@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <com.excel.IndependentTitleLinearLayout
+        android:id="@+id/independent_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+         />
+
+    <com.ctrl.AssociationHorizontalScrollView
+        android:id="@+id/title_row_scr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+         android:scrollbars="none">
+
+        <com.excel.RowTitleLinearLayout
+            android:id="@+id/title_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </com.ctrl.AssociationHorizontalScrollView>
+
+</LinearLayout>
