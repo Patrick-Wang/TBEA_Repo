@@ -3,12 +3,16 @@ package com.dataviewer;
 import com.example.dataviewer.R;
 import com.excel.Sheet;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-public class QuotaTablePage extends AQueryFragment {
+public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 	static String[][] records = new String[][]{
 			{"zblx","zbmc","byjh","by","jhwcl","sy","jsyzzb","sjdjz","jsjdzzb","qnpj","jqnjzzzb","qntq","jqntqzzb","jdjh","jdj","jdhwcl","qntjd","jqntjdzzb","sjd","jsjdzzb","ndjh","ndj"},
 			{"指示完成情况","利润总额","13580","-","0","-","0","3577.92","0","8276.26","0","9236.2","0","50070","7705.8","15.39%","26891.18","-71.34%","-","0.00%","142500","18439.50%"},
@@ -23,6 +27,12 @@ public class QuotaTablePage extends AQueryFragment {
 			{"指示完成情况","应收账款","125499","-","0","-","0","54160","0","495465","0","390666","0","125499","-","0.00%","390665.84","0","594166","0.00%","0","0"},
 			{"指示完成情况","存货","92899","-","0","-","0","275433","0","292367","0","292508","0","92899","-","0.00%","292507.99","0","268608","0.00%","0","0"}		};
 
+	String[] strArr = new String[] { "沈变", "衡变", "新变", "天变", "鲁缆", "新缆", "德缆"};
+	boolean[] boolArr = new boolean[]{
+		true, true,true,true,true,true,true
+	};
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -35,6 +45,29 @@ public class QuotaTablePage extends AQueryFragment {
 		}
 
 		sheet.fix();
+		
+		
+		aq.id(R.id.company).clicked(this);
+		
 		return v;
 	}
+
+	@Override
+	public void onClick(View v) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+		builder.setTitle("公司");
+		builder.setMultiChoiceItems(strArr, boolArr, new OnMultiChoiceClickListener() {
+
+			@Override
+			public void onClick(DialogInterface arg0, int arg1, boolean arg2) {
+				
+			}});
+		builder.setPositiveButton("确定", null);
+		builder.setNegativeButton("取消", null);
+		builder.create().show();
+	}
+	
+	
+	
+	
 }

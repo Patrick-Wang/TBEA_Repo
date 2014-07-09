@@ -42,42 +42,53 @@ public final class R {
         public static final int splash_screen=0x7f020012;
     }
     public static final class id {
-        public static final int action_settings=0x7f080015;
+        public static final int action_settings=0x7f08001d;
+        public static final int al=0x7f080012;
+        public static final int company=0x7f080018;
         public static final int content=0x7f080006;
         public static final int content_hscr=0x7f080004;
         public static final int content_vscr=0x7f080005;
-        public static final int day_signed=0x7f08000c;
+        public static final int cu=0x7f080011;
+        public static final int daily_payment=0x7f08000b;
+        public static final int day_signed=0x7f08000f;
         public static final int f1=0x7f080007;
         public static final int f2=0x7f080008;
         public static final int f3=0x7f080009;
         public static final int host=0x7f080001;
-        public static final int independent_title=0x7f080012;
-        public static final int login=0x7f080010;
+        public static final int independent_title=0x7f08001a;
+        public static final int login=0x7f080015;
         public static final int main_frame=0x7f080000;
-        public static final int moneyback=0x7f08000b;
-        public static final int month_sigend=0x7f08000d;
-        public static final int mysheet=0x7f080011;
-        public static final int psw=0x7f08000f;
-        public static final int rg_tab=0x7f08000a;
+        public static final int moneyback=0x7f08000e;
+        public static final int month=0x7f080017;
+        public static final int month_sigend=0x7f080010;
+        public static final int monthly_payment=0x7f08000c;
+        public static final int mysheet=0x7f080019;
+        public static final int psw=0x7f080014;
+        public static final int receivableratio=0x7f08000a;
+        public static final int rg_tab=0x7f08000d;
         public static final int title_colum=0x7f080003;
         public static final int title_colum_vscr=0x7f080002;
-        public static final int title_row=0x7f080014;
-        public static final int title_row_scr=0x7f080013;
-        public static final int usrn=0x7f08000e;
+        public static final int title_row=0x7f08001c;
+        public static final int title_row_scr=0x7f08001b;
+        public static final int usrn=0x7f080013;
+        public static final int year=0x7f080016;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int body=0x7f030001;
         public static final int bottombar=0x7f030002;
         public static final int cell=0x7f030003;
-        public static final int function_selector_page=0x7f030004;
-        public static final int funds_chart_page=0x7f030005;
-        public static final int futures_chart_page=0x7f030006;
-        public static final int futures_table_page=0x7f030007;
-        public static final int loginpage=0x7f030008;
-        public static final int quota_table_page=0x7f030009;
-        public static final int title=0x7f03000a;
-        public static final int titlebar=0x7f03000b;
+        public static final int daily_payment=0x7f030004;
+        public static final int function_selector_page=0x7f030005;
+        public static final int funds_chart_page=0x7f030006;
+        public static final int futures_chart_page=0x7f030007;
+        public static final int futures_table_page=0x7f030008;
+        public static final int loginpage=0x7f030009;
+        public static final int monthly_payment=0x7f03000a;
+        public static final int quota_table_page=0x7f03000b;
+        public static final int receivable_ratio=0x7f03000c;
+        public static final int title=0x7f03000d;
+        public static final int titlebar=0x7f03000e;
     }
     public static final class menu {
         public static final int main=0x7f070000;

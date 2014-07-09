@@ -7,10 +7,63 @@
     <include layout="@layout/titlebar" >
     </include>
 
-    <com.excel.Sheet
-        android:id="@+id/mysheet"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="25px"
+            android:text="月度指标明细"
+            android:textColor="#000000"
+            android:textSize="28px"
+            android:textStyle="bold" >
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="15px"
+            android:paddingTop="20px" >
+
+            <Button
+                android:id="@+id/year"
+                android:layout_width="150px"
+                android:layout_height="wrap_content"
+                android:text="2014 年"
+                android:textColor="#000000"
+                android:textSize="14px" >
+            </Button>
+
+            <Button
+                android:id="@+id/month"
+                android:layout_width="120px"
+                android:layout_height="wrap_content"
+                android:text="7 月"
+                android:textColor="#000000"
+                android:textSize="14px" >
+            </Button>
+
+            <Button
+                android:id="@+id/company"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="全部公司"
+                android:textColor="#000000"
+                android:textSize="14px" >
+            </Button>
+        </LinearLayout>
+
+        <com.excel.Sheet
+            android:paddingLeft="5px"
+            android:id="@+id/mysheet"
+            android:layout_width="match_parent"
+            android:layout_height="450px"
+            android:orientation="vertical" />
+    </LinearLayout>
 
 </LinearLayout>

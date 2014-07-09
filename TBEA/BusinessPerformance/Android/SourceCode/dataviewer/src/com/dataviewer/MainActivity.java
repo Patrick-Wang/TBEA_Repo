@@ -28,7 +28,7 @@ public class MainActivity extends Activity implements Callback {
 
 		Message message = new Message();
 		message.what = 1;
-		handler.sendMessageDelayed(message, 5000);
+		handler.sendMessageDelayed(message, 2000);
 	}
 
 	@Override

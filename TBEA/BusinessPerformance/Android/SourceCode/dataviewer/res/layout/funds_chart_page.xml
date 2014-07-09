@@ -6,6 +6,21 @@
 
     <include layout="@layout/titlebar" />
 
+    
+    <include 
+        android:id="@+id/receivableratio"
+        layout="@layout/receivable_ratio"/>
+
+     <include 
+        android:id="@+id/daily_payment"
+        layout="@layout/daily_payment"
+        android:visibility="gone"/>
+    
+     <include 
+        android:id="@+id/monthly_payment"
+        layout="@layout/monthly_payment"
+        android:visibility="gone"/>
+     
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >

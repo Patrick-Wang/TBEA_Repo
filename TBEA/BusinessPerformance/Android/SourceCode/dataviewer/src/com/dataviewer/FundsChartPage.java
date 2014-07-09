@@ -18,6 +18,8 @@ OnCheckedChangeListener{
 		update(v);
 		((RadioGroup) aq.id(R.id.rg_tab).getView())
 		.setOnCheckedChangeListener(this);
+		
+	
 		return v;
 	}
 	
@@ -25,10 +27,19 @@ OnCheckedChangeListener{
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		switch (checkedId) {
 		case R.id.moneyback:
+			aq.id(R.id.receivableratio).visibility(View.VISIBLE);
+			aq.id(R.id.daily_payment).visibility(View.GONE);
+			aq.id(R.id.monthly_payment).visibility(View.GONE);
 			break;
 		case R.id.day_signed:
+			aq.id(R.id.receivableratio).visibility(View.GONE);
+			aq.id(R.id.daily_payment).visibility(View.VISIBLE);
+			aq.id(R.id.monthly_payment).visibility(View.GONE);
 			break;
 		case R.id.month_sigend:
+			aq.id(R.id.receivableratio).visibility(View.GONE);
+			aq.id(R.id.daily_payment).visibility(View.GONE);
+			aq.id(R.id.monthly_payment).visibility(View.VISIBLE);
 			break;
 		default:
 			break;
