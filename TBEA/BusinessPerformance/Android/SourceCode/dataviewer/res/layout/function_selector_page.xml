@@ -2,27 +2,96 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/f1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="f1" />
+    <include layout="@layout/titlebar" >
+    </include>
 
-    <Button
-        android:id="@+id/f2"
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="f2" />
+        android:layout_height="match_parent"
+        android:paddingTop="40px" >
 
-    <Button
-        android:id="@+id/f3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="f3" />
+        <TableRow>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/f1"
+                    android:layout_width="142px"
+                    android:layout_height="142px"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/fn1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingTop="10px"
+                    android:text="应收账款明细"
+                    android:textColor="#000000"
+                    android:textSize="16px" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/f2"
+                    android:layout_width="142px"
+                    android:layout_height="142px"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/fn2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingTop="10px"
+                    android:text="期货明细"
+                    android:textColor="#000000"
+                    android:textSize="16px" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/f3"
+                    android:layout_width="142px"
+                    android:layout_height="142px"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/fn3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingTop="10px"
+                    android:text="月度指标明细"
+                    android:textColor="#000000"
+                    android:textSize="16px" >
+                </TextView>
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+
+    <include layout="@layout/bottombar" >
+    </include>
 
 </LinearLayout>

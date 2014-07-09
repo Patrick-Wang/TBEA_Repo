@@ -4,31 +4,61 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <include layout="@layout/titlebar" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal" >
+        android:layout_height="match_parent" >
 
-        <Button
-            android:id="@+id/moneyback"
-            android:layout_width="match_parent"
+        <RadioGroup
+            android:id="@+id/rg_tab"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="净还款比" />
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/day_signed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="日回款/签约" />
+            <RadioButton
+                android:id="@+id/moneyback"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0px"
+                android:layout_weight="1"
+                android:background="@drawable/radio"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:padding="0px"
+                android:text="月回款/签约"
+                android:textColor="@android:color/black" />
 
-        <Button
-            android:id="@+id/month_sigend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="月回款/签约" />
-    </LinearLayout>
+            <RadioButton
+                android:id="@+id/day_signed"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0px"
+                android:layout_weight="1"
+                android:background="@drawable/radio"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="0px"
+                android:text="日回款/签约"
+                android:textColor="@android:color/black" />
+
+            <RadioButton
+                android:id="@+id/month_sigend"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0px"
+                android:layout_weight="1"
+                android:background="@drawable/radio"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="0px"
+                android:text="净还款比"
+                android:textColor="@android:color/black" />
+        </RadioGroup>
+    </RelativeLayout>
 
 </LinearLayout>

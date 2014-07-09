@@ -1,4 +1,4 @@
-package com.example.dataviewer;
+package com.dataviewer;
 
 import com.androidquery.AQuery;
 
