@@ -96,6 +96,7 @@ public class FundsChartPage extends AQueryFragment implements
 		// webView.loadUrl("javascript:refreshView(" + values + ");");
 		// }
 		// });
+		dialog = ProgressDialog.show(getActivity(),null,"页面加载中，请稍后..");
 		webView.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onPageFinished(WebView view, String url) {
