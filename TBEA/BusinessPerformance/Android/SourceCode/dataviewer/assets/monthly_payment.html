@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pie</title>
+<style>
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	align: left;
+	valign: left;
+}
+
+.panel-content {
+	height: 300px;
+	width: 100%;
+	border: 0px;
+	margin: 0;
+	padding: 0;
+	align: left;
+	valign: left;
+	text-align: left;
+}
+</style>
+<script src="www2/js/echarts-plain-1-4-1.js"></script>
+</head>
+<body>
+	<div id="monthly_payment" class="panel-content"></div>
+
+	<script type="text/javascript">
+		function refreshView(values) {
+			var monthly_payment_Chart = echarts.init(document
+					.getElementById('monthly_payment'));
+			var monthly_payment_Option = {
+				tooltip : {
+					trigger : 'axis'
+				},
+				legend : {
+					data : [ '月回款', '月签约' ]
+				},
+				xAxis : [ {
+					type : 'category',
+					data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆', '德缆' ]
+				} ],
+				yAxis : [ {
+					type : 'value',
+					splitArea : {
+						show : true
+					},
+                    min : 0,
+                    max : 180
+				} ],
+				grid : {
+					x : 60,
+					y : 50,
+					x2 : 20,
+					y2 : 20
+				},
+				series : [ {
+					name : '月回款',
+					type : 'bar',
+					data : [ 2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6 ]
+				}, {
+					name : '月签约',
+					type : 'bar',
+					data : [ 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6 ]
+				} ]
+			};
+
+			monthly_payment_Chart.setOption(monthly_payment_Option);
+		}
+	</script>
+</body>
+</html>
