@@ -27,7 +27,7 @@
         <WebView
             android:id="@+id/receiveable_ratio_webview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="350dp" />
     </LinearLayout>
 
 </LinearLayout>
