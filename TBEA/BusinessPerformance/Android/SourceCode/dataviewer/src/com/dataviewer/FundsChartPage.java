@@ -19,14 +19,13 @@ OnCheckedChangeListener{
 		((RadioGroup) aq.id(R.id.rg_tab).getView())
 		.setOnCheckedChangeListener(this);
 		
-	
 		return v;
 	}
 	
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		switch (checkedId) {
-		case R.id.moneyback:
+		case R.id.receivable_money:
 			aq.id(R.id.receivableratio).visibility(View.VISIBLE);
 			aq.id(R.id.daily_payment).visibility(View.GONE);
 			aq.id(R.id.monthly_payment).visibility(View.GONE);

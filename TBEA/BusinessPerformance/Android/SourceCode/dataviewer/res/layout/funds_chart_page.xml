@@ -6,21 +6,20 @@
 
     <include layout="@layout/titlebar" />
 
-    
-    <include 
+    <include
         android:id="@+id/receivableratio"
-        layout="@layout/receivable_ratio"/>
+        layout="@layout/receivable_ratio" />
 
-     <include 
+    <include
         android:id="@+id/daily_payment"
         layout="@layout/daily_payment"
-        android:visibility="gone"/>
-    
-     <include 
+        android:visibility="gone" />
+
+    <include
         android:id="@+id/monthly_payment"
         layout="@layout/monthly_payment"
-        android:visibility="gone"/>
-     
+        android:visibility="gone" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -35,7 +34,7 @@
             android:orientation="horizontal" >
 
             <RadioButton
-                android:id="@+id/moneyback"
+                android:id="@+id/receivable_money"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="0px"
@@ -45,8 +44,9 @@
                 android:checked="true"
                 android:gravity="center"
                 android:padding="0px"
-                android:text="月回款/签约"
-                android:textColor="@android:color/black" />
+                android:text="净回款比率"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
 
             <RadioButton
                 android:id="@+id/day_signed"
@@ -59,7 +59,8 @@
                 android:gravity="center"
                 android:padding="0px"
                 android:text="日回款/签约"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
 
             <RadioButton
                 android:id="@+id/month_sigend"
@@ -71,8 +72,9 @@
                 android:button="@null"
                 android:gravity="center"
                 android:padding="0px"
-                android:text="净还款比"
-                android:textColor="@android:color/black" />
+                android:text="月回款/签约"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
         </RadioGroup>
     </RelativeLayout>
 

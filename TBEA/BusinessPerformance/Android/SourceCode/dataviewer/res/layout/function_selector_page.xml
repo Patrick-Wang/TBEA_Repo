@@ -10,7 +10,7 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="40px" >
+        android:paddingTop="30dp" >
 
         <TableRow>
 
@@ -22,8 +22,8 @@
 
                 <Button
                     android:id="@+id/f1"
-                    android:layout_width="142px"
-                    android:layout_height="142px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_column="0"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/fn1" />
@@ -32,10 +32,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:paddingTop="10px"
+                    android:paddingTop="10dp"
                     android:text="应收账款明细"
                     android:textColor="#000000"
-                    android:textSize="16px" >
+                    android:textSize="16sp" >
                 </TextView>
             </LinearLayout>
 
@@ -47,8 +47,8 @@
 
                 <Button
                     android:id="@+id/f2"
-                    android:layout_width="142px"
-                    android:layout_height="142px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_column="0"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/fn2" />
@@ -57,10 +57,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:paddingTop="10px"
+                    android:paddingTop="10dp"
                     android:text="期货明细"
                     android:textColor="#000000"
-                    android:textSize="16px" >
+                    android:textSize="16sp" >
                 </TextView>
             </LinearLayout>
 
@@ -72,8 +72,8 @@
 
                 <Button
                     android:id="@+id/f3"
-                    android:layout_width="142px"
-                    android:layout_height="142px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_column="0"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/fn3" />
@@ -82,10 +82,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:paddingTop="10px"
+                    android:paddingTop="10dp"
                     android:text="月度指标明细"
                     android:textColor="#000000"
-                    android:textSize="16px" >
+                    android:textSize="16sp" >
                 </TextView>
             </LinearLayout>
         </TableRow>

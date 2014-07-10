@@ -8,21 +8,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:paddingBottom="20px"
-        android:paddingLeft="5px"
-        android:paddingRight="5px"
-        android:paddingTop="25px"
+        android:paddingBottom="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="25dp"
         android:text="净回款比率"
         android:textColor="#000000"
-        android:textSize="28px"
+        android:textSize="22sp"
         android:textStyle="bold" >
     </TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500px"
-        android:paddingLeft="5px"
-        android:paddingRight="5px" >
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
 
         <WebView
             android:layout_width="match_parent"

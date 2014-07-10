@@ -4,27 +4,25 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="25dp"
+        android:text="日签约/回款"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:textStyle="bold" >
+    </TextView>
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="25px"
-            android:text="日签约/回款"
-            android:textColor="#000000"
-            android:textSize="28px"
-            android:textStyle="bold" 
-            android:paddingBottom="20px"
-            android:paddingLeft="5px"
-            android:paddingRight="5px">
-        </TextView>
-
- <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500px"
-        android:paddingLeft="5px"
-        android:paddingRight="5px" >
+        android:layout_height="match_parent"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
 
         <WebView
             android:layout_width="match_parent"
