@@ -23,13 +23,72 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingRight="5dp" >
+
+        <RadioGroup
+            android:id="@+id/rg_tab_ac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/cu"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:background="@drawable/radio"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:padding="0px"
+                android:text="铜"
+                android:textColor="@android:color/black" />
+
+            <RadioButton
+                android:id="@+id/al"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_margin="0px"
+                android:background="@drawable/radio"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="0px"
+                android:text="吕"
+                android:textColor="@android:color/black" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:paddingRight="5dp" >
 
         <WebView
+            android:id="@+id/profit_lost_webview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="350dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:background="@drawable/table" />
+
+        <Button
+            android:id="@+id/detailbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="期货明细" >
+        </Button>
     </LinearLayout>
 
 </LinearLayout>

@@ -3,7 +3,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
     <include layout="@layout/titlebar" >
     </include>
-   
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="25dp"
+            android:text="月度指标明细"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="bold" >
+        </TextView>
+
+        <Button
+            android:id="@+id/company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部公司"
+            android:textColor="#000000"
+            android:textSize="14sp" >
+        </Button>
+
+        <com.excel.Sheet
+            android:id="@+id/mysheet"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:orientation="vertical"
+            android:paddingLeft="5dp" />
+    </LinearLayout>
+
 </LinearLayout>
