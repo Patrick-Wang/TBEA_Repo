@@ -21,59 +21,93 @@ html, body {
 	padding: 0;
 	align: left;
 	valign: left;
-	text-align: left;
 }
 </style>
-<script src="www2/js/echarts-plain-1-4-1.js"></script>
+<script src="www2/js/echarts-plain-2-0-0.js"></script>
 </head>
 <body>
 	<div id="receivable_ratio" class="panel-content"></div>
 	<script type="text/javascript">
-		var receivable_ratio_Chart = echarts.init(document
+		var receivable_ratio_Chart = null;
+		receivable_ratio_Chart = echarts.init(document
 				.getElementById('receivable_ratio'));
-		 function refreshView(values) { 
-			/* var values = [1, 2, 3, 4, 5, 6, 7]; */
-			var receivable_ratio_Option = {
-				tooltip : {
-					trigger : 'item',
-					formatter : "{a} <br/>{b} : {c} ({d}%)"
-				},
-				legend : {
-					orient : 'horizontal',
-					/* x : 'left', */
-					y : 'bottom',
-					data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆', '德缆' ]
-				},
-				series : [ {
-					name : '净回款比率',
-					type : 'pie',
-					radius : '50%',
-					center : [ '50%', '45%' ],
-					data : [ {
-						value : values[0],
-						name : '沈变'
-					}, {
-						value : values[1],
-						name : '衡变'
-					}, {
-						value : values[2],
-						name : '新变'
-					}, {
-						value : values[3],
-						name : '天变'
-					}, {
-						value : values[4],
-						name : '鲁缆'
-					}, {
-						value : values[5],
-						name : '新缆'
-					}, {
-						value : values[6],
-						name : '德缆'
-					} ]
+
+		/* var values = [1, 2, 3, 4, 5, 6, 7]; */
+		var receivable_ratio_Option = {
+			animation : false,
+			tooltip : {
+				trigger : 'item',
+				formatter : "{a} <br/>{b} : {c} ({d}%)",
+                transitionDuration : 0
+			},
+			legend : {
+				orient : 'horizontal',
+				/* x : 'left', */
+				y : 'bottom',
+				data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆', '德缆' ]
+			},
+			series : [ {
+				name : '净回款比率',
+				type : 'pie',
+				radius : '50%',
+				center : [ '50%', '45%' ],
+				data : [ {
+					value : 0,
+					name : '沈变'
+				}, {
+					value : 0,
+					name : '衡变'
+				}, {
+					value : 0,
+					name : '新变'
+				}, {
+					value : 0,
+					name : '天变'
+				}, {
+					value : 0,
+					name : '鲁缆'
+				}, {
+					value : 0,
+					name : '新缆'
+				}, {
+					value : 0,
+					name : '德缆'
 				} ]
-			};
-			receivable_ratio_Chart.setOption(receivable_ratio_Option);
+			} ]
+		};
+		receivable_ratio_Chart.setOption(receivable_ratio_Option);
+		function refreshView(values) {
+			var newOption = receivable_ratio_Chart.getOption();
+			newOption.series = [ {
+				name : '净回款比率',
+				type : 'pie',
+				radius : '50%',
+				center : [ '50%', '45%' ],
+				data : [ {
+					value : values[0],
+					name : '沈变'
+				}, {
+					value : values[1],
+					name : '衡变'
+				}, {
+					value : values[2],
+					name : '新变'
+				}, {
+					value : values[3],
+					name : '天变'
+				}, {
+					value : values[4],
+					name : '鲁缆'
+				}, {
+					value : values[5],
+					name : '新缆'
+				}, {
+					value : values[6],
+					name : '德缆'
+				} ]
+			} ];
+			receivable_ratio_Chart.setOption(newOption);
+			window.FundsChartPage.afterRefresh();
 		}
 	</script>
 </body>
