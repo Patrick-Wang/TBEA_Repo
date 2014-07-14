@@ -22,7 +22,6 @@ import android.webkit.WebViewClient;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
-import com.example.dataviewer.R;
 
 public class FuturesChartPage extends AQueryFragment implements
 		OnCheckedChangeListener {
