@@ -23,7 +23,7 @@ html, body {
     valign: left;
 }
 </style>
-<script src="www2/js/echarts-plain-1-4-1.js"></script>
+<script src="www2/js/echarts-plain-2-0-0.js"></script>
 </head>
 <body>
     <div id="profit_lost_copper" class="panel-content"></div>
@@ -57,7 +57,10 @@ html, body {
                     power : 10000000,
                     precision : 0.01,
                     min : -1300000,
-                    max : 1300000
+                    max : 1300000,
+    				splitArea : {
+    					show : true
+    				}
                 } ],
                 series : [ {
                     name : '沈变',

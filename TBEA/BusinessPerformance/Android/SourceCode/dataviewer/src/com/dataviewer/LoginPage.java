@@ -32,6 +32,9 @@ public class LoginPage extends AQueryFragment {
 					ft.replace(R.id.host, new FunctionSelectorPage());
 					ft.commit();
 
+					aq.id(R.id.usrn).getEditText().clearFocus();
+					aq.id(R.id.psw).getEditText().clearFocus();
+
 					ft = getActivity().getFragmentManager().beginTransaction();
 					ft.remove(LoginPage.this);
 					ft.commit();

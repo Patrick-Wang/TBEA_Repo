@@ -11,13 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:paddingBottom="20dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:paddingTop="25dp"
-        android:text="期貨明细"
+        android:paddingTop="18dp"
+        android:text="期货利润"
         android:textColor="#000000"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textStyle="bold" >
     </TextView>
 
@@ -37,63 +36,85 @@
 
             <RadioButton
                 android:id="@+id/cu"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
                 android:background="@drawable/cu_al_radio"
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:padding="0px"
+                android:padding="0dp"
                 android:text="铜"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
             <RadioButton
                 android:id="@+id/al"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
-                android:layout_margin="0px"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:layout_margin="0dp"
                 android:background="@drawable/cu_al_radio"
                 android:button="@null"
                 android:gravity="center"
-                android:padding="0px"
-                android:text="鋁"
-                android:textColor="@android:color/black" />
+                android:padding="0dp"
+                android:text="铝"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
         </RadioGroup>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingLeft="5dp"
         android:paddingRight="5dp" >
 
         <WebView
             android:id="@+id/profit_lost_webview"
             android:layout_width="wrap_content"
-            android:layout_height="350dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:scaleType="fitEnd"
-            android:src="@drawable/table" >
-        </ImageView>
-
-        <Button
-            android:id="@+id/detailbtn"
+            android:layout_height="250dp" />
+          <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="期货指标" >
-        </Button>
+            android:layout_gravity="right"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:scaleType="fitEnd"
+                android:src="@drawable/table" >
+            </ImageView>
+
+            <Button
+                android:id="@+id/detailbtn"
+                android:layout_width="80dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/cu_al_check"
+                android:minHeight="0dp"
+                android:text="期货明细"
+                android:textSize="14sp" >
+            </Button>
+        </LinearLayout>
+      
     </LinearLayout>
+
+    
+      <TextView
+        android:id="@+id/profit_lost_webview_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="12dp"
+        android:text="盈亏金额总计： 273298.70 万元"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" >
+    </TextView>
+    
+    
 
 </LinearLayout>

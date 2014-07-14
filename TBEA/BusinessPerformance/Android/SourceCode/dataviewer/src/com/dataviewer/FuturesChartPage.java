@@ -87,8 +87,8 @@ public class FuturesChartPage extends AQueryFragment implements
 		profit_Lost_Copper_WebView.getSettings().setNeedInitialFocus(false);
 		profit_Lost_Copper_WebView
 				.addJavascriptInterface(this, jsInterfaceName);
-//		profit_Lost_Copper_WebView.setBackgroundColor(getResources().getColor(
-//				android.R.color.transparent));
+		profit_Lost_Copper_WebView.setBackgroundColor(getResources().getColor(
+				android.R.color.transparent));
 		profit_Lost_Copper_WebView.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onPageFinished(WebView view, String url) {
