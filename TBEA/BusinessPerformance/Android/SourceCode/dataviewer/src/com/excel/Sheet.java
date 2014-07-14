@@ -220,6 +220,23 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		return sumHeight - rowHeight.get(0);
 	}
 
+	public void clean() {
+		lh_title_row.removeAllViews();
+		lv_independent_title.removeAllViews();
+		lv_title_colum.removeAllViews();
+		lv_content.removeAllViews();
+		last_content.removeAllViews();
+		last_title_colum.removeAllViews();
+		last_title_row.removeAllViews();
+		last_content.removeAllViews();
+		sumWidth = 0;
+		sumHeight = 0;
+		columCount = 0;
+		rowCount = 0;
+		columWidth = new LinkedList<Integer>();
+		rowHeight = new LinkedList<Integer>();
+	}
+
 	public void fix() {
 
 		last_content.getLayoutParams().height = blank_row_height;

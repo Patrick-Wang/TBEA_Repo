@@ -27,25 +27,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingBottom="15px"
-            android:paddingTop="20px" >
+            android:paddingBottom="15dp"
+            android:paddingTop="20dp" >
 
             <Button
                 android:id="@+id/year"
-                android:layout_width="150px"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="2014 年"
                 android:textColor="#000000"
-                android:textSize="14px" >
+                android:textSize="14sp" >
             </Button>
 
             <Button
                 android:id="@+id/month"
-                android:layout_width="120px"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:text="7 月"
                 android:textColor="#000000"
-                android:textSize="14px" >
+                android:textSize="14sp" >
             </Button>
 
             <Button
@@ -54,15 +54,15 @@
                 android:layout_height="wrap_content"
                 android:text="全部公司"
                 android:textColor="#000000"
-                android:textSize="14px" >
+                android:textSize="14sp" >
             </Button>
         </LinearLayout>
 
         <com.excel.Sheet
-            android:paddingLeft="5px"
+            android:paddingLeft="5dp"
             android:id="@+id/mysheet"
             android:layout_width="match_parent"
-            android:layout_height="450px"
+            android:layout_height="450dp"
             android:orientation="vertical" />
     </LinearLayout>
 

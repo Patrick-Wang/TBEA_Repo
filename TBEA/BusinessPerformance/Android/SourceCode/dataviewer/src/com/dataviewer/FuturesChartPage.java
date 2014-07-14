@@ -1,16 +1,22 @@
 package com.dataviewer;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.dataviewer.R;
 
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.ProgressDialog;
+import android.os.Handler;
+import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RadioGroup;
@@ -110,6 +116,7 @@ public class FuturesChartPage extends AQueryFragment implements
 						+ values + ");");
 			}
 		});
+
 	}
 
 	public void afterRefresh() {
