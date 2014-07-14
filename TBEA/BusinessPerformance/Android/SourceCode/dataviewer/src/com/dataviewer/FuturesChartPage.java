@@ -3,18 +3,23 @@ package com.dataviewer;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.example.dataviewer.R;
 
-public class FuturesChartPage extends AQueryFragment {
+public class FuturesChartPage extends AQueryFragment implements
+		OnCheckedChangeListener {
 
 	public WebView profit_Lost_Copper_WebView = null;
 
@@ -26,6 +31,22 @@ public class FuturesChartPage extends AQueryFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍后...");
+
+		((RadioGroup) aq.id(R.id.rg_tab_ac).getView())
+				.setOnCheckedChangeListener(this);
+
+		aq.id(R.id.detailbtn).clicked(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				FragmentTransaction ft = getActivity().getFragmentManager()
+						.beginTransaction();
+				ft.hide(FuturesChartPage.this);
+				ft.replace(R.id.host, new FuturesTablePage()).addToBackStack(
+						null);
+				ft.commit();
+			}
+		});
 
 //		if (aq == null) {
 			View v = inflater.inflate(R.layout.futures_chart_page, container,
@@ -40,6 +61,18 @@ public class FuturesChartPage extends AQueryFragment {
 //		}
 
 		return aq.getView();
+	}
+
+	@Override
+	public void onCheckedChanged(RadioGroup group, int checkedId) {
+		switch (checkedId) {
+		case R.id.cu:
+			break;
+		case R.id.al:
+			break;
+		default:
+			break;
+		}
 	}
 
 	public void initView(String jsInterfaceName, String url) {
