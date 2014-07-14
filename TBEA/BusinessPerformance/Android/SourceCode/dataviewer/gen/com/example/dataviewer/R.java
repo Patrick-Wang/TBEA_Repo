@@ -12,6 +12,8 @@ public final class R {
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
+ Default screen margins, per the Android Design guidelines. 
+ Default screen margins, per the Android Design guidelines. 
 
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
@@ -19,31 +21,36 @@ public final class R {
          */
         public static final int activity_horizontal_margin=0x7f040000;
         public static final int activity_vertical_margin=0x7f040001;
+        public static final int loginarea_hight=0x7f040002;
+        public static final int loginbtn_hight=0x7f040003;
     }
     public static final class drawable {
         public static final int background=0x7f020000;
         public static final int bottom=0x7f020001;
-        public static final int detailstitle_bk=0x7f020002;
-        public static final int detailstitle_center=0x7f020003;
-        public static final int fn1=0x7f020004;
-        public static final int fn2=0x7f020005;
-        public static final int fn3=0x7f020006;
-        public static final int func1=0x7f020007;
-        public static final int func2=0x7f020008;
-        public static final int func3=0x7f020009;
-        public static final int ic_launcher=0x7f02000a;
-        public static final int login_n=0x7f02000b;
-        public static final int login_p=0x7f02000c;
-        public static final int loginarea=0x7f02000d;
-        public static final int loginbutton=0x7f02000e;
-        public static final int logintitle=0x7f02000f;
-        public static final int logintitle_left=0x7f020010;
-        public static final int logintitle_right=0x7f020011;
-        public static final int radio=0x7f020012;
-        public static final int refresh=0x7f020013;
-        public static final int rightconer=0x7f020014;
-        public static final int splash_screen=0x7f020015;
-        public static final int table=0x7f020016;
+        public static final int cu_al_check=0x7f020002;
+        public static final int cu_al_radio=0x7f020003;
+        public static final int cu_al_uncheck=0x7f020004;
+        public static final int detailstitle_bk=0x7f020005;
+        public static final int detailstitle_center=0x7f020006;
+        public static final int fn1=0x7f020007;
+        public static final int fn2=0x7f020008;
+        public static final int fn3=0x7f020009;
+        public static final int func1=0x7f02000a;
+        public static final int func2=0x7f02000b;
+        public static final int func3=0x7f02000c;
+        public static final int ic_launcher=0x7f02000d;
+        public static final int login_n=0x7f02000e;
+        public static final int login_p=0x7f02000f;
+        public static final int loginarea=0x7f020010;
+        public static final int loginbutton=0x7f020011;
+        public static final int logintitle=0x7f020012;
+        public static final int logintitle_left=0x7f020013;
+        public static final int logintitle_right=0x7f020014;
+        public static final int radio=0x7f020015;
+        public static final int refresh=0x7f020016;
+        public static final int rightconer=0x7f020017;
+        public static final int splash_screen=0x7f020018;
+        public static final int table=0x7f020019;
     }
     public static final class id {
         public static final int action_settings=0x7f080023;

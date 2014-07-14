@@ -15,7 +15,7 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="25dp"
-        android:text="应收账款明细"
+        android:text="期貨明细"
         android:textColor="#000000"
         android:textSize="22sp"
         android:textStyle="bold" >
@@ -24,6 +24,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical"
         android:paddingRight="5dp" >
 
@@ -36,9 +37,9 @@
 
             <RadioButton
                 android:id="@+id/cu"
-                android:layout_width="50dp"
-                android:layout_height="20dp"
-                android:background="@drawable/radio"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:background="@drawable/cu_al_radio"
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
@@ -48,14 +49,14 @@
 
             <RadioButton
                 android:id="@+id/al"
-                android:layout_width="50dp"
-                android:layout_height="20dp"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
                 android:layout_margin="0px"
-                android:background="@drawable/radio"
+                android:background="@drawable/cu_al_radio"
                 android:button="@null"
                 android:gravity="center"
                 android:padding="0px"
-                android:text="吕"
+                android:text="鋁"
                 android:textColor="@android:color/black" />
         </RadioGroup>
     </LinearLayout>
@@ -76,18 +77,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal" >
 
         <ImageView
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:background="@drawable/table" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:scaleType="fitEnd"
+            android:src="@drawable/table" >
+        </ImageView>
 
         <Button
             android:id="@+id/detailbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="期货明细" >
+            android:text="期货指标" >
         </Button>
     </LinearLayout>
 

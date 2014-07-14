@@ -4,5 +4,6 @@
     android:layout_width="wrap_content"
     android:padding="2px"
     android:layout_height="wrap_content"
-    android:maxWidth="1000px">
+    android:maxWidth="200px"
+    android:minWidth="20dp">
 </com.excel.CellTextView>

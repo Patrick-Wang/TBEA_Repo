@@ -14,22 +14,21 @@ import android.view.ViewGroup;
 
 public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 	static String[][] records = new String[][]{
-			{"zblx","zbmc","byjh","by","jhwcl","sy","jsyzzb","sjdjz","jsjdzzb","qnpj","jqnjzzzb","qntq","jqntqzzb","jdjh","jdj","jdhwcl","qntjd","jqntjdzzb","sjd","jsjdzzb","ndjh","ndj"},
-			{"Ö¸Ê¾Íê³ÉÇé¿ö","ÀûÈó×Ü¶î","13580","-","0","-","0","3577.92","0","8276.26","0","9236.2","0","50070","7705.8","15.39%","26891.18","-71.34%","-","0.00%","142500","18439.50%"},
-			{"Ö¸Ê¾Íê³ÉÇé¿ö","ÏúÊÛÊÕÈë","317600","-","0","-","0","195424","0","177156","0","168057","0","1.04E+06","202547","19.56%","547993.72","-63.04%","-","0.00%","2.65E+08","788818"},
-			{"Ö¸Ê¾Íê³ÉÇé¿ö","¾­ÓªÏÖ½ğÁ÷","149286","-","0","195424","0","177156","0","168057","0","283000","-43777.5","-","22034.43","-","-","0","142500","-358228", "0", "0"},
-			{"Ö¸Ê¾Íê³ÉÇé¿ö","²»º¬Ë°²úÖµ","230537","-","0","-","0","133666","0","142345","0","163089","0","740537","146241","19.75%","475792.73","-69.26%","-","0.00%","1.91E+06","547239"},
-			{"Ö¸Ê¾Íê³ÉÇé¿ö","²úÁ¿","0","-","0","-","0","0","0","0","0","0","0","0","0","0.00%","0","-","-","0.00%","15290","0"},
-			{"Ö¸Ê¾Íê³ÉÇé¿ö","ºÏÍ¬Ç©Ô¼¶î","573549","-","0","-","0","204922","0","235800","0","314177","0","-","-","NULL","-","-","-","NULL","-","0"},
-			{"Ö¸Ê¾Íê³ÉÇé¿ö","    ÆäÖĞ£º¹úÄÚÇ©Ô¼","-","-","0","-","0","-","0","-","0","-","0","-","-","0.00%","-","0","-","0.00%","0","0"},
-			{"Ö¸Ê¾Íê³ÉÇé¿ö","    ÆäÖĞ£º¹ú¼ÊÇ©Ô¼","-","-","0","-","0","-","0","-","0","-","0","-","-","0.00%","-","0","-","0.00%","0","0"},
-			{"Ö¸Ê¾Íê³ÉÇé¿ö","×Ê½ğ»ØÁı","430598","-","0","-","0","149043","0","197095","0","264068","0","1.33E+06","171770","12.95%","640488.31","-73.18%","-","0.00%","3.10E+06","618898"},
-			{"Ö¸Ê¾Íê³ÉÇé¿ö","Ó¦ÊÕÕË¿î","125499","-","0","-","0","54160","0","495465","0","390666","0","125499","-","0.00%","390665.84","0","594166","0.00%","0","0"},
-			{"Ö¸Ê¾Íê³ÉÇé¿ö","´æ»õ","92899","-","0","-","0","275433","0","292367","0","292508","0","92899","-","0.00%","292507.99","0","268608","0.00%","0","0"}		};
-
-	String[] strArr = new String[] { "Éò±ä", "ºâ±ä", "ĞÂ±ä", "Ìì±ä", "Â³ÀÂ", "ĞÂÀÂ", "µÂÀÂ"};
+		{"zblx","zbmc","byjh","by","jhwcl","sy","jsyzzb","sjdjz","jsjdzzb","qnpj","jqnjzzzb","qntq","jqntqzzb","jdjh","jdj","jdhwcl","qntjd","jqntjdzzb","sjd","jsjdzzb","ndjh","ndj"},
+		{"æŒ‡ç¤ºå®Œæˆæƒ…å†µ","åˆ©æ¶¦æ€»é¢","13580","-","0","-","0","3577.92","0","8276.26","0","9236.2","0","50070","7705.8","15.39%","26891.18","-71.34%","-","0.00%","142500","18439.50%"},
+		{"æŒ‡ç¤ºå®Œæˆæƒ…å†µ","é”€å”®æ”¶å…¥","317600","-","0","-","0","195424","0","177156","0","168057","0","1.04E+06","202547","19.56%","547993.72","-63.04%","-","0.00%","2.65E+08","788818"},
+		{"æŒ‡ç¤ºå®Œæˆæƒ…å†µ","ç»è¥ç°é‡‘æµ","149286","-","0","195424","0","177156","0","168057","0","283000","-43777.5","-","22034.43","-","-","0","142500","-358228","142500","1400"},
+		{"æŒ‡ç¤ºå®Œæˆæƒ…å†µ","ä¸å«ç¨äº§å€¼","230537","-","0","-","0","133666","0","142345","0","163089","0","740537","146241","19.75%","475792.73","-69.26%","-","0.00%","1.91E+06","547239"},
+		{"æŒ‡ç¤ºå®Œæˆæƒ…å†µ","äº§é‡","0","-","0","-","0","0","0","0","0","0","0","0","0","0.00%","0","-","-","0.00%","15290","0"},
+		{"æŒ‡ç¤ºå®Œæˆæƒ…å†µ","åˆåŒç­¾çº¦é¢","573549","-","0","-","0","204922","0","235800","0","314177","0","-","-","NULL","-","-","-","NULL","-","0"},
+		{"æŒ‡ç¤ºå®Œæˆæƒ…å†µ","    å…¶ä¸­ï¼šå›½å†…ç­¾çº¦","-","-","0","-","0","-","0","-","0","-","0","-","-","0.00%","-","0","-","0.00%","0","0"},
+		{"æŒ‡ç¤ºå®Œæˆæƒ…å†µ","    å…¶ä¸­ï¼šå›½é™…ç­¾çº¦","-","-","0","-","0","-","0","-","0","-","0","-","-","0.00%","-","0","-","0.00%","0","0"},
+		{"æŒ‡ç¤ºå®Œæˆæƒ…å†µ","èµ„é‡‘å›ç¬¼","430598","-","0","-","0","149043","0","197095","0","264068","0","1.33E+06","171770","12.95%","640488.31","-73.18%","-","0.00%","3.10E+06","618898"},
+		{"æŒ‡ç¤ºå®Œæˆæƒ…å†µ","åº”æ”¶è´¦æ¬¾","125499","-","0","-","0","54160","0","495465","0","390666","0","125499","-","0.00%","390665.84","0","594166","0.00%","0","0"},
+		{"æŒ‡ç¤ºå®Œæˆæƒ…å†µ","å­˜è´§","92899","-","0","-","0","275433","0","292367","0","292508","0","92899","-","0.00%","292507.99","0","268608","0.00%","0","0"}};
+	String[] strArr = new String[] { "å¤©è®Š", "è¡¡è®Š", "é­¯çºœ", "ç€‹è®Š", "æ–°è®Š", "æ–°çºœ"};
 	boolean[] boolArr = new boolean[]{
-		true, true,true,true,true,true,true
+		true, true, true, true, true, true
 	};
 	
 	
@@ -48,26 +47,88 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 		
 		
 		aq.id(R.id.company).clicked(this);
-		
+		aq.id(R.id.month).clicked(this);
+		aq.id(R.id.year).clicked(this);
 		return v;
 	}
 
 	@Override
 	public void onClick(View v) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-		builder.setTitle("¹«Ë¾");
-		builder.setMultiChoiceItems(strArr, boolArr, new OnMultiChoiceClickListener() {
 
-			@Override
-			public void onClick(DialogInterface arg0, int arg1, boolean arg2) {
-				
-			}});
-		builder.setPositiveButton("È·¶¨", null);
-		builder.setNegativeButton("È¡Ïû", null);
+		switch (v.getId()) {
+		case R.id.company:
+			onClickCompony();
+			break;
+		case R.id.month:
+			onClickMonth();
+			break;
+		case R.id.year:
+			onClickYear();
+			break;
+		}
+
+	}
+
+	private void onClickYear() {
+		String[] stringYear = new String[] { "2012å¹´", "2013å¹´", "2014å¹´", "2015å¹´" };
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				this.getActivity());
+		builder.setTitle("Year");
+
+		builder.setSingleChoiceItems(stringYear, 1,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+
+					}
+
+				});
+
+		builder.setPositiveButton("ç¡®å®š", null);
+		builder.setNegativeButton("å–æ¶ˆ", null);
 		builder.create().show();
 	}
-	
-	
-	
-	
+
+	private void onClickMonth() {
+
+		String[] stringMonth = new String[] { "1æœˆ", "2æœˆ", "3æœˆ", "4æœˆ", "5æœˆ",
+				"6æœˆ", "7æœˆ", "8æœˆ", "9æœˆ", "10æœˆ", "11æœˆ", "12æœˆ" };
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				this.getActivity());
+		builder.setTitle("Month");
+
+		builder.setSingleChoiceItems(stringMonth, 1,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+
+					}
+
+				});
+
+		builder.setPositiveButton("ç¡®å®š", null);
+		builder.setNegativeButton("å–æ¶ˆ", null);
+		builder.create().show();
+	}
+
+	private void onClickCompony() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				this.getActivity());
+		builder.setTitle("Compony");
+		builder.setMultiChoiceItems(strArr, boolArr,
+				new OnMultiChoiceClickListener() {
+
+					@Override
+					public void onClick(DialogInterface arg0, int arg1,
+							boolean arg2) {
+
+					}
+				});
+		builder.setPositiveButton("ç¡®å®š", null);
+		builder.setNegativeButton("å–æ¶ˆ", null);
+		builder.create().show();
+	}
+
 }

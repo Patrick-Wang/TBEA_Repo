@@ -16,23 +16,24 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-//
-//class Positions{
-//	private int sumWidth = 0;
-//	private int sumHeight = 0;
-//	private int columCount = 0;
-//	private int rowCount = 0;
-//	private List<Integer> columWidth = new LinkedList<Integer>();
-//	private List<Integer> rowHeight = new LinkedList<Integer>();
-//	
-//	public Positions(int columCount){
-//		this.columCount = columCount;
-//	}
-//	
-//	public boolean test()
-//
-//}
+class DensityUtil { 
 
+    /**
+     * æ ¹æ®æ‰‹æœºçš„åˆ†è¾¨ç‡ä» dp çš„å•ä½ è½¬æˆä¸º px(åƒç´ )
+     */ 
+    public static int dip2px(Context context, float dpValue) { 
+        final float scale = context.getResources().getDisplayMetrics().density; 
+        return (int) (dpValue * scale + 0.5f); 
+    } 
+
+    /**
+     * æ ¹æ®æ‰‹æœºçš„åˆ†è¾¨ç‡ä» px(åƒç´ ) çš„å•ä½ è½¬æˆä¸º dp
+     */ 
+    public static int px2dip(Context context, float pxValue) { 
+        final float scale = context.getResources().getDisplayMetrics().density; 
+        return (int) (pxValue / scale + 0.5f); 
+    } 
+}  
 public class Sheet extends LinearLayout implements OnScrollFinished {
 
 	private LinearLayout lh_title_row = null;
@@ -51,7 +52,7 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 	private List<Integer> columWidth = new LinkedList<Integer>();
 	private List<Integer> rowHeight = new LinkedList<Integer>();
 	private LayoutInflater inflater = null;
-	static Paint paint = null;// ´´½¨Ò»¸ö»­±Ê
+	static Paint paint = null;// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	final public static int blank_row_width = 2000;
 	final public static int blank_row_height = 2000;
@@ -62,8 +63,8 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 
 	public static Paint getEdgePaint() {
 		if (paint == null) {
-			paint = new Paint(Paint.DITHER_FLAG);// ´´½¨Ò»¸ö»­±Ê
-			paint.setColor(Color.BLACK);// ÉèÖÃÎªºì±Ê
+			paint = new Paint(Paint.DITHER_FLAG);// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			paint.setColor(Color.BLACK);// ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½
 		}
 		return paint;
 	}
@@ -84,7 +85,7 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 	}
 
 	private void init() {
-		this.setWillNotDraw(false);// ±ØĞë
+		this.setWillNotDraw(false);// ï¿½ï¿½ï¿½ï¿½
 		inflater = LayoutInflater.from(getContext());
 		addView(inflater.inflate(R.layout.title, null));
 		addView(inflater.inflate(R.layout.body, null));
@@ -277,10 +278,12 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 
 		tv = (CellTextView) inflater.inflate(R.layout.cell, null);
 		tv.setText(record[0]);
-
 		if (lv_independent_title.getChildCount() == 0) {
 			lv_independent_title.addView(tv);
 			tv.adjust(1, 1, 1, 1);
+			tv.setTextColor(Color.WHITE);
+			tv.setBKColor(Color.BLACK);
+			//tv.setPadding(2, DensityUtil.dip2px(this.getContext(), 10), 2, DensityUtil.dip2px(getContext(), 10));
 		} else {
 			lv_title_colum.addView(tv, lv_title_colum.getChildCount() - 1);
 			tv.adjust(1, 0, 1, 1);
@@ -291,9 +294,13 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 			for (int i = 1, len = record.length; i < len; ++i) {
 				tv = (CellTextView) inflater.inflate(R.layout.cell, null);
 				tv.setText(record[i]);
+				tv.setTextColor(Color.WHITE);
 				updateSizeList(tv, rowCount - 1, i, tmpColumWidth, tmpRowHeight);
 				lh_title_row.addView(tv, lh_title_row.getChildCount() - 1);
 				tv.adjust(0, 1, 1, 1);
+				tv.setBKColor(Color.BLACK);
+				//tv.setPadding(2, DensityUtil.dip2px(this.getContext(), 10), 2, DensityUtil.dip2px(getContext(), 10));
+
 			}
 		} else {
 			LinearLayout ll = new ContentLineLinearLayout(getContext());

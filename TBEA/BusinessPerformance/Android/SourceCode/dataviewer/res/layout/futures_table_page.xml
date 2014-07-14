@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:paddingTop="25dp"
-            android:text="月度指标明细"
+            android:text="月度指标完成明细"
             android:textColor="#000000"
             android:textSize="22sp"
             android:textStyle="bold" >
@@ -35,7 +35,7 @@
         <com.excel.Sheet
             android:id="@+id/mysheet"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="350dp"
             android:orientation="vertical"
             android:paddingLeft="5dp" />
     </LinearLayout>
