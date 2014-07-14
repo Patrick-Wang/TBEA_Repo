@@ -14,7 +14,7 @@ html, body {
 }
 
 .panel-content {
-	height: 300px;
+	height: 100%;
 	width: 100%;
 	border: 0px;
 	margin: 0;
@@ -24,18 +24,18 @@ html, body {
 	text-align: left;
 }
 </style>
-<script src="www2/js/echarts-plain-1-4-1.js"></script>
+<script src="www2/js/echarts-plain-2-0-0.js"></script>
 <!-- <script src="www2/js/echarts-plain-2-0-0.js"></script> -->
 </head>
 <body>
-	<div id="pie" class="panel-content"></div>
-	<div id="bar1" class="panel-content"></div>
+	<!-- <div id="pie" class="panel-content"></div>
+	<div id="bar1" class="panel-content"></div> -->
 	<!-- <div id="bar2" class="panel-content"></div> -->
 	<div id="line1" class="panel-content"></div>
-	<div id="line2" class="panel-content"></div>
+	<!-- <div id="line2" class="panel-content"></div> -->
 
 	<script type="text/javascript">
-		var pieChart = echarts.init(document.getElementById('pie'));
+		/* var pieChart = echarts.init(document.getElementById('pie'));
 		var pieOption = {
 			tooltip : {
 				trigger : 'item',
@@ -44,7 +44,6 @@ html, body {
 			legend : {
 				orient : 'horizontal',
 				x : 'left',
-				/* y : 'bottom', */
 				data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆', '德缆' ]
 			},
 			series : [ {
@@ -107,9 +106,10 @@ html, body {
 			} ]
 		};
 
-		bar1Chart.setOption(bar1Option);
-
-		var line1Chart = echarts.init(document.getElementById('line1'));
+		bar1Chart.setOption(bar1Option); */
+		var line1Chart = null;
+		line1Chart = echarts.init(document.getElementById('line1'));
+		/* line1Chart.showLoading(); */
 		line1Option = {
 			tooltip : {
 				trigger : 'axis'
@@ -123,7 +123,7 @@ html, body {
 			    x:60,
 			    y:50, 
 			    x2:20,
-			    y2:20
+			    y2:50
 			  },
 			xAxis : [ {
 				type : 'category',
@@ -169,6 +169,43 @@ html, body {
 		};
 
 		line1Chart.setOption(line1Option);
+		
+	      function refreshView(values) {
+	    	  /* line1Chart.showLoading(); */
+	           var myOption = line1Chart.getOption();
+	           myOption.series = [ {
+	                name : '沈变',
+	                type : 'line',
+	                data : [ -633500.00, 384000.00, 90000.00, 165000.00, 0, 0, 0 ]
+	            }, {
+	                name : '衡变',
+	                type : 'line',
+	                data : [ 0, 308250.00, 1264298.60, -46399.95, 15450.00, -428149.95, -17250.00 ]
+	            }, {
+	                name : '新变',
+	                type : 'line',
+	                data : [ 0, 0, 0, 0, 0, 0, 0 ]
+	            }, {
+	                name : '天变',
+	                type : 'line',
+	                data : [ 0, 0, 0, 0, 0, 0, 0 ]
+	            }, {
+	                name : '鲁缆',
+	                type : 'line',
+	                data : [ -828400.00, 0, 0, 0, 0, 0, 0 ]
+	            } , {
+	                name : '新缆',
+	                type : 'line',
+	                data : [ 0, 0, 0, 0, 0, 0, 0 ]
+	            } , {
+	                name : '德缆',
+	                type : 'line',
+	                data : [ 0, 0, 0, 0, 0, 0, 0 ]
+	            } ]
+	           line1Chart.setOption(myOption);
+	           window.Profit_Lost_Copper.afterRefresh();
+	        }
+		/* } */
 	</script>
 </body>
 </html>

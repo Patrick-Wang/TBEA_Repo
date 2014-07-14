@@ -11,38 +11,47 @@ import android.view.ViewGroup;
 
 public class FunctionSelectorPage extends AQueryFragment {
 
+//	static FuturesChartPage futuresChartPage = new FuturesChartPage();
+//	static FundsChartPage fundsChartPage = new FundsChartPage();
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		View v = inflater.inflate(R.layout.function_selector_page, null);
 		update(v);
-		aq.id(R.id.f1).clicked(new OnClickListener(){
+		aq.id(R.id.f1).clicked(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				System.out.println("onF1Clicked");
-				FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+
+				FragmentTransaction ft = getActivity().getFragmentManager()
+						.beginTransaction();
 				ft.hide(FunctionSelectorPage.this);
 				ft.replace(R.id.host, new FundsChartPage()).addToBackStack(null);
 				ft.commit();
 			}
-			
+
 		});
-		aq.id(R.id.f2).clicked(new OnClickListener(){
+		aq.id(R.id.f2).clicked(new OnClickListener() {
+
 
 			@Override
 			public void onClick(View arg0) {
 				System.out.println("onF2Clicked");
 
-				FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+				FragmentTransaction ft = getActivity().getFragmentManager()
+						.beginTransaction();
+
 				ft.hide(FunctionSelectorPage.this);
 				ft.replace(R.id.host, new FuturesChartPage()).addToBackStack(null);
 				ft.commit();
 			}
-			
+
 		});
 		aq.id(R.id.f3).clicked(new OnClickListener(){
+
 
 			@Override
 			public void onClick(View arg0) {
@@ -54,6 +63,7 @@ public class FunctionSelectorPage extends AQueryFragment {
 				ft.commit();
 			}
 			
+
 		});
 		return v;
 	}

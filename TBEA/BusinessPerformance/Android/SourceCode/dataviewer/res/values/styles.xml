@@ -1,13 +1,22 @@
 <resources>
 
     <!--
+<<<<<<< HEAD
         Base application theme, dependent on API level. This theme is replaced
+=======
+        Base application theme, dependent on API level. This theme is replaced
+>>>>>>> 36444ac948e2846f95e746aa94eb81a9e6f702b2
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
+<<<<<<< HEAD
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
+=======
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+>>>>>>> 36444ac948e2846f95e746aa94eb81a9e6f702b2
             backward-compatibility can go here.
         -->
     </style>

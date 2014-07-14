@@ -5,92 +5,239 @@
 <title>Pie</title>
 <style>
 html, body {
-	height: 100%;
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	align: left;
-	valign: left;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    align: left;
+    valign: left;
 }
 
 .panel-content {
-	height: 300px;
-	width: 100%;
-	border: 0px;
-	margin: 0;
-	padding: 0;
-	align: left;
-	valign: left;
-	text-align: left;
+    height: 100%;
+    width: 100%;
+    border: 0px;
+    margin: 0;
+    padding: 0;
+    align: left;
+    valign: left;
 }
 </style>
 <script src="www2/js/echarts-plain-1-4-1.js"></script>
 </head>
 <body>
-	<div id="profit_lost_copper" class="panel-content"></div>
+    <div id="profit_lost_copper" class="panel-content"></div>
 
-	<script type="text/javascript">
-	function refreshView(values) {
-		var profit_lost_copper_Chart = echarts.init(document.getElementById('profit_lost_copper'));
-		profit_lost_copper_Option = {
-			tooltip : {
-				trigger : 'axis'
-			},
-			legend : {
-				data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆', '德缆' ],
-				y : 'top'
-			},
-			grid : {
-			    x:60,
-			    y:50, 
-			    x2:20,
-			    y2:20
-			  },
-			xAxis : [ {
-				type : 'category',
-				boundaryGap : false,
-				data : [ '1407', '1408', '1409', '1410', '1411', '1412', '1501' ]
-			} ],
-			yAxis : [ {
-				type : 'value',
-				power : 10000000,
-				precision : 0.01,
-				min : -900000,
-				max : 1300000
-			} ],
-			series : [ {
-				name : '沈变',
-				type : 'line',
-				data : [ -633500.00, 384000.00, 90000.00, 165000.00, 0, 0, 0 ]
-			}, {
-				name : '衡变',
-				type : 'line',
-				data : [ 0, 308250.00, 1264298.60, -46399.95, 15450.00, -428149.95, -17250.00 ]
-			}, {
-				name : '新变',
-				type : 'line',
-				data : [ 0, 0, 0, 0, 0, 0, 0 ]
-			}, {
-				name : '天变',
-				type : 'line',
-				data : [ 0, 0, 0, 0, 0, 0, 0 ]
-			}, {
-				name : '鲁缆',
-				type : 'line',
-				data : [ -828400.00, 0, 0, 0, 0, 0, 0 ]
-			} , {
-				name : '新缆',
-				type : 'line',
-				data : [ 0, 0, 0, 0, 0, 0, 0 ]
-			} , {
-				name : '德缆',
-				type : 'line',
-				data : [ 0, 0, 0, 0, 0, 0, 0 ]
-			} ]
-		};
+    <script type="text/javascript">
+        var profit_lost_copper_Chart = echarts.init(document
+                .getElementById('profit_lost_copper'));
+        var profit_lost_copper_Option = {
+        		animation : false,
+                tooltip : {
+                    trigger : 'axis',
+                    transitionDuration : 0
+                },
+                legend : {
+                    data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆', '德缆' ],
+                    y : 'top'
+                },
+                grid : {
+                    x:60,
+                    y:50, 
+                    x2:20,
+                    y2:50
+                  },
+                xAxis : [ {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : [ '1407', '1408', '1409', '1410', '1411', '1412', '1501' ]
+                } ],
+                yAxis : [ {
+                    type : 'value',
+                    power : 10000000,
+                    precision : 0.01,
+                    min : -1300000,
+                    max : 1300000
+                } ],
+                series : [ {
+                    name : '沈变',
+                    type : 'line',
+                    symbolSize: 0,
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                width: 0
+                            }
+                        }
+                    },
+                    data : [ 0, 0, 0, 0, 0, 0, 0 ]
+                }, {
+                    name : '衡变',
+                    type : 'line',
+                    symbolSize: 0,
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                width: 0
+                            }
+                        }
+                    },
+                    data : [ 0, 0, 0, 0, 0, 0, 0 ]
+                }, {
+                    name : '新变',
+                    type : 'line',
+                    symbolSize: 0,
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                width: 0
+                            }
+                        }
+                    },
+                    data : [ 0, 0, 0, 0, 0, 0, 0 ]
+                }, {
+                    name : '天变',
+                    type : 'line',
+                    symbolSize: 0,
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                width: 0
+                            }
+                        }
+                    },
+                    data : [ 0, 0, 0, 0, 0, 0, 0 ]
+                }, {
+                    name : '鲁缆',
+                    type : 'line',
+                    symbolSize: 0,
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                width: 0
+                            }
+                        }
+                    },
+                    data : [ 0, 0, 0, 0, 0, 0, 0 ]
+                } , {
+                    name : '新缆',
+                    type : 'line',
+                    symbolSize: 0,
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                width: 0
+                            }
+                        }
+                    },
+                    data : [ 0, 0, 0, 0, 0, 0, 0 ]
+                } , {
+                    name : '德缆',
+                    type : 'line',
+                    symbolSize: 0,
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                width: 0
+                            }
+                        }
+                    },
+                    data : [ 0, 0, 0, 0, 0, 0, 0 ]
+                } ]
+            };
 
-		profit_lost_copper_Chart.setOption(profit_lost_copper_Option);
-	}
-	</script>
+        profit_lost_copper_Chart.setOption(profit_lost_copper_Option);
+
+        function refreshView(values) {
+            var newOption = profit_lost_copper_Chart.getOption();
+            newOption.series = [ {
+                name : '沈变',
+                type : 'line',
+                symbolSize: 3,
+                itemStyle: {
+                    normal: {
+                        lineStyle: {
+                            width: 2
+                        }
+                    }
+                },
+                data : [ -633500.00, 384000.00, 90000.00, 165000.00, 0, 0, 0 ]
+            }, {
+                name : '衡变',
+                type : 'line',
+                symbolSize: 3,
+                itemStyle: {
+                    normal: {
+                        lineStyle: {
+                            width: 2
+                        }
+                    }
+                },
+                data : [ 0, 308250.00, 1264298.60, -46399.95, 15450.00, -428149.95, -17250.00 ]
+            }, {
+                name : '新变',
+                type : 'line',
+                symbolSize: 3,
+                itemStyle: {
+                    normal: {
+                        lineStyle: {
+                            width: 2
+                        }
+                    }
+                },
+                data : [ 0, 0, 0, 0, 0, 0, 0 ]
+            }, {
+                name : '天变',
+                type : 'line',
+                symbolSize: 3,
+                itemStyle: {
+                    normal: {
+                        lineStyle: {
+                            width: 2
+                        }
+                    }
+                },
+                data : [ 0, 0, 0, 0, 0, 0, 0 ]
+            }, {
+                name : '鲁缆',
+                type : 'line',
+                symbolSize: 3,
+                itemStyle: {
+                    normal: {
+                        lineStyle: {
+                            width: 2
+                        }
+                    }
+                },
+                data : [ -828400.00, 0, 0, 0, 0, 0, 0 ]
+            } , {
+                name : '新缆',
+                type : 'line',
+                symbolSize: 3,
+                itemStyle: {
+                    normal: {
+                        lineStyle: {
+                            width: 2
+                        }
+                    }
+                },
+                data : [ 0, 0, 0, 0, 0, 0, 0 ]
+            } , {
+                name : '德缆',
+                type : 'line',
+                symbolSize: 3,
+                itemStyle: {
+                    normal: {
+                        lineStyle: {
+                            width: 2
+                        }
+                    }
+                },
+                data : [ 0, 0, 0, 0, 0, 0, 0 ]
+            } ];
+            profit_lost_copper_Chart.setOption(newOption);
+            window.Profit_Lost_Copper.afterRefresh();
+        }
+    </script>
 </body>
 </html>

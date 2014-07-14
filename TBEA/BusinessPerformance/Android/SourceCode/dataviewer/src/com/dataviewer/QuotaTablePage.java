@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 	static String[][] records = new String[][]{
+
 		{"zblx","zbmc","byjh","by","jhwcl","sy","jsyzzb","sjdjz","jsjdzzb","qnpj","jqnjzzzb","qntq","jqntqzzb","jdjh","jdj","jdhwcl","qntjd","jqntjdzzb","sjd","jsjdzzb","ndjh","ndj"},
 		{"指示完成情况","利润总额","13580","-","0","-","0","3577.92","0","8276.26","0","9236.2","0","50070","7705.8","15.39%","26891.18","-71.34%","-","0.00%","142500","18439.50%"},
 		{"指示完成情况","销售收入","317600","-","0","-","0","195424","0","177156","0","168057","0","1.04E+06","202547","19.56%","547993.72","-63.04%","-","0.00%","2.65E+08","788818"},
@@ -49,11 +50,13 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 		aq.id(R.id.company).clicked(this);
 		aq.id(R.id.month).clicked(this);
 		aq.id(R.id.year).clicked(this);
+
 		return v;
 	}
 
 	@Override
 	public void onClick(View v) {
+
 
 		switch (v.getId()) {
 		case R.id.company:
