@@ -38,6 +38,9 @@ public class FuturesChartPage extends AQueryFragment implements
 			Bundle savedInstanceState) {
 		dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍后...");
 
+		View v = inflater.inflate(R.layout.futures_chart_page, container,
+				false);
+		update(v);
 		((RadioGroup) aq.id(R.id.rg_tab_ac).getView())
 				.setOnCheckedChangeListener(this);
 
@@ -55,9 +58,7 @@ public class FuturesChartPage extends AQueryFragment implements
 		});
 
 //		if (aq == null) {
-			View v = inflater.inflate(R.layout.futures_chart_page, container,
-					false);
-			update(v);
+			
 			profit_Lost_Copper_WebView = (WebView) v
 					.findViewById(R.id.profit_lost_webview);
 			initView("Profit_Lost_Copper",
@@ -66,7 +67,7 @@ public class FuturesChartPage extends AQueryFragment implements
 //			refresh();
 //		}
 
-		return aq.getView();
+		return v;
 	}
 
 	@Override

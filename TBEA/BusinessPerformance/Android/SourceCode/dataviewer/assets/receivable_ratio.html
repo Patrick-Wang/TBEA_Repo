@@ -78,6 +78,11 @@ html, body {
 		receivable_ratio_Chart.setOption(receivable_ratio_Option);
 		function refreshView(values) {
 			var newOption = receivable_ratio_Chart.getOption();
+			newOption.tooltip = {
+                trigger : 'item',
+                formatter : "{a} <br/>{b} : {c} ({d}%)",
+                transitionDuration : 0
+            };
 			newOption.series = [ {
 				name : '净回款比率',
 				type : 'pie',
