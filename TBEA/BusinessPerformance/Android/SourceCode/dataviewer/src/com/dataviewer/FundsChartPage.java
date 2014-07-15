@@ -9,8 +9,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.CookieManager;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -53,7 +51,6 @@ public class FundsChartPage extends AQueryFragment implements
 
 		dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍后...");
 
-		// if (aq == null) {
 		View v = inflater.inflate(R.layout.funds_chart_page, container, false);
 		update(v);
 		((RadioGroup) aq.id(R.id.rg_tab).getView())
@@ -70,26 +67,13 @@ public class FundsChartPage extends AQueryFragment implements
 					}
 				});
 
-		// } else {
-		// refresh(R.id.receiveable_ratio_webview);
-		// }
-
 		return v;
 	}
 
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		if (null != dialog && !dialog.isShowing()) {
+		if (null != dialog) {
 			dialog.show();
-		}
-		if (null != receiveable_Ratio_WebView) {
-			receiveable_Ratio_WebView.clearCache(false);
-		}
-		if (null != daily_Payment_WebView) {
-			daily_Payment_WebView.destroy();
-		}
-		if (null != monthly_Payment_WebView) {
-			monthly_Payment_WebView.destroy();
 		}
 		switch (checkedId) {
 		case R.id.receivable_money:
@@ -151,8 +135,7 @@ public class FundsChartPage extends AQueryFragment implements
 		webView.getSettings().setAllowFileAccess(true);
 		webView.getSettings().setNeedInitialFocus(false);
 		webView.addJavascriptInterface(this, "FundsChartPage");
-		webView.getSettings().setCacheMode(
-				WebSettings.LOAD_NO_CACHE);
+		webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		webView.setBackgroundColor(getResources().getColor(
 				android.R.color.transparent));
 		webView.setWebViewClient(webViewClient);
@@ -192,11 +175,6 @@ public class FundsChartPage extends AQueryFragment implements
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					// try {
-					// Thread.sleep(3000);
-					// } catch (InterruptedException e) {
-					// // TODO: handle exception
-					// }
 					List<String> values = new ArrayList<String>();
 					for (int i = 1; i <= 7; i++) {
 						values.add(String.valueOf(i));
