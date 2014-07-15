@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RadioGroup;
@@ -33,6 +34,15 @@ public class FundsChartPage extends AQueryFragment implements
 	public void onDestroy() {
 		if (null != dialog) {
 			dialog.dismiss();
+		}
+		if (null != receiveable_Ratio_WebView) {
+			receiveable_Ratio_WebView.destroy();
+		}
+		if (null != daily_Payment_WebView) {
+			daily_Payment_WebView.destroy();
+		}
+		if (null != monthly_Payment_WebView) {
+			monthly_Payment_WebView.destroy();
 		}
 		super.onDestroy();
 	}
@@ -69,7 +79,18 @@ public class FundsChartPage extends AQueryFragment implements
 
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		dialog.show();
+		if (null != dialog && !dialog.isShowing()) {
+			dialog.show();
+		}
+		if (null != receiveable_Ratio_WebView) {
+			receiveable_Ratio_WebView.clearCache(false);
+		}
+		if (null != daily_Payment_WebView) {
+			daily_Payment_WebView.destroy();
+		}
+		if (null != monthly_Payment_WebView) {
+			monthly_Payment_WebView.destroy();
+		}
 		switch (checkedId) {
 		case R.id.receivable_money:
 			aq.id(R.id.receivableratio).visibility(View.VISIBLE);
@@ -119,6 +140,7 @@ public class FundsChartPage extends AQueryFragment implements
 			}
 			break;
 		default:
+			dialog.hide();
 			break;
 		}
 	}
@@ -128,8 +150,9 @@ public class FundsChartPage extends AQueryFragment implements
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.getSettings().setAllowFileAccess(true);
 		webView.getSettings().setNeedInitialFocus(false);
-		webView
-				.addJavascriptInterface(this, "FundsChartPage");
+		webView.addJavascriptInterface(this, "FundsChartPage");
+		webView.getSettings().setCacheMode(
+				WebSettings.LOAD_NO_CACHE);
 		webView.setBackgroundColor(getResources().getColor(
 				android.R.color.transparent));
 		webView.setWebViewClient(webViewClient);
@@ -169,11 +192,11 @@ public class FundsChartPage extends AQueryFragment implements
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-//					try {
-//						Thread.sleep(3000);
-//					} catch (InterruptedException e) {
-//						// TODO: handle exception
-//					}
+					// try {
+					// Thread.sleep(3000);
+					// } catch (InterruptedException e) {
+					// // TODO: handle exception
+					// }
 					List<String> values = new ArrayList<String>();
 					for (int i = 1; i <= 7; i++) {
 						values.add(String.valueOf(i));
@@ -191,6 +214,6 @@ public class FundsChartPage extends AQueryFragment implements
 	}
 
 	public void afterRefresh() {
-		dialog.dismiss();
+		dialog.hide();
 	}
 }

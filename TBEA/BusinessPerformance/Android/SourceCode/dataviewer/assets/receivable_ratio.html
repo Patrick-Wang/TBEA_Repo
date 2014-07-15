@@ -35,22 +35,17 @@ html, body {
 		/* var values = [1, 2, 3, 4, 5, 6, 7]; */
 		var receivable_ratio_Option = {
 			animation : false,
-			tooltip : {
-				trigger : 'item',
-				formatter : "{a} <br/>{b} : {c} ({d}%)",
-                transitionDuration : 0
-			},
 			legend : {
 				orient : 'horizontal',
 				/* x : 'left', */
-				y : 'bottom',
+				y : 'top',
 				data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆', '德缆' ]
 			},
 			series : [ {
 				name : '净回款比率',
 				type : 'pie',
 				radius : '50%',
-				center : [ '50%', '45%' ],
+				center : [ '50%', '65%' ],
 				data : [ {
 					value : 0,
 					name : '沈变'
@@ -87,7 +82,7 @@ html, body {
 				name : '净回款比率',
 				type : 'pie',
 				radius : '50%',
-				center : [ '50%', '45%' ],
+				center : [ '50%', '65%' ],
 				data : [ {
 					value : values[0],
 					name : '沈变'
