@@ -15,7 +15,11 @@ public final class R {
  Default screen margins, per the Android Design guidelines. 
  Default screen margins, per the Android Design guidelines. 
 
+<<<<<<< HEAD
          Customize dimensions originally defined in res/values/dimens.xml (such as
+=======
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+>>>>>>> 36444ac948e2846f95e746aa94eb81a9e6f702b2
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
@@ -53,42 +57,52 @@ public final class R {
         public static final int table=0x7f020019;
     }
     public static final class id {
-        public static final int action_settings=0x7f080023;
-        public static final int al=0x7f080014;
-        public static final int company=0x7f080017;
+        public static final int action_settings=0x7f08002d;
+        public static final int al=0x7f080017;
+        public static final int company=0x7f08001b;
         public static final int content=0x7f080006;
         public static final int content_hscr=0x7f080004;
         public static final int content_vscr=0x7f080005;
-        public static final int cu=0x7f080013;
-        public static final int daily_payment=0x7f08000c;
+        public static final int cu=0x7f080016;
+        public static final int daily_payment=0x7f08000f;
         public static final int daily_payment_webview=0x7f080007;
-        public static final int day_signed=0x7f080010;
-        public static final int detailbtn=0x7f080016;
-        public static final int f1=0x7f080008;
-        public static final int f2=0x7f080009;
-        public static final int f3=0x7f08000a;
+        public static final int daily_payment_webview_details1=0x7f080009;
+        public static final int daily_payment_webview_details2=0x7f08000a;
+        public static final int daily_payment_webview_details_title=0x7f080008;
+        public static final int day_signed=0x7f080013;
+        public static final int detailbtn=0x7f080019;
+        public static final int f1=0x7f08000b;
+        public static final int f2=0x7f08000c;
+        public static final int f3=0x7f08000d;
         public static final int host=0x7f080001;
-        public static final int independent_title=0x7f080020;
-        public static final int login=0x7f08001b;
+        public static final int independent_title=0x7f08002a;
+        public static final int login=0x7f08001f;
         public static final int main_frame=0x7f080000;
-        public static final int month=0x7f08001e;
-        public static final int month_sigend=0x7f080011;
-        public static final int monthly_payment=0x7f08000d;
-        public static final int monthly_payment_webview=0x7f08001c;
-        public static final int mysheet=0x7f080018;
-        public static final int profit_lost_webview=0x7f080015;
-        public static final int psw=0x7f08001a;
-        public static final int receivable_money=0x7f08000f;
-        public static final int receivableratio=0x7f08000b;
-        public static final int receiveable_ratio_webview=0x7f08001f;
-        public static final int rg_tab=0x7f08000e;
-        public static final int rg_tab_ac=0x7f080012;
+        public static final int month=0x7f080025;
+        public static final int month_sigend=0x7f080014;
+        public static final int monthly_payment=0x7f080010;
+        public static final int monthly_payment_webview=0x7f080020;
+        public static final int monthly_payment_webview_details1=0x7f080022;
+        public static final int monthly_payment_webview_details2=0x7f080023;
+        public static final int monthly_payment_webview_details_title=0x7f080021;
+        public static final int mysheet=0x7f08001c;
+        public static final int profit_lost_webview=0x7f080018;
+        public static final int profit_lost_webview_details=0x7f08001a;
+        public static final int psw=0x7f08001e;
+        public static final int receivable_money=0x7f080012;
+        public static final int receivableratio=0x7f08000e;
+        public static final int receiveable_ratio_webview=0x7f080026;
+        public static final int receiveable_ratio_webview_details1=0x7f080028;
+        public static final int receiveable_ratio_webview_details2=0x7f080029;
+        public static final int receiveable_ratio_webview_details_title=0x7f080027;
+        public static final int rg_tab=0x7f080011;
+        public static final int rg_tab_ac=0x7f080015;
         public static final int title_colum=0x7f080003;
         public static final int title_colum_vscr=0x7f080002;
-        public static final int title_row=0x7f080022;
-        public static final int title_row_scr=0x7f080021;
-        public static final int usrn=0x7f080019;
-        public static final int year=0x7f08001d;
+        public static final int title_row=0x7f08002c;
+        public static final int title_row_scr=0x7f08002b;
+        public static final int usrn=0x7f08001d;
+        public static final int year=0x7f080024;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -113,26 +127,35 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
-        public static final int hello_world=0x7f050002;
     }
     public static final class style {
         /** 
+<<<<<<< HEAD
         Base application theme, dependent on API level. This theme is replaced
+=======
+        Base application theme, dependent on API level. This theme is replaced
+>>>>>>> 36444ac948e2846f95e746aa94eb81a9e6f702b2
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     
 
+<<<<<<< HEAD
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
+=======
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+>>>>>>> 36444ac948e2846f95e746aa94eb81a9e6f702b2
             backward-compatibility can go here.
         
-
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
-    
  API 11 theme customizations can go here. 
 
+<<<<<<< HEAD
         Base application theme for API 14+. This theme completely replaces
         AppBaseTheme from BOTH res/values/styles.xml and
+=======
+        Base application theme for API 14+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+>>>>>>> 36444ac948e2846f95e746aa94eb81a9e6f702b2
         res/values-v11/styles.xml on API 14+ devices.
     
  API 14 theme customizations can go here. 

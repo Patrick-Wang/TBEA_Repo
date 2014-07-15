@@ -27,13 +27,13 @@ public class MainActivity extends Activity implements Callback {
 		}
 
 		Message message = new Message();
-		message.what = 1;
+		message.what = 100001;
 		handler.sendMessageDelayed(message, 2000);
 	}
 
 	@Override
 	public boolean handleMessage(Message arg0) {
-		if (arg0.what == 1) {
+		if (arg0.what == 100001) {
 			Drawable draw = null;
 			findViewById(R.id.main_frame).setBackgroundDrawable(draw);
 			findViewById(R.id.host).setVisibility(View.VISIBLE);

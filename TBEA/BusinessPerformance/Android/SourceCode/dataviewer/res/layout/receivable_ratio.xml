@@ -11,10 +11,10 @@
         android:paddingBottom="20dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:paddingTop="25dp"
-        android:text="净回款比率"
+        android:paddingTop="18dp"
+        android:text="应收/逾期款"
         android:textColor="#000000"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textStyle="bold" >
     </TextView>
 
@@ -22,12 +22,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp" >
+        android:paddingRight="5dp" 
+         android:orientation="vertical">
 
         <WebView
             android:id="@+id/receiveable_ratio_webview"
             android:layout_width="match_parent"
-            android:layout_height="350dp" />
+            android:layout_height="250dp" />
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/receiveable_ratio_webview_details_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="总计："
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/receiveable_ratio_webview_details1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="\t应收余额： 656496 万元"
+                android:textColor="#000000"
+                android:textSize="14sp" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/receiveable_ratio_webview_details2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="\t逾期款： 145981 万元"
+                android:textColor="#000000"
+                android:textSize="14sp" >
+            </TextView>
+        </LinearLayout>
+         
     </LinearLayout>
 
 </LinearLayout>

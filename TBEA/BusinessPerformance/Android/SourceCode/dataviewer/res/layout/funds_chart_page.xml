@@ -36,45 +36,45 @@
             <RadioButton
                 android:id="@+id/receivable_money"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="0px"
+                android:layout_height="35dp"
+                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/radio"
+                android:background="@drawable/cu_al_radio"
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:padding="0px"
-                android:text="净回款比率"
+                android:padding="0dp"
+                android:text="应收/逾期款"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/day_signed"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="0px"
+                android:layout_height="35dp"
+                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/radio"
+                android:background="@drawable/cu_al_radio"
                 android:button="@null"
                 android:gravity="center"
-                android:padding="0px"
+                android:padding="0dp"
                 android:text="日回款/签约"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/month_sigend"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="0px"
+                android:layout_height="35dp"
+                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/radio"
+                android:background="@drawable/cu_al_radio"
                 android:button="@null"
                 android:gravity="center"
-                android:padding="0px"
+                android:padding="0dp"
                 android:text="月回款/签约"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
         </RadioGroup>
     </RelativeLayout>
 

@@ -11,23 +11,62 @@
         android:paddingBottom="20dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:paddingTop="25dp"
+        android:paddingTop="18dp"
         android:text="日签约/回款"
         android:textColor="#000000"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textStyle="bold" >
     </TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:paddingLeft="5dp"
         android:paddingRight="5dp" >
 
         <WebView
             android:id="@+id/daily_payment_webview"
             android:layout_width="match_parent"
-            android:layout_height="350dp" />
+            android:layout_height="250dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/daily_payment_webview_details_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="总计："
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/daily_payment_webview_details1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="\t日回款： 748 万元"
+                android:textColor="#000000"
+                android:textSize="14sp" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/daily_payment_webview_details2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="\t日签约： 2807 万元"
+                android:textColor="#000000"
+                android:textSize="14sp" >
+            </TextView>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

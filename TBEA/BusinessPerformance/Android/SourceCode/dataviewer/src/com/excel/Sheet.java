@@ -49,6 +49,8 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 	private int sumHeight = 0;
 	private int columCount = 0;
 	private int rowCount = 0;
+	private int lockRowsCount = 0;
+	private int lockColumCount = 0;
 	private List<Integer> columWidth = new LinkedList<Integer>();
 	private List<Integer> rowHeight = new LinkedList<Integer>();
 	private LayoutInflater inflater = null;
@@ -84,6 +86,15 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		init();
 	}
 
+	
+	public void lockColum(int count){
+		this.lockColumCount = count;
+	}
+	
+	public void lockRow(int count){
+		this.lockRowsCount = count;
+	}
+	
 	private void init() {
 		this.setWillNotDraw(false);// ����
 		inflater = LayoutInflater.from(getContext());
@@ -275,7 +286,7 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		for (int i = 0; i < rowCount; ++i) {
 			tmpRowHeight.add(0);
 		}
-
+		boolean isDeepGray = (rowCount % 2 == 0);
 		tv = (CellTextView) inflater.inflate(R.layout.cell, null);
 		tv.setText(record[0]);
 		if (lv_independent_title.getChildCount() == 0) {
@@ -283,10 +294,16 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 			tv.adjust(1, 1, 1, 1);
 			tv.setTextColor(Color.WHITE);
 			tv.setBKColor(Color.BLACK);
-			//tv.setPadding(2, DensityUtil.dip2px(this.getContext(), 10), 2, DensityUtil.dip2px(getContext(), 10));
+		//	tv.setPadding(DensityUtil.dip2px(this.getContext(), 3), DensityUtil.dip2px(this.getContext(), 10), DensityUtil.dip2px(this.getContext(), 3), DensityUtil.dip2px(getContext(), 10));
 		} else {
 			lv_title_colum.addView(tv, lv_title_colum.getChildCount() - 1);
 			tv.adjust(1, 0, 1, 1);
+			if (isDeepGray){
+				tv.setBKColor(Color.DKGRAY);
+			}
+			else{
+				tv.setBKColor(Color.GRAY);
+			}
 		}
 		updateSizeList(tv, rowCount - 1, 0, tmpColumWidth, tmpRowHeight);
 
@@ -295,12 +312,11 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 				tv = (CellTextView) inflater.inflate(R.layout.cell, null);
 				tv.setText(record[i]);
 				tv.setTextColor(Color.WHITE);
-				updateSizeList(tv, rowCount - 1, i, tmpColumWidth, tmpRowHeight);
-				lh_title_row.addView(tv, lh_title_row.getChildCount() - 1);
+								lh_title_row.addView(tv, lh_title_row.getChildCount() - 1);
 				tv.adjust(0, 1, 1, 1);
 				tv.setBKColor(Color.BLACK);
-				//tv.setPadding(2, DensityUtil.dip2px(this.getContext(), 10), 2, DensityUtil.dip2px(getContext(), 10));
-
+				//tv.setPadding(DensityUtil.dip2px(this.getContext(), 3), DensityUtil.dip2px(this.getContext(), 10), DensityUtil.dip2px(this.getContext(), 3), DensityUtil.dip2px(getContext(), 10));
+				updateSizeList(tv, rowCount - 1, i, tmpColumWidth, tmpRowHeight);
 			}
 		} else {
 			LinearLayout ll = new ContentLineLinearLayout(getContext());
@@ -318,12 +334,21 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 			ll.addView(llfill);
 			lv_content.addView(ll, lv_content.getChildCount() - 1);
 
+			
+			
+			
 			for (int i = 1, len = record.length; i < len; ++i) {
 				tv = (CellTextView) inflater.inflate(R.layout.cell, null);
 				tv.setText(record[i]);
 				updateSizeList(tv, rowCount - 1, i, tmpColumWidth, tmpRowHeight);
 				ll.addView(tv, ll.getChildCount() - 1);
 				tv.adjust(0, 0, 1, 1);
+				if (isDeepGray){
+					tv.setBKColor(Color.DKGRAY);
+				}
+				else{
+					tv.setBKColor(Color.GRAY);
+				}
 			}
 		}
 
