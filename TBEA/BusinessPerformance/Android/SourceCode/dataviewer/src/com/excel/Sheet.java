@@ -298,12 +298,12 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		} else {
 			lv_title_colum.addView(tv, lv_title_colum.getChildCount() - 1);
 			tv.adjust(1, 0, 1, 1);
-			if (isDeepGray){
-				tv.setBKColor(Color.DKGRAY);
-			}
-			else{
-				tv.setBKColor(Color.GRAY);
-			}
+//			if (isDeepGray){
+//				tv.setBKColor(Color.DKGRAY);
+//			}
+//			else{
+//				tv.setBKColor(Color.GRAY);
+//			}
 		}
 		updateSizeList(tv, rowCount - 1, 0, tmpColumWidth, tmpRowHeight);
 
@@ -343,12 +343,12 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 				updateSizeList(tv, rowCount - 1, i, tmpColumWidth, tmpRowHeight);
 				ll.addView(tv, ll.getChildCount() - 1);
 				tv.adjust(0, 0, 1, 1);
-				if (isDeepGray){
-					tv.setBKColor(Color.DKGRAY);
-				}
-				else{
-					tv.setBKColor(Color.GRAY);
-				}
+//				if (isDeepGray){
+//					tv.setBKColor(Color.DKGRAY);
+//				}
+//				else{
+//					tv.setBKColor(Color.GRAY);
+//				}
 			}
 		}
 
