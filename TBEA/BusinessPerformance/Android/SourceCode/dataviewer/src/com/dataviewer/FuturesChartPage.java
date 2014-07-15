@@ -1,27 +1,22 @@
 package com.dataviewer;
 
-import com.example.dataviewer.R;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.ProgressDialog;
-import android.os.Handler;
-import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
+import com.example.dataviewer.R;
 
 public class FuturesChartPage extends AQueryFragment implements
 		OnCheckedChangeListener {
@@ -37,8 +32,8 @@ public class FuturesChartPage extends AQueryFragment implements
 			Bundle savedInstanceState) {
 		dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍后...");
 
-		View v = inflater.inflate(R.layout.futures_chart_page, container,
-				false);
+		View v = inflater
+				.inflate(R.layout.futures_chart_page, container, false);
 		update(v);
 		((RadioGroup) aq.id(R.id.rg_tab_ac).getView())
 				.setOnCheckedChangeListener(this);
@@ -56,15 +51,10 @@ public class FuturesChartPage extends AQueryFragment implements
 			}
 		});
 
-//		if (aq == null) {
-			
-			profit_Lost_Copper_WebView = (WebView) v
-					.findViewById(R.id.profit_lost_webview);
-			initView("Profit_Lost_Copper",
-					"file:///android_asset/profit_lost_copper.html");
-//		} else {
-//			refresh();
-//		}
+		profit_Lost_Copper_WebView = (WebView) v
+				.findViewById(R.id.profit_lost_webview);
+		initView("Profit_Lost_Copper",
+				"file:///android_asset/profit_lost_copper.html");
 
 		return v;
 	}
@@ -103,11 +93,6 @@ public class FuturesChartPage extends AQueryFragment implements
 		handler.post(new Runnable() {
 			@Override
 			public void run() {
-//				try {
-//					Thread.sleep(3000);
-//				} catch (InterruptedException e) {
-//					// TODO: handle exception
-//				}
 				List<String> values = new ArrayList<String>();
 				for (int i = 1; i <= 7; i++) {
 					values.add(String.valueOf(i));
