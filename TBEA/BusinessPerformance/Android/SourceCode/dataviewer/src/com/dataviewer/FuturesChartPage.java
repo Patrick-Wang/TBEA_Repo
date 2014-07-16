@@ -19,7 +19,7 @@ import android.widget.AbsoluteLayout.LayoutParams;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.androidquery.AQuery;
-import com.example.dataviewer.R;
+import com.tbea.dataviewer.R;
 
 public class FuturesChartPage extends AQueryFragment implements
 		OnCheckedChangeListener {
@@ -49,7 +49,7 @@ public class FuturesChartPage extends AQueryFragment implements
 			}
 		});
 
-		
+	
 		profit_Lost_Copper_WebView = new WebView(getActivity());
 		LayoutParams params = new LayoutParams(0, 0, 0, 0);
 		params.width = LayoutParams.MATCH_PARENT;

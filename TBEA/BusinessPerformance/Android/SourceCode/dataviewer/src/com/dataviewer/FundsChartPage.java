@@ -18,7 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.androidquery.AQuery;
-import com.example.dataviewer.R;
+import com.tbea.dataviewer.R;
 
 public class FundsChartPage extends AQueryFragment implements
 		OnCheckedChangeListener {
@@ -64,6 +64,7 @@ public class FundsChartPage extends AQueryFragment implements
 		params.width = LayoutParams.MATCH_PARENT;
 		params.height = LayoutParams.MATCH_PARENT;
 		receiveable_Ratio_WebView.setLayoutParams(params);
+
 
 		((RadioGroup) aq.id(R.id.rg_tab).getView())
 				.setOnCheckedChangeListener(this);

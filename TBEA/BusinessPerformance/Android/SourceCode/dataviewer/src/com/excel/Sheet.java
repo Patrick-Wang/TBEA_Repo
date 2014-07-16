@@ -7,7 +7,9 @@ import java.util.List;
 import com.ctrl.AssociationHorizontalScrollView;
 import com.ctrl.AssociationVerticalScrollView;
 import com.ctrl.OnScrollFinished;
-import com.example.dataviewer.R;
+
+
+import com.tbea.dataviewer.R;
 
 import android.content.Context;
 import android.graphics.Color;

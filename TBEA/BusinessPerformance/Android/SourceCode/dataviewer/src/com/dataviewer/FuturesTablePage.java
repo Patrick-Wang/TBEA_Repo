@@ -1,7 +1,7 @@
 package com.dataviewer;
 
 import com.androidquery.AQuery;
-import com.example.dataviewer.R;
+import com.tbea.dataviewer.R;
 import com.excel.Sheet;
 
 import android.app.AlertDialog;
@@ -14,7 +14,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 public class FuturesTablePage extends AQueryFragment {
-
 	static String[][] records = new String[][] {
 			{ "公司", "类型", "持仓量", "持仓均价", "现价", "盈亏比例", "盈亏金额" },
 			{ "沈变公司", "CU1407", "300", "50000.00", "40000.00", "-3",

@@ -1,7 +1,7 @@
 package com.dataviewer;
 
 import com.androidquery.AQuery;
-import com.example.dataviewer.R;
+import com.tbea.dataviewer.R;
 import com.excel.Sheet;
 
 import android.app.AlertDialog;

@@ -1,6 +1,6 @@
 package com.dataviewer;
 
-import com.example.dataviewer.R;
+import com.tbea.dataviewer.R;
 
 import android.os.Bundle;
 import android.os.Handler;
