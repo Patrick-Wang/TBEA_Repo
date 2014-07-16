@@ -9,14 +9,15 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.CookieManager;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AbsoluteLayout.LayoutParams;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
+import com.androidquery.AQuery;
 import com.example.dataviewer.R;
 
 public class FundsChartPage extends AQueryFragment implements
@@ -48,19 +49,28 @@ public class FundsChartPage extends AQueryFragment implements
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.funds_chart_page, container, false);
+	}
 
+	@Override
+	protected void onViewPrepared(AQuery aq, View fragView) {
 		dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍后...");
 
-		// if (aq == null) {
-		View v = inflater.inflate(R.layout.funds_chart_page, container, false);
-		update(v);
+		receiveable_Ratio_WebView = new WebView(getActivity());
+
+		LayoutParams params = new LayoutParams(0, 0, 0, 0);
+		params.width = LayoutParams.MATCH_PARENT;
+		params.height = LayoutParams.MATCH_PARENT;
+		receiveable_Ratio_WebView.setLayoutParams(params);
+
 		((RadioGroup) aq.id(R.id.rg_tab).getView())
 				.setOnCheckedChangeListener(this);
 
-		receiveable_Ratio_WebView = (WebView) v
-				.findViewById(R.id.receiveable_ratio_webview);
+		((LinearLayout) aq.id(R.id.receiveable_ratio_webview).getView())
+				.addView(receiveable_Ratio_WebView);
+
 		initView(receiveable_Ratio_WebView,
 				"file:///android_asset/receivable_ratio.html",
 				new WebViewClient() {
@@ -69,44 +79,37 @@ public class FundsChartPage extends AQueryFragment implements
 						refresh(R.id.receiveable_ratio_webview);
 					}
 				});
-
-		// } else {
-		// refresh(R.id.receiveable_ratio_webview);
-		// }
-
-		return v;
 	}
 
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		if (null != dialog && !dialog.isShowing()) {
+		if (null != dialog) {
 			dialog.show();
-		}
-		if (null != receiveable_Ratio_WebView) {
-			receiveable_Ratio_WebView.clearCache(false);
-		}
-		if (null != daily_Payment_WebView) {
-			daily_Payment_WebView.destroy();
-		}
-		if (null != monthly_Payment_WebView) {
-			monthly_Payment_WebView.destroy();
 		}
 		switch (checkedId) {
 		case R.id.receivable_money:
-			aq.id(R.id.receivableratio).visibility(View.VISIBLE);
-			aq.id(R.id.daily_payment).visibility(View.GONE);
-			aq.id(R.id.monthly_payment).visibility(View.GONE);
+			getAQ().id(R.id.receivableratio).visibility(View.VISIBLE);
+			getAQ().id(R.id.daily_payment).visibility(View.GONE);
+			getAQ().id(R.id.monthly_payment).visibility(View.GONE);
 
 			refresh(R.id.receiveable_ratio_webview);
 			break;
 		case R.id.day_signed:
-			aq.id(R.id.receivableratio).visibility(View.GONE);
-			aq.id(R.id.daily_payment).visibility(View.VISIBLE);
-			aq.id(R.id.monthly_payment).visibility(View.GONE);
+			getAQ().id(R.id.receivableratio).visibility(View.GONE);
+			getAQ().id(R.id.daily_payment).visibility(View.VISIBLE);
+			getAQ().id(R.id.monthly_payment).visibility(View.GONE);
 
 			if (null == daily_Payment_WebView) {
-				daily_Payment_WebView = (WebView) getActivity().findViewById(
-						R.id.daily_payment_webview);
+
+				daily_Payment_WebView = new WebView(getActivity());
+				LayoutParams params = new LayoutParams(0, 0, 0, 0);
+				params.width = LayoutParams.MATCH_PARENT;
+				params.height = LayoutParams.MATCH_PARENT;
+				daily_Payment_WebView.setLayoutParams(params);
+
+				((LinearLayout) getAQ().id(R.id.daily_payment_webview).getView())
+						.addView(daily_Payment_WebView);
+
 				initView(daily_Payment_WebView,
 						"file:///android_asset/daily_payment.html",
 						new WebViewClient() {
@@ -120,13 +123,21 @@ public class FundsChartPage extends AQueryFragment implements
 			}
 			break;
 		case R.id.month_sigend:
-			aq.id(R.id.receivableratio).visibility(View.GONE);
-			aq.id(R.id.daily_payment).visibility(View.GONE);
-			aq.id(R.id.monthly_payment).visibility(View.VISIBLE);
+			getAQ().id(R.id.receivableratio).visibility(View.GONE);
+			getAQ().id(R.id.daily_payment).visibility(View.GONE);
+			getAQ().id(R.id.monthly_payment).visibility(View.VISIBLE);
 
 			if (null == monthly_Payment_WebView) {
-				monthly_Payment_WebView = (WebView) getActivity().findViewById(
-						R.id.monthly_payment_webview);
+
+				monthly_Payment_WebView = new WebView(getActivity());
+				LayoutParams params = new LayoutParams(0, 0, 0, 0);
+				params.width = LayoutParams.MATCH_PARENT;
+				params.height = LayoutParams.MATCH_PARENT;
+				monthly_Payment_WebView.setLayoutParams(params);
+
+				((LinearLayout) getAQ().id(R.id.monthly_payment_webview).getView())
+						.addView(monthly_Payment_WebView);
+
 				initView(monthly_Payment_WebView,
 						"file:///android_asset/monthly_payment.html",
 						new WebViewClient() {
@@ -151,8 +162,7 @@ public class FundsChartPage extends AQueryFragment implements
 		webView.getSettings().setAllowFileAccess(true);
 		webView.getSettings().setNeedInitialFocus(false);
 		webView.addJavascriptInterface(this, "FundsChartPage");
-		webView.getSettings().setCacheMode(
-				WebSettings.LOAD_NO_CACHE);
+		webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		webView.setBackgroundColor(getResources().getColor(
 				android.R.color.transparent));
 		webView.setWebViewClient(webViewClient);
@@ -192,11 +202,6 @@ public class FundsChartPage extends AQueryFragment implements
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					// try {
-					// Thread.sleep(3000);
-					// } catch (InterruptedException e) {
-					// // TODO: handle exception
-					// }
 					List<String> values = new ArrayList<String>();
 					for (int i = 1; i <= 7; i++) {
 						values.add(String.valueOf(i));

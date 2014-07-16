@@ -1,5 +1,6 @@
 package com.dataviewer;
 
+import com.androidquery.AQuery;
 import com.example.dataviewer.R;
 
 import android.app.FragmentTransaction;
@@ -12,12 +13,9 @@ import android.view.ViewGroup;
 public class LoginPage extends AQueryFragment {
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.loginpage, container, false);
-		update(v);
+	protected void onViewPrepared(final AQuery aq, View fragView) {
 
-		OnClickListener l = new OnClickListener() {
+		aq.id(R.id.login).clicked(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -25,26 +23,17 @@ public class LoginPage extends AQueryFragment {
 						.getText().toString())) {
 					FragmentTransaction ft = getActivity().getFragmentManager()
 							.beginTransaction();
-					ft.hide(LoginPage.this);
+					ft.replace(R.id.host, new HomePage());
 					ft.commit();
-
-					ft = getActivity().getFragmentManager().beginTransaction();
-					ft.replace(R.id.host, new FunctionSelectorPage());
-					ft.commit();
-
-					aq.id(R.id.usrn).getEditText().clearFocus();
-					aq.id(R.id.psw).getEditText().clearFocus();
-
-					ft = getActivity().getFragmentManager().beginTransaction();
-					ft.remove(LoginPage.this);
-					ft.commit();
-					update(null);
 				}
 			}
-		};
+		});
+	}
 
-		aq.id(R.id.login).clicked(l);
-		return v;
+	@Override
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.loginpage, container, false);
 	}
 
 	private boolean auth(String usn, String psw) {

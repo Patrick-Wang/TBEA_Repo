@@ -1,5 +1,6 @@
 package com.dataviewer;
 
+import com.androidquery.AQuery;
 import com.example.dataviewer.R;
 
 import android.app.FragmentTransaction;
@@ -9,26 +10,23 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-public class FunctionSelectorPage extends AQueryFragment {
-
-//	static FuturesChartPage futuresChartPage = new FuturesChartPage();
-//	static FundsChartPage fundsChartPage = new FundsChartPage();
+public class HomePage extends AQueryFragment {
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {		
+		return inflater.inflate(R.layout.home_page, null);
+	}
 
-		View v = inflater.inflate(R.layout.function_selector_page, null);
-		update(v);
+	@Override
+	protected void onViewPrepared(AQuery aq, View fragView) {
 		aq.id(R.id.f1).clicked(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				System.out.println("onF1Clicked");
-
 				FragmentTransaction ft = getActivity().getFragmentManager()
 						.beginTransaction();
-				ft.hide(FunctionSelectorPage.this);
 				ft.replace(R.id.host, new FundsChartPage()).addToBackStack(null);
 				ft.commit();
 			}
@@ -40,11 +38,8 @@ public class FunctionSelectorPage extends AQueryFragment {
 			@Override
 			public void onClick(View arg0) {
 				System.out.println("onF2Clicked");
-
 				FragmentTransaction ft = getActivity().getFragmentManager()
 						.beginTransaction();
-
-				ft.hide(FunctionSelectorPage.this);
 				ft.replace(R.id.host, new FuturesChartPage()).addToBackStack(null);
 				ft.commit();
 			}
@@ -52,19 +47,15 @@ public class FunctionSelectorPage extends AQueryFragment {
 		});
 		aq.id(R.id.f3).clicked(new OnClickListener(){
 
-
 			@Override
 			public void onClick(View arg0) {
 				System.out.println("onF3Clicked");
 
 				FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-				ft.hide(FunctionSelectorPage.this);
 				ft.replace(R.id.host, new QuotaTablePage()).addToBackStack(null);
 				ft.commit();
 			}
-			
 
 		});
-		return v;
 	}
 }
