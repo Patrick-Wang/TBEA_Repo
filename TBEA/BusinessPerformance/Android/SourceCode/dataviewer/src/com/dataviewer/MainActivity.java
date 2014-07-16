@@ -1,6 +1,6 @@
 package com.dataviewer;
 
-import com.example.dataviewer.R;
+import com.tbea.dataviewer.R;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +8,7 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -26,6 +27,12 @@ public class MainActivity extends Activity implements Callback {
 			e.printStackTrace();
 		}
 
+		
+		FragmentTransaction ft = getFragmentManager()
+				.beginTransaction();
+		ft.add(R.id.host, new LoginPage());
+		ft.commit();
+		
 		Message message = new Message();
 		message.what = 100001;
 		handler.sendMessageDelayed(message, 2000);
@@ -34,8 +41,8 @@ public class MainActivity extends Activity implements Callback {
 	@Override
 	public boolean handleMessage(Message arg0) {
 		if (arg0.what == 100001) {
-			Drawable draw = null;
-			findViewById(R.id.main_frame).setBackgroundDrawable(draw);
+			findViewById(R.id.main_frame).getBackground().setCallback(null);
+			findViewById(R.id.main_frame).setBackgroundDrawable(null);
 			findViewById(R.id.host).setVisibility(View.VISIBLE);
 		}
 

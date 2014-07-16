@@ -4,25 +4,24 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
+   
+    
     <LinearLayout
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/splash_screen"
-        android:orientation="vertical" >
-        <LinearLayout
+        android:orientation="vertical" >
+
+        <FrameLayout
             android:id="@+id/host"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/background"
-            android:orientation="vertical"
-            android:visibility="gone" >
+            android:visibility="gone">
 
-            <fragment
-                android:name="com.dataviewer.LoginPage"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
-        </LinearLayout>
+
+        </FrameLayout>
     </LinearLayout>
 
 </LinearLayout>

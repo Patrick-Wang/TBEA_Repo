@@ -13,10 +13,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.AbsoluteLayout.LayoutParams;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
-import com.example.dataviewer.R;
+import com.androidquery.AQuery;
+import com.tbea.dataviewer.R;
 
 public class FuturesChartPage extends AQueryFragment implements
 		OnCheckedChangeListener {
@@ -28,13 +31,9 @@ public class FuturesChartPage extends AQueryFragment implements
 	public ProgressDialog dialog = null;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍后...");
+	protected void onViewPrepared(AQuery aq, View fragView) {
+		dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍侯...");
 
-		View v = inflater
-				.inflate(R.layout.futures_chart_page, container, false);
-		update(v);
 		((RadioGroup) aq.id(R.id.rg_tab_ac).getView())
 				.setOnCheckedChangeListener(this);
 
@@ -44,19 +43,29 @@ public class FuturesChartPage extends AQueryFragment implements
 			public void onClick(View arg0) {
 				FragmentTransaction ft = getActivity().getFragmentManager()
 						.beginTransaction();
-				ft.hide(FuturesChartPage.this);
 				ft.replace(R.id.host, new FuturesTablePage()).addToBackStack(
 						null);
 				ft.commit();
 			}
 		});
 
-		profit_Lost_Copper_WebView = (WebView) v
-				.findViewById(R.id.profit_lost_webview);
+	
+		profit_Lost_Copper_WebView = new WebView(getActivity());
+		LayoutParams params = new LayoutParams(0, 0, 0, 0);
+		params.width = LayoutParams.MATCH_PARENT;
+		params.height = LayoutParams.MATCH_PARENT;
+		profit_Lost_Copper_WebView.setLayoutParams(params);
+		((LinearLayout)aq.id(R.id.profit_lost_webview).getView()).addView(profit_Lost_Copper_WebView);
+		
 		initView("Profit_Lost_Copper",
 				"file:///android_asset/profit_lost_copper.html");
+	}
 
-		return v;
+	@Override
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		return inflater
+				.inflate(R.layout.futures_chart_page, container, false);
 	}
 
 	@Override

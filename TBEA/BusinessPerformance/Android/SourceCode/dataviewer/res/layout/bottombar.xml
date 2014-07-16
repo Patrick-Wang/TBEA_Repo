@@ -5,16 +5,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="28dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bottom" >
- 
-        <ImageView
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/rightconer" >
-        </ImageView>
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="信息资源管理中心 V1.0版本"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" >
+        </TextView>
     </RelativeLayout>
 
 </RelativeLayout>
