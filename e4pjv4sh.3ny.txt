@@ -1,0 +1,36 @@
+﻿Merge branch 'master' of github.com:Patrick-Wang/TBEA_Repo
+
+Conflicts:
+	TBEA/BusinessPerformance/Android/SourceCode/dataviewer/src/com/dataviewer/FundsChartPage.java
+	TBEA/BusinessPerformance/Android/SourceCode/dataviewer/src/com/dataviewer/FuturesChartPage.java
+	TBEA/BusinessPerformance/Android/SourceCode/dataviewer/src/com/dataviewer/FuturesTablePage.java
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 3 and 3 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# All conflicts fixed but you are still merging.
+#   (use "git commit" to conclude merge)
+#
+# Changes to be committed:
+#
+#	modified:   TBEA/BusinessPerformance/Android/SourceCode/dataviewer/AndroidManifest.xml
+#	modified:   TBEA/BusinessPerformance/Android/SourceCode/dataviewer/src/com/dataviewer/FundsChartPage.java
+#	modified:   TBEA/BusinessPerformance/Android/SourceCode/dataviewer/src/com/dataviewer/FuturesChartPage.java
+#	modified:   TBEA/BusinessPerformance/Android/SourceCode/dataviewer/src/com/dataviewer/FuturesTablePage.java
+#	modified:   TBEA/BusinessPerformance/Android/SourceCode/dataviewer/src/com/dataviewer/HomePage.java
+#	modified:   TBEA/BusinessPerformance/Android/SourceCode/dataviewer/src/com/dataviewer/LoginPage.java
+#	modified:   TBEA/BusinessPerformance/Android/SourceCode/dataviewer/src/com/dataviewer/MainActivity.java
+#	modified:   TBEA/BusinessPerformance/Android/SourceCode/dataviewer/src/com/dataviewer/QuotaTablePage.java
+#	modified:   TBEA/BusinessPerformance/Android/SourceCode/dataviewer/src/com/excel/Sheet.java
+#
+
