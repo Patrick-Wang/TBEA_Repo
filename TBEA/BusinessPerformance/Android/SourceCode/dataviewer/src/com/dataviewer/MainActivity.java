@@ -95,11 +95,16 @@ public class MainActivity extends Activity implements Callback {
 			//double nativefreeMemory = ((double) (Debug.getNativeHeapFreeSize()/1024))/1024.0;
 
 			
-			String currentMeterData ="\t" + maxMemory + "M\r\n\t" + 
-			(totalMemory - freeMemory) + "M\r\n\t" + 
-					nativetotalMemory + "M\r\n\t" + 
-					((double)memoryInfo.getTotalPss() / 1024.0) + "M\r\n\t"
-					;
+			String currentMeterData = "\tDalvik heap (used/max)\t : " 
+					+ String.format("%8.3f", ((double) (totalMemory - freeMemory) / 1024.0)) + "M / "
+					+ maxMemory 
+					+ "M\t\r\n\tDalvik Pss\t\t : "
+					+ memoryInfo.dalvikPss / 1024.0
+					+ "M\t\r\n\tNative Pss\t : " 
+					+ ((double) memoryInfo.nativePss / 1024.0)
+					+ "M\t\r\n\tTotal Pss\t\t : "
+					+ ((double) memoryInfo.getTotalPss() / 1024.0)
+					+ "M\t\r\n";
 			meterData += currentMeterData;
 			if (bAllShow){
 				tv.setText(meterHeader + meterData);
