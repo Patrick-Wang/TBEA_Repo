@@ -84,6 +84,7 @@ public class FuturesChartPage extends AQueryFragment implements
 	public void onDestroy() {
 		if (null != dialog) {
 			dialog.dismiss();
+			dialog = null;
 		}
 		if (null != profit_Lost_Copper_WebView) {
 			detachView(profit_Lost_Copper_WebView);

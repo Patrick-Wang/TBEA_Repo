@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 public class AQueryFragment extends Fragment {
@@ -57,6 +58,26 @@ public class AQueryFragment extends Fragment {
 				((ViewGroup) currentParent).removeView(v);
 		}
 		return v;
+	}
+	
+	 protected void unbindDrawables(View view) {
+	        if (view.getBackground() != null) {
+	            view.getBackground().setCallback(null);
+	            view.setBackgroundDrawable(null);
+	        }
+	        if (view instanceof ViewGroup && !(view instanceof AdapterView)
+	                && !(view instanceof WebView)) {
+	            for (int i = ((ViewGroup) view).getChildCount() - 1; i >= 0; --i) {
+	                unbindDrawables(((ViewGroup) view).getChildAt(i));
+	                ((ViewGroup) view).removeViewAt(i);
+	            }
+	        }
+	    }
+
+	@Override
+	public void onDestroy() {
+		unbindDrawables(mFragView);
+		super.onDestroy();
 	}
 	
 	

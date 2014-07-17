@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +21,7 @@ public class MainActivity extends Activity implements Callback {
 	long exitTime = 0;
 	String meterData = "";
 	boolean bAllShow = false;
-	final static String meterHeader = "maxMemory\t\t\ttotalMemory\t\t\tfreeMemory\r\n";
+	final static String meterHeader = "";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,15 +83,23 @@ public class MainActivity extends Activity implements Callback {
 	        //应用程序已获得内存中未使用内存  
 			double freeMemory = ((double) (Runtime.getRuntime().freeMemory()/1024))/1024.0;
 	
+			
+			Debug.MemoryInfo memoryInfo=new Debug.MemoryInfo();
+			Debug.getMemoryInfo(memoryInfo);
+
 			//应用程序最大可用内存  
-			double nativemaxMemory = ((double)(Debug.getNativeHeapSize()/1024)) / 1024.0;  
+			//double nativemaxMemory = ((double)(Debug.getNativeHeapSize()/1024)) / 1024.0;  
 	        //应用程序已获得内存  
 			double nativetotalMemory = ((double) (Debug.getNativeHeapAllocatedSize()/1024))/1024.0;  
 	        //应用程序已获得内存中未使用内存  
-			double nativefreeMemory = ((double) (Debug.getNativeHeapFreeSize()/1024))/1024.0;
+			//double nativefreeMemory = ((double) (Debug.getNativeHeapFreeSize()/1024))/1024.0;
 
 			
-			String currentMeterData = maxMemory + "M\t\t\t" + totalMemory + "M\t\t\t" + freeMemory + "M\t\t" + nativemaxMemory + "M\t\t\t" + nativetotalMemory + "M\t\t\t" + nativefreeMemory + "M\r\n";
+			String currentMeterData ="\t" + maxMemory + "M\r\n\t" + 
+			(totalMemory - freeMemory) + "M\r\n\t" + 
+					nativetotalMemory + "M\r\n\t" + 
+					((double)memoryInfo.getTotalPss() / 1024.0) + "M\r\n\t"
+					;
 			meterData += currentMeterData;
 			if (bAllShow){
 				tv.setText(meterHeader + meterData);
