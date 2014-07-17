@@ -80,6 +80,19 @@ public class FuturesChartPage extends AQueryFragment implements
 		}
 	}
 
+	@Override
+	public void onDestroy() {
+		if (null != dialog) {
+			dialog.dismiss();
+		}
+		if (null != profit_Lost_Copper_WebView) {
+			detachView(profit_Lost_Copper_WebView);
+			profit_Lost_Copper_WebView.destroy();
+			profit_Lost_Copper_WebView = null;
+		}
+		super.onDestroy();
+	}
+	
 	public void initView(String jsInterfaceName, String url) {
 		profit_Lost_Copper_WebView.getSettings().setJavaScriptEnabled(true);
 		profit_Lost_Copper_WebView.getSettings().setAllowFileAccess(true);
@@ -93,6 +106,15 @@ public class FuturesChartPage extends AQueryFragment implements
 			public void onPageFinished(WebView view, String url) {
 				refresh();
 			}
+
+			@Override
+			public void onReceivedError(WebView view, int errorCode,
+					String description, String failingUrl) {
+				// TODO Auto-generated method stub
+				super.onReceivedError(view, errorCode, description, failingUrl);
+			}
+			
+			
 		});
 
 		profit_Lost_Copper_WebView.loadUrl(url);

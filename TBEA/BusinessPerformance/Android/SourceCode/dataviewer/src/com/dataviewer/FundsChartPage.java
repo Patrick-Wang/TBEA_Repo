@@ -28,6 +28,8 @@ public class FundsChartPage extends AQueryFragment implements
 	private Handler handler = new Handler();
 	private ProgressDialog dialog = null;
 
+
+	
 	private WebView provideReceiveableRatioWebView() {
 		WebView web = provideWebView();
 		LinearLayout parent = (LinearLayout) getAQ().id(
@@ -97,6 +99,7 @@ public class FundsChartPage extends AQueryFragment implements
 		}
 		if (null != webView) {
 			webView.destroy();
+			webView = null;
 		}
 		super.onDestroy();
 	}

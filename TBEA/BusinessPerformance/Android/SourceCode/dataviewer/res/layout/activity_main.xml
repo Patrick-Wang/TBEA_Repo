@@ -4,24 +4,32 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-   
-    
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/splash_screen"
-        android:orientation="vertical" >
+        android:background="@drawable/splash_screen" >
 
         <FrameLayout
             android:id="@+id/host"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/background"
-            android:visibility="gone">
-
-
+            android:visibility="gone" >
         </FrameLayout>
-    </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:background="#000000"
+                android:id="@+id/performance_meter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF" >
+            </TextView>
+        </ScrollView>
+    </FrameLayout>
 
 </LinearLayout>
