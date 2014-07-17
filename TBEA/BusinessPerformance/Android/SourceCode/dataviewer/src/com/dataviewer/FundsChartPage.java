@@ -2,7 +2,7 @@ package com.dataviewer;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +17,6 @@ import android.widget.AbsoluteLayout.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-
 import com.androidquery.AQuery;
 import com.tbea.dataviewer.R;
 
@@ -28,10 +27,9 @@ public class FundsChartPage extends AQueryFragment implements
 	private Handler handler = new Handler();
 	private ProgressDialog dialog = null;
 
-	private WebView provideReceiveableRatioWebView() {
-		WebView web = provideWebView();
-		LinearLayout parent = (LinearLayout) getAQ().id(
-				R.id.receiveable_ratio_webview).getView();
+	private WebView provideWebView(int id) {
+		WebView web = createWebView();
+		LinearLayout parent = (LinearLayout) getAQ().id(id).getView();
 		ViewParent currentParent = web.getParent();
 		if (currentParent != null) {
 			if (currentParent != parent) {
@@ -45,41 +43,7 @@ public class FundsChartPage extends AQueryFragment implements
 		return web;
 	}
 
-	private WebView provideDailyPaymentWebView() {
-		WebView web = provideWebView();
-		LinearLayout parent = (LinearLayout) getAQ().id(
-				R.id.daily_payment_webview).getView();
-		ViewParent currentParent = web.getParent();
-		if (currentParent != null) {
-			if (currentParent != parent) {
-				((ViewGroup) currentParent).removeView(web);
-
-			} else {
-				return web;
-			}
-		}
-		parent.addView(web);
-		return web;
-	}
-
-	private WebView provideMonthlyPaymentWebView() {
-		WebView web = provideWebView();
-		LinearLayout parent = (LinearLayout) getAQ().id(
-				R.id.monthly_payment_webview).getView();
-		ViewParent currentParent = web.getParent();
-		if (currentParent != null) {
-			if (currentParent != parent) {
-				((ViewGroup) currentParent).removeView(web);
-
-			} else {
-				return web;
-			}
-		}
-		parent.addView(web);
-		return web;
-	}
-
-	private WebView provideWebView() {
+	private WebView createWebView() {
 		if (webView == null) {
 			webView = new WebView(getActivity());
 			LayoutParams params = new LayoutParams(0, 0, 0, 0);
@@ -113,8 +77,7 @@ public class FundsChartPage extends AQueryFragment implements
 
 		((RadioGroup) aq.id(R.id.rg_tab).getView())
 				.setOnCheckedChangeListener(this);
-
-		initView(provideReceiveableRatioWebView(),
+		initView(provideWebView(R.id.receiveable_ratio_webview),
 				"file:///android_asset/receivable_ratio.html",
 				new WebViewClient() {
 					@Override
@@ -135,63 +98,42 @@ public class FundsChartPage extends AQueryFragment implements
 			getAQ().id(R.id.daily_payment).visibility(View.GONE);
 			getAQ().id(R.id.monthly_payment).visibility(View.GONE);
 
-			refresh(R.id.receiveable_ratio_webview);
+			initView(provideWebView(R.id.receiveable_ratio_webview),
+					"file:///android_asset/receivable_ratio.html",
+					new WebViewClient() {
+						@Override
+						public void onPageFinished(WebView view, String url) {
+							refresh(R.id.receiveable_ratio_webview);
+						}
+					});
 			break;
 		case R.id.day_signed:
 			getAQ().id(R.id.receivableratio).visibility(View.GONE);
 			getAQ().id(R.id.daily_payment).visibility(View.VISIBLE);
 			getAQ().id(R.id.monthly_payment).visibility(View.GONE);
-//
-//			if (null == daily_Payment_WebView) {
-//
-//				daily_Payment_WebView = new WebView(getActivity());
-//				LayoutParams params = new LayoutParams(0, 0, 0, 0);
-//				params.width = LayoutParams.MATCH_PARENT;
-//				params.height = LayoutParams.MATCH_PARENT;
-//				daily_Payment_WebView.setLayoutParams(params);
-//
-//				((LinearLayout) getAQ().id(R.id.daily_payment_webview)
-//						.getView()).addView(daily_Payment_WebView);
-//
-//				initView(daily_Payment_WebView,
-//						"file:///android_asset/daily_payment.html",
-//						new WebViewClient() {
-//							@Override
-//							public void onPageFinished(WebView view, String url) {
-//								refresh(R.id.daily_payment_webview);
-//							}
-//						});
-//			} else {
-//				refresh(R.id.daily_payment_webview);
-//			}
+
+			initView(provideWebView(R.id.daily_payment_webview),
+					"file:///android_asset/daily_payment.html",
+					new WebViewClient() {
+						@Override
+						public void onPageFinished(WebView view, String url) {
+							refresh(R.id.daily_payment_webview);
+						}
+					});
 			break;
 		case R.id.month_sigend:
 			getAQ().id(R.id.receivableratio).visibility(View.GONE);
 			getAQ().id(R.id.daily_payment).visibility(View.GONE);
 			getAQ().id(R.id.monthly_payment).visibility(View.VISIBLE);
 
-//			if (null == monthly_Payment_WebView) {
-//
-//				monthly_Payment_WebView = new WebView(getActivity());
-//				LayoutParams params = new LayoutParams(0, 0, 0, 0);
-//				params.width = LayoutParams.MATCH_PARENT;
-//				params.height = LayoutParams.MATCH_PARENT;
-//				monthly_Payment_WebView.setLayoutParams(params);
-//
-//				((LinearLayout) getAQ().id(R.id.monthly_payment_webview)
-//						.getView()).addView(monthly_Payment_WebView);
-//
-//				initView(monthly_Payment_WebView,
-//						"file:///android_asset/monthly_payment.html",
-//						new WebViewClient() {
-//							@Override
-//							public void onPageFinished(WebView view, String url) {
-//								refresh(R.id.monthly_payment_webview);
-//							}
-//						});
-//			} else {
-//				refresh(R.id.monthly_payment_webview);
-//			}
+			initView(provideWebView(R.id.monthly_payment_webview),
+					"file:///android_asset/monthly_payment.html",
+					new WebViewClient() {
+						@Override
+						public void onPageFinished(WebView view, String url) {
+							refresh(R.id.monthly_payment_webview);
+						}
+					});
 			break;
 		default:
 			dialog.hide();
@@ -199,6 +141,7 @@ public class FundsChartPage extends AQueryFragment implements
 		}
 	}
 
+	@SuppressLint("SetJavaScriptEnabled")
 	public void initView(WebView webView, String url,
 			WebViewClient webViewClient) {
 		webView.getSettings().setJavaScriptEnabled(true);
@@ -219,11 +162,10 @@ public class FundsChartPage extends AQueryFragment implements
 				@Override
 				public void run() {
 					List<String> values = new ArrayList<String>();
-					for (int i = 1; i <= 7; i++) {
+					for (int i = 7; i >= 1; i--) {
 						values.add(String.valueOf(i));
 					}
-//					receiveable_Ratio_WebView.loadUrl("javascript:refreshView("
-//							+ values + ");");
+					webView.loadUrl("javascript:refreshView(" + values + ");");
 				}
 			});
 			break;
@@ -235,8 +177,7 @@ public class FundsChartPage extends AQueryFragment implements
 					for (int i = 1; i <= 7; i++) {
 						values.add(String.valueOf(i));
 					}
-//					daily_Payment_WebView.loadUrl("javascript:refreshView("
-//							+ values + ");");
+					webView.loadUrl("javascript:refreshView(" + values + ");");
 				}
 			});
 
@@ -249,8 +190,7 @@ public class FundsChartPage extends AQueryFragment implements
 					for (int i = 1; i <= 7; i++) {
 						values.add(String.valueOf(i));
 					}
-//					monthly_Payment_WebView.loadUrl("javascript:refreshView("
-//							+ values + ");");
+					webView.loadUrl("javascript:refreshView(" + values + ");");
 				}
 			});
 
