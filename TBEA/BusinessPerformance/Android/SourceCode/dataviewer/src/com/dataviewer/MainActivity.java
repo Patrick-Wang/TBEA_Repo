@@ -96,7 +96,7 @@ public class MainActivity extends Activity implements Callback {
 
 			
 			String currentMeterData = "\tDalvik heap (used/max)\t : " 
-					+ String.format("%8.3f", ((double) (totalMemory - freeMemory) / 1024.0)) + "M / "
+					+ String.format("%8.3f", ((double) (totalMemory - freeMemory))) + "M / "
 					+ maxMemory 
 					+ "M\t\r\n\tDalvik Pss\t\t : "
 					+ memoryInfo.dalvikPss / 1024.0
