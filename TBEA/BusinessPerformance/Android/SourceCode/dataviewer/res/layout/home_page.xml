@@ -29,6 +29,7 @@
                     android:background="@drawable/fn1" />
 
                 <TextView
+                    android:id="@+id/f1t"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -54,6 +55,7 @@
                     android:background="@drawable/fn2" />
 
                 <TextView
+                    android:id="@+id/f2t"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -79,6 +81,7 @@
                     android:background="@drawable/fn3" />
 
                 <TextView
+                    android:id="@+id/f3t"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

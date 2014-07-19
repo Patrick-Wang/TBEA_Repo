@@ -5,17 +5,23 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxCallback;
-import com.androidquery.callback.AjaxStatus;
-import com.tbea.dataviewer.R;
-
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
+
+import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
+import com.common.JsonUtil;
+import com.javaBean.UserBean;
+import com.tbea.dataviewer.R;
 
 public class LoginPage extends AQueryFragment {
 
@@ -26,8 +32,17 @@ public class LoginPage extends AQueryFragment {
 
 			@Override
 			public void onClick(View v) {
+				String url = "http://192.168.7.22/mobile/loginServlet";
 				auth(aq.id(R.id.usrn).getText().toString(), aq.id(R.id.psw)
-						.getText().toString());
+						.getText().toString(), url);
+				InputMethodManager imm = (InputMethodManager) getActivity()
+						.getSystemService(Context.INPUT_METHOD_SERVICE);
+				boolean isOpen = imm.isActive();
+				if (isOpen && null != getActivity().getCurrentFocus()) {
+					imm.hideSoftInputFromWindow(getActivity().getCurrentFocus()
+							.getWindowToken(),
+							InputMethodManager.HIDE_NOT_ALWAYS);
+				}
 			}
 		});
 	}
@@ -38,76 +53,51 @@ public class LoginPage extends AQueryFragment {
 		return inflater.inflate(R.layout.loginpage, container, false);
 	}
 
-	private void auth(String usn, String psw) {
-		String url = "http://218.84.134.160:8081/mobile/loginServlet";
-		try {
+	public void auth(final String usn, final String psw, final String url) {
+//		String url = "http://192.168.7.22/mobile/loginServlet";
 
-			Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<String, String>();
 
-			map.put("username", "admin");
-			map.put("password", "123");
-			long id1 = Thread.currentThread().getId();
-			mAq.ajax(url, map, JSONObject.class,
-					new AjaxCallback<JSONObject>() {
+		map.put("username", usn);
+		map.put("password", psw);
+		mAq.ajax(url, map, JSONObject.class, new AjaxCallback<JSONObject>() {
 
-						@Override
-						public void callback(String url, JSONObject json,
-								AjaxStatus status) {
-							long id = Thread.currentThread().getId();
-							if (json != null) {
-								// successful ajax call, show status code and
-								// json content
-								FragmentTransaction ft = getActivity()
-										.getFragmentManager()
-										.beginTransaction();
-								ft.replace(R.id.host, new HomePage());
-								ft.commit();
-							} else {
-								// ajax error, show error code
-								// Toast.makeText(aq.getContext(), "Error:" +
-								// status.getCode(), Toast.LENGTH_LONG).show();
-							}
+			@Override
+			public void callback(String urlret, JSONObject json, AjaxStatus status) {
+				try {
+					if (json != null) {
+						UserBean userBean = (UserBean) JsonUtil.jsonToBean(
+								json, UserBean.class);
+
+						// successful ajax call, show status code and json
+						// content
+						if (userBean.isLoginFlag()) {
+
+							FragmentTransaction ft = getActivity()
+									.getFragmentManager().beginTransaction();
+							HomePage homePage = new HomePage();
+							homePage.setUserBean(userBean);
+							ft.replace(R.id.host, homePage);
+							ft.commit();
+						} else {
+							Toast.makeText(getActivity(), "用户名或密码错误", Toast.LENGTH_LONG)
+							.show();
 						}
+					} else {
+						// ajax error, show error code
+						if (urlret.equals("http://192.168.7.22/mobile/loginServlet")){
+							LoginPage.this.auth(usn, psw, "http://218.84.134.160:8081/mobile/loginServlet");
+						} else {
+						Toast.makeText(getActivity(), "网络连接错误，请检查您的网络", Toast.LENGTH_LONG)
+								.show();
+						}
+					}
 
-					});
+				} catch (Exception e) {
+					
+				}
+			}
 
-			// AsyncHttpClient client = new AsyncHttpClient();
-			// RequestParams param = new RequestParams();
-			// param.add("username", "admin");
-			// param.add("password", "123");
-			// client.post(url, param, new TextHttpResponseHandler() {
-			//
-			// @Override
-			// public void onFailure(int arg0, Header[] arg1, String arg2,
-			// Throwable arg3) {
-			// Toast.makeText(getActivity(), "网络异常",
-			// Toast.LENGTH_SHORT).show();
-			// }
-			//
-			// @SuppressWarnings("unused")
-			// @Override
-			// public void onSuccess(int arg0, Header[] arg1, String arg2) {
-			//
-			// try {
-			// JSONObject json = new JSONObject(arg2);
-			// int k = 0;
-			// ++k;
-			// } catch (JSONException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-			//
-			// FragmentTransaction ft = getActivity().getFragmentManager()
-			// .beginTransaction();
-			// ft.replace(R.id.host, new HomePage());
-			// ft.commit();
-			//
-			// }
-			//
-			// });
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		});
 	}
 }

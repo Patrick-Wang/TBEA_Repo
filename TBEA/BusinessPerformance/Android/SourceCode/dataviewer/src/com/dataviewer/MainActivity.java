@@ -40,19 +40,19 @@ public class MainActivity extends Activity implements Callback {
 		message.what = 100001;
 		handler.sendMessageDelayed(message, 2000);
 		
-		Message messagePerformance = new Message();
-		messagePerformance.what = 100002;
-		handler.sendMessage(messagePerformance);
-		
-		TextView tv = (TextView) findViewById(R.id.performance_meter);
-		tv.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				bAllShow = !bAllShow;
-			}
-			
-		});
+//		Message messagePerformance = new Message();
+//		messagePerformance.what = 100002;
+//		handler.sendMessage(messagePerformance);
+//		
+//		TextView tv = (TextView) findViewById(R.id.performance_meter);
+//		tv.setOnClickListener(new OnClickListener(){
+//
+//			@Override
+//			public void onClick(View v) {
+//				bAllShow = !bAllShow;
+//			}
+//			
+//		});
 //		Runnable ra = new Runnable(){
 //
 //			@Override
@@ -73,51 +73,51 @@ public class MainActivity extends Activity implements Callback {
 			}
 			findViewById(R.id.host).setVisibility(View.VISIBLE);
 			break;
-		case 100002:
-			TextView tv = (TextView) findViewById(R.id.performance_meter);
-
-			//应用程序最大可用内存  
-			double maxMemory = ((double)(Runtime.getRuntime().maxMemory()/1024)) / 1024.0;  
-	        //应用程序已获得内存  
-			double totalMemory = ((double) (Runtime.getRuntime().totalMemory()/1024))/1024.0;  
-	        //应用程序已获得内存中未使用内存  
-			double freeMemory = ((double) (Runtime.getRuntime().freeMemory()/1024))/1024.0;
-	
-			
-			Debug.MemoryInfo memoryInfo=new Debug.MemoryInfo();
-			Debug.getMemoryInfo(memoryInfo);
-
-			//应用程序最大可用内存  
-			//double nativemaxMemory = ((double)(Debug.getNativeHeapSize()/1024)) / 1024.0;  
-	        //应用程序已获得内存  
-			double nativetotalMemory = ((double) (Debug.getNativeHeapAllocatedSize()/1024))/1024.0;  
-	        //应用程序已获得内存中未使用内存  
-			//double nativefreeMemory = ((double) (Debug.getNativeHeapFreeSize()/1024))/1024.0;
-
-			
-			String currentMeterData = "\tDalvik heap (used/max)\t : " 
-					+ String.format("%8.3f", ((double) (totalMemory - freeMemory))) + "M / "
-					+ maxMemory 
-					+ "M\t\r\n\tDalvik Pss\t\t : "
-					+ memoryInfo.dalvikPss / 1024.0
-					+ "M\t\r\n\tNative Pss\t : " 
-					+ ((double) memoryInfo.nativePss / 1024.0)
-					+ "M\t\r\n\tTotal Pss\t\t : "
-					+ ((double) memoryInfo.getTotalPss() / 1024.0)
-					+ "M\t\r\n";
-			meterData += currentMeterData;
-			if (bAllShow){
-				tv.setText(meterHeader + meterData);
-			}
-			else{
-				tv.setText(meterHeader + currentMeterData);
-			}
-			
-			
-	   		Message messagePerformance = new Message();
-			messagePerformance.what = 100002;
-			handler.sendMessageDelayed(messagePerformance, 1000);
-			break;
+//		case 100002:
+//			TextView tv = (TextView) findViewById(R.id.performance_meter);
+//
+//			//应用程序最大可用内存  
+//			double maxMemory = ((double)(Runtime.getRuntime().maxMemory()/1024)) / 1024.0;  
+//	        //应用程序已获得内存  
+//			double totalMemory = ((double) (Runtime.getRuntime().totalMemory()/1024))/1024.0;  
+//	        //应用程序已获得内存中未使用内存  
+//			double freeMemory = ((double) (Runtime.getRuntime().freeMemory()/1024))/1024.0;
+//	
+//			
+//			Debug.MemoryInfo memoryInfo=new Debug.MemoryInfo();
+//			Debug.getMemoryInfo(memoryInfo);
+//
+//			//应用程序最大可用内存  
+//			//double nativemaxMemory = ((double)(Debug.getNativeHeapSize()/1024)) / 1024.0;  
+//	        //应用程序已获得内存  
+//			double nativetotalMemory = ((double) (Debug.getNativeHeapAllocatedSize()/1024))/1024.0;  
+//	        //应用程序已获得内存中未使用内存  
+//			//double nativefreeMemory = ((double) (Debug.getNativeHeapFreeSize()/1024))/1024.0;
+//
+//			
+//			String currentMeterData = "\tDalvik heap (used/max)\t : " 
+//					+ String.format("%8.3f", ((double) (totalMemory - freeMemory))) + "M / "
+//					+ maxMemory 
+//					+ "M\t\r\n\tDalvik Pss\t\t : "
+//					+ memoryInfo.dalvikPss / 1024.0
+//					+ "M\t\r\n\tNative Pss\t : " 
+//					+ ((double) memoryInfo.nativePss / 1024.0)
+//					+ "M\t\r\n\tTotal Pss\t\t : "
+//					+ ((double) memoryInfo.getTotalPss() / 1024.0)
+//					+ "M\t\r\n";
+//			meterData += currentMeterData;
+//			if (bAllShow){
+//				tv.setText(meterHeader + meterData);
+//			}
+//			else{
+//				tv.setText(meterHeader + currentMeterData);
+//			}
+//			
+//			
+//	   		Message messagePerformance = new Message();
+//			messagePerformance.what = 100002;
+//			handler.sendMessageDelayed(messagePerformance, 1000);
+//			break;
 			default:
 				break;
 		}

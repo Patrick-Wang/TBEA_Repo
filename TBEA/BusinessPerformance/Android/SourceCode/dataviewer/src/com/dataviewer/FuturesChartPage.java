@@ -58,7 +58,7 @@ public class FuturesChartPage extends AQueryFragment implements
 		((LinearLayout)aq.id(R.id.profit_lost_webview).getView()).addView(profit_Lost_Copper_WebView);
 		
 		initView("Profit_Lost_Copper",
-				"file:///android_asset/profit_lost_copper.html");
+				"file:///android_asset/Copy_of_receivable_ratio.html");
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public class FuturesChartPage extends AQueryFragment implements
 	}
 
 	public void afterRefresh() {
-		dialog.dismiss();
+		dialog.hide();
 	}
 
 }
