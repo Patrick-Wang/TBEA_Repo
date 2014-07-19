@@ -1,8 +1,12 @@
 package com.dataviewer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.androidquery.AQuery;
 import com.tbea.dataviewer.R;
 import com.excel.Sheet;
+import com.javaBean.YDZBBean;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,6 +18,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 public class QuotaTablePage extends AQueryFragment implements OnClickListener {
+
+	List<YDZBBean> ydzbBeans = new ArrayList<YDZBBean>();
+
 	static String[][] records = new String[][] {
 			{ "指标名称", "本月计划", "本月完成", "计划完成率", "上月完成", "较上月增长比", "上季度净值",
 					"较上季度增长比", "去年平均", "较去年净值增长比", "去年同期", "较去年同期增长比", "季度计划",
@@ -161,6 +168,14 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 		builder.setPositiveButton("确定", null);
 		builder.setNegativeButton("取消", null);
 		builder.create().show();
+	}
+
+	public List<YDZBBean> getYdzbBeans() {
+		return ydzbBeans;
+	}
+
+	public void setYdzbBeans(List<YDZBBean> ydzbBeans) {
+		this.ydzbBeans = ydzbBeans;
 	}
 
 }

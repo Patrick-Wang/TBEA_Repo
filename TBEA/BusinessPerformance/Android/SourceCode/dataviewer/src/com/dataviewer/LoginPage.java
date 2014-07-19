@@ -25,6 +25,10 @@ import com.tbea.dataviewer.R;
 
 public class LoginPage extends AQueryFragment {
 
+	private static String outerUrl = "http://218.84.134.160:8081/mobile/loginServlet";
+
+	private static String innerUrl = "http://192.168.7.22/mobile/loginServlet";
+
 	@Override
 	protected void onViewPrepared(final AQuery aq, View fragView) {
 
@@ -32,9 +36,9 @@ public class LoginPage extends AQueryFragment {
 
 			@Override
 			public void onClick(View v) {
-				String url = "http://192.168.7.22/mobile/loginServlet";
+				// String url = "http://192.168.7.22/mobile/loginServlet";
 				auth(aq.id(R.id.usrn).getText().toString(), aq.id(R.id.psw)
-						.getText().toString(), url);
+						.getText().toString(), outerUrl);
 				InputMethodManager imm = (InputMethodManager) getActivity()
 						.getSystemService(Context.INPUT_METHOD_SERVICE);
 				boolean isOpen = imm.isActive();
@@ -54,7 +58,7 @@ public class LoginPage extends AQueryFragment {
 	}
 
 	public void auth(final String usn, final String psw, final String url) {
-//		String url = "http://192.168.7.22/mobile/loginServlet";
+		// String url = "http://192.168.7.22/mobile/loginServlet";
 
 		Map<String, String> map = new HashMap<String, String>();
 
@@ -63,7 +67,8 @@ public class LoginPage extends AQueryFragment {
 		mAq.ajax(url, map, JSONObject.class, new AjaxCallback<JSONObject>() {
 
 			@Override
-			public void callback(String urlret, JSONObject json, AjaxStatus status) {
+			public void callback(String urlret, JSONObject json,
+					AjaxStatus status) {
 				try {
 					if (json != null) {
 						UserBean userBean = (UserBean) JsonUtil.jsonToBean(
@@ -80,21 +85,21 @@ public class LoginPage extends AQueryFragment {
 							ft.replace(R.id.host, homePage);
 							ft.commit();
 						} else {
-							Toast.makeText(getActivity(), "用户名或密码错误", Toast.LENGTH_LONG)
-							.show();
+							Toast.makeText(getActivity(), "用户名或密码错误",
+									Toast.LENGTH_LONG).show();
 						}
 					} else {
 						// ajax error, show error code
-						if (urlret.equals("http://192.168.7.22/mobile/loginServlet")){
-							LoginPage.this.auth(usn, psw, "http://218.84.134.160:8081/mobile/loginServlet");
+						if (urlret.equals(outerUrl)) {
+							LoginPage.this.auth(usn, psw, innerUrl);
 						} else {
-						Toast.makeText(getActivity(), "网络连接错误，请检查您的网络", Toast.LENGTH_LONG)
-								.show();
+							Toast.makeText(getActivity(), "网络连接错误，请检查您的网络",
+									Toast.LENGTH_LONG).show();
 						}
 					}
 
 				} catch (Exception e) {
-					
+
 				}
 			}
 

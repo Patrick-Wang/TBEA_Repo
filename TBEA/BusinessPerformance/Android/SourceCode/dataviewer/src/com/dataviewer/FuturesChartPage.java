@@ -19,6 +19,7 @@ import android.widget.AbsoluteLayout.LayoutParams;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.androidquery.AQuery;
+import com.javaBean.QHMXBean;
 import com.tbea.dataviewer.R;
 
 public class FuturesChartPage extends AQueryFragment implements
@@ -29,6 +30,8 @@ public class FuturesChartPage extends AQueryFragment implements
 	public Handler handler = new Handler();
 
 	public ProgressDialog dialog = null;
+
+	public List<QHMXBean> qhmxBeans = new ArrayList<QHMXBean>();
 
 	@Override
 	protected void onViewPrepared(AQuery aq, View fragView) {
@@ -49,23 +52,22 @@ public class FuturesChartPage extends AQueryFragment implements
 			}
 		});
 
-	
 		profit_Lost_Copper_WebView = new WebView(getActivity());
 		LayoutParams params = new LayoutParams(0, 0, 0, 0);
 		params.width = LayoutParams.MATCH_PARENT;
 		params.height = LayoutParams.MATCH_PARENT;
 		profit_Lost_Copper_WebView.setLayoutParams(params);
-		((LinearLayout)aq.id(R.id.profit_lost_webview).getView()).addView(profit_Lost_Copper_WebView);
-		
+		((LinearLayout) aq.id(R.id.profit_lost_webview).getView())
+				.addView(profit_Lost_Copper_WebView);
+
 		initView("Profit_Lost_Copper",
-				"file:///android_asset/Copy_of_receivable_ratio.html");
+				"file:///android_asset/profit_lost_copper.html");
 	}
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater
-				.inflate(R.layout.futures_chart_page, container, false);
+		return inflater.inflate(R.layout.futures_chart_page, container, false);
 	}
 
 	@Override
@@ -93,7 +95,7 @@ public class FuturesChartPage extends AQueryFragment implements
 		}
 		super.onDestroy();
 	}
-	
+
 	public void initView(String jsInterfaceName, String url) {
 		profit_Lost_Copper_WebView.getSettings().setJavaScriptEnabled(true);
 		profit_Lost_Copper_WebView.getSettings().setAllowFileAccess(true);
@@ -114,8 +116,7 @@ public class FuturesChartPage extends AQueryFragment implements
 				// TODO Auto-generated method stub
 				super.onReceivedError(view, errorCode, description, failingUrl);
 			}
-			
-			
+
 		});
 
 		profit_Lost_Copper_WebView.loadUrl(url);
@@ -138,6 +139,14 @@ public class FuturesChartPage extends AQueryFragment implements
 
 	public void afterRefresh() {
 		dialog.hide();
+	}
+
+	public List<QHMXBean> getQhmxBeans() {
+		return qhmxBeans;
+	}
+
+	public void setQhmxBeans(List<QHMXBean> qhmxBeans) {
+		this.qhmxBeans = qhmxBeans;
 	}
 
 }

@@ -1,21 +1,21 @@
 package com.javaBean;
 
 public class UserBean {
-	//�ֻ�����
+	// 手机串号
 	private String imei;
-	//sim����
+	// sim卡号
 	private String simcard;
-	//�û���
+	// 用户名
 	private String userid;
-	//����
+	// 密码
 	private String pwd;
-	//�˵�����Ȩ��
+	// 菜单功能权限
 	private String menuqx;
-	//��˾ID
+	// 公司ID
 	private String companyID;
-	//��˾Ȩ��
+	// 公司权限
 	private String companyqx;
-	
+
 	private boolean loginFlag;
 
 	public String getImei() {
@@ -81,6 +81,5 @@ public class UserBean {
 	public void setLoginFlag(boolean loginFlag) {
 		this.loginFlag = loginFlag;
 	}
-	
-	
+
 }

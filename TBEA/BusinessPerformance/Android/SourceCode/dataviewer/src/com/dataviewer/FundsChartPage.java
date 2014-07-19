@@ -2,6 +2,7 @@ package com.dataviewer;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -17,15 +18,21 @@ import android.widget.AbsoluteLayout.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+
 import com.androidquery.AQuery;
+import com.javaBean.YSZKBean;
 import com.tbea.dataviewer.R;
 
 public class FundsChartPage extends AQueryFragment implements
 		OnCheckedChangeListener {
 
 	private WebView webView = null;
+
 	private Handler handler = new Handler();
+
 	private ProgressDialog dialog = null;
+
+	private List<YSZKBean> yszkBeans = new ArrayList<YSZKBean>();
 
 	private WebView provideWebView(int id) {
 		WebView web = createWebView();
@@ -207,4 +214,13 @@ public class FundsChartPage extends AQueryFragment implements
 	public void afterRefresh() {
 		dialog.hide();
 	}
+
+	public List<YSZKBean> getYszkBeans() {
+		return yszkBeans;
+	}
+
+	public void setYszkBeans(List<YSZKBean> yszkBeans) {
+		this.yszkBeans = yszkBeans;
+	}
+
 }

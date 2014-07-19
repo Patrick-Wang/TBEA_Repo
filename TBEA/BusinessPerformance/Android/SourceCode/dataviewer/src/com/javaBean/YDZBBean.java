@@ -1,41 +1,41 @@
 package com.javaBean;
 
 public class YDZBBean {
-	//���
+	//序号
 	private String xh;
-	//ָ������
+	//指标类型
 	private String zblx;
-	//ָ������
+	//指标名称
 	private String zbmc;
-	//���¼ƻ�
+	//本月计划
 	private String byjh;
-	//�������
+	//本月完成
 	private String bywc;
-	//�ƻ������
+	//计划完成率
 	private String jhwcl;
-	//�������
+	//上月完成
 	private String sywc;
-	//������������
+	//较上月增长比
 	private String jsyzzb;
-	//ȥ��ͬ��
+	//去年同期
 	private String qntq;	
-	//��ȥ��ͬ��������
+	//较去年同期增长比
 	private String jqntqzzb;
-	//���ȼƻ�
+	//季度计划
 	private String jdjh;
-	//�����ۼ�
+	//季度累计
 	private String jdlj;
-	//���ȼƻ������
+	//季度计划完成率
 	private String jdjhwcl;
-	//��ȼƻ�
+	//年度计划
 	private String ndjh;
-	//����ۼ�
+	//年度累计
 	private String ndlj;
-	//��ȼƻ������
+	//年度计划完成率
 	private String ndjhwcl;
-	//ȥ��ͬ���ۼ�
+	//去年同期累计
 	private String qntqlj;
-	//��ȥ��ͬ���ۼ�������
+	//较去年同期累计增长比
 	private String jqntqljzzb;
 	public String getXh() {
 		return xh;

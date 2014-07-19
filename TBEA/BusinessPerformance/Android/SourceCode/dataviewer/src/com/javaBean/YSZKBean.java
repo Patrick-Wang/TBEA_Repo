@@ -1,23 +1,23 @@
 package com.javaBean;
 
 public class YSZKBean {
-	//��ҵ���
+	//企业编号
 	private String qybh;
-	//��ҵ����
+	//企业名称
 	private String qymc;
-	//Ӧ�����
+	//应收余额
 	private String ysye;
-	//���ڿ�
+	//逾期款
 	private String yqk;
-	//�ջؿ�
+	//日回款
 	private String rhk;
-	//��ǩԼ
+	//日签约
 	private String rqy;
-	//�»ؿ�
+	//月回款
 	private String yhk;
-	//��ǩԼ
+	//月签约
 	private String yqy;
-	//��������
+	//数据日期
 	private String sjrq;
 	
 	public String getQybh() {
