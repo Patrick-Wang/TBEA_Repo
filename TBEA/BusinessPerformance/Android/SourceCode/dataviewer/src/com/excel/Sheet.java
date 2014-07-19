@@ -1,14 +1,12 @@
 package com.excel;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.ctrl.AssociationHorizontalScrollView;
 import com.ctrl.AssociationVerticalScrollView;
 import com.ctrl.OnScrollFinished;
-
-
+import com.excel.SizeManager.SizeChangeObserver;
 import com.tbea.dataviewer.R;
 
 import android.content.Context;
@@ -17,49 +15,74 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
-class DensityUtil { 
 
-    /**
-     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
-     */ 
-    public static int dip2px(Context context, float dpValue) { 
-        final float scale = context.getResources().getDisplayMetrics().density; 
-        return (int) (dpValue * scale + 0.5f); 
-    } 
+class DensityUtil {
 
-    /**
-     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
-     */ 
-    public static int px2dip(Context context, float pxValue) { 
-        final float scale = context.getResources().getDisplayMetrics().density; 
-        return (int) (pxValue / scale + 0.5f); 
-    } 
-}  
+	/**
+	 * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+	 */
+	public static int dip2px(Context context, float dpValue) {
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (dpValue * scale + 0.5f);
+	}
+
+	/**
+	 * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
+	 */
+	public static int px2dip(Context context, float pxValue) {
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (pxValue / scale + 0.5f);
+	}
+}
+
 public class Sheet extends LinearLayout implements OnScrollFinished {
+	public enum SheetArea {
+		Independent, Row_title, Colum_title, Content
+	}
 
-	private LinearLayout lh_title_row = null;
+	public interface Adapter {
+		CellTextView getCell(LayoutInflater inflater, Sheet Sheet, int row,
+				int colum, String text);
+
+		ContentLinearLayout getContent(LayoutInflater inflater, Sheet Sheet,
+				SheetArea sheetArea, int index);
+
+		void adjustWidth(Sheet sheet, CellTextView cell, int row, int colum,
+				int width);
+
+		void adjustHeight(Sheet sheet, CellTextView cell, int row, int colum,
+				int height);
+	}
+
+	private Adapter adapter = new StandardAdapter();
+	private LinearLayout lv_title_row = null;
 	private LinearLayout lv_independent_title = null;
 	private LinearLayout lv_title_colum = null;
-	private ContentLinearLayout lv_content = null;
+	private LinearLayout lv_content = null;
 
 	private LinearLayout last_content = null;
 	private LinearLayout last_title_row = null;
 	private LinearLayout last_title_colum = null;
 
-	private int sumWidth = 0;
-	private int sumHeight = 0;
-	private int columCount = 0;
-	private int rowCount = 0;
+	private SizeManager sizeManager = new SizeManager();
+
 	private int lockRowsCount = 0;
 	private int lockColumCount = 0;
-	private List<Integer> columWidth = new LinkedList<Integer>();
-	private List<Integer> rowHeight = new LinkedList<Integer>();
 	private LayoutInflater inflater = null;
-	static Paint paint = null;// ����һ������
+	static Paint paint = null;
 
 	final public static int blank_row_width = 2000;
 	final public static int blank_row_height = 2000;
+
+	public void setAdapter(Adapter adapter) {
+		this.adapter = adapter;
+	}
+
+	public SizeManager getSizeManager() {
+		return sizeManager;
+	}
 
 	public static void setEdgeColor(int color) {
 		getEdgePaint().setColor(color);
@@ -67,8 +90,8 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 
 	public static Paint getEdgePaint() {
 		if (paint == null) {
-			paint = new Paint(Paint.DITHER_FLAG);// ����һ������
-			paint.setColor(Color.BLACK);// ����Ϊ���
+			paint = new Paint(Paint.DITHER_FLAG);
+			paint.setColor(Color.BLACK);
 		}
 		return paint;
 	}
@@ -88,24 +111,23 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		init();
 	}
 
-	
-	public void lockColum(int count){
+	public void lockColum(int count) {
 		this.lockColumCount = count;
 	}
-	
-	public void lockRow(int count){
+
+	public void lockRow(int count) {
 		this.lockRowsCount = count;
 	}
-	
+
 	private void init() {
 		this.setWillNotDraw(false);// ����
 		inflater = LayoutInflater.from(getContext());
 		addView(inflater.inflate(R.layout.title, null));
 		addView(inflater.inflate(R.layout.body, null));
-		lh_title_row = (LinearLayout) findViewById(R.id.title_row);
+		lv_title_row = (LinearLayout) findViewById(R.id.title_row);
 		lv_independent_title = (LinearLayout) findViewById(R.id.independent_title);
 		lv_title_colum = (LinearLayout) findViewById(R.id.title_colum);
-		lv_content = (ContentLinearLayout) findViewById(R.id.content);
+		lv_content = (LinearLayout) findViewById(R.id.content);
 		last_content = new LinearLayout(this.getContext());
 		LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
@@ -113,7 +135,6 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		last_content.setVisibility(VISIBLE);
 		last_content.setLayoutParams(param);
 		lv_content.addView(last_content);
-		lv_content.setSheet(this);
 
 		last_title_colum = new LinearLayout(this.getContext());
 		param = new LinearLayout.LayoutParams(
@@ -125,11 +146,11 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 
 		last_title_row = new LinearLayout(this.getContext());
 		param = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.MATCH_PARENT);
 		last_title_row.setVisibility(VISIBLE);
 		last_title_row.setLayoutParams(param);
-		lh_title_row.addView(last_title_row);
+		lv_title_row.addView(last_title_row);
 
 		AssociationHorizontalScrollView title_row_scr = (AssociationHorizontalScrollView) findViewById(R.id.title_row_scr);
 		AssociationHorizontalScrollView content_hscr = (AssociationHorizontalScrollView) findViewById(R.id.content_hscr);
@@ -145,97 +166,59 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		title_colum_scr.setOnScrollFinished(this);
 	}
 
-	public List<Integer> getColumWidth() {
-		return columWidth;
-	}
-
-	public List<Integer> getRowHeight() {
-		return rowHeight;
-	}
-
 	public CellTextView cell(int row, int colum) {
 		View ret = null;
-		if (row == 0 && colum == 0) {
-			ret = lv_independent_title.getChildAt(0);
-		} else if (colum == 0) {
-			ret = lv_title_colum.getChildAt(row - 1);
-		} else if (row == 0) {
-			ret = lh_title_row.getChildAt(colum - 1);
+		if (row < this.lockRowsCount && colum < this.lockColumCount) {
+			ret = ((LinearLayout) lv_independent_title.getChildAt(row))
+					.getChildAt(colum);
+		} else if (colum < this.lockColumCount) {
+			ret = ((LinearLayout) lv_title_colum.getChildAt(row
+					- this.lockRowsCount)).getChildAt(colum);
+		} else if (row < this.lockRowsCount) {
+			ret = ((LinearLayout) lv_title_row.getChildAt(row))
+					.getChildAt(colum - this.lockColumCount);
 		} else {
-			ret = ((LinearLayout) lv_content.getChildAt(row - 1))
-					.getChildAt(colum - 1);
+			ret = ((LinearLayout) lv_content.getChildAt(row
+					- this.lockRowsCount)).getChildAt(colum
+					- this.lockColumCount);
 		}
+
 		return (CellTextView) ret;
 	}
 
-	public int getColumCount() {
-		return columCount;
-	}
+	private void updateSize(View view, int row, int colum) {
 
-	public int getRowCount() {
-		return rowCount;
-	}
-
-	private void updateTableSize(List<Integer> tmpColumWidth,
-			List<Integer> tmpRowHeight) {
-
-		for (int i = 0, len = tmpColumWidth.size(); i < len; ++i) {
-			if (!columWidth.isEmpty() && columWidth.size() >= (i + 1)) {
-				if (columWidth.get(i) < tmpColumWidth.get(i)) {
-					sumWidth = sumWidth - columWidth.get(i)
-							+ tmpColumWidth.get(i);
-					columWidth.set(i, tmpColumWidth.get(i));
-				}
-			} else {
-				columWidth.add(tmpColumWidth.get(i));
-				sumWidth += tmpColumWidth.get(i);
-			}
-		}
-
-		for (int i = 0, len = tmpRowHeight.size(); i < len; ++i) {
-			if (!rowHeight.isEmpty() && rowHeight.size() >= (i + 1)) {
-				if (rowHeight.get(i) < tmpRowHeight.get(i)) {
-					sumHeight = sumHeight - rowHeight.get(i)
-							+ tmpRowHeight.get(i);
-					rowHeight.set(i, tmpRowHeight.get(i));
-
-				}
-			} else {
-				rowHeight.add(tmpRowHeight.get(i));
-				sumHeight += tmpRowHeight.get(i);
-			}
-		}
-	}
-
-	private void updateSizeList(View view, int row, int colum,
-			List<Integer> tmpColumWidth, List<Integer> tmpRowHeight) {
+		ViewGroup.LayoutParams param = view.getLayoutParams();
 		int w = View.MeasureSpec.makeMeasureSpec(0,
 				View.MeasureSpec.UNSPECIFIED);
 		int h = View.MeasureSpec.makeMeasureSpec(0,
 				View.MeasureSpec.UNSPECIFIED);
 		view.measure(w, h);
-		tmpRowHeight.set(row, view.getMeasuredHeight());
-		tmpColumWidth.set(colum, view.getMeasuredWidth());
-	}
-
-	public int getColumWidth(int i) {
-		return columWidth.get(i);
-	}
-
-	public int getRowHeight(int i) {
-		return rowHeight.get(i);
+		sizeManager.setColum(colum, view.getMeasuredWidth());
+		sizeManager.setRow(row, view.getMeasuredHeight());
 	}
 
 	public int getContentWidth() {
-		return sumWidth - columWidth.get(0);
+		int lockWidth = 0;
+		for (int i = 0; i < this.lockColumCount; ++i) {
+			lockWidth += sizeManager.getWidth(i);
+		}
+
+		return sizeManager.getWidth() - lockWidth;
 	}
 
 	public int getContentHeight() {
-		return sumHeight - rowHeight.get(0);
+		int lockHeight = 0;
+		for (int i = 0; i < this.lockRowsCount; ++i) {
+			lockHeight += sizeManager.getHeight(i);
+		}
+
+		return sizeManager.getHeight() - lockHeight;
+
 	}
 
 	public void clean() {
-		lh_title_row.removeAllViews();
+		lv_title_row.removeAllViews();
 		lv_independent_title.removeAllViews();
 		lv_title_colum.removeAllViews();
 		lv_content.removeAllViews();
@@ -243,118 +226,170 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		last_title_colum.removeAllViews();
 		last_title_row.removeAllViews();
 		last_content.removeAllViews();
-		sumWidth = 0;
-		sumHeight = 0;
-		columCount = 0;
-		rowCount = 0;
-		columWidth = new LinkedList<Integer>();
-		rowHeight = new LinkedList<Integer>();
+		sizeManager = new SizeManager();
 	}
 
-	public void fix() {
+	private void commit(Set<Integer> changedColum, Set<Integer> changedRow,
+			int start) {
 
 		last_content.getLayoutParams().height = blank_row_height;
 		last_title_colum.getLayoutParams().height = blank_row_height;
-		last_title_row.getLayoutParams().width = blank_row_width;
+		last_title_row.getLayoutParams().width = getContentWidth()
+				+ blank_row_width;
 		last_content.getLayoutParams().width = getContentWidth()
 				+ blank_row_width;
 
-		for (int i = 0; i < getRowCount(); ++i) {
-			for (int j = 0; j < getColumCount(); ++j) {
-				CellTextView view = cell(i, j);
-				view.getLayoutParams().width = columWidth.get(j);
-				view.getLayoutParams().height = rowHeight.get(i);
+		final Set<Integer> changedNewColum = new HashSet<Integer>();
+		final Set<Integer> changedNewRow = new HashSet<Integer>();
+
+		sizeManager.registerObserver(new SizeChangeObserver() {
+
+			@Override
+			public void onWidthChanged(SizeManager mgr, int colum, int newSize) {
+				changedNewColum.add(colum);
+			}
+
+			@Override
+			public void onHeightChanged(SizeManager mgr, int row, int newSize) {
+				changedNewRow.add(row);
+			}
+		});
+
+		for (Integer colum : changedColum) {
+			int width = sizeManager.getWidth(colum);
+			for (int row = start - 1; row >= 0; --row) {
+				adapter.adjustWidth(this, cell(row, colum), row, colum, width);
 			}
 		}
-	}
 
-	public boolean AddRecord(String[] record) {
-
-		if (columCount == 0) {
-			columCount = record.length;
+		for (Integer row : changedRow) {
+			int height = sizeManager.getHeight(row);
+			for (int colum = sizeManager.getColumCount() - 1; colum >= 0; --colum) {
+				adapter.adjustHeight(this, cell(row, colum), row, colum, height);
+			}
 		}
 
-		if (record.length != columCount) {
+		for (int row = sizeManager.getRowCount() - 1; row >= start; --row) {
+			for (int colum = sizeManager.getColumCount() - 1; colum >= 0; --colum) {
+				adapter.adjustWidth(this, cell(row, colum), row, colum,
+						sizeManager.getWidth(colum));
+			}
+		}
+
+		if (!changedNewColum.isEmpty() || !changedNewRow.isEmpty()) {
+			commit(changedNewColum, changedNewRow, start);
+		}
+
+	}
+
+	private boolean validate(String[][] tableBlock) {
+		if (sizeManager.isActive()) {
+			if (tableBlock[0].length != sizeManager.getColumCount()) {
+				return false;
+			}
+		} else {
+			sizeManager.active(tableBlock[0].length);
+		}
+		return true;
+	}
+
+	private ContentLinearLayout createContentLineLayout(SheetArea sheetArea,
+			int index) {
+		ContentLinearLayout ll = adapter.getContent(inflater, this, sheetArea,
+				index);
+		ll.setOrientation(LinearLayout.HORIZONTAL);
+		LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+		ll.setLayoutParams(param);
+		ll.setLinePos(sheetArea, index);
+		return ll;
+	}
+
+	private void addRecord(String[] record) {
+		sizeManager.increaseRow(1);
+		ContentLinearLayout unlockedLine = null;
+		ContentLinearLayout lockedLine = null;
+		CellTextView cell = null;
+
+		if (this.lockRowsCount > this.lv_title_row.getChildCount() - 1) {
+
+			lockedLine = createContentLineLayout(SheetArea.Independent,
+					lv_independent_title.getChildCount());
+			this.lv_independent_title.addView(lockedLine,
+					lv_independent_title.getChildCount());
+
+			unlockedLine = createContentLineLayout(SheetArea.Row_title,
+					lv_title_row.getChildCount() - 1);
+			this.lv_title_row.addView(unlockedLine,
+					lv_title_row.getChildCount() - 1);
+
+		} else {
+
+			lockedLine = createContentLineLayout(SheetArea.Colum_title,
+					lv_title_colum.getChildCount() - 1);
+			this.lv_title_colum.addView(lockedLine,
+					lv_title_colum.getChildCount() - 1);
+
+			unlockedLine = createContentLineLayout(SheetArea.Content,
+					lv_content.getChildCount() - 1);
+			this.lv_content.addView(unlockedLine,
+					lv_content.getChildCount() - 1);
+
+		}
+
+		for (int i = 0; i < this.lockColumCount && i < record.length; ++i) {
+			cell = adapter.getCell(this.inflater, this,
+					sizeManager.getRowCount() - 1, i, record[i]);
+			cell.setText(record[i]);
+			lockedLine.addView(cell);
+			updateSize(cell, sizeManager.getRowCount() - 1, i);
+		}
+
+		for (int i = this.lockColumCount; i < record.length; ++i) {
+			cell = adapter.getCell(inflater, this,
+					sizeManager.getRowCount() - 1, i, record[i]);
+			cell.setText(record[i]);
+			unlockedLine.addView(cell);
+			updateSize(cell, sizeManager.getRowCount() - 1, i);
+		}
+
+		LinearLayout llfill = new LinearLayout(this.getContext());
+		llfill.setLayoutParams(new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT));
+		unlockedLine.addView(llfill);
+	}
+
+	public boolean addTableBlock(String[][] tableBlock) {
+
+		int start = sizeManager.getRowCount();
+
+		if (!validate(tableBlock)) {
 			return false;
 		}
 
-		CellTextView tv = null;
-		++rowCount;
-		List<Integer> tmpColumWidth = new ArrayList<Integer>(columCount);
-		List<Integer> tmpRowHeight = new ArrayList<Integer>(rowCount);
-		for (int i = 0; i < columCount; ++i) {
-			tmpColumWidth.add(0);
-		}
-		for (int i = 0; i < rowCount; ++i) {
-			tmpRowHeight.add(0);
-		}
-		boolean isDeepGray = (rowCount % 2 == 0);
-		tv = (CellTextView) inflater.inflate(R.layout.cell, null);
-		tv.setText(record[0]);
-		if (lv_independent_title.getChildCount() == 0) {
-			lv_independent_title.addView(tv);
-			tv.adjust(1, 1, 1, 1);
-			tv.setTextColor(Color.WHITE);
-			tv.setBKColor(Color.BLACK);
-		//	tv.setPadding(DensityUtil.dip2px(this.getContext(), 3), DensityUtil.dip2px(this.getContext(), 10), DensityUtil.dip2px(this.getContext(), 3), DensityUtil.dip2px(getContext(), 10));
-		} else {
-			lv_title_colum.addView(tv, lv_title_colum.getChildCount() - 1);
-			tv.adjust(1, 0, 1, 1);
-//			if (isDeepGray){
-//				tv.setBKColor(Color.DKGRAY);
-//			}
-//			else{
-//				tv.setBKColor(Color.GRAY);
-//			}
-		}
-		updateSizeList(tv, rowCount - 1, 0, tmpColumWidth, tmpRowHeight);
+		final Set<Integer> changedColum = new HashSet<Integer>();
+		final Set<Integer> changedRow = new HashSet<Integer>();
 
-		if (rowCount == 1) {
-			for (int i = 1, len = record.length; i < len; ++i) {
-				tv = (CellTextView) inflater.inflate(R.layout.cell, null);
-				tv.setText(record[i]);
-				tv.setTextColor(Color.WHITE);
-								lh_title_row.addView(tv, lh_title_row.getChildCount() - 1);
-				tv.adjust(0, 1, 1, 1);
-				tv.setBKColor(Color.BLACK);
-				//tv.setPadding(DensityUtil.dip2px(this.getContext(), 3), DensityUtil.dip2px(this.getContext(), 10), DensityUtil.dip2px(this.getContext(), 3), DensityUtil.dip2px(getContext(), 10));
-				updateSizeList(tv, rowCount - 1, i, tmpColumWidth, tmpRowHeight);
+		sizeManager.registerObserver(new SizeChangeObserver() {
+
+			@Override
+			public void onWidthChanged(SizeManager mgr, int colum, int newSize) {
+				changedColum.add(colum);
 			}
-		} else {
-			LinearLayout ll = new ContentLineLinearLayout(getContext());
-			ll.setOrientation(LinearLayout.HORIZONTAL);
-			LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT,
-					LinearLayout.LayoutParams.WRAP_CONTENT);
-			ll.setLayoutParams(param);
 
-			LinearLayout llfill = new LinearLayout(this.getContext());
-			llfill.setLayoutParams(new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.MATCH_PARENT));
-
-			ll.addView(llfill);
-			lv_content.addView(ll, lv_content.getChildCount() - 1);
-
-			
-			
-			
-			for (int i = 1, len = record.length; i < len; ++i) {
-				tv = (CellTextView) inflater.inflate(R.layout.cell, null);
-				tv.setText(record[i]);
-				updateSizeList(tv, rowCount - 1, i, tmpColumWidth, tmpRowHeight);
-				ll.addView(tv, ll.getChildCount() - 1);
-				tv.adjust(0, 0, 1, 1);
-//				if (isDeepGray){
-//					tv.setBKColor(Color.DKGRAY);
-//				}
-//				else{
-//					tv.setBKColor(Color.GRAY);
-//				}
+			@Override
+			public void onHeightChanged(SizeManager mgr, int row, int newSize) {
+				changedRow.add(row);
 			}
+		});
+
+		for (int i = 0; i < tableBlock.length; ++i) {
+			addRecord(tableBlock[i]);
 		}
 
-		updateTableSize(tmpColumWidth, tmpRowHeight);
+		commit(changedColum, changedRow, start);
 
 		return true;
 	}
@@ -367,15 +402,19 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 				int cellHeight = 0;
 
 				if (scrollY > getContentHeight()) {
-					scroll.scrollTo(scroll.getScrollX(), getContentHeight()
-							- getRowHeight(rowCount - 1));
+					scroll.scrollTo(
+							scroll.getScrollX(),
+							getContentHeight()
+									- sizeManager.getHeight(sizeManager
+											.getRowCount() - 1));
 				} else {
-					for (int i = 1; i < rowCount; ++i) {
-						cellHeight = getRowHeight(i);
+					for (int i = this.lockRowsCount, rowCount = sizeManager
+							.getRowCount(); i < rowCount; ++i) {
+						cellHeight = sizeManager.getHeight(i);
 						sumHeight += cellHeight;
 						if (sumHeight > scrollY) {
 							if (cellHeight / 2 < (sumHeight - scrollY)
-									|| (i + 1) == rowCount) {
+									|| (i + 1) == sizeManager.getRowCount()) {
 								scroll.scrollTo(scroll.getScrollX(), sumHeight
 										- cellHeight);
 							} else {
@@ -394,12 +433,15 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 				int cellWidth = 0;
 
 				if (scrollX > getContentWidth()) {
-					scroll.scrollTo(getContentWidth()
-							- getColumWidth(columCount - 1),
+					scroll.scrollTo(
+							getContentWidth()
+									- sizeManager.getWidth(sizeManager
+											.getColumCount() - 1),
 							scroll.getScrollY());
 				} else {
-					for (int i = 1; i < columCount; ++i) {
-						cellWidth = getColumWidth(i);
+					for (int i = this.lockColumCount, columCount = sizeManager
+							.getColumCount(); i < columCount; ++i) {
+						cellWidth = sizeManager.getWidth(i);
 						sumWidth += cellWidth;
 						if (sumWidth > scrollX) {
 							if (cellWidth / 2 < (sumWidth - scrollX)

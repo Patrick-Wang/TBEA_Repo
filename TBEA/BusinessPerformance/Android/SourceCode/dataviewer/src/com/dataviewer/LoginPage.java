@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,11 +33,17 @@ public class LoginPage extends AQueryFragment {
 	@Override
 	protected void onViewPrepared(final AQuery aq, View fragView) {
 
+		SharedPreferences preferences = getActivity().getSharedPreferences(
+				"user", Context.MODE_PRIVATE);
+		aq.id(R.id.usrn).getEditText()
+				.setText(preferences.getString("Email", null));
+		aq.id(R.id.psw).getEditText()
+				.setText(preferences.getString("Password", null));
+
 		aq.id(R.id.login).clicked(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// String url = "http://192.168.7.22/mobile/loginServlet";
 				auth(aq.id(R.id.usrn).getText().toString(), aq.id(R.id.psw)
 						.getText().toString(), outerUrl);
 				InputMethodManager imm = (InputMethodManager) getActivity()
@@ -74,6 +81,13 @@ public class LoginPage extends AQueryFragment {
 						UserBean userBean = (UserBean) JsonUtil.jsonToBean(
 								json, UserBean.class);
 
+						SharedPreferences preferences = getActivity()
+								.getSharedPreferences("user",
+										Context.MODE_PRIVATE);
+						SharedPreferences.Editor editor = preferences.edit();
+						editor.putString("Email", usn);
+						editor.putString("Password", psw);
+						editor.commit();
 						// successful ajax call, show status code and json
 						// content
 						if (userBean.isLoginFlag()) {

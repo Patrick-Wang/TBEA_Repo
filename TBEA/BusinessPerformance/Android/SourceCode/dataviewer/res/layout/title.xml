@@ -3,9 +3,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:fadingEdge="none">
+    >
 
-    <com.excel.IndependentTitleLinearLayout
+    <LinearLayout
         android:id="@+id/independent_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,15 +15,14 @@
         android:id="@+id/title_row_scr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fadingEdge="none"
+        android:overScrollMode="never"
         android:scrollbars="none" >
 
-        <com.excel.RowTitleLinearLayout
-            android:fadingEdge="none"
+        <LinearLayout
             android:id="@+id/title_row"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" />
+            android:orientation="vertical" />
     </com.ctrl.AssociationHorizontalScrollView>
 
 </LinearLayout>

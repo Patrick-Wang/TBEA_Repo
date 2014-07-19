@@ -2,6 +2,7 @@ package com.dataviewer;
 
 import com.androidquery.AQuery;
 import com.tbea.dataviewer.R;
+import com.dataviewer.sheetAdapter.GreenCellAdapter;
 import com.excel.Sheet;
 
 import android.app.AlertDialog;
@@ -46,12 +47,10 @@ public class FuturesTablePage extends AQueryFragment {
 	@Override
 	protected void onViewPrepared(AQuery aq, View fragView) {
 		Sheet sheet = (Sheet) aq.id(R.id.mysheet).getView();
-		for (String[] rec : records) {
-			sheet.AddRecord(rec);
-		}
-
-		sheet.fix();
-
+		sheet.lockColum(2);
+		sheet.lockRow(1);
+		sheet.setAdapter(new GreenCellAdapter());
+		sheet.addTableBlock(records);
 		aq.id(R.id.company).clicked(new OnClickListener() {
 
 			@Override

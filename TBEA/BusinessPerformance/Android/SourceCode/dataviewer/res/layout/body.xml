@@ -9,11 +9,10 @@
         android:id="@+id/title_colum_vscr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fadingEdge="none"
+        android:overScrollMode="never"
         android:scrollbars="none" >
 
-        <com.excel.ColumTitleLinearLayout
-            android:fadingEdge="none"
+        <LinearLayout
             android:id="@+id/title_colum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,17 +23,17 @@
         android:id="@+id/content_hscr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fadingEdge="none"
+        android:overScrollMode="never"
         android:scrollbars="none" >
 
         <com.ctrl.AssociationVerticalScrollView
             android:id="@+id/content_vscr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fadingEdge="none"
+            android:overScrollMode="never"
             android:scrollbars="none" >
 
-            <com.excel.ContentLinearLayout
+            <LinearLayout
                 android:fadingEdge="none"
                 android:id="@+id/content"
                 android:layout_width="wrap_content"
