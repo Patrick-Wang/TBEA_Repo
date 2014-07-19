@@ -20,6 +20,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.androidquery.AQuery;
 import com.javaBean.QHMXBean;
+import com.javaBean.UserBean;
 import com.tbea.dataviewer.R;
 
 public class FuturesChartPage extends AQueryFragment implements
@@ -30,6 +31,8 @@ public class FuturesChartPage extends AQueryFragment implements
 	public Handler handler = new Handler();
 
 	public ProgressDialog dialog = null;
+
+	private UserBean userBean = new UserBean();
 
 	public List<QHMXBean> qhmxBeans = new ArrayList<QHMXBean>();
 
@@ -139,6 +142,14 @@ public class FuturesChartPage extends AQueryFragment implements
 
 	public void afterRefresh() {
 		dialog.hide();
+	}
+
+	public UserBean getUserBean() {
+		return userBean;
+	}
+
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
 	}
 
 	public List<QHMXBean> getQhmxBeans() {

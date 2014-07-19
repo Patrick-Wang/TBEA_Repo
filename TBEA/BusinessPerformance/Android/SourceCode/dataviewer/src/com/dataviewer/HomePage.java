@@ -175,6 +175,7 @@ public class HomePage extends AQueryFragment {
 
 			ft = getActivity().getFragmentManager().beginTransaction();
 			FundsChartPage fundsChartPage = new FundsChartPage();
+			fundsChartPage.setUserBean(userBean);
 			fundsChartPage.setYszkBeans(yszkBeans);
 			ft.replace(R.id.host, fundsChartPage).addToBackStack(null);
 			ft.commit();
@@ -191,6 +192,7 @@ public class HomePage extends AQueryFragment {
 
 			ft = getActivity().getFragmentManager().beginTransaction();
 			FuturesChartPage futuresChartPage = new FuturesChartPage();
+			futuresChartPage.setUserBean(userBean);
 			futuresChartPage.setQhmxBeans(qhmxBeans);
 			ft.replace(R.id.host, futuresChartPage).addToBackStack(null);
 			ft.commit();

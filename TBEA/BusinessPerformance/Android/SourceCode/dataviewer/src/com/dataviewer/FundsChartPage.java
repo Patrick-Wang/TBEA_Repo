@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.androidquery.AQuery;
+import com.javaBean.UserBean;
 import com.javaBean.YSZKBean;
 import com.tbea.dataviewer.R;
 
@@ -31,6 +32,8 @@ public class FundsChartPage extends AQueryFragment implements
 	private Handler handler = new Handler();
 
 	private ProgressDialog dialog = null;
+
+	private UserBean userBean = new UserBean();
 
 	private List<YSZKBean> yszkBeans = new ArrayList<YSZKBean>();
 
@@ -213,6 +216,14 @@ public class FundsChartPage extends AQueryFragment implements
 
 	public void afterRefresh() {
 		dialog.hide();
+	}
+
+	public UserBean getUserBean() {
+		return userBean;
+	}
+
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
 	}
 
 	public List<YSZKBean> getYszkBeans() {
