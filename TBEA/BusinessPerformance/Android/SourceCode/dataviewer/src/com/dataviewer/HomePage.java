@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
@@ -39,6 +40,8 @@ public class HomePage extends AQueryFragment {
 			Calendar.MONTH));
 
 	private static String outerUrl = "http://218.84.134.160:8081/mobile/dataTransfer";
+
+	private static String innerUrl = "http://192.168.7.22/mobile/dataTransfer";
 
 	public UserBean userBean = new UserBean();
 
@@ -140,16 +143,13 @@ public class HomePage extends AQueryFragment {
 					if (json != null) {
 						leadPage(json);
 					} else {
-						// // ajax error, show error code
-						// if (urlret
-						// .equals("http://192.168.7.22/mobile/loginServlet")) {
-						// LoginPage.this
-						// .auth(usn, psw,
-						// "http://218.84.134.160:8081/mobile/loginServlet");
-						// } else {
-						// Toast.makeText(getActivity(), "网络连接错误，请检查您的网络",
-						// Toast.LENGTH_LONG).show();
-						// }
+						// ajax error, show error code
+						if (urlret.equals(outerUrl)) {
+							HomePage.this.fetchData(menuqx, innerUrl);
+						} else {
+							Toast.makeText(getActivity(), "网络连接错误，请检查您的网络",
+									Toast.LENGTH_LONG).show();
+						}
 					}
 
 				} catch (Exception e) {

@@ -1,7 +1,12 @@
 package com.dataviewer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -18,6 +23,7 @@ import android.widget.AbsoluteLayout.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.javaBean.UserBean;
@@ -36,6 +42,17 @@ public class FundsChartPage extends AQueryFragment implements
 	private UserBean userBean = new UserBean();
 
 	private List<YSZKBean> yszkBeans = new ArrayList<YSZKBean>();
+
+	private List<String> companyList = null;
+
+	private static List<String> normalCompanyList = Arrays.asList("5", "6",
+			"7", "8", "9", "10", "11");
+
+	private JSONArray receivableRatioLegendArray = null;
+
+	private JSONArray receivableRatioDataArray = null;
+
+	private JSONArray dailyPaymentXAxisArray = null;
 
 	private WebView provideWebView(int id) {
 		WebView web = createWebView();
@@ -81,6 +98,46 @@ public class FundsChartPage extends AQueryFragment implements
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
+		try {
+			List<String> legends = new ArrayList<String>();
+			List<JSONObject> receivableRatioDataObjects = new ArrayList<JSONObject>();
+			String companyId = null;
+			String companyName = null;
+			double receiveable_ratio = 0.0D;
+			double amount_receivable = 0.0D;
+			double overdue_payment = 0.0D;
+			for (YSZKBean yszkBean : yszkBeans) {
+				companyId = yszkBean.getQybh();
+				if (getCompanyList().contains(companyId)) {
+					amount_receivable = Double.valueOf(yszkBean.getYsye());
+					overdue_payment = Double.valueOf(yszkBean.getYqk());
+					receiveable_ratio = ((amount_receivable - overdue_payment) / amount_receivable);
+					if ("4" == companyId) {
+						// TODO total
+					} else if (normalCompanyList.contains(companyId)) {
+
+						companyName = yszkBean.getQymc();
+						legends.add(companyName);
+						receivableRatioDataObjects.add(new JSONObject(
+								"{value : " + receiveable_ratio + ",name : '"
+										+ companyName + "'}"));
+					} else {
+						continue;
+					}
+				} else {
+					continue;
+				}
+			}
+
+			receivableRatioLegendArray = new JSONArray(legends);
+			dailyPaymentXAxisArray = new JSONArray(legends);
+			receivableRatioDataArray = new JSONArray(receivableRatioDataObjects);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(getActivity(), "数据错误，请重试", Toast.LENGTH_LONG).show();
+		}
+
 		return inflater.inflate(R.layout.funds_chart_page, container, false);
 	}
 
@@ -174,11 +231,9 @@ public class FundsChartPage extends AQueryFragment implements
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					List<String> values = new ArrayList<String>();
-					for (int i = 7; i >= 1; i--) {
-						values.add(String.valueOf(i));
-					}
-					webView.loadUrl("javascript:refreshView(" + values + ");");
+					webView.loadUrl("javascript:refreshView("
+							+ receivableRatioLegendArray + ","
+							+ receivableRatioDataArray + ");");
 				}
 			});
 			break;
@@ -232,6 +287,20 @@ public class FundsChartPage extends AQueryFragment implements
 
 	public void setYszkBeans(List<YSZKBean> yszkBeans) {
 		this.yszkBeans = yszkBeans;
+	}
+
+	public List<String> getCompanyList() {
+		if (null != userBean) {
+			String[] resultArray = userBean.getCompanyqx().split(",");
+			companyList = Arrays.asList(resultArray);
+		} else {
+			companyList = new ArrayList<String>();
+		}
+		return companyList;
+	}
+
+	public void setCompanyList(List<String> companyList) {
+		this.companyList = companyList;
 	}
 
 }
