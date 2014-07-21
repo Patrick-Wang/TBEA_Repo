@@ -182,18 +182,28 @@ public class HomePage extends AQueryFragment {
 			break;
 		case R.id.f2:
 
-			List<QHMXBean> qhmxBeans = new ArrayList<QHMXBean>();
-			for (int i = 0; i < json.length(); i++) {
-				jsonObject = json.getJSONObject(i);
+			List<QHMXBean> qhmxBeans_Copper = new ArrayList<QHMXBean>();
+			List<QHMXBean> qhmxBeans_Aluminium = new ArrayList<QHMXBean>();
+			JSONArray qhmxBeans_Copper_JsonArray = json.getJSONArray(0);
+			JSONArray qhmxBeans_Aluminium_JsonArray = json.getJSONArray(1);
+			for (int i = 0; i < qhmxBeans_Copper_JsonArray.length(); i++) {
+				jsonObject = qhmxBeans_Copper_JsonArray.getJSONObject(i);
 				QHMXBean qhmxBean = (QHMXBean) JsonUtil.jsonToBean(jsonObject,
 						QHMXBean.class);
-				qhmxBeans.add(qhmxBean);
+				qhmxBeans_Copper.add(qhmxBean);
+			}
+			for (int i = 0; i < qhmxBeans_Aluminium_JsonArray.length(); i++) {
+			    jsonObject = qhmxBeans_Aluminium_JsonArray.getJSONObject(i);
+			    QHMXBean qhmxBean = (QHMXBean) JsonUtil.jsonToBean(jsonObject,
+			            QHMXBean.class);
+			    qhmxBeans_Aluminium.add(qhmxBean);
 			}
 
 			ft = getActivity().getFragmentManager().beginTransaction();
 			FuturesChartPage futuresChartPage = new FuturesChartPage();
 			futuresChartPage.setUserBean(userBean);
-			futuresChartPage.setQhmxBeans(qhmxBeans);
+			futuresChartPage.setQhmxBeans_Copper(qhmxBeans_Copper);
+			futuresChartPage.setQhmxBeans_Aluminium(qhmxBeans_Aluminium);
 			ft.replace(R.id.host, futuresChartPage).addToBackStack(null);
 			ft.commit();
 			break;
