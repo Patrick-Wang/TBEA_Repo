@@ -2,8 +2,10 @@ package com.dataviewer.sheetAdapter;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 
+import com.common.DisplayUtil;
 import com.excel.CellTextView;
 import com.excel.ContentLinearLayout;
 import com.excel.Sheet;
@@ -13,19 +15,19 @@ import com.tbea.dataviewer.R;
 
 public class GreenCellAdapter extends StandardAdapter {
 
-
 	Paint cellBKPaint = null;
 	Paint titleBKPaint = null;
-	public GreenCellAdapter(){
+
+	public GreenCellAdapter() {
 		cellBKPaint = new Paint(Paint.DITHER_FLAG);
 		cellBKPaint.setColor(Color.GREEN);
 		cellBKPaint.setStrokeWidth(1);
-		
+
 		titleBKPaint = new Paint(Paint.DITHER_FLAG);
 		titleBKPaint.setColor(Color.BLACK);
 		titleBKPaint.setStrokeWidth(1);
 	}
-	
+
 	@Override
 	public CellTextView getCell(LayoutInflater inflater, Sheet Sheet, int row,
 			int colum, String text) {
@@ -35,10 +37,15 @@ public class GreenCellAdapter extends StandardAdapter {
 			ctv.setBKPaint(cellBKPaint);
 		}
 
-		if (0 == row){
+		if (0 == row) {
 			ctv.setTextColor(Color.WHITE);
+			DisplayMetrics metric = Sheet.getContext().getResources().getDisplayMetrics();
+			ctv.setTextSize(DisplayUtil.sp2px(11, metric.scaledDensity));
+			ctv.setPadding(DisplayUtil.dip2px(5, metric.density),
+					DisplayUtil.dip2px(8, metric.density), DisplayUtil.dip2px(5, metric.density),
+					DisplayUtil.dip2px(8, metric.density));
 		}
-		
+
 		return ctv;
 	}
 
@@ -46,7 +53,8 @@ public class GreenCellAdapter extends StandardAdapter {
 	public ContentLinearLayout getContent(LayoutInflater inflater, Sheet sheet,
 			SheetArea sheetArea, int index) {
 		ContentLinearLayout cll = new ContentLinearLayout(sheet.getContext());
-		if ((sheetArea == SheetArea.Independent && 0 == index) || (sheetArea == SheetArea.Row_title && 0 == index)){
+		if ((sheetArea == SheetArea.Independent && 0 == index)
+				|| (sheetArea == SheetArea.Row_title && 0 == index)) {
 			cll.setBKPaint(titleBKPaint);
 		}
 		return cll;
