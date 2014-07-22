@@ -286,7 +286,7 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 					public void onClick(DialogInterface arg0, int which,
 							boolean isChecked) {
 						boolean bAllCancel = true;
-						for (boolean item : companySel) {
+						for (boolean item : companybeforeSel) {
 							if (item) {
 								bAllCancel = false;
 								break;
