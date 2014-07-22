@@ -71,14 +71,14 @@ html, body {
             axisOption.series = blankArray_Copper;
 			profit_lost_copper_Chart.setOption(axisOption);
 	        document.getElementById('profit_lost_copper').style.display = "";
-			window.Profit_Lost_Copper.refreshData(1);
+			window.Profit_Lost.refreshData(1);
 		}
         
         function refreshData(dataArray_Copper) {
             var dataOption = profit_lost_copper_Chart.getOption();
             dataOption.series = dataArray_Copper;
             profit_lost_copper_Chart.setOption(dataOption);
-            window.Profit_Lost_Copper.afterRefresh();
+            window.Profit_Lost.afterRefresh();
         }
 	</script>
 </body>

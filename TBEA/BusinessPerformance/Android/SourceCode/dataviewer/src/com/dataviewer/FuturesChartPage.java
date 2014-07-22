@@ -65,6 +65,18 @@ public class FuturesChartPage extends AQueryFragment implements
 
     private JSONArray dataArray_Copper = null;
 
+    private JSONArray legends_Aluminium = null;
+
+    private JSONArray xAxisArray_Aluminium = null;
+
+    private double yAxisMin_Aluminium = 0.0D;
+
+    private double yAxisMax_Aluminium = 0.0D;
+
+    private JSONArray blankArray_Aluminium = null;
+
+    private JSONArray dataArray_Aluminium = null;
+
     private static List<String> normalCompanyList = Arrays.asList("5", "6",
             "7", "8", "9", "10", "11");
 
@@ -100,18 +112,18 @@ public class FuturesChartPage extends AQueryFragment implements
         Set<String> dateSet = new TreeSet<String>();
         Map<String, String> valueMap = new HashMap<String, String>();
 
-        for (QHMXBean qhmxBean_Copper : qhmxBeans_Copper) {
-            tempCompanyId = qhmxBean_Copper.getQybh();
+        for (QHMXBean qhmxBean : qhmxBeans_Copper) {
+            tempCompanyId = qhmxBean.getQybh();
             if (companyAuthorityList.contains(tempCompanyId)) {
                 if ("4" == tempCompanyId) {
                     // TODO total
                 } else if (normalCompanyList.contains(tempCompanyId)) {
-                    tempCompanyName = qhmxBean_Copper.getQymc();
+                    tempCompanyName = qhmxBean.getQymc();
                     companyNames.add(tempCompanyName);
-                    tempDate = qhmxBean_Copper.getDate();
+                    tempDate = qhmxBean.getDate();
                     dateSet.add(tempDate);
-                    profit_Lost_Amount = qhmxBean_Copper.getYkje();
-                    tempValues.add(new Double(profit_Lost_Amount));
+                    profit_Lost_Amount = qhmxBean.getYkje();
+                    tempValues.add(Double.valueOf(profit_Lost_Amount));
                     valueMap.put(tempCompanyName + tempDate, profit_Lost_Amount);
                 } else {
                     // TODO 1000 id?
@@ -128,8 +140,8 @@ public class FuturesChartPage extends AQueryFragment implements
         yAxisMin_Copper = tempMap.get("min");
         yAxisMax_Copper = tempMap.get("max");
 
-        List<JSONObject> dataObjects_Copper = new ArrayList<JSONObject>();
-        List<JSONObject> blankObjects_Copper = new ArrayList<JSONObject>();
+        List<JSONObject> dataObjects = new ArrayList<JSONObject>();
+        List<JSONObject> blankObjects = new ArrayList<JSONObject>();
 
         String tempValue = null;
         List<String> valueList = new ArrayList<String>();
@@ -146,13 +158,13 @@ public class FuturesChartPage extends AQueryFragment implements
                 }
                 blankList.add("0");
             }
-            dataObjects_Copper
+            dataObjects
                     .add(new JSONObject(
                             "{name : '"
                                     + companyName
                                     + "', type : 'line', symbolSize: 3, itemStyle: {normal: {lineStyle: {width: 2}}},data : "
                                     + valueList + "}"));
-            blankObjects_Copper
+            blankObjects
                     .add(new JSONObject(
                             "{name : '"
                                     + companyName
@@ -160,16 +172,99 @@ public class FuturesChartPage extends AQueryFragment implements
                                     + blankList + "}"));
         }
 
-        dataArray_Copper = new JSONArray(dataObjects_Copper);
-        blankArray_Copper = new JSONArray(blankObjects_Copper);
+        dataArray_Copper = new JSONArray(dataObjects);
+        blankArray_Copper = new JSONArray(blankObjects);
+    }
+
+    private void transformOfAluminium(List<String> companyAuthorityList)
+            throws JSONException {
+        String tempCompanyId = null;
+        String tempCompanyName = null;
+        String tempDate = null;
+        String profit_Lost_Amount = null;
+        List<Double> tempValues = new ArrayList<Double>();
+        Map<String, Double> tempMap = null;
+
+        Set<String> companyNames = new TreeSet<String>();
+        Set<String> dateSet = new TreeSet<String>();
+        Map<String, String> valueMap = new HashMap<String, String>();
+
+        for (QHMXBean qhmxBean : qhmxBeans_Aluminium) {
+            tempCompanyId = qhmxBean.getQybh();
+            if (companyAuthorityList.contains(tempCompanyId)) {
+                if ("4" == tempCompanyId) {
+                    // TODO total
+                } else if (normalCompanyList.contains(tempCompanyId)) {
+                    tempCompanyName = qhmxBean.getQymc();
+                    companyNames.add(tempCompanyName);
+                    tempDate = qhmxBean.getDate();
+                    dateSet.add(tempDate);
+                    profit_Lost_Amount = qhmxBean.getYkje();
+                    tempValues.add(Double.valueOf(profit_Lost_Amount));
+                    valueMap.put(tempCompanyName + tempDate, profit_Lost_Amount);
+                } else {
+                    // TODO 1000 id?
+                    continue;
+                }
+            } else {
+                continue;
+            }
+        }
+
+        legends_Aluminium = new JSONArray(companyNames);
+        xAxisArray_Aluminium = new JSONArray(dateSet);
+        tempMap = sortData(tempValues);
+        yAxisMin_Aluminium = tempMap.get("min");
+        yAxisMax_Aluminium = tempMap.get("max");
+
+        List<JSONObject> dataObjects = new ArrayList<JSONObject>();
+        List<JSONObject> blankObjects = new ArrayList<JSONObject>();
+
+        String tempValue = null;
+        List<String> valueList = new ArrayList<String>();
+        List<String> blankList = new ArrayList<String>();
+        for (String companyName : companyNames) {
+            valueList.clear();
+            blankList.clear();
+            for (String date : dateSet) {
+                tempValue = valueMap.get(companyName + date);
+                if (null != tempValue) {
+                    valueList.add(tempValue);
+                } else {
+                    valueList.add("0");
+                }
+                blankList.add("0");
+            }
+            dataObjects
+                    .add(new JSONObject(
+                            "{name : '"
+                                    + companyName
+                                    + "', type : 'line', symbolSize: 3, itemStyle: {normal: {lineStyle: {width: 2}}},data : "
+                                    + valueList + "}"));
+            blankObjects
+                    .add(new JSONObject(
+                            "{name : '"
+                                    + companyName
+                                    + "', type : 'line', symbolSize: 0, itemStyle: {normal: {lineStyle: {width: 0}}},data : "
+                                    + blankList + "}"));
+        }
+
+        dataArray_Aluminium = new JSONArray(dataObjects);
+        blankArray_Aluminium = new JSONArray(blankObjects);
     }
 
     private void initData() {
         try {
             List<String> companyList = getCompanyList();
             transformOfCopper(companyList);
+            if (null != qhmxBeans_Aluminium && qhmxBeans_Aluminium.size() > 1) {
+                transformOfAluminium(companyList);
+            } else {
+
+            }
         } catch (JSONException e) {
             Toast.makeText(getActivity(), "数据错误，请重试", Toast.LENGTH_LONG).show();
+            dialog.hide();
         }
     }
 
@@ -228,9 +323,13 @@ public class FuturesChartPage extends AQueryFragment implements
         ((LinearLayout) aq.id(R.id.profit_lost_webview).getView())
                 .addView(webView);
 
-        initView("Profit_Lost_Copper",
-        // "file:///android_asset/Copy_of_profit_lost_copper.html");
-                "file:///android_asset/profit_lost_copper.html");
+        initView("file:///android_asset/profit_lost_copper.html",
+                new WebViewClient() {
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        refresh(R.id.cu);
+                    }
+                });
     }
 
     @Override
@@ -241,12 +340,30 @@ public class FuturesChartPage extends AQueryFragment implements
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (null != dialog) {
+            dialog.show();
+        }
         switch (checkedId) {
         case R.id.cu:
+            initView("file:///android_asset/profit_lost_copper.html",
+                    new WebViewClient() {
+                        @Override
+                        public void onPageFinished(WebView view, String url) {
+                            refresh(R.id.cu);
+                        }
+                    });
             break;
         case R.id.al:
+            initView("file:///android_asset/profit_lost_aluminium.html",
+                    new WebViewClient() {
+                        @Override
+                        public void onPageFinished(WebView view, String url) {
+                            refresh(R.id.cu);
+                        }
+                    });
             break;
         default:
+            dialog.hide();
             break;
         }
     }
@@ -265,74 +382,80 @@ public class FuturesChartPage extends AQueryFragment implements
         super.onDestroy();
     }
 
-    public void initView(String jsInterfaceName, String url) {
+    public void initView(String url, WebViewClient webViewClient) {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setNeedInitialFocus(false);
-        webView.addJavascriptInterface(this, jsInterfaceName);
+        webView.addJavascriptInterface(this, "Profit_Lost");
         webView.setBackgroundColor(getResources().getColor(
                 android.R.color.transparent));
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                refresh();
-            }
-
-            @Override
-            public void onReceivedError(WebView view, int errorCode,
-                    String description, String failingUrl) {
-                super.onReceivedError(view, errorCode, description, failingUrl);
-            }
-
-        });
+        webView.setWebViewClient(webViewClient);
 
         webView.loadUrl(url);
     }
 
-    public void refresh() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                List<String> values = new ArrayList<String>();
-                for (int i = 1; i <= 7; i++) {
-                    values.add(String.valueOf(i));
+    public void refresh(int id) {
+        switch (id) {
+        case R.id.cu:
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    String url = "javascript:refreshAxis(" + legends_Copper
+                            + "," + xAxisArray_Copper + "," + yAxisMin_Copper
+                            + "," + yAxisMax_Copper + "," + blankArray_Copper
+                            + ");";
+                    webView.loadUrl(url);
                 }
-                String url = "javascript:refreshAxis(" + legends_Copper + ","
-                        + xAxisArray_Copper + "," + yAxisMin_Copper + ","
-                        + yAxisMax_Copper + "," + blankArray_Copper + ");";
-                webView.loadUrl(url);
-            }
-        });
+            });
+            break;
+
+        case R.id.al:
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    String url = "javascript:refreshAxis(" + legends_Copper
+                            + "," + xAxisArray_Aluminium + yAxisMin_Aluminium
+                            + "," + yAxisMax_Aluminium + ","
+                            + blankArray_Aluminium + ");";
+                    webView.loadUrl(url);
+                }
+            });
+            break;
+
+        default:
+            dialog.hide();
+            break;
+        }
 
     }
 
     public void refreshData(int id) {
-        // switch (id) {
-        // case 1:
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                String url = "javascript:refreshData(" + dataArray_Copper
-                        + ");";
-                webView.loadUrl(url);
-            }
-        });
-        // break;
-        // case 2:
-        // handler.post(new Runnable() {
-        // @Override
-        // public void run() {
-        // webView.loadUrl("javascript:refreshData("
-        // + monthlyPaymentDataArray + ","
-        // + monthlyContractDataArray + ");");
-        // }
-        // });
-        //
-        // break;
-        // default:
-        // dialog.hide();
-        // break;
-        // }
+        switch (id) {
+        case 1:
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    String url = "javascript:refreshData(" + dataArray_Copper
+                            + ");";
+                    webView.loadUrl(url);
+                }
+            });
+            break;
+        case 2:
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    String url = "javascript:refreshData("
+                            + dataArray_Aluminium + ");";
+                    webView.loadUrl(url);
+                }
+            });
+
+            break;
+        default:
+            dialog.hide();
+            break;
+        }
     }
 
     public void afterRefresh() {

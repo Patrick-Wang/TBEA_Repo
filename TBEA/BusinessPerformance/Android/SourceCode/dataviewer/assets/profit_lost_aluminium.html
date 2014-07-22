@@ -5,92 +5,81 @@
 <title>Pie</title>
 <style>
 html, body {
-	height: 100%;
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	align: left;
-	valign: left;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    align: left;
+    valign: left;
 }
 
 .panel-content {
-	height: 100%;
-	width: 100%;
-	border: 0px;
-	margin: 0;
-	padding: 0;
-	align: left;
-	valign: left;
+    height: 100%;
+    width: 100%;
+    border: 0px;
+    margin: 0;
+    padding: 0;
+    align: left;
+    valign: left;
 }
 </style>
 <script src="www2/js/echarts-plain-2-0-0.js"></script>
 </head>
 <body>
-	<div id="profit_lost_aluminium" class="panel-content"></div>
+    <div id="profit_lost_aluminium" class="panel-content"></div>
 
-	<script type="text/javascript">
-		var profit_lost_aluminium_Chart = echarts.init(document.getElementById('profit_lost_aluminium'));
-		profit_lost_aluminium_Option = {
-				animation : false,
-			tooltip : {
-				trigger : 'axis',
+    <script type="text/javascript">
+        var profit_lost_aluminium_Chart = echarts.init(document
+                .getElementById('profit_lost_aluminium'));
+        var profit_lost_aluminium_Option = {
+            animation : false,
+            grid : {
+                x : 60,
+                y : 45,
+                x2 : 20,
+                y2 : 25
+            }
+        };
+
+        profit_lost_aluminium_Chart.setOption(profit_lost_aluminium_Option);
+        document.getElementById('profit_lost_aluminium').style.display = "none";
+
+        function refreshAxis(legends, xAxisDates, yAxisMin, yAxisMax, blankArray_Aluminium) {
+            var axisOption = profit_lost_aluminium_Chart.getOption();
+            axisOption.tooltip = {
+                trigger : 'axis',
                 transitionDuration : 0
-			},
-			legend : {
-				data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆', '德缆' ],
-				x: 'right',
-				y : 'top'
-			},
-			grid : {
-			    x:60,
-			    y:50, 
-			    x2:20,
-			    y2:20
-			  },
-			xAxis : [ {
-				type : 'category',
-				boundaryGap : false,
-				data : [ '1407', '1408', '1409', '1410', '1411', '1412', '1501' ]
-			} ],
-			yAxis : [ {
-				type : 'value',
-				power : 10000000,
-				precision : 0.01,
-				min : -900000,
-				max : 1300000
-			} ],
-			series : [ {
-				name : '沈变',
-				type : 'line',
-				data : [ -633500.00, 384000.00, 90000.00, 165000.00, 0, 0, 0 ]
-			}, {
-				name : '衡变',
-				type : 'line',
-				data : [ 0, 308250.00, 1264298.60, -46399.95, 15450.00, -428149.95, -17250.00 ]
-			}, {
-				name : '新变',
-				type : 'line',
-				data : [ 0, 0, 0, 0, 0, 0, 0 ]
-			}, {
-				name : '天变',
-				type : 'line',
-				data : [ 0, 0, 0, 0, 0, 0, 0 ]
-			}, {
-				name : '鲁缆',
-				type : 'line',
-				data : [ -828400.00, 0, 0, 0, 0, 0, 0 ]
-			} , {
-				name : '新缆',
-				type : 'line',
-				data : [ 0, 0, 0, 0, 0, 0, 0 ]
-			} , {
-				name : '德缆',
-				type : 'line',
-				data : [ 0, 0, 0, 0, 0, 0, 0 ]
-			} ]
-		};
-
-		profit_lost_aluminium_Chart.setOption(profit_lost_aluminium_Option);
-	</script>
+            };
+            axisOption.legend = {
+                y : 'top',
+                data : legends
+            };
+            axisOption.xAxis = [ {
+                type : 'category',
+                boundaryGap : false,
+                data : xAxisDates
+            } ];
+            axisOption.yAxis = [ {
+                name : '(万元)',
+                type : 'value',
+                min : yAxisMin,
+                max : yAxisMax,
+                splitArea : {
+                    show : true
+                }
+            } ];
+            axisOption.series = blankArray_Aluminium;
+            profit_lost_aluminium_Chart.setOption(axisOption);
+            document.getElementById('profit_lost_aluminium').style.display = "";
+            window.Profit_Lost.refreshData(2);
+        }
+        
+        function refreshData(dataArray_Aluminium) {
+            var dataOption = profit_lost_aluminium_Chart.getOption();
+            dataOption.series = dataArray_Aluminium;
+            profit_lost_aluminium_Chart.setOption(dataOption);
+            window.Profit_Lost.afterRefresh();
+        }
+    </script>
 </body>
 </html>
