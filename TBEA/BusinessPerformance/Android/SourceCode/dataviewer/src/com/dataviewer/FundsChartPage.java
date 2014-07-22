@@ -174,8 +174,9 @@ public class FundsChartPage extends AQueryFragment implements
                                 "{value : " + receiveable_ratio + ",name : '"
                                         + companyName + "'}"));
                         // daily
-                        dailyPaymentDatas.add(new Double(dailyPaymentData));
-                        dailyContractDatas.add(new Double(dailyContractData));
+                        dailyPaymentDatas.add(Double.valueOf(dailyPaymentData));
+                        dailyContractDatas.add(Double
+                                .valueOf(dailyContractData));
 
                         // monthly
                         monthlyPaymentDatas.add(monthlyPaymentData);
