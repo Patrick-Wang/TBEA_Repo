@@ -74,7 +74,7 @@ public class LoginPage extends AQueryFragment implements
 		Server server = Server.getInstance();
 		server.login_outer(usn, psw, this);
 		server.login_inner(usn, psw, this);
-		dialog = ProgressDialog.show(getActivity(), null, "正在登陆");
+		//dialog = ProgressDialog.show(getActivity(), null, "正在登陆");
 	}
 
 	@Override
@@ -89,16 +89,17 @@ public class LoginPage extends AQueryFragment implements
 			}
 		}
 
-		if (responseCount == 2) {
-			dialog.hide();
-			if (successCount > 0) {
-				FragmentTransaction ft = getActivity().getFragmentManager()
-						.beginTransaction();
-				HomePage homePage = new HomePage();
-				//homePage.setUserBean(userBean);
-				ft.replace(R.id.host, homePage);
-				ft.commit();
-			} else if (user_psw_error) {
+		if (successCount == 1){
+			//dialog.hide();
+			FragmentTransaction ft = getActivity().getFragmentManager()
+					.beginTransaction();
+			HomePage homePage = new HomePage();
+			ft.replace(R.id.host, homePage);
+			ft.commit();
+		}
+		
+		if (responseCount == 2 & successCount == 0) {
+			if (user_psw_error) {
 				Toast.makeText(getActivity(), "用户名或密码错误", Toast.LENGTH_SHORT)
 						.show();
 			} else {

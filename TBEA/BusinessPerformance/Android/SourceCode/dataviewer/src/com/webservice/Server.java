@@ -37,7 +37,7 @@ public class Server {
 	}
 
 	public interface OnFundsResponseListener {
-		void onFunds(List<YSZKBean> qhmxBeans, AjaxStatus status);
+		void onFunds(List<YSZKBean> yszkBeans, AjaxStatus status);
 
 	}
 

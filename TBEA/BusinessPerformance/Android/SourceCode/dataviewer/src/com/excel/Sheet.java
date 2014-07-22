@@ -129,7 +129,6 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		this.lockRowCount = count;
 	}
 
-
 	private void init() {
 		this.setWillNotDraw(false);// ����
 		inflater = LayoutInflater.from(getContext());
@@ -177,7 +176,6 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		title_colum_scr.setOnScrollFinished(this);
 	}
 
-	
 	public LinearLayout getSheetLayout(SheetArea area) {
 		if (SheetArea.Independent == area) {
 			return lv_independent_title;
@@ -185,11 +183,11 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 			return lv_title_colum;
 		} else if (SheetArea.Content == area) {
 			return lv_content;
-		} else{
+		} else {
 			return lv_title_row;
 		}
 	}
-	
+
 	public CellTextView cell(int row, int colum) {
 		return (CellTextView) adapter.cellAt(this, row, colum);
 	}
@@ -266,30 +264,39 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 			}
 		});
 
-		for (Integer colum : changedColum) {
-			int width = sizeManager.getWidth(colum);
-			for (int row = start - 1; row >= 0; --row) {
-				adapter.adjustWidth(this, cell(row, colum), row, colum, width);
-			}
-		}
-
-		for (Integer row : changedRow) {
-			int height = sizeManager.getHeight(row);
-			for (int colum = sizeManager.getColumCount() - 1; colum >= 0; --colum) {
+		int height = 0;
+		for (int row = 0, len = sizeManager.getRowCount(); row < len; ++row) {
+			height = sizeManager.getHeight(row);
+			for (int colum = 0, clen = sizeManager.getColumCount(); colum < clen; ++colum) {
 				adapter.adjustHeight(this, cell(row, colum), row, colum, height);
+				adapter.adjustWidth(this, cell(row, colum), row, colum, sizeManager.getWidth(colum));
 			}
 		}
 
-		for (int row = sizeManager.getRowCount() - 1; row >= start; --row) {
-			for (int colum = sizeManager.getColumCount() - 1; colum >= 0; --colum) {
-				adapter.adjustWidth(this, cell(row, colum), row, colum,
-						sizeManager.getWidth(colum));
-			}
-		}
+//		for (Integer colum : changedColum) {
+//			int width = sizeManager.getWidth(colum);
+//			for (int row = start - 1; row >= 0; --row) {
+//				adapter.adjustWidth(this, cell(row, colum), row, colum, width);
+//			}
+//		}
+//
+//		for (Integer row : changedRow) {
+//			int height = sizeManager.getHeight(row);
+//			for (int colum = sizeManager.getColumCount() - 1; colum >= 0; --colum) {
+//				adapter.adjustHeight(this, cell(row, colum), row, colum, height);
+//			}
+//		}
+//
+//		for (int row = sizeManager.getRowCount() - 1; row >= start; --row) {
+//			for (int colum = sizeManager.getColumCount() - 1; colum >= 0; --colum) {
+//				adapter.adjustWidth(this, cell(row, colum), row, colum,
+//						sizeManager.getWidth(colum));
+//			}
+//		}
 
-		if (!changedNewColum.isEmpty() || !changedNewRow.isEmpty()) {
-			commit(changedNewColum, changedNewRow, start);
-		}
+		// if (!changedNewColum.isEmpty() || !changedNewRow.isEmpty()) {
+		// commit(changedNewColum, changedNewRow, start);
+		// }
 
 	}
 

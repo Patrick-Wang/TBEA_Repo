@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.common.DisplayUtil;
+import com.common.Pair;
 import com.excel.CellTextView;
 import com.excel.ContentLinearLayout;
 import com.excel.Sheet;
@@ -26,8 +27,8 @@ public class GreenCellAdapter extends StandardAdapter {
 	Paint lightGrayBKPaint = null;
 	
 	String previousText = "";
-	List<CellTextView> textViewList = new LinkedList<CellTextView>();
-	
+	List<Pair<Integer>> pairs = new LinkedList<Pair<Integer>>();
+	Pair<Integer> curPair = new Pair(0, 0);
 	public GreenCellAdapter() {
 		cellBKPaint = new Paint(Paint.DITHER_FLAG);
 		cellBKPaint.setColor(Color.GREEN);
@@ -40,10 +41,8 @@ public class GreenCellAdapter extends StandardAdapter {
 		grayBKPaint = new Paint(Paint.DITHER_FLAG);
 		grayBKPaint.setColor(Color.GRAY);
 
-		
 		lightGrayBKPaint = new Paint(Paint.DITHER_FLAG);
 		lightGrayBKPaint.setColor(Color.LTGRAY);
-
 	}
 
 	@Override
@@ -70,7 +69,7 @@ public class GreenCellAdapter extends StandardAdapter {
 	}
 
 	
-	private void mergeCells(){
+	private void mergeCells(Sheet sheet){
 		if (textViewList.size() > 1){
 			int sumHeight = 0;
 			for(CellTextView cell : textViewList){
@@ -78,6 +77,7 @@ public class GreenCellAdapter extends StandardAdapter {
 			}
 			textViewList.get(0).getLayoutParams().height = sumHeight;
 		}
+		startRow += textViewList.size();
 		textViewList.clear();
 	}
 	
@@ -85,24 +85,28 @@ public class GreenCellAdapter extends StandardAdapter {
 	public void adjustHeight(Sheet sheet, CellTextView cell, int row,
 			int colum, int height) {
 		super.adjustHeight(sheet, cell, row, colum, height);
-//		if (colum == 0 && row >= sheet.getLockRowCount()){
-//			if (cell.getText().toString().equals(previousText)){
-//				textViewList.add(cell);				
-//				if (row == sheet.getSizeManager().getRowCount() - 1){
-//					mergeCells();
-//				}
-//			}
-//			else{
-//				mergeCells();
-//				previousText = cell.getText().toString();
-//				textViewList.add(cell);
-//			}
-//		}
+		if (colum == 0 && row >= sheet.getLockRowCount()){
+			if (cell.getText().toString().equals(previousText)){
+				//textViewList.add(cell);
+				curPair.setSecond(curPair.getSecond() + 1);
+				if (row == sheet.getSizeManager().getRowCount() - 1){
+					mergeCells(sheet);
+				}
+			}
+			else{
+				//mergeCells(sheet);
+				previousText = cell.getText().toString();
+				//textViewList.add(cell);
+			}
+		}
+		
+		if (row == (sheet.getSizeManager().getRowCount() - 1) && colum == (sheet.getSizeManager().getColumCount() - 1)){
+			mergeCells(sheet);
+		}
 	}
 
 	@Override
 	public CellTextView cellAt(Sheet sheet, int row, int colum) {
-		// TODO Auto-generated method stub
 		return super.cellAt(sheet, row, colum);
 	}
 
