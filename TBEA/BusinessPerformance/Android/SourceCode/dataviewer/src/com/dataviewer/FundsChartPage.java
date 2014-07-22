@@ -108,14 +108,11 @@ public class FundsChartPage extends AQueryFragment implements
         return webView;
     }
 
-    private List getCompanyList() {
+    private List<String> getCompanyList() {
         List<String> companyList = null;
-        if (null != userBean) {
-            String[] resultArray = userBean.getCompanyqx().split(",");
-            companyList = Arrays.asList(resultArray);
-        } else {
-            companyList = new ArrayList<String>();
-        }
+        String[] resultArray = Server.getInstance().getUserBean()
+                .getCompanyqx().split(",");
+        companyList = Arrays.asList(resultArray);
         return companyList;
     }
 
@@ -248,25 +245,26 @@ public class FundsChartPage extends AQueryFragment implements
     @Override
     public View onLoadView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        initData();
         return inflater.inflate(R.layout.funds_chart_page, container, false);
     }
 
     @Override
     protected void onViewPrepared(AQuery aq, View fragView) {
 
-		Server server = Server.getInstance();
-		server.getFunds(Companys.getCompanys(), new OnFundsResponseListener() {
-
-			@Override
-			public void onFunds(List<YSZKBean> qhmxBeans, AjaxStatus status) {
-				// TODO Auto-generated method stub
-
-			}
-
-		});
-
         dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍后...");
+
+        Server server = Server.getInstance();
+        server.getFunds(Companys.getCompanys(), new OnFundsResponseListener() {
+
+            @Override
+            public void onFunds(List<YSZKBean> receivedYszkBeans,
+                    AjaxStatus status) {
+                // TODO Auto-generated method stub
+                yszkBeans = receivedYszkBeans;
+                initData();
+            }
+
+        });
 
         ((RadioGroup) aq.id(R.id.rg_tab).getView())
                 .setOnCheckedChangeListener(this);
@@ -396,9 +394,10 @@ public class FundsChartPage extends AQueryFragment implements
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    webView.loadUrl("javascript:refreshData("
+                    String url = "javascript:refreshData("
                             + dailyPaymentDataArray + ","
-                            + dailyContractDataArray + ");");
+                            + dailyContractDataArray + ");";
+                    webView.loadUrl(url);
                 }
             });
             break;
@@ -406,9 +405,10 @@ public class FundsChartPage extends AQueryFragment implements
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    webView.loadUrl("javascript:refreshData("
+                    String url = "javascript:refreshData("
                             + monthlyPaymentDataArray + ","
-                            + monthlyContractDataArray + ");");
+                            + monthlyContractDataArray + ");";
+                    webView.loadUrl(url);
                 }
             });
 
