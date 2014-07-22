@@ -95,7 +95,7 @@ public class LoginPage extends AQueryFragment implements
 				FragmentTransaction ft = getActivity().getFragmentManager()
 						.beginTransaction();
 				HomePage homePage = new HomePage();
-				homePage.setUserBean(userBean);
+				//homePage.setUserBean(userBean);
 				ft.replace(R.id.host, homePage);
 				ft.commit();
 			} else if (user_psw_error) {

@@ -33,15 +33,6 @@ html, body {
 				.getElementById('daily_payment'));
 		var daily_payment_Option = {
 				animation:false,
-			tooltip : {
-				trigger : 'axis',
-                transitionDuration : 0
-			},
-			legend : {
-				x : 'right',
-				y : 'top',
-				data : [ '日回款', '日签约' ]
-			},
 			xAxis : [ {
 				type : 'category',
 				data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆', '德缆' ]
@@ -50,9 +41,7 @@ html, body {
 				type : 'value',
 				splitArea : {
 					show : true
-				},
-				min : -5,
-				max : 180
+				}
 			} ],
 			grid : {
 				x : 60,
@@ -72,19 +61,49 @@ html, body {
 		};
 
 		daily_payment_Chart.setOption(daily_payment_Option);
+		document.getElementById('daily_payment').style.display = "none";
+		function refreshAxis(xAxisData, yAxisMin, yAxisMax) {
+            var axisOption = daily_payment_Chart.getOption();
+            axisOption.tooltip = {
+                trigger : 'axis',
+                transitionDuration : 0
+            };
+            axisOption.legend = {
+                x : 'right',
+                y : 'top',
+                data : [ '日回款', '日签约' ]
+            };
+            axisOption.xAxis = [ {
+                type : 'category',
+                data : xAxisData
+            } ];
+            axisOption.yAxis = [ {
+                type : 'value',
+                splitArea : {
+                    show : true
+                },
+                min : yAxisMin,
+                max : yAxisMax
+            } ];
+            daily_payment_Chart.setOption(axisOption);
 
-		function refreshView(values) {
-			var newOption = daily_payment_Chart.getOption();
-			newOption.series = [ {
+            document.getElementById('daily_payment').style.display = "";
+
+            window.FundsChartPage.refreshData(1);
+        }
+		
+		function refreshData(dailyPaymentDataArray, dailyContractDataArray) {
+			var dataOption = daily_payment_Chart.getOption();
+			dataOption.series = [ {
+                name : '日回款',
+                type : 'bar',
+                data : dailyPaymentDataArray
+            }, {
 				name : '日签约',
 				type : 'bar',
-				data : [ -2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6 ]
-			}, {
-				name : '日回款',
-				type : 'bar',
-				data : [ 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6 ]
+				data : dailyContractDataArray
 			} ];
-			daily_payment_Chart.setOption(newOption);
+			daily_payment_Chart.setOption(dataOption);
 			window.FundsChartPage.afterRefresh();
 		}
 	</script>

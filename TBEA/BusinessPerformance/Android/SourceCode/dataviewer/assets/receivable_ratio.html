@@ -35,12 +35,6 @@ html, body {
 		/* var values = [1, 2, 3, 4, 5, 6, 7]; */
 		var receivable_ratio_Option = {
 			animation : false,
-			legend : {
-				orient : 'horizontal',
-				/* x : 'left', */
-				y : 'top',
-				data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆', '德缆' ]
-			},
 			series : [ {
 				name : '净回款比率',
 				type : 'pie',
@@ -71,40 +65,24 @@ html, body {
 			} ]
 		};
 		receivable_ratio_Chart.setOption(receivable_ratio_Option);
-		function refreshView(values) {
+		function refreshView(legends, values) {
 			var newOption = receivable_ratio_Chart.getOption();
 			newOption.tooltip = {
                 trigger : 'item',
                 formatter : "{a} <br/>{b} : {c} ({d}%)",
                 transitionDuration : 0
             };
+			newOption.legend = {
+                orient : 'horizontal',
+                y : 'top',
+                data : legends
+            };
 			newOption.series = [ {
 				name : '净回款比率',
 				type : 'pie',
 				radius : '50%',
 				center : [ '50%', '65%' ],
-				data : [ {
-					value : values[0],
-					name : '沈变'
-				}, {
-					value : values[1],
-					name : '衡变'
-				}, {
-					value : values[2],
-					name : '新变'
-				}, {
-					value : values[3],
-					name : '天变'
-				}, {
-					value : values[4],
-					name : '鲁缆'
-				}, {
-					value : values[5],
-					name : '新缆'
-				}, {
-					value : values[6],
-					name : '德缆'
-				} ]
+				data : values
 			} ];
 			receivable_ratio_Chart.setOption(newOption);
 			window.FundsChartPage.afterRefresh();

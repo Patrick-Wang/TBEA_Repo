@@ -19,6 +19,7 @@ import com.common.JsonUtil;
 import com.javaBean.QHMXBean;
 import com.javaBean.UserBean;
 import com.javaBean.YDZBBean;
+import com.javaBean.YSZKBean;
 
 public class Server {
 
@@ -32,6 +33,11 @@ public class Server {
 
 	public interface OnFuturesResponseListener {
 		void onFutures(List<QHMXBean> qhmxBeans, AjaxStatus status);
+
+	}
+
+	public interface OnFundsResponseListener {
+		void onFunds(List<YSZKBean> qhmxBeans, AjaxStatus status);
 
 	}
 
@@ -49,6 +55,10 @@ public class Server {
 
 	public static void reset(Activity activity) {
 		instance = new Server(new AQuery(activity));
+	}
+
+	public UserBean getUserBean() {
+		return userBean;
 	}
 
 	public static Server getInstance() {
@@ -113,8 +123,10 @@ public class Server {
 							AjaxStatus status) {
 						List<YDZBBean> ydzbBeans = null;
 						if (json != null) {
-							ydzbBeans = new ArrayList<YDZBBean>(json.length());
 							try {
+								ydzbBeans = new ArrayList<YDZBBean>(json
+										.length());
+
 								for (int i = 0, len = json.length(); i < len; i++) {
 									ydzbBeans.add((YDZBBean) JsonUtil
 											.jsonToBean(json.getJSONObject(i),
@@ -133,7 +145,7 @@ public class Server {
 	public void getFutures(List<Company> companys,
 			final OnFuturesResponseListener onFuturesResponseListener) {
 		Map<String, String> request = new HashMap<String, String>();
-		request.put("menuqx", "3");
+		request.put("menuqx", "2");
 		request.put("companyID", userBean.getCompanyID());
 		String companyQX = "";
 		for (int i = companys.size() - 1; i >= 0; --i) {
@@ -150,8 +162,10 @@ public class Server {
 							AjaxStatus status) {
 						List<QHMXBean> qhmxBeans = null;
 						if (json != null) {
-							qhmxBeans = new ArrayList<QHMXBean>(json.length());
 							try {
+								qhmxBeans = new ArrayList<QHMXBean>(json
+										.length());
+
 								for (int i = 0, len = json.length(); i < len; i++) {
 									qhmxBeans.add((QHMXBean) JsonUtil
 											.jsonToBean(json.getJSONObject(i),
@@ -162,6 +176,43 @@ public class Server {
 							}
 						}
 						onFuturesResponseListener.onFutures(qhmxBeans, status);
+					}
+				});
+	}
+
+	public void getFunds(List<Company> companys,
+			final OnFundsResponseListener onFundsResponseListener) {
+		Map<String, String> request = new HashMap<String, String>();
+		request.put("menuqx", "1");
+		request.put("companyID", userBean.getCompanyID());
+		String companyQX = "";
+		for (int i = companys.size() - 1; i >= 0; --i) {
+			companyQX += companys.get(i).getId() + ",";
+		}
+		request.put("companyQX", companyQX.substring(0, companyQX.length() - 1));
+		request.put("year", "" + Calendar.getInstance().get(Calendar.YEAR));
+		request.put("month", "" + (Calendar.getInstance().get(Calendar.MONTH)));
+
+		aq.ajax(transfer_outer_url, request, JSONArray.class,
+				new AjaxCallback<JSONArray>() {
+					@Override
+					public void callback(String urlret, JSONArray json,
+							AjaxStatus status) {
+						List<YSZKBean> yszkBeans = null;
+						if (json != null) {
+							try {
+								yszkBeans = new ArrayList<YSZKBean>();
+								for (int i = 0; i < json.length(); i++) {
+									YSZKBean yszkBean = (YSZKBean) JsonUtil
+											.jsonToBean(json.getJSONObject(i),
+													YSZKBean.class);
+									yszkBeans.add(yszkBean);
+								}
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+						}
+						onFundsResponseListener.onFunds(yszkBeans, status);
 					}
 				});
 	}

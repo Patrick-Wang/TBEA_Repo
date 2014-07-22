@@ -32,16 +32,7 @@ html, body {
 		var monthly_payment_Chart = echarts.init(document
 				.getElementById('monthly_payment'));
 		var monthly_payment_Option = {
-				animation:false,
-			tooltip : {
-				trigger : 'axis',
-                transitionDuration : 0
-			},
-			legend : {
-				x : 'right',
-				y : 'top',
-				data : [ '月回款', '月签约' ]
-			},
+			animation : false,
 			xAxis : [ {
 				type : 'category',
 				data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆', '德缆' ]
@@ -50,9 +41,7 @@ html, body {
 				type : 'value',
 				splitArea : {
 					show : true
-				},
-				min : 0,
-				max : 180
+				}
 			} ],
 			grid : {
 				x : 60,
@@ -72,18 +61,48 @@ html, body {
 		};
 
 		monthly_payment_Chart.setOption(monthly_payment_Option);
+		document.getElementById('monthly_payment').style.display = "none";
+		function refreshAxis(xAxisData, yAxisMin, yAxisMax) {
+			var axisOption = monthly_payment_Chart.getOption();
+			axisOption.tooltip = {
+				trigger : 'axis',
+				transitionDuration : 0
+			};
+			axisOption.legend = {
+				x : 'right',
+				y : 'top',
+				data : [ '月回款', '月签约' ]
+			};
+			axisOption.xAxis = [ {
+				type : 'category',
+				data : xAxisData
+			} ];
+			axisOption.yAxis = [ {
+				type : 'value',
+				splitArea : {
+					show : true
+				},
+				min : yAxisMin,
+				max : yAxisMax
+			} ];
+			monthly_payment_Chart.setOption(axisOption);
 
-		function refreshView(values) {
+			document.getElementById('monthly_payment').style.display = "";
+
+			window.FundsChartPage.refreshData(2);
+		}
+
+		function refreshData(monthlyPaymentDataArray, monthlyContractDataArray) {
 
 			var newOption = monthly_payment_Chart.getOption();
 			newOption.series = [ {
+                name : '月回款',
+                type : 'bar',
+                data : monthlyPaymentDataArray
+            }, {
 				name : '月签约',
 				type : 'bar',
-				data : [ 2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6 ]
-			}, {
-				name : '月回款',
-				type : 'bar',
-				data : [ 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6 ]
+				data : monthlyContractDataArray
 			} ];
 			monthly_payment_Chart.setOption(newOption);
 			window.FundsChartPage.afterRefresh();
