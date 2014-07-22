@@ -174,7 +174,9 @@ public class FundsChartPage extends AQueryFragment implements
                                 + receiveable_ratio
                                 + ",name : '"
                                 + companyName
-                                + "',tooltip : {trigger : 'item', transitionDuration : 0, formatter: '应收余额: "
+                                + "',tooltip : {trigger : 'item', transitionDuration : 0, formatter: '"
+                                + companyName
+                                + "<br/>应收余额: "
                                 + amount_receivable
                                 + " 万元<br/>逾期款: "
                                 + overdue_payment
