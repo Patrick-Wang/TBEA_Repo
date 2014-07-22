@@ -383,14 +383,21 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 	}
 
 	
+	public boolean isHidden(int row){
+		if (this.lockColumCount > 0 && sizeManager.getColumCount() > 0) {
+			return ((ViewGroup) cell(0, row).getParent()).getVisibility() == View.GONE;
+		}
+		return false;
+	}
+	
 	public void hideRow(int row) {
 		if (sizeManager.getRowCount() > row) {
 			if (this.lockColumCount > 0 && sizeManager.getColumCount() > 0) {
-				((ViewGroup) cell(0, row).getParent()).setVisibility(View.GONE);
+				((ViewGroup) cell(row, 0).getParent()).setVisibility(View.GONE);
 			}
 
 			if (sizeManager.getColumCount() > this.lockColumCount) {
-				((ViewGroup) cell(this.lockColumCount, row).getParent())
+				((ViewGroup) cell(row, this.lockColumCount).getParent())
 						.setVisibility(View.GONE);
 			}
 
@@ -400,17 +407,21 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 	public void showRow(int row) {
 		if (sizeManager.getRowCount() > row) {
 			if (this.lockColumCount > 0 && sizeManager.getColumCount() > 0) {
-				((ViewGroup) cell(0, row).getParent())
+				((ViewGroup) cell(row, 0).getParent())
 						.setVisibility(View.VISIBLE);
 			}
 
 			if (sizeManager.getColumCount() > this.lockColumCount) {
-				((ViewGroup) cell(this.lockColumCount, row).getParent())
+				((ViewGroup) cell(row, this.lockColumCount).getParent())
 						.setVisibility(View.VISIBLE);
 			}
 		}
 	}
 
+	public Adapter getAdapter(){
+		return adapter;
+	}
+	
 	public boolean addTable(TableSource tableBlock) {
 
 		int start = sizeManager.getRowCount();

@@ -203,7 +203,18 @@ public class FuturesChartPage extends AQueryFragment implements
             public void onClick(View arg0) {
                 FragmentTransaction ft = getActivity().getFragmentManager()
                         .beginTransaction();
-                ft.replace(R.id.host, new FuturesTablePage()).addToBackStack(
+                
+                FuturesTablePage table = new FuturesTablePage();
+                switch(((RadioGroup) getAQ().id(R.id.rg_tab_ac).getView()).getCheckedRadioButtonId()){
+                case R.id.al:
+                	 table.setQHMXBeans(qhmxBeans_Aluminium);
+                	break;
+                case R.id.cu:
+                	 table.setQHMXBeans(qhmxBeans_Copper);
+                	break;
+                }
+               
+                ft.replace(R.id.host, table).addToBackStack(
                         null);
                 ft.commit();
             }

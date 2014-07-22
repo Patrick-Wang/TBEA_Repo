@@ -3,6 +3,7 @@ package com.dataviewer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -129,15 +130,20 @@ public class FuturesTablePage extends AQueryFragment {
 									}
 
 									if (bChanged) {
+										
+										List<String> filters = new LinkedList<String>();
 										for (int i = 0; i < companySel.length; ++i) {
 											companySel[i] = companybeforeSel[i];
+											if (!companySel[i]){
+												filters.add(Companys.getCompany(i).getName());
+											}
 										}
-
-										updateDataFromServer();
+										
+										GreenCellAdapter adapter = (GreenCellAdapter) sheet.getAdapter();
+										adapter.addFilter(1, filters);
 									}
 								}
 							}
-
 						});
 				builder.setNegativeButton("取消", null);
 				builder.create().show();
@@ -199,13 +205,13 @@ public class FuturesTablePage extends AQueryFragment {
 				} else {
 					String result = "";
 					try {
-						Method method = YDZBBean.class.getMethod("get"
+						Method method = QHMXBean.class.getMethod("get"
 								+ nameMap[colum][1].substring(0, 1)
 										.toUpperCase()
 								+ nameMap[colum][1].substring(1));
 						result = (String) method.invoke(qhmxBeans.get(row - 1));
-
-						if (nameMap[colum][2].equals("y")) {
+						
+						if (nameMap[colum][2].equals("y") && null != result) {
 							result = StringUtil.financeFormat(result);
 						}
 
@@ -222,6 +228,10 @@ public class FuturesTablePage extends AQueryFragment {
 						e.printStackTrace();
 					}
 
+					if (result == null){
+						return "";
+					}
+					
 					return result;
 				}
 			}
