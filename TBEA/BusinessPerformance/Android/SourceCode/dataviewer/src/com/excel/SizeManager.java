@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-class SizeManager {
+public class SizeManager {
 
 	public interface SizeChangeObserver {
 		void onWidthChanged(SizeManager mgr, int colum, int newSize);

@@ -1,11 +1,7 @@
 package com.dataviewer;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONObject;
-
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,22 +9,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-import com.common.JsonUtil;
 import com.javaBean.UserBean;
 import com.tbea.dataviewer.R;
+import com.webservice.Server;
+import com.webservice.Server.OnLoginResponseListener;
 
-public class LoginPage extends AQueryFragment {
+public class LoginPage extends AQueryFragment implements
+		OnLoginResponseListener {
 
-	private static String outerUrl = "http://218.84.134.160:8081/mobile/loginServlet";
-
-	private static String innerUrl = "http://192.168.7.22/mobile/loginServlet";
+	private int responseCount = 0;
+	private int successCount = 0;
+	private boolean user_psw_error = false;
+	private ProgressDialog dialog = null;
 
 	@Override
 	protected void onViewPrepared(final AQuery aq, View fragView) {
@@ -45,7 +42,7 @@ public class LoginPage extends AQueryFragment {
 			@Override
 			public void onClick(View v) {
 				auth(aq.id(R.id.usrn).getText().toString(), aq.id(R.id.psw)
-						.getText().toString(), outerUrl);
+						.getText().toString());
 				InputMethodManager imm = (InputMethodManager) getActivity()
 						.getSystemService(Context.INPUT_METHOD_SERVICE);
 				boolean isOpen = imm.isActive();
@@ -64,59 +61,50 @@ public class LoginPage extends AQueryFragment {
 		return inflater.inflate(R.layout.loginpage, container, false);
 	}
 
-	public void auth(final String usn, final String psw, final String url) {
-		// String url = "http://192.168.7.22/mobile/loginServlet";
+	public void auth(final String usn, final String psw) {
+		responseCount = 0;
+		successCount = 0;
+		user_psw_error = false;
+		SharedPreferences preferences = getActivity().getSharedPreferences(
+				"user", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putString("Email", usn);
+		editor.putString("Password", psw);
+		editor.commit();
+		Server server = Server.getInstance();
+		server.login_outer(usn, psw, this);
+		server.login_inner(usn, psw, this);
+		dialog = ProgressDialog.show(getActivity(), null, "正在登陆");
+	}
 
-		Map<String, String> map = new HashMap<String, String>();
+	@Override
+	public void onLogin(UserBean userBean, AjaxStatus status) {
+		++responseCount;
+		if (null != userBean) {
+			if (userBean.isLoginFlag()) {
+				++successCount;
 
-		map.put("username", usn);
-		map.put("password", psw);
-		mAq.ajax(url, map, JSONObject.class, new AjaxCallback<JSONObject>() {
-
-			@Override
-			public void callback(String urlret, JSONObject json,
-					AjaxStatus status) {
-				try {
-					if (json != null) {
-						UserBean userBean = (UserBean) JsonUtil.jsonToBean(
-								json, UserBean.class);
-
-						SharedPreferences preferences = getActivity()
-								.getSharedPreferences("user",
-										Context.MODE_PRIVATE);
-						SharedPreferences.Editor editor = preferences.edit();
-						editor.putString("Email", usn);
-						editor.putString("Password", psw);
-						editor.commit();
-						// successful ajax call, show status code and json
-						// content
-						if (userBean.isLoginFlag()) {
-
-							FragmentTransaction ft = getActivity()
-									.getFragmentManager().beginTransaction();
-							HomePage homePage = new HomePage();
-							homePage.setUserBean(userBean);
-							ft.replace(R.id.host, homePage);
-							ft.commit();
-						} else {
-							Toast.makeText(getActivity(), "用户名或密码错误",
-									Toast.LENGTH_LONG).show();
-						}
-					} else {
-						// ajax error, show error code
-						if (urlret.equals(outerUrl)) {
-							LoginPage.this.auth(usn, psw, innerUrl);
-						} else {
-							Toast.makeText(getActivity(), "网络连接错误，请检查您的网络",
-									Toast.LENGTH_LONG).show();
-						}
-					}
-
-				} catch (Exception e) {
-
-				}
+			} else {
+				user_psw_error = true;
 			}
+		}
 
-		});
+		if (responseCount == 2) {
+			dialog.hide();
+			if (successCount > 0) {
+				FragmentTransaction ft = getActivity().getFragmentManager()
+						.beginTransaction();
+				HomePage homePage = new HomePage();
+				homePage.setUserBean(userBean);
+				ft.replace(R.id.host, homePage);
+				ft.commit();
+			} else if (user_psw_error) {
+				Toast.makeText(getActivity(), "用户名或密码错误", Toast.LENGTH_SHORT)
+						.show();
+			} else {
+				Toast.makeText(getActivity(), "网络连接错误", Toast.LENGTH_SHORT)
+						.show();
+			}
+		}
 	}
 }

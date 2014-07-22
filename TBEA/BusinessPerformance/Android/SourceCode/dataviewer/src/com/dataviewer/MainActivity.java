@@ -1,18 +1,15 @@
 package com.dataviewer;
 
 import com.tbea.dataviewer.R;
+import com.webservice.Server;
 
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.FragmentTransaction;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements Callback {
@@ -30,7 +27,8 @@ public class MainActivity extends Activity implements Callback {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		Server.reset(this);
+	
 		FragmentTransaction ft = getFragmentManager()
 				.beginTransaction();
 		ft.add(R.id.host, new LoginPage());

@@ -1,15 +1,26 @@
 package com.dataviewer;
 
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxStatus;
 import com.tbea.dataviewer.R;
+import com.webservice.Company;
+import com.webservice.Companys;
+import com.webservice.Server;
+import com.webservice.Server.OnMonthQuotaResponseListener;
+import com.common.StringUtil;
 import com.dataviewer.sheetAdapter.GreenCellAdapter;
 import com.excel.Sheet;
+import com.excel.TableSource;
 import com.javaBean.YDZBBean;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.os.Bundle;
@@ -17,69 +28,124 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class QuotaTablePage extends AQueryFragment implements OnClickListener {
-	
-	List<YDZBBean> ydzbBeans = new ArrayList<YDZBBean>();
-	
-	static String[][] records = new String[][] {
-			{ "指标名称", "本月计划", "本月完成", "计划完成率", "上月完成", "较上月增长比", "上季度净值",
-					"较上季度增长比", "去年平均", "较去年净值增长比", "去年同期", "较去年同期增长比", "季度计划",
-					"季度累计", "季度计划完成率", "去年同季度", "较去年同季度增长比", "上季度", "较上季度增长比",
-					"年度计划", "年度累计", "年度计划完成率", "去年同期累计", "较去年同期累计增长比" },
-			{ "利润总额", "13580", "-", "0", "-", "0", "3577.92", "0", "8276.26",
-					"0", "9236.2", "0", "50070", "7705.8", "15.39%",
-					"26891.18", "-71.34%", "-", "0.00%", "142500", "18439.5",
-					"-", "-", "-" },
-			{ "销售收入", "317600", "-", "0", "-", "0", "195424", "0", "177156",
-					"0", "168057", "0", "1.04E+06", "202547", "19.56%",
-					"547993.72", "-63.04%", "-", "0.00%", "2.65E+08", "788818",
-					"-", "-", "-" },
-			{ "经营现金流", "149286", "-", "0", "195424", "0", "177156", "0",
-					"168057", "0", "283000", "-43777.5", "-", "22034.43", "-",
-					"-", "0", "142500", "-358228", "142500", "1400", "-", "-",
-					"-" },
-			{ "不含税产值", "230537", "-", "0", "-", "0", "133666", "0", "142345",
-					"0", "163089", "0", "740537", "146241", "19.75%",
-					"475792.73", "-69.26%", "-", "0.00%", "1.91E+06", "547239",
-					"-", "-", "-" },
-			{ "产量", "0", "-", "0", "-", "0", "0", "0", "0", "0", "0", "0", "0",
-					"0", "0.00%", "0", "-", "-", "0.00%", "15290", "0", "-",
-					"-", "-" },
-			{ "合同签约额", "573549", "-", "0", "-", "0", "204922", "0", "235800",
-					"0", "314177", "0", "-", "-", "NULL", "-", "-", "-",
-					"NULL", "-", "0", "-", "-", "-" },
-			{ "\t其中：国内签约", "-", "-", "0", "-", "0", "-", "0", "-", "0", "-",
-					"0", "-", "-", "0.00%", "-", "0", "-", "0.00%", "0", "0",
-					"-", "-", "-" },
-			{ "\t其中：国际签约", "-", "-", "0", "-", "0", "-", "0", "-", "0", "-",
-					"0", "-", "-", "0.00%", "-", "0", "-", "0.00%", "0", "0",
-					"-", "-", "-" },
-			{ "资金回笼", "430598", "-", "0", "-", "0", "149043", "0", "197095",
-					"0", "264068", "0", "1.33E+06", "171770", "12.95%",
-					"640488.31", "-73.18%", "-", "0.00%", "3.10E+06", "618898",
-					"-", "-", "-" },
-			{ "应收账款", "125499", "-", "0", "-", "0", "54160", "0", "495465",
-					"0", "390666", "0", "125499", "-", "0.00%", "390665.84",
-					"0", "594166", "0.00%", "0", "0", "-", "-", "-" },
-			{ "存货", "92899", "-", "0", "-", "0", "275433", "0", "292367", "0",
-					"292508", "0", "92899", "-", "0.00%", "292507.99", "0",
-					"268608", "0.00%", "0", "0", "-", "-", "-" } };
-	String[] strArr = new String[] { "天变", "衡变", "鲁缆", "沈变", "新变", "新缆", "德缆" };
-	boolean[] boolArr = new boolean[] { true, true, true, true, true, true,
+
+	static String[][] nameMap = { { "序号", "xh", "n" }, { "指标类型", "zblx", "n" },
+			{ "指标名称", "zbmc", "n" }, { "本月计划", "byjh", "y" },
+			{ "本月完成", "bywc", "y" }, { "计划完成率", "jhwcl", "n" },
+			{ "上月完成", "sywc", "y" }, { "较上月增长比", "jsyzzb", "n" },
+			{ "去年同期", "qntq", "y" }, { "较去年同期增长比", "jqntqzzb", "n" },
+			{ "季度计划", "jdjh", "y" }, { "季度累计", "jdlj", "y" },
+			{ "季度计划完成率", "jdjhwcl", "n" }, { "年度计划", "ndjh", "y" },
+			{ "年度累计", "ndlj", "y" }, { "年度计划完成率", "ndjhwcl", "n" },
+			{ "去年同期累计", "qntqlj", "y" }, { "较去年同期累计增长比", "jqntqljzzb", "n" } };
+	Sheet sheet = null;
+	boolean[] companySel = new boolean[] { true, true, true, true, true, true,
 			true };
+
+	private void updateDataFromServer() {
+
+		List<Company> companys = new LinkedList<Company>();
+		for (int i = 0; i < companySel.length; ++i) {
+			if (companySel[i]) {
+				companys.add(Companys.getCompany(i));
+			}
+		}
+
+		String year = (String) getAQ().id(R.id.year).getText();
+		year = year.substring(0, year.length() - 2);
+
+		String month = (String) getAQ().id(R.id.month).getText();
+		month = month.substring(0, month.length() - 2);
+
+		final ProgressDialog dialog = ProgressDialog.show(getActivity(), null,
+				"数据加载中，请稍侯...");
+		Server.getInstance().getMonthQuota(companys, year, month,
+				new OnMonthQuotaResponseListener() {
+
+					@Override
+					public void onMonthQuota(List<YDZBBean> ydzbBeans,
+							AjaxStatus status) {
+						if (ydzbBeans != null) {
+							updateTable(ydzbBeans);
+						}
+						dialog.hide();
+					}
+				});
+
+	}
+
+	protected void updateTable(final List<YDZBBean> ydzbBeans) {
+		sheet.clean();
+		sheet.addTable(new TableSource() {
+
+			@Override
+			public int getRowCount() {
+				return ydzbBeans.size() + 1;
+			}
+
+			@Override
+			public int getColumCount() {
+				return nameMap.length;
+			}
+
+			@Override
+			public String getItem(int row, int colum) {
+
+				if (0 == row) {
+					return nameMap[colum][0];
+				} else {
+					
+//					if (colum == 0 && row < 5){
+//						return "t变电工";
+//					}
+					
+					String result = "";
+					try {
+						Method method = YDZBBean.class.getMethod("get"
+								+ nameMap[colum][1].substring(0, 1)
+										.toUpperCase()
+								+ nameMap[colum][1].substring(1));
+						result = (String) method.invoke(ydzbBeans.get(row - 1));
+
+						if (nameMap[colum][2].equals("y")) {
+							result = StringUtil.financeFormat(result);
+						}
+
+					} catch (NoSuchMethodException e) {
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					} catch (InvocationTargetException e) {
+						e.printStackTrace();
+					}
+
+					return result;
+				}
+
+			}
+
+		});
+	}
 
 	@Override
 	protected void onViewPrepared(AQuery aq, View fragView) {
-		Sheet sheet = (Sheet) aq.id(R.id.mysheet).getView();
+		getAQ().id(R.id.month).getButton()
+				.setText(((Calendar.getInstance().get(Calendar.MONTH))) + " 月");
+		getAQ().id(R.id.year).getButton()
+				.setText((Calendar.getInstance().get(Calendar.YEAR)) + " 年");
+		sheet = (Sheet) aq.id(R.id.mysheet).getView();
 		sheet.setAdapter(new GreenCellAdapter());
-		sheet.lockColum(2);
+		sheet.lockColum(3);
 		sheet.lockRow(1);
-		sheet.addTableBlock(records);
 		aq.id(R.id.company).clicked(this);
 		aq.id(R.id.month).clicked(this);
 		aq.id(R.id.year).clicked(this);
-
+		updateDataFromServer();
 	}
 
 	@Override
@@ -94,7 +160,7 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 
 		switch (v.getId()) {
 		case R.id.company:
-			onClickCompony();
+			onClickCompany();
 			break;
 		case R.id.month:
 			onClickMonth();
@@ -107,69 +173,169 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 	}
 
 	private void onClickYear() {
-		String[] stringYear = new String[] { "2012年", "2013年", "2014年" };
+
+		final String yearBeforeSel = (String) getAQ().id(R.id.year).getText();
+
+		int selItem = 0;
+		final String[] stringYear = new String[] { "2012 年", "2013 年", "2014 年" };
+		for (String item : stringYear) {
+			if (item.equals(yearBeforeSel)) {
+				break;
+			}
+			++selItem;
+		}
+
+		final int currentItem = selItem;
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				this.getActivity());
 		builder.setTitle("年度");
-
-		builder.setSingleChoiceItems(stringYear, 1,
+		final int[] selItems = new int[] { currentItem };
+		builder.setSingleChoiceItems(stringYear, currentItem,
 				new DialogInterface.OnClickListener() {
 
 					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
+					public void onClick(DialogInterface dialog, int which) {
+						selItems[0] = which;
 
 					}
-
 				});
 
-		builder.setPositiveButton("确定", null);
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if (currentItem != selItems[0]) {
+					getAQ().id(R.id.year).getTextView()
+							.setText(stringYear[selItems[0]]);
+					updateDataFromServer();
+				}
+
+			}
+		});
+
 		builder.setNegativeButton("取消", null);
 		builder.create().show();
+
 	}
 
 	private void onClickMonth() {
 
-		String[] stringMonth = new String[] { "1月", "2月", "3月", "4月", "5月",
-				"6月", "7月", "8月", "9月", "10月", "11月", "12月" };
+		final String monthBeforeSel = (String) getAQ().id(R.id.month).getText();
+
+		int selItem = 0;
+		final String[] stringMonth = new String[] { "1 月", "2 月", "3 月", "4 月",
+				"5 月", "6 月", "7 月", "8 月", "9 月", "10 月", "11 月", "12 月" };
+		for (String item : stringMonth) {
+			if (item.equals(monthBeforeSel)) {
+				break;
+			}
+			++selItem;
+		}
+
+		final int currentItem = selItem;
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				this.getActivity());
 		builder.setTitle("月份");
-
-		builder.setSingleChoiceItems(stringMonth, 1,
+		final int[] selItems = new int[] { currentItem };
+		builder.setSingleChoiceItems(stringMonth, currentItem,
 				new DialogInterface.OnClickListener() {
 
 					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
+					public void onClick(DialogInterface dialog, int which) {
+						selItems[0] = which;
 
 					}
-
 				});
 
-		builder.setPositiveButton("确定", null);
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if (currentItem != selItems[0]) {
+					getAQ().id(R.id.month).getTextView()
+							.setText(stringMonth[selItems[0]]);
+					updateDataFromServer();
+				}
+			}
+		});
+
 		builder.setNegativeButton("取消", null);
 		builder.create().show();
 	}
 
-	private void onClickCompony() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(
+	private void onClickCompany() {
+
+		final boolean[] companybeforeSel = new boolean[companySel.length];
+		for (int i = 0; i < companybeforeSel.length; ++i) {
+			companybeforeSel[i] = companySel[i];
+		}
+
+		String companyNames[] = new String[Companys.count()];
+
+		for (int i = 0; i < companyNames.length; ++i) {
+			companyNames[i] = Companys.getCompany(i).getName();
+		}
+
+		final AlertDialog.Builder builder = new AlertDialog.Builder(
 				this.getActivity());
 		builder.setTitle("公司");
-		builder.setMultiChoiceItems(strArr, boolArr,
+		builder.setMultiChoiceItems(companyNames, companybeforeSel,
 				new OnMultiChoiceClickListener() {
 
 					@Override
-					public void onClick(DialogInterface arg0, int arg1,
-							boolean arg2) {
+					public void onClick(DialogInterface arg0, int which,
+							boolean isChecked) {
+						boolean bAllCancel = true;
+						for (boolean item : companySel) {
+							if (item) {
+								bAllCancel = false;
+								break;
+							}
+						}
 
+						if (bAllCancel) {
+							Toast.makeText(getActivity(), "请至少选择一个公司",
+									Toast.LENGTH_SHORT).show();
+						}
 					}
 				});
-		builder.setPositiveButton("确定", null);
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface arg0, int which) {
+
+				boolean bAllCancel = true;
+				for (boolean item : companySel) {
+					if (item) {
+						bAllCancel = false;
+						break;
+					}
+				}
+
+				if (bAllCancel) {
+					Toast.makeText(getActivity(), "请至少选择一个公司",
+							Toast.LENGTH_SHORT).show();
+
+				} else {
+					boolean bChanged = false;
+					for (int i = 0; i < companybeforeSel.length; ++i) {
+						if (companybeforeSel[i] != companySel[i]) {
+							bChanged = true;
+							break;
+						}
+					}
+
+					if (bChanged) {
+						for (int i = 0; i < companySel.length; ++i) {
+							companySel[i] = companybeforeSel[i];
+						}
+						updateDataFromServer();
+					}
+				}
+
+			}
+		});
 		builder.setNegativeButton("取消", null);
 		builder.create().show();
 	}
-
-	public void setYdzbBeans(List<YDZBBean> ydzbBeans) {
-		this.ydzbBeans = ydzbBeans;
-	}
-
 }

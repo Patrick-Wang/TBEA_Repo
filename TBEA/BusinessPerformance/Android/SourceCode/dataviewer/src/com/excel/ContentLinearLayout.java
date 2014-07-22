@@ -68,19 +68,19 @@ public class ContentLinearLayout extends LinearLayout {
 			canvas.drawLine(0, 0, width, 0, Sheet.getEdgePaint());
 		}
 
-		canvas.drawLine(0, getHeight() - 1, width, getHeight() - 1,
-				Sheet.getEdgePaint());
-		for (int j = 0; j < childCount; ++j) {
-			View child = getChildAt(j);
-			canvas.drawLine(child.getRight(), child.getTop(),
-					child.getRight() - 1, child.getBottom(),
-					Sheet.getEdgePaint());
-		}
-
 		if (bkPaint != null){
 			canvas.drawRect(0, 0, width, getHeight() - 1, bkPaint);
 		}
 		
+		canvas.drawLine(0, getHeight() - 1, width, getHeight() - 1,
+				Sheet.getEdgePaint());
+		for (int j = 0; j < childCount; ++j) {
+			View child = getChildAt(j);
+			canvas.drawLine(child.getRight() - 1, child.getTop(),
+					child.getRight() - 1, child.getBottom(),
+					Sheet.getEdgePaint());
+		}
+
 		super.onDraw(canvas);
 	}
 }

@@ -42,6 +42,14 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		Independent, Row_title, Colum_title, Content
 	}
 
+	public int getLockRowCount() {
+		return lockRowCount;
+	}
+
+	public int getLockColumCount() {
+		return lockColumCount;
+	}
+
 	public interface Adapter {
 		CellTextView getCell(LayoutInflater inflater, Sheet Sheet, int row,
 				int colum, String text);
@@ -54,6 +62,8 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 
 		void adjustHeight(Sheet sheet, CellTextView cell, int row, int colum,
 				int height);
+
+		CellTextView cellAt(Sheet sheet, int row, int colum);
 	}
 
 	private Adapter adapter = new StandardAdapter();
@@ -68,7 +78,7 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 
 	private SizeManager sizeManager = new SizeManager();
 
-	private int lockRowsCount = 0;
+	private int lockRowCount = 0;
 	private int lockColumCount = 0;
 	private LayoutInflater inflater = null;
 	static Paint paint = null;
@@ -116,8 +126,9 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 	}
 
 	public void lockRow(int count) {
-		this.lockRowsCount = count;
+		this.lockRowCount = count;
 	}
+
 
 	private void init() {
 		this.setWillNotDraw(false);// ����
@@ -166,24 +177,21 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		title_colum_scr.setOnScrollFinished(this);
 	}
 
-	public CellTextView cell(int row, int colum) {
-		View ret = null;
-		if (row < this.lockRowsCount && colum < this.lockColumCount) {
-			ret = ((LinearLayout) lv_independent_title.getChildAt(row))
-					.getChildAt(colum);
-		} else if (colum < this.lockColumCount) {
-			ret = ((LinearLayout) lv_title_colum.getChildAt(row
-					- this.lockRowsCount)).getChildAt(colum);
-		} else if (row < this.lockRowsCount) {
-			ret = ((LinearLayout) lv_title_row.getChildAt(row))
-					.getChildAt(colum - this.lockColumCount);
-		} else {
-			ret = ((LinearLayout) lv_content.getChildAt(row
-					- this.lockRowsCount)).getChildAt(colum
-					- this.lockColumCount);
+	
+	public LinearLayout getSheetLayout(SheetArea area) {
+		if (SheetArea.Independent == area) {
+			return lv_independent_title;
+		} else if (SheetArea.Colum_title == area) {
+			return lv_title_colum;
+		} else if (SheetArea.Content == area) {
+			return lv_content;
+		} else{
+			return lv_title_row;
 		}
-
-		return (CellTextView) ret;
+	}
+	
+	public CellTextView cell(int row, int colum) {
+		return (CellTextView) adapter.cellAt(this, row, colum);
 	}
 
 	private void updateSize(View view, int row, int colum) {
@@ -209,7 +217,7 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 
 	public int getContentHeight() {
 		int lockHeight = 0;
-		for (int i = 0; i < this.lockRowsCount; ++i) {
+		for (int i = 0; i < this.lockRowCount; ++i) {
 			lockHeight += sizeManager.getHeight(i);
 		}
 
@@ -227,6 +235,9 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		last_title_row.removeAllViews();
 		last_content.removeAllViews();
 		sizeManager = new SizeManager();
+		lv_content.addView(last_content);
+		lv_title_colum.addView(last_title_colum);
+		lv_title_row.addView(last_title_row);
 	}
 
 	private void commit(Set<Integer> changedColum, Set<Integer> changedRow,
@@ -282,13 +293,13 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 
 	}
 
-	private boolean validate(String[][] tableBlock) {
+	private boolean validate(TableSource tableBlock) {
 		if (sizeManager.isActive()) {
-			if (tableBlock[0].length != sizeManager.getColumCount()) {
+			if (tableBlock.getColumCount() != sizeManager.getColumCount()) {
 				return false;
 			}
 		} else {
-			sizeManager.active(tableBlock[0].length);
+			sizeManager.active(tableBlock.getColumCount());
 		}
 		return true;
 	}
@@ -306,13 +317,12 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		return ll;
 	}
 
-	private void addRecord(String[] record) {
-		sizeManager.increaseRow(1);
+	private void addRecord(TableSource tableBlock, int row) {
 		ContentLinearLayout unlockedLine = null;
 		ContentLinearLayout lockedLine = null;
 		CellTextView cell = null;
 
-		if (this.lockRowsCount > this.lv_title_row.getChildCount() - 1) {
+		if (this.lockRowCount > this.lv_title_row.getChildCount() - 1) {
 
 			lockedLine = createContentLineLayout(SheetArea.Independent,
 					lv_independent_title.getChildCount());
@@ -338,18 +348,20 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 
 		}
 
-		for (int i = 0; i < this.lockColumCount && i < record.length; ++i) {
+		int columCount = sizeManager.getColumCount();
+
+		for (int i = 0; i < this.lockColumCount && i < columCount; ++i) {
 			cell = adapter.getCell(this.inflater, this,
-					sizeManager.getRowCount() - 1, i, record[i]);
-			cell.setText(record[i]);
+					sizeManager.getRowCount() - 1, i,
+					tableBlock.getItem(row, i));
 			lockedLine.addView(cell);
 			updateSize(cell, sizeManager.getRowCount() - 1, i);
 		}
 
-		for (int i = this.lockColumCount; i < record.length; ++i) {
+		for (int i = this.lockColumCount; i < columCount; ++i) {
 			cell = adapter.getCell(inflater, this,
-					sizeManager.getRowCount() - 1, i, record[i]);
-			cell.setText(record[i]);
+					sizeManager.getRowCount() - 1, i,
+					tableBlock.getItem(row, i));
 			unlockedLine.addView(cell);
 			updateSize(cell, sizeManager.getRowCount() - 1, i);
 		}
@@ -361,7 +373,35 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		unlockedLine.addView(llfill);
 	}
 
-	public boolean addTableBlock(String[][] tableBlock) {
+	public void hideRow(int row) {
+		if (sizeManager.getRowCount() > row) {
+			if (this.lockColumCount > 0 && sizeManager.getColumCount() > 0) {
+				((ViewGroup) cell(0, row).getParent()).setVisibility(View.GONE);
+			}
+
+			if (sizeManager.getColumCount() > this.lockColumCount) {
+				((ViewGroup) cell(this.lockColumCount, row).getParent())
+						.setVisibility(View.GONE);
+			}
+
+		}
+	}
+
+	public void showRow(int row) {
+		if (sizeManager.getRowCount() > row) {
+			if (this.lockColumCount > 0 && sizeManager.getColumCount() > 0) {
+				((ViewGroup) cell(0, row).getParent())
+						.setVisibility(View.VISIBLE);
+			}
+
+			if (sizeManager.getColumCount() > this.lockColumCount) {
+				((ViewGroup) cell(this.lockColumCount, row).getParent())
+						.setVisibility(View.VISIBLE);
+			}
+		}
+	}
+
+	public boolean addTable(TableSource tableBlock) {
 
 		int start = sizeManager.getRowCount();
 
@@ -385,8 +425,9 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 			}
 		});
 
-		for (int i = 0; i < tableBlock.length; ++i) {
-			addRecord(tableBlock[i]);
+		for (int i = 0, len = tableBlock.getRowCount(); i < len; ++i) {
+			sizeManager.increaseRow(1);
+			addRecord(tableBlock, i);
 		}
 
 		commit(changedColum, changedRow, start);
@@ -408,7 +449,7 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 									- sizeManager.getHeight(sizeManager
 											.getRowCount() - 1));
 				} else {
-					for (int i = this.lockRowsCount, rowCount = sizeManager
+					for (int i = this.lockRowCount, rowCount = sizeManager
 							.getRowCount(); i < rowCount; ++i) {
 						cellHeight = sizeManager.getHeight(i);
 						sumHeight += cellHeight;

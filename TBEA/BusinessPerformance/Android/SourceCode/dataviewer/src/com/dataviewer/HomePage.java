@@ -40,7 +40,7 @@ public class HomePage extends AQueryFragment {
 
 	private static String outerUrl = "http://218.84.134.160:8081/mobile/dataTransfer";
 
-	public UserBean userBean = new UserBean();
+	public static UserBean userBean = new UserBean();
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
@@ -102,15 +102,15 @@ public class HomePage extends AQueryFragment {
 				@Override
 				public void onClick(View arg0) {
 					functionId = R.id.f3;
-					fetchData("3", outerUrl);
+//					fetchData("3", outerUrl);
 
-					// FragmentTransaction ft =
-					// getActivity().getFragmentManager()
-					// .beginTransaction();
-					// ft.replace(R.id.host, new
-					// QuotaTablePage()).addToBackStack(
-					// null);
-					// ft.commit();
+					 FragmentTransaction ft =
+					 getActivity().getFragmentManager()
+					 .beginTransaction();
+					 ft.replace(R.id.host, new
+					 QuotaTablePage()).addToBackStack(
+					 null);
+					 ft.commit();
 				}
 
 			});
@@ -208,7 +208,7 @@ public class HomePage extends AQueryFragment {
 			}
 			ft = getActivity().getFragmentManager().beginTransaction();
 			QuotaTablePage quotaTablePage = new QuotaTablePage();
-			quotaTablePage.setYdzbBeans(ydzbBeans);
+			//quotaTablePage.setYdzbBeans(ydzbBeans);
 			ft.replace(R.id.host, quotaTablePage).addToBackStack(null);
 			ft.commit();
 
