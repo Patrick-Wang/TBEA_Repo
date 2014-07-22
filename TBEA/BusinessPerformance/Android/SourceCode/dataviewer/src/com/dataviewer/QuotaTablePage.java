@@ -110,7 +110,7 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 								+ nameMap[colum][1].substring(1));
 						result = (String) method.invoke(ydzbBeans.get(row - 1));
 
-						if (nameMap[colum][2].equals("y")) {
+						if (nameMap[colum][2].equals("y") && null != result) {
 							result = StringUtil.financeFormat(result);
 						}
 
