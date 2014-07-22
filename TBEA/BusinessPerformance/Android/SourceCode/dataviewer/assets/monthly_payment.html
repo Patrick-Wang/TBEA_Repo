@@ -96,13 +96,13 @@ html, body {
 
 			var newOption = monthly_payment_Chart.getOption();
 			newOption.series = [ {
+                name : '月回款',
+                type : 'bar',
+                data : monthlyPaymentDataArray
+            }, {
 				name : '月签约',
 				type : 'bar',
 				data : monthlyContractDataArray
-			}, {
-				name : '月回款',
-				type : 'bar',
-				data : monthlyPaymentDataArray
 			} ];
 			monthly_payment_Chart.setOption(newOption);
 			window.FundsChartPage.afterRefresh();

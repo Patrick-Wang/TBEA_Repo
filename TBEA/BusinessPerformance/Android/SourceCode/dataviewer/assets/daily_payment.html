@@ -95,13 +95,13 @@ html, body {
 		function refreshData(dailyPaymentDataArray, dailyContractDataArray) {
 			var dataOption = daily_payment_Chart.getOption();
 			dataOption.series = [ {
+                name : '日回款',
+                type : 'bar',
+                data : dailyPaymentDataArray
+            }, {
 				name : '日签约',
 				type : 'bar',
 				data : dailyContractDataArray
-			}, {
-				name : '日回款',
-				type : 'bar',
-				data : dailyPaymentDataArray
 			} ];
 			daily_payment_Chart.setOption(dataOption);
 			window.FundsChartPage.afterRefresh();
