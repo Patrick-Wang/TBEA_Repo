@@ -76,17 +76,13 @@ public class FuturesChartPage extends AQueryFragment implements
         return companyList;
     }
 
-    private Map<String, Double> sortData(List<String> inputList) {
-        List<Double> sortList = new ArrayList<Double>(inputList.size());
-        for (String input : inputList) {
-            sortList.add(Double.valueOf(input));
-        }
+    private Map<String, Double> sortData(List<Double> inputList) {
         Map<String, Double> resultMap = null;
-        if (null != sortList && sortList.size() > 0) {
-            Collections.sort(sortList);
+        if (null != inputList && inputList.size() > 0) {
+            Collections.sort(inputList);
             resultMap = new HashMap<String, Double>();
-            resultMap.put("min", sortList.get(0));
-            resultMap.put("max", sortList.get(sortList.size() - 1));
+            resultMap.put("min", inputList.get(0));
+            resultMap.put("max", inputList.get(inputList.size() - 1));
         }
         return resultMap;
     }
@@ -97,7 +93,7 @@ public class FuturesChartPage extends AQueryFragment implements
         String tempCompanyName = null;
         String tempDate = null;
         String profit_Lost_Amount = null;
-        List<String> tempValues = new ArrayList<String>();
+        List<Double> tempValues = new ArrayList<Double>();
         Map<String, Double> tempMap = null;
 
         Set<String> companyNames = new TreeSet<String>();
@@ -115,7 +111,7 @@ public class FuturesChartPage extends AQueryFragment implements
                     tempDate = qhmxBean_Copper.getDate();
                     dateSet.add(tempDate);
                     profit_Lost_Amount = qhmxBean_Copper.getYkje();
-                    tempValues.add(profit_Lost_Amount);
+                    tempValues.add(new Double(profit_Lost_Amount));
                     valueMap.put(tempCompanyName + tempDate, profit_Lost_Amount);
                 } else {
                     // TODO 1000 id?
