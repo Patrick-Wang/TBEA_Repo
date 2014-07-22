@@ -43,11 +43,15 @@ public class Server {
 
 	private AQuery aq;
 
-	private final static String transfer_outer_url = "http://218.84.134.160:8081/mobile/dataTransfer";
+	// private final static String transfer_url =
+	// "http://218.84.134.160:8081/mobile/dataTransfer";
+	//
+	// private final static String login_url =
+	// "http://218.84.134.160:8081/mobile/loginServlet";
 
-	private static String login_outer_url = "http://218.84.134.160:8081/mobile/loginServlet";
+	private final static String transfer_url = "http://192.168.7.22/mobile/dataTransfer";
 
-	private static String login_inner_url = "http://192.168.7.22/mobile/loginServlet";
+	private final static String login_url = "http://192.168.7.22/mobile/loginServlet";
 
 	private static Server instance = null;
 
@@ -70,36 +74,29 @@ public class Server {
 		this.aq = aq;
 	}
 
-	private void login(String url, String userName, String password,
+	public void login(String userName, String password,
 			final OnLoginResponseListener onLoginResponseListener) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("username", userName);
 		map.put("password", password);
-		aq.ajax(url, map, JSONObject.class, new AjaxCallback<JSONObject>() {
+		aq.ajax(login_url, map, JSONObject.class,
+				new AjaxCallback<JSONObject>() {
 
-			@Override
-			public void callback(String url, JSONObject json, AjaxStatus status) {
+					@Override
+					public void callback(String url, JSONObject json,
+							AjaxStatus status) {
 
-				if (json != null) {
-					userBean = (UserBean) JsonUtil.jsonToBean(json,
-							UserBean.class);
-				} else {
-					userBean = null;
-				}
-				onLoginResponseListener.onLogin(userBean, status);
-			}
+						if (json != null) {
+							userBean = (UserBean) JsonUtil.jsonToBean(json,
+									UserBean.class);
+							onLoginResponseListener.onLogin(userBean, status);
+						} else {
+							onLoginResponseListener.onLogin(null, status);
+						}
 
-		});
-	}
+					}
 
-	public void login_outer(String userName, String password,
-			final OnLoginResponseListener onLoginResponseListener) {
-		login(login_outer_url, userName, password, onLoginResponseListener);
-	}
-
-	public void login_inner(String userName, String password,
-			final OnLoginResponseListener onLoginResponseListener) {
-		login(login_inner_url, userName, password, onLoginResponseListener);
+				});
 	}
 
 	public void getMonthQuota(List<Company> companys, String year,
@@ -116,7 +113,7 @@ public class Server {
 		request.put("year", year);
 		request.put("month", month);
 
-		aq.ajax(transfer_outer_url, request, JSONArray.class,
+		aq.ajax(transfer_url, request, JSONArray.class,
 				new AjaxCallback<JSONArray>() {
 					@Override
 					public void callback(String urlret, JSONArray json,
@@ -155,7 +152,7 @@ public class Server {
 		request.put("year", "" + Calendar.getInstance().get(Calendar.YEAR));
 		request.put("month", "" + (Calendar.getInstance().get(Calendar.MONTH)));
 
-		aq.ajax(transfer_outer_url, request, JSONArray.class,
+		aq.ajax(transfer_url, request, JSONArray.class,
 				new AjaxCallback<JSONArray>() {
 					@Override
 					public void callback(String urlret, JSONArray json,
@@ -213,7 +210,7 @@ public class Server {
 		request.put("year", "" + Calendar.getInstance().get(Calendar.YEAR));
 		request.put("month", "" + (Calendar.getInstance().get(Calendar.MONTH)));
 
-		aq.ajax(transfer_outer_url, request, JSONArray.class,
+		aq.ajax(transfer_url, request, JSONArray.class,
 				new AjaxCallback<JSONArray>() {
 					@Override
 					public void callback(String urlret, JSONArray json,

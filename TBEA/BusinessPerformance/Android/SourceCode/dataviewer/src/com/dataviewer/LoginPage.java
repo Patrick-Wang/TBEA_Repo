@@ -22,11 +22,6 @@ import com.webservice.Server.OnLoginResponseListener;
 public class LoginPage extends AQueryFragment implements
 		OnLoginResponseListener {
 
-	private int responseCount = 0;
-	private int successCount = 0;
-	private boolean user_psw_error = false;
-	private ProgressDialog dialog = null;
-
 	@Override
 	protected void onViewPrepared(final AQuery aq, View fragView) {
 
@@ -62,9 +57,6 @@ public class LoginPage extends AQueryFragment implements
 	}
 
 	public void auth(final String usn, final String psw) {
-		responseCount = 0;
-		successCount = 0;
-		user_psw_error = false;
 		SharedPreferences preferences = getActivity().getSharedPreferences(
 				"user", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = preferences.edit();
@@ -72,40 +64,26 @@ public class LoginPage extends AQueryFragment implements
 		editor.putString("Password", psw);
 		editor.commit();
 		Server server = Server.getInstance();
-		server.login_outer(usn, psw, this);
-		server.login_inner(usn, psw, this);
-		//dialog = ProgressDialog.show(getActivity(), null, "正在登陆");
+		server.login(usn, psw, this);
 	}
 
 	@Override
 	public void onLogin(UserBean userBean, AjaxStatus status) {
-		++responseCount;
+
 		if (null != userBean) {
 			if (userBean.isLoginFlag()) {
-				++successCount;
+				FragmentTransaction ft = getActivity().getFragmentManager()
+						.beginTransaction();
+				HomePage homePage = new HomePage();
+				ft.replace(R.id.host, homePage);
+				ft.commit();
 
 			} else {
-				user_psw_error = true;
-			}
-		}
-
-		if (successCount == 1){
-			//dialog.hide();
-			FragmentTransaction ft = getActivity().getFragmentManager()
-					.beginTransaction();
-			HomePage homePage = new HomePage();
-			ft.replace(R.id.host, homePage);
-			ft.commit();
-		}
-		
-		if (responseCount == 2 & successCount == 0) {
-			if (user_psw_error) {
 				Toast.makeText(getActivity(), "用户名或密码错误", Toast.LENGTH_SHORT)
 						.show();
-			} else {
-				Toast.makeText(getActivity(), "网络连接错误", Toast.LENGTH_SHORT)
-						.show();
 			}
+		} else {
+			Toast.makeText(getActivity(), "网络连接错误", Toast.LENGTH_SHORT).show();
 		}
 	}
 }

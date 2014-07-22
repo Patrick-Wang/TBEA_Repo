@@ -260,7 +260,7 @@ public class FuturesChartPage extends AQueryFragment implements
             if (null != qhmxBeans_Aluminium && qhmxBeans_Aluminium.size() > 1) {
                 transformOfAluminium(companyList);
             } else {
-
+            	getAQ().id(R.id.al).getView().setEnabled(false);
             }
         } catch (JSONException e) {
             Toast.makeText(getActivity(), "数据错误，请重试", Toast.LENGTH_LONG).show();
