@@ -32,13 +32,13 @@ public class Server {
 	}
 
 	public interface OnFuturesResponseListener {
-		void onFutures(List<QHMXBean> qhmxBeans, AjaxStatus status);
+		void onFutures(List<QHMXBean> qhmxBeans_Copper,
+				List<QHMXBean> qhmxBeans_Aluminium, AjaxStatus status);
 
 	}
 
 	public interface OnFundsResponseListener {
 		void onFunds(List<YSZKBean> yszkBeans, AjaxStatus status);
-
 	}
 
 	private AQuery aq;
@@ -160,22 +160,42 @@ public class Server {
 					@Override
 					public void callback(String urlret, JSONArray json,
 							AjaxStatus status) {
-						List<QHMXBean> qhmxBeans = null;
+
+						List<QHMXBean> qhmxBeans_Copper = null;
+						List<QHMXBean> qhmxBeans_Aluminium = null;
+
 						if (json != null) {
 							try {
-								qhmxBeans = new ArrayList<QHMXBean>(json
-										.length());
-
-								for (int i = 0, len = json.length(); i < len; i++) {
-									qhmxBeans.add((QHMXBean) JsonUtil
-											.jsonToBean(json.getJSONObject(i),
-													QHMXBean.class));
+								qhmxBeans_Copper = new ArrayList<QHMXBean>();
+								qhmxBeans_Aluminium = new ArrayList<QHMXBean>();
+								JSONArray qhmxBeans_Copper_JsonArray = json
+										.getJSONArray(0);
+								JSONArray qhmxBeans_Aluminium_JsonArray = json
+										.getJSONArray(1);
+								for (int i = 0; i < qhmxBeans_Copper_JsonArray
+										.length(); i++) {
+									QHMXBean qhmxBean = (QHMXBean) JsonUtil
+											.jsonToBean(
+													qhmxBeans_Copper_JsonArray
+															.getJSONObject(i),
+													QHMXBean.class);
+									qhmxBeans_Copper.add(qhmxBean);
+								}
+								for (int i = 0; i < qhmxBeans_Aluminium_JsonArray
+										.length(); i++) {
+									QHMXBean qhmxBean = (QHMXBean) JsonUtil
+											.jsonToBean(
+													qhmxBeans_Aluminium_JsonArray
+															.getJSONObject(i),
+													QHMXBean.class);
+									qhmxBeans_Aluminium.add(qhmxBean);
 								}
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
 						}
-						onFuturesResponseListener.onFutures(qhmxBeans, status);
+						onFuturesResponseListener.onFutures(qhmxBeans_Copper,
+								qhmxBeans_Aluminium, status);
 					}
 				});
 	}

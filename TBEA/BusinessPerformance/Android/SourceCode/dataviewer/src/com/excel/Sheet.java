@@ -64,6 +64,8 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 				int height);
 
 		CellTextView cellAt(Sheet sheet, int row, int colum);
+		
+		void onFinish(Sheet sheet);
 	}
 
 	private Adapter adapter = new StandardAdapter();
@@ -380,6 +382,7 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		unlockedLine.addView(llfill);
 	}
 
+	
 	public void hideRow(int row) {
 		if (sizeManager.getRowCount() > row) {
 			if (this.lockColumCount > 0 && sizeManager.getColumCount() > 0) {
@@ -439,6 +442,8 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 
 		commit(changedColum, changedRow, start);
 
+		adapter.onFinish(this);
+		
 		return true;
 	}
 

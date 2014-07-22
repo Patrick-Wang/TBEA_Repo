@@ -56,4 +56,10 @@ public class StandardAdapter implements Adapter {
 		}	
 		return (CellTextView) ret;
 	}
+
+	@Override
+	public void onFinish(Sheet sheet) {
+		// TODO Auto-generated method stub
+		
+	}
 }

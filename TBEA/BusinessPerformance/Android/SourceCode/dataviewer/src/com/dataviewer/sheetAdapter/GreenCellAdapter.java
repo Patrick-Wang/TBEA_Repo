@@ -8,8 +8,6 @@ import android.graphics.Paint;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.View;
-
 import com.common.DisplayUtil;
 import com.common.Pair;
 import com.excel.CellTextView;
@@ -26,9 +24,11 @@ public class GreenCellAdapter extends StandardAdapter {
 	Paint grayBKPaint = null;
 	Paint lightGrayBKPaint = null;
 	
+	List<Pair<Integer, List<String>>> filters = new LinkedList<Pair<Integer, List<String>>>();
+	List<Integer> hiddenRows = new LinkedList<Integer>();
 	String previousText = "";
-	List<Pair<Integer>> pairs = new LinkedList<Pair<Integer>>();
-	Pair<Integer> curPair = new Pair(0, 0);
+	List<Pair<Integer, Integer>> pairs = new LinkedList<Pair<Integer, Integer>>();
+	Pair<Integer, Integer> curPair = new Pair<Integer, Integer>(0, 0);
 	public GreenCellAdapter() {
 		cellBKPaint = new Paint(Paint.DITHER_FLAG);
 		cellBKPaint.setColor(Color.GREEN);
@@ -45,6 +45,26 @@ public class GreenCellAdapter extends StandardAdapter {
 		lightGrayBKPaint.setColor(Color.LTGRAY);
 	}
 
+	
+	public void addFilter(int colum, List<String> keyWords){
+		filters.add(new Pair<Integer, List<String>>(colum, keyWords));
+	}
+	
+	
+	private boolean match(int colum, String word){
+		for(Pair<Integer, List<String>> pair : filters){
+			if (pair.getFirst() == colum){
+				for (String val : pair.getSecond()){
+					if (val.equals(word)){
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	
 	@Override
 	public CellTextView getCell(LayoutInflater inflater, Sheet Sheet, int row,
 			int colum, String text) {
@@ -64,21 +84,35 @@ public class GreenCellAdapter extends StandardAdapter {
 		}
 
 		ctv.setText(text);
+		if (!hiddenRows.contains(row)){
+			if (match(colum, text)){
+				hiddenRows.add(row);
+			}
+		}
 		
 		return ctv;
 	}
 
 	
-	private void mergeCells(Sheet sheet){
-		if (textViewList.size() > 1){
-			int sumHeight = 0;
-			for(CellTextView cell : textViewList){
-				sumHeight += cell.getLayoutParams().height = 0;
-			}
-			textViewList.get(0).getLayoutParams().height = sumHeight;
+	
+	@Override
+	public void onFinish(Sheet sheet) {
+		for(int i = hiddenRows.size() - 1; i >= 0; --i){
+			sheet.hideRow(hiddenRows.get(i));
 		}
-		startRow += textViewList.size();
-		textViewList.clear();
+	}
+
+
+	private void mergeCells(Sheet sheet){
+//		if (textViewList.size() > 1){
+//			int sumHeight = 0;
+//			for(CellTextView cell : textViewList){
+//				sumHeight += cell.getLayoutParams().height = 0;
+//			}
+//			textViewList.get(0).getLayoutParams().height = sumHeight;
+//		}
+//		startRow += textViewList.size();
+//		textViewList.clear();
 	}
 	
 	@Override
@@ -87,16 +121,16 @@ public class GreenCellAdapter extends StandardAdapter {
 		super.adjustHeight(sheet, cell, row, colum, height);
 		if (colum == 0 && row >= sheet.getLockRowCount()){
 			if (cell.getText().toString().equals(previousText)){
-				//textViewList.add(cell);
-				curPair.setSecond(curPair.getSecond() + 1);
+				curPair.setSecond(row);
 				if (row == sheet.getSizeManager().getRowCount() - 1){
-					mergeCells(sheet);
+					pairs.add(new Pair<Integer, Integer>(curPair.getFirst(), curPair.getSecond()));
 				}
 			}
 			else{
-				//mergeCells(sheet);
+				pairs.add(new Pair<Integer, Integer>(curPair.getFirst(), curPair.getSecond()));
+				curPair.setFirst(row);
+				curPair.setSecond(row);
 				previousText = cell.getText().toString();
-				//textViewList.add(cell);
 			}
 		}
 		

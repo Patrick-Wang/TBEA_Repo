@@ -62,6 +62,7 @@ public class FuturesTablePage extends AQueryFragment {
 
 		aq.id(R.id.company).clicked(new OnClickListener() {
 
+
 			@Override
 			public void onClick(View v) {
 
@@ -142,38 +143,40 @@ public class FuturesTablePage extends AQueryFragment {
 				builder.create().show();
 			}
 		});
+	
+		updateTable();
 	}
 
-	private void updateDataFromServer() {
-
-		List<Company> companys = new LinkedList<Company>();
-		for (int i = 0; i < companySel.length; ++i) {
-			if (companySel[i]) {
-				companys.add(Companys.getCompany(i));
-			}
-		}
-
-		String year = (String) getAQ().id(R.id.year).getText();
-		year = year.substring(0, year.length() - 2);
-
-		String month = (String) getAQ().id(R.id.month).getText();
-		month = month.substring(0, month.length() - 2);
-
-		final ProgressDialog dialog = ProgressDialog.show(getActivity(), null,
-				"数据加载中，请稍侯...");
-		Server server = Server.getInstance();
-		server.getFutures(companys, new OnFuturesResponseListener() {
-
-			@Override
-			public void onFutures(List<QHMXBean> qhmxBeans, AjaxStatus status) {
-				if (qhmxBeans != null) {
-					FuturesTablePage.this.qhmxBeans = qhmxBeans;
-					updateTable();
-				}
-				dialog.hide();
-			}
-		});
-	}
+//	private void updateDataFromServer() {
+//
+//		List<Company> companys = new LinkedList<Company>();
+//		for (int i = 0; i < companySel.length; ++i) {
+//			if (companySel[i]) {
+//				companys.add(Companys.getCompany(i));
+//			}
+//		}
+//
+//		String year = (String) getAQ().id(R.id.year).getText();
+//		year = year.substring(0, year.length() - 2);
+//
+//		String month = (String) getAQ().id(R.id.month).getText();
+//		month = month.substring(0, month.length() - 2);
+//
+//		final ProgressDialog dialog = ProgressDialog.show(getActivity(), null,
+//				"数据加载中，请稍侯...");
+//		Server server = Server.getInstance();
+//		server.getFutures(companys, new OnFuturesResponseListener() {
+//
+//			@Override
+//			public void onFutures(List<QHMXBean> qhmxBeans, AjaxStatus status) {
+//				if (qhmxBeans != null) {
+//					FuturesTablePage.this.qhmxBeans = qhmxBeans;
+//					updateTable();
+//				}
+//				dialog.hide();
+//			}
+//		});
+//	}
 
 	protected void updateTable() {
 		sheet.clean();

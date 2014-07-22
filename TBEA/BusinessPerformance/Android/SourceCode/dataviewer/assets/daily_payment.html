@@ -35,7 +35,7 @@ html, body {
 				animation:false,
 			xAxis : [ {
 				type : 'category',
-				data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆', '德缆' ]
+				data : [ '沈变', '衡变', '新变', '天变', '鲁缆', '新缆' ]
 			} ],
 			yAxis : [ {
 				type : 'value',
@@ -52,11 +52,11 @@ html, body {
 			series : [ {
 				name : '日回款',
 				type : 'bar',
-				data : [ 0, 0, 0, 0, 0, 0, 0 ]
+				data : [ 0, 0, 0, 0, 0, 0 ]
 			}, {
 				name : '日签约',
 				type : 'bar',
-				data : [ 0, 0, 0, 0, 0, 0, 0 ]
+				data : [ 0, 0, 0, 0, 0, 0 ]
 			} ]
 		};
 
@@ -78,6 +78,7 @@ html, body {
                 data : xAxisData
             } ];
             axisOption.yAxis = [ {
+                name : '(万元)',
                 type : 'value',
                 splitArea : {
                     show : true
