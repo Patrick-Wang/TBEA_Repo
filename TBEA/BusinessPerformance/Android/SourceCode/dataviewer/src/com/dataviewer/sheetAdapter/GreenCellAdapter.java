@@ -219,11 +219,11 @@ public class GreenCellAdapter extends StandardAdapter {
 				|| (sheetArea == SheetArea.Row_title && 0 == index)) {
 			cll.setBKPaint(titleBKPaint);
 		} else {
-			if (index % 2 == 0) {
-				cll.setBKPaint(grayBKPaint);
-			} else {
-				cll.setBKPaint(lightGrayBKPaint);
-			}
+//			if (index % 2 == 0) {
+//				cll.setBKPaint(grayBKPaint);
+//			} else {
+//				cll.setBKPaint(lightGrayBKPaint);
+//			}
 		}
 
 		return cll;
