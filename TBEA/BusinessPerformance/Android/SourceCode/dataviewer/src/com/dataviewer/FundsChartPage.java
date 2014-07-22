@@ -170,9 +170,22 @@ public class FundsChartPage extends AQueryFragment implements
                         companyName = yszkBean.getQymc();
                         companyNames.add(companyName);
                         // receiveable_ratio
-                        receivableRatioDataObjects.add(new JSONObject(
-                                "{value : " + receiveable_ratio + ",name : '"
-                                        + companyName + "'}"));
+                        String js = "{value : "
+                                + receiveable_ratio
+                                + ",name : '"
+                                + companyName
+                                + "',tooltip : {trigger : 'item', transitionDuration : 0, formatter: '应收余额: "
+                                + amount_receivable
+                                + " 万元<br/>逾期款: "
+                                + overdue_payment
+                                + " 万元<br/>净回款比率: "
+                                + String.format("%.2f",
+                                        (receiveable_ratio * 100)) + "%'}}";
+                        System.out.println(js);
+                        JSONObject receiveable_ratio_JSONObject = new JSONObject(
+                                js);
+                        receivableRatioDataObjects
+                                .add(receiveable_ratio_JSONObject);
                         // daily
                         dailyPaymentDatas.add(Double.valueOf(dailyPaymentData));
                         dailyContractDatas.add(Double
@@ -217,6 +230,7 @@ public class FundsChartPage extends AQueryFragment implements
             monthlyPaymentYAxisMax = tempMap.get("max");
 
         } catch (JSONException e) {
+            dialog.hide();
             Toast.makeText(getActivity(), "数据错误，请重试", Toast.LENGTH_LONG).show();
         }
     }
