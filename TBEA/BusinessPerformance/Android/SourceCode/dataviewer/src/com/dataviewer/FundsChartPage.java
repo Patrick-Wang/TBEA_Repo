@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.Transformer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,14 +30,12 @@ import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxStatus;
-import com.javaBean.QHMXBean;
 import com.javaBean.UserBean;
 import com.javaBean.YSZKBean;
 import com.tbea.dataviewer.R;
 import com.webservice.Companys;
 import com.webservice.Server;
 import com.webservice.Server.OnFundsResponseListener;
-import com.webservice.Server.OnFuturesResponseListener;
 
 public class FundsChartPage extends AQueryFragment implements
         OnCheckedChangeListener {
@@ -116,17 +112,13 @@ public class FundsChartPage extends AQueryFragment implements
         return companyList;
     }
 
-    private Map<String, Double> sortData(List<String> inputList) {
-        List<Double> sortList = new ArrayList<Double>(inputList.size());
-        for (String input : inputList) {
-            sortList.add(Double.valueOf(input));
-        }
+    private Map<String, Double> sortData(List<Double> inputList) {
         Map<String, Double> resultMap = null;
-        if (null != sortList && sortList.size() > 0) {
-            Collections.sort(sortList);
+        if (null != inputList && inputList.size() > 0) {
+            Collections.sort(inputList);
             resultMap = new HashMap<String, Double>();
-            resultMap.put("min", sortList.get(0));
-            resultMap.put("max", sortList.get(sortList.size() - 1));
+            resultMap.put("min", inputList.get(0));
+            resultMap.put("max", inputList.get(inputList.size() - 1));
         }
         return resultMap;
     }
@@ -139,7 +131,7 @@ public class FundsChartPage extends AQueryFragment implements
             String companyId = null;
             String companyName = null;
 
-            List<String> tempList = null;
+            List<Double> tempList = null;
             Map<String, Double> tempMap = null;
 
             // receiveable_ratio
@@ -150,8 +142,8 @@ public class FundsChartPage extends AQueryFragment implements
             // daily
             String dailyPaymentData = null;
             String dailyContractData = null;
-            List<String> dailyPaymentDatas = new ArrayList<String>();
-            List<String> dailyContractDatas = new ArrayList<String>();
+            List<Double> dailyPaymentDatas = new ArrayList<Double>();
+            List<Double> dailyContractDatas = new ArrayList<Double>();
 
             // monthly
             String monthlyPaymentData = null;
@@ -182,8 +174,8 @@ public class FundsChartPage extends AQueryFragment implements
                                 "{value : " + receiveable_ratio + ",name : '"
                                         + companyName + "'}"));
                         // daily
-                        dailyPaymentDatas.add(dailyPaymentData);
-                        dailyContractDatas.add(dailyContractData);
+                        dailyPaymentDatas.add(new Double(dailyPaymentData));
+                        dailyContractDatas.add(new Double(dailyContractData));
 
                         // monthly
                         monthlyPaymentDatas.add(monthlyPaymentData);
@@ -204,7 +196,7 @@ public class FundsChartPage extends AQueryFragment implements
             dailyPaymentXAxisArray = new JSONArray(companyNames);
             dailyPaymentDataArray = new JSONArray(dailyPaymentDatas);
             dailyContractDataArray = new JSONArray(dailyContractDatas);
-            tempList = new ArrayList<String>();
+            tempList = new ArrayList<Double>();
             tempList.addAll(dailyPaymentDatas);
             tempList.addAll(dailyContractDatas);
             tempMap = sortData(tempList);
