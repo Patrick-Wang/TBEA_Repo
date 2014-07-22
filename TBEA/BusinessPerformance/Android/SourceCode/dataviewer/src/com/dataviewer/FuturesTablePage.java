@@ -48,6 +48,10 @@ public class FuturesTablePage extends AQueryFragment {
 			Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.futures_table_page, container, false);
 	}
+	
+	public void setQHMXBeans(List<QHMXBean> qhmxBeans){
+		this.qhmxBeans = qhmxBeans;
+	}
 
 	@Override
 	protected void onViewPrepared(AQuery aq, View fragView) {
