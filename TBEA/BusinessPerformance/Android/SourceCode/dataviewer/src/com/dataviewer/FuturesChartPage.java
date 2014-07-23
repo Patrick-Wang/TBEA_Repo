@@ -53,6 +53,8 @@ public class FuturesChartPage extends AQueryFragment implements
 
     public List<QHMXBean> qhmxBeans_Aluminium = new ArrayList<QHMXBean>();
 
+    private StringBuffer toolTipFormatter_Copper = null;
+
     private JSONArray legends_Copper = null;
 
     private JSONArray xAxisArray_Copper = null;
@@ -64,6 +66,8 @@ public class FuturesChartPage extends AQueryFragment implements
     private JSONArray blankArray_Copper = null;
 
     private JSONArray dataArray_Copper = null;
+
+    private StringBuffer toolTipFormatter_Aluminium = null;
 
     private JSONArray legends_Aluminium = null;
 
@@ -134,6 +138,11 @@ public class FuturesChartPage extends AQueryFragment implements
             }
         }
 
+        toolTipFormatter_Copper = new StringBuffer("期货利润 (万元)");
+        int listSize = companyNames.size();
+        for (int i = 0; i < listSize; i++) {
+            toolTipFormatter_Copper.append("<br/>{a" + i + "} : {c" + i + "}");
+        }
         legends_Copper = new JSONArray(companyNames);
         xAxisArray_Copper = new JSONArray(dateSet);
         tempMap = sortData(tempValues);
@@ -211,6 +220,12 @@ public class FuturesChartPage extends AQueryFragment implements
             }
         }
 
+        toolTipFormatter_Aluminium = new StringBuffer("期货利润 (万元)");
+        int listSize = companyNames.size();
+        for (int i = 0; i < listSize; i++) {
+            toolTipFormatter_Aluminium.append("<br/>{a" + i + "} : {c" + i
+                    + "}");
+        }
         legends_Aluminium = new JSONArray(companyNames);
         xAxisArray_Aluminium = new JSONArray(dateSet);
         tempMap = sortData(tempValues);
@@ -260,7 +275,7 @@ public class FuturesChartPage extends AQueryFragment implements
             if (null != qhmxBeans_Aluminium && qhmxBeans_Aluminium.size() > 1) {
                 transformOfAluminium(companyList);
             } else {
-            	getAQ().id(R.id.al).getView().setEnabled(false);
+                getAQ().id(R.id.al).getView().setEnabled(false);
             }
         } catch (JSONException e) {
             Toast.makeText(getActivity(), "数据错误，请重试", Toast.LENGTH_LONG).show();
@@ -298,19 +313,19 @@ public class FuturesChartPage extends AQueryFragment implements
             public void onClick(View arg0) {
                 FragmentTransaction ft = getActivity().getFragmentManager()
                         .beginTransaction();
-                
+
                 FuturesTablePage table = new FuturesTablePage();
-                switch(((RadioGroup) getAQ().id(R.id.rg_tab_ac).getView()).getCheckedRadioButtonId()){
+                switch (((RadioGroup) getAQ().id(R.id.rg_tab_ac).getView())
+                        .getCheckedRadioButtonId()) {
                 case R.id.al:
-                	 table.setQHMXBeans(qhmxBeans_Aluminium);
-                	break;
+                    table.setQHMXBeans(qhmxBeans_Aluminium);
+                    break;
                 case R.id.cu:
-                	 table.setQHMXBeans(qhmxBeans_Copper);
-                	break;
+                    table.setQHMXBeans(qhmxBeans_Copper);
+                    break;
                 }
-               
-                ft.replace(R.id.host, table).addToBackStack(
-                        null);
+
+                ft.replace(R.id.host, table).addToBackStack(null);
                 ft.commit();
             }
         });
@@ -400,7 +415,8 @@ public class FuturesChartPage extends AQueryFragment implements
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    String url = "javascript:refreshAxis(" + legends_Copper
+                    String url = "javascript:refreshAxis('"
+                            + toolTipFormatter_Copper + "'," + legends_Copper
                             + "," + xAxisArray_Copper + "," + yAxisMin_Copper
                             + "," + yAxisMax_Copper + "," + blankArray_Copper
                             + ");";
@@ -413,10 +429,11 @@ public class FuturesChartPage extends AQueryFragment implements
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    String url = "javascript:refreshAxis(" + legends_Copper
-                            + "," + xAxisArray_Aluminium + yAxisMin_Aluminium
-                            + "," + yAxisMax_Aluminium + ","
-                            + blankArray_Aluminium + ");";
+                    String url = "javascript:refreshAxis('"
+                            + toolTipFormatter_Aluminium + "',"
+                            + legends_Aluminium + "," + xAxisArray_Aluminium
+                            + yAxisMin_Aluminium + "," + yAxisMax_Aluminium
+                            + "," + blankArray_Aluminium + ");";
                     webView.loadUrl(url);
                 }
             });

@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxStatus;
+import com.common.StringUtil;
 import com.javaBean.UserBean;
 import com.javaBean.YSZKBean;
 import com.tbea.dataviewer.R;
@@ -135,9 +136,9 @@ public class FundsChartPage extends AQueryFragment implements
             Map<String, Double> tempMap = null;
 
             // receiveable_ratio
-            double receiveable_ratio = 0.0D;
-            double amount_receivable = 0.0D;
-            double overdue_payment = 0.0D;
+            // double receiveable_ratio = 0.0D;
+            String amount_receivable = null;
+            String overdue_payment = null;
 
             // daily
             String dailyPaymentData = null;
@@ -148,16 +149,17 @@ public class FundsChartPage extends AQueryFragment implements
             // monthly
             String monthlyPaymentData = null;
             String monthlyContractData = null;
-            List<String> monthlyPaymentDatas = new ArrayList<String>();
-            List<String> monthlyContractDatas = new ArrayList<String>();
+            List<Double> monthlyPaymentDatas = new ArrayList<Double>();
+            List<Double> monthlyContractDatas = new ArrayList<Double>();
 
             for (YSZKBean yszkBean : yszkBeans) {
                 companyId = yszkBean.getQybh();
                 if (companyList.contains(companyId)) {
                     // receiveable_ratio
-                    amount_receivable = Double.valueOf(yszkBean.getYsye());
-                    overdue_payment = Double.valueOf(yszkBean.getYqk());
-                    receiveable_ratio = ((amount_receivable - overdue_payment) / amount_receivable);
+                    amount_receivable = yszkBean.getYsye();
+                    overdue_payment = yszkBean.getYqk();
+                    // receiveable_ratio = ((amount_receivable -
+                    // overdue_payment) / amount_receivable);
                     // daily
                     dailyPaymentData = yszkBean.getRhk();
                     dailyContractData = yszkBean.getRqy();
@@ -171,19 +173,15 @@ public class FundsChartPage extends AQueryFragment implements
                         companyNames.add(companyName);
                         // receiveable_ratio
                         String js = "{value : "
-                                + receiveable_ratio
+                                + overdue_payment
                                 + ",name : '"
                                 + companyName
                                 + "',tooltip : {trigger : 'item', transitionDuration : 0, formatter: '"
-                                + companyName
-                                + "<br/>应收余额: "
-                                + amount_receivable
-                                + " 万元<br/>逾期款: "
-                                + overdue_payment
-                                + " 万元<br/>净回款比率: "
-                                + String.format("%.2f",
-                                        (receiveable_ratio * 100)) + "%'}}";
-                        System.out.println(js);
+                                + companyName + " (万元)<br/>应收余额: "
+                                + StringUtil.financeFormat(amount_receivable)
+                                + "<br/>逾期款: "
+                                + StringUtil.financeFormat(overdue_payment)
+                                + "'}}";
                         JSONObject receiveable_ratio_JSONObject = new JSONObject(
                                 js);
                         receivableRatioDataObjects
@@ -194,8 +192,10 @@ public class FundsChartPage extends AQueryFragment implements
                                 .valueOf(dailyContractData));
 
                         // monthly
-                        monthlyPaymentDatas.add(monthlyPaymentData);
-                        monthlyContractDatas.add(monthlyContractData);
+                        monthlyPaymentDatas.add(Double
+                                .valueOf(monthlyPaymentData));
+                        monthlyContractDatas.add(Double
+                                .valueOf(monthlyContractData));
                     } else {
                         continue;
                     }
@@ -224,8 +224,8 @@ public class FundsChartPage extends AQueryFragment implements
             monthlyPaymentDataArray = new JSONArray(monthlyPaymentDatas);
             monthlyContractDataArray = new JSONArray(monthlyContractDatas);
             tempList.clear();
-            tempList.addAll(dailyPaymentDatas);
-            tempList.addAll(dailyContractDatas);
+            tempList.addAll(monthlyPaymentDatas);
+            tempList.addAll(monthlyContractDatas);
             tempMap.clear();
             tempMap = sortData(tempList);
             monthlyPaymentYAxisMin = tempMap.get("min");

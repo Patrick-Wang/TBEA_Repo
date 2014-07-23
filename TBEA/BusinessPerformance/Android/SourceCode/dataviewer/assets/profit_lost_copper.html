@@ -34,8 +34,8 @@ html, body {
 		var profit_lost_copper_Option = {
 			animation : false,
             grid : {
-                x : 60,
-                y : 45,
+                x : 65,
+                y : 55,
                 x2 : 20,
                 y2 : 25
             }
@@ -44,10 +44,11 @@ html, body {
 		profit_lost_copper_Chart.setOption(profit_lost_copper_Option);
 		document.getElementById('profit_lost_copper').style.display = "none";
 
-		function refreshAxis(legends, xAxisDates, yAxisMin, yAxisMax, blankArray_Copper) {
+		function refreshAxis(toolTipFormatter, legends, xAxisDates, yAxisMin, yAxisMax, blankArray_Copper) {
 			var axisOption = profit_lost_copper_Chart.getOption();
 			axisOption.tooltip = {
 				trigger : 'axis',
+				formatter : toolTipFormatter,
 				transitionDuration : 0
 			};
 			axisOption.legend = {

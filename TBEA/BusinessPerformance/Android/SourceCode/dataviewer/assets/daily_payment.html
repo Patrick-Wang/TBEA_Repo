@@ -66,6 +66,8 @@ html, body {
             var axisOption = daily_payment_Chart.getOption();
             axisOption.tooltip = {
                 trigger : 'axis',
+                /* formatter : "{b}<br/>{a} : {c} 万元<br/>{a1} : {c1} 万元", */
+                formatter : "{b} (万元)<br/>{a} : {c}<br/>{a1} : {c1}",
                 transitionDuration : 0
             };
             axisOption.legend = {
