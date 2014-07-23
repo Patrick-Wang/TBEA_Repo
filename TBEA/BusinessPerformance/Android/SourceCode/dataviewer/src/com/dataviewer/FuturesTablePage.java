@@ -15,6 +15,7 @@ import com.webservice.Companys;
 import com.webservice.Server;
 import com.webservice.Server.OnFuturesResponseListener;
 import com.common.StringUtil;
+import com.dataviewer.sheetAdapter.FuturesTableAdapter;
 import com.dataviewer.sheetAdapter.GreenCellAdapter;
 import com.excel.Sheet;
 import com.excel.TableSource;
@@ -25,6 +26,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,14 +36,14 @@ import android.widget.Toast;
 
 public class FuturesTablePage extends AQueryFragment {
 
-	static String[][] nameMap = { { "企业编号", "qybh", "n" },
-			{ "企业名称", "qymc", "n" }, { "类型（铜、铝）", "type", "n" },
-			{ "持仓量", "ccl", "n" }, { "持仓均价", "ccjj", "y" },
-			{ "现价", "price", "y" }, { "盈亏比例", "yk", "n" },
-			{ "盈亏金额", "ykje", "y" }, { "日期(年月)", "date", "n" } };
+	static String[][] nameMap = { //{ "企业编号", "qybh", "n" },
+			{ "企业名称", "qymc", "n" }, { "类型", "type", "n" },
+			{ "持仓量 (吨)", "ccl", "n" }, { "持仓均价 (万元)", "ccjj", "y" },
+			{ "现价 (万元)", "price", "y" }, { "盈亏比例", "yk", "n" },
+			{ "盈亏金额 (万元)", "ykje", "y" } };
 	private Sheet sheet = null;
-	boolean[] companySel = new boolean[] { true, true, true, true, true, true,
-			true };
+	boolean[] companySel = null;
+	String companyNames[] = null;
 	public List<QHMXBean> qhmxBeans = new ArrayList<QHMXBean>();
 
 	@Override
@@ -52,6 +54,13 @@ public class FuturesTablePage extends AQueryFragment {
 	
 	public void setQHMXBeans(List<QHMXBean> qhmxBeans){
 		this.qhmxBeans = qhmxBeans;
+		int len = qhmxBeans.size();
+		companySel = new boolean[len - 1];
+		companyNames = new String[len - 1];
+		for (int i = 0; i < len - 1; ++i){
+			companySel[i] = true;
+			companyNames[i] = qhmxBeans.get(i).getQymc();
+		}
 	}
 
 	@Override
@@ -59,7 +68,7 @@ public class FuturesTablePage extends AQueryFragment {
 		sheet = (Sheet) aq.id(R.id.mysheet).getView();
 		sheet.lockColum(2);
 		sheet.lockRow(1);
-		sheet.setAdapter(new GreenCellAdapter());
+		sheet.setAdapter(new FuturesTableAdapter());
 
 		aq.id(R.id.company).clicked(new OnClickListener() {
 
@@ -72,10 +81,7 @@ public class FuturesTablePage extends AQueryFragment {
 					companybeforeSel[i] = companySel[i];
 				}
 
-				String companyNames[] = new String[Companys.count()];
-				for (int i = 0; i < companyNames.length; ++i) {
-					companyNames[i] = Companys.getCompany(i).getName();
-				}
+				
 
 				final AlertDialog.Builder builder = new AlertDialog.Builder(
 						getActivity());
@@ -139,7 +145,20 @@ public class FuturesTablePage extends AQueryFragment {
 										}
 										
 										GreenCellAdapter adapter = (GreenCellAdapter) sheet.getAdapter();
-										adapter.addFilter(1, filters);
+										adapter.addFilter(0, filters);
+										
+										int sumIndex = 0;
+										for (int i = 1, len = sheet.getSizeManager().getRowCount(); i < len; ++i){
+											if (sheet.isVisiable(i)){
+												sumIndex++;
+												
+												if (sumIndex % 2 == 0){
+													sheet.setRowColor(i, Color.GRAY);
+												} else{
+													sheet.setRowColor(i, Color.LTGRAY);
+												}
+											}
+										}
 									}
 								}
 							}
@@ -210,10 +229,12 @@ public class FuturesTablePage extends AQueryFragment {
 								+ nameMap[colum][1].substring(1));
 						result = (String) method.invoke(qhmxBeans.get(row - 1));
 						
-						if (nameMap[colum][2].equals("y") && null != result) {
-							result = StringUtil.financeFormat(result);
+						if (result != null){
+							if (nameMap[colum][2].equals("y")) {
+								result = StringUtil.financeFormat(result);
+							}
 						}
-
+						
 					} catch (NoSuchMethodException e) {
 						e.printStackTrace();
 					} catch (IllegalArgumentException e) {
@@ -228,12 +249,20 @@ public class FuturesTablePage extends AQueryFragment {
 					}
 
 					if (result == null){
-						return "";
+						return "--";
 					}
 					
 					return result;
 				}
 			}
 		});
+		
+		for (int i = 1, len = sheet.getSizeManager().getRowCount(); i < len; ++i){
+			if (i % 2 == 0){
+				sheet.setRowColor(i, Color.GRAY);
+			} else{
+				sheet.setRowColor(i, Color.LTGRAY);
+			}
+		}
 	}
 }

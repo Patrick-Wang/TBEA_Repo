@@ -23,7 +23,6 @@ public class StringUtil {
 			--leftLength;
 		}
 		
-		
 		while (leftLength > 3){
 			parts.add("," + intPart.substring(leftLength - 3, leftLength));
 			leftLength -= 3;

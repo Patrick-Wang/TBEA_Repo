@@ -270,7 +270,7 @@ public class FuturesChartPage extends AQueryFragment implements
 
     @Override
     protected void onViewPrepared(AQuery aq, View fragView) {
-        dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍侯...");
+       // dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍侯...");
 
         Server server = Server.getInstance();
         server.getFutures(Companys.getCompanys(),
@@ -323,13 +323,13 @@ public class FuturesChartPage extends AQueryFragment implements
         ((LinearLayout) aq.id(R.id.profit_lost_webview).getView())
                 .addView(webView);
 
-        initView("file:///android_asset/profit_lost_copper.html",
-                new WebViewClient() {
-                    @Override
-                    public void onPageFinished(WebView view, String url) {
-                        refresh(R.id.cu);
-                    }
-                });
+//        initView("file:///android_asset/profit_lost_copper.html",
+//                new WebViewClient() {
+//                    @Override
+//                    public void onPageFinished(WebView view, String url) {
+//                        refresh(R.id.cu);
+//                    }
+//                });
     }
 
     @Override

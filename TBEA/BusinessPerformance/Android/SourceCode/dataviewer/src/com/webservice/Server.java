@@ -43,15 +43,15 @@ public class Server {
 
 	private AQuery aq;
 
+	private final static String transfer_url = "http://218.84.134.160:8081/mobile/dataTransfer";
+
+	private final static String login_url = "http://218.84.134.160:8081/mobile/loginServlet";
+
 	// private final static String transfer_url =
-	// "http://218.84.134.160:8081/mobile/dataTransfer";
+	// "http://192.168.7.22/mobile/dataTransfer";
 	//
 	// private final static String login_url =
-	// "http://218.84.134.160:8081/mobile/loginServlet";
-
-	private final static String transfer_url = "http://192.168.7.22/mobile/dataTransfer";
-
-	private final static String login_url = "http://192.168.7.22/mobile/loginServlet";
+	// "http://192.168.7.22/mobile/loginServlet";
 
 	private static Server instance = null;
 
@@ -106,7 +106,7 @@ public class Server {
 		request.put("menuqx", "3");
 		request.put("companyID", userBean.getCompanyID());
 		String companyQX = "";
-		for (int i = companys.size() - 1; i >= 0; --i) {
+		for (int i = 0, len = companys.size(); i < len; ++i) {
 			companyQX += companys.get(i).getId() + ",";
 		}
 		request.put("companyQX", companyQX.substring(0, companyQX.length() - 1));
@@ -150,7 +150,7 @@ public class Server {
 		}
 		request.put("companyQX", companyQX.substring(0, companyQX.length() - 1));
 		request.put("year", "" + Calendar.getInstance().get(Calendar.YEAR));
-		request.put("month", "" + (Calendar.getInstance().get(Calendar.MONTH)));
+		request.put("month", "" + (Calendar.getInstance().get(Calendar.MONTH) + 1));
 
 		aq.ajax(transfer_url, request, JSONArray.class,
 				new AjaxCallback<JSONArray>() {
@@ -208,7 +208,7 @@ public class Server {
 		}
 		request.put("companyQX", companyQX.substring(0, companyQX.length() - 1));
 		request.put("year", "" + Calendar.getInstance().get(Calendar.YEAR));
-		request.put("month", "" + (Calendar.getInstance().get(Calendar.MONTH)));
+		request.put("month", "" + (Calendar.getInstance().get(Calendar.MONTH) + 1));
 
 		aq.ajax(transfer_url, request, JSONArray.class,
 				new AjaxCallback<JSONArray>() {

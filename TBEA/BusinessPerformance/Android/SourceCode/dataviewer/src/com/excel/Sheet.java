@@ -383,9 +383,9 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 	}
 
 	
-	public boolean isHidden(int row){
+	public boolean isVisiable(int row){
 		if (this.lockColumCount > 0 && sizeManager.getColumCount() > 0) {
-			return ((ViewGroup) cell(0, row).getParent()).getVisibility() == View.GONE;
+			return ((ViewGroup) cell(row, 0).getParent()).getVisibility() == View.VISIBLE;
 		}
 		return false;
 	}
@@ -418,6 +418,21 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 		}
 	}
 
+	public void setRowColor(int row, int color){
+		Paint paint = new Paint(Paint.DITHER_FLAG);
+		paint.setColor(color);
+		
+		if (sizeManager.getRowCount() > row) {
+			if (this.lockColumCount > 0 && sizeManager.getColumCount() > 0) {
+				((ContentLinearLayout) cell(row, 0).getParent()).setBKPaint(paint);
+			}
+
+			if (sizeManager.getColumCount() > this.lockColumCount) {
+				((ContentLinearLayout) cell(row, this.lockColumCount).getParent()).setBKPaint(paint);
+			}
+		}
+	}
+	
 	public Adapter getAdapter(){
 		return adapter;
 	}

@@ -59,7 +59,6 @@ public class StandardAdapter implements Adapter {
 
 	@Override
 	public void onFinish(Sheet sheet) {
-		// TODO Auto-generated method stub
 		
 	}
 }

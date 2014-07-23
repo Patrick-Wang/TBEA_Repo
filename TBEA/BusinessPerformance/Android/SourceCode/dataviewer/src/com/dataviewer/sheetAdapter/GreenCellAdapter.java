@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -28,15 +29,14 @@ public class GreenCellAdapter extends StandardAdapter {
 	private Sheet sheet = null;
 	Paint cellBKPaint = null;
 	Paint titleBKPaint = null;
-	Paint grayBKPaint = null;
-	Paint lightGrayBKPaint = null;
+//	Paint grayBKPaint = null;
+//	Paint lightGrayBKPaint = null;
 	boolean finished = false;
 	Map<Integer, List<String>> filters = new HashMap<Integer, List<String>>();
 	List<Integer> hiddenRows = new LinkedList<Integer>();
 	String previousText = "";
 	List<Pair<Integer, Integer>> mergePairs = new LinkedList<Pair<Integer, Integer>>();
 	Pair<Integer, Integer> curPair = new Pair<Integer, Integer>(0, 0);
-
 	public GreenCellAdapter() {
 		cellBKPaint = new Paint(Paint.DITHER_FLAG);
 		cellBKPaint.setColor(Color.GREEN);
@@ -45,12 +45,6 @@ public class GreenCellAdapter extends StandardAdapter {
 		titleBKPaint = new Paint(Paint.DITHER_FLAG);
 		titleBKPaint.setColor(Color.BLACK);
 		titleBKPaint.setStrokeWidth(1);
-
-		grayBKPaint = new Paint(Paint.DITHER_FLAG);
-		grayBKPaint.setColor(Color.GRAY);
-
-		lightGrayBKPaint = new Paint(Paint.DITHER_FLAG);
-		lightGrayBKPaint.setColor(Color.LTGRAY);
 	}
 
 	public void addFilter(int colum, List<String> keyWords) {
@@ -112,7 +106,10 @@ public class GreenCellAdapter extends StandardAdapter {
 					DisplayUtil.dip2px(5, metric.density),
 					DisplayUtil.dip2px(5, metric.density));
 		}
-
+//		else if (!allCellCenter && colum == 1){
+//			ctv.setGravity(Gravity.LEFT);
+//		}
+		
 		ctv.setText(text);
 
 		return ctv;
@@ -184,21 +181,21 @@ public class GreenCellAdapter extends StandardAdapter {
 	public void adjustHeight(Sheet sheet, CellTextView cell, int row,
 			int colum, int height) {
 		super.adjustHeight(sheet, cell, row, colum, height);
-		if (colum == 0 && row >= sheet.getLockRowCount()) {
-			if (cell.getText().toString().equals(previousText)) {
-				curPair.setSecond(row);
-				if (row == sheet.getSizeManager().getRowCount() - 1) {
-					mergePairs.add(new Pair<Integer, Integer>(curPair.getFirst(),
-							curPair.getSecond()));
-				}
-			} else {
-				mergePairs.add(new Pair<Integer, Integer>(curPair.getFirst(),
-						curPair.getSecond()));
-				curPair.setFirst(row);
-				curPair.setSecond(row);
-				previousText = cell.getText().toString();
-			}
-		}
+//		if (colum == 0 && row >= sheet.getLockRowCount()) {
+//			if (cell.getText().toString().equals(previousText)) {
+//				curPair.setSecond(row);
+//				if (row == sheet.getSizeManager().getRowCount() - 1) {
+//					mergePairs.add(new Pair<Integer, Integer>(curPair.getFirst(),
+//							curPair.getSecond()));
+//				}
+//			} else {
+//				mergePairs.add(new Pair<Integer, Integer>(curPair.getFirst(),
+//						curPair.getSecond()));
+//				curPair.setFirst(row);
+//				curPair.setSecond(row);
+//				previousText = cell.getText().toString();
+//			}
+//		}
 
 //		if (row == (sheet.getSizeManager().getRowCount() - 1)
 //				&& colum == (sheet.getSizeManager().getColumCount() - 1)) {
