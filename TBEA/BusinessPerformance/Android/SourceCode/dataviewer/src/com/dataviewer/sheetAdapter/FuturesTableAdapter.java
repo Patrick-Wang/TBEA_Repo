@@ -28,10 +28,14 @@ public class FuturesTableAdapter extends GreenCellAdapter {
 
 		ContentLinearLayout cll = super.getContent(inflater, sheet, sheetArea,
 				index);
-		if (index % 2 == 0) {
-			cll.setBKPaint(grayBKPaint);
-		} else {
-			cll.setBKPaint(lightGrayBKPaint);
+		if (!((sheetArea == SheetArea.Independent && 0 == index)
+				|| (sheetArea == SheetArea.Row_title && 0 == index))) {
+
+			if (index % 2 == 0) {
+				cll.setBKPaint(grayBKPaint);
+			} else {
+				cll.setBKPaint(lightGrayBKPaint);
+			}
 		}
 
 		return cll;

@@ -14,7 +14,6 @@ import com.webservice.Companys;
 import com.webservice.Server;
 import com.webservice.Server.OnMonthQuotaResponseListener;
 import com.common.StringUtil;
-import com.dataviewer.sheetAdapter.GreenCellAdapter;
 import com.dataviewer.sheetAdapter.QuotaTableAdapter;
 import com.excel.Sheet;
 import com.excel.TableSource;

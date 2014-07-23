@@ -42,7 +42,7 @@
                 android:id="@+id/daily_payment_webview_details_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="总计："
+                android:text=""
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold" >
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="\t日回款： 748 万元"
+                android:text=""
                 android:textColor="#000000"
                 android:textSize="14sp" >
             </TextView>
@@ -63,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="\t日签约： 2807 万元"
+                android:text=""
                 android:textColor="#000000"
                 android:textSize="14sp" >
             </TextView>

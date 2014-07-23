@@ -4,8 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxStatus;
@@ -55,11 +57,20 @@ public class FuturesTablePage extends AQueryFragment {
 	public void setQHMXBeans(List<QHMXBean> qhmxBeans){
 		this.qhmxBeans = qhmxBeans;
 		int len = qhmxBeans.size();
-		companySel = new boolean[len - 1];
-		companyNames = new String[len - 1];
-		for (int i = 0; i < len - 1; ++i){
+		Set<String> nameSet = new HashSet<String>();
+		for (int i = 0; i < len - 1; ++i) {
+			nameSet.add(qhmxBeans.get(i).getQymc());
+		}
+		
+		companyNames = new String[nameSet.size()];
+		int index = 0;
+		for(String name : nameSet){
+			companyNames[index++] = name;
+		}
+
+		companySel = new boolean[companyNames.length];
+		for (int i = 0; i < companyNames.length; ++i) {
 			companySel[i] = true;
-			companyNames[i] = qhmxBeans.get(i).getQymc();
 		}
 	}
 

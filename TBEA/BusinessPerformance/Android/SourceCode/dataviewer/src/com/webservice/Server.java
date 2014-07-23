@@ -197,16 +197,11 @@ public class Server {
 				});
 	}
 
-	public void getFunds(List<Company> companys,
-			final OnFundsResponseListener onFundsResponseListener) {
+	public void getFunds(final OnFundsResponseListener onFundsResponseListener) {
 		Map<String, String> request = new HashMap<String, String>();
 		request.put("menuqx", "1");
 		request.put("companyID", userBean.getCompanyID());
-		String companyQX = "";
-		for (int i = companys.size() - 1; i >= 0; --i) {
-			companyQX += companys.get(i).getId() + ",";
-		}
-		request.put("companyQX", companyQX.substring(0, companyQX.length() - 1));
+		request.put("companyQX", userBean.getCompanyqx());
 		request.put("year", "" + Calendar.getInstance().get(Calendar.YEAR));
 		request.put("month", "" + (Calendar.getInstance().get(Calendar.MONTH) + 1));
 
