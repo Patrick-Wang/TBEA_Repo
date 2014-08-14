@@ -33,15 +33,12 @@ import android.widget.Toast;
 
 public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 
-	static String[][] nameMap = { { "序号", "xh", "n" }, { "指标名称", "zbmc", "n" },
-			{ "本月计划 (万元)", "byjh", "y" }, { "本月完成 (万元)", "bywc", "y" },
-			{ "计划完成率", "jhwcl", "n" }, { "上月完成 (万元)", "sywc", "y" },
-			{ "较上月增长比", "jsyzzb", "n" }, { "去年同期 (万元)", "qntq", "y" },
-			{ "较去年同期增长比", "jqntqzzb", "n" }, { "季度计划 (万元)", "jdjh", "y" },
-			{ "季度累计 (万元)", "jdlj", "y" }, { "季度计划完成率", "jdjhwcl", "n" },
-			{ "年度计划 (万元)", "ndjh", "y" }, { "年度累计 (万元)", "ndlj", "y" },
-			{ "年度计划完成率", "ndjhwcl", "n" }, { "去年同期累计 (万元)", "qntqlj", "y" },
-			{ "较去年同期累计增长比", "jqntqljzzb", "n" } };
+	static String[][] nameMap = { { "序号", "xh", "n" }, { "指标名称", "zbmc", "n" }, { "本月计划 (万元)", "byjh", "y" },
+			{ "本月完成 (万元)", "bywc", "y" }, { "计划完成率", "jhwcl", "n" }, { "上月完成 (万元)", "sywc", "y" },
+			{ "较上月增长比", "jsyzzb", "n" }, { "去年同期 (万元)", "qntq", "y" }, { "较去年同期增长比", "jqntqzzb", "n" },
+			{ "季度计划 (万元)", "jdjh", "y" }, { "季度累计 (万元)", "jdlj", "y" }, { "季度计划完成率", "jdjhwcl", "n" },
+			{ "年度计划 (万元)", "ndjh", "y" }, { "年度累计 (万元)", "ndlj", "y" }, { "年度计划完成率", "ndjhwcl", "n" },
+			{ "去年同期累计 (万元)", "qntqlj", "y" }, { "较去年同期累计增长比", "jqntqljzzb", "n" } };
 	Sheet sheet = null;
 	boolean[] companySel = null;
 	List<Company> companys = null;
@@ -61,20 +58,19 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 		String month = (String) getAQ().id(R.id.month).getText();
 		month = month.substring(0, month.length() - 2);
 
-		final ProgressDialog dialog = ProgressDialog.show(getActivity(), null,
-				"数据加载中，请稍侯...");
-		Server.getInstance().getMonthQuota(companyList, year, month,
-				new OnMonthQuotaResponseListener() {
+		final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍侯...");
+		Server.getInstance().getMonthQuota(companyList, year, month, new OnMonthQuotaResponseListener() {
 
-					@Override
-					public void onMonthQuota(List<YDZBBean> ydzbBeans,
-							AjaxStatus status) {
-						if (ydzbBeans != null) {
-							updateTable(ydzbBeans);
-						}
-						dialog.hide();
-					}
-				});
+			@Override
+			public void onMonthQuota(List<YDZBBean> ydzbBeans, AjaxStatus status) {
+				if (ydzbBeans != null) {
+					updateTable(ydzbBeans);
+				} else {
+					Toast.makeText(getActivity(), "网络连接错误", Toast.LENGTH_SHORT).show();
+				}
+				dialog.hide();
+			}
+		});
 
 	}
 
@@ -102,9 +98,7 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 					String result = "";
 					try {
 						Method method = YDZBBean.class.getMethod("get"
-								+ nameMap[colum][1].substring(0, 1)
-										.toUpperCase()
-								+ nameMap[colum][1].substring(1));
+								+ nameMap[colum][1].substring(0, 1).toUpperCase() + nameMap[colum][1].substring(1));
 						result = (String) method.invoke(ydzbBeans.get(row - 1));
 
 						if (null != result) {
@@ -151,13 +145,10 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 
 	@Override
 	protected void onViewPrepared(AQuery aq, View fragView) {
-		getAQ().id(R.id.month)
-				.getButton()
-				.setText(
-						((Calendar.getInstance().get(Calendar.MONTH) + 1))
-								+ " 月");
-		getAQ().id(R.id.year).getButton()
-				.setText((Calendar.getInstance().get(Calendar.YEAR)) + " 年");
+		getAQ().id(R.id.month).getButton().setText(((Calendar.getInstance().get(Calendar.MONTH) + 1)) + " 月");
+		aq.id(R.id.receivable_data_date).textColor(Color.RED).text("数据更新日期: " + Server.getServerDataUpdateTime());
+
+		getAQ().id(R.id.year).getButton().setText((Calendar.getInstance().get(Calendar.YEAR)) + " 年");
 		sheet = (Sheet) aq.id(R.id.mysheet).getView();
 		sheet.setAdapter(new QuotaTableAdapter());
 		sheet.lockColum(2);
@@ -166,8 +157,7 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 		aq.id(R.id.month).clicked(this);
 		aq.id(R.id.year).clicked(this);
 
-		companys = Companys.getCompanys(Server.getInstance().getUserBean()
-				.getCompanyqx());
+		companys = Companys.getCompanys(Server.getInstance().getUserBean().getCompanyqx());
 
 		companySel = new boolean[companys.size()];
 		for (int i = 0; i < companySel.length; ++i) {
@@ -177,10 +167,8 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 	}
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.quota_table_page, container, false);
-
 	}
 
 	@Override
@@ -214,27 +202,25 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 		}
 
 		final int currentItem = selItem;
-		AlertDialog.Builder builder = new AlertDialog.Builder(
-				this.getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setTitle("年度");
+		builder.setCancelable(false);
 		final int[] selItems = new int[] { currentItem };
-		builder.setSingleChoiceItems(stringYear, currentItem,
-				new DialogInterface.OnClickListener() {
+		builder.setSingleChoiceItems(stringYear, currentItem, new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						selItems[0] = which;
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				selItems[0] = which;
 
-					}
-				});
+			}
+		});
 
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (currentItem != selItems[0]) {
-					getAQ().id(R.id.year).getTextView()
-							.setText(stringYear[selItems[0]]);
+					getAQ().id(R.id.year).getTextView().setText(stringYear[selItems[0]]);
 					updateDataFromServer();
 				}
 			}
@@ -250,8 +236,8 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 		final String monthBeforeSel = (String) getAQ().id(R.id.month).getText();
 
 		int selItem = 0;
-		final String[] stringMonth = new String[] { "1 月", "2 月", "3 月", "4 月",
-				"5 月", "6 月", "7 月", "8 月", "9 月", "10 月", "11 月", "12 月" };
+		final String[] stringMonth = new String[] { "1 月", "2 月", "3 月", "4 月", "5 月", "6 月", "7 月", "8 月", "9 月",
+				"10 月", "11 月", "12 月" };
 		for (String item : stringMonth) {
 			if (item.equals(monthBeforeSel)) {
 				break;
@@ -260,27 +246,25 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 		}
 
 		final int currentItem = selItem;
-		AlertDialog.Builder builder = new AlertDialog.Builder(
-				this.getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setTitle("月份");
+		builder.setCancelable(false);
 		final int[] selItems = new int[] { currentItem };
-		builder.setSingleChoiceItems(stringMonth, currentItem,
-				new DialogInterface.OnClickListener() {
+		builder.setSingleChoiceItems(stringMonth, currentItem, new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						selItems[0] = which;
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				selItems[0] = which;
 
-					}
-				});
+			}
+		});
 
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (currentItem != selItems[0]) {
-					getAQ().id(R.id.month).getTextView()
-							.setText(stringMonth[selItems[0]]);
+					getAQ().id(R.id.month).getTextView().setText(stringMonth[selItems[0]]);
 					updateDataFromServer();
 				}
 			}
@@ -297,42 +281,40 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 			companybeforeSel[i] = companySel[i];
 		}
 
-		String companyNames[] = new String[Companys.count()];
+		String companyNames[] = new String[companys.size()];
 
 		for (int i = 0; i < companyNames.length; ++i) {
-			companyNames[i] = Companys.getCompany(i).getName();
+			companyNames[i] = companys.get(i).getName();
 		}
 
-		final AlertDialog.Builder builder = new AlertDialog.Builder(
-				this.getActivity());
+		final AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 		builder.setTitle("公司");
-		builder.setMultiChoiceItems(companyNames, companybeforeSel,
-				new OnMultiChoiceClickListener() {
+		builder.setCancelable(false);
+		builder.setMultiChoiceItems(companyNames, companybeforeSel, new OnMultiChoiceClickListener() {
 
-					@Override
-					public void onClick(DialogInterface arg0, int which,
-							boolean isChecked) {
-						boolean bAllCancel = true;
-						for (boolean item : companybeforeSel) {
-							if (item) {
-								bAllCancel = false;
-								break;
-							}
-						}
-
-						if (bAllCancel) {
-							Toast.makeText(getActivity(), "请至少选择一个公司",
-									Toast.LENGTH_SHORT).show();
-						}
-					}
-				});
+			@Override
+			public void onClick(DialogInterface arg0, int which, boolean isChecked) {
+				// boolean bAllCancel = true;
+				// for (boolean item : companybeforeSel) {
+				// if (item) {
+				// bAllCancel = false;
+				// break;
+				// }
+				// }
+				//
+				// if (bAllCancel) {
+				// Toast.makeText(getActivity(), "请至少选择一个公司",
+				// Toast.LENGTH_SHORT).show();
+				// }
+			}
+		});
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface arg0, int which) {
 
 				boolean bAllCancel = true;
-				for (boolean item : companySel) {
+				for (boolean item : companybeforeSel) {
 					if (item) {
 						bAllCancel = false;
 						break;
@@ -340,8 +322,7 @@ public class QuotaTablePage extends AQueryFragment implements OnClickListener {
 				}
 
 				if (bAllCancel) {
-					Toast.makeText(getActivity(), "请至少选择一个公司",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "请至少选择一个公司", Toast.LENGTH_SHORT).show();
 
 				} else {
 					boolean bChanged = false;

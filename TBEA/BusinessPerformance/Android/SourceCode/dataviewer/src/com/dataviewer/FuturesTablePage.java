@@ -3,29 +3,20 @@ package com.dataviewer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxStatus;
 import com.tbea.dataviewer.R;
-import com.webservice.Company;
-import com.webservice.Companys;
-import com.webservice.Server;
-import com.webservice.Server.OnFuturesResponseListener;
 import com.common.StringUtil;
 import com.dataviewer.sheetAdapter.FuturesTableAdapter;
 import com.dataviewer.sheetAdapter.GreenCellAdapter;
 import com.excel.Sheet;
 import com.excel.TableSource;
 import com.javaBean.QHMXBean;
-import com.javaBean.YDZBBean;
-
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.graphics.Color;
@@ -40,9 +31,9 @@ public class FuturesTablePage extends AQueryFragment {
 
 	static String[][] nameMap = { //{ "企业编号", "qybh", "n" },
 			{ "企业名称", "qymc", "n" }, { "类型", "type", "n" },
-			{ "持仓量 (吨)", "ccl", "n" }, { "持仓均价 (万元)", "ccjj", "y" },
-			{ "现价 (万元)", "price", "y" }, { "盈亏比例", "yk", "n" },
-			{ "盈亏金额 (万元)", "ykje", "y" } };
+			{ "持仓量 (吨)", "ccl", "n" }, { "持仓均价 (元)", "ccjj", "y" },
+			{ "现价 (元)", "price", "y" }, { "盈亏比例", "yk", "n" },
+			{ "盈亏金额 (元)", "ykje", "y" } };
 	private Sheet sheet = null;
 	boolean[] companySel = null;
 	String companyNames[] = null;
@@ -96,27 +87,16 @@ public class FuturesTablePage extends AQueryFragment {
 
 				final AlertDialog.Builder builder = new AlertDialog.Builder(
 						getActivity());
+				builder.setCancelable(false);
 				builder.setTitle("公司");
-				builder.setMultiChoiceItems(companyNames, companybeforeSel,
-						new OnMultiChoiceClickListener() {
+				builder.setMultiChoiceItems(companyNames, companybeforeSel, new OnMultiChoiceClickListener(){
 
-							@Override
-							public void onClick(DialogInterface arg0,
-									int which, boolean isChecked) {
-								boolean bAllCancel = true;
-								for (boolean item : companySel) {
-									if (item) {
-										bAllCancel = false;
-										break;
-									}
-								}
-
-								if (bAllCancel) {
-									Toast.makeText(getActivity(), "请至少选择一个公司",
-											Toast.LENGTH_SHORT).show();
-								}
-							}
-						});
+					@Override
+					public void onClick(DialogInterface dialog, int which,
+							boolean isChecked) {
+						// TODO Auto-generated method stub
+						
+					}});
 
 				builder.setPositiveButton("确定",
 						new DialogInterface.OnClickListener() {
@@ -151,7 +131,7 @@ public class FuturesTablePage extends AQueryFragment {
 										for (int i = 0; i < companySel.length; ++i) {
 											companySel[i] = companybeforeSel[i];
 											if (!companySel[i]){
-												filters.add(Companys.getCompany(i).getName());
+												filters.add(companyNames[i]);
 											}
 										}
 										
@@ -181,37 +161,6 @@ public class FuturesTablePage extends AQueryFragment {
 	
 		updateTable();
 	}
-
-//	private void updateDataFromServer() {
-//
-//		List<Company> companys = new LinkedList<Company>();
-//		for (int i = 0; i < companySel.length; ++i) {
-//			if (companySel[i]) {
-//				companys.add(Companys.getCompany(i));
-//			}
-//		}
-//
-//		String year = (String) getAQ().id(R.id.year).getText();
-//		year = year.substring(0, year.length() - 2);
-//
-//		String month = (String) getAQ().id(R.id.month).getText();
-//		month = month.substring(0, month.length() - 2);
-//
-//		final ProgressDialog dialog = ProgressDialog.show(getActivity(), null,
-//				"数据加载中，请稍侯...");
-//		Server server = Server.getInstance();
-//		server.getFutures(companys, new OnFuturesResponseListener() {
-//
-//			@Override
-//			public void onFutures(List<QHMXBean> qhmxBeans, AjaxStatus status) {
-//				if (qhmxBeans != null) {
-//					FuturesTablePage.this.qhmxBeans = qhmxBeans;
-//					updateTable();
-//				}
-//				dialog.hide();
-//			}
-//		});
-//	}
 
 	protected void updateTable() {
 		sheet.clean();

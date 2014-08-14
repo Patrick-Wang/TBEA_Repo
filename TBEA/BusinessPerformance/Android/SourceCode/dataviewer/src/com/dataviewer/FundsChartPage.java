@@ -12,11 +12,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.WebSettings;
@@ -39,11 +45,11 @@ import com.webservice.Server;
 import com.webservice.Server.OnFundsResponseListener;
 
 public class FundsChartPage extends AQueryFragment implements
-		OnCheckedChangeListener {
+		OnCheckedChangeListener, Callback {
 
 	private WebView webView = null;
 
-	private Handler handler = new Handler();
+	private Handler handler = new Handler(this);
 
 	private ProgressDialog dialog = null;
 
@@ -51,8 +57,8 @@ public class FundsChartPage extends AQueryFragment implements
 
 	private List<YSZKBean> yszkBeans = new ArrayList<YSZKBean>();
 
-	private static List<String> normalCompanyList = Arrays.asList("5", "6",
-			"7", "8", "9", "10", "11");
+//	private static List<String> normalCompanyList = Arrays.asList("5", "6",
+//			"7", "8", "9", "10", "11");
 
 	private JSONArray receivableRatioLegendArray = null;
 
@@ -101,6 +107,10 @@ public class FundsChartPage extends AQueryFragment implements
 			params.width = LayoutParams.MATCH_PARENT;
 			params.height = LayoutParams.MATCH_PARENT;
 			webView.setLayoutParams(params);
+			//webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.); 
+			//webView.getSettings().set
+			//webView.getSettings().setBuiltInZoomControls(true);
+			//webView.getSettings().setSupportZoom(false);
 		}
 		return webView;
 	}
@@ -218,7 +228,7 @@ public class FundsChartPage extends AQueryFragment implements
 														.financeFormat(monthlyContractData)
 												+ " 万元");
 
-					} else if (normalCompanyList.contains(companyId)) {
+					} else if (Companys.hasCompany(companyId)) {
 						companyName = yszkBean.getQymc();
 						companyNames.add(companyName);
 						// receiveable_ratio
@@ -309,30 +319,47 @@ public class FundsChartPage extends AQueryFragment implements
 
 	@Override
 	protected void onViewPrepared(AQuery aq, View fragView) {
-
 		dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍后...");
-
-		Server server = Server.getInstance();
-		server.getFunds(new OnFundsResponseListener() {
-
-			@Override
-			public void onFunds(List<YSZKBean> receivedYszkBeans,
-					AjaxStatus status) {
-				// TODO Auto-generated method stub
-				yszkBeans = receivedYszkBeans;
-				initData();
-			}
-
-		});
-
-		((RadioGroup) aq.id(R.id.rg_tab).getView())
+			((RadioGroup) aq.id(R.id.rg_tab).getView())
 				.setOnCheckedChangeListener(this);
 		initView(provideWebView(R.id.receiveable_ratio_webview),
 				"file:///android_asset/receivable_ratio.html",
 				new WebViewClient() {
 					@Override
 					public void onPageFinished(WebView view, String url) {
-						refresh(R.id.receiveable_ratio_webview);
+						Server server = Server.getInstance();
+						server.getFunds(new OnFundsResponseListener() {
+
+							@Override
+							public void onFunds(
+									List<YSZKBean> receivedYszkBeans,
+									AjaxStatus status) {
+								// TODO Auto-generated method stub
+								yszkBeans = receivedYszkBeans;
+								initData();
+								refresh(R.id.receiveable_ratio_webview);
+								OnClickListener listener = new OnClickListener(){
+									@Override
+									public void onClick(View v) {
+										FragmentTransaction ft = getActivity().getFragmentManager()
+												.beginTransaction();
+										FundsTablePage fundsTablePage = new FundsTablePage();
+										fundsTablePage.setData(yszkBeans);
+										//ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN); 
+										ft.replace(R.id.host, fundsTablePage).addToBackStack(null);
+										ft.commit();
+									}
+								};
+								
+								getAQ().id(R.id.detail_day).visibility(View.VISIBLE);
+								getAQ().id(R.id.detail_match).visibility(View.VISIBLE);
+								getAQ().id(R.id.detail_receivable).visibility(View.VISIBLE);
+								getAQ().id(R.id.receivable_data_date).textColor(Color.RED).text("数据更新日期: " + Server.getServerDataUpdateTime());
+								getAQ().id(R.id.detailbtn_receivable).clicked(listener);
+								getAQ().id(R.id.detailbtn_day).clicked(listener);
+								getAQ().id(R.id.detailbtn_match).clicked(listener);
+							}
+						});
 					}
 				});
 	}
@@ -479,11 +506,17 @@ public class FundsChartPage extends AQueryFragment implements
 	}
 
 	public void afterRefresh() {
-		dialog.hide();
+		handler.sendEmptyMessage(1000);
+
 	}
 
 	public UserBean getUserBean() {
 		return userBean;
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
 	}
 
 	public void setUserBean(UserBean userBean) {
@@ -496,6 +529,14 @@ public class FundsChartPage extends AQueryFragment implements
 
 	public void setYszkBeans(List<YSZKBean> yszkBeans) {
 		this.yszkBeans = yszkBeans;
+	}
+
+	@Override
+	public boolean handleMessage(Message arg0) {
+		if (arg0.what == 1000) {
+			dialog.hide();
+		}
+		return false;
 	}
 
 }

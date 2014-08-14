@@ -20,24 +20,26 @@
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
-                <Button
+                <ImageButton
                     android:id="@+id/f1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="0"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/fn1" />
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/fn1" />
 
-                <TextView
-                    android:id="@+id/f1t"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:paddingTop="10dp"
-                    android:text="应收账款明细"
-                    android:textColor="#000000"
-                    android:textSize="16sp" >
-                </TextView>
+                    <TextView
+                        android:id="@+id/f1t"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:paddingTop="10dp"
+                        android:text="应收账款明细"
+                        android:textColor="#000000"
+                        android:textSize="16sp" >
+                    </TextView>
+               
             </LinearLayout>
 
             <LinearLayout
@@ -46,13 +48,14 @@
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
-                <Button
+                <ImageButton
                     android:id="@+id/f2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="0"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/fn2" />
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/fn2" />
 
                 <TextView
                     android:id="@+id/f2t"
@@ -72,13 +75,14 @@
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
-                <Button
+                <ImageButton
                     android:id="@+id/f3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="0"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/fn3" />
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/fn3" />
 
                 <TextView
                     android:id="@+id/f3t"

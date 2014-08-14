@@ -312,7 +312,6 @@ public class AQUtility {
 					AQUtility.report(e);
 				}
 				
-				
 				return null;
 			}
 			

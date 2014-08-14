@@ -17,6 +17,7 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,14 +34,12 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxStatus;
 import com.common.StringUtil;
 import com.javaBean.QHMXBean;
-import com.javaBean.UserBean;
 import com.tbea.dataviewer.R;
 import com.webservice.Companys;
 import com.webservice.Server;
 import com.webservice.Server.OnFuturesResponseListener;
 
-public class FuturesChartPage extends AQueryFragment implements
-		OnCheckedChangeListener {
+public class FuturesChartPage extends AQueryFragment implements OnCheckedChangeListener {
 
 	public WebView webView = null;
 
@@ -48,7 +47,7 @@ public class FuturesChartPage extends AQueryFragment implements
 
 	public ProgressDialog dialog = null;
 
-	private UserBean userBean = new UserBean();
+	// private UserBean userBean = new UserBean();
 
 	public List<QHMXBean> qhmxBeans_Copper = new ArrayList<QHMXBean>();
 
@@ -82,13 +81,11 @@ public class FuturesChartPage extends AQueryFragment implements
 
 	private JSONArray dataArray_Aluminium = null;
 
-	private static List<String> normalCompanyList = Arrays.asList("5", "6",
-			"7", "8", "9", "10", "11");
+	//private static List<String> normalCompanyList = Arrays.asList("5", "6", "7", "8", "9", "10", "11");
 
 	private List<String> getCompanyList() {
 		List<String> companyList = null;
-		String[] resultArray = Server.getInstance().getUserBean()
-				.getCompanyqx().split(",");
+		String[] resultArray = Server.getInstance().getUserBean().getCompanyqx().split(",");
 		companyList = Arrays.asList(resultArray);
 		return companyList;
 	}
@@ -104,8 +101,7 @@ public class FuturesChartPage extends AQueryFragment implements
 		return resultMap;
 	}
 
-	private void transformOfCopper(List<String> companyAuthorityList)
-			throws JSONException {
+	private void transformOfCopper(List<String> companyAuthorityList) throws JSONException {
 		String tempCompanyId = null;
 		String tempCompanyName = null;
 		String tempDate = null;
@@ -120,17 +116,13 @@ public class FuturesChartPage extends AQueryFragment implements
 		for (QHMXBean qhmxBean : qhmxBeans_Copper) {
 			tempCompanyId = qhmxBean.getQybh();
 			if ("1000".equals(tempCompanyId)) {
-				getAQ().id(R.id.profit_lost_webview_details)
-						.getTextView()
-						.setText(
-								"盈亏金额总计: "
-										+ StringUtil.financeFormat(qhmxBean
-												.getYkje()) + " 万元");
+				getAQ().id(R.id.profit_lost_webview_details).getTextView()
+						.setText("盈亏金额总计: " + StringUtil.financeFormat(qhmxBean.getYkje()) + " 元");
 
 			}
 
 			if (companyAuthorityList.contains(tempCompanyId)) {
-				if (normalCompanyList.contains(tempCompanyId)) {
+				if (Companys.hasCompany(tempCompanyId)) {
 					tempCompanyName = qhmxBean.getQymc();
 					companyNames.add(tempCompanyName);
 					tempDate = qhmxBean.getDate();
@@ -146,7 +138,7 @@ public class FuturesChartPage extends AQueryFragment implements
 			}
 		}
 
-		toolTipFormatter_Copper = new StringBuffer("期货利润 (万元)");
+		toolTipFormatter_Copper = new StringBuffer("期货利润 (元)");
 		int listSize = companyNames.size();
 		for (int i = 0; i < listSize; i++) {
 			toolTipFormatter_Copper.append("<br/>{a" + i + "} : {c" + i + "}");
@@ -175,26 +167,19 @@ public class FuturesChartPage extends AQueryFragment implements
 				}
 				blankList.add("0");
 			}
-			dataObjects
-					.add(new JSONObject(
-							"{name : '"
-									+ companyName
-									+ "', type : 'line', symbolSize: 3, itemStyle: {normal: {lineStyle: {width: 2}}},data : "
-									+ valueList + "}"));
-			blankObjects
-					.add(new JSONObject(
-							"{name : '"
-									+ companyName
-									+ "', type : 'line', symbolSize: 0, itemStyle: {normal: {lineStyle: {width: 0}}},data : "
-									+ blankList + "}"));
+			dataObjects.add(new JSONObject("{name : '" + companyName
+					+ "', type : 'line', symbolSize: 3, itemStyle: {normal: {lineStyle: {width: 2}}},data : "
+					+ valueList + "}"));
+			blankObjects.add(new JSONObject("{name : '" + companyName
+					+ "', type : 'line', symbolSize: 0, itemStyle: {normal: {lineStyle: {width: 0}}},data : "
+					+ blankList + "}"));
 		}
 
 		dataArray_Copper = new JSONArray(dataObjects);
 		blankArray_Copper = new JSONArray(blankObjects);
 	}
 
-	private void transformOfAluminium(List<String> companyAuthorityList)
-			throws JSONException {
+	private void transformOfAluminium(List<String> companyAuthorityList) throws JSONException {
 		String tempCompanyId = null;
 		String tempCompanyName = null;
 		String tempDate = null;
@@ -209,15 +194,11 @@ public class FuturesChartPage extends AQueryFragment implements
 		for (QHMXBean qhmxBean : qhmxBeans_Aluminium) {
 			tempCompanyId = qhmxBean.getQybh();
 			if ("1000".equals(tempCompanyId)) {
-				getAQ().id(R.id.profit_lost_webview_details)
-						.getTextView()
-						.setText(
-								"盈亏金额总计: "
-										+ StringUtil.financeFormat(qhmxBean
-												.getYkje()) + " 万元");
+				getAQ().id(R.id.profit_lost_webview_details).getTextView()
+						.setText("盈亏金额总计: " + StringUtil.financeFormat(qhmxBean.getYkje()) + " 元");
 			}
 			if (companyAuthorityList.contains(tempCompanyId)) {
-				if (normalCompanyList.contains(tempCompanyId)) {
+				if (Companys.hasCompany(tempCompanyId)) {
 					tempCompanyName = qhmxBean.getQymc();
 					companyNames.add(tempCompanyName);
 					tempDate = qhmxBean.getDate();
@@ -234,11 +215,10 @@ public class FuturesChartPage extends AQueryFragment implements
 			}
 		}
 
-		toolTipFormatter_Aluminium = new StringBuffer("期货利润 (万元)");
+		toolTipFormatter_Aluminium = new StringBuffer("期货利润 (元)");
 		int listSize = companyNames.size();
 		for (int i = 0; i < listSize; i++) {
-			toolTipFormatter_Aluminium.append("<br/>{a" + i + "} : {c" + i
-					+ "}");
+			toolTipFormatter_Aluminium.append("<br/>{a" + i + "} : {c" + i + "}");
 		}
 		legends_Aluminium = new JSONArray(companyNames);
 		xAxisArray_Aluminium = new JSONArray(dateSet);
@@ -264,18 +244,12 @@ public class FuturesChartPage extends AQueryFragment implements
 				}
 				blankList.add("0");
 			}
-			dataObjects
-					.add(new JSONObject(
-							"{name : '"
-									+ companyName
-									+ "', type : 'line', symbolSize: 3, itemStyle: {normal: {lineStyle: {width: 2}}},data : "
-									+ valueList + "}"));
-			blankObjects
-					.add(new JSONObject(
-							"{name : '"
-									+ companyName
-									+ "', type : 'line', symbolSize: 0, itemStyle: {normal: {lineStyle: {width: 0}}},data : "
-									+ blankList + "}"));
+			dataObjects.add(new JSONObject("{name : '" + companyName
+					+ "', type : 'line', symbolSize: 3, itemStyle: {normal: {lineStyle: {width: 2}}},data : "
+					+ valueList + "}"));
+			blankObjects.add(new JSONObject("{name : '" + companyName
+					+ "', type : 'line', symbolSize: 0, itemStyle: {normal: {lineStyle: {width: 0}}},data : "
+					+ blankList + "}"));
 		}
 
 		dataArray_Aluminium = new JSONArray(dataObjects);
@@ -288,8 +262,6 @@ public class FuturesChartPage extends AQueryFragment implements
 			transformOfCopper(companyList);
 			if (null != qhmxBeans_Aluminium && qhmxBeans_Aluminium.size() > 1) {
 				transformOfAluminium(companyList);
-			} else {
-				getAQ().id(R.id.al).getView().setEnabled(false);
 			}
 		} catch (JSONException e) {
 			Toast.makeText(getActivity(), "数据错误，请重试", Toast.LENGTH_LONG).show();
@@ -298,8 +270,7 @@ public class FuturesChartPage extends AQueryFragment implements
 	}
 
 	private boolean isCUShow() {
-		switch (((RadioGroup) getAQ().id(R.id.rg_tab_ac).getView())
-				.getCheckedRadioButtonId()) {
+		switch (((RadioGroup) getAQ().id(R.id.rg_tab_ac).getView()).getCheckedRadioButtonId()) {
 		case R.id.al:
 			return false;
 		case R.id.cu:
@@ -312,32 +283,14 @@ public class FuturesChartPage extends AQueryFragment implements
 	protected void onViewPrepared(AQuery aq, View fragView) {
 		dialog = ProgressDialog.show(getActivity(), null, "数据加载中，请稍侯...");
 
-		Server server = Server.getInstance();
-		server.getFutures(Companys.getCompanys(),
-				new OnFuturesResponseListener() {
-
-					@Override
-					public void onFutures(
-							List<QHMXBean> receivedQhmxBeans_Copper,
-							List<QHMXBean> receivedQhmxBeans_Aluminium,
-							AjaxStatus status) {
-						qhmxBeans_Copper = receivedQhmxBeans_Copper;
-
-						qhmxBeans_Aluminium = receivedQhmxBeans_Aluminium;
-
-						initData();
-					}
-				});
-
-		((RadioGroup) aq.id(R.id.rg_tab_ac).getView())
-				.setOnCheckedChangeListener(this);
-
+		((RadioGroup) aq.id(R.id.rg_tab_ac).getView()).setOnCheckedChangeListener(this);
+		DisplayMetrics metric = getActivity().getResources().getDisplayMetrics();
+		getAQ().id(R.id.no_data_tips).getView().getLayoutParams().width = metric.widthPixels - 1;
 		aq.id(R.id.detailbtn).clicked(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-				FragmentTransaction ft = getActivity().getFragmentManager()
-						.beginTransaction();
+				FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
 
 				FuturesTablePage table = new FuturesTablePage();
 				if (isCUShow()) {
@@ -345,7 +298,7 @@ public class FuturesChartPage extends AQueryFragment implements
 				} else {
 					table.setQHMXBeans(qhmxBeans_Aluminium);
 				}
-
+				// ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 				ft.replace(R.id.host, table).addToBackStack(null);
 				ft.commit();
 			}
@@ -356,47 +309,95 @@ public class FuturesChartPage extends AQueryFragment implements
 		params.width = LayoutParams.MATCH_PARENT;
 		params.height = LayoutParams.MATCH_PARENT;
 		webView.setLayoutParams(params);
-		((LinearLayout) aq.id(R.id.profit_lost_webview).getView())
-				.addView(webView);
+		((LinearLayout) aq.id(R.id.profit_lost_webview).getView()).addView(webView);
 
-		initView("file:///android_asset/profit_lost_copper.html",
-				new WebViewClient() {
+		initView("file:///android_asset/profit_lost_copper.html", new WebViewClient() {
+			@Override
+			public void onPageFinished(WebView view, String url) {
+
+				Server server = Server.getInstance();
+				server.getFutures(new OnFuturesResponseListener() {
+
 					@Override
-					public void onPageFinished(WebView view, String url) {
+					public void onFutures(List<QHMXBean> receivedQhmxBeans_Copper,
+							List<QHMXBean> receivedQhmxBeans_Aluminium, AjaxStatus status) {
+						qhmxBeans_Copper = receivedQhmxBeans_Copper;
+
+						qhmxBeans_Aluminium = receivedQhmxBeans_Aluminium;
+
+						initData();
+
 						refresh(R.id.cu);
+
+						getAQ().id(R.id.detail).visibility(View.VISIBLE);
 					}
 				});
+			}
+		});
 	}
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.futures_chart_page, container, false);
+	}
+
+	private void showNodataTips() {
+		getAQ().id(R.id.no_data_tips).visibility(View.VISIBLE);
+	}
+
+	private void hideNodataTips() {
+		getAQ().id(R.id.no_data_tips).visibility(View.GONE);
+	}
+
+	private void showChart() {
+		getAQ().id(R.id.profit_lost_webview).visibility(View.VISIBLE);
+		getAQ().id(R.id.detail).visibility(View.VISIBLE);
+		getAQ().id(R.id.profit_lost_webview_details).visibility(View.VISIBLE);
+	}
+
+	private void hideChart() {
+		getAQ().id(R.id.profit_lost_webview).visibility(View.GONE);
+		getAQ().id(R.id.detail).visibility(View.GONE);
+		getAQ().id(R.id.profit_lost_webview_details).visibility(View.GONE);
 	}
 
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		if (null != dialog) {
-			dialog.show();
-		}
+
 		switch (checkedId) {
 		case R.id.cu:
-			initView("file:///android_asset/profit_lost_copper.html",
-					new WebViewClient() {
-						@Override
-						public void onPageFinished(WebView view, String url) {
-							refresh(R.id.cu);
-						}
-					});
+			if (null != dialog) {
+				dialog.show();
+			}
+
+			hideNodataTips();
+			showChart();
+			initView("file:///android_asset/profit_lost_copper.html", new WebViewClient() {
+				@Override
+				public void onPageFinished(WebView view, String url) {
+					refresh(R.id.cu);
+				}
+			});
 			break;
 		case R.id.al:
-			initView("file:///android_asset/profit_lost_aluminium.html",
-					new WebViewClient() {
-						@Override
-						public void onPageFinished(WebView view, String url) {
-							refresh(R.id.cu);
-						}
-					});
+			if (null != qhmxBeans_Aluminium && qhmxBeans_Aluminium.size() > 1) {
+				if (null != dialog) {
+					dialog.show();
+				}
+
+				hideNodataTips();
+				showChart();
+				initView("file:///android_asset/profit_lost_aluminium.html", new WebViewClient() {
+					@Override
+					public void onPageFinished(WebView view, String url) {
+						refresh(R.id.al);
+					}
+				});
+			} else {
+				showNodataTips();
+				hideChart();
+			}
+
 			break;
 		default:
 			dialog.hide();
@@ -423,8 +424,7 @@ public class FuturesChartPage extends AQueryFragment implements
 		webView.getSettings().setAllowFileAccess(true);
 		webView.getSettings().setNeedInitialFocus(false);
 		webView.addJavascriptInterface(this, "Profit_Lost");
-		webView.setBackgroundColor(getResources().getColor(
-				android.R.color.transparent));
+		webView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 		webView.setWebViewClient(webViewClient);
 
 		webView.loadUrl(url);
@@ -436,11 +436,10 @@ public class FuturesChartPage extends AQueryFragment implements
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					String url = "javascript:refreshAxis('"
-							+ toolTipFormatter_Copper + "'," + legends_Copper
-							+ "," + xAxisArray_Copper + "," + yAxisMin_Copper
-							+ "," + yAxisMax_Copper + "," + blankArray_Copper
-							+ ");";
+					String url = "javascript:refreshAxis('" + toolTipFormatter_Copper + "'," + legends_Copper + ","
+							+ xAxisArray_Copper + "," + yAxisMin_Copper + "," + yAxisMax_Copper + ","
+							+ blankArray_Copper + ");";
+					System.out.println(url);
 					webView.loadUrl(url);
 				}
 			});
@@ -450,11 +449,10 @@ public class FuturesChartPage extends AQueryFragment implements
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					String url = "javascript:refreshAxis('"
-							+ toolTipFormatter_Aluminium + "',"
-							+ legends_Aluminium + "," + xAxisArray_Aluminium
-							+ yAxisMin_Aluminium + "," + yAxisMax_Aluminium
-							+ "," + blankArray_Aluminium + ");";
+					String url = "javascript:refreshAxis('" + toolTipFormatter_Aluminium + "'," + legends_Aluminium
+							+ "," + xAxisArray_Aluminium + yAxisMin_Aluminium + "," + yAxisMax_Aluminium + ","
+							+ blankArray_Aluminium + ");";
+					System.out.println(url);
 					webView.loadUrl(url);
 				}
 			});
@@ -473,8 +471,8 @@ public class FuturesChartPage extends AQueryFragment implements
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					String url = "javascript:refreshData(" + dataArray_Copper
-							+ ");";
+					String url = "javascript:refreshData(" + dataArray_Copper + ");";
+					System.out.println(url);
 					webView.loadUrl(url);
 				}
 			});
@@ -483,8 +481,8 @@ public class FuturesChartPage extends AQueryFragment implements
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					String url = "javascript:refreshData("
-							+ dataArray_Aluminium + ");";
+					String url = "javascript:refreshData(" + dataArray_Aluminium + ");";
+					System.out.println(url);
 					webView.loadUrl(url);
 				}
 			});
@@ -500,13 +498,13 @@ public class FuturesChartPage extends AQueryFragment implements
 		dialog.hide();
 	}
 
-	public UserBean getUserBean() {
-		return userBean;
-	}
-
-	public void setUserBean(UserBean userBean) {
-		this.userBean = userBean;
-	}
+	// public UserBean getUserBean() {
+	// return userBean;
+	// }
+	//
+	// public void setUserBean(UserBean userBean) {
+	// this.userBean = userBean;
+	// }
 
 	public List<QHMXBean> getQhmxBeans_Copper() {
 		return qhmxBeans_Copper;

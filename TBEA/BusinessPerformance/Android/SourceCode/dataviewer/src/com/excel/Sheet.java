@@ -216,12 +216,17 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 	}
 
 	public int getContentHeight() {
-		int lockHeight = 0;
-		for (int i = 0; i < this.lockRowCount; ++i) {
-			lockHeight += sizeManager.getHeight(i);
+	
+		int contentHeight = 0;
+		
+		for (int i = lockRowCount; i < sizeManager.getRowCount(); ++i) {
+			if (this.isVisiable(i)){
+				contentHeight += sizeManager.getHeight(i);
+			}
 		}
 
-		return sizeManager.getHeight() - lockHeight;
+		
+		return contentHeight;
 
 	}
 
@@ -481,16 +486,26 @@ public class Sheet extends LinearLayout implements OnScrollFinished {
 				int cellHeight = 0;
 
 				if (scrollY > getContentHeight()) {
+					
+					int lastVisiableRow = 0;
+					for (int i = sizeManager.getRowCount() - 1; i >= this.lockRowCount; --i){
+						if (this.isVisiable(i)){
+							lastVisiableRow = i;
+							break;
+						}
+					}
+					
 					scroll.scrollTo(
 							scroll.getScrollX(),
 							getContentHeight()
-									- sizeManager.getHeight(sizeManager
-											.getRowCount() - 1));
+									- sizeManager.getHeight(lastVisiableRow));
 				} else {
 					for (int i = this.lockRowCount, rowCount = sizeManager
 							.getRowCount(); i < rowCount; ++i) {
-						cellHeight = sizeManager.getHeight(i);
-						sumHeight += cellHeight;
+						if (this.isVisiable(i)){
+							cellHeight = sizeManager.getHeight(i);
+							sumHeight += cellHeight;
+						}
 						if (sumHeight > scrollY) {
 							if (cellHeight / 2 < (sumHeight - scrollY)
 									|| (i + 1) == sizeManager.getRowCount()) {

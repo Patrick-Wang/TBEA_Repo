@@ -18,7 +18,15 @@
             android:visibility="gone" >
         </FrameLayout>
 
-<!--         <ScrollView
+        <TextView
+            android:id="@+id/error_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" >
+        </TextView>
+
+        <!--
+             <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -29,7 +37,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF" >
             </TextView>
-        </ScrollView> -->
+        </ScrollView>
+        -->
     </FrameLayout>
 
 </LinearLayout>

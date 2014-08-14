@@ -1,8 +1,6 @@
 package com.dataviewer;
 
 import com.androidquery.AQuery;
-import com.tbea.dataviewer.R;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +9,6 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.WebView;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 
 public class AQueryFragment extends Fragment {
 	AQuery mAq = null;
@@ -79,6 +76,4 @@ public class AQueryFragment extends Fragment {
 		unbindDrawables(mFragView);
 		super.onDestroy();
 	}
-	
-	
 }

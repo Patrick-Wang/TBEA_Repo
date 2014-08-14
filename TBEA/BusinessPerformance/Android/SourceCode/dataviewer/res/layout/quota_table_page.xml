@@ -68,11 +68,28 @@
             </Button>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/receivable_data_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:textSize="12sp"
+                android:text="数据日期" >
+            </TextView>
+        </LinearLayout>
+
         <com.excel.Sheet
             android:id="@+id/mysheet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
             android:orientation="vertical"
             android:paddingLeft="12dp" />
     </LinearLayout>

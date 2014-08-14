@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.DisplayMetrics;
@@ -106,6 +107,11 @@ public class GreenCellAdapter extends StandardAdapter {
 					DisplayUtil.dip2px(5, metric.density),
 					DisplayUtil.dip2px(5, metric.density));
 		}
+		
+		if (row >= sheet.getLockRowCount() && colum >= sheet.getLockColumCount()) {
+			ctv.setGravity(Gravity.RIGHT);
+		}
+		
 //		else if (!allCellCenter && colum == 1){
 //			ctv.setGravity(Gravity.LEFT);
 //		}

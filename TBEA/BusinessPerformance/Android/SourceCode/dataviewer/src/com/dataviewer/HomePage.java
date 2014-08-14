@@ -31,6 +31,7 @@ public class HomePage extends AQueryFragment {
 				public void onClick(View arg0) {
 					FragmentTransaction ft = getActivity().getFragmentManager()
 							.beginTransaction();
+					//ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN); 
 					ft.replace(R.id.host, new FundsChartPage()).addToBackStack(
 							null);
 					ft.commit();
@@ -49,7 +50,8 @@ public class HomePage extends AQueryFragment {
 				public void onClick(View arg0) {
 					FragmentTransaction ft = getActivity().getFragmentManager()
 							.beginTransaction();
-					ft.replace(R.id.host, new FuturesChartPage())
+					//ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN); 
+										ft.replace(R.id.host, new FuturesChartPage())
 							.addToBackStack(null);
 					ft.commit();
 				}
@@ -67,6 +69,7 @@ public class HomePage extends AQueryFragment {
 				public void onClick(View arg0) {
 					FragmentTransaction ft = getActivity().getFragmentManager()
 							.beginTransaction();
+					//ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN); 
 					ft.replace(R.id.host, new QuotaTablePage()).addToBackStack(
 							null);
 					ft.commit();

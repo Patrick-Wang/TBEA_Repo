@@ -21,22 +21,52 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp" 
-         android:orientation="vertical">
+        android:paddingRight="5dp" >
 
         <LinearLayout
             android:id="@+id/receiveable_ratio_webview"
             android:layout_width="match_parent"
-            android:layout_height="250dp" 
-            android:orientation="vertical"/>
+            android:layout_height="250dp"
+            android:orientation="vertical" />
 
-          <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="12dp"
             android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/detail_receivable"
+                android:layout_width="fill_parent"
+                android:layout_height="25dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="5dp"
+                android:visibility="gone" >
+
+                <Button
+                    android:id="@+id/detailbtn_receivable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/cu_al_check"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="应收账款明细"
+                    android:textSize="14sp" >
+                </Button>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@id/detailbtn_receivable"
+                    android:scaleType="fitEnd"
+                    android:src="@drawable/table" >
+                </ImageView>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/receiveable_ratio_webview_details_title"
@@ -62,13 +92,12 @@
                 android:id="@+id/receiveable_ratio_webview_details2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="7dp"
                 android:text=""
                 android:textColor="#000000"
                 android:textSize="14sp" >
             </TextView>
         </LinearLayout>
-         
     </LinearLayout>
 
 </LinearLayout>

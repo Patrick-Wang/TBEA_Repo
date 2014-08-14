@@ -29,8 +29,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:gravity="center"
             android:orientation="horizontal" >
 
             <RadioButton
@@ -76,6 +74,18 @@
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
         </RadioGroup>
+
+        <TextView
+            android:id="@+id/receivable_data_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/rg_tab"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="3dp"
+            android:layout_alignParentRight="true"
+            android:text=""
+            android:textSize="12sp" >
+        </TextView>
     </RelativeLayout>
 
 </LinearLayout>
