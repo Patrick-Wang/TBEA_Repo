@@ -88,13 +88,16 @@ public class Server {
 
 	public static String getServerDataUpdateTime() {
 		Calendar calendar = Calendar.getInstance();
-		calendar.get(Calendar.YEAR);
+		
 		int delta = 2;
-		if (calendar.get(Calendar.HOUR) > 2) {
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+		if (hour >= 2) {
 			delta = 1;
 		}
+		
+		int day = calendar.get(Calendar.DAY_OF_MONTH) - delta;
 		return calendar.get(Calendar.YEAR) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/"
-				+ (calendar.get(Calendar.DAY_OF_MONTH) - delta);
+				+ day;
 	}
 
 	public UserBean getUserBean() {

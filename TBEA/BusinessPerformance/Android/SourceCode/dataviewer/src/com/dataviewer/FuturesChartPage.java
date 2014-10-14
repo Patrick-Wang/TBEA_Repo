@@ -439,7 +439,6 @@ public class FuturesChartPage extends AQueryFragment implements OnCheckedChangeL
 					String url = "javascript:refreshAxis('" + toolTipFormatter_Copper + "'," + legends_Copper + ","
 							+ xAxisArray_Copper + "," + yAxisMin_Copper + "," + yAxisMax_Copper + ","
 							+ blankArray_Copper + ");";
-					System.out.println(url);
 					webView.loadUrl(url);
 				}
 			});
@@ -450,9 +449,8 @@ public class FuturesChartPage extends AQueryFragment implements OnCheckedChangeL
 				@Override
 				public void run() {
 					String url = "javascript:refreshAxis('" + toolTipFormatter_Aluminium + "'," + legends_Aluminium
-							+ "," + xAxisArray_Aluminium + yAxisMin_Aluminium + "," + yAxisMax_Aluminium + ","
+							+ "," + xAxisArray_Aluminium + "," + yAxisMin_Aluminium + "," + yAxisMax_Aluminium + ","
 							+ blankArray_Aluminium + ");";
-					System.out.println(url);
 					webView.loadUrl(url);
 				}
 			});
@@ -472,7 +470,6 @@ public class FuturesChartPage extends AQueryFragment implements OnCheckedChangeL
 				@Override
 				public void run() {
 					String url = "javascript:refreshData(" + dataArray_Copper + ");";
-					System.out.println(url);
 					webView.loadUrl(url);
 				}
 			});
@@ -482,7 +479,6 @@ public class FuturesChartPage extends AQueryFragment implements OnCheckedChangeL
 				@Override
 				public void run() {
 					String url = "javascript:refreshData(" + dataArray_Aluminium + ");";
-					System.out.println(url);
 					webView.loadUrl(url);
 				}
 			});
