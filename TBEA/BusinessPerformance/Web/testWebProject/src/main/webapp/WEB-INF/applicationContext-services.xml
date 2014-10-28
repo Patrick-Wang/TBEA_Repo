@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    	http://www.springframework.org/schema/tx 
+    	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    	http://www.springframework.org/schema/aop 
+    	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+
+	<!-- -->
+	<!-- PROPERTIES -->
+	<!-- -->
+
+	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
+		<property name="locations"> <list> <value>classpath:../applicationContext.properties</value> 
+		</list> </property> </bean> -->
+
+	<!-- -->
+	<!-- INCLUDES -->
+	<!-- -->
+	<!-- -->
+	<!-- PERFORMANCE -->
+	<!-- -->
+
+	<!-- -->
+	<!-- CACHING -->
+	<!-- -->
+
+	<!-- -->
+	<!-- DATABASE -->
+	<!-- -->
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/my_test_db" />
+	</bean>
+	<bean id="dataSource2" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/yszk_db" />
+	</bean>
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/>
+				<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/>
+				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
+					/> -->
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="true" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="localDB" />
+	</bean>
+	<bean id="entityManagerFactory2"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource2" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> -->
+				<!--<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/> -->
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
+					/> -->
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="true" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="15DB" />
+	</bean>
+
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+
+	<!-- -->
+	<!-- TRANSACTIONS -->
+	<!-- -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="transactionManager2" />
+
+	<aop:aspectj-autoproxy />
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="transactionManager2" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory2" />
+		<property name="dataSource" ref="dataSource2" />
+	</bean>
+
+
+	<!-- -->
+	<!-- DAO -->
+	<!-- -->
+
+	<!-- UTILS -->
+	<!-- -->
+	<!-- -->
+	<!-- HELPERS -->
+	<!-- -->
+
+
+
+	<!-- -->
+	<!-- RESTLET -->
+	<!-- -->
+
+	<!-- -->
+	<!-- BUSINESS -->
+	<!-- -->
+
+	<!-- -->
+	<!-- CLIENTS -->
+	<!-- -->
+
+
+	<!-- -->
+	<!-- SPRING SECURITY -->
+	<!-- -->
+
+</beans>
