@@ -1,19 +1,16 @@
-package com.tbea.test.testWebProject.model.dao.testTable;
+package com.tbea.test.testWebProject.model.dao.cqk;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.tbea.test.testWebProject.model.entity.local.CQK;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
-import com.tbea.test.testWebProject.model.entity.TestTable;
-
-//@Repository
 @Transactional("transactionManager")
-public class TestTableDaoImpl extends AbstractReadWriteDaoImpl<TestTable>
-		implements TestTableDao {
+public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements CQKDao {
 
 	@Override
 	@PersistenceContext(unitName = "localDB")

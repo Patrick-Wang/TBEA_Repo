@@ -7,16 +7,24 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.test.testWebProject.model.dao.testTable.TestTableDao;
 import com.tbea.test.testWebProject.model.entity.TestTable;
 
-@Service
+//@Service
 @Transactional("transactionManager")
 public class TestTableServiceImpl implements TestTableService {
 
-	@Autowired
+//	@Autowired
 	private TestTableDao testTableDao;
 
 	@Override
 	public TestTable getTestTableById(int id) {
 		return testTableDao.getById(id);
+	}
+
+	public TestTableDao getTestTableDao() {
+		return testTableDao;
+	}
+
+	public void setTestTableDao(TestTableDao testTableDao) {
+		this.testTableDao = testTableDao;
 	}
 
 }
