@@ -21,13 +21,14 @@ public class CQKServiceImpl implements CQKService {
 		CQK cqk = new CQK();
 		cqk.setNy("201410");
 		cqk.setHy(hyName);
-		cqk.setCqk2n(yszktzLocalDao.getCQK(0, 730, sshyList, isIncluded,
+		cqk.setCqk2n(yszktzLocalDao.getCQK(null, 730, sshyList, isIncluded,
 				isTotal));
 		cqk.setCqk3n(yszktzLocalDao.getCQK(730, 1095, sshyList, isIncluded,
 				isTotal));
-		cqk.setCqk4njzq(yszktzLocalDao.getCQK(1095, 0, sshyList, isIncluded,
+		cqk.setCqk4njzq(yszktzLocalDao.getCQK(1095, null, sshyList, isIncluded,
 				isTotal));
-		cqk.setZj(yszktzLocalDao.getCQK(0, 0, sshyList, isIncluded, isTotal));
+		cqk.setZj(yszktzLocalDao.getCQK(null, null, sshyList, isIncluded,
+				isTotal));
 		cqkDao.merge(cqk);
 		return;
 	}

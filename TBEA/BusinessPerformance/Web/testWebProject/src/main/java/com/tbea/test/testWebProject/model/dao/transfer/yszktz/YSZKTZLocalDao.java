@@ -10,7 +10,11 @@ public interface YSZKTZLocalDao extends AbstractReadWriteDao<YSZKTZLocal> {
 
 	public List<YSZKTZLocal> getAllYSZKTZLocal();
 
-	public Double getCQK(int startTime, int endTime, List<String> sshyList,
-			boolean isIncluded, boolean isTotal) throws Exception;
+	public Double getCQK(Integer startTime, Integer endTime,
+			List<String> sshyList, boolean isIncluded, boolean isTotal)
+			throws Exception;
+
+	public Double getYQK(String baseMonth, Integer startTime, Integer endTime)
+			throws Exception;
 
 }

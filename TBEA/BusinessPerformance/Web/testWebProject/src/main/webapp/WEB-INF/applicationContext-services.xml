@@ -121,6 +121,7 @@
 		class="com.tbea.test.testWebProject.model.dao.transfer.yszktz.YSZKTZ15DaoImpl" />
 	<bean id="cqkDao" class="com.tbea.test.testWebProject.model.dao.cqk.CQKDaoImpl" />
 	<bean id="blhtDao" class="com.tbea.test.testWebProject.model.dao.blht.BLHTDaoImpl" />
+	<bean id="yqkDao" class="com.tbea.test.testWebProject.model.dao.yqk.YQKDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -174,6 +175,11 @@
 		scope="prototype">
 		<property name="blhtDao" ref="blhtDao" />
 		<property name="blLocalDao" ref="blLocalDao" />
+	</bean>
+	<bean id="yqkService" class="com.tbea.test.testWebProject.service.yqk.YQKServiceImpl"
+		scope="prototype">
+		<property name="yqkDao" ref="yqkDao" />
+		<property name="yszktzLocalDao" ref="yszktzLocalDao" />
 	</bean>
 
 	<!-- -->

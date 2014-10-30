@@ -34,15 +34,16 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 	}
 
 	@Override
-	public Double getCQK(int startTime, int endTime, List<String> sshyList,
-			boolean isIncluded, boolean isTotal) throws Exception {
+	public Double getCQK(Integer startTime, Integer endTime,
+			List<String> sshyList, boolean isIncluded, boolean isTotal)
+			throws Exception {
 		Double result = 0.0D;
 		String sql = "select sum(ysje - yhxje) from YSZKTZLocal"
 				+ " where fhrq is not null";
-		if (startTime != 0) {
+		if (null != startTime) {
 			sql += " and DateDiff(dd, fhrq, getdate()) > :startTime";
 		}
-		if (endTime != 0) {
+		if (null != endTime) {
 			sql += " and DateDiff(dd, fhrq, getdate()) <= :endTime";
 		}
 		if (!isTotal) {
@@ -53,14 +54,42 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 			sql += " in (:sshyList)";
 		}
 		Query query = getEntityManager().createQuery(sql);
-		if (startTime != 0) {
+		if (null != startTime) {
 			query.setParameter("startTime", startTime);
 		}
-		if (endTime != 0) {
+		if (null != endTime) {
 			query.setParameter("endTime", endTime);
 		}
 		if (!isTotal) {
 			query.setParameter("sshyList", sshyList);
+		}
+		try {
+			result = (Double) query.getSingleResult();
+		} catch (NoResultException e) {
+			result = 0.0D;
+		}
+		return result;
+	}
+
+	@Override
+	public Double getYQK(String baseMonth, Integer startTime, Integer endTime)
+			throws Exception {
+		Double result = 0.0D;
+		String sql = "select sum(ysje - yhxje) from YSZKTZLocal"
+				+ " where dqrq is not null";
+		if (null != startTime) {
+			sql += " and DateDiff(mm, dqrq, :baseMonth) >= :startTime";
+		}
+		if (null != endTime) {
+			sql += " and DateDiff(mm, dqrq, :baseMonth) < :endTime";
+		}
+		Query query = getEntityManager().createQuery(sql);
+		query.setParameter("baseMonth", baseMonth + "01");
+		if (null != startTime) {
+			query.setParameter("startTime", startTime);
+		}
+		if (null != endTime) {
+			query.setParameter("endTime", endTime);
 		}
 		try {
 			result = (Double) query.getSingleResult();
