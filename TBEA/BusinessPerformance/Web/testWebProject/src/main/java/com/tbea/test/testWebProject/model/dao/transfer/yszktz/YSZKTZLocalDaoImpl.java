@@ -34,7 +34,6 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 	}
 
 	@Override
-	@Transactional("transactionManager")
 	public Double getCQK(int startTime, int endTime, List<String> sshyList,
 			boolean isIncluded, boolean isTotal) throws Exception {
 		Double result = 0.0D;

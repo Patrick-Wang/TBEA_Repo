@@ -7,7 +7,11 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 import com.tbea.test.testWebProject.model.entity.local.BLLocal;
 
 public interface BLLocalDao extends AbstractReadWriteDao<BLLocal> {
-	
+
 	public List<BLLocal> getAllBLLocal();
+
+	public List<Object[]> getBLJE() throws Exception;
+
+	public List<Object[]> getBLHKJE() throws Exception;
 
 }

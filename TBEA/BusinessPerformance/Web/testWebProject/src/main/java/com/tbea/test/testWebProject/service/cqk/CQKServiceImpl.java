@@ -16,7 +16,6 @@ public class CQKServiceImpl implements CQKService {
 
 	private YSZKTZLocalDao yszktzLocalDao;
 
-	@Transactional("transactionManager")
 	private void importCQKByHY(String hyName, List<String> sshyList,
 			boolean isIncluded, boolean isTotal) throws Exception {
 		CQK cqk = new CQK();
@@ -34,7 +33,6 @@ public class CQKServiceImpl implements CQKService {
 	}
 
 	@Override
-	@Transactional("transactionManager")
 	public boolean importCQK() {
 		boolean result = false;
 		try {
