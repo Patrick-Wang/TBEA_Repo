@@ -1,0 +1,50 @@
+log4j.rootLogger = debug,A,B,C
+
+
+
+
+log4j.appender.A = org.apache.log4j.ConsoleAppender
+
+log4j.appender.A.Target = System.out
+
+log4j.appender.A.layout = org.apache.log4j.PatternLayout
+
+log4j.appender.A.layout.ConversionPattern = %p %t %c - %m%n
+
+
+log4j.appender.B = org.apache.log4j.DailyRollingFileAppender
+
+log4j.appender.B.File = E:/mobile/conf/logs/debug.log
+log4j.appender.B.Append = true
+
+log4j.appender.B.Threshold = DEBUG 
+
+log4j.appender.B.layout = org.apache.log4j.PatternLayout
+
+log4j.appender.B.layout.ConversionPattern = %p %t %c - %m%n
+
+
+
+
+log4j.appender.C = org.apache.log4j.DailyRollingFileAppender
+
+log4j.appender.C.File = E:/mobile/conf/logs/error.log 
+
+log4j.appender.C.Append = true
+
+log4j.appender.C.Threshold = ERROR 
+log4j.appender.C.layout = org.apache.log4j.PatternLayout
+
+log4j.appender.C.layout.ConversionPattern = %p %t %c - %m%n
+
+
+log4j.appender.B = org.apache.log4j.DailyRollingFileAppender
+
+log4j.appender.B.File = E:/mobile/conf/logs/info.log
+log4j.appender.B.Append = true
+
+log4j.appender.B.Threshold = INFO 
+
+log4j.appender.B.layout = org.apache.log4j.PatternLayout
+
+log4j.appender.B.layout.ConversionPattern = %p %t %c - %m%n
