@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
     	http://www.springframework.org/schema/beans 
     	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
@@ -13,7 +12,9 @@
     	http://www.springframework.org/schema/aop 
     	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
         http://www.springframework.org/schema/context 
-        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/task 
+        http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
 
 	<!-- -->
@@ -50,9 +51,9 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/>
-				<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/>
-				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
 					/> -->
 				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
 				<property name="showSql" value="true" />
@@ -102,13 +103,33 @@
 	<!-- DAO -->
 	<!-- -->
 
+	<bean id="qyzjkDao"
+		class="com.tbea.test.testWebProject.model.dao.qyzjk.QYZJKDaoImpl" />
+	<bean id="testTableDao"
+		class="com.tbea.test.testWebProject.model.dao.testTable.TestTableDaoImpl" />
+	<bean id="blLocalDao"
+		class="com.tbea.test.testWebProject.model.dao.transfer.bl.BLLocalDaoImpl" />
+	<bean id="bl15Dao"
+		class="com.tbea.test.testWebProject.model.dao.transfer.bl.BL15DaoImpl" />
+	<bean id="htxxLocalDao"
+		class="com.tbea.test.testWebProject.model.dao.transfer.htxx.HTXXLocalDaoImpl" />
+	<bean id="htxx15Dao"
+		class="com.tbea.test.testWebProject.model.dao.transfer.htxx.HTXX15DaoImpl" />
+	<bean id="yszktzLocalDao"
+		class="com.tbea.test.testWebProject.model.dao.transfer.yszktz.YSZKTZLocalDaoImpl" />
+	<bean id="yszktz15Dao"
+		class="com.tbea.test.testWebProject.model.dao.transfer.yszktz.YSZKTZ15DaoImpl" />
+	<bean id="cqkDao" class="com.tbea.test.testWebProject.model.dao.cqk.CQKDaoImpl" />
+	<bean id="blhtDao" class="com.tbea.test.testWebProject.model.dao.blht.BLHTDaoImpl" />
+	<bean id="yqkDao" class="com.tbea.test.testWebProject.model.dao.yqk.YQKDaoImpl" />
+	<bean id="yszkjgDao"
+		class="com.tbea.test.testWebProject.model.dao.yszkjg.YSZKJGDaoImpl" />
+
 	<!-- UTILS -->
 	<!-- -->
 	<!-- -->
 	<!-- HELPERS -->
 	<!-- -->
-
-
 
 	<!-- -->
 	<!-- RESTLET -->
@@ -118,6 +139,57 @@
 	<!-- BUSINESS -->
 	<!-- -->
 
+	<bean id="qyzjkService"
+		class="com.tbea.test.testWebProject.service.qyzjk.QYZJKServiceImpl"
+		scope="prototype">
+		<property name="qyzjkDao" ref="qyzjkDao" />
+	</bean>
+	<bean id="testTableService"
+		class="com.tbea.test.testWebProject.service.testTable.TestTableServiceImpl"
+		scope="prototype">
+		<property name="testTableDao" ref="testTableDao" />
+	</bean>
+	<bean id="blTransferService"
+		class="com.tbea.test.testWebProject.service.transfer.bl.BLTransferServiceImpl"
+		scope="prototype">
+		<property name="blLocalDao" ref="blLocalDao" />
+		<property name="bl15Dao" ref="bl15Dao" />
+	</bean>
+	<bean id="htxxTransferService"
+		class="com.tbea.test.testWebProject.service.transfer.htxx.HTXXTransferServiceImpl"
+		scope="prototype">
+		<property name="htxxLocalDao" ref="htxxLocalDao" />
+		<property name="htxx15Dao" ref="htxx15Dao" />
+	</bean>
+	<bean id="yszktzTransferService"
+		class="com.tbea.test.testWebProject.service.transfer.yszktz.YSZKTZTransferServiceImpl"
+		scope="prototype">
+		<property name="yszktzLocalDao" ref="yszktzLocalDao" />
+		<property name="yszktz15Dao" ref="yszktz15Dao" />
+	</bean>
+	<bean id="cqkService" class="com.tbea.test.testWebProject.service.cqk.CQKServiceImpl"
+		scope="prototype">
+		<property name="cqkDao" ref="cqkDao" />
+		<property name="yszktzLocalDao" ref="yszktzLocalDao" />
+	</bean>
+	<bean id="blhtService"
+		class="com.tbea.test.testWebProject.service.blht.BLHTServiceImpl"
+		scope="prototype">
+		<property name="blhtDao" ref="blhtDao" />
+		<property name="blLocalDao" ref="blLocalDao" />
+	</bean>
+	<bean id="yqkService" class="com.tbea.test.testWebProject.service.yqk.YQKServiceImpl"
+		scope="prototype">
+		<property name="yqkDao" ref="yqkDao" />
+		<property name="yszktzLocalDao" ref="yszktzLocalDao" />
+	</bean>
+	<bean id="yszkjgService"
+		class="com.tbea.test.testWebProject.service.yszkjg.YSZKJGServiceImpl"
+		scope="prototype">
+		<property name="yszkjgDao" ref="yszkjgDao" />
+		<property name="yszktzLocalDao" ref="yszktzLocalDao" />
+	</bean>
+
 	<!-- -->
 	<!-- CLIENTS -->
 	<!-- -->
@@ -126,5 +198,12 @@
 	<!-- -->
 	<!-- SPRING SECURITY -->
 	<!-- -->
+
+	<!-- -->
+	<!-- SPRING SCHEDULE -->
+	<!-- -->
+
+	<!-- <task:scheduled-tasks scheduler="myScheduler"> <task:scheduled ref="reminderMailService" 
+		method="sendReminderMail" cron="0 10 16 * * ?" fixed-delay="1000" /> </task:scheduled-tasks> -->
 
 </beans>

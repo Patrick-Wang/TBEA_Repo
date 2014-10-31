@@ -10,7 +10,7 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.test.testWebProject.model.entity.TestTable;
 
-@Repository
+//@Repository
 @Transactional("transactionManager")
 public class TestTableDaoImpl extends AbstractReadWriteDaoImpl<TestTable>
 		implements TestTableDao {
