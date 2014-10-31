@@ -34,17 +34,17 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 	}
 
 	@Override
-	public Double getCQK(Integer startTime, Integer endTime,
+	public Double getCQK(String baseMonth, Integer startTime, Integer endTime,
 			List<String> sshyList, boolean isIncluded, boolean isTotal)
 			throws Exception {
 		Double result = 0.0D;
 		String sql = "select sum(ysje - yhxje) from YSZKTZLocal"
 				+ " where fhrq is not null";
 		if (null != startTime) {
-			sql += " and DateDiff(dd, fhrq, getdate()) > :startTime";
+			sql += " and DateDiff(dd, fhrq, :baseMonth) > :startTime";
 		}
 		if (null != endTime) {
-			sql += " and DateDiff(dd, fhrq, getdate()) <= :endTime";
+			sql += " and DateDiff(dd, fhrq, :baseMonth) <= :endTime";
 		}
 		if (!isTotal) {
 			sql += " and Khsshy";
@@ -55,9 +55,11 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 		}
 		Query query = getEntityManager().createQuery(sql);
 		if (null != startTime) {
+			query.setParameter("baseMonth", baseMonth + "01");
 			query.setParameter("startTime", startTime);
 		}
 		if (null != endTime) {
+			query.setParameter("baseMonth", baseMonth + "01");
 			query.setParameter("endTime", endTime);
 		}
 		if (!isTotal) {
@@ -84,11 +86,12 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 			sql += " and DateDiff(mm, dqrq, :baseMonth) < :endTime";
 		}
 		Query query = getEntityManager().createQuery(sql);
-		query.setParameter("baseMonth", baseMonth + "01");
 		if (null != startTime) {
+			query.setParameter("baseMonth", baseMonth + "01");
 			query.setParameter("startTime", startTime);
 		}
 		if (null != endTime) {
+			query.setParameter("baseMonth", baseMonth + "01");
 			query.setParameter("endTime", endTime);
 		}
 		try {
@@ -151,11 +154,12 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 			}
 		}
 		Query query = getEntityManager().createQuery(sql);
-		query.setParameter("baseMonth", baseMonth + "01");
 		if (null != startTime) {
+			query.setParameter("baseMonth", baseMonth + "01");
 			query.setParameter("startTime", startTime);
 		}
 		if (null != endTime) {
+			query.setParameter("baseMonth", baseMonth + "01");
 			query.setParameter("endTime", endTime);
 		}
 		if (!isTotal) {

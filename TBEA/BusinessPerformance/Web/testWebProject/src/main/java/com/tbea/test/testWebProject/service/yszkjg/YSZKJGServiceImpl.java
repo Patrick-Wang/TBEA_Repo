@@ -25,7 +25,7 @@ public class YSZKJGServiceImpl implements YSZKJGService {
 		Double ysje = yszktzLocalDao.getYSZKJE(baseMonth, sshyList, isIncluded,
 				isTotal);
 		YSZKJG yszkjg = new YSZKJG();
-		yszkjg.setNy("201410");
+		yszkjg.setNy(baseMonth);
 		yszkjg.setHy(hyName);
 		yszkjg.setYsje(ysje);
 		NumberFormat nf = new DecimalFormat("0.00%");
@@ -44,7 +44,7 @@ public class YSZKJGServiceImpl implements YSZKJGService {
 				isIncluded, isTotal, true, false));
 		yszkjg.setWdqzbj(yszktzLocalDao.getYSZKJG(baseMonth, null, 0, sshyList,
 				isIncluded, isTotal, true, true));
-		yszkjg.setYszkhj(yszktzLocalDao.getYSZKJG(baseMonth, null, 0, sshyList,
+		yszkjg.setYszkhj(yszktzLocalDao.getYSZKJG(baseMonth, null, null, sshyList,
 				isIncluded, isTotal, false, true));
 		yszkjgDao.merge(yszkjg);
 		return;
@@ -54,46 +54,74 @@ public class YSZKJGServiceImpl implements YSZKJGService {
 	public boolean importYSZKJG() {
 		boolean result = false;
 		try {
-			String baseMonth = "201410";
-			List<String> sshyGWList = new ArrayList<String>();
-			sshyGWList.add("01");
-			importYSZKJGByHY(baseMonth, "国网", sshyGWList, true, false);
 
-			List<String> sshyNWList = new ArrayList<String>();
-			sshyNWList.add("02");
-			importYSZKJGByHY(baseMonth, "南网", sshyNWList, true, false);
+			List<String> monthList = new ArrayList<String>();
+			monthList.add("201301");
+			monthList.add("201302");
+			monthList.add("201303");
+			monthList.add("201304");
+			monthList.add("201305");
+			monthList.add("201306");
+			monthList.add("201307");
+			monthList.add("201308");
+			monthList.add("201309");
+			monthList.add("201310");
+			monthList.add("201311");
+			monthList.add("201312");
+			monthList.add("201401");
+			monthList.add("201402");
+			monthList.add("201403");
+			monthList.add("201404");
+			monthList.add("201405");
+			monthList.add("201406");
+			monthList.add("201407");
+			monthList.add("201408");
+			monthList.add("201409");
+			monthList.add("201410");
+			monthList.add("201411");
+			monthList.add("201412");
+			for (String baseMonth : monthList) {
+				List<String> sshyGWList = new ArrayList<String>();
+				sshyGWList.add("01");
+				importYSZKJGByHY(baseMonth, "国网", sshyGWList, true, false);
 
-			List<String> sshySSDLList = new ArrayList<String>();
-			sshySSDLList.add("08");
-			importYSZKJGByHY(baseMonth, "省、市电力系统", sshySSDLList, true, false);
+				List<String> sshyNWList = new ArrayList<String>();
+				sshyNWList.add("02");
+				importYSZKJGByHY(baseMonth, "南网", sshyNWList, true, false);
 
-			List<String> sshyWDFDList = new ArrayList<String>();
-			sshyWDFDList.add("03");
-			sshyWDFDList.add("04");
-			sshyWDFDList.add("05");
-			sshyWDFDList.add("06");
-			sshyWDFDList.add("07");
-			importYSZKJGByHY(baseMonth, "五大发电", sshyWDFDList, true, false);
+				List<String> sshySSDLList = new ArrayList<String>();
+				sshySSDLList.add("08");
+				importYSZKJGByHY(baseMonth, "省、市电力系统", sshySSDLList, true,
+						false);
 
-			List<String> sshyQTDYList = new ArrayList<String>();
-			sshyQTDYList.add("09");
-			importYSZKJGByHY(baseMonth, "其他电源", sshyQTDYList, true, false);
+				List<String> sshyWDFDList = new ArrayList<String>();
+				sshyWDFDList.add("03");
+				sshyWDFDList.add("04");
+				sshyWDFDList.add("05");
+				sshyWDFDList.add("06");
+				sshyWDFDList.add("07");
+				importYSZKJGByHY(baseMonth, "五大发电", sshyWDFDList, true, false);
 
-			List<String> sshyCKHTList = new ArrayList<String>();
-			sshyCKHTList.add("14");
-			sshyCKHTList.add("15");
-			importYSZKJGByHY(baseMonth, "出口合同", sshyCKHTList, true, false);
+				List<String> sshyQTDYList = new ArrayList<String>();
+				sshyQTDYList.add("09");
+				importYSZKJGByHY(baseMonth, "其他电源", sshyQTDYList, true, false);
 
-			List<String> sshyQTList = new ArrayList<String>();
-			sshyQTList.addAll(sshyGWList);
-			sshyQTList.addAll(sshyNWList);
-			sshyQTList.addAll(sshySSDLList);
-			sshyQTList.addAll(sshyWDFDList);
-			sshyQTList.addAll(sshyQTDYList);
-			sshyQTList.addAll(sshyCKHTList);
-			importYSZKJGByHY(baseMonth, "其他", sshyQTList, false, false);
+				List<String> sshyCKHTList = new ArrayList<String>();
+				sshyCKHTList.add("14");
+				sshyCKHTList.add("15");
+				importYSZKJGByHY(baseMonth, "出口合同", sshyCKHTList, true, false);
 
-			importYSZKJGByHY(baseMonth, "合计", null, false, true);
+				List<String> sshyQTList = new ArrayList<String>();
+				sshyQTList.addAll(sshyGWList);
+				sshyQTList.addAll(sshyNWList);
+				sshyQTList.addAll(sshySSDLList);
+				sshyQTList.addAll(sshyWDFDList);
+				sshyQTList.addAll(sshyQTDYList);
+				sshyQTList.addAll(sshyCKHTList);
+				importYSZKJGByHY(baseMonth, "其他", sshyQTList, false, false);
+
+				importYSZKJGByHY(baseMonth, "合计", null, false, true);
+			}
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -33,14 +33,14 @@ public class YQKServiceImpl implements YQKService {
 			monthList.add("201410");
 			monthList.add("201411");
 			monthList.add("201412");
-			for (String month : monthList) {
+			for (String baseMonth : monthList) {
 				YQK yqk = new YQK();
-				yqk.setNy(month);
-				yqk.setYq1yyn(yszktzLocalDao.getYQK(month, 0, 1));
-				yqk.setYq1_3y(yszktzLocalDao.getYQK(month, 1, 3));
-				yqk.setYq3_6y(yszktzLocalDao.getYQK(month, 3, 6));
-				yqk.setYq6_12y(yszktzLocalDao.getYQK(month, 6, 12));
-				yqk.setYq1nys(yszktzLocalDao.getYQK(month, 12, null));
+				yqk.setNy(baseMonth);
+				yqk.setYq1yyn(yszktzLocalDao.getYQK(baseMonth, 0, 1));
+				yqk.setYq1_3y(yszktzLocalDao.getYQK(baseMonth, 1, 3));
+				yqk.setYq3_6y(yszktzLocalDao.getYQK(baseMonth, 3, 6));
+				yqk.setYq6_12y(yszktzLocalDao.getYQK(baseMonth, 6, 12));
+				yqk.setYq1nys(yszktzLocalDao.getYQK(baseMonth, 12, null));
 				yqkDao.merge(yqk);
 			}
 
@@ -56,11 +56,9 @@ public class YQKServiceImpl implements YQKService {
 		return yqkDao;
 	}
 
-
 	public void setYqkDao(YQKDao yqkDao) {
 		this.yqkDao = yqkDao;
 	}
-
 
 	public YSZKTZLocalDao getYszktzLocalDao() {
 		return yszktzLocalDao;
