@@ -1,10 +1,17 @@
 package com.tbea.test.testWebProject.service.cqk;
 
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.model.dao.cqk.CQKDao;
 import com.tbea.test.testWebProject.model.dao.transfer.yszktz.YSZKTZLocalDao;
 import com.tbea.test.testWebProject.model.entity.local.CQK;
@@ -15,7 +22,18 @@ public class CQKServiceImpl implements CQKService {
 	private CQKDao cqkDao;
 
 	private YSZKTZLocalDao yszktzLocalDao;
-
+private static Map<String, Integer> hyMap = new HashMap<String, Integer>();
+	static {
+		hyMap.put("国网、南网", 0);
+		hyMap.put("省、市电力系统", 1);
+		hyMap.put("五大发电", 2);
+		hyMap.put("其他电源", 3);
+		hyMap.put("石油石化", 4);
+		hyMap.put("轨道交通", 5);
+		hyMap.put("出口合同", 6);
+		hyMap.put("其他", 7);
+		hyMap.put("合计", 8);
+	}
 	private void importCQKByHY(String baseMonth, String hyName,
 			List<String> sshyList, boolean isIncluded, boolean isTotal)
 			throws Exception {
@@ -134,4 +152,70 @@ public class CQKServiceImpl implements CQKService {
 		this.yszktzLocalDao = yszktzLocalDao;
 	}
 
+	//return value format according to cqk
+	//hy one
+	//	[... current year data...]
+	//hy two 
+	//	[... current year data...]
+	@Override
+	public String[][] getCqkData(Date d) {
+		List<com.tbea.test.testWebProject.model.entity.CQK> list = cqkDao.getCqkData(d);
+		
+		String[][] result = new String[hyMap.size()][4]; 
+		for (com.tbea.test.testWebProject.model.entity.CQK cqk : list){
+			if (cqk != null && hyMap.get(cqk.getHy()) != null){
+				result[hyMap.get(cqk.getHy()).intValue()][0] = cqk.getSnjzq() + "";
+				result[hyMap.get(cqk.getHy()).intValue()][1] = cqk.getSn() + "";
+				result[hyMap.get(cqk.getHy()).intValue()][2] = cqk.getLn() + "";
+				result[hyMap.get(cqk.getHy()).intValue()][3] = cqk.getZj() + "";
+			}
+		}
+		return result;
+	}
+
+	//return value format
+	//hy one 
+	//	[... previous year's cqk zj(refer to CQK entity) from January to current month...]
+	//	[... current year's cqk zj(refer to CQK entity) from January to current month...]
+	//	[... current year's cqk ln(refer to CQK entity) from January to current month...]
+	//	[... current year's cqk Sn(refer to CQK entity) from January to current month...]
+	//	[... current year's cqk Snjzq(refer to CQK entity) from January to current month...]
+	//hy two 
+	//	[... previous year's cqk zj(refer to CQK entity) from January to current month...]
+	//	[... current year's cqk zj(refer to CQK entity) from January to current month...]
+	//	[... current year's cqk ln(refer to CQK entity) from January to current month...]
+	//	[... current year's cqk Sn(refer to CQK entity) from January to current month...]
+	//	[... current year's cqk Snjzq(refer to CQK entity) from January to current month...]
+	//......
+	@Override
+	public String[][] getCompareData(Date d) {
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(d);
+      
+		String[][] result = new String[5 * hyMap.size()][cal.get(Calendar.MONTH) + 1]; 
+		
+		List<com.tbea.test.testWebProject.model.entity.CQK> list = cqkDao.getPreYearCQK(d);
+		Calendar time = Calendar.getInstance();
+		int month = 0;
+		for (com.tbea.test.testWebProject.model.entity.CQK cqk : list){
+			if (cqk != null && hyMap.get(cqk.getHy()) != null){
+				time.setTime(Util.valueOf(cqk.getNy()));
+				month = time.get(Calendar.MONTH);
+				result[0 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getZj() + "";
+			}
+		}
+		
+		list = cqkDao.getCurYearCQK(d);
+		for (com.tbea.test.testWebProject.model.entity.CQK cqk : list){
+			if (cqk != null && hyMap.get(cqk.getHy()) != null){
+				time.setTime(Util.valueOf(cqk.getNy()));
+				month = time.get(Calendar.MONTH);
+				result[1 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getZj() + "";
+				result[2 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getLn() + "";
+				result[3 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getSn() + "";
+				result[4 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getSnjzq() + "";
+			}
+		}
+		return result;
+	}
 }

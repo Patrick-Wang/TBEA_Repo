@@ -1,9 +1,19 @@
 package com.tbea.test.testWebProject.model.dao.cqk;
 
-import com.tbea.test.testWebProject.model.entity.local.CQK;
+import java.sql.Date;
+import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
-public interface CQKDao extends AbstractReadWriteDao<CQK> {
+import com.tbea.test.testWebProject.model.entity.CQK;
+import com.tbea.test.testWebProject.model.entity.QYZJK;
+
+public interface CQKDao extends AbstractReadWriteDao<com.tbea.test.testWebProject.model.entity.local.CQK> {
+
+	List<CQK> getPreYearCQK(Date d);
+
+	List<CQK> getCurYearCQK(Date d);
+
+	List<CQK> getCqkData(Date d);
 
 }
