@@ -5,8 +5,8 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
-import com.tbea.test.testWebProject.model.entity.CQK;
-import com.tbea.test.testWebProject.model.entity.QYZJK;
+
+import com.tbea.test.testWebProject.model.entity.local.CQK;
 
 public interface CQKDao extends AbstractReadWriteDao<com.tbea.test.testWebProject.model.entity.local.CQK> {
 

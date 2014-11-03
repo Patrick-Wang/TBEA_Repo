@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.test.testWebProject.common.Util;
-import com.tbea.test.testWebProject.model.entity.CQK;
 import com.tbea.test.testWebProject.model.entity.YQKBHQS;
 
 @Repository
@@ -23,7 +22,7 @@ public class YQKBHQSDaoImpl extends AbstractReadWriteDaoImpl<YQKBHQS> implements
 		YQKBHQSDao {
 
 	@Override
-	@PersistenceContext(unitName = "15DB")
+	@PersistenceContext(unitName = "localDB")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
 	}

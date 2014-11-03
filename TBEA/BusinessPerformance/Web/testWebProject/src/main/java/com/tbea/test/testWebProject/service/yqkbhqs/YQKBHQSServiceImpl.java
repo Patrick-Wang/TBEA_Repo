@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.model.dao.cqk.CQKDao;
 import com.tbea.test.testWebProject.model.dao.yqkbhqs.YQKBHQSDao;
-import com.tbea.test.testWebProject.model.entity.CQK;
 import com.tbea.test.testWebProject.model.entity.YQKBHQS;
 
 @Service

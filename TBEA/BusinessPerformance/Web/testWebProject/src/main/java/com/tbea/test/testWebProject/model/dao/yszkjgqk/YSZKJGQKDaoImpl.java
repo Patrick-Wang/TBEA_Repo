@@ -21,7 +21,7 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		implements YSZKJGQKDao {
 
 	@Override
-	@PersistenceContext(unitName = "15DB")
+	@PersistenceContext(unitName = "localDB")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
 	}

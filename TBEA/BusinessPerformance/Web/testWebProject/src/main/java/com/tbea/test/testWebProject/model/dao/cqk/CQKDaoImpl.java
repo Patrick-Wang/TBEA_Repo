@@ -17,7 +17,6 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.test.testWebProject.common.Util;
 
-import com.tbea.test.testWebProject.model.entity.QYZJK;
 
 @Repository
 @Transactional("transactionManager2")
@@ -33,7 +32,7 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<com.tbea.test.testWebProject.model.entity.CQK> getPreYearCQK(Date d) {
+	public List<CQK> getPreYearCQK(Date d) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		
@@ -52,7 +51,7 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
 
 
 	@Override
-	public List<com.tbea.test.testWebProject.model.entity.CQK> getCurYearCQK(Date d) {
+	public List<CQK> getCurYearCQK(Date d) {
 		Calendar cal = Calendar.getInstance();
         cal.setTime(d);
         Calendar curYear = Calendar.getInstance();
@@ -68,7 +67,7 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
 
 
 	@Override
-	public List<com.tbea.test.testWebProject.model.entity.CQK> getCqkData(Date d) {
+	public List<CQK> getCqkData(Date d) {
 		Query q = getEntityManager().createQuery("select c from CQK c where c.ny = ?1");
 		Calendar cal = Calendar.getInstance();
         cal.setTime(d);

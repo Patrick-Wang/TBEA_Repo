@@ -159,14 +159,14 @@ private static Map<String, Integer> hyMap = new HashMap<String, Integer>();
 	//	[... current year data...]
 	@Override
 	public String[][] getCqkData(Date d) {
-		List<com.tbea.test.testWebProject.model.entity.CQK> list = cqkDao.getCqkData(d);
+		List<CQK> list = cqkDao.getCqkData(d);
 		
 		String[][] result = new String[hyMap.size()][4]; 
-		for (com.tbea.test.testWebProject.model.entity.CQK cqk : list){
+		for (CQK cqk : list){
 			if (cqk != null && hyMap.get(cqk.getHy()) != null){
-				result[hyMap.get(cqk.getHy()).intValue()][0] = cqk.getSnjzq() + "";
-				result[hyMap.get(cqk.getHy()).intValue()][1] = cqk.getSn() + "";
-				result[hyMap.get(cqk.getHy()).intValue()][2] = cqk.getLn() + "";
+				result[hyMap.get(cqk.getHy()).intValue()][0] = cqk.getCqk4njzq() + "";
+				result[hyMap.get(cqk.getHy()).intValue()][1] = cqk.getCqk3n() + "";
+				result[hyMap.get(cqk.getHy()).intValue()][2] = cqk.getCqk2n() + "";
 				result[hyMap.get(cqk.getHy()).intValue()][3] = cqk.getZj() + "";
 			}
 		}
@@ -194,10 +194,10 @@ private static Map<String, Integer> hyMap = new HashMap<String, Integer>();
       
 		String[][] result = new String[5 * hyMap.size()][cal.get(Calendar.MONTH) + 1]; 
 		
-		List<com.tbea.test.testWebProject.model.entity.CQK> list = cqkDao.getPreYearCQK(d);
+		List<CQK> list = cqkDao.getPreYearCQK(d);
 		Calendar time = Calendar.getInstance();
 		int month = 0;
-		for (com.tbea.test.testWebProject.model.entity.CQK cqk : list){
+		for (CQK cqk : list){
 			if (cqk != null && hyMap.get(cqk.getHy()) != null){
 				time.setTime(Util.valueOf(cqk.getNy()));
 				month = time.get(Calendar.MONTH);
@@ -206,14 +206,14 @@ private static Map<String, Integer> hyMap = new HashMap<String, Integer>();
 		}
 		
 		list = cqkDao.getCurYearCQK(d);
-		for (com.tbea.test.testWebProject.model.entity.CQK cqk : list){
+		for (CQK cqk : list){
 			if (cqk != null && hyMap.get(cqk.getHy()) != null){
 				time.setTime(Util.valueOf(cqk.getNy()));
 				month = time.get(Calendar.MONTH);
 				result[1 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getZj() + "";
-				result[2 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getLn() + "";
-				result[3 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getSn() + "";
-				result[4 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getSnjzq() + "";
+				result[2 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getCqk2n() + "";
+				result[3 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getCqk3n() + "";
+				result[4 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getCqk4njzq() + "";
 			}
 		}
 		return result;

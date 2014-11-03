@@ -20,7 +20,7 @@ import com.tbea.test.testWebProject.model.entity.BLHTDQQKHZ;
 public class BLHTDQQKHZDaoImpl extends AbstractReadWriteDaoImpl<BLHTDQQKHZ> implements BLHTDQQKHZDao {
 
 	@Override
-	@PersistenceContext(unitName = "15DB")
+	@PersistenceContext(unitName = "localDB")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
 	}
