@@ -1,5 +1,6 @@
 package com.tbea.test.testWebProject.model.entity;
 
+//月度指标
 public class YDZBBean {
 	//序号
 	private String xh;

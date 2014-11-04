@@ -188,6 +188,11 @@ declare var $: any;
 module JQTable {
 
 
+    export enum TitleMergeAlign{
+        Left,
+        Center
+    }
+
     export class Response {
         private rows: Array<string[]>;
         constructor(rows: Array<string[]>) {
@@ -599,15 +604,29 @@ module JQTable {
         }
 
 
-        public mergeColum(col: number, row?: number) {
+        public setRowBgColor(row: number, r: number, g: number, b: number): void{
+            this.completeList.push(() => {
+                $("#" + this.mGridName + " #" + (row + 1)).css("background", "rgb(" + r + "," + g + "," + b + ")");
+            })
+        }
+
+        public mergeColum(col: number, row?: number, align ?: TitleMergeAlign) {
             if (row != undefined) {
                 this.completeList.push(() => {
+                    if (align == undefined) {
+                        align = TitleMergeAlign.Center;
+                    }
                     ++row;
                     var leftCell = $("#" + this.mGridName + " #" + row + " #" + this.id(col) + row);
                     var rightCell = leftCell.next();
+                    if (align == TitleMergeAlign.Center) {
+                        leftCell.css("text-align", "right");
+                    } else {
+                        leftCell.css("text-align", "left");
+                    }
+                  
                     leftCell.css("border-right-width", "0px");
                     leftCell.css("padding-right", "0px");
-                    leftCell.css("text-align", "right");
                     leftCell.css("disabled", "disabled");
                     rightCell.css("padding-left", "0px");
                     rightCell.css("disabled", "disabled");
@@ -645,12 +664,16 @@ module JQTable {
                     for (var i = 0; i < mya.length; i++) {
                         var leftCell = $("#" + this.mGridName + " #" + mya[i] + " #" + this.id(col) + mya[i]);
                         var rightCell = leftCell.next();
-                        if (leftCell.css("display") != "none" && rightCell.css("display") != "none" &&
-                            grid.getCell(mya[i], col) == grid.getCell(mya[i], col + 1)) {
-                            var content = grid.getCell(mya[i], col);
-                            grid.setCell(mya[i], col, content.substring(0, content.length / 2));
-                            grid.setCell(mya[i], col + 1, content.substring(content.length / 2, content.length));
-                            this.mergeColum(col, i);
+                        if (leftCell.css("display") != "none" && rightCell.css("display") != "none"){
+                            if (grid.getCell(mya[i], col) == grid.getCell(mya[i], col + 1)) {
+                                var content = grid.getCell(mya[i], col);
+                                grid.setCell(mya[i], col, content.substring(0, content.length / 2));
+                                grid.setCell(mya[i], col + 1, content.substring(content.length / 2, content.length));
+                                this.mergeColum(col, i);
+                            }
+                            else if (grid.getCell(mya[i], col + 1) == "") {
+                                this.mergeColum(col, i);
+                            }
                         }
                     }
                 });

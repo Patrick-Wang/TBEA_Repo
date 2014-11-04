@@ -20,12 +20,9 @@ public class YDZBDaoImpl implements YDZBDao {
 		List<YDZBBean> YDZBList = new ArrayList<YDZBBean>();
 		Statement stmt = null;
 		ResultSet res = null;
-		// ��ѯ��ݿ�
-		// conn = new ConnDB().getConnection();
 		stmt = conn.createStatement();
 		res = stmt.executeQuery("exec dbo.p_jysj2014_sjzbhzcx " + nf + "," + yf
 				+ ",'" + qybh + "'," + zblx + ";");
-		// ��ݽ���ж�
 		while (res.next()) {
 			YDZBBean ydzbbean = new YDZBBean();
 			ydzbbean.setXh(res.getString(1));
@@ -52,7 +49,7 @@ public class YDZBDaoImpl implements YDZBDao {
 	}
 
 	public List<YDZBBean> getYDZB(Calendar cal) {
-		List<YDZBBean> YSZKList = null;
+		List<YDZBBean> ydzbs = null;
 		try {
 
 			DBConnectionManager manager = DBConnectionManager
@@ -60,13 +57,13 @@ public class YDZBDaoImpl implements YDZBDao {
 
 			Connection conn = manager.getConnection("mobileSys");
 
-			YSZKList = getYDZBInfo(cal.get(Calendar.YEAR),
+			ydzbs = getYDZBInfo(cal.get(Calendar.YEAR),
 					cal.get(Calendar.MONTH), "4;5;6;7;8;9;10;11", 0, conn);
 
 		} catch (Exception e) {
 
 		}
-		return YSZKList;
+		return ydzbs;
 	}
 
 }

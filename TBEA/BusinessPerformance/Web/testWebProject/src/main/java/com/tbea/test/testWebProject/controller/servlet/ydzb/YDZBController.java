@@ -26,27 +26,80 @@ public class YDZBController {
 	@Autowired
 	private YDZBService service;
 
-	private String view = "blhtdqqkhzb";
-
-	private String commandName = "bl";
-
-	@RequestMapping(value = "ydzb.do", method = RequestMethod.GET)
-	public ModelAndView getBlhtdqqkhzbById(HttpServletRequest request,
+	@RequestMapping(value = "hzb_zbhz.do", method = RequestMethod.GET)
+	public ModelAndView getHzb_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 		Calendar now = Calendar.getInstance();  
 		int month = now.get(Calendar.MONTH) + 1;
 		int year = now.get(Calendar.YEAR);
-		service.getYDZB(now);
-		
 		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-//		String blhtdqqk = JSONArray.fromObject(service.getBlhtdqqk(d)).toString().replace("null", "0");
-//		String blyeqs = JSONArray.fromObject(service.getBlyeqs(d)).toString().replace("null", "0");
-//		map.put("blhtdqqk", blhtdqqk);
-//		map.put("blyeqs", blyeqs);
-		return new ModelAndView(view, map);
+		String hzb_zbhz = JSONArray.fromObject(service.getHzb_zbhzData(d)).toString().replace("null", "0");
+		map.put("hzb_zbhz", hzb_zbhz);
+		return new ModelAndView("hzb_zbhz", map);
+	}
+	
+	@RequestMapping(value = "gcy_zbhz.do", method = RequestMethod.GET)
+	public ModelAndView getGcy_zbhz(HttpServletRequest request,
+			HttpServletResponse response) {
+		Calendar now = Calendar.getInstance();  
+		int month = now.get(Calendar.MONTH) + 1;
+		int year = now.get(Calendar.YEAR);
+		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("month", month);
+		map.put("year", year);
+		String gcy_zbhz = JSONArray.fromObject(service.getGcy_zbhzData(d)).toString().replace("null", "0");
+		map.put("gcy_zbhz", gcy_zbhz);
+		return new ModelAndView("gcy_zbhz", map);
+	}
+	
+	@RequestMapping(value = "gdw_zbhz.do", method = RequestMethod.GET)
+	public ModelAndView getGdw_zbhz(HttpServletRequest request,
+			HttpServletResponse response) {
+		Calendar now = Calendar.getInstance();  
+		int month = now.get(Calendar.MONTH) + 1;
+		int year = now.get(Calendar.YEAR);
+		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("month", month);
+		map.put("year", year);
+		String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0");
+		map.put("gdw_zbhz", gdw_zbhz);
+		return new ModelAndView("gdw_zbhz", map);
 	}
 
+	
+	@RequestMapping(value = "xjlrb.do", method = RequestMethod.GET)
+	public ModelAndView getXjlrb(HttpServletRequest request,
+			HttpServletResponse response) {
+		Calendar now = Calendar.getInstance();  
+		int month = now.get(Calendar.MONTH) + 1;
+		int year = now.get(Calendar.YEAR);
+		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("month", month);
+		map.put("year", year);
+		String xjlrb = JSONArray.fromObject(service.getXjlrbData(d)).toString().replace("null", "0");
+		map.put("xjlrb", xjlrb);
+		return new ModelAndView("xjlrb", map);
+	}
+	
+	
+	@RequestMapping(value = "yszkrb_qkb.do", method = RequestMethod.GET)
+	public ModelAndView getYszkrb_qkb(HttpServletRequest request,
+			HttpServletResponse response) {
+		Calendar now = Calendar.getInstance();  
+		int month = now.get(Calendar.MONTH) + 1;
+		int year = now.get(Calendar.YEAR);
+		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("month", month);
+		map.put("year", year);
+		String yszkrb_qkb = JSONArray.fromObject(service.getYszkrb_qkbData(d)).toString().replace("null", "0");
+		map.put("yszkrb_qkb", yszkrb_qkb);
+		return new ModelAndView("yszkrb_qkb", map);
+	}
 }
