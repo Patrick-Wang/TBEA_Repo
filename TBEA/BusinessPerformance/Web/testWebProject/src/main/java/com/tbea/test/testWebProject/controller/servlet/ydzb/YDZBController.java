@@ -94,10 +94,12 @@ public class YDZBController {
 		Calendar now = Calendar.getInstance();  
 		int month = now.get(Calendar.MONTH) + 1;
 		int year = now.get(Calendar.YEAR);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
+		int day = now.get(Calendar.DAY_OF_MONTH);
+		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + day);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
+		map.put("day",  day);
 		String yszkrb_qkb = JSONArray.fromObject(service.getYszkrb_qkbData(d)).toString().replace("null", "0");
 		map.put("yszkrb_qkb", yszkrb_qkb);
 		return new ModelAndView("yszkrb_qkb", map);

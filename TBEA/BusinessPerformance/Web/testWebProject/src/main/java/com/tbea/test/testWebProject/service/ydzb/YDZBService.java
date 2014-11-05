@@ -7,8 +7,6 @@ import com.tbea.test.testWebProject.model.entity.QYZJK;
 
 public interface YDZBService {
 
-	public String[][] getYDZB(Calendar cal);
-
 	public String[][] getHzb_zbhzData(Date d);
 
 	public String[][] getGcy_zbhzData(Date d);

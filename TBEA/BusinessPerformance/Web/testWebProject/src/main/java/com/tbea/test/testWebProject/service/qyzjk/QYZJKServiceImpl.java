@@ -1,7 +1,5 @@
 package com.tbea.test.testWebProject.service.qyzjk;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.test.testWebProject.model.dao.qyzjk.QYZJKDao;

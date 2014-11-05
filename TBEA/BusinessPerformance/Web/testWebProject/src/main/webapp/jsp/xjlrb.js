@@ -16,6 +16,7 @@ var xjlrb;
                 new JQTable.Node("本年累计流出", "bnljlc"),
                 new JQTable.Node("本日净流量", "brjll"),
                 new JQTable.Node("本月累计净流量", "byljjll"),
+                new JQTable.Node("报表本月调整数", "bbbytzs"),
                 new JQTable.Node("本年累计净流量", "bnljjll")
             ], gridName);
         };

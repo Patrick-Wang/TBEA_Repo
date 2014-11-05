@@ -16,13 +16,15 @@ module gdw_zbhz {
                     .append(new JQTable.Node(month + "月计划", "yjh"))
                     .append(new JQTable.Node(month + "月完成", "ywc"))
                     .append(new JQTable.Node(month + "月计划完成率", "yjhwcl", true, 180))
-                    .append(new JQTable.Node(month + "年度累计", "ndlj"))
-                    .append(new JQTable.Node(month + "累计完成率", "ljwcl")),
+                    .append(new JQTable.Node("季度累计", "jdlj"))
+                    .append(new JQTable.Node("季度完成率", "jdwcl"))
+                    .append(new JQTable.Node("年度累计", "ndlj"))
+                    .append(new JQTable.Node("累计完成率", "ljwcl")),
                 new JQTable.Node("去年同期", "qntq_1")
                     .append(new JQTable.Node("去年同期", "qntq"))
                     .append(new JQTable.Node("同比增长", "tbzz"))
                     .append(new JQTable.Node("去年同期累计", "qntqlj"))
-                    .append(new JQTable.Node("同比增长", "tbzz"))
+                    .append(new JQTable.Node("同比增长", "tbzz_1"))
             ], gridName);
         }
     }
