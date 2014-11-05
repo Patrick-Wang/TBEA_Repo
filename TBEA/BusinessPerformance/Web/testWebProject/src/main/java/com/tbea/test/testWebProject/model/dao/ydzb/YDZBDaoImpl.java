@@ -47,7 +47,7 @@ public class YDZBDaoImpl implements YDZBDao {
 					ydzbbean.setJqntqljzzb(res.getString(26));
 					YDZBList.add(ydzbbean);
 					
-					System.out.println(JSONObject.fromObject(ydzbbean).toString());
+					//System.out.println(JSONObject.fromObject(ydzbbean).toString());
 					
 				}
 			} catch (Exception e) {
@@ -77,7 +77,7 @@ public class YDZBDaoImpl implements YDZBDao {
 			
 			String query = "exec p_jysj2014_zbhzcxV2 " + nf + "," + yf + ",'"
 					+ qybh + "', 0, 0;";
-			System.out.println(query);
+			//System.out.println(query);
 			res = stmt.executeQuery(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,9 +91,9 @@ public class YDZBDaoImpl implements YDZBDao {
 		ResultSet res = null;
 		try {
 			stmt = conn.createStatement();
-			String query = "exec dbo.p_jysj2014_sjzbhzcx " + nf + "," + yf
+			String query = "p_jysj2014_zbfdwhz " + nf + "," + yf
 					+ ",'" + qybh + "', 0;";
-			System.out.println(query);
+			//System.out.println(query);
 			res = stmt.executeQuery(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -158,7 +158,7 @@ public class YDZBDaoImpl implements YDZBDao {
 					xjl.setDnjll(res.getString("dnjll"));
 					xjl.setBytzs(res.getString("bytzs"));
 					xjls.add(xjl);
-					System.out.println(JSONObject.fromObject(xjl).toString());
+					//System.out.println(JSONObject.fromObject(xjl).toString());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

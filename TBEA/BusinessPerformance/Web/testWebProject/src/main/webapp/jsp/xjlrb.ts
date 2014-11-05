@@ -98,7 +98,7 @@ module xjlrb {
                     cellEdit: true,
                     height: '100%',
                     width: 1200,
-                    shrinkToFit: false,
+                    shrinkToFit: true,
                     rowNum: 100,
                     autoScroll: true
                 }));

@@ -25,8 +25,7 @@
           href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
     <script src="../jsp/jqgrid/js/jquery-ui-custom.min.js" type="text/javascript"></script>
     <script src="../jsp/jqgrid/js/ui.multiselect.js" type="text/javascript"></script>
-    <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
-
+   
     <script src="../jsp/cqk.js" type="text/javascript"></script>
 
     <script type="text/javascript">
@@ -170,7 +169,7 @@
                 <option value="4">石油石化</option>
                 <option value="5">轨道交通</option>
                 <option value="6">出口合同</option>
-                <option value="7">其它</option>
+                <option value="7">其他</option>
             </select>
         </div>
 
@@ -186,6 +185,7 @@
 
 
 
-    </bodystyle>
+    </body>
+ <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 
 </html>

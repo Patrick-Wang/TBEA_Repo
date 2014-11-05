@@ -113,10 +113,8 @@ public class YDZBServiceImpl implements YDZBService {
 				data[row * len + base][7] = ydzb.getNdjhwcl();
 				data[row * len + base][8] = Util.financeFormat(ydzb.getQntq());
 				data[row * len + base][9] = ydzb.getJqntqzzb();
-				
 				data[row * len + base][10] = Util.financeFormat(ydzb.getQntqlj());
 				data[row * len + base][11] = ydzb.getJqntqljzzb();
-				System.out.println(data[row * len + base][9] + "   " + data[row * len + base][11]);
 			}
 		}
 	}
@@ -159,18 +157,18 @@ public class YDZBServiceImpl implements YDZBService {
 		qyGroups.add(Company.getGcl());	
 		for (int[] qyGroup : qyGroups){
 			for (int qy : qyGroup){
-				zbs.add(ydzbDao.getYDZB_V2(cal, qy));
+				zbs.add(ydzbDao.getYDZB(cal, qy));
 			}
-			zbs.add(ydzbDao.getYDZB_V2(cal, qyGroup));
+			zbs.add(ydzbDao.getYDZB(cal, qyGroup));
 		}
 		
-		zbs.add(ydzbDao.getYDZB_V2(cal, new Array(Company.getSbdcy()).join(Company.getXnycy())
+		zbs.add(ydzbDao.getYDZB(cal, new Array(Company.getSbdcy()).join(Company.getXnycy())
 				.join(Company.getNycy()).join(Company.getGcl())
 				.toArray()));
 		
-		zbs.add(ydzbDao.getYDZB_V2(cal, Company.ZH));
+		zbs.add(ydzbDao.getYDZB(cal, Company.ZH));
 		
-		zbs.add(ydzbDao.getYDZB_V2(cal, Company.getAll()));
+		zbs.add(ydzbDao.getYDZB(cal, Company.getAll()));
 		
 		for (int i = 0, len = zbs.size(); i < len; ++i){
 			fillZbhzData(result, zbs.get(i), i, 21);

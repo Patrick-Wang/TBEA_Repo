@@ -1,4 +1,5 @@
 /// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 declare var echarts;
 
 module yqkqsbh {
@@ -112,12 +113,21 @@ module yqkqsbh {
 
             var data = [];
             var tmp = [];
+            var row = [];
             for (var i = 0; i < this.mMonth; ++i) {
                 tmp = [(i + 1) + "月份"];
-                data.push(tmp.concat(this.mData[i]));
+                row = [].concat(this.mData[i]);
+                for (var col in row){
+                	row[col] = Util.formatCurrency(row[col]);
+                }
+                data.push(tmp.concat(row));
             }
             tmp = ["合计"];
-            data.push(tmp.concat(this.mData[this.mMonth]));
+            row = [].concat(this.mData[this.mMonth]);
+            for (var col in row){
+            	row[col] = Util.formatCurrency(row[col]);
+            }
+            data.push(tmp.concat(row));
 
 
             $("#" + name).jqGrid(

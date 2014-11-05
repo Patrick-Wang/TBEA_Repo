@@ -5,13 +5,13 @@ var cqk;
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
-        JQGridAssistantFactory.createTable = function (gridName) {
+        JQGridAssistantFactory.createTable = function (gridName, year) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("客户所属行业", "khsshy"),
                 new JQTable.Node("客户所属行业", "khsshy_1"),
-                new JQTable.Node("n-4年及以前", "n4n"),
-                new JQTable.Node("n-3年", "n3n"),
-                new JQTable.Node("n-2年", "n2n"),
+                new JQTable.Node(year - 4 + "年及以前", "n4n"),
+                new JQTable.Node(year - 3 + "年", "n3n"),
+                new JQTable.Node(year - 2 + "年", "n2n"),
                 new JQTable.Node("合计", "hj")
             ], gridName);
         };
@@ -190,7 +190,7 @@ var cqk;
         View.prototype.updatePieEchart = function (echart) {
             var data = this.mTableData;
 
-            var legend = ["国网、南网", "省、市电力公司", "五大发电", "其他电源", "石油石化", "轨道交通", "出口合同", "其它"];
+            var legend = ["国网、南网", "省、市电力公司", "五大发电", "其他电源", "石油石化", "轨道交通", "出口合同", "其他"];
             var dljpt = 0;
             for (var i = 0; i < 4; ++i) {
                 dljpt += parseInt(this.mTableData[i][3]);
@@ -313,7 +313,7 @@ var cqk;
         //    ysyq_payment_Chart.setOption(ysyq_payment_Option);
         //}
         View.prototype.updateTable = function (name) {
-            var tableAssist = JQGridAssistantFactory.createTable(name);
+            var tableAssist = JQGridAssistantFactory.createTable(name, this.mYear);
             tableAssist.mergeTitle();
 
             tableAssist.mergeRow(0);

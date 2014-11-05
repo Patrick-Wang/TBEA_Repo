@@ -1,6 +1,9 @@
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_3.xsd" version="2.3">
 	<display-name>test web project</display-name>
+	<welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
 	<listener>
 		<listener-class>org.springframework.web.util.WebAppRootListener
 		</listener-class>

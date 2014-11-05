@@ -193,16 +193,6 @@ module JQTable {
         Center
     }
 
-    export class Response {
-        private rows: Array<string[]>;
-        constructor(rows: Array<string[]>) {
-            this.rows = rows;
-        }
-
-        public get data(): Array<string[]> {
-            return this.rows;
-        }
-    }
 
     export class Node {
         private mName: string;
@@ -920,12 +910,6 @@ module JQTable {
                 };
             }
 
-            if (option.loadComplete != undefined) {
-                var onSuccess: (resp: Response) => void = option.loadComplete;
-                option.loadComplete = (data) => {
-                    onSuccess(new Response(data.rows));
-                }
-            }
 
             if (option.loadError != undefined) {
                 var onFailed: () => void = option.loadError;

@@ -24,7 +24,6 @@
           href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
     <script src="../jsp/jqgrid/js/jquery-ui-custom.min.js" type="text/javascript"></script>
     <script src="../jsp/jqgrid/js/ui.multiselect.js" type="text/javascript"></script>
-    <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 
     <script src="../jsp/yszkjgqkb.js" type="text/javascript"></script>
 
@@ -196,5 +195,6 @@
 
 
 </body>
+    <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 
 </html>

@@ -158,21 +158,6 @@ var JQTable;
     })(JQTable.TitleMergeAlign || (JQTable.TitleMergeAlign = {}));
     var TitleMergeAlign = JQTable.TitleMergeAlign;
 
-    var Response = (function () {
-        function Response(rows) {
-            this.rows = rows;
-        }
-        Object.defineProperty(Response.prototype, "data", {
-            get: function () {
-                return this.rows;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return Response;
-    })();
-    JQTable.Response = Response;
-
     var Node = (function () {
         function Node(name, id, isReadOnly, width) {
             if (typeof isReadOnly === "undefined") { isReadOnly = true; }
@@ -852,13 +837,6 @@ var JQTable;
                 option.jsonReader = {
                     cell: "",
                     id: "0"
-                };
-            }
-
-            if (option.loadComplete != undefined) {
-                var onSuccess = option.loadComplete;
-                option.loadComplete = function (data) {
-                    onSuccess(new Response(data.rows));
                 };
             }
 
