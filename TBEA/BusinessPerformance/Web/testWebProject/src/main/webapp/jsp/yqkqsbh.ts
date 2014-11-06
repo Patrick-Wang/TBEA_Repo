@@ -32,7 +32,7 @@ module yqkqsbh {
 
         private updateEchart(echart: string): void {
 
-            var legend = ["一个月以内", "1-3月", "3-6月", "6-12月", "一年以上", "总额"];
+            var legend = ["一个月以内", "1-3月", "3-6月", "6-12月", "一年以上"];
 
             var month: string[] = [];
             var data = [];
@@ -41,28 +41,29 @@ module yqkqsbh {
                 data.push([]);
             }
 
-            var total = [];
+//            var total = [];
             for (var i = 1; i <= this.mMonth; ++i) {
                 month.push(i + "月");
-                total.push(0);
+//                total.push(0);
             }
 
 
-            for (var j = 0; j < legend.length - 1; ++j) {
+            for (var j = 0; j < legend.length; ++j) {
                 for (var i = 1; i <= this.mMonth; ++i) {
                     data[j].push(this.mData[i - 1][j]);
                 }
             }
-            for (var i = 1; i <= this.mMonth; ++i) {
-                for (var j = 0; j < legend.length - 1; ++j) {
-                    total[i - 1] += parseInt(data[j][i - 1]);
-                }
-            }
+            
+//            for (var i = 1; i <= this.mMonth; ++i) {
+//                for (var j = 0; j < legend.length - 1; ++j) {
+//                    total[i - 1] += parseInt(data[j][i - 1]);
+//                }
+//            }
 
 
-            for (var i = 1; i <= this.mMonth; ++i) {
-                data[legend.length - 1].push(total[i - 1] + "");
-            }
+//            for (var i = 1; i <= this.mMonth; ++i) {
+//                data[legend.length - 1].push(total[i - 1] + "");
+//            }
 
 
             var ser = [];

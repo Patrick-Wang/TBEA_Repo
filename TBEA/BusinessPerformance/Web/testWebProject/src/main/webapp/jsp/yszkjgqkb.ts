@@ -1,5 +1,5 @@
 /// <reference path="jqgrid/jqassist.ts" />
-
+/// <reference path="util.ts" />
 declare var echarts;
 
 module yszkjgqkb {
@@ -377,6 +377,17 @@ module yszkjgqkb {
 
             for (var i = 0; i < data.length; ++i) {
                 data[i] = data[i].concat(this.mTableData[i]);
+            }
+            
+            var row = [];
+            for (var i = 0; i < data.length; ++i) {
+                row = [].concat(this.mTableData[i]);
+                for (var col in row){
+                	if (col != '1'){
+                		row[col] = Util.formatCurrency(row[col]);
+                	}     
+                }
+                data[i] = data[i].concat(row);
             }
 
             $("#" + name).jqGrid(

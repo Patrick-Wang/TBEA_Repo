@@ -1,5 +1,5 @@
 /// <reference path="jqgrid/jqassist.ts" />
-
+/// <reference path="util.ts" />
 declare var echarts;
 
 module blhtdqqkhzb {
@@ -142,8 +142,17 @@ module blhtdqqkhzb {
                 ["保理合同到期情况", "金额"],
                 ["保理合同到期情况", "份数"]
             ];
-            for (var i = 0; i < data.length; ++i){
-                data[i] = data[i].concat(this.mTableData[i]);
+//            for (var i = 0; i < data.length; ++i){
+//                data[i] = data[i].concat(this.mTableData[i]);
+//            }
+
+            var row = [];
+            for (var i = 0; i < data.length; ++i) {
+                row = [].concat(this.mTableData[i]);
+                for (var col in row){
+                	row[col] = Util.formatCurrency(row[col]);
+                }
+                data[i] = data[i].concat(row);
             }
 
             $("#" + name).jqGrid(
@@ -159,10 +168,7 @@ module blhtdqqkhzb {
                     shrinkToFit: false,
                     autoScroll: true,
                     data: tableAssist.getData(data),
-                    datatype: "local",
-                    loadComplete: function (resp: JQTable.Response) {
-                        //var data: Array<string[]> = resp.data;
-                    }
+                    datatype: "local"                 
                 }));
 
         }

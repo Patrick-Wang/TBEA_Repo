@@ -1,4 +1,5 @@
 /// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 declare var echarts;
 
 module gdw_zbhz {
@@ -162,15 +163,33 @@ module gdw_zbhz {
                 ["存货", "众和公司"],
                 ["存货", "集团合计"]];
 
+            var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (data[i][1].lastIndexOf("计") >= 0) {
                     tableAssist.setRowBgColor(i, 183, 222, 232);
                 }
-
                 if (this.mData[i] instanceof Array) {
-                    data[i] = data[i].concat(this.mData[i]);
+                    row = [].concat(this.mData[i]);
+                    for (var col in row) {
+                        if (col != '3' && col != '5' && col != '7' && col != '9' && col != '11') {
+                            row[col] = Util.formatCurrency(row[col]);
+                        }
+                    }
+                    data[i] = data[i].concat(row);
                 }
             }
+
+//            for (var i = 0; i < data.length; ++i) {
+//               
+//if (data[i][1].lastIndexOf("计") >= 0) {
+//                    tableAssist.setRowBgColor(i, 183, 222, 232);
+//                }
+//				
+//
+//                if (this.mData[i] instanceof Array) {
+//                    data[i] = data[i].concat(this.mData[i]);
+//                }
+//            }
 
             $("#" + name).jqGrid(
                 tableAssist.decorate({

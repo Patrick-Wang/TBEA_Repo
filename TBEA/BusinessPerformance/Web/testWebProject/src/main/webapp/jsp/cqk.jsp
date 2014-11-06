@@ -25,7 +25,7 @@
           href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
     <script src="../jsp/jqgrid/js/jquery-ui-custom.min.js" type="text/javascript"></script>
     <script src="../jsp/jqgrid/js/ui.multiselect.js" type="text/javascript"></script>
-   
+   	<script src="../jsp/util.js" type="text/javascript"></script>
     <script src="../jsp/cqk.js" type="text/javascript"></script>
 
     <script type="text/javascript">

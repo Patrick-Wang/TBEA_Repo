@@ -1,4 +1,5 @@
 /// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 declare var echarts;
 
 module hzb_zbhz {
@@ -68,11 +69,25 @@ module hzb_zbhz {
 						["17", "三项费用率"]];
 
 
+//            for (var i = 0; i < data.length; ++i) {
+//                if (this.mData[i] instanceof Array) {
+//                    data[i] = data[i].concat(this.mData[i]);
+//                }
+//            }
+
+ 			var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (this.mData[i] instanceof Array) {
-                    data[i] = data[i].concat(this.mData[i]);
+                    row = [].concat(this.mData[i]);
+                    for (var col in row) {
+                        if (col != '2' && col != '4' && col != '6' && col != '8' && col != '10') {
+                            row[col] = Util.formatCurrency(row[col]);
+                        }
+                    }
+                    data[i] = data[i].concat(row);
                 }
             }
+
 
             $("#" + name).jqGrid(
                 tableAssist.decorate({

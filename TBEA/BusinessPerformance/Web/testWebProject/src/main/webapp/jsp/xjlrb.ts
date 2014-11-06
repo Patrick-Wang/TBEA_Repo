@@ -1,4 +1,5 @@
 /// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 declare var echarts;
 
 module xjlrb {
@@ -74,13 +75,28 @@ module xjlrb {
                 ["众和公司"],
                 ["合计"]];
 
+//            for (var i = 0; i < data.length; ++i) {
+//                if (data[i][0].lastIndexOf("计") >= 0) {
+//                    tableAssist.setRowBgColor(i, 183, 222, 232);
+//                }
+//
+//                if (this.mData[i] instanceof Array) {
+//                    data[i] = data[i].concat(this.mData[i]);
+//                }
+//            }
+            
+            var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (data[i][0].lastIndexOf("计") >= 0) {
                     tableAssist.setRowBgColor(i, 183, 222, 232);
                 }
 
                 if (this.mData[i] instanceof Array) {
-                    data[i] = data[i].concat(this.mData[i]);
+                    row = [].concat(this.mData[i]);
+                    for (var col in row) {
+                        row[col] = Util.formatCurrency(row[col]);
+                    }
+                    data[i] = data[i].concat(row);
                 }
             }
 

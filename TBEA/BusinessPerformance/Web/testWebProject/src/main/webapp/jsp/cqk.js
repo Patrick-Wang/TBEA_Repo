@@ -334,8 +334,16 @@ var cqk;
                 ["合", "计"]
             ];
 
+            //			for (var i = 0; i < data.length; ++i){
+            //				data[i] = data[i].concat(this.mTableData[i]);
+            //			}
+            var row = [];
             for (var i = 0; i < data.length; ++i) {
-                data[i] = data[i].concat(this.mTableData[i]);
+                row = [].concat(this.mTableData[i]);
+                for (var col in row) {
+                    row[col] = Util.formatCurrency(row[col]);
+                }
+                data[i] = data[i].concat(row);
             }
 
             $("#" + name).jqGrid(tableAssist.decorate({

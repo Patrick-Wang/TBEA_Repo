@@ -79,16 +79,16 @@ public class YDZBServiceImpl implements YDZBService {
 		for (YDZBBean ydzb : ydzbs) {
 			if (ydzb != null && xhMap.get(ydzb.getXh()) != null) {
 				index = xhMap.get(ydzb.getXh());
-				result[index][0] = Util.financeFormat(ydzb.getByjh());
-				result[index][1] = Util.financeFormat(ydzb.getBywc());
+				result[index][0] = ydzb.getByjh();
+				result[index][1] = ydzb.getBywc();
 				result[index][2] = ydzb.getJhwcl();
-				result[index][3] = Util.financeFormat(ydzb.getJdlj());
+				result[index][3] = ydzb.getJdlj();
 				result[index][4] = ydzb.getJdjhwcl();
-				result[index][5] = Util.financeFormat(ydzb.getNdlj());
+				result[index][5] = ydzb.getNdlj();
 				result[index][6] = ydzb.getNdjhwcl();
-				result[index][7] = Util.financeFormat(ydzb.getQntq());
+				result[index][7] = ydzb.getQntq();
 				result[index][8] = ydzb.getJqntqzzb();
-				result[index][9] = Util.financeFormat(ydzb.getQntqlj());
+				result[index][9] = ydzb.getQntqlj();
 				result[index][10] = ydzb.getJqntqljzzb();
 			}
 		}
@@ -104,16 +104,16 @@ public class YDZBServiceImpl implements YDZBService {
 			if (ydzb != null && zbMap.get(ydzb.getXh()) != null) {
 				row = zbMap.get(ydzb.getXh());
 				data[row * len + base][0] = ydzb.getNdjh();
-				data[row * len + base][1] = Util.financeFormat(ydzb.getByjh());
-				data[row * len + base][2] = Util.financeFormat(ydzb.getBywc());
+				data[row * len + base][1] = ydzb.getByjh();
+				data[row * len + base][2] = ydzb.getBywc();
 				data[row * len + base][3] = ydzb.getJhwcl();
-				data[row * len + base][4] = Util.financeFormat(ydzb.getJdlj());
+				data[row * len + base][4] = ydzb.getJdlj();
 				data[row * len + base][5] = ydzb.getJdjhwcl();
-				data[row * len + base][6] = Util.financeFormat(ydzb.getNdlj());
+				data[row * len + base][6] = ydzb.getNdlj();
 				data[row * len + base][7] = ydzb.getNdjhwcl();
-				data[row * len + base][8] = Util.financeFormat(ydzb.getQntq());
+				data[row * len + base][8] = ydzb.getQntq();
 				data[row * len + base][9] = ydzb.getJqntqzzb();
-				data[row * len + base][10] = Util.financeFormat(ydzb.getQntqlj());
+				data[row * len + base][10] = ydzb.getQntqlj();
 				data[row * len + base][11] = ydzb.getJqntqljzzb();
 			}
 		}

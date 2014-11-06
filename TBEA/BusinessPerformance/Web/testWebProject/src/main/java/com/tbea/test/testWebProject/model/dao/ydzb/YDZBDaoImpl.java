@@ -91,8 +91,8 @@ public class YDZBDaoImpl implements YDZBDao {
 		ResultSet res = null;
 		try {
 			stmt = conn.createStatement();
-			String query = "p_jysj2014_zbfdwhz " + nf + "," + yf
-					+ ",'" + qybh + "', 0;";
+			String query = "exec p_jysj2014_zbfdwhz " + nf + "," + yf
+					+ ",'" + qybh + "', 0, 0;";
 			//System.out.println(query);
 			res = stmt.executeQuery(query);
 		} catch (SQLException e) {
@@ -140,7 +140,7 @@ public class YDZBDaoImpl implements YDZBDao {
 		try {
 			stmt = getConnection().createStatement();
 			String query = "exec yszk_xjlrb '" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DAY_OF_MONTH) + "';";
-			System.out.println(query);
+			//System.out.println(query);
 			res = stmt.executeQuery(query);
 			
 			
