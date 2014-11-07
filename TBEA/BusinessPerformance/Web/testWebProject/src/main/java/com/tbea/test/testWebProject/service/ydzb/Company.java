@@ -1,87 +1,78 @@
 package com.tbea.test.testWebProject.service.ydzb;
 
-import java.util.ArrayList;
-import java.util.List;
-
-//5	SB	沈变公司
-//6	HB	衡变公司
-//7	XB	新变厂
-//8	TB	天变公司
-//9	LL	鲁缆公司
-//10	XL	新缆厂
-//11	DL	德缆公司
-//23	JCK	进出口公司
-//25	NDGS	能动公司
-//27	ZH	众和公司
-//29	XNY	新能源
-//30	GY	新特能源公司
-//66	TCNY	天池能源
-//70	GCGS	国际工程公司
-//74	ZJWL	中疆物流
-
-
-class Array{
-	List<int[]> list = new ArrayList<int[]>();
-	private int len = 0;
-	public Array(int[] arr){
-		list.add(arr);
-		len += arr.length;
-	}
-	
-	public Array join(int[] arr){
-		list.add(arr);
-		len += arr.length;
-		return this;
-	}
-	
-	public int[] toArray(){
-		int[] ret = new int[len];
-		int base = 0;
-		for (int[] arr : list){
-			for (int i = 0; i < arr.length; ++i){
-				ret[base] = arr[i];
-				base++;
-			}
-		}
-		return ret;
-	}
-}
+import java.util.HashMap;
+import java.util.Map;
 
 public class Company {
-	public static int SB = 5;
-	public static int HB = 6;
-	public static int XB = 7;
-	public static int TB = 8;
-	public static int LL = 9;
-	public static int XL = 10;
-	public static int DL = 11;
-	public static int JCK = 23;
-	public static int NDGS = 25;
-	public static int ZH = 27;
-	public static int XNY = 29;
-	public static int GY = 30;
-	public static int TCNY = 66;
-	public static int GCGS = 70;
-	public static int ZJWL = 74;
 
-	public static int[] getAll() {
-		return new int[] { SB, HB, XB, TB, LL, XL, DL, JCK, NDGS, ZH, XNY, GY,
-				TCNY, GCGS, ZJWL };
+	public enum Type {
+		SB, HB, XB, TB, LL, XL, DL, JCK, NDGS, ZH, XNY, GY, TCNY, GCGS, ZJWL, SBDCY, XNYCY, NYCY, GCL, JT
 	}
 
-	public static int[] getSbdcy() {
-		return new int[] { SB, HB, XB, TB, LL, XL, DL };
+	private static Map<String, Company> cyMap = null;
+	
+	private static Company companys[] = new Company[] {
+			new Company("5", "沈变公司"),
+			new Company("6", "衡变公司"),
+			new Company("7", "新变厂"),
+			new Company("8", "天变公司"),
+			new Company("9", "鲁缆公司"),
+			new Company("10", "新缆厂"),
+			new Company("11", "德缆公司"),
+			new Company("23", "进出口公司"),
+			new Company("25", "能动公司"),
+			new Company("27", "众和公司"),
+			new Company("29", "新能源"),
+			new Company("30", "新特能源公司"),
+			new Company("66", "天池能源"),
+			new Company("70", "国际工程公司"),
+			new Company("74", "中疆物流"),
+			new CompanyGroup("999", "输变电产业", new Type[] { Type.SB, Type.HB,
+					Type.XB, Type.TB, Type.LL, Type.XL, Type.DL }),
+			new CompanyGroup("888", "新能源产业", new Type[] { Type.GY, Type.XNY }),
+			new CompanyGroup("777", "能源产业", new Type[] { Type.TCNY, Type.NDGS,
+					Type.ZJWL }),
+			new CompanyGroup("666", "工程类", new Type[] { Type.JCK, Type.GCGS }),
+			new CompanyGroup("9999", "集团合计", new Type[] { Type.SB, Type.HB,
+					Type.XB, Type.TB, Type.LL, Type.XL, Type.DL, Type.JCK,
+					Type.NDGS, Type.ZH, Type.XNY, Type.GY, Type.TCNY,
+					Type.GCGS, Type.ZJWL }) };
+
+	private String name;
+	private String Id;
+
+	protected Company(String id, String name) {
+		super();
+		this.name = name;
+		Id = id;
 	}
 
-	public static int[] getXnycy() {
-		return new int[] { GY, XNY };
+	public String getName() {
+		return name;
 	}
 
-	public static int[] getNycy() {
-		return new int[] { TCNY, NDGS, ZJWL };
+	public String getId() {
+		return Id;
 	}
 
-	public static int[] getGcl() {
-		return new int[] { JCK, GCGS };
+	public static Company get(Type ct) {
+		return companys[ct.ordinal()];
+	}
+	
+	public static Company get(String id) {
+		if (cyMap == null){
+			cyMap = new HashMap<String, Company>();
+		}
+		
+		if (!cyMap.containsKey(id)){
+			for (int i = companys.length - 1; i >= 0; --i){
+				if (companys[i].getId().equals(id)){
+					cyMap.put(id, companys[i]);
+					break;
+				}
+			}
+		}
+		
+		return cyMap.get(id);
 	}
 }

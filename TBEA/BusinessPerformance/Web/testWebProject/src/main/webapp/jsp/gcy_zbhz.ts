@@ -15,10 +15,11 @@ module gcy_zbhz {
                     .append(new JQTable.Node(month + "月计划", "yjh"))
                     .append(new JQTable.Node(month + "月完成", "ywc"))
                     .append(new JQTable.Node(month + "月计划完成率", "yjhwcl", true, 220))
+                    .append(new JQTable.Node("季度计划", "jdjh"))
                     .append(new JQTable.Node("季度累计", "jdlj"))
                     .append(new JQTable.Node("季度完成率", "jdwcl"))
-                    .append(new JQTable.Node(month + "年度累计", "ndlj"))
-                    .append(new JQTable.Node(month + "累计完成率", "ljwcl")),
+                    .append(new JQTable.Node("年度累计", "ndlj"))
+                    .append(new JQTable.Node("累计完成率", "ljwcl")),
                 new JQTable.Node("去年同期", "qntq_1")
                     .append(new JQTable.Node("去年同期", "qntq"))
                     .append(new JQTable.Node("同比增长", "tbzz"))
@@ -63,13 +64,13 @@ module gcy_zbhz {
 
 
             var data = [
-                ["利润总额", "输变电产业"],
-                ["利润总额", "新能源产业"],
-                ["利润总额", "能源产业"],
-                ["利润总额", "工程类"],
-                ["利润总额", "股份合计"],
-                ["利润总额", "众和公司"],
-                ["利润总额", "集团合计"],
+                ["报表利润", "输变电产业"],
+                ["报表利润", "新能源产业"],
+                ["报表利润", "能源产业"],
+                ["报表利润", "工程类"],
+                ["报表利润", "股份合计"],
+                ["报表利润", "众和公司"],
+                ["报表利润", "集团合计"],
                 ["销售收入", "输变电产业"],
                 ["销售收入", "新能源产业"],
                 ["销售收入", "能源产业"],

@@ -16,21 +16,7 @@ import com.tbea.test.testWebProject.model.dao.ydzb.YDZBDao;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
 
-//5	沈变公司
-//6	衡变公司
-//7	新变厂
-//8	天变公司
-//9	鲁缆公司
-//10	新缆厂
-//11	德缆公司
-//23	进出口公司
-//25	能动公司
-//27	众和公司
-//29	新能源
-//30	新特能源公司
-//66	天池能源
-//70	国际工程公司
-//74	中疆物流
+
 
 @Service
 @Transactional("transactionManager2")
@@ -38,47 +24,115 @@ public class YDZBServiceImpl implements YDZBService {
 
 	@Autowired
 	private YDZBDao ydzbDao;
-	private static Map<String, Integer> xhMap = new HashMap<String, Integer>();
-	private static Map<String, Integer> zbMap = new HashMap<String, Integer>();
+	private static Map<String, Integer> zbbh_hzMap = new HashMap<String, Integer>();
+	private static Map<String, Integer> zbbh_gcygdwMap = new HashMap<String, Integer>();
+	private static Map<String, Integer> qybh_gcyMap = new HashMap<String, Integer>();
+	private static Map<String, Integer> qybh_gdwMap = new HashMap<String, Integer>();
 
+//	5	报表利润
+//	6	利润总额
+//	7	销售收入
+//	33	国内收入
+//	37	国际收入
+//	8	净现金流
+//	9	不含税产值
+//	22	资金回笼
+//	23	应收帐款
+//	24	其中逾期款
+//	25	存货
+//	26	其中积压物资
+//	18	合同签约额
+//	19	国内签约
+//	20	国际签约(万美元)
+//	21	现款现货签约
+//	10	产量：变压器
+//	11	产量：用铜量
+//	12	产量：用铝量
+//	13	产量：多晶硅
+//	15	产量：逆变器
+//	16	产量：发电量
+//	17	产量：煤炭
+//	27	人数
+//	28	人均利润
+//	29	人均收入
+//	30	三项费用
+//	31	三项费用率
+//	32	净资产收益率
+	
 	static {
-		xhMap.put("2", 0);
-		xhMap.put("6", 1);
-		xhMap.put("9", 2);
-		xhMap.put("10", 3);
-		xhMap.put("11", 4);
-		xhMap.put("12", 5);
-		xhMap.put("13", 6);
-		xhMap.put("8", 7);
-		xhMap.put("7", 8);
-		xhMap.put("17", 9);
-		xhMap.put("18", 10);
-		xhMap.put("19", 11);
-		xhMap.put("25", 12);
-		xhMap.put("26", 13);
-		xhMap.put("27", 14);
-		xhMap.put("28", 15);
-		xhMap.put("29", 16);
+		zbbh_hzMap.put("6", 0);
+		zbbh_hzMap.put("8", 1);
+		zbbh_hzMap.put("23", 2);
+		zbbh_hzMap.put("24", 3);
+		zbbh_hzMap.put("25", 4);
+		zbbh_hzMap.put("26", 5);
+		zbbh_hzMap.put("18", 6);
+		zbbh_hzMap.put("22", 7);
+		zbbh_hzMap.put("9", 8);
+		zbbh_hzMap.put("10", 9);
+		zbbh_hzMap.put("11", 10);
+		zbbh_hzMap.put("12", 11);
+		zbbh_hzMap.put("27", 12);
+		zbbh_hzMap.put("28", 13);
+		zbbh_hzMap.put("29", 14);
+		zbbh_hzMap.put("30", 15);
+		zbbh_hzMap.put("31", 16);
 	}
 
 	static {
-		zbMap.put("2", 0);
-		zbMap.put("3", 1);
-		zbMap.put("6", 2);
-		zbMap.put("9", 3);
-		zbMap.put("11", 4);
+		zbbh_gcygdwMap.put("5", 0);//报表利润
+		zbbh_gcygdwMap.put("7", 1);
+		zbbh_gcygdwMap.put("8", 2);
+		zbbh_gcygdwMap.put("23", 3);
+		zbbh_gcygdwMap.put("25", 4);
 	}
-
+	private static String GFHJ = "gfhj";
+	public YDZBServiceImpl(){
+		Company.Type[] types = new Company.Type[]{
+			Company.Type.SBDCY,
+			Company.Type.XNYCY,
+			Company.Type.NYCY,
+			Company.Type.GCL,
+			null,//gfhj need to calculate by program
+			Company.Type.ZH,
+			Company.Type.JT
+		};
+		Company cy;
+		CompanyGroup cyg;
+		Company[] cys;
+		for (int i = 0, j = 0; i < types.length; ++i){
+			if (types[i] != null){
+				cy = Company.get(types[i]);
+				qybh_gcyMap.put(cy.getId(), i);
+				
+				if (cy instanceof CompanyGroup && cy.getId() != Company.get(Company.Type.JT).getId()){
+					cyg = (CompanyGroup)cy;
+					cys = cyg.getCompanys();
+					for (int k = 0; k < cys.length; ++k){
+						qybh_gdwMap.put(cys[k].getId(), j++);
+					}
+				}
+				qybh_gdwMap.put(cy.getId(), j++);
+			}
+			else{
+				qybh_gdwMap.put(GFHJ, j++);
+				qybh_gcyMap.put(GFHJ, i);
+			}
+		}
+		
+	}
+	
+	
 	@Override
 	public String[][] getHzb_zbhzData(Date d) {
-		String[][] result = new String[xhMap.size()][11];
+		String[][] result = new String[zbbh_hzMap.size()][11];
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		List<YDZBBean> ydzbs = ydzbDao.getYDZB_V2(cal, Company.getAll());
+		List<YDZBBean> ydzbs = ydzbDao.getYDZB_V2(cal, Company.get(Company.Type.JT));
 		int index = 0;
 		for (YDZBBean ydzb : ydzbs) {
-			if (ydzb != null && xhMap.get(ydzb.getXh()) != null) {
-				index = xhMap.get(ydzb.getXh());
+			if (ydzb != null && zbbh_hzMap.get(ydzb.getZblx()) != null) {
+				index = zbbh_hzMap.get(ydzb.getZblx());
 				result[index][0] = ydzb.getByjh();
 				result[index][1] = ydzb.getBywc();
 				result[index][2] = ydzb.getJhwcl();
@@ -95,26 +149,178 @@ public class YDZBServiceImpl implements YDZBService {
 		return result;
 	}
 	
-	private void fillZbhzData(String[][] data, List<YDZBBean> ydzbs, int base, int len) {
-		int row = 0;
+	private String accumulate(String[][] data, int row, int col, String val2){
+		try{
+			return data[row][col] = String.format("%.2f", Double.valueOf(plus(data[row][col], val2)));
+		}
+		catch (Exception e){
+			return data[row][col] = "--";
+		}
+	}
+	
+	private String plus(String val1, String val2){
+		double v1 = 0;
+		double v2 = 0;
+		try{
+			v1 = Double.parseDouble(val1);
+		}
+		catch (Exception e){
+			
+		}
+		try{
+			v2 = Double.parseDouble(val2); 
+		}
+		catch (Exception e){
+			
+		}
+		
+		return (v2 + v1) + "";
+	}
+	
+	private String minus(String val1, String val2){
+		double v1 = 0;
+		double v2 = 0;
+		try{
+			v1 = Double.parseDouble(val1);
+		}
+		catch (Exception e){
+			
+		}
+		try{
+			v2 = Double.parseDouble(val2); 
+		}
+		catch (Exception e){
+			
+		}
+		
+		return (v1 - v2) + "";
+	}
+	
+	
+	private String mult(String val1, String val2){
+		double v1 = 0;
+		double v2 = 0;
+		try{
+			v1 = Double.parseDouble(val1);
+		}
+		catch (Exception e){
+			return "--";
+		}
+		try{
+			v2 = Double.parseDouble(val2); 
+		}
+		catch (Exception e){
+			return "--";
+		}
+		return v2 * v1 + "";
+	}
+	
+	private String division(String base, String sub){
+		double v1 = 0;
+		double v2 = 0;
+		try{
+			v1 = Double.parseDouble(base);
+		}
+		catch (Exception e){
+			return "--";
+		}
+		try{
+			v2 = Double.parseDouble(sub); 
+		}
+		catch (Exception e){
+			return "--";
+		}
+		if (v1 == 0){
+			return "--";
+		}
+		else{
+			return v2 / v1 + "";
+		}
+	}
+	
+	private String completeRate(String[][] data, int row, int col,  int baseCol, int completeCol){
+		try{
+			return data[row][col] = String.format("%.2f", Double.valueOf(mult(division(data[row][baseCol], data[row][completeCol]), "100")))  + "%";
+		}
+		catch (Exception e){
+			return data[row][col] = "--";
+		}
+	}
+	
+	private void fillZbhzData(String[][] data, List<YDZBBean> ydzbs, int len, Map<String, Integer> qybhMap) {
+		
 		if (ydzbs == null){
 			return;
 		}
+		
+		CompanyGroup sbdcy = (CompanyGroup)Company.get(Company.Type.SBDCY);
+		CompanyGroup xnycy = (CompanyGroup)Company.get(Company.Type.XNYCY);
+		CompanyGroup nycy = (CompanyGroup)Company.get(Company.Type.NYCY);
+		CompanyGroup gcl = (CompanyGroup)Company.get(Company.Type.GCL);
+	
+		int zb = 0;
+		int qybh = 0;
+		int index = 0;
+		int gfhjIndex = qybhMap.get(GFHJ);
+		int glhjRow = 0;
 		for (YDZBBean ydzb : ydzbs) {
-			if (ydzb != null && zbMap.get(ydzb.getXh()) != null) {
-				row = zbMap.get(ydzb.getXh());
-				data[row * len + base][0] = ydzb.getNdjh();
-				data[row * len + base][1] = ydzb.getByjh();
-				data[row * len + base][2] = ydzb.getBywc();
-				data[row * len + base][3] = ydzb.getJhwcl();
-				data[row * len + base][4] = ydzb.getJdlj();
-				data[row * len + base][5] = ydzb.getJdjhwcl();
-				data[row * len + base][6] = ydzb.getNdlj();
-				data[row * len + base][7] = ydzb.getNdjhwcl();
-				data[row * len + base][8] = ydzb.getQntq();
-				data[row * len + base][9] = ydzb.getJqntqzzb();
-				data[row * len + base][10] = ydzb.getQntqlj();
-				data[row * len + base][11] = ydzb.getJqntqljzzb();
+			if (ydzb != null && zbbh_gcygdwMap.get(ydzb.getZblx()) != null && null != qybhMap.get(ydzb.getXh())) {
+				zb = zbbh_gcygdwMap.get(ydzb.getZblx());
+				qybh = qybhMap.get(ydzb.getXh());
+				index = zb * len + qybh;
+				try {
+					data[index][0] = ydzb.getNdjh();
+					data[index][1] = ydzb.getByjh();
+					data[index][2] = ydzb.getBywc();
+					data[index][3] = ydzb.getJhwcl();
+					data[index][4] = ydzb.getJdjh();
+					data[index][5] = ydzb.getJdlj();
+					data[index][6] = ydzb.getJdjhwcl();
+					data[index][7] = ydzb.getNdlj();
+					data[index][8] = ydzb.getNdjhwcl();
+					data[index][9] = ydzb.getQntq();
+					data[index][10] = ydzb.getJqntqzzb();
+					data[index][11] = ydzb.getQntqlj();
+					data[index][12] = ydzb.getJqntqljzzb();
+					
+					if (sbdcy.getId().equals(ydzb.getXh()) ||
+						xnycy.getId().equals(ydzb.getXh()) ||
+						nycy.getId().equals(ydzb.getXh()) ||
+						gcl.getId().equals(ydzb.getXh())){
+						glhjRow = zb * len + gfhjIndex;
+						accumulate(data, glhjRow, 0, ydzb.getNdjh());
+						accumulate(data, glhjRow, 1, ydzb.getByjh());
+						accumulate(data, glhjRow, 2, ydzb.getBywc());
+						completeRate(data, glhjRow, 3, 1, 2);
+						accumulate(data, glhjRow, 4, ydzb.getJdjh());
+						accumulate(data, glhjRow, 5, ydzb.getJdlj());
+						completeRate(data, glhjRow, 6, 4, 5);
+						accumulate(data, glhjRow, 7, ydzb.getNdlj());
+						completeRate(data, glhjRow, 8, 0, 7);
+						accumulate(data, glhjRow, 9, ydzb.getQntq());
+						try{
+							data[glhjRow][10] = String.format("%.2f", Double.valueOf(
+									mult(
+										division(data[glhjRow][9],
+												minus(data[glhjRow][2], data[glhjRow][9])),
+										"100")))  + "%";
+						}
+						catch (Exception e){
+							data[glhjRow][10] = "--";
+						}
+
+						accumulate(data, glhjRow, 11, ydzb.getQntqlj());
+						try{
+							data[glhjRow][12] = String.format("%.2f", Double.valueOf(mult(minus(this.division(ydzb.getQntqlj(), ydzb.getNdlj()), "1"), "100"))) + "%";
+						}
+						catch (Exception e){
+							data[glhjRow][12] = "--";
+						}
+					}
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -122,58 +328,21 @@ public class YDZBServiceImpl implements YDZBService {
 
 	@Override
 	public String[][] getGcy_zbhzData(Date d) {
-		String[][] result = new String[7 * zbMap.size()][12];
+		String[][] result = new String[7 * zbbh_gcygdwMap.size()][13];
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		List<List<YDZBBean>> zbs = new ArrayList<List<YDZBBean>>(7);
-		zbs.add(ydzbDao.getYDZB_V2(cal, Company.getSbdcy()));
-		zbs.add(ydzbDao.getYDZB_V2(cal, Company.getXnycy()));
-		zbs.add(ydzbDao.getYDZB_V2(cal, Company.getNycy()));
-		zbs.add(ydzbDao.getYDZB_V2(cal, Company.getGcl()));
-		zbs.add(ydzbDao.getYDZB_V2(cal,
-				new Array(Company.getSbdcy()).join(Company.getXnycy())
-						.join(Company.getNycy()).join(Company.getGcl())
-						.toArray()));
-		zbs.add(ydzbDao.getYDZB_V2(cal, Company.ZH));
-		zbs.add(ydzbDao.getYDZB_V2(cal, Company.getAll()));
-		
-		for (int i = 0, len = zbs.size(); i < len; ++i){
-			fillZbhzData(result, zbs.get(i), i, 7);
-		}
-		
+		List<YDZBBean> ydzbs = ydzbDao.getYDZB(cal, Company.get(Company.Type.JT));
+		fillZbhzData(result, ydzbs, 7, qybh_gcyMap);
 		return result;
 	}
 
 	@Override
 	public String[][] getGdw_zbhzData(Date d) {
-		String[][] result = new String[21 * zbMap.size()][12];
+		String[][] result = new String[21 * zbbh_gcygdwMap.size()][13];
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		List<List<YDZBBean>> zbs = new ArrayList<List<YDZBBean>>(21);
-		List<int[]> qyGroups = new ArrayList<int[]>();
-		qyGroups.add(Company.getSbdcy());
-		qyGroups.add(Company.getXnycy());
-		qyGroups.add(Company.getNycy());
-		qyGroups.add(Company.getGcl());	
-		for (int[] qyGroup : qyGroups){
-			for (int qy : qyGroup){
-				zbs.add(ydzbDao.getYDZB(cal, qy));
-			}
-			zbs.add(ydzbDao.getYDZB(cal, qyGroup));
-		}
-		
-		zbs.add(ydzbDao.getYDZB(cal, new Array(Company.getSbdcy()).join(Company.getXnycy())
-				.join(Company.getNycy()).join(Company.getGcl())
-				.toArray()));
-		
-		zbs.add(ydzbDao.getYDZB(cal, Company.ZH));
-		
-		zbs.add(ydzbDao.getYDZB(cal, Company.getAll()));
-		
-		for (int i = 0, len = zbs.size(); i < len; ++i){
-			fillZbhzData(result, zbs.get(i), i, 21);
-		}
-		
+		List<YDZBBean> ydzbs = ydzbDao.getYDZB(cal, Company.get(Company.Type.JT));
+		fillZbhzData(result, ydzbs, 21, qybh_gdwMap);
 		return result;
 	}
 

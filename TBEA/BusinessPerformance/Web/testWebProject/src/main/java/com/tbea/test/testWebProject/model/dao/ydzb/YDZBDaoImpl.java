@@ -2,6 +2,7 @@ package com.tbea.test.testWebProject.model.dao.ydzb;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -16,15 +17,24 @@ import org.springframework.stereotype.Repository;
 import com.tbea.Connection.DBConnectionManager;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
+import com.tbea.test.testWebProject.service.ydzb.Company;
+import com.tbea.test.testWebProject.service.ydzb.CompanyGroup;
 
 @Repository
 public class YDZBDaoImpl implements YDZBDao {
 
-	private List<YDZBBean> injectBean(ResultSet res) {
+	private List<YDZBBean> injectV2Bean(ResultSet res) {
 		List<YDZBBean> YDZBList = new ArrayList<YDZBBean>();
 		if (null != res) {
 
 			try {
+				ResultSetMetaData rsmd = res.getMetaData();
+				int len = rsmd.getColumnCount();
+				String columName = "";
+				for (int i = 0; i < len; ++i){
+					columName += rsmd.getColumnName(i + 1) + "\t";
+				}
+				System.out.println(columName);
 				while (res.next()) {
 					YDZBBean ydzbbean = new YDZBBean();
 					ydzbbean.setXh(res.getString(1));
@@ -47,7 +57,57 @@ public class YDZBDaoImpl implements YDZBDao {
 					ydzbbean.setJqntqljzzb(res.getString(26));
 					YDZBList.add(ydzbbean);
 					
-					//System.out.println(JSONObject.fromObject(ydzbbean).toString());
+					String rowData = "";
+					for (int i = 0; i < len; ++i){
+						rowData += res.getString(i + 1) + "\t";
+					}
+					
+					System.out.println(rowData);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return YDZBList;
+	}
+	
+	private List<YDZBBean> injectBean(ResultSet res) {
+		List<YDZBBean> YDZBList = new ArrayList<YDZBBean>();
+		if (null != res) {
+
+			try {
+				ResultSetMetaData rsmd = res.getMetaData();
+				int len = rsmd.getColumnCount();
+				String columName = "";
+				for (int i = 0; i < len; ++i){
+					columName += rsmd.getColumnName(i + 1) + "\t";
+				}
+				System.out.println(columName);
+				while (res.next()) {
+					YDZBBean ydzbbean = new YDZBBean();
+					ydzbbean.setXh(res.getString("qybh"));
+					ydzbbean.setZblx(res.getString("zbbh"));
+					ydzbbean.setZbmc(res.getString("zbmc"));
+					ydzbbean.setByjh(res.getString("byjhz"));
+					ydzbbean.setBywc(res.getString("bywcz"));
+					ydzbbean.setJhwcl(res.getString("jhwcl"));
+					ydzbbean.setQntq(res.getString("qntqz"));
+					ydzbbean.setJqntqzzb(res.getString("jtqzzb"));
+					ydzbbean.setJdjh(res.getString("jdjh"));
+					ydzbbean.setJdlj(res.getString("jdlj"));
+					ydzbbean.setJdjhwcl(res.getString("jdwcl"));
+					ydzbbean.setNdjh(res.getString("ndjhz"));
+					ydzbbean.setNdlj(res.getString("ndljwcz"));
+					ydzbbean.setNdjhwcl(res.getString("ndwcl"));
+					ydzbbean.setQntqlj(res.getString("qntqlj"));
+					ydzbbean.setJqntqljzzb(res.getString("jqntqljzzb"));
+					YDZBList.add(ydzbbean);
+					String rowData = "";
+					for (int i = 0; i < len; ++i){
+						rowData += res.getString(i + 1) + "\t";
+					}
+					
+					System.out.println(rowData);
 					
 				}
 			} catch (Exception e) {
@@ -56,7 +116,7 @@ public class YDZBDaoImpl implements YDZBDao {
 		}
 		return YDZBList;
 	}
-
+	
 	private Connection mConnection;
 
 	private Connection getConnection() {
@@ -82,7 +142,7 @@ public class YDZBDaoImpl implements YDZBDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return injectBean(res);
+		return injectV2Bean(res);
 	}
 
 	private List<YDZBBean> getYDZBInfo(int nf, int yf, String qybh,
@@ -93,6 +153,10 @@ public class YDZBDaoImpl implements YDZBDao {
 			stmt = conn.createStatement();
 			String query = "exec p_jysj2014_zbfdwhz " + nf + "," + yf
 					+ ",'" + qybh + "', 0, 0;";
+			
+//			String query = "exec p_jysj2014_zbfdwhz " + nf + "," + yf
+//					+ ",'4;5;6;7;8;9;29;22;', 0, 0;";
+			
 			//System.out.println(query);
 			res = stmt.executeQuery(query);
 		} catch (SQLException e) {
@@ -102,34 +166,31 @@ public class YDZBDaoImpl implements YDZBDao {
 		return injectBean(res);
 	}
 
-	@Override
-	public List<YDZBBean> getYDZB_V2(Calendar cal, int[] companys) {
-		String coms = "";
-		for (int i = 0; i < companys.length; ++i) {
-			coms += companys[i] + ";";
+	private String getCompanyIdString(Company company){
+		String comIds = "";
+		if (company instanceof CompanyGroup){
+			CompanyGroup group = (CompanyGroup) company;
+			Company[] cys = group.getCompanys();
+			for (int i = 0; i < cys.length; ++i) {
+				comIds += cys[i].getId() + ";";
+			}
+			
+		} else{
+			comIds = company.getId() + ";";
 		}
+		return comIds;
+	}
+	
+	@Override
+	public List<YDZBBean> getYDZB_V2(Calendar cal, Company company) {
 		return getYDZBInfo_V2(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1,
-				coms, getConnection());
+				getCompanyIdString(company), getConnection());
 	}
 
 	@Override
-	public List<YDZBBean> getYDZB(Calendar cal, int[] companys) {
-		String coms = "";
-		for (int i = 0; i < companys.length; ++i) {
-			coms += companys[i] + ";";
-		}
+	public List<YDZBBean> getYDZB(Calendar cal, Company company) {
 		return getYDZBInfo(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1,
-				coms, getConnection());
-	}
-
-	@Override
-	public List<YDZBBean> getYDZB_V2(Calendar cal, int company) {
-		return getYDZB_V2(cal, new int[]{company});
-	}
-
-	@Override
-	public List<YDZBBean> getYDZB(Calendar cal, int company) {
-		return getYDZB(cal, new int[]{company});
+				getCompanyIdString(company), getConnection());
 	}
 
 	@Override
