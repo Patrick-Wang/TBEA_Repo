@@ -28,13 +28,13 @@ public class YDZBDaoImpl implements YDZBDao {
 		if (null != res) {
 
 			try {
-				ResultSetMetaData rsmd = res.getMetaData();
-				int len = rsmd.getColumnCount();
-				String columName = "";
-				for (int i = 0; i < len; ++i){
-					columName += rsmd.getColumnName(i + 1) + "\t";
-				}
-				System.out.println(columName);
+//				ResultSetMetaData rsmd = res.getMetaData();
+//				int len = rsmd.getColumnCount();
+//				String columName = "";
+//				for (int i = 0; i < len; ++i){
+//					columName += rsmd.getColumnName(i + 1) + "\t";
+//				}
+//				System.out.println(columName);
 				while (res.next()) {
 					YDZBBean ydzbbean = new YDZBBean();
 					ydzbbean.setXh(res.getString(1));
@@ -57,12 +57,12 @@ public class YDZBDaoImpl implements YDZBDao {
 					ydzbbean.setJqntqljzzb(res.getString(26));
 					YDZBList.add(ydzbbean);
 					
-					String rowData = "";
-					for (int i = 0; i < len; ++i){
-						rowData += res.getString(i + 1) + "\t";
-					}
-					
-					System.out.println(rowData);
+//					String rowData = "";
+//					for (int i = 0; i < len; ++i){
+//						rowData += res.getString(i + 1) + "\t";
+//					}
+//					
+//					System.out.println(rowData);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -76,13 +76,13 @@ public class YDZBDaoImpl implements YDZBDao {
 		if (null != res) {
 
 			try {
-				ResultSetMetaData rsmd = res.getMetaData();
-				int len = rsmd.getColumnCount();
-				String columName = "";
-				for (int i = 0; i < len; ++i){
-					columName += rsmd.getColumnName(i + 1) + "\t";
-				}
-				System.out.println(columName);
+//				ResultSetMetaData rsmd = res.getMetaData();
+//				int len = rsmd.getColumnCount();
+//				String columName = "";
+//				for (int i = 0; i < len; ++i){
+//					columName += rsmd.getColumnName(i + 1) + "\t";
+//				}
+//				System.out.println(columName);
 				while (res.next()) {
 					YDZBBean ydzbbean = new YDZBBean();
 					ydzbbean.setXh(res.getString("qybh"));
@@ -102,12 +102,12 @@ public class YDZBDaoImpl implements YDZBDao {
 					ydzbbean.setQntqlj(res.getString("qntqlj"));
 					ydzbbean.setJqntqljzzb(res.getString("jqntqljzzb"));
 					YDZBList.add(ydzbbean);
-					String rowData = "";
-					for (int i = 0; i < len; ++i){
-						rowData += res.getString(i + 1) + "\t";
-					}
-					
-					System.out.println(rowData);
+//					String rowData = "";
+//					for (int i = 0; i < len; ++i){
+//						rowData += res.getString(i + 1) + "\t";
+//					}
+//					
+//					System.out.println(rowData);
 					
 				}
 			} catch (Exception e) {

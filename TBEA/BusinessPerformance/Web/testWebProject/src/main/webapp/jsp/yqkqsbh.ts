@@ -119,7 +119,7 @@ module yqkqsbh {
                 tmp = [(i + 1) + "月份"];
                 row = [].concat(this.mData[i]);
                 for (var col in row){
-                	row[col] = Util.formatCurrency(row[col]);
+			      	row[col] = Util.formatCurrency(row[col]);
                 }
                 data.push(tmp.concat(row));
             }

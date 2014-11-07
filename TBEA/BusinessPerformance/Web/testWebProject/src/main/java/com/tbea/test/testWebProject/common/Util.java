@@ -79,4 +79,84 @@ public class Util {
 		
 		return builder.toString();
 	}
+	
+	public static String plus(String val1, String val2){
+		double v1 = 0;
+		double v2 = 0;
+		try{
+			v1 = Double.parseDouble(val1);
+		}
+		catch (Exception e){
+			
+		}
+		try{
+			v2 = Double.parseDouble(val2); 
+		}
+		catch (Exception e){
+			
+		}
+		
+		return (v2 + v1) + "";
+	}
+	
+	public static String minus(String val1, String val2){
+		double v1 = 0;
+		double v2 = 0;
+		try{
+			v1 = Double.parseDouble(val1);
+		}
+		catch (Exception e){
+			
+		}
+		try{
+			v2 = Double.parseDouble(val2); 
+		}
+		catch (Exception e){
+			
+		}
+		
+		return (v1 - v2) + "";
+	}
+	
+	
+	public static String mult(String val1, String val2){
+		double v1 = 0;
+		double v2 = 0;
+		try{
+			v1 = Double.parseDouble(val1);
+		}
+		catch (Exception e){
+			return "--";
+		}
+		try{
+			v2 = Double.parseDouble(val2); 
+		}
+		catch (Exception e){
+			return "--";
+		}
+		return v2 * v1 + "";
+	}
+	
+	public static String division(String base, String sub){
+		double v1 = 0;
+		double v2 = 0;
+		try{
+			v1 = Double.parseDouble(base);
+		}
+		catch (Exception e){
+			return "--";
+		}
+		try{
+			v2 = Double.parseDouble(sub); 
+		}
+		catch (Exception e){
+			return "--";
+		}
+		if (v1 == 0){
+			return "--";
+		}
+		else{
+			return v2 / v1 + "";
+		}
+	}
 }
