@@ -9,32 +9,39 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Repository;
 
+import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
+
 import com.tbea.Connection.DBConnectionManager;
+import com.tbea.test.testWebProject.model.dao.yqk.YQKDao;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
+import com.tbea.test.testWebProject.model.entity.local.YQK;
 import com.tbea.test.testWebProject.service.ydzb.Company;
 import com.tbea.test.testWebProject.service.ydzb.CompanyGroup;
 
 @Repository
-public class YDZBDaoImpl implements YDZBDao {
-
+public class YDZBDaoImpl implements YDZBDao{
+	
 	private List<YDZBBean> injectV2Bean(ResultSet res) {
 		List<YDZBBean> YDZBList = new ArrayList<YDZBBean>();
 		if (null != res) {
 
 			try {
-//				ResultSetMetaData rsmd = res.getMetaData();
-//				int len = rsmd.getColumnCount();
-//				String columName = "";
-//				for (int i = 0; i < len; ++i){
-//					columName += rsmd.getColumnName(i + 1) + "\t";
-//				}
-//				System.out.println(columName);
+				ResultSetMetaData rsmd = res.getMetaData();
+				int len = rsmd.getColumnCount();
+				String columName = "";
+				for (int i = 0; i < len; ++i){
+					columName += rsmd.getColumnName(i + 1) + "\t";
+				}
+				System.out.println(columName);
 				while (res.next()) {
 					YDZBBean ydzbbean = new YDZBBean();
 					ydzbbean.setXh(res.getString(1));
@@ -57,12 +64,12 @@ public class YDZBDaoImpl implements YDZBDao {
 					ydzbbean.setJqntqljzzb(res.getString(26));
 					YDZBList.add(ydzbbean);
 					
-//					String rowData = "";
-//					for (int i = 0; i < len; ++i){
-//						rowData += res.getString(i + 1) + "\t";
-//					}
-//					
-//					System.out.println(rowData);
+					String rowData = "";
+					for (int i = 0; i < len; ++i){
+						rowData += res.getString(i + 1) + "\t";
+					}
+					
+					System.out.println(rowData);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -76,13 +83,13 @@ public class YDZBDaoImpl implements YDZBDao {
 		if (null != res) {
 
 			try {
-//				ResultSetMetaData rsmd = res.getMetaData();
-//				int len = rsmd.getColumnCount();
-//				String columName = "";
-//				for (int i = 0; i < len; ++i){
-//					columName += rsmd.getColumnName(i + 1) + "\t";
-//				}
-//				System.out.println(columName);
+				ResultSetMetaData rsmd = res.getMetaData();
+				int len = rsmd.getColumnCount();
+				String columName = "";
+				for (int i = 0; i < len; ++i){
+					columName += rsmd.getColumnName(i + 1) + "\t";
+				}
+				System.out.println(columName);
 				while (res.next()) {
 					YDZBBean ydzbbean = new YDZBBean();
 					ydzbbean.setXh(res.getString("qybh"));
@@ -102,12 +109,12 @@ public class YDZBDaoImpl implements YDZBDao {
 					ydzbbean.setQntqlj(res.getString("qntqlj"));
 					ydzbbean.setJqntqljzzb(res.getString("jqntqljzzb"));
 					YDZBList.add(ydzbbean);
-//					String rowData = "";
-//					for (int i = 0; i < len; ++i){
-//						rowData += res.getString(i + 1) + "\t";
-//					}
-//					
-//					System.out.println(rowData);
+					String rowData = "";
+					for (int i = 0; i < len; ++i){
+						rowData += res.getString(i + 1) + "\t";
+					}
+					
+					System.out.println(rowData);
 					
 				}
 			} catch (Exception e) {
@@ -118,6 +125,7 @@ public class YDZBDaoImpl implements YDZBDao {
 	}
 	
 	private Connection mConnection;
+
 
 	private Connection getConnection() {
 		if (null == mConnection) {

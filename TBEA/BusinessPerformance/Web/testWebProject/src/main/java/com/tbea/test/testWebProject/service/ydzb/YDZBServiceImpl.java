@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.model.dao.ydzb.YDZBDao;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
+import com.tbea.test.testWebProject.service.ydzb.Company.Type;
 
 
 
@@ -25,7 +27,7 @@ public class YDZBServiceImpl implements YDZBService {
 	@Autowired
 	private YDZBDao ydzbDao;
 	private static Map<String, Integer> zbbh_hzMap = new HashMap<String, Integer>();
-
+	private static Map<String, String> zbid_mcMap = new HashMap<String, String>();
 //	5	报表利润
 //	6	利润总额
 //	7	销售收入
@@ -74,6 +76,12 @@ public class YDZBServiceImpl implements YDZBService {
 		zbbh_hzMap.put("29", 14);
 		zbbh_hzMap.put("30", 15);
 		zbbh_hzMap.put("31", 16);
+		
+		zbid_mcMap.put("5", "报表利润");
+		zbid_mcMap.put("7", "销售收入");
+		zbid_mcMap.put("8", "现金流");
+		zbid_mcMap.put("23", "应收帐款");
+		zbid_mcMap.put("25", "存货");
 	}
 
 
@@ -158,4 +166,84 @@ public class YDZBServiceImpl implements YDZBService {
 		return null;
 	}
 
+	private List<List<YDZBBean>> getOverviewData(int year, int monthFrom, int monthTo, Company company){
+		Calendar month = Calendar.getInstance();
+		List<List<YDZBBean>> preYearODs = new ArrayList<List<YDZBBean>>();
+		for (int i = monthFrom; i <= monthTo; ++i){
+			month.set(year, i, 1);
+			preYearODs.add(ydzbDao.getYDZB_V2(month, company));
+		}
+		return preYearODs;
+	}
+	
+	
+	private String fromatNumber(String n){
+		if (n != null){
+			if (n.equals("--")){
+				n = "0";
+			} else if (n.contains("%")){
+				n = (Double.parseDouble(n.replace("%", ""))) + "";
+			}
+		}
+		return n;
+	}
+
+	@Override
+	public String[][] getYdZbhz_overviewData(Date d, Company company, String zb) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		String[][] ret = new String[3][cal.get(Calendar.MONTH) + 1];
+		List<List<YDZBBean>> curYearOds = getOverviewData(cal.get(Calendar.YEAR), 0, cal.get(Calendar.MONTH), company);
+		List<YDZBBean> monthYdzbs;
+		for (int month = curYearOds.size() - 1; month >= 0; --month){
+			monthYdzbs = curYearOds.get(month);
+			for (YDZBBean ydzb : monthYdzbs){
+				if (zb.equals(ydzb.getZblx())){
+					ret[0][month] = fromatNumber(ydzb.getByjh());
+					ret[1][month] = fromatNumber(ydzb.getBywc());
+					ret[2][month] = fromatNumber(ydzb.getJhwcl());
+				}
+			}
+		}		
+		return ret;
+	}
+
+
+	@Override
+	public String[][] getJdZbhz_overviewData(Date d, Company company, String zb) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		return null;
+	}
+
+
+	@Override
+	public String[][] getNdZbhz_overviewData(Date d, Company company, String zb) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		return null;
+	}
+
+
+	@Override
+	public String[][] getYdtbZbhz_overviewData(Date d, Company company, String zb) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		return null;
+	}
+
+
+	@Override
+	public String[][] getJdtbZbhz_overviewData(Date d, Company company, String zb) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		
+		return null;
+	}
+
+	@Override
+	public String getZbmc(String id){
+		return zbid_mcMap.get(id);
+	}
+	
 }
