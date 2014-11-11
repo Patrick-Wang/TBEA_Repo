@@ -49,7 +49,7 @@ public class BLTransferServiceImpl implements BLTransferService {
 				blLocalDao.merge(blLocal);
 			}
 			List<BLLocal> blLocalList = blLocalDao.getAllBLLocal();
-			System.out.println(blLocalList);
+			// System.out.println(blLocalList);
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

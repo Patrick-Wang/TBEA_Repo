@@ -30,9 +30,9 @@ public class QYZJKController {
 		int id = qyzjk.getId();
 		String qybh = qyzjk.getQYBH();
 		String qymc = qyzjk.getQYMC();
-		System.out.println("id:" + id);
-		System.out.println("qybh:" + qybh);
-		System.out.println("qymc:" + qymc);
+		// System.out.println("id:" + id);
+		// System.out.println("qybh:" + qybh);
+		// System.out.println("qymc:" + qymc);
 
 		return new ModelAndView(view, commandName, qyzjk);
 	}

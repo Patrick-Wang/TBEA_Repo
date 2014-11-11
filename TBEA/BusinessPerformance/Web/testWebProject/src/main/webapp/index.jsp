@@ -29,7 +29,7 @@
 			sql = dbConn.createStatement();
 			rs = sql.executeQuery("select*from my_test_table");
 
-			System.out.println("Connection Successful!"); //如果连接成功 控制台输出Connection Successful! 
+			// System.out.println("Connection Successful!"); //如果连接成功 控制台输出Connection Successful! 
 
 			out.println("<table Border>");
 			out.println("<tr><td colspan=8 align=center>用户数据</td></tr>");

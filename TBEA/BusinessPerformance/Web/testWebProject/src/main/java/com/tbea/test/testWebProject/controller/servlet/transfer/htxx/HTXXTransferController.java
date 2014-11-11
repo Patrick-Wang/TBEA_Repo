@@ -26,7 +26,7 @@ public class HTXXTransferController {
 	public ModelAndView htxxTransfer(HttpServletRequest request,
 			HttpServletResponse response) {
 		boolean result = htxxTransferService.transferHTXX();
-		System.out.println("result:" + result);
+		// System.out.println("result:" + result);
 		return new ModelAndView(view, commandName, result);
 	}
 	

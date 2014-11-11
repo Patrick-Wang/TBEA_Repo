@@ -47,7 +47,7 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 				htxxLocalDao.merge(htxxLocal);
 			}
 			List<HTXXLocal> htxxLocalList = htxxLocalDao.getAllHTXXLocal();
-			System.out.println(htxxLocalList);
+			// System.out.println(htxxLocalList);
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

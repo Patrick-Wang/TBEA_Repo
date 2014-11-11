@@ -26,7 +26,7 @@ public class BLTransferController {
 	public ModelAndView blTransfer(HttpServletRequest request,
 			HttpServletResponse response) {
 		boolean result = blTransferService.transferBL();
-		System.out.println("result:" + result);
+		// System.out.println("result:" + result);
 		return new ModelAndView(view, commandName, result);
 	}
 	

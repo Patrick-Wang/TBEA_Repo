@@ -9,7 +9,7 @@ public class TestMain {
 
 		BLTransferService blTransferService = new BLTransferServiceImpl();
 		boolean result = blTransferService.transferBL();
-		System.out.println("result:" + result);
+		// System.out.println("result:" + result);
 
 	}
 

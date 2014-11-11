@@ -29,8 +29,8 @@ public class TestTableController {
 		TestTable testTable = testTableService.getTestTableById(1);
 		int id = testTable.getId();
 		String name = testTable.getName();
-		System.out.println("id:" + id);
-		System.out.println("name:" + name);
+		// System.out.println("id:" + id);
+		// System.out.println("name:" + name);
 
 		return new ModelAndView(view, commandName, testTable);
 	}

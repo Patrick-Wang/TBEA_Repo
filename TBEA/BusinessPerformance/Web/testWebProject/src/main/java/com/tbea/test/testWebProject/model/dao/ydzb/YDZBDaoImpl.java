@@ -41,7 +41,7 @@ public class YDZBDaoImpl implements YDZBDao{
 				for (int i = 0; i < len; ++i){
 					columName += rsmd.getColumnName(i + 1) + "\t";
 				}
-				System.out.println(columName);
+				// System.out.println(columName);
 				while (res.next()) {
 					YDZBBean ydzbbean = new YDZBBean();
 					ydzbbean.setXh(res.getString(1));
@@ -69,7 +69,7 @@ public class YDZBDaoImpl implements YDZBDao{
 						rowData += res.getString(i + 1) + "\t";
 					}
 					
-					System.out.println(rowData);
+					// System.out.println(rowData);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -89,7 +89,7 @@ public class YDZBDaoImpl implements YDZBDao{
 				for (int i = 0; i < len; ++i){
 					columName += rsmd.getColumnName(i + 1) + "\t";
 				}
-				System.out.println(columName);
+				// System.out.println(columName);
 				while (res.next()) {
 					YDZBBean ydzbbean = new YDZBBean();
 					ydzbbean.setXh(res.getString("qybh"));
@@ -114,7 +114,7 @@ public class YDZBDaoImpl implements YDZBDao{
 						rowData += res.getString(i + 1) + "\t";
 					}
 					
-					System.out.println(rowData);
+					// System.out.println(rowData);
 					
 				}
 			} catch (Exception e) {

@@ -33,7 +33,7 @@ public class CQKController {
 	public ModelAndView importCQK(HttpServletRequest request,
 			HttpServletResponse response) {
 		boolean result = cqkService.importCQK();
-		System.out.println("result:" + result);
+		// System.out.println("result:" + result);
 		return new ModelAndView(view, commandName, result);
 	}
 	@RequestMapping(value = "cqk.do", method = RequestMethod.GET)

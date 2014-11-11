@@ -26,7 +26,7 @@ public class YSZKTZTransferController {
 	public ModelAndView yszktzTransfer(HttpServletRequest request,
 			HttpServletResponse response) {
 		boolean result = yszktzTransferService.transferYSZKTZ();
-		System.out.println("result:" + result);
+		// System.out.println("result:" + result);
 		return new ModelAndView(view, commandName, result);
 	}
 

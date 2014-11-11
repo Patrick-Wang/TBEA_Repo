@@ -26,7 +26,7 @@ public class YQKController {
 	public ModelAndView importYQK(HttpServletRequest request,
 			HttpServletResponse response) {
 		boolean result = yqkService.importYQK();
-		System.out.println("result:" + result);
+		// System.out.println("result:" + result);
 		return new ModelAndView(view, commandName, result);
 	}
 
