@@ -14,6 +14,27 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
 
 
+<script type="text/javascript">
+function formSubmit(){
+	var usrName = $('#j_username').val();
+	var psw = $('#j_password').val();
+	if ("admin" == usrName && "1234" == psw) {
+        $('.errors').hide();
+		window.location.href='index.htm';
+	} else {
+	    $('.errors').show();
+	}
+	//window.location.href='index.htm';
+    //document.forms[0].submit();
+};
+function doSubmit(evt){
+      var evt=evt?evt:(window.event?window.event:null);
+      if (evt.keyCode==13){
+          formSubmit();
+    }
+}
+
+</script>
 </head>
 <body>
     <div style="text-align: center;">
@@ -33,10 +54,10 @@
 		  <label for="j_password">Password:</label>
 		  <input type="password" name="j_password" id="j_password" onkeydown="doSubmit(event)"/>
 		  <input type="hidden" name="transmissionStr" id="transmissionStr"/>
-		  <div style="position: relative;height: 52px;margin-top:10px;" onclick="javascript:window.location.href='index.htm'">
+          <div class="errors" hidden="true" >用户名或密码错误，请重新输入。 </div>
+		  <div style="position: relative;height: 52px;margin-top:10px;" onclick="formSubmit();">
 		  <span  class="small-btn" >Login</span>
-	       </div>
-	  
+	      </div>
 	  </fieldset>
 	</form>
 	

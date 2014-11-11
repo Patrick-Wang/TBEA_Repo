@@ -191,5 +191,4 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 .errors {
     color: #CC0000;
     text-align: left;
-    margin: 0 40px;
 }
