@@ -34,6 +34,16 @@
 <script type="text/javascript">
             (function () {
                 $(document).ready(function () {
+                	
+                	var ajaxbg = $("#background,#progressBar"); 
+                		ajaxbg.hide(); 
+                	$(document).ajaxStart(function () { 
+                		ajaxbg.show(); 
+                	}).ajaxStop(function () { 
+                		ajaxbg.hide(); 
+                	}); 
+                	
+                	
                 	zbhz_overview.View.newInstance().init(
                 		["chart_yd", "chart_jd", "chart_nd", "chart_ydtb", "chart_jdtb"], 
                         ${month},//month
@@ -49,9 +59,7 @@
 <title>指标汇总 ${zbmc}</title>
 
 <style type="text/css">
-body {
-	background-color: rgb(247, 247, 247);
-}
+
 
 .panel-content-border {
 	height: 350px;
@@ -146,6 +154,41 @@ th.ui-th-ltr {
 	/* jqGrid columns name wrap  */
 	font-size: 14px;
 }
+
+
+.background { 
+	display: block; 
+	width: 100%; 
+	height: 100%; 
+	opacity: 0.4; 
+	filter: alpha(opacity=40); 
+	background:while; 
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	z-index: 2000; 
+}
+.progressBar { 
+	border: solid 2px #86A5AD;
+	background: white url(../jsp/loading.gif) no-repeat; 
+} 
+.progressBar { 
+	display: block; 
+	width: 180px; 
+	height: 20px; 
+	position: fixed; 
+	top: 50%; 
+	left: 50%; 
+	margin-left: -74px; 
+	margin-top: -14px; 
+	padding: 0px 5px 8px 40px; 
+	text-align: left; 
+	line-height: 27px; 
+	font-weight: bold; 
+	position: absolute; 
+	z-index: 2001; 
+} 
+
 </style>
 </head>
 <body>
@@ -182,7 +225,7 @@ th.ui-th-ltr {
 		<input type="checkbox" style="float: left;" id="cdw" onclick="zbhz_overview.View.newInstance().onChecked(this.checked)"/>
 		<div style="float: left;" id="dw">
 			按单位 <select id= "${id_19}"
-				onchange="zbhz_overview.View.newInstance().onCySelected(this.value)">
+				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)">
 				<option value="${id_0}" selected="selected">${name_0}</option>
 				<option value="${id_1}">${name_1}</option>
 				<option value="${id_2}">${name_2}</option>
@@ -199,7 +242,7 @@ th.ui-th-ltr {
 				<option value="${id_13}">${name_13}</option>
 				<option value="${id_14}">${name_14}</option>
 			</select> <select id= "${id_15}"
-				onchange="zbhz_overview.View.newInstance().onCySelected(this.value)"
+				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
 				id="sbd" style="display: none">
 				<option value="${id_0}" selected="selected">${name_0}</option>
 				<option value="${id_1}">${name_1}</option>
@@ -209,18 +252,18 @@ th.ui-th-ltr {
 				<option value="${id_5}">${name_5}</option>
 				<option value="${id_6}">${name_6}</option>
 			</select> <select id="${id_16}"
-				onchange="zbhz_overview.View.newInstance().onCySelected(this.value)"
+				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
 				style="display: none">
 				<option value="${id_7}">${name_7}</option>
 				<option value="${id_8}">${name_8}</option>
 			</select> <select id="${id_17}"
-				onchange="zbhz_overview.View.newInstance().onCySelected(this.value)"
+				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
 				style="display: none">
 				<option value="${id_9}">${name_9}</option>
 				<option value="${id_10}">${name_10}</option>
 				<option value="${id_11}">${name_11}</option>
 			</select> <select id="${id_18}"
-				onchange="zbhz_overview.View.newInstance().onCySelected(this.value)"
+				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
 				style="display: none">
 				<option value="${id_12}">${name_12}</option>
 				<option value="${id_13}">${name_13}</option>
@@ -254,7 +297,10 @@ th.ui-th-ltr {
 			<div id="chart_jdtb" class="panel-content"></div>
 		</div>
 	</div>
-
+	<div id="background" class="background" style="display: none; "></div> 
+	<div id="progressBar" class="progressBar" style="display: none; ">数据加载中，请稍等...</div> 
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
+
+
 </html>

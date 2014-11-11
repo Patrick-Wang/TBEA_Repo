@@ -206,20 +206,260 @@ var zbhz_overview;
                     }
                 ]
             };
-
             echarts.init($('#' + this.mChartIds[0 /* YDZB */])[0]).setOption(option);
         };
 
         View.prototype.updateJdUI = function (data) {
+            var jdCount = data[0].length;
+            var jd = [];
+            var legend = ["季度计划", "季度累计", "季度完成率"];
+            for (var i = 1; i <= jdCount; ++i) {
+                jd.push("第" + i + "季度");
+            }
+
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: legend
+                },
+                toolbox: {
+                    show: true
+                },
+                calculable: false,
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: true,
+                        data: jd
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    },
+                    {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value} %'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: legend[0],
+                        type: 'bar',
+                        smooth: true,
+                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                        data: data[0]
+                    },
+                    {
+                        name: legend[1],
+                        type: 'bar',
+                        smooth: true,
+                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                        data: data[1]
+                    },
+                    {
+                        name: legend[2],
+                        type: 'line',
+                        smooth: true,
+                        yAxisIndex: 1,
+                        data: data[2]
+                    }
+                ]
+            };
+            echarts.init($('#' + this.mChartIds[1 /* JDZB */])[0]).setOption(option);
         };
 
         View.prototype.updateNdUI = function (data) {
+            var jdCount = data[0].length;
+            var jd = [];
+            var legend = ["年度计划", "年度累计", "累计完成率"];
+            var xYear = [this.mYear - 2 + "年", this.mYear - 1 + "年", this.mYear + "年"];
+
+            for (var i = 1; i <= jdCount; ++i) {
+                jd.push("第" + i + "季度");
+            }
+
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: legend
+                },
+                toolbox: {
+                    show: true
+                },
+                calculable: false,
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: true,
+                        data: xYear
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    },
+                    {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value} %'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: legend[0],
+                        type: 'bar',
+                        smooth: true,
+                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                        data: data[0]
+                    },
+                    {
+                        name: legend[1],
+                        type: 'bar',
+                        smooth: true,
+                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                        data: data[1]
+                    },
+                    {
+                        name: legend[2],
+                        type: 'line',
+                        smooth: true,
+                        yAxisIndex: 1,
+                        data: data[2]
+                    }
+                ]
+            };
+            echarts.init($('#' + this.mChartIds[2 /* NDZB */])[0]).setOption(option);
         };
 
         View.prototype.updateYdtbUI = function (data) {
+            var month = this.getMonth();
+            var legend = [(this.mYear - 1) + "年*月完成", (this.mYear) + "年*月完成", "同比增长率"];
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: legend
+                },
+                toolbox: {
+                    show: true
+                },
+                calculable: false,
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: true,
+                        data: month
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    },
+                    {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value} %'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: legend[0],
+                        type: 'bar',
+                        smooth: true,
+                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                        data: data[1]
+                    },
+                    {
+                        name: legend[1],
+                        type: 'bar',
+                        smooth: true,
+                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                        data: data[0]
+                    },
+                    {
+                        name: legend[2],
+                        type: 'line',
+                        smooth: true,
+                        yAxisIndex: 1,
+                        data: data[2]
+                    }
+                ]
+            };
+            echarts.init($('#' + this.mChartIds[3 /* YDTQ */])[0]).setOption(option);
         };
 
         View.prototype.updateJdtbUI = function (data) {
+            var jdCount = data[0].length;
+            var jd = [];
+            var legend = [this.mYear - 1 + "年季度累计", this.mYear + "年季度累计", "同比增长率"];
+            for (var i = 1; i <= jdCount; ++i) {
+                jd.push("第" + i + "季度");
+            }
+
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: legend
+                },
+                toolbox: {
+                    show: true
+                },
+                calculable: false,
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: true,
+                        data: jd
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    },
+                    {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value} %'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: legend[0],
+                        type: 'bar',
+                        smooth: true,
+                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                        data: data[1]
+                    },
+                    {
+                        name: legend[1],
+                        type: 'bar',
+                        smooth: true,
+                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                        data: data[0]
+                    },
+                    {
+                        name: legend[2],
+                        type: 'line',
+                        smooth: true,
+                        yAxisIndex: 1,
+                        data: data[2]
+                    }
+                ]
+            };
+            echarts.init($('#' + this.mChartIds[4 /* JDTQ */])[0]).setOption(option);
         };
 
         View.prototype.onCySelected = function (val) {
@@ -241,7 +481,11 @@ var zbhz_overview;
         };
 
         View.prototype.onChecked = function (val) {
+            var curComp = this.getCurrentCompany();
             this.mChecked = val;
+            if (curComp != this.getCurrentCompany()) {
+                this.updateUI();
+            }
         };
         return View;
     })();
