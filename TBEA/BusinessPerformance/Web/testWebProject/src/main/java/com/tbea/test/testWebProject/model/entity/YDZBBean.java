@@ -1,7 +1,14 @@
 package com.tbea.test.testWebProject.model.entity;
 
+import java.io.Serializable;
+
+import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
+
 //月度指标
-public class YDZBBean {
+public class YDZBBean extends AbstractReadWriteEntity implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	//序号
 	private String xh;
 	//指标类型
