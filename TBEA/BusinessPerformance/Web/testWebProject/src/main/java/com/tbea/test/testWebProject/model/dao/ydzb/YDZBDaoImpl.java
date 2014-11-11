@@ -12,23 +12,23 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.springframework.stereotype.Repository;
 
-import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
-
 import com.tbea.Connection.DBConnectionManager;
-import com.tbea.test.testWebProject.model.dao.yqk.YQKDao;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
-import com.tbea.test.testWebProject.model.entity.local.YQK;
 import com.tbea.test.testWebProject.service.ydzb.Company;
 import com.tbea.test.testWebProject.service.ydzb.CompanyGroup;
 
 @Repository
 public class YDZBDaoImpl implements YDZBDao{
+	
+	EntityManager entityManager;
+	
+	@PersistenceContext(unitName = "15DB")
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
 	
 	private List<YDZBBean> injectV2Bean(ResultSet res) {
 		List<YDZBBean> YDZBList = new ArrayList<YDZBBean>();

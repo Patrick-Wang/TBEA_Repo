@@ -202,6 +202,46 @@ public class YDZBServiceImpl implements YDZBService {
 					ret[0][month] = fromatNumber(ydzb.getByjh());
 					ret[1][month] = fromatNumber(ydzb.getBywc());
 					ret[2][month] = fromatNumber(ydzb.getJhwcl());
+					break;
+				}
+			}
+		}		
+		return ret;
+	}
+
+	private List<List<YDZBBean>> getQuarterData(int year, int month, Company company){
+		Calendar cal = Calendar.getInstance();
+		List<List<YDZBBean>> ods = new ArrayList<List<YDZBBean>>();
+		int quarterCount = (month + 1) / 3;
+		int lastQuarter = (month + 1) % 3; 
+		for (int i = 1; i <= quarterCount; ++i){
+			cal.set(year, i * 3 - 1, 1);
+			ods.add(ydzbDao.getYDZB_V2(cal, company));
+		}
+		
+		if (lastQuarter > 0){
+			cal.set(year, month, 1);
+			ods.add(ydzbDao.getYDZB_V2(cal, company));
+		}
+		return ods;
+	}
+	
+
+	@Override
+	public String[][] getJdZbhz_overviewData(Date d, Company company, String zb) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		List<List<YDZBBean>> jdData = getQuarterData(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), company);
+		String[][] ret = new String[3][jdData.size()];
+		List<YDZBBean> jdYdzbs;
+		for (int jd = jdData.size() - 1; jd >= 0; --jd){
+			jdYdzbs = jdData.get(jd);
+			for (YDZBBean ydzb : jdYdzbs){
+				if (zb.equals(ydzb.getZblx())){
+					ret[0][jd] = fromatNumber(ydzb.getJdjh());
+					ret[1][jd] = fromatNumber(ydzb.getJdlj());
+					ret[2][jd] = fromatNumber(ydzb.getJdjhwcl());
+					break;
 				}
 			}
 		}		
@@ -210,18 +250,29 @@ public class YDZBServiceImpl implements YDZBService {
 
 
 	@Override
-	public String[][] getJdZbhz_overviewData(Date d, Company company, String zb) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(d);
-		return null;
-	}
-
-
-	@Override
 	public String[][] getNdZbhz_overviewData(Date d, Company company, String zb) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		return null;
+		List<List<YDZBBean>> yearData = new ArrayList<List<YDZBBean>>();
+		yearData.add(ydzbDao.getYDZB_V2(cal, company));
+		cal.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH), 1);
+		yearData.add(ydzbDao.getYDZB_V2(cal, company));
+		cal.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH), 1);
+		yearData.add(ydzbDao.getYDZB_V2(cal, company));
+		String[][] ret = new String[3][yearData.size()];
+		List<YDZBBean> ydzbs;
+		for (int i = yearData.size() - 1; i >= 0; --i) {
+			ydzbs = yearData.get(i);
+			for (YDZBBean ydzb : ydzbs) {
+				if (zb.equals(ydzb.getZblx())) {
+					ret[0][i] = fromatNumber(ydzb.getNdjh());
+					ret[1][i] = fromatNumber(ydzb.getNdlj());
+					ret[2][i] = fromatNumber(ydzb.getNdjhwcl());
+					break;
+				}
+			}
+		}
+		return ret;
 	}
 
 
@@ -229,7 +280,22 @@ public class YDZBServiceImpl implements YDZBService {
 	public String[][] getYdtbZbhz_overviewData(Date d, Company company, String zb) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		return null;
+		String[][] ret = new String[3][cal.get(Calendar.MONTH) + 1];
+		
+		List<List<YDZBBean>> curYearOds = getOverviewData(cal.get(Calendar.YEAR), 0, cal.get(Calendar.MONTH), company);
+		List<YDZBBean> monthYdzbs;
+		for (int month = curYearOds.size() - 1; month >= 0; --month){
+			monthYdzbs = curYearOds.get(month);
+			for (YDZBBean ydzb : monthYdzbs){
+				if (zb.equals(ydzb.getZblx())){
+					ret[0][month] = fromatNumber(ydzb.getBywc());
+					ret[1][month] = fromatNumber(ydzb.getQntq());
+					ret[2][month] = fromatNumber(ydzb.getJqntqzzb());
+					break;
+				}
+			}
+		}
+		return ret;
 	}
 
 
@@ -237,8 +303,34 @@ public class YDZBServiceImpl implements YDZBService {
 	public String[][] getJdtbZbhz_overviewData(Date d, Company company, String zb) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
+		List<List<YDZBBean>> curYearJdData = getQuarterData(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), company);
+		String[][] ret = new String[3][curYearJdData.size()];
+		List<YDZBBean> jdYdzbs;
+		for (int jd = curYearJdData.size() - 1; jd >= 0; --jd){
+			jdYdzbs = curYearJdData.get(jd);
+			for (YDZBBean ydzb : jdYdzbs){
+				if (zb.equals(ydzb.getZblx())){
+					ret[0][jd] = fromatNumber(ydzb.getJdlj());
+					break;
+				}
+			}
+		}
 		
-		return null;
+		List<List<YDZBBean>> preYearJdData = getQuarterData(cal.get(Calendar.YEAR) - 1, (cal.get(Calendar.MONTH) + 4) / 3 * 3 - 1 , company);
+		for (int jd = preYearJdData.size() - 1; jd >= 0; --jd){
+			jdYdzbs = preYearJdData.get(jd);
+			for (YDZBBean ydzb : jdYdzbs){
+				if (zb.equals(ydzb.getZblx())){
+					ret[1][jd] = fromatNumber(ydzb.getJdlj());
+					ret[2][jd] = Util.doubleFormat(
+							Util.mult("100", 
+									Util.division(ret[1][jd], 
+											Util.minus(ret[0][jd], ret[1][jd]))));
+					break;
+				}
+			}
+		}
+		return ret;
 	}
 
 	@Override

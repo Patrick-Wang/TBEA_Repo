@@ -25,6 +25,7 @@ var zbhz_overview;
         CompanyType[CompanyType["NYCY"] = 17] = "NYCY";
         CompanyType[CompanyType["GCL"] = 18] = "GCL";
         CompanyType[CompanyType["JT"] = 19] = "JT";
+        CompanyType[CompanyType["ALL"] = 100] = "ALL";
     })(CompanyType || (CompanyType = {}));
 
     var YDZBDataSet = (function () {
@@ -101,9 +102,9 @@ var zbhz_overview;
 
     var View = (function () {
         function View() {
-            this.mChecked = false;
+            this.mSelectCy = true;
             this.mCy = 19 /* JT */;
-            this.mDw = 0 /* SB */;
+            this.mDw = 100 /* ALL */;
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -122,7 +123,7 @@ var zbhz_overview;
         };
 
         View.prototype.getCurrentCompany = function () {
-            if (this.mChecked) {
+            if (this.mDw != 100 /* ALL */) {
                 return this.mDw;
             } else {
                 return this.mCy;
@@ -154,6 +155,9 @@ var zbhz_overview;
             var month = this.getMonth();
             var legend = [(this.mMonth) + "月计划", (this.mMonth) + "月完成", (this.mMonth) + "月计划完成率"];
             var option = {
+                title: {
+                    text: '月度指标完成情况'
+                },
                 tooltip: {
                     trigger: 'axis'
                 },
@@ -218,6 +222,9 @@ var zbhz_overview;
             }
 
             var option = {
+                title: {
+                    text: '季度指标完成情况'
+                },
                 tooltip: {
                     trigger: 'axis'
                 },
@@ -284,6 +291,9 @@ var zbhz_overview;
             }
 
             var option = {
+                title: {
+                    text: '年度指标完成情况'
+                },
                 tooltip: {
                     trigger: 'axis'
                 },
@@ -343,6 +353,9 @@ var zbhz_overview;
             var month = this.getMonth();
             var legend = [(this.mYear - 1) + "年*月完成", (this.mYear) + "年*月完成", "同比增长率"];
             var option = {
+                title: {
+                    text: '月度同期对比'
+                },
                 tooltip: {
                     trigger: 'axis'
                 },
@@ -407,6 +420,9 @@ var zbhz_overview;
             }
 
             var option = {
+                title: {
+                    text: '季度同期对比'
+                },
                 tooltip: {
                     trigger: 'axis'
                 },
@@ -463,29 +479,13 @@ var zbhz_overview;
         };
 
         View.prototype.onCySelected = function (val) {
-            var curComp = this.getCurrentCompany();
             this.mCy = val;
             var select = $("#dw select")[0];
             this.mDw = parseInt(select.options[select.selectedIndex].value);
-            if (curComp != this.getCurrentCompany()) {
-                this.updateUI();
-            }
         };
 
         View.prototype.onDwSelected = function (val) {
-            var curComp = this.getCurrentCompany();
             this.mDw = val;
-            if (curComp != this.getCurrentCompany()) {
-                this.updateUI();
-            }
-        };
-
-        View.prototype.onChecked = function (val) {
-            var curComp = this.getCurrentCompany();
-            this.mChecked = val;
-            if (curComp != this.getCurrentCompany()) {
-                this.updateUI();
-            }
         };
         return View;
     })();

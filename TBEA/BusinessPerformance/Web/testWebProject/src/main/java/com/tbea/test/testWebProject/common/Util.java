@@ -159,4 +159,15 @@ public class Util {
 			return v2 / v1 + "";
 		}
 	}
+	
+	public static String doubleFormat(String dv){
+		double v1 = 0;
+		try{
+			v1 = Double.parseDouble(dv);
+		}
+		catch (Exception e){
+			return "0";
+		}
+		return String.format("%.2f", v1);
+	}
 }

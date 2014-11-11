@@ -208,10 +208,9 @@ th.ui-th-ltr {
 			zbhz_overview.View.newInstance().onCySelected(parseInt(index));
 		}
 	</script>
-	<div style="width:200px; height:20px;">
-		<input type="checkbox" style="float: left;" />
+	<div style="width:800px; height:20px;">
 		<div style="float: left;">
-			按产业 <select onchange="onCySelected(this.value)">
+			按产业: <select onchange="onCySelected(this.value)">
 				<option value="${id_19}" selected="selected">${name_19}</option>
 				<option value="${id_15}">${name_15}</option>
 				<option value="${id_16}">${name_16}</option>
@@ -219,14 +218,11 @@ th.ui-th-ltr {
 				<option value="${id_18}">${name_18}</option>
 			</select>
 		</div>
-	</div>
-	<br/>
-	<div style="width:200px; height:20px;">
-		<input type="checkbox" style="float: left;" id="cdw" onclick="zbhz_overview.View.newInstance().onChecked(this.checked)"/>
-		<div style="float: left;" id="dw">
-			按单位 <select id= "${id_19}"
-				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)">
-				<option value="${id_0}" selected="selected">${name_0}</option>
+		<div style="float: left; margin-left :15px;" id="dw">
+			按单位: <select id= "${id_19}"
+				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)" style="width: 125px;">
+				<option value="100" selected="selected">全部</option>
+				<option value="${id_0}">${name_0}</option>
 				<option value="${id_1}">${name_1}</option>
 				<option value="${id_2}">${name_2}</option>
 				<option value="${id_3}">${name_3}</option>
@@ -243,8 +239,9 @@ th.ui-th-ltr {
 				<option value="${id_14}">${name_14}</option>
 			</select> <select id= "${id_15}"
 				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-				id="sbd" style="display: none">
-				<option value="${id_0}" selected="selected">${name_0}</option>
+				id="sbd" style="width: 125px; display: none">
+				<option value="100" selected="selected">全部</option>
+				<option value="${id_0}">${name_0}</option>
 				<option value="${id_1}">${name_1}</option>
 				<option value="${id_2}">${name_2}</option>
 				<option value="${id_3}">${name_3}</option>
@@ -253,26 +250,32 @@ th.ui-th-ltr {
 				<option value="${id_6}">${name_6}</option>
 			</select> <select id="${id_16}"
 				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-				style="display: none">
+				style="width: 125px; display: none">
+				<option value="100" selected="selected">全部</option>
 				<option value="${id_7}">${name_7}</option>
 				<option value="${id_8}">${name_8}</option>
 			</select> <select id="${id_17}"
 				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-				style="display: none">
+				style="width: 125px; display: none">
+				<option value="100" selected="selected">全部</option>
 				<option value="${id_9}">${name_9}</option>
 				<option value="${id_10}">${name_10}</option>
 				<option value="${id_11}">${name_11}</option>
 			</select> <select id="${id_18}"
 				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-				style="display: none">
+				style="width: 125px; display: none">
+				<option value="100" selected="selected">全部</option>
 				<option value="${id_12}">${name_12}</option>
 				<option value="${id_13}">${name_13}</option>
 			</select>
 		</div>
+		<div style="float: left; margin-left :15px;">
+			<input type="button" onclick="zbhz_overview.View.newInstance().updateUI()" value="更新" style="width:90px;"></input>
+		</div>
 	</div>
 
 
-	<div align="center" style="margin-bottom: 15px">
+	<div align="center" style="margin-bottom: 15px;margin-top:15px">
 		<div class="panel-content-border">
 			<div id="chart_yd" class="panel-content"></div>
 		</div>

@@ -10,7 +10,8 @@ module zbhz_overview {
 		TCNY, NDGS, ZJWL,
 		JCK,   GCGS,  
 		ZH, 
-		SBDCY, XNYCY, NYCY, GCL, JT
+		SBDCY, XNYCY, NYCY, GCL, JT,
+		ALL = 100
 	}
 
 	 
@@ -105,11 +106,10 @@ module zbhz_overview {
             return View.ins;
         }
 
-		
+		private mSelectCy : boolean = true;
 		private mDataSetMgr : DataSetManager;
-		private mChecked: boolean = false;
  		private mCy: CompanyType = CompanyType.JT;
-        private mDw: CompanyType = CompanyType.SB;
+        private mDw: CompanyType = CompanyType.ALL;
         private mMonth: number;
         private mYear: number;
         private mChartIds: string[];
@@ -123,7 +123,7 @@ module zbhz_overview {
         }
 
 		private getCurrentCompany() :　CompanyType{
-			if (this.mChecked){
+			if (this.mDw != CompanyType.ALL){
 				return this.mDw;
 			}
 			else{
@@ -152,11 +152,13 @@ module zbhz_overview {
 		} 
 
 		private updateYdUI(data : Array<string[]>){
-		   
+
             var month: string[] = this.getMonth();
             var legend = [(this.mMonth) + "月计划", (this.mMonth) + "月完成", (this.mMonth) + "月计划完成率"];
             var option = {
-
+				title : {
+				        text: '月度指标完成情况'
+				},	   
                 tooltip: {
                     trigger: 'axis'
                 },
@@ -213,6 +215,7 @@ module zbhz_overview {
 		}
 
 		private updateJdUI(data : Array<string[]>){
+
 			var jdCount = data[0].length;
 			var jd = [];
 			 var legend = ["季度计划", "季度累计", "季度完成率"];
@@ -221,7 +224,9 @@ module zbhz_overview {
 			}
 			
             var option = {
-
+				title : {
+				        text: '季度指标完成情况'
+				},
                 tooltip: {
                     trigger: 'axis'
                 },
@@ -290,7 +295,9 @@ module zbhz_overview {
 			}
 			
             var option = {
-
+				title : {
+			        text: '年度指标完成情况'
+			    },
                 tooltip: {
                     trigger: 'axis'
                 },
@@ -350,7 +357,9 @@ module zbhz_overview {
 		    var month: string[] = this.getMonth();
             var legend = [(this.mYear - 1) + "年*月完成", (this.mYear) + "年*月完成", "同比增长率"];
             var option = {
-
+				title : {
+			        text: '月度同期对比'
+			    },
                 tooltip: {
                     trigger: 'axis'
                 },
@@ -415,7 +424,9 @@ module zbhz_overview {
 			}
 			
             var option = {
-
+				title : {
+			        text: '季度同期对比'
+			    },
                 tooltip: {
                     trigger: 'axis'
                 },
@@ -472,29 +483,13 @@ module zbhz_overview {
 		}
 
 		public onCySelected(val : number){
-			var curComp = this.getCurrentCompany();
 			this.mCy = val;
 			var select = $("#dw select")[0];
 			this.mDw = parseInt(select.options[select.selectedIndex].value);
-			if (curComp != this.getCurrentCompany()){
-				this.updateUI();
-			}
 		}
 		
 		public onDwSelected(val : number){
-			var curComp = this.getCurrentCompany();
 			this.mDw = val;
-			if (curComp != this.getCurrentCompany()){
-				this.updateUI();
-			}
-		}
-		
-		public onChecked(val : boolean){
-			var curComp = this.getCurrentCompany();
-			this.mChecked = val;
-			if (curComp != this.getCurrentCompany()){
-				this.updateUI();
-			}
 		}
     }
 }
