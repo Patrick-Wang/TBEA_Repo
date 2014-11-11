@@ -1,0 +1,195 @@
+html {
+    font-size: 100%;
+    overflow-y: scroll;
+}
+body {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.header {
+	background: #171717 url(../images/sprite-gradients.png) 0 0 repeat-x;
+	height: 90px;
+	color: #D9D9D9;
+
+}
+.header h1 {
+	color: #DEDEDE;
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-ms-font-smoothing: antialiased;
+	-o-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	padding-top: 20px;
+	
+}
+
+h1 {
+	font-size: 36px;
+	line-height: 42px;
+	font-weight: 200;
+	padding: 10px 0 0;
+}
+.header > div {
+position: relative;
+width: 970px;
+height: 90px;
+margin: 0 auto;
+}
+
+#loginForm {
+    background: none repeat scroll 0 0 #F9F9F5;
+    border: 1px solid #E1E1DC;
+    border-radius: 8px 8px 8px 8px;
+    margin: 1em auto;
+    padding: 0.75em 0;
+    width: 450px;
+}
+#loginForm h2 {
+    margin: 0 auto;
+    text-align: center;
+}
+#loginForm fieldset {
+    margin: 0 auto;
+    width: 270px;
+}
+#loginForm button, #loginForm label {
+    margin-top: 0.5em;
+}
+#loginForm label[for="password_reset"] {
+    bottom: 0;
+    position: absolute;
+}
+#loginForm input {
+    width: 270px;
+}
+
+#loginForm p {
+    text-align: right;
+    width: 310px;
+}
+
+#loginForm button, #loginForm label {
+    margin-top: 0.5em;
+}
+input:not([type="radio"]), textarea {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.2) inset;
+    outline: medium none;
+    padding: 5px;
+    width: 245px;
+}
+input:focus:not([type="submit"]), textarea:focus {
+    background: none repeat scroll 0 0 #F8FDFE;
+    border-color: #8ED9EE;
+    transition-property: all;
+}
+
+
+fieldset {
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+}
+#a_id {
+    color: #0C657E;
+    transition-duration: 0.12s;
+    transition-property: all;
+    float: left;
+    font-size: 15px;
+    margin: 1px 0 0 10px;
+    text-decoration: underline;
+}
+#a_id:visited {
+    color: #64576C;
+}
+#a_id:hover {
+    color: #1291B5;
+    outline: 0 none;
+}
+#a_id:active {
+    outline: 0 none;
+}
+#a_id:focus {
+    outline: 0 none;
+}
+
+label {
+    display: block;
+    margin-bottom: 3px;
+    text-align:left;
+}
+label {
+    cursor: pointer;
+}
+label span {
+    color: #AA0000;
+    font-family: "Lato","Arial",sans-serif;
+}
+input:not([type="radio"]), textarea {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.2) inset;
+    outline: medium none;
+    padding: 5px;
+    width: 245px;
+}
+input:focus:not([type="submit"]), textarea:focus {
+    background: none repeat scroll 0 0 #F8FDFE;
+    border-color: #8ED9EE;
+    transition-property: all;
+}
+
+button, input, select, textarea {
+    font-size: 100%;
+    margin: 0;
+    vertical-align: baseline;
+}
+button, input {
+    line-height: normal;
+}
+body, button, input, select, textarea {
+    color: #393937;
+    font-family: "Lato","Arial",sans-serif;
+}
+button::-moz-focus-inner, input::-moz-focus-inner {
+    border: 0 none;
+    padding: 0;
+}
+.small-btn:hover {
+    cursor: pointer;
+}
+.small-btn {
+	background: url("../images/btn-small-main.png") no-repeat scroll 0 0 transparent;
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+	font-family: "Lato","Arial",sans-serif;
+    letter-spacing: 1px;
+    line-height: 34px;
+    border-bottom: medium none;
+    display: inline-block;
+    font-size: 0.9em;
+    height: 18px;
+    line-height: 18px;
+    margin: 0 10px 0 0;
+    padding: 7px;
+    text-align: center;
+    text-shadow: 0 1px 0 white;
+    width:73px;
+    float: right;
+}
+
+.errors {
+    color: #CC0000;
+    text-align: left;
+    margin: 0 40px;
+}
