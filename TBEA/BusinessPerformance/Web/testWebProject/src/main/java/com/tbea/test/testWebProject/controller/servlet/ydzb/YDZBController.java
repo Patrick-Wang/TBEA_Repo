@@ -161,7 +161,7 @@ public class YDZBController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		map.put("zbhz_overview", getZbhz_overviewData(d, cid, zb));
+		//map.put("zbhz_overview", getZbhz_overviewData(d, cid, zb));
 		map.put("zbid", zb);
 		map.put("zbmc", service.getZbmc(zb));
 		Company coms[] = Company.getAll();

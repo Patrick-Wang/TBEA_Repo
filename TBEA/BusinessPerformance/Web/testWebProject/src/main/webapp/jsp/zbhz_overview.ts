@@ -113,9 +113,8 @@ module zbhz_overview {
         private mMonth: number;
         private mYear: number;
         private mChartIds: string[];
-        public init(echartIds: string[], month : number, year : number, jtData: any, zbid : string): void {
+        public init(echartIds: string[], month : number, year : number, zbid : string): void {
            this.mDataSetMgr = new DataSetManager(zbid);
-           this.mDataSetMgr.addDataSet(new YDZBDataSet(CompanyType.JT, jtData.yd, jtData.jd, jtData.nd, jtData.ydtb, jtData.jdtb));
            this.mMonth = month;
            this.mYear = year;
            this.mChartIds = echartIds;

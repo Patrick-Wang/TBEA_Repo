@@ -113,9 +113,8 @@ var zbhz_overview;
             return View.ins;
         };
 
-        View.prototype.init = function (echartIds, month, year, jtData, zbid) {
+        View.prototype.init = function (echartIds, month, year, zbid) {
             this.mDataSetMgr = new DataSetManager(zbid);
-            this.mDataSetMgr.addDataSet(new YDZBDataSet(19 /* JT */, jtData.yd, jtData.jd, jtData.nd, jtData.ydtb, jtData.jdtb));
             this.mMonth = month;
             this.mYear = year;
             this.mChartIds = echartIds;
