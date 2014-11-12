@@ -385,8 +385,8 @@ module cqk {
                     drag: false,
                     resize: false,
                     //autowidth : false,
-                    cellsubmit: 'clientArray',
-                    cellEdit: true,
+//                    cellsubmit: 'clientArray',
+//                    cellEdit: true,
                     height: '100%',
                     width: 1000,
                
