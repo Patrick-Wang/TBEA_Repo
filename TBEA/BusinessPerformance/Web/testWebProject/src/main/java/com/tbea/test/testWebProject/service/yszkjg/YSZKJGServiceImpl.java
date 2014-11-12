@@ -21,9 +21,13 @@ public class YSZKJGServiceImpl implements YSZKJGService {
 	private void importYSZKJGByHY(String baseMonth, String hyName,
 			List<String> sshyList, boolean isIncluded, boolean isTotal)
 			throws Exception {
-		Double ysjezj = yszktzLocalDao.getYSZKJE(baseMonth, null, false, true);
-		Double ysje = yszktzLocalDao.getYSZKJE(baseMonth, sshyList, isIncluded,
-				isTotal);
+		Double ysjezj = yszktzLocalDao.getYSZKJG(baseMonth, null, null, null,
+				false, true, false, true);
+		Double ysje = yszktzLocalDao.getYSZKJG(baseMonth, null, null, sshyList,
+				isIncluded, isTotal, false, true);
+//		Double ysjezj = yszktzLocalDao.getYSZKJE(baseMonth, null, false, true);
+//		Double ysje = yszktzLocalDao.getYSZKJE(baseMonth, sshyList, isIncluded,
+//				isTotal);
 		YSZKJG yszkjg = new YSZKJG();
 		yszkjg.setNy(baseMonth);
 		yszkjg.setHy(hyName);
@@ -44,8 +48,9 @@ public class YSZKJGServiceImpl implements YSZKJGService {
 				isIncluded, isTotal, true, false));
 		yszkjg.setWdqzbj(yszktzLocalDao.getYSZKJG(baseMonth, null, 0, sshyList,
 				isIncluded, isTotal, true, true));
-		yszkjg.setYszkhj(yszktzLocalDao.getYSZKJG(baseMonth, null, null, sshyList,
-				isIncluded, isTotal, false, true));
+		yszkjg.setYszkhj(ysje);
+//		yszkjg.setYszkhj(yszktzLocalDao.getYSZKJG(baseMonth, null, null, sshyList,
+//				isIncluded, isTotal, false, true));
 		yszkjgDao.merge(yszkjg);
 		return;
 	}
