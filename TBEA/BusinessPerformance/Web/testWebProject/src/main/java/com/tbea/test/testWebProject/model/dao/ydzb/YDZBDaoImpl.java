@@ -31,6 +31,7 @@ public class YDZBDaoImpl implements YDZBDao{
 	}
 	
 	private List<YDZBBean> injectV2Bean(ResultSet res) {
+		Calendar start = Calendar.getInstance();
 		List<YDZBBean> YDZBList = new ArrayList<YDZBBean>();
 		if (null != res) {
 
@@ -75,10 +76,13 @@ public class YDZBDaoImpl implements YDZBDao{
 				e.printStackTrace();
 			}
 		}
+		Calendar end = Calendar.getInstance();
+		System.out.println("injectV2Bean()  escape " + (end.getTimeInMillis() - start.getTimeInMillis()));
 		return YDZBList;
 	}
 	
 	private List<YDZBBean> injectBean(ResultSet res) {
+		Calendar start = Calendar.getInstance();
 		List<YDZBBean> YDZBList = new ArrayList<YDZBBean>();
 		if (null != res) {
 
@@ -121,32 +125,52 @@ public class YDZBDaoImpl implements YDZBDao{
 				e.printStackTrace();
 			}
 		}
+		
+		Calendar end = Calendar.getInstance();
+		System.out.println("injectBean()  escape " + (end.getTimeInMillis() - start.getTimeInMillis()));
 		return YDZBList;
 	}
 	
-	private static Connection mConnection;
-
+	private Connection mConnection;
+	private Statement stmt;
 
 	private Connection getConnection() {
 		if (null == mConnection) {
+			Calendar start = Calendar.getInstance();  
 			DBConnectionManager manager = DBConnectionManager
 					.getInstance("mobileSys");
+			Calendar end = Calendar.getInstance();
+			System.out.println("DBConnectionManager.getInstance  escape " + (end.getTimeInMillis() - start.getTimeInMillis()));
+			
+			start = Calendar.getInstance();  
 			mConnection = manager.getConnection("mobileSys");
+			end = Calendar.getInstance();
+			System.out.println("manager.getConnection  escape " + (end.getTimeInMillis() - start.getTimeInMillis()));
+
 		}
 		return mConnection;
 	}
-
+	
 	private List<YDZBBean> getYDZBInfo_V2(int nf, int yf, String qybh,
 			Connection conn) {
-		Statement stmt = null;
 		ResultSet res = null;
 		try {
-			stmt = conn.createStatement();
+			if (stmt == null){
+				Calendar start = Calendar.getInstance();  
+				stmt = conn.createStatement();
+				Calendar end = Calendar.getInstance();
+				System.out.println("conn.createStatement()  escape " + (end.getTimeInMillis() - start.getTimeInMillis()));
+
+			}
 			
 			String query = "exec p_jysj2014_zbhzcxV2 " + nf + "," + yf + ",'"
 					+ qybh + "', 0, 0;";
 //			System.out.println(query);
+			Calendar start = Calendar.getInstance();  
 			res = stmt.executeQuery(query);
+			Calendar end = Calendar.getInstance();
+			System.out.println("executeQuery()  escape " + (end.getTimeInMillis() - start.getTimeInMillis()));
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -241,6 +265,25 @@ public class YDZBDaoImpl implements YDZBDao{
 		}
 		
 		return xjls;
+	}
+
+	@Override
+	public void uninit() {
+		getConnection();
+		
+	}
+
+	@Override
+	public void init() {
+		if (null != mConnection) {
+
+			DBConnectionManager manager = DBConnectionManager
+					.getInstance("mobileSys");
+			manager.freeConnection("mobileSys", mConnection);
+			mConnection = null;
+			stmt = null;
+		}
+
 	}
 
 }

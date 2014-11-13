@@ -346,5 +346,19 @@ public class YDZBServiceImpl implements YDZBService {
 	public String getZbmc(String id){
 		return zbid_mcMap.get(id);
 	}
+
+
+	@Override
+	public void batEnd() {
+		ydzbDao.uninit();
+		
+	}
+
+
+	@Override
+	public void batBegin() {
+		ydzbDao.init();
+		
+	}
 	
 }
