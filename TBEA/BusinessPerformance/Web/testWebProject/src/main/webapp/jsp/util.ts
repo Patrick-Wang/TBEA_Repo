@@ -1,4 +1,38 @@
+declare var $;
 module Util {
+
+	export class RestDateDataSet{
+		private mBaseResUrl : string;
+		private mDataMap : any = {};
+		public constructor(baseResUrl : string){
+			this.mBaseResUrl = baseResUrl;
+		}
+		
+        public getData(m: number, y: number, callBack: (arrayData : Array<string[]>) => void): void{
+            if (undefined == this.mDataMap[y + ""]) {
+                this.mDataMap[y + ""] = {};
+            }
+            if (undefined == this.mDataMap[y + ""][m + ""]){
+
+                $.ajax({
+                    type: "GET",
+                    url: this.mBaseResUrl + "/" + m + "/" + y + "",
+	                success: (data: any) =>{
+		                    var jsnData = JSON.parse(data);
+		                    this.mDataMap[y + ""][m + ""] = jsnData;
+		                    callBack(jsnData);
+			        },
+			        error: (XMLHttpRequest, textStatus, errorThrown) => {
+	                    callBack(null);
+	                }
+         		});
+			}
+			else {
+        		callBack(this.mDataMap[y + ""][m + ""]);
+    		}
+		}
+	}
+
 
 	export function formatCurrency (val: string): string{
 		

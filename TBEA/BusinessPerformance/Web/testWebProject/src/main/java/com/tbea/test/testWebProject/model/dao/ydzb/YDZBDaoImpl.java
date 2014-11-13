@@ -35,13 +35,13 @@ public class YDZBDaoImpl implements YDZBDao{
 		if (null != res) {
 
 			try {
-				ResultSetMetaData rsmd = res.getMetaData();
-				int len = rsmd.getColumnCount();
-				String columName = "";
-				for (int i = 0; i < len; ++i){
-					columName += rsmd.getColumnName(i + 1) + "\t";
-				}
-				// System.out.println(columName);
+//				ResultSetMetaData rsmd = res.getMetaData();
+//				int len = rsmd.getColumnCount();
+//				String columName = "";
+//				for (int i = 0; i < len; ++i){
+//					columName += rsmd.getColumnName(i + 1) + "\t";
+//				}
+//				 System.out.println(columName);
 				while (res.next()) {
 					YDZBBean ydzbbean = new YDZBBean();
 					ydzbbean.setXh(res.getString(1));
@@ -64,12 +64,12 @@ public class YDZBDaoImpl implements YDZBDao{
 					ydzbbean.setJqntqljzzb(res.getString(26));
 					YDZBList.add(ydzbbean);
 					
-					String rowData = "";
-					for (int i = 0; i < len; ++i){
-						rowData += res.getString(i + 1) + "\t";
-					}
-					
-					// System.out.println(rowData);
+//					String rowData = "";
+//					for (int i = 0; i < len; ++i){
+//						rowData += res.getString(i + 1) + "\t";
+//					}
+//					
+//					 System.out.println(rowData);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -83,13 +83,13 @@ public class YDZBDaoImpl implements YDZBDao{
 		if (null != res) {
 
 			try {
-				ResultSetMetaData rsmd = res.getMetaData();
-				int len = rsmd.getColumnCount();
-				String columName = "";
-				for (int i = 0; i < len; ++i){
-					columName += rsmd.getColumnName(i + 1) + "\t";
-				}
-				// System.out.println(columName);
+//				ResultSetMetaData rsmd = res.getMetaData();
+//				int len = rsmd.getColumnCount();
+//				String columName = "";
+//				for (int i = 0; i < len; ++i){
+//					columName += rsmd.getColumnName(i + 1) + "\t";
+//				}
+//				 System.out.println(columName);
 				while (res.next()) {
 					YDZBBean ydzbbean = new YDZBBean();
 					ydzbbean.setXh(res.getString("qybh"));
@@ -109,12 +109,12 @@ public class YDZBDaoImpl implements YDZBDao{
 					ydzbbean.setQntqlj(res.getString("qntqlj"));
 					ydzbbean.setJqntqljzzb(res.getString("jqntqljzzb"));
 					YDZBList.add(ydzbbean);
-					String rowData = "";
-					for (int i = 0; i < len; ++i){
-						rowData += res.getString(i + 1) + "\t";
-					}
-					
-					// System.out.println(rowData);
+//					String rowData = "";
+//					for (int i = 0; i < len; ++i){
+//						rowData += res.getString(i + 1) + "\t";
+//					}
+//					
+//					 System.out.println(rowData);
 					
 				}
 			} catch (Exception e) {
@@ -124,7 +124,7 @@ public class YDZBDaoImpl implements YDZBDao{
 		return YDZBList;
 	}
 	
-	private Connection mConnection;
+	private static Connection mConnection;
 
 
 	private Connection getConnection() {
@@ -133,7 +133,7 @@ public class YDZBDaoImpl implements YDZBDao{
 					.getInstance("mobileSys");
 			mConnection = manager.getConnection("mobileSys");
 		}
-		return this.mConnection;
+		return mConnection;
 	}
 
 	private List<YDZBBean> getYDZBInfo_V2(int nf, int yf, String qybh,
@@ -145,7 +145,7 @@ public class YDZBDaoImpl implements YDZBDao{
 			
 			String query = "exec p_jysj2014_zbhzcxV2 " + nf + "," + yf + ",'"
 					+ qybh + "', 0, 0;";
-			//System.out.println(query);
+//			System.out.println(query);
 			res = stmt.executeQuery(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -161,7 +161,7 @@ public class YDZBDaoImpl implements YDZBDao{
 			stmt = conn.createStatement();
 			String query = "exec p_jysj2014_zbfdwhz " + nf + "," + yf
 					+ ",'" + qybh + "', 0, 0;";
-			
+//			System.out.println(query);
 //			String query = "exec p_jysj2014_zbfdwhz " + nf + "," + yf
 //					+ ",'4;5;6;7;8;9;29;22;', 0, 0;";
 			

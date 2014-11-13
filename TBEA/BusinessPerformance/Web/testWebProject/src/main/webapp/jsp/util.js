@@ -1,5 +1,36 @@
 var Util;
 (function (Util) {
+    var RestDateDataSet = (function () {
+        function RestDateDataSet(baseResUrl) {
+            this.mDataMap = {};
+            this.mBaseResUrl = baseResUrl;
+        }
+        RestDateDataSet.prototype.getData = function (m, y, callBack) {
+            var _this = this;
+            if (undefined == this.mDataMap[y + ""]) {
+                this.mDataMap[y + ""] = {};
+            }
+            if (undefined == this.mDataMap[y + ""][m + ""]) {
+                $.ajax({
+                    type: "GET",
+                    url: this.mBaseResUrl + "/" + m + "/" + y + "",
+                    success: function (data) {
+                        var jsnData = JSON.parse(data);
+                        _this.mDataMap[y + ""][m + ""] = jsnData;
+                        callBack(jsnData);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        callBack(null);
+                    }
+                });
+            } else {
+                callBack(this.mDataMap[y + ""][m + ""]);
+            }
+        };
+        return RestDateDataSet;
+    })();
+    Util.RestDateDataSet = RestDateDataSet;
+
     function formatCurrency(val) {
         if (val == "--" || val == "") {
             return val;

@@ -34,16 +34,7 @@
 <script type="text/javascript">
             (function () {
                 $(document).ready(function () {
-                	
-                	var ajaxbg = $("#background,#progressBar"); 
-                		ajaxbg.hide(); 
-                	$(document).ajaxStart(function () { 
-                		ajaxbg.show(); 
-                	}).ajaxStop(function () { 
-                		ajaxbg.hide(); 
-                	}); 
-                	
-                	
+
                 	zbhz_overview.View.newInstance().init(
                 		["chart_yd", "chart_jd", "chart_nd", "chart_ydtb", "chart_jdtb"], 
                         ${month},//month
@@ -154,41 +145,6 @@ th.ui-th-ltr {
 	font-size: 14px;
 }
 
-
-.background { 
-	display: block; 
-	width: 100%; 
-	height: 100%; 
-	opacity: 0.4; 
-	filter: alpha(opacity=40); 
-	background:while; 
-	position: absolute; 
-	top: 0; 
-	left: 0; 
-	z-index: 2000; 
-}
-
-
-.loading{
-	background: white url(../jsp/loading.gif) no-repeat; 
-}
-
-.progressBar { 
-	border: solid 2px #86A5AD;
-	display: block; 
-	width: 270px; 
-	height: 66px; 
-	position: fixed; 
-	top: 50%; 
-	left: 50%; 
-	padding: 0px 0px 0px 0px;
-	margin-left: -135px; 
-	margin-top: -33px; 
-	text-align: left; 
-	font-weight: bold; 
-	position: absolute; 
-	z-index: 2001; 
-} 
 
 </style>
 </head>
@@ -301,19 +257,7 @@ th.ui-th-ltr {
 			<div id="chart_jdtb" class="panel-content"></div>
 		</div>
 	</div>
-	<div id="background" class="background" style="display: none;"></div>
-	<div id="progressBar" class="progressBar">
-		<table>
-			<tr>
-				<td valign="middle" style="width: 60px; height: 60px;"
-					align="center">
-					<div class="loading" style="width: 30px; height: 30px;"></div>
-				</td>
-				<td>数据加载中，请稍等...</td>
-			</tr>
-		</table>
-	</div>
-
+	<%@include file="loading.jsp" %>
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 

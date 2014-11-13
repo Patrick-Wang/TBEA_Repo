@@ -12,6 +12,7 @@ import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,18 +44,25 @@ public class YDZBController {
 		return new ModelAndView("hzb_zbhz", map);
 	}
 	
+	
+//	@RequestMapping(value = "gcy_zbhz/{month}/{year}", method = RequestMethod.GET)
+//	public @ResponseBody String getGcy_zbhz(  @PathVariable("month") String m, @PathVariable("year") String y) {
+//		int month = Integer.parseInt(m);
+//		int year = Integer.parseInt(y);
+//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + "1");
+//		String gcy_zbhz = JSONArray.fromObject(service.getGcy_zbhzData(d)).toString().replace("null", "0");
+//		return gcy_zbhz;
+//	}
+	
 	@RequestMapping(value = "gcy_zbhz.do", method = RequestMethod.GET)
 	public ModelAndView getGcy_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 		Calendar now = Calendar.getInstance();  
 		int month = now.get(Calendar.MONTH) + 1;
 		int year = now.get(Calendar.YEAR);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		String gcy_zbhz = JSONArray.fromObject(service.getGcy_zbhzData(d)).toString().replace("null", "0");
-		map.put("gcy_zbhz", gcy_zbhz);
 		return new ModelAndView("gcy_zbhz", map);
 	}
 	

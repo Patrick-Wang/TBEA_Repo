@@ -460,14 +460,14 @@ module zbhz_overview {
                         type: 'bar',
                         smooth: true,
                         itemStyle: { normal: { areaStyle: { type: 'default' } } },
-                        data: data[1]
+                        data: data[0]
                     },
                     {
                         name: legend[1],
                         type: 'bar',
                         smooth: true,
                         itemStyle: { normal: { areaStyle: { type: 'default' } } },
-                        data: data[0]
+                        data: data[1]
                     },
                     {
                         name: legend[2],

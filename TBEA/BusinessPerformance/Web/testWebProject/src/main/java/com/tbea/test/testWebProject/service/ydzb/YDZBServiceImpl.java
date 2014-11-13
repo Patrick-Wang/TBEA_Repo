@@ -254,10 +254,11 @@ public class YDZBServiceImpl implements YDZBService {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		List<List<YDZBBean>> yearData = new ArrayList<List<YDZBBean>>();
+		cal.set(cal.get(Calendar.YEAR) - 2, 11, 1);
 		yearData.add(ydzbDao.getYDZB_V2(cal, company));
-		cal.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH), 1);
+		cal.set(cal.get(Calendar.YEAR) + 1, 11, 1);
 		yearData.add(ydzbDao.getYDZB_V2(cal, company));
-		cal.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH), 1);
+		cal.set(cal.get(Calendar.YEAR) + 2, 11, 1);
 		yearData.add(ydzbDao.getYDZB_V2(cal, company));
 		String[][] ret = new String[3][yearData.size()];
 		List<YDZBBean> ydzbs;
@@ -310,7 +311,7 @@ public class YDZBServiceImpl implements YDZBService {
 			jdYdzbs = curYearJdData.get(jd);
 			for (YDZBBean ydzb : jdYdzbs){
 				if (zb.equals(ydzb.getZblx())){
-					ret[0][jd] = fromatNumber(ydzb.getJdlj());
+					ret[1][jd] = fromatNumber(ydzb.getJdlj());
 					break;
 				}
 			}
@@ -321,11 +322,19 @@ public class YDZBServiceImpl implements YDZBService {
 			jdYdzbs = preYearJdData.get(jd);
 			for (YDZBBean ydzb : jdYdzbs){
 				if (zb.equals(ydzb.getZblx())){
-					ret[1][jd] = fromatNumber(ydzb.getJdlj());
-					ret[2][jd] = Util.doubleFormat(
-							Util.mult("100", 
-									Util.division(ret[1][jd], 
-											Util.minus(ret[0][jd], ret[1][jd]))));
+					ret[0][jd] = fromatNumber(ydzb.getJdlj());
+					if (ret[1][jd].equals("0")){
+						ret[2][jd] = "0";
+					}
+					else{
+						ret[2][jd] = Util.doubleFormat(
+								Util.mult("100", 
+										Util.division(ret[0][jd], 
+												Util.minus(ret[1][jd], ret[0][jd]))));
+						if (ret[0][jd].charAt(0) == '-'){
+							ret[2][jd] = Util.minus("100", ret[2][jd]);
+						}
+					}
 					break;
 				}
 			}
