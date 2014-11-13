@@ -39,7 +39,7 @@ public class YDZBController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		String hzb_zbhz = JSONArray.fromObject(service.getHzb_zbhzData(d)).toString().replace("null", "0");
+		String hzb_zbhz = JSONArray.fromObject(service.getHzb_zbhzData(d)).toString().replace("null", "0.00");
 		map.put("hzb_zbhz", hzb_zbhz);
 		return new ModelAndView("hzb_zbhz", map);
 	}
@@ -63,6 +63,9 @@ public class YDZBController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
+		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + "1");
+		String gcy_zbhz = JSONArray.fromObject(service.getGcy_zbhzData(d)).toString().replace("null", "0.00");
+		map.put("gcy_zbhz", gcy_zbhz);
 		return new ModelAndView("gcy_zbhz", map);
 	}
 	
@@ -76,7 +79,7 @@ public class YDZBController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0");
+		String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
 		map.put("gdw_zbhz", gdw_zbhz);
 		return new ModelAndView("gdw_zbhz", map);
 	}
@@ -94,7 +97,7 @@ public class YDZBController {
 		map.put("month", month);
 		map.put("year", year);
 		map.put("day",  day);
-		String xjlrb = JSONArray.fromObject(service.getXjlrbData(d)).toString().replace("null", "0");
+		String xjlrb = JSONArray.fromObject(service.getXjlrbData(d)).toString().replace("null", "0.00");
 		map.put("xjlrb", xjlrb);
 		return new ModelAndView("xjlrb", map);
 	}
@@ -110,18 +113,18 @@ public class YDZBController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		String yszkrb_qkb = JSONArray.fromObject(service.getYszkrb_qkbData(d)).toString().replace("null", "0");
+		String yszkrb_qkb = JSONArray.fromObject(service.getYszkrb_qkbData(d)).toString().replace("null", "0.00");
 		map.put("yszkrb_qkb", yszkrb_qkb);
 		return new ModelAndView("yszkrb_qkb", map);
 	}
 	
 	
 	private String getZbhz_overviewData(Date d, int companyId, String zbid){
-		String zbhz_overview_yd = JSONArray.fromObject(service.getYdZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0");
-		String zbhz_overview_jd = JSONArray.fromObject(service.getJdZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0");
-		String zbhz_overview_nd = JSONArray.fromObject(service.getNdZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0");
-		String zbhz_overview_ydtb = JSONArray.fromObject(service.getYdtbZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0");
-		String zbhz_overview_jdtb = JSONArray.fromObject(service.getJdtbZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0");
+		String zbhz_overview_yd = JSONArray.fromObject(service.getYdZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
+		String zbhz_overview_jd = JSONArray.fromObject(service.getJdZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
+		String zbhz_overview_nd = JSONArray.fromObject(service.getNdZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
+		String zbhz_overview_ydtb = JSONArray.fromObject(service.getYdtbZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
+		String zbhz_overview_jdtb = JSONArray.fromObject(service.getJdtbZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
 		return "{\"yd\":" + zbhz_overview_yd + ", \"jd\" : " + zbhz_overview_jd + ", \"nd\":"+ zbhz_overview_nd +" , \"ydtb\":"+ zbhz_overview_ydtb +", \"jdtb\":" + zbhz_overview_jdtb + "}";
 	}
 	

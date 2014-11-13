@@ -33,7 +33,7 @@ public class YQKBHQSController {
 		int year = now.get(Calendar.YEAR);
 		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
 		Map<String, Object> map = new HashMap<String, Object>();
-		String yqkbhqs = JSONArray.fromObject(service.getYqkbhqsData(d)).toString().replace("null", "0");
+		String yqkbhqs = JSONArray.fromObject(service.getYqkbhqsData(d)).toString().replace("null", "0.00");
 		map.put("yqkqsbh", yqkbhqs);
 		return new ModelAndView(view, map);
 	}

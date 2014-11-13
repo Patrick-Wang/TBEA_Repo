@@ -36,9 +36,9 @@ public class YSZKJGQKController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		String table = JSONArray.fromObject(service.getYszkjg(d)).toString().replace("null", "0");
-		String bar = JSONArray.fromObject(service.getWdqtbbh(d)).toString().replace("null", "0");
-		String line = JSONArray.fromObject(service.getJetbbh(d)).toString().replace("null", "0");
+		String table = JSONArray.fromObject(service.getYszkjg(d)).toString().replace("null", "0.00");
+		String bar = JSONArray.fromObject(service.getWdqtbbh(d)).toString().replace("null", "0.00");
+		String line = JSONArray.fromObject(service.getJetbbh(d)).toString().replace("null", "0.00");
 
 		map.put("table", table);
 		map.put("bar", bar);

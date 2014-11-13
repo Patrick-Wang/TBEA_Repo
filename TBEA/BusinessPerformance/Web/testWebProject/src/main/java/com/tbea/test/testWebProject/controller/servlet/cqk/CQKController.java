@@ -46,8 +46,8 @@ public class CQKController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		String cqk = JSONArray.fromObject(cqkService.getCqkData(d)).toString().replace("null", "0");
-		String cqkCompare = JSONArray.fromObject(cqkService.getCompareData(d)).toString().replace("null", "0");
+		String cqk = JSONArray.fromObject(cqkService.getCqkData(d)).toString().replace("null", "0.00");
+		String cqkCompare = JSONArray.fromObject(cqkService.getCompareData(d)).toString().replace("null", "0.00");
 		map.put("cqk", cqk);
 		map.put("cqkCompare", cqkCompare);
 		return new ModelAndView("cqk", map);

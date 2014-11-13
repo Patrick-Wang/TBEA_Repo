@@ -39,8 +39,8 @@ public class BLHTDQQKHZController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		String blhtdqqk = JSONArray.fromObject(service.getBlhtdqqk(d)).toString().replace("null", "0");
-		String blyeqs = JSONArray.fromObject(service.getBlyeqs(d)).toString().replace("null", "0");
+		String blhtdqqk = JSONArray.fromObject(service.getBlhtdqqk(d)).toString().replace("null", "0.00");
+		String blyeqs = JSONArray.fromObject(service.getBlyeqs(d)).toString().replace("null", "0.00");
 		map.put("blhtdqqk", blhtdqqk);
 		map.put("blyeqs", blyeqs);
 		return new ModelAndView(view, map);

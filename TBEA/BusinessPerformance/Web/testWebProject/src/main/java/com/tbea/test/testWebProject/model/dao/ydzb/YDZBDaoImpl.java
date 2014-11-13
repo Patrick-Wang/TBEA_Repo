@@ -216,7 +216,7 @@ public class YDZBDaoImpl implements YDZBDao{
 			try {
 				while (res.next()) {
 					XJL xjl = new XJL();
-					if (null != res.getString("jgmc")){
+					if (!res.getString("jgmc").equals("中疆物流")){
 						xjl.setDrlr(res.getString("drlr"));
 						xjl.setDrlc(res.getString("drlc"));
 						xjl.setDrjll(res.getString("drjll"));
