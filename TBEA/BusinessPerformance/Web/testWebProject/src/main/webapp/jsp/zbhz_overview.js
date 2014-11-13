@@ -152,7 +152,7 @@ var zbhz_overview;
 
         View.prototype.updateYdUI = function (data) {
             var month = this.getMonth();
-            var legend = [(this.mMonth) + "月计划", (this.mMonth) + "月完成", (this.mMonth) + "月计划完成率"];
+            var legend = ["月度计划", "月度完成", "计划完成率"];
             var option = {
                 title: {
                     text: '月度指标完成情况'
@@ -350,7 +350,7 @@ var zbhz_overview;
 
         View.prototype.updateYdtbUI = function (data) {
             var month = this.getMonth();
-            var legend = [(this.mYear - 1) + "年*月完成", (this.mYear) + "年*月完成", "同比增长率"];
+            var legend = [(this.mYear - 1) + "年同期月度完成", (this.mYear) + "年同期月度完成", "同比增长率"];
             var option = {
                 title: {
                     text: '月度同期对比'
@@ -413,7 +413,7 @@ var zbhz_overview;
         View.prototype.updateJdtbUI = function (data) {
             var jdCount = data[0].length;
             var jd = [];
-            var legend = [this.mYear - 1 + "年季度累计", this.mYear + "年季度累计", "同比增长率"];
+            var legend = [this.mYear - 1 + "年同期季度累计", this.mYear + "年同期季度累计", "同比增长率"];
             for (var i = 1; i <= jdCount; ++i) {
                 jd.push("第" + i + "季度");
             }
