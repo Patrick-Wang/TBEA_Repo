@@ -54,7 +54,7 @@ function doSubmit(evt){
 		  <label for="j_password">Password:</label>
 		  <input type="password" name="j_password" id="j_password" onkeydown="doSubmit(event)"/>
 		  <input type="hidden" name="transmissionStr" id="transmissionStr"/>
-          <div class="errors" hidden="true" >用户名或密码错误，请重新输入。 </div>
+          <div class="errors" style="display: none" >用户名或密码错误，请重新输入。 </div>
 		  <div style="position: relative;height: 52px;margin-top:10px;" onclick="formSubmit();">
 		  <span  class="small-btn" >Login</span>
 	      </div>
