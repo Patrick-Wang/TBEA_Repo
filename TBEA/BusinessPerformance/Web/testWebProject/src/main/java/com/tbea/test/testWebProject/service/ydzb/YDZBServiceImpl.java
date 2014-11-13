@@ -179,7 +179,7 @@ public class YDZBServiceImpl implements YDZBService {
 	
 	private String fromatNumber(String n){
 		if (n != null){
-			if (n.equals("--")){
+			if ("--".equals(n)){
 				n = "0";
 			} else if (n.contains("%")){
 				n = (Double.parseDouble(n.replace("%", ""))) + "";
@@ -323,7 +323,7 @@ public class YDZBServiceImpl implements YDZBService {
 			for (YDZBBean ydzb : jdYdzbs){
 				if (zb.equals(ydzb.getZblx())){
 					ret[0][jd] = fromatNumber(ydzb.getJdlj());
-					if (ret[1][jd].equals("0")){
+					if ("0".equals(ret[1][jd])){
 						ret[2][jd] = "0";
 					}
 					else{
