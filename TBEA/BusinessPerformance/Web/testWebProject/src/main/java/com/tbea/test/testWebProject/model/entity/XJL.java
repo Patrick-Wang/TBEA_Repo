@@ -1,6 +1,7 @@
 package com.tbea.test.testWebProject.model.entity;
 
 public class XJL {
+	private String name;
 	private String drlr;
 	private String drlc;
 	private String drjll;
@@ -16,6 +17,18 @@ public class XJL {
 	 */
 	public String getDrlr() {
 		return drlr;
+	}
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 	/**
 	 * @return the drlc

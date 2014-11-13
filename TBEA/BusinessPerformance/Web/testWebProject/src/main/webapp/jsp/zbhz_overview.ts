@@ -6,7 +6,7 @@ module zbhz_overview {
 
 	 enum CompanyType {
 		SB, HB, XB, TB, LL, XL, DL, 
-		GY, XNY,
+		XNY, GY,
 		TCNY, NDGS, ZJWL,
 		JCK,   GCGS,  
 		ZH, 

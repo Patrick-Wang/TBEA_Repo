@@ -216,17 +216,19 @@ public class YDZBDaoImpl implements YDZBDao{
 			try {
 				while (res.next()) {
 					XJL xjl = new XJL();
-					xjl.setDrlr(res.getString("drlr"));
-					xjl.setDrlc(res.getString("drlc"));
-					xjl.setDrjll(res.getString("drjll"));
-					xjl.setDylr(res.getString("dylr"));
-					xjl.setDylc(res.getString("dylc"));
-					xjl.setDyjll(res.getString("dyjll"));
-					xjl.setDnlr(res.getString("dnlr"));
-					xjl.setDnlc(res.getString("dnlc"));
-					xjl.setDnjll(res.getString("dnjll"));
-					xjl.setBytzs(res.getString("bytzs"));
-					xjls.add(xjl);
+					if (null != res.getString("jgmc")){
+						xjl.setDrlr(res.getString("drlr"));
+						xjl.setDrlc(res.getString("drlc"));
+						xjl.setDrjll(res.getString("drjll"));
+						xjl.setDylr(res.getString("dylr"));
+						xjl.setDylc(res.getString("dylc"));
+						xjl.setDyjll(res.getString("dyjll"));
+						xjl.setDnlr(res.getString("dnlr"));
+						xjl.setDnlc(res.getString("dnlc"));
+						xjl.setDnjll(res.getString("dnjll"));
+						xjl.setBytzs(res.getString("bytzs"));
+						xjls.add(xjl);
+					}
 					//System.out.println(JSONObject.fromObject(xjl).toString());
 				}
 			} catch (Exception e) {

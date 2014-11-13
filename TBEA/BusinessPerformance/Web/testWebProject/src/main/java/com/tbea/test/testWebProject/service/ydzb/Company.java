@@ -7,7 +7,7 @@ public class Company {
 
 	public enum Type {
 		SB, HB, XB, TB, LL, XL, DL, 
-		GY, XNY,
+		XNY, GY,
 		TCNY, NDGS, ZJWL,
 		JCK,   GCGS,  
 		ZH, 
@@ -24,8 +24,8 @@ public class Company {
 			new Company("9", "鲁缆公司"),
 			new Company("10", "新缆厂"),
 			new Company("11", "德缆公司"),
-			new Company("29", "新能源"),
 			new Company("30", "新特能源公司"),
+			new Company("29", "新能源"),
 			new Company("66", "天池能源"),
 			new Company("25", "能动公司"),
 			new Company("74", "中疆物流"),
@@ -34,7 +34,7 @@ public class Company {
 			new Company("27", "众和公司"),		
 			new CompanyGroup("999", "输变电产业", new Type[] { Type.SB, Type.HB,
 					Type.XB, Type.TB, Type.LL, Type.XL, Type.DL }),
-			new CompanyGroup("888", "新能源产业", new Type[] { Type.GY, Type.XNY }),
+			new CompanyGroup("888", "新能源产业", new Type[] { Type.XNY, Type.GY}),
 			new CompanyGroup("777", "能源产业", new Type[] { Type.TCNY, Type.NDGS,
 					Type.ZJWL }),
 			new CompanyGroup("666", "工程类", new Type[] { Type.JCK, Type.GCGS }),
