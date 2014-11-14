@@ -35,6 +35,8 @@ public class BLHT extends AbstractReadWriteEntity implements Serializable {
 
 	private Integer dqblzyhkfs;
 
+//	private Integer qybh;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -118,6 +120,14 @@ public class BLHT extends AbstractReadWriteEntity implements Serializable {
 		this.dqblzyhkfs = dqblzyhkfs;
 	}
 
+//	public Integer getQybh() {
+//		return qybh;
+//	}
+//
+//	public void setQybh(Integer qybh) {
+//		this.qybh = qybh;
+//	}
+
 	@Override
 	public String toString() {
 		return "BLHT [id=" + getId() + ", ny=" + ny + ", dqfkhfxsblye="
@@ -125,7 +135,7 @@ public class BLHT extends AbstractReadWriteEntity implements Serializable {
 				+ ", dqkhfxsblye=" + dqkhfxsblye + ", dqkhfxsblfs="
 				+ dqkhfxsblfs + ", dqblje=" + dqblje + ", dqblfs=" + dqblfs
 				+ ", dqblzyhkje=" + dqblzyhkje + ", dqblzyhkfs=" + dqblzyhkfs
-				+ "]";
+				/*+ ", qybh=" + qybh*/ + "]";
 	}
 
 }

@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,67 @@ public class YSZKJGServiceImpl implements YSZKJGService {
 
 	private YSZKTZLocalDao yszktzLocalDao;
 
+	private static String[] QYBHArray = { "5", "6", "7", "8", "9", "10", "11" };
+
+	private void importYSZKJGByHYAndQY(String baseMonth, String hyName,
+			List<String> sshyList, boolean isIncluded, boolean isTotal)
+			throws Exception {
+		Map<String, Double> ysjezjMap = yszktzLocalDao.getYSZKJGByQY(baseMonth,
+				null, null, null, false, true, false, true);
+		Map<String, Double> ysjeMap = yszktzLocalDao.getYSZKJGByQY(baseMonth,
+				null, null, sshyList, isIncluded, isTotal, false, true);
+		// Double ysjezj = yszktzLocalDao.getYSZKJE(baseMonth, null, false,
+		// true);
+		// Double ysje = yszktzLocalDao.getYSZKJE(baseMonth, sshyList,
+		// isIncluded,
+		// isTotal);
+		Map<String, Double> yq1yynMap = yszktzLocalDao.getYSZKJGByQY(baseMonth,
+				0, 1, sshyList, isIncluded, isTotal, false, false);
+		Map<String, Double> yq1_3yMap = yszktzLocalDao.getYSZKJGByQY(baseMonth,
+				1, 3, sshyList, isIncluded, isTotal, false, false);
+		Map<String, Double> yq3_6yMap = yszktzLocalDao.getYSZKJGByQY(baseMonth,
+				3, 6, sshyList, isIncluded, isTotal, false, false);
+		Map<String, Double> yq6_12yMap = yszktzLocalDao.getYSZKJGByQY(
+				baseMonth, 6, 12, sshyList, isIncluded, isTotal, false, false);
+		Map<String, Double> yq1nysMap = yszktzLocalDao.getYSZKJGByQY(baseMonth,
+				12, null, sshyList, isIncluded, isTotal, false, false);
+		Map<String, Double> wdqkMap = yszktzLocalDao.getYSZKJGByQY(baseMonth,
+				null, 0, sshyList, isIncluded, isTotal, true, false);
+		Map<String, Double> wdqzbjMap = yszktzLocalDao.getYSZKJGByQY(baseMonth,
+				null, 0, sshyList, isIncluded, isTotal, true, true);
+		YSZKJG yszkjg = null;
+		NumberFormat nf = new DecimalFormat("0.00%");
+		Double ysje = null;
+		Double ysjezj = null;
+		for (String qybh : QYBHArray) {
+			ysje = ysjeMap.get(qybh);
+			ysjezj = ysjezjMap.get(qybh);
+			yszkjg = new YSZKJG();
+			yszkjg.setNy(baseMonth);
+			yszkjg.setHy(hyName);
+			yszkjg.setYsje(ysje);
+			if (null != ysje && null != ysjezj) {
+				yszkjg.setZqbbl(nf.format(ysje / ysjezj));
+			} else {
+				yszkjg.setZqbbl(null);
+			}
+			yszkjg.setYq1yyn(yq1yynMap.get(qybh));
+			yszkjg.setYq1_3y(yq1_3yMap.get(qybh));
+			yszkjg.setYq3_6y(yq3_6yMap.get(qybh));
+			yszkjg.setYq6_12y(yq6_12yMap.get(qybh));
+			yszkjg.setYq1nys(yq1nysMap.get(qybh));
+			yszkjg.setWdqk(wdqkMap.get(qybh));
+			yszkjg.setWdqzbj(wdqzbjMap.get(qybh));
+			yszkjg.setYszkhj(ysje);
+			// yszkjg.setYszkhj(yszktzLocalDao.getYSZKJG(baseMonth, null, null,
+			// sshyList,
+			// isIncluded, isTotal, false, true));
+			yszkjg.setQybh(Integer.valueOf(qybh));
+			yszkjgDao.merge(yszkjg);
+		}
+		return;
+	}
+
 	private void importYSZKJGByHY(String baseMonth, String hyName,
 			List<String> sshyList, boolean isIncluded, boolean isTotal)
 			throws Exception {
@@ -25,9 +87,11 @@ public class YSZKJGServiceImpl implements YSZKJGService {
 				false, true, false, true);
 		Double ysje = yszktzLocalDao.getYSZKJG(baseMonth, null, null, sshyList,
 				isIncluded, isTotal, false, true);
-//		Double ysjezj = yszktzLocalDao.getYSZKJE(baseMonth, null, false, true);
-//		Double ysje = yszktzLocalDao.getYSZKJE(baseMonth, sshyList, isIncluded,
-//				isTotal);
+		// Double ysjezj = yszktzLocalDao.getYSZKJE(baseMonth, null, false,
+		// true);
+		// Double ysje = yszktzLocalDao.getYSZKJE(baseMonth, sshyList,
+		// isIncluded,
+		// isTotal);
 		YSZKJG yszkjg = new YSZKJG();
 		yszkjg.setNy(baseMonth);
 		yszkjg.setHy(hyName);
@@ -49,9 +113,12 @@ public class YSZKJGServiceImpl implements YSZKJGService {
 		yszkjg.setWdqzbj(yszktzLocalDao.getYSZKJG(baseMonth, null, 0, sshyList,
 				isIncluded, isTotal, true, true));
 		yszkjg.setYszkhj(ysje);
-//		yszkjg.setYszkhj(yszktzLocalDao.getYSZKJG(baseMonth, null, null, sshyList,
-//				isIncluded, isTotal, false, true));
+		// yszkjg.setYszkhj(yszktzLocalDao.getYSZKJG(baseMonth, null, null,
+		// sshyList,
+		// isIncluded, isTotal, false, true));
+		yszkjg.setQybh(9999);
 		yszkjgDao.merge(yszkjg);
+		importYSZKJGByHYAndQY(baseMonth, hyName, sshyList, isIncluded, isTotal);
 		return;
 	}
 
