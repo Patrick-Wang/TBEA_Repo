@@ -188,10 +188,12 @@ declare var $: any;
 module JQTable {
 
 
-    export enum TitleMergeAlign{
+    export enum TextAlign{
         Left,
+        Right,
         Center
     }
+
 
 
     export class Node {
@@ -201,13 +203,19 @@ module JQTable {
         private mParent: Node = null;
         private mReadOnly: boolean;
         private mWidth: number;
+        private mAlign: TextAlign;
 
-        constructor(name: string, id: string, isReadOnly: boolean = true, width: number = 0) {
+        constructor(name: string, id: string, isReadOnly: boolean = true, align : TextAlign = TextAlign.Right, width: number = 0) {
             this.mWidth = width;
             this.mName = name;
             this.mId = id;
             this.mReadOnly = isReadOnly;
+            this.mAlign = align;
         }
+
+		public align() : TextAlign{
+			return this.mAlign;
+		}
 
         public width(): number {
             if (this.mWidth == undefined) {
@@ -418,6 +426,7 @@ module JQTable {
                         index: colId,
                         sortable: false,
                         editable: !nodes[j].isReadOnly(),
+                        align: (nodes[j].align() == TextAlign.Left) ? 'left': 'right',
                         cellattr: function(rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
@@ -600,16 +609,16 @@ module JQTable {
             })
         }
 
-        public mergeColum(col: number, row?: number, align ?: TitleMergeAlign) {
+        public mergeColum(col: number, row?: number, align ?: TextAlign) {
             if (row != undefined) {
                 this.completeList.push(() => {
                     if (align == undefined) {
-                        align = TitleMergeAlign.Center;
+                        align = TextAlign.Center;
                     }
                     ++row;
                     var leftCell = $("#" + this.mGridName + " #" + row + " #" + this.id(col) + row);
                     var rightCell = leftCell.next();
-                    if (align == TitleMergeAlign.Center) {
+                    if (align == TextAlign.Center) {
                         leftCell.css("text-align", "right");
                     } else {
                         leftCell.css("text-align", "left");

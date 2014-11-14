@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.test.testWebProject.common.Util.Escape;
 import com.tbea.test.testWebProject.service.blhtdqqkhz.BLHTDQQKHZService;
 import com.tbea.test.testWebProject.service.ydzb.Company;
 import com.tbea.test.testWebProject.service.ydzb.YDZBService;
@@ -29,30 +30,38 @@ public class YDZBController {
 	@Autowired
 	private YDZBService service;
 
+	@RequestMapping(value = "hzb_zbhz_update.do", method = RequestMethod.GET)
+	public @ResponseBody String getHzb_zbhz_update(HttpServletRequest request,
+			HttpServletResponse response) {
+		Calendar now = Calendar.getInstance();  
+		int month = Integer.parseInt(request.getParameter("month"));
+		int year = Integer.parseInt(request.getParameter("year"));
+		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
+		String hzb_zbhz = JSONArray.fromObject(service.getHzb_zbhzData(d)).toString().replace("null", "0.00");
+		return hzb_zbhz;
+	}
+	
 	@RequestMapping(value = "hzb_zbhz.do", method = RequestMethod.GET)
 	public ModelAndView getHzb_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 		Calendar now = Calendar.getInstance();  
 		int month = now.get(Calendar.MONTH) + 1;
 		int year = now.get(Calendar.YEAR);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		String hzb_zbhz = JSONArray.fromObject(service.getHzb_zbhzData(d)).toString().replace("null", "0.00");
-		map.put("hzb_zbhz", hzb_zbhz);
 		return new ModelAndView("hzb_zbhz", map);
 	}
 	
-	
-//	@RequestMapping(value = "gcy_zbhz/{month}/{year}", method = RequestMethod.GET)
-//	public @ResponseBody String getGcy_zbhz(  @PathVariable("month") String m, @PathVariable("year") String y) {
-//		int month = Integer.parseInt(m);
-//		int year = Integer.parseInt(y);
-//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + "1");
-//		String gcy_zbhz = JSONArray.fromObject(service.getGcy_zbhzData(d)).toString().replace("null", "0");
-//		return gcy_zbhz;
-//	}
+	@RequestMapping(value = "gcy_zbhz_update.do", method = RequestMethod.GET)
+	public @ResponseBody String getGcy_zbhz_update( HttpServletRequest request,
+			HttpServletResponse response) {
+		int month = Integer.parseInt(request.getParameter("month"));
+		int year = Integer.parseInt(request.getParameter("year"));
+		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + "1");
+		String gcy_zbhz = JSONArray.fromObject(service.getGcy_zbhzData(d)).toString().replace("null", "0.00");
+		return gcy_zbhz;
+	}
 	
 	@RequestMapping(value = "gcy_zbhz.do", method = RequestMethod.GET)
 	public ModelAndView getGcy_zbhz(HttpServletRequest request,
@@ -63,10 +72,18 @@ public class YDZBController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + "1");
-		String gcy_zbhz = JSONArray.fromObject(service.getGcy_zbhzData(d)).toString().replace("null", "0.00");
-		map.put("gcy_zbhz", gcy_zbhz);
 		return new ModelAndView("gcy_zbhz", map);
+	}
+	
+	
+	@RequestMapping(value = "gdw_zbhz_update.do", method = RequestMethod.GET)
+	public  @ResponseBody String getGdw_zbhz_update(HttpServletRequest request,
+			HttpServletResponse response) {
+		int month = Integer.parseInt(request.getParameter("month"));
+		int year = Integer.parseInt(request.getParameter("year"));
+		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
+		String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
+		return gdw_zbhz;
 	}
 	
 	@RequestMapping(value = "gdw_zbhz.do", method = RequestMethod.GET)
@@ -79,8 +96,6 @@ public class YDZBController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
-		map.put("gdw_zbhz", gdw_zbhz);
 		return new ModelAndView("gdw_zbhz", map);
 	}
 
@@ -120,11 +135,27 @@ public class YDZBController {
 	
 	
 	private String getZbhz_overviewData(Date d, int companyId, String zbid){
+		Escape escape = new Escape();
+		escape.start();
 		String zbhz_overview_yd = JSONArray.fromObject(service.getYdZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
+		escape.end("getZbhz_overviewData zbhz_overview_yd  escape ");
+
+		escape.start();
 		String zbhz_overview_jd = JSONArray.fromObject(service.getJdZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
+		escape.end("getZbhz_overviewData zbhz_overview_jd  escape ");
+				
+		escape.start();
 		String zbhz_overview_nd = JSONArray.fromObject(service.getNdZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
+		escape.end("getZbhz_overviewData zbhz_overview_nd  escape ");
+		
+		escape.start();
 		String zbhz_overview_ydtb = JSONArray.fromObject(service.getYdtbZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
+		escape.end("getZbhz_overviewData zbhz_overview_ydtb  escape ");
+		
+		escape.start();
 		String zbhz_overview_jdtb = JSONArray.fromObject(service.getJdtbZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
+		escape.end("getZbhz_overviewData zbhz_overview_jdtb  escape ");
+		
 		return "{\"yd\":" + zbhz_overview_yd + ", \"jd\" : " + zbhz_overview_jd + ", \"nd\":"+ zbhz_overview_nd +" , \"ydtb\":"+ zbhz_overview_ydtb +", \"jdtb\":" + zbhz_overview_jdtb + "}";
 	}
 	

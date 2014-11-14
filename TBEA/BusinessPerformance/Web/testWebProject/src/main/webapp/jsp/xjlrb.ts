@@ -8,7 +8,7 @@ module xjlrb {
 
         public static createTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位名称", "dwnc"),
+                new JQTable.Node("单位名称", "dwnc", true, JQTable.TextAlign.Left),
                 new JQTable.Node("本日流入", "brlr"),
                 new JQTable.Node("本月累计流入", "byljlr"),
                 new JQTable.Node("本年累计流入", "bnljlr"),

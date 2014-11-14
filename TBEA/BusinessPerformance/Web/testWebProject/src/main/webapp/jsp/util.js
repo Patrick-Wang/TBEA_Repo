@@ -1,11 +1,11 @@
 var Util;
 (function (Util) {
-    var RestDateDataSet = (function () {
-        function RestDateDataSet(baseResUrl) {
+    var DateDataSet = (function () {
+        function DateDataSet(baseResUrl) {
             this.mDataMap = {};
             this.mBaseResUrl = baseResUrl;
         }
-        RestDateDataSet.prototype.getData = function (m, y, callBack) {
+        DateDataSet.prototype.getData = function (m, y, callBack) {
             var _this = this;
             if (undefined == this.mDataMap[y + ""]) {
                 this.mDataMap[y + ""] = {};
@@ -13,7 +13,7 @@ var Util;
             if (undefined == this.mDataMap[y + ""][m + ""]) {
                 $.ajax({
                     type: "GET",
-                    url: this.mBaseResUrl + "/" + m + "/" + y + "",
+                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "",
                     success: function (data) {
                         var jsnData = JSON.parse(data);
                         _this.mDataMap[y + ""][m + ""] = jsnData;
@@ -27,15 +27,15 @@ var Util;
                 callBack(this.mDataMap[y + ""][m + ""]);
             }
         };
-        return RestDateDataSet;
+        return DateDataSet;
     })();
-    Util.RestDateDataSet = RestDateDataSet;
+    Util.DateDataSet = DateDataSet;
 
     function formatCurrency(val) {
         if (val == "--" || val == "") {
             return val;
         }
-
+        val = parseFloat(val).toFixed(2) + "";
         var dot = val.lastIndexOf('.');
         var intPart = "";
         var parts = [];

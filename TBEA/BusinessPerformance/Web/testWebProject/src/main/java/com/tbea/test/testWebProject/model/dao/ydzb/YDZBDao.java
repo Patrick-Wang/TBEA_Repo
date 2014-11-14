@@ -17,6 +17,4 @@ public interface YDZBDao{
 	public List<YDZBBean> getYDZB(Calendar cal, Company company);
 	public List<YDZBBean> getYDZB_V2(Calendar cal, Company company);
 	public List<XJL> getXJL(Calendar cal);
-	public void uninit();
-	public void init();
 }

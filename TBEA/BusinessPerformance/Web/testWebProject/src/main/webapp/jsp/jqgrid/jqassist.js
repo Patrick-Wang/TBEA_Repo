@@ -152,15 +152,17 @@
 
 var JQTable;
 (function (JQTable) {
-    (function (TitleMergeAlign) {
-        TitleMergeAlign[TitleMergeAlign["Left"] = 0] = "Left";
-        TitleMergeAlign[TitleMergeAlign["Center"] = 1] = "Center";
-    })(JQTable.TitleMergeAlign || (JQTable.TitleMergeAlign = {}));
-    var TitleMergeAlign = JQTable.TitleMergeAlign;
+    (function (TextAlign) {
+        TextAlign[TextAlign["Left"] = 0] = "Left";
+        TextAlign[TextAlign["Right"] = 1] = "Right";
+        TextAlign[TextAlign["Center"] = 2] = "Center";
+    })(JQTable.TextAlign || (JQTable.TextAlign = {}));
+    var TextAlign = JQTable.TextAlign;
 
     var Node = (function () {
-        function Node(name, id, isReadOnly, width) {
+        function Node(name, id, isReadOnly, align, width) {
             if (typeof isReadOnly === "undefined") { isReadOnly = true; }
+            if (typeof align === "undefined") { align = 1 /* Right */; }
             if (typeof width === "undefined") { width = 0; }
             this.mChilds = [];
             this.mParent = null;
@@ -168,7 +170,12 @@ var JQTable;
             this.mName = name;
             this.mId = id;
             this.mReadOnly = isReadOnly;
+            this.mAlign = align;
         }
+        Node.prototype.align = function () {
+            return this.mAlign;
+        };
+
         Node.prototype.width = function () {
             if (this.mWidth == undefined) {
                 return -1;
@@ -367,6 +374,7 @@ var JQTable;
                         index: colId,
                         sortable: false,
                         editable: !nodes[j].isReadOnly(),
+                        align: (nodes[j].align() == 0 /* Left */) ? 'left' : 'right',
                         cellattr: function (rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
@@ -551,12 +559,12 @@ var JQTable;
             if (row != undefined) {
                 this.completeList.push(function () {
                     if (align == undefined) {
-                        align = 1 /* Center */;
+                        align = 2 /* Center */;
                     }
                     ++row;
                     var leftCell = $("#" + _this.mGridName + " #" + row + " #" + _this.id(col) + row);
                     var rightCell = leftCell.next();
-                    if (align == 1 /* Center */) {
+                    if (align == 2 /* Center */) {
                         leftCell.css("text-align", "right");
                     } else {
                         leftCell.css("text-align", "left");

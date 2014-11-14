@@ -1,6 +1,7 @@
 package com.tbea.test.testWebProject.common;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -169,5 +170,23 @@ public class Util {
 			return "0";
 		}
 		return String.format("%.2f", v1);
+	}
+	
+	public static class Escape{
+		
+		private Calendar start;
+		private Calendar end;
+		public Escape(){}
+		
+		public void start(){
+			start = Calendar.getInstance();
+			
+		}
+		
+		public long end(String log){
+			end = Calendar.getInstance();
+			System.out.println(log + (end.getTimeInMillis() - start.getTimeInMillis()));
+			return end.getTimeInMillis() - start.getTimeInMillis();
+		}
 	}
 }

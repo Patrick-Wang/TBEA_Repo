@@ -8,7 +8,7 @@ var xjlrb;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位名称", "dwnc"),
+                new JQTable.Node("单位名称", "dwnc", true, 0 /* Left */),
                 new JQTable.Node("本日流入", "brlr"),
                 new JQTable.Node("本月累计流入", "byljlr"),
                 new JQTable.Node("本年累计流入", "bnljlr"),

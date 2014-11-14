@@ -8,13 +8,13 @@ module gcy_zbhz {
 
         public static createTable(gridName: string, month: number): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("指标", "zb"),
-                new JQTable.Node("产业", "cy"),
+                new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                new JQTable.Node("产业", "cy", true, JQTable.TextAlign.Left),
                 new JQTable.Node("全年", "qn"),
                 new JQTable.Node("当期", "dq")
-                    .append(new JQTable.Node(month + "月计划", "yjh"))
-                    .append(new JQTable.Node(month + "月完成", "ywc"))
-                    .append(new JQTable.Node(month + "月计划完成率", "yjhwcl", true, 220))
+                    .append(new JQTable.Node("月度计划", "yjh"))
+                    .append(new JQTable.Node("月度完成", "ywc"))
+                    .append(new JQTable.Node("月计划完成率", "yjhwcl", true, 220))
                     .append(new JQTable.Node("季度计划", "jdjh"))
                     .append(new JQTable.Node("季度累计", "jdlj"))
                     .append(new JQTable.Node("季度完成率", "jdwcl"))
@@ -38,22 +38,41 @@ module gcy_zbhz {
             }
             return View.ins;
         }
-        private mEchartIdPie: string;
+
         private mMonth: number;
-        private mEchartIdSquire: string;
-        private mEchartIdLine: string;
         private mYear: number;
         private mData: Array<string[]>;
-        public init(echartIdPie: string, tableId: string, month: number, year: number, data: Array<string[]>): void {
+        private mDataSet : Util.DateDataSet;
+        private mTableId : string;
+        public init(tableId: string, month: number, year: number): void {
             this.mYear = year;
             this.mMonth = month;
-            this.mEchartIdPie = echartIdPie;
-            this.mData = data;
-            this.updateTable(tableId);
+            this.mTableId = tableId;
+            this.mDataSet = new Util.DateDataSet("gcy_zbhz_update.do");
+            this.updateUI();
         }
+        
+        public onYearSelected(year : number){
+        	this.mYear = year;
+        }
+        
+        public onMonthSelected(month : number){
+        	this.mMonth = month;
+        }
+        
+		public updateUI(){
+			this.mDataSet.getData(this.mMonth, this.mYear, (dataArray : Array<string[]>) =>{
+				if (null != dataArray){
+					this.mData = dataArray;
+					$('h1').text(this.mYear + "年" + this.mMonth + "月 各产业指标汇总");
+					$('title').text(this.mYear + "年" + this.mMonth + "月 各产业指标汇总");
+					this.updateTable();
+				}
+			});
+		}
 
-
-        private updateTable(name: string): void {
+        private updateTable(): void {
+       	    var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mMonth);
             tableAssist.mergeRow(0);
            
@@ -119,6 +138,9 @@ module gcy_zbhz {
                 }
             }
 
+			var parent = $("#" + this.mTableId);
+			parent.empty();
+			parent.append("<table id='"+ name +"'></table>");
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",

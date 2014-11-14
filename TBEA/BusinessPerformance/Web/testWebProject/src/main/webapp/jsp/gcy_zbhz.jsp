@@ -1,5 +1,9 @@
 ﻿<%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -30,13 +34,13 @@
     <script type="text/javascript">
         (function () {
             $(document).ready(function () {
-                gcy_zbhz.View.newInstance().init("chart", "table", ${month}, ${year}, eval(${gcy_zbhz}));
+                gcy_zbhz.View.newInstance().init("table", ${month}, ${year});
             });
         })();
     </script>
     <meta charset="UTF-8">
 
-    <title>${year}年${month}月指标汇总</title>
+    <title>${year}年${month}月 各产业指标汇总</title>
 
     <style type="text/css">
         body {
@@ -140,44 +144,78 @@
 </head>
 <body style="width:1400px">
     <div class=" header">
-        <h1>${year}年${month}月指标汇总</h1>
+        <h1>${year}年${month}月 各产业指标汇总</h1>
     </div>
-
-    <div align="center">
-        <table id="table"></table>
+	<script type="text/javascript">
+		function onYearChange(year){
+			if (year == ${year}){
+				$("#month_" + ${year}).css("display", "");
+				$("#month_" + ${year - 1}).css("display", "none");
+			} else{
+				$("#month_" + ${year}).css("display", "none");
+				$("#month_" + ${year - 1}).css("display", "");
+			}
+			;
+			gcy_zbhz.View.newInstance().onYearSelected(year);
+			gcy_zbhz.View.newInstance().onMonthSelected($("#month_" + year + " option:selected").val());
+		}
+	</script>
+	<table>
+		<tr>
+			<td>
+				<select id= "year"
+					onchange="onYearChange(this.value)" style="width: 125px;">
+					<option value="${year}" selected="selected">${year}年</option>
+					<option value="${year - 1}">${year - 1}年</option>
+				</select> 
+			</td>
+			<td>
+				<select id= "month_${year}"
+					onchange="gcy_zbhz.View.newInstance().onMonthSelected(this.value)" style="width: 125px;">
+					<c:forEach begin="0" end="${month - 1}" var="i">
+							<c:choose>
+	
+							   <c:when test="${i == (month - 1)}">
+									<option value="${month}" selected="selected">${month}月</option>
+							   </c:when>
+							   
+							   <c:otherwise>
+									<option value="${i + 1}">${i + 1}月</option>
+							   </c:otherwise>
+							  
+							</c:choose>
+						
+					</c:forEach>
+					
+				</select> 
+				<select id= "month_${year - 1}"
+					onchange="gcy_zbhz.View.newInstance().onMonthSelected(this.value)" style="width: 125px;display:none">
+					<c:forEach begin="0" end="11" var="i">
+							<c:choose>
+	
+							   <c:when test="${i == (month - 1)}">
+									<option value="${i + 1}" selected="selected">${month}月</option>
+							   </c:when>
+							   
+							   <c:otherwise>
+									<option value="${i + 1}">${i + 1}月</option>
+							   </c:otherwise>
+							  
+							</c:choose>
+						
+					</c:forEach>
+					
+				</select> 
+			</td>
+			<td>
+				<input type="button" value="更新" onclick="gcy_zbhz.View.newInstance().updateUI()"></input>
+			</td>
+		</tr>
+	</table>
+	<div align="center" id="table">
     </div>
-
-    <!--<div align="center" style="margin-top: 15px">
-        <div class="panel-content-border" style="margin-bottom:20px;">
-            <div id="piechart" class="panel-content"></div>
-        </div>
-
-        <div >
-            应收账款情况和款项变化趋势
-            <select onchange="cqk.View.newInstance().onSelected(this.value)">
-                <option value="1" selected="selected">国网、南网</option>
-                <option value="2">省、市电力公司</option>
-                <option value="3">五大发电</option>
-                <option value="4">其他电源</option>
-                <option value="5">石油石化</option>
-                <option value="6">制造行业</option>
-                <option value="7">铁路（轨道交通）</option>
-                <option value="8">出口合同</option>
-                <option value="9">其它</option>
-            </select>
-        </div>
-
-        <div style="margin-left:50px;margin-top:10px">
-            <div class="panel-content-border" style="float:left;width:600px">
-                <div id="squarechart" class="panel-content"></div>
-            </div>
-            <div class="panel-content-border" style="float:left;width:600px;margin-left:20px">
-                <div id="linechart" class="panel-content"></div>
-            </div>
-        </div>
-    </div>-->
-
-
+    
+	<%@include file="loading.jsp" %>
 
 </body>
    <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>

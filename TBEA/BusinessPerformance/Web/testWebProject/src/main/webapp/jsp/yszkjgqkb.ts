@@ -7,8 +7,8 @@ module yszkjgqkb {
     class JQGridAssistantFactory {
         public static createTable(gridName): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("客户所属行业", "khsshy"),
-                new JQTable.Node("客户所属行业", "khsshy_1"),
+                new JQTable.Node("客户所属行业", "khsshy", true, JQTable.TextAlign.Left),
+                new JQTable.Node("客户所属行业", "khsshy_1", true, JQTable.TextAlign.Left),
                 new JQTable.Node("应收账款情况", "zqkh")
                     .append(new JQTable.Node("金额", "je"))
                     .append(new JQTable.Node("占全部比例", "zqbbl")),
@@ -374,10 +374,6 @@ module yszkjgqkb {
                 ["出口", "合同"],
                 ["其", "它"],
                 ["合", "计"]];
-
-            for (var i = 0; i < data.length; ++i) {
-                data[i] = data[i].concat(this.mTableData[i]);
-            }
             
             var row = [];
             for (var i = 0; i < data.length; ++i) {

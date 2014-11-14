@@ -28,8 +28,4 @@ public interface YDZBService {
 
 	String getZbmc(String id);
 
-	public void batEnd();
-
-	public void batBegin();
-
 }

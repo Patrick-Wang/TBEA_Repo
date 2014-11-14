@@ -7,12 +7,12 @@ module yqkqsbh {
     class JQGridAssistantFactory {
         public static createTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("月份", "yf", true, 150),
-                new JQTable.Node("逾期一个月以内", "yqygyyn", true, 160),
-                new JQTable.Node("逾期1-3月", "yqysy", true, 160),
-                new JQTable.Node("逾期3-6月", "yqsly", true, 160),
-                new JQTable.Node("逾期6-12月", "yqlsey", true, 160),
-                new JQTable.Node("逾期一年以上", "yqynys", true, 160)
+                new JQTable.Node("月份", "yf", true, JQTable.TextAlign.Left),
+                new JQTable.Node("逾期一个月以内", "yqygyyn"),
+                new JQTable.Node("逾期1-3月", "yqysy"),
+                new JQTable.Node("逾期3-6月", "yqsly"),
+                new JQTable.Node("逾期6-12月", "yqlsey"),
+                new JQTable.Node("逾期一年以上", "yqynys")
             ], gridName);
         }
     }

@@ -15,34 +15,36 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.tbea.Connection.DBConnectionManager;
+import com.tbea.test.testWebProject.common.Util.Escape;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
 import com.tbea.test.testWebProject.service.ydzb.Company;
 import com.tbea.test.testWebProject.service.ydzb.CompanyGroup;
 
 @Repository
-public class YDZBDaoImpl implements YDZBDao{
-	
+public class YDZBDaoImpl implements YDZBDao {
+
 	EntityManager entityManager;
-	
+
 	@PersistenceContext(unitName = "15DB")
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
-	
+
 	private List<YDZBBean> injectV2Bean(ResultSet res) {
-		Calendar start = Calendar.getInstance();
 		List<YDZBBean> YDZBList = new ArrayList<YDZBBean>();
+		Escape escape = new Escape();
+		escape.start();
 		if (null != res) {
 
 			try {
-//				ResultSetMetaData rsmd = res.getMetaData();
-//				int len = rsmd.getColumnCount();
-//				String columName = "";
-//				for (int i = 0; i < len; ++i){
-//					columName += rsmd.getColumnName(i + 1) + "\t";
-//				}
-//				 System.out.println(columName);
+				 ResultSetMetaData rsmd = res.getMetaData();
+				 int len = rsmd.getColumnCount();
+				 String columName = "";
+				 for (int i = 0; i < len; ++i){
+				 columName += rsmd.getColumnName(i + 1) + "\t";
+				 }
+				 System.out.println(columName);
 				while (res.next()) {
 					YDZBBean ydzbbean = new YDZBBean();
 					ydzbbean.setXh(res.getString(1));
@@ -64,36 +66,36 @@ public class YDZBDaoImpl implements YDZBDao{
 					ydzbbean.setQntqlj(res.getString(25));
 					ydzbbean.setJqntqljzzb(res.getString(26));
 					YDZBList.add(ydzbbean);
+
+					 String rowData = "";
+					 for (int i = 0; i < len; ++i){
+					 rowData += res.getString(i + 1) + "\t";
+					 }
 					
-//					String rowData = "";
-//					for (int i = 0; i < len; ++i){
-//						rowData += res.getString(i + 1) + "\t";
-//					}
-//					
-//					 System.out.println(rowData);
+					 System.out.println(rowData);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		Calendar end = Calendar.getInstance();
-		System.out.println("injectV2Bean()  escape " + (end.getTimeInMillis() - start.getTimeInMillis()));
+		escape.end("injectV2Bean escape ");
 		return YDZBList;
 	}
-	
+
 	private List<YDZBBean> injectBean(ResultSet res) {
-		Calendar start = Calendar.getInstance();
+		Escape escape = new Escape();
+		escape.start();
 		List<YDZBBean> YDZBList = new ArrayList<YDZBBean>();
 		if (null != res) {
 
 			try {
-//				ResultSetMetaData rsmd = res.getMetaData();
-//				int len = rsmd.getColumnCount();
-//				String columName = "";
-//				for (int i = 0; i < len; ++i){
-//					columName += rsmd.getColumnName(i + 1) + "\t";
-//				}
-//				 System.out.println(columName);
+				 ResultSetMetaData rsmd = res.getMetaData();
+				 int len = rsmd.getColumnCount();
+				 String columName = "";
+				 for (int i = 0; i < len; ++i){
+				 columName += rsmd.getColumnName(i + 1) + "\t";
+				 }
+				 System.out.println(columName);
 				while (res.next()) {
 					YDZBBean ydzbbean = new YDZBBean();
 					ydzbbean.setXh(res.getString("qybh"));
@@ -113,116 +115,137 @@ public class YDZBDaoImpl implements YDZBDao{
 					ydzbbean.setQntqlj(res.getString("qntqlj"));
 					ydzbbean.setJqntqljzzb(res.getString("jqntqljzzb"));
 					YDZBList.add(ydzbbean);
-//					String rowData = "";
-//					for (int i = 0; i < len; ++i){
-//						rowData += res.getString(i + 1) + "\t";
-//					}
-//					
-//					 System.out.println(rowData);
+					 String rowData = "";
+					 for (int i = 0; i < len; ++i){
+					 rowData += res.getString(i + 1) + "\t";
+					 }
 					
+					 System.out.println(rowData);
+
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-		Calendar end = Calendar.getInstance();
-		System.out.println("injectBean()  escape " + (end.getTimeInMillis() - start.getTimeInMillis()));
+
+		escape.end("injectBean escape ");
 		return YDZBList;
 	}
-	
-	private Connection mConnection;
-	private Statement stmt;
+
+	private void freeConnection(Connection con) {
+		DBConnectionManager.getInstance("mobileSys").freeConnection(
+				"mobileSys", con);
+	}
 
 	private Connection getConnection() {
-		if (null == mConnection) {
-			Calendar start = Calendar.getInstance();  
-			DBConnectionManager manager = DBConnectionManager
-					.getInstance("mobileSys");
-			Calendar end = Calendar.getInstance();
-			System.out.println("DBConnectionManager.getInstance  escape " + (end.getTimeInMillis() - start.getTimeInMillis()));
-			
-			start = Calendar.getInstance();  
-			mConnection = manager.getConnection("mobileSys");
-			end = Calendar.getInstance();
-			System.out.println("manager.getConnection  escape " + (end.getTimeInMillis() - start.getTimeInMillis()));
-
-		}
-		return mConnection;
+		Escape escape = new Escape();
+		escape.start();
+		Connection con =  DBConnectionManager.getInstance("mobileSys").getConnection(
+				"mobileSys");
+		escape.end("conn.getConnection()  escape ");
+		return con;
 	}
-	
+
 	private List<YDZBBean> getYDZBInfo_V2(int nf, int yf, String qybh,
 			Connection conn) {
+		List<YDZBBean> ret = null; 
 		ResultSet res = null;
 		try {
-			if (stmt == null){
-				Calendar start = Calendar.getInstance();  
-				stmt = conn.createStatement();
-				Calendar end = Calendar.getInstance();
-				System.out.println("conn.createStatement()  escape " + (end.getTimeInMillis() - start.getTimeInMillis()));
+			conn.setAutoCommit(false);
+			Escape escape = new Escape();
+			escape.start();
+			Statement stmt = conn.createStatement();
+			escape.end("v2 conn.createStatement()  escape ");
+		
 
-			}
-			
 			String query = "exec p_jysj2014_zbhzcxV2 " + nf + "," + yf + ",'"
 					+ qybh + "', 0, 0;";
-//			System.out.println(query);
-			Calendar start = Calendar.getInstance();  
+			escape.start();
 			res = stmt.executeQuery(query);
-			Calendar end = Calendar.getInstance();
-			System.out.println("executeQuery()  escape " + (end.getTimeInMillis() - start.getTimeInMillis()));
-
+			escape.end("v2 executeQuery()  escape ");
+			
+			ret = injectV2Bean(res);
+			conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return injectV2Bean(res);
+		try {
+			conn.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
 	}
 
 	private List<YDZBBean> getYDZBInfo(int nf, int yf, String qybh,
 			Connection conn) {
+		List<YDZBBean> ret = null; 
 		Statement stmt = null;
 		ResultSet res = null;
 		try {
-			stmt = conn.createStatement();
-			String query = "exec p_jysj2014_zbfdwhz " + nf + "," + yf
-					+ ",'" + qybh + "', 0, 0;";
-//			System.out.println(query);
-//			String query = "exec p_jysj2014_zbfdwhz " + nf + "," + yf
-//					+ ",'4;5;6;7;8;9;29;22;', 0, 0;";
+			Escape escape = new Escape();
 			
-			//System.out.println(query);
+			conn.setAutoCommit(false);
+			escape.start();
+			stmt = conn.createStatement();
+			escape.end("conn.createStatement()  escape ");
+			
+
+
+			String query = "exec p_jysj2014_zbfdwhz " + nf + "," + yf + ",'"
+					+ qybh + "', 0, 0;";
+			escape.start();
 			res = stmt.executeQuery(query);
+			escape.end("conn.executeQuery()  escape ");
+
+			ret = injectBean(res);
+			conn.commit();
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return injectBean(res);
+		try {
+			conn.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
 	}
 
-	private String getCompanyIdString(Company company){
+	private String getCompanyIdString(Company company) {
 		String comIds = "";
-		if (company instanceof CompanyGroup){
+		if (company instanceof CompanyGroup) {
 			CompanyGroup group = (CompanyGroup) company;
 			Company[] cys = group.getCompanys();
 			for (int i = 0; i < cys.length; ++i) {
 				comIds += cys[i].getId() + ";";
 			}
-			
-		} else{
+
+		} else {
 			comIds = company.getId() + ";";
 		}
 		return comIds;
 	}
-	
+
 	@Override
 	public List<YDZBBean> getYDZB_V2(Calendar cal, Company company) {
-		return getYDZBInfo_V2(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1,
-				getCompanyIdString(company), getConnection());
+		Connection con = getConnection();
+		List<YDZBBean> ret = getYDZBInfo_V2(cal.get(Calendar.YEAR),
+				cal.get(Calendar.MONTH) + 1, getCompanyIdString(company), con);
+		freeConnection(con);
+		return ret;
+
 	}
 
 	@Override
 	public List<YDZBBean> getYDZB(Calendar cal, Company company) {
-		return getYDZBInfo(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1,
-				getCompanyIdString(company), getConnection());
+		Connection con = getConnection();
+		List<YDZBBean> ret = getYDZBInfo(cal.get(Calendar.YEAR),
+				cal.get(Calendar.MONTH) + 1, getCompanyIdString(company),
+				con);
+		freeConnection(con);
+		return ret;
 	}
 
 	@Override
@@ -232,15 +255,16 @@ public class YDZBDaoImpl implements YDZBDao{
 		List<XJL> xjls = new ArrayList<XJL>();
 		try {
 			stmt = getConnection().createStatement();
-			String query = "exec yszk_xjlrb '" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DAY_OF_MONTH) + "';";
-			//System.out.println(query);
+			String query = "exec yszk_xjlrb '" + cal.get(Calendar.YEAR) + "-"
+					+ (cal.get(Calendar.MONTH) + 1) + "-"
+					+ cal.get(Calendar.DAY_OF_MONTH) + "';";
+			// System.out.println(query);
 			res = stmt.executeQuery(query);
-			
-			
+
 			try {
 				while (res.next()) {
 					XJL xjl = new XJL();
-					if (!res.getString("jgmc").equals("中疆物流")){
+					if (!res.getString("jgmc").equals("中疆物流")) {
 						xjl.setDrlr(res.getString("drlr"));
 						xjl.setDrlc(res.getString("drlc"));
 						xjl.setDrjll(res.getString("drjll"));
@@ -253,37 +277,18 @@ public class YDZBDaoImpl implements YDZBDao{
 						xjl.setBytzs(res.getString("bytzs"));
 						xjls.add(xjl);
 					}
-					//System.out.println(JSONObject.fromObject(xjl).toString());
+					// System.out.println(JSONObject.fromObject(xjl).toString());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return xjls;
-	}
-
-	@Override
-	public void uninit() {
-		getConnection();
-		
-	}
-
-	@Override
-	public void init() {
-		if (null != mConnection) {
-
-			DBConnectionManager manager = DBConnectionManager
-					.getInstance("mobileSys");
-			manager.freeConnection("mobileSys", mConnection);
-			mConnection = null;
-			stmt = null;
-		}
-
 	}
 
 }

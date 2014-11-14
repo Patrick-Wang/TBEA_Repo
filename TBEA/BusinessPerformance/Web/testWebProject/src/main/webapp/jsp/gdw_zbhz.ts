@@ -6,17 +6,15 @@ module gdw_zbhz {
 
     class JQGridAssistantFactory {
 
-       
-
         public static createTable(gridName: string, month: number): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("指标", "zb"),
-                new JQTable.Node("企业名称", "qymc"),
+                new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                new JQTable.Node("企业名称", "qymc", true, JQTable.TextAlign.Left),
                 new JQTable.Node("年度计划", "ndjh"),
                 new JQTable.Node("当期", "dq")
-                    .append(new JQTable.Node(month + "月计划", "yjh"))
-                    .append(new JQTable.Node(month + "月完成", "ywc"))
-                    .append(new JQTable.Node(month + "月计划完成率", "yjhwcl", true, 220))
+                    .append(new JQTable.Node("月度计划", "yjh"))
+                    .append(new JQTable.Node("月度完成", "ywc"))
+                    .append(new JQTable.Node("月计划完成率", "yjhwcl", true))
                     .append(new JQTable.Node("季度计划", "jdjh"))
                     .append(new JQTable.Node("季度累计", "jdlj"))
                     .append(new JQTable.Node("季度完成率", "jdwcl"))
@@ -25,7 +23,7 @@ module gdw_zbhz {
                 new JQTable.Node("去年同期", "qntq_1")
                     .append(new JQTable.Node("去年同期", "qntq"))
                     .append(new JQTable.Node("同比增长", "tbzz"))
-                    .append(new JQTable.Node("去年同期累计", "qntqlj", true, 200))
+                    .append(new JQTable.Node("去年同期累计", "qntqlj", true))
                     .append(new JQTable.Node("同比增长", "tbzz_1"))
             ], gridName);
         }
@@ -40,22 +38,41 @@ module gdw_zbhz {
             }
             return View.ins;
         }
-        private mEchartIdPie: string;
+
         private mMonth: number;
-        private mEchartIdSquire: string;
-        private mEchartIdLine: string;
         private mYear: number;
         private mData: Array<string[]>;
-        public init(echartIdPie: string, tableId: string, month: number, year: number, data: Array<string[]>): void {
+        private mDataSet : Util.DateDataSet;
+        private mTableId : string;
+        public init(tableId: string, month: number, year: number): void {
             this.mYear = year;
             this.mMonth = month;
-            this.mEchartIdPie = echartIdPie;
-            this.mData = data;
-            this.updateTable(tableId);
+            this.mDataSet = new Util.DateDataSet("gdw_zbhz_update.do");
+            this.mTableId = tableId;
+            this.updateUI();
         }
+        
+        public onYearSelected(year : number){
+        	this.mYear = year;
+        }
+        
+        public onMonthSelected(month : number){
+        	this.mMonth = month;
+        }
+        
+		public updateUI(){
+			this.mDataSet.getData(this.mMonth, this.mYear, (dataArray : Array<string[]>) =>{
+				if (null != dataArray){
+					this.mData = dataArray;
+					$('h1').text(this.mYear + "年" + this.mMonth + "月 各单位指标汇总");
+					$('title').text(this.mYear + "年" + this.mMonth + "月 各单位指标汇总");
+					this.updateTable();
+				}
+			});
+		}
 
-
-        private updateTable(name: string): void {
+        private updateTable(): void {
+       		var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mMonth);
             tableAssist.mergeRow(0);
            
@@ -182,18 +199,9 @@ module gdw_zbhz {
                 }
             }
 
-//            for (var i = 0; i < data.length; ++i) {
-//               
-//if (data[i][1].lastIndexOf("计") >= 0) {
-//                    tableAssist.setRowBgColor(i, 183, 222, 232);
-//                }
-//				
-//
-//                if (this.mData[i] instanceof Array) {
-//                    data[i] = data[i].concat(this.mData[i]);
-//                }
-//            }
-
+			var parent = $("#" + this.mTableId);
+			parent.empty();
+			parent.append("<table id='"+ name +"'></table>");
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",

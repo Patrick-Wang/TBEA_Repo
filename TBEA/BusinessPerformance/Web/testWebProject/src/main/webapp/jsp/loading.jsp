@@ -58,4 +58,9 @@
         		ajaxbg.hide(); 
         	}); 
         	$("#background").css("height", document.body.scrollHeight + "px");
+        	$("#background").css("width", document.body.scrollWidth + "px");
+        	window.onresize = function(){
+        		$("#background").css("height", document.body.scrollHeight + "px");
+        		$("#background").css("width", document.body.scrollWidth + "px");
+        	}
 </script>

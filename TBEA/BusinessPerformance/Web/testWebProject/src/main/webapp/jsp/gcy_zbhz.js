@@ -8,10 +8,10 @@ var gcy_zbhz;
         }
         JQGridAssistantFactory.createTable = function (gridName, month) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("指标", "zb"),
-                new JQTable.Node("产业", "cy"),
+                new JQTable.Node("指标", "zb", true, 0 /* Left */),
+                new JQTable.Node("产业", "cy", true, 0 /* Left */),
                 new JQTable.Node("全年", "qn"),
-                new JQTable.Node("当期", "dq").append(new JQTable.Node(month + "月计划", "yjh")).append(new JQTable.Node(month + "月完成", "ywc")).append(new JQTable.Node(month + "月计划完成率", "yjhwcl", true, 220)).append(new JQTable.Node("季度计划", "jdjh")).append(new JQTable.Node("季度累计", "jdlj")).append(new JQTable.Node("季度完成率", "jdwcl")).append(new JQTable.Node("年度累计", "ndlj")).append(new JQTable.Node("累计完成率", "ljwcl")),
+                new JQTable.Node("当期", "dq").append(new JQTable.Node("月度计划", "yjh")).append(new JQTable.Node("月度完成", "ywc")).append(new JQTable.Node("月计划完成率", "yjhwcl", true, 220)).append(new JQTable.Node("季度计划", "jdjh")).append(new JQTable.Node("季度累计", "jdlj")).append(new JQTable.Node("季度完成率", "jdwcl")).append(new JQTable.Node("年度累计", "ndlj")).append(new JQTable.Node("累计完成率", "ljwcl")),
                 new JQTable.Node("去年同期", "qntq_1").append(new JQTable.Node("去年同期", "qntq")).append(new JQTable.Node("同比增长", "tbzz")).append(new JQTable.Node("去年同期累计", "qntqlj", true, 200)).append(new JQTable.Node("同比增长", "tbzz_1"))
             ], gridName);
         };
@@ -28,15 +28,36 @@ var gcy_zbhz;
             return View.ins;
         };
 
-        View.prototype.init = function (echartIdPie, tableId, month, year, data) {
+        View.prototype.init = function (tableId, month, year) {
             this.mYear = year;
             this.mMonth = month;
-            this.mEchartIdPie = echartIdPie;
-            this.mData = data;
-            this.updateTable(tableId);
+            this.mTableId = tableId;
+            this.mDataSet = new Util.DateDataSet("gcy_zbhz_update.do");
+            this.updateUI();
         };
 
-        View.prototype.updateTable = function (name) {
+        View.prototype.onYearSelected = function (year) {
+            this.mYear = year;
+        };
+
+        View.prototype.onMonthSelected = function (month) {
+            this.mMonth = month;
+        };
+
+        View.prototype.updateUI = function () {
+            var _this = this;
+            this.mDataSet.getData(this.mMonth, this.mYear, function (dataArray) {
+                if (null != dataArray) {
+                    _this.mData = dataArray;
+                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月 各产业指标汇总");
+                    $('title').text(_this.mYear + "年" + _this.mMonth + "月 各产业指标汇总");
+                    _this.updateTable();
+                }
+            });
+        };
+
+        View.prototype.updateTable = function () {
+            var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name, this.mMonth);
             tableAssist.mergeRow(0);
 
@@ -100,6 +121,9 @@ var gcy_zbhz;
                 }
             }
 
+            var parent = $("#" + this.mTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
                 // url: "TestTable/WGDD_load.do",
                 // datatype: "json",

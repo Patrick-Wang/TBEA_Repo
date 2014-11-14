@@ -1,7 +1,7 @@
 declare var $;
 module Util {
 
-	export class RestDateDataSet{
+	export class DateDataSet{
 		private mBaseResUrl : string;
 		private mDataMap : any = {};
 		public constructor(baseResUrl : string){
@@ -13,10 +13,9 @@ module Util {
                 this.mDataMap[y + ""] = {};
             }
             if (undefined == this.mDataMap[y + ""][m + ""]){
-
                 $.ajax({
                     type: "GET",
-                    url: this.mBaseResUrl + "/" + m + "/" + y + "",
+                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "",
 	                success: (data: any) =>{
 		                    var jsnData = JSON.parse(data);
 		                    this.mDataMap[y + ""][m + ""] = jsnData;
@@ -39,7 +38,7 @@ module Util {
 		if (val == "--" || val == ""){
 			return val;
 		}
-		
+		val = parseFloat(val).toFixed(2) + "";
 		var dot : number = val.lastIndexOf('.');
 		var intPart : string = "";
 		var parts : string[] = [];

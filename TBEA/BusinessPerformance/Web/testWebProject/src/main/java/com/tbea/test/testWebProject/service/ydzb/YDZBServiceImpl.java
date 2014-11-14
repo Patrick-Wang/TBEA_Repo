@@ -179,7 +179,7 @@ public class YDZBServiceImpl implements YDZBService {
 	
 	private String fromatNumber(String n){
 		if (n != null){
-			if (n.equals("--")){
+			if ("--".equals(n)){
 				n = "0";
 			} else if (n.contains("%")){
 				n = (Double.parseDouble(n.replace("%", ""))) + "";
@@ -254,11 +254,15 @@ public class YDZBServiceImpl implements YDZBService {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		List<List<YDZBBean>> yearData = new ArrayList<List<YDZBBean>>();
+		int curMonth = cal.get(Calendar.MONTH);
+		
 		cal.set(cal.get(Calendar.YEAR) - 2, 11, 1);
 		yearData.add(ydzbDao.getYDZB_V2(cal, company));
+		
 		cal.set(cal.get(Calendar.YEAR) + 1, 11, 1);
 		yearData.add(ydzbDao.getYDZB_V2(cal, company));
-		cal.set(cal.get(Calendar.YEAR) + 2, 11, 1);
+		
+		cal.set(cal.get(Calendar.YEAR) + 1, curMonth, 1);
 		yearData.add(ydzbDao.getYDZB_V2(cal, company));
 		String[][] ret = new String[3][yearData.size()];
 		List<YDZBBean> ydzbs;
@@ -323,7 +327,7 @@ public class YDZBServiceImpl implements YDZBService {
 			for (YDZBBean ydzb : jdYdzbs){
 				if (zb.equals(ydzb.getZblx())){
 					ret[0][jd] = fromatNumber(ydzb.getJdlj());
-					if (ret[1][jd].equals("0")){
+					if ("0".equals(ret[1][jd])){
 						ret[2][jd] = "0";
 					}
 					else{
@@ -347,18 +351,5 @@ public class YDZBServiceImpl implements YDZBService {
 		return zbid_mcMap.get(id);
 	}
 
-
-	@Override
-	public void batEnd() {
-		ydzbDao.uninit();
-		
-	}
-
-
-	@Override
-	public void batBegin() {
-		ydzbDao.init();
-		
-	}
 	
 }

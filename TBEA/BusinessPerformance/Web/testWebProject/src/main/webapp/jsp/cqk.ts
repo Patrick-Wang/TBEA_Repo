@@ -8,8 +8,8 @@ module cqk {
 
         public static createTable(gridName: string, year : number): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("客户所属行业", "khsshy"),
-                new JQTable.Node("客户所属行业", "khsshy_1"),
+                new JQTable.Node("客户所属行业", "khsshy", true, JQTable.TextAlign.Left),
+                new JQTable.Node("客户所属行业", "khsshy_1", true, JQTable.TextAlign.Left),
                 new JQTable.Node(year - 4 + "年及以前", "n4n"),
                 new JQTable.Node(year - 3 + "年", "n3n"),
                 new JQTable.Node(year - 2 + "年", "n2n"),

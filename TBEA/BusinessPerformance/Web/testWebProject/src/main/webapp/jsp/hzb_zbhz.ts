@@ -8,12 +8,12 @@ module hzb_zbhz {
 
         public static createTable(gridName: string, month: number): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("序号", "xh", true, 60),
-                new JQTable.Node("指标", "zb"),
+                new JQTable.Node("序号", "xh", true, JQTable.TextAlign.Left, 60),
+                new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                 new JQTable.Node("当期", "dq")
-                    .append(new JQTable.Node(month + "月计划", "yjh"))
-                    .append(new JQTable.Node(month + "月完成", "ywc"))
-                    .append(new JQTable.Node(month + "月完成率", "ywcl"))
+                    .append(new JQTable.Node("月度计划", "yjh"))
+                    .append(new JQTable.Node("月度完成", "ywc"))
+                    .append(new JQTable.Node("月完成率", "ywcl"))
                     .append(new JQTable.Node("季度累计", "jdlj"))
                     .append(new JQTable.Node("季度完成率", "jdwcl"))
                     .append(new JQTable.Node("年度累计", "ndlj"))
@@ -36,19 +36,40 @@ module hzb_zbhz {
             }
             return View.ins;
         }
-        private mEchartIdPie: string;
+
         private mMonth: number;
         private mYear: number;
         private mData: Array<string[]>;
-        public init(echartIdPie: string, tableId: string, month: number, year: number, data: Array<string[]>): void {
+        private mDataSet : Util.DateDataSet;
+        private mTableId : string;
+        public init(tableId: string, month: number, year: number): void {
             this.mYear = year;
             this.mMonth = month;
-            this.mEchartIdPie = echartIdPie;
-            this.mData = data;
-            this.updateTable(tableId);
-        }
+			this.mDataSet = new Util.DateDataSet("hzb_zbhz_update.do");
+            this.mTableId = tableId;
+            this.updateUI();
 
-        private updateTable(name: string): void {
+        }
+ 		public onYearSelected(year : number){
+        	this.mYear = year;
+        }
+        
+        public onMonthSelected(month : number){
+        	this.mMonth = month;
+        }
+        
+		public updateUI(){
+			this.mDataSet.getData(this.mMonth, this.mYear, (dataArray : Array<string[]>) =>{
+				if (null != dataArray){
+					this.mData = dataArray;
+					$('h1').text(this.mYear + "年" + this.mMonth + "月 指标汇总");
+					$('title').text(this.mYear + "年" + this.mMonth + "月 指标汇总");
+					this.updateTable();
+				}
+			});
+		}
+        private updateTable(): void {
+        	var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mMonth);
             var data = [["1", "利润总额"],
 						["2", "经营性净现金流"],
@@ -88,7 +109,9 @@ module hzb_zbhz {
                 }
             }
 
-
+			var parent = $("#" + this.mTableId);
+			parent.empty();
+			parent.append("<table id='"+ name +"'></table>");
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
