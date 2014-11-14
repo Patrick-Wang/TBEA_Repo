@@ -258,7 +258,7 @@ public class YDZBServiceImpl implements YDZBService {
 		yearData.add(ydzbDao.getYDZB_V2(cal, company));
 		cal.set(cal.get(Calendar.YEAR) + 1, 11, 1);
 		yearData.add(ydzbDao.getYDZB_V2(cal, company));
-		cal.set(cal.get(Calendar.YEAR) + 2, 11, 1);
+		cal.set(cal.get(Calendar.YEAR) + 1, cal.get(Calendar.MONTH), 1);
 		yearData.add(ydzbDao.getYDZB_V2(cal, company));
 		String[][] ret = new String[3][yearData.size()];
 		List<YDZBBean> ydzbs;

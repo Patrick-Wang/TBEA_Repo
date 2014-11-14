@@ -13,5 +13,9 @@ public interface BLLocalDao extends AbstractReadWriteDao<BLLocal> {
 	public List<Object[]> getBLJE() throws Exception;
 
 	public List<Object[]> getBLHKJE() throws Exception;
+	
+	public List<Object[]> getBLJEByQY() throws Exception;
+	
+	public List<Object[]> getBLHKJEByQY() throws Exception;
 
 }

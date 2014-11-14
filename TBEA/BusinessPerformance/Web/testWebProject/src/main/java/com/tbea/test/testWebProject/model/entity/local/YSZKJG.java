@@ -41,6 +41,8 @@ public class YSZKJG extends AbstractReadWriteEntity implements Serializable {
 
 	private Double yszkhj;
 
+	private Integer qybh;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -148,13 +150,22 @@ public class YSZKJG extends AbstractReadWriteEntity implements Serializable {
 		this.yszkhj = yszkhj;
 	}
 
+	public Integer getQybh() {
+		return qybh;
+	}
+
+	public void setQybh(Integer qybh) {
+		this.qybh = qybh;
+	}
+
 	@Override
 	public String toString() {
 		return "YSZKJG [id=" + getId() + ", ny=" + ny + ", hy=" + hy
 				+ ", ysje=" + ysje + ", zqbbl=" + zqbbl + ", yq1yyn=" + yq1yyn
 				+ ", yq1_3y=" + yq1_3y + ", yq3_6y=" + yq3_6y + ", yq6_12y="
 				+ yq6_12y + ", yq1nys=" + yq1nys + ", wdqk=" + wdqk
-				+ ", wdqzbj=" + wdqzbj + ", yszkhj=" + yszkhj + "]";
+				+ ", wdqzbj=" + wdqzbj + ", yszkhj=" + yszkhj + ", qybh="
+				+ qybh + "]";
 	}
 
 }

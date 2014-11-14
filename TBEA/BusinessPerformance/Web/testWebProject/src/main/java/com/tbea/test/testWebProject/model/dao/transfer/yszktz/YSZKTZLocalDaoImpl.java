@@ -1,6 +1,8 @@
 package com.tbea.test.testWebProject.model.dao.transfer.yszktz;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -73,6 +75,48 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, Double> getCQKByQY(String baseMonth, Integer startTime,
+			Integer endTime, List<String> sshyList, boolean isIncluded,
+			boolean isTotal) throws Exception {
+		String sql = "select qybh, sum(ysje - yhxje) from YSZKTZLocal"
+				+ " where fhrq is not null";
+		if (null != startTime) {
+			sql += " and DateDiff(dd, fhrq, :baseMonth) > :startTime";
+		}
+		if (null != endTime) {
+			sql += " and DateDiff(dd, fhrq, :baseMonth) <= :endTime";
+		}
+		if (!isTotal) {
+			sql += " and Khsshy";
+			if (!isIncluded) {
+				sql += " not";
+			}
+			sql += " in (:sshyList)";
+		}
+		sql += " group by qybh";
+		Query query = getEntityManager().createQuery(sql);
+		if (null != startTime) {
+			query.setParameter("baseMonth", baseMonth + "01");
+			query.setParameter("startTime", startTime);
+		}
+		if (null != endTime) {
+			query.setParameter("baseMonth", baseMonth + "01");
+			query.setParameter("endTime", endTime);
+		}
+		if (!isTotal) {
+			query.setParameter("sshyList", sshyList);
+		}
+		List<Object[]> resultList = (List<Object[]>) query.getResultList();
+		Map<String, Double> resultMap = new HashMap<String, Double>();
+		for (Object[] result : resultList) {
+			resultMap.put(result[0].toString(),
+					Double.valueOf(result[1].toString()));
+		}
+		return resultMap;
+	}
+
 	@Override
 	public Double getYQK(String baseMonth, Integer startTime, Integer endTime)
 			throws Exception {
@@ -100,6 +144,37 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 			result = 0.0D;
 		}
 		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, Double> getYQKByQY(String baseMonth, Integer startTime,
+			Integer endTime) throws Exception {
+		String sql = "select qybh, sum(ysje - yhxje) from YSZKTZLocal"
+				+ " where dqrq is not null";
+		if (null != startTime) {
+			sql += " and DateDiff(mm, dqrq, :baseMonth) >= :startTime";
+		}
+		if (null != endTime) {
+			sql += " and DateDiff(mm, dqrq, :baseMonth) < :endTime";
+		}
+		sql += " group by qybh";
+		Query query = getEntityManager().createQuery(sql);
+		if (null != startTime) {
+			query.setParameter("baseMonth", baseMonth + "01");
+			query.setParameter("startTime", startTime);
+		}
+		if (null != endTime) {
+			query.setParameter("baseMonth", baseMonth + "01");
+			query.setParameter("endTime", endTime);
+		}
+		List<Object[]> resultList = (List<Object[]>) query.getResultList();
+		Map<String, Double> resultMap = new HashMap<String, Double>();
+		for (Object[] result : resultList) {
+			resultMap.put(result[0].toString(),
+					Double.valueOf(result[1].toString()));
+		}
+		return resultMap;
 	}
 
 	@Override
@@ -171,6 +246,56 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 			result = 0.0D;
 		}
 		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, Double> getYSZKJGByQY(String baseMonth,
+			Integer startTime, Integer endTime, List<String> sshyList,
+			boolean isIncluded, boolean isTotal, boolean isKXLB, boolean isZBJ)
+			throws Exception {
+		String sql = "select qybh, sum(ysje - yhxje) from YSZKTZLocal"
+				+ " where dqrq is not null";
+		if (null != startTime) {
+			sql += " and DateDiff(mm, dqrq, :baseMonth) >= :startTime";
+		}
+		if (null != endTime) {
+			sql += " and DateDiff(mm, dqrq, :baseMonth) < :endTime";
+		}
+		if (!isTotal) {
+			sql += " and khsshy";
+			if (!isIncluded) {
+				sql += " not";
+			}
+			sql += " in (:sshyList)";
+		}
+		if (isKXLB) {
+			if (isZBJ) {
+				sql += " and kxlb = 10";
+			} else {
+				sql += " and kxlb <> 10";
+			}
+		}
+		sql += " group by qybh";
+		Query query = getEntityManager().createQuery(sql);
+		if (null != startTime) {
+			query.setParameter("baseMonth", baseMonth + "01");
+			query.setParameter("startTime", startTime);
+		}
+		if (null != endTime) {
+			query.setParameter("baseMonth", baseMonth + "01");
+			query.setParameter("endTime", endTime);
+		}
+		if (!isTotal) {
+			query.setParameter("sshyList", sshyList);
+		}
+		List<Object[]> resultList = (List<Object[]>) query.getResultList();
+		Map<String, Double> resultMap = new HashMap<String, Double>();
+		for (Object[] result : resultList) {
+			resultMap.put(result[0].toString(),
+					Double.valueOf(result[1].toString()));
+		}
+		return resultMap;
 	}
 
 }

@@ -1,14 +1,12 @@
 package com.tbea.test.testWebProject.service.cqk;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.test.testWebProject.common.Util;
@@ -22,7 +20,7 @@ public class CQKServiceImpl implements CQKService {
 	private CQKDao cqkDao;
 
 	private YSZKTZLocalDao yszktzLocalDao;
-private static Map<String, Integer> hyMap = new HashMap<String, Integer>();
+	private static Map<String, Integer> hyMap = new HashMap<String, Integer>();
 	static {
 		hyMap.put("国网、南网", 0);
 		hyMap.put("省、市电力系统", 1);
@@ -34,9 +32,13 @@ private static Map<String, Integer> hyMap = new HashMap<String, Integer>();
 		hyMap.put("其他", 7);
 		hyMap.put("合计", 8);
 	}
+
+	private static String[] QYBHArray = { "5", "6", "7", "8", "9", "10", "11" };
+
 	private void importCQKByHY(String baseMonth, String hyName,
 			List<String> sshyList, boolean isIncluded, boolean isTotal)
 			throws Exception {
+		// Total
 		CQK cqk = new CQK();
 		cqk.setNy(baseMonth);
 		cqk.setHy(hyName);
@@ -48,7 +50,36 @@ private static Map<String, Integer> hyMap = new HashMap<String, Integer>();
 				isIncluded, isTotal));
 		cqk.setZj(yszktzLocalDao.getCQK(baseMonth, null, null, sshyList,
 				isIncluded, isTotal));
+		cqk.setQybh(9999);
 		cqkDao.merge(cqk);
+		// QY
+		importCQKByHYAndQY(baseMonth, hyName, sshyList, isIncluded, isTotal);
+		return;
+	}
+
+	private void importCQKByHYAndQY(String baseMonth, String hyName,
+			List<String> sshyList, boolean isIncluded, boolean isTotal)
+			throws Exception {
+		CQK cqk = null;
+		Map<String, Double> cqk2nMap = yszktzLocalDao.getCQKByQY(baseMonth,
+				null, 730, sshyList, isIncluded, isTotal);
+		Map<String, Double> cqk3nMap = yszktzLocalDao.getCQKByQY(baseMonth,
+				730, 1095, sshyList, isIncluded, isTotal);
+		Map<String, Double> cqk4njzqMap = yszktzLocalDao.getCQKByQY(baseMonth,
+				1095, null, sshyList, isIncluded, isTotal);
+		Map<String, Double> zjMap = yszktzLocalDao.getCQKByQY(baseMonth, null,
+				null, sshyList, isIncluded, isTotal);
+		for (String qybh : QYBHArray) {
+			cqk = new CQK();
+			cqk.setNy(baseMonth);
+			cqk.setHy(hyName);
+			cqk.setCqk2n(cqk2nMap.get(qybh));
+			cqk.setCqk3n(cqk3nMap.get(qybh));
+			cqk.setCqk4njzq(cqk4njzqMap.get(qybh));
+			cqk.setZj(zjMap.get(qybh));
+			cqk.setQybh(Integer.valueOf(qybh));
+			cqkDao.merge(cqk);
+		}
 		return;
 	}
 
@@ -152,68 +183,87 @@ private static Map<String, Integer> hyMap = new HashMap<String, Integer>();
 		this.yszktzLocalDao = yszktzLocalDao;
 	}
 
-	//return value format according to cqk
-	//hy one
-	//	[... current year data...]
-	//hy two 
-	//	[... current year data...]
+	// return value format according to cqk
+	// hy one
+	// [... current year data...]
+	// hy two
+	// [... current year data...]
 	@Override
 	public String[][] getCqkData(Date d) {
 		List<CQK> list = cqkDao.getCqkData(d);
-		
-		String[][] result = new String[hyMap.size()][4]; 
-		for (CQK cqk : list){
-			if (cqk != null && hyMap.get(cqk.getHy()) != null){
-				result[hyMap.get(cqk.getHy()).intValue()][0] = cqk.getCqk4njzq() + "";
-				result[hyMap.get(cqk.getHy()).intValue()][1] = cqk.getCqk3n() + "";
-				result[hyMap.get(cqk.getHy()).intValue()][2] = cqk.getCqk2n() + "";
+
+		String[][] result = new String[hyMap.size()][4];
+		for (CQK cqk : list) {
+			if (cqk != null && hyMap.get(cqk.getHy()) != null) {
+				result[hyMap.get(cqk.getHy()).intValue()][0] = cqk
+						.getCqk4njzq() + "";
+				result[hyMap.get(cqk.getHy()).intValue()][1] = cqk.getCqk3n()
+						+ "";
+				result[hyMap.get(cqk.getHy()).intValue()][2] = cqk.getCqk2n()
+						+ "";
 				result[hyMap.get(cqk.getHy()).intValue()][3] = cqk.getZj() + "";
 			}
 		}
 		return result;
 	}
 
-	//return value format
-	//hy one 
-	//	[... previous year's cqk zj(refer to CQK entity) from January to current month...]
-	//	[... current year's cqk zj(refer to CQK entity) from January to current month...]
-	//	[... current year's cqk ln(refer to CQK entity) from January to current month...]
-	//	[... current year's cqk Sn(refer to CQK entity) from January to current month...]
-	//	[... current year's cqk Snjzq(refer to CQK entity) from January to current month...]
-	//hy two 
-	//	[... previous year's cqk zj(refer to CQK entity) from January to current month...]
-	//	[... current year's cqk zj(refer to CQK entity) from January to current month...]
-	//	[... current year's cqk ln(refer to CQK entity) from January to current month...]
-	//	[... current year's cqk Sn(refer to CQK entity) from January to current month...]
-	//	[... current year's cqk Snjzq(refer to CQK entity) from January to current month...]
-	//......
+	// return value format
+	// hy one
+	// [... previous year's cqk zj(refer to CQK entity) from January to current
+	// month...]
+	// [... current year's cqk zj(refer to CQK entity) from January to current
+	// month...]
+	// [... current year's cqk ln(refer to CQK entity) from January to current
+	// month...]
+	// [... current year's cqk Sn(refer to CQK entity) from January to current
+	// month...]
+	// [... current year's cqk Snjzq(refer to CQK entity) from January to
+	// current month...]
+	// hy two
+	// [... previous year's cqk zj(refer to CQK entity) from January to current
+	// month...]
+	// [... current year's cqk zj(refer to CQK entity) from January to current
+	// month...]
+	// [... current year's cqk ln(refer to CQK entity) from January to current
+	// month...]
+	// [... current year's cqk Sn(refer to CQK entity) from January to current
+	// month...]
+	// [... current year's cqk Snjzq(refer to CQK entity) from January to
+	// current month...]
+	// ......
 	@Override
 	public String[][] getCompareData(Date d) {
-    	Calendar cal = Calendar.getInstance();
-    	cal.setTime(d);
-      
-		String[][] result = new String[5 * hyMap.size()][cal.get(Calendar.MONTH) + 1]; 
-		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+
+		String[][] result = new String[5 * hyMap.size()][cal
+				.get(Calendar.MONTH) + 1];
+
 		List<CQK> list = cqkDao.getPreYearCQK(d);
 		Calendar time = Calendar.getInstance();
 		int month = 0;
-		for (CQK cqk : list){
-			if (cqk != null && hyMap.get(cqk.getHy()) != null){
+		for (CQK cqk : list) {
+			if (cqk != null && hyMap.get(cqk.getHy()) != null) {
 				time.setTime(Util.valueOf(cqk.getNy()));
 				month = time.get(Calendar.MONTH);
-				result[0 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getZj() + "";
+				result[0 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk
+						.getZj() + "";
 			}
 		}
-		
+
 		list = cqkDao.getCurYearCQK(d);
-		for (CQK cqk : list){
-			if (cqk != null && hyMap.get(cqk.getHy()) != null){
+		for (CQK cqk : list) {
+			if (cqk != null && hyMap.get(cqk.getHy()) != null) {
 				time.setTime(Util.valueOf(cqk.getNy()));
 				month = time.get(Calendar.MONTH);
-				result[1 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getZj() + "";
-				result[2 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getCqk2n() + "";
-				result[3 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getCqk3n() + "";
-				result[4 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk.getCqk4njzq() + "";
+				result[1 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk
+						.getZj() + "";
+				result[2 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk
+						.getCqk2n() + "";
+				result[3 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk
+						.getCqk3n() + "";
+				result[4 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk
+						.getCqk4njzq() + "";
 			}
 		}
 		return result;
