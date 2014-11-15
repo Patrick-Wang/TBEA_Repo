@@ -32,9 +32,10 @@
     <script src="../jsp/gcy_zbhz.js" type="text/javascript"></script>
 
     <script type="text/javascript">
+    	var instance = gcy_zbhz.View.newInstance();
         (function () {
             $(document).ready(function () {
-                gcy_zbhz.View.newInstance().init("table", ${month}, ${year});
+            	instance.init("table", ${month}, ${year});
             });
         })();
     </script>
@@ -146,75 +147,9 @@
     <div class=" header">
         <h1>${year}年${month}月 各产业指标汇总</h1>
     </div>
-	<script type="text/javascript">
-		function onYearChange(year){
-			if (year == ${year}){
-				$("#month_" + ${year}).css("display", "");
-				$("#month_" + ${year - 1}).css("display", "none");
-			} else{
-				$("#month_" + ${year}).css("display", "none");
-				$("#month_" + ${year - 1}).css("display", "");
-			}
-			;
-			gcy_zbhz.View.newInstance().onYearSelected(year);
-			gcy_zbhz.View.newInstance().onMonthSelected($("#month_" + year + " option:selected").val());
-		}
-	</script>
-	<table>
-		<tr>
-			<td>
-				<select id= "year"
-					onchange="onYearChange(this.value)" style="width: 125px;">
-					<option value="${year}" selected="selected">${year}年</option>
-					<option value="${year - 1}">${year - 1}年</option>
-				</select> 
-			</td>
-			<td>
-				<select id= "month_${year}"
-					onchange="gcy_zbhz.View.newInstance().onMonthSelected(this.value)" style="width: 125px;">
-					<c:forEach begin="0" end="${month - 1}" var="i">
-							<c:choose>
-	
-							   <c:when test="${i == (month - 1)}">
-									<option value="${month}" selected="selected">${month}月</option>
-							   </c:when>
-							   
-							   <c:otherwise>
-									<option value="${i + 1}">${i + 1}月</option>
-							   </c:otherwise>
-							  
-							</c:choose>
-						
-					</c:forEach>
-					
-				</select> 
-				<select id= "month_${year - 1}"
-					onchange="gcy_zbhz.View.newInstance().onMonthSelected(this.value)" style="width: 125px;display:none">
-					<c:forEach begin="0" end="11" var="i">
-							<c:choose>
-	
-							   <c:when test="${i == (month - 1)}">
-									<option value="${i + 1}" selected="selected">${month}月</option>
-							   </c:when>
-							   
-							   <c:otherwise>
-									<option value="${i + 1}">${i + 1}月</option>
-							   </c:otherwise>
-							  
-							</c:choose>
-						
-					</c:forEach>
-					
-				</select> 
-			</td>
-			<td>
-				<input type="button" value="更新" onclick="gcy_zbhz.View.newInstance().updateUI()"></input>
-			</td>
-		</tr>
-	</table>
-	<div align="center" id="table">
-    </div>
-    
+
+    <%@include file="date_selection.jsp" %>
+    <div align="center" id="table"></div>
 	<%@include file="loading.jsp" %>
 
 </body>

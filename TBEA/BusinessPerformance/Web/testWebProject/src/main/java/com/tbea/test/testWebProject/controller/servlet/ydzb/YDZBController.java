@@ -100,6 +100,17 @@ public class YDZBController {
 	}
 
 	
+	@RequestMapping(value = "xjlrb_update.do", method = RequestMethod.GET)
+	public @ResponseBody String getXjlrb_update(HttpServletRequest request,
+			HttpServletResponse response) {
+		int month = Integer.parseInt(request.getParameter("month"));
+		int year = Integer.parseInt(request.getParameter("year"));
+		int day = Integer.parseInt(request.getParameter("day"));
+		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + day);
+		String xjlrb = JSONArray.fromObject(service.getXjlrbData(d)).toString().replace("null", "0.00");
+		return xjlrb;
+	}
+	
 	@RequestMapping(value = "xjlrb.do", method = RequestMethod.GET)
 	public ModelAndView getXjlrb(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -107,13 +118,12 @@ public class YDZBController {
 		int month = now.get(Calendar.MONTH) + 1;
 		int year = now.get(Calendar.YEAR);
 		int day = now.get(Calendar.DAY_OF_MONTH);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + day);
+		int dayCount = now.getActualMaximum(Calendar.DAY_OF_MONTH);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
 		map.put("day",  day);
-		String xjlrb = JSONArray.fromObject(service.getXjlrbData(d)).toString().replace("null", "0.00");
-		map.put("xjlrb", xjlrb);
+		map.put("dayCount",  dayCount);
 		return new ModelAndView("xjlrb", map);
 	}
 	

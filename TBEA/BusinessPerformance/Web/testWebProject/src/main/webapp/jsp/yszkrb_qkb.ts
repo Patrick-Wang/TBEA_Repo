@@ -41,15 +41,38 @@ module yszkrb_qkb {
         private mEchartIdLine: string;
         private mYear: number;
         private mData: Array<string[]>;
-        public init(echartIdPie: string, tableId: string, month: number, year: number, data: Array<string[]>): void {
+        private mDataSet : Util.DateDataSet;
+        private mTableId : string;
+        public init(tableId: string, month: number, year: number): void {
             this.mYear = year;
             this.mMonth = month;
-            this.mEchartIdPie = echartIdPie;
-            this.mData = data;
-            this.updateTable(tableId);
-        }
+			this.mDataSet = new Util.DateDataSet("yszkrb_qkb_update.do");
+            this.mTableId = tableId;
+            this.updateUI();
 
-        private updateTable(name: string): void {
+        }
+ 		public onYearSelected(year : number){
+        	this.mYear = year;
+        }
+        
+        public onMonthSelected(month : number){
+        	this.mMonth = month;
+        }
+        
+		public updateUI(){
+			this.mDataSet.getData(this.mMonth, this.mYear, (dataArray : Array<string[]>) =>{
+				if (null != dataArray){
+					this.mData = dataArray;
+					$('h1').text(this.mYear + "年" + this.mMonth + "月 各单位指标汇总");
+					$('title').text(this.mYear + "年" + this.mMonth + "月 各单位指标汇总");
+					this.updateTable();
+				}
+			});
+		}
+		
+		
+        private updateTable(): void {
+       		var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
 
 
@@ -68,7 +91,9 @@ module yszkrb_qkb {
                     data[i] = data[i].concat(this.mData[i]);
                 }
             }
-
+			var parent = $("#" + this.mTableId);
+			parent.empty();
+			parent.append("<table id='"+ name +"'></table>");
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",

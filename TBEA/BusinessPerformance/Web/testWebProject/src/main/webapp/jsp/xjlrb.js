@@ -34,15 +34,41 @@ var xjlrb;
             return View.ins;
         };
 
-        View.prototype.init = function (echartIdPie, tableId, month, year, data) {
+        View.prototype.init = function (tableId, month, year, day) {
             this.mYear = year;
             this.mMonth = month;
-            this.mEchartId = echartIdPie;
-            this.mData = data;
-            this.updateTable(tableId);
+            this.mDataSet = new Util.DateDataSet("xjlrb_update.do");
+            this.mTableId = tableId;
+            this.mDay = day;
+            this.updateUI();
         };
 
-        View.prototype.updateTable = function (name) {
+        View.prototype.onDaySelected = function (day) {
+            this.mDay = day;
+        };
+
+        View.prototype.onYearSelected = function (year) {
+            this.mYear = year;
+        };
+
+        View.prototype.onMonthSelected = function (month) {
+            this.mMonth = month;
+        };
+
+        View.prototype.updateUI = function () {
+            var _this = this;
+            this.mDataSet.getDataByDay(this.mMonth, this.mYear, this.mDay, function (dataArray) {
+                if (null != dataArray) {
+                    _this.mData = dataArray;
+                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日 现金流日报");
+                    $('title').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日 现金流日报");
+                    _this.updateTable();
+                }
+            });
+        };
+
+        View.prototype.updateTable = function () {
+            var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name);
 
             var data = [
@@ -72,15 +98,6 @@ var xjlrb;
                 ["众和公司"],
                 ["合计"]];
 
-            //            for (var i = 0; i < data.length; ++i) {
-            //                if (data[i][0].lastIndexOf("计") >= 0) {
-            //                    tableAssist.setRowBgColor(i, 183, 222, 232);
-            //                }
-            //
-            //                if (this.mData[i] instanceof Array) {
-            //                    data[i] = data[i].concat(this.mData[i]);
-            //                }
-            //            }
             var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (data[i][0].lastIndexOf("计") >= 0) {
@@ -95,6 +112,9 @@ var xjlrb;
                     data[i] = data[i].concat(row);
                 }
             }
+            var parent = $("#" + this.mTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
 
             $("#" + name).jqGrid(tableAssist.decorate({
                 // url: "TestTable/WGDD_load.do",

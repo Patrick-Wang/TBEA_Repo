@@ -29,15 +29,16 @@
     <script src="../jsp/xjlrb.js" type="text/javascript"></script>
 
     <script type="text/javascript">
+    	var instance = xjlrb.View.newInstance();
         (function () {
             $(document).ready(function () {
-                xjlrb.View.newInstance().init("chart", "table", ${month}, ${year}, eval(${xjlrb}));
+            	instance.init("table", ${month}, ${year}, ${day});
             });
         })();
     </script>
     <meta charset="UTF-8">
 
-    <title>${year}年${month}月${day}日现金流日报</title>
+    <title>${year}年${month}月${day}日 现金流日报</title>
 
     <style type="text/css">
         body {
@@ -141,45 +142,12 @@
 </head>
 <body style="width:1400px">
     <div class=" header">
-        <h1>${year}年${month}月${day}日现金流日报</h1>
+        <h1>${year}年${month}月${day}日 现金流日报</h1>
     </div>
-
-    <div align="center">
-        <table id="table"></table>
+	<%@include file="date_selection.jsp" %>
+	<div align="center" id="table">
     </div>
-
-    <!--<div align="center" style="margin-top: 15px">
-        <div class="panel-content-border" style="margin-bottom:20px;">
-            <div id="piechart" class="panel-content"></div>
-        </div>
-
-        <div >
-            应收账款情况和款项变化趋势
-            <select onchange="cqk.View.newInstance().onSelected(this.value)">
-                <option value="1" selected="selected">国网、南网</option>
-                <option value="2">省、市电力公司</option>
-                <option value="3">五大发电</option>
-                <option value="4">其他电源</option>
-                <option value="5">石油石化</option>
-                <option value="6">制造行业</option>
-                <option value="7">铁路（轨道交通）</option>
-                <option value="8">出口合同</option>
-                <option value="9">其它</option>
-            </select>
-        </div>
-
-        <div style="margin-left:50px;margin-top:10px">
-            <div class="panel-content-border" style="float:left;width:600px">
-                <div id="squarechart" class="panel-content"></div>
-            </div>
-            <div class="panel-content-border" style="float:left;width:600px;margin-left:20px">
-                <div id="linechart" class="panel-content"></div>
-            </div>
-        </div>
-    </div>-->
-
-
-
+      	<%@include file="loading.jsp" %>
     </body>
  <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 </html>

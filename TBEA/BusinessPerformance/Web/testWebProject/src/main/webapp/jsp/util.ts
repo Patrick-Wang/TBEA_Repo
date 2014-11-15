@@ -30,6 +30,32 @@ module Util {
         		callBack(this.mDataMap[y + ""][m + ""]);
     		}
 		}
+		
+		public getDataByDay(m: number, y: number, d: number, callBack: (arrayData : Array<string[]>) => void): void{
+            if (undefined == this.mDataMap[y + ""]) {
+                this.mDataMap[y + ""] = {};
+            }
+            if (undefined == this.mDataMap[y + ""][m + ""]){
+            	this.mDataMap[y + ""][m + ""] = {}
+            }
+            if (undefined == this.mDataMap[y + ""][m + ""][d + ""]){
+                $.ajax({
+                    type: "GET",
+                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "&day=" + d,
+	                success: (data: any) =>{
+		                    var jsnData = JSON.parse(data);
+		                    this.mDataMap[y + ""][m + ""][d + ""] = jsnData;
+		                    callBack(jsnData);
+			        },
+			        error: (XMLHttpRequest, textStatus, errorThrown) => {
+	                    callBack(null);
+	                }
+         		});
+			}
+			else {
+        		callBack(this.mDataMap[y + ""][m + ""][d + ""]);
+    		}
+		}
 	}
 
 

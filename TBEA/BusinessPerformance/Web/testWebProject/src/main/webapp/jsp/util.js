@@ -27,6 +27,32 @@ var Util;
                 callBack(this.mDataMap[y + ""][m + ""]);
             }
         };
+
+        DateDataSet.prototype.getDataByDay = function (m, y, d, callBack) {
+            var _this = this;
+            if (undefined == this.mDataMap[y + ""]) {
+                this.mDataMap[y + ""] = {};
+            }
+            if (undefined == this.mDataMap[y + ""][m + ""]) {
+                this.mDataMap[y + ""][m + ""] = {};
+            }
+            if (undefined == this.mDataMap[y + ""][m + ""][d + ""]) {
+                $.ajax({
+                    type: "GET",
+                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "&day=" + d,
+                    success: function (data) {
+                        var jsnData = JSON.parse(data);
+                        _this.mDataMap[y + ""][m + ""][d + ""] = jsnData;
+                        callBack(jsnData);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        callBack(null);
+                    }
+                });
+            } else {
+                callBack(this.mDataMap[y + ""][m + ""][d + ""]);
+            }
+        };
         return DateDataSet;
     })();
     Util.DateDataSet = DateDataSet;
