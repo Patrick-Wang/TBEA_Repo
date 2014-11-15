@@ -35,7 +35,7 @@ module xjlrb {
 
         private mMonth: number;
         private mYear: number;
-        private mData: Array<string[]>;
+        private mData: Array<string[]> = [];
         private mDataSet : Util.DateDataSet;
         private mTableId : string;
         private mDay: number;
@@ -45,6 +45,7 @@ module xjlrb {
 			this.mDataSet = new Util.DateDataSet("xjlrb_update.do");
             this.mTableId = tableId;
             this.mDay = day;
+            this.updateTable();
             this.updateUI();
 
         }

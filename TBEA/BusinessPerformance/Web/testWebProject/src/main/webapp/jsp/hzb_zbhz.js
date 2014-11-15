@@ -19,6 +19,7 @@ var hzb_zbhz;
 
     var View = (function () {
         function View() {
+            this.mData = [];
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -32,6 +33,7 @@ var hzb_zbhz;
             this.mMonth = month;
             this.mDataSet = new Util.DateDataSet("hzb_zbhz_update.do");
             this.mTableId = tableId;
+            this.updateTable();
             this.updateUI();
         };
         View.prototype.onYearSelected = function (year) {

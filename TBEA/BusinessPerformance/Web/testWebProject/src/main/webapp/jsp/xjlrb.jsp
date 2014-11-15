@@ -144,8 +144,18 @@
     <div class=" header">
         <h1>${year}年${month}月${day}日 现金流日报</h1>
     </div>
-	<%@include file="date_selection.jsp" %>
-	<div align="center" id="table">
+	<Table align="center">
+		<tr>
+		<td>
+	   	 <%@include file="date_selection.jsp" %>
+	   	 <td>
+	    </tr>
+	    <tr>
+		<td>
+	    <div  id="table"></div>
+	     <td>
+	    </tr>
+     </Table>
     </div>
       	<%@include file="loading.jsp" %>
     </body>

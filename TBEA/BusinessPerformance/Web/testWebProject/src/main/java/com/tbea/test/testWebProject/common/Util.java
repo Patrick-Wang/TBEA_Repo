@@ -167,7 +167,7 @@ public class Util {
 			v1 = Double.parseDouble(dv);
 		}
 		catch (Exception e){
-			return "0";
+			return "0.00";
 		}
 		return String.format("%.2f", v1);
 	}

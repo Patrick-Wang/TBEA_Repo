@@ -41,7 +41,7 @@ module gdw_zbhz {
 
         private mMonth: number;
         private mYear: number;
-        private mData: Array<string[]>;
+        private mData: Array<string[]> = [];
         private mDataSet : Util.DateDataSet;
         private mTableId : string;
         public init(tableId: string, month: number, year: number): void {
@@ -49,6 +49,7 @@ module gdw_zbhz {
             this.mMonth = month;
             this.mDataSet = new Util.DateDataSet("gdw_zbhz_update.do");
             this.mTableId = tableId;
+            this.updateTable();
             this.updateUI();
         }
         

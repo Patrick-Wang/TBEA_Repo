@@ -20,6 +20,7 @@ var gcy_zbhz;
 
     var View = (function () {
         function View() {
+            this.mData = [];
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -33,6 +34,7 @@ var gcy_zbhz;
             this.mMonth = month;
             this.mTableId = tableId;
             this.mDataSet = new Util.DateDataSet("gcy_zbhz_update.do");
+            this.updateTable();
             this.updateUI();
         };
 

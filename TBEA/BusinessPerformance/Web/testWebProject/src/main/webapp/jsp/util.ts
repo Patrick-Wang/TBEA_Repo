@@ -61,7 +61,7 @@ module Util {
 
 	export function formatCurrency (val: string): string{
 		
-		if (val == "--" || val == ""){
+		if (val === "--" || val === ""){
 			return val;
 		}
 		val = parseFloat(val).toFixed(2) + "";

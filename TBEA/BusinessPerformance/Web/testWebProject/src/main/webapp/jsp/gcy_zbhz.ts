@@ -41,7 +41,7 @@ module gcy_zbhz {
 
         private mMonth: number;
         private mYear: number;
-        private mData: Array<string[]>;
+        private mData: Array<string[]> = [];
         private mDataSet : Util.DateDataSet;
         private mTableId : string;
         public init(tableId: string, month: number, year: number): void {
@@ -49,6 +49,7 @@ module gcy_zbhz {
             this.mMonth = month;
             this.mTableId = tableId;
             this.mDataSet = new Util.DateDataSet("gcy_zbhz_update.do");
+            this.updateTable();
             this.updateUI();
         }
         

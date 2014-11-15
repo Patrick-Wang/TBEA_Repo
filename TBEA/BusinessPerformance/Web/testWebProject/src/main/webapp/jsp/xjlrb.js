@@ -26,6 +26,7 @@ var xjlrb;
 
     var View = (function () {
         function View() {
+            this.mData = [];
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -40,6 +41,7 @@ var xjlrb;
             this.mDataSet = new Util.DateDataSet("xjlrb_update.do");
             this.mTableId = tableId;
             this.mDay = day;
+            this.updateTable();
             this.updateUI();
         };
 
