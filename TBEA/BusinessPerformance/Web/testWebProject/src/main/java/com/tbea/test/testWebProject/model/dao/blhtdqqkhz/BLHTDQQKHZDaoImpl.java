@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.model.entity.BLHTDQQKHZ;
 
@@ -27,16 +28,17 @@ public class BLHTDQQKHZDaoImpl extends AbstractReadWriteDaoImpl<BLHTDQQKHZ> impl
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<BLHTDQQKHZ> getBlAfterDate(Calendar cal) {
+	public List<BLHTDQQKHZ> getBlAfterDate(Calendar cal, Company comp) {
 		Query q = getEntityManager().createQuery(
-				"select b from BLHTDQQKHZ b where b.ny >= ?1");
+				"select b from BLHTDQQKHZ b where b.ny >= ?1 and b.qybh = ?2");
 		String date = Util.format(cal.getTime());
 		q.setParameter(1, date);
+		q.setParameter(2, Integer.valueOf(comp.getId()));
 		return q.getResultList();
 	}
 
 	@Override
-	public List<BLHTDQQKHZ> getBltbbh(Calendar cal) {
+	public List<BLHTDQQKHZ> getBltbbh(Calendar cal, Company comp) {
 		Calendar preYear = Calendar.getInstance();
 		preYear.set(cal.get(Calendar.YEAR) - 1, 0, 1);
 
@@ -49,11 +51,12 @@ public class BLHTDQQKHZDaoImpl extends AbstractReadWriteDaoImpl<BLHTDQQKHZ> impl
 
 		Query q = getEntityManager()
 				.createQuery(
-						"select b from BLHTDQQKHZ b where b.ny >= ?1 and b.ny <= ?2 or b.ny >= ?3 and b.ny <= ?4");
+						"select b from BLHTDQQKHZ b where b.ny >= ?1 and b.ny <= ?2 or b.ny >= ?3 and b.ny <= ?4 and b.qybh = ?5");
 		q.setParameter(1, Util.format(preYear.getTime()));
 		q.setParameter(2, Util.format(preYearMonth.getTime()));
 		q.setParameter(3, Util.format(curYear.getTime()));
 		q.setParameter(4, Util.format(cal.getTime()));
+		q.setParameter(5, Integer.valueOf(comp.getId()));
 		return q.getResultList();
 	}
 

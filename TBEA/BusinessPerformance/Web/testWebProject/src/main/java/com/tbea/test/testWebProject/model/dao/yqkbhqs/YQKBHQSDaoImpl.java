@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.model.entity.YQKBHQS;
 
@@ -28,9 +29,9 @@ public class YQKBHQSDaoImpl extends AbstractReadWriteDaoImpl<YQKBHQS> implements
 	}
 
 	@Override
-	public List<YQKBHQS> getYqkbhqsOfThisYear(Calendar cur) {
+	public List<YQKBHQS> getYqkbhqsOfThisYear(Calendar cur, Company comp) {
 		Query q = getEntityManager().createQuery(
-				"select y from YQKBHQS y where y.ny >= ?1 and y.ny <= ?2");
+				"select y from YQKBHQS y where y.ny >= ?1 and y.ny <= ?2 and y.qybh = ?3");
 		Calendar yearBegin = Calendar.getInstance();
 		yearBegin.set(cur.get(Calendar.YEAR), 0, 1);
 		Calendar yearEnd = Calendar.getInstance();
@@ -39,6 +40,7 @@ public class YQKBHQSDaoImpl extends AbstractReadWriteDaoImpl<YQKBHQS> implements
 		String timeEnd = Util.format(yearEnd.getTime());
 		q.setParameter(1, timeBegin);
 		q.setParameter(2, timeEnd);
+		q.setParameter(3, Integer.valueOf(comp.getId()));
 		return q.getResultList();
 	}
 

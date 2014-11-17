@@ -22,6 +22,7 @@ var cqk;
     var View = (function () {
         function View() {
             this.currentSelected = 0;
+            this.mComp = 19 /* JT */;
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -33,15 +34,42 @@ var cqk;
         View.prototype.init = function (echartIdPie, echartIdSquire, echartIdLine, tableId, args) {
             this.mMonth = args[0];
             this.mYear = args[1];
-            this.mLineData = args[2];
-            this.mTableData = args[3];
+            this.mTableId = tableId;
             this.mEchartIdLine = echartIdLine;
             this.mEchartIdPie = echartIdPie;
             this.mEchartIdSquire = echartIdSquire;
-            this.updateTable(tableId);
-            this.updatePieEchart(this.mEchartIdPie);
-            this.updateLineEchart(this.mEchartIdLine);
-            this.updateSquareEchart(this.mEchartIdSquire);
+            this.mDataSet = new Util.DateDataSet("cqk_update.do");
+            this.updateTable(this.mTableId);
+            this.updateUI();
+        };
+
+        View.prototype.onYearSelected = function (year) {
+            this.mYear = year;
+        };
+
+        View.prototype.onMonthSelected = function (month) {
+            this.mMonth = month;
+        };
+
+        View.prototype.onCompanySelected = function (comp) {
+            this.mComp = comp;
+        };
+
+        View.prototype.updateUI = function () {
+            var _this = this;
+            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
+                if (null != data) {
+                    var arr = data.split("##");
+                    _this.mTableData = JSON.parse(arr[0]);
+                    _this.mLineData = JSON.parse(arr[1]);
+                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月  陈欠款");
+                    document.title = _this.mYear + "年" + _this.mMonth + "月  陈欠款";
+                    _this.updateTable(_this.mTableId);
+                    _this.updatePieEchart(_this.mEchartIdPie);
+                    _this.updateLineEchart(_this.mEchartIdLine);
+                    _this.updateSquareEchart(_this.mEchartIdSquire);
+                }
+            });
         };
 
         View.prototype.onSelected = function (i) {
@@ -314,6 +342,7 @@ var cqk;
         //    ysyq_payment_Chart.setOption(ysyq_payment_Option);
         //}
         View.prototype.updateTable = function (name) {
+            var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name, this.mYear);
             tableAssist.mergeTitle();
 
@@ -338,14 +367,20 @@ var cqk;
             //			for (var i = 0; i < data.length; ++i){
             //				data[i] = data[i].concat(this.mTableData[i]);
             //			}
-            var row = [];
-            for (var i = 0; i < data.length; ++i) {
-                row = [].concat(this.mTableData[i]);
-                for (var col in row) {
-                    row[col] = Util.formatCurrency(row[col]);
+            if (undefined != this.mTableData) {
+                var row = [];
+                for (var i = 0; i < data.length; ++i) {
+                    row = [].concat(this.mTableData[i]);
+                    for (var col in row) {
+                        row[col] = Util.formatCurrency(row[col]);
+                    }
+                    data[i] = data[i].concat(row);
                 }
-                data[i] = data[i].concat(row);
             }
+
+            var parent = $("#" + this.mTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
 
             $("#" + name).jqGrid(tableAssist.decorate({
                 // url: "TestTable/WGDD_load.do",

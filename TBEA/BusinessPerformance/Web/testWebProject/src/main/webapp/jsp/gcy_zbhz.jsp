@@ -149,17 +149,25 @@
     </div>
 	<Table align="center">
 		<tr>
+			<td>
+				<Table>
+					<tr>
+						<td><%@include file="date_selection.jsp"%>
+						</td>
+						<td><input type="button" value="更新" style="width : 80px; margin-left:10px;"
+							onclick="instance.updateUI()"></input>
+				</Table>
+			</td>
+		</tr>
 		<td>
-	   	 <%@include file="date_selection.jsp" %>
-	   	 <td>
-	    </tr>
-	    <tr>
-		<td>
-	    <div  id="table"></div>
-	     <td>
-	    </tr>
-     </Table>
-	<%@include file="loading.jsp" %>
+		</tr>
+		<tr>
+			<td>
+				<div id="table"></div>
+			<td>
+		</tr>
+	</Table>
+	<%@include file="loading.jsp"%>
 
 </body>
    <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>

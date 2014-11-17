@@ -189,4 +189,35 @@ public class Util {
 			return end.getTimeInMillis() - start.getTimeInMillis();
 		}
 	}
+	
+	private static boolean filter(Company.Type filters[], int val){
+		for (int i = filters.length - 1; i >= 0; --i){
+			if (val == filters[i].ordinal()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static String[][] getCommonCompanyNameAndIds(){
+		Company coms[] = Company.getAll();
+		Company.Type filters[] = new Company.Type[]{
+				 Company.Type.SBDCY,
+				 Company.Type.XNYCY,
+				 Company.Type.NYCY,
+				 Company.Type.GCL
+		};
+		
+		String[][] name_ids = new String[2][coms.length - filters.length]; 
+		int iCount = 0;
+		for (int i = 0;  i < coms.length; ++i){
+			
+			if (!filter(filters, i)) {
+				name_ids[1][iCount] = i + "";
+				name_ids[0][iCount] = coms[i].getName();
+				++iCount;
+			}
+		}
+		return name_ids;
+	}
 }

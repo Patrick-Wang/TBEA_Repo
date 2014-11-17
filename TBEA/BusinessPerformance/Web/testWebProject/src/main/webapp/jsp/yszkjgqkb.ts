@@ -47,25 +47,56 @@ module yszkjgqkb {
         private mCurrentSelected: number = 0;
         private mSquireData: string;
         private mLineData: string;
-
+        private mDataSet : Util.DateDataSet;
+        private mTableId : string;
+        private mComp: Util.CompanyType = Util.CompanyType.JT;
         public init(echartIdPie: string, echartIdSquire: string, echartIdBar: string, echartIdLine: string, tableId: string, args: any[]): void {
             this.mMonth = args[0];
             this.mYear = args[1];
-            this.mTableData = args[2];
-            this.mBarData = args[3];
-            this.mLineData = args[4];
+            this.mTableId = tableId;
             
             this.mEchartIdBar = echartIdBar;
             this.mEchartIdLine = echartIdLine;
             this.mEchartIdPie = echartIdPie;
             this.mEchartIdSquire = echartIdSquire;
             
-            this.updatePieEchart(this.mEchartIdPie);
-            this.updateLineEchart(this.mEchartIdLine);
-            this.updateBarEchart(this.mEchartIdBar);
-            this.updateSquareEchart(this.mEchartIdSquire);
+			this.mDataSet = new Util.DateDataSet("yszkjgqk_update.do");
             this.updateTable(tableId);
+            this.updateUI();
         }
+
+
+		
+ 		public onYearSelected(year : number){
+        	this.mYear = year;
+        }
+        
+        public onMonthSelected(month : number){
+        	this.mMonth = month;
+        }
+        
+        public onCompanySelected(comp : Util.CompanyType){
+        	this.mComp = comp;
+        }
+        
+		public updateUI(){
+		 	this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data : string) =>{
+				if (null != data){
+					var arr = data.split("##");
+					this.mTableData = JSON.parse(arr[0]);
+					this.mBarData = JSON.parse(arr[1]);
+					this.mLineData = JSON.parse(arr[2]);
+					$('h1').text(this.mYear + "年" + this.mMonth + "月  应收账款结构情况表");
+					document.title = this.mYear + "年" + this.mMonth + "月  应收账款结构情况表";
+					this.updateTable(this.mTableId);
+		            this.updatePieEchart(this.mEchartIdPie);
+		            this.updateLineEchart(this.mEchartIdLine);
+		            this.updateBarEchart(this.mEchartIdBar);
+		            this.updateSquareEchart(this.mEchartIdSquire);
+				}
+			});
+		}
+
 
         public onSelected(i: number) {
             this.mCurrentSelected = i;
@@ -359,6 +390,7 @@ module yszkjgqkb {
         }
 
         private updateTable(name: string): void {
+       	 	var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
             tableAssist.mergeTitle();
             tableAssist.mergeRow(0);
@@ -375,17 +407,24 @@ module yszkjgqkb {
                 ["其", "它"],
                 ["合", "计"]];
             
-            var row = [];
-            for (var i = 0; i < data.length; ++i) {
-                row = [].concat(this.mTableData[i]);
-                for (var col in row){
-                	if (col != '1'){
-                		row[col] = Util.formatCurrency(row[col]);
-                	}     
+            if (undefined != this.mTableData) {
+                var row = [];
+                for (var i = 0; i < data.length; ++i) {
+                    row = [].concat(this.mTableData[i]);
+                    for (var col in row) {
+                        if (col != '1') {
+                            row[col] = Util.formatCurrency(row[col]);
+                        }
+                    }
+                    data[i] = data[i].concat(row);
                 }
-                data[i] = data[i].concat(row);
             }
 
+
+			var parent = $("#" + this.mTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
+            
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",

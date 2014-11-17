@@ -22,14 +22,44 @@ module yqkqsbh {
             return new View();
         }
         private mMonth: number;
+        private mYear: number;
         private mData: Array<string[]>;
+        private mDataSet : Util.DateDataSet;
+        private mTableId : string;
+        private mCharId : string;
+        private mComp: Util.CompanyType = Util.CompanyType.JT;
         public init(echartId: string, tableId: string, args: any[]): void {
             this.mMonth = args[0];
-            this.mData = args[1];
-            this.updateEchart(echartId);
+            this.mYear = args[1];
+          
+            this.mTableId = tableId;
+            this.mCharId = echartId;
+            this.mDataSet = new Util.DateDataSet("yqkbhqs_update.do");
             this.updateTable(tableId);
+            this.updateUI();
         }
-
+        
+		public onYearSelected(year : number){
+        	this.mYear = year;
+        }
+        
+       
+        public onCompanySelected(comp : Util.CompanyType){
+        	this.mComp = comp;
+        }
+        
+		public updateUI(){
+		 	this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data : string) =>{
+				if (null != data){
+					this.mData = JSON.parse(data);
+					$('h1').text(this.mYear + "年  逾期款趋势变化表");
+					document.title = this.mYear + "年  逾期款趋势变化表";
+					this.updateEchart(this.mCharId);
+					this.updateTable(this.mTableId);
+				}
+			});
+		}
+		
         private updateEchart(echart: string): void {
 
             var legend = ["一个月以内", "1-3月", "3-6月", "6-12月", "一年以上"];
@@ -110,6 +140,8 @@ module yqkqsbh {
         }
 
         private updateTable(name: string): void {
+        	var name = this.mTableId + "_jqgrid_1234";
+        
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
 
             var data = [];
@@ -117,18 +149,26 @@ module yqkqsbh {
             var row = [];
             for (var i = 0; i < this.mMonth; ++i) {
                 tmp = [(i + 1) + "月份"];
-                row = [].concat(this.mData[i]);
-                for (var col in row){
-			      	row[col] = Util.formatCurrency(row[col]);
+                if (undefined != this.mData){
+	                row = [].concat(this.mData[i]);
+	                for (var col in row){
+				      	row[col] = Util.formatCurrency(row[col]);
+	                }
                 }
                 data.push(tmp.concat(row));
             }
             tmp = ["合计"];
-            row = [].concat(this.mData[this.mMonth]);
-            for (var col in row){
-            	row[col] = Util.formatCurrency(row[col]);
+            if (undefined != this.mData){
+	            row = [].concat(this.mData[this.mMonth]);
+	            for (var col in row){
+	            	row[col] = Util.formatCurrency(row[col]);
+	            }
             }
             data.push(tmp.concat(row));
+            
+			var parent = $("#" + this.mTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
 
 
             $("#" + name).jqGrid(

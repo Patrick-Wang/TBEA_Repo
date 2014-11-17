@@ -237,7 +237,7 @@ th.ui-th-ltr {
 						<td>
 							<div style="float: left; margin-left: 15px;">
 								<input type="button"
-									onclick="zbhz_overview.View.newInstance().updateUI()"
+									onclick="zbhz_overview.View.newInstance().updateUI()" style="width : 80px; margin-left:10px;"
 									value="更新" ></input>
 							</div>
 						</td>

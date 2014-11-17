@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.model.entity.YSZKJGQK;
 
@@ -27,19 +28,20 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 	}
 
 	@Override
-	public List<YSZKJGQK> getYszkjg(Calendar cal) {
+	public List<YSZKJGQK> getYszkjg(Calendar cal, Company comp) {
 		Query q = getEntityManager().createQuery(
-				"select y from YSZKJGQK y where y.ny = ?1");
+				"select y from YSZKJGQK y where y.ny = ?1 and y.qybh = ?2");
 		q.setParameter(1, Util.format(cal.getTime()));
+		q.setParameter(2, Integer.valueOf(comp.getId()));
 		return q.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<YSZKJGQK> getJetbbh(Calendar cal) {
+	public List<YSZKJGQK> getJetbbh(Calendar cal, Company comp) {
 		Query q = getEntityManager()
 				.createQuery(
-						"select y from YSZKJGQK y where y.ny >= ?1 and y.ny <= ?2 or y.ny >= ?3 and y.ny <= ?4");
+						"select y from YSZKJGQK y where y.ny >= ?1 and y.ny <= ?2 or y.ny >= ?3 and y.ny <= ?4 and y.qybh = ?5");
 		Calendar preYear = Calendar.getInstance();
 		preYear.set(cal.get(Calendar.YEAR) - 1, 0, 1);
 		Calendar preYearMonth = Calendar.getInstance();
@@ -52,15 +54,16 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		q.setParameter(2, Util.format(preYearMonth.getTime()));
 		q.setParameter(3, Util.format(curYear.getTime()));
 		q.setParameter(4, Util.format(cal.getTime()));
+		q.setParameter(5, Integer.valueOf(comp.getId()));
 		return q.getResultList();
 
 	}
 
 	@Override
-	public List<YSZKJGQK> getWdqtbbh(Calendar cal) {
+	public List<YSZKJGQK> getWdqtbbh(Calendar cal, Company comp) {
 		Query q = getEntityManager()
 				.createQuery(
-						"select y from YSZKJGQK y where y.ny >= ? and y.ny <= ? or y.ny >= ? and y.ny <= ?");
+						"select y from YSZKJGQK y where y.ny >= ? and y.ny <= ? or y.ny >= ? and y.ny <= ? and y.qybh = ?");
 		Calendar preYear = Calendar.getInstance();
 		preYear.set(cal.get(Calendar.YEAR) - 1, 0, 1);
 		Calendar preYearMonth = Calendar.getInstance();
@@ -73,6 +76,7 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		q.setParameter(2, Util.format(preYearMonth.getTime()));
 		q.setParameter(3, Util.format(curYear.getTime()));
 		q.setParameter(4, Util.format(cal.getTime()));
+		q.setParameter(5, Integer.valueOf(comp.getId()));
 		return q.getResultList();
 	}
 

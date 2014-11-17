@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.model.dao.blhtdqqkhz.BLHTDQQKHZDao;
 import com.tbea.test.testWebProject.model.entity.BLHTDQQKHZ;
@@ -39,13 +40,14 @@ public class BLHTDQQKHZServiceImpl implements BLHTDQQKHZService {
 	//	[...Dqfkhfxsblye, Dqfkhfxsblfs (refer to BLHTDQQKHZ entity)...]
 	//current year's bl fs
 	//	[...Dqfkhfxsblye, Dqfkhfxsblfs (refer to BLHTDQQKHZ entity)...]
-	public String[][] getBlhtdqqk(Date date){
+	@Override
+	public String[][] getBlhtdqqk(Date date, Company comp){
 
     	Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.MONTH, -1);
 	       
-        List<BLHTDQQKHZ> list = blDao.getBlAfterDate(cal);
+        List<BLHTDQQKHZ> list = blDao.getBlAfterDate(cal, comp);
 
 		
 		String[][] result = new String[2][12]; 
@@ -94,12 +96,13 @@ public class BLHTDQQKHZServiceImpl implements BLHTDQQKHZService {
 	//return value format
 	//	[... previous year's blye from January to current month...]
 	//	[... current year's blye from January to current month...]
-	public String[][] getBlyeqs(Date date){
+	@Override
+	public String[][] getBlyeqs(Date date, Company comp){
 
     	Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
-		List<BLHTDQQKHZ> list = blDao.getBltbbh(cal);
+		List<BLHTDQQKHZ> list = blDao.getBltbbh(cal, comp);
 		
 		String[][] result = new String[2][cal.get(Calendar.MONTH) + 1]; 
 

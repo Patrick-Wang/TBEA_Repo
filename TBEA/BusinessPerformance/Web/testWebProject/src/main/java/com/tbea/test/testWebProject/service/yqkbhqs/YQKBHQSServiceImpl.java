@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.model.dao.cqk.CQKDao;
 import com.tbea.test.testWebProject.model.dao.yqkbhqs.YQKBHQSDao;
@@ -33,11 +34,11 @@ public class YQKBHQSServiceImpl implements YQKBHQSService {
 	//Total
 	//	[... current year data...]
 	@Override
-	public String[][] getYqkbhqsData(Date d) {
+	public String[][] getYqkbhqsData(Date d, Company comp) {
 		Calendar cal = Calendar.getInstance();
     	cal.setTime(d);
 		String[][] result = new String[13][5]; 
-		List<YQKBHQS> list = yqkbhqsDao.getYqkbhqsOfThisYear(cal);
+		List<YQKBHQS> list = yqkbhqsDao.getYqkbhqsOfThisYear(cal, comp);
 		
 		int[] total = new int[]{0, 0, 0, 0, 0};
 		Calendar time = Calendar.getInstance();

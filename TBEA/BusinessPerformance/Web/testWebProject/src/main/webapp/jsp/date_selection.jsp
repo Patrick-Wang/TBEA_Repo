@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <script type="text/javascript">
@@ -62,53 +62,62 @@
 	</script>
 <table id="date_selection">
 	<tr>
-		<td><select id="year" onchange="onYearChange(this.value)"
-			style="width: 125px;">
-				<option value="${year}" selected="selected">${year}年</option>
-				<option value="${year - 1}">${year - 1}年</option>
-		</select></td>
-		<td><select id="month"
-			onchange="onMonthSelected(this.value)" style="width: 125px;">
-				<c:forEach begin="0" end="${month - 1}" var="i">
-					<c:choose>
+		<c:choose>
 
-						<c:when test="${i == (month - 1)}">
-							<option value="${month}" selected="selected">${month}月</option>
-						</c:when>
+			<c:when test="${empty month}">
+				<td><select id="year"
+					onchange="instance.onYearChange(this.value)" style="width: 125px;">
+						<option value="${year}" selected="selected">${year}年</option>
+						<option value="${year - 1}">${year - 1}年</option>
+				</select></td>
+			</c:when>
 
-						<c:otherwise>
-							<option value="${i + 1}">${i + 1}月</option>
-						</c:otherwise>
+			<c:otherwise>
+				<td><select id="year" onchange="onYearChange(this.value)"
+					style="width: 125px;">
+						<option value="${year}" selected="selected">${year}年</option>
+						<option value="${year - 1}">${year - 1}年</option>
+				</select></td>
+				<td><select id="month" onchange="onMonthSelected(this.value)"
+					style="width: 125px;">
+						<c:forEach begin="0" end="${month - 1}" var="i">
+							<c:choose>
 
-					</c:choose>
+								<c:when test="${i == (month - 1)}">
+									<option value="${month}" selected="selected">${month}月</option>
+								</c:when>
 
-				</c:forEach>
+								<c:otherwise>
+									<option value="${i + 1}">${i + 1}月</option>
+								</c:otherwise>
 
-		</select>
-		
-		</td>
+							</c:choose>
+
+						</c:forEach>
+
+				</select></td>
+			</c:otherwise>
+
+		</c:choose>
+
 		<c:if test="${!(empty day)}">
 			<td><select id="day"
 				onchange="instance.onDaySelected(this.value)" style="width: 125px;">
-				<c:forEach begin="0" end="${dayCount - 1}" var="i">
-					<c:choose>
-						<c:when test="${i == (day - 1)}">
-							<option value="${i + 1}" selected="selected">${i + 1}日</option>
-						</c:when>
+					<c:forEach begin="0" end="${dayCount - 1}" var="i">
+						<c:choose>
+							<c:when test="${i == (day - 1)}">
+								<option value="${i + 1}" selected="selected">${i + 1}日</option>
+							</c:when>
 
-						<c:otherwise>
-							<option value="${i + 1}">${i + 1}日</option>
-						</c:otherwise>
+							<c:otherwise>
+								<option value="${i + 1}">${i + 1}日</option>
+							</c:otherwise>
 
-					</c:choose>
+						</c:choose>
 
-				</c:forEach>
+					</c:forEach>
 
-		</select>
-		
-		</td>
+			</select></td>
 		</c:if>
-		<td><input type="button" value="更新" onclick="instance.updateUI()"></input>
-		</td>
 	</tr>
 </table>

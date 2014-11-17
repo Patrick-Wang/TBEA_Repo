@@ -3,20 +3,9 @@
 declare var echarts;
 
 module zbhz_overview {
-
-	 enum CompanyType {
-		SB, HB, XB, TB, LL, XL, DL, 
-		XNY, GY,
-		TCNY, NDGS, ZJWL,
-		JCK,   GCGS,  
-		ZH, 
-		SBDCY, XNYCY, NYCY, GCL, JT,
-		ALL = 100
-	}
-
 	 
 	 class YDZBDataSet{
-	 	private companyId : CompanyType = CompanyType.JT;
+	 	private companyId : Util.CompanyType = Util.CompanyType.JT;
 	 	private mYd: Array<string[]>;
 	 	private mJd: Array<string[]>;
 	 	private mNd: Array<string[]>;
@@ -39,11 +28,11 @@ module zbhz_overview {
 	 		return this.mJdtb;
 	 	}
 	 	
-	 	public getType() : CompanyType{
+	 	public getType() : Util.CompanyType{
 	 		return this.companyId;
 	 	}
 	 	
-	 	constructor(comId : CompanyType, 
+	 	constructor(comId : Util.CompanyType, 
 		 	yd : Array<string[]>, 
 		 	jd : Array<string[]>,
 		 	nd : Array<string[]>,
@@ -70,7 +59,7 @@ module zbhz_overview {
 			this.dataSetMap[dataSet.getType() + ""] = dataSet;
 		}
 		
-		public getData(ty : CompanyType, callBack : (dataSet: YDZBDataSet) => void) : void{
+		public getData(ty : Util.CompanyType, callBack : (dataSet: YDZBDataSet) => void) : void{
 			if (this.dataSetMap[ty + ""] == undefined){
 				$.ajax({
 		             type: "GET",
@@ -108,8 +97,8 @@ module zbhz_overview {
 
 		private mSelectCy : boolean = true;
 		private mDataSetMgr : DataSetManager;
- 		private mCy: CompanyType = CompanyType.JT;
-        private mDw: CompanyType = CompanyType.ALL;
+ 		private mCy: Util.CompanyType = Util.CompanyType.JT;
+        private mDw: Util.CompanyType = Util.CompanyType.ALL;
         private mMonth: number;
         private mYear: number;
         private mChartIds: string[];
@@ -121,8 +110,8 @@ module zbhz_overview {
            this.updateUI();
         }
 
-		private getCurrentCompany() :　CompanyType{
-			if (this.mDw != CompanyType.ALL){
+		private getCurrentCompany() :　Util.CompanyType{
+			if (this.mDw != Util.CompanyType.ALL){
 				return this.mDw;
 			}
 			else{

@@ -33,22 +33,54 @@ module cqk {
         private mEchartIdSquire: string;
         private mEchartIdLine: string;
         private mYear: number;
+        private mComp: Util.CompanyType = Util.CompanyType.JT;
         private mLineData: Array<string[]>;
         private mTableData: Array<string[]>;
+        private mDataSet : Util.DateDataSet;
+        private mTableId : string;
         public init(echartIdPie: string, echartIdSquire: string, echartIdLine: string, tableId: string, args: any[]): void {
             this.mMonth = args[0];
             this.mYear = args[1];
-            this.mLineData = args[2];
-            this.mTableData = args[3];
+            this.mTableId = tableId;
             this.mEchartIdLine = echartIdLine;
             this.mEchartIdPie = echartIdPie;
             this.mEchartIdSquire = echartIdSquire;
-            this.updateTable(tableId);
-            this.updatePieEchart(this.mEchartIdPie);
-            this.updateLineEchart(this.mEchartIdLine);
-            this.updateSquareEchart(this.mEchartIdSquire);
-            
+            this.mDataSet = new Util.DateDataSet("cqk_update.do");
+            this.updateTable(this.mTableId);
+            this.updateUI();
         }
+        
+        
+
+ 		public onYearSelected(year : number){
+        	this.mYear = year;
+        }
+        
+        public onMonthSelected(month : number){
+        	this.mMonth = month;
+        }
+        
+        public onCompanySelected(comp : Util.CompanyType){
+        	this.mComp = comp;
+        }
+        
+		public updateUI(){
+		 	this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data : string) =>{
+				if (null != data){
+					var arr = data.split("##");
+					this.mTableData = JSON.parse(arr[0]);
+					this.mLineData = JSON.parse(arr[1]);
+					$('h1').text(this.mYear + "年" + this.mMonth + "月  陈欠款");
+					document.title = this.mYear + "年" + this.mMonth + "月  陈欠款";
+					this.updateTable(this.mTableId);
+		            this.updatePieEchart(this.mEchartIdPie);
+		            this.updateLineEchart(this.mEchartIdLine);
+		            this.updateSquareEchart(this.mEchartIdSquire);
+				}
+			});
+		}
+        
+        
 
         public onSelected(i: number) {
         	this.currentSelected = i;
@@ -341,15 +373,16 @@ module cqk {
         //}
 
         private updateTable(name: string): void {
+        	var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mYear);
             tableAssist.mergeTitle();
          
             tableAssist.mergeRow(0);
-	           tableAssist.mergeColum(0, 4);
-	           tableAssist.mergeColum(0, 5);
-	           tableAssist.mergeColum(0, 6);
-	           tableAssist.mergeColum(0, 7);
-	           tableAssist.mergeColum(0, 8);
+           tableAssist.mergeColum(0, 4);
+           tableAssist.mergeColum(0, 5);
+           tableAssist.mergeColum(0, 6);
+           tableAssist.mergeColum(0, 7);
+           tableAssist.mergeColum(0, 8);
             var data = [
                	["电力及配套","国网、南网"],
 				["电力及配套","省、市电力系统"],
@@ -359,22 +392,29 @@ module cqk {
 				["轨道","交通"],
 				["出口","合同"],
 				["其","他"],
-				["合","计"],
+				["合","计"]
 			];
 
 //			for (var i = 0; i < data.length; ++i){
 //				data[i] = data[i].concat(this.mTableData[i]);
 //			}
-
-            var row = [];
-            for (var i = 0; i < data.length; ++i) {
-                row = [].concat(this.mTableData[i]);
-                for (var col in row) {
-                    row[col] = Util.formatCurrency(row[col]);
-                }
-                data[i] = data[i].concat(row);
+		
+			if (undefined != this.mTableData)
+			{
+	            var row = [];
+	            for (var i = 0; i < data.length; ++i) {
+	                row = [].concat(this.mTableData[i]);
+	                for (var col in row) {
+	                    row[col] = Util.formatCurrency(row[col]);
+	                }
+	                data[i] = data[i].concat(row);
+	            }
             }
 
+			var parent = $("#" + this.mTableId);
+			parent.empty();
+			parent.append("<table id='"+ name +"'></table>");
+			
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",

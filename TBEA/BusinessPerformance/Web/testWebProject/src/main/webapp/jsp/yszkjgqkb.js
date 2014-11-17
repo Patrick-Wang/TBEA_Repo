@@ -20,6 +20,7 @@ var yszkjgqkb;
     var View = (function () {
         function View() {
             this.mCurrentSelected = 0;
+            this.mComp = 19 /* JT */;
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -31,20 +32,47 @@ var yszkjgqkb;
         View.prototype.init = function (echartIdPie, echartIdSquire, echartIdBar, echartIdLine, tableId, args) {
             this.mMonth = args[0];
             this.mYear = args[1];
-            this.mTableData = args[2];
-            this.mBarData = args[3];
-            this.mLineData = args[4];
+            this.mTableId = tableId;
 
             this.mEchartIdBar = echartIdBar;
             this.mEchartIdLine = echartIdLine;
             this.mEchartIdPie = echartIdPie;
             this.mEchartIdSquire = echartIdSquire;
 
-            this.updatePieEchart(this.mEchartIdPie);
-            this.updateLineEchart(this.mEchartIdLine);
-            this.updateBarEchart(this.mEchartIdBar);
-            this.updateSquareEchart(this.mEchartIdSquire);
+            this.mDataSet = new Util.DateDataSet("yszkjgqk_update.do");
             this.updateTable(tableId);
+            this.updateUI();
+        };
+
+        View.prototype.onYearSelected = function (year) {
+            this.mYear = year;
+        };
+
+        View.prototype.onMonthSelected = function (month) {
+            this.mMonth = month;
+        };
+
+        View.prototype.onCompanySelected = function (comp) {
+            this.mComp = comp;
+        };
+
+        View.prototype.updateUI = function () {
+            var _this = this;
+            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
+                if (null != data) {
+                    var arr = data.split("##");
+                    _this.mTableData = JSON.parse(arr[0]);
+                    _this.mBarData = JSON.parse(arr[1]);
+                    _this.mLineData = JSON.parse(arr[2]);
+                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月  应收账款结构情况表");
+                    document.title = _this.mYear + "年" + _this.mMonth + "月  应收账款结构情况表";
+                    _this.updateTable(_this.mTableId);
+                    _this.updatePieEchart(_this.mEchartIdPie);
+                    _this.updateLineEchart(_this.mEchartIdLine);
+                    _this.updateBarEchart(_this.mEchartIdBar);
+                    _this.updateSquareEchart(_this.mEchartIdSquire);
+                }
+            });
         };
 
         View.prototype.onSelected = function (i) {
@@ -318,6 +346,7 @@ var yszkjgqkb;
         };
 
         View.prototype.updateTable = function (name) {
+            var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name);
             tableAssist.mergeTitle();
             tableAssist.mergeRow(0);
@@ -334,16 +363,22 @@ var yszkjgqkb;
                 ["其", "它"],
                 ["合", "计"]];
 
-            var row = [];
-            for (var i = 0; i < data.length; ++i) {
-                row = [].concat(this.mTableData[i]);
-                for (var col in row) {
-                    if (col != '1') {
-                        row[col] = Util.formatCurrency(row[col]);
+            if (undefined != this.mTableData) {
+                var row = [];
+                for (var i = 0; i < data.length; ++i) {
+                    row = [].concat(this.mTableData[i]);
+                    for (var col in row) {
+                        if (col != '1') {
+                            row[col] = Util.formatCurrency(row[col]);
+                        }
                     }
+                    data[i] = data[i].concat(row);
                 }
-                data[i] = data[i].concat(row);
             }
+
+            var parent = $("#" + this.mTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
 
             $("#" + name).jqGrid(tableAssist.decorate({
                 // url: "TestTable/WGDD_load.do",

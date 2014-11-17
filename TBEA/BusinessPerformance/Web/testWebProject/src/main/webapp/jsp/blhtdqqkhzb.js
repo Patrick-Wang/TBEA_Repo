@@ -47,6 +47,7 @@ var blhtdqqkhzb;
 
     var View = (function () {
         function View() {
+            this.mComp = 19 /* JT */;
         }
         View.newInstance = function () {
             return new View();
@@ -55,10 +56,38 @@ var blhtdqqkhzb;
         View.prototype.init = function (echartId, tableId, args) {
             this.mMonth = args[0];
             this.mYear = args[1];
-            this.mChartData = args[2];
-            this.mTableData = args[3];
-            this.updateEchart(echartId);
-            this.updateTable(tableId);
+            this.mTableId = tableId;
+            this.mEchartsId = echartId;
+            this.mDataSet = new Util.DateDataSet("blhtdqqkhz_update.do");
+            this.updateTable(this.mTableId);
+            this.updateUI();
+        };
+
+        View.prototype.onYearSelected = function (year) {
+            this.mYear = year;
+        };
+
+        View.prototype.onMonthSelected = function (month) {
+            this.mMonth = month;
+        };
+
+        View.prototype.onCompanySelected = function (comp) {
+            this.mComp = comp;
+        };
+
+        View.prototype.updateUI = function () {
+            var _this = this;
+            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
+                if (null != data) {
+                    var arr = data.split("##");
+                    _this.mChartData = JSON.parse(arr[0]);
+                    _this.mTableData = JSON.parse(arr[1]);
+                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月  保理合同到期情况汇总表");
+                    document.title = _this.mYear + "年" + _this.mMonth + "月  保理合同到期情况汇总表";
+                    _this.updateTable(_this.mTableId);
+                    _this.updateEchart(_this.mEchartsId);
+                }
+            });
         };
 
         View.prototype.fillData = function (month) {
@@ -127,6 +156,7 @@ var blhtdqqkhzb;
         };
 
         View.prototype.updateTable = function (name) {
+            var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name, this.mMonth);
             tableAssist.mergeTitle();
             tableAssist.mergeRow(0);
@@ -138,15 +168,19 @@ var blhtdqqkhzb;
             //            for (var i = 0; i < data.length; ++i){
             //                data[i] = data[i].concat(this.mTableData[i]);
             //            }
-            var row = [];
-            for (var i = 0; i < data.length; ++i) {
-                row = [].concat(this.mTableData[i]);
-                for (var col in row) {
-                    row[col] = Util.formatCurrency(row[col]);
+            if (undefined != this.mTableData) {
+                var row = [];
+                for (var i = 0; i < data.length; ++i) {
+                    row = [].concat(this.mTableData[i]);
+                    for (var col in row) {
+                        row[col] = Util.formatCurrency(row[col]);
+                    }
+                    data[i] = data[i].concat(row);
                 }
-                data[i] = data[i].concat(row);
             }
-
+            var parent = $("#" + this.mTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
                 multiselect: false,
                 drag: false,

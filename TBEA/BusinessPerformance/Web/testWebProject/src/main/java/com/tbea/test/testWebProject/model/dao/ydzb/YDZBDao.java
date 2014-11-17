@@ -5,10 +5,10 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
+import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
 import com.tbea.test.testWebProject.model.entity.local.YQK;
-import com.tbea.test.testWebProject.service.ydzb.Company;
 
 
 

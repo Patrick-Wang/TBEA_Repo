@@ -5,15 +5,16 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
+import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.model.entity.YSZKJGQK;
 
 public interface YSZKJGQKDao extends AbstractReadWriteDao<YSZKJGQK> {
 
-	List<YSZKJGQK> getYszkjg(Calendar cal);
+	List<YSZKJGQK> getYszkjg(Calendar cal, Company comp);
 
-	List<YSZKJGQK> getJetbbh(Calendar cal);
+	List<YSZKJGQK> getJetbbh(Calendar cal, Company comp);
 
-	List<YSZKJGQK> getWdqtbbh(Calendar cal);
+	List<YSZKJGQK> getWdqtbbh(Calendar cal, Company comp);
 
 	
 }

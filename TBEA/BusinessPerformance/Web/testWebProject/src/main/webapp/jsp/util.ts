@@ -1,6 +1,16 @@
 declare var $;
 module Util {
 
+	export enum CompanyType {
+		SB, HB, XB, TB, LL, XL, DL, 
+		XNY, GY,
+		TCNY, NDGS, ZJWL,
+		JCK,   GCGS,  
+		ZH, 
+		SBDCY, XNYCY, NYCY, GCL, JT,
+		ALL = 100
+	}
+
 	export class DateDataSet{
 		private mBaseResUrl : string;
 		private mDataMap : any = {};
@@ -54,6 +64,31 @@ module Util {
 			}
 			else {
         		callBack(this.mDataMap[y + ""][m + ""][d + ""]);
+    		}
+		}
+		
+		public getDataByCompany(m: number, y: number, compId: CompanyType, callBack: (arrayData : string) => void): void{
+            if (undefined == this.mDataMap[y + ""]) {
+                this.mDataMap[y + ""] = {};
+            }
+            if (undefined == this.mDataMap[y + ""][m + ""]){
+            	this.mDataMap[y + ""][m + ""] = {}
+            }
+            if (undefined == this.mDataMap[y + ""][m + ""][compId + ""]){
+                $.ajax({
+                    type: "GET",
+                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "&companyId=" + compId,
+	                success: (data: any) =>{
+		                  this.mDataMap[y + ""][m + ""][compId + ""] = data;
+		                  callBack(data);
+			        },
+			        error: (XMLHttpRequest, textStatus, errorThrown) => {
+	                    callBack(null);
+	                }
+         		});
+			}
+			else {
+        		callBack(this.mDataMap[y + ""][m + ""][compId + ""]);
     		}
 		}
 	}

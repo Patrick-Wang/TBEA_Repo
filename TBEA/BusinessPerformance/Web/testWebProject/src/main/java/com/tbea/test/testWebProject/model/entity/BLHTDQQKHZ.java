@@ -30,7 +30,22 @@ public class BLHTDQQKHZ extends AbstractReadWriteEntity implements Serializable 
 	Integer Dqblfs; //	到期保理份数
 	Double Dqblzyhkje; //	到期保理中已回款金额
 	Integer Dqblzyhkfs; //	到期保理中已回款份数
+	Integer qybh;
 
+	/**
+	 * @return the qybh
+	 */
+	@Column(name = "qybh")	
+	public Integer getQybh() {
+		return qybh;
+	}
+
+	/**
+	 * @param qybh the qybh to set
+	 */
+	public void setQybh(Integer qybh) {
+		this.qybh = qybh;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

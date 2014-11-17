@@ -117,7 +117,6 @@ function fixFork () {
         navMarginRight = 150 - (bodyWidth - contnetWidth) / 2;
     }
     $('#nav')[0].style.marginRight = navMarginRight + 'px';
-    $('#fork-image')[0].style.width = (document.body.offsetWidth < 768 ? 1 : forkWidth) + 'px';
 };
 fixFork();
 $(window).on('resize', fixFork);

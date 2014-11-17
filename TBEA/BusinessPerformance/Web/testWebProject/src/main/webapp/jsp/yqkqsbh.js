@@ -21,6 +21,7 @@ var yqkqsbh;
 
     var View = (function () {
         function View() {
+            this.mComp = 19 /* JT */;
         }
         View.newInstance = function () {
             return new View();
@@ -28,9 +29,34 @@ var yqkqsbh;
 
         View.prototype.init = function (echartId, tableId, args) {
             this.mMonth = args[0];
-            this.mData = args[1];
-            this.updateEchart(echartId);
+            this.mYear = args[1];
+
+            this.mTableId = tableId;
+            this.mCharId = echartId;
+            this.mDataSet = new Util.DateDataSet("yqkbhqs_update.do");
             this.updateTable(tableId);
+            this.updateUI();
+        };
+
+        View.prototype.onYearSelected = function (year) {
+            this.mYear = year;
+        };
+
+        View.prototype.onCompanySelected = function (comp) {
+            this.mComp = comp;
+        };
+
+        View.prototype.updateUI = function () {
+            var _this = this;
+            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
+                if (null != data) {
+                    _this.mData = JSON.parse(data);
+                    $('h1').text(_this.mYear + "年  逾期款趋势变化表");
+                    document.title = _this.mYear + "年  逾期款趋势变化表";
+                    _this.updateEchart(_this.mCharId);
+                    _this.updateTable(_this.mTableId);
+                }
+            });
         };
 
         View.prototype.updateEchart = function (echart) {
@@ -104,6 +130,8 @@ var yqkqsbh;
         };
 
         View.prototype.updateTable = function (name) {
+            var name = this.mTableId + "_jqgrid_1234";
+
             var tableAssist = JQGridAssistantFactory.createTable(name);
 
             var data = [];
@@ -111,18 +139,26 @@ var yqkqsbh;
             var row = [];
             for (var i = 0; i < this.mMonth; ++i) {
                 tmp = [(i + 1) + "月份"];
-                row = [].concat(this.mData[i]);
-                for (var col in row) {
-                    row[col] = Util.formatCurrency(row[col]);
+                if (undefined != this.mData) {
+                    row = [].concat(this.mData[i]);
+                    for (var col in row) {
+                        row[col] = Util.formatCurrency(row[col]);
+                    }
                 }
                 data.push(tmp.concat(row));
             }
             tmp = ["合计"];
-            row = [].concat(this.mData[this.mMonth]);
-            for (var col in row) {
-                row[col] = Util.formatCurrency(row[col]);
+            if (undefined != this.mData) {
+                row = [].concat(this.mData[this.mMonth]);
+                for (var col in row) {
+                    row[col] = Util.formatCurrency(row[col]);
+                }
             }
             data.push(tmp.concat(row));
+
+            var parent = $("#" + this.mTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
 
             $("#" + name).jqGrid(tableAssist.decorate({
                 // url: "TestTable/WGDD_load.do",

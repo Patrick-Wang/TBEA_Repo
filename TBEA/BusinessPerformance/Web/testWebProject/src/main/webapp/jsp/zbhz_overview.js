@@ -3,31 +3,6 @@
 
 var zbhz_overview;
 (function (zbhz_overview) {
-    var CompanyType;
-    (function (CompanyType) {
-        CompanyType[CompanyType["SB"] = 0] = "SB";
-        CompanyType[CompanyType["HB"] = 1] = "HB";
-        CompanyType[CompanyType["XB"] = 2] = "XB";
-        CompanyType[CompanyType["TB"] = 3] = "TB";
-        CompanyType[CompanyType["LL"] = 4] = "LL";
-        CompanyType[CompanyType["XL"] = 5] = "XL";
-        CompanyType[CompanyType["DL"] = 6] = "DL";
-        CompanyType[CompanyType["XNY"] = 7] = "XNY";
-        CompanyType[CompanyType["GY"] = 8] = "GY";
-        CompanyType[CompanyType["TCNY"] = 9] = "TCNY";
-        CompanyType[CompanyType["NDGS"] = 10] = "NDGS";
-        CompanyType[CompanyType["ZJWL"] = 11] = "ZJWL";
-        CompanyType[CompanyType["JCK"] = 12] = "JCK";
-        CompanyType[CompanyType["GCGS"] = 13] = "GCGS";
-        CompanyType[CompanyType["ZH"] = 14] = "ZH";
-        CompanyType[CompanyType["SBDCY"] = 15] = "SBDCY";
-        CompanyType[CompanyType["XNYCY"] = 16] = "XNYCY";
-        CompanyType[CompanyType["NYCY"] = 17] = "NYCY";
-        CompanyType[CompanyType["GCL"] = 18] = "GCL";
-        CompanyType[CompanyType["JT"] = 19] = "JT";
-        CompanyType[CompanyType["ALL"] = 100] = "ALL";
-    })(CompanyType || (CompanyType = {}));
-
     var YDZBDataSet = (function () {
         function YDZBDataSet(comId, yd, jd, nd, ydtb, jdtb) {
             this.companyId = 19 /* JT */;

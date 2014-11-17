@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util.Escape;
 import com.tbea.test.testWebProject.service.blhtdqqkhz.BLHTDQQKHZService;
-import com.tbea.test.testWebProject.service.ydzb.Company;
 import com.tbea.test.testWebProject.service.ydzb.YDZBService;
 
 @Controller

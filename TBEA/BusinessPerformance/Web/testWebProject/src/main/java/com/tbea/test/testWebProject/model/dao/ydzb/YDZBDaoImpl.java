@@ -15,11 +15,11 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.tbea.Connection.DBConnectionManager;
+import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.CompanyGroup;
 import com.tbea.test.testWebProject.common.Util.Escape;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
-import com.tbea.test.testWebProject.service.ydzb.Company;
-import com.tbea.test.testWebProject.service.ydzb.CompanyGroup;
 
 @Repository
 public class YDZBDaoImpl implements YDZBDao {

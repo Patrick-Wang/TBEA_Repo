@@ -6,11 +6,12 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
+import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.model.entity.QYZJK;
 import com.tbea.test.testWebProject.model.entity.YQKBHQS;
 
 public interface YQKBHQSDao extends AbstractReadWriteDao<YQKBHQS> {
 
-	List<YQKBHQS> getYqkbhqsOfThisYear(Calendar cal);
+	List<YQKBHQS> getYqkbhqsOfThisYear(Calendar cal, Company comp);
 
 }

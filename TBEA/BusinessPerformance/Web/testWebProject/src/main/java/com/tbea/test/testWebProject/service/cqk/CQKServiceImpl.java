@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.model.dao.cqk.CQKDao;
 import com.tbea.test.testWebProject.model.dao.transfer.yszktz.YSZKTZLocalDao;
@@ -189,8 +190,8 @@ public class CQKServiceImpl implements CQKService {
 	// hy two
 	// [... current year data...]
 	@Override
-	public String[][] getCqkData(Date d) {
-		List<CQK> list = cqkDao.getCqkData(d);
+	public String[][] getCqkData(Date d, Company comp) {
+		List<CQK> list = cqkDao.getCqkData(d, comp);
 
 		String[][] result = new String[hyMap.size()][4];
 		for (CQK cqk : list) {
@@ -232,14 +233,14 @@ public class CQKServiceImpl implements CQKService {
 	// current month...]
 	// ......
 	@Override
-	public String[][] getCompareData(Date d) {
+	public String[][] getCompareData(Date d, Company comp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 
 		String[][] result = new String[5 * hyMap.size()][cal
 				.get(Calendar.MONTH) + 1];
 
-		List<CQK> list = cqkDao.getPreYearCQK(d);
+		List<CQK> list = cqkDao.getPreYearCQK(d, comp);
 		Calendar time = Calendar.getInstance();
 		int month = 0;
 		for (CQK cqk : list) {
@@ -251,7 +252,7 @@ public class CQKServiceImpl implements CQKService {
 			}
 		}
 
-		list = cqkDao.getCurYearCQK(d);
+		list = cqkDao.getCurYearCQK(d, comp);
 		for (CQK cqk : list) {
 			if (cqk != null && hyMap.get(cqk.getHy()) != null) {
 				time.setTime(Util.valueOf(cqk.getNy()));

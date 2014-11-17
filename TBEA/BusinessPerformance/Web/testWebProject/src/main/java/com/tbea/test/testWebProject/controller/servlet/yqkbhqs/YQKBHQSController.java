@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.test.testWebProject.service.cqk.CQKService;
+import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.service.yqkbhqs.YQKBHQSService;
 
 @Controller
@@ -25,16 +27,31 @@ public class YQKBHQSController {
 	@Autowired
 	private YQKBHQSService service;
 	private String view = "yqkqsbh";
+	
+	@RequestMapping(value = "yqkbhqs_update.do", method = RequestMethod.GET)
+	public @ResponseBody String getYqkbhqs_update(HttpServletRequest request,
+			HttpServletResponse response) {
+		int year = Integer.parseInt(request.getParameter("year"));
+		String companyId = request.getParameter("companyId");
+		int cid = Integer.parseInt(companyId);
+		Date d = java.sql.Date.valueOf(year + "-" + 1 + "-" + 1);
+		Company comp = Company.get(cid);
+		String yqkbhqs = JSONArray.fromObject(service.getYqkbhqsData(d, comp)).toString().replace("null", "0.00");
+		return yqkbhqs;
+	}
+
+	
 	@RequestMapping(value = "yqkbhqs.do", method = RequestMethod.GET)
 	public ModelAndView getYqkbhqs(HttpServletRequest request,
 			HttpServletResponse response) {
 		Calendar now = Calendar.getInstance();  
-		int month = now.get(Calendar.MONTH) + 1;
 		int year = now.get(Calendar.YEAR);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
 		Map<String, Object> map = new HashMap<String, Object>();
-		String yqkbhqs = JSONArray.fromObject(service.getYqkbhqsData(d)).toString().replace("null", "0.00");
-		map.put("yqkqsbh", yqkbhqs);
+		map.put("year", year);
+		String[][] name_ids = Util.getCommonCompanyNameAndIds();
+		map.put("names", name_ids[0]);
+		map.put("ids", name_ids[1]);
+		map.put("company_size", name_ids[0].length);
 		return new ModelAndView(view, map);
 	}
 

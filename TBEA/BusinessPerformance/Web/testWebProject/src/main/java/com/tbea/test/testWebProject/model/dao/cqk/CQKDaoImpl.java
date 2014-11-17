@@ -15,6 +15,7 @@ import com.tbea.test.testWebProject.model.entity.local.CQK;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util;
 
 
@@ -32,7 +33,7 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CQK> getPreYearCQK(Date d) {
+	public List<CQK> getPreYearCQK(Date d, Company comp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		
@@ -42,16 +43,17 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
         Calendar preYearMonth = Calendar.getInstance();
         preYearMonth.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH), 1);
         
-        Query q = getEntityManager().createQuery("select c from CQK c where c.ny >= ?1 and c.ny <= ?2");
+        Query q = getEntityManager().createQuery("select c from CQK c where c.ny >= ?1 and c.ny <= ?2 and c.qybh = ?3");
 		q.setParameter(1, Util.format(preYear.getTime()));
 		q.setParameter(2, Util.format(preYearMonth.getTime()));
+		q.setParameter(3, Integer.valueOf(comp.getId()));
 		
 		return q.getResultList();
 	}
 
 
 	@Override
-	public List<CQK> getCurYearCQK(Date d) {
+	public List<CQK> getCurYearCQK(Date d, Company comp) {
 		Calendar cal = Calendar.getInstance();
         cal.setTime(d);
         Calendar curYear = Calendar.getInstance();
@@ -59,19 +61,22 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
         cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), 1);
         
    
-        Query q = getEntityManager().createQuery("select c from CQK c where c.ny >= ?1 and c.ny <= ?2");
+        Query q = getEntityManager().createQuery("select c from CQK c where c.ny >= ?1 and c.ny <= ?2 and c.qybh = ?3");
 		q.setParameter(1, Util.format(curYear.getTime()));
 		q.setParameter(2, Util.format(d));
+		q.setParameter(3, Integer.valueOf(comp.getId()));
+		
 		return q.getResultList();
 	}
 
 
 	@Override
-	public List<CQK> getCqkData(Date d) {
-		Query q = getEntityManager().createQuery("select c from CQK c where c.ny = ?1");
+	public List<CQK> getCqkData(Date d, Company comp) {
+		Query q = getEntityManager().createQuery("select c from CQK c where c.ny = ?1 and c.qybh = ?2");
 		Calendar cal = Calendar.getInstance();
         cal.setTime(d);
 		q.setParameter(1, Util.format(d));
+		q.setParameter(2, Integer.valueOf(comp.getId()));
 		return  q.getResultList();
 	}
 

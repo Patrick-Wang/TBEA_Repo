@@ -32,7 +32,22 @@ public class YSZKJGQK extends AbstractReadWriteEntity implements Serializable {
 	Double Wdqk;//	未到期款
 	Double Wdqzbj;//	未到期质保金
 	Double Yszkhj;//	应收账款合计
+	Integer qybh;
+	/**
+	 * @return the qybh
+	 */
+	@Column(name = "qybh")	
+	public Integer getQybh() {
+		return qybh;
+	}
 
+	/**
+	 * @param qybh the qybh to set
+	 */
+	public void setQybh(Integer qybh) {
+		this.qybh = qybh;
+	}
+	
 	@Column(name = "ny")
 	public String getNy() {
 		return Ny;

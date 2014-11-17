@@ -6,17 +6,13 @@ import java.util.Map;
 import java.sql.Date;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util;
-import com.tbea.test.testWebProject.model.dao.cqk.CQKDao;
-import com.tbea.test.testWebProject.model.dao.yqkbhqs.YQKBHQSDao;
 import com.tbea.test.testWebProject.model.dao.yszkjgqk.YSZKJGQKDao;
-import com.tbea.test.testWebProject.model.entity.YQKBHQS;
 import com.tbea.test.testWebProject.model.entity.YSZKJGQK;
 
 @Service
@@ -46,11 +42,11 @@ public class YSZKJGQKServiceImpl implements YSZKJGQKService {
 	//	[... current year's je, zqbbl ...]
 	//......
 	@Override
-	public String[][] getYszkjg(Date d) {
+	public String[][] getYszkjg(Date d, Company comp) {
 		String[][] result = new String[hyMap.size()][10];
 		Calendar cal = Calendar.getInstance();
     	cal.setTime(d);
-		List<YSZKJGQK> list = yszkjgqkDao.getYszkjg(cal);
+		List<YSZKJGQK> list = yszkjgqkDao.getYszkjg(cal, comp);
 		for (YSZKJGQK ysk : list){
 			result[hyMap.get(ysk.getHy())][0] = ysk.getYsje() + "";
 			result[hyMap.get(ysk.getHy())][1] = ysk.getZqbbl() + "";
@@ -83,12 +79,12 @@ public class YSZKJGQKServiceImpl implements YSZKJGQKService {
 	//	[... current year's yszkhj from January to current month...]
 	//......
 	@Override
-	public String[][] getWdqtbbh(Date d) {
+	public String[][] getWdqtbbh(Date d, Company comp) {
 		Calendar cal = Calendar.getInstance();
     	cal.setTime(d);
 		String[][] result = new String[6*hyMap.size()][cal.get(Calendar.MONTH) + 1];
 		
-		List<YSZKJGQK> list = yszkjgqkDao.getWdqtbbh(cal);
+		List<YSZKJGQK> list = yszkjgqkDao.getWdqtbbh(cal, comp);
 		int yearBase = 0;
 		Calendar time =  Calendar.getInstance();
 		int month = 0;
@@ -126,12 +122,12 @@ public class YSZKJGQKServiceImpl implements YSZKJGQKService {
 	//	[... current year data...]
 	//......
 	@Override
-	public String[][] getJetbbh(Date d) {
+	public String[][] getJetbbh(Date d, Company comp) {
 		Calendar cal = Calendar.getInstance();
     	cal.setTime(d);
 		String[][] result = new String[2*hyMap.size()][cal.get(Calendar.MONTH) + 1];
 		
-		List<YSZKJGQK> list = yszkjgqkDao.getJetbbh(cal);
+		List<YSZKJGQK> list = yszkjgqkDao.getJetbbh(cal, comp);
 		int yearBase = 0;
 		Calendar time =  Calendar.getInstance();
 		for (YSZKJGQK ysk : list){
