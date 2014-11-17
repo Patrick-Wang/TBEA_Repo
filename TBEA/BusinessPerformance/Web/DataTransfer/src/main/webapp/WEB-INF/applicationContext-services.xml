@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    	http://www.springframework.org/schema/tx 
+    	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    	http://www.springframework.org/schema/aop 
+    	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/task 
+        http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+
+	<!-- -->
+	<!-- PROPERTIES -->
+	<!-- -->
+
+	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
+		<property name="locations"> <list> <value>classpath:../applicationContext.properties</value> 
+		</list> </property> </bean> -->
+
+	<!-- -->
+	<!-- INCLUDES -->
+	<!-- -->
+	<!-- -->
+	<!-- PERFORMANCE -->
+	<!-- -->
+
+	<!-- -->
+	<!-- CACHING -->
+	<!-- -->
+
+	<!-- -->
+	<!-- DATABASE -->
+	<!-- -->
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/my_test_db" />
+	</bean>
+	<bean id="dataSource2" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/yszk_db" />
+	</bean>
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
+					/> -->
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="localDB" />
+	</bean>
+	<bean id="entityManagerFactory2"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource2" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> -->
+				<!--<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/> -->
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
+					/> -->
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="15DB" />
+	</bean>
+
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+
+	<!-- -->
+	<!-- TRANSACTIONS -->
+	<!-- -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="transactionManager2" />
+
+	<aop:aspectj-autoproxy />
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="transactionManager2" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory2" />
+		<property name="dataSource" ref="dataSource2" />
+	</bean>
+
+
+	<!-- -->
+	<!-- DAO -->
+	<!-- -->
+
+	<bean id="xjlrbDao" class="com.tbea.datatransfer.model.dao.local.xjlrb.XJLRBDaoImpl" />
+	<bean id="bl15Dao" class="com.tbea.datatransfer.model.dao.yszk15.bl.BL15DaoImpl" />
+
+	<!-- UTILS -->
+	<!-- -->
+	<!-- -->
+	<!-- HELPERS -->
+	<!-- -->
+
+	<!-- -->
+	<!-- RESTLET -->
+	<!-- -->
+
+	<!-- -->
+	<!-- BUSINESS -->
+	<!-- -->
+
+	<bean id="xjlrbService" class="com.tbea.datatransfer.service.local.xjlrb.XJLRBServiceImpl"
+		scope="prototype">
+		<property name="xjlrbDao" ref="xjlrbDao" />
+		<property name="bl15Dao" ref="bl15Dao" />
+	</bean>
+
+	<!-- -->
+	<!-- CLIENTS -->
+	<!-- -->
+
+
+	<!-- -->
+	<!-- SPRING SECURITY -->
+	<!-- -->
+
+	<!-- -->
+	<!-- SPRING SCHEDULE -->
+	<!-- -->
+
+	<!-- <task:scheduled-tasks scheduler="myScheduler"> <task:scheduled ref="reminderMailService" 
+		method="sendReminderMail" cron="0 10 16 * * ?" fixed-delay="1000" /> </task:scheduled-tasks> -->
+
+</beans>
