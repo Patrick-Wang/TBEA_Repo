@@ -12,6 +12,10 @@ public interface BL15Dao extends AbstractReadOnlyDao<BL15> {
 	public List<BL15> getAllBL15();
 
 	// xjlrb
-	public List<Object[]> getXJLRBByDate(Calendar date);
+	public List<Object[]> getXJLRBByDate(Calendar date) throws Exception;
+
+	// ydzbfdw
+	public List<Object[]> getAllYDZBFDW(Integer year, Integer month)
+			throws Exception;
 
 }

@@ -1,4 +1,4 @@
-package com.tbea.datatransfer.controller.servlet.xjlrb;
+package com.tbea.datatransfer.controller.servlet.ydzbfdw;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,23 +9,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.datatransfer.service.local.xjlrb.XJLRBService;
+import com.tbea.datatransfer.service.local.ydzbfdw.YDZBFDWService;
 
 @Controller
-@RequestMapping(value = "XJLRB")
-public class XJLRBController {
+@RequestMapping(value = "YDZBFDW")
+public class YDZBFDWController {
 
 	@Autowired
-	private XJLRBService xjlrbService;
+	private YDZBFDWService ydzbfdwService;
 
-	private String view = "xjlrbPage";
+	private String view = "ydzbfdwPage";
 
 	private String commandName = "result";
 
-	@RequestMapping(value = "importXJLRB.do", method = RequestMethod.GET)
-	public ModelAndView importXJLRB(HttpServletRequest request,
+	@RequestMapping(value = "importYDZBFDW.do", method = RequestMethod.GET)
+	public ModelAndView importYDZBFDW(HttpServletRequest request,
 			HttpServletResponse response) {
-		boolean result = xjlrbService.importXJLRB();
+		boolean result = ydzbfdwService.importYDZBFDW();
 		// System.out.println("result:" + result);
 		return new ModelAndView(view, commandName, result);
 	}
