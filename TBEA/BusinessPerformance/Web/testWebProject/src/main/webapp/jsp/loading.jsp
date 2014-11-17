@@ -3,10 +3,10 @@
 <style>
 .lbackground {
 	display: block;
-	width: 100%;
-	height: 100%;
+	
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=50)";
+
 	opacity: 0.4;
-	filter: alpha(opacity = 40);
 	background: gray;
 	position: absolute;
 	top: 0;
@@ -50,17 +50,33 @@
 </div>
 
 <script type="text/javascript">
-        	var ajaxbg = $("#background,#progressBar"); 
-        		ajaxbg.hide(); 
+			var ajaxbg = $("#background,#progressBar"); 
+			if (navigator.appName == "Microsoft Internet Explorer"){
+				ajaxbg = $("#progressBar"); 
+			}
+        	
+        	ajaxbg.hide(); 
         	$(document).ajaxStart(function () { 
-        		ajaxbg.show(); 
+        		ajaxbg.show();
+        		if (navigator.appName == "Microsoft Internet Explorer"){
+        			$("table,input,select, h1").each(function(index, e){e.disabled = true;});	
+        			$("#progressBar table")[0].disabled = false;
+      			}
+      			else{
+                	$("#background").css("height", document.body.scrollHeight + "px");
+                	$("#background").css("width", document.body.scrollWidth + "px");
+      			}
         	}).ajaxStop(function () { 
         		ajaxbg.hide(); 
+        		if (navigator.appName == "Microsoft Internet Explorer"){
+        			$("table,input,select, h1").each(function(index, e){e.disabled = false;});
+      			}
         	}); 
-        	$("#background").css("height", document.body.scrollHeight + "px");
-        	$("#background").css("width", document.body.scrollWidth + "px");
+
         	window.onresize = function(){
-        		$("#background").css("height", document.body.scrollHeight + "px");
-        		$("#background").css("width", document.body.scrollWidth + "px");
+        		if (navigator.appName != "Microsoft Internet Explorer"){
+        			$("#background").css("height", document.body.scrollHeight + "px");
+                    $("#background").css("width", document.body.scrollWidth + "px");
+        		}
         	}
 </script>

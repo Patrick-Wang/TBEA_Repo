@@ -49,8 +49,6 @@
 <title>指标汇总 ${zbmc}</title>
 
 <style type="text/css">
-
-
 .panel-content-border {
 	height: 350px;
 	width: 1000px;
@@ -144,11 +142,10 @@ th.ui-th-ltr {
 	/* jqGrid columns name wrap  */
 	font-size: 14px;
 }
-
-
 </style>
 </head>
 <body>
+
 	<div class="header">
 		<h1>指标汇总 ${zbmc}</h1>
 	</div>
@@ -165,99 +162,138 @@ th.ui-th-ltr {
 			zbhz_overview.View.newInstance().onCySelected(parseInt(index));
 		}
 	</script>
-	<div style="width:800px; height:20px;">
-		<div style="float: left;">
-			按产业: <select onchange="onCySelected(this.value)">
-				<option value="${id_19}" selected="selected">${name_19}</option>
-				<option value="${id_15}">${name_15}</option>
-				<option value="${id_16}">${name_16}</option>
-				<option value="${id_17}">${name_17}</option>
-				<option value="${id_18}">${name_18}</option>
-			</select>
-		</div>
-		<div style="float: left; margin-left :15px;" id="dw">
-			按单位: <select id= "${id_19}"
-				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)" style="width: 125px;">
-				<option value="100" selected="selected">全部</option>
-				<option value="${id_0}">${name_0}</option>
-				<option value="${id_1}">${name_1}</option>
-				<option value="${id_2}">${name_2}</option>
-				<option value="${id_3}">${name_3}</option>
-				<option value="${id_4}">${name_4}</option>
-				<option value="${id_5}">${name_5}</option>
-				<option value="${id_6}">${name_6}</option>
-				<option value="${id_7}">${name_7}</option>
-				<option value="${id_8}">${name_8}</option>
-				<option value="${id_9}">${name_9}</option>
-				<option value="${id_10}">${name_10}</option>
-				<option value="${id_11}">${name_11}</option>
-				<option value="${id_12}">${name_12}</option>
-				<option value="${id_13}">${name_13}</option>
-				<option value="${id_14}">${name_14}</option>
-			</select> <select id= "${id_15}"
-				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-				id="sbd" style="width: 125px; display: none">
-				<option value="100" selected="selected">全部</option>
-				<option value="${id_0}">${name_0}</option>
-				<option value="${id_1}">${name_1}</option>
-				<option value="${id_2}">${name_2}</option>
-				<option value="${id_3}">${name_3}</option>
-				<option value="${id_4}">${name_4}</option>
-				<option value="${id_5}">${name_5}</option>
-				<option value="${id_6}">${name_6}</option>
-			</select> <select id="${id_16}"
-				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-				style="width: 125px; display: none">
-				<option value="100" selected="selected">全部</option>
-				<option value="${id_7}">${name_7}</option>
-				<option value="${id_8}">${name_8}</option>
-			</select> <select id="${id_17}"
-				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-				style="width: 125px; display: none">
-				<option value="100" selected="selected">全部</option>
-				<option value="${id_9}">${name_9}</option>
-				<option value="${id_10}">${name_10}</option>
-				<option value="${id_11}">${name_11}</option>
-			</select> <select id="${id_18}"
-				onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-				style="width: 125px; display: none">
-				<option value="100" selected="selected">全部</option>
-				<option value="${id_12}">${name_12}</option>
-				<option value="${id_13}">${name_13}</option>
-			</select>
-		</div>
-		<div style="float: left; margin-left :15px;">
-			<input type="button" onclick="zbhz_overview.View.newInstance().updateUI()" value="更新" style="width:90px;"></input>
-		</div>
-	</div>
+	<Table align="center">
+		<tr>
+			<td>
+				<Table align="left">
+					<tr>
+						<td>
+
+							<div>
+								按产业: <select onchange="onCySelected(this.value)">
+									<option value="${id_19}" selected="selected">${name_19}</option>
+									<option value="${id_15}">${name_15}</option>
+									<option value="${id_16}">${name_16}</option>
+									<option value="${id_17}">${name_17}</option>
+									<option value="${id_18}">${name_18}</option>
+								</select>
+							</div>
+
+						</td>
+						<td>
+							<div style="margin-left: 15px;" id="dw">
+								按单位: <select id="${id_19}"
+									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
+									style="width: 125px;">
+									<option value="100" selected="selected">全部</option>
+									<option value="${id_0}">${name_0}</option>
+									<option value="${id_1}">${name_1}</option>
+									<option value="${id_2}">${name_2}</option>
+									<option value="${id_3}">${name_3}</option>
+									<option value="${id_4}">${name_4}</option>
+									<option value="${id_5}">${name_5}</option>
+									<option value="${id_6}">${name_6}</option>
+									<option value="${id_7}">${name_7}</option>
+									<option value="${id_8}">${name_8}</option>
+									<option value="${id_9}">${name_9}</option>
+									<option value="${id_10}">${name_10}</option>
+									<option value="${id_11}">${name_11}</option>
+									<option value="${id_12}">${name_12}</option>
+									<option value="${id_13}">${name_13}</option>
+									<option value="${id_14}">${name_14}</option>
+								</select> <select id="${id_15}"
+									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
+									id="sbd" style="width: 125px; display: none">
+									<option value="100" selected="selected">全部</option>
+									<option value="${id_0}">${name_0}</option>
+									<option value="${id_1}">${name_1}</option>
+									<option value="${id_2}">${name_2}</option>
+									<option value="${id_3}">${name_3}</option>
+									<option value="${id_4}">${name_4}</option>
+									<option value="${id_5}">${name_5}</option>
+									<option value="${id_6}">${name_6}</option>
+								</select> <select id="${id_16}"
+									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
+									style="width: 125px; display: none">
+									<option value="100" selected="selected">全部</option>
+									<option value="${id_7}">${name_7}</option>
+									<option value="${id_8}">${name_8}</option>
+								</select> <select id="${id_17}"
+									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
+									style="width: 125px; display: none">
+									<option value="100" selected="selected">全部</option>
+									<option value="${id_9}">${name_9}</option>
+									<option value="${id_10}">${name_10}</option>
+									<option value="${id_11}">${name_11}</option>
+								</select> <select id="${id_18}"
+									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
+									style="width: 125px; display: none">
+									<option value="100" selected="selected">全部</option>
+									<option value="${id_12}">${name_12}</option>
+									<option value="${id_13}">${name_13}</option>
+								</select>
+							</div>
+						</td>
+						<td>
+							<div style="float: left; margin-left: 15px;">
+								<input type="button"
+									onclick="zbhz_overview.View.newInstance().updateUI()"
+									value="更新" ></input>
+							</div>
+						</td>
 
 
-	<div align="center" style="margin-bottom: 15px;margin-top:15px">
-		<div class="panel-content-border">
-			<div id="chart_yd" class="panel-content"></div>
-		</div>
-	</div>
-	<div align="center" style="margin-bottom: 15px">
-		<div class="panel-content-border">
-			<div id="chart_jd" class="panel-content"></div>
-		</div>
-	</div>
-	<div align="center" style="margin-bottom: 15px">
-		<div class="panel-content-border">
-			<div id="chart_nd" class="panel-content"></div>
-		</div>
-	</div>
-	<div align="center" style="margin-bottom: 15px">
-		<div class="panel-content-border">
-			<div id="chart_ydtb" class="panel-content"></div>
-		</div>
-	</div>
-	<div align="center" style="margin-bottom: 15px">
-		<div class="panel-content-border">
-			<div id="chart_jdtb" class="panel-content"></div>
-		</div>
-	</div>
-	<%@include file="loading.jsp" %>
+					</tr>
+				</Table>
+		</tr>
+		<tr>
+			<td>
+
+				<div align="center" style="margin-bottom: 15px; margin-top: 15px">
+					<div class="panel-content-border">
+						<div id="chart_yd" class="panel-content"></div>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div align="center" style="margin-bottom: 15px">
+					<div class="panel-content-border">
+						<div id="chart_jd" class="panel-content"></div>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div align="center" style="margin-bottom: 15px">
+					<div class="panel-content-border">
+						<div id="chart_nd" class="panel-content"></div>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div align="center" style="margin-bottom: 15px">
+					<div class="panel-content-border">
+						<div id="chart_ydtb" class="panel-content"></div>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div align="center" style="margin-bottom: 15px">
+					<div class="panel-content-border">
+						<div id="chart_jdtb" class="panel-content"></div>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</Table>
+	<%@include file="loading.jsp"%>
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 

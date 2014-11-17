@@ -66,7 +66,7 @@ module gdw_zbhz {
 				if (null != dataArray){
 					this.mData = dataArray;
 					$('h1').text(this.mYear + "年" + this.mMonth + "月 各单位指标汇总");
-					$('title').text(this.mYear + "年" + this.mMonth + "月 各单位指标汇总");
+					document.title = this.mYear + "年" + this.mMonth + "月 各单位指标汇总";
 					this.updateTable();
 				}
 			});

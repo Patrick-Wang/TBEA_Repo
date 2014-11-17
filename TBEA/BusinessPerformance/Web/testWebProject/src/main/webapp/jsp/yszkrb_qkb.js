@@ -34,35 +34,15 @@ var yszkrb_qkb;
             return View.ins;
         };
 
-        View.prototype.init = function (tableId, month, year) {
+        View.prototype.init = function (echartIdPie, tableId, month, year, data) {
             this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("yszkrb_qkb_update.do");
-            this.mTableId = tableId;
-            this.updateUI();
-        };
-        View.prototype.onYearSelected = function (year) {
-            this.mYear = year;
+            this.mEchartIdPie = echartIdPie;
+            this.mData = data;
+            this.updateTable(tableId);
         };
 
-        View.prototype.onMonthSelected = function (month) {
-            this.mMonth = month;
-        };
-
-        View.prototype.updateUI = function () {
-            var _this = this;
-            this.mDataSet.getData(this.mMonth, this.mYear, function (dataArray) {
-                if (null != dataArray) {
-                    _this.mData = dataArray;
-                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月 各单位指标汇总");
-                    $('title').text(_this.mYear + "年" + _this.mMonth + "月 各单位指标汇总");
-                    _this.updateTable();
-                }
-            });
-        };
-
-        View.prototype.updateTable = function () {
-            var name = this.mTableId + "_jqgrid_1234";
+        View.prototype.updateTable = function (name) {
             var tableAssist = JQGridAssistantFactory.createTable(name);
 
             var data = [
@@ -80,9 +60,7 @@ var yszkrb_qkb;
                     data[i] = data[i].concat(this.mData[i]);
                 }
             }
-            var parent = $("#" + this.mTableId);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table>");
+
             $("#" + name).jqGrid(tableAssist.decorate({
                 // url: "TestTable/WGDD_load.do",
                 // datatype: "json",

@@ -52,7 +52,7 @@ var gcy_zbhz;
                 if (null != dataArray) {
                     _this.mData = dataArray;
                     $('h1').text(_this.mYear + "年" + _this.mMonth + "月 各产业指标汇总");
-                    $('title').text(_this.mYear + "年" + _this.mMonth + "月 各产业指标汇总");
+                    document.title = _this.mYear + "年" + _this.mMonth + "月 各产业指标汇总";
                     _this.updateTable();
                 }
             });

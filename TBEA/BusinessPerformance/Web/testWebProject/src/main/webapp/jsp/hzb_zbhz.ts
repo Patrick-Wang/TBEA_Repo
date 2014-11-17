@@ -64,7 +64,7 @@ module hzb_zbhz {
 				if (null != dataArray){
 					this.mData = dataArray;
 					$('h1').text(this.mYear + "年" + this.mMonth + "月 指标汇总");
-					$('title').text(this.mYear + "年" + this.mMonth + "月 指标汇总");
+					document.title = this.mYear + "年" + this.mMonth + "月 指标汇总";
 					this.updateTable();
 				}
 			});

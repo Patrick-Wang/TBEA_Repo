@@ -63,7 +63,7 @@ var xjlrb;
                 if (null != dataArray) {
                     _this.mData = dataArray;
                     $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日 现金流日报");
-                    $('title').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日 现金流日报");
+                    document.title = _this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日 现金流日报";
                     _this.updateTable();
                 }
             });

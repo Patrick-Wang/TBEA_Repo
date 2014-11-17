@@ -67,7 +67,7 @@ module xjlrb {
 				if (null != dataArray){
 					this.mData = dataArray;
 					$('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报");
-					$('title').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报");
+					document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报";
 					this.updateTable();
 				}
 			});

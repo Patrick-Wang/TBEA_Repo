@@ -20,7 +20,7 @@ module Util {
 		                    var jsnData = JSON.parse(data);
 		                    this.mDataMap[y + ""][m + ""] = jsnData;
 		                    callBack(jsnData);
-			        },
+			        }, 
 			        error: (XMLHttpRequest, textStatus, errorThrown) => {
 	                    callBack(null);
 	                }
