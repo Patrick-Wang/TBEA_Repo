@@ -172,7 +172,7 @@ public class YDZBServiceImpl implements YDZBService {
 		List<List<YDZBBean>> preYearODs = new ArrayList<List<YDZBBean>>();
 		for (int i = monthFrom; i <= monthTo; ++i){
 			month.set(year, i, 1);
-			preYearODs.add(ydzbDao.getYDZB_V2(month, company));
+			preYearODs.add(ydzbDao.getYDZB(month, company));
 		}
 		return preYearODs;
 	}
@@ -199,7 +199,7 @@ public class YDZBServiceImpl implements YDZBService {
 		for (int month = curYearOds.size() - 1; month >= 0; --month){
 			monthYdzbs = curYearOds.get(month);
 			for (YDZBBean ydzb : monthYdzbs){
-				if (zb.equals(ydzb.getZblx())){
+				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId())){
 					ret[0][month] = fromatNumber(ydzb.getByjh());
 					ret[1][month] = fromatNumber(ydzb.getBywc());
 					ret[2][month] = fromatNumber(ydzb.getJhwcl());
@@ -217,12 +217,12 @@ public class YDZBServiceImpl implements YDZBService {
 		int lastQuarter = (month + 1) % 3; 
 		for (int i = 1; i <= quarterCount; ++i){
 			cal.set(year, i * 3 - 1, 1);
-			ods.add(ydzbDao.getYDZB_V2(cal, company));
+			ods.add(ydzbDao.getYDZB(cal, company));
 		}
 		
 		if (lastQuarter > 0){
 			cal.set(year, month, 1);
-			ods.add(ydzbDao.getYDZB_V2(cal, company));
+			ods.add(ydzbDao.getYDZB(cal, company));
 		}
 		return ods;
 	}
@@ -238,7 +238,7 @@ public class YDZBServiceImpl implements YDZBService {
 		for (int jd = jdData.size() - 1; jd >= 0; --jd){
 			jdYdzbs = jdData.get(jd);
 			for (YDZBBean ydzb : jdYdzbs){
-				if (zb.equals(ydzb.getZblx())){
+				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId())){
 					ret[0][jd] = fromatNumber(ydzb.getJdjh());
 					ret[1][jd] = fromatNumber(ydzb.getJdlj());
 					ret[2][jd] = fromatNumber(ydzb.getJdjhwcl());
@@ -258,19 +258,19 @@ public class YDZBServiceImpl implements YDZBService {
 		int curMonth = cal.get(Calendar.MONTH);
 		
 		cal.set(cal.get(Calendar.YEAR) - 2, 11, 1);
-		yearData.add(ydzbDao.getYDZB_V2(cal, company));
+		yearData.add(ydzbDao.getYDZB(cal, company));
 		
 		cal.set(cal.get(Calendar.YEAR) + 1, 11, 1);
-		yearData.add(ydzbDao.getYDZB_V2(cal, company));
+		yearData.add(ydzbDao.getYDZB(cal, company));
 		
 		cal.set(cal.get(Calendar.YEAR) + 1, curMonth, 1);
-		yearData.add(ydzbDao.getYDZB_V2(cal, company));
+		yearData.add(ydzbDao.getYDZB(cal, company));
 		String[][] ret = new String[3][yearData.size()];
 		List<YDZBBean> ydzbs;
 		for (int i = yearData.size() - 1; i >= 0; --i) {
 			ydzbs = yearData.get(i);
 			for (YDZBBean ydzb : ydzbs) {
-				if (zb.equals(ydzb.getZblx())) {
+				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId())) {
 					ret[0][i] = fromatNumber(ydzb.getNdjh());
 					ret[1][i] = fromatNumber(ydzb.getNdlj());
 					ret[2][i] = fromatNumber(ydzb.getNdjhwcl());
@@ -293,7 +293,7 @@ public class YDZBServiceImpl implements YDZBService {
 		for (int month = curYearOds.size() - 1; month >= 0; --month){
 			monthYdzbs = curYearOds.get(month);
 			for (YDZBBean ydzb : monthYdzbs){
-				if (zb.equals(ydzb.getZblx())){
+				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId())){
 					ret[0][month] = fromatNumber(ydzb.getBywc());
 					ret[1][month] = fromatNumber(ydzb.getQntq());
 					ret[2][month] = fromatNumber(ydzb.getJqntqzzb());
@@ -315,7 +315,7 @@ public class YDZBServiceImpl implements YDZBService {
 		for (int jd = curYearJdData.size() - 1; jd >= 0; --jd){
 			jdYdzbs = curYearJdData.get(jd);
 			for (YDZBBean ydzb : jdYdzbs){
-				if (zb.equals(ydzb.getZblx())){
+				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId())){
 					ret[1][jd] = fromatNumber(ydzb.getJdlj());
 					break;
 				}
@@ -326,7 +326,7 @@ public class YDZBServiceImpl implements YDZBService {
 		for (int jd = preYearJdData.size() - 1; jd >= 0; --jd){
 			jdYdzbs = preYearJdData.get(jd);
 			for (YDZBBean ydzb : jdYdzbs){
-				if (zb.equals(ydzb.getZblx())){
+				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId())){
 					ret[0][jd] = fromatNumber(ydzb.getJdlj());
 					if ("0".equals(ret[1][jd])){
 						ret[2][jd] = "0";
