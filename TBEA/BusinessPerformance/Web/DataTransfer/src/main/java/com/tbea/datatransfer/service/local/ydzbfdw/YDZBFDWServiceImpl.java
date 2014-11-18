@@ -38,7 +38,7 @@ public class YDZBFDWServiceImpl implements YDZBFDWService {
 					ydzbfdw.setQybh(null == ydzbfdw15Array[1] ? 0 : Integer
 							.valueOf(ydzbfdw15Array[1].toString()));
 					ydzbfdw.setZbbh(null == ydzbfdw15Array[2] ? 0 : Integer
-							.valueOf(ydzbfdw15Array[1].toString()));
+							.valueOf(ydzbfdw15Array[2].toString()));
 					ydzbfdw.setZbmc((String) ydzbfdw15Array[3]);
 					ydzbfdw.setByjhz(null == ydzbfdw15Array[4] ? 0 : Double
 							.valueOf(ydzbfdw15Array[4].toString()));

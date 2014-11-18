@@ -18,4 +18,8 @@ public interface BL15Dao extends AbstractReadOnlyDao<BL15> {
 	public List<Object[]> getAllYDZBFDW(Integer year, Integer month)
 			throws Exception;
 
+	// zbhz
+	public List<Object[]> getAllZBHZ(Integer year, Integer month)
+			throws Exception;
+
 }

@@ -56,5 +56,20 @@ public class BL15DaoImpl extends AbstractReadOnlyDaoImpl<BL15> implements
 		List<Object[]> result = (List<Object[]>) query.getResultList();
 		return result;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> getAllZBHZ(Integer year, Integer month)
+			throws Exception {
+		String sql = "exec p_jysj2014_zbhzcxV2 :year, :month, :qylb, :zblx, :userid";
+		Query query = getEntityManager().createNativeQuery(sql);
+		query.setParameter("year", year);
+		query.setParameter("month", month);
+		query.setParameter("qylb", "5;6;7;8;9;10;11;30;29;66;25;74;23;70;27");
+		query.setParameter("zblx", 0);
+		query.setParameter("userid", 0);
+		List<Object[]> result = (List<Object[]>) query.getResultList();
+		return result;
+	}
 
 }
