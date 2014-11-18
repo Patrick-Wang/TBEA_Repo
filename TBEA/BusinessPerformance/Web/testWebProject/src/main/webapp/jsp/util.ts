@@ -19,7 +19,7 @@ module Util {
 		}
 		
         public getData(m: number, y: number, callBack: (arrayData : Array<string[]>) => void): void{
-            if (undefined == this.mDataMap[y + ""]) {
+			if (undefined == this.mDataMap[y + ""]) {
                 this.mDataMap[y + ""] = {};
             }
             if (undefined == this.mDataMap[y + ""][m + ""]){
@@ -28,7 +28,7 @@ module Util {
                     url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "",
 	                success: (data: any) =>{
 		                    var jsnData = JSON.parse(data);
-		                    this.mDataMap[y + ""][m + ""] = jsnData;
+							this.mDataMap[y + ""][m + ""] = jsnData;
 		                    callBack(jsnData);
 			        }, 
 			        error: (XMLHttpRequest, textStatus, errorThrown) => {

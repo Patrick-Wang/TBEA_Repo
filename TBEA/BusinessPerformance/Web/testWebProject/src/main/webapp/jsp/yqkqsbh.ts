@@ -73,7 +73,7 @@ module yqkqsbh {
 
 //            var total = [];
             for (var i = 1; i <= this.mMonth; ++i) {
-                month.push(i + "月");
+				month.push(i + "月");
 //                total.push(0);
             }
 

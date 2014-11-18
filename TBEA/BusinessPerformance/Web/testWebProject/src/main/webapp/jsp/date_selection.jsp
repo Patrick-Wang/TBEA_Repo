@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<script type="text/javascript">
+<c:if test="${!(empty month)}">
+	<script type="text/javascript">
 		function onYearChange(year){
 			var monthCount;
 			var curSelected = parseInt($("#month" + " option:selected").val());
@@ -30,8 +31,7 @@
 			instance.onYearSelected(year);
 			onMonthSelected(selectedOpt);
 		}
-		
-		
+
 		function getDaysInMonth(year,month){ 
 			month = parseInt(month,10); //parseInt(number,type) //此函数后面如果不跟第2个参数来表示进制，默认是10进制。 
 			var temp = new Date(year,month,0); 
@@ -60,6 +60,7 @@
 			}
 		}
 	</script>
+</c:if>
 <table id="date_selection">
 	<tr>
 		<c:choose>
