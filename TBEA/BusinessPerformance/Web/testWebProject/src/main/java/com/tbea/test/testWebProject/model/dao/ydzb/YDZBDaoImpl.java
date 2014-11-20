@@ -1,6 +1,7 @@
 package com.tbea.test.testWebProject.model.dao.ydzb;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -11,12 +12,14 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
 import com.tbea.Connection.DBConnectionManager;
 import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.CompanyGroup;
+import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.Util.Escape;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
@@ -24,13 +27,8 @@ import com.tbea.test.testWebProject.model.entity.YDZBBean;
 @Repository
 public class YDZBDaoImpl implements YDZBDao {
 
-	EntityManager entityManager;
-
-	@PersistenceContext(unitName = "15DB")
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
+	
+	
 	private List<YDZBBean> injectV2Bean(ResultSet res) {
 		List<YDZBBean> YDZBList = new ArrayList<YDZBBean>();
 		Escape escape = new Escape();
@@ -250,6 +248,15 @@ public class YDZBDaoImpl implements YDZBDao {
 
 	@Override
 	public List<XJL> getXJL(Calendar cal) {
+//		Query q = entityManager.createQuery(
+//				"select x from XJL x where x.rq = ?1 and x.jgmc != '中疆物流'");
+//		Date d = Date.valueOf(cal.get(Calendar.YEAR) + "-"
+//					+ (cal.get(Calendar.MONTH) + 1) + "-"
+//					+ cal.get(Calendar.DAY_OF_MONTH));
+//		q.setParameter(1, d);
+//		return q.getResultList();
+		
+		
 		Statement stmt = null;
 		ResultSet res = null;
 		List<XJL> xjls = new ArrayList<XJL>();
