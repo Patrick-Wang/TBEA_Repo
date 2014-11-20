@@ -21,6 +21,7 @@ public class XJLRBServiceImpl implements XJLRBService {
 	public boolean importXJLRB() {
 		boolean result = false;
 		try {
+			xjlrbDao.truncateXJLRB();
 			Calendar cur = Calendar.getInstance();
 			Calendar end = Calendar.getInstance();
 			cur.set(2013, 1 - 1, 1);
@@ -63,7 +64,10 @@ public class XJLRBServiceImpl implements XJLRBService {
 			}
 			result = true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println(result);
 		}
 		return result;
 	}

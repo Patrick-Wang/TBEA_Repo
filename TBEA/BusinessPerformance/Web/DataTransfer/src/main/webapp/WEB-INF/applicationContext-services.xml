@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
     	http://www.springframework.org/schema/beans 
     	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
@@ -103,9 +105,11 @@
 	<!-- DAO -->
 	<!-- -->
 
-    <bean id="bl15Dao" class="com.tbea.datatransfer.model.dao.yszk15.bl.BL15DaoImpl" />
-	<bean id="xjlrbDao" class="com.tbea.datatransfer.model.dao.local.xjlrb.XJLRBDaoImpl" />
-	<bean id="ydzbfdwDao" class="com.tbea.datatransfer.model.dao.local.ydzbfdw.YDZBFDWDaoImpl" />
+	<bean id="bl15Dao" class="com.tbea.datatransfer.model.dao.yszk15.bl.BL15DaoImpl" />
+	<bean id="xjlrbDao"
+		class="com.tbea.datatransfer.model.dao.local.xjlrb.XJLRBDaoImpl" />
+	<bean id="ydzbfdwDao"
+		class="com.tbea.datatransfer.model.dao.local.ydzbfdw.YDZBFDWDaoImpl" />
 	<bean id="zbhzDao" class="com.tbea.datatransfer.model.dao.local.zbhz.ZBHZDaoImpl" />
 
 	<!-- UTILS -->
@@ -122,17 +126,20 @@
 	<!-- BUSINESS -->
 	<!-- -->
 
-	<bean id="xjlrbService" class="com.tbea.datatransfer.service.local.xjlrb.XJLRBServiceImpl"
+	<bean id="xjlrbService"
+		class="com.tbea.datatransfer.service.local.xjlrb.XJLRBServiceImpl"
 		scope="prototype">
 		<property name="xjlrbDao" ref="xjlrbDao" />
 		<property name="bl15Dao" ref="bl15Dao" />
 	</bean>
-	<bean id="ydzbfdwService" class="com.tbea.datatransfer.service.local.ydzbfdw.YDZBFDWServiceImpl"
+	<bean id="ydzbfdwService"
+		class="com.tbea.datatransfer.service.local.ydzbfdw.YDZBFDWServiceImpl"
 		scope="prototype">
 		<property name="ydzbfdwDao" ref="ydzbfdwDao" />
 		<property name="bl15Dao" ref="bl15Dao" />
 	</bean>
-	<bean id="zbhzService" class="com.tbea.datatransfer.service.local.zbhz.ZBHZServiceImpl"
+	<bean id="zbhzService"
+		class="com.tbea.datatransfer.service.local.zbhz.ZBHZServiceImpl"
 		scope="prototype">
 		<property name="zbhzDao" ref="zbhzDao" />
 		<property name="bl15Dao" ref="bl15Dao" />
@@ -151,7 +158,19 @@
 	<!-- SPRING SCHEDULE -->
 	<!-- -->
 
-	<!-- <task:scheduled-tasks scheduler="myScheduler"> <task:scheduled ref="reminderMailService" 
-		method="sendReminderMail" cron="0 10 16 * * ?" fixed-delay="1000" /> </task:scheduled-tasks> -->
+
+	<task:scheduled-tasks scheduler="myScheduler">
+		<!-- <task:scheduled ref="reminderMailService" method="sendReminderMail" 
+			fixed-rate="5000"/> -->
+		<task:scheduled ref="xjlrbService" method="importXJLRB"
+			cron="0 0 4 * * *" />
+		<task:scheduled ref="ydzbfdwService" method="importYDZBFDW"
+			cron="0 20 4 * * *" />
+		<task:scheduled ref="zbhzService" method="importZBHZ"
+			cron="0 40 4 * * *" />
+
+	</task:scheduled-tasks>
+
+	<task:scheduler id="myScheduler" pool-size="10" />
 
 </beans>

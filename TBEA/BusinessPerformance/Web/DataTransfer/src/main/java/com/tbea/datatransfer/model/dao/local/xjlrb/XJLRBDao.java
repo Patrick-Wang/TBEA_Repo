@@ -6,4 +6,5 @@ import com.tbea.datatransfer.model.entity.local.XJLRB;
 
 public interface XJLRBDao extends AbstractReadWriteDao<XJLRB> {
 
+	public void truncateXJLRB();
 }

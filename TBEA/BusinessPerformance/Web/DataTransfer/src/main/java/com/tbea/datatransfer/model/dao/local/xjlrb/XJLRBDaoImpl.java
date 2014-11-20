@@ -2,6 +2,7 @@ package com.tbea.datatransfer.model.dao.local.xjlrb;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,13 @@ public class XJLRBDaoImpl extends AbstractReadWriteDaoImpl<XJLRB> implements
 	@PersistenceContext(unitName = "localDB")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
+	}
+
+	@Override
+	public void truncateXJLRB() {
+		String sql = "delete From XJLRB";
+		Query query = getEntityManager().createQuery(sql);
+		query.executeUpdate();
 	}
 
 }

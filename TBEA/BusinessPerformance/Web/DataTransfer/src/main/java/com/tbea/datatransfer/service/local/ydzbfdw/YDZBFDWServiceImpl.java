@@ -20,6 +20,7 @@ public class YDZBFDWServiceImpl implements YDZBFDWService {
 	public boolean importYDZBFDW() {
 		boolean result = false;
 		try {
+			ydzbfdwDao.truncateYDZBFDW();
 			Calendar cur = Calendar.getInstance();
 			Calendar end = Calendar.getInstance();
 			cur.set(2013, 1 - 1, 1);
@@ -89,7 +90,10 @@ public class YDZBFDWServiceImpl implements YDZBFDWService {
 			}
 			result = true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println(result);
 		}
 		return result;
 	}

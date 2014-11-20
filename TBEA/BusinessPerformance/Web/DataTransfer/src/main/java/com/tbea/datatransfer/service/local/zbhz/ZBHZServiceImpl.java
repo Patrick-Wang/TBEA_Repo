@@ -20,6 +20,7 @@ public class ZBHZServiceImpl implements ZBHZService {
 	public boolean importZBHZ() {
 		boolean result = false;
 		try {
+			zbhzDao.truncateZBHZ();
 			Calendar cur = Calendar.getInstance();
 			Calendar end = Calendar.getInstance();
 			cur.set(2013, 1 - 1, 1);
@@ -84,6 +85,8 @@ public class ZBHZServiceImpl implements ZBHZService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println(result);
 		}
 		return result;
 	}

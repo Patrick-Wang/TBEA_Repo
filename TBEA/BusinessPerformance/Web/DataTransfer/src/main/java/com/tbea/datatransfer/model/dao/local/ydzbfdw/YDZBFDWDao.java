@@ -6,4 +6,5 @@ import com.tbea.datatransfer.model.entity.local.YDZBFDW;
 
 public interface YDZBFDWDao extends AbstractReadWriteDao<YDZBFDW> {
 
+	public void truncateYDZBFDW();
 }
