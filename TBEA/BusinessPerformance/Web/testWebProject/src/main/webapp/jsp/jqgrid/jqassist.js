@@ -374,11 +374,23 @@ var JQTable;
                         index: colId,
                         sortable: false,
                         editable: !nodes[j].isReadOnly(),
-                        align: (nodes[j].align() == 0 /* Left */) ? 'left' : 'right',
                         cellattr: function (rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
                     });
+
+                    switch (nodes[j].align()) {
+                        case 0 /* Left */:
+                            this.mColModel[this.mColModel.length - 1].align = 'left';
+                            break;
+                        case 2 /* Center */:
+                            this.mColModel[this.mColModel.length - 1].align = 'center';
+                            break;
+                        case 1 /* Right */:
+                            this.mColModel[this.mColModel.length - 1].align = 'right';
+                            break;
+                    }
+
                     if (nodes[j].width() > 0) {
                         this.mColModel[this.mColModel.length - 1].width = nodes[j].width();
                     }
@@ -564,11 +576,8 @@ var JQTable;
                     ++row;
                     var leftCell = $("#" + _this.mGridName + " #" + row + " #" + _this.id(col) + row);
                     var rightCell = leftCell.next();
-                    if (align == 2 /* Center */) {
-                        leftCell.css("text-align", "right");
-                    } else {
-                        leftCell.css("text-align", "left");
-                    }
+                    leftCell.css("text-align", "right");
+                    rightCell.css("text-align", "left");
 
                     leftCell.css("border-right-width", "0px");
                     leftCell.css("padding-right", "0px");

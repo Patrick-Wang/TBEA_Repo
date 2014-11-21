@@ -31,13 +31,13 @@
 		var instance = hkjhjg.View.newInstance();
             (function () {
                 $(document).ready(function () {
-                	instance.init("chart", "table", ${month}, ${year});
+                	instance.init("chart", ["table_jg", "table_zt", "table_xz"], ${month}, ${year});
                 });
             })();
     </script>
 <meta charset="UTF-8">
 
-<title>${year}年${month}月 回款计划结构</title>
+<title>${year}年${month}月 回款计划结构明细</title>
 
 <style type="text/css">
 body {
@@ -141,7 +141,7 @@ th.ui-th-ltr {
 </head>
 <body style="width:1400px">
     <div class=" header">
-        <h1>${year}年${month}月 回款计划结构</h1>
+        <h1>${year}年${month}月 回款计划结构明细</h1>
     </div>
 
 	<Table align="center">
@@ -177,9 +177,20 @@ th.ui-th-ltr {
 		</tr>
 		<tr>
 			<td>
-				<div id="table"></div>
+				<div id="table_jg"></div>
 			<td>
 		</tr>
+		<tr>
+			<td>
+				<div id="table_zt"></div>
+			<td>
+		</tr>
+		<tr>
+			<td>
+				<div id="table_xz"></div>
+			<td>
+		</tr>
+	
 	</Table>
 	<%@include file="loading.jsp"%>
 </body>

@@ -24,9 +24,22 @@ public class HKJHJGServiceImpl implements HKJHJGService {
 	public String[][] getHkjhjgData(Date d, Company comp) {
 		// TODO Auto-generated method stub
 		return new String[][]{
-				{"1", "2", "3", "4", "4"},
-				{"1", "2", "3", "4", "4"},
-				{"1", "2", "3", "4", "4"}
+				{"1.00", "2.00", "3.00", "4.00", "4.00"},
+				{"1.00", "2.00", "3.00", "4.00", "4.00"},
+				{"1.00", "2.00", "3.00", "4.00", "4.00"}
 				};
+	}
+
+	@Override
+	public String[] getHkjhztData(Date d, Company comp) {
+		// TODO Auto-generated method stub
+		return new String[]
+				{"1.00", "2.00", "3", "4", "4"};
+	}
+
+	@Override
+	public String[] getHkjhxzData(Date d, Company comp) {
+		return new String[]
+				{"1.00", "2.00", "3.00", "4.00", "4"};
 	}
 }

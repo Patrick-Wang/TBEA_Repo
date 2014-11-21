@@ -79,6 +79,29 @@ var Util;
             }
         };
 
+        DateDataSet.prototype.getDataByYear = function (y, compId, callBack) {
+            var _this = this;
+            if (undefined == this.mDataMap[y + ""]) {
+                this.mDataMap[y + ""] = {};
+            }
+
+            if (undefined == this.mDataMap[y + ""][compId + ""]) {
+                $.ajax({
+                    type: "GET",
+                    url: this.mBaseResUrl + "?year=" + y + "&companyId=" + compId,
+                    success: function (data) {
+                        _this.mDataMap[y + ""][compId + ""] = data;
+                        callBack(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        callBack(null);
+                    }
+                });
+            } else {
+                callBack(this.mDataMap[y + ""][compId + ""]);
+            }
+        };
+
         DateDataSet.prototype.getDataByCompany = function (m, y, compId, callBack) {
             var _this = this;
             if (undefined == this.mDataMap[y + ""]) {

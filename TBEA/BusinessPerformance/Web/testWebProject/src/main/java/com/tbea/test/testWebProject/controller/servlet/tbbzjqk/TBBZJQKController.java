@@ -1,4 +1,4 @@
-package com.tbea.test.testWebProject.controller.servlet.hkjhjg;
+package com.tbea.test.testWebProject.controller.servlet.tbbzjqk;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -21,48 +21,45 @@ import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.service.cqk.CQKService;
 import com.tbea.test.testWebProject.service.hkjhjg.HKJHJGService;
+import com.tbea.test.testWebProject.service.syhkjhzxqk.SYHKJHZXQKService;
+import com.tbea.test.testWebProject.service.tbbzjqk.TBBZJQKService;
 
 @Controller
-@RequestMapping(value = "hkjhjg")
-public class HKJHJGController {
+@RequestMapping(value = "tbbzjqk")
+public class TBBZJQKController {
 
 	@Autowired
-	private HKJHJGService service;
-
-
+	private TBBZJQKService service;
 	
-	@RequestMapping(value = "hkjhjg_update.do", method = RequestMethod.GET)
-	public @ResponseBody String getHkjhjg_update(HttpServletRequest request,
+	
+	@RequestMapping(value = "tbbzjqk_update.do", method = RequestMethod.GET)
+	public @ResponseBody String getTbbzjqk_update(HttpServletRequest request,
 			HttpServletResponse response) {
-		int month = Integer.parseInt(request.getParameter("month"));
+		Calendar now = Calendar.getInstance();  
 		int year = Integer.parseInt(request.getParameter("year"));
 		String companyId = request.getParameter("companyId");
 		int cid = Integer.parseInt(companyId);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
+		Date d = java.sql.Date.valueOf(year + "-" +  (now.get(Calendar.MONTH) + 1) + "-" + 1);
 		
 		Company comp = Company.get(cid);
-		String hkjhjg = JSONArray.fromObject(service.getHkjhjgData(d, comp)).toString().replace("null", "0.00");
-		String hkjhzt = JSONArray.fromObject(service.getHkjhztData(d, comp)).toString().replace("null", "0.00");
-		String hkjhxz = JSONArray.fromObject(service.getHkjhxzData(d, comp)).toString().replace("null", "0.00");
-		
-		return hkjhjg + "##" + hkjhzt + "##" + hkjhxz;
+		String syhkjhzxqk = JSONArray.fromObject(service.getTbbzjqkData(d, comp)).toString().replace("null", "0.00");
+		return syhkjhzxqk;
 	}
 	
 
 	
-	@RequestMapping(value = "hkjhjg.do", method = RequestMethod.GET)
-	public ModelAndView getHkjhjg(HttpServletRequest request,
+	@RequestMapping(value = "tbbzjqk.do", method = RequestMethod.GET)
+	public ModelAndView getTbbzjqk(HttpServletRequest request,
 			HttpServletResponse response) {
 		Calendar now = Calendar.getInstance();  
-		int month = now.get(Calendar.MONTH) + 1;
 		int year = now.get(Calendar.YEAR);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("month", month);
+
 		map.put("year", year);
 		String[][] name_ids = Util.getCommonCompanyNameAndIds();
 		map.put("names", name_ids[0]);
 		map.put("ids", name_ids[1]);
 		map.put("company_size", name_ids[0].length);
-		return new ModelAndView("hkjhjg", map);
+		return new ModelAndView("tbbzjqk", map);
 	}
 }

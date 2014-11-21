@@ -426,11 +426,23 @@ module JQTable {
                         index: colId,
                         sortable: false,
                         editable: !nodes[j].isReadOnly(),
-                        align: (nodes[j].align() == TextAlign.Left) ? 'left': 'right',
                         cellattr: function(rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
                     });
+                    
+                    switch (nodes[j].align()){
+                    	case TextAlign.Left:
+                    	this.mColModel[this.mColModel.length - 1].align = 'left';
+                    	break;
+                    case TextAlign.Center:
+                    	this.mColModel[this.mColModel.length - 1].align = 'center';
+                    	break;
+                    case TextAlign.Right:
+                    	this.mColModel[this.mColModel.length - 1].align = 'right';
+                    	break;
+                    }
+                    
                     if (nodes[j].width() > 0) {
                         this.mColModel[this.mColModel.length - 1].width = nodes[j].width();
                     }
@@ -618,12 +630,9 @@ module JQTable {
                     ++row;
                     var leftCell = $("#" + this.mGridName + " #" + row + " #" + this.id(col) + row);
                     var rightCell = leftCell.next();
-                    if (align == TextAlign.Center) {
-                        leftCell.css("text-align", "right");
-                    } else {
-                        leftCell.css("text-align", "left");
-                    }
-                  
+                    leftCell.css("text-align", "right");
+                    rightCell.css("text-align", "left");
+                    
                     leftCell.css("border-right-width", "0px");
                     leftCell.css("padding-right", "0px");
                     leftCell.css("disabled", "disabled");

@@ -67,6 +67,30 @@ module Util {
     		}
 		}
 		
+		
+		public getDataByYear(y: number, compId: CompanyType, callBack: (arrayData : string) => void): void{
+            if (undefined == this.mDataMap[y + ""]) {
+                this.mDataMap[y + ""] = {};
+            }
+           
+            if (undefined == this.mDataMap[y + ""][compId + ""]){
+                $.ajax({
+                    type: "GET",
+                    url: this.mBaseResUrl + "?year=" + y + "&companyId=" + compId,
+	                success: (data: any) =>{
+		                  this.mDataMap[y + ""][compId + ""] = data;
+		                  callBack(data);
+			        },
+			        error: (XMLHttpRequest, textStatus, errorThrown) => {
+	                    callBack(null);
+	                }
+         		});
+			}
+			else {
+        		callBack(this.mDataMap[y + ""][compId + ""]);
+    		}
+		}
+		
 		public getDataByCompany(m: number, y: number, compId: CompanyType, callBack: (arrayData : string) => void): void{
             if (undefined == this.mDataMap[y + ""]) {
                 this.mDataMap[y + ""] = {};
@@ -93,7 +117,7 @@ module Util {
 		}
 	}
 
-
+ 
 	export function formatCurrency (val: string): string{
 		
 		if (val === "--" || val === ""){
