@@ -156,16 +156,6 @@ th.ui-th-column div {
 	border-top-left-radius: 0px;
 }
 
-td{
-	padding: 0px 0px 0px 0px;
-}
-tr{
-	padding: 0px 0px 0px 0px;
-}
-
-table{
-	padding: 0px 0px 0px 0px;
-}
 </style>
 
 </head>

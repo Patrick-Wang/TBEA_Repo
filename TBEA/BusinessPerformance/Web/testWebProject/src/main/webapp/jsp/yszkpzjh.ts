@@ -12,7 +12,7 @@ module yszkpzjh {
                 new JQTable.Node("本月计划销售收入", "byjhxssr", true, JQTable.TextAlign.Right, 100),
                 new JQTable.Node("本月目标责任书应收指标", "bymbzrsyszb", true, JQTable.TextAlign.Right, 100),
                 new JQTable.Node("本月应收内控指标", "byysnkzb", true, JQTable.TextAlign.Right, 100),
-                new JQTable.Node("本月资金回笼计划", "byzjhljh", true, JQTable.TextAlign.Right, 100)], gridName);
+                new JQTable.Node("本月资金回笼计划", "byzjhljh", true, JQTable.TextAlign.Right, 120)], gridName);
 	        }
 
         public static createYSPZ2(gridName): JQTable.JQGridAssistant{
@@ -20,7 +20,7 @@ module yszkpzjh {
                     new JQTable.Node("(加)本月销售收入新增应收金额", "byxssrxzysje", true, JQTable.TextAlign.Right, 100),
                     new JQTable.Node("(减)本月可降应收资金回笼金额", "bykjyszjhlje", true, JQTable.TextAlign.Right, 100),
                     new JQTable.Node("(加)本月归还保理增加应收金额", "byghblzjysje", true, JQTable.TextAlign.Right, 100),
-                    new JQTable.Node("(减)本月新增保理回款冲减应收金额", "byxzblhkcjysje", true, JQTable.TextAlign.Right, 100),
+                    new JQTable.Node("(减)本月新增保理回款冲减应收金额", "byxzblhkcjysje", true, JQTable.TextAlign.Right, 120),
                     new JQTable.Node("本月预计账面应收余额", "byyjzmysye", true, JQTable.TextAlign.Right, 100),
                     new JQTable.Node("与目标责任书指标差距", "ymbzeszbcj", true, JQTable.TextAlign.Right, 100),
                     new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, JQTable.TextAlign.Right, 100)], gridName);
@@ -36,7 +36,7 @@ module yszkpzjh {
                     new JQTable.Node("(减)上月末已开票未发货产生应收金额", "symykfpfhscysje", true, JQTable.TextAlign.Right, 100),
                     new JQTable.Node("(加)上月末已发货未开票增加实际应收金额", "symyfhwkpzjsjsuje", true, JQTable.TextAlign.Right, 100),
                     new JQTable.Node("(加)上月末保理回款冲减应收金额", "symblhkzjysje", true, JQTable.TextAlign.Right, 100),
-                    new JQTable.Node("(加)上月末预收冲减应收的金额", "symyscjysdje", true, JQTable.TextAlign.Right, 100),
+                    new JQTable.Node("(加)上月末预收冲减应收的金额", "symyscjysdje", true, JQTable.TextAlign.Right, 120),
                     new JQTable.Node("(加)其他冲减应收", "qtcjys", true, JQTable.TextAlign.Right, 100),
                     new JQTable.Node("上月实际应收余额", "sysjysye", true, JQTable.TextAlign.Right, 100),
                     new JQTable.Node("(加)本月发货产品新增应收金额", "byfhcpxzysje", true, JQTable.TextAlign.Right, 100),
