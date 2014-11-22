@@ -91,6 +91,25 @@ module Util {
     		}
 		}
 		
+	   public getDataByYearOnly(y: number, callBack: (arrayData : Array<string[]>) => void): void{
+            if (undefined == this.mDataMap[y + ""]){
+                $.ajax({
+                    type: "GET",
+                    url: this.mBaseResUrl + "?year=" + y,
+	                success: (data: any) =>{
+		                  this.mDataMap[y + ""] = JSON.parse(data);
+		                  callBack(this.mDataMap[y + ""]);
+			        },
+			        error: (XMLHttpRequest, textStatus, errorThrown) => {
+	                    callBack(null);
+	                }
+         		});
+			}
+			else {
+        		callBack(this.mDataMap[y + ""]);
+    		}
+		}
+		
 		public getDataByCompany(m: number, y: number, compId: CompanyType, callBack: (arrayData : string) => void): void{
             if (undefined == this.mDataMap[y + ""]) {
                 this.mDataMap[y + ""] = {};
