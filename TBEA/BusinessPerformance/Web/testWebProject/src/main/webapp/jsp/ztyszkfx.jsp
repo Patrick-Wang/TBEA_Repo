@@ -31,7 +31,7 @@
    			 var instance = ztyszkfx.View.newInstance();
             (function () {
                 $(document).ready(function () {
-                    ztyszkfx.View.newInstance().init("table", ${year});
+                	instance.init("table", ${year});
                 });
             })();
     </script>
