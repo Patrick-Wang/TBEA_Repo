@@ -1,6 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
-
 var zbhz_overview;
 (function (zbhz_overview) {
     var YDZBDataSet = (function () {
@@ -28,13 +25,11 @@ var zbhz_overview;
         YDZBDataSet.prototype.getJdtb = function () {
             return this.mJdtb;
         };
-
         YDZBDataSet.prototype.getType = function () {
             return this.companyId;
         };
         return YDZBDataSet;
     })();
-
     var DataSetManager = (function () {
         function DataSetManager(zbid) {
             this.dataSetMap = {};
@@ -43,7 +38,6 @@ var zbhz_overview;
         DataSetManager.prototype.addDataSet = function (dataSet) {
             this.dataSetMap[dataSet.getType() + ""] = dataSet;
         };
-
         DataSetManager.prototype.getData = function (ty, callBack) {
             var _this = this;
             if (this.dataSetMap[ty + ""] == undefined) {
@@ -59,13 +53,13 @@ var zbhz_overview;
                         callBack(null);
                     }
                 });
-            } else {
+            }
+            else {
                 callBack(this.dataSetMap[ty + ""]);
             }
         };
         return DataSetManager;
     })();
-
     var ChartType;
     (function (ChartType) {
         ChartType[ChartType["YDZB"] = 0] = "YDZB";
@@ -74,7 +68,6 @@ var zbhz_overview;
         ChartType[ChartType["YDTQ"] = 3] = "YDTQ";
         ChartType[ChartType["JDTQ"] = 4] = "JDTQ";
     })(ChartType || (ChartType = {}));
-
     var View = (function () {
         function View() {
             this.mSelectCy = true;
@@ -87,7 +80,6 @@ var zbhz_overview;
             }
             return View.ins;
         };
-
         View.prototype.init = function (echartIds, month, year, zbid) {
             this.mDataSetMgr = new DataSetManager(zbid);
             this.mMonth = month;
@@ -95,15 +87,14 @@ var zbhz_overview;
             this.mChartIds = echartIds;
             this.updateUI();
         };
-
         View.prototype.getCurrentCompany = function () {
             if (this.mDw != 100 /* ALL */) {
                 return this.mDw;
-            } else {
+            }
+            else {
                 return this.mCy;
             }
         };
-
         View.prototype.updateUI = function () {
             var _this = this;
             this.mDataSetMgr.getData(this.getCurrentCompany(), function (dataSet) {
@@ -116,7 +107,6 @@ var zbhz_overview;
                 }
             });
         };
-
         View.prototype.getMonth = function () {
             var month = [];
             for (var i = 0; i < this.mMonth; ++i) {
@@ -124,7 +114,6 @@ var zbhz_overview;
             }
             return month;
         };
-
         View.prototype.updateYdUI = function (data) {
             var month = this.getMonth();
             var legend = ["月度计划", "月度完成", "计划完成率"];
@@ -186,7 +175,6 @@ var zbhz_overview;
             };
             echarts.init($('#' + this.mChartIds[0 /* YDZB */])[0]).setOption(option);
         };
-
         View.prototype.updateJdUI = function (data) {
             var jdCount = data[0].length;
             var jd = [];
@@ -194,7 +182,6 @@ var zbhz_overview;
             for (var i = 1; i <= jdCount; ++i) {
                 jd.push("第" + i + "季度");
             }
-
             var option = {
                 title: {
                     text: '季度指标完成情况'
@@ -253,17 +240,14 @@ var zbhz_overview;
             };
             echarts.init($('#' + this.mChartIds[1 /* JDZB */])[0]).setOption(option);
         };
-
         View.prototype.updateNdUI = function (data) {
             var jdCount = data[0].length;
             var jd = [];
             var legend = ["年度计划", "年度累计", "累计完成率"];
-            var xYear = [this.mYear - 2 + "年", this.mYear - 1 + "年", this.mYear + "年"];
-
+            var xYear = [this.mYear - 2 + "年", this.mYear - 1 + "年", this.mYear + "年",];
             for (var i = 1; i <= jdCount; ++i) {
                 jd.push("第" + i + "季度");
             }
-
             var option = {
                 title: {
                     text: '年度指标完成情况'
@@ -322,7 +306,6 @@ var zbhz_overview;
             };
             echarts.init($('#' + this.mChartIds[2 /* NDZB */])[0]).setOption(option);
         };
-
         View.prototype.updateYdtbUI = function (data) {
             var month = this.getMonth();
             var legend = [(this.mYear - 1) + "年同期月度完成", (this.mYear) + "年同期月度完成", "同比增长率"];
@@ -384,7 +367,6 @@ var zbhz_overview;
             };
             echarts.init($('#' + this.mChartIds[3 /* YDTQ */])[0]).setOption(option);
         };
-
         View.prototype.updateJdtbUI = function (data) {
             var jdCount = data[0].length;
             var jd = [];
@@ -392,7 +374,6 @@ var zbhz_overview;
             for (var i = 1; i <= jdCount; ++i) {
                 jd.push("第" + i + "季度");
             }
-
             var option = {
                 title: {
                     text: '季度同期对比'
@@ -451,13 +432,11 @@ var zbhz_overview;
             };
             echarts.init($('#' + this.mChartIds[4 /* JDTQ */])[0]).setOption(option);
         };
-
         View.prototype.onCySelected = function (val) {
             this.mCy = val;
             var select = $("#dw select")[0];
             this.mDw = parseInt(select.options[select.selectedIndex].value);
         };
-
         View.prototype.onDwSelected = function (val) {
             this.mDw = val;
         };
@@ -465,4 +444,3 @@ var zbhz_overview;
     })();
     zbhz_overview.View = View;
 })(zbhz_overview || (zbhz_overview = {}));
-//# sourceMappingURL=zbhz_overview.js.map

@@ -1,5 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
 var xl_fkfstj;
 (function (xl_fkfstj) {
     var JQGridAssistantFactory = (function () {
@@ -8,7 +6,6 @@ var xl_fkfstj;
         JQGridAssistantFactory.createSubNode = function (parent) {
             return parent.append(new JQTable.Node("笔数", "bs")).append(new JQTable.Node("金额", "je"));
         };
-
         JQGridAssistantFactory.createFdwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("", "title", true, 0 /* Left */),
@@ -26,7 +23,6 @@ var xl_fkfstj;
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("现款现货合同", "xkxh"))
             ], gridName);
         };
-
         JQGridAssistantFactory.createGwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("", "title", true, 0 /* Left */),
@@ -43,7 +39,6 @@ var xl_fkfstj;
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("质保期超过1年的合同", "zbqcq1n"))
             ], gridName);
         };
-
         JQGridAssistantFactory.createNwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("", "title", true, 0 /* Left */),
@@ -57,27 +52,22 @@ var xl_fkfstj;
         };
         return JQGridAssistantFactory;
     })();
-
     var View = (function () {
         function View() {
         }
         View.newInstance = function () {
             return new View();
         };
-
         View.prototype.init = function (fdwTableId, gwTableId, nwTableId, fdwData, gwData, nwData) {
             this.updateFdwTable(fdwTableId, fdwTableId + "_jqgrid_1234", JQGridAssistantFactory.createFdwTable(fdwTableId + "_jqgrid_1234"), fdwData);
-
             var rawData = [
                 ["集中招标"],
                 ["非集中招标"],
-                ["合计"]];
-
+                ["合计"]
+            ];
             this.updateTable(gwTableId, gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(gwTableId + "_jqgrid_1234"), rawData, gwData);
-
             this.updateTable(nwTableId, nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(nwTableId + "_jqgrid_1234"), rawData, nwData);
         };
-
         View.prototype.updateTable = function (parentName, childName, tableAssist, data, rawData) {
             var row = [];
             for (var i = 0; i < data.length; ++i) {
@@ -91,20 +81,15 @@ var xl_fkfstj;
                     data[i] = data[i].concat(row);
                 }
             }
-
             var parent = $("#" + parentName);
             parent.empty();
             parent.append("<table id='" + childName + "'></table>");
-
             $("#" + childName).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
@@ -113,12 +98,10 @@ var xl_fkfstj;
                 autoScroll: true
             }));
         };
-
         View.prototype.updateFdwTable = function (parentName, childName, tableAssist, rawData) {
             tableAssist.mergeTitle();
             tableAssist.mergeRow(0);
             tableAssist.mergeColum(0, 11);
-
             var data = [
                 ["电源客户", "火电"],
                 ["电源客户", "水电"],
@@ -131,8 +114,8 @@ var xl_fkfstj;
                 ["非电力市场", "航天军工"],
                 ["非电力市场", "连锁经营"],
                 ["非电力市场", "其他"],
-                ["合", "计"]];
-
+                ["合", "计"]
+            ];
             var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (rawData[i] instanceof Array) {
@@ -145,20 +128,15 @@ var xl_fkfstj;
                     data[i] = data[i].concat(row);
                 }
             }
-
             var parent = $("#" + parentName);
             parent.empty();
             parent.append("<table id='" + childName + "'></table>");
-
             $("#" + childName).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
@@ -170,4 +148,3 @@ var xl_fkfstj;
     })();
     xl_fkfstj.View = View;
 })(xl_fkfstj || (xl_fkfstj = {}));
-//# sourceMappingURL=xl_fkfstj.js.map

@@ -23,13 +23,15 @@ module tbbzjqk {
         }
         private mComp: Util.CompanyType = Util.CompanyType.JT;
         private mYear: number;
-        private mData: Array<string[]> = [];
+        private mData: Array<string> = [];
         private mDataSet: Util.DateDataSet;
         private mTableId: string;
-        public init(tableId: string, year: number): void {
+        private mEchartId;
+        public init(echartId: string, tableId: string, year: number): void {
             this.mYear = year;
             this.mDataSet = new Util.DateDataSet("tbbzjqk_update.do");
             this.mTableId = tableId;
+            this.mEchartId = echartId;
             this.updateTable();
             this.updateUI();
 
@@ -49,8 +51,66 @@ module tbbzjqk {
                     $('h1').text(this.mYear + "年 投标保证金情况");
                     document.title = this.mYear + "年 投标保证金情况";
                     this.updateTable();
+                    this.updateEchart();
                 }
             });
+        }
+
+        private updateEchart(): void{
+        	var tbbzjChart = echarts.init($("#" + this.mEchartId)[0]);
+
+            var month: string[] = [];
+            var currentYearData = [];
+            var lastYearData = [];
+            for (var i = 1; i <= 12; ++i) {
+                month.push(i + "月");
+                lastYearData.push(i);
+                currentYearData.push(i + 12);
+            }
+
+            var data = [];
+            data.push(lastYearData);
+            data.push(currentYearData);
+            var legend = [this.mYear - 1 + "年", this.mYear + "年"];
+
+            var ser = [];
+            for (var i = 0; i < legend.length; ++i) {
+                ser.push({
+                    name: legend[i],
+                    type: 'line',
+                    smooth: true,
+                    data: data[i]
+                })
+            }
+
+            var tbbzjOption = {
+
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: legend
+                },
+                toolbox: {
+                    show: true,
+                },
+                calculable: false,
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: month
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: ser
+            }
+
+            tbbzjChart.setOption(tbbzjOption);
         }
         //private initEchart(echart): void{
         //    var ysyq_payment_Chart = echarts.init(echart);

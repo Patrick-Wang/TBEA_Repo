@@ -1,6 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
-
 var yqkqsbh;
 (function (yqkqsbh) {
     var JQGridAssistantFactory = (function () {
@@ -18,7 +15,6 @@ var yqkqsbh;
         };
         return JQGridAssistantFactory;
     })();
-
     var View = (function () {
         function View() {
             this.mComp = 19 /* JT */;
@@ -26,26 +22,21 @@ var yqkqsbh;
         View.newInstance = function () {
             return new View();
         };
-
         View.prototype.init = function (echartId, tableId, args) {
             this.mMonth = args[0];
             this.mYear = args[1];
-
             this.mTableId = tableId;
             this.mCharId = echartId;
             this.mDataSet = new Util.DateDataSet("yqkbhqs_update.do");
             this.updateTable(tableId);
             this.updateUI();
         };
-
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
         };
-
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;
         };
-
         View.prototype.updateUI = function () {
             var _this = this;
             this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
@@ -58,36 +49,21 @@ var yqkqsbh;
                 }
             });
         };
-
         View.prototype.updateEchart = function (echart) {
             var legend = ["一个月以内", "1-3月", "3-6月", "6-12月", "一年以上"];
-
             var month = [];
             var data = [];
-
             for (var i = 0; i < legend.length; ++i) {
                 data.push([]);
             }
-
             for (var i = 1; i <= this.mMonth; ++i) {
                 month.push(i + "月");
-                //                total.push(0);
             }
-
             for (var j = 0; j < legend.length; ++j) {
                 for (var i = 1; i <= this.mMonth; ++i) {
                     data[j].push(this.mData[i - 1][j]);
                 }
             }
-
-            //            for (var i = 1; i <= this.mMonth; ++i) {
-            //                for (var j = 0; j < legend.length - 1; ++j) {
-            //                    total[i - 1] += parseInt(data[j][i - 1]);
-            //                }
-            //            }
-            //            for (var i = 1; i <= this.mMonth; ++i) {
-            //                data[legend.length - 1].push(total[i - 1] + "");
-            //            }
             var ser = [];
             for (var i = 0; i < legend.length; ++i) {
                 ser.push({
@@ -99,7 +75,6 @@ var yqkqsbh;
                     data: data[i]
                 });
             }
-
             var option = {
                 tooltip: {
                     trigger: 'axis'
@@ -125,15 +100,11 @@ var yqkqsbh;
                 ],
                 series: ser
             };
-
             echarts.init($('#' + echart)[0]).setOption(option);
         };
-
         View.prototype.updateTable = function (name) {
             var name = this.mTableId + "_jqgrid_1234";
-
             var tableAssist = JQGridAssistantFactory.createTable(name);
-
             var data = [];
             var tmp = [];
             var row = [];
@@ -155,22 +126,15 @@ var yqkqsbh;
                 }
             }
             data.push(tmp.concat(row));
-
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
-
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: '100%',
                 width: 1000,
                 shrinkToFit: true,
@@ -181,4 +145,3 @@ var yqkqsbh;
     })();
     yqkqsbh.View = View;
 })(yqkqsbh || (yqkqsbh = {}));
-//# sourceMappingURL=yqkqsbh.js.map

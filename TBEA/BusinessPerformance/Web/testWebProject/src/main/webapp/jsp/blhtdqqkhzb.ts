@@ -3,7 +3,7 @@
 declare var echarts;
 
 module blhtdqqkhzb {
-
+ 
     class JQGridAssistantFactory {
 
         private static createPreNode(month: number): JQTable.Node {
@@ -197,9 +197,6 @@ module blhtdqqkhzb {
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    //autowidth : false,
-                    //                    cellsubmit: 'clientArray',
-                    //                    cellEdit: true,
                     height: '100%',
                     width: 1000,
                     shrinkToFit: false,

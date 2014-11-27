@@ -1,6 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
-
 var hzb_zbhz;
 (function (hzb_zbhz) {
     var JQGridAssistantFactory = (function () {
@@ -16,7 +13,6 @@ var hzb_zbhz;
         };
         return JQGridAssistantFactory;
     })();
-
     var View = (function () {
         function View() {
             this.mData = [];
@@ -27,7 +23,6 @@ var hzb_zbhz;
             }
             return View.ins;
         };
-
         View.prototype.init = function (tableId, month, year) {
             this.mYear = year;
             this.mMonth = month;
@@ -39,11 +34,9 @@ var hzb_zbhz;
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
         };
-
         View.prototype.onMonthSelected = function (month) {
             this.mMonth = month;
         };
-
         View.prototype.updateUI = function () {
             var _this = this;
             this.mDataSet.getData(this.mMonth, this.mYear, function (dataArray) {
@@ -58,30 +51,7 @@ var hzb_zbhz;
         View.prototype.updateTable = function () {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name, this.mMonth);
-            var data = [
-                ["1", "利润总额"],
-                ["2", "经营性净现金流"],
-                ["3", "应收账款"],
-                ["4", "其中：逾期款"],
-                ["5", "存货 "],
-                ["6", "其中：积压物资"],
-                ["7", "合同签约额"],
-                ["8", "资金回笼"],
-                ["9", "不含税产值"],
-                ["10", "产量：变压器"],
-                ["11", "产量：用铜量"],
-                ["12", "产量：用铝量"],
-                ["13", "人数"],
-                ["14", "人均利润"],
-                ["15", "人均收入"],
-                ["16", "三项费用"],
-                ["17", "三项费用率"]];
-
-            //            for (var i = 0; i < data.length; ++i) {
-            //                if (this.mData[i] instanceof Array) {
-            //                    data[i] = data[i].concat(this.mData[i]);
-            //                }
-            //            }
+            var data = [["1", "利润总额"], ["2", "经营性净现金流"], ["3", "应收账款"], ["4", "其中：逾期款"], ["5", "存货 "], ["6", "其中：积压物资"], ["7", "合同签约额"], ["8", "资金回笼"], ["9", "不含税产值"], ["10", "产量：变压器"], ["11", "产量：用铜量"], ["12", "产量：用铝量"], ["13", "人数"], ["14", "人均利润"], ["15", "人均收入"], ["16", "三项费用"], ["17", "三项费用率"]];
             var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (this.mData[i] instanceof Array) {
@@ -94,21 +64,15 @@ var hzb_zbhz;
                     data[i] = data[i].concat(row);
                 }
             }
-
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: '100%',
                 width: 1200,
                 shrinkToFit: true,
@@ -120,4 +84,3 @@ var hzb_zbhz;
     })();
     hzb_zbhz.View = View;
 })(hzb_zbhz || (hzb_zbhz = {}));
-//# sourceMappingURL=hzb_zbhz.js.map

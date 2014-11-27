@@ -1,6 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
-
 var yszkjgqkb;
 (function (yszkjgqkb) {
     var JQGridAssistantFactory = (function () {
@@ -16,7 +13,6 @@ var yszkjgqkb;
         };
         return JQGridAssistantFactory;
     })();
-
     var View = (function () {
         function View() {
             this.mCurrentSelected = 0;
@@ -28,34 +24,27 @@ var yszkjgqkb;
             }
             return View.ins;
         };
-
         View.prototype.init = function (echartIdPie, echartIdSquire, echartIdBar, echartIdLine, tableId, args) {
             this.mMonth = args[0];
             this.mYear = args[1];
             this.mTableId = tableId;
-
             this.mEchartIdBar = echartIdBar;
             this.mEchartIdLine = echartIdLine;
             this.mEchartIdPie = echartIdPie;
             this.mEchartIdSquire = echartIdSquire;
-
             this.mDataSet = new Util.DateDataSet("yszkjgqk_update.do");
             this.updateTable(tableId);
             this.updateUI();
         };
-
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
         };
-
         View.prototype.onMonthSelected = function (month) {
             this.mMonth = month;
         };
-
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;
         };
-
         View.prototype.updateUI = function () {
             var _this = this;
             this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
@@ -74,7 +63,6 @@ var yszkjgqkb;
                 }
             });
         };
-
         View.prototype.onSelected = function (i) {
             this.mCurrentSelected = i;
             this.updateLineEchart(this.mEchartIdLine);
@@ -88,14 +76,18 @@ var yszkjgqkb;
             for (var i = 1; i <= this.mMonth; ++i) {
                 month.push(i + "月");
             }
-
             for (var i = 0; i < 6; ++i) {
                 data.push(this.mBarData[i + this.mCurrentSelected * 6]);
             }
-
             var ser = [];
-            var rgba = [[193, 35, 43, 0.5], [181, 195, 52, 0.5], [252, 206, 16, 0.5], [193, 35, 43, 1], [181, 195, 52, 1], [252, 206, 16, 1]];
-
+            var rgba = [
+                [193, 35, 43, 0.5],
+                [181, 195, 52, 0.5],
+                [252, 206, 16, 0.5],
+                [193, 35, 43, 1],
+                [181, 195, 52, 1],
+                [252, 206, 16, 1]
+            ];
             var temp;
             for (var j = 0; j < legend.length; ++j) {
                 if (j == 3) {
@@ -119,13 +111,11 @@ var yszkjgqkb;
                     },
                     data: data[k]
                 };
-
                 if (j < 3) {
                     temp.xAxisIndex = 1;
                 }
                 ser.push(temp);
             }
-
             var option = {
                 tooltip: {
                     trigger: 'axis'
@@ -137,20 +127,19 @@ var yszkjgqkb;
                     show: true
                 },
                 calculable: false,
-                xAxis: [
-                    {
-                        type: 'category',
-                        boundaryGap: true,
-                        data: month
-                    }, {
-                        type: 'category',
-                        axisLine: { show: false },
-                        axisTick: { show: false },
-                        axisLabel: { show: false },
-                        splitArea: { show: false },
-                        splitLine: { show: false },
-                        data: month
-                    }],
+                xAxis: [{
+                    type: 'category',
+                    boundaryGap: true,
+                    data: month
+                }, {
+                    type: 'category',
+                    axisLine: { show: false },
+                    axisTick: { show: false },
+                    axisLabel: { show: false },
+                    splitArea: { show: false },
+                    splitLine: { show: false },
+                    data: month
+                }],
                 yAxis: [
                     {
                         type: 'value'
@@ -158,37 +147,22 @@ var yszkjgqkb;
                 ],
                 series: ser
             };
-            try  {
+            try {
                 echarts.init($('#' + echart)[0]).setOption(option);
-            } catch (e) {
+            }
+            catch (e) {
             }
         };
-
         View.prototype.updateSquareEchart = function (echart) {
             var month = [];
             var data = [];
             for (var i = 1; i <= this.mMonth; ++i) {
                 month.push(i + "月");
             }
-
             for (var i = 0; i < 3; ++i) {
                 data.push(this.mBarData[i + this.mCurrentSelected * 6 + 3]);
             }
-
             var legend = ["应收未收", "未到期款", "未到期质保金"];
-
-            //var chart: ECharts.Chart = new ECharts.Chart(new ECharts.XAxis(month), new ECharts.YAxis());
-            //chart.setLegend(new ECharts.Legend(, ECharts.LegendX.center));
-            //var ser: ECharts.Line.SeriesImpl = new ECharts.Line.SquareSeries('应收未收', data[0]);
-            //ser.stack = "金额";
-            //chart.addSeries(ser);
-            //ser = new ECharts.Line.SquareSeries('未到期款', data[1]);
-            //ser.stack = "金额";
-            //chart.addSeries(ser);
-            //ser = new ECharts.Line.SquareSeries('未到期质保金', data[2]);
-            //ser.stack = "金额";
-            //chart.addSeries(ser);
-            //chart.update(echart);
             var ser = [];
             for (var i = 0; i < legend.length; ++i) {
                 ser.push({
@@ -200,7 +174,6 @@ var yszkjgqkb;
                     data: data[i]
                 });
             }
-
             var option = {
                 tooltip: {
                     trigger: 'axis'
@@ -226,30 +199,18 @@ var yszkjgqkb;
                 ],
                 series: ser
             };
-
             echarts.init($('#' + echart)[0]).setOption(option);
         };
-
         View.prototype.updateLineEchart = function (echart) {
             var month = [];
             var data = [];
             for (var i = 1; i <= this.mMonth; ++i) {
                 month.push(i + "月");
             }
-
             for (var i = 0; i < 2; ++i) {
                 data.push(this.mLineData[i + this.mCurrentSelected * 2]);
             }
-
-            //var chart: ECharts.Chart = new ECharts.Chart(new ECharts.XAxis(month), new ECharts.YAxis());
-            //chart.setLegend(new ECharts.Legend(["2013年", "2014年"], ECharts.LegendX.center));
-            //var ser: ECharts.Line.SeriesImpl = new ECharts.Line.SeriesImpl('2013年', data[0]);
-            //chart.addSeries(ser);
-            //ser = new ECharts.Line.SeriesImpl('2014年', data[1]);
-            //chart.addSeries(ser);
-            //chart.update(echart);
             var legend = [this.mYear - 1 + "年", this.mYear + "年"];
-
             var ser = [];
             for (var i = 0; i < legend.length; ++i) {
                 ser.push({
@@ -259,7 +220,6 @@ var yszkjgqkb;
                     data: data[i]
                 });
             }
-
             var option = {
                 tooltip: {
                     trigger: 'axis'
@@ -285,7 +245,6 @@ var yszkjgqkb;
                 ],
                 series: ser
             };
-
             echarts.init($('#' + echart)[0]).setOption(option);
         };
         View.prototype.updatePieEchart = function (echart) {
@@ -298,12 +257,7 @@ var yszkjgqkb;
                     total += parseInt(this.mTableData[i][0]);
                 }
             }
-
-            var dataIn = [
-                { name: "  电力\r\n及配套", value: total },
-                { name: " ", value: parseInt(this.mTableData[5][0]) },
-                { name: "  ", value: parseInt(this.mTableData[6][0]) }];
-
+            var dataIn = [{ name: "  电力\r\n及配套", value: total }, { name: " ", value: parseInt(this.mTableData[5][0]) }, { name: "  ", value: parseInt(this.mTableData[6][0]) }];
             var option = {
                 tooltip: {
                     trigger: 'axis'
@@ -323,7 +277,8 @@ var yszkjgqkb;
                         type: 'pie',
                         radius: [100, 130],
                         data: dataOut
-                    }, {
+                    },
+                    {
                         name: "2",
                         type: 'pie',
                         radius: [0, 60],
@@ -341,10 +296,8 @@ var yszkjgqkb;
                     }
                 ]
             };
-
             echarts.init($('#' + echart)[0]).setOption(option);
         };
-
         View.prototype.updateTable = function (name) {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name);
@@ -361,8 +314,8 @@ var yszkjgqkb;
                 ["电力及配套", "其他电源"],
                 ["出口", "合同"],
                 ["其", "它"],
-                ["合", "计"]];
-
+                ["合", "计"]
+            ];
             if (undefined != this.mTableData) {
                 var row = [];
                 for (var i = 0; i < data.length; ++i) {
@@ -375,22 +328,15 @@ var yszkjgqkb;
                     data[i] = data[i].concat(row);
                 }
             }
-
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
-
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: '100%',
                 width: 1200,
                 shrinkToFit: true,
@@ -401,4 +347,3 @@ var yszkjgqkb;
     })();
     yszkjgqkb.View = View;
 })(yszkjgqkb || (yszkjgqkb = {}));
-//# sourceMappingURL=yszkjgqkb.js.map
