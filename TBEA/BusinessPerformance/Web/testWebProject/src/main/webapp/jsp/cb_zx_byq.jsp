@@ -41,7 +41,7 @@
     </script>
 <meta charset="UTF-8">
 
-<title>变压器成本</title>
+<title>变压器执行订单</title>
 
 <style type="text/css">
 body {
@@ -145,7 +145,7 @@ th.ui-th-ltr {
 </head>
 <body style:"width=1400px">
 	<div class="header">
-		<h1>变压器成本</h1>
+		<h1>变压器执行订单</h1>
 	</div>
 
 

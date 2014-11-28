@@ -1,7 +1,7 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
 declare var echarts;
-module cb_byq {
+module cb_xl {
 
     class JQGridAssistantFactory {
 

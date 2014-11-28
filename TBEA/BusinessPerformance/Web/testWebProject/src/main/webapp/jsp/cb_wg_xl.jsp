@@ -28,20 +28,21 @@
 	type="text/javascript"></script>
 <script src="../jsp/jqgrid/js/ui.multiselect.js" type="text/javascript"></script>
 <script src="../jsp/util.js" type="text/javascript"></script>
-<script src="../jsp/cb_xl.js" type="text/javascript"></script>
+<script src="../jsp/cb_wg_xl.js" type="text/javascript"></script>
 
 <script type="text/javascript">
             (function () {
                 $(document).ready(function () {
-                	cb_xl.View.newInstance().init(
+                	cb_wg_xl.View.newInstance().init(
                 			"table1", 
                 			"table2", 
-                			"table3");
+                			"table3", 
+                			"table4");
             })})();
     </script>
 <meta charset="UTF-8">
 
-<title>线缆成本</title>
+<title>线缆完工订单</title>
 
 <style type="text/css">
 body {
@@ -145,13 +146,14 @@ th.ui-th-ltr {
 </head>
 <body style:"width=1400px">
 	<div class="header">
-		<h1>线缆成本</h1>
+		<h1>线缆完工订单</h1>
 	</div>
 
 
 	<div align="center" id="table1" style="margin-bottom:15px"></div>
 	<div align="center" id="table2" style="margin-bottom:15px"></div>
 	<div align="center" id="table3" style="margin-bottom:15px"></div>
+	<div align="center" id="table4" style="margin-bottom:15px"></div>
 
 </body>
 

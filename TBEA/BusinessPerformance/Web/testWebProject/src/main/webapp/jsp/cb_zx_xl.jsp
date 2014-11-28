@@ -28,12 +28,12 @@
 	type="text/javascript"></script>
 <script src="../jsp/jqgrid/js/ui.multiselect.js" type="text/javascript"></script>
 <script src="../jsp/util.js" type="text/javascript"></script>
-<script src="../jsp/cb_xl.js" type="text/javascript"></script>
+<script src="../jsp/cb_zx_xl.js" type="text/javascript"></script>
 
 <script type="text/javascript">
             (function () {
                 $(document).ready(function () {
-                	cb_xl.View.newInstance().init(
+                	cb_zx_xl.View.newInstance().init(
                 			"table1", 
                 			"table2", 
                 			"table3");
@@ -41,7 +41,7 @@
     </script>
 <meta charset="UTF-8">
 
-<title>线缆成本</title>
+<title>线缆执行订单</title>
 
 <style type="text/css">
 body {
@@ -145,7 +145,7 @@ th.ui-th-ltr {
 </head>
 <body style:"width=1400px">
 	<div class="header">
-		<h1>线缆成本</h1>
+		<h1>线缆执行订单</h1>
 	</div>
 
 
