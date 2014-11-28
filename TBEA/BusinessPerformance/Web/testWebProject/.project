@@ -35,6 +35,11 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.palantir.typescript.typeScriptBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
@@ -44,6 +49,7 @@
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 		<nature>com.axmor.eclipse.typescript.builder.typescriptNature</nature>
+		<nature>com.palantir.typescript.typeScriptNature</nature>
 	</natures>
 	<linkedResources>
 		<link>

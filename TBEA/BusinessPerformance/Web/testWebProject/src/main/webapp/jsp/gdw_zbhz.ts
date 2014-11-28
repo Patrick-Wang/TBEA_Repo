@@ -203,7 +203,7 @@ module gdw_zbhz {
 			var parent = $("#" + this.mTableId);
 			parent.empty();
 			parent.append("<table id='"+ name +"'></table>");
-            $("#" + name).jqGrid(
+            $("#" + name).jqGrid( 
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
