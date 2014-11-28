@@ -48,10 +48,12 @@ module ztyszkfx {
         private mData: Array<string[]>;
         private mDataSet: Util.DateDataSet;
         private mTableId: string;
-        public init(tableId: string, year: number): void {
+        private mEchartId;
+        public init(echartId: string, tableId: string, year: number): void {
             this.mYear = year;
             this.mDataSet = new Util.DateDataSet("ztyszkfx_update.do");
             this.mTableId = tableId;
+            this.mEchartId = echartId;
             this.updateTable();
             this.updateUI();
 
@@ -68,10 +70,106 @@ module ztyszkfx {
                     $('h1').text(this.mYear + "年 整体应收账款分析表");
                     document.title = this.mYear + "年 整体应收账款分析表";
                     this.updateTable();
+                    this.updateEchart();
                 }
             });
         }
 
+        private updateEchart(): void{
+        	var ztyszkfxChart = echarts.init($("#" + this.mEchartId)[0]);
+        	var month: string[] = [];
+ 		    for (var i = 1; i <= 12; ++i){
+ 		   		month.push(i + "月");
+ 		    }
+            var legend = ["账面应收账款余额", "保理控制余额", "应收账款实际数", "累计收入", "账面应收占收入比"];
+
+            var zmysData = [41982, 31876, 51975, 43856, 61498, 32696, 38574, 62641, 28434, 51114, 41563, 68415];
+            var blkzData = [29167, 21401, 47155, 32584, 52523, 19573, 24652, 50217, 17426, 43018, 37107, 60047];
+            var yssjData = [49841, 57498, 34574, 87756, 85353, 57772, 23587, 54536, 48478, 67488, 99837, 10760];
+            var ljsrData = [47291, 67214, 14715, 53258, 45252, 31957, 32465, 25021, 71742, 64301, 83710, 76004];
+            var yszbData: any[] = [];
+            for (var i = 0; i < zmysData.length; i++) {
+            	yszbData.push((zmysData[i] / (ljsrData[i] / (i + 1) * 12)).toFixed(2));
+			}
+            
+            var ztyszkfxOption = {
+				title : {
+				        text: '整体应收账款分析'
+				},	   
+				tooltip : {
+			        trigger: 'axis',
+			        formatter: function(v) {
+			            return v[0][1] + '<br/>'
+		                + v[0][0] + ' : ' + v[0][2] + '<br/>'
+		                + v[1][0] + ' : ' + v[1][2] + '<br/>'
+		                + v[2][0] + ' : ' + v[2][2] + '<br/>'
+		                + v[3][0] + ' : ' + v[3][2] + '<br/>'
+			            + v[4][0] + ' : ' + v[4][2] + '%';
+			        }
+			    },
+                legend: {
+                    data: legend
+                },
+                toolbox: {
+                    show: true,
+                },
+                calculable: false,
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: true,
+                        data: month
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    },
+			        {
+			            type : 'value',
+			            axisLabel : {
+			                formatter: '{value} %'
+			            }
+			        }
+                ],
+                series: [
+                    {
+                        name: legend[0],
+                        type: 'line',
+                        smooth: true,
+                        data: zmysData
+                    },
+                    {
+                        name: legend[1],
+                        type: 'line',
+                        smooth: true,
+                        data: blkzData
+                    },
+                    {
+                    	name: legend[2],
+                    	type: 'line',
+                    	smooth: true,
+                    	data: yssjData
+                    },
+                    {
+                    	name: legend[3],
+                    	type: 'line',
+                    	smooth: true,
+                    	data: ljsrData
+                    },
+                    {
+                        name: legend[4],
+                        type: 'line',
+                        smooth: true,
+                        yAxisIndex: 1,
+                        data: yszbData
+                    }
+                ]
+            }
+            ztyszkfxChart.setOption(ztyszkfxOption);
+		
+        }
+        
         //private initEchart(echart): void {
         //    var ysyq_payment_Chart = echarts.init(echart)
         //    var ysyq_payment_Option = {

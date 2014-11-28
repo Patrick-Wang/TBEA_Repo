@@ -34,6 +34,9 @@
             (function () {
                 $(document).ready(function () {
                 	byq_fkfstj.View.newInstance().init(
+                			"echartIdFDW", 
+                            "echartIdGW", 
+                            "echartIdNW",
                 			"table1", 
                 			"table2", 
                 			"table3", 
@@ -53,14 +56,12 @@ body {
 }
 
 .panel-content-border {
-	height: 350px;
-	width: 1000px;
-	border: 2px solid #e3e3e3;
-	margin: 0;
-	padding: 0;
-	align: center;
-	valign: center;
-	text-align: center;
+    height: 330px;
+    width: 620px;
+    border: 2px solid #e3e3e3;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
 
 .panel-content {
@@ -153,10 +154,29 @@ th.ui-th-ltr {
 	</div>
 
 
-	<div align="center" id="table1" style="margin-bottom:15px"></div>
-	<div align="center" id="table2" style="margin-bottom:15px"></div>
-	<div align="center" id="table3" style="margin-bottom:15px"></div>
+	<div align="center" id="table1" style="margin-bottom: 15px"></div>
+	<div align="center" id="table2" style="margin-bottom: 15px"></div>
+	<div align="center" id="table3" style="margin-bottom: 15px"></div>
 
+	<div style="height: 390px; margin-top: 20px; margin-left: 80px;"
+		align="center">
+		<div style="float: left;">
+			<div class="panel-content-border" style="float: left">
+				<div id="echartIdGW" class="panel-content"></div>
+			</div>
+			<div class="panel-content-border"
+				style="float: left; margin-left: 20px">
+				<div id="echartIdNW" class="panel-content"></div>
+			</div>
+		</div>
+	</div>
+	<div align="center" style="margin-top: 20px">
+		<div class="panel-content-border" align="center"
+			style="width: 1000px; margin-top: 20px">
+			<div id="echartIdFDW" class="panel-content"></div>
+		</div>
+	</div>
 </body>
+<script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 
 </html>
