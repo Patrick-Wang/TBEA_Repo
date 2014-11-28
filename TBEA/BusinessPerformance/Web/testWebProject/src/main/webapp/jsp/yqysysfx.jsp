@@ -1,42 +1,42 @@
 ﻿<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
 
- <link rel="stylesheet" type="text/css" media="screen"
-	href="../jsp/jqgrid/themes/ui.jqgrid.css">
-<link rel="stylesheet" type="text/css" media="screen"
-	href="../jsp/jqgrid/themes/ui.multiselect.css">
-<script src="../jsp/jqgrid/js/jquery.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="../jsp/jqgrid/themes/ui.jqgrid.css">
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="../jsp/jqgrid/themes/ui.multiselect.css">
+    <script src="../jsp/jqgrid/js/jquery.js" type="text/javascript"></script>
 
-<script src="../jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
-<script src="../jsp/jqgrid/js/i18n/grid.locale-en.js"
-	type="text/javascript"></script>
+    <script src="../jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
+    <script src="../jsp/jqgrid/js/i18n/grid.locale-en.js" type="text/javascript"></script>
 
 
-<script src="../jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
-<script src="../jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
-<script src="../jsp/jqgrid/js/jquery.contextmenu.js"
-	type="text/javascript"></script>
-<script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
-<script src="../jsp/jqgrid/jqassist.js" type="text/javascript"></script>
+    <script src="../jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
+    <script src="../jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
+    <script src="../jsp/jqgrid/js/jquery.contextmenu.js" type="text/javascript"></script>
+    <script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
+    <script src="../jsp/jqgrid/jqassist.js" type="text/javascript"></script>
 
-<link rel="stylesheet" type="text/css" media="screen"
-	href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
-<script src="../jsp/jqgrid/js/jquery-ui-custom.min.js"
-	type="text/javascript"></script>
-<script src="../jsp/jqgrid/js/ui.multiselect.js" type="text/javascript"></script>
-
-<script src="../jsp/util.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
+    <script src="../jsp/jqgrid/js/jquery-ui-custom.min.js" type="text/javascript"></script>
+    <script src="../jsp/jqgrid/js/ui.multiselect.js" type="text/javascript"></script>
+     	<script src="../jsp/util.js" type="text/javascript"></script>
     <script src="../jsp/yqysysfx.js" type="text/javascript"></script>
 
     <script type="text/javascript">
-            (function () {
-                $(document).ready(function () {
-                    yqysysfx.View.newInstance().init("chart", "table");
-                });
-            })();
+    	var instance = yqysysfx.View.newInstance();
+        (function () {
+        	$(document).ready(function() {
+    			instance.init("chart", "table");
+    		});
+        })();
     </script>
     <meta charset="UTF-8">
 
@@ -142,20 +142,52 @@
         }
     </style>
 </head>
-<body>
-    <div class="header">
+<body style="width:1400px">
+    <div class=" header">
         <h1>逾期应收因素分析</h1>
     </div>
-<!--     <div align="center" style="margin-bottom: 15px"> -->
-<!--         <div class="panel-content-border"> -->
-<!--             <div id="chart" class="panel-content"></div> -->
-<!--         </div> -->
-<!--     </div> -->
 
-    <div align="center">
-        <table id="table"></table>
-    </div>
+	<Table align="center">
+		<tr>
+			<td>
+				<Table>
+					<tr>
+						<td><select id="companys"
+							onchange="instance.onCompanySelected(this.value)"
+							style="width: 125px;">
+								<c:forEach begin="0" end="${company_size - 1}" var="i">
+									<c:choose>
+										<c:when test="${i + 1 == company_size}">
+											<option value="${ids[i]}" selected="selected">全部</option>
+										</c:when>
+
+										<c:otherwise>
+											<option value="${ids[i]}">${names[i]}</option>
+										</c:otherwise>
+
+									</c:choose>
+
+								</c:forEach>
+						</select>
+						</td>
+						<td><input type="button" value="更新" style="width : 80px; margin-left:10px;"
+							onclick="instance.updateUI()"></input>
+							</td>
+							</tr>
+				</Table>
+			</td>
+		</tr>
+		<td>
+		</tr>
+		<tr>
+			<td>
+				<div id="table"></div>
+			<td>
+		</tr>
+	</Table>
+	<%@include file="loading.jsp"%>
 
 </body>
 
 </html>
+

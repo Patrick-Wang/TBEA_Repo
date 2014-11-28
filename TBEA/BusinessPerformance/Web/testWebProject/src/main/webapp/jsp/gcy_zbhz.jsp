@@ -159,8 +159,6 @@
 				</Table>
 			</td>
 		</tr>
-		<td>
-		</tr>
 		<tr>
 			<td>
 				<div id="table"></div>

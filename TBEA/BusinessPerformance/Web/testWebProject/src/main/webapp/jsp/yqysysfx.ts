@@ -7,6 +7,7 @@ module yqysysfx {
         public static createTable(gridName): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("因素分类", "ysfl", true, JQTable.TextAlign.Left),
+                new JQTable.Node("因素分类", "ysfl_1", true, JQTable.TextAlign.Left),
                 new JQTable.Node("内部因素", "nbys", true, JQTable.TextAlign.Left),
                 new JQTable.Node("客户资信", "khzx", true, JQTable.TextAlign.Left),
                 new JQTable.Node("滚动付款", "gdfk", true, JQTable.TextAlign.Left),
@@ -23,11 +24,35 @@ module yqysysfx {
             return new View();
         }
 
+        
+        private mData: Array<string[]> = [];
+        private mDataSet : Util.DateDataSet;
+        private mTableId : string;
+        private mComp: Util.CompanyType = Util.CompanyType.JT;
+        
         public init(echartId: string, tableId: string): void {
            // this.initEchart($('#' + echartId)[0]);
-            this.updateTable(tableId);
+            this.mTableId = tableId;
+            this.mDataSet = new Util.DateDataSet("yqysysfx_update.do");
+            this.updateTable();
+            this.updateUI();
+        }
+        
+        public updateUI(){
+            this.mDataSet.getDataByCompany(1, 2014, this.mComp, (dataArray : string) =>{
+                if (null != dataArray){
+                    this.mData = JSON.parse(dataArray);
+//                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报");
+//                    document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报";
+                    this.updateTable();
+                }
+            });
         }
 
+        public onCompanySelected(comp : Util.CompanyType){
+            this.mComp = comp;
+        }
+        
         private initEchart(echart): void {
             var ysyq_payment_Chart = echarts.init(echart)
             var ysyq_payment_Option = {
@@ -84,15 +109,36 @@ module yqysysfx {
             ysyq_payment_Chart.setOption(ysyq_payment_Option);
         }
 
-        private updateTable(name: string): void {
+        private updateTable(): void {
+            var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
             tableAssist.mergeRow(0);
+            tableAssist.mergeTitle();
             var data = [
                 ["总数量","户数"],
                 ["总数量","金额"],
                 ["其中：法律手段清收","户数"],
                 ["其中：法律手段清收","金额"]];
 
+            if (this.mData != null) {
+                var row = [];
+                for (var i = 0; i < data.length; ++i) {
+                    row = [].concat(this.mData[i]);
+                    if (0 != i % 2) {
+                        for (var col in row) {
+                            row[col] = Util.formatCurrency(row[col]);
+                        }
+                    }
+
+                    data[i] = data[i].concat(row);
+                }
+            }
+
+            var parent = $("#" + this.mTableId);
+            parent.empty();
+            parent.append("<table id='"+ name +"'></table>");
+            
+                
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
@@ -106,8 +152,8 @@ module yqysysfx {
                     cellsubmit: 'clientArray',
                     cellEdit: true,
                     height: '100%',
-                    width: '100%',
-                    shrinkToFit: false,
+                    width: 1200,
+                    shrinkToFit: true,
                     autoScroll: true
                 }));
 
