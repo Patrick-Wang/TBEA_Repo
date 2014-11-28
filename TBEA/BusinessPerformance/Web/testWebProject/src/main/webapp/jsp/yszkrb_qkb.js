@@ -1,5 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-
 var yszkrb_qkb;
 (function (yszkrb_qkb) {
     var JQGridAssistantFactory = (function () {
@@ -23,7 +21,6 @@ var yszkrb_qkb;
         };
         return JQGridAssistantFactory;
     })();
-
     var View = (function () {
         function View() {
         }
@@ -33,7 +30,6 @@ var yszkrb_qkb;
             }
             return View.ins;
         };
-
         View.prototype.init = function (echartIdPie, tableId, month, year, data) {
             this.mYear = year;
             this.mMonth = month;
@@ -41,10 +37,8 @@ var yszkrb_qkb;
             this.mData = data;
             this.updateTable(tableId);
         };
-
         View.prototype.updateTable = function (name) {
             var tableAssist = JQGridAssistantFactory.createTable(name);
-
             var data = [
                 ["沈变公司"],
                 ["衡变公司"],
@@ -53,25 +47,19 @@ var yszkrb_qkb;
                 ["鲁缆公司"],
                 ["新缆厂"],
                 ["德缆公司"],
-                ["合计"]];
-
+                ["合计"]
+            ];
             for (var i = 0; i < data.length; ++i) {
                 if (this.mData[i] instanceof Array) {
                     data[i] = data[i].concat(this.mData[i]);
                 }
             }
-
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: '100%',
                 width: 1200,
                 shrinkToFit: false,
@@ -83,4 +71,3 @@ var yszkrb_qkb;
     })();
     yszkrb_qkb.View = View;
 })(yszkrb_qkb || (yszkrb_qkb = {}));
-//# sourceMappingURL=yszkrb_qkb.js.map

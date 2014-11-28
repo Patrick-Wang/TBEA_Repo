@@ -1,6 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
-
 var gdw_zbhz;
 (function (gdw_zbhz) {
     var JQGridAssistantFactory = (function () {
@@ -17,7 +14,6 @@ var gdw_zbhz;
         };
         return JQGridAssistantFactory;
     })();
-
     var View = (function () {
         function View() {
             this.mData = [];
@@ -28,7 +24,6 @@ var gdw_zbhz;
             }
             return View.ins;
         };
-
         View.prototype.init = function (tableId, month, year) {
             this.mYear = year;
             this.mMonth = month;
@@ -37,15 +32,12 @@ var gdw_zbhz;
             this.updateTable();
             this.updateUI();
         };
-
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
         };
-
         View.prototype.onMonthSelected = function (month) {
             this.mMonth = month;
         };
-
         View.prototype.updateUI = function () {
             var _this = this;
             this.mDataSet.getData(this.mMonth, this.mYear, function (dataArray) {
@@ -57,12 +49,10 @@ var gdw_zbhz;
                 }
             });
         };
-
         View.prototype.updateTable = function () {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name, this.mMonth);
             tableAssist.mergeRow(0);
-
             var data = [
                 ["报表利润", "沈变公司"],
                 ["报表利润", "衡变公司"],
@@ -168,8 +158,8 @@ var gdw_zbhz;
                 ["存货", "工程小计"],
                 ["存货", "股份公司小计"],
                 ["存货", "众和公司"],
-                ["存货", "集团合计"]];
-
+                ["存货", "集团合计"]
+            ];
             var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (data[i][1].lastIndexOf("计") >= 0) {
@@ -185,21 +175,15 @@ var gdw_zbhz;
                     data[i] = data[i].concat(row);
                 }
             }
-
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: 600,
                 width: 1200,
                 shrinkToFit: true,
@@ -211,4 +195,3 @@ var gdw_zbhz;
     })();
     gdw_zbhz.View = View;
 })(gdw_zbhz || (gdw_zbhz = {}));
-//# sourceMappingURL=gdw_zbhz.js.map

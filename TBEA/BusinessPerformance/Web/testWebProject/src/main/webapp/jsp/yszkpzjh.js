@@ -1,6 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
-
 var yszkpzjh;
 (function (yszkpzjh) {
     var JQGridAssistantFactory = (function () {
@@ -12,9 +9,9 @@ var yszkpzjh;
                 new JQTable.Node("本月计划销售收入", "byjhxssr", true, 1 /* Right */, 100),
                 new JQTable.Node("本月目标责任书应收指标", "bymbzrsyszb", true, 1 /* Right */, 100),
                 new JQTable.Node("本月应收内控指标", "byysnkzb", true, 1 /* Right */, 100),
-                new JQTable.Node("本月资金回笼计划", "byzjhljh", true, 1 /* Right */, 120)], gridName);
+                new JQTable.Node("本月资金回笼计划", "byzjhljh", true, 1 /* Right */, 120)
+            ], gridName);
         };
-
         JQGridAssistantFactory.createYSPZ2 = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("(加)本月销售收入新增应收金额", "byxssrxzysje", true, 1 /* Right */, 100),
@@ -23,14 +20,14 @@ var yszkpzjh;
                 new JQTable.Node("(减)本月新增保理回款冲减应收金额", "byxzblhkcjysje", true, 1 /* Right */, 120),
                 new JQTable.Node("本月预计账面应收余额", "byyjzmysye", true, 1 /* Right */, 100),
                 new JQTable.Node("与目标责任书指标差距", "ymbzeszbcj", true, 1 /* Right */, 100),
-                new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, 1 /* Right */, 100)], gridName);
+                new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, 1 /* Right */, 100)
+            ], gridName);
         };
         JQGridAssistantFactory.createYSPZ3 = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("上月末账面<br/>应收余额", "symzbysye", true, 1 /* Right */, 100)
             ], gridName);
         };
-
         JQGridAssistantFactory.createYSPZ4 = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("(减)上月末已开票未发货产生应收金额", "symykfpfhscysje", true, 1 /* Right */, 100),
@@ -43,11 +40,11 @@ var yszkpzjh;
                 new JQTable.Node("(减)本月回款降低应收金额（发货后的款项）", "byhkjdysje", true, 1 /* Right */, 100),
                 new JQTable.Node("本月预计实际应收余额", "byyjsjysye", true, 1 /* Right */, 100),
                 new JQTable.Node("与目标责任书指标差距", "ymbzeszbcj", true, 1 /* Right */, 100),
-                new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, 1 /* Right */, 100)], gridName);
+                new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, 1 /* Right */, 100)
+            ], gridName);
         };
         return JQGridAssistantFactory;
     })();
-
     var View = (function () {
         function View() {
             this.mComp = 19 /* JT */;
@@ -55,7 +52,6 @@ var yszkpzjh;
         View.newInstance = function () {
             return new View();
         };
-
         View.prototype.init = function (echartId, tableId, month, year) {
             this.mYear = year;
             this.mMonth = month;
@@ -65,19 +61,15 @@ var yszkpzjh;
             this.updateTable(this.mTableId);
             this.updateUI();
         };
-
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
         };
-
         View.prototype.onMonthSelected = function (month) {
             this.mMonth = month;
         };
-
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;
         };
-
         View.prototype.updateUI = function () {
             var _this = this;
             this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
@@ -89,20 +81,17 @@ var yszkpzjh;
                         JSON.parse(arrData[2]),
                         JSON.parse(arrData[3])
                     ];
-
                     for (var i = 0; i < _this.mData.length; ++i) {
                         for (var j = 0; j < _this.mData[i].length; ++j) {
                             _this.mData[i][j] = Util.formatCurrency(_this.mData[i][j]);
                         }
                     }
-
                     $('h1').text(_this.mYear + "年" + _this.mMonth + "月 应收账款盘子规划");
                     document.title = _this.mYear + "年" + _this.mMonth + "月 应收账款盘子规划";
                     _this.updateTable(_this.mTableId);
                 }
             });
         };
-
         View.prototype.refreshTable = function (listName, refreshTags, list) {
             for (var i = 0; i < refreshTags.length; i++) {
                 if (refreshTags[i]) {
@@ -110,15 +99,11 @@ var yszkpzjh;
                         $("#" + listName + (i + 1) + "_jqgrid_1234").jqGrid('saveCell', '1', list[i]);
                         list[i] = -1;
                     }
-
                     $("#" + listName + (i + 1) + "_jqgrid_1234").trigger("reloadGrid");
-
-                    //$("#" + listName + (i + 1)).jqGrid('sRow', '1');
                     refreshTags[i] = false;
                 }
             }
         };
-
         View.prototype.updateTable = function (listName) {
             var _this = this;
             var data = [[[""]], [[""]], [[""]], [[""]]];
@@ -128,28 +113,21 @@ var yszkpzjh;
                 data[2] = [this.mData[2]];
                 data[3] = [this.mData[3]];
             }
-
             var selectGrid = null;
             var selectRow = 0;
             var currentList;
             var refreshTags = [false, false, false, false];
             var listCurrentColum = [-1, -1, -1, -1];
-
-            // for table one
             var name1 = listName + "1" + "_jqgrid_1234";
             var parent = $("#" + listName + "1");
             parent.empty();
             parent.append("<table id='" + name1 + "'></table>");
             var t1Assist = JQGridAssistantFactory.createYSPZ1(name1);
             t1Assist.disableDragCell();
-
             $("#" + name1).jqGrid(t1Assist.decorate({
                 data: t1Assist.getData(data[0]),
                 datatype: "local",
-                //url : "Table?q=2",
-                //datatype: "json",
                 multiselect: false,
-                //rowNum : 4,
                 drag: false,
                 resize: false,
                 autowidth: false,
@@ -158,10 +136,6 @@ var yszkpzjh;
                 width: '100%',
                 shrinkToFit: false,
                 autoScroll: true,
-                //afterSaveCell : function(id, nm, v, iRow, iCol) {
-                //	listCurrentColum[0].erase(listCurrentColum[0]
-                //			.find(iCol))
-                //},
                 beforeEditCell: function (id, nm, tmp, iRow, iCol) {
                     listCurrentColum[0] = iCol;
                 },
@@ -178,9 +152,6 @@ var yszkpzjh;
                     $("#" + name1 + " #1").css("height", "24px");
                 }
             }));
-
-            //t1Assist.group($("#" + listName + "1"));
-            //for table 2
             var name2 = listName + "2" + "_jqgrid_1234";
             parent = $("#" + listName + "2");
             parent.empty();
@@ -190,21 +161,14 @@ var yszkpzjh;
             $("#" + name2).jqGrid(t2Assist.decorate({
                 data: t2Assist.getData(data[1]),
                 datatype: "local",
-                //url : "Table?q=2",
-                //datatype: "json",
                 drag: false,
                 resize: false,
                 multiselect: false,
-                //rowNum : 4,
                 cellEdit: true,
                 height: '100%',
                 width: '100%',
                 shrinkToFit: false,
                 autoScroll: true,
-                //afterSaveCell : function(id, nm, v, iRow, iCol) {
-                //	listCurrentColum[1].erase(listCurrentColum[1]
-                //			.find(iCol))
-                //},
                 beforeEditCell: function (id, nm, tmp, iRow, iCol) {
                     listCurrentColum[1] = iCol;
                 },
@@ -219,10 +183,8 @@ var yszkpzjh;
                     $("#gbox_" + name2).css("border-left", "0px solid #a6c9e2");
                     $("#gbox_" + name2).css("border-bottom", "0px solid #a6c9e2");
                     $("#" + name2 + " #1").css("height", "24px");
-                    //ui-jqgrid ui-widget ui-widget-content ui-corner-all
                 }
             }));
-
             var name4 = listName + "4" + "_jqgrid_1234";
             parent = $("#" + listName + "4");
             parent.empty();
@@ -232,19 +194,12 @@ var yszkpzjh;
             $("#" + name4).jqGrid(t4Assist.decorate({
                 data: t4Assist.getData(data[3]),
                 datatype: "local",
-                //url : "Table?q=2",
-                //datatype: "json",
                 cellEdit: true,
                 multiselect: false,
-                //rowNum : 4,
                 height: '100%',
                 width: '100%',
                 shrinkToFit: false,
                 autoScroll: true,
-                //afterSaveCell : function(id, nm, v, iRow, iCol) {
-                //	listCurrentColum[3].erase(listCurrentColum[3]
-                //			.find(iCol));
-                //},
                 beforeEditCell: function (id, nm, tmp, iRow, iCol) {
                     listCurrentColum[3] = iCol;
                 },
@@ -260,8 +215,6 @@ var yszkpzjh;
                     $("#" + name4 + " #1").css("height", "24px");
                 }
             }));
-
-            //for table 3
             var name3 = listName + "3" + "_jqgrid_1234";
             parent = $("#" + listName + "3");
             parent.empty();
@@ -273,12 +226,9 @@ var yszkpzjh;
             $("#" + name3).jqGrid(t3Assist.decorate({
                 data: t3Assist.getData(data[2]),
                 datatype: "local",
-                //url : "Table?q=2",
-                //datatype: "json",
                 colModel: colModel,
                 cellEdit: true,
                 multiselect: false,
-                //rowNum : 4,
                 height: '100%',
                 width: '100%',
                 shrinkToFit: false,
@@ -290,24 +240,14 @@ var yszkpzjh;
                     }
                     _this.refreshTable(listName, refreshTags, listCurrentColum);
                 },
-                //afterSaveCell : function(id, nm, v, iRow, iCol) {
-                //	listCurrentColum[2].erase(listCurrentColum[2]
-                //			.find(iCol))
-                //},
                 beforeEditCell: function (id, nm, tmp, iRow, iCol) {
                     listCurrentColum[2] = iCol;
                 },
                 gridComplete: function () {
                     var grid = $("#" + name3);
-
-                    // var ids = grid.getDataIDs();gview_list_hb4
                     var height = parseInt($("#gview_" + name2).css("height").replace("px", "")) + parseInt($("#gview_" + name4).css("height").replace("px", ""));
                     var titleHeight = parseInt($("#" + name2 + "_" + t2Assist.id(0)).css("height").replace("px", ""));
-
-                    //grid.setRowData ( '1', false, {height: 25 + 46 + 5} );
-                    //$("#" + listName + "3_" + t3Assist.id(0)).css("height", titleHeight + "px");
                     $("#" + name3 + " #1").css("height", (height - titleHeight) + "px");
-
                     $("#gbox_" + name3).css("border-right", "0px solid #a6c9e2");
                 }
             }));
@@ -316,4 +256,3 @@ var yszkpzjh;
     })();
     yszkpzjh.View = View;
 })(yszkpzjh || (yszkpzjh = {}));
-//# sourceMappingURL=yszkpzjh.js.map

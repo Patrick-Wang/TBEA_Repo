@@ -27,6 +27,11 @@ import com.tbea.test.testWebProject.service.ydzb.YDZBService;
 @RequestMapping(value = "ydzb")
 public class YDZBController {
 
+	public YDZBController(){
+		
+		System.out.println("controller init");
+	}
+	
 	@Autowired
 	private YDZBService service;
 

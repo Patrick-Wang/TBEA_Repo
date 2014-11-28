@@ -56,8 +56,8 @@ module hkjhjg {
         private mMonth: number;
         private mYear: number;
         private mJGData: Array<string[]>;
-        private mZTData: Array<string[]>;
-        private mXZData: Array<string[]>;
+        private mZTData: Array<string>;
+        private mXZData: Array<string>;
         private mDataSet : Util.DateDataSet;
         private mTableIds: string[];
         private mEchartId;
@@ -103,12 +103,70 @@ module hkjhjg {
                     this.updateJGTable();
                     this.updateZTTable();
                     this.updateXZTable();
-                    //this.updateEchart();
+                    this.updateEchart();
                 }
             });
         }
-//        private updateEchart(): void {
-//            var ysyq_payment_Chart = echarts.init($("#" + this.mEchartId)[0]);
+        private updateEchart(): void {
+            var hkjhjgChart = echarts.init($("#" + this.mEchartId)[0]);
+            var legend = ["逾期应收账款", "逾期款", "未到期应收账款"
+                          , "未到期款", "逾期应收账款", "逾期款"
+                          , "未到期应收账款", "未到期款"];
+            var dataOut = [];
+            var qbTotal = 0;
+            var zqTotal = 0;
+            
+            for (var i = 0; i < legend.length; ++i) {
+                dataOut.push({ name: legend[i], value: i + 1 });
+                if (i < 4) {
+                	qbTotal += (i + 1);
+                } else {
+                	zqTotal += (i + 1);
+				}
+            }
+            var dataIn = [{ name: "确保", value: qbTotal },
+                          { name: "争取", value: zqTotal }];
+
+            var hkjhjgOption = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    x: "left",
+                    data: legend,
+                    orient: "vertical"
+                },
+                toolbox: {
+                    show: true,
+                },
+                calculable: false,
+                series: [
+                    {
+                        name: "1",
+                        type: 'pie',
+                        radius: [100, 130],
+                        data: dataOut
+                    }, {
+                        name: "2",
+                        type: 'pie',
+                        radius: [0, 60],
+                         itemStyle : {
+			                normal : {
+			                    label : {
+			                        position : 'inner'
+			                    },
+			                    labelLine : {
+			                        show : false
+			                    }
+			                }
+		                },
+                        data: dataIn
+                    }
+                ]
+            }
+
+            hkjhjgChart.setOption(hkjhjgOption);
+            
 //            var ysyq_payment_Option = {
 //                animation: true,
 //                tooltip: {
@@ -161,7 +219,7 @@ module hkjhjg {
 //                    }]
 //            };
 //            ysyq_payment_Chart.setOption(ysyq_payment_Option);
-//        }
+        }
 
         private updateJGTable(): void {
        		var name = this.mTableIds[HKJHType.JG] + "_jqgrid_1234";

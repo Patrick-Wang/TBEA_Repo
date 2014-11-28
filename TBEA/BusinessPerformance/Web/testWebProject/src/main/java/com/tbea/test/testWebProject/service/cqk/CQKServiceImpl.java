@@ -18,6 +18,12 @@ import com.tbea.test.testWebProject.model.entity.local.CQK;
 @Transactional("transactionManager")
 public class CQKServiceImpl implements CQKService {
 
+	public CQKServiceImpl(){
+		
+		System.out.println("service init");
+	}
+	
+	
 	private CQKDao cqkDao;
 
 	private YSZKTZLocalDao yszktzLocalDao;

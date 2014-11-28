@@ -1,6 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
-
 var gcy_zbhz;
 (function (gcy_zbhz) {
     var JQGridAssistantFactory = (function () {
@@ -17,7 +14,6 @@ var gcy_zbhz;
         };
         return JQGridAssistantFactory;
     })();
-
     var View = (function () {
         function View() {
             this.mData = [];
@@ -28,7 +24,6 @@ var gcy_zbhz;
             }
             return View.ins;
         };
-
         View.prototype.init = function (tableId, month, year) {
             this.mYear = year;
             this.mMonth = month;
@@ -37,15 +32,12 @@ var gcy_zbhz;
             this.updateTable();
             this.updateUI();
         };
-
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
         };
-
         View.prototype.onMonthSelected = function (month) {
             this.mMonth = month;
         };
-
         View.prototype.updateUI = function () {
             var _this = this;
             this.mDataSet.getData(this.mMonth, this.mYear, function (dataArray) {
@@ -57,17 +49,14 @@ var gcy_zbhz;
                 }
             });
         };
-
         View.prototype.updateTable = function () {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name, this.mMonth);
             tableAssist.mergeRow(0);
-
             for (var i = 0; i < 5; ++i) {
                 tableAssist.setRowBgColor(i * 7 + 4, 183, 222, 232);
                 tableAssist.setRowBgColor(i * 7 + 6, 183, 222, 232);
             }
-
             var data = [
                 ["报表利润", "输变电产业"],
                 ["报表利润", "新能源产业"],
@@ -103,13 +92,8 @@ var gcy_zbhz;
                 ["存 货", "工程类"],
                 ["存 货", "股份合计"],
                 ["存 货", "众和公司"],
-                ["存 货", "集团合计"]];
-
-            //            for (var i = 0; i < data.length; ++i) {
-            //                if (this.mData[i] instanceof Array) {
-            //                    data[i] = data[i].concat(this.mData[i]);
-            //                }
-            //            }
+                ["存 货", "集团合计"]
+            ];
             var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (this.mData[i] instanceof Array) {
@@ -122,21 +106,15 @@ var gcy_zbhz;
                     data[i] = data[i].concat(row);
                 }
             }
-
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: 600,
                 width: 1200,
                 shrinkToFit: true,
@@ -148,4 +126,3 @@ var gcy_zbhz;
     })();
     gcy_zbhz.View = View;
 })(gcy_zbhz || (gcy_zbhz = {}));
-//# sourceMappingURL=gcy_zbhz.js.map
