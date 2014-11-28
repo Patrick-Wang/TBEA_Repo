@@ -31,7 +31,7 @@
    			 var instance = ztyszkfx.View.newInstance();
             (function () {
                 $(document).ready(function () {
-                	instance.init("table", ${year});
+                	instance.init("chart", "table", ${year});
                 });
             })();
     </script>
@@ -163,6 +163,12 @@
 			<td>
 		</tr>
 	</Table>
+    <div align="center" style="margin-top: 20px">
+        <div class="panel-content-border" align="center"
+            style="width: 1000px; margin-top: 20px">
+            <div id="chart" class="panel-content"></div>
+        </div>
+    </div>
 	<%@include file="loading.jsp"%>
 </body>
    <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>

@@ -26,7 +26,7 @@ var xl_fkfstj;
         JQGridAssistantFactory.createGwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("", "title", true, 0 /* Left */),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("国网网合同订单总量", "gwhtddzl")),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("国网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:06:0:01", "306001")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("0:09:0:01", "009001")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:4:2:1", "3421")),
@@ -42,7 +42,7 @@ var xl_fkfstj;
         JQGridAssistantFactory.createNwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("", "title", true, 0 /* Left */),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("国网网合同订单总量", "gwhtddzl")),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("南网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("1:6:2:1", "1621")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("1:2:6:1", "1261")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("0:09:01", "00901")),
@@ -58,7 +58,7 @@ var xl_fkfstj;
         View.newInstance = function () {
             return new View();
         };
-        View.prototype.init = function (fdwTableId, gwTableId, nwTableId, fdwData, gwData, nwData) {
+        View.prototype.init = function (echartIdFDW, echartIdGW, echartIdNW, fdwTableId, gwTableId, nwTableId, fdwData, gwData, nwData) {
             this.updateFdwTable(fdwTableId, fdwTableId + "_jqgrid_1234", JQGridAssistantFactory.createFdwTable(fdwTableId + "_jqgrid_1234"), fdwData);
             var rawData = [
                 ["集中招标"],
@@ -67,6 +67,94 @@ var xl_fkfstj;
             ];
             this.updateTable(gwTableId, gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(gwTableId + "_jqgrid_1234"), rawData, gwData);
             this.updateTable(nwTableId, nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(nwTableId + "_jqgrid_1234"), rawData, nwData);
+            this.updatePieEchart(echartIdFDW, "非电网合同订单总量", [651654.32, 514613.95, 111984.61, 564895.41, 416516.54, 651654.32, 514613.95, 111984.61, 564895.41, 416516.54, 487519.32]);
+            this.updateEchart(echartIdGW, "国网合同订单总量", [{ value: 466446.34, name: '集中招标' }, { value: 487519.32, name: '非集中招标' }]);
+            this.updateEchart(echartIdNW, "南网合同订单总量", [{ value: 865146.13, name: '集中招标' }, { value: 955648.95, name: '非集中招标' }]);
+        };
+        View.prototype.updatePieEchart = function (chartId, tileTex, data) {
+            var chart = echarts.init($("#" + chartId)[0]);
+            var legend = ["火电", "水电", "核电", "风电、光伏", "轨道交通", "石油石化", "煤炭煤化工", "钢铁冶金", "航天军工", "连锁经营", "其他"];
+            var dataOut = [];
+            var dykhTotal = 0;
+            var fdlscTotal = 0;
+            for (var i = 0; i < legend.length; ++i) {
+                dataOut.push({ name: legend[i], value: parseInt(data[i]) });
+                if (i < 4) {
+                    dykhTotal += parseInt(data[i]);
+                }
+                else {
+                    fdlscTotal += parseInt(data[i]);
+                }
+            }
+            var dataIn = [{ name: "电源客户", value: dykhTotal }, { name: "非电力市场", value: fdlscTotal }];
+            var option = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    x: "left",
+                    data: legend,
+                    orient: "vertical"
+                },
+                toolbox: {
+                    show: true
+                },
+                calculable: false,
+                series: [
+                    {
+                        type: 'pie',
+                        radius: [100, 130],
+                        data: dataOut
+                    },
+                    {
+                        type: 'pie',
+                        radius: [0, 60],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    position: 'inner'
+                                },
+                                labelLine: {
+                                    show: false
+                                }
+                            }
+                        },
+                        data: dataIn
+                    }
+                ]
+            };
+            chart.setOption(option);
+        };
+        View.prototype.updateEchart = function (chartId, tileTex, data) {
+            var chart = echarts.init($("#" + chartId)[0]);
+            var legend = ["集中招标", "非集中招标"];
+            var total = 0;
+            var option = {
+                title: {
+                    text: tileTex,
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    x: "left",
+                    data: legend,
+                    orient: "vertical"
+                },
+                toolbox: {
+                    show: true
+                },
+                calculable: false,
+                series: [
+                    {
+                        type: 'pie',
+                        radius: '50%',
+                        data: data
+                    }
+                ]
+            };
+            chart.setOption(option);
         };
         View.prototype.updateTable = function (parentName, childName, tableAssist, data, rawData) {
             var row = [];

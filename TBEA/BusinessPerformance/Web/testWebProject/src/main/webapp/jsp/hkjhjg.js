@@ -89,7 +89,7 @@ var hkjhjg;
         };
         View.prototype.updateEchart = function () {
             var hkjhjgChart = echarts.init($("#" + this.mEchartId)[0]);
-            var legend = ["逾期应收账款", "逾期款", "未到期应收账款", "未到期款", "逾期应收账款", "逾期款", "未到期应收账款", "未到期款"];
+            var legend = ["确保可回逾期应收账款", "确保可回逾期款", "确保可回未到期应收账款", "确保可回未到期款", "争取可回逾期应收账款", "争取可回逾期款", "争取可回未到期应收账款", "争取可回未到期款"];
             var dataOut = [];
             var qbTotal = 0;
             var zqTotal = 0;
@@ -105,7 +105,7 @@ var hkjhjg;
             var dataIn = [{ name: "确保", value: qbTotal }, { name: "争取", value: zqTotal }];
             var hkjhjgOption = {
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'item'
                 },
                 legend: {
                     x: "left",

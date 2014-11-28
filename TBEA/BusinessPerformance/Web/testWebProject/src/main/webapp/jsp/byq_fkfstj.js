@@ -22,7 +22,7 @@ var byq_fkfstj;
         JQGridAssistantFactory.createGwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("", "title", true, 0 /* Left */),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("国网网合同订单总量", "gwhtddzl")),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("国网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:4:2:1", "3421")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:4:2.5:0.5", "342505")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("0:9:0:1", "0901")),
@@ -36,7 +36,7 @@ var byq_fkfstj;
         JQGridAssistantFactory.createNwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("", "title", true, 0 /* Left */),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("国网网合同订单总量", "gwhtddzl")),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("南网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:3:3:1", "3331")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("1:4:4:0.5:0.5", "1440505")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("1:2:6.5:0.5", "126505")),
@@ -53,7 +53,7 @@ var byq_fkfstj;
         View.newInstance = function () {
             return new View();
         };
-        View.prototype.init = function (fdwTableId, gwTableId, nwTableId, fdwData, gwData, nwData) {
+        View.prototype.init = function (echartIdFDW, echartIdGW, echartIdNW, fdwTableId, gwTableId, nwTableId, fdwData, gwData, nwData) {
             var rowData = [
                 ["沈变"],
                 ["衡变"],
@@ -63,6 +63,39 @@ var byq_fkfstj;
             this.updateTable(fdwTableId, fdwTableId + "_jqgrid_1234", JQGridAssistantFactory.createFdwTable(fdwTableId + "_jqgrid_1234"), rowData, fdwData);
             this.updateTable(gwTableId, gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(gwTableId + "_jqgrid_1234"), rowData, gwData);
             this.updateTable(nwTableId, nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(nwTableId + "_jqgrid_1234"), rowData, nwData);
+            this.updateEchart(echartIdFDW, "非电网合同订单总量", [{ value: 651654.32, name: '沈变' }, { value: 514613.95, name: '衡变' }, { value: 564895.41, name: '新变' }]);
+            this.updateEchart(echartIdGW, "国网合同订单总量", [{ value: 466446.34, name: '沈变' }, { value: 111984.61, name: '衡变' }, { value: 487519.32, name: '新变' }]);
+            this.updateEchart(echartIdNW, "南网合同订单总量", [{ value: 865146.13, name: '沈变' }, { value: 955648.95, name: '衡变' }, { value: 416516.54, name: '新变' }]);
+        };
+        View.prototype.updateEchart = function (chartId, tileTex, data) {
+            var chart = echarts.init($("#" + chartId)[0]);
+            var legend = ["沈变", "衡变", "新变"];
+            var option = {
+                title: {
+                    text: tileTex,
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    x: "left",
+                    data: legend,
+                    orient: "vertical"
+                },
+                toolbox: {
+                    show: true
+                },
+                calculable: false,
+                series: [
+                    {
+                        type: 'pie',
+                        radius: '50%',
+                        data: data
+                    }
+                ]
+            };
+            chart.setOption(option);
         };
         View.prototype.updateTable = function (parentName, childName, tableAssist, data, rawData) {
             var row = [];
@@ -70,9 +103,7 @@ var byq_fkfstj;
                 if (rawData[i] instanceof Array) {
                     row = [].concat(rawData[i]);
                     for (var col in row) {
-                        if (col % 2 != 0) {
-                            row[col] = Util.formatCurrency(row[col]);
-                        }
+                        row[col] = Util.formatCurrency(row[col]);
                     }
                     data[i] = data[i].concat(row);
                 }
