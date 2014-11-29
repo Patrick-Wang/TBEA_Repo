@@ -28,11 +28,13 @@ module yqysysfx {
         private mData: Array<string[]> = [];
         private mDataSet : Util.DateDataSet;
         private mTableId : string;
+        private mEchartId;
         private mComp: Util.CompanyType = Util.CompanyType.JT;
         
         public init(echartId: string, tableId: string): void {
            // this.initEchart($('#' + echartId)[0]);
             this.mTableId = tableId;
+            this.mEchartId = echartId;
             this.mDataSet = new Util.DateDataSet("yqysysfx_update.do");
             this.updateTable();
             this.updateUI();
@@ -45,6 +47,7 @@ module yqysysfx {
 //                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报");
 //                    document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报";
                     this.updateTable();
+                    this.updateEchart();
                 }
             });
         }
@@ -53,60 +56,66 @@ module yqysysfx {
             this.mComp = comp;
         }
         
-        private initEchart(echart): void {
-            var ysyq_payment_Chart = echarts.init(echart)
-            var ysyq_payment_Option = {
-                animation: true,
-                tooltip: {
-                    trigger: 'axis',
-                    /* formatter : "{b}<br/>{a} : {c} 万元<br/>{a1} : {c1} 万元", */
 
-                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                        type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
-                    }
-                },
+        private updateEchart(): void{
+        	var yqysysChart = echarts.init($("#" + this.mEchartId)[0]);
+            var legend = ["总金额", "其中：法律手段清收"];
+            var ysfl = ["内部因素", "客户资信", "滚动付款", "项目变化", "合同因素", "手续办理", "其它"]
+
+            var zjeData = [41982, 31876, 51975, 43856, 61498, 32696, 38574];
+            var flsdData = [29167, 21401, 47155, 32584, 52523, 19573, 24652];
+            
+            var yqysysOption = {
+				title : {
+				        text: '逾期应收因素分析'
+				},	   
+				tooltip : {
+			        trigger: 'axis'
+			    },
                 legend: {
-                    x: 'right',
-                    data: ["合同金额", "预期阶段", "中标阶段", "完工阶段"],
-
+                    data: legend
                 },
-                xAxis: [{
-                    type: 'category',
-                    data: ['沈变', '衡变', '新变', '天变']
-                }],
-                yAxis: [{
-                    type: 'value'
-
-                }],
-
-                calculable: true,
-                series: [{
-                    name: '合同金额',
-                    type: 'bar',
-
-                    barCategoryGap: "50%",
-                    data: [63363.11, 55628.27, 58521.55, 69100.58]
-                }, {
-                        name: '预期阶段',
+                toolbox: {
+                    show: true,
+                },
+                calculable: false,
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: true,
+                        data: ysfl
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    },
+			        {
+			            type : 'value',
+			            axisLabel : {
+			                formatter: '{value} %'
+			            }
+			        }
+                ],
+                series: [
+                    {
+                        name: legend[0],
                         type: 'bar',
-
-                        stack: '阶段',
-                        data: [9098.58, 1240.13, 1140.61, 3154.82]
-                    }, {
-                        name: '中标阶段',
-
+                        smooth: true,
+                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                        data: zjeData
+                    },
+                    {
+                        name: legend[1],
                         type: 'bar',
-                        stack: '阶段',
-                        data: [3934.13, 3200.22, 1382.52, 3934.13]
-                    }, {
-                        name: '完工阶段',
-                        type: 'bar',
-
-                        stack: '阶段',
-                        data: [11980.74, 2240.18, 3487.11, 6980.74]
-                    }]
-            };
-            ysyq_payment_Chart.setOption(ysyq_payment_Option);
+                        smooth: true,
+                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
+                        data: flsdData
+                    }
+                ]
+            }
+            yqysysChart.setOption(yqysysOption);
+		
         }
 
         private updateTable(): void {
