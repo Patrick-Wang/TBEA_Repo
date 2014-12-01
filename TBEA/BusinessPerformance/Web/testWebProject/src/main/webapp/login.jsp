@@ -18,10 +18,16 @@
 function formSubmit(){
 	var usrName = $('#j_username').val();
 	var psw = $('#j_password').val();
-	if ("admin" == usrName && "1234" == psw) {
+	if ("huanghanjie" == usrName && "hhj" == psw) {
         $('.errors').hide();
 		window.location.href='index.htm';
-	} else {
+	} else if ("admin" == usrName && "1234" == psw) { 
+        $('.errors').hide();
+        window.location.href='index.htm';
+    } else if ("qgb" == usrName && "1234" == psw) { 
+        $('.errors').hide();
+        window.location.href='index2.htm';
+    } else {
 	    $('.errors').show();
 	}
 	//window.location.href='index.htm';
