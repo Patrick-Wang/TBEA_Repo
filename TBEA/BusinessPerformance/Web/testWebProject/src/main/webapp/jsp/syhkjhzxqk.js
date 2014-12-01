@@ -17,7 +17,6 @@ var syhkjhzxqk;
     var View = (function () {
         function View() {
             this.mComp = 19 /* JT */;
-            this.mData = [];
         }
         View.newInstance = function () {
             return new View();
@@ -137,6 +136,18 @@ var syhkjhzxqk;
             tableAssist.mergeColum(0, 9);
             tableAssist.mergeTitle();
             var data = [["按款项状态分", "未到期应收账款"], ["按款项状态分", "逾期款应收账款"], ["按款项状态分", "未到期款"], ["按款项状态分", "逾期款"], ["按清收性质分", "确保可回款"], ["按清收性质分", "争取可回款"], ["小", "计"], ["现款现", "货回款"], ["计划外", "回款"], ["合", "计"]];
+            if (this.mData != undefined) {
+                for (var i = 0; i < data.length; ++i) {
+                    for (var j = 0; j < this.mData[i].length; ++j) {
+                        if (j < 2) {
+                            data[i].push(Util.formatCurrency(this.mData[i][j]));
+                        }
+                        else {
+                            data[i].push((parseFloat(this.mData[i][j]) * 100).toFixed(2) + "%");
+                        }
+                    }
+                }
+            }
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");

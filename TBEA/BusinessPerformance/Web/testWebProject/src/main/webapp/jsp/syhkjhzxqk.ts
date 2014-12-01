@@ -24,7 +24,7 @@ module syhkjhzxqk {
         private mComp: Util.CompanyType = Util.CompanyType.JT;
         private mMonth: number;
         private mYear: number;
-        private mData: Array<string[]> = [];
+        private mData: Array<string[]>;
         private mDataSet: Util.DateDataSet;
         private mTableId: string;
         private mEchartId;
@@ -228,7 +228,20 @@ module syhkjhzxqk {
                 ["现款现", "货回款"],
                 ["计划外", "回款"],
                 ["合", "计"]];
-
+            if (this.mData != undefined) {
+                for (var i = 0; i < data.length; ++i) {
+                    for(var j = 0; j < this.mData[i].length; ++j){
+                        if (j < 2){
+                             data[i].push(Util.formatCurrency(this.mData[i][j]));
+                            }
+                        else{
+                           data[i].push((parseFloat(this.mData[i][j]) * 100).toFixed(2) + "%");
+                        }
+                    }
+                }
+            }
+        
+            
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
