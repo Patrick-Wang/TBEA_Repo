@@ -322,7 +322,7 @@ public class YDZBServiceImpl implements YDZBService {
 			}
 		}
 		
-		List<List<YDZBBean>> preYearJdData = getQuarterData(cal.get(Calendar.YEAR) - 1, (cal.get(Calendar.MONTH) + 4) / 3 * 3 - 1 , company);
+		List<List<YDZBBean>> preYearJdData = getQuarterData(cal.get(Calendar.YEAR) - 1, (cal.get(Calendar.MONTH) + 3) / 3 * 3 - 1 , company);
 		for (int jd = preYearJdData.size() - 1; jd >= 0; --jd){
 			jdYdzbs = preYearJdData.get(jd);
 			for (YDZBBean ydzb : jdYdzbs){
