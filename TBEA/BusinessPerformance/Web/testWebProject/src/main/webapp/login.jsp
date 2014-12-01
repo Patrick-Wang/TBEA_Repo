@@ -55,9 +55,9 @@ function doSubmit(evt){
 	
 	<form id="loginForm" action="" method="post" >
 	  <fieldset>
-		  <label for="j_username">Username:</label>
+		  <label for="j_username">用户名：</label>
 		  <input type="text" name="j_username" id="j_username" onkeydown="doSubmit(event)" autocomplete="on" />
-		  <label for="j_password">Password:</label>
+		  <label for="j_password">密码：</label>
 		  <input type="password" name="j_password" id="j_password" onkeydown="doSubmit(event)"/>
 		  <input type="hidden" name="transmissionStr" id="transmissionStr"/>
           <div class="errors" style="display: none" >用户名或密码错误，请重新输入。 </div>
