@@ -21,6 +21,9 @@ function formSubmit(){
 	if ("admin" == usrName && "1234" == psw) {
         $('.errors').hide();
 		window.location.href='index.htm';
+	} else if ("qgb" == usrName && "1234" == psw) { 
+		$('.errors').hide();
+        window.location.href='index2.htm';
 	} else {
 	    $('.errors').show();
 	}

@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ECharts">
+    <meta name="author" content="linzhifeng@baidu.com">
+    <title>TBEA 经营管控系统</title>
+	<style type="text/css">
+	footer {
+		display: block;
+	}
+	</style>
+	<script type="text/javascript">
+		document.createElement("footer");
+	</script>
+
+    <link rel="shortcut icon" href="./images/logo.png">
+
+<!--
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://echarts.baidu.com/doc/asset/css/bootstrap.css" rel="stylesheet">
+    <link href="http://echarts.baidu.com/doc/asset/css/carousel.css" rel="stylesheet">
+    <link href="http://echarts.baidu.com/doc/asset/css/echartsHome.css" rel="stylesheet">
+-->
+    <link href="./css/font-awesome.min.css" rel="stylesheet">
+    <link href="./css/bootstrap.css" rel="stylesheet">
+    <link href="./css/carousel.css" rel="stylesheet">
+    <link href="./css/echartsHome.css" rel="stylesheet">
+<style type="text/css" media="screen">CSS 样式表</style>
+<style type="text/css" media="all">CSS 样式表</style>
+<style type="text/css" media="print">CSS 样式表</style>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+   <STYLE>
+   article {
+	DISPLAY: block
+}
+aside {
+	DISPLAY: block
+}
+dialog {
+	DISPLAY: block
+}
+figcaption {
+	DISPLAY: block
+}
+figure {
+	DISPLAY: block
+}
+footer {
+	DISPLAY: block
+}
+header {
+	DISPLAY: block
+}
+hgroup {
+	DISPLAY: block
+}
+main {
+	DISPLAY: block
+}
+nav {
+	DISPLAY: block
+}
+section {
+	DISPLAY: block
+}
+mark {
+	BACKGROUND: #ff0; COLOR: #000
+}
+template {
+	DISPLAY: none
+}
+</STYLE>
+<TITLE>ECharts · Example</TITLE>
+<META charset=utf-8>
+<META content=IE=edge http-equiv=X-UA-Compatible>
+<META name=viewport content="width=device-width, initial-scale=1.0">
+<META name=description content=ECharts>
+<META name=author content=linzhifeng@baidu.com><LINK rel=stylesheet href="css/font-awesome.min.css"><LINK rel=stylesheet href="css/bootstrap.css"><LINK rel=stylesheet href="css/carousel.css"><LINK rel=stylesheet href="css/echartsHome.css">
+<STYLE type=text/css media=screen>.jumbotron {
+	PADDING-BOTTOM: 48px; PADDING-TOP: 48px
+}
+.container .jumbotron {
+	PADDING-LEFT: 60px; PADDING-RIGHT: 60px
+}
+.jumbotron H1 {
+	FONT-SIZE: 63px
+}
+.jumbotron .h1 {
+	FONT-SIZE: 63px
+}
+.carousel-control .glyphicon-chevron-left {
+	MARGIN-TOP: -15px; WIDTH: 30px; HEIGHT: 30px; MARGIN-LEFT: -15px; FONT-SIZE: 30px
+}
+.carousel-control .glyphicon-chevron-right {
+	MARGIN-TOP: -15px; WIDTH: 30px; HEIGHT: 30px; MARGIN-LEFT: -15px; FONT-SIZE: 30px
+}
+.carousel-control .icon-prev {
+	MARGIN-TOP: -15px; WIDTH: 30px; HEIGHT: 30px; MARGIN-LEFT: -15px; FONT-SIZE: 30px
+}
+.carousel-control .icon-next {
+	MARGIN-TOP: -15px; WIDTH: 30px; HEIGHT: 30px; MARGIN-LEFT: -15px; FONT-SIZE: 30px
+}
+.carousel-caption {
+	PADDING-BOTTOM: 30px; RIGHT: 20%; LEFT: 20%
+}
+.carousel-indicators {
+	BOTTOM: 20px
+}
+</STYLE>
+
+<STYLE type=text/css media=all>
+.lead {
+	FONT-SIZE: 21px
+}
+.dl-horizontal DT {
+	TEXT-ALIGN: right; WIDTH: 160px; TEXT-OVERFLOW: ellipsis; WHITE-SPACE: nowrap; FLOAT: left; CLEAR: left; OVERFLOW: hidden
+}
+.dl-horizontal DD {
+	MARGIN-LEFT: 180px
+}
+.container {
+	WIDTH: 750px
+}
+.container {
+	WIDTH: 970px
+}
+.container {
+	WIDTH: 1170px
+}
+.col-sm-1 {
+	FLOAT: left
+}
+.col-sm-2 {
+	FLOAT: left
+}
+.col-sm-3 {
+	FLOAT: left
+}
+.col-sm-4 {
+	FLOAT: left
+}
+.col-sm-5 {
+	FLOAT: left
+}
+.col-sm-6 {
+	FLOAT: left
+}
+.col-sm-7 {
+	FLOAT: left
+}
+.col-sm-8 {
+	FLOAT: left
+}
+.col-sm-9 {
+	FLOAT: left
+}
+.col-sm-10 {
+	FLOAT: left
+}
+.col-sm-11 {
+	FLOAT: left
+}
+.col-sm-12 {
+	FLOAT: left
+}
+.col-sm-12 {
+	WIDTH: 100%
+}
+.col-sm-11 {
+	WIDTH: 91.66%
+}
+.col-sm-10 {
+	WIDTH: 83.33%
+}
+.col-sm-9 {
+	WIDTH: 75%
+}
+.col-sm-8 {
+	WIDTH: 66.66%
+}
+.col-sm-7 {
+	WIDTH: 58.33%
+}
+.col-sm-6 {
+	WIDTH: 50%
+}
+.col-sm-5 {
+	WIDTH: 41.66%
+}
+.col-sm-4 {
+	WIDTH: 33.33%
+}
+.col-sm-3 {
+	WIDTH: 25%
+}
+.col-sm-2 {
+	WIDTH: 16.66%
+}
+.col-sm-1 {
+	WIDTH: 8.33%
+}
+.col-sm-pull-12 {
+	RIGHT: 100%
+}
+.col-sm-pull-11 {
+	RIGHT: 91.66%
+}
+.col-sm-pull-10 {
+	RIGHT: 83.33%
+}
+.col-sm-pull-9 {
+	RIGHT: 75%
+}
+.col-sm-pull-8 {
+	RIGHT: 66.66%
+}
+.col-sm-pull-7 {
+	RIGHT: 58.33%
+}
+.col-sm-pull-6 {
+	RIGHT: 50%
+}
+.col-sm-pull-5 {
+	RIGHT: 41.66%
+}
+.col-sm-pull-4 {
+	RIGHT: 33.33%
+}
+.col-sm-pull-3 {
+	RIGHT: 25%
+}
+.col-sm-pull-2 {
+	RIGHT: 16.66%
+}
+.col-sm-pull-1 {
+	RIGHT: 8.33%
+}
+.col-sm-pull-0 {
+	RIGHT: 0px
+}
+.col-sm-push-12 {
+	LEFT: 100%
+}
+.col-sm-push-11 {
+	LEFT: 91.66%
+}
+.col-sm-push-10 {
+	LEFT: 83.33%
+}
+.col-sm-push-9 {
+	LEFT: 75%
+}
+.col-sm-push-8 {
+	LEFT: 66.66%
+}
+.col-sm-push-7 {
+	LEFT: 58.33%
+}
+.col-sm-push-6 {
+	LEFT: 50%
+}
+.col-sm-push-5 {
+	LEFT: 41.66%
+}
+.col-sm-push-4 {
+	LEFT: 33.33%
+}
+.col-sm-push-3 {
+	LEFT: 25%
+}
+.col-sm-push-2 {
+	LEFT: 16.66%
+}
+.col-sm-push-1 {
+	LEFT: 8.33%
+}
+.col-sm-push-0 {
+	LEFT: 0px
+}
+.col-sm-offset-12 {
+	MARGIN-LEFT: 100%
+}
+.col-sm-offset-11 {
+	MARGIN-LEFT: 91.66%
+}
+.col-sm-offset-10 {
+	MARGIN-LEFT: 83.33%
+}
+.col-sm-offset-9 {
+	MARGIN-LEFT: 75%
+}
+.col-sm-offset-8 {
+	MARGIN-LEFT: 66.66%
+}
+.col-sm-offset-7 {
+	MARGIN-LEFT: 58.33%
+}
+.col-sm-offset-6 {
+	MARGIN-LEFT: 50%
+}
+.col-sm-offset-5 {
+	MARGIN-LEFT: 41.66%
+}
+.col-sm-offset-4 {
+	MARGIN-LEFT: 33.33%
+}
+.col-sm-offset-3 {
+	MARGIN-LEFT: 25%
+}
+.col-sm-offset-2 {
+	MARGIN-LEFT: 16.66%
+}
+.col-sm-offset-1 {
+	MARGIN-LEFT: 8.33%
+}
+.col-sm-offset-0 {
+	MARGIN-LEFT: 0px
+}
+.col-md-1 {
+	FLOAT: left
+}
+.col-md-2 {
+	FLOAT: left
+}
+.col-md-3 {
+	FLOAT: left
+}
+.col-md-4 {
+	FLOAT: left
+}
+.col-md-5 {
+	FLOAT: left
+}
+.col-md-6 {
+	FLOAT: left
+}
+.col-md-7 {
+	FLOAT: left
+}
+.col-md-8 {
+	FLOAT: left
+}
+.col-md-9 {
+	FLOAT: left
+}
+.col-md-10 {
+	FLOAT: left
+}
+.col-md-11 {
+	FLOAT: left
+}
+.col-md-12 {
+	FLOAT: left
+}
+.col-md-12 {
+	WIDTH: 100%
+}
+.col-md-11 {
+	WIDTH: 91.66%
+}
+.col-md-10 {
+	WIDTH: 83.33%
+}
+.col-md-9 {
+	WIDTH: 75%
+}
+.col-md-8 {
+	WIDTH: 66.66%
+}
+.col-md-7 {
+	WIDTH: 58.33%
+}
+.col-md-6 {
+	WIDTH: 50%
+}
+.col-md-5 {
+	WIDTH: 41.66%
+}
+.col-md-4 {
+	WIDTH: 33.33%
+}
+.col-md-3 {
+	WIDTH: 25%
+}
+.col-md-2 {
+	WIDTH: 16.66%
+}
+.col-md-1 {
+	WIDTH: 8.33%
+}
+.col-md-pull-12 {
+	RIGHT: 100%
+}
+.col-md-pull-11 {
+	RIGHT: 91.66%
+}
+.col-md-pull-10 {
+	RIGHT: 83.33%
+}
+.col-md-pull-9 {
+	RIGHT: 75%
+}
+.col-md-pull-8 {
+	RIGHT: 66.66%
+}
+.col-md-pull-7 {
+	RIGHT: 58.33%
+}
+.col-md-pull-6 {
+	RIGHT: 50%
+}
+.col-md-pull-5 {
+	RIGHT: 41.66%
+}
+.col-md-pull-4 {
+	RIGHT: 33.33%
+}
+.col-md-pull-3 {
+	RIGHT: 25%
+}
+.col-md-pull-2 {
+	RIGHT: 16.66%
+}
+.col-md-pull-1 {
+	RIGHT: 8.33%
+}
+.col-md-pull-0 {
+	RIGHT: 0px
+}
+.col-md-push-12 {
+	LEFT: 100%
+}
+.col-md-push-11 {
+	LEFT: 91.66%
+}
+.col-md-push-10 {
+	LEFT: 83.33%
+}
+.col-md-push-9 {
+	LEFT: 75%
+}
+.col-md-push-8 {
+	LEFT: 66.66%
+}
+.col-md-push-7 {
+	LEFT: 58.33%
+}
+.col-md-push-6 {
+	LEFT: 50%
+}
+.col-md-push-5 {
+	LEFT: 41.66%
+}
+.col-md-push-4 {
+	LEFT: 33.33%
+}
+.col-md-push-3 {
+	LEFT: 25%
+}
+.col-md-push-2 {
+	LEFT: 16.66%
+}
+.col-md-push-1 {
+	LEFT: 8.33%
+}
+.col-md-push-0 {
+	LEFT: 0px
+}
+.col-md-offset-12 {
+	MARGIN-LEFT: 100%
+}
+.col-md-offset-11 {
+	MARGIN-LEFT: 91.66%
+}
+.col-md-offset-10 {
+	MARGIN-LEFT: 83.33%
+}
+.col-md-offset-9 {
+	MARGIN-LEFT: 75%
+}
+.col-md-offset-8 {
+	MARGIN-LEFT: 66.66%
+}
+.col-md-offset-7 {
+	MARGIN-LEFT: 58.33%
+}
+.col-md-offset-6 {
+	MARGIN-LEFT: 50%
+}
+.col-md-offset-5 {
+	MARGIN-LEFT: 41.66%
+}
+.col-md-offset-4 {
+	MARGIN-LEFT: 33.33%
+}
+.col-md-offset-3 {
+	MARGIN-LEFT: 25%
+}
+.col-md-offset-2 {
+	MARGIN-LEFT: 16.66%
+}
+.col-md-offset-1 {
+	MARGIN-LEFT: 8.33%
+}
+.col-md-offset-0 {
+	MARGIN-LEFT: 0px
+}
+.col-lg-1 {
+	FLOAT: left
+}
+.col-lg-2 {
+	FLOAT: left
+}
+.col-lg-3 {
+	FLOAT: left
+}
+.col-lg-4 {
+	FLOAT: left
+}
+.col-lg-5 {
+	FLOAT: left
+}
+.col-lg-6 {
+	FLOAT: left
+}
+.col-lg-7 {
+	FLOAT: left
+}
+.col-lg-8 {
+	FLOAT: left
+}
+.col-lg-9 {
+	FLOAT: left
+}
+.col-lg-10 {
+	FLOAT: left
+}
+.col-lg-11 {
+	FLOAT: left
+}
+.col-lg-12 {
+	FLOAT: left
+}
+.col-lg-12 {
+	WIDTH: 100%
+}
+.col-lg-11 {
+	WIDTH: 91.66%
+}
+.col-lg-10 {
+	WIDTH: 83.33%
+}
+.col-lg-9 {
+	WIDTH: 75%
+}
+.col-lg-8 {
+	WIDTH: 66.66%
+}
+.col-lg-7 {
+	WIDTH: 58.33%
+}
+.col-lg-6 {
+	WIDTH: 50%
+}
+.col-lg-5 {
+	WIDTH: 41.66%
+}
+.col-lg-4 {
+	WIDTH: 33.33%
+}
+.col-lg-3 {
+	WIDTH: 25%
+}
+.col-lg-2 {
+	WIDTH: 16.66%
+}
+.col-lg-1 {
+	WIDTH: 8.33%
+}
+.col-lg-pull-12 {
+	RIGHT: 100%
+}
+.col-lg-pull-11 {
+	RIGHT: 91.66%
+}
+.col-lg-pull-10 {
+	RIGHT: 83.33%
+}
+.col-lg-pull-9 {
+	RIGHT: 75%
+}
+.col-lg-pull-8 {
+	RIGHT: 66.66%
+}
+.col-lg-pull-7 {
+	RIGHT: 58.33%
+}
+.col-lg-pull-6 {
+	RIGHT: 50%
+}
+.col-lg-pull-5 {
+	RIGHT: 41.66%
+}
+.col-lg-pull-4 {
+	RIGHT: 33.33%
+}
+.col-lg-pull-3 {
+	RIGHT: 25%
+}
+.col-lg-pull-2 {
+	RIGHT: 16.66%
+}
+.col-lg-pull-1 {
+	RIGHT: 8.33%
+}
+.col-lg-pull-0 {
+	RIGHT: 0px
+}
+.col-lg-push-12 {
+	LEFT: 100%
+}
+.col-lg-push-11 {
+	LEFT: 91.66%
+}
+.col-lg-push-10 {
+	LEFT: 83.33%
+}
+.col-lg-push-9 {
+	LEFT: 75%
+}
+.col-lg-push-8 {
+	LEFT: 66.66%
+}
+.col-lg-push-7 {
+	LEFT: 58.33%
+}
+.col-lg-push-6 {
+	LEFT: 50%
+}
+.col-lg-push-5 {
+	LEFT: 41.66%
+}
+.col-lg-push-4 {
+	LEFT: 33.33%
+}
+.col-lg-push-3 {
+	LEFT: 25%
+}
+.col-lg-push-2 {
+	LEFT: 16.66%
+}
+.col-lg-push-1 {
+	LEFT: 8.33%
+}
+.col-lg-push-0 {
+	LEFT: 0px
+}
+.col-lg-offset-12 {
+	MARGIN-LEFT: 100%
+}
+.col-lg-offset-11 {
+	MARGIN-LEFT: 91.66%
+}
+.col-lg-offset-10 {
+	MARGIN-LEFT: 83.33%
+}
+.col-lg-offset-9 {
+	MARGIN-LEFT: 75%
+}
+.col-lg-offset-8 {
+	MARGIN-LEFT: 66.66%
+}
+.col-lg-offset-7 {
+	MARGIN-LEFT: 58.33%
+}
+.col-lg-offset-6 {
+	MARGIN-LEFT: 50%
+}
+.col-lg-offset-5 {
+	MARGIN-LEFT: 41.66%
+}
+.col-lg-offset-4 {
+	MARGIN-LEFT: 33.33%
+}
+.col-lg-offset-3 {
+	MARGIN-LEFT: 25%
+}
+.col-lg-offset-2 {
+	MARGIN-LEFT: 16.66%
+}
+.col-lg-offset-1 {
+	MARGIN-LEFT: 8.33%
+}
+.col-lg-offset-0 {
+	MARGIN-LEFT: 0px
+}
+.form-inline .form-group {
+	DISPLAY: inline-block; MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.form-inline .form-control {
+	WIDTH: auto; DISPLAY: inline-block; VERTICAL-ALIGN: middle
+}
+.form-inline .input-group > .form-control {
+	WIDTH: 100%
+}
+.form-inline .control-label {
+	MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.form-inline .radio {
+	MARGIN-TOP: 0px; PADDING-LEFT: 0px; DISPLAY: inline-block; MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.form-inline .checkbox {
+	MARGIN-TOP: 0px; PADDING-LEFT: 0px; DISPLAY: inline-block; MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.form-inline .radio INPUT[type='radio'] {
+	FLOAT: none; MARGIN-LEFT: 0px
+}
+.form-inline .checkbox INPUT[type='checkbox'] {
+	FLOAT: none; MARGIN-LEFT: 0px
+}
+.form-inline .has-feedback .form-control-feedback {
+	TOP: 0px
+}
+.form-horizontal .control-label {
+	TEXT-ALIGN: right
+}
+.navbar-right .dropdown-menu {
+	RIGHT: 0px; LEFT: auto
+}
+.navbar-right .dropdown-menu-left {
+	RIGHT: auto; LEFT: 0px
+}
+.nav-justified.nav-tabs > LI {
+	WIDTH: 1%; DISPLAY: table-cell
+}
+.nav-justified.nav-tabs > LI > A {
+	MARGIN-BOTTOM: 0px
+}
+.nav-justified.nav-tabs > LI > A {
+	BORDER-BOTTOM: #ddd 1px solid; border-radius: 4px 4px 0 0
+}
+.nav-justified.nav-tabs > .active > A {
+	BORDER-BOTTOM-COLOR: #fff
+}
+.nav-justified.nav-tabs > .active > A:hover {
+	BORDER-BOTTOM-COLOR: #fff
+}
+.nav-justified.nav-tabs > .active > A:focus {
+	BORDER-BOTTOM-COLOR: #fff
+}
+.nav-justified > LI {
+	WIDTH: 1%; DISPLAY: table-cell
+}
+.nav-justified > LI > A {
+	MARGIN-BOTTOM: 0px
+}
+.nav-tabs-justified > LI > A {
+	BORDER-BOTTOM: #ddd 1px solid; border-radius: 4px 4px 0 0
+}
+.nav-tabs-justified > .active > A {
+	BORDER-BOTTOM-COLOR: #fff
+}
+.nav-tabs-justified > .active > A:hover {
+	BORDER-BOTTOM-COLOR: #fff
+}
+.nav-tabs-justified > .active > A:focus {
+	BORDER-BOTTOM-COLOR: #fff
+}
+.navbar {
+	border-radius: 4px
+}
+.navbar-header {
+	FLOAT: left
+}
+.navbar-collapse {
+	WIDTH: auto; BORDER-TOP: 0px; box-shadow: none
+}
+.collapse.navbar-collapse {
+	PADDING-BOTTOM: 0px; DISPLAY: block !important; HEIGHT: auto !important; OVERFLOW: visible !important
+}
+.in.navbar-collapse {
+	OVERFLOW-Y: visible
+}
+.navbar-fixed-top .navbar-collapse {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.navbar-static-top .navbar-collapse {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.navbar-fixed-bottom .navbar-collapse {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.container > .navbar-header {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px
+}
+.container-fluid > .navbar-header {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px
+}
+.container > .navbar-collapse {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px
+}
+.container-fluid > .navbar-collapse {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px
+}
+.navbar-static-top {
+	border-radius: 0
+}
+.navbar-fixed-top {
+	border-radius: 0
+}
+.navbar-fixed-bottom {
+	border-radius: 0
+}
+.navbar > .container .navbar-brand {
+	MARGIN-LEFT: -15px
+}
+.navbar > .container-fluid .navbar-brand {
+	MARGIN-LEFT: -15px
+}
+.navbar-toggle {
+	DISPLAY: none
+}
+.navbar-nav {
+	MARGIN: 0px; FLOAT: left
+}
+.navbar-nav > LI {
+	FLOAT: left
+}
+.navbar-nav > LI > A {
+	PADDING-BOTTOM: 15px; PADDING-TOP: 15px
+}
+.navbar-left {
+	FLOAT: left !important
+}
+.navbar-right {
+	FLOAT: right !important
+}
+.navbar-form .form-group {
+	DISPLAY: inline-block; MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.navbar-form .form-control {
+	WIDTH: auto; DISPLAY: inline-block; VERTICAL-ALIGN: middle
+}
+.navbar-form .input-group > .form-control {
+	WIDTH: 100%
+}
+.navbar-form .control-label {
+	MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.navbar-form .radio {
+	MARGIN-TOP: 0px; PADDING-LEFT: 0px; DISPLAY: inline-block; MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.navbar-form .checkbox {
+	MARGIN-TOP: 0px; PADDING-LEFT: 0px; DISPLAY: inline-block; MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.navbar-form .radio INPUT[type='radio'] {
+	FLOAT: none; MARGIN-LEFT: 0px
+}
+.navbar-form .checkbox INPUT[type='checkbox'] {
+	FLOAT: none; MARGIN-LEFT: 0px
+}
+.navbar-form .has-feedback .form-control-feedback {
+	TOP: 0px
+}
+.navbar-form {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: auto; MARGIN-LEFT: 0px; BORDER-TOP: 0px; MARGIN-RIGHT: 0px; BORDER-RIGHT: 0px; PADDING-TOP: 0px; box-shadow: none; -webkit-box-shadow: none
+}
+.navbar-text {
+	FLOAT: left; MARGIN-LEFT: 15px; MARGIN-RIGHT: 15px
+}
+.modal-dialog {
+	MARGIN: 30px auto; WIDTH: 600px
+}
+.modal-content {
+	box-shadow: 0 5px 15px rgba(0, 0, 0, .5); -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5)
+}
+.modal-sm {
+	WIDTH: 300px
+}
+.modal-lg {
+	WIDTH: 900px
+}
+.visible-lg {
+	DISPLAY: block !important
+}
+TABLE.visible-lg {
+	DISPLAY: table
+}
+TR.visible-lg {
+	DISPLAY: table-row !important
+}
+TH.visible-lg {
+	DISPLAY: table-cell !important
+}
+TD.visible-lg {
+	DISPLAY: table-cell !important
+}
+.hidden-lg {
+	DISPLAY: none !important
+}
+.marketing {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.navbar-wrapper {
+	MARGIN-TOP: 20px
+}
+.navbar-wrapper .container {
+	PADDING-LEFT: 15px; PADDING-RIGHT: 15px
+}
+.navbar-wrapper .navbar {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.navbar-wrapper .navbar {
+	border-radius: 4px
+}
+.carousel-caption P {
+	LINE-HEIGHT: 1.4; MARGIN-BOTTOM: 20px; FONT-SIZE: 21px
+}
+.featurette-heading {
+	FONT-SIZE: 50px
+}
+.featurette-heading {
+	MARGIN-TOP: 120px
+}
+</STYLE>
+
+<STYLE type=text/css media=print>* {
+	BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #000 !important; text-shadow: none; box-shadow: none
+}
+A {
+	TEXT-DECORATION: underline
+}
+A:visited {
+	TEXT-DECORATION: underline
+}
+A[href]:after {
+	CONTENT: " (" attr(href) ")"
+}
+ABBR[title]:after {
+	CONTENT: " (" attr(title) ")"
+}
+A[href^='javascript:']:after {
+	CONTENT: ""
+}
+A[href^='#']:after {
+	CONTENT: ""
+}
+PRE {
+	BORDER-BOTTOM: #999 1px solid; BORDER-LEFT: #999 1px solid; PAGE-BREAK-INSIDE: avoid; BORDER-TOP: #999 1px solid; BORDER-RIGHT: #999 1px solid
+}
+BLOCKQUOTE {
+	BORDER-BOTTOM: #999 1px solid; BORDER-LEFT: #999 1px solid; PAGE-BREAK-INSIDE: avoid; BORDER-TOP: #999 1px solid; BORDER-RIGHT: #999 1px solid
+}
+THEAD {
+	DISPLAY: table-header-group
+}
+TR {
+	PAGE-BREAK-INSIDE: avoid
+}
+IMG {
+	PAGE-BREAK-INSIDE: avoid
+}
+IMG {
+	MAX-WIDTH: 100% !important
+}
+P {
+	WIDOWS: 3; ORPHANS: 3
+}
+H2 {
+	WIDOWS: 3; ORPHANS: 3
+}
+H3 {
+	WIDOWS: 3; ORPHANS: 3
+}
+H2 {
+	PAGE-BREAK-AFTER: avoid
+}
+H3 {
+	PAGE-BREAK-AFTER: avoid
+}
+SELECT {
+	BACKGROUND: #fff
+}
+.navbar {
+	DISPLAY: none
+}
+.table TD {
+	BACKGROUND-COLOR: #fff !important
+}
+.table TH {
+	BACKGROUND-COLOR: #fff !important
+}
+.btn > .caret {
+	BORDER-TOP-COLOR: #000 !important
+}
+.dropup > .btn > .caret {
+	BORDER-TOP-COLOR: #000 !important
+}
+.label {
+	BORDER-BOTTOM: #000 1px solid; BORDER-LEFT: #000 1px solid; BORDER-TOP: #000 1px solid; BORDER-RIGHT: #000 1px solid
+}
+.table {
+	BORDER-COLLAPSE: collapse !important
+}
+.table-bordered TH {
+	BORDER-BOTTOM: #ddd 1px solid; BORDER-LEFT: #ddd 1px solid; BORDER-TOP: #ddd 1px solid; BORDER-RIGHT: #ddd 1px solid
+}
+.table-bordered TD {
+	BORDER-BOTTOM: #ddd 1px solid; BORDER-LEFT: #ddd 1px solid; BORDER-TOP: #ddd 1px solid; BORDER-RIGHT: #ddd 1px solid
+}
+.visible-print {
+	DISPLAY: block !important
+}
+TABLE.visible-print {
+	DISPLAY: table
+}
+TR.visible-print {
+	DISPLAY: table-row !important
+}
+TH.visible-print {
+	DISPLAY: table-cell !important
+}
+TD.visible-print {
+	DISPLAY: table-cell !important
+}
+.hidden-print {
+	DISPLAY: none !important
+}
+</STYLE>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+
+
+
+<STYLE type=text/css>.affix {
+	WIDTH: 160px
+}
+.affix LI {
+	LINE-HEIGHT: 35px; LIST-STYLE-TYPE: none; HEIGHT: 35px; VERTICAL-ALIGN: middle
+}
+UL.slides LI {
+	BORDER-BOTTOM: #ccc 0px solid; POSITION: relative; BORDER-LEFT: #ccc 0px solid; LIST-STYLE-TYPE: none; MARGIN: 15px 0px; WIDTH: 33.3%; FLOAT: left; OVERFLOW: hidden; BORDER-TOP: #ccc 0px solid; BORDER-RIGHT: #ccc 0px solid
+}
+UL.slides LI A {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: block; PADDING-TOP: 5px
+}
+UL.slides LI A STRONG {
+	COLOR: #1e90ff; FONT-SIZE: 15px
+}
+UL.slides LI A:hover {
+	BACKGROUND-COLOR: #eee; TEXT-DECORATION: none
+}
+UL.slides LI IMG {
+	WIDTH: 60%
+}
+UL.slides LI SPAN {
+	WIDTH: 36%; DISPLAY: inline-block; COLOR: #666; VERTICAL-ALIGN: top
+}
+.col-md-10 H3 {
+	BORDER-BOTTOM: #ccc 1px solid; PADDING-BOTTOM: 10px; MARGIN: 10px 0px; CLEAR: both
+}
+.col-md-10 H3 A {
+	DISPLAY: inline-block; PADDING-TOP: 63px
+}
+#chartsTypeNav UL LI {
+	PADDING-LEFT: 10px; -webkit-transition: background-color 0.3s; transition: background-color 0.3s; -moz-transition: background-color 0.3s; -o-transition: background-color 0.3s
+}
+</style>
+</head>
+
+<body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation" id="head"></div>
+
+    <div class="container" style="padding-top:10px;">
+        <div class="row-fluid">
+            <div class="col-md-2">
+                <div class="affix" style="margin-left: -20px; margin-top: auto;" id="chartsTypeNav">
+                    <ul style="padding:10px 0;">
+						<!-- <li style="background-color: transparent;"><i class="ec-icon ec-icon-line"></i> <a href="./index.html#zbhz" style="color: rgb(62, 152, 197);">指标汇总明细</a></li> -->
+                        <li style="background-color: rgb(62, 152, 197);"><i class="ec-icon ec-icon-scatter"></i> <a href="./index.html#yszk" style="color: rgb(255, 255, 255);">应收账款</a></li>
+                        <li style="background-color: transparent;"><i class="ec-icon ec-icon-k"></i> <a href="./index.html#bl" style="color: rgb(62, 152, 197);">保理状态</a></li>
+                        <li style="background-color: transparent;"><i class="ec-icon ec-icon-pie"></i> <a href="./index.html#ht" style="color: rgb(62, 152, 197);">合同付款</a></li>
+						<li style="background-color: transparent;"><i class="ec-icon ec-icon-radar"></i> <a href="./index.html#hk" style="color: rgb(62, 152, 197);">回款</a></li>
+                        <li style="background-color: transparent;"><i class="ec-icon ec-icon-chord"></i> <a href="./index.html#cb" style="color: rgb(62, 152, 197);">成本管控</a></li>
+						<li style="background-color: transparent;"><i class="ec-icon ec-icon-force"></i> <a href="./index.html#tbbzj" style="color: rgb(62, 152, 197);">投标保证金</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <p style="margin:10px 0 0px 0">
+                </p>
+				<!-- <div>
+				<h3>指标汇总明细<a name="zbhz"> </a></h3>
+                    <div class="section">
+                        <div class="thumb3">
+                          <ul class="slides">
+                            <li data-thumb="asset/img/example/line1.png">
+                              <a href="ydzb/hzb_zbhz.do" target="_blank"><img src="./images/charts/bar1.png" alt="本月指标汇总">
+                              <span><strong>整体指标汇总</strong><br>本月整体指标汇总</span></a>
+                            </li>/li
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="ydzb/gcy_zbhz.do" target="_blank"><img src="./images/charts/line2.png" alt="各产业本月指标汇总">
+                              <span><strong>各产业指标汇总</strong><br>各产业本月指标汇总</span></a>
+                            </li>/li
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="ydzb/gdw_zbhz.do" target="_blank"><img src="./images/charts/pie1.png" alt="各单位本月指标汇总">
+                              <span><strong>各单位指标汇总</strong><br>各单位本月指标汇总</span></a>
+                            </li>/li
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="ydzb/zbhz_overview.do" target="_blank"><img src="./images/charts/scatter1.png" alt="指标-利润总额">
+                              <span><strong>指标-利润总额</strong><br>各产业、单位利润总额指标汇总情况</span></a>
+                            </li>/li
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="ydzb/zbhz_overview.do?zb=7" target="_blank"><img src="./images/charts/scatter2.png" alt="指标-销售收入">
+                              <span><strong>指标-销售收入</strong><br>各产业、单位销售收入指标汇总情况</span></a>
+                            </li>/li
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="ydzb/zbhz_overview.do?zb=23" target="_blank"><img src="./images/charts/scatter4.png" alt="指标-应收账款">
+                              <span><strong>指标-应收账款</strong><br>各产业、单位应收账款指标汇总情况</span></a>
+                            </li>/li
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="ydzb/zbhz_overview.do?zb=25" target="_blank"><img src="./images/charts/scatter5.png" alt="指标-存货">
+                              <span><strong>指标-存货</strong><br>各产业、单位存货指标汇总情况</span></a>
+                            </li>/li
+
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="ydzb/zbhz_overview.do?zb=8" target="_blank"><img src="./images/charts/scatter3.png" alt="指标-现金流">
+                              <span><strong>指标-现金流</strong><br>各产业、单位现金流指标汇总情况</span></a>
+                            </li>/li
+                            <li data-thumb="asset/img/example/line1.png">
+                              <a href="ydzb/xjlrb.do" target="_blank"><img src="./images/charts/bar1.png" alt="本日现金流日报">
+                              <span><strong>现金流日报</strong><br>本日现金流日报</span></a>
+                            </li>/li
+
+                          </ul>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div>
+                    <h3>应收账款<a name="yszk"> </a></h3>
+                    <div class="section">
+                        <div class="thumb3">
+                          <ul class="slides">
+						  
+							<li data-thumb="asset/img/example/line1.png">
+							  <a href="yszkpzjh/yszkpzjh.do" target="_blank"><img src="./images/charts/bar1.png" alt="输变电产业应收账款一览">
+							  <span><strong>应收账款盘子规划</strong><br>各公司应收账款盘子规划</span></a>
+							</li><!--/li-->
+
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="yszkjgqk/yszkjgqk.do" target="_blank"><img src="./images/charts/line2.png" alt="应收账款趋势分析">
+                              <span><strong>应收账款结构情况</strong><br>各行业应收账款结构情况、变化趋势及同比情况</span></a>
+                            </li><!--/li-->
+
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="yqkbhqs/yqkbhqs.do" target="_blank"><img src="./images/charts/pie1.png" alt="应收账款客户结构分析">
+                              <span><strong>逾期款趋势变化</strong><br>本年度整体逾期款结构、趋势变化及近两月逾期款结构图</span></a>
+                            </li><!--/li-->
+
+						    <li data-thumb="asset/img/example/line1.png">
+                              <a href="yqysysfx/yqysysfx.do" target="_blank"><img src="./images/charts/bar1.png" alt="输变电产业应收账款一览">
+                              <span><strong>逾期应收因素分析</strong><br>整体逾期应收因素分析</span></a>
+                            </li>
+							
+                            <!--<li data-thumb="asset/img/example/cache.png">
+                              <a href="index.htm" target="_blank"><img src="./images/charts/line2.png" alt="应收账款趋势分析">
+                              <span><strong>输变电集团应收账款分析</strong><br>输变电集团应收账款分析</span></a>
+                            </li><!--/li-->
+
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="CQK/cqk.do" target="_blank"><img src="./images/charts/pie1.png" alt="应收账款客户结构分析">
+                              <span><strong>陈欠款分析</strong><br>整体陈欠款分析、变化趋势及同比情况</span></a>
+                            </li><!--/li-->
+                            
+                           <li data-thumb="asset/img/example/line1.png">
+							  <a href="ztyszkfx/ztyszkfx.do" target="_blank"><img src="./images/charts/bar1.png" alt="输变电产业应收账款一览">
+							  <span><strong>整体应收账款分析表</strong><br>整体应收账款分析表</span></a>
+							</li><!--/li-->
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>保理状态<a name="bl"> </a></h3>
+                    <div class="section">
+                        <div class="thumb4">
+                          <ul class="slides">
+                            <li data-thumb="asset/img/example/k1.png">
+                              <a href="blhtdqqkhz/blhtdqqkhz.do" target="_blank"><img src="./images/charts/k1.png" alt="ECharts k1">
+                              <span><strong>保理合同到期情况汇总</strong><br>整体保理合同到期情况、变化趋势及同比情况</span></a>
+                            </li><!--/li-->
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>合同付款<a name="ht"> </a></h3>
+                    <div class="section">
+                        <div class="thumb4">
+                            <ul class="slides">
+                                <li data-thumb="asset/img/example/cache.png">
+                                  <a href="byqfkfstj/byqfkfstj.do" target="_blank"><img src="./images/charts/pie1.png" alt="ECharts pie1">
+                                  <span><strong>变压器合同付款方式明细</strong></span></a>
+                                </li>
+                                <li data-thumb="asset/img/example/cache.png">
+                 					<a href="xlfkfstj/xlfkfstj.do" target="_blank"><img src="./images/charts/pie2.png" alt="ECharts pie2">
+                                  	<span><strong>线缆合同付款方式明细</strong></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                      </div>
+					  	
+                </div>
+                <div>
+                    <h3>回款<a name="hk"> </a></h3>
+                    <div class="section">
+                        <div class="thumb4">
+                          <ul class="slides">
+                            <!--<li data-thumb="asset/img/example/scatter1.png">
+                              <a href="index.htm" target="_blank"><img src="./images/charts/scatter1.png" alt="ECharts scatter1">
+                              <span><strong>每日回款</strong><br>输变电集团每日回款明细</span></a>
+                            </li>-->
+                            <li data-thumb="asset/img/example/cache.png">
+                               <a href="hkjhjg/hkjhjg.do" target="_blank"><img src="./images/charts/scatter2.png" alt="ECharts scatter2">
+                              <span><strong>本月回款计划结构明细</strong><br>各公司本月回款计划整体结构以及款项状态、汇款性质结构</span></a>
+                            </li>
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="syhkjhzxqk/syhkjhzxqk.do" target="_blank"><img src="./images/charts/scatter5.png" alt="ECharts scatter5">
+                              <span><strong>上月回款计划执行情况</strong></span></a>
+                            </li>
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="rhkqk/rhkqk.do" target="_blank"><img src="./images/charts/scatter5.png" alt="ECharts scatter5">
+                              <span><strong>当日回款明细</strong></span></a>
+                            </li>
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>成本管控<a name="cb"> </a></h3>
+                    <div class="section">
+                        <div class="thumb4">
+                          <ul class="slides">
+                            <li data-thumb="asset/img/example/bar1.png">
+                              <a href="./jsp/cb_byq.jsp" target="_blank"><img src="./images/charts/bar1.png" alt="ECharts bar1">
+                              <span><strong>变压器投标明细</strong><br>变压器投标整体明细及各周个月情况</span></a>
+                            </li>
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="./jsp/cb_xl.jsp" target="_blank"><img src="./images/charts/bar2.png" alt="ECharts bar2">
+                              <span><strong>线缆投标明细</strong><br>线缆投标整体明细及各周个月情况</span></a>
+                            </li>
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="./jsp/cb_zx_byq.jsp" target="_blank"><img src="./images/charts/bar10.png" alt="ECharts bar10">
+                              <span><strong>变压器执行订单明细</strong><br>变压器执行订单明细汇总及两单对比情况</span></a>
+                            </li>
+                            <li data-thumb="asset/img/example/bar1.png">
+                              <a href="./jsp/cb_zx_xl.jsp" target="_blank"><img src="./images/charts/bar1.png" alt="ECharts bar1">
+                              <span><strong>线缆执行订单明细</strong><br>线缆执行订单明细汇总及两单对比情况</span></a>
+                            </li>
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="./jsp/cb_wg_byq.jsp" target="_blank"><img src="./images/charts/bar10.png" alt="ECharts bar10">
+                              <span><strong>变压器完工订单明细</strong><br>变压器完工订单明细汇总及不同电压情况汇总</span></a>
+                            </li>
+                            <li data-thumb="asset/img/example/bar1.png">
+                              <a href="./jsp/cb_wg_xl.jsp" target="_blank"><img src="./images/charts/bar1.png" alt="ECharts bar1">
+                              <span><strong>线缆完工订单明细</strong><br>线缆完工订单明细汇总及不同电压情况汇总</span></a>
+                            </li>
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>投标保证金<a name="tbbzj"> </a></h3>
+                    <div class="section">
+                        <div class="thumb4">
+                          <ul class="slides">
+                            <li data-thumb="asset/img/example/bar1.png">
+                              <a href="tbbzjqk/tbbzjqk.do" target="_blank"><img src="./images/charts/bar1.png" alt="ECharts bar1">
+                              <span><strong>投标保证金情况</strong><br>投标保证金情况</span></a>
+                            </li>
+                            <!--<li data-thumb="asset/img/example/cache.png">
+                              <a href="index.htm" target="_blank"><img src="./images/charts/bar2.png" alt="ECharts bar2">
+                              <span><strong>投标保证金变化趋势</strong><br>本年度投标保证金变化趋势</span></a>
+                            </li>
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="index.htm" target="_blank"><img src="./images/charts/bar10.png" alt="ECharts bar10">
+                              <span><strong>投标保证金同比情况</strong><br>本年度投标保证金同比情况</span></a>
+                            </li>-->
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+        </div>
+    </div> <!-- /container -->
+
+    <footer id="footer" style="margin-top: 30px;"></footer>
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/echartsHome.js"></script><script src="./js/h.js" type="text/javascript"></script><script src="./js/h(1).js" type="text/javascript"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(window).load(function (){
+      var section = $('[class=section]');
+      function loadImage(i) {
+          setTimeout(function (){
+              var list = $('div>ul>li>a', section[i]);
+              var nav = $('ol>li>img', section[i]);
+              var href;
+              var src;
+              if (list.length > 0) {
+                  for (var j = 0, k = list.length; j < k; j++) {
+                      list[j].target = '_blank';
+                      href = list[j].href.slice(list[j].href.lastIndexOf('/') + 1, -5);
+                      src = list[j].firstChild.src.replace(
+                          'cache', href
+                      );
+                      list[j].firstChild.alt = 'ECharts ' + href;
+                      list[j].firstChild.src = src;
+                  }
+              }
+          }, i * 100);
+      }
+      for (var i = 0, l = section.length; i < l; i++) {
+          loadImage(i);
+      }
+      
+    var chartsTypeNav = document.getElementById('chartsTypeNav');
+    function _scroll() {
+        var navHeight = chartsTypeNav.offsetHeight;
+        var viewHeight = document.documentElement.clientHeight;
+        var scrollHeight = document.documentElement.scrollTop
+                           || document.body.scrollTop;
+        var offsetHeight = document.body.offsetHeight;
+        var footHole = offsetHeight - scrollHeight - viewHeight;
+        var maxHeight = viewHeight - (230 - footHole) - 80;
+        if (footHole < 320 && maxHeight < navHeight) {
+            // 见footer
+            //chartsTypeNav.style.marginTop = footHole - 150 + 'px';
+            chartsTypeNav.style.marginTop = maxHeight - navHeight + 'px';
+        }
+        else {
+            // 未见footer
+            chartsTypeNav.style.marginTop = 'auto';
+        }
+        
+        var len = offsetList.length;
+		var height = [];
+		for (var i = 0; i < len - 1; i++) {
+			height.push(offsetList[i + 1].offsetTop - offsetList[i].offsetTop);
+        }
+		
+		var hasLightItem = false;
+            for (var i = 0; i < len - 1; i++) {
+                if (Math.abs(scrollHeight - offsetList[i].offsetTop) < (height[i] / 2) && navDom[i] && !hasLightItem) {
+                    navDom[i].style.backgroundColor = '#3E98C5';
+					hasLightItem = true;
+                    $(navDom[i]).children('a')[0].style.color = '#fff';
+                }
+                else {
+                    navDom[i].style.backgroundColor = 'transparent';
+                    $(navDom[i]).children('a')[0].style.color = '#3E98C5';
+                }
+            }
+     
+    }
+    var offsetList = [];
+    var navDom = $('#chartsTypeNav>ul>li');
+    function _resize() {
+        offsetList = [];
+        $('h3').each(function(idx, dom){
+            offsetList[idx] = {
+                name : dom.childNodes[1].name, 
+                offsetTop : dom.childNodes[1].offsetTop
+            };
+        });
+		$("#footer").css("marginTop", "180px");
+        offsetList.push({
+            name : 'topic',
+            offsetTop : document.documentElement.scrollHeight - parseInt($("#footer").css("marginTop").replace("px", "")) - $("#footer").height() - parseInt($("#footer").css("paddingTop").replace("px", ""))
+        })
+        setTimeout(_scroll, 500);
+    }
+    
+    function scroll2Pos (idx) {
+        return function() {
+            $("body,html").animate(
+                {scrollTop: offsetList[idx].offsetTop + 30},
+                500
+            );
+            return false;
+        }
+    }
+    $('#chartsTypeNav>ul>li>a').each(function(idx, dom){
+        $(dom).on('click', scroll2Pos(idx));
+    })
+    $(window).on('scroll', _scroll);
+    $(window).on('resize', _resize);
+    _resize();
+    });
+    </script>
+  
+
+</body></html>
