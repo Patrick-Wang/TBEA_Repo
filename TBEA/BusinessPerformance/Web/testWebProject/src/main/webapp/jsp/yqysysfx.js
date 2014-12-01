@@ -20,7 +20,6 @@ var yqysysfx;
     })();
     var View = (function () {
         function View() {
-            this.mData = [];
             this.mComp = 19 /* JT */;
         }
         View.newInstance = function () {
@@ -114,7 +113,7 @@ var yqysysfx;
                 ["其中：法律手段清收", "户数"],
                 ["其中：法律手段清收", "金额"]
             ];
-            if (this.mData != null) {
+            if (this.mData != undefined) {
                 var row = [];
                 for (var i = 0; i < data.length; ++i) {
                     row = [].concat(this.mData[i]);

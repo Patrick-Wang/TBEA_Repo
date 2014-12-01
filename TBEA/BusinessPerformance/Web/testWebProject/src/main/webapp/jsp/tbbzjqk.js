@@ -119,7 +119,8 @@ var tbbzjqk;
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
-                width: '100%'
+                shrinkToFit: true,
+                width: this.mData.length * 90
             }));
         };
         return View;

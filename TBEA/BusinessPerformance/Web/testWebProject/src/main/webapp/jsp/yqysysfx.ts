@@ -25,7 +25,7 @@ module yqysysfx {
         }
 
         
-        private mData: Array<string[]> = [];
+        private mData: Array<string[]>;
         private mDataSet : Util.DateDataSet;
         private mTableId : string;
         private mEchartId;
@@ -129,7 +129,7 @@ module yqysysfx {
                 ["其中：法律手段清收","户数"],
                 ["其中：法律手段清收","金额"]];
 
-            if (this.mData != null) {
+            if (this.mData != undefined) {
                 var row = [];
                 for (var i = 0; i < data.length; ++i) {
                     row = [].concat(this.mData[i]);
