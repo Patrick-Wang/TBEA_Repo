@@ -12,20 +12,26 @@ import javax.persistence.Table;
 import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 
 @Entity
-@Table(name = "yszk_zj_ztyszkfxb")
+@Table(name = "ztyszkfxb")
 public class ZTYSZKFX extends AbstractReadWriteEntity{
-	Date gxrq;
-	String gsbm;
-	Double byzmyszkye;
-	Double byblkzye;
-	Double byyszksjs;
-	Double ljsr;
-	Double qntqzmyszkye;
-	Double qntqblye;
-	Double qntqyszksjs;
-	Double qntqsr;
-	String sfdrwc;
-	Integer qybh;
+	Date	gxrq	;
+	String	gsbm	;
+	Double	byzmyszkye	;
+	Double	byblkzye	;
+	Double	byyszksjs	;
+	Double	ljsr	;
+	Double	Zmyszsrb	;
+	Double	qntqzmyszkye	;
+	Double	qntqblye	;
+	Double	qntqyszksjs	;
+	Double	qntqsr	;
+	String	Qntqzmyszsrb	;
+	String	Zmyejqntqzzb	;
+	String	Bljqntqzzb	;
+	String	Sjysjqntqzzb	;
+	String	Srjqntqzzb	;
+	Integer	qybh	;
+
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -81,6 +87,13 @@ public class ZTYSZKFX extends AbstractReadWriteEntity{
 	}
 
 	/**
+	 * @return the zmyszsrb
+	 */
+	public Double getZmyszsrb() {
+		return Zmyszsrb;
+	}
+
+	/**
 	 * @return the qntqzmyszkye
 	 */
 	public Double getQntqzmyszkye() {
@@ -109,10 +122,38 @@ public class ZTYSZKFX extends AbstractReadWriteEntity{
 	}
 
 	/**
-	 * @return the sfdrwc
+	 * @return the qntqzmyszsrb
 	 */
-	public String getSfdrwc() {
-		return sfdrwc;
+	public String getQntqzmyszsrb() {
+		return Qntqzmyszsrb;
+	}
+
+	/**
+	 * @return the zmyejqntqzzb
+	 */
+	public String getZmyejqntqzzb() {
+		return Zmyejqntqzzb;
+	}
+
+	/**
+	 * @return the bljqntqzzb
+	 */
+	public String getBljqntqzzb() {
+		return Bljqntqzzb;
+	}
+
+	/**
+	 * @return the sjysjqntqzzb
+	 */
+	public String getSjysjqntqzzb() {
+		return Sjysjqntqzzb;
+	}
+
+	/**
+	 * @return the srjqntqzzb
+	 */
+	public String getSrjqntqzzb() {
+		return Srjqntqzzb;
 	}
 
 	/**
@@ -165,6 +206,13 @@ public class ZTYSZKFX extends AbstractReadWriteEntity{
 	}
 
 	/**
+	 * @param zmyszsrb the zmyszsrb to set
+	 */
+	public void setZmyszsrb(Double zmyszsrb) {
+		Zmyszsrb = zmyszsrb;
+	}
+
+	/**
 	 * @param qntqzmyszkye the qntqzmyszkye to set
 	 */
 	public void setQntqzmyszkye(Double qntqzmyszkye) {
@@ -193,10 +241,38 @@ public class ZTYSZKFX extends AbstractReadWriteEntity{
 	}
 
 	/**
-	 * @param sfdrwc the sfdrwc to set
+	 * @param qntqzmyszsrb the qntqzmyszsrb to set
 	 */
-	public void setSfdrwc(String sfdrwc) {
-		this.sfdrwc = sfdrwc;
+	public void setQntqzmyszsrb(String qntqzmyszsrb) {
+		Qntqzmyszsrb = qntqzmyszsrb;
+	}
+
+	/**
+	 * @param zmyejqntqzzb the zmyejqntqzzb to set
+	 */
+	public void setZmyejqntqzzb(String zmyejqntqzzb) {
+		Zmyejqntqzzb = zmyejqntqzzb;
+	}
+
+	/**
+	 * @param bljqntqzzb the bljqntqzzb to set
+	 */
+	public void setBljqntqzzb(String bljqntqzzb) {
+		Bljqntqzzb = bljqntqzzb;
+	}
+
+	/**
+	 * @param sjysjqntqzzb the sjysjqntqzzb to set
+	 */
+	public void setSjysjqntqzzb(String sjysjqntqzzb) {
+		Sjysjqntqzzb = sjysjqntqzzb;
+	}
+
+	/**
+	 * @param srjqntqzzb the srjqntqzzb to set
+	 */
+	public void setSrjqntqzzb(String srjqntqzzb) {
+		Srjqntqzzb = srjqntqzzb;
 	}
 
 	/**

@@ -175,17 +175,7 @@ th.ui-th-column div {
 							onchange="instance.onCompanySelected(this.value)"
 							style="width: 125px;">
 								<c:forEach begin="0" end="${company_size - 1}" var="i">
-									<c:choose>
-										<c:when test="${i + 1 == company_size}">
-											<option value="${ids[i]}" selected="selected">全部</option>
-										</c:when>
-
-										<c:otherwise>
-											<option value="${ids[i]}">${names[i]}</option>
-										</c:otherwise>
-
-									</c:choose>
-
+									<option value="${ids[i]}">${names[i]}</option>
 								</c:forEach>
 						</select></td>
 						<td><input type="button" value="更新"

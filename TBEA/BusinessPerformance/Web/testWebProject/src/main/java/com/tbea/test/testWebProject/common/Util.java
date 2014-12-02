@@ -199,15 +199,9 @@ public class Util {
 		return false;
 	}
 	
-	public static String[][] getCommonCompanyNameAndIds(){
+	public static String[][] getCommonCompanyNameAndIds(Company.Type filters[]){
 		Company coms[] = Company.getAll();
-		Company.Type filters[] = new Company.Type[]{
-				 Company.Type.SBDCY,
-				 Company.Type.XNYCY,
-				 Company.Type.NYCY,
-				 Company.Type.GCL
-		};
-		
+	
 		String[][] name_ids = new String[2][coms.length - filters.length]; 
 		int iCount = 0;
 		for (int i = 0;  i < coms.length; ++i){
@@ -219,5 +213,14 @@ public class Util {
 			}
 		}
 		return name_ids;
+	}
+	
+	public static String[][] getCommonCompanyNameAndIds(){
+		return  getCommonCompanyNameAndIds(new Company.Type[]{
+				 Company.Type.SBDCY,
+				 Company.Type.XNYCY,
+				 Company.Type.NYCY,
+				 Company.Type.GCL
+		});
 	}
 }

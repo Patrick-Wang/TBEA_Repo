@@ -275,7 +275,7 @@ module zbhz_overview {
 			var jdCount = data[0].length;
 			var jd = [];
 			var legend = ["年度计划", "年度累计", "累计完成率"];
-			var xYear = [this.mYear - 2 + "年", this.mYear - 1 + "年", this.mYear + "年",]
+			var xYear = [this.mYear - 2 + "年", this.mYear - 1 + "年", this.mYear + "年"]
 			
 			
 			for (var i = 1; i <= jdCount; ++i){

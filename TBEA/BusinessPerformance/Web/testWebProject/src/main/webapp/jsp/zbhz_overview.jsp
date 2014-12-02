@@ -293,9 +293,10 @@ th.ui-th-ltr {
 			</td>
 		</tr>
 	</Table>
+	<script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 	<%@include file="loading.jsp"%>
 </body>
-<script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
+
 
 
 </html>

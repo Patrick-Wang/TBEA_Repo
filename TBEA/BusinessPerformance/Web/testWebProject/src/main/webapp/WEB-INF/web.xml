@@ -8,9 +8,6 @@
 		<listener-class>org.springframework.web.util.WebAppRootListener
 		</listener-class>
 	</listener>
-	<listener>
-	    <listener-class>com.tbea.Connection.JDBCListener</listener-class>
-	</listener>
 	
 	<context-param>
 		<param-name>webAppRootKey</param-name>

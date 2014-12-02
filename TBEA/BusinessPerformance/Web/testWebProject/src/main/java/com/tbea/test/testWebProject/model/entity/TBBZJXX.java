@@ -1,7 +1,5 @@
 package com.tbea.test.testWebProject.model.entity;
 
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,15 +10,12 @@ import javax.persistence.Table;
 import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 
 @Entity
-@Table(name = "yszk_zj_tbbzjxx")
+@Table(name = "ndtbbzjqk")
 public class TBBZJXX  extends AbstractReadWriteEntity{
 	
-	Date gxrq;
-	String gsbm;
 	Integer nf;
 	Integer yf;
 	Double je;
-	String sfdrwc;
 	Integer qybh;
 	/**
 	 * @return the iD
@@ -37,18 +32,6 @@ public class TBBZJXX  extends AbstractReadWriteEntity{
 	}
 
 	/**
-	 * @return the gxrq
-	 */
-	public Date getGxrq() {
-		return gxrq;
-	}
-	/**
-	 * @return the gsbm
-	 */
-	public String getGsbm() {
-		return gsbm;
-	}
-	/**
 	 * @return the nf
 	 */
 	public Integer getNf() {
@@ -63,14 +46,9 @@ public class TBBZJXX  extends AbstractReadWriteEntity{
 	/**
 	 * @return the je
 	 */
+	@Column(name = "ye")
 	public Double getJe() {
 		return je;
-	}
-	/**
-	 * @return the sfdrwc
-	 */
-	public String getSfdrwc() {
-		return sfdrwc;
 	}
 	/**
 	 * @return the qybh
@@ -82,15 +60,6 @@ public class TBBZJXX  extends AbstractReadWriteEntity{
 	/**
 	 * @param gxrq the gxrq to set
 	 */
-	public void setGxrq(Date gxrq) {
-		this.gxrq = gxrq;
-	}
-	/**
-	 * @param gsbm the gsbm to set
-	 */
-	public void setGsbm(String gsbm) {
-		this.gsbm = gsbm;
-	}
 	/**
 	 * @param nf the nf to set
 	 */
@@ -108,12 +77,6 @@ public class TBBZJXX  extends AbstractReadWriteEntity{
 	 */
 	public void setJe(Double je) {
 		this.je = je;
-	}
-	/**
-	 * @param sfdrwc the sfdrwc to set
-	 */
-	public void setSfdrwc(String sfdrwc) {
-		this.sfdrwc = sfdrwc;
 	}
 	/**
 	 * @param qybh the qybh to set

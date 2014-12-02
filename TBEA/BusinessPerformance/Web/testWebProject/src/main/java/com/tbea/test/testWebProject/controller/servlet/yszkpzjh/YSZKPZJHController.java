@@ -62,7 +62,15 @@ public class YSZKPZJHController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		String[][] name_ids = Util.getCommonCompanyNameAndIds();
+		String[][] name_ids = Util
+				.getCommonCompanyNameAndIds(new Company.Type[] {
+						Company.Type.TB, Company.Type.LL, Company.Type.XL,
+						Company.Type.DL, Company.Type.XNY, Company.Type.GY,
+						Company.Type.TCNY, Company.Type.NDGS,
+						Company.Type.ZJWL, Company.Type.JCK, Company.Type.GCGS,
+						Company.Type.ZH, Company.Type.SBDCY,
+						Company.Type.XNYCY, Company.Type.NYCY,
+						Company.Type.GCL, Company.Type.JT });
 		map.put("names", name_ids[0]);
 		map.put("ids", name_ids[1]);
 		map.put("company_size", name_ids[0].length);
