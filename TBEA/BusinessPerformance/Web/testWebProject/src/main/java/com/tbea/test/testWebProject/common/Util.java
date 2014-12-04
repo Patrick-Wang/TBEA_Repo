@@ -81,6 +81,14 @@ public class Util {
 		return builder.toString();
 	}
 	
+	public static String plus(String val1, String val2, String val3, String val4){
+		return plus(plus(val1, val2, val3), val4);
+	}
+	
+	public static String plus(String val1, String val2, String val3){
+		return plus(plus(val1, val2), val3);
+	}
+	
 	public static String plus(String val1, String val2){
 		double v1 = 0;
 		double v2 = 0;

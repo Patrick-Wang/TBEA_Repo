@@ -20,8 +20,8 @@ public class XLFDWFKFS extends AbstractReadWriteEntity {
 	Double	ddzlje	;
 	Integer	wyfkhtbs	;
 	Double	wyfkhtje	;
-	Integer	yfuxybfzshtbs	;
-	Double	yfuxybfzshtje	;
+	Integer	yfkxybfzshtbs	;
+	Double	yfkxybfzshtje	;
 	Integer	yfkzbfzsdsszjhtbs	;
 	Double	yfkzbfzsdsszjhtje	;
 	Integer	hwjfhfkblxybfzbshtbs	;
@@ -87,14 +87,14 @@ public class XLFDWFKFS extends AbstractReadWriteEntity {
 		return wyfkhtje;
 	}
 
-	@Column(name="yfuxybfzshtbs")
-	public Integer getYfuxybfzshtbs() {
-		return yfuxybfzshtbs;
+	@Column(name="yfkxybfzshtbs")
+	public Integer getYfkxybfzshtbs() {
+		return yfkxybfzshtbs;
 	}
 
-	@Column(name="yfuxybfzshtje")
-	public Double getYfuxybfzshtje() {
-		return yfuxybfzshtje;
+	@Column(name="yfkxybfzshtje")
+	public Double getYfkxybfzshtje() {
+		return yfkxybfzshtje;
 	}
 
 	@Column(name="yfkzbfzsdsszjhtbs")
@@ -237,17 +237,17 @@ public class XLFDWFKFS extends AbstractReadWriteEntity {
 	}
 
 	/**
-	 * @param yfuxybfzshtbs the yfuxybfzshtbs to set
+	 * @param fkxybfzshtbsxybfzshtbs the yfkxybfzshtbs to set
 	 */
-	public void setYfuxybfzshtbs(Integer yfuxybfzshtbs) {
-		this.yfuxybfzshtbs = yfuxybfzshtbs;
+	public void setYfkxybfzshtbs(Integer yfkxybfzshtbs) {
+		this.yfkxybfzshtbs = yfkxybfzshtbs;
 	}
 
 	/**
-	 * @param yfuxybfzshtje the yfuxybfzshtje to set
+	 * @param yfkxybfzshtje the yfkxybfzshtje to set
 	 */
-	public void setYfuxybfzshtje(Double yfuxybfzshtje) {
-		this.yfuxybfzshtje = yfuxybfzshtje;
+	public void setYfkxybfzshtje(Double yfkxybfzshtje) {
+		this.yfkxybfzshtje = yfkxybfzshtje;
 	}
 
 	/**

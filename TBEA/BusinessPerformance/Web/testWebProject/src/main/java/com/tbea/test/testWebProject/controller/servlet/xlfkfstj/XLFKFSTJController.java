@@ -41,12 +41,13 @@ public class XLFKFSTJController {
 		Calendar now = Calendar.getInstance();  
 		Date d = java.sql.Date.valueOf(now.get(Calendar.YEAR) + "-" +  (now.get(Calendar.MONTH) + 1) + "-" + now.get(Calendar.DAY_OF_MONTH));
 		Map<String, Object> map = new HashMap<String, Object>();
-		String fdw = JSONArray.fromObject(service.getFdwData(d)).toString().replace("null", "0.00");
-		map.put("fdw", fdw);
+	
 		String gw = JSONArray.fromObject(service.getGwData(d)).toString().replace("null", "0.00");
 		map.put("gw", gw);
 		String nw = JSONArray.fromObject(service.getNwData(d)).toString().replace("null", "0.00");
 		map.put("nw", nw);
+		String fdw = JSONArray.fromObject(service.getFdwData(d)).toString().replace("null", "0.00");
+		map.put("fdw", fdw);
 		return new ModelAndView("xl_fkfstj", map);
 	}
 }
