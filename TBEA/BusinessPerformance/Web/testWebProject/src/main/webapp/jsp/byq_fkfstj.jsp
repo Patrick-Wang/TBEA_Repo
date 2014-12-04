@@ -40,9 +40,9 @@
                 			"table1", 
                 			"table2", 
                 			"table3", 
-                			${fdw}, 
-                			${gw}, 
-                			${nw});
+                			JSON.parse('${fdw}'), 
+                			JSON.parse('${gw}'), 
+                			JSON.parse('${nw}'));
                 });
             })();
     </script>
