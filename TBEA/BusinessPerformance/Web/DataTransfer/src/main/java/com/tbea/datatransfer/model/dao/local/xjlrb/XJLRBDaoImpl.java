@@ -22,8 +22,8 @@ public class XJLRBDaoImpl extends AbstractReadWriteDaoImpl<XJLRB> implements
 
 	@Override
 	public void truncateXJLRB() {
-		String sql = "delete From XJLRB";
-		Query query = getEntityManager().createQuery(sql);
+		String sql = "truncate table XJLRB";
+		Query query = getEntityManager().createNativeQuery(sql);
 		query.executeUpdate();
 	}
 

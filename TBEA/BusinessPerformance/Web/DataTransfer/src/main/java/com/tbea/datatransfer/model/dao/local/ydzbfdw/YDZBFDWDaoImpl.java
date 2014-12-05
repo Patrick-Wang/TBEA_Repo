@@ -22,8 +22,8 @@ public class YDZBFDWDaoImpl extends AbstractReadWriteDaoImpl<YDZBFDW> implements
 
 	@Override
 	public void truncateYDZBFDW() {
-		String sql = "delete From YDZBFDW";
-		Query query = getEntityManager().createQuery(sql);
+		String sql = "truncate table YDZBFDW";
+		Query query = getEntityManager().createNativeQuery(sql);
 		query.executeUpdate();
 	}
 

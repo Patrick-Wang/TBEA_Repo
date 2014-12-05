@@ -2,6 +2,7 @@ package com.tbea.datatransfer.service.local.ydzbfdw;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,8 @@ public class YDZBFDWServiceImpl implements YDZBFDWService {
 
 	private BL15Dao bl15Dao;
 
+	private Map<Integer, Integer> qybhMap;
+
 	@Override
 	public boolean importYDZBFDW() {
 		boolean result = false;
@@ -28,6 +31,7 @@ public class YDZBFDWServiceImpl implements YDZBFDWService {
 			List<Object[]> ydzbfdw15List = null;
 			Integer year = null;
 			Integer month = null;
+			Integer newQYBH = null;
 			while (!cur.after(end)) {
 				year = cur.get(Calendar.YEAR);
 				month = cur.get(Calendar.MONTH) + 1;
@@ -36,8 +40,12 @@ public class YDZBFDWServiceImpl implements YDZBFDWService {
 				for (Object[] ydzbfdw15Array : ydzbfdw15List) {
 					ydzbfdw = new YDZBFDW();
 					ydzbfdw.setNy(year + String.format("%02d", month));
-					ydzbfdw.setQybh(null == ydzbfdw15Array[1] ? 0 : Integer
-							.valueOf(ydzbfdw15Array[1].toString()));
+					// qybh update
+					newQYBH = qybhMap.get(ydzbfdw15Array[1]);
+					ydzbfdw.setQybh(null == newQYBH ? Integer
+							.valueOf(ydzbfdw15Array[1].toString()) : newQYBH);
+					// ydzbfdw.setQybh(null == ydzbfdw15Array[1] ? 0 : Integer
+					// .valueOf(ydzbfdw15Array[1].toString()));
 					ydzbfdw.setZbbh(null == ydzbfdw15Array[2] ? 0 : Integer
 							.valueOf(ydzbfdw15Array[2].toString()));
 					ydzbfdw.setZbmc((String) ydzbfdw15Array[3]);
@@ -112,6 +120,14 @@ public class YDZBFDWServiceImpl implements YDZBFDWService {
 
 	public void setBl15Dao(BL15Dao bl15Dao) {
 		this.bl15Dao = bl15Dao;
+	}
+
+	public Map<Integer, Integer> getQybhMap() {
+		return qybhMap;
+	}
+
+	public void setQybhMap(Map<Integer, Integer> qybhMap) {
+		this.qybhMap = qybhMap;
 	}
 
 }
