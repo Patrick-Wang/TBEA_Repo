@@ -5,6 +5,7 @@
     xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
     xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
     	http://www.springframework.org/schema/beans 
@@ -16,7 +17,9 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-4.0.xsd
         http://www.springframework.org/schema/task 
-        http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+        http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 
 	<!-- -->
@@ -26,7 +29,15 @@
 	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
 		<property name="locations"> <list> <value>classpath:../applicationContext.properties</value> 
 		</list> </property> </bean> -->
-
+    <util:map id="qybhMap" map-class="java.util.HashMap" key-type="java.lang.Integer" value-type="java.lang.Integer">
+        <entry key="5" value="1" />
+        <entry key="6" value="2" />
+        <entry key="7" value="3" />
+        <entry key="8" value="301" />
+        <entry key="9" value="4" />
+        <entry key="10" value="5" />
+        <entry key="11" value="6" />
+    </util:map>
 	<!-- -->
 	<!-- INCLUDES -->
 	<!-- -->
@@ -137,6 +148,7 @@
 		scope="prototype">
 		<property name="ydzbfdwDao" ref="ydzbfdwDao" />
 		<property name="bl15Dao" ref="bl15Dao" />
+       <property name="qybhMap" ref="qybhMap" />
 	</bean>
 	<bean id="zbhzService"
 		class="com.tbea.datatransfer.service.local.zbhz.ZBHZServiceImpl"

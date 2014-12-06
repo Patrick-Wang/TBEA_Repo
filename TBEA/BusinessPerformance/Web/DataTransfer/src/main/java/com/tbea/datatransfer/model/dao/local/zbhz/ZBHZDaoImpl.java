@@ -22,8 +22,8 @@ public class ZBHZDaoImpl extends AbstractReadWriteDaoImpl<ZBHZ> implements
 
 	@Override
 	public void truncateZBHZ() {
-		String sql = "delete From ZBHZ";
-		Query query = getEntityManager().createQuery(sql);
+		String sql = "truncate table ZBHZ";
+		Query query = getEntityManager().createNativeQuery(sql);
 		query.executeUpdate();
 	}
 
