@@ -6,7 +6,7 @@ module ztyszkfx {
 
     class JQGridAssistantFactory {
 
-        private static createCurrentYearNode(year: number) : JQTable.Node{
+        private static createCurrentYearNode(year: number): JQTable.Node {
             return new JQTable.Node(year + "年", "n" + year)
                 .append(new JQTable.Node("本月账面应收账款余额", "byzmyszkye"))
                 .append(new JQTable.Node("本月保理控制余额", "byblkzye"))
@@ -24,7 +24,7 @@ module ztyszkfx {
                 .append(new JQTable.Node("账面应收占收入比", "zmyszsrb"));
         }
 
-        public static createTable(gridName : string, year : number): JQTable.JQGridAssistant {
+        public static createTable(gridName: string, year: number): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("单位", "dw", true, JQTable.TextAlign.Left),
                 JQGridAssistantFactory.createCurrentYearNode(year),
@@ -43,7 +43,7 @@ module ztyszkfx {
             return new View();
         }
 
-      
+
         private mYear: number;
         private mData: Array<string[]>;
         private mDataSet: Util.DateDataSet;
@@ -64,7 +64,7 @@ module ztyszkfx {
 
 
         public updateUI() {
-               this.mDataSet.getDataByYearOnly(this.mYear, (arrayData : Array<string[]>) => {
+            this.mDataSet.getDataByYearOnly(this.mYear, (arrayData: Array<string[]>) => {
                 if (null != arrayData) {
                     this.mData = arrayData;
                     $('h1').text(this.mYear + "年 整体应收账款分析表");
@@ -75,12 +75,12 @@ module ztyszkfx {
             });
         }
 
-        private updateEchart(): void{
-        	var ztyszkfxChart = echarts.init($("#" + this.mEchartId)[0]);
-        	var month: string[] = [];
- 		    for (var i = 1; i <= 12; ++i){
- 		   		month.push(i + "月");
- 		    }
+        private updateEchart(): void {
+            var ztyszkfxChart = echarts.init($("#" + this.mEchartId)[0]);
+            var month: string[] = [];
+            for (var i = 1; i <= 12; ++i) {
+                month.push(i + "月");
+            }
             var legend = ["账面应收账款余额", "保理控制余额", "应收账款实际数", "累计收入", "账面应收占收入比"];
 
             var zmysData = [41982, 31876, 51975, 43856, 61498, 32696, 38574, 62641, 28434, 51114, 41563, 68415];
@@ -89,24 +89,24 @@ module ztyszkfx {
             var ljsrData = [47291, 67214, 14715, 53258, 45252, 31957, 32465, 25021, 71742, 64301, 83710, 76004];
             var yszbData: any[] = [];
             for (var i = 0; i < zmysData.length; i++) {
-            	yszbData.push((zmysData[i] / (ljsrData[i] / (i + 1) * 12)).toFixed(2));
-			}
-            
+                yszbData.push((zmysData[i] / (ljsrData[i] / (i + 1) * 12)).toFixed(2));
+            }
+
             var ztyszkfxOption = {
-				title : {
-				        text: '整体应收账款分析'
-				},	   
-				tooltip : {
-			        trigger: 'axis',
-			        formatter: function(v) {
-			            return v[0][1] + '<br/>'
-		                + v[0][0] + ' : ' + v[0][2] + '<br/>'
-		                + v[1][0] + ' : ' + v[1][2] + '<br/>'
-		                + v[2][0] + ' : ' + v[2][2] + '<br/>'
-		                + v[3][0] + ' : ' + v[3][2] + '<br/>'
-			            + v[4][0] + ' : ' + v[4][2] + '%';
-			        }
-			    },
+                title: {
+                    text: '整体应收账款分析'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: function(v) {
+                        return v[0][1] + '<br/>'
+                            + v[0][0] + ' : ' + v[0][2] + '<br/>'
+                            + v[1][0] + ' : ' + v[1][2] + '<br/>'
+                            + v[2][0] + ' : ' + v[2][2] + '<br/>'
+                            + v[3][0] + ' : ' + v[3][2] + '<br/>'
+                            + v[4][0] + ' : ' + v[4][2] + '%';
+                    }
+                },
                 legend: {
                     data: legend
                 },
@@ -125,12 +125,12 @@ module ztyszkfx {
                     {
                         type: 'value'
                     },
-			        {
-			            type : 'value',
-			            axisLabel : {
-			                formatter: '{value} %'
-			            }
-			        }
+                    {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value} %'
+                        }
+                    }
                 ],
                 series: [
                     {
@@ -146,16 +146,16 @@ module ztyszkfx {
                         data: blkzData
                     },
                     {
-                    	name: legend[2],
-                    	type: 'line',
-                    	smooth: true,
-                    	data: yssjData
+                        name: legend[2],
+                        type: 'line',
+                        smooth: true,
+                        data: yssjData
                     },
                     {
-                    	name: legend[3],
-                    	type: 'line',
-                    	smooth: true,
-                    	data: ljsrData
+                        name: legend[3],
+                        type: 'line',
+                        smooth: true,
+                        data: ljsrData
                     },
                     {
                         name: legend[4],
@@ -167,9 +167,9 @@ module ztyszkfx {
                 ]
             }
             ztyszkfxChart.setOption(ztyszkfxOption);
-		
+
         }
-        
+
         //private initEchart(echart): void {
         //    var ysyq_payment_Chart = echarts.init(echart)
         //    var ysyq_payment_Option = {
@@ -227,7 +227,7 @@ module ztyszkfx {
         //}
 
         private updateTable(): void {
-          	var name = this.mTableId + "_jqgrid_1234";
+            var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mYear);
 
             var data = [["沈变"],
@@ -243,17 +243,22 @@ module ztyszkfx {
             ];
 
 
-			if (undefined != this.mData){
-			 	for (var i = 0; i < this.mData.length && i < data.length; ++i){
-			 		var row = [];
-			 		for (var j = 0; j < this.mData[i].length; ++j){
-			 			row.push(Util.formatCurrency(this.mData[i][j]));
-			 		}
-			 		data[i] = data[i].concat(row);
-			 	}
-			}
+            if (undefined != this.mData) {
+                for (var i = 0; i < this.mData.length && i < data.length; ++i) {
+                    var row = [];
+                    for (var j = 0; j < this.mData[i].length; ++j) {
+                        if ((this.mData[i][j] + "").indexOf("%") < 0) {
+                            row.push(Util.formatCurrency(this.mData[i][j]));
+                        }
+                        else {
+                            row.push(this.mData[i][j]);
+                        }
+                    }
+                    data[i] = data[i].concat(row);
+                }
+            }
 
-			var parent = $("#" + this.mTableId);
+            var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
 

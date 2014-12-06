@@ -46,7 +46,7 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
         Query q = getEntityManager().createQuery("select c from CQK c where c.ny >= ?1 and c.ny <= ?2 and c.qybh = ?3");
 		q.setParameter(1, Util.format(preYear.getTime()));
 		q.setParameter(2, Util.format(preYearMonth.getTime()));
-		q.setParameter(3, Integer.valueOf(comp.getId()));
+		q.setParameter(3, comp.getId());
 		
 		return q.getResultList();
 	}
@@ -64,7 +64,7 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
         Query q = getEntityManager().createQuery("select c from CQK c where c.ny >= ?1 and c.ny <= ?2 and c.qybh = ?3");
 		q.setParameter(1, Util.format(curYear.getTime()));
 		q.setParameter(2, Util.format(d));
-		q.setParameter(3, Integer.valueOf(comp.getId()));
+		q.setParameter(3, comp.getId());
 		
 		return q.getResultList();
 	}
@@ -76,7 +76,7 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
 		Calendar cal = Calendar.getInstance();
         cal.setTime(d);
 		q.setParameter(1, Util.format(d));
-		q.setParameter(2, Integer.valueOf(comp.getId()));
+		q.setParameter(2, comp.getId());
 		return  q.getResultList();
 	}
 

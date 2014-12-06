@@ -3,6 +3,7 @@ package com.tbea.test.testWebProject.controller.servlet.ydzb;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.CompanyManager;
+import com.tbea.test.testWebProject.common.Organization;
+import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.common.Util.Escape;
 import com.tbea.test.testWebProject.service.blhtdqqkhz.BLHTDQQKHZService;
 import com.tbea.test.testWebProject.service.ydzb.YDZBService;
@@ -150,26 +154,33 @@ public class YDZBController {
 	
 	
 	private String getZbhz_overviewData(Date d, int companyId, String zbid){
-		Escape escape = new Escape();
-		escape.start();
-		String zbhz_overview_yd = JSONArray.fromObject(service.getYdZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
-		escape.end("getZbhz_overviewData zbhz_overview_yd  escape ");
+//		Escape escape = new Escape();
+//		escape.start();
+		Organization org = CompanyManager.getOperationOrganization();
+		Company comp = org.getCompany(CompanyManager.getType(companyId));
 
-		escape.start();
-		String zbhz_overview_jd = JSONArray.fromObject(service.getJdZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
-		escape.end("getZbhz_overviewData zbhz_overview_jd  escape ");
+		String zbhz_overview_yd = JSONArray.fromObject(service.getYdZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
+//		escape.end("getZbhz_overviewData zbhz_overview_yd  escape ");
+
+//		escape.start();
+		comp = org.getCompany(CompanyManager.getType(companyId));
+		String zbhz_overview_jd = JSONArray.fromObject(service.getJdZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
+//		escape.end("getZbhz_overviewData zbhz_overview_jd  escape ");
 				
-		escape.start();
-		String zbhz_overview_nd = JSONArray.fromObject(service.getNdZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
-		escape.end("getZbhz_overviewData zbhz_overview_nd  escape ");
+//		escape.start();
+		comp = org.getCompany(CompanyManager.getType(companyId));
+		String zbhz_overview_nd = JSONArray.fromObject(service.getNdZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
+//		escape.end("getZbhz_overviewData zbhz_overview_nd  escape ");
 		
-		escape.start();
-		String zbhz_overview_ydtb = JSONArray.fromObject(service.getYdtbZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
-		escape.end("getZbhz_overviewData zbhz_overview_ydtb  escape ");
+//		escape.start();
+		comp = org.getCompany(CompanyManager.getType(companyId));
+		String zbhz_overview_ydtb = JSONArray.fromObject(service.getYdtbZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
+//		escape.end("getZbhz_overviewData zbhz_overview_ydtb  escape ");
 		
-		escape.start();
-		String zbhz_overview_jdtb = JSONArray.fromObject(service.getJdtbZbhz_overviewData(d, Company.get(companyId), zbid)).toString().replace("null", "0.00");
-		escape.end("getZbhz_overviewData zbhz_overview_jdtb  escape ");
+//		escape.start();
+		comp = org.getCompany(CompanyManager.getType(companyId));
+		String zbhz_overview_jdtb = JSONArray.fromObject(service.getJdtbZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
+//		escape.end("getZbhz_overviewData zbhz_overview_jdtb  escape ");
 		
 		return "{\"yd\":" + zbhz_overview_yd + ", \"jd\" : " + zbhz_overview_jd + ", \"nd\":"+ zbhz_overview_nd +" , \"ydtb\":"+ zbhz_overview_ydtb +", \"jdtb\":" + zbhz_overview_jdtb + "}";
 	}
@@ -179,7 +190,7 @@ public class YDZBController {
 			HttpServletResponse response) {
 		String companyId = request.getParameter("companyId");
 		if (companyId == null){
-			companyId = Company.Type.JT.ordinal() + "";
+			companyId = CompanyType.JT.ordinal() + "";
 		}
 		
 		int cid = Integer.parseInt(companyId);
@@ -202,7 +213,7 @@ public class YDZBController {
 			HttpServletResponse response) {
 		String companyId = request.getParameter("companyId");
 		if (companyId == null){
-			companyId = Company.Type.JT.ordinal() + "";
+			companyId = CompanyType.JT.ordinal() + "";
 		}
 		
 		int cid = Integer.parseInt(companyId);
@@ -221,10 +232,14 @@ public class YDZBController {
 		//map.put("zbhz_overview", getZbhz_overviewData(d, cid, zb));
 		map.put("zbid", zb);
 		map.put("zbmc", service.getZbmc(zb));
-		Company coms[] = Company.getAll();
-		for (int i = 0;  i < coms.length; ++i){
+		Organization org = CompanyManager.getOperationOrganization();
+		List<Company> coms = org.getBottomCompany();
+		coms.addAll(org.getCompany(CompanyType.JT).getSubCompanysWithLeaves());
+		coms.add(org.getCompany(CompanyType.JT));
+		
+		for (int i = 0;  i < coms.size(); ++i){
 			map.put("id_" + i, i);
-			map.put("name_" + i, coms[i].getName());
+			map.put("name_" + i, coms.get(i).getName());
 		}
 		return new ModelAndView("zbhz_overview", map);
 	}

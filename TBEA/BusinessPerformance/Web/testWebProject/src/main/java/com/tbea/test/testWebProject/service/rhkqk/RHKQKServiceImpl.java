@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.CompanyManager;
+import com.tbea.test.testWebProject.common.Organization;
+import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.model.dao.rhkxx.RHKXXDao;
 import com.tbea.test.testWebProject.model.entity.RHKXX;
 @Service
@@ -17,15 +20,16 @@ import com.tbea.test.testWebProject.model.entity.RHKXX;
 public class RHKQKServiceImpl implements   RHKQKService{
 
 	
-	private static Map<String, Integer> compMap = new HashMap<String, Integer>();
+	private static Map<Integer, Integer> compMap = new HashMap<Integer, Integer>();
 	static {
-		compMap.put(Company.get(Company.Type.SB).getId(), 0);
-		compMap.put(Company.get(Company.Type.HB).getId(), 1);
-		compMap.put(Company.get(Company.Type.XB).getId(), 2);
-		compMap.put(Company.get(Company.Type.TB).getId(), 3);
-		compMap.put(Company.get(Company.Type.LL).getId(), 4);
-		compMap.put(Company.get(Company.Type.XL).getId(), 5);
-		compMap.put(Company.get(Company.Type.DL).getId(), 6);
+		Organization org = CompanyManager.getOperationOrganization();
+		compMap.put(org.getCompany(CompanyType.SB).getId(), 0);
+		compMap.put(org.getCompany(CompanyType.HB).getId(), 1);
+		compMap.put(org.getCompany(CompanyType.XB).getId(), 2);
+		compMap.put(org.getCompany(CompanyType.TB).getId(), 3);
+		compMap.put(org.getCompany(CompanyType.LL).getId(), 4);
+		compMap.put(org.getCompany(CompanyType.XL).getId(), 5);
+		compMap.put(org.getCompany(CompanyType.DL).getId(), 6);
 	}
 	
 	@Autowired

@@ -33,7 +33,7 @@ public class BLHTDQQKHZDaoImpl extends AbstractReadWriteDaoImpl<BLHTDQQKHZ> impl
 				"select b from BLHTDQQKHZ b where b.ny >= ?1 and b.qybh = ?2");
 		String date = Util.format(cal.getTime());
 		q.setParameter(1, date);
-		q.setParameter(2, Integer.valueOf(comp.getId()));
+		q.setParameter(2, comp.getId());
 		return q.getResultList();
 	}
 
@@ -56,7 +56,7 @@ public class BLHTDQQKHZDaoImpl extends AbstractReadWriteDaoImpl<BLHTDQQKHZ> impl
 		q.setParameter(2, Util.format(preYearMonth.getTime()));
 		q.setParameter(3, Util.format(curYear.getTime()));
 		q.setParameter(4, Util.format(cal.getTime()));
-		q.setParameter(5, Integer.valueOf(comp.getId()));
+		q.setParameter(5, comp.getId());
 		return q.getResultList();
 	}
 

@@ -10,7 +10,7 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.test.testWebProject.model.entity.QYZJK;
 
-//@Repository
+@Repository
 @Transactional("transactionManager2")
 public class QYZJKDaoImpl extends AbstractReadWriteDaoImpl<QYZJK> implements
 		QYZJKDao {

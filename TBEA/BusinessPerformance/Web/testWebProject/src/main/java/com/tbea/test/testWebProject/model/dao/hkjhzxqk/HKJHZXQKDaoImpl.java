@@ -46,8 +46,7 @@ public class HKJHZXQKDaoImpl  extends AbstractReadWriteDaoImpl<QYZJK> implements
 		c.add(Calendar.MONTH, 1);
 		dstr = c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-1";
 		Date dEnd =  Date.valueOf(dstr);//String.format(format, args)c.get(field)
-		int id = Integer.valueOf(comp.getId());
-		q.setParameter("compId", id);
+		q.setParameter("compId", comp.getId());
 		q.setParameter("start", dStart);
 		q.setParameter("end", dEnd);
 		return q.getResultList();
@@ -66,8 +65,8 @@ public class HKJHZXQKDaoImpl  extends AbstractReadWriteDaoImpl<QYZJK> implements
 		c.add(Calendar.MONTH, 1);
 		dstr = c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-1";
 		Date dEnd =  Date.valueOf(dstr);//String.format(format, args)c.get(field)
-		int id = Integer.valueOf(comp.getId());
-		q.setParameter("compId", id);
+
+		q.setParameter("compId", comp.getId());
 		q.setParameter("start", dStart);
 		q.setParameter("end", dEnd);
 		return q.getResultList();

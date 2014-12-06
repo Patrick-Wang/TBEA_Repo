@@ -40,7 +40,7 @@ public class YQKBHQSDaoImpl extends AbstractReadWriteDaoImpl<YQKBHQS> implements
 		String timeEnd = Util.format(yearEnd.getTime());
 		q.setParameter(1, timeBegin);
 		q.setParameter(2, timeEnd);
-		q.setParameter(3, Integer.valueOf(comp.getId()));
+		q.setParameter(3, comp.getId());
 		return q.getResultList();
 	}
 

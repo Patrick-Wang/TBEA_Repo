@@ -5,18 +5,21 @@ import java.util.List;
 import java.util.Map;
 
 import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.CompanyManager;
+import com.tbea.test.testWebProject.common.Organization;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
 
 public class GcyZBHZStrategy extends ZbfdwhzZBHZStrategy {
 	
-	private static Map<String, Integer> qybh_gcyMap = new HashMap<String, Integer>();
+	private static Map<Integer, Integer> qybh_gcyMap = new HashMap<Integer, Integer>();
 	
 	public GcyZBHZStrategy(){
 		if (qybh_gcyMap.isEmpty()){
+			Organization org = CompanyManager.getOperationOrganization();
 			for (int i = 0, j = 0; i < CY_TYPES.length; ++i){
 				if (CY_TYPES[i] != null){
-					qybh_gcyMap.put(Company.get(CY_TYPES[i]).getId(), i);
+					qybh_gcyMap.put(org.getCompany(CY_TYPES[i]).getId(), i);
 				}
 				else{
 					qybh_gcyMap.put(GFHJ, i);

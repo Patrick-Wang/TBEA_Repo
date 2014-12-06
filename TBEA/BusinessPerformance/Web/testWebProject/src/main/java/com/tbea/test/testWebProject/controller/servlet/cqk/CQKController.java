@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.CompanyManager;
+import com.tbea.test.testWebProject.common.Organization;
 import com.tbea.test.testWebProject.common.Util;
+import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.service.cqk.CQKService;
 
 @Controller
@@ -50,7 +53,9 @@ public class CQKController {
 		int cid = Integer.parseInt(companyId);
 		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
 		
-		Company comp = Company.get(cid);
+		Organization org = CompanyManager.getOperationOrganization();
+		Company comp = org.getCompany(CompanyManager.getType(cid));
+		
 		String cqk = JSONArray.fromObject(cqkService.getCqkData(d, comp)).toString().replace("null", "0.00");
 		String cqkCompare = JSONArray.fromObject(cqkService.getCompareData(d, comp)).toString().replace("null", "0.00");
 		return cqk + "##" + cqkCompare;
@@ -67,7 +72,8 @@ public class CQKController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		String[][] name_ids = Util.getCommonCompanyNameAndIds();
+		Organization org = CompanyManager.getOperationOrganization();
+		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
 		map.put("names", name_ids[0]);
 		map.put("ids", name_ids[1]);
 		map.put("company_size", name_ids[0].length);

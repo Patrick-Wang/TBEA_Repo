@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.CompanyManager;
+import com.tbea.test.testWebProject.common.Organization;
 import com.tbea.test.testWebProject.common.Util;
+import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.model.dao.byqfkfstj.BYQFKFSDao;
 import com.tbea.test.testWebProject.model.entity.BYQFDWFKFS;
 import com.tbea.test.testWebProject.model.entity.BYQGWFKFS;
@@ -23,9 +26,10 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 	private static Map<Integer, Integer> qymap = new HashMap<Integer, Integer>();
 
 	static {
-		qymap.put(Integer.valueOf(Company.get(Company.Type.SB).getId()), 0);
-		qymap.put(Integer.valueOf(Company.get(Company.Type.HB).getId()), 1);
-		qymap.put(Integer.valueOf(Company.get(Company.Type.XB).getId()), 2);
+		Organization org = CompanyManager.getOperationOrganization();
+		qymap.put(org.getCompany(CompanyType.SB).getId(), 0);
+		qymap.put(org.getCompany(CompanyType.HB).getId(), 1);
+		qymap.put(org.getCompany(CompanyType.XB).getId(), 2);
 	}
 
 	@Autowired

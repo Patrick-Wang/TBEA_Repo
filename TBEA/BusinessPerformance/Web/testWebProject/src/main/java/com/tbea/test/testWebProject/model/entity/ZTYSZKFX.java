@@ -20,7 +20,7 @@ public class ZTYSZKFX extends AbstractReadWriteEntity{
 	Double	byblkzye	;
 	Double	byyszksjs	;
 	Double	ljsr	;
-	Double	Zmyszsrb	;
+	String	Zmyszsrb	;
 	Double	qntqzmyszkye	;
 	Double	qntqblye	;
 	Double	qntqyszksjs	;
@@ -89,7 +89,7 @@ public class ZTYSZKFX extends AbstractReadWriteEntity{
 	/**
 	 * @return the zmyszsrb
 	 */
-	public Double getZmyszsrb() {
+	public String getZmyszsrb() {
 		return Zmyszsrb;
 	}
 
@@ -208,7 +208,7 @@ public class ZTYSZKFX extends AbstractReadWriteEntity{
 	/**
 	 * @param zmyszsrb the zmyszsrb to set
 	 */
-	public void setZmyszsrb(Double zmyszsrb) {
+	public void setZmyszsrb(String zmyszsrb) {
 		Zmyszsrb = zmyszsrb;
 	}
 

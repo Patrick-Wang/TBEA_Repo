@@ -32,7 +32,7 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		Query q = getEntityManager().createQuery(
 				"select y from YSZKJGQK y where y.ny = ?1 and y.qybh = ?2");
 		q.setParameter(1, Util.format(cal.getTime()));
-		q.setParameter(2, Integer.valueOf(comp.getId()));
+		q.setParameter(2, comp.getId());
 		return q.getResultList();
 	}
 
@@ -54,7 +54,7 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		q.setParameter(2, Util.format(preYearMonth.getTime()));
 		q.setParameter(3, Util.format(curYear.getTime()));
 		q.setParameter(4, Util.format(cal.getTime()));
-		q.setParameter(5, Integer.valueOf(comp.getId()));
+		q.setParameter(5, comp.getId());
 		return q.getResultList();
 
 	}
@@ -76,7 +76,7 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		q.setParameter(2, Util.format(preYearMonth.getTime()));
 		q.setParameter(3, Util.format(curYear.getTime()));
 		q.setParameter(4, Util.format(cal.getTime()));
-		q.setParameter(5, Integer.valueOf(comp.getId()));
+		q.setParameter(5, comp.getId());
 		return q.getResultList();
 	}
 

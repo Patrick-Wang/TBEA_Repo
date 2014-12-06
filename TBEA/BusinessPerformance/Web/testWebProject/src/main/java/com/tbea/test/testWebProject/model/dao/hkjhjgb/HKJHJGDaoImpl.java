@@ -32,8 +32,7 @@ public class HKJHJGDaoImpl  extends AbstractReadWriteDaoImpl<QYZJK> implements H
 	@Override
 	public List<HKJHJG> getHkjhjg(Date d, Company comp) {
 		Query q = getEntityManager().createQuery("select h from HKJHJG h where h.qybh = :compId and h.ny = :ny");
-		int id = Integer.valueOf(comp.getId());
-		q.setParameter("compId", id);
+		q.setParameter("compId", comp.getId());
 		q.setParameter("ny", Util.format(d));
 		return q.getResultList();
 	}

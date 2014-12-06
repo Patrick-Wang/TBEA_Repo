@@ -72,7 +72,7 @@ module hzb_zbhz {
         private updateTable(): void {
         	var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mMonth);
-            var data = [["1", "利润总额"],
+            var data = [["1", "报表利润"],
 						["2", "经营性净现金流"],
 						["3", "应收账款"],
 						["4", "其中：逾期款"],

@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.CompanyManager;
+import com.tbea.test.testWebProject.common.Organization;
 import com.tbea.test.testWebProject.common.Util;
-import com.tbea.test.testWebProject.common.Company.Type;
+import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.model.dao.ydzb.YDZBDao;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
@@ -60,7 +62,7 @@ public class YDZBServiceImpl implements YDZBService {
 //	32	净资产收益率
 	
 	static {
-		zbbh_hzMap.put("6", 0);
+		zbbh_hzMap.put("5", 0);
 		zbbh_hzMap.put("8", 1);
 		zbbh_hzMap.put("23", 2);
 		zbbh_hzMap.put("24", 3);
@@ -96,7 +98,8 @@ public class YDZBServiceImpl implements YDZBService {
 		String[][] result = new String[zbbh_hzMap.size()][11];
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		List<YDZBBean> ydzbs = ydzbDao.getYDZB_V2(cal, Company.get(Company.Type.JT));
+		Organization org = CompanyManager.getOperationOrganization();
+		List<YDZBBean> ydzbs = ydzbDao.getYDZB_V2(cal, org.getCompany(CompanyType.JT));
 		int index = 0;
 		for (YDZBBean ydzb : ydzbs) {
 			if (ydzb != null && zbbh_hzMap.get(ydzb.getZblx()) != null) {
@@ -123,7 +126,8 @@ public class YDZBServiceImpl implements YDZBService {
 	public String[][] getGcy_zbhzData(Date d) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		List<YDZBBean> ydzbs = ydzbDao.getYDZB(cal, Company.get(Company.Type.JT));
+		Organization org = CompanyManager.getOperationOrganization();
+		List<YDZBBean> ydzbs = ydzbDao.getYDZB(cal, org.getCompany(CompanyType.JT));
 		String[][] result = ZBHZStrategyFactory.createGcyZBHZStrategy().getZBHZData(ydzbs);
 		return result;
 	}
@@ -132,7 +136,8 @@ public class YDZBServiceImpl implements YDZBService {
 	public String[][] getGdw_zbhzData(Date d) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		List<YDZBBean> ydzbs = ydzbDao.getYDZB(cal, Company.get(Company.Type.JT));
+		Organization org = CompanyManager.getOperationOrganization();
+		List<YDZBBean> ydzbs = ydzbDao.getYDZB(cal, org.getCompany(CompanyType.JT));
 		String[][] result = ZBHZStrategyFactory.createGdwZBHZStrategy().getZBHZData(ydzbs);
 		return result;
 	}
@@ -199,7 +204,7 @@ public class YDZBServiceImpl implements YDZBService {
 		for (int month = curYearOds.size() - 1; month >= 0; --month){
 			monthYdzbs = curYearOds.get(month);
 			for (YDZBBean ydzb : monthYdzbs){
-				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId())){
+				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId() + "")){
 					ret[0][month] = fromatNumber(ydzb.getByjh());
 					ret[1][month] = fromatNumber(ydzb.getBywc());
 					ret[2][month] = fromatNumber(ydzb.getJhwcl());
@@ -238,7 +243,7 @@ public class YDZBServiceImpl implements YDZBService {
 		for (int jd = jdData.size() - 1; jd >= 0; --jd){
 			jdYdzbs = jdData.get(jd);
 			for (YDZBBean ydzb : jdYdzbs){
-				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId())){
+				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId() + "")){
 					ret[0][jd] = fromatNumber(ydzb.getJdjh());
 					ret[1][jd] = fromatNumber(ydzb.getJdlj());
 					ret[2][jd] = fromatNumber(ydzb.getJdjhwcl());
@@ -270,7 +275,7 @@ public class YDZBServiceImpl implements YDZBService {
 		for (int i = yearData.size() - 1; i >= 0; --i) {
 			ydzbs = yearData.get(i);
 			for (YDZBBean ydzb : ydzbs) {
-				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId())) {
+				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId() + "")) {
 					ret[0][i] = fromatNumber(ydzb.getNdjh());
 					ret[1][i] = fromatNumber(ydzb.getNdlj());
 					ret[2][i] = fromatNumber(ydzb.getNdjhwcl());
@@ -293,7 +298,7 @@ public class YDZBServiceImpl implements YDZBService {
 		for (int month = curYearOds.size() - 1; month >= 0; --month){
 			monthYdzbs = curYearOds.get(month);
 			for (YDZBBean ydzb : monthYdzbs){
-				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId())){
+				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId() + "")){
 					ret[0][month] = fromatNumber(ydzb.getBywc());
 					ret[1][month] = fromatNumber(ydzb.getQntq());
 					ret[2][month] = fromatNumber(ydzb.getJqntqzzb());
@@ -315,7 +320,7 @@ public class YDZBServiceImpl implements YDZBService {
 		for (int jd = curYearJdData.size() - 1; jd >= 0; --jd){
 			jdYdzbs = curYearJdData.get(jd);
 			for (YDZBBean ydzb : jdYdzbs){
-				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId())){
+				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId() + "")){
 					ret[1][jd] = fromatNumber(ydzb.getJdlj());
 					break;
 				}
@@ -326,7 +331,7 @@ public class YDZBServiceImpl implements YDZBService {
 		for (int jd = preYearJdData.size() - 1; jd >= 0; --jd){
 			jdYdzbs = preYearJdData.get(jd);
 			for (YDZBBean ydzb : jdYdzbs){
-				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId())){
+				if (zb.equals(ydzb.getZblx()) && ydzb.getXh().equals(company.getId() + "")){
 					ret[0][jd] = fromatNumber(ydzb.getJdlj());
 					if ("0".equals(ret[1][jd])){
 						ret[2][jd] = "0";

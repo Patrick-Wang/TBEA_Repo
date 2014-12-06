@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.CompanyManager;
+import com.tbea.test.testWebProject.common.Organization;
+import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.model.dao.ztyszkfx.ZTYSZKFXDao;
 import com.tbea.test.testWebProject.model.entity.ZTYSZKFX;
 
@@ -20,23 +23,24 @@ import com.tbea.test.testWebProject.model.entity.ZTYSZKFX;
 public class ZTYSZKFXServiceImpl implements ZTYSZKFXService{
 
 	
-	private static Map<String, Integer> compMap = new HashMap<String, Integer>();
+	private static Map<Integer, Integer> compMap = new HashMap<Integer, Integer>();
 	static {
-		compMap.put(Company.get(Company.Type.SB).getId(), 0);
-		compMap.put(Company.get(Company.Type.HB).getId(), 1);
-		compMap.put(Company.get(Company.Type.XB).getId(), 2);
-		compMap.put(Company.get(Company.Type.TB).getId(), 3);
-		compMap.put(Company.get(Company.Type.LL).getId(), 5);
-		compMap.put(Company.get(Company.Type.XL).getId(), 6);
-		compMap.put(Company.get(Company.Type.DL).getId(), 7);
+		Organization org = CompanyManager.getOperationOrganization();
+		compMap.put(org.getCompany(CompanyType.SB).getId(), 0);
+		compMap.put(org.getCompany(CompanyType.HB).getId(), 1);
+		compMap.put(org.getCompany(CompanyType.XB).getId(), 2);
+		compMap.put(org.getCompany(CompanyType.TB).getId(), 3);
+		compMap.put(org.getCompany(CompanyType.LL).getId(), 5);
+		compMap.put(org.getCompany(CompanyType.XL).getId(), 6);
+		compMap.put(org.getCompany(CompanyType.DL).getId(), 7);
 	}
 	
 	
 	@Autowired
 	ZTYSZKFXDao ztysDao;
 	
-	private Double[] sum(List<ZTYSZKFX> ztyszkfxs, int curMon) {
-		Double[] ret = new Double[14];
+	private double[] sum(List<ZTYSZKFX> ztyszkfxs, int curMon) {
+		double[] ret = new double[14];
 		for (ZTYSZKFX ztys : ztyszkfxs) {
 			if (compMap.get(ztys.getQybh()) != null) {
 				ret[0] += ztys.getByzmyszkye();
@@ -49,13 +53,13 @@ public class ZTYSZKFXServiceImpl implements ZTYSZKFXService{
 				ret[7] += ztys.getQntqyszksjs();
 				ret[8] += ztys.getQntqsr();
 				ret[9] = ret[5] / (ret[8] / curMon * 12);
-				ret[10] = (ztys.getByzmyszkye() - ztys.getQntqzmyszkye())
-						/ ztys.getQntqzmyszkye();
-				ret[11] = (ztys.getByblkzye() - ztys.getQntqblye())
-						/ ztys.getByblkzye();
-				ret[12] = (ztys.getByyszksjs() - ztys.getQntqyszksjs())
-						/ ztys.getByyszksjs();
-				ret[13] = (ztys.getLjsr() - ztys.getQntqsr()) / ztys.getLjsr();
+				ret[10] = (ret[0] - ret[5])
+						/ ret[5] ;
+				ret[11] = (ret[1] - ret[6])
+						/ ret[6] ;
+				ret[12] = (ret[2] - ret[7])
+						/ ret[7];
+				ret[13] = (ret[3] - ret[8]) / ret[8];
 			}
 		}
 		return ret;
@@ -98,13 +102,20 @@ public class ZTYSZKFXServiceImpl implements ZTYSZKFXService{
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		int curMon = cal.get(Calendar.MONTH) + 1;
-		Double[] retbyq = sum(byqZtyszkfxs, curMon);
-		Double[] retXl = sum(xlZtyszkfxs, curMon);
-		Double[] retSbd = sum(ztyszkfxs, curMon);
+		double[] retbyq = sum(byqZtyszkfxs, curMon);
+		double[] retXl = sum(xlZtyszkfxs, curMon);
+		double[] retSbd = sum(ztyszkfxs, curMon);
 		for (int i = 0; i < 14; ++i){
-			ret[4][i] = retbyq[i] + "";
-			ret[8][i] = retXl[i] + "";
-			ret[9][i] = retSbd[i] + "";
+			if (i >= 9 || i == 4){
+				ret[4][i] = String.format("%.2f", retbyq[i] * 100) + "%";
+				ret[8][i] = String.format("%.2f", retXl[i] * 100) + "%";
+				ret[9][i] = String.format("%.2f", retSbd[i] * 100) + "%";
+			}else {
+				ret[4][i] = retbyq[i] + "";
+				ret[8][i] = retXl[i] + "";
+				ret[9][i] = retSbd[i] + "";
+			}
+			
 		}
 		
 		return ret;

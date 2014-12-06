@@ -155,7 +155,6 @@ th.ui-th-column div {
 .ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
 	border-top-left-radius: 0px;
 }
-
 </style>
 
 </head>
@@ -164,45 +163,38 @@ th.ui-th-column div {
 	<div class="header">
 		<h1>${year}年${month}月 应收账款盘子规划</h1>
 	</div>
-	<Table align="center" >
+	<Table>
 		<tr>
 			<td>
 				<Table>
 					<tr>
 						<td><%@include file="date_selection.jsp"%>
 						</td>
-						<td><select id="companys"
-							onchange="instance.onCompanySelected(this.value)"
-							style="width: 125px;">
-								<c:forEach begin="0" end="${company_size - 1}" var="i">
-									<option value="${ids[i]}">${names[i]}</option>
-								</c:forEach>
-						</select></td>
+						<td><%@include file="company_selection.jsp"%>
+						</td>
 						<td><input type="button" value="更新"
 							style="width: 80px; margin-left: 10px;"
-							onclick="instance.updateUI()"></input>
+							onclick="instance.updateUI()"></input></td>
+					</tr>
 				</Table>
 			</td>
 		</tr>
-		<td>
-		</tr>
+
+
 		<tr>
 			<td>
 				<div id="list1"></div>
-				<div >
+				<div>
 					<div style="float: left;">
-						<div id="list3">
-						</div>
+						<div id="list3"></div>
 					</div>
 					<div style="float: left;">
 
 						<div>
-							<div id="list2">
-							</div>
+							<div id="list2"></div>
 						</div>
 						<div>
-							<div id="list4">
-							</div>
+							<div id="list4"></div>
 						</div>
 					</div>
 				</div>

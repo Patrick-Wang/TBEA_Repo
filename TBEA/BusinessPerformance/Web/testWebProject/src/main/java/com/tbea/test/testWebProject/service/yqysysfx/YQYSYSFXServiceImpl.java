@@ -22,7 +22,7 @@ public class YQYSYSFXServiceImpl implements YQYSYSFXService{
 		List<YQYSYSFX> list = ysysfxDao.getYqysysfxList(d);
 		int col = 0;
 		for(YQYSYSFX ysys : list){
-			if (comp.getId().equals(ysys.getQybh() + "")){
+			if (comp.getId() == ysys.getQybh()){
 				col = ysys.getYsfl();
 				result[0][col - 1] = ysys.getHs() + "";
 				result[1][col - 1] = ysys.getJe() + "";

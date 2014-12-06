@@ -1,8 +1,10 @@
 package com.tbea.test.testWebProject.controller.servlet.yszkpzjh;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.CompanyManager;
+import com.tbea.test.testWebProject.common.Organization;
 import com.tbea.test.testWebProject.common.Util;
-import com.tbea.test.testWebProject.service.cqk.CQKService;
-import com.tbea.test.testWebProject.service.hkjhjg.HKJHJGService;
 import com.tbea.test.testWebProject.service.yszkpzjh.YSZKPZJHService;
 
 @Controller
@@ -41,13 +44,18 @@ public class YSZKPZJHController {
 		String companyId = request.getParameter("companyId");
 		int cid = Integer.parseInt(companyId);
 		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
+		CompanyType compType = CompanyManager.getType(cid);
+		Organization org = CompanyManager.getPzghOrganization();
+		Company comp = org.getCompany(compType);	
+		String yszkpzjh = "[]##[]##[]##[]";
+		if (comp != null){
+			YSZKPZJHBean bean = service.getYszkpzjhData(d, comp);
+			yszkpzjh = JSONArray.fromObject(bean.getList1()).toString().replace("null", "0.00");
+			yszkpzjh += "##" + JSONArray.fromObject(bean.getList2()).toString().replace("null", "0.00");
+			yszkpzjh += "##" + JSONArray.fromObject(bean.getList3()).toString().replace("null", "0.00");
+			yszkpzjh += "##" + JSONArray.fromObject(bean.getList4()).toString().replace("null", "0.00");
+		}
 		
-		Company comp = Company.get(cid);
-		YSZKPZJHBean bean = service.getYszkpzjhData(d, comp);
-		String yszkpzjh = JSONArray.fromObject(bean.getList1()).toString().replace("null", "0.00");
-		yszkpzjh += "##" + JSONArray.fromObject(bean.getList2()).toString().replace("null", "0.00");
-		yszkpzjh += "##" + JSONArray.fromObject(bean.getList3()).toString().replace("null", "0.00");
-		yszkpzjh += "##" + JSONArray.fromObject(bean.getList4()).toString().replace("null", "0.00");
 		return yszkpzjh;
 	}
 	
@@ -62,18 +70,15 @@ public class YSZKPZJHController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		String[][] name_ids = Util
-				.getCommonCompanyNameAndIds(new Company.Type[] {
-						Company.Type.TB, Company.Type.LL, Company.Type.XL,
-						Company.Type.DL, Company.Type.XNY, Company.Type.GY,
-						Company.Type.TCNY, Company.Type.NDGS,
-						Company.Type.ZJWL, Company.Type.JCK, Company.Type.GCGS,
-						Company.Type.ZH, Company.Type.SBDCY,
-						Company.Type.XNYCY, Company.Type.NYCY,
-						Company.Type.GCL, Company.Type.JT });
-		map.put("names", name_ids[0]);
-		map.put("ids", name_ids[1]);
-		map.put("company_size", name_ids[0].length);
+		Organization org = CompanyManager.getPzghOrganization();
+		String[][] name_ids = Util.getCompanyNameAndIds(org.getTopCompany());
+		map.put("topComp", name_ids);
+		List<String[][]> subComps = new ArrayList<String[][]>();
+		for (int i = 0; i < org.getTopCompany().size(); ++i){
+			name_ids = Util.getCompanyNameAndIds(org.getTopCompany().get(i).getSubCompanys());
+			subComps.add(name_ids);
+		}
+		map.put("subComp", subComps);
 		return new ModelAndView("yszkpzjh", map);
 	}
 }

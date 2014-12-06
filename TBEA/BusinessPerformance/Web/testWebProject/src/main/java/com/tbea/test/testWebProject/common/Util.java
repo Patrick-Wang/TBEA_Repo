@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.text.SimpleDateFormat;
 
+import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
+
 public class Util {
 	public static String format(Date d){
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMM"); 
@@ -198,37 +200,44 @@ public class Util {
 		}
 	}
 	
-	private static boolean filter(Company.Type filters[], int val){
+	private static boolean filter(CompanyManager.CompanyType filters[], CompanyManager.CompanyType val){
 		for (int i = filters.length - 1; i >= 0; --i){
-			if (val == filters[i].ordinal()){
+			if (val == filters[i]){
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public static String[][] getCommonCompanyNameAndIds(Company.Type filters[]){
-		Company coms[] = Company.getAll();
 	
-		String[][] name_ids = new String[2][coms.length - filters.length]; 
-		int iCount = 0;
-		for (int i = 0;  i < coms.length; ++i){
-			
-			if (!filter(filters, i)) {
-				name_ids[1][iCount] = i + "";
-				name_ids[0][iCount] = coms[i].getName();
-				++iCount;
+	public static String[][] getCompanyNameAndIds(List<Company> list, CompanyType[] filters){
+		List<String> names = new ArrayList<String>();
+		List<String> ids = new ArrayList<String>();
+		for (int i = 0; i < list.size(); ++i) {
+			if (!filter(filters, list.get(i).getType())){
+				ids.add(list.get(i).getType().ordinal() + "");
+				names.add(list.get(i).getName());
 			}
 		}
-		return name_ids;
+		
+		String[][] ret = new String[2][ids.size()];
+		names.toArray(ret[0]);
+		ids.toArray(ret[1]);
+		return ret;
 	}
 	
-	public static String[][] getCommonCompanyNameAndIds(){
-		return  getCommonCompanyNameAndIds(new Company.Type[]{
-				 Company.Type.SBDCY,
-				 Company.Type.XNYCY,
-				 Company.Type.NYCY,
-				 Company.Type.GCL
-		});
+	
+	public static String[][] getCompanyNameAndIds(List<Company> list) {
+		List<String> names = new ArrayList<String>();
+		List<String> ids = new ArrayList<String>();
+		for (int i = 0; i < list.size(); ++i) {
+
+			ids.add(list.get(i).getType().ordinal() + "");
+			names.add(list.get(i).getName());
+		}
+		String[][] ret = new String[2][ids.size()];
+		names.toArray(ret[0]);
+		ids.toArray(ret[1]);
+		return ret;
 	}
 }

@@ -1,10 +1,8 @@
 package com.tbea.test.testWebProject.service.ydzb;
 
 import java.sql.Date;
-import java.sql.SQLException;
 
 import com.tbea.test.testWebProject.common.Company;
-import com.tbea.test.testWebProject.common.Company.Type;
 
 public interface YDZBService {
 

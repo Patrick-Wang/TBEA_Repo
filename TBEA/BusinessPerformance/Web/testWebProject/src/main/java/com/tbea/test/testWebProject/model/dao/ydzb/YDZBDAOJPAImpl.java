@@ -12,8 +12,8 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import com.tbea.test.testWebProject.common.Company;
-import com.tbea.test.testWebProject.common.CompanyGroup;
 import com.tbea.test.testWebProject.common.Util;
+import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
 import com.tbea.test.testWebProject.model.entity.local.XJLRB;
@@ -34,25 +34,35 @@ public class YDZBDAOJPAImpl implements YDZBDao {
 	public List<YDZBBean> getYDZB(Calendar cal, Company company) {
 		String query = "select y from YDZBFDW y where y.ny = ?1";
 		query += " and( y.qybh = " + company.getId();
-		if (company instanceof CompanyGroup) {
-			CompanyGroup group = (CompanyGroup) company;
-			Company[] cys = group.getCompanys();
-			for (int i = 0; i < cys.length; ++i) {
-				query += " or y.qybh = " +cys[i].getId();
+
+		if (!company.getSubCompanys().isEmpty()) {
+
+			List<Company> cys = company.getSubCompanys();
+			for (int i = 0; i < cys.size(); ++i) {
+				query += " or y.qybh = " + cys.get(i).getId();
 			}
 		}
-		
-		if (company.getId().equals(company.get(Company.Type.JT).getId())){
-			query += " or y.qybh = " + company.get(Company.Type.SBDCY).getId();
-			query += " or y.qybh = " + company.get(Company.Type.NYCY).getId();
-			query += " or y.qybh = " + company.get(Company.Type.XNYCY).getId();
-			query += " or y.qybh = " + company.get(Company.Type.GCL).getId();
+
+		if (company.getType() == CompanyType.JT) {
+			List<Company> cys = company.getLeaves();
+			for (int i = 0; i < cys.size(); ++i) {
+				if (cys.get(i).getType() != CompanyType.ZH) {
+					query += " or y.qybh = " + cys.get(i).getId();
+				}
+			}
+			//
+			// query += " or y.qybh = " +
+			// company.get(Company.Type.SBDCY).getId();
+			// query += " or y.qybh = " +
+			// company.get(Company.Type.NYCY).getId();
+			// query += " or y.qybh = " +
+			// company.get(Company.Type.XNYCY).getId();
+			// query += " or y.qybh = " + company.get(Company.Type.GCL).getId();
 		}
 
 		query += ")";
-		
-		Query q = entityManager
-				.createQuery(query);
+
+		Query q = entityManager.createQuery(query);
 		Date d = Date.valueOf(cal.get(Calendar.YEAR) + "-"
 				+ (cal.get(Calendar.MONTH) + 1) + "-"
 				+ cal.get(Calendar.DAY_OF_MONTH));
