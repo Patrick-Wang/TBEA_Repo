@@ -30,6 +30,7 @@ public class YSZKPZJHServiceImpl implements YSZKPZJHService {
 	@Override
 	public YSZKPZJHBean getYszkpzjhData(Date d, Company comp) {
 		YSZKPZJHBean bean = new YSZKPZJHBean();
+		bean.setCompanyType(comp.getType().ordinal());
 		List<YSZKPZGH> pzghs = yszkpzjhDao.getPzjhData(d, comp);
 		if (!pzghs.isEmpty()){
 			YSZKPZGH yszkpzgh = pzghs.get(0);

@@ -47,7 +47,7 @@ var yszkpzjh;
     })();
     var View = (function () {
         function View() {
-            this.mComp = 19 /* JT */;
+            this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
             return new View();
@@ -70,25 +70,45 @@ var yszkpzjh;
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;
         };
+        View.prototype.convertData = function (src) {
+            var dest = [];
+            var row = [];
+            for (var i in src.list1) {
+                row.push(Util.formatCurrency(src.list1[i]));
+            }
+            dest.push(row);
+            row = [];
+            for (var i in src.list2) {
+                row.push(Util.formatCurrency(src.list2[i]));
+            }
+            dest.push(row);
+            row = [];
+            for (var i in src.list3) {
+                row.push(Util.formatCurrency(src.list4[i]));
+            }
+            dest.push(row);
+            row = [];
+            for (var i in src.list4) {
+                row.push(Util.formatCurrency(src.list4[i]));
+            }
+            dest.push(row);
+            row = [];
+            return dest;
+        };
         View.prototype.updateUI = function () {
             var _this = this;
             this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
                 if (null != data) {
-                    var arrData = data.split("##");
-                    _this.mData = [
-                        JSON.parse(arrData[0]),
-                        JSON.parse(arrData[1]),
-                        JSON.parse(arrData[2]),
-                        JSON.parse(arrData[3])
-                    ];
-                    for (var i = 0; i < _this.mData.length; ++i) {
-                        for (var j = 0; j < _this.mData[i].length; ++j) {
-                            _this.mData[i][j] = Util.formatCurrency(_this.mData[i][j]);
-                        }
-                    }
-                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月 应收账款盘子规划");
+                    _this.mData = JSON.parse(data);
+                    $('#title h1').text(_this.mYear + "年" + _this.mMonth + "月 应收账款盘子规划");
                     document.title = _this.mYear + "年" + _this.mMonth + "月 应收账款盘子规划";
-                    _this.updateTable(_this.mTableId);
+                    $("#dataarea tr").css("display", "none");
+                    for (var i = 0; i < _this.mData.length; ++i) {
+                        var curData = _this.mData[i];
+                        $("#dataarea #" + curData.companyType).css("display", "");
+                        $("#dataarea #" + curData.companyType + "block").css("display", "");
+                        _this.updateTable("list" + curData.companyType, _this.convertData(curData));
+                    }
                 }
             });
         };
@@ -104,14 +124,14 @@ var yszkpzjh;
                 }
             }
         };
-        View.prototype.updateTable = function (listName) {
+        View.prototype.updateTable = function (listName, currData) {
             var _this = this;
             var data = [[[""]], [[""]], [[""]], [[""]]];
             if (undefined != this.mData) {
-                data[0] = [this.mData[0]];
-                data[1] = [this.mData[1]];
-                data[2] = [this.mData[2]];
-                data[3] = [this.mData[3]];
+                data[0] = [currData[0]];
+                data[1] = [currData[1]];
+                data[2] = [currData[2]];
+                data[3] = [currData[3]];
             }
             var selectGrid = null;
             var selectRow = 0;

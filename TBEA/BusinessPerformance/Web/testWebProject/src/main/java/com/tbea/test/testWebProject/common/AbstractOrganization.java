@@ -18,6 +18,12 @@ public abstract class AbstractOrganization implements Organization {
 		return comp;
 	}
 
+	
+	protected AbstractOrganization append(Company comp){
+		topComps.add(comp);
+		return this;
+	}
+	
 	private Company queryCompany(List<Company> comps, Integer id) {
 		Company ret = null;
 		if (null != comps) {

@@ -47,14 +47,24 @@ public class YSZKPZJHController {
 		CompanyType compType = CompanyManager.getType(cid);
 		Organization org = CompanyManager.getPzghOrganization();
 		Company comp = org.getCompany(compType);	
-		String yszkpzjh = "[]##[]##[]##[]";
-		if (comp != null){
-			YSZKPZJHBean bean = service.getYszkpzjhData(d, comp);
-			yszkpzjh = JSONArray.fromObject(bean.getList1()).toString().replace("null", "0.00");
-			yszkpzjh += "##" + JSONArray.fromObject(bean.getList2()).toString().replace("null", "0.00");
-			yszkpzjh += "##" + JSONArray.fromObject(bean.getList3()).toString().replace("null", "0.00");
-			yszkpzjh += "##" + JSONArray.fromObject(bean.getList4()).toString().replace("null", "0.00");
+		List<Company> comps = comp.getSubCompanys();
+		
+		YSZKPZJHBean[] yszkpzjhBeans = new YSZKPZJHBean[comps.size() + 1];
+		yszkpzjhBeans[0] = service.getYszkpzjhData(d, comp);
+		for (int i = 0; i < comps.size(); ++i){
+			yszkpzjhBeans[i + 1] = service.getYszkpzjhData(d, comps.get(i));
 		}
+		String yszkpzjh = JSONArray.fromObject(yszkpzjhBeans).toString().replace("null", "0.00");
+//		String yszkpzjh = "[]##[]##[]##[]";
+//		if (!comps.isEmpty()){
+//			
+//			YSZKPZJHBean bean = service.getYszkpzjhData(d, comp);
+//			
+//			yszkpzjh = JSONArray.fromObject(bean.getList1()).toString().replace("null", "0.00");
+//			yszkpzjh += "##" + JSONArray.fromObject(bean.getList2()).toString().replace("null", "0.00");
+//			yszkpzjh += "##" + JSONArray.fromObject(bean.getList3()).toString().replace("null", "0.00");
+//			yszkpzjh += "##" + JSONArray.fromObject(bean.getList4()).toString().replace("null", "0.00");
+//		}
 		
 		return yszkpzjh;
 	}
@@ -79,6 +89,7 @@ public class YSZKPZJHController {
 			subComps.add(name_ids);
 		}
 		map.put("subComp", subComps);
+		map.put("onlytop", true);
 		return new ModelAndView("yszkpzjh", map);
 	}
 }

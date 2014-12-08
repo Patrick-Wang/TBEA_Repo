@@ -216,7 +216,9 @@ module byq_fkfstj {
                 if (rawData[i] instanceof Array) {
                     row = [].concat(rawData[i]);
                     for (var col in row) {
-                        row[col] = Util.formatCurrency(row[col]);
+                        if (col % 2 == 1){
+                            row[col] = Util.formatCurrency(row[col]);
+                        }
                     }
                     data[i] = data[i].concat(row);
                 }

@@ -161,24 +161,20 @@ public class YDZBController {
 
 		String zbhz_overview_yd = JSONArray.fromObject(service.getYdZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
 //		escape.end("getZbhz_overviewData zbhz_overview_yd  escape ");
-
+		
 //		escape.start();
-		comp = org.getCompany(CompanyManager.getType(companyId));
 		String zbhz_overview_jd = JSONArray.fromObject(service.getJdZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
 //		escape.end("getZbhz_overviewData zbhz_overview_jd  escape ");
 				
 //		escape.start();
-		comp = org.getCompany(CompanyManager.getType(companyId));
 		String zbhz_overview_nd = JSONArray.fromObject(service.getNdZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
 //		escape.end("getZbhz_overviewData zbhz_overview_nd  escape ");
 		
 //		escape.start();
-		comp = org.getCompany(CompanyManager.getType(companyId));
 		String zbhz_overview_ydtb = JSONArray.fromObject(service.getYdtbZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
 //		escape.end("getZbhz_overviewData zbhz_overview_ydtb  escape ");
 		
 //		escape.start();
-		comp = org.getCompany(CompanyManager.getType(companyId));
 		String zbhz_overview_jdtb = JSONArray.fromObject(service.getJdtbZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
 //		escape.end("getZbhz_overviewData zbhz_overview_jdtb  escape ");
 		

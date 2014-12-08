@@ -71,8 +71,6 @@ body {
 }
 
 .right {
-	width: 45%;
-	height: 180px;
 	float: left;
 	padding-top: 20px;
 }
@@ -108,6 +106,8 @@ body {
 }
 
 .companyname h1 {
+	margin-top: 0px;
+	margin-bottom: 0px;
 	width: 30px;
 	font-size: 30px;
 	word-wrap: break-word;
@@ -118,6 +118,7 @@ body {
 
 .lxian {
 	margin-left: 30px;
+	margin-right: 15px;
 	width: 1px;
 	height: 175px;
 	background: #5cb85c;
@@ -159,54 +160,96 @@ th.ui-th-column div {
 
 </head>
 
-<body style="width: 1300px">
-	<div class="header">
-		<h1>${year}年${month}月 应收账款盘子规划</h1>
+<body style="width: 1400px">
+	<div class="header" id="title">
+		<h1>${year}年${month}月应收账款盘子规划</h1>
 	</div>
 	<Table>
 		<tr>
-			<td>
-				<Table>
-					<tr>
-						<td><%@include file="date_selection.jsp"%>
-						</td>
-						<td><%@include file="company_selection.jsp"%>
-						</td>
-						<td><input type="button" value="更新"
-							style="width: 80px; margin-left: 10px;"
-							onclick="instance.updateUI()"></input></td>
-					</tr>
-				</Table>
+			<td><%@include file="date_selection.jsp"%>
 			</td>
-		</tr>
-
-
-		<tr>
-			<td>
-				<div id="list1"></div>
-				<div>
-					<div style="float: left;">
-						<div id="list3"></div>
-					</div>
-					<div style="float: left;">
-
-						<div>
-							<div id="list2"></div>
-						</div>
-						<div>
-							<div id="list4"></div>
-						</div>
-					</div>
-				</div>
-			<td>
+			<td><%@include file="company_selection.jsp"%>
+			</td>
+			<td><input type="button" value="更新"
+				style="width: 80px; margin-left: 10px;"
+				onclick="instance.updateUI()"></input></td>
 		</tr>
 	</Table>
+
+	<Table id="dataarea">
+		<c:forEach begin="0" end="${fn:length(topComp[0]) - 1}" var="i">
+			<tr id="${topComp[1][i]}block">
+				<td>
+					<div style="display: block; height: 10px"></div>
+				</td>
+			</tr>
+			<tr id="${topComp[1][i]}" style="padding-top: 10px">
+				<td valign="middle" align="center">
+					<div class="companyname">
+						<h1>${topComp[0][i]}</h1>
+
+					</div>
+				</td>
+				<td valign="middle">
+					<div class="lxian"></div>
+				</td>
+				<td valign="middle">
+					<div id="list${topComp[1][i]}1" }" style="float: left;"></div>
+					<div style="float: left;">
+						<div style="float: left;">
+							<div id="list${topComp[1][i]}3"></div>
+						</div>
+						<div style="float: left;">
+
+							<div>
+								<div id="list${topComp[1][i]}2"></div>
+							</div>
+							<div>
+								<div id="list${topComp[1][i]}4"></div>
+							</div>
+						</div>
+					</div>
+				<td>
+			</tr>
+
+			<c:forEach begin="0" end="${fn:length(subComp[i][0]) - 1}" var="j">
+				<tr id="${subComp[i][1][j]}block">
+					<td>
+						<div style="height: 10px"></div>
+					</td>
+				</tr>
+				<tr id="${subComp[i][1][j]}" style="padding-top: 10px">
+					<td valign="middle" align="center">
+						<div class="companyname">
+							<h1>${subComp[i][0][j]}</h1>
+						</div>
+					</td>
+					<td valign="middle">
+						<div class="lxian"></div>
+					</td>
+					<td valign="middle">
+						<div id="list${subComp[i][1][j]}1" style="float: left;"></div>
+						<div style="float: left;">
+							<div style="float: left;">
+								<div id="list${subComp[i][1][j]}3"></div>
+							</div>
+							<div style="float: left;">
+
+								<div>
+									<div id="list${subComp[i][1][j]}2"></div>
+								</div>
+								<div>
+									<div id="list${subComp[i][1][j]}4"></div>
+								</div>
+							</div>
+						</div>
+					<td>
+				</tr>
+			</c:forEach>
+		</c:forEach>
+
+	</Table>
 	<%@include file="loading.jsp"%>
-
-
-
-
-
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 </html>

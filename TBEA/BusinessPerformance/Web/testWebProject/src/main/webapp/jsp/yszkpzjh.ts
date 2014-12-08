@@ -52,7 +52,7 @@ module yszkpzjh {
             return new View();
         }
 
-        private mComp : Util.CompanyType = Util.CompanyType.JT;
+        private mComp : Util.CompanyType = Util.CompanyType.SB;
         private mMonth: number;
         private mYear: number;
         private mData: Array<string[]>;
@@ -81,26 +81,48 @@ module yszkpzjh {
         	this.mComp = comp;
         }
 
+        
+        private  convertData(src: any) : Array<string[]> {
+            var dest: Array<string[]> = [];
+            var row = [];
+            for (var i in src.list1) {
+                row.push(Util.formatCurrency(src.list1[i]));
+            }
+            dest.push(row);
+            row = [];
+            for (var i in src.list2) {
+                row.push(Util.formatCurrency(src.list2[i]));
+            }
+            dest.push(row);
+            row = [];
+            for (var i in src.list3) {
+                row.push(Util.formatCurrency(src.list4[i]));
+            }
+            dest.push(row);
+            row = [];
+            for (var i in src.list4) {
+                row.push(Util.formatCurrency(src.list4[i]));
+            }
+            dest.push(row);
+            row = [];
+            return dest;
+        }
+        
 		public updateUI(){
-			this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data : string) =>{
+			this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data : any) =>{
 				if (null != data){
-					var arrData = data.split("##");
-					this.mData = [
-						JSON.parse(arrData[0]),
-						JSON.parse(arrData[1]),
-						JSON.parse(arrData[2]),
-						JSON.parse(arrData[3])
-					];
-					
+					this.mData =   JSON.parse(data);
+					$('#title h1').text(this.mYear + "年" + this.mMonth + "月 应收账款盘子规划");
+                    document.title = this.mYear + "年" + this.mMonth + "月 应收账款盘子规划";
+                    $("#dataarea tr").css("display", "none");
+                
 					for (var i = 0; i < this.mData.length; ++i){
-						for (var j = 0; j < this.mData[i].length; ++j){
-							this.mData[i][j] = Util.formatCurrency(this.mData[i][j]);
-						}
+                        var curData : any = this.mData[i];
+                        $("#dataarea #" + curData.companyType).css("display", "");
+                         $("#dataarea #" + curData.companyType + "block").css("display", "");
+						this.updateTable("list" + curData.companyType, this.convertData(curData));
 					}
 					
-					$('h1').text(this.mYear + "年" + this.mMonth + "月 应收账款盘子规划");
-					document.title = this.mYear + "年" + this.mMonth + "月 应收账款盘子规划";
-					this.updateTable(this.mTableId);
 				}
 			});
 		}
@@ -122,13 +144,13 @@ module yszkpzjh {
 			}
 		}
 
-        private updateTable(listName: string): void {
+        private updateTable(listName: string, currData ?: Array<string[]>): void {
             var data = [[[""]], [[""]], [[""]], [[""]]];
             if (undefined != this.mData) {
-                data[0] = [this.mData[0]];
-                data[1] = [this.mData[1]];
-                data[2] = [this.mData[2]];
-                data[3] = [this.mData[3]];
+                data[0] = [currData[0]];
+                data[1] = [currData[1]];
+                data[2] = [currData[2]];
+                data[3] = [currData[3]];
             }
 
             var selectGrid = null;

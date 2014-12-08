@@ -40,3 +40,8 @@ Icon
 \TBEA\BusinessPerformance\Android\SourceCode\dataviewer\gen
 \TBEA\BusinessPerforwmance\Android\SourceCode\dataviewer\bin
 TBEA/BusinessPerformance/Web/testWebProject/.project
+*.class
+*.properties
+*.properties
+*.prefs
+*.class

@@ -1,6 +1,7 @@
 package com.tbea.test.testWebProject.controller.servlet.yszkpzjh;
 
 public class YSZKPZJHBean {
+	private Integer companyType = null;
 	private String[] list1;
 	private String[] list2;
 	private String[] list3;
@@ -53,4 +54,15 @@ public class YSZKPZJHBean {
 	public void setList4(String[] list4) {
 		this.list4 = list4;
 	}
+	//@Column(name="[companyType]")
+	public Integer getCompanyType() {
+		return companyType;
+	}
+	/**
+	 * @param companyType the companyType to set
+	 */
+	public void setCompanyType(Integer companyType) {
+		this.companyType = companyType;
+	}
+
 }
