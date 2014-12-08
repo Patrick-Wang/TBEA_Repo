@@ -40,8 +40,16 @@ public class CompanyManager {
 			return value;
 		}
 
-		protected Company getCompany(Integer id) {
+		protected Company getCompany(int id) {
 			return new Company(id, this);
+		}
+		
+		public static CompanyType valueOf(int tyOrd){
+			CompanyType[] types = CompanyType.values();
+			if (types.length > tyOrd){
+				return types[tyOrd];
+			}
+			return null;
 		}
 	}
 
@@ -56,13 +64,5 @@ public class CompanyManager {
 		return opera;
 	}
 
-	public static CompanyType getType(int index) {
-		for (CompanyType ty : CompanyType.values()) {
-			if (index == ty.ordinal()) {
-				return ty;
-			}
-		}
-		return null;
-	}
 
 }

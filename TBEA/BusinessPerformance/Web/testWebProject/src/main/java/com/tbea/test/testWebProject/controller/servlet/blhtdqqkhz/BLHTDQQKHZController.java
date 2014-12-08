@@ -43,7 +43,7 @@ public class BLHTDQQKHZController {
 		Date d = java.sql.Date.valueOf(year + "-" + month + "-1");
 		Map<String, Object> map = new HashMap<String, Object>();
 		Organization org = CompanyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyManager.getType(cid));
+		Company comp = org.getCompany(CompanyType.valueOf(cid));
 
 		String blhtdqqk = JSONArray.fromObject(service.getBlhtdqqk(d, comp)).toString().replace("null", "0.00");
 		String blyeqs = JSONArray.fromObject(service.getBlyeqs(d, comp)).toString().replace("null", "0.00");

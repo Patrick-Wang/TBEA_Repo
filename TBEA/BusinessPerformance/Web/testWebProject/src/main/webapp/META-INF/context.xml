@@ -1,7 +1,7 @@
 <Context>
 	<Resource name="jdbc/my_test_db" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="root" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://10.1.4.106:1433; DatabaseName=operating_management"
+		url="jdbc:sqlserver://localhost:1433; DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 	<Resource name="jdbc/yszk_db" auth="Container" type="javax.sql.DataSource"

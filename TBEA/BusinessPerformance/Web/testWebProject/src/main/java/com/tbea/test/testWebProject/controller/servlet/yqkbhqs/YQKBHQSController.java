@@ -40,7 +40,7 @@ public class YQKBHQSController {
 		Date d = java.sql.Date.valueOf(year + "-" + 1 + "-" + 1);
 
 		Organization org = CompanyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyManager.getType(cid));
+		Company comp = org.getCompany(CompanyType.valueOf(cid));
 
 		String yqkbhqs = JSONArray.fromObject(service.getYqkbhqsData(d, comp)).toString().replace("null", "0.00");
 		return yqkbhqs;

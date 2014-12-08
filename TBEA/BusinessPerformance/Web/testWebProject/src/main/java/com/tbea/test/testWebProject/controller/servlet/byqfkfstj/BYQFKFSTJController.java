@@ -14,17 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.test.testWebProject.common.Company;
-import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.service.byqfkfstj.BYQFKFSTJService;
-import com.tbea.test.testWebProject.service.cqk.CQKService;
-import com.tbea.test.testWebProject.service.hkjhjg.HKJHJGService;
-import com.tbea.test.testWebProject.service.syhkjhzxqk.SYHKJHZXQKService;
-import com.tbea.test.testWebProject.service.tbbzjqk.TBBZJQKService;
-import com.tbea.test.testWebProject.service.ztyszkfx.ZTYSZKFXService;
 
 @Controller
 @RequestMapping(value = "byqfkfstj")

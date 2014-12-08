@@ -46,7 +46,7 @@ public class YQYSYSFXController {
 			String companyId = request.getParameter("companyId");
 			int cid = Integer.parseInt(companyId);
 			Organization org = CompanyManager.getOperationOrganization();
-			Company comp = org.getCompany(CompanyManager.getType(cid));
+			Company comp = org.getCompany(CompanyType.valueOf(cid));
 			Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
 			String xjlrb = JSONArray.fromObject(service.getYqysysfxData(d, comp)).toString().replace("null", "0.00");
 			return xjlrb;

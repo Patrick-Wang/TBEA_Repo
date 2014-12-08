@@ -36,7 +36,8 @@
                 	cb_byq.View.newInstance().init(
                 			"table1", 
                 			"table2", 
-                			"table3");
+                			"table3",
+                			JSON.parse('${tbmx}'));
             })})();
     </script>
 <meta charset="UTF-8">

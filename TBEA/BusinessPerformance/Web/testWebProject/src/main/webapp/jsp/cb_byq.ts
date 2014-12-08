@@ -21,7 +21,12 @@ module cb_byq {
                 "人工及制造费用", "投标制造成本", "运费", "投标毛利（单台）", "投标毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                if (i < 6) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left));
+                }
+                else {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         }
@@ -68,17 +73,19 @@ module cb_byq {
 //		private mfdwData : string[];
 //		private mgwData : string[];
 //		private mnwData : string[];
+        private mTbmxData: string[][];
 		private mMxTableId : string;
 		private mJttbTableId : string;
 		private mGstbTableId : string;
         public init(
 	        mxTableId: string, 
 	        jttbTableId: string, 
-	        gstbTableId: string): void {
+	        gstbTableId: string,
+            tbmx: string[][]): void {
 			this.mMxTableId = mxTableId;
 			this.mJttbTableId = jttbTableId;
 			this.mGstbTableId = gstbTableId;
-			
+			this.mTbmxData = tbmx;
             this.updateMxTable();
              this.updateJttbTable();
           	this.updateGstbTable();
@@ -143,20 +150,25 @@ module cb_byq {
         private updateMxTable(): void {
          	var name = this.mMxTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createMxTable(name);
-			var data = [[""]
-			];
-  			var row = [];
-//            for (var i = 0; i < data.length; ++i) {
-//                if (rawData[i] instanceof Array) {
-//                    row = [].concat(rawData[i]);
-//                    for (var col in row) {
-//                    	if (col % 2 != 0){
-//                        	row[col] = Util.formatCurrency(row[col]);
-//                        }
-//                    }
-//                    data[i] = data[i].concat(row);
-//                }
-//            }
+			var data = [[""]];
+            var row = [];
+            if (this.mTbmxData != undefined) {
+                data = [];
+                for (var i = 0; i < this.mTbmxData.length; ++i) {
+                    if (this.mTbmxData[i] instanceof Array) {
+                        row = [].concat(this.mTbmxData[i]);
+                        for (var col in row) {
+                            if (col == 8 || col == 13 || col == 15 || col == 17 || col == 19 || col == 21 || col >= 21 && col != 29) {
+                                row[col] = Util.formatCurrency(row[col]);
+                            } else if (col == 29) {
+                                row[col] = (parseFloat(row[col]) * 100).toFixed(2) + "%";
+                            }
+                        }
+                        data.push(row);
+                    }
+                }
+            }
+           
             
             
 			var parent = $("#" + this.mMxTableId);
@@ -179,6 +191,7 @@ module cb_byq {
                     width: 1250,
                     shrinkToFit: false,
                     autoScroll: true,
+                    rowNum:1000
 //                    userData: {
 //                        'title': "合计"
 //                    },

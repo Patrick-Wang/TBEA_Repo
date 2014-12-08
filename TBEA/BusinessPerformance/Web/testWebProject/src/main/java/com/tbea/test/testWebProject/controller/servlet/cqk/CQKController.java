@@ -54,7 +54,7 @@ public class CQKController {
 		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
 		
 		Organization org = CompanyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyManager.getType(cid));
+		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		
 		String cqk = JSONArray.fromObject(cqkService.getCqkData(d, comp)).toString().replace("null", "0.00");
 		String cqkCompare = JSONArray.fromObject(cqkService.getCompareData(d, comp)).toString().replace("null", "0.00");

@@ -44,7 +44,7 @@ public class HKJHJGController {
 		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
 		
 		Organization org = CompanyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyManager.getType(cid));
+		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		
 		String hkjhjg = JSONArray.fromObject(service.getHkjhjgData(d, comp)).toString().replace("null", "0.00");
 		String hkjhzt = JSONArray.fromObject(service.getHkjhztData(d, comp)).toString().replace("null", "0.00");

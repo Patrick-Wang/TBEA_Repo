@@ -43,7 +43,7 @@ public class YSZKJGQKController {
 		int cid = Integer.parseInt(companyId);
 		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
 		Organization org = CompanyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyManager.getType(cid));
+		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		
 		String table = JSONArray.fromObject(service.getYszkjg(d, comp)).toString().replace("null", "0.00");
 		String bar = JSONArray.fromObject(service.getWdqtbbh(d, comp)).toString().replace("null", "0.00");

@@ -157,7 +157,7 @@ public class YDZBController {
 //		Escape escape = new Escape();
 //		escape.start();
 		Organization org = CompanyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyManager.getType(companyId));
+		Company comp = org.getCompany(CompanyType.valueOf(companyId));
 
 		String zbhz_overview_yd = JSONArray.fromObject(service.getYdZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
 //		escape.end("getZbhz_overviewData zbhz_overview_yd  escape ");

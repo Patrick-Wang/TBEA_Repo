@@ -44,7 +44,7 @@ public class YSZKPZJHController {
 		String companyId = request.getParameter("companyId");
 		int cid = Integer.parseInt(companyId);
 		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
-		CompanyType compType = CompanyManager.getType(cid);
+		CompanyType compType = CompanyType.valueOf(cid);
 		Organization org = CompanyManager.getPzghOrganization();
 		Company comp = org.getCompany(compType);	
 		List<Company> comps = comp.getSubCompanys();

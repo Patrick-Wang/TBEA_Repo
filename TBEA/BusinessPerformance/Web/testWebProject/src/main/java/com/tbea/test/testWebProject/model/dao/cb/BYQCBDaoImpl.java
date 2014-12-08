@@ -1,0 +1,42 @@
+package com.tbea.test.testWebProject.model.dao.cb;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.tbea.test.testWebProject.model.entity.CBBYQTBDD;
+import com.tbea.test.testWebProject.model.entity.CBBYQWGDD;
+import com.tbea.test.testWebProject.model.entity.CBBYQZXDD;
+
+@Repository
+@Transactional("transactionManager")
+public class BYQCBDaoImpl implements  BYQCBDao{
+	@PersistenceContext(unitName = "localDB")
+	private EntityManager entityManager;
+
+	@Override
+	public List<CBBYQTBDD> getTbdd() {
+		Query q = entityManager.createQuery(
+				"from CBBYQTBDD");
+		return q.getResultList();
+	}
+
+	@Override
+	public List<CBBYQZXDD> getZxdd() {
+		Query q = entityManager.createQuery(
+				"from CBBYQZXDD");
+		return q.getResultList();
+	}
+
+	@Override
+	public List<CBBYQWGDD> getWgdd() {
+		Query q = entityManager.createQuery(
+				"from CBBYQWGDD");
+		return q.getResultList();
+	}
+}
