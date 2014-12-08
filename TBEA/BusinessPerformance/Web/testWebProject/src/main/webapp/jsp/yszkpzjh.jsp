@@ -183,7 +183,7 @@ th.ui-th-column div {
 					<div style="display: block; height: 10px"></div>
 				</td>
 			</tr>
-			<tr id="${topComp[1][i]}" style="padding-top: 10px">
+			<tr id="${topComp[1][i]}" style="display:none;padding-top: 10px">
 				<td valign="middle" align="center">
 					<div class="companyname">
 						<h1>${topComp[0][i]}</h1>
@@ -218,7 +218,7 @@ th.ui-th-column div {
 						<div style="height: 10px"></div>
 					</td>
 				</tr>
-				<tr id="${subComp[i][1][j]}" style="padding-top: 10px">
+				<tr id="${subComp[i][1][j]}" style="display:none;padding-top: 10px">
 					<td valign="middle" align="center">
 						<div class="companyname">
 							<h1>${subComp[i][0][j]}</h1>
