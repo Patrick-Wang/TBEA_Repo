@@ -142,7 +142,12 @@ var ztyszkfx;
                 for (var i = 0; i < this.mData.length && i < data.length; ++i) {
                     var row = [];
                     for (var j = 0; j < this.mData[i].length; ++j) {
-                        row.push(Util.formatCurrency(this.mData[i][j]));
+                        if ((this.mData[i][j] + "").indexOf("%") < 0) {
+                            row.push(Util.formatCurrency(this.mData[i][j]));
+                        }
+                        else {
+                            row.push(this.mData[i][j]);
+                        }
                     }
                     data[i] = data[i].concat(row);
                 }

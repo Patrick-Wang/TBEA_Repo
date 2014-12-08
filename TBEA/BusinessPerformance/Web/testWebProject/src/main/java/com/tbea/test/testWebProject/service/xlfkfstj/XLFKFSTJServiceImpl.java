@@ -63,8 +63,8 @@ public class XLFKFSTJServiceImpl implements XLFKFSTJService {
 		String[][] result = new String[12][22];
 		int col = 0;
 		for (XLFDWFKFS xlfdw : fdwfkfss) {
-			if (null != xlfdw && hymap.containsKey(xlfdw.getKhbh())) {
-				col = hymap.get(xlfdw.getKhbh());
+			if (null != xlfdw && hymap.containsKey(Integer.valueOf(xlfdw.getKhbh()))) {
+				col = hymap.get(Integer.valueOf(xlfdw.getKhbh()));
 				if (3 == col){
 					result[col][0] = Util.plus(result[col][0], xlfdw.getDdzlbs() + "");
 					result[col][1] = Util.plus(result[col][1], xlfdw.getDdzlje() + "");

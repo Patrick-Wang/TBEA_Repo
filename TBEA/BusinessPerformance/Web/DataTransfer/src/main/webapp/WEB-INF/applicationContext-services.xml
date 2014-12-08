@@ -156,6 +156,13 @@
 		<property name="zbhzDao" ref="zbhzDao" />
 		<property name="bl15Dao" ref="bl15Dao" />
 	</bean>
+    <bean id="logService"
+        class="com.tbea.datatransfer.service.local.log.LogServiceImpl"
+        scope="prototype">
+        <property name="ydzbfdwDao" ref="ydzbfdwDao" />
+        <property name="bl15Dao" ref="bl15Dao" />
+       <property name="qybhMap" ref="qybhMap" />
+    </bean>
 
 	<!-- -->
 	<!-- CLIENTS -->
