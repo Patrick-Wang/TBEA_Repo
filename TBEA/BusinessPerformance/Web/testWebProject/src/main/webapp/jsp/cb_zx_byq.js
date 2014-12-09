@@ -7,10 +7,15 @@ var cb_zx_byq;
             return parent.append(new JQTable.Node("单价", "dj")).append(new JQTable.Node("用量", "yl"));
         };
         JQGridAssistantFactory.createMxTable = function (gridName) {
-            var title = ["订单所在单位及项目公司", "订单执行阶段", "工作号", "国别", "客户行业类型", "合同中标时间 ", "产品型号", "合同号", "订货单位", "交货时间", "产值", "硅钢牌号", "硅钢数量", "硅钢单价", "铜用量", "铜单价", "铜加工费", "变压器油规格", "变压器油用量", "变压器油单价", "钢材用量", "钢材单价", "纸板用量", "纸板单价", "五大主材成本", "其他材料成本", "材料合计", "人工制造费用", "生产总成本", "运费", "产值测算毛利额", "产值测算毛利率"];
+            var title = ["订单所在单位及项目公司", "订单执行阶段", "工作号", "国别", "客户行业类型", "合同中标时间 ", "产品型号", "合同号", "订货单位", "交货时间", "产值", "硅钢牌号", "硅钢数量", "硅钢单价", "铜用量", "铜单价", "铜加工费", "变压器油规格", "变压器油用量", "变压器油单价", "钢材用量", "钢材单价", "纸板用量", "纸板单价", "五大主材成本", "其他材料成本", "材料合计（不含税）", "人工制造费用", "生产总成本", "运费", "产值测算毛利额", "产值测算毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                if (i < 10) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */));
+                }
+                else {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
@@ -50,10 +55,14 @@ var cb_zx_byq;
         View.newInstance = function () {
             return new View();
         };
-        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId) {
+        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId, mx, jt, gs, month) {
             this.mMxTableId = mxTableId;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
+            this.mMxData = mx;
+            this.mJtData = jt;
+            this.mGsData = gs;
+            this.mMonth = month;
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
@@ -63,6 +72,23 @@ var cb_zx_byq;
             var tableAssist = JQGridAssistantFactory.createMxTable(name);
             var data = [[""]];
             var row = [];
+            if (this.mMxData != undefined) {
+                data = [];
+                for (var i = 0; i < this.mMxData.length; ++i) {
+                    if (this.mMxData[i] instanceof Array) {
+                        row = [].concat(this.mMxData[i]);
+                        for (var col in row) {
+                            if (col == 8 || col == 13 || col == 15 || col == 17 || col == 19 || col == 21 || col >= 21 && col != 29) {
+                                row[col] = Util.formatCurrency(row[col]);
+                            }
+                            else if (col == 29) {
+                                row[col] = (parseFloat(row[col]) * 100).toFixed(2) + "%";
+                            }
+                        }
+                        data.push(row);
+                    }
+                }
+            }
             var parent = $("#" + this.mMxTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");

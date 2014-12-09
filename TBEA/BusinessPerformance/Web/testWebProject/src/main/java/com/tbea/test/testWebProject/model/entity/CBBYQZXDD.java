@@ -18,7 +18,7 @@ public class CBBYQZXDD extends AbstractReadWriteEntity {
 	
 	Date	gxrq	;
 	Integer	tbcpbh	;
-	Integer	ddzzjd	;
+	Integer	ddzxjd	;
 	String	hth	;
 	Date	htzbsj	;
 	Date	jhsj	;
@@ -63,9 +63,9 @@ public class CBBYQZXDD extends AbstractReadWriteEntity {
 		return tbcpbh;
 	}
 
-	@Column(name="[ddzzjd]")
-	public Integer getDdzzjd() {
-		return ddzzjd;
+	@Column(name="[ddzxjd]")
+	public Integer getDdzxjd() {
+		return ddzxjd;
 	}
 
 	@Column(name="[hth]")
@@ -188,10 +188,10 @@ public class CBBYQZXDD extends AbstractReadWriteEntity {
 	}
 
 	/**
-	 * @param ddzzjd the ddzzjd to set
+	 * @param ddzxjd the ddzxjd to set
 	 */
-	public void setDdzzjd(Integer ddzzjd) {
-		this.ddzzjd = ddzzjd;
+	public void setDdzxjd(Integer ddzxjd) {
+		this.ddzxjd = ddzxjd;
 	}
 
 	/**

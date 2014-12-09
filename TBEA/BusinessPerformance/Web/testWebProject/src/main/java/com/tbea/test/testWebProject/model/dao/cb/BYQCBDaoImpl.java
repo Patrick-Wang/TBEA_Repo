@@ -39,4 +39,16 @@ public class BYQCBDaoImpl implements  BYQCBDao{
 				"from CBBYQWGDD");
 		return q.getResultList();
 	}
+
+	@Override
+	public CBBYQTBDD getTbddById(Integer tbcpbh) {
+		Query q = entityManager.createQuery(
+				"from CBBYQTBDD where id = :tbcpbh");
+		q.setParameter("tbcpbh", tbcpbh);
+		List<CBBYQTBDD> tbdds = q.getResultList();
+		if (!tbdds.isEmpty()){
+			return tbdds.get(0);
+		}
+		return null;
+	}
 }

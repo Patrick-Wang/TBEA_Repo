@@ -17,4 +17,5 @@ public interface BYQCBDao {
 	List<CBBYQTBDD> getTbdd();
 	List<CBBYQZXDD> getZxdd();
 	List<CBBYQWGDD> getWgdd();
+	CBBYQTBDD getTbddById(Integer tbcpbh);
 }

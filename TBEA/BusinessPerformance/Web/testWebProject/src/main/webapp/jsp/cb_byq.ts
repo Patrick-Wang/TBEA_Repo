@@ -71,9 +71,9 @@ module cb_byq {
 //		private mfdwData : string[];
 //		private mgwData : string[];
 //		private mnwData : string[];
-        private mTbmxData: string[][];
-        private mJttbData: string[][];
-        private mGstbData: string[][];
+        private mMxData: string[][];
+        private mJtData: string[][];
+        private mGsData: string[][];
         private mMonth: number;
 		private mMxTableId : string;
 		private mJttbTableId : string;
@@ -82,16 +82,16 @@ module cb_byq {
 	        mxTableId: string, 
 	        jttbTableId: string, 
 	        gstbTableId: string,
-            tbmx: string[][],
-            jttb: string[][],
-            gstb: string[][],
+            mx: string[][],
+            jt: string[][],
+            gs: string[][],
             month: number): void {
 			this.mMxTableId = mxTableId;
 			this.mJttbTableId = jttbTableId;
 			this.mGstbTableId = gstbTableId;
-			this.mTbmxData = tbmx;
-            this.mJttbData = jttb;
-            this.mGstbData = gstb;
+			this.mMxData = mx;
+            this.mJtData = jt;
+            this.mGsData = gs;
             this.mMonth = month;
             this.updateMxTable();
              this.updateJttbTable();
@@ -159,11 +159,11 @@ module cb_byq {
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createMxTable(name);
 			var data = [[""]];
             var row = [];
-            if (this.mTbmxData != undefined) {
+            if (this.mMxData != undefined) {
                 data = [];
-                for (var i = 0; i < this.mTbmxData.length; ++i) {
-                    if (this.mTbmxData[i] instanceof Array) {
-                        row = [].concat(this.mTbmxData[i]);
+                for (var i = 0; i < this.mMxData.length; ++i) {
+                    if (this.mMxData[i] instanceof Array) {
+                        row = [].concat(this.mMxData[i]);
                         for (var col in row) {
                             if (col == 8 || col == 13 || col == 15 || col == 17 || col == 19 || col == 21 || col >= 21 && col != 29) {
                                 row[col] = Util.formatCurrency(row[col]);
@@ -219,7 +219,7 @@ module cb_byq {
 				["总计"]];
              
             for (var i = 0; i < data.length; ++i){             
-                data[i] = this.format( data[i].concat(this.mJttbData[i]))
+                data[i] = this.format( data[i].concat(this.mJtData[i]))
             }
             
             
@@ -270,10 +270,10 @@ module cb_byq {
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createGstbTable(name);
 			var data = [];
             for (var i = 0; i < this.mMonth; ++i){               
-                data.push(this.format([(i + 1) + "月"].concat(this.mGstbData[i])));
+                data.push(this.format([(i + 1) + "月"].concat(this.mGsData[i])));
             }
             
-            data.push(this.format(["总计"].concat(this.mGstbData[this.mMonth])));
+            data.push(this.format(["总计"].concat(this.mGsData[this.mMonth])));
             
 			var parent = $("#" + this.mGstbTableId);
 			parent.empty();

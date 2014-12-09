@@ -54,18 +54,21 @@ public class BYQCBController {
 	@RequestMapping(value = "zx.do", method = RequestMethod.GET)
 	public ModelAndView getByqzxcb(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar preMonth = Calendar.getInstance();  
-		preMonth.add(Calendar.MONTH, -1);
-		int month = preMonth.get(Calendar.MONTH) + 1;
-		int year = preMonth.get(Calendar.YEAR);
+		Calendar date = Calendar.getInstance();  
+		int month = date.get(Calendar.MONTH) + 1;
+		int year = date.get(Calendar.YEAR);
+		List<String[][]> zxs = service.getZxmx(Date.valueOf(year + "-" + month + "-1"));
+		String[][] aZxmx = zxs.get(0);
+		String[][] aJtzx = zxs.get(1);
+		String[][] aGszx = zxs.get(2);
 		Map<String, Object> map = new HashMap<String, Object>();
+		String zxmx = JSONArray.fromObject(aZxmx).toString().replace("null", "0.00");
+		String jtzx = JSONArray.fromObject(aJtzx).toString().replace("null", "0.00");
+		String gszx = JSONArray.fromObject(aGszx).toString().replace("null", "0.00");
+		map.put("zxmx", zxmx);
+		map.put("jtzx", jtzx);
+		map.put("gszx", gszx);
 		map.put("month", month);
-		map.put("year", year);
-		Organization org = CompanyManager.getOperationOrganization();
-		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		map.put("names", name_ids[0]);
-		map.put("ids", name_ids[1]);
-		map.put("company_size", name_ids[0].length);
 		return new ModelAndView("cb_zx_byq", map);
 	}
 	
