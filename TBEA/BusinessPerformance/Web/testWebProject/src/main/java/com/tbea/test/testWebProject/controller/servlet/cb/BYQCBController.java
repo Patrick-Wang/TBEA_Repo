@@ -3,6 +3,7 @@ package com.tbea.test.testWebProject.controller.servlet.cb;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,16 +36,17 @@ public class BYQCBController {
 		Calendar date = Calendar.getInstance();  
 		int month = date.get(Calendar.MONTH) + 1;
 		int year = date.get(Calendar.YEAR);
-		String[][] aTbmx = service.getTbmx(Date.valueOf(year + "-" + month + "-1"));
-//		String[][] aJttb = service.getJttb(Date.valueOf(year + "-" + month + "-1"));
-//		String[][] aGstb = service.getGstb(Date.valueOf(year + "-" + month + "-1"));
+		List<String[][]> tbs = service.getTbmx(Date.valueOf(year + "-" + month + "-1"));
+		String[][] aTbmx = tbs.get(0);
+		String[][] aJttb = tbs.get(1);
+		String[][] aGstb = tbs.get(2);
 		Map<String, Object> map = new HashMap<String, Object>();
 		String tbmx = JSONArray.fromObject(aTbmx).toString().replace("null", "0.00");
-//		String jttb = JSONArray.fromObject(aJttb).toString().replace("null", "0.00");
-//		String gstb = JSONArray.fromObject(aGstb).toString().replace("null", "0.00");
+		String jttb = JSONArray.fromObject(aJttb).toString().replace("null", "0.00");
+		String gstb = JSONArray.fromObject(aGstb).toString().replace("null", "0.00");
 		map.put("tbmx", tbmx);
-//		map.put("jttb", jttb);
-//		map.put("gstb", gstb);
+		map.put("jttb", jttb);
+		map.put("gstb", gstb);
 		map.put("month", month);
 		return new ModelAndView("cb_byq", map);
 	}

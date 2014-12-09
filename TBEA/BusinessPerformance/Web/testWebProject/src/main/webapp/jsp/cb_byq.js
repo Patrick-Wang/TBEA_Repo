@@ -7,7 +7,7 @@ var cb_byq;
             return parent.append(new JQTable.Node("单价", "dj")).append(new JQTable.Node("用量", "yl"));
         };
         JQGridAssistantFactory.createMxTable = function (gridName) {
-            var title = ["订单所在单位及项目公司", "投标报价时间", "用户单位名称", "项目名称", "预计交货时间", "型号", "电压", "产量（万KVA）", "产值", "预计开标时间", "销售部门预测的中标概率", "投标硅钢牌号", "投标硅钢用量（单台）", "投标硅钢单价", "投标电解铜用量（单台）", "投标电解铜单价", "投标变压器油用量（单台）", "投标变压器油单价", "投标钢材用量（单台）", "投标钢材单价", "投标纸板用量（单台）", "投标纸板单价", "投标五大主材成本", "投标其他材料成本", "投标材料成本总计", "人工及制造费用", "投标制造成本", "运费", "投标毛利（单台）", "投标毛利率"];
+            var title = ["订单所在单位及项目公司", "投标报价时间", "用户单位名称", "项目名称", "预计交货时间", "型号", "电压", "产量（万KVA）", "产值", "预计开标时间", "销售部门预测的中标概率", "投标硅钢牌号", "投标硅钢用量（单台）", "投标硅钢单价", "投标电解铜用量（单台）", "投标电解铜单价", "投标变压器油用量（单台）", "投标变压器油单价", "投标钢材用量（单台）", "投标钢材单价", "投标纸板用量（单台）", "投标纸板单价", "投标五大主材成本", "投标其他材料成本", "投标材料成本总计（不含税）", "人工及制造费用", "投标制造成本", "运费", "投标毛利（单台）", "投标毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i < 6) {
@@ -29,7 +29,7 @@ var cb_byq;
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("电解铜", "djt")).append(new JQTable.Node("加工费", "jgf")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("纸板", "zb")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("变压器油", "byqy")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("钢材", "gc")).append(new JQTable.Node("加工费", "jgf"))
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("钢材", "gc"))
             ], gridName);
         };
         JQGridAssistantFactory.createGstbTable = function (gridName) {
@@ -42,7 +42,7 @@ var cb_byq;
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("电解铜", "1djt")).append(new JQTable.Node("加工费", "1jgf")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("纸板", "1zb")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("变压器油", "1byqy")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("钢材", "1gc")).append(new JQTable.Node("加工费", "1jgf"))
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("钢材", "1gc"))
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -53,11 +53,14 @@ var cb_byq;
         View.newInstance = function () {
             return new View();
         };
-        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId, tbmx) {
+        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId, tbmx, jttb, gstb, month) {
             this.mMxTableId = mxTableId;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
             this.mTbmxData = tbmx;
+            this.mJttbData = jttb;
+            this.mGstbData = gstb;
+            this.mMonth = month;
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
@@ -95,7 +98,7 @@ var cb_byq;
                 resize: false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
-                height: '100%',
+                height: 250,
                 width: 1250,
                 shrinkToFit: false,
                 autoScroll: true,
@@ -111,7 +114,9 @@ var cb_byq;
                 ["新变"],
                 ["总计"]
             ];
-            var row = [];
+            for (var i = 0; i < data.length; ++i) {
+                data[i] = this.format(data[i].concat(this.mJttbData[i]));
+            }
             var parent = $("#" + this.mJttbTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
@@ -129,17 +134,28 @@ var cb_byq;
                 autoScroll: true
             }));
         };
+        View.prototype.format = function (row) {
+            for (var col = 1; col < row.length; ++col) {
+                if (col == 3) {
+                    row[col] = (parseFloat(row[col]) * 100).toFixed(2) + "%";
+                }
+                else if (col != 5 && col != 7 && col != 10 && col != 14 && col != 16) {
+                    row[col] = Util.formatCurrency(row[col]);
+                }
+                else {
+                    row[col] = parseFloat(row[col]).toFixed(2);
+                }
+            }
+            return row;
+        };
         View.prototype.updateGstbTable = function () {
             var name = this.mGstbTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createGstbTable(name);
-            var data = [
-                ["1月"],
-                ["2月"],
-                ["3月"],
-                ["4月"],
-                ["总计"]
-            ];
-            var row = [];
+            var data = [];
+            for (var i = 0; i < this.mMonth; ++i) {
+                data.push(this.format([(i + 1) + "月"].concat(this.mGstbData[i])));
+            }
+            data.push(this.format(["总计"].concat(this.mGstbData[this.mMonth])));
             var parent = $("#" + this.mGstbTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
@@ -151,7 +167,7 @@ var cb_byq;
                 resize: false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
-                height: '100%',
+                height: 110,
                 width: 1250,
                 shrinkToFit: true,
                 autoScroll: true

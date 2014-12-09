@@ -37,12 +37,16 @@
                 			"table1", 
                 			"table2", 
                 			"table3",
-                			JSON.parse('${tbmx}'));
+                			JSON.parse('${tbmx}'),
+                			JSON.parse('${jttb}'),
+                			JSON.parse('${gstb}'),
+                			${month});
+                	
             })})();
     </script>
 <meta charset="UTF-8">
 
-<title>变压器成本</title>
+<title>变压器投标成本明细</title>
 
 <style type="text/css">
 body {
@@ -146,7 +150,7 @@ th.ui-th-ltr {
 </head>
 <body style:"width=1400px">
 	<div class="header">
-		<h1>变压器成本</h1>
+		<h1>变压器投标成本明细</h1>
 	</div>
 
 

@@ -17,7 +17,7 @@ module cb_byq {
                 "预计开标时间", "销售部门预测的中标概率", "投标硅钢牌号", "投标硅钢用量（单台）",
                 "投标硅钢单价", "投标电解铜用量（单台）", "投标电解铜单价", "投标变压器油用量（单台）",
                 "投标变压器油单价", "投标钢材用量（单台）", "投标钢材单价", "投标纸板用量（单台）",
-                "投标纸板单价", "投标五大主材成本", "投标其他材料成本", "投标材料成本总计",
+                "投标纸板单价", "投标五大主材成本", "投标其他材料成本", "投标材料成本总计（不含税）",
                 "人工及制造费用", "投标制造成本", "运费", "投标毛利（单台）", "投标毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
@@ -43,7 +43,6 @@ module cb_byq {
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("纸板", "zb")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("变压器油", "byqy")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("钢材", "gc"))
-                    .append(new JQTable.Node("加工费", "jgf"))
             ], gridName);
         }
         
@@ -59,7 +58,6 @@ module cb_byq {
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("纸板", "1zb")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("变压器油", "1byqy")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("钢材", "1gc"))
-                    .append(new JQTable.Node("加工费", "1jgf"))
             ], gridName);
         }
     }
@@ -74,6 +72,9 @@ module cb_byq {
 //		private mgwData : string[];
 //		private mnwData : string[];
         private mTbmxData: string[][];
+        private mJttbData: string[][];
+        private mGstbData: string[][];
+        private mMonth: number;
 		private mMxTableId : string;
 		private mJttbTableId : string;
 		private mGstbTableId : string;
@@ -81,11 +82,17 @@ module cb_byq {
 	        mxTableId: string, 
 	        jttbTableId: string, 
 	        gstbTableId: string,
-            tbmx: string[][]): void {
+            tbmx: string[][],
+            jttb: string[][],
+            gstb: string[][],
+            month: number): void {
 			this.mMxTableId = mxTableId;
 			this.mJttbTableId = jttbTableId;
 			this.mGstbTableId = gstbTableId;
 			this.mTbmxData = tbmx;
+            this.mJttbData = jttb;
+            this.mGstbData = gstb;
+            this.mMonth = month;
             this.updateMxTable();
              this.updateJttbTable();
           	this.updateGstbTable();
@@ -187,7 +194,7 @@ module cb_byq {
                     //autowidth : false,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
-                    height: '100%',
+                    height: 250,
                     width: 1250,
                     shrinkToFit: false,
                     autoScroll: true,
@@ -210,18 +217,10 @@ module cb_byq {
 				["衡变"],
 				["新变"],
 				["总计"]];
-  			var row = [];
-//            for (var i = 0; i < data.length; ++i) {
-//                if (rawData[i] instanceof Array) {
-//                    row = [].concat(rawData[i]);
-//                    for (var col in row) {
-//                    	if (col % 2 != 0){
-//                        	row[col] = Util.formatCurrency(row[col]);
-//                        }
-//                    }
-//                    data[i] = data[i].concat(row);
-//                }
-//            }
+             
+            for (var i = 0; i < data.length; ++i){             
+                data[i] = this.format( data[i].concat(this.mJttbData[i]))
+            }
             
             
 			var parent = $("#" + this.mJttbTableId);
@@ -253,28 +252,28 @@ module cb_byq {
 
         }
         
+        private format(row: string[]) {
+            for (var col = 1; col < row.length; ++col) {
+                if (col == 3) {
+                    row[col] = (parseFloat(row[col]) * 100).toFixed(2) + "%";
+                } else if (col != 5 && col != 7 && col != 10 && col != 14 && col != 16) {
+                    row[col] = Util.formatCurrency(row[col]);
+                } else {
+                    row[col] = parseFloat(row[col]).toFixed(2);
+                }
+            }
+            return row
+        }
+        
         private updateGstbTable(): void {
          	var name = this.mGstbTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createGstbTable(name);
-			var data = [
-				["1月"],
-				["2月"],
-				["3月"],
-				["4月"],
-				["总计"]];
-  			var row = [];
-//            for (var i = 0; i < data.length; ++i) {
-//                if (rawData[i] instanceof Array) {
-//                    row = [].concat(rawData[i]);
-//                    for (var col in row) {
-//                    	if (col % 2 != 0){
-//                        	row[col] = Util.formatCurrency(row[col]);
-//                        }
-//                    }
-//                    data[i] = data[i].concat(row);
-//                }
-//            }
+			var data = [];
+            for (var i = 0; i < this.mMonth; ++i){               
+                data.push(this.format([(i + 1) + "月"].concat(this.mGstbData[i])));
+            }
             
+            data.push(this.format(["总计"].concat(this.mGstbData[this.mMonth])));
             
 			var parent = $("#" + this.mGstbTableId);
 			parent.empty();
@@ -292,7 +291,7 @@ module cb_byq {
                     //autowidth : false,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
-                    height: '100%',
+                    height: 110,
                     width: 1250,
                     shrinkToFit: true,
                     autoScroll: true,

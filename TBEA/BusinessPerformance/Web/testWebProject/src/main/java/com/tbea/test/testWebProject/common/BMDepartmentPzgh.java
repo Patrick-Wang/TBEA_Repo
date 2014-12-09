@@ -22,15 +22,21 @@ class BMDepartmentPzgh extends AbstractOrganization {
 
 	@Override
 	public Company getCompany(Integer id) {
-		int top = id / 100;
-		if (top <= topComps.size()) {
-			int sub = id % 10;
-			if (sub % 100 / 10 == 0
-					&& topComps.get(top - 1).getSubCompanys().size() >= sub) {
-				return topComps.get(top - 1).getSubCompanys().get(sub);
+		Company ret = null;
+		if (id >= 100){
+			int top = id / 100 - 1;
+			if (top < topComps.size()) {
+				int sub = id % 100 - 1;
+				if (topComps.get(top).getSubCompanys().size() > sub) {
+					ret = topComps.get(top).getSubCompanys().get(sub);
+				}
 			}
 		}
-		return null;
+		else if(id >= 1){
+			ret = topComps.get(id - 1);
+		}
+	
+		return ret;
 	}
 
 	@Override
