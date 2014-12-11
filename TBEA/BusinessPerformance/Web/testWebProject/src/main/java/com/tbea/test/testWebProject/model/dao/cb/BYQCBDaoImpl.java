@@ -51,4 +51,16 @@ public class BYQCBDaoImpl implements  BYQCBDao{
 		}
 		return null;
 	}
+
+	@Override
+	public CBBYQZXDD getZxddById(Integer zxcpbh) {
+		Query q = entityManager.createQuery(
+				"from CBBYQZXDD where id = :zxcpbh");
+		q.setParameter("zxcpbh", zxcpbh);
+		List<CBBYQZXDD> zxdds = q.getResultList();
+		if (!zxdds.isEmpty()){
+			return zxdds.get(0);
+		}
+		return null;
+	}
 }

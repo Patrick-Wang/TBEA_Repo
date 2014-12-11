@@ -40,7 +40,7 @@
                 			JSON.parse('${zxmx}'),
                 			JSON.parse('${jtzx}'),
                 			JSON.parse('${gszx}'),
-                			${month});
+                			 ${month});
             })})();
     </script>
 <meta charset="UTF-8">

@@ -21,7 +21,12 @@ module cb_wg_byq {
 
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                if (i < 2){
+                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left));
+                    }else{
+                     nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                    }
+               
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         }
@@ -84,6 +89,13 @@ module cb_wg_byq {
         //		private mfdwData : string[];
         //		private mgwData : string[];
         //		private mnwData : string[];
+          private mMxData: string[][];
+        private mJtData: string[][];
+        private mGsData: string[][];
+         private mBtdyData: string[][];
+        private mMonth: number;
+                private mYear: number;
+         private mDataSet : Util.DateDataSet;
         private mMxTableId: string;
         private mJttbTableId: string;
         private mGstbTableId: string;
@@ -92,18 +104,59 @@ module cb_wg_byq {
             mxTableId: string,
             jttbTableId: string,
             gstbTableId: string,
-            fdyTableId : string): void {
+            fdyTableId : string,
+              mx: string[][],
+            jt: string[][],
+            gs: string[][],
+             btdy: string[][],
+            month: number,
+            year: number): void {
             this.mMxTableId = mxTableId;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
             this.mFdyTableId = fdyTableId;
-
+    this.mDataSet = new Util.DateDataSet("wg_update.do");
+            this.mMxData = mx;
+            this.mJtData = jt;
+            this.mGsData = gs;
+            this.mBtdyData = btdy;
+            this.mMonth = month;
+             this.mYear = year;
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
             this.updateFdyTable();
         }
 
+        
+          public onYearSelected(year : number){
+            this.mYear = year;
+        }
+        
+        public onMonthSelected(month : number){
+            this.mMonth = month;
+        }
+        
+        public updateUI(){
+            this.mDataSet.getData(this.mMonth, this.mYear, (dataArray : Array<string[]>) =>{
+                if (null != dataArray){
+                    var data : any = dataArray[0];
+                    this.mJtData = data;
+                    data = dataArray[1];
+                    this.mBtdyData = data;
+
+                    this.updateJttbTable();
+                    this.updateFdyTable();
+//                    this.mData = dataArray;
+//                    $('h1').text(this.mYear + "年" + this.mMonth + "月 各产业指标汇总");
+//                    document.title = this.mYear + "年" + this.mMonth + "月 各产业指标汇总";
+//                    this.updateTable();
+                }
+            });
+        }
+
+        
+        
         //        private initEchart(echart): void {
         //            var ysyq_payment_Chart = echarts.init(echart)
         //            var ysyq_payment_Option = {
@@ -163,19 +216,24 @@ module cb_wg_byq {
         private updateMxTable(): void {
             var name = this.mMxTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createMxTable(name);
-            var data = [[""]
-            ];
+            var data = [[""]];
             var row = [];
-            //            for (var i = 0; i < data.length; ++i) {
-            //                if (rawData[i] instanceof Array) {
-            //                    row = [].concat(rawData[i]);
-            //                    for (var col in row) {
-            //                    	if (col % 2 != 0){
-            //                        	row[col] = Util.formatCurrency(row[col]);
-            //                        }
-            //                                 data[i] = data[i].concat(row);
-            //                }
-            //            }
+            if (this.mMxData != undefined) {
+                data = [];
+                for (var i = 0; i < this.mMxData.length; ++i) {
+                    if (this.mMxData[i] instanceof Array) {
+                        row = [].concat(this.mMxData[i]);
+                        for (var col in row) {
+                            if (21 == col) {
+                                row[col] = (parseFloat(row[col]) * 100).toFixed(2) + "%";
+                            } else if (col != 0 && col != 1 && col != 3 && col != 5 && col != 8 && col != 10 && col != 12) {
+                                row[col] = Util.formatCurrency(row[col]);
+                            }
+                        }
+                        data.push(row);
+                    }
+                }
+            }
             
             
             var parent = $("#" + this.mMxTableId);
@@ -193,8 +251,9 @@ module cb_wg_byq {
                     resize: false,
                     //autowidth : false,
                     cellsubmit: 'clientArray',
+                    rowNum:10000,
                     cellEdit: true,
-                    height: '100%',
+                    height: 250,
                     width: 1250,
                     shrinkToFit: false,
                     autoScroll: true,
@@ -215,32 +274,41 @@ module cb_wg_byq {
             tableAssist.mergeColum(0, 9);
             tableAssist.mergeRow(0);
             tableAssist.mergeRow(1);
-            tableAssist.mergeRow(2);
+            tableAssist.mergeRow(2, 0, 3);
+            tableAssist.mergeRow(2, 3, 3);
+            tableAssist.mergeRow(2, 6, 3);
+            tableAssist.mergeRow(2, 9, 3);
             var data = [
-                ["1月","沈变","","中标阶段"],
-                ["1月","沈变","","预期阶段"],
-                ["1月","沈变","","完工阶段"],
-                ["1月","衡变"," ","中标阶段"],
-                ["1月","衡变"," ","预期阶段"],
-                ["1月","衡变"," ","完工阶段"],
-                ["1月","新变","","中标阶段"],
-                ["1月","新变","","预期阶段"],
-                ["1月","新变","","完工阶段"],
-                ["X月","小计"," ","中标阶段"],
-                ["X月","小计"," ","预期阶段"],
-                ["X月","小计"," ","完工阶段"]];
-            var row = [];
-            //            for (var i = 0; i < data.length; ++i) {
-            //                if (rawData[i] instanceof Array) {
-            //                    row = [].concat(rawData[i]);
-            //                    for (var col in row) {
-            //                    	if (col % 2 != 0){
-            //                        	row[col] = Util.formatCurrency(row[col]);
-            //                        }
-            //                                 data[i] = data[i].concat(row);
-            //                }
-            //            }
-            
+                [this.mMonth + "月","沈变","","中标阶段"],
+                [this.mMonth + "月","沈变","","预期阶段"],
+                [this.mMonth + "月","沈变","","完工阶段"],
+                [this.mMonth + "月","衡变"," ","中标阶段"],
+                [this.mMonth + "月","衡变"," ","预期阶段"],
+                [this.mMonth + "月","衡变"," ","完工阶段"],
+                [this.mMonth + "月","新变","","中标阶段"],
+                [this.mMonth + "月","新变","","预期阶段"],
+                [this.mMonth + "月","新变","","完工阶段"],
+                [this.mYear + "年" + this.mMonth,"月小计"," ","中标阶段"],
+                [this.mYear + "年" + this.mMonth, "月小计", " ", "预期阶段"],
+                [this.mYear + "年" + this.mMonth, "月小计", " ", "完工阶段"]];
+            for (var i = 0; i < this.mJtData.length; ++i) {
+                if (this.mJtData[i] instanceof Array) {
+                    for (var col in this.mJtData[i]) {
+                        if (col == 0){
+                            data[i][2] = Util.formatCurrency(this.mJtData[i][col]);
+                        }
+                        else if ( col % 2 == 1){
+                            data[i].push(Util.formatCurrency(this.mJtData[i][col]));
+                            }
+                        else if (col == 2){
+                            data[i].push((parseFloat(this.mJtData[i][col]) * 100.0).toFixed(2) + "%");
+                        }
+                        else {
+                            data[i].push(parseFloat(this.mJtData[i][col]).toFixed(2));
+                        }       
+                    }
+                }
+            }
             
             var parent = $("#" + this.mJttbTableId);
             parent.empty();
@@ -346,40 +414,49 @@ module cb_wg_byq {
             tableAssist.mergeColum(0, 18);
             tableAssist.mergeRow(0);
             tableAssist.mergeRow(1);
-            tableAssist.mergeRow(2);
+            for (var i = 0; i < 7; ++i){
+                tableAssist.mergeRow(2, i * 3, 3);
+            }
             
-            var data = [["1月","110KV以下","","中标阶段"],
-                        ["1月","110KV以下","","预期阶段"],
-                        ["1月","110KV以下","","完工阶段"],
-                        ["1月","220KV"," ","中标阶段"],
-                        ["1月","220KV"," ","预期阶段"],
-                        ["1月","220KV"," ","完工阶段"],
-                        ["1月","330KV","","中标阶段"],
-                        ["1月","330KV","","预期阶段"],
-                        ["1月","330KV","","完工阶段"],
-                        ["1月","500KV以上"," ","中标阶段"],
-                        ["1月","500KV以上"," ","预期阶段"],
-                        ["1月","500KV以上"," ","完工阶段"],
-                        ["1月","直流","","中标阶段"],
-                        ["1月","直流","","预期阶段"],
-                        ["1月","直流","","完工阶段"],
-                        ["1月","电抗器"," ","中标阶段"],
-                        ["1月","电抗器"," ","预期阶段"],
-                        ["1月","电抗器"," ","完工阶段"],
-                        [" 1月","小计","","中标阶段"],
-                        [" 1月","小计","","预期阶段"],
-                        [" 1月","小计","","完工阶段"]];
-            var row = [];
-            //            for (var i = 0; i < data.length; ++i) {
-            //                if (rawData[i] instanceof Array) {
-            //                    row = [].concat(rawData[i]);
-            //                    for (var col in row) {
-            //                      if (col % 2 != 0){
-            //                          row[col] = Util.formatCurrency(row[col]);
-            //                        }
-            //                                 data[i] = data[i].concat(row);
-            //                }
-            //            }
+            var data = [[this.mMonth + "月","110KV","","中标阶段"],
+                        [this.mMonth + "月","110KV","","预期阶段"],
+                        [this.mMonth + "月","110KV","","完工阶段"],
+                        [this.mMonth + "月","220KV"," ","中标阶段"],
+                        [this.mMonth + "月","220KV"," ","预期阶段"],
+                        [this.mMonth + "月","220KV"," ","完工阶段"],
+                        [this.mMonth + "月","330KV","","中标阶段"],
+                        [this.mMonth + "月","330KV","","预期阶段"],
+                        [this.mMonth + "月","330KV","","完工阶段"],
+                        [this.mMonth + "月","500KV"," ","中标阶段"],
+                        [this.mMonth + "月","500KV"," ","预期阶段"],
+                        [this.mMonth + "月","500KV"," ","完工阶段"],
+                        [this.mMonth + "月","直流","","中标阶段"],
+                        [this.mMonth + "月","直流","","预期阶段"],
+                        [this.mMonth + "月","直流","","完工阶段"],
+                        [this.mMonth + "月","电抗器"," ","中标阶段"],
+                        [this.mMonth + "月","电抗器"," ","预期阶段"],
+                        [this.mMonth + "月","电抗器"," ","完工阶段"],
+                        [this.mYear + "年" + this.mMonth,"月小计","","中标阶段"],
+                        [this.mYear + "年" + this.mMonth,"月小计","","预期阶段"],
+                        [this.mYear + "年" + this.mMonth,"月小计","","完工阶段"]];
+          for (var i = 0; i < this.mBtdyData.length; ++i) {
+                if (this.mBtdyData[i] instanceof Array) {
+                    for (var col in this.mBtdyData[i]) {
+                        if (col == 0){
+                            data[i][2] = Util.formatCurrency(this.mBtdyData[i][col]);
+                        }
+                        else if ( col % 2 == 1){
+                            data[i].push(Util.formatCurrency(this.mBtdyData[i][col]));
+                            }
+                        else if (col == 2){
+                            data[i].push((parseFloat(this.mBtdyData[i][col]) * 100.0).toFixed(2) + "%");
+                        }
+                        else {
+                            data[i].push(parseFloat(this.mBtdyData[i][col]).toFixed(2));
+                        }       
+                    }
+                }
+            }
             
             
             var parent = $("#" + this.mFdyTableId);

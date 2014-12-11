@@ -10,7 +10,12 @@ var cb_wg_byq;
             var title = ["工作号", "完工时间", "产值", "实际硅钢片用量 ", "实际硅钢片单价 ", "实际电解铜用量 ", "实际电解铜单价（无税含加工费） ", "加工费(含税) ", " 实际变压器油用量 ", " 实际变压器油单价 ", "实际钢材用量 ", "实际钢材单价 ", " 实际绝缘纸板用量 ", " 实际绝缘纸板单价 ", "实际五大主材成本 ", "实际其他材料成本合计 ", "实际材料成本总计 ", "实际人工制造费用 ", "实际总成本 ", "运费 ", "实际毛利额 ", "实际毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                if (i < 2) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */));
+                }
+                else {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
@@ -67,21 +72,64 @@ var cb_wg_byq;
         View.newInstance = function () {
             return new View();
         };
-        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId, fdyTableId) {
+        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId, fdyTableId, mx, jt, gs, btdy, month, year) {
             this.mMxTableId = mxTableId;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
             this.mFdyTableId = fdyTableId;
+            this.mDataSet = new Util.DateDataSet("wg_update.do");
+            this.mMxData = mx;
+            this.mJtData = jt;
+            this.mGsData = gs;
+            this.mBtdyData = btdy;
+            this.mMonth = month;
+            this.mYear = year;
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
             this.updateFdyTable();
+        };
+        View.prototype.onYearSelected = function (year) {
+            this.mYear = year;
+        };
+        View.prototype.onMonthSelected = function (month) {
+            this.mMonth = month;
+        };
+        View.prototype.updateUI = function () {
+            var _this = this;
+            this.mDataSet.getData(this.mMonth, this.mYear, function (dataArray) {
+                if (null != dataArray) {
+                    var data = dataArray[0];
+                    _this.mJtData = data;
+                    data = dataArray[1];
+                    _this.mBtdyData = data;
+                    _this.updateJttbTable();
+                    _this.updateFdyTable();
+                }
+            });
         };
         View.prototype.updateMxTable = function () {
             var name = this.mMxTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createMxTable(name);
             var data = [[""]];
             var row = [];
+            if (this.mMxData != undefined) {
+                data = [];
+                for (var i = 0; i < this.mMxData.length; ++i) {
+                    if (this.mMxData[i] instanceof Array) {
+                        row = [].concat(this.mMxData[i]);
+                        for (var col in row) {
+                            if (21 == col) {
+                                row[col] = (parseFloat(row[col]) * 100).toFixed(2) + "%";
+                            }
+                            else if (col != 0 && col != 1 && col != 3 && col != 5 && col != 8 && col != 10 && col != 12) {
+                                row[col] = Util.formatCurrency(row[col]);
+                            }
+                        }
+                        data.push(row);
+                    }
+                }
+            }
             var parent = $("#" + this.mMxTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
@@ -92,8 +140,9 @@ var cb_wg_byq;
                 drag: false,
                 resize: false,
                 cellsubmit: 'clientArray',
+                rowNum: 10000,
                 cellEdit: true,
-                height: '100%',
+                height: 250,
                 width: 1250,
                 shrinkToFit: false,
                 autoScroll: true
@@ -106,22 +155,42 @@ var cb_wg_byq;
             tableAssist.mergeColum(0, 9);
             tableAssist.mergeRow(0);
             tableAssist.mergeRow(1);
-            tableAssist.mergeRow(2);
+            tableAssist.mergeRow(2, 0, 3);
+            tableAssist.mergeRow(2, 3, 3);
+            tableAssist.mergeRow(2, 6, 3);
+            tableAssist.mergeRow(2, 9, 3);
             var data = [
-                ["1月", "沈变", "", "中标阶段"],
-                ["1月", "沈变", "", "预期阶段"],
-                ["1月", "沈变", "", "完工阶段"],
-                ["1月", "衡变", " ", "中标阶段"],
-                ["1月", "衡变", " ", "预期阶段"],
-                ["1月", "衡变", " ", "完工阶段"],
-                ["1月", "新变", "", "中标阶段"],
-                ["1月", "新变", "", "预期阶段"],
-                ["1月", "新变", "", "完工阶段"],
-                ["X月", "小计", " ", "中标阶段"],
-                ["X月", "小计", " ", "预期阶段"],
-                ["X月", "小计", " ", "完工阶段"]
+                [this.mMonth + "月", "沈变", "", "中标阶段"],
+                [this.mMonth + "月", "沈变", "", "预期阶段"],
+                [this.mMonth + "月", "沈变", "", "完工阶段"],
+                [this.mMonth + "月", "衡变", " ", "中标阶段"],
+                [this.mMonth + "月", "衡变", " ", "预期阶段"],
+                [this.mMonth + "月", "衡变", " ", "完工阶段"],
+                [this.mMonth + "月", "新变", "", "中标阶段"],
+                [this.mMonth + "月", "新变", "", "预期阶段"],
+                [this.mMonth + "月", "新变", "", "完工阶段"],
+                [this.mYear + "年" + this.mMonth, "月小计", " ", "中标阶段"],
+                [this.mYear + "年" + this.mMonth, "月小计", " ", "预期阶段"],
+                [this.mYear + "年" + this.mMonth, "月小计", " ", "完工阶段"]
             ];
-            var row = [];
+            for (var i = 0; i < this.mJtData.length; ++i) {
+                if (this.mJtData[i] instanceof Array) {
+                    for (var col in this.mJtData[i]) {
+                        if (col == 0) {
+                            data[i][2] = Util.formatCurrency(this.mJtData[i][col]);
+                        }
+                        else if (col % 2 == 1) {
+                            data[i].push(Util.formatCurrency(this.mJtData[i][col]));
+                        }
+                        else if (col == 2) {
+                            data[i].push((parseFloat(this.mJtData[i][col]) * 100.0).toFixed(2) + "%");
+                        }
+                        else {
+                            data[i].push(parseFloat(this.mJtData[i][col]).toFixed(2));
+                        }
+                    }
+                }
+            }
             var parent = $("#" + this.mJttbTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
@@ -173,9 +242,28 @@ var cb_wg_byq;
             tableAssist.mergeColum(0, 18);
             tableAssist.mergeRow(0);
             tableAssist.mergeRow(1);
-            tableAssist.mergeRow(2);
-            var data = [["1月", "110KV以下", "", "中标阶段"], ["1月", "110KV以下", "", "预期阶段"], ["1月", "110KV以下", "", "完工阶段"], ["1月", "220KV", " ", "中标阶段"], ["1月", "220KV", " ", "预期阶段"], ["1月", "220KV", " ", "完工阶段"], ["1月", "330KV", "", "中标阶段"], ["1月", "330KV", "", "预期阶段"], ["1月", "330KV", "", "完工阶段"], ["1月", "500KV以上", " ", "中标阶段"], ["1月", "500KV以上", " ", "预期阶段"], ["1月", "500KV以上", " ", "完工阶段"], ["1月", "直流", "", "中标阶段"], ["1月", "直流", "", "预期阶段"], ["1月", "直流", "", "完工阶段"], ["1月", "电抗器", " ", "中标阶段"], ["1月", "电抗器", " ", "预期阶段"], ["1月", "电抗器", " ", "完工阶段"], [" 1月", "小计", "", "中标阶段"], [" 1月", "小计", "", "预期阶段"], [" 1月", "小计", "", "完工阶段"]];
-            var row = [];
+            for (var i = 0; i < 7; ++i) {
+                tableAssist.mergeRow(2, i * 3, 3);
+            }
+            var data = [[this.mMonth + "月", "110KV", "", "中标阶段"], [this.mMonth + "月", "110KV", "", "预期阶段"], [this.mMonth + "月", "110KV", "", "完工阶段"], [this.mMonth + "月", "220KV", " ", "中标阶段"], [this.mMonth + "月", "220KV", " ", "预期阶段"], [this.mMonth + "月", "220KV", " ", "完工阶段"], [this.mMonth + "月", "330KV", "", "中标阶段"], [this.mMonth + "月", "330KV", "", "预期阶段"], [this.mMonth + "月", "330KV", "", "完工阶段"], [this.mMonth + "月", "500KV", " ", "中标阶段"], [this.mMonth + "月", "500KV", " ", "预期阶段"], [this.mMonth + "月", "500KV", " ", "完工阶段"], [this.mMonth + "月", "直流", "", "中标阶段"], [this.mMonth + "月", "直流", "", "预期阶段"], [this.mMonth + "月", "直流", "", "完工阶段"], [this.mMonth + "月", "电抗器", " ", "中标阶段"], [this.mMonth + "月", "电抗器", " ", "预期阶段"], [this.mMonth + "月", "电抗器", " ", "完工阶段"], [this.mYear + "年" + this.mMonth, "月小计", "", "中标阶段"], [this.mYear + "年" + this.mMonth, "月小计", "", "预期阶段"], [this.mYear + "年" + this.mMonth, "月小计", "", "完工阶段"]];
+            for (var i = 0; i < this.mBtdyData.length; ++i) {
+                if (this.mBtdyData[i] instanceof Array) {
+                    for (var col in this.mBtdyData[i]) {
+                        if (col == 0) {
+                            data[i][2] = Util.formatCurrency(this.mBtdyData[i][col]);
+                        }
+                        else if (col % 2 == 1) {
+                            data[i].push(Util.formatCurrency(this.mBtdyData[i][col]));
+                        }
+                        else if (col == 2) {
+                            data[i].push((parseFloat(this.mBtdyData[i][col]) * 100.0).toFixed(2) + "%");
+                        }
+                        else {
+                            data[i].push(parseFloat(this.mBtdyData[i][col]).toFixed(2));
+                        }
+                    }
+                }
+            }
             var parent = $("#" + this.mFdyTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");

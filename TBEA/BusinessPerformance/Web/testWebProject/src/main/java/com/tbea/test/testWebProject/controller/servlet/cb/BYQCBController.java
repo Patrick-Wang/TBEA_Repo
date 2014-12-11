@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.test.testWebProject.common.CompanyManager;
@@ -72,21 +73,44 @@ public class BYQCBController {
 		return new ModelAndView("cb_zx_byq", map);
 	}
 	
+	@RequestMapping(value = "wg_update.do", method = RequestMethod.GET)
+	public @ResponseBody String  getByqwgcb_update(HttpServletRequest request,
+			HttpServletResponse response) {
+		int month = Integer.parseInt(request.getParameter("month"));
+		int year = Integer.parseInt(request.getParameter("year"));
+		Date d = java.sql.Date.valueOf(year + "-" + month + "-1");
+		List<String[][]> wgs = service.getWgmx(Date.valueOf(year + "-" + month + "-1"));
+		String[][] aJtwg = wgs.get(1);
+		String[][] aBydywg = wgs.get(3);
+		String jtwg = JSONArray.fromObject(aJtwg).toString().replace("null", "0.00");
+		String byqwg = JSONArray.fromObject(aBydywg).toString().replace("null", "0.00");
+		return "[" + jtwg  + ","+ byqwg + "]";
+	
+	}
+	
+	
 	@RequestMapping(value = "wg.do", method = RequestMethod.GET)
 	public ModelAndView getByqwgcb(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar preMonth = Calendar.getInstance();  
-		preMonth.add(Calendar.MONTH, -1);
-		int month = preMonth.get(Calendar.MONTH) + 1;
-		int year = preMonth.get(Calendar.YEAR);
+		Calendar date = Calendar.getInstance();  
+		int month = date.get(Calendar.MONTH) + 1;
+		int year = date.get(Calendar.YEAR);
+		List<String[][]> wgs = service.getWgmx(Date.valueOf(year + "-" + month + "-1"));
+		String[][] aWgmx = wgs.get(0);
+		String[][] aJtwg = wgs.get(1);
+		String[][] aGswg = wgs.get(2);
+		String[][] aBydywg = wgs.get(3);
 		Map<String, Object> map = new HashMap<String, Object>();
+		String wgmx = JSONArray.fromObject(aWgmx).toString().replace("null", "0.00");
+		String jtwg = JSONArray.fromObject(aJtwg).toString().replace("null", "0.00");
+		String gswg = JSONArray.fromObject(aGswg).toString().replace("null", "0.00");
+		String bydywg = JSONArray.fromObject(aBydywg).toString().replace("null", "0.00");
+		map.put("wgmx", wgmx);
+		map.put("jtwg", jtwg);
+		map.put("gswg", gswg);
+		map.put("bydywg", bydywg);
 		map.put("month", month);
 		map.put("year", year);
-		Organization org = CompanyManager.getOperationOrganization();
-		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		map.put("names", name_ids[0]);
-		map.put("ids", name_ids[1]);
-		map.put("company_size", name_ids[0].length);
 		return new ModelAndView("cb_wg_byq", map);
 	}
 }
