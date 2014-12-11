@@ -46,11 +46,21 @@ function doSubmit(evt){
     <div style="text-align: center;">
 	<div class="header">
 		<div>
-			<h1><strong>特变电工经营管控信息平台</strong></h1>
+			<table>
+                <tr>
+                    <td style = "padding-top: 3px">
+                        <img src="images/login_logo.png" width = "300px" border="0" height="60px">
+                    </td>
+                </tr>
+            </table>
 		</div>
 	</div>
-	
-	<div style="height:80px;"></div>
+	<div style="height:30px;"></div>
+    <div class = "title" style ="text-align: center;">
+        <img src="images/title.png" width = "640px" border="0" height="62px">
+    </div>
+    
+	<div style="height:60px;"></div>
     <div align="center" >
 	
 	<form id="loginForm" action="" method="post" >
@@ -68,7 +78,7 @@ function doSubmit(evt){
 	</form>
 	
 	</div>
-		<div style="text-align:center;margin-top:210px;font-size: 13px;font-weight: 400;">
+		<div style="text-align:center;margin-top:140px;font-size: 13px;font-weight: 400;">
 		  <div>&copy;2014 信息资源管理中心版权所有 </div>
 	    </div>
 	</div>
