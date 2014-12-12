@@ -114,7 +114,7 @@ var cb_wg_xl;
                             if (21 == col) {
                                 row[col] = (parseFloat(row[col]) * 100).toFixed(2) + "%";
                             }
-                            else if (col != 0 && col != 1 && col != 3 && col != 5 && col != 8 && col != 10 && col != 12) {
+                            else if (col == 8 || col == 10 || col >= 13) {
                                 row[col] = Util.formatCurrency(row[col]);
                             }
                         }

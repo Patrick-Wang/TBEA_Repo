@@ -173,7 +173,7 @@ public class CBXLWGDD extends AbstractReadWriteEntity {
 		this.yf = yf;
 	}
 
-	//@Column(name="[dwmc]")
+	@Column(name="[dwmc]")
 	public String getDwmc() {
 		return dwmc;
 	}

@@ -167,7 +167,7 @@ public class XLCBServiceImpl implements XLCBService{
 				//wg[row][3] = //合同中标时间
 				//wg[row][4] = //合同号
 				//wg[row][5] = //数量
-				//wg[row][6] = //用户单位名称
+				wg[row][6] = wgdd.getDwmc();
 				//wg[row][7] = //产品大类
 				wg[row][8] = wgdd.getCz() + "";//产值//产值
 				wg[row][9] = wgdd.getDjtyl() + "";//实际电解铜用量//实际铜用量
