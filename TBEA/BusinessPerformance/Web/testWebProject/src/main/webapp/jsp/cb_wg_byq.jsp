@@ -156,15 +156,8 @@ th.ui-th-ltr {
 	</div>
 
 
-
-	<div align="center">
-		<table>
-			<tr>
-				<div id="table1" style="margin-bottom: 15px"></div>
-			</tr>
-			<tr >
-
-				<table>
+<div id="table1" align="center" style="margin-bottom: 15px"></div>
+<table style="margin-left:80px">
 					<tr >
 						<td><%@include file="date_selection.jsp"%>
 						</td>
@@ -173,19 +166,11 @@ th.ui-th-ltr {
 							onclick="instance.updateUI()"></input></td>
 					</tr>
 				</table>
+				<div id="table2" align="center" style="margin-bottom: 15px"></div>
+					<div id="table3" align="center" style="margin-bottom: 15px; display: none"></div>
+					<div id="table4" align="center" style="margin-bottom: 15px;"></div>
+		
 
-			</tr>
-			<tr>
-				<div id="table2" style="margin-bottom: 15px"></div>
-			</tr>
-			<tr>
-				<div id="table3" style="margin-bottom: 15px; display: none"></div>
-			</tr>
-			<tr>
-				<div id="table4" style="margin-bottom: 15px;"></div>
-			</tr>
-		</table>
-	</div>
 
 	<%@include file="loading.jsp"%>
 </body>

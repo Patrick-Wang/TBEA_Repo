@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.test.testWebProject.common.Company;
@@ -15,6 +16,7 @@ import com.tbea.test.testWebProject.model.dao.cqk.CQKDao;
 import com.tbea.test.testWebProject.model.dao.transfer.yszktz.YSZKTZLocalDao;
 import com.tbea.test.testWebProject.model.entity.local.CQK;
 
+@Service
 @Transactional("transactionManager")
 public class CQKServiceImpl implements CQKService {
 

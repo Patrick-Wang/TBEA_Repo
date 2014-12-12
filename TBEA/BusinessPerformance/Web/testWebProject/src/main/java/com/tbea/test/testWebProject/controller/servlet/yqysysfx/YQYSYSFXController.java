@@ -22,7 +22,6 @@ import com.tbea.test.testWebProject.common.CompanyManager;
 import com.tbea.test.testWebProject.common.Organization;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
-import com.tbea.test.testWebProject.service.blht.BLHTService;
 import com.tbea.test.testWebProject.service.yqysysfx.YQYSYSFXService;
 
 @Controller

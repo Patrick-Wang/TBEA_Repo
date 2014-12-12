@@ -23,10 +23,10 @@ public class CBXLTBDD extends AbstractReadWriteEntity {
 	Double	cz	;
 	String	yjkbsj	;
 	Double	yczbgl	;
-	Double	djtyl	;
-	Double	djtdj	;
-	Double	lyl	;
-	Double	byqydj	;
+	Double	djtyl	 = 0.0;
+	Double	djtdj	 = 0.0;
+	Double	lyl	 = 0.0;
+	Double	ldj	 = 0.0;
 	Double	qtcbhj	;
 	Double	yf	;
 
@@ -97,9 +97,9 @@ public class CBXLTBDD extends AbstractReadWriteEntity {
 		return lyl;
 	}
 
-	@Column(name="[byqydj]")
-	public Double getByqydj() {
-		return byqydj;
+	@Column(name="[tblvdj]")
+	public Double getLdj() {
+		return ldj;
 	}
 
 	@Column(name="[qtcbhj]")
@@ -192,8 +192,8 @@ public class CBXLTBDD extends AbstractReadWriteEntity {
 	/**
 	 * @param byqydj the byqydj to set
 	 */
-	public void setByqydj(Double byqydj) {
-		this.byqydj = byqydj;
+	public void setLdj(Double byqydj) {
+		this.ldj = byqydj;
 	}
 
 	/**

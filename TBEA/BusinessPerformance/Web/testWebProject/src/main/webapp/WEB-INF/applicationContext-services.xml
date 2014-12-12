@@ -107,27 +107,27 @@
 	<!-- DAO -->
 	<!-- -->
 
-	<bean id="qyzjkDao"
-		class="com.tbea.test.testWebProject.model.dao.qyzjk.QYZJKDaoImpl" />
-	<bean id="testTableDao"
-		class="com.tbea.test.testWebProject.model.dao.testTable.TestTableDaoImpl" />
-	<bean id="blLocalDao"
-		class="com.tbea.test.testWebProject.model.dao.transfer.bl.BLLocalDaoImpl" />
-	<bean id="bl15Dao"
-		class="com.tbea.test.testWebProject.model.dao.transfer.bl.BL15DaoImpl" />
-	<bean id="htxxLocalDao"
-		class="com.tbea.test.testWebProject.model.dao.transfer.htxx.HTXXLocalDaoImpl" />
-	<bean id="htxx15Dao"
-		class="com.tbea.test.testWebProject.model.dao.transfer.htxx.HTXX15DaoImpl" />
-	<bean id="yszktzLocalDao"
-		class="com.tbea.test.testWebProject.model.dao.transfer.yszktz.YSZKTZLocalDaoImpl" />
-	<bean id="yszktz15Dao"
-		class="com.tbea.test.testWebProject.model.dao.transfer.yszktz.YSZKTZ15DaoImpl" />
-	<bean id="cqkDao" class="com.tbea.test.testWebProject.model.dao.cqk.CQKDaoImpl" />
-	<bean id="blhtDao" class="com.tbea.test.testWebProject.model.dao.blht.BLHTDaoImpl" />
-	<bean id="yqkDao" class="com.tbea.test.testWebProject.model.dao.yqk.YQKDaoImpl" />
-	<bean id="yszkjgDao"
-		class="com.tbea.test.testWebProject.model.dao.yszkjg.YSZKJGDaoImpl" />
+<!-- 	<bean id="qyzjkDao" -->
+<!-- 		class="com.tbea.test.testWebProject.model.dao.qyzjk.QYZJKDaoImpl" /> -->
+<!-- 	<bean id="testTableDao" -->
+<!-- 		class="com.tbea.test.testWebProject.model.dao.testTable.TestTableDaoImpl" /> -->
+<!-- 	<bean id="blLocalDao" -->
+<!-- 		class="com.tbea.test.testWebProject.model.dao.transfer.bl.BLLocalDaoImpl" /> -->
+<!-- 	<bean id="bl15Dao" -->
+<!-- 		class="com.tbea.test.testWebProject.model.dao.transfer.bl.BL15DaoImpl" /> -->
+<!-- 	<bean id="htxxLocalDao" -->
+<!-- 		class="com.tbea.test.testWebProject.model.dao.transfer.htxx.HTXXLocalDaoImpl" /> -->
+<!-- 	<bean id="htxx15Dao" -->
+<!-- 		class="com.tbea.test.testWebProject.model.dao.transfer.htxx.HTXX15DaoImpl" /> -->
+<!-- 	<bean id="yszktzLocalDao" -->
+<!-- 		class="com.tbea.test.testWebProject.model.dao.transfer.yszktz.YSZKTZLocalDaoImpl" /> -->
+<!-- 	<bean id="yszktz15Dao" -->
+<!-- 		class="com.tbea.test.testWebProject.model.dao.transfer.yszktz.YSZKTZ15DaoImpl" /> -->
+<!-- 	<bean id="cqkDao" class="com.tbea.test.testWebProject.model.dao.cqk.CQKDaoImpl" /> -->
+<!-- 	<bean id="blhtDao" class="com.tbea.test.testWebProject.model.dao.blht.BLHTDaoImpl" /> -->
+<!-- 	<bean id="yqkDao" class="com.tbea.test.testWebProject.model.dao.yqk.YQKDaoImpl" /> -->
+<!-- 	<bean id="yszkjgDao" -->
+<!-- 		class="com.tbea.test.testWebProject.model.dao.yszkjg.YSZKJGDaoImpl" /> -->
 
 	<!-- UTILS -->
 	<!-- -->
@@ -143,56 +143,56 @@
 	<!-- BUSINESS -->
 	<!-- -->
 
-	<bean id="qyzjkService"
-		class="com.tbea.test.testWebProject.service.qyzjk.QYZJKServiceImpl"
-		scope="prototype">
-		<property name="qyzjkDao" ref="qyzjkDao" />
-	</bean>
-	<bean id="testTableService"
-		class="com.tbea.test.testWebProject.service.testTable.TestTableServiceImpl"
-		scope="prototype">
-		<property name="testTableDao" ref="testTableDao" />
-	</bean>
-	<bean id="blTransferService"
-		class="com.tbea.test.testWebProject.service.transfer.bl.BLTransferServiceImpl"
-		scope="prototype">
-		<property name="blLocalDao" ref="blLocalDao" />
-		<property name="bl15Dao" ref="bl15Dao" />
-	</bean>
-	<bean id="htxxTransferService"
-		class="com.tbea.test.testWebProject.service.transfer.htxx.HTXXTransferServiceImpl"
-		scope="prototype">
-		<property name="htxxLocalDao" ref="htxxLocalDao" />
-		<property name="htxx15Dao" ref="htxx15Dao" />
-	</bean>
-	<bean id="yszktzTransferService"
-		class="com.tbea.test.testWebProject.service.transfer.yszktz.YSZKTZTransferServiceImpl"
-		scope="prototype">
-		<property name="yszktzLocalDao" ref="yszktzLocalDao" />
-		<property name="yszktz15Dao" ref="yszktz15Dao" />
-	</bean>
-	<bean id="cqkService" class="com.tbea.test.testWebProject.service.cqk.CQKServiceImpl"
-		scope="prototype">
-		<property name="cqkDao" ref="cqkDao" />
-		<property name="yszktzLocalDao" ref="yszktzLocalDao" />
-	</bean>
-	<bean id="blhtService"
-		class="com.tbea.test.testWebProject.service.blht.BLHTServiceImpl"
-		scope="prototype">
-		<property name="blhtDao" ref="blhtDao" />
-		<property name="blLocalDao" ref="blLocalDao" />
-	</bean>
-	<bean id="yqkService" class="com.tbea.test.testWebProject.service.yqk.YQKServiceImpl"
-		scope="prototype">
-		<property name="yqkDao" ref="yqkDao" />
-		<property name="yszktzLocalDao" ref="yszktzLocalDao" />
-	</bean>
-	<bean id="yszkjgService"
-		class="com.tbea.test.testWebProject.service.yszkjg.YSZKJGServiceImpl"
-		scope="prototype">
-		<property name="yszkjgDao" ref="yszkjgDao" />
-		<property name="yszktzLocalDao" ref="yszktzLocalDao" />
-	</bean>
+<!-- 	<bean id="qyzjkService" -->
+<!-- 		class="com.tbea.test.testWebProject.service.qyzjk.QYZJKServiceImpl" -->
+<!-- 		scope="prototype"> -->
+<!-- 		<property name="qyzjkDao" ref="qyzjkDao" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="testTableService" -->
+<!-- 		class="com.tbea.test.testWebProject.service.testTable.TestTableServiceImpl" -->
+<!-- 		scope="prototype"> -->
+<!-- 		<property name="testTableDao" ref="testTableDao" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="blTransferService" -->
+<!-- 		class="com.tbea.test.testWebProject.service.transfer.bl.BLTransferServiceImpl" -->
+<!-- 		scope="prototype"> -->
+<!-- 		<property name="blLocalDao" ref="blLocalDao" /> -->
+<!-- 		<property name="bl15Dao" ref="bl15Dao" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="htxxTransferService" -->
+<!-- 		class="com.tbea.test.testWebProject.service.transfer.htxx.HTXXTransferServiceImpl" -->
+<!-- 		scope="prototype"> -->
+<!-- 		<property name="htxxLocalDao" ref="htxxLocalDao" /> -->
+<!-- 		<property name="htxx15Dao" ref="htxx15Dao" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="yszktzTransferService" -->
+<!-- 		class="com.tbea.test.testWebProject.service.transfer.yszktz.YSZKTZTransferServiceImpl" -->
+<!-- 		scope="prototype"> -->
+<!-- 		<property name="yszktzLocalDao" ref="yszktzLocalDao" /> -->
+<!-- 		<property name="yszktz15Dao" ref="yszktz15Dao" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="cqkService" class="com.tbea.test.testWebProject.service.cqk.CQKServiceImpl" -->
+<!-- 		scope="prototype"> -->
+<!-- 		<property name="cqkDao" ref="cqkDao" /> -->
+<!-- 		<property name="yszktzLocalDao" ref="yszktzLocalDao" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="blhtService" -->
+<!-- 		class="com.tbea.test.testWebProject.service.blht.BLHTServiceImpl" -->
+<!-- 		scope="prototype"> -->
+<!-- 		<property name="blhtDao" ref="blhtDao" /> -->
+<!-- 		<property name="blLocalDao" ref="blLocalDao" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="yqkService" class="com.tbea.test.testWebProject.service.yqk.YQKServiceImpl" -->
+<!-- 		scope="prototype"> -->
+<!-- 		<property name="yqkDao" ref="yqkDao" /> -->
+<!-- 		<property name="yszktzLocalDao" ref="yszktzLocalDao" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="yszkjgService" -->
+<!-- 		class="com.tbea.test.testWebProject.service.yszkjg.YSZKJGServiceImpl" -->
+<!-- 		scope="prototype"> -->
+<!-- 		<property name="yszkjgDao" ref="yszkjgDao" /> -->
+<!-- 		<property name="yszktzLocalDao" ref="yszktzLocalDao" /> -->
+<!-- 	</bean> -->
 
 	<!-- -->
 	<!-- CLIENTS -->

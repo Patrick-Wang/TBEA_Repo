@@ -23,12 +23,36 @@ public class CompanyManager {
 		GCL		("工程类"),
 		JT		("集团"),
 		BYQC	("变压器厂"),
+		GJMYCTGS	("国际贸易成套公司"),
 		ZTFGS	("中特分公司"),
 		KJHGQ	("康嘉互感器"),
+		DQZJFGS	("电气组件分公司"),
+		DLZDHGS	("电力自动化公司"),
 		SKGS	("上开公司"),
-		DQFGS	("电气分公司"),
-		ZTGS	("中特公司"),
-		XBGS	("箱变公司");
+		XSZX	("修试中心"),
+		XDWLGS	("现代物流公司"),
+		DLKCSJGS	("电力勘测设计公司"),
+		XLGGS	("新利钢公司"),
+		GNCTB	("国内成套部"),
+		DLAZB	("电力安装部"),
+		ZXGS	("中型公司"),
+		HXGS	("和新公司"),
+		TBDG_YD_NYYXGS	("特变电工（印度）能源有限公司"),
+		SBWYGS	("沈变物业公司"),
+		DQFGS	("电气分公司"),		
+		HNGJWLGS	("湖南国际物流公司"),		
+		HNGCGS	("湖南工程公司"),		
+		ZYGS	("众业公司"),		
+		HNZNDQGS	("湖南智能电气公司"),		
+		NJZNDQGS	("南京智能电气公司"),		
+		HNYLGS	("湖南园林公司"),
+		TBGS	("天变公司"),		
+		ZTGS	("中特公司"),		
+		XBGS	("箱变公司"),		
+		GJCTGCGS	("国际成套工程公司"),		
+		GNGCJXGS	("国内工程检修公司"),		
+		XJXTGJWLMYGS	("新疆新特国际物流贸易公司");
+	
 
 		private final String value;
 
@@ -55,11 +79,16 @@ public class CompanyManager {
 
 	static Organization pzgh = new BMDepartmentPzgh();
 	static Organization opera = new OperationDepartment();
+	static Organization BM = new BMDepartment();
+
+	public static Organization getBMOrganization() {
+		return BM;
+	}
 
 	public static Organization getPzghOrganization() {
 		return pzgh;
 	}
-
+	
 	public static Organization getOperationOrganization() {
 		return opera;
 	}

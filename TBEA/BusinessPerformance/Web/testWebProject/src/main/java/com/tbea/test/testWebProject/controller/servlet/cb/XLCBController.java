@@ -1,11 +1,15 @@
 package com.tbea.test.testWebProject.controller.servlet.cb;
 
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,26 +25,29 @@ import com.tbea.test.testWebProject.service.cb.XLCBService;
 
 
 @Controller
-@RequestMapping(value = "xl")
+@RequestMapping(value = "xlcb")
 public class XLCBController {
 	@Autowired
 	private XLCBService service;
 	
-	@RequestMapping(value = "zb.do", method = RequestMethod.GET)
-	public ModelAndView getByqzbcb(HttpServletRequest request,
+	@RequestMapping(value = "tb.do", method = RequestMethod.GET)
+	public ModelAndView getZbcb(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar preMonth = Calendar.getInstance();  
-		preMonth.add(Calendar.MONTH, -1);
-		int month = preMonth.get(Calendar.MONTH) + 1;
-		int year = preMonth.get(Calendar.YEAR);
+		Calendar date = Calendar.getInstance();  
+		int month = date.get(Calendar.MONTH) + 1;
+		int year = date.get(Calendar.YEAR);
+		List<String[][]> tbs = service.getTbmx(Date.valueOf(year + "-" + month + "-1"));
+		String[][] aTbmx = tbs.get(0);
+		String[][] aJttb = tbs.get(1);
+		String[][] aGstb = tbs.get(2);
 		Map<String, Object> map = new HashMap<String, Object>();
+		String tbmx = JSONArray.fromObject(aTbmx).toString().replace("null", "0.00");
+		String jttb = JSONArray.fromObject(aJttb).toString().replace("null", "0.00");
+		String gstb = JSONArray.fromObject(aGstb).toString().replace("null", "0.00");
+		map.put("tbmx", tbmx);
+		map.put("jttb", jttb);
+		map.put("gstb", gstb);
 		map.put("month", month);
-		map.put("year", year);
-		Organization org = CompanyManager.getOperationOrganization();
-		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		map.put("names", name_ids[0]);
-		map.put("ids", name_ids[1]);
-		map.put("company_size", name_ids[0].length);
 		return new ModelAndView("cb_xl", map);
 	}
 	

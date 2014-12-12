@@ -123,25 +123,29 @@ public class BYQCBServiceImpl implements BYQCBService {
 		tb[row][0] = valueOf(tb[row][0]) + byqtbcb.getCz() + "";
 		tb[row][1] = valueOf(tb[row][1]) + byqtbcb.getCz() - tbzccb + "";
 		tb[row][2] = valueOf(tb[row][1]) / valueOf(tb[row][0]) + "";
-		tb[row][3] = valueOf(tb[row][3]) + byqtbcb.getGgdj()
-				* byqtbcb.getGgyl() + "";
-		tb[row][4] = valueOf(tb[row][4]) + byqtbcb.getGgyl() + "";
-		tb[row][5] = valueOf(tb[row][5]) + byqtbcb.getDjtdj()
+		
+		tb[row][3] = valueOf(tb[row][3]) + byqtbcb.getGgyl() + "";
+		tb[row][4] = valueOf(tb[row][4]) + byqtbcb.getGgdj() * byqtbcb.getGgyl() + "";
+		
+		tb[row][5] = valueOf(tb[row][5]) + byqtbcb.getDjtyl() + "";
+		tb[row][6] = valueOf(tb[row][6]) + byqtbcb.getDjtdj()
 				* byqtbcb.getDjtyl() + "";
-		tb[row][6] = valueOf(tb[row][6]) + byqtbcb.getDjtyl() + "";
 		tb[row][7] = "0";// 电解铜费用
-		tb[row][8 + delta] = valueOf(tb[row][8 + delta]) + byqtbcb.getZbdj()
+		
+		tb[row][8 + delta] = valueOf(tb[row][8 + delta]) + byqtbcb.getZbyl()
+				+ "";
+		tb[row][9 + delta] = valueOf(tb[row][9 + delta]) + byqtbcb.getZbdj()
 				* byqtbcb.getZbyl() + "";
-		tb[row][9 + delta] = valueOf(tb[row][9 + delta]) + byqtbcb.getZbyl()
-				+ "";
+		
 		tb[row][10 + delta] = valueOf(tb[row][10 + delta])
-				+ byqtbcb.getByqydj() * byqtbcb.getByqyyl() + "";
-		tb[row][11 + delta] = valueOf(tb[row][11 + delta])
 				+ byqtbcb.getByqyyl() + "";
-		tb[row][12 + delta] = valueOf(tb[row][12 + delta]) + byqtbcb.getGcdj()
-				* byqtbcb.getGcyl() + "";
-		tb[row][13 + delta] = valueOf(tb[row][13 + delta]) + byqtbcb.getGcyl()
+		tb[row][11 + delta] = valueOf(tb[row][11 + delta])
+				+ byqtbcb.getByqydj() * byqtbcb.getByqyyl() + "";
+		tb[row][12 + delta] = valueOf(tb[row][12 + delta]) + byqtbcb.getGcyl()
 				+ "";
+
+		tb[row][13 + delta] = valueOf(tb[row][13 + delta]) + byqtbcb.getGcdj()
+				* byqtbcb.getGcyl() + "";
 	}
 
 	@Override
@@ -251,26 +255,31 @@ public class BYQCBServiceImpl implements BYQCBService {
 		jtzx[row][0] = valueOf(jtzx[row][0]) + byqcbzxdd.getCz() + "";
 		jtzx[row][1] = valueOf(jtzx[row][0]) + byqcbzxdd.getCz() - sczcb + "";
 		jtzx[row][2] = valueOf(jtzx[row][1]) / valueOf(jtzx[row][0]) + "";
-		jtzx[row][3] = valueOf(jtzx[row][3]) + byqcbzxdd.getGgdj()
+		
+		jtzx[row][3] = valueOf(jtzx[row][3]) + byqcbzxdd.getGgyl() + "";
+		jtzx[row][4] = valueOf(jtzx[row][4]) + byqcbzxdd.getGgdj()
 				* byqcbzxdd.getGgyl() + "";
-		jtzx[row][4] = valueOf(jtzx[row][4]) + byqcbzxdd.getGgyl() + "";
-		jtzx[row][5] = valueOf(jtzx[row][5]) + byqcbzxdd.getDjtdj()
+		
+		jtzx[row][5] = valueOf(jtzx[row][5]) + byqcbzxdd.getDjtyl() + "";
+		jtzx[row][6] = valueOf(jtzx[row][6]) + byqcbzxdd.getDjtdj()
 				* byqcbzxdd.getDjtyl() + "";
-		jtzx[row][6] = valueOf(jtzx[row][6]) + byqcbzxdd.getDjtyl() + "";
 		jtzx[row][7] = "0";// 电解铜费用
 
 		jtzx[row][8 + delta] = valueOf(jtzx[row][8 + delta])
-				+ byqcbzxdd.getZbdj() * byqcbzxdd.getZbyl() + "";
-		jtzx[row][9 + delta] = valueOf(jtzx[row][9 + delta])
 				+ byqcbzxdd.getZbyl() + "";
+		jtzx[row][9 + delta] = valueOf(jtzx[row][9 + delta])
+				+ byqcbzxdd.getZbdj() * byqcbzxdd.getZbyl() + "";
+		
 		jtzx[row][10 + delta] = valueOf(jtzx[row][10 + delta])
-				+ byqcbzxdd.getByqydj() * byqcbzxdd.getByqyyl() + "";
-		jtzx[row][11 + delta] = valueOf(jtzx[row][11 + delta])
 				+ byqcbzxdd.getByqyyl() + "";
+		jtzx[row][11 + delta] = valueOf(jtzx[row][11 + delta])
+				+ byqcbzxdd.getByqydj() * byqcbzxdd.getByqyyl() + "";
+		
 		jtzx[row][12 + delta] = valueOf(jtzx[row][12 + delta])
-				+ byqcbzxdd.getGcdj() * byqcbzxdd.getGcyl() + "";
-		jtzx[row][13 + delta] = valueOf(jtzx[row][13 + delta])
 				+ byqcbzxdd.getGcyl() + "";
+		jtzx[row][13 + delta] = valueOf(jtzx[row][13 + delta])
+				+ byqcbzxdd.getGcdj() * byqcbzxdd.getGcyl() + "";
+	
 	}
 
 	@Override
@@ -387,24 +396,30 @@ public class BYQCBServiceImpl implements BYQCBService {
 		jtzx[row][0] = valueOf(jtzx[row][0]) + byqcbwgdd.getSjcz() + "";
 		jtzx[row][1] = valueOf(jtzx[row][0]) + byqcbwgdd.getSjcz() - sczcb + "";
 		jtzx[row][2] = valueOf(jtzx[row][1]) / valueOf(jtzx[row][0]) + "";
-		jtzx[row][3] = valueOf(jtzx[row][3]) + byqcbwgdd.getGgdj()
+		
+		jtzx[row][3] = valueOf(jtzx[row][3]) + byqcbwgdd.getGgyl() + "";
+		jtzx[row][4] = valueOf(jtzx[row][4]) + byqcbwgdd.getGgdj()
 				* byqcbwgdd.getGgyl() + "";
-		jtzx[row][4] = valueOf(jtzx[row][4]) + byqcbwgdd.getGgyl() + "";
-		jtzx[row][5] = valueOf(jtzx[row][5]) + byqcbwgdd.getDjtdj()
+		
+		jtzx[row][5] = valueOf(jtzx[row][5]) + byqcbwgdd.getDjtyl() + "";
+		jtzx[row][6] = valueOf(jtzx[row][6]) + byqcbwgdd.getDjtdj()
 				* byqcbwgdd.getDjtyl() + "";
-		jtzx[row][6] = valueOf(jtzx[row][6]) + byqcbwgdd.getDjtyl() + "";
+		
 		// jtzx[row][7] = "0";// 电解铜费用
-		jtzx[row][8 - 1] = valueOf(jtzx[row][8 - 1]) + byqcbwgdd.getZbdj()
+		jtzx[row][7] = valueOf(jtzx[row][7]) + byqcbwgdd.getZbyl() + "";
+		jtzx[row][8] = valueOf(jtzx[row][8]) + byqcbwgdd.getZbdj()
 				* byqcbwgdd.getZbyl() + "";
-		jtzx[row][9 - 1] = valueOf(jtzx[row][9 - 1]) + byqcbwgdd.getZbyl() + "";
-		jtzx[row][10 - 1] = valueOf(jtzx[row][10 - 1]) + byqcbwgdd.getByqydj()
+		
+		jtzx[row][9] = valueOf(jtzx[row][9]) + byqcbwgdd.getByqyyl()
+				+ "";
+		jtzx[row][10] = valueOf(jtzx[row][10]) + byqcbwgdd.getByqydj()
 				* byqcbwgdd.getByqyyl() + "";
-		jtzx[row][11 - 1] = valueOf(jtzx[row][11 - 1]) + byqcbwgdd.getByqyyl()
+		
+		jtzx[row][11] = valueOf(jtzx[row][11]) + byqcbwgdd.getGcyl()
 				+ "";
-		jtzx[row][12 - 1] = valueOf(jtzx[row][12 - 1]) + byqcbwgdd.getGcdj()
+		jtzx[row][12] = valueOf(jtzx[row][12]) + byqcbwgdd.getGcdj()
 				* byqcbwgdd.getGcyl() + "";
-		jtzx[row][13 - 1] = valueOf(jtzx[row][13 - 1]) + byqcbwgdd.getGcyl()
-				+ "";
+		
 	}
 
 	@Override

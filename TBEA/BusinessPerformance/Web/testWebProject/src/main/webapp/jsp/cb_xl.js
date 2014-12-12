@@ -10,7 +10,12 @@ var cb_xl;
             var title = ["订单所在单位及项目公司", "投标报价时间", "用户单位名称", "产品大类", "数量", "产值", "预计开标时间", "销售部门预测的中标概率", "投标电解铜用量", "投标电解铜单价", "投标铝用量", "投标铝单价", "投标其他成本合计", "投标成本总计", "运费", "投标毛利率", "投标毛利额"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                if (i < 5) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */));
+                }
+                else {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
@@ -42,10 +47,14 @@ var cb_xl;
         View.newInstance = function () {
             return new View();
         };
-        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId) {
+        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId, mx, jt, gs, month) {
             this.mMxTableId = mxTableId;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
+            this.mMxData = mx;
+            this.mJtData = jt;
+            this.mGsData = gs;
+            this.mMonth = month;
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
@@ -55,6 +64,23 @@ var cb_xl;
             var tableAssist = JQGridAssistantFactory.createMxTable(name);
             var data = [[""]];
             var row = [];
+            if (this.mMxData != undefined) {
+                data = [];
+                for (var i = 0; i < this.mMxData.length; ++i) {
+                    if (this.mMxData[i] instanceof Array) {
+                        row = [].concat(this.mMxData[i]);
+                        for (var col in row) {
+                            if (col == 5 || col == 9 || (col >= 11 && col <= 15)) {
+                                row[col] = Util.formatCurrency(row[col]);
+                            }
+                            else if (col == 7 || col == 16) {
+                                row[col] = (parseFloat(row[col]) * 100).toFixed(2) + "%";
+                            }
+                        }
+                        data.push(row);
+                    }
+                }
+            }
             var parent = $("#" + this.mMxTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
@@ -66,10 +92,11 @@ var cb_xl;
                 resize: false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
-                height: '100%',
+                height: 250,
                 width: 1250,
                 shrinkToFit: false,
-                autoScroll: true
+                autoScroll: true,
+                rowNum: 1000
             }));
         };
         View.prototype.updateJttbTable = function () {
@@ -81,7 +108,9 @@ var cb_xl;
                 ["德缆"],
                 ["总计"]
             ];
-            var row = [];
+            for (var i = 0; i < data.length; ++i) {
+                data[i] = this.format(data[i].concat(this.mJtData[i]));
+            }
             var parent = $("#" + this.mJttbTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
@@ -99,17 +128,28 @@ var cb_xl;
                 autoScroll: true
             }));
         };
+        View.prototype.format = function (row) {
+            for (var col = 1; col < row.length; ++col) {
+                if (col == 3) {
+                    row[col] = (parseFloat(row[col]) * 100).toFixed(2) + "%";
+                }
+                else if (col != 5 && col != 7 && col != 10 && col != 14 && col != 16) {
+                    row[col] = Util.formatCurrency(row[col]);
+                }
+                else {
+                    row[col] = parseFloat(row[col]).toFixed(2);
+                }
+            }
+            return row;
+        };
         View.prototype.updateGstbTable = function () {
             var name = this.mGstbTableId + "_jqgrid_1234";
-            var tableAssist = JQGridAssistantFactory.createJttbTable(name);
-            var data = [
-                ["1月"],
-                ["2月"],
-                ["3月"],
-                ["4月"],
-                ["总计"]
-            ];
-            var row = [];
+            var tableAssist = JQGridAssistantFactory.createGstbTable(name);
+            var data = [];
+            for (var i = 0; i < this.mMonth; ++i) {
+                data.push(this.format([(i + 1) + "月"].concat(this.mGsData[i])));
+            }
+            data.push(this.format(["总计"].concat(this.mGsData[this.mMonth])));
             var parent = $("#" + this.mGstbTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
@@ -121,7 +161,7 @@ var cb_xl;
                 resize: false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
-                height: '100%',
+                height: 110,
                 width: 1250,
                 shrinkToFit: true,
                 autoScroll: true
