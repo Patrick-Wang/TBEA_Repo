@@ -48,19 +48,19 @@ function doSubmit(evt){
 		<div>
 			<table>
                 <tr>
-                    <td style = "padding-top: 3px">
-                        <img src="images/login_logo.png" width = "300px" border="0" height="60px">
+                    <td style = "padding-top: 0px">
+                        <img src="images/login_logo.png" width = "100%" border="0" height="130px">
                     </td>
                 </tr>
             </table>
 		</div>
 	</div>
-	<div style="height:30px;"></div>
+	<div style="height:80px;"></div>
     <div class = "title" style ="text-align: center;">
-        <img src="images/title.png" width = "640px" border="0" height="62px">
+        <h1 style="color:#170A69; font-size:300%"><b>特变电工经营管控信息平台</b></h1>
     </div>
     
-	<div style="height:60px;"></div>
+	<div style="height:50px;"></div>
     <div align="center" >
 	
 	<form id="loginForm" action="" method="post" >
@@ -72,7 +72,7 @@ function doSubmit(evt){
 		  <input type="hidden" name="transmissionStr" id="transmissionStr"/>
           <div class="errors" style="display: none" >用户名或密码错误，请重新输入。 </div>
 		  <div style="position: relative;height: 52px;margin-top:10px;" onclick="formSubmit();">
-		  <span  class="small-btn" >Login</span>
+		  <span  class="small-btn" >登录</span>
 	      </div>
 	  </fieldset>
 	</form>
