@@ -40,13 +40,24 @@ public class BYQCBServiceImpl implements BYQCBService {
 	}
 
 	private static Map<String, Integer> dydjMap = new HashMap<String, Integer>();
+	private static Map<Integer, String> byqzxjdMap = new HashMap<Integer, String>();
+
 	static {
 		dydjMap.put("110", 0);
 		dydjMap.put("220", 1);
 		dydjMap.put("330", 2);
 		dydjMap.put("500", 3);
+		
+		byqzxjdMap.put(101,"未设计");
+		byqzxjdMap.put(102,"已设计");
+		byqzxjdMap.put(103,"已开工前评审");
+		byqzxjdMap.put(104,"已采购");
+		byqzxjdMap.put(105,"已排产");
+
 	}
 
+	private Organization org = CompanyManager.getPzghOrganization();
+	
 	private Double valueOf(String val) {
 		if (val != null) {
 			return Double.valueOf(val);
@@ -81,7 +92,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 
 	private void fillTbmx(String[][] tbmx, int row, XMXX xmxx,
 			CBBYQTBDD byqtbcb, Double zccb, Double tbclzcb, Double tbzccb) {
-		tbmx[row][0] = xmxx.getDdszdw();// 订单所在单位及项目公司//订单所在单位及项目公司
+		tbmx[row][0] = org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName();// 订单所在单位及项目公司//订单所在单位及项目公司
 		tbmx[row][1] = byqtbcb.getTbbjsj() + "";// 投标报价时间//投标报价时间
 		tbmx[row][2] = xmxx.getYhdwmc();// 用户单位名称//用户单位名称
 		tbmx[row][3] = xmxx.getXmmc();// 项目名称//项目名称
@@ -165,7 +176,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 		rets.add(gstb);
 		XMXX xmxx;
 		CBBYQTBDD byqtbcb;
-		Organization org = CompanyManager.getPzghOrganization();
+
 		Company comp;
 
 		Calendar firstMonth = Calendar.getInstance();
@@ -215,10 +226,10 @@ public class BYQCBServiceImpl implements BYQCBService {
 	private void fillZxmx(String[][] zxmx, int row, XMXX xmxx,
 			CBBYQZXDD byqcbzxdd, CBBYQTBDD tbdd, Double zccb, Double clzcb,
 			Double sczcb) {
-		zxmx[row][0] = xmxx.getDdszdw();// 订单所在单位及项目公司订单所在单位及项目公司
-		zxmx[row][1] = byqcbzxdd.getDdzxjd() + "";// 订单执行阶段订单执行阶段
+		zxmx[row][0] = org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName();;// 订单所在单位及项目公司订单所在单位及项目公司
+		zxmx[row][1] = byqzxjdMap.get(Integer.valueOf(byqcbzxdd.getDdzxjd()));// 订单执行阶段订单执行阶段
 		zxmx[row][2] = byqcbzxdd.getGzh();// 工作号工作号
-		zxmx[row][3] = xmxx.getGb() + "";// 国别国别
+		zxmx[row][3] = xmxx.getGb() == 0 ? "国内订单" : "国际订单" + "";// 国别国别
 		zxmx[row][4] = xmxx.getKhhylx();// 客户行业类型客户行业类型
 		zxmx[row][5] = byqcbzxdd.getHtzbsj() + "";// 合同中标时间合同中标时间
 		zxmx[row][6] = tbdd.getXh() + "";// 产品型号
@@ -300,7 +311,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 		CBBYQZXDD byqcbzxdd;
 		CBBYQTBDD tbdd;
 		XMXX xmxx;
-		Organization org = CompanyManager.getPzghOrganization();
+		
 		Company comp;
 
 		Calendar firstMonth = Calendar.getInstance();
@@ -442,7 +453,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 		CBBYQWGDD byqcbwgdd;
 		CBBYQTBDD tbdd;
 		XMXX xmxx;
-		Organization org = CompanyManager.getPzghOrganization();
+		
 		Company comp;
 
 		Calendar firstMonth = Calendar.getInstance();

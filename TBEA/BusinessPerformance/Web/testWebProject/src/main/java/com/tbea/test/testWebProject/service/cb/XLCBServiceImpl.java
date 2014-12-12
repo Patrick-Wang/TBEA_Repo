@@ -36,10 +36,17 @@ public class XLCBServiceImpl implements XLCBService{
 	private XMXXDao xmxxDao;
 	
 	private static Map<CompanyType, Integer> gsMap = new HashMap<CompanyType, Integer>();
+//	private static Map<Integer, String> xlzxjdMap = new HashMap<Integer, String>();
 	static {
 		gsMap.put(CompanyType.LL, 0);
 		gsMap.put(CompanyType.XL, 1);
 		gsMap.put(CompanyType.DL, 2);
+		
+//		xlzxjdMap.put(201,"已采购");
+//		xlzxjdMap.put(202,"已排产");
+//		xlzxjdMap.put(203,"已生产");
+//		xlzxjdMap.put(204,"完工");
+
 	}
 	
 	private Double valueOf(String val) {

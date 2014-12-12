@@ -22,7 +22,7 @@ public class CompanyManager {
 		NYCY	("能源产业"),
 		GCL		("工程类"),
 		JT		("集团"),
-		BYQC	("变压器厂"),
+		BYQC	("沈变变压器厂"),
 		GJMYCTGS	("国际贸易成套公司"),
 		ZTFGS	("中特分公司"),
 		KJHGQ	("康嘉互感器"),
