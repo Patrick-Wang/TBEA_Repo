@@ -11,9 +11,9 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util;
-import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
+import com.tbea.test.testWebProject.common.companys.Company;
+import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
 import com.tbea.test.testWebProject.model.entity.local.XJLRB;

@@ -19,14 +19,15 @@ public class CBXLWGDD extends AbstractReadWriteEntity {
 	Date	gxrq	;
 	Integer	zxcpbh	;
 	String	wgsj	;
-	String	cz	;
+	Double	cz	;
 	Double	djtyl	;
 	Double	djtdj	;
 	Double	tjgf	;
 	Double	lyl	;
-	Double	byqydj	;
+	Double	sjlvdj	;
 	Double	qtcbhj	;
 	Double	yf	;
+	String dwmc;
 
 	
 	@Id
@@ -56,7 +57,7 @@ public class CBXLWGDD extends AbstractReadWriteEntity {
 	}
 
 	@Column(name="[cz]")
-	public String getCz() {
+	public Double getCz() {
 		return cz;
 	}
 
@@ -80,9 +81,9 @@ public class CBXLWGDD extends AbstractReadWriteEntity {
 		return lyl;
 	}
 
-	@Column(name="[byqydj]")
-	public Double getByqydj() {
-		return byqydj;
+	@Column(name="[sjlvdj]")
+	public Double getSjlvdj() {
+		return sjlvdj;
 	}
 
 	@Column(name="[qtcbhj]")
@@ -119,7 +120,7 @@ public class CBXLWGDD extends AbstractReadWriteEntity {
 	/**
 	 * @param cz the cz to set
 	 */
-	public void setCz(String cz) {
+	public void setCz(Double cz) {
 		this.cz = cz;
 	}
 
@@ -154,8 +155,8 @@ public class CBXLWGDD extends AbstractReadWriteEntity {
 	/**
 	 * @param byqydj the byqydj to set
 	 */
-	public void setByqydj(Double byqydj) {
-		this.byqydj = byqydj;
+	public void setSjlvdj(Double sjlvdj) {
+		this.sjlvdj = sjlvdj;
 	}
 
 	/**
@@ -170,6 +171,18 @@ public class CBXLWGDD extends AbstractReadWriteEntity {
 	 */
 	public void setYf(Double yf) {
 		this.yf = yf;
+	}
+
+	//@Column(name="[dwmc]")
+	public String getDwmc() {
+		return dwmc;
+	}
+
+	/**
+	 * @param dwmc the dwmc to set
+	 */
+	public void setDwmc(String dwmc) {
+		this.dwmc = dwmc;
 	}
 
 	

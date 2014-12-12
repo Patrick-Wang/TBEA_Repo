@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.tbea.test.testWebProject.common.Company;
-import com.tbea.test.testWebProject.common.CompanyManager;
-import com.tbea.test.testWebProject.common.Organization;
 import com.tbea.test.testWebProject.common.Util;
+import com.tbea.test.testWebProject.common.companys.Company;
+import com.tbea.test.testWebProject.common.companys.CompanyManager;
+import com.tbea.test.testWebProject.common.companys.Organization;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
 
 public class GcyZBHZStrategy extends ZbfdwhzZBHZStrategy {

@@ -6,7 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.text.SimpleDateFormat;
 
-import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
+import com.tbea.test.testWebProject.common.companys.Company;
+import com.tbea.test.testWebProject.common.companys.CompanyManager;
+import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 
 public class Util {
 	public static String format(Date d){

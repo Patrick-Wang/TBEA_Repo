@@ -5,7 +5,7 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
-import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.entity.BLHTDQQKHZ;
 
 public interface BLHTDQQKHZDao extends AbstractReadWriteDao<BLHTDQQKHZ> {

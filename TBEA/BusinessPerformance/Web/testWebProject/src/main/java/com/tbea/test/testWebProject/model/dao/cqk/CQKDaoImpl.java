@@ -15,8 +15,8 @@ import com.tbea.test.testWebProject.model.entity.local.CQK;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
-import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util;
+import com.tbea.test.testWebProject.common.companys.Company;
 
 
 @Repository

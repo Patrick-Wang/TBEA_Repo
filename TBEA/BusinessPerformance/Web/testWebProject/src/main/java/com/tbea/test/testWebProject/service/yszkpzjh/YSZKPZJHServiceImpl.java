@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.controller.servlet.yszkpzjh.YSZKPZJHBean;
 import com.tbea.test.testWebProject.model.dao.hkjhjgb.HKJHJGDao;
 import com.tbea.test.testWebProject.model.dao.yszkpzjh.YSZKPZJHDao;

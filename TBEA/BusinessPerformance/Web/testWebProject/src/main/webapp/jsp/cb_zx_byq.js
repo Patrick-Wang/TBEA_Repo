@@ -141,7 +141,7 @@ var cb_zx_byq;
                                     data[i].push(Util.formatCurrency(row[col]));
                                 }
                                 else {
-                                    data[i].push(row[col]);
+                                    data[i].push(parseFloat(row[col]).toFixed(2));
                                 }
                             }
                         }

@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.test.testWebProject.common.Company;
-import com.tbea.test.testWebProject.common.CompanyManager;
-import com.tbea.test.testWebProject.common.Organization;
 import com.tbea.test.testWebProject.common.Util;
-import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
+import com.tbea.test.testWebProject.common.companys.Company;
+import com.tbea.test.testWebProject.common.companys.CompanyManager;
+import com.tbea.test.testWebProject.common.companys.Organization;
+import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.model.dao.byqfkfstj.BYQFKFSDao;
 import com.tbea.test.testWebProject.model.entity.BYQFDWFKFS;
 import com.tbea.test.testWebProject.model.entity.BYQGWFKFS;

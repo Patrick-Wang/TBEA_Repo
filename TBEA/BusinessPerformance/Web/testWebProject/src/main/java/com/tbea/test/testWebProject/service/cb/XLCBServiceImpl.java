@@ -11,14 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.test.testWebProject.common.Company;
-import com.tbea.test.testWebProject.common.CompanyManager;
-import com.tbea.test.testWebProject.common.Organization;
-import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
+import com.tbea.test.testWebProject.common.companys.Company;
+import com.tbea.test.testWebProject.common.companys.CompanyManager;
+import com.tbea.test.testWebProject.common.companys.Organization;
+import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.model.dao.cb.XLCBDao;
 import com.tbea.test.testWebProject.model.dao.cb.XMXXDao;
 import com.tbea.test.testWebProject.model.entity.CBBYQTBDD;
+import com.tbea.test.testWebProject.model.entity.CBBYQWGDD;
+import com.tbea.test.testWebProject.model.entity.CBBYQZXDD;
 import com.tbea.test.testWebProject.model.entity.CBXLTBDD;
+import com.tbea.test.testWebProject.model.entity.CBXLWGDD;
 import com.tbea.test.testWebProject.model.entity.XMXX;
 
 @Service
@@ -84,10 +87,11 @@ public class XLCBServiceImpl implements XLCBService{
 		tb[row][0] = valueOf(tb[row][0]) + valueOf(xltbcb.getCz()) + "";
 		tb[row][1] = valueOf(tb[row][1]) + valueOf(xltbcb.getCz()) - tbcbzj + "";
 		tb[row][2] = valueOf(tb[row][1]) / valueOf(tb[row][0]) + "";
-		tb[row][3] = valueOf(tb[row][3]) + valueOf(xltbcb.getDjtdj()) + "";
-		tb[row][4] = valueOf(tb[row][4]) + valueOf(xltbcb.getDjtdj()) * valueOf(xltbcb.getDjtyl()) + "";
-		tb[row][5] = valueOf(tb[row][5]) + valueOf(xltbcb.getLdj()) + "";
-		tb[row][6] = valueOf(tb[row][6]) + valueOf(xltbcb.getLdj()) * valueOf(xltbcb.getLyl()) + "";
+		tb[row][3] = valueOf(tb[row][3]) + valueOf(xltbcb.getDjtdj()) * valueOf(xltbcb.getDjtyl()) + "";
+
+		tb[row][4] = valueOf(tb[row][4]) + valueOf(xltbcb.getDjtyl()) + "";
+		tb[row][5] = valueOf(tb[row][5]) + valueOf(xltbcb.getLdj()) * valueOf(xltbcb.getLyl()) + "";
+		tb[row][6] = valueOf(tb[row][6]) + valueOf(xltbcb.getLyl()) + "";
 	}
 	
 	private double valueOf(Double d){
@@ -153,5 +157,140 @@ public class XLCBServiceImpl implements XLCBService{
 
 		return rets;
 	}
+	
+	private void fillWgmx(String[][] wg, int row, CBXLWGDD wgdd,
+			Double zccb, Double sjzcb) {
+		//wg[row][0] = CompanyType.XL.getValue();// 工作号
+				wg[row][0] = CompanyType.XL.getValue();//订单所在单位及项目公司
+				wg[row][1] = wgdd.getWgsj();//完工时间//完工时间
+				//wg[row][2] = //投标报价时间
+				//wg[row][3] = //合同中标时间
+				//wg[row][4] = //合同号
+				//wg[row][5] = //数量
+				//wg[row][6] = //用户单位名称
+				//wg[row][7] = //产品大类
+				wg[row][8] = wgdd.getCz() + "";//产值//产值
+				wg[row][9] = wgdd.getDjtyl() + "";//实际电解铜用量//实际铜用量
+				wg[row][10] = wgdd.getDjtdj() + "";//实际电解铜单价//实际铜单价
+				wg[row][11] = wgdd.getTjgf() + "";//铜加工费//实际铜加工费
+				wg[row][12] = wgdd.getLyl() + "";//实际铝用量//实际铝用量
+				wg[row][13] = wgdd.getSjlvdj() + "";//实际铝单价//实际铝单价
+				wg[row][14] = zccb + "";//主材成本
+				wg[row][15] = wgdd.getQtcbhj() + "";//其他成本合计//实际其他材料成本合计
+				wg[row][16] = zccb + wgdd.getQtcbhj() + "";//材料成本合计
+				wg[row][17] = 0.0 + "";//人工制造费用
+				wg[row][18] = sjzcb + "";//实际总成本
+				wg[row][19] = wgdd.getYf() + "";//运费//运费
+				wg[row][20] = (valueOf(wgdd.getCz()) - sjzcb) + "";//实际毛利额
+				wg[row][21] = (valueOf(wgdd.getCz()) - sjzcb) / valueOf(wgdd.getCz()) + "";//实际毛利率
+	}
+
+	private void fillwgqk(String[][] jtzx, Integer row, CBXLWGDD xlcbwgdd,
+			Double sczcb) {
+		jtzx[row][0] = valueOf(jtzx[row][0]) + xlcbwgdd.getCz() + "";
+		jtzx[row][1] = valueOf(jtzx[row][0]) + xlcbwgdd.getCz() - sczcb + "";
+		jtzx[row][2] = valueOf(jtzx[row][1]) / valueOf(jtzx[row][0]) + "";
+		
+		jtzx[row][3] = valueOf(jtzx[row][3]) + xlcbwgdd.getDjtyl() * xlcbwgdd.getDjtdj()+ "";
+		jtzx[row][4] = valueOf(jtzx[row][4]) + xlcbwgdd.getDjtyl() + "";
+		
+		jtzx[row][5] = valueOf(jtzx[row][5]) + xlcbwgdd.getSjlvdj()
+				* xlcbwgdd.getLyl() + "";
+		jtzx[row][6] = valueOf(jtzx[row][6]) + xlcbwgdd.getLyl() + "";
+	}
+
+	@Override
+	public List<String[][]> getWgmx(Date date) {
+		List<CBXLWGDD> xlcbwgdds = xlDao.getWgdd();
+		List<String[][]> rets = new ArrayList<String[][]>();
+		String[][] wgmx = new String[xlcbwgdds.size()][23];
+		String[][] jtwg = new String[4 * 3][7];
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		String[][] gswg = new String[(cal.get(Calendar.MONTH) + 1) * 3 * 3 + 3][7];
+		String[][] dydjwg = new String[11 * 3][7];
+		rets.add(wgmx);
+		rets.add(jtwg);
+		rets.add(gswg);
+		rets.add(dydjwg);
+		CBXLWGDD xlcbwgdd;
+
+		XMXX xmxx;
+		Organization org = CompanyManager.getBMOrganization();
+		Company comp;
+
+		Calendar firstMonth = Calendar.getInstance();
+		firstMonth.set(cal.get(Calendar.YEAR), 1, 1);
+
+		Calendar tmpCal = Calendar.getInstance();
+
+		for (int i = 0; i < xlcbwgdds.size(); ++i) {
+			xlcbwgdd = xlcbwgdds.get(i);
+
+			Double wg_zccb = xlcbwgdd.getLyl() * xlcbwgdd.getSjlvdj()
+					+ xlcbwgdd.getDjtyl() * xlcbwgdd.getDjtdj();// 投标五大主材成本
+			Double sjzcb =  wg_zccb + xlcbwgdd.getQtcbhj() + 0.0;
+			fillWgmx(wgmx, i, xlcbwgdd, wg_zccb, sjzcb);
+
+			if (xlcbwgdd.getWgsj() != null) {
+				tmpCal.setTime(Date.valueOf(xlcbwgdd.getWgsj() + "-1"));
+				comp = org.getCompany(5);
+				if (tmpCal.get(Calendar.YEAR) == cal.get(Calendar.YEAR)
+						&& tmpCal.get(Calendar.MONTH) == cal
+								.get(Calendar.MONTH)) {
+					
+					if (comp != null) {
+
+						if (comp.getParentCompany() != null) {
+							comp = comp.getParentCompany();
+						}
+
+						fillwgqk(jtwg, gsMap.get(comp.getType()) * 3 + 2,
+								xlcbwgdd, sjzcb);
+						fillwgqk(jtwg, jtwg.length - 1, xlcbwgdd, sjzcb);
+					}
+
+//					if (tbdd.getDy() != null
+//							&& dydjMap.containsKey(tbdd.getDy())) {
+//
+//						filltbqk(dydjwg, dydjMap.get(tbdd.getDy()) * 3, tbdd,
+//								tbzccb, false);
+//						filltbqk(dydjwg, dydjwg.length - 3, tbdd, tbzccb, false);
+//
+//						fillzxqk(dydjwg, dydjMap.get(tbdd.getDy()) * 3 + 1,
+//								byqcbzxdd, zx_sczcb, false);
+//						fillzxqk(dydjwg, dydjwg.length - 2, byqcbzxdd,
+//								zx_sczcb, false);
+//
+//						fillwgqk(dydjwg, dydjMap.get(tbdd.getDy()) * 3 + 2,
+//								byqcbwgdd, wg_sczcb);
+//						fillwgqk(dydjwg, dydjwg.length - 1, byqcbwgdd, wg_sczcb);
+//
+//					}
+				}
+				
+				if (tmpCal.get(Calendar.YEAR) == cal.get(Calendar.YEAR)){
+					fillwgqk(gswg, (gsMap.get(comp.getType()) * (cal.get(Calendar.MONTH) + 1) + tmpCal.get(Calendar.MONTH)) * 3 + 2,
+							xlcbwgdd, sjzcb);
+					fillwgqk(gswg, gswg.length - 1,
+							xlcbwgdd, sjzcb);
+				}
+				
+//				for (int j = 0; j < (cal.get(Calendar.MONTH) + 1); ++j){
+//					fillwgqk(gswg, gsMap.get(comp.getType()) * (cal.get(Calendar.MONTH) + 1) + j,
+//							xlcbwgdd, sjzcb);
+//				}
+				
+				
+			}
+
+			//
+		}
+		//
+		computeDj(jtwg);
+		computeDj(gswg);
+		return rets;
+	}
+
 
 }

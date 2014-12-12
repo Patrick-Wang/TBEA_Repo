@@ -31,18 +31,24 @@
 <script src="../jsp/cb_wg_xl.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+	var instance = cb_wg_xl.View.newInstance();
             (function () {
                 $(document).ready(function () {
-                	cb_wg_xl.View.newInstance().init(
+                	instance.init(
                 			"table1", 
                 			"table2", 
                 			"table3", 
-                			"table4");
+                			"table4",
+                			JSON.parse('${wgmx}'),
+                			JSON.parse('${jtwg}'),
+                			JSON.parse('${gswg}'),
+                			JSON.parse('${btdywg}'),
+                			${month}, ${year});
             })})();
     </script>
 <meta charset="UTF-8">
 
-<title>线缆完工订单</title>
+<title>线缆完工成本明细</title>
 
 <style type="text/css">
 body {
@@ -146,15 +152,26 @@ th.ui-th-ltr {
 </head>
 <body style:"width=1400px">
 	<div class="header">
-		<h1>线缆完工订单</h1>
+		<h1>线缆完工成本明细</h1>
 	</div>
 
+<div id="table1" align="center" style="margin-bottom: 15px"></div>
+<table style="margin-left:80px">
+					<tr >
+						<td><%@include file="date_selection.jsp"%>
+						</td>
+						<td><input type="button" value="更新"
+							style="width: 80px; margin-left: 10px;"
+							onclick="instance.updateUI()"></input></td>
+					</tr>
+				</table>
+				<div id="table2" align="center" style="margin-bottom: 15px"></div>
+					<div id="table3" align="center" style="margin-bottom: 15px;"></div>
+					<div id="table4" align="center" style="margin-bottom: 15px; display: none"></div>
+		
 
-	<div align="center" id="table1" style="margin-bottom:15px"></div>
-	<div align="center" id="table2" style="margin-bottom:15px"></div>
-	<div align="center" id="table3" style="margin-bottom:15px"></div>
-	<div align="center" id="table4" style="margin-bottom:15px"></div>
 
+	<%@include file="loading.jsp"%>
 </body>
 
 </html>

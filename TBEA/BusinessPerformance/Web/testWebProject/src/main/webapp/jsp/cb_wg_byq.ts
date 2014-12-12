@@ -115,7 +115,7 @@ module cb_wg_byq {
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
             this.mFdyTableId = fdyTableId;
-    this.mDataSet = new Util.DateDataSet("wg_update.do");
+        this.mDataSet = new Util.DateDataSet("wg_update.do");
             this.mMxData = mx;
             this.mJtData = jt;
             this.mGsData = gs;

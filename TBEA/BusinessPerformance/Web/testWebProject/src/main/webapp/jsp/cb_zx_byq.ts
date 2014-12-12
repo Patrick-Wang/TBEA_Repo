@@ -243,7 +243,7 @@ module cb_zx_byq {
                                 }
 
                                 else {
-                                    data[i].push(row[col]);
+                                    data[i].push(parseFloat(row[col]).toFixed(2));
                                 }
 
                             }

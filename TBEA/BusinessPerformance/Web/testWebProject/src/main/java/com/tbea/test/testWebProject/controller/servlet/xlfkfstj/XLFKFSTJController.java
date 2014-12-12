@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.test.testWebProject.common.Company;
 import com.tbea.test.testWebProject.common.Util;
+import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.service.byqfkfstj.BYQFKFSTJService;
 import com.tbea.test.testWebProject.service.cqk.CQKService;
 import com.tbea.test.testWebProject.service.hkjhjg.HKJHJGService;

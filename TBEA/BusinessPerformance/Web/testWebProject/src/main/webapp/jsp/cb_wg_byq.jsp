@@ -42,7 +42,7 @@
                 			JSON.parse('${wgmx}'),
                 			JSON.parse('${jtwg}'),
                 			JSON.parse('${gswg}'),
-                			JSON.parse('${bydywg}'),
+                			JSON.parse('${btdywg}'),
                 			${month}, ${year});
             })})();
     </script>

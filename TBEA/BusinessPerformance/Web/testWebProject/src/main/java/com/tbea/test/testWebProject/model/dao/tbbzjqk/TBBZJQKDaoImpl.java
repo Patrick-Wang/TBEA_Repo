@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
-import com.tbea.test.testWebProject.common.Company;
+import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.entity.TBBZJXX;
 
 @Repository

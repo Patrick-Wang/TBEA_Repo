@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.test.testWebProject.common.CompanyManager;
-import com.tbea.test.testWebProject.common.Organization;
 import com.tbea.test.testWebProject.common.Util;
-import com.tbea.test.testWebProject.common.CompanyManager.CompanyType;
+import com.tbea.test.testWebProject.common.companys.CompanyManager;
+import com.tbea.test.testWebProject.common.companys.Organization;
+import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.service.cb.BYQCBService;
 
 
@@ -99,16 +99,16 @@ public class BYQCBController {
 		String[][] aWgmx = wgs.get(0);
 		String[][] aJtwg = wgs.get(1);
 		String[][] aGswg = wgs.get(2);
-		String[][] aBydywg = wgs.get(3);
+		String[][] aBtdywg = wgs.get(3);
 		Map<String, Object> map = new HashMap<String, Object>();
 		String wgmx = JSONArray.fromObject(aWgmx).toString().replace("null", "0.00");
 		String jtwg = JSONArray.fromObject(aJtwg).toString().replace("null", "0.00");
 		String gswg = JSONArray.fromObject(aGswg).toString().replace("null", "0.00");
-		String bydywg = JSONArray.fromObject(aBydywg).toString().replace("null", "0.00");
+		String btdywg = JSONArray.fromObject(aBtdywg).toString().replace("null", "0.00");
 		map.put("wgmx", wgmx);
 		map.put("jtwg", jtwg);
 		map.put("gswg", gswg);
-		map.put("bydywg", bydywg);
+		map.put("btdywg", btdywg);
 		map.put("month", month);
 		map.put("year", year);
 		return new ModelAndView("cb_wg_byq", map);

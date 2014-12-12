@@ -246,7 +246,7 @@ module cb_xl {
             for (var col = 1; col < row.length; ++col) {
                 if (col == 3) {
                     row[col] = (parseFloat(row[col]) * 100).toFixed(2) + "%";
-                } else if (col != 5 && col != 7 && col != 10 && col != 14 && col != 16) {
+                } else if (col != 5 && col != 7) {
                     row[col] = Util.formatCurrency(row[col]);
                 } else {
                     row[col] = parseFloat(row[col]).toFixed(2);
