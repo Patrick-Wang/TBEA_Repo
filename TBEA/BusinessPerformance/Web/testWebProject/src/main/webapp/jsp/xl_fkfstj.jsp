@@ -48,7 +48,7 @@
     </script>
 <meta charset="UTF-8">
 
-<title>线缆付款方式统计</title>
+<title>线缆9月付款方式统计</title>
 
 <style type="text/css">
 body {
@@ -150,7 +150,7 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class="header">
-		<h1>线缆付款方式统计</h1>
+		<h1>线缆9月付款方式统计</h1>
 	</div>
 
 	<div align="center" id="table1" style="margin-bottom: 15px"></div>

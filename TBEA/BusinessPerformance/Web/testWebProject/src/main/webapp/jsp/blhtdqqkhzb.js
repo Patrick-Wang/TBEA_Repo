@@ -135,7 +135,7 @@ var blhtdqqkhzb;
                         smooth: true,
                         itemStyle: { normal: { areaStyle: { type: 'default' } } },
                         data: data[1]
-                    },
+                    }
                 ]
             };
             echarts.init($('#' + echart)[0]).setOption(option);

@@ -159,7 +159,7 @@ module blhtdqqkhzb {
                         smooth: true,
                         itemStyle: { normal: { areaStyle: { type: 'default' } } },
                         data: data[1]
-                    },
+                    }
                 ]
             }
 

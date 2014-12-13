@@ -87,7 +87,7 @@ public class XLCBController {
 		map.put("jtwg", jtwg);
 		map.put("gswg", gswg);
 		map.put("btdywg", btdywg);
-		map.put("month", month);
+		map.put("month", 8);
 		map.put("year", year);
 		return new ModelAndView("cb_wg_xl", map);
 	}

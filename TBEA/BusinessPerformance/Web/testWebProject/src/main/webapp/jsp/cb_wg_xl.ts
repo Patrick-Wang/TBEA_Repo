@@ -111,13 +111,13 @@ module cb_wg_xl {
             this.mFdyTableId = fdyTableId;
             this.mCurMonth = month;
             this.mCurYear = year;
-        this.mDataSet = new Util.DateDataSet("wg_update.do");
+            this.mDataSet = new Util.DateDataSet("wg_update.do");
             this.mMxData = mx;
             this.mJtData = jt;
             this.mGsData = gs;
             this.mBtdyData = btdy;
-            this.mMonth = month;
-             this.mYear = year;
+            this.mMonth = 8;//month;
+            this.mYear = 2014;//year;
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();

@@ -29,7 +29,7 @@ module yqysysfx {
         private mDataSet : Util.DateDataSet;
         private mTableId : string;
         private mEchartId;
-        private mComp: Util.CompanyType = Util.CompanyType.JT;
+        private mComp: Util.CompanyType = Util.CompanyType.SB;
         
         public init(echartId: string, tableId: string): void {
            // this.initEchart($('#' + echartId)[0]);

@@ -78,7 +78,7 @@ public class YSZKPZJHController {
 		int month = now.get(Calendar.MONTH) + 1;
 		int year = now.get(Calendar.YEAR);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("month", month);
+		map.put("month", 4);
 		map.put("year", year);
 		Organization org = CompanyManager.getPzghOrganization();
 		String[][] name_ids = Util.getCompanyNameAndIds(org.getTopCompany());

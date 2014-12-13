@@ -380,29 +380,35 @@ public class BYQCBServiceImpl implements BYQCBService {
 	}
 
 	private void fillWgmx(String[][] wg, int row, CBBYQWGDD wgdd,
-			CBBYQZXDD byqcbzxdd, Double wdzccb, Double clzcb, Double sjzcb) {
-		wg[row][0] = byqcbzxdd != null ? byqcbzxdd.getGzh() : "";// 工作号
-		wg[row][1] = wgdd.getWgsj();// 完工时间//完工时间
-		wg[row][2] = wgdd.getSjcz() + "";// 实际产值//产值
-		wg[row][3] = wgdd.getGgyl() + "";// 实际硅钢用量（单台）//实际硅钢片用量
-		wg[row][4] = wgdd.getGgdj() + "";// 实际硅钢单价//实际硅钢片单价
-		wg[row][5] = wgdd.getDjtyl() + "";// 实际电解铜用量（单台）//实际电解铜用量
-		wg[row][6] = wgdd.getDjtdj() + "";// 实际电解铜单价//实际电解铜单价（无税含加工费）
-		wg[row][7] = wgdd.getTjgf() + "";// 铜加工费//加工费(含税)
-		wg[row][8] = wgdd.getByqyyl() + "";// 实际变压器油用量（单台）//实际变压器油用量
-		wg[row][9] = wgdd.getByqydj() + "";// 实际变压器油单价//实际变压器油单价
-		wg[row][10] = wgdd.getGcyl() + "";// 实际钢材用量（单台）//实际钢材用量
-		wg[row][11] = wgdd.getGcdj() + "";// 实际钢材单价//实际钢材单价
-		wg[row][12] = wgdd.getZbyl() + "";// 实际纸板用量（单台）//实际绝缘纸板用量
-		wg[row][13] = wgdd.getZbdj() + "";// 实际纸板单价//实际绝缘纸板单价
-		wg[row][14] = wdzccb + "";// 实际五大主材成本
-		wg[row][15] = wgdd.getQtclcb() + "";// 其他材料成本//实际其他材料成本合计
-		wg[row][16] = clzcb + "";// 实际材料成本总计
-		wg[row][17] = wgdd.getRgjzzfy() + "";// 人工及制造费用//实际人工制造费用
-		wg[row][18] = sjzcb + "";// 实际总成本
-		wg[row][19] = wgdd.getYf() + "";// 运费//运费
-		wg[row][20] = wgdd.getSjcz() - sjzcb + "";// 实际毛利额
-		wg[row][21] = (wgdd.getSjcz() - sjzcb) / wgdd.getSjcz() + "";// 实际毛利率
+			CBBYQZXDD byqcbzxdd, XMXX xmxx, CBBYQTBDD tbdd, Double wdzccb,
+			Double clzcb, Double sjzcb) {
+		wg[row][0] =  org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName();// 订单所在单位及项目公司
+		wg[row][1] = byqcbzxdd != null ? byqcbzxdd.getGzh() : "";// 工作号
+		wg[row][2] = wgdd.getWgsj();// 完工时间//完工时间
+		wg[row][3] = xmxx.getYhdwmc();// 订货单位
+		wg[row][4] = tbdd.getXh(); // 产品型号
+		wg[row][5] = tbdd.getDy(); // 电压等级
+		wg[row][6] = tbdd.getCl(); // 产量 （万KVA）
+		wg[row][7] = wgdd.getSjcz() + "";// 实际产值//产值
+		wg[row][8] = wgdd.getGgyl() + "";// 实际硅钢用量（单台）//实际硅钢片用量
+		wg[row][9] = wgdd.getGgdj() + "";// 实际硅钢单价//实际硅钢片单价
+		wg[row][10] = wgdd.getDjtyl() + "";// 实际电解铜用量（单台）//实际电解铜用量
+		wg[row][11] = wgdd.getDjtdj() + "";// 实际电解铜单价//实际电解铜单价（无税含加工费）
+		wg[row][12] = wgdd.getTjgf() + "";// 铜加工费//加工费(含税)
+		wg[row][13] = wgdd.getByqyyl() + "";// 实际变压器油用量（单台）//实际变压器油用量
+		wg[row][14] = wgdd.getByqydj() + "";// 实际变压器油单价//实际变压器油单价
+		wg[row][15] = wgdd.getGcyl() + "";// 实际钢材用量（单台）//实际钢材用量
+		wg[row][16] = wgdd.getGcdj() + "";// 实际钢材单价//实际钢材单价
+		wg[row][17] = wgdd.getZbyl() + "";// 实际纸板用量（单台）//实际绝缘纸板用量
+		wg[row][18] = wgdd.getZbdj() + "";// 实际纸板单价//实际绝缘纸板单价
+		wg[row][19] = wdzccb + "";// 实际五大主材成本
+		wg[row][20] = wgdd.getQtclcb() + "";// 其他材料成本//实际其他材料成本合计
+		wg[row][21] = clzcb + "";// 实际材料成本总计
+		wg[row][22] = wgdd.getRgjzzfy() + "";// 人工及制造费用//实际人工制造费用
+		wg[row][23] = sjzcb + "";// 实际总成本
+		wg[row][24] = wgdd.getYf() + "";// 运费//运费
+		wg[row][25] = wgdd.getSjcz() - sjzcb + "";// 实际毛利额
+		wg[row][26] = (wgdd.getSjcz() - sjzcb) / wgdd.getSjcz() + "";// 实际毛利率
 	}
 
 	private void fillwgqk(String[][] jtzx, Integer row, CBBYQWGDD byqcbwgdd,
@@ -439,16 +445,13 @@ public class BYQCBServiceImpl implements BYQCBService {
 	public List<String[][]> getWgmx(Date date) {
 		List<CBBYQWGDD> byqcbwgdds = byqcbDao.getWgdd();
 		List<String[][]> rets = new ArrayList<String[][]>();
-		String[][] wgmx = new String[byqcbwgdds.size()][22];
+		String[][] wgmx = new String[byqcbwgdds.size()][27];
 		String[][] jtwg = new String[4 * 3][13];
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		String[][] gswg = new String[(cal.get(Calendar.MONTH)) * 3 * 3 + 3][13];
 		String[][] dydjwg = new String[7 * 3][13];
-		rets.add(wgmx);
-		rets.add(jtwg);
-		rets.add(gswg);
-		rets.add(dydjwg);
+		
 		CBBYQZXDD byqcbzxdd;
 		CBBYQWGDD byqcbwgdd;
 		CBBYQTBDD tbdd;
@@ -460,7 +463,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 		firstMonth.set(cal.get(Calendar.YEAR), 1, 1);
 
 		Calendar tmpCal = Calendar.getInstance();
-
+		int len = 0;
 		for (int i = 0; i < byqcbwgdds.size(); ++i) {
 			byqcbwgdd = byqcbwgdds.get(i);
 			byqcbzxdd = byqcbDao.getZxddById(byqcbwgdd.getZxcpbh());
@@ -480,9 +483,11 @@ public class BYQCBServiceImpl implements BYQCBService {
 					+ byqcbwgdd.getZbyl() * byqcbwgdd.getZbdj();// 投标五大主材成本
 			Double wg_clzcb = (wg_zccb + byqcbwgdd.getQtclcb()) / 1.17;// 材料合计
 			Double wg_sczcb = wg_clzcb + byqcbwgdd.getRgjzzfy();// 生产总成本
-
-			fillWgmx(wgmx, i, byqcbwgdd, byqcbzxdd, wg_zccb, wg_clzcb, wg_sczcb);
-
+			if (xmxx.getYhdwmc() != null){
+				//System.out.println(xmxx.getYhdwmc());
+				++len;
+				fillWgmx(wgmx, i, byqcbwgdd, byqcbzxdd, xmxx, tbdd, wg_zccb, wg_clzcb, wg_sczcb);
+			
 			Double zx_zccb = byqcbzxdd.getGgyl() * byqcbzxdd.getGgdj()
 					+ byqcbzxdd.getDjtyl() * byqcbzxdd.getDjtdj()
 					+ byqcbzxdd.getByqyyl() * byqcbzxdd.getByqydj()
@@ -543,6 +548,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 					}
 				}
 			}
+			}
 
 			//
 		}
@@ -550,6 +556,18 @@ public class BYQCBServiceImpl implements BYQCBService {
 		computeDj(jtwg, false);
 		computeDj(dydjwg, false);
 
+		String[][] newWgmx = new String[len][27];
+		for (int i = 0; i < len; ++i){
+			for (int j = 0; j < 27; ++j){
+				newWgmx[i][j] = wgmx[i][j];;
+			}
+		}
+		
+		rets.add(newWgmx);
+		rets.add(jtwg);
+		rets.add(gswg);
+		rets.add(dydjwg);
+		
 		return rets;
 	}
 

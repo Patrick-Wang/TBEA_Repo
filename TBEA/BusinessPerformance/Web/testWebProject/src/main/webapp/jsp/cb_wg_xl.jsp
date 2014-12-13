@@ -156,7 +156,7 @@ th.ui-th-ltr {
 	</div>
 
 <div id="table1" align="center" style="margin-bottom: 15px"></div>
-<table style="margin-left:80px">
+<table style="margin-left:70px">
 					<tr >
 						<td><%@include file="date_selection.jsp"%>
 						</td>

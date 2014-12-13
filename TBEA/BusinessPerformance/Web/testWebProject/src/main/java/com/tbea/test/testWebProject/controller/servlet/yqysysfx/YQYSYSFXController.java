@@ -60,6 +60,7 @@ public class YQYSYSFXController {
 		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
 		map.put("names", name_ids[0]);
 		map.put("ids", name_ids[1]);
+		//map.put("all", CompanyType.SBDCY.ordinal() + "");
 		map.put("company_size", name_ids[0].length);
 		return new ModelAndView("yqysysfx", map);
 	}
