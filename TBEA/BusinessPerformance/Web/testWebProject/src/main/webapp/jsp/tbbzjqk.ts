@@ -21,7 +21,7 @@ module tbbzjqk {
         public static newInstance(): View {
             return new View();
         }
-        private mComp: Util.CompanyType = Util.CompanyType.JT;
+        private mComp: Util.CompanyType = Util.CompanyType.HB;
         private mYear: number;
         private mData: Array<string> = [];
         private mDataSet: Util.DateDataSet;
