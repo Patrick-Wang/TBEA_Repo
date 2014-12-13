@@ -71,7 +71,7 @@ module tbbzjqk {
             var data = [];
             data.push(lastYearData);
             data.push(currentYearData);
-            var legend = [this.mYear - 1 + "年", this.mYear + "年"];
+            var legend = [/*this.mYear - 1 + "年",*/ this.mYear + "年"];
 
             var ser = [];
             for (var i = 0; i < legend.length; ++i) {
@@ -79,7 +79,7 @@ module tbbzjqk {
                     name: legend[i],
                     type: 'line',
                     smooth: true,
-                    data: data[i]
+                    data: this.mData
                 })
             }
 
