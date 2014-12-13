@@ -17,7 +17,7 @@ var yqkqsbh;
     })();
     var View = (function () {
         function View() {
-            this.mComp = 19 /* JT */;
+            this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
             return new View();

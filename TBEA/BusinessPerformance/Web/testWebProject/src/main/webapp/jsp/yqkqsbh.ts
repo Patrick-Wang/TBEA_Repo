@@ -27,7 +27,7 @@ module yqkqsbh {
         private mDataSet : Util.DateDataSet;
         private mTableId : string;
         private mCharId : string;
-        private mComp: Util.CompanyType = Util.CompanyType.JT;
+        private mComp: Util.CompanyType = Util.CompanyType.SB;
         public init(echartId: string, tableId: string, args: any[]): void {
             this.mMonth = args[0];
             this.mYear = args[1];

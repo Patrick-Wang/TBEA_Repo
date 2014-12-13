@@ -18,7 +18,7 @@ var cqk;
     var View = (function () {
         function View() {
             this.currentSelected = 0;
-            this.mComp = 19 /* JT */;
+            this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
             if (View.ins == undefined) {

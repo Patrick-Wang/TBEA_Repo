@@ -49,7 +49,7 @@ module yszkjgqkb {
         private mLineData: string;
         private mDataSet : Util.DateDataSet;
         private mTableId : string;
-        private mComp: Util.CompanyType = Util.CompanyType.JT;
+        private mComp: Util.CompanyType = Util.CompanyType.SB;
         public init(echartIdPie: string, echartIdSquire: string, echartIdBar: string, echartIdLine: string, tableId: string, args: any[]): void {
             this.mMonth = args[0];
             this.mYear = args[1];
