@@ -56,7 +56,7 @@ module blhtdqqkhzb {
         private mYear: number;
         private mChartData: Array<string[]>;
         private mTableData: Array<string[]>;
-        private mComp: Util.CompanyType = Util.CompanyType.JT;
+        private mComp: Util.CompanyType = Util.CompanyType.HB;
         private mDataSet : Util.DateDataSet;
         private mTableId : string;
         private mEchartsId : string;

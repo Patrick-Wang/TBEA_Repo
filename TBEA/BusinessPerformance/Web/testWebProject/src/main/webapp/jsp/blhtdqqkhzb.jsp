@@ -163,8 +163,8 @@ th.ui-th-ltr {
 							style="width: 125px;">
 								<c:forEach begin="0" end="${company_size - 1}" var="i">
 									<c:choose>
-										<c:when test="${i + 1 == company_size}">
-											<option value="${ids[i]}" selected="selected">全部</option>
+										<c:when test="${i == 1}">
+											<option value="${ids[i]}" selected="selected">${names[i]}</option>
 										</c:when>
 
 										<c:otherwise>
