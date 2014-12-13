@@ -35,24 +35,29 @@ public class RHKQKServiceImpl implements   RHKQKService{
 	@Autowired
 	RHKXXDao rhkxxDao;
 	
-	
-	private Double[] sum(List<RHKXX> rhkxxs) {
-		Double[] ret = new Double[13];
+	private double valueOf(Double d){
+		if (d == null){
+			return 0.0;
+		}
+		return d.doubleValue();
+	}
+	private double[] sum(List<RHKXX> rhkxxs) {
+		double[] ret = new double[13];
 		for (RHKXX rhk : rhkxxs) {
 			if (compMap.get(rhk.getQybh()) != null) {
-				ret[0] += rhk.getJtxdydzjhlzb();
-				ret[1] += rhk.getGdwzxzddhkjh();
-				ret[2] += rhk.getHkje();
-				ret[3] += rhk.getYlj();
+				ret[0] += valueOf(rhk.getJtxdydzjhlzb());
+				ret[1] += valueOf(rhk.getGdwzxzddhkjh());
+				ret[2] += valueOf(rhk.getHkje());
+				ret[3] += valueOf(rhk.getYlj());
 				ret[4] = ret[0] == 0.0 ? 0.0 : ret[3] / ret[0];
 				ret[5] = ret[1] == 0.0 ? 0.0 : ret[3] / ret[1];
-				ret[6] += rhk.getYhkzkjysdhkje();
-				ret[7] += rhk.getQzqbbc();
-				ret[8] += rhk.getQzzqbc();
-				ret[9] += rhk.getMqzydhkjhhj();
-				ret[10] += rhk.getQyqb();
+				ret[6] += valueOf(rhk.getYhkzkjysdhkje());
+				ret[7] += valueOf(rhk.getQzqbbc());
+				ret[8] += valueOf(rhk.getQzzqbc());
+				ret[9] += valueOf(rhk.getMqzydhkjhhj());
+				ret[10] += valueOf(rhk.getQyqb());
 				ret[11] = ret[1] == 0.0 ? 0.0 : ret[10] / ret[1];
-				ret[12] += rhk.getJzydyszkzmye();
+				ret[12] += valueOf(rhk.getJzydyszkzmye());
 			}
 		}
 		return ret;
@@ -82,10 +87,15 @@ public class RHKQKServiceImpl implements   RHKQKService{
 				}
 			}
 			
-			Double[] dRet =  sum(rhkxxs);
+			double[] dRet =  sum(rhkxxs);
 			
 			for (int i = 0; i < ret[0].length; ++i){
-				ret[7][i] = dRet[i] + "";
+				if (i == 4 || i == 11){
+					ret[7][i] = String.format("%.2f", dRet[i] * 100) + "%";
+				}
+				else{
+					ret[7][i] = dRet[i] + "";
+				}
 			}
 		}
 		return ret;		

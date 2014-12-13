@@ -21,7 +21,7 @@ module syhkjhzxqk {
         public static newInstance(): View {
             return new View();
         }
-        private mComp: Util.CompanyType = Util.CompanyType.JT;
+        private mComp: Util.CompanyType = Util.CompanyType.HB;
         private mMonth: number;
         private mYear: number;
         private mData: Array<string[]>;
@@ -235,7 +235,8 @@ module syhkjhzxqk {
                              data[i].push(Util.formatCurrency(this.mData[i][j]));
                             }
                         else{
-                           data[i].push((parseFloat(this.mData[i][j]) * 100).toFixed(2) + "%");
+                             data[i].push((this.mData[i][j]));
+                          // data[i].push((parseFloat(this.mData[i][j]) * 100).toFixed(2) + "%");
                         }
                     }
                 }

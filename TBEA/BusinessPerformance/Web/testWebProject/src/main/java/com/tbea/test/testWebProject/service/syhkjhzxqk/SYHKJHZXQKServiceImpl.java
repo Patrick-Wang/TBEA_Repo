@@ -34,73 +34,48 @@ public class SYHKJHZXQKServiceImpl implements SYHKJHZXQKService {
 	public String[][] getSyhkjhzxqkData(Date d, Company comp) {
 		String[][] ret = new String[10][3];
 
-		List<HKJHJG> hkjhjgs = hkjhjgDao.getHkjhjg(d, comp);
+		//List<HKJHJG> hkjhjgs = hkjhjgDao.getHkjhjg(d, comp);
 		List<YDSJHKQK> ydsjhkqks = hkjhzxqkDao.getSjhkqk(d, comp);
 
 		HKJHJG hkjhjg = null;
 		YDSJHKQK ydsjhkqk = null;
-		if (!hkjhjgs.isEmpty()) {
-			hkjhjg = hkjhjgs.get(0);
-			ret[0][0] = hkjhjg.getByhlwdqyszk() + "";
-			ret[1][0] = hkjhjg.getByhlyqyszk() + "";
-			ret[2][0] = hkjhjg.getByhlwdqk() + "";
-			ret[3][0] = hkjhjg.getByhlyqk() + "";
-			ret[4][0] = hkjhjg.getQbkhxj() + "";
-			ret[5][0] = hkjhjg.getZqkhxj() + "";
-			ret[6][0] = hkjhjg.getByhlyqyszk() + hkjhjg.getByhlwdqk()
-					+ hkjhjg.getByhlyqk() + hkjhjg.getQbkhxj()
-					+ hkjhjg.getZqkhxj() + "";
-
-			ret[9][0] = ret[6][0];
-
-		}
 		if (!ydsjhkqks.isEmpty()) {
 			ydsjhkqk = ydsjhkqks.get(0);
+			ret[0][0] = ydsjhkqk.getWdqyszkjhhk() + "";
+			ret[1][0] = ydsjhkqk.getYqyszkjhhk() + "";
+			ret[2][0] = ydsjhkqk.getWdqkjhhk() + "";
+			ret[3][0] = ydsjhkqk.getYqkjhhk() + "";
+			ret[4][0] = ydsjhkqk.getQbkhjhhk() + "";
+			ret[5][0] = ydsjhkqk.getQbkhjhhk() + "";
+			ret[6][0] = ydsjhkqk.getJhxj() + "";
+
+			ret[9][0] = ydsjhkqk.getJhhj() + "";
+			
+			
 			ret[0][1] = ydsjhkqk.getWdqyszksjhk() + "";
 			ret[1][1] = ydsjhkqk.getYqyszksjhk() + "";
 			ret[2][1] = ydsjhkqk.getWdqksjhk() + "";
 			ret[3][1] = ydsjhkqk.getYqksjhk() + "";
-			ret[4][1] = ydsjhkqk.getQbkhhk() + "";
-			ret[5][1] = ydsjhkqk.getZqkhhk() + "";
-			ret[6][1] = ydsjhkqk.getWdqyszksjhk() + ydsjhkqk.getYqyszksjhk()
-					+ ydsjhkqk.getWdqksjhk() + ydsjhkqk.getYqksjhk()
-					+ ydsjhkqk.getQbkhhk() + ydsjhkqk.getZqkhhk() + "";
+			ret[4][1] = ydsjhkqk.getQbkhsjhk() + "";
+			ret[5][1] = ydsjhkqk.getQbkhsjhk() + "";
+			ret[6][1] = ydsjhkqk.getSjxj() + "";
 
-			ret[7][1] = ydsjhkqk.getXkxhhk() + "";
-			ret[8][1] = ydsjhkqk.getJhwhk() + "";
-			ret[9][1] = ydsjhkqk.getXkxhhk() + ydsjhkqk.getJhwhk()
-					+ ydsjhkqk.getWdqyszksjhk() + ydsjhkqk.getYqyszksjhk()
-					+ ydsjhkqk.getWdqksjhk() + ydsjhkqk.getYqksjhk()
-					+ ydsjhkqk.getQbkhhk() + ydsjhkqk.getZqkhhk() + "";
+			ret[9][1] = ydsjhkqk.getSjhj() + "";
+			
+			
+			
+			ret[0][2] = ydsjhkqk.getWdqyszkjhwcl() + "";
+			ret[1][2] = ydsjhkqk.getYqyszkjhwcl() + "";
+			ret[2][2] = ydsjhkqk.getWdqkjhwcl() + "";
+			ret[3][2] = ydsjhkqk.getYqkjhwcl() + "";
+			ret[4][2] = ydsjhkqk.getQbkhjhwcl() + "";
+			ret[5][2] = ydsjhkqk.getQbkhjhwcl() + "";
+			ret[6][2] = ydsjhkqk.getXjwcl() + "";
+
+			ret[9][2] = ydsjhkqk.getHjwcl() + "";
+			
 		}
-
-		if (hkjhjg != null && null != ydsjhkqk) {
-			ret[0][2] = div(ydsjhkqk.getWdqyszksjhk(), hkjhjg.getByhlwdqyszk());
-			ret[1][2] = div(ydsjhkqk.getYqyszksjhk(), hkjhjg.getByhlyqyszk());
-			ret[2][2] = div(ydsjhkqk.getWdqksjhk(), hkjhjg.getByhlwdqk());
-			ret[3][2] = div(ydsjhkqk.getYqksjhk(), hkjhjg.getByhlyqk());
-			ret[4][2] = div(ydsjhkqk.getQbkhhk(), hkjhjg.getQbkhxj());
-			ret[5][2] = div(ydsjhkqk.getZqkhhk(), hkjhjg.getZqkhxj());
-			ret[6][2] = div(
-					ydsjhkqk.getWdqyszksjhk() + ydsjhkqk.getYqyszksjhk()
-							+ ydsjhkqk.getWdqksjhk() + ydsjhkqk.getYqksjhk()
-							+ ydsjhkqk.getQbkhhk() + ydsjhkqk.getZqkhhk(),
-					hkjhjg.getByhlyqyszk() + hkjhjg.getByhlwdqk()
-							+ hkjhjg.getByhlyqk() + hkjhjg.getQbkhxj()
-							+ hkjhjg.getZqkhxj());
-
-			ret[7][2] = "0";
-			ret[8][2] = "0";
-			ret[9][2] = div(
-					ydsjhkqk.getXkxhhk() + ydsjhkqk.getJhwhk()
-							+ ydsjhkqk.getWdqyszksjhk()
-							+ ydsjhkqk.getYqyszksjhk() + ydsjhkqk.getWdqksjhk()
-							+ ydsjhkqk.getYqksjhk() + ydsjhkqk.getQbkhhk()
-							+ ydsjhkqk.getZqkhhk(), hkjhjg.getByhlyqyszk()
-							+ hkjhjg.getByhlwdqk() + hkjhjg.getByhlyqk()
-							+ hkjhjg.getQbkhxj() + hkjhjg.getZqkhxj());
-		}
-
+	
 		return ret;
 		// return new String[][]{
 		// {"1", "1", "1"},

@@ -116,7 +116,7 @@ module cb_wg_byq {
             this.mGsData = gs;
             this.mBtdyData = btdy;
             this.mMonth = 8;//month;
-            this.mYear = 2014;//year;
+             this.mYear = 2014;//year;
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();

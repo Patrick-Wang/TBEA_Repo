@@ -16,7 +16,7 @@ var syhkjhzxqk;
     })();
     var View = (function () {
         function View() {
-            this.mComp = 19 /* JT */;
+            this.mComp = 1 /* HB */;
         }
         View.newInstance = function () {
             return new View();
@@ -143,7 +143,7 @@ var syhkjhzxqk;
                             data[i].push(Util.formatCurrency(this.mData[i][j]));
                         }
                         else {
-                            data[i].push((parseFloat(this.mData[i][j]) * 100).toFixed(2) + "%");
+                            data[i].push((this.mData[i][j]));
                         }
                     }
                 }

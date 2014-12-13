@@ -60,7 +60,7 @@ public class SYHKJHZXQKController {
 		int month = preMonth.get(Calendar.MONTH) + 1;
 		int year = preMonth.get(Calendar.YEAR);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("month", month);
+		map.put("month", 9);
 		map.put("year", year);
 		Organization org = CompanyManager.getOperationOrganization();
 		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());

@@ -24,7 +24,7 @@ public class RHKXX  extends AbstractReadWriteEntity{
 	Double	jtxdydzjhlzb	;
 	Double	Gdwzxzddhkjh	;
 	Double	ylj	;
-	Double	Zjhlzbwc	;
+	String	Zjhlzbwc	;
 	String	Hkjhwcl	;
 	Double	Mqzydhkjhhj	;
 	Double	Qyqb	;
@@ -110,7 +110,7 @@ public class RHKXX  extends AbstractReadWriteEntity{
 	/**
 	 * @return the zjhlzbwc
 	 */
-	public Double getZjhlzbwc() {
+	public String getZjhlzbwc() {
 		return Zjhlzbwc;
 	}
 
@@ -222,7 +222,7 @@ public class RHKXX  extends AbstractReadWriteEntity{
 	/**
 	 * @param zjhlzbwc the zjhlzbwc to set
 	 */
-	public void setZjhlzbwc(Double zjhlzbwc) {
+	public void setZjhlzbwc(String zjhlzbwc) {
 		Zjhlzbwc = zjhlzbwc;
 	}
 

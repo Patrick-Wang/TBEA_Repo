@@ -62,7 +62,7 @@ public class HKJHJGController {
 		int month = now.get(Calendar.MONTH) + 1;
 		int year = now.get(Calendar.YEAR);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("month", month);
+		map.put("month", 9);
 		map.put("year", year);
 		Organization org = CompanyManager.getOperationOrganization();
 		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());

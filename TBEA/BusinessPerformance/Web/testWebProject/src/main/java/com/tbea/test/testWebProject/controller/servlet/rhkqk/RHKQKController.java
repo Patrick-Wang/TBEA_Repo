@@ -43,9 +43,9 @@ public class RHKQKController {
 	public ModelAndView getXjlrb(HttpServletRequest request,
 			HttpServletResponse response) {
 		Calendar now = Calendar.getInstance();  
-		int month = now.get(Calendar.MONTH) + 1;
-		int year = now.get(Calendar.YEAR);
-		int day = now.get(Calendar.DAY_OF_MONTH);
+		int month = 11;//now.get(Calendar.MONTH) + 1;
+		int year = 2013;//now.get(Calendar.YEAR);
+		int day = 30;//now.get(Calendar.DAY_OF_MONTH);
 		int dayCount = now.getActualMaximum(Calendar.DAY_OF_MONTH);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);

@@ -27,7 +27,7 @@ public class RHKXXDaoImpl  extends AbstractReadWriteDaoImpl<RHKXX> implements RH
 	
 	@Override
 	public List<RHKXX> getRhkxxData(Date d) {
-		Query q = this.getEntityManager().createQuery("from RHKXX where DateDiff(mm, Hkrq, :date) = 0");
+		Query q = this.getEntityManager().createQuery("from RHKXX where DateDiff(dd, Hkrq, :date) = 0");
 		q.setParameter("date", d);
 		return q.getResultList();
 	}

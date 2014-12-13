@@ -8,6 +8,7 @@ module rhkqk {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("单位", "dw", true, JQTable.TextAlign.Left),
                 new JQTable.Node("集团下达月度资金回笼指标", "dwxdydzjhlzb"),
+                new JQTable.Node("各单位自行制定的回款计划", "gdwzxdzdhkjh"),
                 new JQTable.Node("今日回款", "jrhk"),
                 new JQTable.Node("月累计(截止今日)", "ylj"),
                 new JQTable.Node("资金回笼指标完成", "zjhlzbwc"),
@@ -144,6 +145,7 @@ module rhkqk {
                 if (this.mData[i] instanceof Array) {
                     row = [].concat(this.mData[i]);
                     for (var col in row) {
+                        if (col != 4 && col != 11)
                         row[col] = Util.formatCurrency(row[col]);
                     }
                     data[i] = data[i].concat(row);
@@ -167,8 +169,8 @@ module rhkqk {
                     //autowidth : false,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
-                    // height: '100%',
-                    width: 1000,
+                    height: '100%',
+                    width: 1200,
                     shrinkToFit: false,
                     autoScroll: true,
 //                    userData: {
