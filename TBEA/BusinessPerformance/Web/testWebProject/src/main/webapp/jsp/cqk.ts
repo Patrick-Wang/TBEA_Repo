@@ -13,7 +13,7 @@ module cqk {
                 new JQTable.Node(year - 4 + "年及以前", "n4n"),
                 new JQTable.Node(year - 3 + "年", "n3n"),
                 new JQTable.Node(year - 2 + "年", "n2n"),
-                new JQTable.Node("合计", "hj"),
+                new JQTable.Node("合计", "hj")
             ], gridName);
         }
     }
