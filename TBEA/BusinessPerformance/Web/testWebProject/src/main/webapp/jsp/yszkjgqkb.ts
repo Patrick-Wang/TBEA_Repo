@@ -74,7 +74,6 @@ module yszkjgqkb {
         public onMonthSelected(month : number){
         	this.mMonth = month;
         }
-        
         public onCompanySelected(comp : Util.CompanyType){
         	this.mComp = comp;
         }
@@ -111,9 +110,14 @@ module yszkjgqkb {
             for (var i = 1; i <= this.mMonth; ++i) {
                 month.push(i + "月");
             }
-
+            var row = [];
             for (var i = 0; i < 6; ++i) {
-                data.push(this.mBarData[i + this.mCurrentSelected * 6]);
+                row = [];
+                data.push(row);
+                for (var j = 0; j < this.mBarData[i + this.mCurrentSelected * 6].length; ++j){
+                     row.push(parseInt(this.mBarData[i + this.mCurrentSelected * 6][j] + ""));
+                }
+               
             }
 
             var ser = [];

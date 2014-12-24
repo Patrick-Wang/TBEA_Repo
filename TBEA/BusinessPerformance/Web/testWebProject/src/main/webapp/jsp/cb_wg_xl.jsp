@@ -155,20 +155,48 @@ th.ui-th-ltr {
 		<h1>线缆完工成本明细</h1>
 	</div>
 
-<div id="table1" align="center" style="margin-bottom: 15px"></div>
-<table style="margin-left:70px">
-					<tr >
-						<td><%@include file="date_selection.jsp"%>
-						</td>
+	<table align="center">
+		<tr>
+			<td>
+				<div id="table1" align="center" style="margin-bottom: 15px"></div>
+			</td>
+		</tr>
+		<tr>
+
+			<td>
+				<table>
+					<tr>
+
+						<td><%@include file="date_selection.jsp"%></td>
 						<td><input type="button" value="更新"
 							style="width: 80px; margin-left: 10px;"
 							onclick="instance.updateUI()"></input></td>
 					</tr>
 				</table>
+			</td>
+
+		</tr>
+		<tr>
+			<td>
 				<div id="table2" align="center" style="margin-bottom: 15px"></div>
-					<div id="table3" align="center" style="margin-bottom: 15px;"></div>
-					<div id="table4" align="center" style="margin-bottom: 15px; display: none"></div>
-		
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div id="table3" align="center" style="margin-bottom: 15px;"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div id="table4" align="center"
+					style="margin-bottom: 15px; display: none"></div>
+			</td>
+		</tr>
+	</table>
+
+
+
+
 
 
 	<%@include file="loading.jsp"%>

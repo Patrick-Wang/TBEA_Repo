@@ -70,7 +70,8 @@ public class XLCBServiceImpl implements XLCBService{
 
 	private void fillTbmx(String[][] tbmx, int row, XMXX xmxx,
 			CBXLTBDD xltbcb, Double zccb, Double tbcbzj) {
-		tbmx[row][0] = xmxx.getDdszdw();//订单所在单位及项目公司//订单所在单位及项目公司
+		Organization org = CompanyManager.getBMOrganization();
+		tbmx[row][0] = org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName();//订单所在单位及项目公司//订单所在单位及项目公司
 		tbmx[row][1] = xltbcb.getTbbjsj() + "";//投标报价时间//投标报价时间
 		tbmx[row][2] = xmxx.getYhdwmc();//用户单位名称
 		tbmx[row][3] = xltbcb.getCpdl() + "";//产品大类//产品大类

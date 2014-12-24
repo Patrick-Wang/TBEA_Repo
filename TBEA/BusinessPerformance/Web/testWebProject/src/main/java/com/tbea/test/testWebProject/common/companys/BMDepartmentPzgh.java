@@ -20,23 +20,23 @@ class BMDepartmentPzgh extends AbstractOrganization {
 						.append(getCompany(CompanyType.XBGS, 303)));
 	}
 	
-	@Override
-	public Company getCompany(Integer id) {
-		Company ret = null;
-		if (id >= 100) {
-			int top = id / 100 - 1;
-			if (top < topComps.size()) {
-				int sub = id % 100 - 1;
-				if (topComps.get(top).getSubCompanys().size() > sub) {
-					ret = topComps.get(top).getSubCompanys().get(sub);
-				}
-			}
-		} else if (id >= 1 && topComps.size() >= id) {
-			ret = topComps.get(id - 1);
-		}
-
-		return ret;
-	}
+//	@Override
+//	public Company getCompany(Integer id) {
+//		Company ret = null;
+//		if (id >= 100) {
+//			int top = id / 100 - 1;
+//			if (top < topComps.size()) {
+//				int sub = id % 100 - 1;
+//				if (topComps.get(top).getSubCompanys().size() > sub) {
+//					ret = topComps.get(top).getSubCompanys().get(sub);
+//				}
+//			}
+//		} else if (id >= 1 && topComps.size() >= id) {
+//			ret = topComps.get(id - 1);
+//		}
+//
+//		return ret;
+//	}
 
 	@Override
 	public int getDepth() {

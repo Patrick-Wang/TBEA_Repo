@@ -1,8 +1,10 @@
 package com.tbea.test.testWebProject.controller.servlet.yszkjgqk;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +44,7 @@ public class YSZKJGQKController {
 		String companyId = request.getParameter("companyId");
 		int cid = Integer.parseInt(companyId);
 		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = CompanyManager.getBMOrganization();
 		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		
 		String table = JSONArray.fromObject(service.getYszkjg(d, comp)).toString().replace("null", "0.00");
@@ -62,11 +64,25 @@ public class YSZKJGQKController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
-		Organization org = CompanyManager.getOperationOrganization();
-		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		map.put("names", name_ids[0]);
-		map.put("ids", name_ids[1]);
-		map.put("company_size", name_ids[0].length);
+		
+		Organization org = CompanyManager.getBMOrganization();
+		String[][] name_ids = Util.getCompanyNameAndIds(org.getTopCompany());
+		
+		map.put("topComp", name_ids);
+		List<String[][]> subComps = new ArrayList<String[][]>();
+		for (int i = 0; i < org.getTopCompany().size(); ++i){
+			name_ids = Util.getCompanyNameAndIds(org.getTopCompany().get(i).getSubCompanys());
+			subComps.add(name_ids);
+		}
+		map.put("subComp", subComps);
+		map.put("both", true);
+		
+		
+//		Organization org = CompanyManager.getOperationOrganization();
+//		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
+//		map.put("names", name_ids[0]);
+//		map.put("ids", name_ids[1]);
+//		map.put("company_size", name_ids[0].length);
 		return new ModelAndView(view, map);
 	}
 
