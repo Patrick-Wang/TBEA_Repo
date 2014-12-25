@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,18 +66,28 @@ public class YSZKJGQKController {
 		map.put("month", month);
 		map.put("year", year);
 		
+		
 		Organization org = CompanyManager.getBMOrganization();
-		String[][] name_ids = Util.getCompanyNameAndIds(org.getTopCompany());
+		List<Company> comps = org.getTopCompany();
+		List<Company> existComps = new ArrayList<Company>();
+//		for (int i = 0; i < comps.size(); ++i){
+//			if (service.IsCompanyExist(comps.get(i))){
+//				existComps.add(comps.get(i));
+//			}
+//		}
+		
+		String[][] name_ids = Util.getCompanyNameAndIds(comps);
 		
 		map.put("topComp", name_ids);
-		List<String[][]> subComps = new ArrayList<String[][]>();
-		for (int i = 0; i < org.getTopCompany().size(); ++i){
-			name_ids = Util.getCompanyNameAndIds(org.getTopCompany().get(i).getSubCompanys());
-			subComps.add(name_ids);
-		}
-		map.put("subComp", subComps);
-		map.put("both", true);
-		
+		//map.put("topFirst", name_ids);
+//		List<String[][]> subComps = new ArrayList<String[][]>();
+//		for (int i = 0; i < org.getTopCompany().size(); ++i){
+//			name_ids = Util.getCompanyNameAndIds(org.getTopCompany().get(i).getSubCompanys());
+//			subComps.add(name_ids);
+//		}
+//		map.put("subComp", subComps);
+		map.put("onlytop", true);
+		map.put("both", false);
 		
 //		Organization org = CompanyManager.getOperationOrganization();
 //		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());

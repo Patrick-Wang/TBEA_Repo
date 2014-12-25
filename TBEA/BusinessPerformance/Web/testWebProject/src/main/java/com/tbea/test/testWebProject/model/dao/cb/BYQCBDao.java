@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.entity.CBBYQTBDD;
 import com.tbea.test.testWebProject.model.entity.CBBYQWGDD;
 import com.tbea.test.testWebProject.model.entity.CBBYQZXDD;

@@ -576,4 +576,42 @@ public class BYQCBServiceImpl implements BYQCBService {
 		return getWgmx(d).get(1);
 	}
 
+	@Override
+	public boolean IsCompanyExist(Company company) {
+		return xmxxDao.hasCompany(company);
+	}
+
+	@Override
+	public String[][] getTbmx(Date date, Company comp) {
+		List<CBBYQTBDD> byqcbtbdds = byqcbDao.getTbdd();
+		String[][] tbmx = new String[byqcbtbdds.size()][30];
+		List<String[]> tbmxs = new ArrayList<String[]>();
+		XMXX xmxx;
+		CBBYQTBDD byqtbcb;
+		Company tmpComp;
+
+		for (int i = 0; i < byqcbtbdds.size(); ++i) {
+			byqtbcb = byqcbtbdds.get(i);
+			xmxx = xmxxDao.getXmxxByBh(byqtbcb.getXmxx());
+
+			Double zccb = byqtbcb.getGgyl() * byqtbcb.getGgdj()
+					+ byqtbcb.getDjtyl() * byqtbcb.getDjtdj()
+					+ byqtbcb.getByqyyl() * byqtbcb.getByqydj()
+					+ byqtbcb.getGcyl() * byqtbcb.getGcdj() + byqtbcb.getZbyl()
+					* byqtbcb.getZbdj();// 投标五大主材成本
+			Double tbclzcb = (zccb + byqtbcb.getQtclcb()) / 1.17;// 投标材料成本总计
+			Double tbzccb = tbclzcb + byqtbcb.getRgjzzfy();// 投标制造成本
+			tmpComp = org.getCompany(Integer.valueOf(xmxx.getDdszdw()));
+			if (comp.getId() == tmpComp.getId()){
+				fillTbmx(tbmx, i, xmxx, byqtbcb, zccb, tbclzcb, tbzccb);
+				tbmxs.add(tbmx[i]);
+			}
+			
+
+		}
+		tbmx = new String[tbmxs.size()][30];
+		tbmxs.toArray(tbmx);
+		return tbmx;
+	}
+
 }
