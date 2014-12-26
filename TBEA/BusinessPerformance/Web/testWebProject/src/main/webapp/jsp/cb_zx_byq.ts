@@ -76,6 +76,9 @@ module cb_zx_byq {
         private mMxTableId: string;
         private mJttbTableId: string;
         private mGstbTableId: string;
+        private mDataSet : Util.DateDataSet;
+        private mComp: Util.CompanyType = Util.CompanyType.SB;
+        
         public init(
             mxTableId: string,
             jttbTableId: string,
@@ -91,9 +94,24 @@ module cb_zx_byq {
             this.mJtData = jt;
             this.mGsData = gs;
             this.mMonth = month;
-            this.updateMxTable();
+            this.mDataSet = new Util.DateDataSet("zx_update.do");
+            //this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
+            this.updateUI();
+        }
+
+        public onCompanySelected(comp : Util.CompanyType){
+            this.mComp = comp;
+        }
+        
+        public updateUI(){
+            this.mDataSet.getDataByCompany(0, 0, this.mComp, (data : string) =>{
+                if (null != data){
+                    this.mMxData = JSON.parse(data);
+                    this.updateMxTable();
+                }
+            });
         }
 
         //        private initEchart(echart): void {

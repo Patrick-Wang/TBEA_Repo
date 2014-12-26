@@ -68,6 +68,7 @@ var cb_wg_byq;
     })();
     var View = (function () {
         function View() {
+            this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
             return new View();
@@ -77,37 +78,46 @@ var cb_wg_byq;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
             this.mFdyTableId = fdyTableId;
-            this.mDataSet = new Util.DateDataSet("wg_update.do");
+            this.mCompanyDataSet = new Util.DateDataSet("wg_update.do");
+            this.mDateDataSet = new Util.DateDataSet("wg_date_update.do");
             this.mMxData = mx;
             this.mJtData = jt;
             this.mGsData = gs;
             this.mBtdyData = btdy;
-            this.mMonth = 8;
-            this.mYear = 2014;
-            this.updateMxTable();
-            this.updateJttbTable();
+            this.mMonth = month;
+            this.mYear = year;
             this.updateGstbTable();
             this.updateFdyTable();
-            this.updateUI();
+            this.updateCompany();
+        };
+        View.prototype.onCompanySelected = function (comp) {
+            this.mComp = comp;
+        };
+        View.prototype.updateCompany = function () {
+            var _this = this;
+            this.mCompanyDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
+                if (null != data) {
+                    _this.mMxData = JSON.parse(data);
+                    _this.updateMxTable();
+                }
+            });
+        };
+        View.prototype.updateDate = function () {
+            var _this = this;
+            this.mDateDataSet.getData(this.mMonth, this.mYear, function (arrayData) {
+                if (null != arrayData) {
+                    _this.mJtData = arrayData[0];
+                    _this.mBtdyData = arrayData[1];
+                    _this.updateJttbTable();
+                    _this.updateFdyTable();
+                }
+            });
         };
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
         };
         View.prototype.onMonthSelected = function (month) {
             this.mMonth = month;
-        };
-        View.prototype.updateUI = function () {
-            var _this = this;
-            this.mDataSet.getData(this.mMonth, this.mYear, function (dataArray) {
-                if (null != dataArray) {
-                    var data = dataArray[0];
-                    _this.mJtData = data;
-                    data = dataArray[1];
-                    _this.mBtdyData = data;
-                    _this.updateJttbTable();
-                    _this.updateFdyTable();
-                }
-            });
         };
         View.prototype.updateMxTable = function () {
             var name = this.mMxTableId + "_jqgrid_1234";

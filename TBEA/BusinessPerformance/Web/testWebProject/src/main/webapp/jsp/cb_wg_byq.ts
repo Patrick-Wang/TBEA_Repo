@@ -84,130 +84,80 @@ module cb_wg_byq {
         //		private mfdwData : string[];
         //		private mgwData : string[];
         //		private mnwData : string[];
-          private mMxData: string[][];
+        private mMxData: string[][];
         private mJtData: string[][];
         private mGsData: string[][];
-         private mBtdyData: string[][];
+        private mBtdyData: string[][];
         private mMonth: number;
-                private mYear: number;
-         private mDataSet : Util.DateDataSet;
+        private mYear: number;
+        private mDateDataSet : Util.DateDataSet;
+        private mCompanyDataSet : Util.DateDataSet;
         private mMxTableId: string;
         private mJttbTableId: string;
         private mGstbTableId: string;
         private mFdyTableId: string;
+        private mComp: Util.CompanyType = Util.CompanyType.SB;
         public init(
             mxTableId: string,
             jttbTableId: string,
             gstbTableId: string,
             fdyTableId : string,
-              mx: string[][],
+            mx: string[][],
             jt: string[][],
             gs: string[][],
-             btdy: string[][],
+            btdy: string[][],
             month: number,
             year: number): void {
             this.mMxTableId = mxTableId;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
             this.mFdyTableId = fdyTableId;
-        this.mDataSet = new Util.DateDataSet("wg_update.do");
+            this.mCompanyDataSet = new Util.DateDataSet("wg_update.do");
+            this.mDateDataSet = new Util.DateDataSet("wg_date_update.do");
             this.mMxData = mx;
             this.mJtData = jt;
             this.mGsData = gs;
             this.mBtdyData = btdy;
-            this.mMonth = 8;//month;
-             this.mYear = 2014;//year;
-            this.updateMxTable();
-            this.updateJttbTable();
+            this.mMonth = month;//month;
+            this.mYear = year;//year;
+            //this.updateMxTable();
+           // this.updateJttbTable();
             this.updateGstbTable();
             this.updateFdyTable();
-            this.updateUI();
+            this.updateCompany();
         }
 
+        public onCompanySelected(comp : Util.CompanyType){
+            this.mComp = comp;
+        }
         
-          public onYearSelected(year : number){
+        public updateCompany(){
+            this.mCompanyDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data : string) =>{
+                if (null != data){
+                    this.mMxData = JSON.parse(data);
+                    this.updateMxTable();
+                }
+            });
+        }
+
+         public updateDate(){
+            this.mDateDataSet.getData(this.mMonth, this.mYear, (arrayData : any) =>{
+                if (null != arrayData){
+                    this.mJtData = arrayData[0];
+                    this.mBtdyData = arrayData[1];
+                    this.updateJttbTable();
+                    this.updateFdyTable();
+                }
+            });
+        }
+        
+        public onYearSelected(year : number){
             this.mYear = year;
         }
         
         public onMonthSelected(month : number){
             this.mMonth = month;
         }
-        
-        public updateUI(){
-            this.mDataSet.getData(this.mMonth, this.mYear, (dataArray : Array<string[]>) =>{
-                if (null != dataArray){
-                    var data : any = dataArray[0];
-                    this.mJtData = data;
-                    data = dataArray[1];
-                    this.mBtdyData = data;
-
-                    this.updateJttbTable();
-                    this.updateFdyTable();
-//                    this.mData = dataArray;
-//                    $('h1').text(this.mYear + "年" + this.mMonth + "月 各产业指标汇总");
-//                    document.title = this.mYear + "年" + this.mMonth + "月 各产业指标汇总";
-//                    this.updateTable();
-                }
-            });
-        }
-
-        
-        
-        //        private initEchart(echart): void {
-        //            var ysyq_payment_Chart = echarts.init(echart)
-        //            var ysyq_payment_Option = {
-        //                animation: true,
-        //                tooltip: {
-        //                    trigger: 'axis',
-        //                    /* formatter : "{b}<br/>{a} : {c} 万元<br/>{a1} : {c1} 万元", */
-        //
-        //                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-        //                        type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
-        //                    }
-        //                },
-        //                legend: {
-        //                    x: 'right',
-        //                    data: ["合同金额", "预期阶段", "中标阶段", "完工阶段"],
-        //
-        //                },
-        //                xAxis: [{
-        //                    type: 'category',
-        //                    data: ['沈变', '衡变', '新变', '天变']
-        //                }],
-        //                yAxis: [{
-        //                    type: 'value'
-        //
-        //                }],
-        //
-        //                calculable: true,
-        //                series: [{
-        //                    name: '合同金额',
-        //                    type: 'bar',
-        //
-        //                    barCategoryGap: "50%",
-        //                    data: [63363.11, 55628.27, 58521.55, 69100.58]
-        //                }, {
-        //                        name: '预期阶段',
-        //                        type: 'bar',
-        //
-        //                        stack: '阶段',
-        //                        data: [9098.58, 1240.13, 1140.61, 3154.82]
-        //                    }, {
-        //                        name: '中标阶段',
-        //
-        //                        type: 'bar',
-        //                        stack: '阶段',
-        //                        data: [3934.13, 3200.22, 1382.52, 3934.13]
-        //                    }, {
-        //                        name: '完工阶段',
-        //                        type: 'bar',
-        //
-        //                        stack: '阶段',
-        //                        data: [11980.74, 2240.18, 3487.11, 6980.74]
-        //                    }]
-        //            };
-        //            ysyq_payment_Chart.setOption(ysyq_payment_Option);
-        //        }
 
         private updateMxTable(): void {
             var name = this.mMxTableId + "_jqgrid_1234";

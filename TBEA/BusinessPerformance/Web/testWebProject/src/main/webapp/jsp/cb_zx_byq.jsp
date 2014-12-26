@@ -31,9 +31,10 @@
 <script src="../jsp/cb_zx_byq.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+			var instance = cb_zx_byq.View.newInstance();
             (function () {
                 $(document).ready(function () {
-                	cb_zx_byq.View.newInstance().init(
+                	instance.init(
                 			"table1", 
                 			"table2", 
                 			"table3",
@@ -151,12 +152,31 @@ th.ui-th-ltr {
 	<div class="header">
 		<h1>变压器执行成本明细</h1>
 	</div>
+	<Table align="center">
+		<tr>
+			<td>
+				<Table>
+					<tr>
+						<td><%@include file="company_selection.jsp"%></td>
+						<td><input type="button" value="更新"
+							style="width: 80px; margin-left: 10px;"
+							onclick="instance.updateUI()"></input>
+					</tr>
+				</Table>
+			</td>
+		</tr>
+		<tr>
+			<td><div id="table1" style="margin-bottom: 15px"></div></td>
+		</tr>
+		<tr>
+			<td><div id="table2" style="margin-bottom: 15px"></div></td>
+		</tr>
+		<tr>
+			<td><div id="table3" style="margin-bottom: 15px"></div></td>
+		</tr>
+	</Table>
 
-
-	<div align="center" id="table1" style="margin-bottom:15px"></div>
-	<div align="center" id="table2" style="margin-bottom:15px"></div>
-	<div align="center" id="table3" style="margin-bottom:15px"></div>
-
+	<%@include file="loading.jsp"%>
 </body>
 
 </html>

@@ -34,7 +34,7 @@ public class XMXXDaoImpl implements XMXXDao{
 	@Override
 	public boolean hasCompany(Company company) {
 		Query q = entityManager
-				.createQuery("from XMXX CAST(ddzdw as int) where ddszdw = :comp");
+				.createQuery("from XMXX where ddszdw = :comp");
 		q.setParameter("comp", "0" + company.getId());
 		q.setFirstResult(0);
 		q.setMaxResults(1);
