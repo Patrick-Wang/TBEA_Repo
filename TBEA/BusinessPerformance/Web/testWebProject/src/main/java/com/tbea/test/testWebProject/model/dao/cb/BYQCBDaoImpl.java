@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.entity.CBBYQTBDD;
 import com.tbea.test.testWebProject.model.entity.CBBYQWGDD;
 import com.tbea.test.testWebProject.model.entity.CBBYQZXDD;
@@ -63,4 +64,5 @@ public class BYQCBDaoImpl implements  BYQCBDao{
 		}
 		return null;
 	}
+
 }

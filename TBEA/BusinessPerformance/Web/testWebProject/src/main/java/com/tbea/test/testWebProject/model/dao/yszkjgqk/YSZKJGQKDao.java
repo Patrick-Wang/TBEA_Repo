@@ -16,5 +16,6 @@ public interface YSZKJGQKDao extends AbstractReadWriteDao<YSZKJGQK> {
 
 	List<YSZKJGQK> getWdqtbbh(Calendar cal, Company comp);
 
-	
+	boolean hasCompany(Company comp);
+
 }

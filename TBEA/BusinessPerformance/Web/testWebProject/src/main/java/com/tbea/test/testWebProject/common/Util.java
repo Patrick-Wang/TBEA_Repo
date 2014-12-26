@@ -233,7 +233,6 @@ public class Util {
 		List<String> names = new ArrayList<String>();
 		List<String> ids = new ArrayList<String>();
 		for (int i = 0; i < list.size(); ++i) {
-
 			ids.add(list.get(i).getType().ordinal() + "");
 			names.add(list.get(i).getName());
 		}

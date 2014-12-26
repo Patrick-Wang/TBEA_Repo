@@ -158,23 +158,8 @@ th.ui-th-ltr {
 					<tr>
 						<td><%@include file="date_selection.jsp"%>
 						</td>
-						<td><select id="companys"
-							onchange="instance.onCompanySelected(this.value)"
-							style="width: 125px;">
-								<c:forEach begin="0" end="${company_size - 1}" var="i">
-									<c:choose>
-										<c:when test="${i == 0}">
-											<option value="${ids[i]}" selected="selected">${names[i]}</option>
-										</c:when>
-
-										<c:otherwise>
-											<option value="${ids[i]}">${names[i]}</option>
-										</c:otherwise>
-
-									</c:choose>
-
-								</c:forEach>
-						</select></td>
+						<td>
+						<%@include file="company_selection.jsp"%></td>
 						<td><input type="button" value="更新"
 							style="width: 80px; margin-left: 10px;"
 							onclick="instance.updateUI()"></input>

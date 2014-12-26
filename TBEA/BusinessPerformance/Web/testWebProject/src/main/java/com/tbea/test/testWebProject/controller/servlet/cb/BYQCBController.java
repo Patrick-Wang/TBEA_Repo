@@ -1,10 +1,14 @@
 package com.tbea.test.testWebProject.controller.servlet.cb;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.test.testWebProject.common.Util;
+import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
 import com.tbea.test.testWebProject.common.companys.Organization;
 import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
@@ -30,6 +35,25 @@ import com.tbea.test.testWebProject.service.cb.BYQCBService;
 public class BYQCBController {
 	@Autowired
 	private BYQCBService service;
+	
+	
+	
+	@RequestMapping(value = "tb_update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getByqzbcb_update(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Calendar date = Calendar.getInstance();  
+		int month = date.get(Calendar.MONTH) + 1;
+		int year = date.get(Calendar.YEAR);
+		String companyId = request.getParameter("companyId");
+		int cid = Integer.parseInt(companyId);
+		Organization org = CompanyManager.getBMOrganization();
+		Company comp = org.getCompany(CompanyType.valueOf(cid));
+		
+		String[][] aTbmx = service.getTbmx(Date.valueOf(year + "-" + month + "-1"), comp);
+		String tbmx = JSONArray.fromObject(aTbmx).toString().replace("null", "0.00");
+
+		return tbmx.getBytes("utf-8");
+	}
 	
 	@RequestMapping(value = "tb.do", method = RequestMethod.GET)
 	public ModelAndView getByqzbcb(HttpServletRequest request,
@@ -49,6 +73,55 @@ public class BYQCBController {
 		map.put("jttb", jttb);
 		map.put("gstb", gstb);
 		map.put("month", month);
+		
+		
+		Organization org = CompanyManager.getBMOrganization();
+
+//		String[][] name_ids = Util.getCompanyNameAndIds(org.getTopCompany());
+//		map.put("topComp", name_ids);
+//		
+//	
+//		
+//		
+//		map.put("topComp", name_ids);
+		//List<Integer> noSubCompIndexs = new ArrayList<Integer>();
+		List<Company> topComps = new ArrayList<Company>();
+		List<String[][]> subComps = new ArrayList<String[][]>();
+		List<Company> existComps = new ArrayList<Company>();
+		List<Company> comps;
+		String[][] name_ids;
+		Map<String, Boolean> emptyCompanySet = new HashMap<String, Boolean>();
+		for (int i = 0; i < org.getTopCompany().size(); ++i){
+			comps = org.getTopCompany().get(i).getSubCompanys();
+			existComps = new ArrayList<Company>();
+			for (int j = 0; j < comps.size(); ++j){
+				if (service.IsCompanyExist(comps.get(j))){
+					existComps.add(comps.get(j));
+				}
+			}
+			if (!existComps.isEmpty()){
+				name_ids = Util.getCompanyNameAndIds(existComps);
+				subComps.add(name_ids);
+				topComps.add(org.getTopCompany().get(i));
+				if (!service.IsCompanyExist(org.getTopCompany().get(i))){
+					//noSubCompIndexs.add(org.getTopCompany().get(i).getId());
+					emptyCompanySet.put("" + org.getTopCompany().get(i).getType().ordinal(), true);
+				}
+			} else if (service.IsCompanyExist(org.getTopCompany().get(i))){
+				topComps.add(org.getTopCompany().get(i));
+			}
+		}
+		
+		name_ids = Util.getCompanyNameAndIds(topComps);
+		//String[] emptyCompany = new String[noSubCompIndexs.size()];
+
+		//noSubCompIndexs.toArray(emptyCompany);
+		map.put("emptyComp", emptyCompanySet);
+		map.put("topComp", name_ids);
+		map.put("subComp", subComps);
+		map.put("onlytop", false);
+		map.put("both", true);
+		
 		return new ModelAndView("cb_byq", map);
 	}
 	

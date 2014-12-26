@@ -80,4 +80,14 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		return q.getResultList();
 	}
 
+	@Override
+	public boolean hasCompany(Company comp) {
+		Query q = getEntityManager()
+				.createQuery("from YSZKJGQK where qybh = :comp");
+		q.setParameter("comp", comp.getId());
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		return !q.getResultList().isEmpty();
+	}
+
 }

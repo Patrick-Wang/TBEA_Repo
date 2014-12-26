@@ -10,11 +10,14 @@ import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 public abstract class AbstractOrganization implements Organization {
 
 	protected List<Company> topComps = new ArrayList<Company>();
-	protected Map<CompanyManager.CompanyType, Company> typeIdMap = new HashMap<CompanyManager.CompanyType, Company>();
-
+	protected Map<CompanyManager.CompanyType, Company> typeCompMap = new HashMap<CompanyManager.CompanyType, Company>();
+	protected Map<Integer, Company> idCompMap = new HashMap<Integer, Company>();
+	
+	
 	protected Company getCompany(CompanyManager.CompanyType ty, Integer id) {
 		Company comp = ty.getCompany(id);
-		typeIdMap.put(ty, comp);
+		typeCompMap.put(ty, comp);
+		idCompMap.put(id, comp);
 		return comp;
 	}
 
@@ -44,12 +47,12 @@ public abstract class AbstractOrganization implements Organization {
 
 	@Override
 	public Company getCompany(CompanyType type) {
-		return typeIdMap.get(type);
+		return typeCompMap.get(type);
 	}
 
 	@Override
 	public Company getCompany(Integer id) {
-		return queryCompany(topComps, id);
+		return idCompMap.get(id);//queryCompany(topComps, id);
 	}
 
 	@Override

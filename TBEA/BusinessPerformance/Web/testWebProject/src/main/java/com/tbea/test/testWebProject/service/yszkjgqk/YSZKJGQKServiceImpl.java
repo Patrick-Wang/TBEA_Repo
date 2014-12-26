@@ -3,6 +3,7 @@ package com.tbea.test.testWebProject.service.yszkjgqk;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.sql.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
+import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.model.dao.yszkjgqk.YSZKJGQKDao;
 import com.tbea.test.testWebProject.model.entity.YSZKJGQK;
 
@@ -146,6 +148,11 @@ public class YSZKJGQKServiceImpl implements YSZKJGQKService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public boolean IsCompanyExist(Company comp) {
+		return yszkjgqkDao.hasCompany(comp);
 	}
 
 

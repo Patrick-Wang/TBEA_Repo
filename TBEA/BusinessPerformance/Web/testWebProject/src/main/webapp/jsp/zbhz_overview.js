@@ -2,7 +2,7 @@ var zbhz_overview;
 (function (zbhz_overview) {
     var YDZBDataSet = (function () {
         function YDZBDataSet(comId, yd, jd, nd, ydtb, jdtb) {
-            this.companyId = 19 /* JT */;
+            this.companyId = 18 /* JT */;
             this.companyId = comId;
             this.mYd = yd;
             this.mJd = jd;
@@ -71,8 +71,8 @@ var zbhz_overview;
     var View = (function () {
         function View() {
             this.mSelectCy = true;
-            this.mCy = 19 /* JT */;
-            this.mDw = 100 /* ALL */;
+            this.mCy = 18 /* JT */;
+            this.mDw = 1000 /* ALL */;
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -88,7 +88,7 @@ var zbhz_overview;
             this.updateUI();
         };
         View.prototype.getCurrentCompany = function () {
-            if (this.mDw != 100 /* ALL */) {
+            if (this.mDw != 1000 /* ALL */) {
                 return this.mDw;
             }
             else {

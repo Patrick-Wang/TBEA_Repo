@@ -74,7 +74,6 @@ module yszkjgqkb {
         public onMonthSelected(month : number){
         	this.mMonth = month;
         }
-        
         public onCompanySelected(comp : Util.CompanyType){
         	this.mComp = comp;
         }
@@ -105,26 +104,29 @@ module yszkjgqkb {
             this.updateSquareEchart(this.mEchartIdSquire);
         }
         private updateBarEchart(echart: string): void {
-            var legend = [this.mYear - 1 + "应收未收", this.mYear - 1 + "未到期款", this.mYear - 1 + "未到期质保金", '', this.mYear + "应收未收", this.mYear + "未到期款", this.mYear + "未到期质保金"];
+            var legend = [this.mYear + "应收未收", this.mYear + "未到期款", this.mYear + "未到期质保金"];
             var month: string[] = [];
             var data = [];
             for (var i = 1; i <= this.mMonth; ++i) {
                 month.push(i + "月");
             }
-
-            for (var i = 0; i < 6; ++i) {
-                data.push(this.mBarData[i + this.mCurrentSelected * 6]);
+            var row = [];
+            for (var i = 3; i < 6; ++i) {
+                row = [];
+                data.push(row);
+                for (var j = 0; j < this.mBarData[i + this.mCurrentSelected * 6].length; ++j){
+                     row.push(parseInt(this.mBarData[i + this.mCurrentSelected * 6][j] + ""));
+                }
+               
             }
 
             var ser = [];
             var rgba = [
-                [193, 35, 43, 0.5], [181, 195, 52, 0.5], [252, 206, 16, 0.5], [193, 35, 43, 1], [181, 195, 52, 1], [252, 206, 16, 1]];
+                [193, 35, 43, 1], [181, 195, 52, 1], [252, 206, 16, 1]];
 
             var temp;
             for (var j = 0; j < legend.length; ++j) {
-                if (j == 3) {
-                    continue;
-                }
+              
                 var k = j;
                 if (j > 3) {
                     k = j - 1;
@@ -136,7 +138,7 @@ module yszkjgqkb {
 
                     itemStyle: {
                         normal: {
-                            color: "rgba(" + rgba[k][0] + "," + rgba[k][1] + "," + rgba[k][2] + "," + rgba[k][3] + ")",
+                            color: "rgba(" + rgba[j][0] + "," + rgba[j][1] + "," + rgba[j][2] + "," + rgba[j][3] + ")",
                             label: {
                                 show: true
                             }
@@ -146,9 +148,6 @@ module yszkjgqkb {
                 }
 
 
-                if (j < 3) {
-                    temp.xAxisIndex = 1;
-                }
                 ser.push(temp);
             }
 
