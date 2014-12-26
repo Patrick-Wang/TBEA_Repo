@@ -54,13 +54,13 @@
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/my_test_db" />
 	</bean>
-	<bean id="dataSource2" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<bean id="dataSource15" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/yszk_db" />
 	</bean>
-	<bean id="dataSource3" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<bean id="dataSourcedl" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/dl_db" />
 	</bean>
-	<bean id="dataSource4" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<bean id="dataSourcetb" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/tb_db" />
 	</bean>
 
@@ -79,9 +79,9 @@
 		</property>
 		<property name="persistenceUnitName" value="localDB" />
 	</bean>
-	<bean id="entityManagerFactory2"
+	<bean id="entityManagerFactory15"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource2" />
+		<property name="dataSource" ref="dataSource15" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> -->
@@ -94,9 +94,9 @@
 		</property>
 		<property name="persistenceUnitName" value="15DB" />
 	</bean>
-	<bean id="entityManagerFactory3"
+	<bean id="entityManagerFactorydl"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource3" />
+		<property name="dataSource" ref="dataSourcedl" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> -->
@@ -109,9 +109,9 @@
 		</property>
 		<property name="persistenceUnitName" value="dlDB" />
 	</bean>
-	<bean id="entityManagerFactory4"
+	<bean id="entityManagerFactorytb"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource4" />
+		<property name="dataSource" ref="dataSourcetb" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> -->
@@ -132,9 +132,9 @@
 	<!-- TRANSACTIONS -->
 	<!-- -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	<tx:annotation-driven transaction-manager="transactionManager2" />
-	<tx:annotation-driven transaction-manager="transactionManager3" />
-	<tx:annotation-driven transaction-manager="transactionManager4" />
+	<tx:annotation-driven transaction-manager="transactionManager15" />
+	<tx:annotation-driven transaction-manager="transactionManagerdl" />
+	<tx:annotation-driven transaction-manager="transactionManagertb" />
 
 	<aop:aspectj-autoproxy />
 
@@ -142,17 +142,17 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	<bean id="transactionManager2" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory2" />
-		<property name="dataSource" ref="dataSource2" />
+	<bean id="transactionManager15" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory15" />
+		<property name="dataSource" ref="dataSource15" />
 	</bean>
-	<bean id="transactionManager3" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory3" />
-		<property name="dataSource" ref="dataSource3" />
+	<bean id="transactionManagerdl" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactorydl" />
+		<property name="dataSource" ref="dataSourcedl" />
 	</bean>
-	<bean id="transactionManager4" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory4" />
-		<property name="dataSource" ref="dataSource4" />
+	<bean id="transactionManagertb" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactorytb" />
+		<property name="dataSource" ref="dataSourcetb" />
 	</bean>
 
 

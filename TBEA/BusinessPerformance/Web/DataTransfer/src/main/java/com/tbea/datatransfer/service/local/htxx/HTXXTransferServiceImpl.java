@@ -21,7 +21,6 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 	private HTXXTBDao htxxTBDao;
 
 	@Override
-	@Transactional("transactionManager")
 	public boolean transferHTXX() {
 		boolean result = false;
 		try {

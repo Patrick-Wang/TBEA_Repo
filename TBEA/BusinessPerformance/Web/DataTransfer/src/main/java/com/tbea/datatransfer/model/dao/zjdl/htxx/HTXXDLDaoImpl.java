@@ -12,7 +12,7 @@ import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
 
 import com.tbea.datatransfer.model.entity.zjdl.HTXXDL;
 
-@Transactional("transactionManager3")
+@Transactional("transactionManagerdl")
 public class HTXXDLDaoImpl extends AbstractReadOnlyDaoImpl<HTXXDL> implements
 		HTXXDLDao {
 
