@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:util="http://www.springframework.org/schema/util"
-    xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
     	http://www.springframework.org/schema/beans 
     	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
@@ -29,15 +27,16 @@
 	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
 		<property name="locations"> <list> <value>classpath:../applicationContext.properties</value> 
 		</list> </property> </bean> -->
-    <util:map id="qybhMap" map-class="java.util.HashMap" key-type="java.lang.Integer" value-type="java.lang.Integer">
-        <entry key="5" value="1" />
-        <entry key="6" value="2" />
-        <entry key="7" value="3" />
-        <entry key="8" value="301" />
-        <entry key="9" value="4" />
-        <entry key="10" value="5" />
-        <entry key="11" value="6" />
-    </util:map>
+	<util:map id="qybhMap" map-class="java.util.HashMap" key-type="java.lang.Integer"
+		value-type="java.lang.Integer">
+		<entry key="5" value="1" />
+		<entry key="6" value="2" />
+		<entry key="7" value="3" />
+		<entry key="8" value="301" />
+		<entry key="9" value="4" />
+		<entry key="10" value="5" />
+		<entry key="11" value="6" />
+	</util:map>
 	<!-- -->
 	<!-- INCLUDES -->
 	<!-- -->
@@ -57,6 +56,9 @@
 	</bean>
 	<bean id="dataSource2" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/yszk_db" />
+	</bean>
+	<bean id="dataSource3" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/dl_db" />
 	</bean>
 
 	<bean id="entityManagerFactory"
@@ -89,6 +91,21 @@
 		</property>
 		<property name="persistenceUnitName" value="15DB" />
 	</bean>
+	<bean id="entityManagerFactory3"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource3" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> -->
+				<!--<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/> -->
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
+					/> -->
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="dlDB" />
+	</bean>
 
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
@@ -99,6 +116,7 @@
 	<!-- -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<tx:annotation-driven transaction-manager="transactionManager2" />
+	<tx:annotation-driven transaction-manager="transactionManager3" />
 
 	<aop:aspectj-autoproxy />
 
@@ -109,6 +127,10 @@
 	<bean id="transactionManager2" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory2" />
 		<property name="dataSource" ref="dataSource2" />
+	</bean>
+	<bean id="transactionManager3" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory3" />
+		<property name="dataSource" ref="dataSource3" />
 	</bean>
 
 
@@ -148,7 +170,7 @@
 		scope="prototype">
 		<property name="ydzbfdwDao" ref="ydzbfdwDao" />
 		<property name="bl15Dao" ref="bl15Dao" />
-       <property name="qybhMap" ref="qybhMap" />
+		<property name="qybhMap" ref="qybhMap" />
 	</bean>
 	<bean id="zbhzService"
 		class="com.tbea.datatransfer.service.local.zbhz.ZBHZServiceImpl"
@@ -156,13 +178,12 @@
 		<property name="zbhzDao" ref="zbhzDao" />
 		<property name="bl15Dao" ref="bl15Dao" />
 	</bean>
-    <bean id="logService"
-        class="com.tbea.datatransfer.service.local.log.LogServiceImpl"
-        scope="prototype">
-        <property name="ydzbfdwDao" ref="ydzbfdwDao" />
-        <property name="bl15Dao" ref="bl15Dao" />
-       <property name="qybhMap" ref="qybhMap" />
-    </bean>
+	<bean id="logService" class="com.tbea.datatransfer.service.local.log.LogServiceImpl"
+		scope="prototype">
+		<property name="ydzbfdwDao" ref="ydzbfdwDao" />
+		<property name="bl15Dao" ref="bl15Dao" />
+		<property name="qybhMap" ref="qybhMap" />
+	</bean>
 
 	<!-- -->
 	<!-- CLIENTS -->
