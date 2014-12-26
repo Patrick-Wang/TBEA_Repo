@@ -13,14 +13,16 @@ public interface BYQCBService {
 
 	List<String[][]> getWgmx(Date valueOf);
 
-	String[][] getJtwg(Date d);
 
-	boolean IsCompanyExist(Company company);
+	boolean IsZxCompanyExist(Company company);
+	boolean IsTbCompanyExist(Company company);
+	boolean IsWgCompanyExist(Company company);
+	
+	String[][] getTbmx(Date date, Company comp);
 
-	String[][] getTbmx(Date valueOf, Company comp);
+	String[][] getZxmx(Date date, Company comp);
 
-//	String[][] getJttb(Date date);
-//
-//	String[][] getGstb(Date date);
+	String[][] getWgmx(Date date, Company comp);
 
+	List<String[][]> getJtwg(Date date);
 }

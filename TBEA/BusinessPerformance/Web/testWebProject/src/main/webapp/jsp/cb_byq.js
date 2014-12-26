@@ -49,6 +49,7 @@ var cb_byq;
     })();
     var View = (function () {
         function View() {
+            this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
             return new View();
@@ -61,9 +62,22 @@ var cb_byq;
             this.mJtData = jt;
             this.mGsData = gs;
             this.mMonth = month;
-            this.updateMxTable();
+            this.mDataSet = new Util.DateDataSet("tb_update.do");
             this.updateJttbTable();
             this.updateGstbTable();
+            this.updateUI();
+        };
+        View.prototype.onCompanySelected = function (comp) {
+            this.mComp = comp;
+        };
+        View.prototype.updateUI = function () {
+            var _this = this;
+            this.mDataSet.getDataByCompany(0, 0, this.mComp, function (data) {
+                if (null != data) {
+                    _this.mMxData = JSON.parse(data);
+                    _this.updateMxTable();
+                }
+            });
         };
         View.prototype.updateMxTable = function () {
             var name = this.mMxTableId + "_jqgrid_1234";

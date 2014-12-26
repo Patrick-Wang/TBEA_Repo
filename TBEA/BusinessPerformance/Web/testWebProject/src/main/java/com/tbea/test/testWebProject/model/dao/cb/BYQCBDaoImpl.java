@@ -64,5 +64,35 @@ public class BYQCBDaoImpl implements  BYQCBDao{
 		}
 		return null;
 	}
-
+	
+	
+	@Override
+	public boolean containsTbCompany(Company company) {
+		Query q = entityManager
+				.createQuery("SELECT c FROM CBBYQTBDD c, XMXX x where c.xmxx = x.xmbh and x.ddszdw = :comp");
+		q.setParameter("comp", "0" + company.getId());
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		return !q.getResultList().isEmpty();
+	}
+	
+	@Override
+	public boolean containsZxCompany(Company company) {
+		Query q = entityManager
+				.createQuery("SELECT z FROM CBBYQZXDD z, CBBYQTBDD t, XMXX x where z.tbcpbh = t.id and t.xmxx = x.xmbh and x.ddszdw = :comp");
+		q.setParameter("comp", "0" + company.getId());
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		return !q.getResultList().isEmpty();
+	}
+	
+	@Override
+	public boolean containsWgCompany(Company company) {
+		Query q = entityManager
+				.createQuery("SELECT w FROM CBBYQWGDD w, CBBYQZXDD z, CBBYQTBDD t, XMXX x where w.zxcpbh = z.id and z.tbcpbh = t.id and t.xmxx = x.xmbh and x.ddszdw = :comp");
+		q.setParameter("comp", "0" + company.getId());
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		return !q.getResultList().isEmpty();
+	}
 }
