@@ -60,6 +60,9 @@
 	<bean id="dataSource3" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/dl_db" />
 	</bean>
+	<bean id="dataSource4" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/tb_db" />
+	</bean>
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -106,6 +109,20 @@
 		</property>
 		<property name="persistenceUnitName" value="dlDB" />
 	</bean>
+	<bean id="entityManagerFactory4"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource4" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> -->
+				<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/>
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" /> -->
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="tbDB" />
+	</bean>
 
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
@@ -117,6 +134,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<tx:annotation-driven transaction-manager="transactionManager2" />
 	<tx:annotation-driven transaction-manager="transactionManager3" />
+	<tx:annotation-driven transaction-manager="transactionManager4" />
 
 	<aop:aspectj-autoproxy />
 
@@ -132,6 +150,10 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory3" />
 		<property name="dataSource" ref="dataSource3" />
 	</bean>
+	<bean id="transactionManager4" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory4" />
+		<property name="dataSource" ref="dataSource4" />
+	</bean>
 
 
 	<!-- -->
@@ -144,6 +166,10 @@
 	<bean id="ydzbfdwDao"
 		class="com.tbea.datatransfer.model.dao.local.ydzbfdw.YDZBFDWDaoImpl" />
 	<bean id="zbhzDao" class="com.tbea.datatransfer.model.dao.local.zbhz.ZBHZDaoImpl" />
+	<bean id="htxxLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.htxx.HTXXLocalDaoImpl" />
+	<bean id="htxxDLDao" class="com.tbea.datatransfer.model.dao.zjdl.htxx.HTXXDLDaoImpl" />
+	<bean id="htxxTBDao" class="com.tbea.datatransfer.model.dao.zjtb.htxx.HTXXTBDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -183,6 +209,13 @@
 		<property name="ydzbfdwDao" ref="ydzbfdwDao" />
 		<property name="bl15Dao" ref="bl15Dao" />
 		<property name="qybhMap" ref="qybhMap" />
+	</bean>
+	<bean id="htxxTransferService"
+		class="com.tbea.datatransfer.service.local.htxx.HTXXTransferServiceImpl"
+		scope="prototype">
+		<property name="htxxLocalDao" ref="htxxLocalDao" />
+		<property name="htxxDLDao" ref="htxxDLDao" />
+		<property name="htxxTBDao" ref="htxxTBDao" />
 	</bean>
 
 	<!-- -->
