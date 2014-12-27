@@ -31,9 +31,10 @@
 <script src="../jsp/cb_xl.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+			var instance = cb_xl.View.newInstance();
             (function () {
                 $(document).ready(function () {
-                	cb_xl.View.newInstance().init(
+                	instance.init(
                 			"table1", 
                 			"table2", 
                 			"table3",
@@ -152,10 +153,30 @@ th.ui-th-ltr {
 		<h1>线缆投标成本明细</h1>
 	</div>
 
-
-	<div align="center" id="table1" style="margin-bottom:15px"></div>
-	<div align="center" id="table2" style="margin-bottom:15px"></div>
-	<div align="center" id="table3" style="margin-bottom:15px"></div>
+	<Table align="center">
+		<tr>
+			<td>
+				<Table>
+					<tr>
+						<td><%@include file="company_selection.jsp"%></td>
+						<td><input type="button" value="更新"
+							style="width: 80px; margin-left: 10px;"
+							onclick="instance.updateUI()"></input>
+					</tr>
+				</Table>
+			</td>
+		</tr>
+		<tr>
+			<td><div id="table1" style="margin-bottom: 15px"></div></td>
+		</tr>
+		<tr>
+			<td><div id="table2" style="margin-bottom: 15px"></div></td>
+		</tr>
+		<tr>
+			<td><div id="table3" style="margin-bottom: 15px"></div></td>
+		</tr>
+	</Table>
+	<%@include file="loading.jsp"%>
 
 </body>
 

@@ -59,6 +59,7 @@ var cb_wg_xl;
     })();
     var View = (function () {
         function View() {
+            this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
             return new View();
@@ -81,6 +82,9 @@ var cb_wg_xl;
             this.updateJttbTable();
             this.updateGstbTable();
             this.updateFdyTable();
+        };
+        View.prototype.onCompanySelected = function (comp) {
+            this.mComp = comp;
         };
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
