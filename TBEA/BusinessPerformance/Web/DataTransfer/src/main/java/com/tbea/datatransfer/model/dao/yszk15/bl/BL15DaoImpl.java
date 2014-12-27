@@ -13,7 +13,7 @@ import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
 
 import com.tbea.datatransfer.model.entity.yszk15.BL15;
 
-@Transactional("transactionManager2")
+@Transactional("transactionManager15")
 public class BL15DaoImpl extends AbstractReadOnlyDaoImpl<BL15> implements
 		BL15Dao {
 
