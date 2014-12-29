@@ -1,5 +1,6 @@
 package com.tbea.test.testWebProject.controller.servlet.cb;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.test.testWebProject.common.CompanySelection;
 import com.tbea.test.testWebProject.common.Util;
+import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
 import com.tbea.test.testWebProject.common.companys.Organization;
 import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
@@ -30,6 +33,27 @@ import com.tbea.test.testWebProject.service.cb.XLCBService;
 public class XLCBController {
 	@Autowired
 	private XLCBService service;
+	
+	@RequestMapping(value = "tb_update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getXltbcb_update(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Calendar date = Calendar.getInstance();
+		int month = date.get(Calendar.MONTH) + 1;
+		int year = date.get(Calendar.YEAR);
+		String companyId = request.getParameter("companyId");
+		int cid = Integer.parseInt(companyId);
+		Organization org = CompanyManager.getBMOrganization();
+		Company comp = org.getCompany(CompanyType.valueOf(cid));
+
+		List<String[]> aZxmx = service.getTbmx(
+				Date.valueOf(year + "-" + month + "-1"), comp);
+		String zxmx = JSONArray.fromObject(aZxmx).toString()
+				.replace("null", "0.00");
+
+		return zxmx.getBytes("utf-8");
+	}
+
+	
 	
 	@RequestMapping(value = "tb.do", method = RequestMethod.GET)
 	public ModelAndView getZbcb(HttpServletRequest request,
@@ -49,6 +73,18 @@ public class XLCBController {
 		map.put("jttb", jttb);
 		map.put("gstb", gstb);
 		map.put("month", month);
+		
+		
+		Organization org = CompanyManager.getBMOrganization();
+		CompanySelection compSelection = new CompanySelection(false,
+				org.getTopCompany(), new CompanySelection.Filter() {
+					@Override
+					public boolean keep(Company comp) {
+						return service.IsTbCompanyExist(comp);
+					}
+				});
+		compSelection.select(map);
+		
 		return new ModelAndView("cb_xl", map);
 	}
 	
@@ -87,8 +123,19 @@ public class XLCBController {
 		map.put("jtwg", jtwg);
 		map.put("gswg", gswg);
 		map.put("btdywg", btdywg);
-		map.put("month", 8);
+		map.put("month", month);
 		map.put("year", year);
+		
+		Organization org = CompanyManager.getBMOrganization();
+		CompanySelection compSelection = new CompanySelection(false,
+				org.getTopCompany(), new CompanySelection.Filter() {
+					@Override
+					public boolean keep(Company comp) {
+						return comp.getType() == CompanyManager.CompanyType.XL;
+					}
+				});
+		compSelection.select(map);
+		
 		return new ModelAndView("cb_wg_xl", map);
 	}
 }

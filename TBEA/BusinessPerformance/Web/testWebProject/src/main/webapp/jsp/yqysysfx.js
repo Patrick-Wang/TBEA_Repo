@@ -51,56 +51,54 @@ var yqysysfx;
             var ysfl = ["内部因素", "客户资信", "滚动付款", "项目变化", "合同因素", "手续办理", "其它"];
             var zjeData = [41982, 31876, 51975, 43856, 61498, 32696, 38574];
             var flsdData = [29167, 21401, 47155, 32584, 52523, 19573, 24652];
-            var yqysysOption = {
+            var option = {
                 title: {
                     text: '逾期应收因素分析'
                 },
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
                 },
                 legend: {
-                    data: legend
+                    data: ['总金额', '其中法律清收']
                 },
                 toolbox: {
-                    show: true
+                    show: true,
+                    orient: 'vertical',
+                    x: 'right',
+                    y: 'center'
                 },
-                calculable: false,
+                calculable: true,
                 xAxis: [
                     {
                         type: 'category',
-                        boundaryGap: true,
-                        data: ysfl
+                        data: ['内部因素', '客户资信', '滚动付款', '项目变化', '合同因素', '手续办理', '其他']
                     }
                 ],
                 yAxis: [
                     {
                         type: 'value'
-                    },
-                    {
-                        type: 'value',
-                        axisLabel: {
-                            formatter: '{value} %'
-                        }
                     }
                 ],
                 series: [
                     {
-                        name: legend[0],
+                        name: '总金额',
                         type: 'bar',
-                        smooth: true,
-                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
-                        data: zjeData
+                        barWidth: 15,
+                        stack: '逾期因素分析',
+                        data: [620, 432, 301, 634, 790, 1130, 820]
                     },
                     {
-                        name: legend[1],
+                        name: '其中法律清收',
                         type: 'bar',
-                        smooth: true,
-                        itemStyle: { normal: { areaStyle: { type: 'default' } } },
-                        data: flsdData
+                        stack: '逾期因素分析',
+                        data: [169, 272, 121, 274, 390, 230, 210]
                     }
                 ]
             };
-            yqysysChart.setOption(yqysysOption);
+            yqysysChart.setOption(option);
         };
         View.prototype.updateTable = function () {
             var name = this.mTableId + "_jqgrid_1234";

@@ -300,5 +300,49 @@ public class XLCBServiceImpl implements XLCBService{
 		return rets;
 	}
 
+	@Override
+	public boolean IsTbCompanyExist(Company comp) {
+		// TODO Auto-generated method stub
+		return xlDao.containsTbCompany(comp);
+	}
+
+	@Override
+	public List<String[]> getTbmx(Date date, Company comp) {
+		List<CBXLTBDD> xlcbtbdds = xlDao.getTbdd();
+
+		String[][] tbrow;
+		List<String[]> tbmx = new ArrayList<String[]>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		
+		
+		XMXX xmxx;
+		CBXLTBDD xltbcb;
+		Organization org = CompanyManager.getBMOrganization();
+
+
+		Calendar firstMonth = Calendar.getInstance();
+		firstMonth.set(cal.get(Calendar.YEAR), 1, 1);
+
+		Calendar tmpCal = Calendar.getInstance();
+
+		for (int i = 0; i < xlcbtbdds.size(); ++i) {
+			xltbcb = xlcbtbdds.get(i);
+			xmxx = xmxxDao.getXmxxByBh(xltbcb.getXmbh());
+
+			Double zccb = valueOf(xltbcb.getLyl()) * valueOf(xltbcb.getLdj())
+					+ valueOf(xltbcb.getDjtyl()) * valueOf(xltbcb.getDjtdj());// 投标五大主材成本
+			Double tbcbzj = (zccb - valueOf(xltbcb.getQtcbhj())) / 1.17;
+			if (comp.getId() == Integer.valueOf(xmxx.getDdszdw())){
+				tbrow = new String[1][17];
+				fillTbmx(tbrow, 0, xmxx, xltbcb, zccb, tbcbzj);
+				tbmx.add(tbrow[0]);
+			}
+		}
+
+	
+		return tbmx;
+	}
+
 
 }

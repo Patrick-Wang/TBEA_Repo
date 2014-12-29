@@ -158,6 +158,17 @@ th.ui-th-ltr {
 	<table align="center">
 		<tr>
 			<td>
+				<Table>
+					<tr>
+						<td><%@include file="company_selection.jsp"%></td>
+						<td><input type="button" value="更新"
+							style="width: 80px; margin-left: 10px;"></input>
+					</tr>
+				</Table>
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<div id="table1" align="center" style="margin-bottom: 15px"></div>
 			</td>
 		</tr>
@@ -193,9 +204,6 @@ th.ui-th-ltr {
 			</td>
 		</tr>
 	</table>
-
-
-
 
 
 

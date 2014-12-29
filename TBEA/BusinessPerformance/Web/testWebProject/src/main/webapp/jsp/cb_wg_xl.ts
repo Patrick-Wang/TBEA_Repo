@@ -94,6 +94,7 @@ module cb_wg_xl {
         private mJttbTableId: string;
         private mGstbTableId: string;
         private mFdyTableId: string;
+        private mComp: Util.CompanyType = Util.CompanyType.SB;
         public init(
             mxTableId: string,
             jttbTableId: string,
@@ -124,6 +125,9 @@ module cb_wg_xl {
             this.updateFdyTable();
         }
 
+         public onCompanySelected(comp : Util.CompanyType){
+            this.mComp = comp;
+        }
         
           public onYearSelected(year : number){
             this.mYear = year;
