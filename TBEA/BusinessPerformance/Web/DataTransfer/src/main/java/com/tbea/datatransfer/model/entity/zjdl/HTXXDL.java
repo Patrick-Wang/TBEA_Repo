@@ -161,7 +161,7 @@ public class HTXXDL extends AbstractReadOnlyEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "HTXXLocal [id=" + getId() + ", gxrq=" + gxrq + ", htbh=" + htbh
+		return "HTXXDL [id=" + getId() + ", gxrq=" + gxrq + ", htbh=" + htbh
 				+ ", xmxx=" + xmxx + ", sspq=" + sspq + ", khbh=" + khbh
 				+ ", khmc=" + khmc + ", khsshy=" + khsshy + ", qdrq=" + qdrq
 				+ ", cpje=" + cpje + ", fy=" + fy + ", zje=" + zje + ", htzt="
