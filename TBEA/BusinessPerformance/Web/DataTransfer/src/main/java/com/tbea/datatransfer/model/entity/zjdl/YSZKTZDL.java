@@ -46,8 +46,6 @@ public class YSZKTZDL extends AbstractReadOnlyEntity implements Serializable {
 
 	private String sfdrwc;
 
-	private Integer qybh;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -171,22 +169,14 @@ public class YSZKTZDL extends AbstractReadOnlyEntity implements Serializable {
 		this.sfdrwc = sfdrwc;
 	}
 
-	public Integer getQybh() {
-		return qybh;
-	}
-
-	public void setQybh(Integer qybh) {
-		this.qybh = qybh;
-	}
-
 	@Override
 	public String toString() {
-		return "YSZKTZ15 [id=" + getId() + ", gxrq=" + gxrq + ", htbh=" + htbh
+		return "YSZKTZDL [id=" + getId() + ", gxrq=" + gxrq + ", htbh=" + htbh
 				+ ", khbh=" + khbh + ", khmc=" + khmc + ", khsshy=" + khsshy
 				+ ", kxlb=" + kxlb + ", ysje=" + ysje + ", dqrq=" + dqrq
 				+ ", yhxje=" + yhxje + ", yfhje=" + yfhje + ", fhrq=" + fhrq
 				+ ", ykpje=" + ykpje + ", kprq=" + kprq + ", sfdrwc=" + sfdrwc
-				+ ", qybh=" + qybh + "]";
+				+ "]";
 	}
 
 }

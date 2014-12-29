@@ -115,9 +115,10 @@
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> -->
-				<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/>
-				<!-- <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
-				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" /> -->
+				<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" />
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
+					/> <property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" 
+					/> -->
 				<property name="showSql" value="false" />
 			</bean>
 		</property>
@@ -170,6 +171,9 @@
 		class="com.tbea.datatransfer.model.dao.local.htxx.HTXXLocalDaoImpl" />
 	<bean id="htxxDLDao" class="com.tbea.datatransfer.model.dao.zjdl.htxx.HTXXDLDaoImpl" />
 	<bean id="htxxTBDao" class="com.tbea.datatransfer.model.dao.zjtb.htxx.HTXXTBDaoImpl" />
+	<bean id="blLocalDao" class="com.tbea.datatransfer.model.dao.local.bl.BLLocalDaoImpl" />
+	<bean id="blDLDao" class="com.tbea.datatransfer.model.dao.zjdl.bl.BLDLDaoImpl" />
+	<bean id="blTBDao" class="com.tbea.datatransfer.model.dao.zjtb.bl.BLTBDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -216,6 +220,13 @@
 		<property name="htxxLocalDao" ref="htxxLocalDao" />
 		<property name="htxxDLDao" ref="htxxDLDao" />
 		<property name="htxxTBDao" ref="htxxTBDao" />
+	</bean>
+	<bean id="blTransferService"
+		class="com.tbea.datatransfer.service.local.bl.BLTransferServiceImpl"
+		scope="prototype">
+		<property name="blLocalDao" ref="blLocalDao" />
+		<property name="blDLDao" ref="blDLDao" />
+		<property name="blTBDao" ref="blTBDao" />
 	</bean>
 
 	<!-- -->
