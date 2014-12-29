@@ -31,24 +31,22 @@
 <script src="../jsp/xl_fkfstj.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+		var instance = xl_fkfstj.View.newInstance();
             (function () {
                 $(document).ready(function () {
-                	xl_fkfstj.View.newInstance().init(
+                	instance.init(
                             "echartIdFDW", 
                             "echartIdGW", 
                             "echartIdNW",
                 			"table1", 
                 			"table2", 
-                			"table3", 
-                			${fdw}, 
-                			${gw}, 
-                			${nw});
+                			"table3", ${year}, ${month});
                 });
             })();
     </script>
 <meta charset="UTF-8">
 
-<title>线缆9月付款方式统计</title>
+<title>线缆 ${year}年${month}月 付款方式统计</title>
 
 <style type="text/css">
 body {
@@ -150,31 +148,64 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class="header">
-		<h1>线缆9月付款方式统计</h1>
+		<h1>线缆 ${year}年${month}月 付款方式统计</h1>
 	</div>
 
-	<div align="center" id="table1" style="margin-bottom: 15px"></div>
-	<div align="center" id="table2" style="margin-bottom: 15px"></div>
-	<div align="center" id="table3" style="margin-bottom: 15px"></div>
+	<table align="center">
+		<tr>
+			<td><Table>
+					<tr>
+						<td><%@include file="date_selection.jsp"%></td>
+						<td><%@include file="company_selection.jsp"%></td>
+						<td><input type="button" value="更新"
+							style="width: 80px; margin-left: 10px;"
+							onclick="instance.updateUI()"></input>
+					</tr>
+				</Table></td>
+		</tr>
+		<tr>
+			<td><div id="table1" style="margin-bottom: 15px"></div></td>
+		</tr>
+		<tr>
+			<td><div id="table2" style="margin-bottom: 15px"></div></td>
+		</tr>
+		<tr>
+			<td><div id="table3" style="margin-bottom: 15px"></div></td>
+		</tr>
+		<tr align="center">
+			<td>
+				<div style="margin-top: 20px">
+					<div class="panel-content-border" align="center"
+						style="width: 1000px; margin-top: 20px">
+						<div id="echartIdFDW" class="panel-content"></div>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>
+							<div class="panel-content-border">
+								<div id="echartIdGW" class="panel-content"></div>
+							</div>
 
-    <div align="center" style="margin-top: 20px">
-        <div class="panel-content-border" align="center"
-            style="width: 1000px; margin-top: 20px">
-            <div id="echartIdFDW" class="panel-content"></div>
-        </div>
-    </div>
-	<div style="height: 390px; margin-top: 20px; margin-left: 80px;"
-		align="center">
-		<div style="float: left;">
-			<div class="panel-content-border" style="float: left">
-				<div id="echartIdGW" class="panel-content"></div>
-			</div>
-			<div class="panel-content-border"
-				style="float: left; margin-left: 20px">
-				<div id="echartIdNW" class="panel-content"></div>
-			</div>
-		</div>
-	</div>
+						</td>
+						<td>
+							<div class="panel-content-border" style="margin-left: 20px">
+								<div id="echartIdNW" class="panel-content"></div>
+							</div>
+						</td>
+					</tr>
+				</table>
+
+			</td>
+		</tr>
+	</table>
+
+<%@include file="loading.jsp"%>
+
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 

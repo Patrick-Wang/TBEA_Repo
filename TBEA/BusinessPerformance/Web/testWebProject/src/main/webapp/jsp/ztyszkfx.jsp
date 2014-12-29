@@ -165,7 +165,7 @@
 	</Table>
     <div align="center" style="margin-top: 20px">
         <div class="panel-content-border" align="center"
-            style="width: 1000px; margin-top: 20px">
+            style="width: 1300px; margin-top: 20px">
             <div id="chart" class="panel-content"></div>
         </div>
     </div>

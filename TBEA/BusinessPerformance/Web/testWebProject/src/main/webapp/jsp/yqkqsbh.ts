@@ -80,7 +80,7 @@ module yqkqsbh {
 
             for (var j = 0; j < legend.length; ++j) {
                 for (var i = 1; i <= this.mMonth; ++i) {
-                    data[j].push(this.mData[i - 1][j]);
+                    data[j].push(parseFloat(this.mData[i - 1][j]).toFixed(2));
                 }
             }
             
@@ -165,7 +165,7 @@ module yqkqsbh {
 	            }
             }
             data.push(tmp.concat(row));
-            
+            tableAssist.setRowBgColor(data.length - 1, 183, 222, 232);
 			var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");

@@ -65,56 +65,61 @@ module yqysysfx {
             var zjeData = [41982, 31876, 51975, 43856, 61498, 32696, 38574];
             var flsdData = [29167, 21401, 47155, 32584, 52523, 19573, 24652];
             
-        var option = {
-            title : {
+       var option = {
+    title : {
         text: '逾期应收因素分析'
     },
-
     tooltip : {
-        trigger: 'axis',
-        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
+        trigger: 'axis'
     },
     legend: {
         data:['总金额','其中法律清收']
     },
     toolbox: {
         show : true,
-        orient: 'vertical',
-        x: 'right',
-        y: 'center'
-       
+
     },
     calculable : true,
+
     xAxis : [
         {
             type : 'category',
             data : ['内部因素','客户资信','滚动付款','项目变化','合同因素','手续办理','其他']
+        },
+        {
+            type : 'category',
+            axisLine: {show:false},
+            axisTick: {show:false},
+            axisLabel: {show:false},
+            splitArea: {show:false},
+            splitLine: {show:false},
+            data : ['内部因素','客户资信','滚动付款','项目变化','合同因素','手续办理','其他']
+          
         }
     ],
     yAxis : [
         {
-            type : 'value'
+            type : 'value',
         }
     ],
     series : [
-
-        {
-            name:'总金额',
-            type:'bar',
-            barWidth : 15,
-            stack: '逾期因素分析',
-            data:[620, 432, 301, 634, 790, 1130, 820]
-        },
-
         {
             name:'其中法律清收',
             type:'bar',
-            stack: '逾期因素分析',
+            barWidth : 18,
+            itemStyle: {normal: {color:'rgba(193,35,43,1)', label:{show:true}}},
             data:[169, 272, 121, 274, 390, 230, 210]
+        },
+       
+        {
+            name:'总金额',
+            type:'bar',
+            barWidth : 25,
+            xAxisIndex:1,
+            itemStyle: {normal: {color:'rgba(193,35,43,0.5)', label:{show:true,formatter:function(a,b,c){return c>0 ? (c +'\n'):'';}}}},
+            data:[620, 432, 301, 634, 790, 1130, 820]
         }
-
+        
     ]
 };
             yqysysChart.setOption(option);

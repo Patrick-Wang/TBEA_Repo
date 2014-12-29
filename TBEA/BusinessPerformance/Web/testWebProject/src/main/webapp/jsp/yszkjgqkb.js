@@ -157,6 +157,9 @@ var yszkjgqkb;
             }
             for (var i = 0; i < 3; ++i) {
                 data.push(this.mBarData[i + this.mCurrentSelected * 6 + 3]);
+                for (var j = 0; j < data[i].length; ++j) {
+                    data[i][j] = parseFloat(data[i][j]).toFixed(2);
+                }
             }
             var legend = ["应收未收", "未到期款", "未到期质保金"];
             var ser = [];
@@ -205,6 +208,9 @@ var yszkjgqkb;
             }
             for (var i = 0; i < 2; ++i) {
                 data.push(this.mLineData[i + this.mCurrentSelected * 2]);
+                for (var j = 0; j < data[i].length; ++j) {
+                    data[i][j] = parseFloat(data[i][j]).toFixed(2);
+                }
             }
             var legend = [this.mYear - 1 + "年", this.mYear + "年"];
             var ser = [];
@@ -253,29 +259,27 @@ var yszkjgqkb;
                     total += parseInt(this.mTableData[i][0]);
                 }
             }
-            var dataIn = [{ name: "  电力\r\n及配套", value: total }, { name: " ", value: parseInt(this.mTableData[5][0]) }, { name: "  ", value: parseInt(this.mTableData[6][0]) }];
+            var dataIn = [{ name: "  电力及配套", value: total }, { name: "出口合同", value: parseInt(this.mTableData[5][0]) }, { name: "其它", value: parseInt(this.mTableData[6][0]) }];
             var option = {
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 legend: {
                     x: "left",
                     data: legend,
                     orient: "vertical"
                 },
-                toolbox: {
-                    show: true
-                },
                 calculable: false,
                 series: [
                     {
-                        name: "1",
+                        name: "行业占比",
                         type: 'pie',
                         radius: [100, 130],
                         data: dataOut
                     },
                     {
-                        name: "2",
+                        name: "行业占比",
                         type: 'pie',
                         radius: [0, 60],
                         itemStyle: {
@@ -334,7 +338,7 @@ var yszkjgqkb;
                 drag: false,
                 resize: false,
                 height: '100%',
-                width: 1200,
+                width: 1300,
                 shrinkToFit: true,
                 autoScroll: true
             }));

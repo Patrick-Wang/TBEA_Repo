@@ -72,7 +72,6 @@ body {
 .right {
 	width: 45%;
 	height: 180px;
-	float: left;
 	padding-top: 20px;
 	margin-left: 225px;
 }
@@ -113,7 +112,6 @@ body {
 	word-wrap: break-word;
 	letter-spacing: 20px;
 	color: #5cb85c;
-	float: left;
 }
 
 .lxian {
@@ -121,7 +119,6 @@ body {
 	width: 1px;
 	height: 175px;
 	background: #5cb85c;
-	float: left;
 }
 
 .hrclass hr {
@@ -146,71 +143,87 @@ th.ui-th-ltr {
 }
 </style>
 </head>
-<body style="width: 1400px">
+<body>
 	<div class="header">
 		<h1>${year}年${month}月应收账款结构情况表</h1>
 	</div>
-
-	<Table align="center">
+	<table align="center" style="width: 1300px">
 		<tr>
 			<td>
 				<Table>
 					<tr>
 						<td><%@include file="date_selection.jsp"%>
 						</td>
-						<td>
-						<%@include file="company_selection.jsp"%></td>
+						<td><%@include file="company_selection.jsp"%></td>
 						<td><input type="button" value="更新"
 							style="width: 80px; margin-left: 10px;"
-							onclick="instance.updateUI()"></input>
+							onclick="instance.updateUI()"></input></td>
+					</tr>
 				</Table>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<div id="table"></div>
-			<td>
+			</td>
 		</tr>
-	</Table>
+		<tr align="center">
+			<td>
 
-	<div align="center" style="margin-top: 20px">
-		<div class="panel-content-border" align="center"
-			style="width: 1000px; margin-top: 20px">
-			<div id="chartPie" class="panel-content"></div>
-		</div>
-	</div>
-	<div
-		style="float: left; margin-left: 80px; margin-top: 20px; margin-bottom: 10px">
-		行业 <select onchange="instance.onSelected(this.value)">
-			<option value="1" selected="selected">国网</option>
-			<option value="2">南网</option>
-			<option value="3">省、市电力公司</option>
-			<option value="4">五大发电</option>
-			<option value="5">其他电源</option>
-			<option value="6">出口合同</option>
-			<option value="7">其它</option>
-		</select>
+				<div class="panel-content-border"
+					style="width: 1200px; margin-top: 20px">
+					<div id="chartPie" class="panel-content"></div>
+				</div>
 
+			</td>
+		</tr>
+		<tr align="center" >
+			<td>
+				<div>
+					行业 <select onchange="instance.onSelected(this.value)">
+						<option value="0" selected="selected">国网</option>
+						<option value="1">南网</option>
+						<option value="2">省、市电力公司</option>
+						<option value="3">五大发电</option>
+						<option value="4">其他电源</option>
+						<option value="5">出口合同</option>
+						<option value="6">其它</option>
+						<option value="7">合计</option>
+					</select>
+				</div>
+			</td>
+		</tr>
 
-	</div>
-	<div style="height: 390px; margin-top: 20px; margin-left: 80px;"
-		align="center">
+		<tr align="center">
+			<td>
+				<table>
+					<tr>
+						<td>
+							<div class="panel-content-border">
+								<div id="chartLine" class="panel-content"></div>
+							</div>
+						</td>
+						<td>
+							<div class="panel-content-border">
+								<div id="chartSquare" class="panel-content"></div>
+							</div>
+						</td>
+					</tr>
 
-		<div style="float: left;">
-			<div class="panel-content-border" style="float: left">
-				<div id="chartLine" class="panel-content"></div>
-			</div>
-			<div class="panel-content-border"
-				style="float: left; margin-left: 20px">
-				<div id="chartSquare" class="panel-content"></div>
-			</div>
-		</div>
-	</div>
-	<div align="center">
-		<div class="panel-content-border" style="width: 1000px;">
-			<div id="chartBar" class="panel-content"></div>
-		</div>
-	</div>
+				</table>
+			</td>
+		</tr>
+
+		<tr align="center">
+			<td>
+
+				<div class="panel-content-border" style="width: 1250px;">
+					<div id="chartBar" class="panel-content"></div>
+				</div>
+
+			</td>
+		</tr>
+	</table>
 	<%@include file="loading.jsp"%>
 
 </body>

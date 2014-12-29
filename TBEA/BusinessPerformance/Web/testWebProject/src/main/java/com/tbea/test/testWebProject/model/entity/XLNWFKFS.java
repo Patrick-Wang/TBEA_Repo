@@ -14,6 +14,7 @@ import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 @Table(name = "yszk_zj_htfkfstj_xl_nwfk")
 public class XLNWFKFS extends AbstractReadWriteEntity {
 	Date gxrq;
+	String ny;
 	String gsbm;
 	String	sfjzzb	;
 	Integer	nwhtddzlbs	;
@@ -245,6 +246,14 @@ public class XLNWFKFS extends AbstractReadWriteEntity {
 	 */
 	public void setQybh(Integer qybh) {
 		this.qybh = qybh;
+	}
+
+	public String getNy() {
+		return ny;
+	}
+
+	public void setNy(String ny) {
+		this.ny = ny;
 	}
 
 }
