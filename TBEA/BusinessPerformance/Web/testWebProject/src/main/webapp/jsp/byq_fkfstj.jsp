@@ -31,21 +31,16 @@
 <script src="../jsp/byq_fkfstj.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-            (function () {
-                $(document).ready(function () {
-                	byq_fkfstj.View.newInstance().init(
-                			"echartIdFDW", 
-                            "echartIdGW", 
-                            "echartIdNW",
-                			"table1", 
-                			"table2", 
-                			"table3", 
-                			JSON.parse('${fdw}'), 
-                			JSON.parse('${gw}'), 
-                			JSON.parse('${nw}'));
-                });
-            })();
-    </script>
+	(function() {
+		$(document).ready(
+				function() {
+					byq_fkfstj.View.newInstance().init("echartIdFDW",
+							"echartIdGW", "echartIdNW", "table1", "table2",
+							"table3", JSON.parse('${fdw}'),
+							JSON.parse('${gw}'), JSON.parse('${nw}'));
+				});
+	})();
+</script>
 <meta charset="UTF-8">
 
 <title>变压器9月付款方式统计</title>
@@ -56,12 +51,12 @@ body {
 }
 
 .panel-content-border {
-    height: 330px;
-    width: 620px;
-    border: 2px solid #e3e3e3;
-    margin: 0;
-    padding: 0;
-    text-align: center;
+	height: 330px;
+	width: 620px;
+	border: 2px solid #e3e3e3;
+	margin: 0;
+	padding: 0;
+	text-align: center;
 }
 
 .panel-content {
@@ -148,7 +143,7 @@ th.ui-th-ltr {
 }
 </style>
 </head>
-<body style:"width=1400px">
+<body>
 	<div class="header">
 		<h1>变压器9月付款方式统计</h1>
 	</div>
@@ -158,17 +153,24 @@ th.ui-th-ltr {
 	<div align="center" id="table2" style="margin-bottom: 15px"></div>
 	<div align="center" id="table3" style="margin-bottom: 15px"></div>
 
-	<div style="height: 390px; margin-top: 20px; margin-left: 80px;"
-		align="center">
-		<div style="float: left;">
-			<div class="panel-content-border" style="float: left">
-				<div id="echartIdGW" class="panel-content"></div>
-			</div>
-			<div class="panel-content-border"
-				style="float: left; margin-left: 20px">
-				<div id="echartIdNW" class="panel-content"></div>
-			</div>
-		</div>
+	<div align="center" style="margin-top: 20px">
+		<table>
+			<tr>
+
+				<td>
+
+					<div class="panel-content-border">
+						<div id="echartIdGW" class="panel-content"></div>
+					</div>
+				</td>
+				<td>
+					<div class="panel-content-border" style="margin-left: 20px">
+						<div id="echartIdNW" class="panel-content"></div>
+					</div>
+				</td>
+
+			</tr>
+		</table>
 	</div>
 	<div align="center" style="margin-top: 20px">
 		<div class="panel-content-border" align="center"
