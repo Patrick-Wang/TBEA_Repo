@@ -4,17 +4,17 @@ var ztyszkfx;
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createCurrentYearNode = function (year) {
-            return new JQTable.Node(year + "年", "n" + year).append(new JQTable.Node("本月账面应收账款余额", "byzmyszkye")).append(new JQTable.Node("本月保理控制余额", "byblkzye")).append(new JQTable.Node("本月应收账款实际数", "byyszksjs")).append(new JQTable.Node("本月收入", "bysr")).append(new JQTable.Node("账面应收占收入比例", "zmyszsrbl"));
+            return new JQTable.Node(year + "年", "n" + year).append(new JQTable.Node("本月账面应收账款余额", "byzmyszkye", true, 1 /* Right */, 100)).append(new JQTable.Node("本月保理控制余额", "byblkzye", true, 1 /* Right */, 100)).append(new JQTable.Node("本月应收账款实际数", "byyszksjs", true, 1 /* Right */, 100)).append(new JQTable.Node("本月收入", "bysr", true, 1 /* Right */, 100)).append(new JQTable.Node("账面应收占收入比例", "zmyszsrbl", true, 1 /* Right */, 100));
         };
         JQGridAssistantFactory.createPreYearNode = function (year) {
-            return new JQTable.Node(year + "年", "n" + year).append(new JQTable.Node("去年同期账面应收账款余额", "qntqzmyszkye")).append(new JQTable.Node("去年同期保理余额", "qntqblye")).append(new JQTable.Node("去年同期应收账款实际数", "qntqyszksjs")).append(new JQTable.Node("去年同期收入", "qntqsr")).append(new JQTable.Node("账面应收占收入比", "zmyszsrb"));
+            return new JQTable.Node(year + "年", "n" + year).append(new JQTable.Node("去年同期账面应收账款余额", "qntqzmyszkye", true, 1 /* Right */, 100)).append(new JQTable.Node("去年同期保理余额", "qntqblye", true, 1 /* Right */, 100)).append(new JQTable.Node("去年同期应收账款实际数", "qntqyszksjs", true, 1 /* Right */, 100)).append(new JQTable.Node("去年同期收入", "qntqsr", true, 1 /* Right */, 100)).append(new JQTable.Node("账面应收占收入比", "zmyszsrb", true, 1 /* Right */, 100));
         };
         JQGridAssistantFactory.createTable = function (gridName, year) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位", "dw", true, 0 /* Left */),
+                new JQTable.Node("单位", "dw", true, 0 /* Left */, 90),
                 JQGridAssistantFactory.createCurrentYearNode(year),
                 JQGridAssistantFactory.createPreYearNode(year - 1),
-                new JQTable.Node("同比增长", "tbzz").append(new JQTable.Node("账面余额较去年同期增长比", "zmyejqntqzzb")).append(new JQTable.Node("保理较去年同期增长比", "bljqntqzzb")).append(new JQTable.Node("实际应收较去年同期增长比", "sjysjqntqzzb")).append(new JQTable.Node("收入较去年同期增长比", "sujqntqzzb"))
+                new JQTable.Node("同比增长", "tbzz").append(new JQTable.Node("账面余额较去年同期增长比", "zmyejqntqzzb", true, 1 /* Right */, 100)).append(new JQTable.Node("保理较去年同期增长比", "bljqntqzzb", true, 1 /* Right */, 100)).append(new JQTable.Node("实际应收较去年同期增长比", "sjysjqntqzzb", true, 1 /* Right */, 100)).append(new JQTable.Node("收入较去年同期增长比", "sujqntqzzb", true, 1 /* Right */, 100))
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -152,6 +152,9 @@ var ztyszkfx;
                     data[i] = data[i].concat(row);
                 }
             }
+            tableAssist.setRowBgColor(4, 183, 222, 232);
+            tableAssist.setRowBgColor(8, 183, 222, 232);
+            tableAssist.setRowBgColor(9, 183, 222, 232);
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
@@ -164,8 +167,8 @@ var ztyszkfx;
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
-                width: 1000,
-                shrinkToFit: false,
+                width: 1300,
+                shrinkToFit: true,
                 autoScroll: true
             }));
         };

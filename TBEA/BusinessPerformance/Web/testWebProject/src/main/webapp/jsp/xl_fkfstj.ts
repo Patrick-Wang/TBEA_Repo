@@ -4,7 +4,7 @@ module xl_fkfstj {
 
     class JQGridAssistantFactory {
 
-        private static createSubNode(parent: JQTable.Node): JQTable.Node{
+        private static createSubNode(parent: JQTable.Node): JQTable.Node {
             return parent
                 .append(new JQTable.Node("笔数", "bs"))
                 .append(new JQTable.Node("金额", "je"));
@@ -27,7 +27,7 @@ module xl_fkfstj {
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("现款现货合同", "xkxh"))
             ], gridName);
         }
-        
+
         public static createGwTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("", "title", true, JQTable.TextAlign.Left),
@@ -44,8 +44,8 @@ module xl_fkfstj {
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("质保期超过1年的合同", "zbqcq1n"))
             ], gridName);
         }
-        
-          public static createNwTable(gridName: string): JQTable.JQGridAssistant {
+
+        public static createNwTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("", "title", true, JQTable.TextAlign.Left),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("南网合同订单总量", "gwhtddzl")),
@@ -62,170 +62,218 @@ module xl_fkfstj {
         public static newInstance(): View {
             return new View();
         }
+        private mMonth: number;
+        private mYear: number;
+        echartIdGW: string;
+        echartIdNW: string;
+        fdwTableId: string;
+        gwTableId: string;
+        nwTableId: string;
+        echartIdFDW: string;
+        private mDataSet: Util.DateDataSet;
+        private mComp: Util.CompanyType = Util.CompanyType.SB;
 
-       public init(echartIdFDW: string, 
-       		echartIdGW: string, 
-    		echartIdNW: string,
-	        fdwTableId: string, 
-	        gwTableId: string, 
-	        nwTableId: string, 
-	        fdwData :  Array<string[]>,
-			gwData : Array<string[]>,
-			nwData :  Array<string[]>): void {
-			
-            this.updateFdwTable(
-            	fdwTableId, 
-            	fdwTableId + "_jqgrid_1234",
-            	JQGridAssistantFactory.createFdwTable(fdwTableId + "_jqgrid_1234"),
-            	fdwData);
-            	
-            var rawData = [
-               	["集中招标"],
-				["非集中招标"],
-				["合计"]];
-				
-            this.updateTable(
-            	gwTableId, 
-            	gwTableId + "_jqgrid_1234",
-            	JQGridAssistantFactory.createGwTable(gwTableId + "_jqgrid_1234"),
-            	rawData, 
-            	gwData);
-            	
-            this.updateTable(
-            	nwTableId, 
-            	nwTableId + "_jqgrid_1234",
-            	JQGridAssistantFactory.createNwTable(nwTableId + "_jqgrid_1234"),
-            	rawData, 
-            	nwData);
+        public init(echartIdFDW: string,
+            echartIdGW: string,
+            echartIdNW: string,
+            fdwTableId: string,
+            gwTableId: string,
+            nwTableId: string,
+            year : number,
+            month : number): void {
+            this.mYear = year;
+            this.mMonth = month;
+            this.echartIdFDW = echartIdFDW;
+            this.echartIdGW = echartIdGW;
+            this.echartIdNW = echartIdNW;
+            this.fdwTableId = fdwTableId;
+            this.gwTableId = gwTableId;
+            this.nwTableId = nwTableId;
+
+
+            this.mDataSet = new Util.DateDataSet("xlfkfstj_update.do");
 
             this.updatePieEchart(echartIdFDW, "非电网合同订单总量",
-            		[651654.32, 514613.95, 111984.61, 564895.41,
-            		 416516.54, 651654.32, 514613.95, 111984.61,
-            		 564895.41, 416516.54, 487519.32]);
+                [651654.32, 514613.95, 111984.61, 564895.41,
+                    416516.54, 651654.32, 514613.95, 111984.61,
+                    564895.41, 416516.54, 487519.32]);
             this.updateEchart(echartIdGW, "国网合同订单总量",
-            		[{value : 466446.34, name : '集中招标'},
-            		 {value : 487519.32, name : '非集中招标'}]);
+                [{ value: 466446.34, name: '集中招标' },
+                    { value: 487519.32, name: '非集中招标' }]);
             this.updateEchart(echartIdNW, "南网合同订单总量",
-            		[{value : 865146.13, name : '集中招标'},
-            		 {value : 955648.95, name : '非集中招标'}]);
+                [{ value: 865146.13, name: '集中招标' },
+                    { value: 955648.95, name: '非集中招标' }]);
+
+            this.updateUI();
         }
 
-	        private updatePieEchart(chartId: string, tileTex: string, data: any[]): void {
-	        	var chart = echarts.init($("#" + chartId)[0]);
-	            var legend = ["火电", "水电", "核电", "风电、光伏", 
-	                          "轨道交通", "石油石化", "煤炭煤化工", "钢铁冶金", "航天军工", "连锁经营", "其他"];
-	            var dataOut = [];
-	            var dykhTotal = 0;
-	            var fdlscTotal = 0;
-	            for (var i = 0; i < legend.length; ++i) {
-	            	dataOut.push({ name: legend[i], value: parseInt(data[i]) });
-	                if (i < 4) {
-	                	dykhTotal += parseInt(data[i]);
-	                } else {
-	                	fdlscTotal += parseInt(data[i]);
-	                }
-	            }
+        
+        public onYearSelected(year : number){
+            this.mYear = year;
+        }
+        
+        public onMonthSelected(month : number){
+            this.mMonth = month;
+        }
+        
+        public onCompanySelected(comp: Util.CompanyType) {
+            this.mComp = comp;
+        }
 
-	            var dataIn = [{ name: "电源客户", value: dykhTotal },
-	                { name: "非电力市场", value: fdlscTotal }];
+        public updateUI() {
+            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data: string) => {
+                if (null != data) {
+                    var fktjData = JSON.parse(data);
+                    this.updateFdwTable(
+                        this.fdwTableId,
+                        this.fdwTableId + "_jqgrid_1234",
+                        JQGridAssistantFactory.createFdwTable(this.fdwTableId + "_jqgrid_1234"),
+                        fktjData[0]);
 
-	            var option = {
-	                tooltip: {
-	                    trigger: 'item'
-	                },
-	                legend: {
-	                    x: "left",
-	                    data: legend,
-	                    orient: "vertical"
-	                },
-	                toolbox: {
-	                    show: true,
-	                },
-	                calculable: false,
-	                series: [
-	                    {
-	                        type: 'pie',
-	                        radius: [100, 130],
-	                        data: dataOut
-	                    }, {
-	                        type: 'pie',
-	                        radius: [0, 60],
-	                         itemStyle : {
-				                normal : {
-				                    label : {
-				                        position : 'inner'
-				                    },
-				                    labelLine : {
-				                        show : false
-				                    }
-				                }
-			                },
-	                        data: dataIn
-	                    }
-	                ]
-	            }
-	            chart.setOption(option);
-	        }
-	        
-			private updateEchart(chartId: string, tileTex: string, data: any[]): void{
-	        	var chart = echarts.init($("#" + chartId)[0]);
-	            var legend = ["集中招标", "非集中招标"];
-	            var total = 0;
+                    var rawData = [
+                        ["集中招标"],
+                        ["非集中招标"],
+                        ["合计"]];
 
-	            var option = {
-	            	title : {
-					    text: tileTex,
-					    x: 'center'
-					},
-	                tooltip: {
-	                    trigger: 'item'
-	                },
-	                legend: {
-	                    x: "left",
-	                    data: legend,
-	                    orient: "vertical"
-	                },
-	                toolbox: {
-	                    show: true,
-	                },
-	                calculable: false,
-	                series: [
-	                    {
-	                        type: 'pie',
-	                        radius: '50%',
-	                        data: data
-	                    }
-	                ]
-	            }
+                    this.updateTable(
+                        this.gwTableId,
+                        this.gwTableId + "_jqgrid_1234",
+                        JQGridAssistantFactory.createGwTable(this.gwTableId + "_jqgrid_1234"),
+                        rawData,
+                        fktjData[1]);
 
-	            chart.setOption(option);
-	        }
+                    this.updateTable(
+                        this.nwTableId,
+                        this.nwTableId + "_jqgrid_1234",
+                        JQGridAssistantFactory.createNwTable(this.nwTableId + "_jqgrid_1234"),
+                        rawData,
+                        fktjData[2]);
+                    
+                    $('h1').text("线缆 " + this.mYear + "年" + this.mMonth + "月 付款方式统计");
+                    document.title = "线缆 " + this.mYear + "年" + this.mMonth + "月 付款方式统计";
+                }
+            });
+        }
 
-		private updateTable(      
-		        parentName: string, 
-		        childName : string, 
-		        tableAssist : JQTable.JQGridAssistant, 
-		        data : Array<string[]>, 
-		        rawData : Array<string[]>): void {
 
-  			var row = [];
+
+
+        private updatePieEchart(chartId: string, tileTex: string, data: any[]): void {
+            var chart = echarts.init($("#" + chartId)[0]);
+            var legend = ["火电", "水电", "核电", "风电、光伏",
+                "轨道交通", "石油石化", "煤炭煤化工", "钢铁冶金", "航天军工", "连锁经营", "其他"];
+            var dataOut = [];
+            var dykhTotal = 0;
+            var fdlscTotal = 0;
+            for (var i = 0; i < legend.length; ++i) {
+                dataOut.push({ name: legend[i], value: parseInt(data[i]) });
+                if (i < 4) {
+                    dykhTotal += parseInt(data[i]);
+                } else {
+                    fdlscTotal += parseInt(data[i]);
+                }
+            }
+
+            var dataIn = [{ name: "电源客户", value: dykhTotal },
+                { name: "非电力市场", value: fdlscTotal }];
+
+            var option = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    x: "left",
+                    data: legend,
+                    orient: "vertical"
+                },
+                toolbox: {
+                    show: true,
+                },
+                calculable: false,
+                series: [
+                    {
+                        type: 'pie',
+                        radius: [100, 130],
+                        data: dataOut
+                    }, {
+                        type: 'pie',
+                        radius: [0, 60],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    position: 'inner'
+                                },
+                                labelLine: {
+                                    show: false
+                                }
+                            }
+                        },
+                        data: dataIn
+                    }
+                ]
+            }
+            chart.setOption(option);
+        }
+
+        private updateEchart(chartId: string, tileTex: string, data: any[]): void {
+            var chart = echarts.init($("#" + chartId)[0]);
+            var legend = ["集中招标", "非集中招标"];
+            var total = 0;
+
+            var option = {
+                title: {
+                    text: tileTex,
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    x: "left",
+                    data: legend,
+                    orient: "vertical"
+                },
+                toolbox: {
+                    show: true,
+                },
+                calculable: false,
+                series: [
+                    {
+                        type: 'pie',
+                        radius: '50%',
+                        data: data
+                    }
+                ]
+            }
+
+            chart.setOption(option);
+        }
+
+        private updateTable(
+            parentName: string,
+            childName: string,
+            tableAssist: JQTable.JQGridAssistant,
+            data: Array<string[]>,
+            rawData: Array<string[]>): void {
+
+            var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (rawData[i] instanceof Array) {
                     row = [].concat(rawData[i]);
                     for (var col in row) {
-                    	if (col % 2 != 0){
-                        	row[col] = Util.formatCurrency(row[col]);
+                        if (col % 2 != 0) {
+                            row[col] = Util.formatCurrency(row[col]);
                         }
                     }
                     data[i] = data[i].concat(row);
                 }
             }
-            
-            
-			var parent = $("#" + parentName);
-			parent.empty();
-			parent.append("<table id='"+ childName +"'></table>");
-			
+
+
+            var parent = $("#" + parentName);
+            parent.empty();
+            parent.append("<table id='" + childName + "'></table>");
+
             $("#" + childName).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
@@ -242,56 +290,56 @@ module xl_fkfstj {
                     width: 1250,
                     shrinkToFit: false,
                     autoScroll: true,
-//                    userData: {
-//                        'title': "合计"
-//                    },
-//                    footerrow: true,
-//                    userDataOnFooter: true
+                    //                    userData: {
+                    //                        'title': "合计"
+                    //                    },
+                    //                    footerrow: true,
+                    //                    userDataOnFooter: true
                 }));
 
         }
 
         private updateFdwTable(
-		        parentName: string, 
-		        childName : string, 
-		        tableAssist : JQTable.JQGridAssistant, 
-		        rawData : Array<string[]>): void  {
-		        
+            parentName: string,
+            childName: string,
+            tableAssist: JQTable.JQGridAssistant,
+            rawData: Array<string[]>): void {
+
             tableAssist.mergeTitle();
             tableAssist.mergeRow(0);
             tableAssist.mergeColum(0, 11);
 
             var data = [
-               	["电源客户", "火电"],
-				["电源客户", "水电"],
-				["电源客户", "核电"],
-				["电源客户", "风电、光伏"],
-				["非电力市场", "轨道交通"],
-				["非电力市场", "石油石化"],
-				["非电力市场", "煤炭煤化工"],
-				["非电力市场", "钢铁冶金"],
-				["非电力市场", "航天军工"],
-				["非电力市场", "连锁经营"],
-				["非电力市场", "其他"],
-				["合", "计"]];
-				
-			var row = [];
+                ["电源客户", "火电"],
+                ["电源客户", "水电"],
+                ["电源客户", "核电"],
+                ["电源客户", "风电、光伏"],
+                ["非电力市场", "轨道交通"],
+                ["非电力市场", "石油石化"],
+                ["非电力市场", "煤炭煤化工"],
+                ["非电力市场", "钢铁冶金"],
+                ["非电力市场", "航天军工"],
+                ["非电力市场", "连锁经营"],
+                ["非电力市场", "其他"],
+                ["合", "计"]];
+
+            var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (rawData[i] instanceof Array) {
                     row = [].concat(rawData[i]);
                     for (var col in row) {
-                    	if (col % 2 != 0){
-                        	row[col] = Util.formatCurrency(row[col]);
+                        if (col % 2 != 0) {
+                            row[col] = Util.formatCurrency(row[col]);
                         }
                     }
                     data[i] = data[i].concat(row);
                 }
             }
-				
-			var parent = $("#" + parentName);
-			parent.empty();
-			parent.append("<table id='"+ childName +"'></table>");	
-				
+
+            var parent = $("#" + parentName);
+            parent.empty();
+            parent.append("<table id='" + childName + "'></table>");
+
             $("#" + childName).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
@@ -306,10 +354,10 @@ module xl_fkfstj {
                     cellEdit: true,
                     height: '100%',
                     width: 1250,
-                    shrinkToFit: false 
-//                    autoScroll: true,
-//                    footerrow: true,
-//                    userDataOnFooter: true
+                    shrinkToFit: false
+                    //                    autoScroll: true,
+                    //                    footerrow: true,
+                    //                    userDataOnFooter: true
                 }));
 
         }

@@ -149,81 +149,104 @@ th.ui-th-ltr {
 }
 </style>
 </head>
-<body style="width: 1300px">
+<body>
 	<div class=" header">
 		<h1>${year}年${month}月陈欠款</h1>
 	</div>
 
 	<Table align="center">
-		<tr>
+		<tr align="center">
 			<td>
 				<Table>
 					<tr>
-						<td><%@include file="date_selection.jsp"%>
+						<td>
+							<Table>
+								<tr>
+									<td>
+									<td><%@include file="date_selection.jsp"%>
+									</td>
+									<td><select id="companys"
+										onchange="instance.onCompanySelected(this.value)"
+										style="width: 125px;">
+											<c:forEach begin="0" end="${company_size - 1}" var="i">
+												<c:choose>
+													<c:when test="${i == 0}">
+														<option value="${ids[i]}" selected="selected">${names[i]}</option>
+													</c:when>
+
+													<c:otherwise>
+														<option value="${ids[i]}">${names[i]}</option>
+													</c:otherwise>
+
+												</c:choose>
+
+											</c:forEach>
+									</select></td>
+									<td><input type="button" value="更新"
+										style="width: 80px; margin-left: 10px;"
+										onclick="instance.updateUI()"></input></td>
+								</tr>
+							</Table>
 						</td>
-						<td><select id="companys"
-							onchange="instance.onCompanySelected(this.value)"
-							style="width: 125px;">
-								<c:forEach begin="0" end="${company_size - 1}" var="i">
-									<c:choose>
-										<c:when test="${i == 0}">
-											<option value="${ids[i]}" selected="selected">${names[i]}</option>
-										</c:when>
-
-										<c:otherwise>
-											<option value="${ids[i]}">${names[i]}</option>
-										</c:otherwise>
-
-									</c:choose>
-
-								</c:forEach>
-						</select></td>
-						<td><input type="button" value="更新"
-							style="width: 80px; margin-left: 10px;"
-							onclick="instance.updateUI()"></input>
+					</tr>
+					<tr align="center">
+						<td>
+							<div id="table"></div>
+						</td>
+					</tr>
 				</Table>
 			</td>
 		</tr>
+		<tr align="center">
+			<td>
+				<div style="margin-top: 15px">
+					<div class="panel-content-border"">
+						<div id="piechart" class="panel-content"></div>
+					</div>
+			</td>
+		</tr>
+		<tr align="center">
+			<td>
+				<div>
+					行业 <select onchange="instance.onSelected(this.value)">
+						<option value="0" selected="selected">国网、南网</option>
+						<option value="1">省、市电力公司</option>
+						<option value="2">五大发电</option>
+						<option value="3">其他电源</option>
+						<option value="4">石油石化</option>
+						<option value="5">轨道交通</option>
+						<option value="6">出口合同</option>
+						<option value="7">其他</option>
+					</select>
+				</div>
+			</td>
+		</tr>
+
 		<tr>
 			<td>
-				<div id="table"></div>
-			<td>
+				<table>
+					<tr>
+						<td>
+							<div class="panel-content-border"
+								style="margin-top: 10px; width: 600px">
+								<div id="squarechart" class="panel-content"></div>
+							</div>
+						</td>
+						<td>
+							<div class="panel-content-border"
+								style="margin-top: 10px; width: 600px; margin-left: 20px">
+								<div id="linechart" class="panel-content"></div>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</td>
 		</tr>
 	</Table>
 	<%@include file="loading.jsp"%>
-	<div align="center" style="margin-top: 15px">
-				<div class="panel-content-border" style="margin-bottom: 20px;">
-			<div id="piechart" class="panel-content"></div>
-		</div>
-
-		<div>
-			行业 <select onchange="instance.onSelected(this.value)">
-				<option value="0" selected="selected">国网、南网</option>
-				<option value="1">省、市电力公司</option>
-				<option value="2">五大发电</option>
-				<option value="3">其他电源</option>
-				<option value="4">石油石化</option>
-				<option value="5">轨道交通</option>
-				<option value="6">出口合同</option>
-				<option value="7">其他</option>
-			</select>
-		</div>
-
-		<div style="margin-left: 50px; margin-top: 10px">
-			<div class="panel-content-border" style="float: left; width: 600px">
-				<div id="squarechart" class="panel-content"></div>
-			</div>
-			<div class="panel-content-border"
-						style="float: left; width: 600px; margin-left: 20px">
-				<div id="linechart" class="panel-content"></div>
-			</div>
-		</div>
-	</div>
 
 
-
-
-		</body>
+</body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 
 </html>

@@ -201,24 +201,13 @@ module yszkjgqkb {
 
             for (var i = 0; i < 3; ++i) {
                 data.push(this.mBarData[i + this.mCurrentSelected * 6 + 3]);
+                for (var j = 0; j < data[i].length; ++j){
+                    data[i][j] = parseFloat(data[i][j]).toFixed(2);   
+                }
             }
 
 
             var legend = ["应收未收", "未到期款", "未到期质保金"];
-            //var chart: ECharts.Chart = new ECharts.Chart(new ECharts.XAxis(month), new ECharts.YAxis());
-            //chart.setLegend(new ECharts.Legend(, ECharts.LegendX.center));
-            //var ser: ECharts.Line.SeriesImpl = new ECharts.Line.SquareSeries('应收未收', data[0]);
-            //ser.stack = "金额";
-            //chart.addSeries(ser);
-            //ser = new ECharts.Line.SquareSeries('未到期款', data[1]);
-            //ser.stack = "金额";
-            //chart.addSeries(ser);
-
-            //ser = new ECharts.Line.SquareSeries('未到期质保金', data[2]);
-            //ser.stack = "金额";
-            //chart.addSeries(ser);
-
-            //chart.update(echart);
 
 
             var ser = [];
@@ -275,6 +264,9 @@ module yszkjgqkb {
 
             for (var i = 0; i < 2; ++i) {
                 data.push(this.mLineData[i + this.mCurrentSelected * 2]);
+                for (var j = 0; j < data[i].length; ++j){
+                    data[i][j] = parseFloat(data[i][j]).toFixed(2);   
+                }
             }
 
             //var chart: ECharts.Chart = new ECharts.Chart(new ECharts.XAxis(month), new ECharts.YAxis());
@@ -343,31 +335,30 @@ module yszkjgqkb {
                 }
             }
 
-            var dataIn = [{ name: "  电力\r\n及配套", value: total },
-                { name: " ", value: parseInt(this.mTableData[5][0]) },
-                { name: "  ", value: parseInt(this.mTableData[6][0]) }];
+            var dataIn = [{ name: "  电力及配套", value: total },
+                { name: "出口合同", value: parseInt(this.mTableData[5][0]) },
+                { name: "其它", value: parseInt(this.mTableData[6][0]) }];
 
             var option = {
-                tooltip: {
-                    trigger: 'axis'
+                 tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 legend: {
                     x: "left",
                     data: legend,
                     orient: "vertical"
                 },
-                toolbox: {
-                    show: true,
-                },
+
                 calculable: false,
                 series: [
                     {
-                        name: "1",
+                        name: "行业占比",
                         type: 'pie',
                         radius: [100, 130],
                         data: dataOut
                     }, {
-                        name: "2",
+                        name: "行业占比",
                         type: 'pie',
                         radius: [0, 60],
                          itemStyle : {
@@ -437,7 +428,7 @@ module yszkjgqkb {
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
                     height: '100%',
-                    width: 1200,
+                    width: 1300,
                     shrinkToFit: true,
                     autoScroll: true,
                     //userData: userdata,

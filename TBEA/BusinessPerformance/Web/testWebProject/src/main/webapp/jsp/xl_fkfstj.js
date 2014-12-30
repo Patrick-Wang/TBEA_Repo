@@ -54,22 +54,52 @@ var xl_fkfstj;
     })();
     var View = (function () {
         function View() {
+            this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
             return new View();
         };
-        View.prototype.init = function (echartIdFDW, echartIdGW, echartIdNW, fdwTableId, gwTableId, nwTableId, fdwData, gwData, nwData) {
-            this.updateFdwTable(fdwTableId, fdwTableId + "_jqgrid_1234", JQGridAssistantFactory.createFdwTable(fdwTableId + "_jqgrid_1234"), fdwData);
-            var rawData = [
-                ["集中招标"],
-                ["非集中招标"],
-                ["合计"]
-            ];
-            this.updateTable(gwTableId, gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(gwTableId + "_jqgrid_1234"), rawData, gwData);
-            this.updateTable(nwTableId, nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(nwTableId + "_jqgrid_1234"), rawData, nwData);
+        View.prototype.init = function (echartIdFDW, echartIdGW, echartIdNW, fdwTableId, gwTableId, nwTableId, year, month) {
+            this.mYear = year;
+            this.mMonth = month;
+            this.echartIdFDW = echartIdFDW;
+            this.echartIdGW = echartIdGW;
+            this.echartIdNW = echartIdNW;
+            this.fdwTableId = fdwTableId;
+            this.gwTableId = gwTableId;
+            this.nwTableId = nwTableId;
+            this.mDataSet = new Util.DateDataSet("xlfkfstj_update.do");
             this.updatePieEchart(echartIdFDW, "非电网合同订单总量", [651654.32, 514613.95, 111984.61, 564895.41, 416516.54, 651654.32, 514613.95, 111984.61, 564895.41, 416516.54, 487519.32]);
             this.updateEchart(echartIdGW, "国网合同订单总量", [{ value: 466446.34, name: '集中招标' }, { value: 487519.32, name: '非集中招标' }]);
             this.updateEchart(echartIdNW, "南网合同订单总量", [{ value: 865146.13, name: '集中招标' }, { value: 955648.95, name: '非集中招标' }]);
+            this.updateUI();
+        };
+        View.prototype.onYearSelected = function (year) {
+            this.mYear = year;
+        };
+        View.prototype.onMonthSelected = function (month) {
+            this.mMonth = month;
+        };
+        View.prototype.onCompanySelected = function (comp) {
+            this.mComp = comp;
+        };
+        View.prototype.updateUI = function () {
+            var _this = this;
+            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
+                if (null != data) {
+                    var fktjData = JSON.parse(data);
+                    _this.updateFdwTable(_this.fdwTableId, _this.fdwTableId + "_jqgrid_1234", JQGridAssistantFactory.createFdwTable(_this.fdwTableId + "_jqgrid_1234"), fktjData[0]);
+                    var rawData = [
+                        ["集中招标"],
+                        ["非集中招标"],
+                        ["合计"]
+                    ];
+                    _this.updateTable(_this.gwTableId, _this.gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(_this.gwTableId + "_jqgrid_1234"), rawData, fktjData[1]);
+                    _this.updateTable(_this.nwTableId, _this.nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(_this.nwTableId + "_jqgrid_1234"), rawData, fktjData[2]);
+                    $('h1').text("线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计");
+                    document.title = "线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计";
+                }
+            });
         };
         View.prototype.updatePieEchart = function (chartId, tileTex, data) {
             var chart = echarts.init($("#" + chartId)[0]);

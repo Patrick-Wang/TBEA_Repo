@@ -15,6 +15,7 @@ import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 public class XLFDWFKFS extends AbstractReadWriteEntity {
 	Date gxrq;
 	String gsbm;
+	String ny;
 	String	khbh	;
 	Integer	ddzlbs	;
 	Double	ddzlje	;
@@ -40,7 +41,13 @@ public class XLFDWFKFS extends AbstractReadWriteEntity {
 	Double	xkxhhtje	;
 	String sfdrwc;
 	Integer qybh;
+	public String getNy() {
+		return ny;
+	}
 
+	public void setNy(String ny) {
+		this.ny = ny;
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")

@@ -8,32 +8,32 @@ module ztyszkfx {
 
         private static createCurrentYearNode(year: number): JQTable.Node {
             return new JQTable.Node(year + "年", "n" + year)
-                .append(new JQTable.Node("本月账面应收账款余额", "byzmyszkye"))
-                .append(new JQTable.Node("本月保理控制余额", "byblkzye"))
-                .append(new JQTable.Node("本月应收账款实际数", "byyszksjs"))
-                .append(new JQTable.Node("本月收入", "bysr"))
-                .append(new JQTable.Node("账面应收占收入比例", "zmyszsrbl"));
+                .append(new JQTable.Node("本月账面应收账款余额", "byzmyszkye", true, JQTable.TextAlign.Right, 100))
+                .append(new JQTable.Node("本月保理控制余额", "byblkzye", true, JQTable.TextAlign.Right, 100))
+                .append(new JQTable.Node("本月应收账款实际数", "byyszksjs", true, JQTable.TextAlign.Right, 100))
+                .append(new JQTable.Node("本月收入", "bysr", true, JQTable.TextAlign.Right, 100))
+                .append(new JQTable.Node("账面应收占收入比例", "zmyszsrbl", true, JQTable.TextAlign.Right, 100));
         }
 
         private static createPreYearNode(year: number): JQTable.Node {
             return new JQTable.Node(year + "年", "n" + year)
-                .append(new JQTable.Node("去年同期账面应收账款余额", "qntqzmyszkye"))
-                .append(new JQTable.Node("去年同期保理余额", "qntqblye"))
-                .append(new JQTable.Node("去年同期应收账款实际数", "qntqyszksjs"))
-                .append(new JQTable.Node("去年同期收入", "qntqsr"))
-                .append(new JQTable.Node("账面应收占收入比", "zmyszsrb"));
+                .append(new JQTable.Node("去年同期账面应收账款余额", "qntqzmyszkye", true, JQTable.TextAlign.Right, 100))
+                .append(new JQTable.Node("去年同期保理余额", "qntqblye", true, JQTable.TextAlign.Right, 100))
+                .append(new JQTable.Node("去年同期应收账款实际数", "qntqyszksjs", true, JQTable.TextAlign.Right, 100))
+                .append(new JQTable.Node("去年同期收入", "qntqsr", true, JQTable.TextAlign.Right, 100))
+                .append(new JQTable.Node("账面应收占收入比", "zmyszsrb", true, JQTable.TextAlign.Right, 100));
         }
 
         public static createTable(gridName: string, year: number): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位", "dw", true, JQTable.TextAlign.Left),
+                new JQTable.Node("单位", "dw", true, JQTable.TextAlign.Left, 90),
                 JQGridAssistantFactory.createCurrentYearNode(year),
                 JQGridAssistantFactory.createPreYearNode(year - 1),
                 new JQTable.Node("同比增长", "tbzz")
-                    .append(new JQTable.Node("账面余额较去年同期增长比", "zmyejqntqzzb"))
-                    .append(new JQTable.Node("保理较去年同期增长比", "bljqntqzzb"))
-                    .append(new JQTable.Node("实际应收较去年同期增长比", "sjysjqntqzzb"))
-                    .append(new JQTable.Node("收入较去年同期增长比", "sujqntqzzb"))
+                    .append(new JQTable.Node("账面余额较去年同期增长比", "zmyejqntqzzb", true, JQTable.TextAlign.Right, 100))
+                    .append(new JQTable.Node("保理较去年同期增长比", "bljqntqzzb", true, JQTable.TextAlign.Right, 100))
+                    .append(new JQTable.Node("实际应收较去年同期增长比", "sjysjqntqzzb", true, JQTable.TextAlign.Right, 100))
+                    .append(new JQTable.Node("收入较去年同期增长比", "sujqntqzzb", true, JQTable.TextAlign.Right, 100))
             ], gridName);
         }
     }
@@ -257,7 +257,10 @@ module ztyszkfx {
                     data[i] = data[i].concat(row);
                 }
             }
-
+            
+            tableAssist.setRowBgColor(4, 183, 222, 232);
+            tableAssist.setRowBgColor(8, 183, 222, 232);
+            tableAssist.setRowBgColor(9, 183, 222, 232);
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
@@ -275,8 +278,8 @@ module ztyszkfx {
                     cellsubmit: 'clientArray',
                     cellEdit: true,
                     height: '100%',
-                    width: 1000,
-                    shrinkToFit: false,
+                    width: 1300,
+                    shrinkToFit: true,
                     autoScroll: true,
                     //userData: {
                     //    'dw': "产业集团合计"

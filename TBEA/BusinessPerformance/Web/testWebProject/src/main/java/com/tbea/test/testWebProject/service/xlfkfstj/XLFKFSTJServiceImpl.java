@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.dao.xlfkfstj.XLFKFSDao;
-import com.tbea.test.testWebProject.model.entity.BYQFDWFKFS;
 import com.tbea.test.testWebProject.model.entity.XLFDWFKFS;
 import com.tbea.test.testWebProject.model.entity.XLGWFKFS;
 import com.tbea.test.testWebProject.model.entity.XLNWFKFS;
@@ -58,8 +57,8 @@ public class XLFKFSTJServiceImpl implements XLFKFSTJService {
 	@Autowired
 	XLFKFSDao xlfkfsDao;
 	
-	public String[][] getFdwData(Date d){
-		List<XLFDWFKFS> fdwfkfss = xlfkfsDao.getFdwfkfs();
+	public String[][] getFdwData(Date d, Company comp){
+		List<XLFDWFKFS> fdwfkfss = xlfkfsDao.getFdwfkfs(d, comp);
 		String[][] result = new String[12][22];
 		int col = 0;
 		for (XLFDWFKFS xlfdw : fdwfkfss) {
@@ -126,8 +125,8 @@ public class XLFKFSTJServiceImpl implements XLFKFSTJService {
 		return result;
 	}
 
-	public String[][] getGwData(Date d){
-		List<XLGWFKFS> gwfkfss = xlfkfsDao.getGwfkfs();
+	public String[][] getGwData(Date d, Company comp){
+		List<XLGWFKFS> gwfkfss = xlfkfsDao.getGwfkfs(d, comp);
 		String[][] result = new String[3][22];
 		int col = 0;
 		for (XLGWFKFS xlgw : gwfkfss) {
@@ -167,8 +166,8 @@ public class XLFKFSTJServiceImpl implements XLFKFSTJService {
 		return result;
 	}
 
-	public String[][] getNwData(Date d){
-		List<XLNWFKFS> nwfkfss = xlfkfsDao.getNwfkfs();
+	public String[][] getNwData(Date d, Company comp){
+		List<XLNWFKFS> nwfkfss = xlfkfsDao.getNwfkfs(d, comp);
 		String[][] result = new String[3][12];
 		int col = 0;
 		for (XLNWFKFS xlnw : nwfkfss) {
@@ -196,6 +195,14 @@ public class XLFKFSTJServiceImpl implements XLFKFSTJService {
 			result[2][i] = Util.plus(result[0][i], result[2][i], result[1][i]);
 		}
 		return result;
+	}
+
+	@Override
+	public boolean containsCompany(Company comp) {
+		return xlfkfsDao.fdwContainsCompany(comp) || 
+				xlfkfsDao.nwContainsCompany(comp) || 
+				xlfkfsDao.gwContainsCompany(comp);
+
 	}
 
 }

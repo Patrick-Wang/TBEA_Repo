@@ -112,7 +112,12 @@ module cqk {
                 }
             }
 
-      
+            for (var i = 0; i < data.length; ++i){
+                for (var j = 0; j < data[i].length; ++j){
+                    data[i][j] = parseFloat(data[i][j]).toFixed(2);
+                }    
+            }
+            
             var legend = ["陈欠4年及以上", "陈欠3年", "陈欠2年"];
             var ser = [];
             for (var i = 0; i < legend.length; ++i) {
@@ -181,17 +186,13 @@ module cqk {
                 }
             }
             var legend = [this.mYear - 1 + "年", this.mYear + "年"];
-            //var chart: ECharts.Chart = new ECharts.Chart(new ECharts.XAxis(month), new ECharts.YAxis());
-           // chart.setLegend(new ECharts.Legend([this.mYear - 1 + "年", this.mYear + "年"], ECharts.LegendX.center));
-
-            //var ser: ECharts.Line.SeriesImpl = new ECharts.Line.SeriesImpl(this.mYear - 1 + '年', data[0]);
-            //chart.addSeries(ser);
-
-            //ser = new ECharts.Line.SeriesImpl(this.mYear + '年', data[1]);
-            //chart.addSeries(ser);
-
-            //chart.update(echart);
-
+         
+            for (var i = 0; i < data.length; ++i){
+                for (var j = 0; j < data[i].length; ++j){
+                    data[i][j] = parseFloat(data[i][j]).toFixed(2);
+                }    
+            }
+            
             var ser = [];
             for (var i = 0; i < legend.length; ++i) {
                 ser.push({
@@ -241,28 +242,19 @@ module cqk {
             var legend = ["国网、南网", "省、市电力公司", "五大发电", "其他电源", "石油石化", "轨道交通","出口合同", "其他"];
    			var dljpt = 0;
     		for (var i = 0; i < 4; ++i) {
-                	dljpt += parseInt(this.mTableData[i][3])
+                dljpt += parseInt(this.mTableData[i][3])
             }
    			var dataIn = [
-                { name: "电力 \r\n及配套",  value: dljpt},
-                { name: "", value: parseInt(this.mTableData[4][3]) },
-                { name: " ", value: parseInt(this.mTableData[5][3]) },
-                { name: "  ", value: parseInt(this.mTableData[6][3]) },
-                { name: "   ",  value: parseInt(this.mTableData[7][3]) }
+                { name: "电力及配套",  value: dljpt},
+                { name: "石油石化", value: parseInt(this.mTableData[4][3]) },
+                { name: "轨道交通", value: parseInt(this.mTableData[5][3]) },
+                { name: "出口合同", value: parseInt(this.mTableData[6][3]) },
+                { name: "其他",  value: parseInt(this.mTableData[7][3]) }
             ];
-//            var dataIn = [
-//                { name: " 电力 \r\n及配套", value: Math.random() * (1000 + 1) },
-//                { name: "石油\r\n石化", value: Math.random() * (1000 + 1) },
-//                { name: "制造\r\n行业", value: Math.random() * (1000 + 1) },
-//                { name: "    铁路    \r\n（轨道交通）", value: Math.random() * (1000 + 1) },
-//                { name: " 出口\r\n合同", value: Math.random() * (1000 + 1) },
-//                { name: "其它", value: Math.random() * (1000 + 1) }
-//            ];
 
             var dataOut = [];
             for (var i = 0; i < legend.length; ++i) {
-                //dataOut.push({ name: legend[i], value: Math.random() * (1000 + 1) });
-                dataOut.push({ name: legend[i], value: this.mTableData[i][3] });
+                dataOut.push({ name: legend[i], value: parseFloat(this.mTableData[i][3]).toFixed(2) });
             }
 
             //var dataIn = [{ name: "  电力\r\n及配套", value: Math.random() * (1000 + 1) },
@@ -274,7 +266,8 @@ module cqk {
         			text: '行业占比'
     			},
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 legend: {
                     x: "left",
@@ -288,12 +281,12 @@ module cqk {
                 calculable: false,
                 series: [
                     {
-                        name: "1",
+                        name: "行业占比",
                         type: 'pie',
                         radius: [100, 130],
                         data: dataOut
                     }, {
-                        name: "2",
+                        name: "行业占比",
                         type: 'pie',
                         radius: [0, 60],
                         itemStyle : {
@@ -387,7 +380,7 @@ module cqk {
                	["电力及配套","国网、南网"],
 				["电力及配套","省、市电力系统"],
 				["电力及配套","五大发电"],
-				["电力及配套","其它"],
+				["电力及配套","其他电源"],
 				["石油","石化"],
 				["轨道","交通"],
 				["出口","合同"],
