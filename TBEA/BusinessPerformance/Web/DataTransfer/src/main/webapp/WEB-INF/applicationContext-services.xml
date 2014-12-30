@@ -174,9 +174,16 @@
 	<bean id="blLocalDao" class="com.tbea.datatransfer.model.dao.local.bl.BLLocalDaoImpl" />
 	<bean id="blDLDao" class="com.tbea.datatransfer.model.dao.zjdl.bl.BLDLDaoImpl" />
 	<bean id="blTBDao" class="com.tbea.datatransfer.model.dao.zjtb.bl.BLTBDaoImpl" />
-	<bean id="yszktzLocalDao" class="com.tbea.datatransfer.model.dao.local.yszktz.YSZKTZLocalDaoImpl" />
-	<bean id="yszktzDLDao" class="com.tbea.datatransfer.model.dao.zjdl.yszktz.YSZKTZDLDaoImpl" />
-	<bean id="yszktzTBDao" class="com.tbea.datatransfer.model.dao.zjtb.yszktz.YSZKTZTBDaoImpl" />
+	<bean id="yszktzLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.yszktz.YSZKTZLocalDaoImpl" />
+	<bean id="yszktzDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.yszktz.YSZKTZDLDaoImpl" />
+	<bean id="yszktzTBDao"
+		class="com.tbea.datatransfer.model.dao.zjtb.yszktz.YSZKTZTBDaoImpl" />
+	<bean id="mrhkLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.mrhk.MRHKLocalDaoImpl" />
+	<bean id="mrhkDLDao" class="com.tbea.datatransfer.model.dao.zjdl.mrhk.MRHKDLDaoImpl" />
+	<bean id="mrhkTBDao" class="com.tbea.datatransfer.model.dao.zjtb.mrhk.MRHKTBDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -237,6 +244,13 @@
 		<property name="yszktzLocalDao" ref="yszktzLocalDao" />
 		<property name="yszktzDLDao" ref="yszktzDLDao" />
 		<property name="yszktzTBDao" ref="yszktzTBDao" />
+	</bean>
+	<bean id="mrhkTransferService"
+		class="com.tbea.datatransfer.service.local.mrhk.MRHKTransferServiceImpl"
+		scope="prototype">
+		<property name="mrhkLocalDao" ref="mrhkLocalDao" />
+		<property name="mrhkDLDao" ref="mrhkDLDao" />
+		<property name="mrhkTBDao" ref="mrhkTBDao" />
 	</bean>
 
 	<!-- -->
