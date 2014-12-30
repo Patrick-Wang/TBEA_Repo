@@ -19,8 +19,14 @@
 
 	<Resource name="jdbc/tb_db" auth="Container" type="javax.sql.DataSource"
 		username="gfgs_yszk" password="yszk2014" driverClassName="oracle.jdbc.driver.OracleDriver"
-		url="jdbc:oracle:thin:@172.30.10.5:1521:PROD"
-		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1 from dual"
+		url="jdbc:oracle:thin:@172.30.10.5:1521:PROD" initialSize="35"
+		maxActive="70" maxIdle="10" validationQuery="select 1 from dual"
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
+
+	<Resource name="jdbc/tb_db2" auth="Container" type="javax.sql.DataSource"
+		username="tbjysj" password="tbjysj141217" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+		url="jdbc:jtds:sqlserver://172.30.10.10;DatabaseName=LiveBos"
+		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 </Context>
 

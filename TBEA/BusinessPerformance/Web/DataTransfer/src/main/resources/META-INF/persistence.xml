@@ -29,4 +29,11 @@
 			<property name="hibernate.cache.use_second_level_cache" value="false" />
 		</properties>
     </persistence-unit>
+
+    <persistence-unit name="tbDB2">
+		<properties>
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.OSCacheProvider" />
+			<property name="hibernate.cache.use_second_level_cache" value="false" />
+		</properties>
+    </persistence-unit>
 </persistence>

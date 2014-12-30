@@ -63,6 +63,9 @@
 	<bean id="dataSourcetb" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/tb_db" />
 	</bean>
+	<bean id="dataSourcetb2" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/tb_db2" />
+	</bean>
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -124,6 +127,20 @@
 		</property>
 		<property name="persistenceUnitName" value="tbDB" />
 	</bean>
+	<bean id="entityManagerFactorytb2"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSourcetb2" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/>
+				<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" />
+				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" /> -->
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="tbDB2" />
+	</bean>
 
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
@@ -136,6 +153,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager15" />
 	<tx:annotation-driven transaction-manager="transactionManagerdl" />
 	<tx:annotation-driven transaction-manager="transactionManagertb" />
+	<tx:annotation-driven transaction-manager="transactionManagertb2" />
 
 	<aop:aspectj-autoproxy />
 
@@ -154,6 +172,10 @@
 	<bean id="transactionManagertb" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactorytb" />
 		<property name="dataSource" ref="dataSourcetb" />
+	</bean>
+	<bean id="transactionManagertb2" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactorytb2" />
+		<property name="dataSource" ref="dataSourcetb2" />
 	</bean>
 
 
@@ -184,6 +206,12 @@
 		class="com.tbea.datatransfer.model.dao.local.mrhk.MRHKLocalDaoImpl" />
 	<bean id="mrhkDLDao" class="com.tbea.datatransfer.model.dao.zjdl.mrhk.MRHKDLDaoImpl" />
 	<bean id="mrhkTBDao" class="com.tbea.datatransfer.model.dao.zjtb.mrhk.MRHKTBDaoImpl" />
+	<bean id="ztyszkfxbLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.ztyszkfxb.ZTYSZKFXBLocalDaoImpl" />
+	<bean id="ztyszkfxbDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.ztyszkfxb.ZTYSZKFXBDLDaoImpl" />
+	<bean id="ztyszkfxbTBDao"
+		class="com.tbea.datatransfer.model.dao.zjtb.ztyszkfxb.ZTYSZKFXBTBDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -251,6 +279,13 @@
 		<property name="mrhkLocalDao" ref="mrhkLocalDao" />
 		<property name="mrhkDLDao" ref="mrhkDLDao" />
 		<property name="mrhkTBDao" ref="mrhkTBDao" />
+	</bean>
+	<bean id="ztyszkfxbTransferService"
+		class="com.tbea.datatransfer.service.local.ztyszkfxb.ZTYSZKFXBTransferServiceImpl"
+		scope="prototype">
+		<property name="ztyszkfxbLocalDao" ref="ztyszkfxbLocalDao" />
+		<property name="ztyszkfxbDLDao" ref="ztyszkfxbDLDao" />
+		<property name="ztyszkfxbTBDao" ref="ztyszkfxbTBDao" />
 	</bean>
 
 	<!-- -->
