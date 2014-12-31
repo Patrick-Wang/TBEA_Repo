@@ -59,119 +59,115 @@ module byq_fkfstj {
             return new View();
         }
 
-// private mfdwData : string[];
-// private mgwData : string[];
-// private mnwData : string[];
-// private mfdwTableId : string;
-// private mgwTableId : string;
-// private mnwTableId : string;
 
+        private mMonth: number;
+        private mYear: number;
+        private mDataSet: Util.DateDataSet;
+        private mComp: Util.CompanyType = Util.CompanyType.SB;
+        echartIdGW: string;
+        echartIdNW: string;
+        fdwTableId: string;
+        gwTableId: string;
+        nwTableId: string;
+        echartIdFDW: string;
+        
         public init(echartIdFDW: string, 
         	echartIdGW: string, 
         	echartIdNW: string, 
 	        fdwTableId: string, 
 	        gwTableId: string, 
 	        nwTableId: string, 
-	        fdwData :  Array<string[]>,
-			gwData : Array<string[]>,
-			nwData :  Array<string[]>): void {
-			
-			var rowData = [
-               	["沈变"],
-				["衡变"],
-				["新变"],
-				["合计"]];
-            this.updateTable(
-            	fdwTableId, 
-            	fdwTableId + "_jqgrid_1234",
-            	JQGridAssistantFactory.createFdwTable(fdwTableId + "_jqgrid_1234"),
-            	rowData, 
-            	fdwData);
-            	
-            this.updateTable(
-            	gwTableId, 
-            	gwTableId + "_jqgrid_1234",
-            	JQGridAssistantFactory.createGwTable(gwTableId + "_jqgrid_1234"),
-            	rowData, 
-            	gwData);
-            	
-            this.updateTable(
-            	nwTableId, 
-            	nwTableId + "_jqgrid_1234",
-            	JQGridAssistantFactory.createNwTable(nwTableId + "_jqgrid_1234"),
-            	rowData, 
-            	nwData);
+	        year : number,
+            month : number): void {
             
-            this.updateEchart(echartIdFDW, "非电网合同订单总量",
-            		[{value : 651654.32, name : '沈变'},
-            		 {value : 514613.95, name : '衡变'},
-            		 {value : 564895.41, name : '新变'}]);
-            this.updateEchart(echartIdGW, "国网合同订单总量",
-            		[{value : 466446.34, name : '沈变'},
-            		 {value : 111984.61, name : '衡变'},
-            		 {value : 487519.32, name : '新变'}]);
-            this.updateEchart(echartIdNW, "南网合同订单总量",
-            		[{value : 865146.13, name : '沈变'},
-            		 {value : 955648.95, name : '衡变'},
-            		 {value : 416516.54, name : '新变'}]);
+            this.mYear = year;
+            this.mMonth = month;
+            this.echartIdGW = echartIdGW;
+            this.echartIdNW = echartIdNW;
+            this.echartIdFDW = echartIdFDW;
+            this.fdwTableId = fdwTableId;
+            this.gwTableId = gwTableId;
+            this.nwTableId = nwTableId;
+            
+			this.mDataSet = new Util.DateDataSet("byqfkfstj_update.do");
+		
+            
+          
+                  this.updateUI();
         }
 
-// private initEchart(echart): void {
-// var ysyq_payment_Chart = echarts.init(echart)
-// var ysyq_payment_Option = {
-// animation: true,
-// tooltip: {
-// trigger: 'axis',
-// /* formatter : "{b}<br/>{a} : {c} 万元<br/>{a1} : {c1} 万元", */
-//
-// axisPointer: { // 坐标轴指示器，坐标轴触发有效
-// type: 'line' // 默认为直线，可选为：'line' | 'shadow'
-// }
-// },
-// legend: {
-// x: 'right',
-// data: ["合同金额", "预期阶段", "中标阶段", "完工阶段"],
-//
-// },
-// xAxis: [{
-// type: 'category',
-// data: ['沈变', '衡变', '新变', '天变']
-// }],
-// yAxis: [{
-// type: 'value'
-//
-// }],
-//
-// calculable: true,
-// series: [{
-// name: '合同金额',
-// type: 'bar',
-//
-// barCategoryGap: "50%",
-// data: [63363.11, 55628.27, 58521.55, 69100.58]
-// }, {
-// name: '预期阶段',
-// type: 'bar',
-//
-// stack: '阶段',
-// data: [9098.58, 1240.13, 1140.61, 3154.82]
-// }, {
-// name: '中标阶段',
-//
-// type: 'bar',
-// stack: '阶段',
-// data: [3934.13, 3200.22, 1382.52, 3934.13]
-// }, {
-// name: '完工阶段',
-// type: 'bar',
-//
-// stack: '阶段',
-// data: [11980.74, 2240.18, 3487.11, 6980.74]
-// }]
-// };
-// ysyq_payment_Chart.setOption(ysyq_payment_Option);
-// }
-
+        
+        public onYearSelected(year : number){
+            this.mYear = year;
+        }
+        
+        public onMonthSelected(month : number){
+            this.mMonth = month;
+        }
+        
+        public onCompanySelected(comp: Util.CompanyType) {
+            this.mComp = comp;
+        }
+        
+         public updateUI() {
+            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data: string) => {
+                if (null != data) {
+                    var fktjData = JSON.parse(data);
+                    var rowData = [
+                ["沈变"],
+                ["衡变"],
+                ["新变"],
+                ["合计"]];
+            this.updateTable(
+                this.fdwTableId, 
+                this.fdwTableId + "_jqgrid_1234",
+                JQGridAssistantFactory.createFdwTable(this.fdwTableId + "_jqgrid_1234"),
+                rowData, 
+                fktjData[0]);
+                                    rowData = [
+                ["沈变"],
+                ["衡变"],
+                ["新变"],
+                ["合计"]];
+            this.updateTable(
+                this.gwTableId, 
+                this.gwTableId + "_jqgrid_1234",
+                JQGridAssistantFactory.createGwTable(this.gwTableId + "_jqgrid_1234"),
+                rowData, 
+                fktjData[1]);
+                                    rowData = [
+                ["沈变"],
+                ["衡变"],
+                ["新变"],
+                ["合计"]];
+            this.updateTable(
+                this.nwTableId, 
+                this.nwTableId + "_jqgrid_1234",
+                JQGridAssistantFactory.createNwTable(this.nwTableId + "_jqgrid_1234"),
+                rowData, 
+                fktjData[2]);
+                    
+                    $('h1').text("变压器" + this.mYear + "年" + this.mMonth + "月 付款方式统计");
+                    document.title = "变压器 " + this.mYear + "年" + this.mMonth + "月 付款方式统计";
+                }
+                this.updateEchart(this.echartIdFDW, "非电网合同订单总量",
+                    [{value : parseFloat(fktjData[0][0][1]).toFixed(2), name : '沈变'},
+                     {value : parseFloat(fktjData[0][1][1]).toFixed(2), name : '衡变'},
+                     {value : parseFloat(fktjData[0][2][1]).toFixed(2), name : '新变'}]);
+                this.updateEchart(this.echartIdGW, "国网合同订单总量",
+                        [{value : parseFloat(fktjData[1][0][1]).toFixed(2), name : '沈变'},
+                         {value : parseFloat(fktjData[1][1][1]).toFixed(2), name : '衡变'},
+                         {value : parseFloat(fktjData[1][2][1]).toFixed(2), name : '新变'}]);
+                this.updateEchart(this.echartIdNW, "南网合同订单总量",
+                        [{value : parseFloat(fktjData[2][0][1]).toFixed(2), name : '沈变'},
+                         {value : parseFloat(fktjData[2][1][1]).toFixed(2), name : '衡变'},
+                         {value : parseFloat(fktjData[2][2][1]).toFixed(2), name : '新变'}]);
+            });
+             
+             
+             
+        }
+ 
 			private updateEchart(chartId: string, tileTex: string, data: any[]): void{
 	        	var chart = echarts.init($("#" + chartId)[0]);
 	            var legend = ["沈变", "衡变", "新变"];
@@ -181,8 +177,9 @@ module byq_fkfstj {
 					    text: tileTex,
 					    x: 'center'
 					},
-	                tooltip: {
-	                    trigger: 'item'
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
 	                },
 	                legend: {
 	                    x: "left",
@@ -218,6 +215,9 @@ module byq_fkfstj {
                     for (var col in row) {
                         if (col % 2 == 1){
                             row[col] = Util.formatCurrency(row[col]);
+                        }
+                        else{
+                             row[col] = parseInt(row[col]);
                         }
                     }
                     data[i] = data[i].concat(row);

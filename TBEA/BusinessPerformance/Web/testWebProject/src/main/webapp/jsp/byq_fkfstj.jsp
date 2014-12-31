@@ -31,19 +31,19 @@
 <script src="../jsp/byq_fkfstj.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+	var instance = byq_fkfstj.View.newInstance();
 	(function() {
 		$(document).ready(
 				function() {
-					byq_fkfstj.View.newInstance().init("echartIdFDW",
+					instance.init("echartIdFDW",
 							"echartIdGW", "echartIdNW", "table1", "table2",
-							"table3", JSON.parse('${fdw}'),
-							JSON.parse('${gw}'), JSON.parse('${nw}'));
+							"table3", ${year}, ${month});
 				});
 	})();
 </script>
 <meta charset="UTF-8">
 
-<title>变压器9月付款方式统计</title>
+<title>变压器 ${year}年${month}月 付款方式统计</title>
 
 <style type="text/css">
 body {
@@ -145,39 +145,63 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class="header">
-		<h1>变压器9月付款方式统计</h1>
+		<h1>变压器 ${year}年${month}月 付款方式统计</h1>
 	</div>
 
 
-	<div align="center" id="table1" style="margin-bottom: 15px"></div>
-	<div align="center" id="table2" style="margin-bottom: 15px"></div>
-	<div align="center" id="table3" style="margin-bottom: 15px"></div>
+	<table align="center">
+		<tr>
+			<td><Table>
+					<tr>
+						<td><%@include file="date_selection.jsp"%></td>
+						<td><input type="button" value="更新"
+							style="width: 80px; margin-left: 10px;"
+							onclick="instance.updateUI()"></input>
+					</tr>
+				</Table></td>
+		</tr>
+		<tr>
+			<td><div id="table1" style="margin-bottom: 15px"></div></td>
+		</tr>
+		<tr>
+			<td><div id="table2" style="margin-bottom: 15px"></div></td>
+		</tr>
+		<tr>
+			<td><div id="table3" style="margin-bottom: 15px"></div></td>
+		</tr>
 
-	<div align="center" style="margin-top: 20px">
-		<table>
-			<tr>
+		<tr>
+			<td>
+				<table>
+					<tr>
 
-				<td>
+						<td>
 
-					<div class="panel-content-border">
-						<div id="echartIdGW" class="panel-content"></div>
-					</div>
-				</td>
-				<td>
-					<div class="panel-content-border" style="margin-left: 20px">
-						<div id="echartIdNW" class="panel-content"></div>
-					</div>
-				</td>
+							<div class="panel-content-border">
+								<div id="echartIdGW" class="panel-content"></div>
+							</div>
+						</td>
+						<td>
+							<div class="panel-content-border" style="margin-left: 20px">
+								<div id="echartIdNW" class="panel-content"></div>
+							</div>
+						</td>
 
-			</tr>
-		</table>
-	</div>
-	<div align="center" style="margin-top: 20px">
-		<div class="panel-content-border" align="center"
-			style="width: 1000px; margin-top: 20px">
-			<div id="echartIdFDW" class="panel-content"></div>
-		</div>
-	</div>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr align="center">
+			<td>
+				<div class="panel-content-border" align="center"
+					style="width: 1000px; margin-top: 20px">
+					<div id="echartIdFDW" class="panel-content"></div>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<%@include file="loading.jsp"%>
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 

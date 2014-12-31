@@ -17,6 +17,7 @@ public class BYQFDWFKFS extends AbstractReadWriteEntity{
 	
 	Date gxrq;
 	String gsbm;
+	String ny;
 	Integer fdwhtddzlbs;
 	Double fdwhtddzlje;
 	Integer wyfkhtbs;
@@ -327,6 +328,14 @@ public class BYQFDWFKFS extends AbstractReadWriteEntity{
 	 */
 	public void setQybh(Integer qybh) {
 		this.qybh = qybh;
+	}
+
+	public String getNy() {
+		return ny;
+	}
+
+	public void setNy(String ny) {
+		this.ny = ny;
 	}
 
 }

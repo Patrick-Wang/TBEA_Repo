@@ -23,21 +23,24 @@ public class BYQFKFSDaoImpl implements BYQFKFSDao {
 	@Override
 	public List<BYQFDWFKFS> getFdwfs(Date d) {
 		Query q = entityManager.createQuery(
-				"from BYQFDWFKFS");
+				"from BYQFDWFKFS where ny = :date");
+		q.setParameter("date", Util.format(d));
 		return q.getResultList();
 	}
 
 	@Override
 	public List<BYQGWFKFS> getGwfs(Date d) {
 		Query q = entityManager.createQuery(
-				"from BYQGWFKFS");
+				"from BYQGWFKFS where ny = :date");
+		q.setParameter("date", Util.format(d));
 		return q.getResultList();
 	}
 
 	@Override
 	public List<BYQNWFKFS> getNwfs(Date d) {
 		Query q = entityManager.createQuery(
-				"from BYQNWFKFS");
+				"from BYQNWFKFS where ny = :date");
+		q.setParameter("date", Util.format(d));
 		return q.getResultList();
 	}
 	

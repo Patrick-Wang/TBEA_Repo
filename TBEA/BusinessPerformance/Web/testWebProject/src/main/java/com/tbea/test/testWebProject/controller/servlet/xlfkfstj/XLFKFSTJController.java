@@ -63,7 +63,7 @@ public class XLFKFSTJController {
 		Map<String, Object> map = new HashMap<String, Object>();
 	
 		Organization org = CompanyManager.getBMOrganization();
-		CompanySelection compSelection = new CompanySelection(false,
+		CompanySelection compSelection = new CompanySelection(true,
 				org.getTopCompany(), new CompanySelection.Filter() {
 					@Override
 					public boolean keep(Company comp) {

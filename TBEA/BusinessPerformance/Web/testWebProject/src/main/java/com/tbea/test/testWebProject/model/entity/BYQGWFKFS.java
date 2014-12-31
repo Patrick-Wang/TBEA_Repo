@@ -15,6 +15,7 @@ import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 public class BYQGWFKFS  extends AbstractReadWriteEntity{
 	Date gxrq;
 	String gsbm;
+	String ny;
 	Integer gwhtddzlbs;
 	Double gwhtddzlje;
 	Integer n3_4_2_1bs;
@@ -309,6 +310,14 @@ public class BYQGWFKFS  extends AbstractReadWriteEntity{
 	 */
 	public void setQybh(Integer qybh) {
 		this.qybh = qybh;
+	}
+
+	public String getNy() {
+		return ny;
+	}
+
+	public void setNy(String ny) {
+		this.ny = ny;
 	}
 
 
