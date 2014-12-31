@@ -247,6 +247,14 @@
 		class="com.tbea.datatransfer.model.dao.local.xm.XMLocalDaoImpl" />
 	<bean id="xmDLDao"
 		class="com.tbea.datatransfer.model.dao.zjdl.xm.XMDLDaoImpl" />
+	<bean id="xltbLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.xltb.XLTBLocalDaoImpl" />
+	<bean id="xltbDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.xltb.XLTBDLDaoImpl" />
+	<bean id="xlwgLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.xlwg.XLWGLocalDaoImpl" />
+	<bean id="xlwgDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.xlwg.XLWGDLDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -362,6 +370,18 @@
 		scope="prototype">
 		<property name="xmLocalDao" ref="xmLocalDao" />
 		<property name="xmDLDao" ref="xmDLDao" />
+	</bean>
+	<bean id="xltbTransferService"
+		class="com.tbea.datatransfer.service.local.xltb.XLTBTransferServiceImpl"
+		scope="prototype">
+		<property name="xltbLocalDao" ref="xltbLocalDao" />
+		<property name="xltbDLDao" ref="xltbDLDao" />
+	</bean>
+	<bean id="xlwgTransferService"
+		class="com.tbea.datatransfer.service.local.xlwg.XLWGTransferServiceImpl"
+		scope="prototype">
+		<property name="xlwgLocalDao" ref="xlwgLocalDao" />
+		<property name="xlwgDLDao" ref="xlwgDLDao" />
 	</bean>
 
 	<!-- -->
