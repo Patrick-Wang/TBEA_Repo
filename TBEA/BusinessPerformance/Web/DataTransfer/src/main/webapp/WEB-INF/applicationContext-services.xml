@@ -225,6 +225,12 @@
 		class="com.tbea.datatransfer.model.dao.zjdl.ydsjhkqk.YDSJHKQKDLDaoImpl" />
 	<bean id="ydsjhkqkTBDao"
 		class="com.tbea.datatransfer.model.dao.zjtb.ydsjhkqk.YDSJHKQKTBDaoImpl" />
+	<bean id="mrhkhzLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.mrhkhz.MRHKHZLocalDaoImpl" />
+	<bean id="mrhkhzDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.mrhkhz.MRHKHZDLDaoImpl" />
+	<bean id="mrhkhzTBDao"
+		class="com.tbea.datatransfer.model.dao.zjtb.mrhkhz.MRHKHZTBDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -313,6 +319,13 @@
 		<property name="ydsjhkqkLocalDao" ref="ydsjhkqkLocalDao" />
 		<property name="ydsjhkqkDLDao" ref="ydsjhkqkDLDao" />
 		<property name="ydsjhkqkTBDao" ref="ydsjhkqkTBDao" />
+	</bean>
+	<bean id="mrhkhzTransferService"
+		class="com.tbea.datatransfer.service.local.mrhkhz.MRHKHZTransferServiceImpl"
+		scope="prototype">
+		<property name="mrhkhzLocalDao" ref="mrhkhzLocalDao" />
+		<property name="mrhkhzDLDao" ref="mrhkhzDLDao" />
+		<property name="mrhkhzTBDao" ref="mrhkhzTBDao" />
 	</bean>
 
 	<!-- -->
