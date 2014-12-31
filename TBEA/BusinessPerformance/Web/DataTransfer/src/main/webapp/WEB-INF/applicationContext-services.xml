@@ -243,6 +243,10 @@
 		class="com.tbea.datatransfer.model.dao.zjdl.tbbzjxx.TBBZJXXDLDaoImpl" />
 	<bean id="tbbzjxxTBDao"
 		class="com.tbea.datatransfer.model.dao.zjtb.tbbzjxx.TBBZJXXTBDaoImpl" />
+	<bean id="xmLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.xm.XMLocalDaoImpl" />
+	<bean id="xmDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.xm.XMDLDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -352,6 +356,12 @@
 		<property name="tbbzjxxLocalDao" ref="tbbzjxxLocalDao" />
 		<property name="tbbzjxxDLDao" ref="tbbzjxxDLDao" />
 		<property name="tbbzjxxTBDao" ref="tbbzjxxTBDao" />
+	</bean>
+	<bean id="xmTransferService"
+		class="com.tbea.datatransfer.service.local.xm.XMTransferServiceImpl"
+		scope="prototype">
+		<property name="xmLocalDao" ref="xmLocalDao" />
+		<property name="xmDLDao" ref="xmDLDao" />
 	</bean>
 
 	<!-- -->
