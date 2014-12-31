@@ -69,9 +69,6 @@ var xl_fkfstj;
             this.gwTableId = gwTableId;
             this.nwTableId = nwTableId;
             this.mDataSet = new Util.DateDataSet("xlfkfstj_update.do");
-            this.updatePieEchart(echartIdFDW, "非电网合同订单总量", [651654.32, 514613.95, 111984.61, 564895.41, 416516.54, 651654.32, 514613.95, 111984.61, 564895.41, 416516.54, 487519.32]);
-            this.updateEchart(echartIdGW, "国网合同订单总量", [{ value: 466446.34, name: '集中招标' }, { value: 487519.32, name: '非集中招标' }]);
-            this.updateEchart(echartIdNW, "南网合同订单总量", [{ value: 865146.13, name: '集中招标' }, { value: 955648.95, name: '非集中招标' }]);
             this.updateUI();
         };
         View.prototype.onYearSelected = function (year) {
@@ -95,9 +92,21 @@ var xl_fkfstj;
                         ["合计"]
                     ];
                     _this.updateTable(_this.gwTableId, _this.gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(_this.gwTableId + "_jqgrid_1234"), rawData, fktjData[1]);
+                    rawData = [
+                        ["集中招标"],
+                        ["非集中招标"],
+                        ["合计"]
+                    ];
                     _this.updateTable(_this.nwTableId, _this.nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(_this.nwTableId + "_jqgrid_1234"), rawData, fktjData[2]);
                     $('h1').text("线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计");
                     document.title = "线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计";
+                    var chartDataFdw = [];
+                    for (var i = 0; i < fktjData[0].length - 1; ++i) {
+                        chartDataFdw.push(parseFloat(fktjData[0][i][1]).toFixed(2));
+                    }
+                    _this.updatePieEchart(_this.echartIdFDW, "非电网合同订单总量", chartDataFdw);
+                    _this.updateEchart(_this.echartIdGW, "国网合同订单总量", [{ value: parseFloat(fktjData[1][0][1]).toFixed(2), name: '集中招标' }, { value: parseFloat(fktjData[1][1][1]).toFixed(2), name: '非集中招标' }]);
+                    _this.updateEchart(_this.echartIdNW, "南网合同订单总量", [{ value: parseFloat(fktjData[2][0][1]).toFixed(2), name: '集中招标' }, { value: parseFloat(fktjData[2][1][1]).toFixed(2), name: '非集中招标' }]);
                 }
             });
         };
@@ -165,7 +174,8 @@ var xl_fkfstj;
                     x: 'center'
                 },
                 tooltip: {
-                    trigger: 'item'
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 legend: {
                     x: "left",
@@ -194,6 +204,9 @@ var xl_fkfstj;
                     for (var col in row) {
                         if (col % 2 != 0) {
                             row[col] = Util.formatCurrency(row[col]);
+                        }
+                        else {
+                            row[col] = parseInt(row[col]);
                         }
                     }
                     data[i] = data[i].concat(row);
@@ -241,6 +254,9 @@ var xl_fkfstj;
                     for (var col in row) {
                         if (col % 2 != 0) {
                             row[col] = Util.formatCurrency(row[col]);
+                        }
+                        else {
+                            row[col] = parseInt(row[col]);
                         }
                     }
                     data[i] = data[i].concat(row);

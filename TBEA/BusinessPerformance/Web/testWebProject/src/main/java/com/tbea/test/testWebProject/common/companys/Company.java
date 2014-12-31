@@ -57,6 +57,20 @@ public class Company {
 		this.parentCompany = parentCompany;
 	}
 
+	public boolean contains(Company comp){
+		if (!subCompanys.contains(comp)){
+			for (int i = 0; i < subCompanys.size(); ++i){
+				if (subCompanys.get(i).contains(comp)){
+					return true;
+				}
+			}
+		}
+		else {
+			return true;
+		}
+		return false;
+	}
+	
 
 	/**
 	 * @param subCompanys the subCompanys to set

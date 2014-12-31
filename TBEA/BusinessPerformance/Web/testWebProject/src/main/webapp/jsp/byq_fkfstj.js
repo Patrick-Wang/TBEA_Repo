@@ -49,23 +49,65 @@ var byq_fkfstj;
     })();
     var View = (function () {
         function View() {
+            this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
             return new View();
         };
-        View.prototype.init = function (echartIdFDW, echartIdGW, echartIdNW, fdwTableId, gwTableId, nwTableId, fdwData, gwData, nwData) {
-            var rowData = [
-                ["沈变"],
-                ["衡变"],
-                ["新变"],
-                ["合计"]
-            ];
-            this.updateTable(fdwTableId, fdwTableId + "_jqgrid_1234", JQGridAssistantFactory.createFdwTable(fdwTableId + "_jqgrid_1234"), rowData, fdwData);
-            this.updateTable(gwTableId, gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(gwTableId + "_jqgrid_1234"), rowData, gwData);
-            this.updateTable(nwTableId, nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(nwTableId + "_jqgrid_1234"), rowData, nwData);
-            this.updateEchart(echartIdFDW, "非电网合同订单总量", [{ value: 651654.32, name: '沈变' }, { value: 514613.95, name: '衡变' }, { value: 564895.41, name: '新变' }]);
-            this.updateEchart(echartIdGW, "国网合同订单总量", [{ value: 466446.34, name: '沈变' }, { value: 111984.61, name: '衡变' }, { value: 487519.32, name: '新变' }]);
-            this.updateEchart(echartIdNW, "南网合同订单总量", [{ value: 865146.13, name: '沈变' }, { value: 955648.95, name: '衡变' }, { value: 416516.54, name: '新变' }]);
+        View.prototype.init = function (echartIdFDW, echartIdGW, echartIdNW, fdwTableId, gwTableId, nwTableId, year, month) {
+            this.mYear = year;
+            this.mMonth = month;
+            this.echartIdGW = echartIdGW;
+            this.echartIdNW = echartIdNW;
+            this.echartIdFDW = echartIdFDW;
+            this.fdwTableId = fdwTableId;
+            this.gwTableId = gwTableId;
+            this.nwTableId = nwTableId;
+            this.mDataSet = new Util.DateDataSet("byqfkfstj_update.do");
+            this.updateUI();
+        };
+        View.prototype.onYearSelected = function (year) {
+            this.mYear = year;
+        };
+        View.prototype.onMonthSelected = function (month) {
+            this.mMonth = month;
+        };
+        View.prototype.onCompanySelected = function (comp) {
+            this.mComp = comp;
+        };
+        View.prototype.updateUI = function () {
+            var _this = this;
+            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
+                if (null != data) {
+                    var fktjData = JSON.parse(data);
+                    var rowData = [
+                        ["沈变"],
+                        ["衡变"],
+                        ["新变"],
+                        ["合计"]
+                    ];
+                    _this.updateTable(_this.fdwTableId, _this.fdwTableId + "_jqgrid_1234", JQGridAssistantFactory.createFdwTable(_this.fdwTableId + "_jqgrid_1234"), rowData, fktjData[0]);
+                    rowData = [
+                        ["沈变"],
+                        ["衡变"],
+                        ["新变"],
+                        ["合计"]
+                    ];
+                    _this.updateTable(_this.gwTableId, _this.gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(_this.gwTableId + "_jqgrid_1234"), rowData, fktjData[1]);
+                    rowData = [
+                        ["沈变"],
+                        ["衡变"],
+                        ["新变"],
+                        ["合计"]
+                    ];
+                    _this.updateTable(_this.nwTableId, _this.nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(_this.nwTableId + "_jqgrid_1234"), rowData, fktjData[2]);
+                    $('h1').text("变压器" + _this.mYear + "年" + _this.mMonth + "月 付款方式统计");
+                    document.title = "变压器 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计";
+                }
+                _this.updateEchart(_this.echartIdFDW, "非电网合同订单总量", [{ value: parseFloat(fktjData[0][0][1]).toFixed(2), name: '沈变' }, { value: parseFloat(fktjData[0][1][1]).toFixed(2), name: '衡变' }, { value: parseFloat(fktjData[0][2][1]).toFixed(2), name: '新变' }]);
+                _this.updateEchart(_this.echartIdGW, "国网合同订单总量", [{ value: parseFloat(fktjData[1][0][1]).toFixed(2), name: '沈变' }, { value: parseFloat(fktjData[1][1][1]).toFixed(2), name: '衡变' }, { value: parseFloat(fktjData[1][2][1]).toFixed(2), name: '新变' }]);
+                _this.updateEchart(_this.echartIdNW, "南网合同订单总量", [{ value: parseFloat(fktjData[2][0][1]).toFixed(2), name: '沈变' }, { value: parseFloat(fktjData[2][1][1]).toFixed(2), name: '衡变' }, { value: parseFloat(fktjData[2][2][1]).toFixed(2), name: '新变' }]);
+            });
         };
         View.prototype.updateEchart = function (chartId, tileTex, data) {
             var chart = echarts.init($("#" + chartId)[0]);
@@ -76,7 +118,8 @@ var byq_fkfstj;
                     x: 'center'
                 },
                 tooltip: {
-                    trigger: 'item'
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 legend: {
                     x: "left",
@@ -105,6 +148,9 @@ var byq_fkfstj;
                     for (var col in row) {
                         if (col % 2 == 1) {
                             row[col] = Util.formatCurrency(row[col]);
+                        }
+                        else {
+                            row[col] = parseInt(row[col]);
                         }
                     }
                     data[i] = data[i].concat(row);
