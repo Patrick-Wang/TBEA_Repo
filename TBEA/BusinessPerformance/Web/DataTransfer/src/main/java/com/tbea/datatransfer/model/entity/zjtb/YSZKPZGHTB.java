@@ -38,7 +38,7 @@ public class YSZKPZGHTB extends AbstractReadOnlyEntity implements Serializable {
 
 	private Double byghblzjysje;
 
-//	private Double byxzblhkcjysje;
+	private Double byxzblhkcjysje;
 
 	private Double symykpwfhcsysje;
 
@@ -147,13 +147,13 @@ public class YSZKPZGHTB extends AbstractReadOnlyEntity implements Serializable {
 		this.byghblzjysje = byghblzjysje;
 	}
 
-//	public Double getByxzblhkcjysje() {
-//		return byxzblhkcjysje;
-//	}
-//
-//	public void setByxzblhkcjysje(Double byxzblhkcjysje) {
-//		this.byxzblhkcjysje = byxzblhkcjysje;
-//	}
+	public Double getByxzblhkcjysje() {
+		return byxzblhkcjysje;
+	}
+
+	public void setByxzblhkcjysje(Double byxzblhkcjysje) {
+		this.byxzblhkcjysje = byxzblhkcjysje;
+	}
 
 	public Double getSymykpwfhcsysje() {
 		return symykpwfhcsysje;
@@ -226,7 +226,7 @@ public class YSZKPZGHTB extends AbstractReadOnlyEntity implements Serializable {
 				+ byjhxssr + ", byysnkzb=" + byysnkzb + ", symzmysye="
 				+ symzmysye + ", byxssrxzysje=" + byxssrxzysje
 				+ ", bykjyszjhlje=" + bykjyszjhlje + ", byghblzjysje="
-				+ byghblzjysje/* + ", byxzblhkcjysje=" + byxzblhkcjysje*/
+				+ byghblzjysje + ", byxzblhkcjysje=" + byxzblhkcjysje
 				+ ", symykpwfhcsysje=" + symykpwfhcsysje
 				+ ", symyfhwkpzjsjysje=" + symyfhwkpzjsjysje
 				+ ", symblhkcjysje=" + symblhkcjysje + ", symyscjysje="

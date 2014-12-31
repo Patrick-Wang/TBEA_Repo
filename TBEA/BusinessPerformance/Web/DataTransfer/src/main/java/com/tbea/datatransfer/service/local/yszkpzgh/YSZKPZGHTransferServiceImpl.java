@@ -69,7 +69,7 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 				yszkpzghLocal.setByxssrxzysje(yszkpzghTB.getByxssrxzysje());
 				yszkpzghLocal.setBykjyszjhlje(yszkpzghTB.getBykjyszjhlje());
 				yszkpzghLocal.setByghblzjysje(yszkpzghTB.getByghblzjysje());
-//				yszkpzghLocal.setByxzblhkcjysje(yszkpzghTB.getByxzblhkcjysje());
+				yszkpzghLocal.setByxzblhkcjysje(yszkpzghTB.getByxzblhkcjysje());
 				yszkpzghLocal.setSymykpwfhcsysje(yszkpzghTB
 						.getSymykpwfhcsysje());
 				yszkpzghLocal.setSymyfhwkpzjsjysje(yszkpzghTB
