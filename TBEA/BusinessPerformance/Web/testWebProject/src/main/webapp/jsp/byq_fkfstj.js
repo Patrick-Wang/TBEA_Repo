@@ -101,7 +101,7 @@ var byq_fkfstj;
                         ["合计"]
                     ];
                     _this.updateTable(_this.nwTableId, _this.nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(_this.nwTableId + "_jqgrid_1234"), rowData, fktjData[2]);
-                    $('h1').text("变压器" + _this.mYear + "年" + _this.mMonth + "月 付款方式统计");
+                    $('h1').text("变压器 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计");
                     document.title = "变压器 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计";
                 }
                 _this.updateEchart(_this.echartIdFDW, "非电网合同订单总量", [{ value: parseFloat(fktjData[0][0][1]).toFixed(2), name: '沈变' }, { value: parseFloat(fktjData[0][1][1]).toFixed(2), name: '衡变' }, { value: parseFloat(fktjData[0][2][1]).toFixed(2), name: '新变' }]);

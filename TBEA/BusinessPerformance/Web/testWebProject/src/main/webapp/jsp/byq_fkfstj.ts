@@ -147,7 +147,7 @@ module byq_fkfstj {
                 rowData, 
                 fktjData[2]);
                     
-                    $('h1').text("变压器" + this.mYear + "年" + this.mMonth + "月 付款方式统计");
+                    $('h1').text("变压器 " + this.mYear + "年" + this.mMonth + "月 付款方式统计");
                     document.title = "变压器 " + this.mYear + "年" + this.mMonth + "月 付款方式统计";
                 }
                 this.updateEchart(this.echartIdFDW, "非电网合同订单总量",
