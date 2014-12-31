@@ -132,9 +132,10 @@
 		<property name="dataSource" ref="dataSourcetb2" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/>
-				<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" />
-				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" /> -->
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" 
+					/> <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
+					/> -->
 				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
 				<property name="showSql" value="false" />
 			</bean>
@@ -218,6 +219,34 @@
 		class="com.tbea.datatransfer.model.dao.zjdl.ydhkjhjgb.YDHKJHJGBDLDaoImpl" />
 	<bean id="ydhkjhjgbTBDao"
 		class="com.tbea.datatransfer.model.dao.zjtb.ydhkjhjgb.YDHKJHJGBTBDaoImpl" />
+	<bean id="ydsjhkqkLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.ydsjhkqk.YDSJHKQKLocalDaoImpl" />
+	<bean id="ydsjhkqkDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.ydsjhkqk.YDSJHKQKDLDaoImpl" />
+	<bean id="ydsjhkqkTBDao"
+		class="com.tbea.datatransfer.model.dao.zjtb.ydsjhkqk.YDSJHKQKTBDaoImpl" />
+	<bean id="mrhkhzLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.mrhkhz.MRHKHZLocalDaoImpl" />
+	<bean id="mrhkhzDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.mrhkhz.MRHKHZDLDaoImpl" />
+	<bean id="mrhkhzTBDao"
+		class="com.tbea.datatransfer.model.dao.zjtb.mrhkhz.MRHKHZTBDaoImpl" />
+	<bean id="yszkpzghLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.yszkpzgh.YSZKPZGHLocalDaoImpl" />
+	<bean id="yszkpzghDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.yszkpzgh.YSZKPZGHDLDaoImpl" />
+	<bean id="yszkpzghTBDao"
+		class="com.tbea.datatransfer.model.dao.zjtb.yszkpzgh.YSZKPZGHTBDaoImpl" />
+	<bean id="tbbzjxxLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.tbbzjxx.TBBZJXXLocalDaoImpl" />
+	<bean id="tbbzjxxDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.tbbzjxx.TBBZJXXDLDaoImpl" />
+	<bean id="tbbzjxxTBDao"
+		class="com.tbea.datatransfer.model.dao.zjtb.tbbzjxx.TBBZJXXTBDaoImpl" />
+	<bean id="xmLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.xm.XMLocalDaoImpl" />
+	<bean id="xmDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.xm.XMDLDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -299,6 +328,40 @@
 		<property name="ydhkjhjgbLocalDao" ref="ydhkjhjgbLocalDao" />
 		<property name="ydhkjhjgbDLDao" ref="ydhkjhjgbDLDao" />
 		<property name="ydhkjhjgbTBDao" ref="ydhkjhjgbTBDao" />
+	</bean>
+	<bean id="ydsjhkqkTransferService"
+		class="com.tbea.datatransfer.service.local.ydsjhkqk.YDSJHKQKTransferServiceImpl"
+		scope="prototype">
+		<property name="ydsjhkqkLocalDao" ref="ydsjhkqkLocalDao" />
+		<property name="ydsjhkqkDLDao" ref="ydsjhkqkDLDao" />
+		<property name="ydsjhkqkTBDao" ref="ydsjhkqkTBDao" />
+	</bean>
+	<bean id="mrhkhzTransferService"
+		class="com.tbea.datatransfer.service.local.mrhkhz.MRHKHZTransferServiceImpl"
+		scope="prototype">
+		<property name="mrhkhzLocalDao" ref="mrhkhzLocalDao" />
+		<property name="mrhkhzDLDao" ref="mrhkhzDLDao" />
+		<property name="mrhkhzTBDao" ref="mrhkhzTBDao" />
+	</bean>
+	<bean id="yszkpzghTransferService"
+		class="com.tbea.datatransfer.service.local.yszkpzgh.YSZKPZGHTransferServiceImpl"
+		scope="prototype">
+		<property name="yszkpzghLocalDao" ref="yszkpzghLocalDao" />
+		<property name="yszkpzghDLDao" ref="yszkpzghDLDao" />
+		<property name="yszkpzghTBDao" ref="yszkpzghTBDao" />
+	</bean>
+	<bean id="tbbzjxxTransferService"
+		class="com.tbea.datatransfer.service.local.tbbzjxx.TBBZJXXTransferServiceImpl"
+		scope="prototype">
+		<property name="tbbzjxxLocalDao" ref="tbbzjxxLocalDao" />
+		<property name="tbbzjxxDLDao" ref="tbbzjxxDLDao" />
+		<property name="tbbzjxxTBDao" ref="tbbzjxxTBDao" />
+	</bean>
+	<bean id="xmTransferService"
+		class="com.tbea.datatransfer.service.local.xm.XMTransferServiceImpl"
+		scope="prototype">
+		<property name="xmLocalDao" ref="xmLocalDao" />
+		<property name="xmDLDao" ref="xmDLDao" />
 	</bean>
 
 	<!-- -->
