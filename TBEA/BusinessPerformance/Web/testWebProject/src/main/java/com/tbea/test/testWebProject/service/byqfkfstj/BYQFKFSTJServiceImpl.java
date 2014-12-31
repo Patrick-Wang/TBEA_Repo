@@ -18,6 +18,9 @@ import com.tbea.test.testWebProject.model.dao.byqfkfstj.BYQFKFSDao;
 import com.tbea.test.testWebProject.model.entity.BYQFDWFKFS;
 import com.tbea.test.testWebProject.model.entity.BYQGWFKFS;
 import com.tbea.test.testWebProject.model.entity.BYQNWFKFS;
+import com.tbea.test.testWebProject.model.entity.XLFDWFKFS;
+import com.tbea.test.testWebProject.model.entity.XLGWFKFS;
+import com.tbea.test.testWebProject.model.entity.XLNWFKFS;
 
 @Service
 @Transactional("transactionManager")
@@ -157,6 +160,23 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 		}
 
 		return result;
+	}
+
+	@Override
+	public Date getLatestDate() {
+		BYQFDWFKFS fdwfkfs = byqfkfsDao.getLatestFdwfkfs();
+		if (fdwfkfs != null && fdwfkfs.getGxrq() != null){
+			return fdwfkfs.getGxrq();
+		}
+		BYQGWFKFS gwfkfs = byqfkfsDao.getLatestGwfkfs();
+		if (gwfkfs != null && gwfkfs.getGxrq() != null){
+			return gwfkfs.getGxrq();
+		}
+		BYQNWFKFS nwfkfs = byqfkfsDao.getLatestNwfkfs();
+		if (nwfkfs != null && nwfkfs.getGxrq() != null){
+			return nwfkfs.getGxrq();
+		}
+		return null;
 	}
 
 }

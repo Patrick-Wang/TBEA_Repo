@@ -92,8 +92,6 @@
 	</tr>
 </table>
 
-<c:if test="${both}">
 	<script type="text/javascript">
 		onComp_categorySelected($("#comp_category")[0], $("#comp_category")[0].value);
 	</script>
-</c:if>

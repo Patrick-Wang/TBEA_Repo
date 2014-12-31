@@ -21,4 +21,10 @@ public interface XLFKFSDao {
 	boolean gwContainsCompany(Company comp);
 	
 	boolean nwContainsCompany(Company comp);
+
+	XLFDWFKFS getLatestFdwfkfs();
+
+	XLGWFKFS getLatestGwfkfs();
+
+	XLNWFKFS getLatestNwfkfs();
 }

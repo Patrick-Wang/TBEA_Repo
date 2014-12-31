@@ -14,6 +14,7 @@ import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.model.entity.BYQFDWFKFS;
 import com.tbea.test.testWebProject.model.entity.BYQGWFKFS;
 import com.tbea.test.testWebProject.model.entity.BYQNWFKFS;
+import com.tbea.test.testWebProject.model.entity.XLNWFKFS;
 @Repository
 @Transactional("transactionManager")
 public class BYQFKFSDaoImpl implements BYQFKFSDao {
@@ -42,6 +43,45 @@ public class BYQFKFSDaoImpl implements BYQFKFSDao {
 				"from BYQNWFKFS where ny = :date");
 		q.setParameter("date", Util.format(d));
 		return q.getResultList();
+	}
+
+	@Override
+	public BYQFDWFKFS getLatestFdwfkfs() {
+		Query q = entityManager.createQuery(
+				"from BYQFDWFKFS order by gxrq desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<BYQFDWFKFS> fkfs = q.getResultList();
+		if (!fkfs.isEmpty()){
+			return fkfs.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public BYQGWFKFS getLatestGwfkfs() {
+		Query q = entityManager.createQuery(
+				"from BYQGWFKFS order by gxrq desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<BYQGWFKFS> fkfs = q.getResultList();
+		if (!fkfs.isEmpty()){
+			return fkfs.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public BYQNWFKFS getLatestNwfkfs() {
+		Query q = entityManager.createQuery(
+				"from BYQNWFKFS order by gxrq desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<BYQNWFKFS> fkfs = q.getResultList();
+		if (!fkfs.isEmpty()){
+			return fkfs.get(0);
+		}
+		return null;
 	}
 	
 }

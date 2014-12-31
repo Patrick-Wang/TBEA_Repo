@@ -10,4 +10,6 @@ public interface BYQFKFSTJService {
 
 	String[][] getNwData(Date d);
 
+	Date getLatestDate();
+
 }

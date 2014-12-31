@@ -7,13 +7,13 @@ module byq_fkfstj {
 
         private static createSubNode(parent: JQTable.Node): JQTable.Node{
             return parent
-                .append(new JQTable.Node("笔数", "bs"))
-                .append(new JQTable.Node("金额", "je"));
+                .append(new JQTable.Node("笔数", "bs", true, JQTable.TextAlign.Right, 70))
+                .append(new JQTable.Node("金额", "je", true, JQTable.TextAlign.Right, 80));
         }
 
         public static createFdwTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, JQTable.TextAlign.Left),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("非电网合同订单总量", "fdwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("无预付款合同", "wyfkht")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("预付款<10%合同", "yfkxy10")),
@@ -27,7 +27,7 @@ module byq_fkfstj {
         
          public static createGwTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, JQTable.TextAlign.Left),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("国网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:4:2:1", "3421")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:4:2.5:0.5", "342505")),
@@ -42,7 +42,7 @@ module byq_fkfstj {
         
         public static createNwTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, JQTable.TextAlign.Left),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("南网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:3:3:1", "3331")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("1:4:4:0.5:0.5", "1440505")),

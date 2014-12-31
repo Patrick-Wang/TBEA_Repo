@@ -4,16 +4,24 @@ module xl_fkfstj {
 
     class JQGridAssistantFactory {
 
-        private static createSubNode(parent: JQTable.Node): JQTable.Node {
-            return parent
-                .append(new JQTable.Node("笔数", "bs"))
-                .append(new JQTable.Node("金额", "je"));
+         private static createSubNode(parent: JQTable.Node, fixedWidth : boolean = true): JQTable.Node{
+            if (fixedWidth){
+                 return parent
+                    .append(new JQTable.Node("笔数", "bs", true, JQTable.TextAlign.Right, 70))
+                    .append(new JQTable.Node("金额", "je", true, JQTable.TextAlign.Right, 80));
+            }
+            else {
+                 return parent
+                    .append(new JQTable.Node("笔数", "bs"))
+                    .append(new JQTable.Node("金额", "je"));
+            }
+            
         }
 
         public static createFdwTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, JQTable.TextAlign.Left),
-                new JQTable.Node("", "title1", true, JQTable.TextAlign.Left),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
+                new JQTable.Node("", "title1", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("订单总量", "ddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("无预付款合同", "wyfkht")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("预付款<10%合同", "yfkxy10")),
@@ -30,7 +38,7 @@ module xl_fkfstj {
 
         public static createGwTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, JQTable.TextAlign.Left),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("国网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:06:0:01", "306001")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("0:09:0:01", "009001")),
@@ -48,12 +56,12 @@ module xl_fkfstj {
         public static createNwTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("", "title", true, JQTable.TextAlign.Left),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("南网合同订单总量", "gwhtddzl")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("1:6:2:1", "1621")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("1:2:6:1", "1261")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("0:09:01", "00901")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("其他", "qt")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("质保期超过1年的合同", "zbqcq1n"))
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("南网合同订单总量", "gwhtddzl"), false),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("1:6:2:1", "1621"), false),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("1:2:6:1", "1261"), false),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("0:09:01", "00901"), false),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("其他", "qt"), false),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("质保期超过1年的合同", "zbqcq1n"), false)
             ], gridName);
         }
     }
@@ -138,7 +146,7 @@ module xl_fkfstj {
                         this.nwTableId + "_jqgrid_1234",
                         JQGridAssistantFactory.createNwTable(this.nwTableId + "_jqgrid_1234"),
                         rawData,
-                        fktjData[2]);
+                        fktjData[2], true);
                     
                     $('h1').text("线缆 " + this.mYear + "年" + this.mMonth + "月 付款方式统计");
                     document.title = "线缆 " + this.mYear + "年" + this.mMonth + "月 付款方式统计";
@@ -264,7 +272,8 @@ module xl_fkfstj {
             childName: string,
             tableAssist: JQTable.JQGridAssistant,
             data: Array<string[]>,
-            rawData: Array<string[]>): void {
+            rawData: Array<string[]>,
+            shrink : boolean = false): void {
 
             var row = [];
             for (var i = 0; i < data.length; ++i) {
@@ -300,7 +309,7 @@ module xl_fkfstj {
                     cellEdit: true,
                     height: '100%',
                     width: 1250,
-                    shrinkToFit: false,
+                    shrinkToFit: shrink,
                     autoScroll: true,
                     //                    userData: {
                     //                        'title': "合计"

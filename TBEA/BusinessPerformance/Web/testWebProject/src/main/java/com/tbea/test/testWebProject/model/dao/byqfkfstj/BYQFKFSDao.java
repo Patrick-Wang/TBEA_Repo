@@ -15,4 +15,10 @@ public interface BYQFKFSDao {
 
 	List<BYQNWFKFS> getNwfs(Date d);
 
+	BYQFDWFKFS getLatestFdwfkfs();
+
+	BYQGWFKFS getLatestGwfkfs();
+
+	BYQNWFKFS getLatestNwfkfs();
+
 }

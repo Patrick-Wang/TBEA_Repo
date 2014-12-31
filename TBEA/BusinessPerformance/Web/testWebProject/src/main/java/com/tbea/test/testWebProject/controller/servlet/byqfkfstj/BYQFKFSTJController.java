@@ -46,10 +46,14 @@ public class BYQFKFSTJController {
 	@RequestMapping(value = "byqfkfstj.do", method = RequestMethod.GET)
 	public ModelAndView getZtyszkfx(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar now = Calendar.getInstance();  
-		Date d = java.sql.Date.valueOf(now.get(Calendar.YEAR) + "-" +  (now.get(Calendar.MONTH) + 1) + "-" + now.get(Calendar.DAY_OF_MONTH));
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		Calendar date = Calendar.getInstance();  
+		Date d = service.getLatestDate();
+		if (null != d){
+			date.setTime(d);
+			date.add(Calendar.MONTH, -1);
+		}
 		int month = date.get(Calendar.MONTH) + 1;
 		int year = date.get(Calendar.YEAR);
 		map.put("month", month);

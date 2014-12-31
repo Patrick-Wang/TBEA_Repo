@@ -73,6 +73,12 @@ public class XLFKFSTJController {
 		compSelection.select(map);
 		
 		Calendar date = Calendar.getInstance();  
+		Date d = service.getLatestDate();
+		if (null != d){
+			date.setTime(d);
+			date.add(Calendar.MONTH, -1);
+		}
+		
 		int month = date.get(Calendar.MONTH) + 1;
 		int year = date.get(Calendar.YEAR);
 		map.put("month", month);

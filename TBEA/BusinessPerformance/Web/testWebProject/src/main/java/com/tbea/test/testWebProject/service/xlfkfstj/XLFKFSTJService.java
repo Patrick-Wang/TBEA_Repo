@@ -14,4 +14,6 @@ public interface XLFKFSTJService {
 
 	boolean containsCompany(Company comp);
 
+	Date getLatestDate();
+
 }

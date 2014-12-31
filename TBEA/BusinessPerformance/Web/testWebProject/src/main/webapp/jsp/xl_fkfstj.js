@@ -3,13 +3,19 @@ var xl_fkfstj;
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
-        JQGridAssistantFactory.createSubNode = function (parent) {
-            return parent.append(new JQTable.Node("笔数", "bs")).append(new JQTable.Node("金额", "je"));
+        JQGridAssistantFactory.createSubNode = function (parent, fixedWidth) {
+            if (fixedWidth === void 0) { fixedWidth = true; }
+            if (fixedWidth) {
+                return parent.append(new JQTable.Node("笔数", "bs", true, 1 /* Right */, 70)).append(new JQTable.Node("金额", "je", true, 1 /* Right */, 80));
+            }
+            else {
+                return parent.append(new JQTable.Node("笔数", "bs")).append(new JQTable.Node("金额", "je"));
+            }
         };
         JQGridAssistantFactory.createFdwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, 0 /* Left */),
-                new JQTable.Node("", "title1", true, 0 /* Left */),
+                new JQTable.Node("", "title", true, 0 /* Left */, 70),
+                new JQTable.Node("", "title1", true, 0 /* Left */, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("订单总量", "ddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("无预付款合同", "wyfkht")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("预付款<10%合同", "yfkxy10")),
@@ -25,7 +31,7 @@ var xl_fkfstj;
         };
         JQGridAssistantFactory.createGwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, 0 /* Left */),
+                new JQTable.Node("", "title", true, 0 /* Left */, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("国网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:06:0:01", "306001")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("0:09:0:01", "009001")),
@@ -42,12 +48,12 @@ var xl_fkfstj;
         JQGridAssistantFactory.createNwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("", "title", true, 0 /* Left */),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("南网合同订单总量", "gwhtddzl")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("1:6:2:1", "1621")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("1:2:6:1", "1261")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("0:09:01", "00901")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("其他", "qt")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("质保期超过1年的合同", "zbqcq1n"))
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("南网合同订单总量", "gwhtddzl"), false),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("1:6:2:1", "1621"), false),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("1:2:6:1", "1261"), false),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("0:09:01", "00901"), false),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("其他", "qt"), false),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("质保期超过1年的合同", "zbqcq1n"), false)
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -97,7 +103,7 @@ var xl_fkfstj;
                         ["非集中招标"],
                         ["合计"]
                     ];
-                    _this.updateTable(_this.nwTableId, _this.nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(_this.nwTableId + "_jqgrid_1234"), rawData, fktjData[2]);
+                    _this.updateTable(_this.nwTableId, _this.nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(_this.nwTableId + "_jqgrid_1234"), rawData, fktjData[2], true);
                     $('h1').text("线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计");
                     document.title = "线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计";
                     var chartDataFdw = [];
@@ -196,7 +202,8 @@ var xl_fkfstj;
             };
             chart.setOption(option);
         };
-        View.prototype.updateTable = function (parentName, childName, tableAssist, data, rawData) {
+        View.prototype.updateTable = function (parentName, childName, tableAssist, data, rawData, shrink) {
+            if (shrink === void 0) { shrink = false; }
             var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (rawData[i] instanceof Array) {
@@ -225,7 +232,7 @@ var xl_fkfstj;
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
-                shrinkToFit: false,
+                shrinkToFit: shrink,
                 autoScroll: true
             }));
         };

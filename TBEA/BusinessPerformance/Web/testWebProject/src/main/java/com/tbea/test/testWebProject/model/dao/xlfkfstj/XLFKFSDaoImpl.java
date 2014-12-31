@@ -72,4 +72,43 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 		q.setParameter("compId", "0" + comp.getId());
 		return ((Long)(q.getResultList().get(0))) > 0;
 	}
+
+	@Override
+	public XLFDWFKFS getLatestFdwfkfs() {
+		Query q = entityManager.createQuery(
+				"from XLFDWFKFS order by gxrq desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<XLFDWFKFS> fkfs = q.getResultList();
+		if (!fkfs.isEmpty()){
+			return fkfs.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public XLGWFKFS getLatestGwfkfs() {
+		Query q = entityManager.createQuery(
+				"from XLGWFKFS order by gxrq desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<XLGWFKFS> fkfs = q.getResultList();
+		if (!fkfs.isEmpty()){
+			return fkfs.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public XLNWFKFS getLatestNwfkfs() {
+		Query q = entityManager.createQuery(
+				"from XLNWFKFS order by gxrq desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<XLNWFKFS> fkfs = q.getResultList();
+		if (!fkfs.isEmpty()){
+			return fkfs.get(0);
+		}
+		return null;
+	}
 }
