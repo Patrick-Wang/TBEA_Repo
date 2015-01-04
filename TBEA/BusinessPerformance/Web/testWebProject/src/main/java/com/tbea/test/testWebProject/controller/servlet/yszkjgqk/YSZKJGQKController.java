@@ -58,10 +58,15 @@ public class YSZKJGQKController {
 	@RequestMapping(value = "yszkjgqk.do", method = RequestMethod.GET)
 	public ModelAndView getYqkbhqs(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar now = Calendar.getInstance();  
-		int month = now.get(Calendar.MONTH) + 1;
-		int year = now.get(Calendar.YEAR);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
+		Calendar date = Calendar.getInstance();  
+		Date d = service.getLatestDate();
+		if (null != d){
+			date.setTime(d);
+		}
+		
+		int month = date.get(Calendar.MONTH) + 1;
+		int year = date.get(Calendar.YEAR);
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
