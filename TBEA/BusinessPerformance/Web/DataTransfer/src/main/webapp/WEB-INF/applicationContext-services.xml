@@ -243,18 +243,38 @@
 		class="com.tbea.datatransfer.model.dao.zjdl.tbbzjxx.TBBZJXXDLDaoImpl" />
 	<bean id="tbbzjxxTBDao"
 		class="com.tbea.datatransfer.model.dao.zjtb.tbbzjxx.TBBZJXXTBDaoImpl" />
-	<bean id="xmLocalDao"
-		class="com.tbea.datatransfer.model.dao.local.xm.XMLocalDaoImpl" />
-	<bean id="xmDLDao"
-		class="com.tbea.datatransfer.model.dao.zjdl.xm.XMDLDaoImpl" />
+	<bean id="xmLocalDao" class="com.tbea.datatransfer.model.dao.local.xm.XMLocalDaoImpl" />
+	<bean id="xmDLDao" class="com.tbea.datatransfer.model.dao.zjdl.xm.XMDLDaoImpl" />
 	<bean id="xltbLocalDao"
 		class="com.tbea.datatransfer.model.dao.local.xltb.XLTBLocalDaoImpl" />
-	<bean id="xltbDLDao"
-		class="com.tbea.datatransfer.model.dao.zjdl.xltb.XLTBDLDaoImpl" />
+	<bean id="xltbDLDao" class="com.tbea.datatransfer.model.dao.zjdl.xltb.XLTBDLDaoImpl" />
 	<bean id="xlwgLocalDao"
 		class="com.tbea.datatransfer.model.dao.local.xlwg.XLWGLocalDaoImpl" />
-	<bean id="xlwgDLDao"
-		class="com.tbea.datatransfer.model.dao.zjdl.xlwg.XLWGDLDaoImpl" />
+	<bean id="xlwgDLDao" class="com.tbea.datatransfer.model.dao.zjdl.xlwg.XLWGDLDaoImpl" />
+	<bean id="fkfsbyqfdwLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.fkfs.byq.FKFSBYQFDWLocalDaoImpl" />
+	<bean id="fkfsbyqgwLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.fkfs.byq.FKFSBYQGWLocalDaoImpl" />
+	<bean id="fkfsbyqnwLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.fkfs.byq.FKFSBYQNWLocalDaoImpl" />
+	<bean id="fkfsxlfdwLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.fkfs.xl.FKFSXLFDWLocalDaoImpl" />
+	<bean id="fkfsxlgwLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.fkfs.xl.FKFSXLGWLocalDaoImpl" />
+	<bean id="fkfsxlnwLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.fkfs.xl.FKFSXLNWLocalDaoImpl" />
+	<bean id="fkfsbyqfdwTBDao"
+		class="com.tbea.datatransfer.model.dao.zjtb.fkfs.FKFSBYQFDWTBDaoImpl" />
+	<bean id="fkfsbyqgwTBDao"
+		class="com.tbea.datatransfer.model.dao.zjtb.fkfs.FKFSBYQGWTBDaoImpl" />
+	<bean id="fkfsbyqnwTBDao"
+		class="com.tbea.datatransfer.model.dao.zjtb.fkfs.FKFSBYQNWTBDaoImpl" />
+	<bean id="fkfsxlfdwDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.fkfs.FKFSXLFDWDLDaoImpl" />
+	<bean id="fkfsxlgwDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.fkfs.FKFSXLGWDLDaoImpl" />
+	<bean id="fkfsxlnwDLDao"
+		class="com.tbea.datatransfer.model.dao.zjdl.fkfs.FKFSXLNWDLDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -382,6 +402,42 @@
 		scope="prototype">
 		<property name="xlwgLocalDao" ref="xlwgLocalDao" />
 		<property name="xlwgDLDao" ref="xlwgDLDao" />
+	</bean>
+	<bean id="fkfsbyqfdwTransferService"
+		class="com.tbea.datatransfer.service.local.fkfs.byq.FKFSBYQFDWTransferServiceImpl"
+		scope="prototype">
+		<property name="fkfsbyqfdwLocalDao" ref="fkfsbyqfdwLocalDao" />
+		<property name="fkfsbyqfdwTBDao" ref="fkfsbyqfdwTBDao" />
+	</bean>
+	<bean id="fkfsbyqgwTransferService"
+		class="com.tbea.datatransfer.service.local.fkfs.byq.FKFSBYQGWTransferServiceImpl"
+		scope="prototype">
+		<property name="fkfsbyqgwLocalDao" ref="fkfsbyqgwLocalDao" />
+		<property name="fkfsbyqgwTBDao" ref="fkfsbyqgwTBDao" />
+	</bean>
+	<bean id="fkfsbyqnwTransferService"
+		class="com.tbea.datatransfer.service.local.fkfs.byq.FKFSBYQNWTransferServiceImpl"
+		scope="prototype">
+		<property name="fkfsbyqnwLocalDao" ref="fkfsbyqnwLocalDao" />
+		<property name="fkfsbyqnwTBDao" ref="fkfsbyqnwTBDao" />
+	</bean>
+	<bean id="fkfsxlfdwTransferService"
+		class="com.tbea.datatransfer.service.local.fkfs.xl.FKFSXLFDWTransferServiceImpl"
+		scope="prototype">
+		<property name="fkfsxlfdwLocalDao" ref="fkfsxlfdwLocalDao" />
+		<property name="fkfsxlfdwDLDao" ref="fkfsxlfdwDLDao" />
+	</bean>
+	<bean id="fkfsxlgwTransferService"
+		class="com.tbea.datatransfer.service.local.fkfs.xl.FKFSXLGWTransferServiceImpl"
+		scope="prototype">
+		<property name="fkfsxlgwLocalDao" ref="fkfsxlgwLocalDao" />
+		<property name="fkfsxlgwDLDao" ref="fkfsxlgwDLDao" />
+	</bean>
+	<bean id="fkfsxlnwTransferService"
+		class="com.tbea.datatransfer.service.local.fkfs.xl.FKFSXLNWTransferServiceImpl"
+		scope="prototype">
+		<property name="fkfsxlnwLocalDao" ref="fkfsxlnwLocalDao" />
+		<property name="fkfsxlnwDLDao" ref="fkfsxlnwDLDao" />
 	</bean>
 
 	<!-- -->
