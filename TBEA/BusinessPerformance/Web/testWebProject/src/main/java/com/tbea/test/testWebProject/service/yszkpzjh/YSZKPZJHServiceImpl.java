@@ -7,10 +7,13 @@ import java.sql.Date;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.controller.servlet.yszkpzjh.YSZKPZJHBean;
 import com.tbea.test.testWebProject.model.dao.hkjhjgb.HKJHJGDao;
@@ -101,6 +104,15 @@ public class YSZKPZJHServiceImpl implements YSZKPZJHService {
 		}
 
 		return bean;
+	}
+
+	@Override
+	public Date getLatestDate() {
+		YSZKPZGH pzgh = yszkpzjhDao.getLatestDate();
+		if (null != pzgh){
+			return (Date) Util.valueOf(pzgh.getYf());
+		}
+		return null;
 	}
 
 }

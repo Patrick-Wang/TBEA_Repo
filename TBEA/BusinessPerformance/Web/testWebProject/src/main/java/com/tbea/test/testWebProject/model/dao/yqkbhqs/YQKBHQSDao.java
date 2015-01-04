@@ -14,4 +14,6 @@ public interface YQKBHQSDao extends AbstractReadWriteDao<YQKBHQS> {
 
 	List<YQKBHQS> getYqkbhqsOfThisYear(Calendar cal, Company comp);
 
+	YQKBHQS getLatestDate();
+
 }

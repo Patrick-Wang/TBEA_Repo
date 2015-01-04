@@ -8,4 +8,6 @@ public interface YQKBHQSService {
 
 	public String[][] getYqkbhqsData(Date d, Company comp);
 
+	public Date getLatestDate();
+
 }

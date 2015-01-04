@@ -65,5 +65,14 @@ public class YQKBHQSServiceImpl implements YQKBHQSService {
 		return result;
 	}
 
+	@Override
+	public Date getLatestDate() {
+		YQKBHQS yqkbhqs = yqkbhqsDao.getLatestDate();
+		if (null != yqkbhqs){
+			return (Date) Util.valueOf(yqkbhqs.getNy());
+		}
+		return null;
+	}
+
 
 }

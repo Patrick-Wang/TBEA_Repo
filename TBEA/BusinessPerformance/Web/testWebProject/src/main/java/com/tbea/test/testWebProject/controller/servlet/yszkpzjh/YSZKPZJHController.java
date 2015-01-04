@@ -23,6 +23,7 @@ import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
 import com.tbea.test.testWebProject.common.companys.Organization;
 import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
+import com.tbea.test.testWebProject.common.CompanySelection;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.service.yszkpzjh.YSZKPZJHService;
 
@@ -55,16 +56,6 @@ public class YSZKPZJHController {
 			yszkpzjhBeans[i + 1] = service.getYszkpzjhData(d, comps.get(i));
 		}
 		String yszkpzjh = JSONArray.fromObject(yszkpzjhBeans).toString().replace("null", "0.00");
-//		String yszkpzjh = "[]##[]##[]##[]";
-//		if (!comps.isEmpty()){
-//			
-//			YSZKPZJHBean bean = service.getYszkpzjhData(d, comp);
-//			
-//			yszkpzjh = JSONArray.fromObject(bean.getList1()).toString().replace("null", "0.00");
-//			yszkpzjh += "##" + JSONArray.fromObject(bean.getList2()).toString().replace("null", "0.00");
-//			yszkpzjh += "##" + JSONArray.fromObject(bean.getList3()).toString().replace("null", "0.00");
-//			yszkpzjh += "##" + JSONArray.fromObject(bean.getList4()).toString().replace("null", "0.00");
-//		}
 		
 		return yszkpzjh;
 	}
@@ -74,11 +65,19 @@ public class YSZKPZJHController {
 	@RequestMapping(value = "yszkpzjh.do", method = RequestMethod.GET)
 	public ModelAndView getYszkpzjh(HttpServletRequest request,
 			HttpServletResponse response) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		Date date = service.getLatestDate();
 		Calendar now = Calendar.getInstance();  
+		if (null != date){
+			now.setTime(date);
+		}
+		
 		int month = now.get(Calendar.MONTH) + 1;
 		int year = now.get(Calendar.YEAR);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("month", 4);
+		
+		map.put("month", month);
 		map.put("year", year);
 		Organization org = CompanyManager.getPzghOrganization();
 		String[][] name_ids = Util.getCompanyNameAndIds(org.getTopCompany());

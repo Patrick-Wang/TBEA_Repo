@@ -10,4 +10,6 @@ public interface YSZKPZJHDao {
 
 	List<YSZKPZGH> getPzjhData(Date d, Company comp);
 
+	YSZKPZGH getLatestDate();
+
 }

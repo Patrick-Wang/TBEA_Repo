@@ -16,6 +16,7 @@ import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.entity.HKJHJG;
 import com.tbea.test.testWebProject.model.entity.QYZJK;
+import com.tbea.test.testWebProject.model.entity.XLNWFKFS;
 
 
 @Repository
