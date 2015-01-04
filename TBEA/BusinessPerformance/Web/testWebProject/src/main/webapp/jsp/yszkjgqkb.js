@@ -251,15 +251,29 @@ var yszkjgqkb;
         };
         View.prototype.updatePieEchart = function (echart) {
             var legend = ["国网", "南网", "省、市电力公司", "五大发电", "其他电源", "出口合同", "其它"];
+            var legendData = [];
             var dataOut = [];
             var total = 0;
             for (var i = 0; i < legend.length; ++i) {
-                dataOut.push({ name: legend[i], value: parseInt(this.mTableData[i][0]) });
-                if (i < 5) {
-                    total += parseInt(this.mTableData[i][0]);
+                if (parseInt(this.mTableData[i][0]) > 0) {
+                    legendData.push(legend[i]);
+                    dataOut.push({ name: legend[i], value: parseInt(this.mTableData[i][0]) });
+                    if (i < 5) {
+                        total += parseInt(this.mTableData[i][0]);
+                    }
                 }
             }
-            var dataIn = [{ name: "  电力及配套", value: total }, { name: "出口合同", value: parseInt(this.mTableData[5][0]) }, { name: "其它", value: parseInt(this.mTableData[6][0]) }];
+            var dataIn = [];
+            if (total > 0) {
+                legendData.push("电力及配套");
+                dataIn.push({ name: "电力及配套", value: total });
+            }
+            if (parseInt(this.mTableData[5][0]) > 0) {
+                dataIn.push({ name: "出口合同", value: parseInt(this.mTableData[5][0]) });
+            }
+            if (parseInt(this.mTableData[6][0]) > 0) {
+                dataIn.push({ name: "其它", value: parseInt(this.mTableData[6][0]) });
+            }
             var option = {
                 tooltip: {
                     trigger: 'item',
@@ -267,7 +281,7 @@ var yszkjgqkb;
                 },
                 legend: {
                     x: "left",
-                    data: legend,
+                    data: legendData,
                     orient: "vertical"
                 },
                 calculable: false,

@@ -118,6 +118,7 @@ module byq_fkfstj {
                 ["衡变"],
                 ["新变"],
                 ["合计"]];
+                    
             this.updateTable(
                 this.fdwTableId, 
                 this.fdwTableId + "_jqgrid_1234",
@@ -171,7 +172,14 @@ module byq_fkfstj {
 			private updateEchart(chartId: string, tileTex: string, data: any[]): void{
 	        	var chart = echarts.init($("#" + chartId)[0]);
 	            var legend = ["沈变", "衡变", "新变"];
-
+                var legendData = [];
+                var realData = [];
+                for (var i = 0; i < legend.length; ++i){
+                    if (data[i].value >　0){
+                        legendData.push(legend[i]);
+                        realData.push(data[i]);
+                    }    
+                }
 	            var option = {
 	            	title : {
 					    text: tileTex,
@@ -183,7 +191,7 @@ module byq_fkfstj {
 	                },
 	                legend: {
 	                    x: "left",
-	                    data: legend,
+	                    data: legendData,
 	                    orient: "vertical"
 	                },
 	                toolbox: {
@@ -192,9 +200,10 @@ module byq_fkfstj {
 	                calculable: false,
 	                series: [
 	                    {
+                            name: "公司占比",
 	                        type: 'pie',
 	                        radius: '50%',
-	                        data: data
+	                        data: realData
 	                    }
 	                ]
 	            }

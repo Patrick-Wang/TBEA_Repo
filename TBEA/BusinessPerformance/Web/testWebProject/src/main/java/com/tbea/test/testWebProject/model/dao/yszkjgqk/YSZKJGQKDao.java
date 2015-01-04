@@ -18,4 +18,6 @@ public interface YSZKJGQKDao extends AbstractReadWriteDao<YSZKJGQK> {
 
 	boolean hasCompany(Company comp);
 
+	YSZKJGQK getLatestYszkjg();
+
 }

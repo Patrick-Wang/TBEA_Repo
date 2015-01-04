@@ -155,6 +155,15 @@ public class YSZKJGQKServiceImpl implements YSZKJGQKService {
 		return yszkjgqkDao.hasCompany(comp);
 	}
 
+	@Override
+	public Date getLatestDate() {
+		YSZKJGQK yszjjg = yszkjgqkDao.getLatestYszkjg();
+		if (yszjjg != null && yszjjg.getNy() != null){
+			return (Date) Util.valueOf(yszjjg.getNy());
+		}
+		return null;
+	}
+
 
 
 }

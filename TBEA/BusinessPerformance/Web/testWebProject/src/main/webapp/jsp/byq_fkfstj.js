@@ -112,6 +112,14 @@ var byq_fkfstj;
         View.prototype.updateEchart = function (chartId, tileTex, data) {
             var chart = echarts.init($("#" + chartId)[0]);
             var legend = ["沈变", "衡变", "新变"];
+            var legendData = [];
+            var realData = [];
+            for (var i = 0; i < legend.length; ++i) {
+                if (data[i].value > 0) {
+                    legendData.push(legend[i]);
+                    realData.push(data[i]);
+                }
+            }
             var option = {
                 title: {
                     text: tileTex,
@@ -123,7 +131,7 @@ var byq_fkfstj;
                 },
                 legend: {
                     x: "left",
-                    data: legend,
+                    data: legendData,
                     orient: "vertical"
                 },
                 toolbox: {
@@ -132,9 +140,10 @@ var byq_fkfstj;
                 calculable: false,
                 series: [
                     {
+                        name: "公司占比",
                         type: 'pie',
                         radius: '50%',
-                        data: data
+                        data: realData
                     }
                 ]
             };

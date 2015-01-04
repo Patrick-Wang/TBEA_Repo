@@ -14,6 +14,7 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
+import com.tbea.test.testWebProject.model.entity.XLNWFKFS;
 import com.tbea.test.testWebProject.model.entity.YSZKJGQK;
 
 @Repository
@@ -88,6 +89,19 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		q.setFirstResult(0);
 		q.setMaxResults(1);
 		return !q.getResultList().isEmpty();
+	}
+
+	@Override
+	public YSZKJGQK getLatestYszkjg() {
+		Query q = getEntityManager().createQuery(
+				"from YSZKJGQK order by ny desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<YSZKJGQK> yszks = q.getResultList();
+		if (!yszks.isEmpty()){
+			return yszks.get(0);
+		}
+		return null;
 	}
 
 }

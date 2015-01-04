@@ -15,4 +15,6 @@ public interface YSZKJGQKService {
 
 	public boolean IsCompanyExist(Company comp);
 
+	public Date getLatestDate();
+
 }

@@ -122,51 +122,66 @@ var xl_fkfstj;
             var dataOut = [];
             var dykhTotal = 0;
             var fdlscTotal = 0;
+            var legendData = [];
             for (var i = 0; i < legend.length; ++i) {
-                dataOut.push({ name: legend[i], value: parseInt(data[i]) });
-                if (i < 4) {
-                    dykhTotal += parseInt(data[i]);
-                }
-                else {
-                    fdlscTotal += parseInt(data[i]);
+                if (parseInt(data[i]) > 0) {
+                    legendData.push(legend[i]);
+                    dataOut.push({ name: legend[i], value: parseInt(data[i]) });
+                    if (i < 4) {
+                        dykhTotal += parseInt(data[i]);
+                    }
+                    else {
+                        fdlscTotal += parseInt(data[i]);
+                    }
                 }
             }
-            var dataIn = [{ name: "电源客户", value: dykhTotal }, { name: "非电力市场", value: fdlscTotal }];
+            var dataIn = [];
+            if (dykhTotal > 0) {
+                legendData.push("电源客户");
+                dataIn.push({ name: "电源客户", value: dykhTotal });
+            }
+            if (fdlscTotal > 0) {
+                legendData.push("非电力市场");
+                dataIn.push({ name: "非电力市场", value: fdlscTotal });
+            }
             var option = {
+                title: {
+                    text: "非电网合同订单总量",
+                    x: 'right'
+                },
                 tooltip: {
-                    trigger: 'item'
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 legend: {
                     x: "left",
-                    data: legend,
+                    data: legendData,
                     orient: "vertical"
                 },
-                toolbox: {
-                    show: true
-                },
                 calculable: false,
-                series: [
-                    {
-                        type: 'pie',
-                        radius: [100, 130],
-                        data: dataOut
-                    },
-                    {
-                        type: 'pie',
-                        radius: [0, 60],
-                        itemStyle: {
-                            normal: {
-                                label: {
-                                    position: 'inner'
-                                },
-                                labelLine: {
-                                    show: false
-                                }
+                series: [{
+                    name: "行业占比",
+                    type: 'pie',
+                    minAngle: 2,
+                    radius: [0, 60],
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                position: 'inner'
+                            },
+                            labelLine: {
+                                show: false
                             }
-                        },
-                        data: dataIn
-                    }
-                ]
+                        }
+                    },
+                    data: dataIn
+                }, {
+                    name: "行业占比",
+                    type: 'pie',
+                    minAngle: 0.01,
+                    radius: [100, 130],
+                    data: dataOut
+                }]
             };
             chart.setOption(option);
         };
@@ -174,6 +189,16 @@ var xl_fkfstj;
             var chart = echarts.init($("#" + chartId)[0]);
             var legend = ["集中招标", "非集中招标"];
             var total = 0;
+            var legendData = [];
+            var realData = [];
+            if (data[0].value > 0) {
+                realData.push(data[0]);
+                legendData.push(data[0].name);
+            }
+            if (data[1].value > 0) {
+                realData.push(data[1]);
+                legendData.push(data[1].name);
+            }
             var option = {
                 title: {
                     text: tileTex,
@@ -185,7 +210,7 @@ var xl_fkfstj;
                 },
                 legend: {
                     x: "left",
-                    data: legend,
+                    data: legendData,
                     orient: "vertical"
                 },
                 toolbox: {
@@ -194,9 +219,10 @@ var xl_fkfstj;
                 calculable: false,
                 series: [
                     {
+                        name: "行业占比",
                         type: 'pie',
                         radius: '50%',
-                        data: data
+                        data: realData
                     }
                 ]
             };
