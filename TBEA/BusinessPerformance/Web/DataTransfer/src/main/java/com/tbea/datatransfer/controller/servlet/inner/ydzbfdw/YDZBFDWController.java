@@ -1,4 +1,4 @@
-package com.tbea.datatransfer.controller.servlet.log;
+package com.tbea.datatransfer.controller.servlet.inner.ydzbfdw;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,23 +10,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.datatransfer.service.inner.ydzbfdw.YDZBFDWService;
-import com.tbea.datatransfer.service.log.LogService;
 
 @Controller
-@RequestMapping(value = "Log")
-public class LogController {
+@RequestMapping(value = "YDZBFDW")
+public class YDZBFDWController {
 
 	@Autowired
-	private LogService logService;
+	private YDZBFDWService ydzbfdwService;
 
 	private String view = "ydzbfdwPage";
 
 	private String commandName = "result";
 
-	@RequestMapping(value = "getLog.do", method = RequestMethod.GET)
-	public ModelAndView getLog(HttpServletRequest request,
+	@RequestMapping(value = "importYDZBFDW.do", method = RequestMethod.GET)
+	public ModelAndView importYDZBFDW(HttpServletRequest request,
 			HttpServletResponse response) {
-		boolean result = logService.logYDZBFDW();
+		boolean result = ydzbfdwService.importYDZBFDW();
 		// System.out.println("result:" + result);
 		return new ModelAndView(view, commandName, result);
 	}

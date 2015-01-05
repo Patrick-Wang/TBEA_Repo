@@ -186,10 +186,10 @@
 
 	<bean id="bl15Dao" class="com.tbea.datatransfer.model.dao.yszk15.bl.BL15DaoImpl" />
 	<bean id="xjlrbDao"
-		class="com.tbea.datatransfer.model.dao.local.xjlrb.XJLRBDaoImpl" />
+		class="com.tbea.datatransfer.model.dao.inner.xjlrb.XJLRBDaoImpl" />
 	<bean id="ydzbfdwDao"
-		class="com.tbea.datatransfer.model.dao.local.ydzbfdw.YDZBFDWDaoImpl" />
-	<bean id="zbhzDao" class="com.tbea.datatransfer.model.dao.local.zbhz.ZBHZDaoImpl" />
+		class="com.tbea.datatransfer.model.dao.inner.ydzbfdw.YDZBFDWDaoImpl" />
+	<bean id="zbhzDao" class="com.tbea.datatransfer.model.dao.inner.zbhz.ZBHZDaoImpl" />
 	<bean id="htxxLocalDao"
 		class="com.tbea.datatransfer.model.dao.local.htxx.HTXXLocalDaoImpl" />
 	<bean id="htxxDLDao" class="com.tbea.datatransfer.model.dao.zjdl.htxx.HTXXDLDaoImpl" />
@@ -275,8 +275,8 @@
 		class="com.tbea.datatransfer.model.dao.zjdl.fkfs.FKFSXLGWDLDaoImpl" />
 	<bean id="fkfsxlnwDLDao"
 		class="com.tbea.datatransfer.model.dao.zjdl.fkfs.FKFSXLNWDLDaoImpl" />
-	<bean id="blhtDao" class="com.tbea.datatransfer.model.dao.local.blht.BLHTDaoImpl" />
-	<bean id="cqkDao" class="com.tbea.datatransfer.model.dao.local.cqk.CQKDaoImpl" />
+	<bean id="blhtDao" class="com.tbea.datatransfer.model.dao.inner.blht.BLHTDaoImpl" />
+	<bean id="cqkDao" class="com.tbea.datatransfer.model.dao.inner.cqk.CQKDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -293,25 +293,25 @@
 	<!-- -->
 
 	<bean id="xjlrbService"
-		class="com.tbea.datatransfer.service.local.xjlrb.XJLRBServiceImpl"
+		class="com.tbea.datatransfer.service.inner.xjlrb.XJLRBServiceImpl"
 		scope="prototype">
 		<property name="xjlrbDao" ref="xjlrbDao" />
 		<property name="bl15Dao" ref="bl15Dao" />
 	</bean>
 	<bean id="ydzbfdwService"
-		class="com.tbea.datatransfer.service.local.ydzbfdw.YDZBFDWServiceImpl"
+		class="com.tbea.datatransfer.service.inner.ydzbfdw.YDZBFDWServiceImpl"
 		scope="prototype">
 		<property name="ydzbfdwDao" ref="ydzbfdwDao" />
 		<property name="bl15Dao" ref="bl15Dao" />
 		<property name="qybhMap" ref="qybhMap" />
 	</bean>
 	<bean id="zbhzService"
-		class="com.tbea.datatransfer.service.local.zbhz.ZBHZServiceImpl"
+		class="com.tbea.datatransfer.service.inner.zbhz.ZBHZServiceImpl"
 		scope="prototype">
 		<property name="zbhzDao" ref="zbhzDao" />
 		<property name="bl15Dao" ref="bl15Dao" />
 	</bean>
-	<bean id="logService" class="com.tbea.datatransfer.service.local.log.LogServiceImpl"
+	<bean id="logService" class="com.tbea.datatransfer.service.log.LogServiceImpl"
 		scope="prototype">
 		<property name="ydzbfdwDao" ref="ydzbfdwDao" />
 		<property name="bl15Dao" ref="bl15Dao" />
@@ -442,13 +442,13 @@
 		<property name="fkfsxlnwDLDao" ref="fkfsxlnwDLDao" />
 	</bean>
 	<bean id="blhtService"
-		class="com.tbea.datatransfer.service.local.blht.BLHTServiceImpl"
+		class="com.tbea.datatransfer.service.inner.blht.BLHTServiceImpl"
 		scope="prototype">
 		<property name="blhtDao" ref="blhtDao" />
 		<property name="blLocalDao" ref="blLocalDao" />
 	</bean>
 	<bean id="cqkService"
-		class="com.tbea.datatransfer.service.local.cqk.CQKServiceImpl"
+		class="com.tbea.datatransfer.service.inner.cqk.CQKServiceImpl"
 		scope="prototype">
 		<property name="cqkDao" ref="cqkDao" />
 		<property name="yszktzLocalDao" ref="yszktzLocalDao" />
