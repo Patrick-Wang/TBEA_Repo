@@ -275,8 +275,8 @@
 		class="com.tbea.datatransfer.model.dao.zjdl.fkfs.FKFSXLGWDLDaoImpl" />
 	<bean id="fkfsxlnwDLDao"
 		class="com.tbea.datatransfer.model.dao.zjdl.fkfs.FKFSXLNWDLDaoImpl" />
-	<bean id="blhtDao"
-		class="com.tbea.datatransfer.model.dao.local.blht.BLHTDaoImpl" />
+	<bean id="blhtDao" class="com.tbea.datatransfer.model.dao.local.blht.BLHTDaoImpl" />
+	<bean id="cqkDao" class="com.tbea.datatransfer.model.dao.local.cqk.CQKDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -446,6 +446,12 @@
 		scope="prototype">
 		<property name="blhtDao" ref="blhtDao" />
 		<property name="blLocalDao" ref="blLocalDao" />
+	</bean>
+	<bean id="cqkService"
+		class="com.tbea.datatransfer.service.local.cqk.CQKServiceImpl"
+		scope="prototype">
+		<property name="cqkDao" ref="cqkDao" />
+		<property name="yszktzLocalDao" ref="yszktzLocalDao" />
 	</bean>
 
 	<!-- -->
