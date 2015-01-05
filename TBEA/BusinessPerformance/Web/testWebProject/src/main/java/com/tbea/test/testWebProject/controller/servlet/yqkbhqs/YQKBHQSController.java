@@ -51,6 +51,10 @@ public class YQKBHQSController {
 	public ModelAndView getYqkbhqs(HttpServletRequest request,
 			HttpServletResponse response) {
 		Calendar now = Calendar.getInstance();  
+		Date d = service.getLatestDate();
+		if (null != d){
+			now.setTime(d);
+		}
 		int year = now.get(Calendar.YEAR);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("year", year);

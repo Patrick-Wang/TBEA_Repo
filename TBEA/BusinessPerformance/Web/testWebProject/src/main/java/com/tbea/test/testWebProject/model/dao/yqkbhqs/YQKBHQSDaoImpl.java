@@ -15,6 +15,7 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
+import com.tbea.test.testWebProject.model.entity.XLNWFKFS;
 import com.tbea.test.testWebProject.model.entity.YQKBHQS;
 
 @Repository
@@ -42,6 +43,19 @@ public class YQKBHQSDaoImpl extends AbstractReadWriteDaoImpl<YQKBHQS> implements
 		q.setParameter(2, timeEnd);
 		q.setParameter(3, comp.getId());
 		return q.getResultList();
+	}
+
+	@Override
+	public YQKBHQS getLatestDate() {
+		Query q = getEntityManager().createQuery(
+				"from YQKBHQS order by Ny desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<YQKBHQS> yqks = q.getResultList();
+		if (!yqks.isEmpty()){
+			return yqks.get(0);
+		}
+		return null;
 	}
 
 }

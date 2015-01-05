@@ -9,4 +9,6 @@ public interface YSZKPZJHService {
 
 	YSZKPZJHBean getYszkpzjhData(Date d, Company comp);
 
+	Date getLatestDate();
+
 }
