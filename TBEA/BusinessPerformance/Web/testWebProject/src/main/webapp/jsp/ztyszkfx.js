@@ -25,8 +25,9 @@ var ztyszkfx;
         View.newInstance = function () {
             return new View();
         };
-        View.prototype.init = function (echartId, tableId, year) {
+        View.prototype.init = function (echartId, tableId, year, month) {
             this.mYear = year;
+            this.mMonth = month;
             this.mDataSet = new Util.DateDataSet("ztyszkfx_update.do");
             this.mTableId = tableId;
             this.mEchartId = echartId;
@@ -36,9 +37,12 @@ var ztyszkfx;
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
         };
+        View.prototype.onMonthSelected = function (month) {
+            this.mMonth = month;
+        };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByYearOnly(this.mYear, function (arrayData) {
+            this.mDataSet.getData(this.mMonth, this.mYear, function (arrayData) {
                 if (null != arrayData) {
                     _this.mData = arrayData;
                     $('h1').text(_this.mYear + "年 整体应收账款分析表");

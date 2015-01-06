@@ -79,16 +79,24 @@ public class YSZKPZJHController {
 		
 		map.put("month", month);
 		map.put("year", year);
+		
 		Organization org = CompanyManager.getPzghOrganization();
-		String[][] name_ids = Util.getCompanyNameAndIds(org.getTopCompany());
-		map.put("topComp", name_ids);
-		List<String[][]> subComps = new ArrayList<String[][]>();
-		for (int i = 0; i < org.getTopCompany().size(); ++i){
-			name_ids = Util.getCompanyNameAndIds(org.getTopCompany().get(i).getSubCompanys());
-			subComps.add(name_ids);
-		}
-		map.put("subComp", subComps);
-		map.put("onlytop", true);
+		CompanySelection compSelection = new CompanySelection(true,
+				org.getTopCompany());
+		compSelection.setFirstCompany(CompanyType.HB);
+		compSelection.select(map);
+		
+		
+//		String[][] name_ids = Util.getCompanyNameAndIds(org.getTopCompany());
+//		map.put("topComp", name_ids);
+//		List<String[][]> subComps = new ArrayList<String[][]>();
+//		for (int i = 0; i < org.getTopCompany().size(); ++i){
+//			name_ids = Util.getCompanyNameAndIds(org.getTopCompany().get(i).getSubCompanys());
+//			subComps.add(name_ids);
+//		}
+//		map.put("subComp", subComps);
+//		map.put("onlytop", true);
+//		map.put("firstCompany", CompanyType.HB.ordinal());
 		return new ModelAndView("yszkpzjh", map);
 	}
 }

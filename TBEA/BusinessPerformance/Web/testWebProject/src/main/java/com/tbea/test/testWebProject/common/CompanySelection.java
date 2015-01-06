@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.tbea.test.testWebProject.common.companys.Company;
+import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 
 public class CompanySelection {
 	public interface Filter {
@@ -14,6 +15,7 @@ public class CompanySelection {
 	private boolean mTopOnly = false;
 	private List<Company> mTopComps;
 	private Filter mFilter;
+	private int firstCompany = 0;
 	public CompanySelection(boolean topOnly, List<Company> topComps, Filter filter) {
 		super();
 		this.mTopOnly = topOnly;
@@ -30,6 +32,15 @@ public class CompanySelection {
 				return true;
 			}
 		};
+	}
+	
+	public void setFirstCompany(CompanyType compType){
+		for (int  i = 0; i < mTopComps.size(); ++i){
+			if (mTopComps.get(i).getType() == compType){
+				this.firstCompany = i;
+				break;
+			}
+		}
 	}
 	
 	private List<Company> FilterCompanys(List<Company> comps){
@@ -77,5 +88,6 @@ public class CompanySelection {
 		map.put("subComp", subComps);
 		map.put("onlytop", mTopOnly);
 		map.put("both", !mTopOnly);
+		map.put("firstCompany", name_ids[1][this.firstCompany]);
 	}
 }

@@ -9,5 +9,6 @@ public interface CQKService {
 	public String[][] getCqkData(Date d, Company comp);
 	public String[][] getCompareData(Date d, Company comp);
 	public boolean importCQK();
+	public Date getLatestDate();
 
 }

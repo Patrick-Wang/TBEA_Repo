@@ -36,9 +36,9 @@ public class ZTYSZKFXController {
 	@RequestMapping(value = "ztyszkfx_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getZtyszkfx_update(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar now = Calendar.getInstance();  
 		int year = Integer.parseInt(request.getParameter("year"));
-		Date d = java.sql.Date.valueOf(year + "-" +  (now.get(Calendar.MONTH) + 1) + "-" + 1);
+		int month = Integer.parseInt(request.getParameter("month"));
+		Date d = java.sql.Date.valueOf(year + "-" +  month + "-" + 1);
 		
 		String syhkjhzxqk = JSONArray.fromObject(service.getZtyszkfxData(d)).toString().replace("null", "0.00");
 		return syhkjhzxqk;
@@ -50,9 +50,16 @@ public class ZTYSZKFXController {
 	public ModelAndView getZtyszkfx(HttpServletRequest request,
 			HttpServletResponse response) {
 		Calendar now = Calendar.getInstance();  
+		
+		Date date = service.getLatestDate(); 
+		if (null != date){
+			now.setTime(date);
+		}
 		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH) + 1;
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("year", year);
+		map.put("month", month);
 		return new ModelAndView("ztyszkfx", map);
 	}
 }

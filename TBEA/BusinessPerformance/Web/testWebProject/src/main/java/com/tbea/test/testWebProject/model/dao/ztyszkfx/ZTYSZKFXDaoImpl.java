@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.test.testWebProject.common.Util;
+import com.tbea.test.testWebProject.model.entity.XLNWFKFS;
 import com.tbea.test.testWebProject.model.entity.ZTYSZKFX;
 
 @Repository
@@ -29,6 +30,19 @@ public class ZTYSZKFXDaoImpl  extends AbstractReadWriteDaoImpl<ZTYSZKFX> impleme
 		Query q = this.getEntityManager().createQuery("select z from ZTYSZKFX z where DateDiff(mm, z.gxrq, :date) = 0");
 		q.setParameter("date", d);
 		return q.getResultList();
+	}
+
+	@Override
+	public ZTYSZKFX getLatestYszk() {
+		Query q = getEntityManager().createQuery(
+				"from ZTYSZKFX order by gxrq desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<ZTYSZKFX> yszks = q.getResultList();
+		if (!yszks.isEmpty()){
+			return yszks.get(0);
+		}
+		return null;
 	}
 	
 }

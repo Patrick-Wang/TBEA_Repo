@@ -278,4 +278,13 @@ public class CQKServiceImpl implements CQKService {
 		}
 		return result;
 	}
+
+	@Override
+	public Date getLatestDate() {
+		CQK cqk = cqkDao.getLatestCQK();
+		if (null != cqk){
+			return (Date)Util.valueOf(cqk.getNy());
+		}
+		return null;
+	}
 }

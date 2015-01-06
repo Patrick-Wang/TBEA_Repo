@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.model.entity.XLNWFKFS;
 import com.tbea.test.testWebProject.model.entity.local.CQK;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
@@ -78,6 +79,20 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
 		q.setParameter(1, Util.format(d));
 		q.setParameter(2, comp.getId());
 		return  q.getResultList();
+	}
+
+
+	@Override
+	public CQK getLatestCQK() {
+		Query q = getEntityManager().createQuery(
+				"from CQK order by ny desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<CQK> cqks = q.getResultList();
+		if (!cqks.isEmpty()){
+			return cqks.get(0);
+		}
+		return null;
 	}
 
 }

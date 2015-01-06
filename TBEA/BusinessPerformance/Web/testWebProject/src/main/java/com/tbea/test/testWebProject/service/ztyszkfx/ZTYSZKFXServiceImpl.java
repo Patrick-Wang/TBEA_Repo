@@ -121,4 +121,13 @@ public class ZTYSZKFXServiceImpl implements ZTYSZKFXService{
 		return ret;
 	}
 
+	@Override
+	public Date getLatestDate() {
+		ZTYSZKFX yszk = ztysDao.getLatestYszk();
+		if (null != yszk){
+			return yszk.getGxrq();
+		}
+		return null;
+	}
+
 }

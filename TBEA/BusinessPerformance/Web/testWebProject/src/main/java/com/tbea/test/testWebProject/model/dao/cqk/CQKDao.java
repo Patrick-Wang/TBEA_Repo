@@ -22,4 +22,6 @@ public interface CQKDao extends AbstractReadWriteDao<com.tbea.test.testWebProjec
 
 	List<CQK> getCqkData(Date d, Company comp);
 
+	CQK getLatestCQK();
+
 }
