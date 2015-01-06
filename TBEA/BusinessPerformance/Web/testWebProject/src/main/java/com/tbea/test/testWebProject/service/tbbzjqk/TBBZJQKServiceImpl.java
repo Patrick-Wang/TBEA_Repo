@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.dao.tbbzjqk.TBBZJQKDao;
 import com.tbea.test.testWebProject.model.entity.TBBZJXX;
+import com.tbea.test.testWebProject.model.entity.local.CQK;
 @Service
 @Transactional("transactionManager")
 public class TBBZJQKServiceImpl implements TBBZJQKService{
@@ -27,6 +29,15 @@ public class TBBZJQKServiceImpl implements TBBZJQKService{
 			ret[tbj.getYf() - 1] = tbj.getJe() + "";
 		}
 		return ret;
+	}
+
+	@Override
+	public Date getLatestDate() {
+		TBBZJXX tb = tbjDao.getLatestTBJ();
+		if (null != tb){
+			return (Date)Date.valueOf(tb.getNf() + "-" + tb.getYf() + "-1");
+		}
+		return null;
 	}
 	
 }

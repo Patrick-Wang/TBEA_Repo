@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.dao.hkjhjgb.HKJHJGDao;
 import com.tbea.test.testWebProject.model.entity.HKJHJG;
@@ -89,5 +90,14 @@ public class HKJHJGServiceImpl implements HKJHJGService {
 		return ret;
 		// return new String[]
 		// {"1.00", "2.00", "3.00", "4.00", "4"};
+	}
+
+	@Override
+	public Date getLatestDate() {
+		HKJHJG hkjg = hkjhjgDao.getLatestHkjg();
+		if (null != hkjg){
+			return (Date) Util.valueOf(hkjg.getNy());
+		}
+		return null;
 	}
 }

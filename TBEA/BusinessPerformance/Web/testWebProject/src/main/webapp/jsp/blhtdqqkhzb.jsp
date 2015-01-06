@@ -44,7 +44,7 @@
     </script>
 <meta charset="UTF-8">
 
-<title>${year}年${month}月保理合同到期情况汇总表</title>
+<title>${year}年${month}月 保理合同到期情况汇总表</title>
 
 <style type="text/css">
 body {
@@ -148,33 +148,17 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class="header">
-		<h1>${year}年${month}月保理合同到期情况汇总表</h1>
+		<h1>${year}年${month}月 保理合同到期情况汇总表</h1>
 	</div>
 
-	<Table align="center">
+	<Table align="center" >
 		<tr>
 			<td>
 				<Table>
 					<tr>
 						<td><%@include file="date_selection.jsp"%>
 						</td>
-						<td><select id="companys"
-							onchange="instance.onCompanySelected(this.value)"
-							style="width: 125px;">
-								<c:forEach begin="0" end="${company_size - 1}" var="i">
-									<c:choose>
-										<c:when test="${i == 1}">
-											<option value="${ids[i]}" selected="selected">${names[i]}</option>
-										</c:when>
-
-										<c:otherwise>
-											<option value="${ids[i]}">${names[i]}</option>
-										</c:otherwise>
-
-									</c:choose>
-
-								</c:forEach>
-						</select></td>
+						<td><%@include file="company_selection.jsp"%></td>
 						<td><input type="button" value="更新"
 							style="width: 80px; margin-left: 10px;"
 							onclick="instance.updateUI()"></input>
@@ -184,8 +168,8 @@ th.ui-th-ltr {
 		<tr>
 			<td>
 				<div align="center">
-					<div class="panel-content-border">
-						<div id="chart" class="panel-content"></div>
+					<div class="panel-content-border" style="margin-bottom:20px;width:1200px">
+						<div id="chart" class="panel-content" ></div>
 					</div>
 				</div>
 			</td>

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.test.testWebProject.common.CompanySelection;
+import com.tbea.test.testWebProject.common.DateSelection;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
@@ -59,16 +61,25 @@ public class HKJHJGController {
 	public ModelAndView getHkjhjg(HttpServletRequest request,
 			HttpServletResponse response) {
 		Calendar now = Calendar.getInstance();  
-		int month = now.get(Calendar.MONTH) + 1;
-		int year = now.get(Calendar.YEAR);
+//		int month = now.get(Calendar.MONTH) + 1;
+//		int year = now.get(Calendar.YEAR);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("month", 9);
-		map.put("year", year);
+//		map.put("month", month);
+//		map.put("year", year);
+		
+		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
+		dateSel.select(map);
+		
 		Organization org = CompanyManager.getOperationOrganization();
-		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		map.put("names", name_ids[0]);
-		map.put("ids", name_ids[1]);
-		map.put("company_size", name_ids[0].length);
+		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanys());
+		compSel.setFirstCompany(CompanyType.HB);
+		compSel.select(map);
+		
+//		Organization org = CompanyManager.getOperationOrganization();
+//		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
+//		map.put("names", name_ids[0]);
+//		map.put("ids", name_ids[1]);
+//		map.put("company_size", name_ids[0].length);
 		return new ModelAndView("hkjhjg", map);
 	}
 }

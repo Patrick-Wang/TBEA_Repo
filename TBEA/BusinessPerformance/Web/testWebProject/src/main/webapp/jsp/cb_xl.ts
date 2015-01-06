@@ -285,7 +285,10 @@ module cb_xl {
             var parent = $("#" + this.mGstbTableId);
             parent.empty();
             parent.append("<table id='"+ name +"'></table>");
-            
+            var height : any = '100%';
+            if (this.mMonth > 4){
+                height = 110;    
+            }
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
@@ -298,7 +301,7 @@ module cb_xl {
                     //autowidth : false,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
-                    height: 110,
+                    height: height,
                     width: 1250,
                     shrinkToFit: true,
                     autoScroll: true,

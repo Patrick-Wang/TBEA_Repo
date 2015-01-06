@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.test.testWebProject.common.CompanySelection;
+import com.tbea.test.testWebProject.common.DateSelection;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
@@ -37,12 +39,12 @@ public class TBBZJQKController {
 	
 	@RequestMapping(value = "tbbzjqk_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getTbbzjqk_update(HttpServletRequest request,
-			HttpServletResponse response) {
-		Calendar now = Calendar.getInstance();  
+			HttpServletResponse response) { 
 		int year = Integer.parseInt(request.getParameter("year"));
+		int month = Integer.parseInt(request.getParameter("month"));
 		String companyId = request.getParameter("companyId");
 		int cid = Integer.parseInt(companyId);
-		Date d = java.sql.Date.valueOf(year + "-" +  (now.get(Calendar.MONTH) + 1) + "-" + 1);
+		Date d = java.sql.Date.valueOf(year + "-" +  month + "-" + 1);
 		Organization org = CompanyManager.getOperationOrganization();
 		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		String syhkjhzxqk = JSONArray.fromObject(service.getTbbzjqkData(d, comp)).toString().replace("null", "0.00");
@@ -54,16 +56,12 @@ public class TBBZJQKController {
 	@RequestMapping(value = "tbbzjqk.do", method = RequestMethod.GET)
 	public ModelAndView getTbbzjqk(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar now = Calendar.getInstance();  
-		int year = now.get(Calendar.YEAR);
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		map.put("year", year);
+		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
+		dateSel.select(map);
 		Organization org = CompanyManager.getOperationOrganization();
-		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		map.put("names", name_ids[0]);
-		map.put("ids", name_ids[1]);
-		map.put("company_size", name_ids[0].length);
+		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanys());
+		compSel.select(map);
 		return new ModelAndView("tbbzjqk", map);
 	}
 }

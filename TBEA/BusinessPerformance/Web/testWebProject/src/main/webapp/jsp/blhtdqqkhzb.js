@@ -27,7 +27,7 @@ var blhtdqqkhzb;
         };
         JQGridAssistantFactory.createTable = function (gridName, month) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("保理到期月份", "bldqyf", true, 0 /* Left */),
+                new JQTable.Node("保理到期月份", "bldqyf", true, 0 /* Left */, 120),
                 new JQTable.Node("保理到期月份", "bldqyf_1", true, 0 /* Left */),
                 JQGridAssistantFactory.createPreNode(month - 1),
                 JQGridAssistantFactory.createNextNode(month),
@@ -146,8 +146,8 @@ var blhtdqqkhzb;
             tableAssist.mergeTitle();
             tableAssist.mergeRow(0);
             var data = [
-                ["保理合同到期情况", "金额"],
-                ["保理合同到期情况", "份数"]
+                ["保理合同\r\n到期情况", "金额"],
+                ["保理合同\r\n到期情况", "份数"]
             ];
             if (undefined != this.mTableData) {
                 var row = [];
@@ -167,8 +167,8 @@ var blhtdqqkhzb;
                 drag: false,
                 resize: false,
                 height: '100%',
-                width: 1000,
-                shrinkToFit: false,
+                width: 1200,
+                shrinkToFit: true,
                 autoScroll: true,
                 data: tableAssist.getData(data),
                 datatype: "local"

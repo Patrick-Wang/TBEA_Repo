@@ -33,12 +33,15 @@ var tbbzjqk;
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
         };
+        View.prototype.onMonthSelected = function (month) {
+            this.mMonth = month;
+        };
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByYear(this.mYear, this.mComp, function (data) {
+            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
                 if (null != data) {
                     _this.mData = JSON.parse(data);
                     $('h1').text(_this.mYear + "年 投标保证金情况");
@@ -100,7 +103,7 @@ var tbbzjqk;
         };
         View.prototype.updateTable = function () {
             var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist = JQGridAssistantFactory.createTable(name, this.mData.length);
+            var tableAssist = JQGridAssistantFactory.createTable(name, 12);
             var data = [["余额"]];
             if (undefined != this.mData) {
                 for (var i = 0; i < this.mData.length; ++i) {
@@ -120,7 +123,7 @@ var tbbzjqk;
                 cellEdit: true,
                 height: '100%',
                 shrinkToFit: true,
-                width: this.mData.length * 90
+                width: 12 * 90
             }));
         };
         return View;

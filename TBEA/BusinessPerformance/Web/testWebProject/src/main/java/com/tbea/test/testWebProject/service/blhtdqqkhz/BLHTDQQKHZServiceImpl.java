@@ -120,4 +120,19 @@ public class BLHTDQQKHZServiceImpl implements BLHTDQQKHZService {
 		return result;
 	}
 
+
+	@Override
+	public Date getLatestDate() {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date d = Date.valueOf(cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-1");
+		BLHTDQQKHZ blht = blDao.getLatestBl(d);
+		if (null != blht){
+			cal.setTime((Date) Util.valueOf(blht.getNy()));
+			cal.add(Calendar.MONTH, 1);
+			return Date.valueOf(cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-1");
+		}
+		return null;
+	}
+
 }

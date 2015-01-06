@@ -15,6 +15,7 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.entity.TBBZJXX;
+import com.tbea.test.testWebProject.model.entity.local.CQK;
 
 @Repository
 @Transactional("transactionManager")
@@ -34,6 +35,19 @@ public class TBBZJQKDaoImpl extends AbstractReadWriteDaoImpl<TBBZJXX> implements
 		q.setParameter("year", c.get(Calendar.YEAR));
 		q.setParameter("month", c.get(Calendar.MONTH) + 1);
 		return q.getResultList();
+	}
+
+	@Override
+	public TBBZJXX getLatestTBJ() {
+		Query q = getEntityManager().createQuery(
+				"from TBBZJXX order by nf desc, yf desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<TBBZJXX> tbs = q.getResultList();
+		if (!tbs.isEmpty()){
+			return tbs.get(0);
+		}
+		return null;
 	}
 
 }

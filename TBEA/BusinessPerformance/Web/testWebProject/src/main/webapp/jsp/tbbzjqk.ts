@@ -27,6 +27,7 @@ module tbbzjqk {
         private mDataSet: Util.DateDataSet;
         private mTableId: string;
         private mEchartId;
+        private mMonth:number;
         public init(echartId: string, tableId: string, year: number): void {
             this.mYear = year;
             this.mDataSet = new Util.DateDataSet("tbbzjqk_update.do");
@@ -39,13 +40,17 @@ module tbbzjqk {
         public onYearSelected(year: number) {
             this.mYear = year;
         }
+        
+        public onMonthSelected(month: number) {
+            this.mMonth = month;
+        }
 
         public onCompanySelected(comp : Util.CompanyType){
         	this.mComp = comp;
         }
         
         public updateUI() {
-               this.mDataSet.getDataByYear(this.mYear, this.mComp, (data: string) => {
+               this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data: string) => {
                 if (null != data) {
                     this.mData = JSON.parse(data);
                     $('h1').text(this.mYear + "年 投标保证金情况");
@@ -168,7 +173,7 @@ module tbbzjqk {
 
         private updateTable(): void {
             var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mData.length);
+            var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, 12);
        
             var data = [["余额"]];
 			if (undefined != this.mData){
@@ -196,7 +201,7 @@ module tbbzjqk {
                     cellEdit: true,
                     height: '100%',
                     shrinkToFit: true,
-                    width: this.mData.length * 90,
+                    width: 12 * 90,
                     //userData : {
                     //	'kxxz' : "合计"
                     //},

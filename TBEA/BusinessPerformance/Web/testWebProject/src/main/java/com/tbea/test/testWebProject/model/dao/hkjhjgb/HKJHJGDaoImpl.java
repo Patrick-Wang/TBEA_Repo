@@ -17,6 +17,7 @@ import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.entity.HKJHJG;
 import com.tbea.test.testWebProject.model.entity.QYZJK;
 import com.tbea.test.testWebProject.model.entity.XLNWFKFS;
+import com.tbea.test.testWebProject.model.entity.local.CQK;
 
 
 @Repository
@@ -36,6 +37,19 @@ public class HKJHJGDaoImpl  extends AbstractReadWriteDaoImpl<QYZJK> implements H
 		q.setParameter("compId", comp.getId());
 		q.setParameter("ny", Util.format(d));
 		return q.getResultList();
+	}
+
+	@Override
+	public HKJHJG getLatestHkjg() {
+		Query q = getEntityManager().createQuery(
+				"from HKJHJG order by ny desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<HKJHJG> hkjhs = q.getResultList();
+		if (!hkjhs.isEmpty()){
+			return hkjhs.get(0);
+		}
+		return null;
 	}
 
 }

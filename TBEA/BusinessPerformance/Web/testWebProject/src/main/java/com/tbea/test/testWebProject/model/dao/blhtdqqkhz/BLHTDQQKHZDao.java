@@ -1,5 +1,6 @@
 package com.tbea.test.testWebProject.model.dao.blhtdqqkhz;
 
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
@@ -13,5 +14,7 @@ public interface BLHTDQQKHZDao extends AbstractReadWriteDao<BLHTDQQKHZ> {
 	List<BLHTDQQKHZ> getBlAfterDate(Calendar cal, Company comp);
 
 	List<BLHTDQQKHZ> getBltbbh(Calendar cal, Company comp);
+
+	BLHTDQQKHZ getLatestBl(Date d);
 
 }

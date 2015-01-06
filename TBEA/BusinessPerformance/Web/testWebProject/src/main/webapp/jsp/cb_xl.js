@@ -167,6 +167,10 @@ var cb_xl;
             var parent = $("#" + this.mGstbTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
+            var height = '100%';
+            if (this.mMonth > 4) {
+                height = 110;
+            }
             $("#" + name).jqGrid(tableAssist.decorate({
                 data: tableAssist.getData(data),
                 datatype: "local",
@@ -175,7 +179,7 @@ var cb_xl;
                 resize: false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
-                height: 110,
+                height: height,
                 width: 1250,
                 shrinkToFit: true,
                 autoScroll: true

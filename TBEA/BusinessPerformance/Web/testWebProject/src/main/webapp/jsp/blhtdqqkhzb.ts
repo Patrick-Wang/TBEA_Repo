@@ -35,7 +35,7 @@ module blhtdqqkhzb {
 
         public static createTable(gridName: string, month: number): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("保理到期月份", "bldqyf", true, JQTable.TextAlign.Left),
+                new JQTable.Node("保理到期月份", "bldqyf", true, JQTable.TextAlign.Left, 120),
                 new JQTable.Node("保理到期月份", "bldqyf_1", true, JQTable.TextAlign.Left),
                 JQGridAssistantFactory.createPreNode(month - 1),
                 JQGridAssistantFactory.createNextNode(month),
@@ -173,8 +173,8 @@ module blhtdqqkhzb {
             tableAssist.mergeTitle();
             tableAssist.mergeRow(0);
             var data = [
-                ["保理合同到期情况", "金额"],
-                ["保理合同到期情况", "份数"]
+                ["保理合同\r\n到期情况", "金额"],
+                ["保理合同\r\n到期情况", "份数"]
             ];
             //            for (var i = 0; i < data.length; ++i){
             //                data[i] = data[i].concat(this.mTableData[i]);
@@ -198,8 +198,8 @@ module blhtdqqkhzb {
                     drag: false,
                     resize: false,
                     height: '100%',
-                    width: 1000,
-                    shrinkToFit: false,
+                    width: 1200,
+                    shrinkToFit: true,
                     autoScroll: true,
                     data: tableAssist.getData(data),
                     datatype: "local"

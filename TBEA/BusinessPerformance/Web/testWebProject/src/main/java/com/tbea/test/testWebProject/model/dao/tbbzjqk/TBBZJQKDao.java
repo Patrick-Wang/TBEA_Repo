@@ -10,4 +10,6 @@ public interface TBBZJQKDao {
 
 	List<TBBZJXX> getTbbzj(Date d, Company comp);
 
+	TBBZJXX getLatestTBJ();
+
 }

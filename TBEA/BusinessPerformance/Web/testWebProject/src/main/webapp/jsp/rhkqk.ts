@@ -151,7 +151,7 @@ module rhkqk {
                     data[i] = data[i].concat(row);
                 }
             }
-            
+            tableAssist.setRowBgColor(7, 183, 222, 232);
             
 			var parent = $("#" + this.mTableId);
 			parent.empty();
@@ -171,7 +171,7 @@ module rhkqk {
                     cellEdit: true,
                     height: '100%',
                     width: 1200,
-                    shrinkToFit: false,
+                    shrinkToFit: true,
                     autoScroll: true,
 //                    userData: {
 //                        'yf': "合计"

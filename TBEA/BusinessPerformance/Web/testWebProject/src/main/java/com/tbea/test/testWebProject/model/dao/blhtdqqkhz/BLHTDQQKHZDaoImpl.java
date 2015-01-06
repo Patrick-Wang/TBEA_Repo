@@ -1,5 +1,6 @@
 package com.tbea.test.testWebProject.model.dao.blhtdqqkhz;
 
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.entity.BLHTDQQKHZ;
+import com.tbea.test.testWebProject.model.entity.ZTYSZKFX;
 
 @Repository
 @Transactional("transactionManager2")
@@ -58,6 +60,20 @@ public class BLHTDQQKHZDaoImpl extends AbstractReadWriteDaoImpl<BLHTDQQKHZ> impl
 		q.setParameter(4, Util.format(cal.getTime()));
 		q.setParameter(5, comp.getId());
 		return q.getResultList();
+	}
+
+	@Override
+	public BLHTDQQKHZ getLatestBl(Date d) {
+		Query q = getEntityManager().createQuery(
+				"from BLHTDQQKHZ where Ny <= :date order by Ny desc");
+		q.setParameter("date", Util.format(d));
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<BLHTDQQKHZ> bls = q.getResultList();
+		if (!bls.isEmpty()){
+			return bls.get(0);
+		}
+		return null;
 	}
 
 }

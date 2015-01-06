@@ -10,4 +10,6 @@ public interface HKJHJGDao {
 
 	List<HKJHJG> getHkjhjg(Date d, Company comp);
 
+	HKJHJG getLatestHkjg();
+
 }

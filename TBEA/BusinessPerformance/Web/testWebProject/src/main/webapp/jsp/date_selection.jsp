@@ -28,7 +28,7 @@
 				}
 			}
 			
-			instance.onYearSelected(year);
+			instance.onYearSelected(parseInt(year + ""));
 			onMonthChanged(selectedOpt);
 		}
 
@@ -40,7 +40,7 @@
 		
 	
 		function onMonthChanged(month){
-			instance.onMonthSelected(month);
+			instance.onMonthSelected(parseInt(month + ""));
 			if ($('#day') != undefined){
 				var year = parseInt($("#year" + " option:selected").val());
 				var dayCount = getDaysInMonth(year, month);
@@ -67,7 +67,8 @@
 
 			<c:when test="${empty month}">
 				<td><select id="year"
-					onchange="instance.onYearSelected(this.value)" style="width: 125px;">
+					onchange="instance.onYearSelected(this.value)"
+					style="width: 125px;">
 						<option value="${year}" selected="selected">${year}年</option>
 						<option value="${year - 1}">${year - 1}年</option>
 				</select></td>
@@ -122,3 +123,13 @@
 		</c:if>
 	</tr>
 </table>
+<script type="text/javascript">
+	instance.onYearSelected(${year});
+
+</script>
+<c:if test="${!(empty month)}">
+	<script type="text/javascript">
+	onYearChange(${year});
+
+</script>
+</c:if>
