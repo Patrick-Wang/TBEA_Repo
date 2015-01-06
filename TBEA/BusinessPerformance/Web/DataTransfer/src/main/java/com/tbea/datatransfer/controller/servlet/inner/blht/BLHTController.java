@@ -1,4 +1,4 @@
-package com.tbea.datatransfer.controller.servlet.log;
+package com.tbea.datatransfer.controller.servlet.inner.blht;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,24 +9,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.datatransfer.service.inner.ydzbfdw.YDZBFDWService;
-import com.tbea.datatransfer.service.log.LogService;
+import com.tbea.datatransfer.service.inner.blht.BLHTService;
 
 @Controller
-@RequestMapping(value = "Log")
-public class LogController {
+@RequestMapping(value = "BLHT")
+public class BLHTController {
 
 	@Autowired
-	private LogService logService;
+	private BLHTService blhtService;
 
-	private String view = "ydzbfdwPage";
+	private String view = "blhtPage";
 
 	private String commandName = "result";
 
-	@RequestMapping(value = "getLog.do", method = RequestMethod.GET)
-	public ModelAndView getLog(HttpServletRequest request,
+	@RequestMapping(value = "importBLHT.do", method = RequestMethod.GET)
+	public ModelAndView importBLHT(HttpServletRequest request,
 			HttpServletResponse response) {
-		boolean result = logService.logYDZBFDW();
+		boolean result = blhtService.importBLHT();
 		// System.out.println("result:" + result);
 		return new ModelAndView(view, commandName, result);
 	}

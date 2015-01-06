@@ -1,4 +1,4 @@
-package com.tbea.datatransfer.controller.servlet.log;
+package com.tbea.datatransfer.controller.servlet.local.xlwg;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,25 +9,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.datatransfer.service.inner.ydzbfdw.YDZBFDWService;
-import com.tbea.datatransfer.service.log.LogService;
+import com.tbea.datatransfer.service.local.xlwg.XLWGTransferService;
 
 @Controller
-@RequestMapping(value = "Log")
-public class LogController {
+@RequestMapping(value = "xlwgTransfer")
+public class XLWGTransferController {
 
 	@Autowired
-	private LogService logService;
+	private XLWGTransferService xlwgTransferService;
 
-	private String view = "ydzbfdwPage";
+	private String view = "xlwgTransferPage";
 
 	private String commandName = "result";
 
-	@RequestMapping(value = "getLog.do", method = RequestMethod.GET)
-	public ModelAndView getLog(HttpServletRequest request,
+	@RequestMapping(value = "xlwgTransfer.do", method = RequestMethod.GET)
+	public ModelAndView xlwgTransfer(HttpServletRequest request,
 			HttpServletResponse response) {
-		boolean result = logService.logYDZBFDW();
-		// System.out.println("result:" + result);
+		boolean result = xlwgTransferService.transferXLWG();
 		return new ModelAndView(view, commandName, result);
 	}
 

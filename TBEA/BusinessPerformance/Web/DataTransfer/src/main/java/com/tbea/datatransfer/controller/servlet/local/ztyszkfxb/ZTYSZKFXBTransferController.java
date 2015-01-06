@@ -1,4 +1,4 @@
-package com.tbea.datatransfer.controller.servlet.log;
+package com.tbea.datatransfer.controller.servlet.local.ztyszkfxb;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,25 +9,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.datatransfer.service.inner.ydzbfdw.YDZBFDWService;
-import com.tbea.datatransfer.service.log.LogService;
+import com.tbea.datatransfer.service.local.ztyszkfxb.ZTYSZKFXBTransferService;
 
 @Controller
-@RequestMapping(value = "Log")
-public class LogController {
+@RequestMapping(value = "ztyszkfxbTransfer")
+public class ZTYSZKFXBTransferController {
 
 	@Autowired
-	private LogService logService;
+	private ZTYSZKFXBTransferService ztyszkfxbTransferService;
 
-	private String view = "ydzbfdwPage";
+	private String view = "ztyszkfxbTransferPage";
 
 	private String commandName = "result";
 
-	@RequestMapping(value = "getLog.do", method = RequestMethod.GET)
-	public ModelAndView getLog(HttpServletRequest request,
+	@RequestMapping(value = "ztyszkfxbTransfer.do", method = RequestMethod.GET)
+	public ModelAndView ztyszkfxbTransfer(HttpServletRequest request,
 			HttpServletResponse response) {
-		boolean result = logService.logYDZBFDW();
-		// System.out.println("result:" + result);
+		boolean result = ztyszkfxbTransferService.transferZTYSZKFXB();
 		return new ModelAndView(view, commandName, result);
 	}
 
