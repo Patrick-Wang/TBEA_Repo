@@ -279,6 +279,8 @@
 	<bean id="cqkDao" class="com.tbea.datatransfer.model.dao.inner.cqk.CQKDaoImpl" />
 	<bean id="hkjhjgbDao"
 		class="com.tbea.datatransfer.model.dao.inner.hkjhjgb.HKJHJGBDaoImpl" />
+	<bean id="ndtbbzjqkDao"
+		class="com.tbea.datatransfer.model.dao.inner.ndtbbzjqk.NDTBBZJQKDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -459,6 +461,12 @@
 		scope="prototype">
 		<property name="hkjhjgbDao" ref="hkjhjgbDao" />
 		<property name="ydhkjhjgbLocalDao" ref="ydhkjhjgbLocalDao" />
+	</bean>
+	<bean id="ndtbbzjqkService"
+		class="com.tbea.datatransfer.service.inner.ndtbbzjqk.NDTBBZJQKServiceImpl"
+		scope="prototype">
+		<property name="ndtbbzjqkDao" ref="ndtbbzjqkDao" />
+		<property name="tbbzjxxLocalDao" ref="tbbzjxxLocalDao" />
 	</bean>
 
 	<!-- -->
