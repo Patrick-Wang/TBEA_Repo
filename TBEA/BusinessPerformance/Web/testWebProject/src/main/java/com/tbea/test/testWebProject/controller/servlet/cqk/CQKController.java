@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.test.testWebProject.common.CompanySelection;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
@@ -67,16 +68,23 @@ public class CQKController {
 	public ModelAndView getBlhtdqqkhzbById(HttpServletRequest request,
 			HttpServletResponse response) {
 		Calendar now = Calendar.getInstance();  
+
+		Date d = cqkService.getLatestDate();
+		if (null != d){
+			now.setTime(d);
+		}
+		
 		int month = now.get(Calendar.MONTH) + 1;
 		int year = now.get(Calendar.YEAR);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("month", month);
 		map.put("year", year);
 		Organization org = CompanyManager.getOperationOrganization();
-		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		map.put("names", name_ids[0]);
-		map.put("ids", name_ids[1]);
-		map.put("company_size", name_ids[0].length);
+		CompanySelection compSelection = new CompanySelection(true,
+				org.getCompany(CompanyType.SBDCY).getSubCompanys());
+		compSelection.select(map);
+
 		return new ModelAndView("cqk", map);
 	}
 }

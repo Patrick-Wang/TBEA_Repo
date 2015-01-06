@@ -43,14 +43,15 @@ module ztyszkfx {
             return new View();
         }
 
-
+        private mMonth : number;
         private mYear: number;
         private mData: Array<string[]>;
         private mDataSet: Util.DateDataSet;
         private mTableId: string;
         private mEchartId;
-        public init(echartId: string, tableId: string, year: number): void {
+        public init(echartId: string, tableId: string, year: number, month:number): void {
             this.mYear = year;
+            this.mMonth = month;
             this.mDataSet = new Util.DateDataSet("ztyszkfx_update.do");
             this.mTableId = tableId;
             this.mEchartId = echartId;
@@ -62,9 +63,12 @@ module ztyszkfx {
             this.mYear = year;
         }
 
-
+        public onMonthSelected(month : number){
+            this.mMonth = month;
+        }
+        
         public updateUI() {
-            this.mDataSet.getDataByYearOnly(this.mYear, (arrayData: Array<string[]>) => {
+            this.mDataSet.getData(this.mMonth, this.mYear, (arrayData: Array<string[]>) => {
                 if (null != arrayData) {
                     this.mData = arrayData;
                     $('h1').text(this.mYear + "年 整体应收账款分析表");

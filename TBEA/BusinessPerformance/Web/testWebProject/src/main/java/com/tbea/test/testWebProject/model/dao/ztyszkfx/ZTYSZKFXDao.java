@@ -9,4 +9,6 @@ public interface ZTYSZKFXDao {
 
 	List<ZTYSZKFX> getZtyszkfxData(Date d);
 
+	ZTYSZKFX getLatestYszk();
+
 }

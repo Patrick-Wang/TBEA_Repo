@@ -6,4 +6,6 @@ public interface ZTYSZKFXService {
 
 	String[][] getZtyszkfxData(Date d);
 
+	Date getLatestDate();
+
 }

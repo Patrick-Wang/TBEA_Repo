@@ -39,7 +39,7 @@
 				<c:forEach begin="0" end="${fn:length(topComp[0]) - 1}" var="i">
 					<c:choose>
 
-						<c:when test="${i == 0}">
+						<c:when test="${topComp[1][i] == firstCompany}">
 							<option value="${topComp[1][i]}" selected="selected">${topComp[0][i]}</option>
 						</c:when>
 
