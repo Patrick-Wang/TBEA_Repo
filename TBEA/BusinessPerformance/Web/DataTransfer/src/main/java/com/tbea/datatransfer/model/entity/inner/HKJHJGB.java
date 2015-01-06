@@ -1,7 +1,6 @@
 package com.tbea.datatransfer.model.entity.inner;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,15 +12,14 @@ import javax.persistence.Table;
 import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 
 @Entity
-@Table(name = "yszk_zj_ydhkjhjgb")
-public class HKJHJGB extends AbstractReadWriteEntity implements
-		Serializable {
+@Table(name = "hkjhjgb")
+public class HKJHJGB extends AbstractReadWriteEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Date gxrq;
-
 	private String gsbm;
+
+	private String ny;
 
 	private Double qbkhyqyszk;
 
@@ -39,11 +37,23 @@ public class HKJHJGB extends AbstractReadWriteEntity implements
 
 	private Double zqkhwdqk;
 
+	private Double byhlyqyszk;
+
+	private Double byhlyqk;
+
+	private Double byhlwdqyszk;
+
+	private Double byhlwdqk;
+
+	private Double byhlxj;
+
+	private Double qbkhxj;
+
+	private Double zqkhxj;
+
 	private Double xyqsk;
 
 	private Double gyqsk;
-
-	private String sfdrwc;
 
 	private Integer qybh;
 
@@ -58,20 +68,20 @@ public class HKJHJGB extends AbstractReadWriteEntity implements
 		super.setId(id);
 	}
 
-	public Date getGxrq() {
-		return gxrq;
-	}
-
-	public void setGxrq(Date gxrq) {
-		this.gxrq = gxrq;
-	}
-
 	public String getGsbm() {
 		return gsbm;
 	}
 
 	public void setGsbm(String gsbm) {
 		this.gsbm = gsbm;
+	}
+
+	public String getNy() {
+		return ny;
+	}
+
+	public void setNy(String ny) {
+		this.ny = ny;
 	}
 
 	public Double getQbkhyqyszk() {
@@ -138,6 +148,62 @@ public class HKJHJGB extends AbstractReadWriteEntity implements
 		this.zqkhwdqk = zqkhwdqk;
 	}
 
+	public Double getByhlyqyszk() {
+		return byhlyqyszk;
+	}
+
+	public void setByhlyqyszk(Double byhlyqyszk) {
+		this.byhlyqyszk = byhlyqyszk;
+	}
+
+	public Double getByhlyqk() {
+		return byhlyqk;
+	}
+
+	public void setByhlyqk(Double byhlyqk) {
+		this.byhlyqk = byhlyqk;
+	}
+
+	public Double getByhlwdqyszk() {
+		return byhlwdqyszk;
+	}
+
+	public void setByhlwdqyszk(Double byhlwdqyszk) {
+		this.byhlwdqyszk = byhlwdqyszk;
+	}
+
+	public Double getByhlwdqk() {
+		return byhlwdqk;
+	}
+
+	public void setByhlwdqk(Double byhlwdqk) {
+		this.byhlwdqk = byhlwdqk;
+	}
+
+	public Double getByhlxj() {
+		return byhlxj;
+	}
+
+	public void setByhlxj(Double byhlxj) {
+		this.byhlxj = byhlxj;
+	}
+
+	public Double getQbkhxj() {
+		return qbkhxj;
+	}
+
+	public void setQbkhxj(Double qbkhxj) {
+		this.qbkhxj = qbkhxj;
+	}
+
+	public Double getZqkhxj() {
+		return zqkhxj;
+	}
+
+	public void setZqkhxj(Double zqkhxj) {
+		this.zqkhxj = zqkhxj;
+	}
+
 	public Double getXyqsk() {
 		return xyqsk;
 	}
@@ -154,14 +220,6 @@ public class HKJHJGB extends AbstractReadWriteEntity implements
 		this.gyqsk = gyqsk;
 	}
 
-	public String getSfdrwc() {
-		return sfdrwc;
-	}
-
-	public void setSfdrwc(String sfdrwc) {
-		this.sfdrwc = sfdrwc;
-	}
-
 	public Integer getQybh() {
 		return qybh;
 	}
@@ -172,13 +230,16 @@ public class HKJHJGB extends AbstractReadWriteEntity implements
 
 	@Override
 	public String toString() {
-		return "YDHKJHJGBLocal [id=" + getId() + ", gxrq=" + gxrq + ", gsbm="
-				+ gsbm + ", qbkhyqyszk=" + qbkhyqyszk + ", qbkhyqk=" + qbkhyqk
+		return "HKJHJGB [id=" + getId() + ", gsbm=" + gsbm + ", ny=" + ny
+				+ ", qbkhyqyszk=" + qbkhyqyszk + ", qbkhyqk=" + qbkhyqk
 				+ ", qbkhwdqyszk=" + qbkhwdqyszk + ", qbkhwdqk=" + qbkhwdqk
 				+ ", zqkhyqyszk=" + zqkhyqyszk + ", zqkhyqk=" + zqkhyqk
 				+ ", zqkhwdqyszk=" + zqkhwdqyszk + ", zqkhwdqk=" + zqkhwdqk
-				+ ", xyqsk=" + xyqsk + ", gyqsk=" + gyqsk + ", sfdrwc="
-				+ sfdrwc + ", qybh=" + qybh + "]";
+				+ ", byhlyqyszk=" + byhlyqyszk + ", byhlyqk=" + byhlyqk
+				+ ", byhlwdqyszk=" + byhlwdqyszk + ", byhlwdqk=" + byhlwdqk
+				+ ", byhlxj=" + byhlxj + ", qbkhxj=" + qbkhxj + ", Zqkhxj="
+				+ zqkhxj + ", xyqsk=" + xyqsk + ", gyqsk=" + gyqsk + ", qybh="
+				+ qybh + "]";
 	}
 
 }
