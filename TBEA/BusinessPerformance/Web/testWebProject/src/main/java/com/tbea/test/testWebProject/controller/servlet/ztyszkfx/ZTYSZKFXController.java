@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.test.testWebProject.common.DateSelection;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.service.cqk.CQKService;
@@ -48,18 +49,10 @@ public class ZTYSZKFXController {
 	
 	@RequestMapping(value = "ztyszkfx.do", method = RequestMethod.GET)
 	public ModelAndView getZtyszkfx(HttpServletRequest request,
-			HttpServletResponse response) {
-		Calendar now = Calendar.getInstance();  
-		
-		Date date = service.getLatestDate(); 
-		if (null != date){
-			now.setTime(date);
-		}
-		int year = now.get(Calendar.YEAR);
-		int month = now.get(Calendar.MONTH) + 1;
+			HttpServletResponse response) {	
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("year", year);
-		map.put("month", month);
+		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
+		dateSel.select(map);
 		return new ModelAndView("ztyszkfx", map);
 	}
 }

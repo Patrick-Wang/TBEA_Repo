@@ -67,6 +67,11 @@ public class ZTYSZKFXServiceImpl implements ZTYSZKFXService{
 	
 	public String[][] getZtyszkfxData(Date d){
 
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.MONTH, 1);
+		d = Date.valueOf(cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-1");
+		
 		String[][] ret = new String[10][14];
 		List<ZTYSZKFX> ztyszkfxs = ztysDao.getZtyszkfxData(d);
 		Integer row = 0;
@@ -99,7 +104,7 @@ public class ZTYSZKFXServiceImpl implements ZTYSZKFXService{
 				}
 			}
 		}
-		Calendar cal = Calendar.getInstance();
+		cal = Calendar.getInstance();
 		cal.setTime(d);
 		int curMon = cal.get(Calendar.MONTH) + 1;
 		double[] retbyq = sum(byqZtyszkfxs, curMon);
@@ -125,7 +130,10 @@ public class ZTYSZKFXServiceImpl implements ZTYSZKFXService{
 	public Date getLatestDate() {
 		ZTYSZKFX yszk = ztysDao.getLatestYszk();
 		if (null != yszk){
-			return yszk.getGxrq();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(yszk.getGxrq());
+			cal.add(Calendar.MONTH, -1);
+			return Date.valueOf(cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-1");
 		}
 		return null;
 	}
