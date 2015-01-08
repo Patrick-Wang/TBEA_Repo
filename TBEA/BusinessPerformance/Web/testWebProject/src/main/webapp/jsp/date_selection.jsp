@@ -12,7 +12,7 @@
 			if ($('#day') != undefined){
 				var year = parseInt($("#year" + " option:selected").val());
 				var dayCount = getDaysInMonth(year, month);
-				if (month == ${month}){
+				if (year == ${year} &&　month == ${month}){
 					dayCount = ${dayCount};
 				}
 				var selectedOpt = parseInt($("#day" + " option:selected").val());

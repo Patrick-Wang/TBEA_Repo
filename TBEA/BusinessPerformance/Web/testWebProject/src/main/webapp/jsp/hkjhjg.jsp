@@ -139,7 +139,7 @@ th.ui-th-ltr {
 }
 </style>
 </head>
-<body style="width:1400px">
+<body>
     <div class=" header">
         <h1>${year}年${month}月 回款计划结构明细</h1>
     </div>
