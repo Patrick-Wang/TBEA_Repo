@@ -10,6 +10,6 @@ import com.tbea.test.testWebProject.model.entity.local.YQK;
 
 public interface YQYSYSFXDao extends AbstractReadWriteDao<YQYSYSFX> {
 
-	List<YQYSYSFX> getYqysysfxList(Date d);
+	List<YQYSYSFX> getYqysysfxList();
 
 }

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.test.testWebProject.common.CompanySelection;
+import com.tbea.test.testWebProject.common.DateSelection;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
@@ -34,13 +36,17 @@ public class YQKBHQSController {
 	@RequestMapping(value = "yqkbhqs_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getYqkbhqs_update(HttpServletRequest request,
 			HttpServletResponse response) {
-		int year = Integer.parseInt(request.getParameter("year"));
-		String companyId = request.getParameter("companyId");
-		int cid = Integer.parseInt(companyId);
-		Date d = java.sql.Date.valueOf(year + "-" + 1 + "-" + 1);
-
+//		int year = Integer.parseInt(request.getParameter("year"));
+//		String companyId = request.getParameter("companyId");
+//		int cid = Integer.parseInt(companyId);
+//		Date d = java.sql.Date.valueOf(year + "-" + 1 + "-" + 1);
+//
+//		Organization org = CompanyManager.getOperationOrganization();
+//		Company comp = org.getCompany(CompanyType.valueOf(cid));
+		
+		Date d = DateSelection.getDate(request);
 		Organization org = CompanyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyType.valueOf(cid));
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
 
 		String yqkbhqs = JSONArray.fromObject(service.getYqkbhqsData(d, comp)).toString().replace("null", "0.00");
 		return yqkbhqs;
@@ -50,19 +56,27 @@ public class YQKBHQSController {
 	@RequestMapping(value = "yqkbhqs.do", method = RequestMethod.GET)
 	public ModelAndView getYqkbhqs(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar now = Calendar.getInstance();  
-		Date d = service.getLatestDate();
-		if (null != d){
-			now.setTime(d);
-		}
-		int year = now.get(Calendar.YEAR);
+//		Calendar now = Calendar.getInstance();  
+//		Date d = service.getLatestDate();
+//		if (null != d){
+//			now.setTime(d);
+//		}
+//		int year = now.get(Calendar.YEAR);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("year", year);
+//		Organization org = CompanyManager.getOperationOrganization();
+//		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
+//		map.put("names", name_ids[0]);
+//		map.put("ids", name_ids[1]);
+//		map.put("company_size", name_ids[0].length);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("year", year);
+		DateSelection dateSel = new DateSelection(service.getLatestDate(), false, false);
+		dateSel.select(map);
+
 		Organization org = CompanyManager.getOperationOrganization();
-		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		map.put("names", name_ids[0]);
-		map.put("ids", name_ids[1]);
-		map.put("company_size", name_ids[0].length);
+		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanys());
+		compSel.select(map);
 		return new ModelAndView(view, map);
 	}
 

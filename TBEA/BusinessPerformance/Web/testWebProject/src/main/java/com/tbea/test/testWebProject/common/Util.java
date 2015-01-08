@@ -21,11 +21,18 @@ public class Util {
 	}
 	
 	public static Integer valueOf(Integer v){
-		return v == null ? Integer.valueOf(0) : v;
+		if (null == v){
+			return 0;
+		}
+		return v;
+		
 	}
 	
 	public static Double valueOf(Double v){
-		return v == null ? Double.valueOf(0) : v;
+		if (null == v){
+			return 0.0;
+		}
+		return v;
 	}
 	
 	public static String financeFormat(String val){
@@ -184,11 +191,11 @@ public class Util {
 		return String.format("%.2f", v1);
 	}
 	
-	public static class Escape{
+	public static class Elapse{
 		
 		private Calendar start;
 		private Calendar end;
-		public Escape(){}
+		public Elapse(){}
 		
 		public void start(){
 			start = Calendar.getInstance();

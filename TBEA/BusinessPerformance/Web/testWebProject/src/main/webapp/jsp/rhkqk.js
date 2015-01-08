@@ -60,7 +60,7 @@ var rhkqk;
         View.prototype.updateTable = function () {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name);
-            var data = [["沈变公司"], ["衡变公司"], ["新变厂"], ["其中：天变公司"], ["鲁缆公司"], ["新缆厂"], ["德缆公司"], ["合计"]];
+            var data = [["沈变公司"], ["衡变公司"], ["新变厂"], ["其中:天变公司"], ["鲁缆公司"], ["新缆厂"], ["德缆公司"], ["合计"]];
             var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (this.mData[i] instanceof Array) {

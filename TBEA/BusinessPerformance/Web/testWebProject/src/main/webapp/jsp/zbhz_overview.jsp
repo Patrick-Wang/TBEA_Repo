@@ -32,10 +32,11 @@
 <script src="../jsp/zbhz_overview.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+var instance = zbhz_overview.View.newInstance();
             (function () {
                 $(document).ready(function () {
 
-                	zbhz_overview.View.newInstance().init(
+                	instance.init(
                 		["chart_yd", "chart_jd", "chart_nd", "chart_ydtb", "chart_jdtb"], 
                         ${month},//month
                         ${year},//year
@@ -150,6 +151,7 @@ th.ui-th-ltr {
 		<h1>指标汇总 ${zbmc}</h1>
 	</div>
 	<script type="text/javascript">
+	   
 		function onCySelected(index){
 			$("#dw select").each(function(i, e){
 				if (e.id != index){
@@ -159,80 +161,81 @@ th.ui-th-ltr {
 					e.style.display = "";
 				}
 			});
-			zbhz_overview.View.newInstance().onCySelected(parseInt(index));
+			instance.onCySelected(parseInt(index));
 		}
 	</script>
 	<Table align="center">
 		<tr>
 			<td>
-				<Table align="left">
+				<Table align="left" cellspacing="0" cellpadding="0">
 					<tr>
-						<td>
+<!-- 						<td> -->
 
-							<div>
-								按产业: <select onchange="onCySelected(this.value)">
-									<option value="${id_19}" selected="selected">${name_19}</option>
-									<option value="${id_15}">${name_15}</option>
-									<option value="${id_16}">${name_16}</option>
-									<option value="${id_17}">${name_17}</option>
-									<option value="${id_18}">${name_18}</option>
-								</select>
-							</div>
+<!-- 							<div> -->
+<!-- 								按产业: <select onchange="onCySelected(this.value)"> -->
+<%-- 									<option value="${id_19}" selected="selected">${name_19}</option> --%>
+<%-- 									<option value="${id_15}">${name_15}</option> --%>
+<%-- 									<option value="${id_16}">${name_16}</option> --%>
+<%-- 									<option value="${id_17}">${name_17}</option> --%>
+<%-- 									<option value="${id_18}">${name_18}</option> --%>
+<!-- 								</select> -->
+<!-- 							</div> -->
 
-						</td>
+<!-- 						</td> -->
 						<td>
-							<div style="margin-left: 15px;" id="dw">
-								按单位: <select id="${id_19}"
-									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-									style="width: 125px;">
-									<option value="100" selected="selected">全部</option>
-									<option value="${id_0}">${name_0}</option>
-									<option value="${id_1}">${name_1}</option>
-									<option value="${id_2}">${name_2}</option>
-									<option value="${id_3}">${name_3}</option>
-									<option value="${id_4}">${name_4}</option>
-									<option value="${id_5}">${name_5}</option>
-									<option value="${id_6}">${name_6}</option>
-									<option value="${id_7}">${name_7}</option>
-									<option value="${id_8}">${name_8}</option>
-									<option value="${id_9}">${name_9}</option>
-									<option value="${id_10}">${name_10}</option>
-									<option value="${id_11}">${name_11}</option>
-									<option value="${id_12}">${name_12}</option>
-									<option value="${id_13}">${name_13}</option>
-									<option value="${id_14}">${name_14}</option>
-								</select> <select id="${id_15}"
-									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-									id="sbd" style="width: 125px; display: none">
-									<option value="100" selected="selected">全部</option>
-									<option value="${id_0}">${name_0}</option>
-									<option value="${id_1}">${name_1}</option>
-									<option value="${id_2}">${name_2}</option>
-									<option value="${id_3}">${name_3}</option>
-									<option value="${id_4}">${name_4}</option>
-									<option value="${id_5}">${name_5}</option>
-									<option value="${id_6}">${name_6}</option>
-								</select> <select id="${id_16}"
-									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-									style="width: 125px; display: none">
-									<option value="100" selected="selected">全部</option>
-									<option value="${id_7}">${name_7}</option>
-									<option value="${id_8}">${name_8}</option>
-								</select> <select id="${id_17}"
-									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-									style="width: 125px; display: none">
-									<option value="100" selected="selected">全部</option>
-									<option value="${id_9}">${name_9}</option>
-									<option value="${id_10}">${name_10}</option>
-									<option value="${id_11}">${name_11}</option>
-								</select> <select id="${id_18}"
-									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)"
-									style="width: 125px; display: none">
-									<option value="100" selected="selected">全部</option>
-									<option value="${id_12}">${name_12}</option>
-									<option value="${id_13}">${name_13}</option>
-								</select>
-							</div>
+						<%@include file="company_selection.jsp" %>
+<!-- 							<div style="margin-left: 15px;" id="dw"> -->
+<%-- 								按单位: <select id="${id_19}" --%>
+<!-- 									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)" -->
+<!-- 									style="width: 125px;"> -->
+<!-- 									<option value="100" selected="selected">全部</option> -->
+<%-- 									<option value="${id_0}">${name_0}</option> --%>
+<%-- 									<option value="${id_1}">${name_1}</option> --%>
+<%-- 									<option value="${id_2}">${name_2}</option> --%>
+<%-- 									<option value="${id_3}">${name_3}</option> --%>
+<%-- 									<option value="${id_4}">${name_4}</option> --%>
+<%-- 									<option value="${id_5}">${name_5}</option> --%>
+<%-- 									<option value="${id_6}">${name_6}</option> --%>
+<%-- 									<option value="${id_7}">${name_7}</option> --%>
+<%-- 									<option value="${id_8}">${name_8}</option> --%>
+<%-- 									<option value="${id_9}">${name_9}</option> --%>
+<%-- 									<option value="${id_10}">${name_10}</option> --%>
+<%-- 									<option value="${id_11}">${name_11}</option> --%>
+<%-- 									<option value="${id_12}">${name_12}</option> --%>
+<%-- 									<option value="${id_13}">${name_13}</option> --%>
+<%-- 									<option value="${id_14}">${name_14}</option> --%>
+<%-- 								</select> <select id="${id_15}" --%>
+<!-- 									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)" -->
+<!-- 									id="sbd" style="width: 125px; display: none"> -->
+<!-- 									<option value="100" selected="selected">全部</option> -->
+<%-- 									<option value="${id_0}">${name_0}</option> --%>
+<%-- 									<option value="${id_1}">${name_1}</option> --%>
+<%-- 									<option value="${id_2}">${name_2}</option> --%>
+<%-- 									<option value="${id_3}">${name_3}</option> --%>
+<%-- 									<option value="${id_4}">${name_4}</option> --%>
+<%-- 									<option value="${id_5}">${name_5}</option> --%>
+<%-- 									<option value="${id_6}">${name_6}</option> --%>
+<%-- 								</select> <select id="${id_16}" --%>
+<!-- 									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)" -->
+<!-- 									style="width: 125px; display: none"> -->
+<!-- 									<option value="100" selected="selected">全部</option> -->
+<%-- 									<option value="${id_7}">${name_7}</option> --%>
+<%-- 									<option value="${id_8}">${name_8}</option> --%>
+<%-- 								</select> <select id="${id_17}" --%>
+<!-- 									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)" -->
+<!-- 									style="width: 125px; display: none"> -->
+<!-- 									<option value="100" selected="selected">全部</option> -->
+<%-- 									<option value="${id_9}">${name_9}</option> --%>
+<%-- 									<option value="${id_10}">${name_10}</option> --%>
+<%-- 									<option value="${id_11}">${name_11}</option> --%>
+<%-- 								</select> <select id="${id_18}" --%>
+<!-- 									onchange="zbhz_overview.View.newInstance().onDwSelected(this.value)" -->
+<!-- 									style="width: 125px; display: none"> -->
+<!-- 									<option value="100" selected="selected">全部</option> -->
+<%-- 									<option value="${id_12}">${name_12}</option> --%>
+<%-- 									<option value="${id_13}">${name_13}</option> --%>
+<!-- 								</select> -->
+<!-- 							</div> -->
 						</td>
 						<td>
 							<div style="float: left; margin-left: 15px;">

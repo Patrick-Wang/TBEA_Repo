@@ -31,10 +31,10 @@
 		
 	</script>
 </c:if>
-<table id="comp_selection">
+<table id="comp_selection"  cellspacing="0" cellpadding="0">
 	<tr>
 
-		<td><select id="comp_category"
+		<td style="padding-right:5px"><select id="comp_category"
 			onchange="onComp_categorySelected(this, this.value)" style="width: 125px;">
 				<c:forEach begin="0" end="${fn:length(topComp[0]) - 1}" var="i">
 					<c:choose>
@@ -53,7 +53,7 @@
 		</select></td>
 
 		<c:if test="${both}">
-			<td><c:forEach begin="0" end="${fn:length(topComp[0]) - 1}"
+			<td style="padding-right:5px"><c:forEach begin="0" end="${fn:length(topComp[0]) - 1}"
 					var="i">
 					<c:choose>
 
@@ -65,7 +65,7 @@
 
 						<c:otherwise>
 							<select id="subcomp${i}"
-								onchange="instance.onCompanySelected(this.value})"
+								onchange="instance.onCompanySelected(this.value)"
 								style="width: 125px; display: none;">
 						</c:otherwise>
 

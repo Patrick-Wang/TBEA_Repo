@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.test.testWebProject.common.CompanySelection;
+import com.tbea.test.testWebProject.common.DateSelection;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
@@ -37,15 +39,20 @@ public class SYHKJHZXQKController {
 	@RequestMapping(value = "syhkjhzxqk_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getSyhkjhzxqk_update(HttpServletRequest request,
 			HttpServletResponse response) {
-		int month = Integer.parseInt(request.getParameter("month"));
-		int year = Integer.parseInt(request.getParameter("year"));
-		String companyId = request.getParameter("companyId");
-		int cid = Integer.parseInt(companyId);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
-		
-		Organization org = CompanyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyType.valueOf(cid));
+//		int month = Integer.parseInt(request.getParameter("month"));
+//		int year = Integer.parseInt(request.getParameter("year"));
+//		String companyId = request.getParameter("companyId");
+//		int cid = Integer.parseInt(companyId);
+//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
+//		
+//		Organization org = CompanyManager.getOperationOrganization();
+//		Company comp = org.getCompany(CompanyType.valueOf(cid));
 
+		Date d = DateSelection.getDate(request);
+		Organization org = CompanyManager.getOperationOrganization();
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
+		
+		
 		String syhkjhzxqk = JSONArray.fromObject(service.getSyhkjhzxqkData(d, comp)).toString().replace("null", "0.00");
 		return syhkjhzxqk;
 	}
@@ -55,18 +62,16 @@ public class SYHKJHZXQKController {
 	@RequestMapping(value = "syhkjhzxqk.do", method = RequestMethod.GET)
 	public ModelAndView getSyhkjhzxqk(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar preMonth = Calendar.getInstance();  
-		preMonth.add(Calendar.MONTH, -1);
-		int month = preMonth.get(Calendar.MONTH) + 1;
-		int year = preMonth.get(Calendar.YEAR);
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("month", 9);
-		map.put("year", year);
+		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
+		dateSel.select(map);
+
 		Organization org = CompanyManager.getOperationOrganization();
-		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		map.put("names", name_ids[0]);
-		map.put("ids", name_ids[1]);
-		map.put("company_size", name_ids[0].length);
+		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanys());
+		compSel.setFirstCompany(CompanyType.HB);
+		compSel.select(map);
+		
 		return new ModelAndView("syhkjhzxqk", map);
 	}
 }

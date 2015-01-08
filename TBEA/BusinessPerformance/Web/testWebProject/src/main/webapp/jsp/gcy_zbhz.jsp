@@ -143,7 +143,7 @@
         }
     </style>
 </head>
-<body style="width:1400px">
+<body>
     <div class=" header">
         <h1>${year}年${month}月 各产业指标汇总</h1>
     </div>

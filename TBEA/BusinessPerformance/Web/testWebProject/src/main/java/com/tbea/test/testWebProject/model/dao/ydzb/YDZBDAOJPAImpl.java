@@ -15,6 +15,7 @@ import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.model.entity.XJL;
+import com.tbea.test.testWebProject.model.entity.XLNWFKFS;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
 import com.tbea.test.testWebProject.model.entity.local.XJLRB;
 import com.tbea.test.testWebProject.model.entity.local.YDZBFDW;
@@ -152,6 +153,45 @@ public class YDZBDAOJPAImpl implements YDZBDao {
 		}
 
 		return xjls;
+	}
+
+	@Override
+	public ZBHZ getLatestZbhj() {
+		Query q = entityManager.createQuery(
+				"from ZBHZ order by ny desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<ZBHZ> zbs = q.getResultList();
+		if (!zbs.isEmpty()){
+			return zbs.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public YDZBFDW getLatestYdzbfdw() {
+		Query q = entityManager.createQuery(
+				"from YDZBFDW order by ny desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<YDZBFDW> ydzbs = q.getResultList();
+		if (!ydzbs.isEmpty()){
+			return ydzbs.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public XJLRB getLatestXjlrb() {
+		Query q = entityManager.createQuery(
+				"from XJLRB where jgmc != '中疆物流' order by rq desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<XJLRB> rbs = q.getResultList();
+		if (!rbs.isEmpty()){
+			return rbs.get(0);
+		}
+		return null;
 	}
 
 }

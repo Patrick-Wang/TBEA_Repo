@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.test.testWebProject.common.CompanySelection;
+import com.tbea.test.testWebProject.common.DateSelection;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
@@ -48,14 +49,19 @@ public class CQKController {
 	@RequestMapping(value = "cqk_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getBlhtdqqkhzbById_update(HttpServletRequest request,
 			HttpServletResponse response) {
-		int month = Integer.parseInt(request.getParameter("month"));
-		int year = Integer.parseInt(request.getParameter("year"));
-		String companyId = request.getParameter("companyId");
-		int cid = Integer.parseInt(companyId);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
+//		int month = Integer.parseInt(request.getParameter("month"));
+//		int year = Integer.parseInt(request.getParameter("year"));
+//		String companyId = request.getParameter("companyId");
+//		int cid = Integer.parseInt(companyId);
+//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
+//		
 		
+		Date d = DateSelection.getDate(request);
 		Organization org = CompanyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyType.valueOf(cid));
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
+		
+//		Organization org = CompanyManager.getOperationOrganization();
+//		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		
 		String cqk = JSONArray.fromObject(cqkService.getCqkData(d, comp)).toString().replace("null", "0.00");
 		String cqkCompare = JSONArray.fromObject(cqkService.getCompareData(d, comp)).toString().replace("null", "0.00");
@@ -67,19 +73,12 @@ public class CQKController {
 	@RequestMapping(value = "cqk.do", method = RequestMethod.GET)
 	public ModelAndView getBlhtdqqkhzbById(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar now = Calendar.getInstance();  
-
-		Date d = cqkService.getLatestDate();
-		if (null != d){
-			now.setTime(d);
-		}
-		
-		int month = now.get(Calendar.MONTH) + 1;
-		int year = now.get(Calendar.YEAR);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("month", month);
-		map.put("year", year);
+
+		DateSelection dateSel = new DateSelection(cqkService.getLatestDate(), true, false);
+		dateSel.select(map);
+		
 		Organization org = CompanyManager.getOperationOrganization();
 		CompanySelection compSelection = new CompanySelection(true,
 				org.getCompany(CompanyType.SBDCY).getSubCompanys());

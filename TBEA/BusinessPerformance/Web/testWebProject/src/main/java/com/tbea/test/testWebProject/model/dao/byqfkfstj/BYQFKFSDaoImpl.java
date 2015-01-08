@@ -48,7 +48,7 @@ public class BYQFKFSDaoImpl implements BYQFKFSDao {
 	@Override
 	public BYQFDWFKFS getLatestFdwfkfs() {
 		Query q = entityManager.createQuery(
-				"from BYQFDWFKFS order by gxrq desc");
+				"from BYQFDWFKFS order by ny desc");
 		q.setFirstResult(0);
 		q.setMaxResults(1);
 		List<BYQFDWFKFS> fkfs = q.getResultList();
@@ -61,7 +61,7 @@ public class BYQFKFSDaoImpl implements BYQFKFSDao {
 	@Override
 	public BYQGWFKFS getLatestGwfkfs() {
 		Query q = entityManager.createQuery(
-				"from BYQGWFKFS order by gxrq desc");
+				"from BYQGWFKFS order by ny desc");
 		q.setFirstResult(0);
 		q.setMaxResults(1);
 		List<BYQGWFKFS> fkfs = q.getResultList();
@@ -74,7 +74,7 @@ public class BYQFKFSDaoImpl implements BYQFKFSDao {
 	@Override
 	public BYQNWFKFS getLatestNwfkfs() {
 		Query q = entityManager.createQuery(
-				"from BYQNWFKFS order by gxrq desc");
+				"from BYQNWFKFS order by ny desc");
 		q.setFirstResult(0);
 		q.setMaxResults(1);
 		List<BYQNWFKFS> fkfs = q.getResultList();

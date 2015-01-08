@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.test.testWebProject.common.companys.Company;
+import com.tbea.test.testWebProject.model.entity.CBBYQWGDD;
 import com.tbea.test.testWebProject.model.entity.CBXLTBDD;
 import com.tbea.test.testWebProject.model.entity.CBXLWGDD;
 import com.tbea.test.testWebProject.model.entity.CBXLZXDD;
@@ -49,5 +50,18 @@ public class XLCBDaoImpl implements XLCBDao{
 		q.setFirstResult(0);
 		q.setMaxResults(1);
 		return !q.getResultList().isEmpty();
+	}
+
+	@Override
+	public CBXLWGDD getLatestWgdd() {
+		Query q = entityManager.createQuery(
+				"from CBXLWGDD order by wgsj desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<CBXLWGDD> wgdds = q.getResultList();
+		if (!wgdds.isEmpty()){
+			return wgdds.get(0);
+		}
+		return null;
 	}
 }

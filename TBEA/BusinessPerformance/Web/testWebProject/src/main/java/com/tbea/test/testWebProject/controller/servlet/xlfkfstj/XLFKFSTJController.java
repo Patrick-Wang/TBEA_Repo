@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.test.testWebProject.common.CompanySelection;
+import com.tbea.test.testWebProject.common.DateSelection;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
 import com.tbea.test.testWebProject.common.companys.Organization;
@@ -39,14 +40,18 @@ public class XLFKFSTJController {
 	public @ResponseBody byte[] getZtyszkfx_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
-		int month = Integer.parseInt(request.getParameter("month"));
-		int year = Integer.parseInt(request.getParameter("year"));
-		Date d = java.sql.Date.valueOf(year + "-" +  month + "-1");
+//		int month = Integer.parseInt(request.getParameter("month"));
+//		int year = Integer.parseInt(request.getParameter("year"));
+//		Date d = java.sql.Date.valueOf(year + "-" +  month + "-1");
+//		
+//		String companyId = request.getParameter("companyId");
+//		int cid = Integer.parseInt(companyId);
+//		Organization org = CompanyManager.getBMOrganization();
+//		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		
-		String companyId = request.getParameter("companyId");
-		int cid = Integer.parseInt(companyId);
+		Date d = DateSelection.getDate(request);
 		Organization org = CompanyManager.getBMOrganization();
-		Company comp = org.getCompany(CompanyType.valueOf(cid));
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		
 		
 		List<String[][]> result=  new ArrayList<String[][]>();
@@ -72,17 +77,9 @@ public class XLFKFSTJController {
 				});
 		compSelection.select(map);
 		
-		Calendar date = Calendar.getInstance();  
-		Date d = service.getLatestDate();
-		if (null != d){
-			date.setTime(d);
-			date.add(Calendar.MONTH, -1);
-		}
-		
-		int month = date.get(Calendar.MONTH) + 1;
-		int year = date.get(Calendar.YEAR);
-		map.put("month", month);
-		map.put("year", year);
+
+		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
+		dateSel.select(map);
 		
 		return new ModelAndView("xl_fkfstj", map);
 	}

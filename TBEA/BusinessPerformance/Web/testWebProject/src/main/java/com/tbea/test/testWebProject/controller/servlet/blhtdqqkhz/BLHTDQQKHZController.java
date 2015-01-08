@@ -38,14 +38,9 @@ public class BLHTDQQKHZController {
 	@RequestMapping(value = "blhtdqqkhz_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getBlhtdqqkhzbById_update(HttpServletRequest request,
 			HttpServletResponse response) {
-		int month = Integer.parseInt(request.getParameter("month"));
-		int year = Integer.parseInt(request.getParameter("year"));
-		String companyId = request.getParameter("companyId");
-		int cid = Integer.parseInt(companyId);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-1");
-		Map<String, Object> map = new HashMap<String, Object>();
+		Date d = DateSelection.getDate(request);
 		Organization org = CompanyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyType.valueOf(cid));
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
 
 		String blhtdqqk = JSONArray.fromObject(service.getBlhtdqqk(d, comp)).toString().replace("null", "0.00");
 		String blyeqs = JSONArray.fromObject(service.getBlyeqs(d, comp)).toString().replace("null", "0.00");
@@ -55,14 +50,7 @@ public class BLHTDQQKHZController {
 	@RequestMapping(value = "blhtdqqkhz.do", method = RequestMethod.GET)
 	public ModelAndView getBlhtdqqkhzbById(HttpServletRequest request,
 			HttpServletResponse response) {
-//		Calendar now = Calendar.getInstance();  
-//		int month = now.get(Calendar.MONTH) + 1;
-//		int year = now.get(Calendar.YEAR);
-//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
 		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("month", month);
-//		map.put("year", year);
-		
 
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);
@@ -73,11 +61,6 @@ public class BLHTDQQKHZController {
 		compSelection.setFirstCompany(CompanyType.XL);
 		compSelection.select(map);
 		
-//		Organization org = CompanyManager.getOperationOrganization();
-//		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-//		map.put("names", name_ids[0]);
-//		map.put("ids", name_ids[1]);
-//		map.put("company_size", name_ids[0].length);
 		return new ModelAndView(view, map);
 	}
 

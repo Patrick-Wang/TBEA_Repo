@@ -100,5 +100,13 @@ public class RHKQKServiceImpl implements   RHKQKService{
 		}
 		return ret;		
 	}
+	@Override
+	public Date getLatestDate() {
+		RHKXX rhkxx = rhkxxDao.getLatestRhkxx();
+		if (null != rhkxx){
+			return rhkxx.getHkrq();
+		}
+		return null;
+	}
 
 }

@@ -39,14 +39,19 @@ public class HKJHJGController {
 	@RequestMapping(value = "hkjhjg_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getHkjhjg_update(HttpServletRequest request,
 			HttpServletResponse response) {
-		int month = Integer.parseInt(request.getParameter("month"));
-		int year = Integer.parseInt(request.getParameter("year"));
-		String companyId = request.getParameter("companyId");
-		int cid = Integer.parseInt(companyId);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
+//		int month = Integer.parseInt(request.getParameter("month"));
+//		int year = Integer.parseInt(request.getParameter("year"));
+//		String companyId = request.getParameter("companyId");
+//		int cid = Integer.parseInt(companyId);
+//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
+//		
+//		Organization org = CompanyManager.getOperationOrganization();
+//		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		
+		
+		Date d = DateSelection.getDate(request);
 		Organization org = CompanyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyType.valueOf(cid));
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		
 		String hkjhjg = JSONArray.fromObject(service.getHkjhjgData(d, comp)).toString().replace("null", "0.00");
 		String hkjhzt = JSONArray.fromObject(service.getHkjhztData(d, comp)).toString().replace("null", "0.00");
@@ -60,26 +65,15 @@ public class HKJHJGController {
 	@RequestMapping(value = "hkjhjg.do", method = RequestMethod.GET)
 	public ModelAndView getHkjhjg(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar now = Calendar.getInstance();  
-//		int month = now.get(Calendar.MONTH) + 1;
-//		int year = now.get(Calendar.YEAR);
-		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("month", month);
-//		map.put("year", year);
-		
+		Map<String, Object> map = new HashMap<String, Object>();	
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);
-		
+
 		Organization org = CompanyManager.getOperationOrganization();
 		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanys());
 		compSel.setFirstCompany(CompanyType.HB);
 		compSel.select(map);
-		
-//		Organization org = CompanyManager.getOperationOrganization();
-//		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-//		map.put("names", name_ids[0]);
-//		map.put("ids", name_ids[1]);
-//		map.put("company_size", name_ids[0].length);
+
 		return new ModelAndView("hkjhjg", map);
 	}
 }

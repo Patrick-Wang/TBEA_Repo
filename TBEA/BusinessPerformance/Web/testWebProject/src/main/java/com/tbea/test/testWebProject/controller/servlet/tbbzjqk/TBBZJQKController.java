@@ -40,13 +40,19 @@ public class TBBZJQKController {
 	@RequestMapping(value = "tbbzjqk_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getTbbzjqk_update(HttpServletRequest request,
 			HttpServletResponse response) { 
-		int year = Integer.parseInt(request.getParameter("year"));
-		int month = Integer.parseInt(request.getParameter("month"));
-		String companyId = request.getParameter("companyId");
-		int cid = Integer.parseInt(companyId);
-		Date d = java.sql.Date.valueOf(year + "-" +  month + "-" + 1);
+//		int year = Integer.parseInt(request.getParameter("year"));
+//		int month = Integer.parseInt(request.getParameter("month"));
+//		String companyId = request.getParameter("companyId");
+//		int cid = Integer.parseInt(companyId);
+//		Date d = java.sql.Date.valueOf(year + "-" +  month + "-" + 1);
+//		Organization org = CompanyManager.getOperationOrganization();
+//		Company comp = org.getCompany(CompanyType.valueOf(cid));
+		
+		
+		Date d = DateSelection.getDate(request);
 		Organization org = CompanyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyType.valueOf(cid));
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
+		
 		String syhkjhzxqk = JSONArray.fromObject(service.getTbbzjqkData(d, comp)).toString().replace("null", "0.00");
 		return syhkjhzxqk;
 	}

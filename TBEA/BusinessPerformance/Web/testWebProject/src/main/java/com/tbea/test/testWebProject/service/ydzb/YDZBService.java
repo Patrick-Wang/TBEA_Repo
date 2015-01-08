@@ -1,6 +1,7 @@
 package com.tbea.test.testWebProject.service.ydzb;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 import com.tbea.test.testWebProject.common.companys.Company;
 
@@ -27,5 +28,11 @@ public interface YDZBService {
 	public String[][] getJdtbZbhz_overviewData(Date d, Company company, String zb);
 
 	String getZbmc(String id);
+
+	public Date getLatestHzbDate();
+
+	public Date getLatestGcyDate();
+
+	public Date getLatestXjlDate();
 
 }

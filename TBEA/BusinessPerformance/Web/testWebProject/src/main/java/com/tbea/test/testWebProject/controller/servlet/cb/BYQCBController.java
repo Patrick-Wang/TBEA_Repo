@@ -2,14 +2,10 @@ package com.tbea.test.testWebProject.controller.servlet.cb;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,11 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.test.testWebProject.common.CompanySelection;
-import com.tbea.test.testWebProject.common.Util;
+import com.tbea.test.testWebProject.common.DateSelection;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
 import com.tbea.test.testWebProject.common.companys.Organization;
-import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.service.cb.BYQCBService;
 
 @Controller
@@ -39,16 +34,11 @@ public class BYQCBController {
 	@RequestMapping(value = "tb_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getByqtbcb_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		Calendar date = Calendar.getInstance();
-		int month = date.get(Calendar.MONTH) + 1;
-		int year = date.get(Calendar.YEAR);
-		String companyId = request.getParameter("companyId");
-		int cid = Integer.parseInt(companyId);
-		Organization org = CompanyManager.getBMOrganization();
-		Company comp = org.getCompany(CompanyType.valueOf(cid));
 
-		String[][] aTbmx = service.getTbmx(
-				Date.valueOf(year + "-" + month + "-1"), comp);
+		Organization org = CompanyManager.getBMOrganization();
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
+
+		String[][] aTbmx = service.getTbmx(comp);
 		String tbmx = JSONArray.fromObject(aTbmx).toString()
 				.replace("null", "0.00");
 
@@ -61,18 +51,17 @@ public class BYQCBController {
 		Calendar date = Calendar.getInstance();
 		int month = date.get(Calendar.MONTH) + 1;
 		int year = date.get(Calendar.YEAR);
+		
 		List<String[][]> tbs = service.getTbmx(Date.valueOf(year + "-" + month
 				+ "-1"));
-		String[][] aTbmx = tbs.get(0);
-		String[][] aJttb = tbs.get(1);
-		String[][] aGstb = tbs.get(2);
 		Map<String, Object> map = new HashMap<String, Object>();
-		String tbmx = JSONArray.fromObject(aTbmx).toString()
+		String tbmx = JSONArray.fromObject(tbs.get(0)).toString()
 				.replace("null", "0.00");
-		String jttb = JSONArray.fromObject(aJttb).toString()
+		String jttb = JSONArray.fromObject(tbs.get(1)).toString()
 				.replace("null", "0.00");
-		String gstb = JSONArray.fromObject(aGstb).toString()
+		String gstb = JSONArray.fromObject(tbs.get(2)).toString()
 				.replace("null", "0.00");
+		
 		map.put("tbmx", tbmx);
 		map.put("jttb", jttb);
 		map.put("gstb", gstb);
@@ -94,16 +83,11 @@ public class BYQCBController {
 	@RequestMapping(value = "zx_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getByqzxcb_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		Calendar date = Calendar.getInstance();
-		int month = date.get(Calendar.MONTH) + 1;
-		int year = date.get(Calendar.YEAR);
-		String companyId = request.getParameter("companyId");
-		int cid = Integer.parseInt(companyId);
-		Organization org = CompanyManager.getBMOrganization();
-		Company comp = org.getCompany(CompanyType.valueOf(cid));
 
-		String[][] aZxmx = service.getZxmx(
-				Date.valueOf(year + "-" + month + "-1"), comp);
+		Organization org = CompanyManager.getBMOrganization();
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
+
+		String[][] aZxmx = service.getZxmx(comp);
 		String zxmx = JSONArray.fromObject(aZxmx).toString()
 				.replace("null", "0.00");
 
@@ -118,15 +102,12 @@ public class BYQCBController {
 		int year = date.get(Calendar.YEAR);
 		List<String[][]> zxs = service.getZxmx(Date.valueOf(year + "-" + month
 				+ "-1"));
-		String[][] aZxmx = zxs.get(0);
-		String[][] aJtzx = zxs.get(1);
-		String[][] aGszx = zxs.get(2);
 		Map<String, Object> map = new HashMap<String, Object>();
-		String zxmx = JSONArray.fromObject(aZxmx).toString()
+		String zxmx = JSONArray.fromObject(zxs.get(0)).toString()
 				.replace("null", "0.00");
-		String jtzx = JSONArray.fromObject(aJtzx).toString()
+		String jtzx = JSONArray.fromObject(zxs.get(1)).toString()
 				.replace("null", "0.00");
-		String gszx = JSONArray.fromObject(aGszx).toString()
+		String gszx = JSONArray.fromObject(zxs.get(2)).toString()
 				.replace("null", "0.00");
 		map.put("zxmx", zxmx);
 		map.put("jtzx", jtzx);
@@ -149,16 +130,11 @@ public class BYQCBController {
 	@RequestMapping(value = "wg_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getByqwgcb_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		Calendar date = Calendar.getInstance();
-		int month = date.get(Calendar.MONTH) + 1;
-		int year = date.get(Calendar.YEAR);
-		String companyId = request.getParameter("companyId");
-		int cid = Integer.parseInt(companyId);
-		Organization org = CompanyManager.getBMOrganization();
-		Company comp = org.getCompany(CompanyType.valueOf(cid));
 
-		String[][] aWgmx = service.getWgmx(
-				Date.valueOf(year + "-" + month + "-1"), comp);
+		Organization org = CompanyManager.getBMOrganization();
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
+
+		String[][] aWgmx = service.getWgmx(comp);
 		String wgmx = JSONArray.fromObject(aWgmx).toString()
 				.replace("null", "0.00");
 
@@ -169,9 +145,8 @@ public class BYQCBController {
 	@RequestMapping(value = "wg_date_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getByqwgcb_date_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		int month = Integer.parseInt(request.getParameter("month"));
-		int year = Integer.parseInt(request.getParameter("year"));
-		List<String[][]> aWgs = service.getJtwg(Date.valueOf(year + "-" + month + "-1"));
+
+		List<String[][]> aWgs = service.getJtwg(DateSelection.getDate(request));
 		String wgs = JSONArray.fromObject(aWgs).toString()
 				.replace("null", "0.00");
 
@@ -182,28 +157,7 @@ public class BYQCBController {
 	@RequestMapping(value = "wg.do", method = RequestMethod.GET)
 	public ModelAndView getByqwgcb(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar date = Calendar.getInstance();
-		int month = date.get(Calendar.MONTH) + 1;
-		int year = date.get(Calendar.YEAR);
-		List<String[][]> wgs = service.getWgmx(Date.valueOf(year + "-" + month
-				+ "-1"));
-		String[][] aWgmx = wgs.get(0);
-		String[][] aJtwg = wgs.get(1);
-		String[][] aGswg = wgs.get(2);
-		String[][] aBtdywg = wgs.get(3);
 		Map<String, Object> map = new HashMap<String, Object>();
-		String wgmx = JSONArray.fromObject(aWgmx).toString()
-				.replace("null", "0.00");
-		String jtwg = JSONArray.fromObject(aJtwg).toString()
-				.replace("null", "0.00");
-		String gswg = JSONArray.fromObject(aGswg).toString()
-				.replace("null", "0.00");
-		String btdywg = JSONArray.fromObject(aBtdywg).toString()
-				.replace("null", "0.00");
-		map.put("wgmx", wgmx);
-		map.put("jtwg", jtwg);
-		map.put("gswg", gswg);
-		map.put("btdywg", btdywg);
 
 		Organization org = CompanyManager.getBMOrganization();
 		CompanySelection compSelection = new CompanySelection(false,
@@ -215,8 +169,9 @@ public class BYQCBController {
 				});
 		compSelection.select(map);
 
-		map.put("year", year);
-		map.put("month", month);
+		
+		DateSelection dateSel = new DateSelection(service.getLatestWgDate(), true, false);
+		dateSel.select(map);
 		
 		return new ModelAndView("cb_wg_byq", map);
 	}

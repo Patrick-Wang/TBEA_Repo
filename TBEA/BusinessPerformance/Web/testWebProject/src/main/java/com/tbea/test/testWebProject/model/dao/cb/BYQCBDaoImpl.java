@@ -13,6 +13,7 @@ import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.entity.CBBYQTBDD;
 import com.tbea.test.testWebProject.model.entity.CBBYQWGDD;
 import com.tbea.test.testWebProject.model.entity.CBBYQZXDD;
+import com.tbea.test.testWebProject.model.entity.RHKXX;
 
 @Repository
 @Transactional("transactionManager")
@@ -94,5 +95,18 @@ public class BYQCBDaoImpl implements  BYQCBDao{
 		q.setFirstResult(0);
 		q.setMaxResults(1);
 		return !q.getResultList().isEmpty();
+	}
+
+	@Override
+	public CBBYQWGDD getLatestWgdd() {
+		Query q = entityManager.createQuery(
+				"from CBBYQWGDD order by wgsj desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<CBBYQWGDD> wgdds = q.getResultList();
+		if (!wgdds.isEmpty()){
+			return wgdds.get(0);
+		}
+		return null;
 	}
 }

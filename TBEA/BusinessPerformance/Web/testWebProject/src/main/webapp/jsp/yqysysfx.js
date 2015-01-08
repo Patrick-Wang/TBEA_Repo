@@ -49,8 +49,27 @@ var yqysysfx;
             var yqysysChart = echarts.init($("#" + this.mEchartId)[0]);
             var legend = ["总金额", "其中：法律手段清收"];
             var ysfl = ["内部因素", "客户资信", "滚动付款", "项目变化", "合同因素", "手续办理", "其它"];
-            var zjeData = [41982, 31876, 51975, 43856, 61498, 32696, 38574];
-            var flsdData = [29167, 21401, 47155, 32584, 52523, 19573, 24652];
+            var data = [];
+            if (this.mData != undefined) {
+                var row = [];
+                for (var i = 0; i < data.length; ++i) {
+                    row = [].concat(this.mData[i]);
+                    if (0 != i % 2) {
+                        for (var col in row) {
+                            row[col] = Util.formatCurrency(row[col]);
+                        }
+                    }
+                    data[i] = data[i].concat(row);
+                }
+            }
+            var zjeData = [];
+            for (var col in this.mData[1]) {
+                zjeData.push(parseFloat(this.mData[1][col]).toFixed(2));
+            }
+            var flsdData = [];
+            for (var col in this.mData[3]) {
+                flsdData.push(parseFloat(this.mData[3][col]).toFixed(2));
+            }
             var option = {
                 title: {
                     text: '逾期应收因素分析'
@@ -91,7 +110,7 @@ var yqysysfx;
                         type: 'bar',
                         barWidth: 18,
                         itemStyle: { normal: { color: 'rgba(193,35,43,1)', label: { show: true } } },
-                        data: [169, 272, 121, 274, 390, 230, 210]
+                        data: flsdData
                     },
                     {
                         name: '总金额',
@@ -101,7 +120,7 @@ var yqysysfx;
                         itemStyle: { normal: { color: 'rgba(193,35,43,0.5)', label: { show: true, formatter: function (a, b, c) {
                             return c > 0 ? (c + '\n') : '';
                         } } } },
-                        data: [620, 432, 301, 634, 790, 1130, 820]
+                        data: zjeData
                     }
                 ]
             };

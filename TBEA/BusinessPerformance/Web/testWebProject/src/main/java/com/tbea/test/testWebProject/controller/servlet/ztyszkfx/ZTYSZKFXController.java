@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.test.testWebProject.common.CompanySelection;
 import com.tbea.test.testWebProject.common.DateSelection;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
+import com.tbea.test.testWebProject.common.companys.CompanyManager;
+import com.tbea.test.testWebProject.common.companys.Organization;
 import com.tbea.test.testWebProject.service.cqk.CQKService;
 import com.tbea.test.testWebProject.service.hkjhjg.HKJHJGService;
 import com.tbea.test.testWebProject.service.syhkjhzxqk.SYHKJHZXQKService;
@@ -37,9 +40,10 @@ public class ZTYSZKFXController {
 	@RequestMapping(value = "ztyszkfx_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getZtyszkfx_update(HttpServletRequest request,
 			HttpServletResponse response) {
-		int year = Integer.parseInt(request.getParameter("year"));
-		int month = Integer.parseInt(request.getParameter("month"));
-		Date d = java.sql.Date.valueOf(year + "-" +  month + "-" + 1);
+//		int year = Integer.parseInt(request.getParameter("year"));
+//		int month = Integer.parseInt(request.getParameter("month"));
+//		Date d = java.sql.Date.valueOf(year + "-" +  month + "-" + 1);
+		Date d = DateSelection.getDate(request);
 		
 		String syhkjhzxqk = JSONArray.fromObject(service.getZtyszkfxData(d)).toString().replace("null", "0.00");
 		return syhkjhzxqk;

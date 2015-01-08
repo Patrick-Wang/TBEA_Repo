@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.test.testWebProject.common.CompanySelection;
+import com.tbea.test.testWebProject.common.DateSelection;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
@@ -36,32 +38,40 @@ public class YQYSYSFXController {
 	private String commandName = "result";
 
 	@RequestMapping(value = "yqysysfx_update.do", method = RequestMethod.GET)
+	public @ResponseBody String getYqysysfx_update(HttpServletRequest request,
+			HttpServletResponse response) {
+		// String companyId = request.getParameter("companyId");
+		// int cid = Integer.parseInt(companyId);
+		// Organization org = CompanyManager.getOperationOrganization();
+		// Company comp = org.getCompany(CompanyType.valueOf(cid));
 
-		public @ResponseBody String getYqysysfx_update(HttpServletRequest request,
-				HttpServletResponse response) {
-			int month = Integer.parseInt(request.getParameter("month"));
-			int year = Integer.parseInt(request.getParameter("year"));
-			//int day = Integer.parseInt(request.getParameter("day"));
-			String companyId = request.getParameter("companyId");
-			int cid = Integer.parseInt(companyId);
-			Organization org = CompanyManager.getOperationOrganization();
-			Company comp = org.getCompany(CompanyType.valueOf(cid));
-			Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
-			String xjlrb = JSONArray.fromObject(service.getYqysysfxData(d, comp)).toString().replace("null", "0.00");
-			return xjlrb;
-		}	
-	
+		Organization org = CompanyManager.getOperationOrganization();
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
+
+		String xjlrb = JSONArray.fromObject(service.getYqysysfxData(comp))
+				.toString().replace("null", "0.00");
+		return xjlrb;
+	}
+
 	@RequestMapping(value = "yqysysfx.do", method = RequestMethod.GET)
 	public ModelAndView getYqysysfx(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar now = Calendar.getInstance();  
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		Organization org = CompanyManager.getOperationOrganization();
-		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		map.put("names", name_ids[0]);
-		map.put("ids", name_ids[1]);
-		//map.put("all", CompanyType.SBDCY.ordinal() + "");
-		map.put("company_size", name_ids[0].length);
+		CompanySelection compSel = new CompanySelection(true, org.getCompany(
+				CompanyType.SBDCY).getSubCompanys());
+		compSel.select(map);
+
+		// Calendar now = Calendar.getInstance();
+		//
+		// Organization org = CompanyManager.getOperationOrganization();
+		// String[][] name_ids =
+		// Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
+		// map.put("names", name_ids[0]);
+		// map.put("ids", name_ids[1]);
+		// //map.put("all", CompanyType.SBDCY.ordinal() + "");
+		// map.put("company_size", name_ids[0].length);
 		return new ModelAndView("yqysysfx", map);
 	}
 

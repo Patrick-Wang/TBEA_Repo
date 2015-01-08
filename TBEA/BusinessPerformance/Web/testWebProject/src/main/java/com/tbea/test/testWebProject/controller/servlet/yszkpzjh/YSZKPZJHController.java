@@ -24,6 +24,7 @@ import com.tbea.test.testWebProject.common.companys.CompanyManager;
 import com.tbea.test.testWebProject.common.companys.Organization;
 import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.common.CompanySelection;
+import com.tbea.test.testWebProject.common.DateSelection;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.service.yszkpzjh.YSZKPZJHService;
 
@@ -40,14 +41,20 @@ public class YSZKPZJHController {
 	@RequestMapping(value = "yszkpzjh_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getYszkpzjh_update(HttpServletRequest request,
 			HttpServletResponse response) {
-		int month = Integer.parseInt(request.getParameter("month"));
-		int year = Integer.parseInt(request.getParameter("year"));
-		String companyId = request.getParameter("companyId");
-		int cid = Integer.parseInt(companyId);
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
-		CompanyType compType = CompanyType.valueOf(cid);
+//		int month = Integer.parseInt(request.getParameter("month"));
+//		int year = Integer.parseInt(request.getParameter("year"));
+//		String companyId = request.getParameter("companyId");
+//		int cid = Integer.parseInt(companyId);
+//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
+//		CompanyType compType = CompanyType.valueOf(cid);
+//		Organization org = CompanyManager.getPzghOrganization();
+//		Company comp = org.getCompany(compType);	
+		
+		Date d = DateSelection.getDate(request);
 		Organization org = CompanyManager.getPzghOrganization();
-		Company comp = org.getCompany(compType);	
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
+		
+		
 		List<Company> comps = comp.getSubCompanys();
 		
 		YSZKPZJHBean[] yszkpzjhBeans = new YSZKPZJHBean[comps.size() + 1];
@@ -68,17 +75,21 @@ public class YSZKPZJHController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		Date date = service.getLatestDate();
-		Calendar now = Calendar.getInstance();  
-		if (null != date){
-			now.setTime(date);
-		}
+//		Date date = service.getLatestDate();
+//		Calendar now = Calendar.getInstance();  
+//		if (null != date){
+//			now.setTime(date);
+//		}
+//		
+//		int month = now.get(Calendar.MONTH) + 1;
+//		int year = now.get(Calendar.YEAR);
+//		
+//		map.put("month", month);
+//		map.put("year", year);
 		
-		int month = now.get(Calendar.MONTH) + 1;
-		int year = now.get(Calendar.YEAR);
+		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
+		dateSel.select(map);
 		
-		map.put("month", month);
-		map.put("year", year);
 		
 		Organization org = CompanyManager.getPzghOrganization();
 		CompanySelection compSelection = new CompanySelection(true,

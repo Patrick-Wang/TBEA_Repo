@@ -117,8 +117,8 @@ module cb_wg_xl {
             this.mJtData = jt;
             this.mGsData = gs;
             this.mBtdyData = btdy;
-            this.mMonth = 8;//month;
-            this.mYear = 2014;//year;
+            this.mMonth = month;
+            this.mYear = year;
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
@@ -146,7 +146,7 @@ module cb_wg_xl {
                     this.mGsData = data;
 
                     this.updateJttbTable();
-//                    this.updateGstbTable();
+                    this.updateGstbTable();
 //                    this.mData = dataArray;
 //                    $('h1').text(this.mYear + "年" + this.mMonth + "月 各产业指标汇总");
 //                    document.title = this.mYear + "年" + this.mMonth + "月 各产业指标汇总";
@@ -156,62 +156,7 @@ module cb_wg_xl {
         }
 
         
-        
-        //        private initEchart(echart): void {
-        //            var ysyq_payment_Chart = echarts.init(echart)
-        //            var ysyq_payment_Option = {
-        //                animation: true,
-        //                tooltip: {
-        //                    trigger: 'axis',
-        //                    /* formatter : "{b}<br/>{a} : {c} 万元<br/>{a1} : {c1} 万元", */
-        //
-        //                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-        //                        type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
-        //                    }
-        //                },
-        //                legend: {
-        //                    x: 'right',
-        //                    data: ["合同金额", "预期阶段", "中标阶段", "完工阶段"],
-        //
-        //                },
-        //                xAxis: [{
-        //                    type: 'category',
-        //                    data: ['沈变', '衡变', '新变', '天变']
-        //                }],
-        //                yAxis: [{
-        //                    type: 'value'
-        //
-        //                }],
-        //
-        //                calculable: true,
-        //                series: [{
-        //                    name: '合同金额',
-        //                    type: 'bar',
-        //
-        //                    barCategoryGap: "50%",
-        //                    data: [63363.11, 55628.27, 58521.55, 69100.58]
-        //                }, {
-        //                        name: '预期阶段',
-        //                        type: 'bar',
-        //
-        //                        stack: '阶段',
-        //                        data: [9098.58, 1240.13, 1140.61, 3154.82]
-        //                    }, {
-        //                        name: '中标阶段',
-        //
-        //                        type: 'bar',
-        //                        stack: '阶段',
-        //                        data: [3934.13, 3200.22, 1382.52, 3934.13]
-        //                    }, {
-        //                        name: '完工阶段',
-        //                        type: 'bar',
-        //
-        //                        stack: '阶段',
-        //                        data: [11980.74, 2240.18, 3487.11, 6980.74]
-        //                    }]
-        //            };
-        //            ysyq_payment_Chart.setOption(ysyq_payment_Option);
-        //        }
+ 
 
         private updateMxTable(): void {
             var name = this.mMxTableId + "_jqgrid_1234";
@@ -349,10 +294,10 @@ module cb_wg_xl {
              var data = [];
             var gs = ["鲁缆","新缆","德缆"];
             for (var i = 0; i < 3; ++i){
-                tableAssist.mergeRow(0, i * this.mCurMonth * 3, this.mCurMonth * 3);
+                tableAssist.mergeRow(0, i * this.mMonth * 3, this.mMonth * 3);
              
-                for (var j = 0; j < this.mCurMonth; ++j){
-                    tableAssist.mergeRow(1, i * this.mCurMonth * 3 + j * 3, 3);
+                for (var j = 0; j < this.mMonth; ++j){
+                    tableAssist.mergeRow(1, i * this.mMonth * 3 + j * 3, 3);
                     data.push([gs[i], j + 1 + "月", "","中标阶段"]);
                     data.push([gs[i], j + 1 + "月", "","预期阶段"]);
                     data.push([gs[i], j + 1 + "月", "","完工阶段"]);
@@ -360,12 +305,12 @@ module cb_wg_xl {
             }
             
 
-            tableAssist.mergeRow(0, 3 * this.mCurMonth * 3, 3);
-            tableAssist.mergeRow(1, 3 * this.mCurMonth * 3, 3);
-            tableAssist.mergeColum(0, 3 * this.mCurMonth * 3);
-            data.push([this.mCurYear + "年" + this.mCurMonth, "月小计", "", "中标阶段"]);
-            data.push([this.mCurYear + "年" + this.mCurMonth, "月小计", "", "预期阶段"]);
-            data.push([this.mCurYear + "年" + this.mCurMonth, "月小计", "", "完工阶段"]);
+            tableAssist.mergeRow(0, 3 * this.mMonth * 3, 3);
+            tableAssist.mergeRow(1, 3 * this.mMonth * 3, 3);
+            tableAssist.mergeColum(0, 3 * this.mMonth * 3);
+            data.push([this.mYear + "年" + this.mMonth, "月小计", "", "中标阶段"]);
+            data.push([this.mYear + "年" + this.mMonth, "月小计", "", "预期阶段"]);
+            data.push([this.mYear + "年" + this.mMonth, "月小计", "", "完工阶段"]);
 
             var row = [];
             for (var i = 0; i < data.length; ++i) {

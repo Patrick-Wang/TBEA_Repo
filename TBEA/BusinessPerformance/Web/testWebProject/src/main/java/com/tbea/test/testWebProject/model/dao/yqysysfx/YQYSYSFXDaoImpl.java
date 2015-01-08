@@ -26,7 +26,7 @@ public class YQYSYSFXDaoImpl extends AbstractReadWriteDaoImpl<YQYSYSFX> implemen
 	}
 
 	@Override
-	public List<YQYSYSFX> getYqysysfxList(Date d) {
+	public List<YQYSYSFX> getYqysysfxList() {
 		Query q = this.getEntityManager().createQuery("select y from YQYSYSFX y");
 		return q.getResultList();
 	}

@@ -39,10 +39,6 @@
                 			"table2", 
                 			"table3", 
                 			"table4",
-                			JSON.parse('${wgmx}'),
-                			JSON.parse('${jtwg}'),
-                			JSON.parse('${gswg}'),
-                			JSON.parse('${btdywg}'),
                 			${month},
                 			${year});
             })})();

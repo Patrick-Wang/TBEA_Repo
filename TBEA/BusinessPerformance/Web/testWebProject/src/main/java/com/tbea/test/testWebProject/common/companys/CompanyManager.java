@@ -112,6 +112,7 @@ public class CompanyManager {
 	static Organization pzgh = new BMDepartmentPzgh();
 	static Organization opera = new OperationDepartment();
 	static Organization BM = new BMDepartment();
+	static Organization zbhz = new OperationZBHZ(new OperationDepartment());
 
 	public static Organization getBMOrganization() {
 		return BM;
@@ -125,5 +126,8 @@ public class CompanyManager {
 		return opera;
 	}
 
+	public static Organization getOperationZBHZOrganization(){
+		return zbhz;
+	}
 
 }

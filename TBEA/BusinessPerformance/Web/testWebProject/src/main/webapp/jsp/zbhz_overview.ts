@@ -99,6 +99,7 @@ module zbhz_overview {
 		private mDataSetMgr : DataSetManager;
  		private mCy: Util.CompanyType = Util.CompanyType.JT;
         private mDw: Util.CompanyType = Util.CompanyType.ALL;
+        private mComp:  Util.CompanyType = Util.CompanyType.JT;
         private mMonth: number;
         private mYear: number;
         private mChartIds: string[];
@@ -110,17 +111,21 @@ module zbhz_overview {
            this.updateUI();
         }
 
-		private getCurrentCompany() :　Util.CompanyType{
-			if (this.mDw != Util.CompanyType.ALL){
-				return this.mDw;
-			}
-			else{
-				return this.mCy;
-			}
-		}
+        public onCompanySelected(comp : Util.CompanyType){
+            this.mComp = comp;
+        }
+         
+//		private getCurrentCompany() :　Util.CompanyType{
+//			if (this.mDw != Util.CompanyType.ALL){
+//				return this.mDw;
+//			}
+//			else{
+//				return this.mCy;
+//			}
+//		}
 
 		private updateUI() : void{
-			this.mDataSetMgr.getData(this.getCurrentCompany(), (dataSet : YDZBDataSet) =>{
+			this.mDataSetMgr.getData(this.mComp, (dataSet : YDZBDataSet) =>{
 				if (dataSet != null){
 					this.updateYdUI(dataSet.getYd());
 					this.updateJdUI(dataSet.getJd());

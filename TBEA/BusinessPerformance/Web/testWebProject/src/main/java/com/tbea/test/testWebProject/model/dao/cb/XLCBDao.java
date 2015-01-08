@@ -13,4 +13,5 @@ public interface XLCBDao {
 	List<CBXLZXDD> getZxdd();
 	List<CBXLWGDD> getWgdd();
 	boolean containsTbCompany(Company comp);
+	CBXLWGDD getLatestWgdd();
 }

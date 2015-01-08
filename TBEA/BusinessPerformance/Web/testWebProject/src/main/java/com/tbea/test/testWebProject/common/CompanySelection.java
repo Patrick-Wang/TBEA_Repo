@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 
@@ -21,6 +23,15 @@ public class CompanySelection {
 		this.mTopOnly = topOnly;
 		this.mTopComps = topComps;
 		this.mFilter = filter;
+	}
+	
+	public static CompanyType getCompany(HttpServletRequest request){
+		String companyId = request.getParameter("companyId");
+		if (null != companyId){
+			int cid = Integer.parseInt(companyId);
+			return CompanyType.valueOf(cid);
+		}
+		return null;
 	}
 	
 	public CompanySelection(boolean topOnly, List<Company> topComps) {

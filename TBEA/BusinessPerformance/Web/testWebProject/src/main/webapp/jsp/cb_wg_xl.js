@@ -76,8 +76,8 @@ var cb_wg_xl;
             this.mJtData = jt;
             this.mGsData = gs;
             this.mBtdyData = btdy;
-            this.mMonth = 8;
-            this.mYear = 2014;
+            this.mMonth = month;
+            this.mYear = year;
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
@@ -101,6 +101,7 @@ var cb_wg_xl;
                     data = dataArray[1];
                     _this.mGsData = data;
                     _this.updateJttbTable();
+                    _this.updateGstbTable();
                 }
             });
         };
@@ -211,20 +212,20 @@ var cb_wg_xl;
             var data = [];
             var gs = ["鲁缆", "新缆", "德缆"];
             for (var i = 0; i < 3; ++i) {
-                tableAssist.mergeRow(0, i * this.mCurMonth * 3, this.mCurMonth * 3);
-                for (var j = 0; j < this.mCurMonth; ++j) {
-                    tableAssist.mergeRow(1, i * this.mCurMonth * 3 + j * 3, 3);
+                tableAssist.mergeRow(0, i * this.mMonth * 3, this.mMonth * 3);
+                for (var j = 0; j < this.mMonth; ++j) {
+                    tableAssist.mergeRow(1, i * this.mMonth * 3 + j * 3, 3);
                     data.push([gs[i], j + 1 + "月", "", "中标阶段"]);
                     data.push([gs[i], j + 1 + "月", "", "预期阶段"]);
                     data.push([gs[i], j + 1 + "月", "", "完工阶段"]);
                 }
             }
-            tableAssist.mergeRow(0, 3 * this.mCurMonth * 3, 3);
-            tableAssist.mergeRow(1, 3 * this.mCurMonth * 3, 3);
-            tableAssist.mergeColum(0, 3 * this.mCurMonth * 3);
-            data.push([this.mCurYear + "年" + this.mCurMonth, "月小计", "", "中标阶段"]);
-            data.push([this.mCurYear + "年" + this.mCurMonth, "月小计", "", "预期阶段"]);
-            data.push([this.mCurYear + "年" + this.mCurMonth, "月小计", "", "完工阶段"]);
+            tableAssist.mergeRow(0, 3 * this.mMonth * 3, 3);
+            tableAssist.mergeRow(1, 3 * this.mMonth * 3, 3);
+            tableAssist.mergeColum(0, 3 * this.mMonth * 3);
+            data.push([this.mYear + "年" + this.mMonth, "月小计", "", "中标阶段"]);
+            data.push([this.mYear + "年" + this.mMonth, "月小计", "", "预期阶段"]);
+            data.push([this.mYear + "年" + this.mMonth, "月小计", "", "完工阶段"]);
             var row = [];
             for (var i = 0; i < data.length; ++i) {
                 row = this.mGsData[i];

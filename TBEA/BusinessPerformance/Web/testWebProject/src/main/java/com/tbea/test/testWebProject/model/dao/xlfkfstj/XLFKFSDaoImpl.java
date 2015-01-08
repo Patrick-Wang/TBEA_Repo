@@ -76,7 +76,7 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 	@Override
 	public XLFDWFKFS getLatestFdwfkfs() {
 		Query q = entityManager.createQuery(
-				"from XLFDWFKFS order by gxrq desc");
+				"from XLFDWFKFS order by ny desc");
 		q.setFirstResult(0);
 		q.setMaxResults(1);
 		List<XLFDWFKFS> fkfs = q.getResultList();
@@ -89,7 +89,7 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 	@Override
 	public XLGWFKFS getLatestGwfkfs() {
 		Query q = entityManager.createQuery(
-				"from XLGWFKFS order by gxrq desc");
+				"from XLGWFKFS order by ny desc");
 		q.setFirstResult(0);
 		q.setMaxResults(1);
 		List<XLGWFKFS> fkfs = q.getResultList();
@@ -102,7 +102,7 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 	@Override
 	public XLNWFKFS getLatestNwfkfs() {
 		Query q = entityManager.createQuery(
-				"from XLNWFKFS order by gxrq desc");
+				"from XLNWFKFS order by ny desc");
 		q.setFirstResult(0);
 		q.setMaxResults(1);
 		List<XLNWFKFS> fkfs = q.getResultList();

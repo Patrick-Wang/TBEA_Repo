@@ -207,20 +207,28 @@ public class XLFKFSTJServiceImpl implements XLFKFSTJService {
 
 	@Override
 	public Date getLatestDate() {
+		Date dLatest = null;
 
 		XLFDWFKFS fdwfkfs = xlfkfsDao.getLatestFdwfkfs();
-		if (fdwfkfs != null && fdwfkfs.getGxrq() != null){
-			return fdwfkfs.getGxrq();
+		if (fdwfkfs != null && fdwfkfs.getNy() != null){
+			dLatest = (Date) Util.valueOf(fdwfkfs.getNy());
 		}
 		XLGWFKFS gwfkfs = xlfkfsDao.getLatestGwfkfs();
-		if (gwfkfs != null && gwfkfs.getGxrq() != null){
-			return gwfkfs.getGxrq();
+		if (gwfkfs != null && gwfkfs.getNy() != null){
+			Date gw = (Date) Util.valueOf(gwfkfs.getNy());
+			if (dLatest == null || dLatest.before(gw)){
+				dLatest = gw;
+			}
 		}
 		XLNWFKFS nwfkfs = xlfkfsDao.getLatestNwfkfs();
-		if (nwfkfs != null && nwfkfs.getGxrq() != null){
-			return nwfkfs.getGxrq();
+		if (nwfkfs != null && nwfkfs.getNy() != null){
+			Date nw = (Date) Util.valueOf(nwfkfs.getNy());
+			if (dLatest == null || dLatest.before(nw)){
+				dLatest = nw;
+			}
 		}
-		return null;
+
+		return dLatest;
 	}
 
 }

@@ -269,18 +269,6 @@ module yszkjgqkb {
                 }
             }
 
-            //var chart: ECharts.Chart = new ECharts.Chart(new ECharts.XAxis(month), new ECharts.YAxis());
-            //chart.setLegend(new ECharts.Legend(["2013年", "2014年"], ECharts.LegendX.center));
-
-            //var ser: ECharts.Line.SeriesImpl = new ECharts.Line.SeriesImpl('2013年', data[0]);
-            //chart.addSeries(ser);
-
-            //ser = new ECharts.Line.SeriesImpl('2014年', data[1]);
-            //chart.addSeries(ser);
-
-            //chart.update(echart);
-
-
             var legend = [this.mYear - 1 + "年", this.mYear + "年"];
 
             var ser = [];

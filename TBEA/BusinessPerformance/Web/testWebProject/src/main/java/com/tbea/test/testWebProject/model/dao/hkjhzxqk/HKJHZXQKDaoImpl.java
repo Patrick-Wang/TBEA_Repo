@@ -63,4 +63,18 @@ public class HKJHZXQKDaoImpl  extends AbstractReadWriteDaoImpl<QYZJK> implements
 		return q.getResultList();
 	}
 
+
+	@Override
+	public YDSJHKQK getLatestYdsjhk() {
+		Query q = getEntityManager().createQuery(
+				"from YDSJHKQK order by ny desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<YDSJHKQK> ydhk = q.getResultList();
+		if (!ydhk.isEmpty()){
+			return ydhk.get(0);
+		}
+		return null;
+	}
+
 }

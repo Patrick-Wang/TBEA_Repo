@@ -142,7 +142,7 @@
         }
     </style>
 </head>
-<body style="width:1400px">
+<body>
     <div class=" header">
         <h1>${year}年${month}月 各单位指标汇总</h1>
     </div>

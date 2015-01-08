@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.test.testWebProject.model.entity.HKJHJG;
 import com.tbea.test.testWebProject.model.entity.RHKXX;
 import com.tbea.test.testWebProject.model.entity.ZTYSZKFX;
 
@@ -30,6 +31,19 @@ public class RHKXXDaoImpl  extends AbstractReadWriteDaoImpl<RHKXX> implements RH
 		Query q = this.getEntityManager().createQuery("from RHKXX where DateDiff(dd, Hkrq, :date) = 0");
 		q.setParameter("date", d);
 		return q.getResultList();
+	}
+
+	@Override
+	public RHKXX getLatestRhkxx() {
+		Query q = getEntityManager().createQuery(
+				"from RHKXX order by Hkrq desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<RHKXX> hkxxs = q.getResultList();
+		if (!hkxxs.isEmpty()){
+			return hkxxs.get(0);
+		}
+		return null;
 	}
 
 }

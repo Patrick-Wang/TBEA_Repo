@@ -225,6 +225,10 @@ var cb_zx_byq;
             var parent = $("#" + this.mGstbTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
+            var height = 220;
+            if (this.mMonth < 4) {
+                height = "100%";
+            }
             $("#" + name).jqGrid(tableAssist.decorate({
                 data: tableAssist.getData(data),
                 datatype: "local",
@@ -233,7 +237,7 @@ var cb_zx_byq;
                 resize: false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
-                height: 220,
+                height: height,
                 width: 1250,
                 rowNum: 200,
                 shrinkToFit: true,

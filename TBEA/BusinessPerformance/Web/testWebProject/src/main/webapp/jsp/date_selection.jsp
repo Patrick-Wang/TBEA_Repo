@@ -3,6 +3,47 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+
+
+<c:if test="${!(empty day)}">
+<script type="text/javascript">
+	function changeDay(month){
+			if ($('#day') != undefined){
+				var year = parseInt($("#year" + " option:selected").val());
+				var dayCount = getDaysInMonth(year, month);
+				if (month == ${month}){
+					dayCount = ${dayCount};
+				}
+				var selectedOpt = parseInt($("#day" + " option:selected").val());
+				if (dayCount < selectedOpt){
+					selectedOpt = dayCount;
+					instance.onDaySelected(dayCount);
+				}
+
+				var select = $("#day");
+				select.empty();
+				for (var i = 0; i < dayCount; ++i){
+					if (i + 1 == selectedOpt){
+						select.append("<option value='" + (i + 1) + "' selected='selected'>" + (i +1) + "日</option>");
+					}
+					else{
+						select.append("<option value='" + (i + 1) + "'>" + (i +1) + "日</option>");
+					}
+				}
+			}
+		}
+	</script>
+</c:if>
+
+<c:if test="${(empty day)}">
+<script type="text/javascript">
+	function changeDay(month){
+			
+	}
+	</script>
+</c:if>
+
 <c:if test="${!(empty month)}">
 	<script type="text/javascript">
 		function onYearChange(year){
@@ -41,32 +82,19 @@
 	
 		function onMonthChanged(month){
 			instance.onMonthSelected(parseInt(month + ""));
-			if ($('#day') != undefined){
-				var year = parseInt($("#year" + " option:selected").val());
-				var dayCount = getDaysInMonth(year, month);
-				var curDaySelected = parseInt($("#day" + " option:selected").val());
-				var selectedOpt = dayCount > curDaySelected ? curDaySelected : dayCount;
-
-				var select = $("#day");
-				select.empty();
-				for (var i = 0; i < dayCount; ++i){
-					if (i + 1 == selectedOpt){
-						select.append("<option value='" + (i + 1) + "' selected='selected'>" + (i +1) + "日</option>");
-					}
-					else{
-						select.append("<option value='" + (i + 1) + "'>" + (i +1) + "日</option>");
-					}
-				}
-			}
+			changeDay(month);
 		}
 	</script>
 </c:if>
-<table id="date_selection">
+
+
+
+<table id="date_selection"  cellspacing="0" cellpadding="0">
 	<tr>
 		<c:choose>
 
 			<c:when test="${empty month}">
-				<td><select id="year"
+				<td style="padding-right:5px"><select id="year"
 					onchange="instance.onYearSelected(this.value)"
 					style="width: 125px;">
 						<option value="${year}" selected="selected">${year}年</option>
@@ -75,12 +103,12 @@
 			</c:when>
 
 			<c:otherwise>
-				<td><select id="year" onchange="onYearChange(this.value)"
+				<td style="padding-right:5px"><select id="year" onchange="onYearChange(this.value)"
 					style="width: 125px;">
 						<option value="${year}" selected="selected">${year}年</option>
 						<option value="${year - 1}">${year - 1}年</option>
 				</select></td>
-				<td><select id="month" onchange="onMonthChanged(this.value)"
+				<td style="padding-right:5px"><select id="month" onchange="onMonthChanged(this.value)"
 					style="width: 125px;">
 						<c:forEach begin="0" end="${month - 1}" var="i">
 							<c:choose>
@@ -103,7 +131,7 @@
 		</c:choose>
 
 		<c:if test="${!(empty day)}">
-			<td><select id="day"
+			<td style="padding-right:5px"><select id="day"
 				onchange="instance.onDaySelected(this.value)" style="width: 125px;">
 					<c:forEach begin="0" end="${dayCount - 1}" var="i">
 						<c:choose>

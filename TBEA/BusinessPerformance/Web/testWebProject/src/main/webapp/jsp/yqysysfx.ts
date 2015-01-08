@@ -24,106 +24,126 @@ module yqysysfx {
             return new View();
         }
 
-        
+
         private mData: Array<string[]>;
-        private mDataSet : Util.DateDataSet;
-        private mTableId : string;
+        private mDataSet: Util.DateDataSet;
+        private mTableId: string;
         private mEchartId;
         private mComp: Util.CompanyType = Util.CompanyType.SB;
-        
+
         public init(echartId: string, tableId: string): void {
-           // this.initEchart($('#' + echartId)[0]);
+            // this.initEchart($('#' + echartId)[0]);
             this.mTableId = tableId;
             this.mEchartId = echartId;
             this.mDataSet = new Util.DateDataSet("yqysysfx_update.do");
             this.updateTable();
             this.updateUI();
         }
-        
-        public updateUI(){
-            this.mDataSet.getDataByCompany(1, 2014, this.mComp, (dataArray : string) =>{
-                if (null != dataArray){
+
+        public updateUI() {
+            this.mDataSet.getDataByCompany(1, 2014, this.mComp, (dataArray: string) => {
+                if (null != dataArray) {
                     this.mData = JSON.parse(dataArray);
-//                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报");
-//                    document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报";
+                    //                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报");
+                    //                    document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报";
                     this.updateTable();
                     this.updateEchart();
                 }
             });
         }
 
-        public onCompanySelected(comp : Util.CompanyType){
+        public onCompanySelected(comp: Util.CompanyType) {
             this.mComp = comp;
         }
-        
 
-        private updateEchart(): void{
-        	var yqysysChart = echarts.init($("#" + this.mEchartId)[0]);
+
+        private updateEchart(): void {
+            var yqysysChart = echarts.init($("#" + this.mEchartId)[0]);
             var legend = ["总金额", "其中：法律手段清收"];
             var ysfl = ["内部因素", "客户资信", "滚动付款", "项目变化", "合同因素", "手续办理", "其它"]
+            var data = [];
+            if (this.mData != undefined) {
+                var row = [];
+                for (var i = 0; i < data.length; ++i) {
+                    row = [].concat(this.mData[i]);
+                    if (0 != i % 2) {
+                        for (var col in row) {
+                            row[col] = Util.formatCurrency(row[col]);
+                        }
+                    }
 
-            var zjeData = [41982, 31876, 51975, 43856, 61498, 32696, 38574];
-            var flsdData = [29167, 21401, 47155, 32584, 52523, 19573, 24652];
-            
-       var option = {
-    title : {
-        text: '逾期应收因素分析'
-    },
-    tooltip : {
-        trigger: 'axis'
-    },
-    legend: {
-        data:['总金额','其中法律清收']
-    },
-    toolbox: {
-        show : true,
+                    data[i] = data[i].concat(row);
+                }
+            }
 
-    },
-    calculable : true,
+            var zjeData = [];
+            for (var col in this.mData[1]) {
+                zjeData.push(parseFloat(this.mData[1][col]).toFixed(2));
+            }
+            var flsdData = [];
+            for (var col in this.mData[3]) {
+                flsdData.push(parseFloat(this.mData[3][col]).toFixed(2));
+            }
 
-    xAxis : [
-        {
-            type : 'category',
-            data : ['内部因素','客户资信','滚动付款','项目变化','合同因素','手续办理','其他']
-        },
-        {
-            type : 'category',
-            axisLine: {show:false},
-            axisTick: {show:false},
-            axisLabel: {show:false},
-            splitArea: {show:false},
-            splitLine: {show:false},
-            data : ['内部因素','客户资信','滚动付款','项目变化','合同因素','手续办理','其他']
-          
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value',
-        }
-    ],
-    series : [
-        {
-            name:'其中法律清收',
-            type:'bar',
-            barWidth : 18,
-            itemStyle: {normal: {color:'rgba(193,35,43,1)', label:{show:true}}},
-            data:[169, 272, 121, 274, 390, 230, 210]
-        },
-       
-        {
-            name:'总金额',
-            type:'bar',
-            barWidth : 25,
-            xAxisIndex:1,
-            itemStyle: {normal: {color:'rgba(193,35,43,0.5)', label:{show:true,formatter:function(a,b,c){return c>0 ? (c +'\n'):'';}}}},
-            data:[620, 432, 301, 634, 790, 1130, 820]
-        }
-        
-    ]
-};
+            var option = {
+                title: {
+                    text: '逾期应收因素分析'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['总金额', '其中法律清收']
+                },
+                toolbox: {
+                    show: true,
+
+                },
+                calculable: true,
+
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: ['内部因素', '客户资信', '滚动付款', '项目变化', '合同因素', '手续办理', '其他']
+                    },
+                    {
+                        type: 'category',
+                        axisLine: { show: false },
+                        axisTick: { show: false },
+                        axisLabel: { show: false },
+                        splitArea: { show: false },
+                        splitLine: { show: false },
+                        data: ['内部因素', '客户资信', '滚动付款', '项目变化', '合同因素', '手续办理', '其他']
+
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                    }
+                ],
+                series: [
+                    {
+                        name: '其中法律清收',
+                        type: 'bar',
+                        barWidth: 18,
+                        itemStyle: { normal: { color: 'rgba(193,35,43,1)', label: { show: true } } },
+                        data: flsdData
+                    },
+
+                    {
+                        name: '总金额',
+                        type: 'bar',
+                        barWidth: 25,
+                        xAxisIndex: 1,
+                        itemStyle: { normal: { color: 'rgba(193,35,43,0.5)', label: { show: true, formatter: function(a, b, c) { return c > 0 ? (c + '\n') : ''; } } } },
+                        data: zjeData
+                    }
+
+                ]
+            };
             yqysysChart.setOption(option);
-		
+
         }
 
         private updateTable(): void {
@@ -132,10 +152,10 @@ module yqysysfx {
             tableAssist.mergeRow(0);
             tableAssist.mergeTitle();
             var data = [
-                ["总数量","户数"],
-                ["总数量","金额"],
-                ["其中：法律手段清收","户数"],
-                ["其中：法律手段清收","金额"]];
+                ["总数量", "户数"],
+                ["总数量", "金额"],
+                ["其中：法律手段清收", "户数"],
+                ["其中：法律手段清收", "金额"]];
 
             if (this.mData != undefined) {
                 var row = [];
@@ -153,9 +173,9 @@ module yqysysfx {
 
             var parent = $("#" + this.mTableId);
             parent.empty();
-            parent.append("<table id='"+ name +"'></table>");
-            
-                
+            parent.append("<table id='" + name + "'></table>");
+
+
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",

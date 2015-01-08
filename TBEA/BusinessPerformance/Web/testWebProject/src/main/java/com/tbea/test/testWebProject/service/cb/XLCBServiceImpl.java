@@ -223,7 +223,6 @@ public class XLCBServiceImpl implements XLCBService{
 		rets.add(dydjwg);
 		CBXLWGDD xlcbwgdd;
 
-		XMXX xmxx;
 		Organization org = CompanyManager.getBMOrganization();
 		Company comp;
 
@@ -237,17 +236,16 @@ public class XLCBServiceImpl implements XLCBService{
 
 			Double wg_zccb = xlcbwgdd.getLyl() * xlcbwgdd.getSjlvdj()
 					+ xlcbwgdd.getDjtyl() * xlcbwgdd.getDjtdj();// 投标五大主材成本
-			Double sjzcb =  wg_zccb + xlcbwgdd.getQtcbhj() + 0.0;
+			Double sjzcb = wg_zccb + xlcbwgdd.getQtcbhj() + 0.0;
 			fillWgmx(wgmx, i, xlcbwgdd, wg_zccb, sjzcb);
 
 			if (xlcbwgdd.getWgsj() != null) {
 				tmpCal.setTime(Date.valueOf(xlcbwgdd.getWgsj() + "-1"));
 				comp = org.getCompany(5);
 				if (tmpCal.get(Calendar.YEAR) == cal.get(Calendar.YEAR)
-						&& tmpCal.get(Calendar.MONTH) == cal
-								.get(Calendar.MONTH)) {
-					
-					if (comp != null) {
+						&& comp != null) {
+
+					if (tmpCal.get(Calendar.MONTH) == cal.get(Calendar.MONTH)) {
 
 						if (comp.getParentCompany() != null) {
 							comp = comp.getParentCompany();
@@ -258,43 +256,19 @@ public class XLCBServiceImpl implements XLCBService{
 						fillwgqk(jtwg, jtwg.length - 1, xlcbwgdd, sjzcb);
 					}
 
-//					if (tbdd.getDy() != null
-//							&& dydjMap.containsKey(tbdd.getDy())) {
-//
-//						filltbqk(dydjwg, dydjMap.get(tbdd.getDy()) * 3, tbdd,
-//								tbzccb, false);
-//						filltbqk(dydjwg, dydjwg.length - 3, tbdd, tbzccb, false);
-//
-//						fillzxqk(dydjwg, dydjMap.get(tbdd.getDy()) * 3 + 1,
-//								byqcbzxdd, zx_sczcb, false);
-//						fillzxqk(dydjwg, dydjwg.length - 2, byqcbzxdd,
-//								zx_sczcb, false);
-//
-//						fillwgqk(dydjwg, dydjMap.get(tbdd.getDy()) * 3 + 2,
-//								byqcbwgdd, wg_sczcb);
-//						fillwgqk(dydjwg, dydjwg.length - 1, byqcbwgdd, wg_sczcb);
-//
-//					}
-				}
-				
-				if (tmpCal.get(Calendar.YEAR) == cal.get(Calendar.YEAR)){
-					fillwgqk(gswg, (gsMap.get(comp.getType()) * (cal.get(Calendar.MONTH) + 1) + tmpCal.get(Calendar.MONTH)) * 3 + 2,
-							xlcbwgdd, sjzcb);
-					fillwgqk(gswg, gswg.length - 1,
-							xlcbwgdd, sjzcb);
-				}
-				
-//				for (int j = 0; j < (cal.get(Calendar.MONTH) + 1); ++j){
-//					fillwgqk(gswg, gsMap.get(comp.getType()) * (cal.get(Calendar.MONTH) + 1) + j,
-//							xlcbwgdd, sjzcb);
-//				}
-				
-				
-			}
+					if (tmpCal.get(Calendar.MONTH) <= cal.get(Calendar.MONTH)) {
+						fillwgqk(
+								gswg,
+								(gsMap.get(comp.getType())
+										* (cal.get(Calendar.MONTH) + 1) + tmpCal
+										.get(Calendar.MONTH)) * 3 + 2,
+								xlcbwgdd, sjzcb);
+						fillwgqk(gswg, gswg.length - 1, xlcbwgdd, sjzcb);
+					}
 
-			//
+				}
+			}
 		}
-		//
 		computeDj(jtwg);
 		computeDj(gswg);
 		return rets;
@@ -311,20 +285,9 @@ public class XLCBServiceImpl implements XLCBService{
 		List<CBXLTBDD> xlcbtbdds = xlDao.getTbdd();
 
 		String[][] tbrow;
-		List<String[]> tbmx = new ArrayList<String[]>();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		
-		
+		List<String[]> tbmx = new ArrayList<String[]>();	
 		XMXX xmxx;
 		CBXLTBDD xltbcb;
-		Organization org = CompanyManager.getBMOrganization();
-
-
-		Calendar firstMonth = Calendar.getInstance();
-		firstMonth.set(cal.get(Calendar.YEAR), 1, 1);
-
-		Calendar tmpCal = Calendar.getInstance();
 
 		for (int i = 0; i < xlcbtbdds.size(); ++i) {
 			xltbcb = xlcbtbdds.get(i);
@@ -342,6 +305,15 @@ public class XLCBServiceImpl implements XLCBService{
 
 	
 		return tbmx;
+	}
+
+	@Override
+	public Date getLatestWgDate() {
+		CBXLWGDD wgdd = xlDao.getLatestWgdd();
+		if (null != wgdd){
+			return Date.valueOf(wgdd.getWgsj() + "-1");
+		}
+		return null;
 	}
 
 

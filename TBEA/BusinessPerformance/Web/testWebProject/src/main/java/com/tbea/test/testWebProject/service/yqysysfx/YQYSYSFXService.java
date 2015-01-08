@@ -6,6 +6,6 @@ import com.tbea.test.testWebProject.common.companys.Company;
 
 public interface YQYSYSFXService {
 
-	String[][] getYqysysfxData(Date d, Company comp);
+	String[][] getYqysysfxData(Company comp);
 
 }

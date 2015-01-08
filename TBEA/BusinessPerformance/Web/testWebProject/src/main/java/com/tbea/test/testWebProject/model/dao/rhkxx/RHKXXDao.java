@@ -9,4 +9,6 @@ public interface RHKXXDao {
 
 	List<RHKXX> getRhkxxData(Date d);
 
+	RHKXX getLatestRhkxx();
+
 }

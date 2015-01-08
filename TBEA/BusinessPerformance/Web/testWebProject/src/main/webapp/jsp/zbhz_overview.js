@@ -73,6 +73,7 @@ var zbhz_overview;
             this.mSelectCy = true;
             this.mCy = 18 /* JT */;
             this.mDw = 1000 /* ALL */;
+            this.mComp = 18 /* JT */;
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -87,17 +88,12 @@ var zbhz_overview;
             this.mChartIds = echartIds;
             this.updateUI();
         };
-        View.prototype.getCurrentCompany = function () {
-            if (this.mDw != 1000 /* ALL */) {
-                return this.mDw;
-            }
-            else {
-                return this.mCy;
-            }
+        View.prototype.onCompanySelected = function (comp) {
+            this.mComp = comp;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSetMgr.getData(this.getCurrentCompany(), function (dataSet) {
+            this.mDataSetMgr.getData(this.mComp, function (dataSet) {
                 if (dataSet != null) {
                     _this.updateYdUI(dataSet.getYd());
                     _this.updateJdUI(dataSet.getJd());

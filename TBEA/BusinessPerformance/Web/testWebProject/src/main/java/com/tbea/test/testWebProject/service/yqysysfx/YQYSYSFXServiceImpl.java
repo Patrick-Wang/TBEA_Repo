@@ -17,9 +17,9 @@ public class YQYSYSFXServiceImpl implements YQYSYSFXService{
 	@Autowired
 	private YQYSYSFXDao ysysfxDao;
 	
-	public String[][] getYqysysfxData(Date d, Company comp){
+	public String[][] getYqysysfxData(Company comp){
 		String[][] result = new String[4][7];
-		List<YQYSYSFX> list = ysysfxDao.getYqysysfxList(d);
+		List<YQYSYSFX> list = ysysfxDao.getYqysysfxList();
 		int col = 0;
 		for(YQYSYSFX ysys : list){
 			if (comp.getId() == ysys.getQybh()){

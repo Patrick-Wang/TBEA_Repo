@@ -23,4 +23,5 @@ public interface BYQCBDao {
 	boolean containsTbCompany(Company company);
 	boolean containsZxCompany(Company company);
 	boolean containsWgCompany(Company company);
+	CBBYQWGDD getLatestWgdd();
 }

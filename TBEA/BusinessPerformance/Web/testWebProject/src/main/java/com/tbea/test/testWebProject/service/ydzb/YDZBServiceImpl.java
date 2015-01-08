@@ -20,6 +20,9 @@ import com.tbea.test.testWebProject.common.companys.CompanyManager.CompanyType;
 import com.tbea.test.testWebProject.model.dao.ydzb.YDZBDao;
 import com.tbea.test.testWebProject.model.entity.XJL;
 import com.tbea.test.testWebProject.model.entity.YDZBBean;
+import com.tbea.test.testWebProject.model.entity.local.XJLRB;
+import com.tbea.test.testWebProject.model.entity.local.YDZBFDW;
+import com.tbea.test.testWebProject.model.entity.local.ZBHZ;
 
 
 
@@ -355,6 +358,35 @@ public class YDZBServiceImpl implements YDZBService {
 	@Override
 	public String getZbmc(String id){
 		return zbid_mcMap.get(id);
+	}
+
+
+	@Override
+	public Date getLatestHzbDate() {
+		ZBHZ zbhj = ydzbDao.getLatestZbhj();
+		if (zbhj != null){
+			return (Date) Util.valueOf(zbhj.getNy());
+		}
+		return null;
+	}
+
+	@Override
+	public Date getLatestGcyDate() {
+		YDZBFDW ydzb = ydzbDao.getLatestYdzbfdw();
+		if (ydzb != null){
+			return (Date) Util.valueOf(ydzb.getNy());
+		}
+		return null;
+	}
+
+
+	@Override
+	public Date getLatestXjlDate() {
+		XJLRB rb = ydzbDao.getLatestXjlrb();
+		if (rb != null){
+			return rb.getRq();
+		}
+		return null;
 	}
 
 	

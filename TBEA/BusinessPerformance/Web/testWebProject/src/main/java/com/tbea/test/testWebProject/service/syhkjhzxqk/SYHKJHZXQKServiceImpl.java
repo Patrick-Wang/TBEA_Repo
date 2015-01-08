@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.model.dao.hkjhjgb.HKJHJGDao;
 import com.tbea.test.testWebProject.model.dao.hkjhzxqk.HKJHZXQKDao;
@@ -24,20 +25,12 @@ public class SYHKJHZXQKServiceImpl implements SYHKJHZXQKService {
 	@Autowired
 	private HKJHJGDao hkjhjgDao;
 
-	private String div(Double sub, Double base) {
-		if (base != 0) {
-			return sub / base + "";
-		}
-		return "--";
-	}
 
 	public String[][] getSyhkjhzxqkData(Date d, Company comp) {
 		String[][] ret = new String[10][3];
 
-		//List<HKJHJG> hkjhjgs = hkjhjgDao.getHkjhjg(d, comp);
 		List<YDSJHKQK> ydsjhkqks = hkjhzxqkDao.getSjhkqk(d, comp);
 
-		HKJHJG hkjhjg = null;
 		YDSJHKQK ydsjhkqk = null;
 		if (!ydsjhkqks.isEmpty()) {
 			ydsjhkqk = ydsjhkqks.get(0);
@@ -89,6 +82,15 @@ public class SYHKJHZXQKServiceImpl implements SYHKJHZXQKService {
 		// {"1", "1", "1"},
 		// {"1", "1", "1"},
 		// };
+	}
+
+	@Override
+	public Date getLatestDate() {
+		YDSJHKQK ydsjhk = hkjhzxqkDao.getLatestYdsjhk();
+		if (null != ydsjhk){
+			return (Date) Util.valueOf(ydsjhk.getNy());
+		}
+		return null;
 	}
 
 }

@@ -30,11 +30,14 @@ public class YSZKJGQKServiceImpl implements YSZKJGQKService {
 		hyMap.put("国网", 0);
 		hyMap.put("南网", 1);
 		hyMap.put("省、市电力系统", 2);
+		hyMap.put("省、市电力公司", 2);
 		hyMap.put("五大发电", 3);
 		hyMap.put("其他电源", 4);
 		hyMap.put("出口合同", 5);
 		hyMap.put("其他", 6);
+		hyMap.put("其它", 6);
 		hyMap.put("合计", 7);
+		hyMap.put("合   计", 7);
 	}
 	
 	//return value format according to yszkjgqk
@@ -90,28 +93,30 @@ public class YSZKJGQKServiceImpl implements YSZKJGQKService {
 		int yearBase = 0;
 		Calendar time =  Calendar.getInstance();
 		int month = 0;
-		for (YSZKJGQK ysk : list){
-			time.setTime(Util.valueOf(ysk.getNy()));
-			month = time.get(Calendar.MONTH);
-			if (time.get(Calendar.YEAR) < cal.get(Calendar.YEAR)){
-				//previous year
-				yearBase = 0;
+		for (YSZKJGQK ysk : list) {
+			if (hyMap.containsKey(ysk.getHy())) {
+				time.setTime(Util.valueOf(ysk.getNy()));
+				month = time.get(Calendar.MONTH);
+				if (time.get(Calendar.YEAR) < cal.get(Calendar.YEAR)) {
+					// previous year
+					yearBase = 0;
+				} else {
+					// current year
+					yearBase = 1;
+				}
+
+				result[yearBase * 3 + hyMap.get(ysk.getHy()) * 6][month] = ysk
+						.getYyn()
+						+ ysk.getYdsy()
+						+ ysk.getSdly()
+						+ ysk.getLdsey() + ysk.getYnys() + "";
+				result[yearBase * 3 + hyMap.get(ysk.getHy()) * 6 + 1][month] = ysk
+						.getWdqk() + "";
+				result[yearBase * 3 + hyMap.get(ysk.getHy()) * 6 + 2][month] = ysk
+						.getYszkhj() + "";
 			}
-			else{
-				//current year
-				yearBase = 1;
-			}
-			
-			result[yearBase * 3 + hyMap.get(ysk.getHy()) * 6][month] = 
-					ysk.getYyn() + 
-					ysk.getYdsy() + 
-					ysk.getSdly() + 
-					ysk.getLdsey() + 
-					ysk.getYnys() + "";
-			result[yearBase * 3 + hyMap.get(ysk.getHy()) * 6 + 1][month] = ysk.getWdqk() + "";
-			result[yearBase * 3 + hyMap.get(ysk.getHy()) * 6 + 2][month] = ysk.getYszkhj() + "";
 		}
-		
+
 		return result;
 	}
 

@@ -180,6 +180,10 @@ module tbbzjqk {
 				for (var i = 0; i < this.mData.length; ++i){
 					data[0].push(Util.formatCurrency(this.mData[i]));
 				}
+                
+                for (var i = this.mData.length; i < 12; ++i){
+                    data[0].push("0.00");
+                }
 			}
 
 

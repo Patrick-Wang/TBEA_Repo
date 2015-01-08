@@ -155,60 +155,7 @@ module syhkjhzxqk {
             zxqkChart.setOption(zxqkOption);
 		
         }
-        // private initEchart(echart): void{
-        // var ysyq_payment_Chart = echarts.init(echart);
-        // var ysyq_payment_Option = {
-        // animation:true,
-        // tooltip:{
-        // trigger : 'axis',
-        // /* formatter : "{b}<br/>{a} : {c} 万元<br/>{a1} : {c1} 万元", */
-
-        // axisPointer : { // 坐标轴指示器，坐标轴触发有效
-        // type : 'line' // 默认为直线，可选为：'line' | 'shadow'
-        // }
-        // },
-        // legend:{
-        // x : 'right',
-        // data : [ "计划回款","实际回款","计划完成率" ]
-
-        // },
-        // xAxis : [ {
-        // type : 'category',
-        // data : [ "未到期应收账款","逾期款应收账款","未到期款","逾期款"]
-        // } ],
-        // yAxis : [ {
-        // type : 'value'
-
-        // } ,
-        // {
-        // type : 'value',
-        // min: 0,
-        // max: 100
-
-        // }],
-
-        // calculable : true,
-        // series : [ {
-        // name : '计划回款',
-        // type : 'bar',
-
-        // barCategoryGap: "50%",
-        // data : [ 63363.11, 55628.27, 58521.55, 69100.58]
-        // }, {
-        // name : '实际回款',
-        // type : 'bar',
-
-        // data : [ 50690.48, 50065.44, 58521.55, 58044.48]
-        // } ,{
-        // name : '计划完成率',
-        // type : 'line',
-        // yAxisIndex: 1,
-        // data : [80, 90, 100, 84]
-        // } ]
-        // };
-        // ysyq_payment_Chart.setOption(ysyq_payment_Option);
-        // }
-
+ 
         private updateTable(): void {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);

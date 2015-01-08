@@ -68,27 +68,29 @@ var cb_wg_byq;
     })();
     var View = (function () {
         function View() {
+            this.mMxData = [[]];
+            this.mJtData = [[]];
+            this.mGsData = [[]];
+            this.mBtdyData = [[]];
             this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
             return new View();
         };
-        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId, fdyTableId, mx, jt, gs, btdy, month, year) {
+        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId, fdyTableId, month, year) {
             this.mMxTableId = mxTableId;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
             this.mFdyTableId = fdyTableId;
             this.mCompanyDataSet = new Util.DateDataSet("wg_update.do");
             this.mDateDataSet = new Util.DateDataSet("wg_date_update.do");
-            this.mMxData = mx;
-            this.mJtData = jt;
-            this.mGsData = gs;
-            this.mBtdyData = btdy;
             this.mMonth = month;
             this.mYear = year;
-            this.updateGstbTable();
+            this.updateMxTable();
+            this.updateJttbTable();
             this.updateFdyTable();
             this.updateCompany();
+            this.updateDate();
         };
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;

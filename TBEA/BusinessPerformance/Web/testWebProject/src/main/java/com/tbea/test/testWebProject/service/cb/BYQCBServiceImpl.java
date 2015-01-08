@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
 import com.tbea.test.testWebProject.common.companys.Organization;
@@ -589,7 +590,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 	}
 
 	@Override
-	public String[][] getTbmx(Date date, Company comp) {
+	public String[][] getTbmx(Company comp) {
 		List<CBBYQTBDD> byqcbtbdds = byqcbDao.getTbdd();
 		String[][] tbmx = new String[byqcbtbdds.size()][30];
 		List<String[]> tbmxs = new ArrayList<String[]>();
@@ -622,17 +623,12 @@ public class BYQCBServiceImpl implements BYQCBService {
 	}
 
 	@Override
-	public String[][] getZxmx(Date date, Company comp) {
+	public String[][] getZxmx(Company comp) {
 		List<CBBYQZXDD> byqcbzxdds = byqcbDao.getZxdd();
 		String[][] zxmx = new String[byqcbzxdds.size()][32];
 		CBBYQZXDD byqcbzxdd;
 		CBBYQTBDD tbdd;
 		XMXX xmxx;
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		Calendar firstMonth = Calendar.getInstance();
-		firstMonth.set(cal.get(Calendar.YEAR), 1, 1);
 
 		for (int i = 0; i < byqcbzxdds.size(); ++i) {
 			byqcbzxdd = byqcbzxdds.get(i);
@@ -656,7 +652,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 	}
 
 	@Override
-	public String[][] getWgmx(Date date, Company comp) {
+	public String[][] getWgmx(Company comp) {
 		List<CBBYQWGDD> byqcbwgdds = byqcbDao.getWgdd();
 		String[][] wgmx = new String[byqcbwgdds.size()][27];
 
@@ -707,6 +703,15 @@ public class BYQCBServiceImpl implements BYQCBService {
 		ret.remove(2);
 		ret.remove(0);
 		return ret;
+	}
+
+	@Override
+	public Date getLatestWgDate() {
+		CBBYQWGDD wgdd = byqcbDao.getLatestWgdd();
+		if (null != wgdd){
+			return Date.valueOf(wgdd.getWgsj() + "-1");
+		}
+		return null;
 	}
 
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.test.testWebProject.common.CompanySelection;
+import com.tbea.test.testWebProject.common.DateSelection;
 import com.tbea.test.testWebProject.common.Util;
 import com.tbea.test.testWebProject.common.companys.Company;
 import com.tbea.test.testWebProject.common.companys.CompanyManager;
@@ -40,10 +41,9 @@ public class XLCBController {
 		Calendar date = Calendar.getInstance();
 		int month = date.get(Calendar.MONTH) + 1;
 		int year = date.get(Calendar.YEAR);
-		String companyId = request.getParameter("companyId");
-		int cid = Integer.parseInt(companyId);
+
 		Organization org = CompanyManager.getBMOrganization();
-		Company comp = org.getCompany(CompanyType.valueOf(cid));
+		Company comp = org.getCompany(CompanySelection.getCompany(request));
 
 		List<String[]> aZxmx = service.getTbmx(
 				Date.valueOf(year + "-" + month + "-1"), comp);
@@ -62,18 +62,14 @@ public class XLCBController {
 		int month = date.get(Calendar.MONTH) + 1;
 		int year = date.get(Calendar.YEAR);
 		List<String[][]> tbs = service.getTbmx(Date.valueOf(year + "-" + month + "-1"));
-		String[][] aTbmx = tbs.get(0);
-		String[][] aJttb = tbs.get(1);
-		String[][] aGstb = tbs.get(2);
 		Map<String, Object> map = new HashMap<String, Object>();
-		String tbmx = JSONArray.fromObject(aTbmx).toString().replace("null", "0.00");
-		String jttb = JSONArray.fromObject(aJttb).toString().replace("null", "0.00");
-		String gstb = JSONArray.fromObject(aGstb).toString().replace("null", "0.00");
+		String tbmx = JSONArray.fromObject(tbs.get(0)).toString().replace("null", "0.00");
+		String jttb = JSONArray.fromObject(tbs.get(1)).toString().replace("null", "0.00");
+		String gstb = JSONArray.fromObject(tbs.get(2)).toString().replace("null", "0.00");
 		map.put("tbmx", tbmx);
 		map.put("jttb", jttb);
 		map.put("gstb", gstb);
 		map.put("month", month);
-		
 		
 		Organization org = CompanyManager.getBMOrganization();
 		CompanySelection compSelection = new CompanySelection(false,
@@ -91,41 +87,33 @@ public class XLCBController {
 	@RequestMapping(value = "wg_update.do", method = RequestMethod.GET)
 	public  @ResponseBody String  getxlwgcb_update(HttpServletRequest request,
 			HttpServletResponse response) {
-		int month = Integer.parseInt(request.getParameter("month"));
-		int year = Integer.parseInt(request.getParameter("year"));
-		Date d = java.sql.Date.valueOf(year + "-" + month + "-1");
-		List<String[][]> wgs = service.getWgmx(Date.valueOf(year + "-" + month + "-1"));
-		String[][] aJtwg = wgs.get(1);
-		//String[][] aGswg = wgs.get(2);
-		String jtwg = JSONArray.fromObject(aJtwg).toString().replace("null", "0.00");
-		//String gswg = JSONArray.fromObject(aGswg).toString().replace("null", "0.00");
-		return "[" + jtwg  + "]";
+		List<String[][]> wgs = service.getWgmx(DateSelection.getDate(request));
+
+		String jtwg = JSONArray.fromObject(wgs.get(1)).toString().replace("null", "0.00");
+		String gswg = JSONArray.fromObject(wgs.get(2)).toString().replace("null", "0.00");
+		return "[" + jtwg  + "," + gswg + "]";
 
 	}
 	
 	@RequestMapping(value = "wg.do", method = RequestMethod.GET)
 	public ModelAndView getxlwgcb(HttpServletRequest request,
 			HttpServletResponse response) {
-		Calendar date = Calendar.getInstance();  
-		int month = date.get(Calendar.MONTH) + 1;
-		int year = date.get(Calendar.YEAR);
-		List<String[][]> wgs = service.getWgmx(Date.valueOf(year + "-" + month + "-1"));
-		String[][] aWgmx = wgs.get(0);
-		String[][] aJtwg = wgs.get(1);
-		String[][] aGswg = wgs.get(2);
-		String[][] aBtdywg = wgs.get(3);
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		String wgmx = JSONArray.fromObject(aWgmx).toString().replace("null", "0.00");
-		String jtwg = JSONArray.fromObject(aJtwg).toString().replace("null", "0.00");
-		String gswg = JSONArray.fromObject(aGswg).toString().replace("null", "0.00");
-		String btdywg = JSONArray.fromObject(aBtdywg).toString().replace("null", "0.00");
+		DateSelection dateSel = new DateSelection(service.getLatestWgDate(), true, false);
+		dateSel.select(map);
+		
+		List<String[][]> wgs = service.getWgmx(dateSel.getDate());		
+		String wgmx = JSONArray.fromObject(wgs.get(0)).toString().replace("null", "0.00");
+		String jtwg = JSONArray.fromObject(wgs.get(1)).toString().replace("null", "0.00");
+		String gswg = JSONArray.fromObject(wgs.get(2)).toString().replace("null", "0.00");
+		String btdywg = JSONArray.fromObject(wgs.get(3)).toString().replace("null", "0.00");
 		map.put("wgmx", wgmx);
 		map.put("jtwg", jtwg);
 		map.put("gswg", gswg);
 		map.put("btdywg", btdywg);
-		map.put("month", month);
-		map.put("year", year);
 		
+
 		Organization org = CompanyManager.getBMOrganization();
 		CompanySelection compSelection = new CompanySelection(false,
 				org.getTopCompany(), new CompanySelection.Filter() {

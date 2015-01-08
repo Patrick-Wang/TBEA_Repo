@@ -84,10 +84,10 @@ module cb_wg_byq {
         //		private mfdwData : string[];
         //		private mgwData : string[];
         //		private mnwData : string[];
-        private mMxData: string[][];
-        private mJtData: string[][];
-        private mGsData: string[][];
-        private mBtdyData: string[][];
+        private mMxData: string[][] = [[]];
+        private mJtData: string[][] = [[]];
+        private mGsData: string[][] = [[]];
+        private mBtdyData: string[][] = [[]];
         private mMonth: number;
         private mYear: number;
         private mDateDataSet : Util.DateDataSet;
@@ -102,10 +102,6 @@ module cb_wg_byq {
             jttbTableId: string,
             gstbTableId: string,
             fdyTableId : string,
-            mx: string[][],
-            jt: string[][],
-            gs: string[][],
-            btdy: string[][],
             month: number,
             year: number): void {
             this.mMxTableId = mxTableId;
@@ -114,17 +110,18 @@ module cb_wg_byq {
             this.mFdyTableId = fdyTableId;
             this.mCompanyDataSet = new Util.DateDataSet("wg_update.do");
             this.mDateDataSet = new Util.DateDataSet("wg_date_update.do");
-            this.mMxData = mx;
-            this.mJtData = jt;
-            this.mGsData = gs;
-            this.mBtdyData = btdy;
+//            this.mMxData = mx;
+//            this.mJtData = jt;
+//            this.mGsData = gs;
+//            this.mBtdyData = btdy;
             this.mMonth = month;//month;
             this.mYear = year;//year;
-            //this.updateMxTable();
-           // this.updateJttbTable();
-            this.updateGstbTable();
+            this.updateMxTable();
+            this.updateJttbTable();
+            //this.updateGstbTable();
             this.updateFdyTable();
             this.updateCompany();
+            this.updateDate();
         }
 
         public onCompanySelected(comp : Util.CompanyType){
