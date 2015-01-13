@@ -37,7 +37,7 @@
     </script>
     <meta charset="UTF-8">
 
-    <title>${year}年 整体应收账款分析表</title>
+    <title>${year}年${month}月 整体应收账款分析表</title>
 
     <style type="text/css">
         body {
@@ -141,7 +141,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>${year}年 整体应收账款分析表</h1>
+        <h1>${year}年${month}月 整体应收账款分析表</h1>
     </div>
 	<Table align="center">
 		<tr>
@@ -155,20 +155,34 @@
 				</Table>
 			</td>
 		</tr>
-		<td>
-		</tr>
 		<tr>
 			<td>
 				<div id="table"></div>
 			<td>
 		</tr>
+		<tr>
+			<td>
+				<select id = "opt_comp" onchange="instance.onChartCompSelected(this.value)" style="width:100px; margin-top: 15px">
+				<option value="0" selected="selected">沈变</option>
+				<option value="1">衡变</option>
+				<option value="2">新变</option>
+				<option value="3">天变</option>
+				<option value="4">鲁缆</option>
+				<option value="5">新缆</option>
+				<option value="6">德缆</option>
+				</select>
+			<td>
+		</tr>
+		<tr>
+			<td>
+				<div class="panel-content-border" align="center"
+	            style="width: 1300px; margin-top: 8px">
+	            <div id="chart" class="panel-content"></div>
+       	 		</div>
+			<td>
+		</tr>
 	</Table>
-    <div align="center" style="margin-top: 20px">
-        <div class="panel-content-border" align="center"
-            style="width: 1300px; margin-top: 20px">
-            <div id="chart" class="panel-content"></div>
-        </div>
-    </div>
+  
 	<%@include file="loading.jsp"%>
 </body>
    <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>

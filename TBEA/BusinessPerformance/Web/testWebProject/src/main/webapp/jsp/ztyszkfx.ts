@@ -49,6 +49,7 @@ module ztyszkfx {
         private mDataSet: Util.DateDataSet;
         private mTableId: string;
         private mEchartId;
+        private mCompIndex : number = 0;
         public init(echartId: string, tableId: string, year: number, month:number): void {
             this.mYear = year;
             this.mMonth = month;
@@ -71,8 +72,8 @@ module ztyszkfx {
             this.mDataSet.getData(this.mMonth, this.mYear, (arrayData: Array<string[]>) => {
                 if (null != arrayData) {
                     this.mData = arrayData;
-                    $('h1').text(this.mYear + "年 整体应收账款分析表");
-                    document.title = this.mYear + "年 整体应收账款分析表";
+                    $('h1').text(this.mYear + "年" + this.mMonth  + "月 整体应收账款分析表");
+                    document.title = this.mYear + "年" + this.mMonth  + "月 整体应收账款分析表";
                     this.updateTable();
                     this.updateEchart();
                 }
@@ -82,18 +83,17 @@ module ztyszkfx {
         private updateEchart(): void {
             var ztyszkfxChart = echarts.init($("#" + this.mEchartId)[0]);
             var month: string[] = [];
-            for (var i = 1; i <= 12; ++i) {
-                month.push(i + "月");
-            }
-            var legend = ["账面应收账款余额", "保理控制余额", "应收账款实际数", "累计收入", "账面应收占收入比"];
 
-            var zmysData = [41982, 31876, 51975, 43856, 61498, 32696, 38574, 62641, 28434, 51114, 41563, 68415];
-            var blkzData = [29167, 21401, 47155, 32584, 52523, 19573, 24652, 50217, 17426, 43018, 37107, 60047];
-            var yssjData = [49841, 57498, 34574, 87756, 85353, 57772, 23587, 54536, 48478, 67488, 99837, 10760];
-            var ljsrData = [47291, 67214, 14715, 53258, 45252, 31957, 32465, 25021, 71742, 64301, 83710, 76004];
-            var yszbData: any[] = [];
-            for (var i = 0; i < zmysData.length; i++) {
-                yszbData.push((zmysData[i] / (ljsrData[i] / (i + 1) * 12)).toFixed(2));
+            var compMap = [0, 1, 2, 3, 5, 6, 7];
+            
+            
+            var legend = ["本月", "去年同期"];
+
+            var jn = [];
+            var qitq = [];
+            for (var i = 0; i < 4; i++) {
+                 jn.push(parseFloat(this.mData[compMap[this.mCompIndex]][i]).toFixed(2));
+                 qitq.push(parseFloat(this.mData[compMap[this.mCompIndex]][i + 5]).toFixed(2));
             }
 
             var ztyszkfxOption = {
@@ -101,15 +101,7 @@ module ztyszkfx {
                     text: '整体应收账款分析'
                 },
                 tooltip: {
-                    trigger: 'axis',
-                    formatter: function(v) {
-                        return v[0][1] + '<br/>'
-                            + v[0][0] + ' : ' + v[0][2] + '<br/>'
-                            + v[1][0] + ' : ' + v[1][2] + '<br/>'
-                            + v[2][0] + ' : ' + v[2][2] + '<br/>'
-                            + v[3][0] + ' : ' + v[3][2] + '<br/>'
-                            + v[4][0] + ' : ' + v[4][2] + '%';
-                    }
+                    trigger: 'axis'
                 },
                 legend: {
                     data: legend
@@ -122,7 +114,7 @@ module ztyszkfx {
                     {
                         type: 'category',
                         boundaryGap: true,
-                        data: month
+                        data: ["账面应收账款余额", "保理控制余额", "应收账款实际数", "收入"]
                     }
                 ],
                 yAxis: [
@@ -139,97 +131,27 @@ module ztyszkfx {
                 series: [
                     {
                         name: legend[0],
-                        type: 'line',
+                        type: 'bar',
                         smooth: true,
-                        data: zmysData
+                        data: jn
                     },
                     {
                         name: legend[1],
-                        type: 'line',
+                        type: 'bar',
                         smooth: true,
-                        data: blkzData
+                        data: qitq
                     },
-                    {
-                        name: legend[2],
-                        type: 'line',
-                        smooth: true,
-                        data: yssjData
-                    },
-                    {
-                        name: legend[3],
-                        type: 'line',
-                        smooth: true,
-                        data: ljsrData
-                    },
-                    {
-                        name: legend[4],
-                        type: 'line',
-                        smooth: true,
-                        yAxisIndex: 1,
-                        data: yszbData
-                    }
                 ]
             }
             ztyszkfxChart.setOption(ztyszkfxOption);
 
         }
 
-        //private initEchart(echart): void {
-        //    var ysyq_payment_Chart = echarts.init(echart)
-        //    var ysyq_payment_Option = {
-        //        animation: true,
-        //        tooltip: {
-        //            trigger: 'axis',
-        //            /* formatter : "{b}<br/>{a} : {c} 万元<br/>{a1} : {c1} 万元", */
-
-        //            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-        //                type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
-        //            }
-        //        },
-        //        legend: {
-        //            x: 'right',
-        //            data: ["合同金额", "预期阶段", "中标阶段", "完工阶段"],
-
-        //        },
-        //        xAxis: [{
-        //            type: 'category',
-        //            data: ['沈变', '衡变', '新变', '天变']
-        //        }],
-        //        yAxis: [{
-        //            type: 'value'
-
-        //        }],
-
-        //        calculable: true,
-        //        series: [{
-        //            name: '合同金额',
-        //            type: 'bar',
-
-        //            barCategoryGap: "50%",
-        //            data: [63363.11, 55628.27, 58521.55, 69100.58]
-        //        }, {
-        //                name: '预期阶段',
-        //                type: 'bar',
-
-        //                stack: '阶段',
-        //                data: [9098.58, 1240.13, 1140.61, 3154.82]
-        //            }, {
-        //                name: '中标阶段',
-
-        //                type: 'bar',
-        //                stack: '阶段',
-        //                data: [3934.13, 3200.22, 1382.52, 3934.13]
-        //            }, {
-        //                name: '完工阶段',
-        //                type: 'bar',
-
-        //                stack: '阶段',
-        //                data: [11980.74, 2240.18, 3487.11, 6980.74]
-        //            }]
-        //    };
-        //    ysyq_payment_Chart.setOption(ysyq_payment_Option);
-        //}
-
+        public onChartCompSelected(v) : void{
+            this.mCompIndex = v;
+            this.updateEchart();
+        }
+        
         private updateTable(): void {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mYear);

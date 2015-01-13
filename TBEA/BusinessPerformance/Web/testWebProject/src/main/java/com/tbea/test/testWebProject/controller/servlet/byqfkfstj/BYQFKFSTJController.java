@@ -2,7 +2,6 @@ package com.tbea.test.testWebProject.controller.servlet.byqfkfstj;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.test.testWebProject.common.CompanySelection;
 import com.tbea.test.testWebProject.common.DateSelection;
-import com.tbea.test.testWebProject.common.companys.Company;
-import com.tbea.test.testWebProject.common.companys.CompanyManager;
-import com.tbea.test.testWebProject.common.companys.Organization;
 import com.tbea.test.testWebProject.service.byqfkfstj.BYQFKFSTJService;
 
 @Controller

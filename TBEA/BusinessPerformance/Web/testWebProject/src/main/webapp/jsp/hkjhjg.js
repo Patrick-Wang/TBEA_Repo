@@ -76,8 +76,8 @@ var hkjhjg;
                 if (null != data) {
                     var tmpData = data.split("##");
                     _this.mJGData = JSON.parse(tmpData[0]);
-                    _this.mXZData = JSON.parse(tmpData[1]);
-                    _this.mZTData = JSON.parse(tmpData[2]);
+                    _this.mZTData = JSON.parse(tmpData[1]);
+                    _this.mXZData = JSON.parse(tmpData[2]);
                     $('h1').text(_this.mYear + "年" + _this.mMonth + "月 回款计划结构明细");
                     document.title = _this.mYear + "年" + _this.mMonth + "月 回款计划结构明细";
                     _this.updateJGTable();
@@ -90,26 +90,42 @@ var hkjhjg;
         View.prototype.updateEchart = function () {
             var hkjhjgChart = echarts.init($("#" + this.mEchartId)[0]);
             var legend = ["确保可回逾期应收账款", "确保可回逾期款", "确保可回未到期应收账款", "确保可回未到期款", "争取可回逾期应收账款", "争取可回逾期款", "争取可回未到期应收账款", "争取可回未到期款"];
+            var legendNew = [];
             var dataOut = [];
             var qbTotal = 0;
             var zqTotal = 0;
-            for (var i = 0; i < legend.length; ++i) {
-                dataOut.push({ name: legend[i], value: i + 1 });
-                if (i < 4) {
-                    qbTotal += (i + 1);
-                }
-                else {
-                    zqTotal += (i + 1);
+            var val = null;
+            for (var i = 0; i < legend.length - 4; ++i) {
+                val = parseFloat(this.mJGData[1][i]).toFixed(2);
+                if (val > 0) {
+                    dataOut.push({ name: legend[i], value: val });
+                    legendNew.push(legend[i]);
                 }
             }
-            var dataIn = [{ name: "确保", value: qbTotal }, { name: "争取", value: zqTotal }];
+            for (var i = 4; i < legend.length; ++i) {
+                val = parseFloat(this.mJGData[2][i - 4]).toFixed(2);
+                if (val > 0) {
+                    dataOut.push({ name: legend[i], value: val });
+                    legendNew.push(legend[i]);
+                }
+            }
+            var dataIn = [];
+            val = { name: "确保", value: parseFloat(this.mXZData[0]).toFixed(2) };
+            if (val.value > 0) {
+                dataIn.push({ name: "确保", value: parseFloat(this.mXZData[0]).toFixed(2) });
+            }
+            val = { name: "确保", value: parseFloat(this.mXZData[1]).toFixed(2) };
+            if (val.value > 0) {
+                dataIn.push({ name: "争取", value: parseFloat(this.mXZData[1]).toFixed(2) });
+            }
             var hkjhjgOption = {
                 tooltip: {
-                    trigger: 'item'
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 legend: {
                     x: "left",
-                    data: legend,
+                    data: legendNew,
                     orient: "vertical"
                 },
                 toolbox: {
@@ -118,13 +134,13 @@ var hkjhjg;
                 calculable: false,
                 series: [
                     {
-                        name: "1",
+                        name: "款项名称",
                         type: 'pie',
                         radius: [100, 130],
                         data: dataOut
                     },
                     {
-                        name: "2",
+                        name: "款项名称",
                         type: 'pie',
                         radius: [0, 60],
                         itemStyle: {

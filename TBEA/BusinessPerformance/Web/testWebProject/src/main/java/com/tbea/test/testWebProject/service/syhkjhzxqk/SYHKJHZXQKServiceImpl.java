@@ -1,6 +1,7 @@
 package com.tbea.test.testWebProject.service.syhkjhzxqk;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,24 @@ public class SYHKJHZXQKServiceImpl implements SYHKJHZXQKService {
 			return (Date) Util.valueOf(ydsjhk.getNy());
 		}
 		return null;
+	}
+
+	@Override
+	public String[][] getHkjhzxqkXjData(Date d, Company comp) {
+
+		List<YDSJHKQK> ydsjhkqks = hkjhzxqkDao.getHkqkXj(d, comp);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		String[][] ret = new String[cal.get(Calendar.MONTH) + 1][3];
+		
+		for (YDSJHKQK ydsjhkqk : ydsjhkqks){
+			cal.setTime(Util.valueOf(ydsjhkqk.getNy()));
+			ret[cal.get(Calendar.MONTH)][0] = ydsjhkqk.getJhxj() + "";
+			ret[cal.get(Calendar.MONTH)][1] = ydsjhkqk.getSjxj() + "";
+			ret[cal.get(Calendar.MONTH)][2] = Util.division("100", ydsjhkqk.getXjwcl().replace("%", ""));
+		}
+
+		return ret;
 	}
 
 }

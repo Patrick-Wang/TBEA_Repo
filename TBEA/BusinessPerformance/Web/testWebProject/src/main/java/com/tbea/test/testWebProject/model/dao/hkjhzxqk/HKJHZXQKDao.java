@@ -15,4 +15,6 @@ public interface HKJHZXQKDao {
 
 	YDSJHKQK getLatestYdsjhk();
 
+	List<YDSJHKQK> getHkqkXj(Date d, Company comp);
+
 }

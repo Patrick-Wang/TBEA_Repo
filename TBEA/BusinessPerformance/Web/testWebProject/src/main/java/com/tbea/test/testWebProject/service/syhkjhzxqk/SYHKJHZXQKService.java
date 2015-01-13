@@ -11,4 +11,6 @@ public interface SYHKJHZXQKService {
 
 	Date getLatestDate();
 
+	String[][] getHkjhzxqkXjData(Date d, Company comp);
+
 }

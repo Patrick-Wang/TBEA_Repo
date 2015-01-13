@@ -47,19 +47,9 @@ public class HKJHZXQKDaoImpl  extends AbstractReadWriteDaoImpl<QYZJK> implements
 
 	@Override
 	public List<YDHKJHJG> getHkjhjg(Date d, Company comp) {
-		Query q = getEntityManager().createQuery("select h from YDHKJHJG h where h.qybh = :compId and h.gxrq >= :start and h.gxrq < :end");
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM"); 
-		String dstr = formatter.format(d);
-		Date dStart = Date.valueOf(dstr + "-1");
-		Calendar c = Calendar.getInstance();
-		c.setTime(d);
-		c.add(Calendar.MONTH, 1);
-		dstr = c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-1";
-		Date dEnd =  Date.valueOf(dstr);//String.format(format, args)c.get(field)
-
+		Query q = getEntityManager().createQuery("select h from YDHKJHJG h where h.qybh = :compId and h.ny = :date");
 		q.setParameter("compId", comp.getId());
-		q.setParameter("start", dStart);
-		q.setParameter("end", dEnd);
+		q.setParameter("date", Util.format(d));
 		return q.getResultList();
 	}
 
@@ -77,4 +67,16 @@ public class HKJHZXQKDaoImpl  extends AbstractReadWriteDaoImpl<QYZJK> implements
 		return null;
 	}
 
+
+	@Override
+	public List<YDSJHKQK> getHkqkXj(Date d, Company comp) {
+		Query q = getEntityManager().createQuery("select h from YDSJHKQK h where h.qybh = :compId and h.ny >= :dStart and h.ny <= :dEnd");
+		q.setParameter("compId", comp.getId());
+		Calendar cal  = Calendar.getInstance();
+		cal.setTime(d);
+		Date dStart = Date.valueOf(cal.get(Calendar.YEAR) + "-1-1");
+		q.setParameter("dStart", Util.format(dStart));
+		q.setParameter("dEnd", Util.format(d));
+		return q.getResultList();
+	}
 }
