@@ -68,4 +68,10 @@ public class NDTBBZJQK extends AbstractReadWriteEntity implements Serializable {
 		this.qybh = qybh;
 	}
 
+	@Override
+	public String toString() {
+		return "NDTBBZJQK [id=" + getId() + ", nf=" + nf + ", yf=" + yf
+				+ ", je=" + je + ", qybh=" + qybh + "]";
+	}
+
 }
