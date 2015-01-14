@@ -110,7 +110,7 @@ module blhtdqqkhzb {
                 }
             }
             else {
-                for (var i = 1; i <= this.mMonth; ++i) {
+                for (var i = 1; i <= 12; ++i) {
                     month.push(i + "月");
                 }
             }

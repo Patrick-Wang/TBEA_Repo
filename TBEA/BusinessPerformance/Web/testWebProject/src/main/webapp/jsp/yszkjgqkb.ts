@@ -107,7 +107,7 @@ module yszkjgqkb {
             var legend = [this.mYear + "应收未收", this.mYear + "未到期款", this.mYear + "未到期质保金"];
             var month: string[] = [];
             var data = [];
-            for (var i = 1; i <= this.mMonth; ++i) {
+            for (var i = 1; i <= 12; ++i) {
                 month.push(i + "月");
             }
             var row = [];
@@ -195,7 +195,7 @@ module yszkjgqkb {
 
             var month: string[] = [];
             var data = [];
-            for (var i = 1; i <= this.mMonth; ++i) {
+            for (var i = 1; i <= 12; ++i) {
                 month.push(i + "月");
             }
 
@@ -258,7 +258,7 @@ module yszkjgqkb {
 
             var month: string[] = [];
             var data = [];
-            for (var i = 1; i <= this.mMonth; ++i) {
+            for (var i = 1; i <= 12; ++i) {
                 month.push(i + "月");
             }
 

@@ -64,7 +64,7 @@ module syhkjhzxqk {
         
 		private getMonth(): string[]{
 			var month: string[] = [];
-		   for (var i = 0; i < this.mMonth; ++i){
+		   for (var i = 0; i < 12; ++i){
 		   		month.push((i + 1) + "月");
 		   }
 		   return month;

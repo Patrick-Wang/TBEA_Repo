@@ -73,7 +73,7 @@ var yszkjgqkb;
             var legend = [this.mYear + "应收未收", this.mYear + "未到期款", this.mYear + "未到期质保金"];
             var month = [];
             var data = [];
-            for (var i = 1; i <= this.mMonth; ++i) {
+            for (var i = 1; i <= 12; ++i) {
                 month.push(i + "月");
             }
             var row = [];
@@ -152,7 +152,7 @@ var yszkjgqkb;
         View.prototype.updateSquareEchart = function (echart) {
             var month = [];
             var data = [];
-            for (var i = 1; i <= this.mMonth; ++i) {
+            for (var i = 1; i <= 12; ++i) {
                 month.push(i + "月");
             }
             for (var i = 0; i < 3; ++i) {
@@ -203,7 +203,7 @@ var yszkjgqkb;
         View.prototype.updateLineEchart = function (echart) {
             var month = [];
             var data = [];
-            for (var i = 1; i <= this.mMonth; ++i) {
+            for (var i = 1; i <= 12; ++i) {
                 month.push(i + "月");
             }
             for (var i = 0; i < 2; ++i) {

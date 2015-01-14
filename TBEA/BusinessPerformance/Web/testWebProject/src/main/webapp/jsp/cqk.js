@@ -86,7 +86,7 @@ var cqk;
                 data.push(this.mLineData[this.currentSelected * 5 + 2]);
                 data.push(this.mLineData[this.currentSelected * 5 + 3]);
                 data.push(this.mLineData[this.currentSelected * 5 + 4]);
-                for (var i = 1; i <= this.mMonth; ++i) {
+                for (var i = 1; i <= 12; ++i) {
                     month.push(i + "月");
                 }
             }
@@ -153,7 +153,7 @@ var cqk;
             else {
                 data.push(this.mLineData[this.currentSelected * 5]);
                 data.push(this.mLineData[this.currentSelected * 5 + 1]);
-                for (var i = 1; i <= this.mMonth; ++i) {
+                for (var i = 1; i <= 12; ++i) {
                     month.push(i + "月");
                 }
             }
@@ -204,7 +204,7 @@ var cqk;
         };
         View.prototype.updatePieEchart = function (echart) {
             var data = this.mTableData;
-            var legend = ["国网、南网", "省、市电力公司", "五大发电", "其他电源", "石油石化", "轨道交通", "出口合同", "其他"];
+            var legend = ["国网、南网", "省、市电力公司", "五大发电", "其他电源", "石油石化", "轨道交通", "出口合同"];
             var dljpt = 0;
             for (var i = 0; i < 4; ++i) {
                 dljpt += parseInt(this.mTableData[i][3]);
@@ -242,24 +242,8 @@ var cqk;
                     {
                         name: "行业占比",
                         type: 'pie',
-                        radius: [100, 130],
+                        radius: [0, 130],
                         data: dataOut
-                    },
-                    {
-                        name: "行业占比",
-                        type: 'pie',
-                        radius: [0, 60],
-                        itemStyle: {
-                            normal: {
-                                label: {
-                                    position: 'inner'
-                                },
-                                labelLine: {
-                                    show: false
-                                }
-                            }
-                        },
-                        data: dataIn
                     }
                 ]
             };
