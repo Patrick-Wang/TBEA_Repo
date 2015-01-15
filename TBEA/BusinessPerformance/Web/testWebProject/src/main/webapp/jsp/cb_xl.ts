@@ -19,11 +19,15 @@ module cb_xl {
             "投标成本总计", "运费", "投标毛利率", "投标毛利额"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                   if (i < 5) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left));
+                if (2 == i) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 300));
+                } else if (6 == i) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 130));
+                } else if (i < 5) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 100));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 100));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);

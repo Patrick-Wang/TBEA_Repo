@@ -20,12 +20,14 @@ module cb_wg_xl {
 
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                  if (i < 8){
-                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left));
-                    }else{
-                     nodes.push(new JQTable.Node(title[i], "Mx" + i));
-                    }
-               
+                if (6 == i) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 200));
+                }
+                else if (i < 8) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 100));
+                } else {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 100));
+                }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         }

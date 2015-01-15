@@ -10,11 +10,14 @@ var cb_wg_xl;
             var title = ["订单所在单位及项目公司", "完工时间", "投标报价时间", "合同中标时间", "合同号", "数量", "用户单位名称", "产品大类", "产值", "实际铜用量", "实际铜单价", "实际铜加工费", "实际铝用量", "实际铝单价", "主材成本", "实际其他材料成本合计", "材料成本合计", "人工制造费用", "实际总成本", "运费", "实际毛利额", "实际毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                if (i < 8) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */));
+                if (6 == i) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 200));
+                }
+                else if (i < 8) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 100));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 100));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);

@@ -17,9 +17,9 @@ module cb_wg_byq {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i < 7){
-                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left));
+                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 100));
                     }else{
-                     nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 100));
                     }
                
             }

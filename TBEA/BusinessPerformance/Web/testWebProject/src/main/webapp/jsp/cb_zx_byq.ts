@@ -17,10 +17,10 @@ module cb_zx_byq {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i < 10) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 100));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 100));
                 }
 
             }
@@ -95,7 +95,7 @@ module cb_zx_byq {
             this.mGsData = gs;
             this.mMonth = month;
             this.mDataSet = new Util.DateDataSet("zx_update.do");
-            //this.updateMxTable();
+            this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
             this.updateUI();

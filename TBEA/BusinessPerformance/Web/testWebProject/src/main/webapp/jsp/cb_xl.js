@@ -10,11 +10,17 @@ var cb_xl;
             var title = ["订单所在单位及项目公司", "投标报价时间", "用户单位名称", "产品大类", "数量", "产值", "预计开标时间", "销售部门预测的中标概率", "投标电解铜用量", "投标电解铜单价", "投标铝用量", "投标铝单价", "投标其他成本合计", "投标成本总计", "运费", "投标毛利率", "投标毛利额"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                if (i < 5) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */));
+                if (2 == i) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 300));
+                }
+                else if (6 == i) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 130));
+                }
+                else if (i < 5) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 100));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 100));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);

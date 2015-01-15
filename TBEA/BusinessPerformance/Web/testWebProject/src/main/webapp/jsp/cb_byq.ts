@@ -21,11 +21,13 @@ module cb_byq {
                 "人工及制造费用", "投标制造成本", "运费", "投标毛利（单台）", "投标毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                if (i < 6) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left));
+                if (i == 2 || i == 3) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 200));
+                } else if (i < 6) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 100));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 100));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -98,7 +100,7 @@ module cb_byq {
             this.mDataSet = new Util.DateDataSet("tb_update.do");
 
          
-            //this.updateMxTable();
+            this.updateMxTable();
             this.updateJttbTable();
           	this.updateGstbTable();
             this.updateUI();
@@ -117,62 +119,6 @@ module cb_byq {
             });
         }
         
-//        private initEchart(echart): void {
-//            var ysyq_payment_Chart = echarts.init(echart)
-//            var ysyq_payment_Option = {
-//                animation: true,
-//                tooltip: {
-//                    trigger: 'axis',
-//                    /* formatter : "{b}<br/>{a} : {c} 万元<br/>{a1} : {c1} 万元", */
-//
-//                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-//                        type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
-//                    }
-//                },
-//                legend: {
-//                    x: 'right',
-//                    data: ["合同金额", "预期阶段", "中标阶段", "完工阶段"],
-//
-//                },
-//                xAxis: [{
-//                    type: 'category',
-//                    data: ['沈变', '衡变', '新变', '天变']
-//                }],
-//                yAxis: [{
-//                    type: 'value'
-//
-//                }],
-//
-//                calculable: true,
-//                series: [{
-//                    name: '合同金额',
-//                    type: 'bar',
-//
-//                    barCategoryGap: "50%",
-//                    data: [63363.11, 55628.27, 58521.55, 69100.58]
-//                }, {
-//                        name: '预期阶段',
-//                        type: 'bar',
-//
-//                        stack: '阶段',
-//                        data: [9098.58, 1240.13, 1140.61, 3154.82]
-//                    }, {
-//                        name: '中标阶段',
-//
-//                        type: 'bar',
-//                        stack: '阶段',
-//                        data: [3934.13, 3200.22, 1382.52, 3934.13]
-//                    }, {
-//                        name: '完工阶段',
-//                        type: 'bar',
-//
-//                        stack: '阶段',
-//                        data: [11980.74, 2240.18, 3487.11, 6980.74]
-//                    }]
-//            };
-//            ysyq_payment_Chart.setOption(ysyq_payment_Option);
-//        }
-
         private updateMxTable(): void {
          	var name = this.mMxTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createMxTable(name);
