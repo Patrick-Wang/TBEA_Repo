@@ -10,11 +10,17 @@ var cb_zx_byq;
             var title = ["订单所在单位及项目公司", "订单执行阶段", "工作号", "国别", "客户行业类型", "合同中标时间 ", "产品型号", "合同号", "订货单位", "交货时间", "产值", "硅钢牌号", "硅钢数量", "硅钢单价", "铜用量", "铜单价", "铜加工费", "变压器油规格", "变压器油用量", "变压器油单价", "钢材用量", "钢材单价", "纸板用量", "纸板单价", "五大主材成本", "其他材料成本", "材料合计", "人工制造费用", "生产总成本", "运费", "产值测算毛利额", "产值测算毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                if (i < 10) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 100));
+                if (i == 0) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 90));
+                }
+                else if (i == 6) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 120));
+                }
+                else if (i < 10) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 80));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 100));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 80));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);

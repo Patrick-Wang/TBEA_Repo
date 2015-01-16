@@ -10,11 +10,14 @@ var cb_wg_byq;
             var title = ["订单所在单位及项目公司", "工作号", "完工时间", "订货单位", "产品型号", "电压等级", "产量（万KVA）", "产值", " 实际硅钢片用量 ", " 实际硅钢片单价 ", " 实际电解铜用量 ", " 实际电解铜单价（无税含加工费） ", " 加工费(含税) ", " 实际变压器油用量 ", " 实际变压器油单价 ", " 实际钢材用量 ", " 实际钢材单价 ", " 实际绝缘纸板用量 ", " 实际绝缘纸板单价 ", " 实际五大主材成本 ", " 实际其他材料成本合计 ", " 实际材料成本总计 ", " 实际人工制造费用 ", " 实际总成本 ", " 运费 ", " 实际毛利额 ", "实际毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                if (i < 7) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 100));
+                if (i == 0) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 90));
+                }
+                else if (i < 7) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 80));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 100));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 80));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);

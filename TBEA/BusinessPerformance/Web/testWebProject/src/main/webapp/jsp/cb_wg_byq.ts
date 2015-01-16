@@ -16,12 +16,14 @@ module cb_wg_byq {
 
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                if (i < 7){
-                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 100));
-                    }else{
-                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 100));
-                    }
-               
+                 if (i == 0) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 90));
+                } else if (i < 7) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 80));
+                } else {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 80));
+                }
+
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         }

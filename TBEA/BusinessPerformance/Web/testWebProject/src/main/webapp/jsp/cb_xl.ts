@@ -19,15 +19,17 @@ module cb_xl {
             "投标成本总计", "运费", "投标毛利率", "投标毛利额"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                if (2 == i) {
+                 if (0 == i) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 90));
+                } else if (2 == i) {
                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 300));
                 } else if (6 == i) {
                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 130));
                 } else if (i < 5) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 100));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 80));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 100));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 80));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -90,7 +92,7 @@ module cb_xl {
             this.mGsData = gs;
             this.mMonth = month;
             this.mDataSet = new Util.DateDataSet("tb_update.do");
-            //this.updateMxTable();
+            this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
             this.updateUI();

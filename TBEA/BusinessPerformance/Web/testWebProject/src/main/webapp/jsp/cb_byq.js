@@ -10,14 +10,20 @@ var cb_byq;
             var title = ["订单所在单位及项目公司", "投标报价时间", "用户单位名称", "项目名称", "预计交货时间", "型号", "电压", "产量（万KVA）", "产值", "预计开标时间", "销售部门预测的中标概率", "投标硅钢牌号", "投标硅钢用量（单台）", "投标硅钢单价", "投标电解铜用量（单台）", "投标电解铜单价", "投标变压器油用量（单台）", "投标变压器油单价", "投标钢材用量（单台）", "投标钢材单价", "投标纸板用量（单台）", "投标纸板单价", "投标五大主材成本", "投标其他材料成本", "投标材料成本总计（不含税）", "人工及制造费用", "投标制造成本", "运费", "投标毛利（单台）", "投标毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                if (i == 2 || i == 3) {
+                if (i == 0) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 90));
+                }
+                else if (i == 2 || i == 3) {
                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 200));
                 }
+                else if (i == 5) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 120));
+                }
                 else if (i < 6) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 100));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 80));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 100));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 80));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
