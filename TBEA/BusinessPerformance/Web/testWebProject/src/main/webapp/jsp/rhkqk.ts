@@ -15,7 +15,7 @@ module rhkqk {
                 new JQTable.Node("回款计划完成率", "hkjhwcl"),
                 new JQTable.Node("已回款中可降应收的回款金额", "yhkzkjysdhkje"),
                 new JQTable.Node("目前-月底回款计划", "mqydhkjh")
-                    .append(new JQTable.Node("确保搬出", "qbbc"))
+                    .append(new JQTable.Node("确保办出", "qbbc"))
                     .append(new JQTable.Node("争取办出", "zqbc"))
                     .append(new JQTable.Node("两者合计", "lzhj")),
                 new JQTable.Node("全月确保", "qyqb"),
