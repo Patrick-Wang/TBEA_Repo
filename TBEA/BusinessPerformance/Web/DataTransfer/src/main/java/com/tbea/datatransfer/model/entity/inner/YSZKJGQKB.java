@@ -13,7 +13,7 @@ import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 
 @Entity
 @Table(name = "yszkjgqkb")
-public class YSZKJG extends AbstractReadWriteEntity implements Serializable {
+public class YSZKJGQKB extends AbstractReadWriteEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -160,7 +160,7 @@ public class YSZKJG extends AbstractReadWriteEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "YSZKJG [id=" + getId() + ", ny=" + ny + ", hy=" + hy
+		return "YSZKJGQKB [id=" + getId() + ", ny=" + ny + ", hy=" + hy
 				+ ", ysje=" + ysje + ", zqbbl=" + zqbbl + ", yq1yyn=" + yq1yyn
 				+ ", yq1_3y=" + yq1_3y + ", yq3_6y=" + yq3_6y + ", yq6_12y="
 				+ yq6_12y + ", yq1nys=" + yq1nys + ", wdqk=" + wdqk

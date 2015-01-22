@@ -12,4 +12,7 @@ public interface MRHKHZLocalDao extends AbstractReadWriteDao<MRHKHZLocal> {
 
 	public void deleteMRHKHZLocalByQY(int qybh);
 
+	public Double getYLJHKByQY(String date, int qybh);
+	
+	public Object[] getYLJBCByQY(String date, int qybh);
 }
