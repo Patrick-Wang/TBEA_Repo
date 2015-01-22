@@ -1,8 +1,10 @@
 package com.tbea.test.testWebProject.controller.servlet.cqk;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,10 +64,12 @@ public class CQKController {
 		
 //		Organization org = CompanyManager.getOperationOrganization();
 //		Company comp = org.getCompany(CompanyType.valueOf(cid));
-		
-		String cqk = JSONArray.fromObject(cqkService.getCqkData(d, comp)).toString().replace("null", "0.00");
-		String cqkCompare = JSONArray.fromObject(cqkService.getCompareData(d, comp)).toString().replace("null", "0.00");
-		return cqk + "##" + cqkCompare;
+		List<String[][]> result = new ArrayList<String[][]>();
+		result.add(cqkService.getCqkData(d, comp));
+		result.add(cqkService.getCompareData(d, comp));
+		String cqkResult = JSONArray.fromObject(result).toString().replace("null", "0.00");
+
+		return cqkResult;
 	}
 	
 

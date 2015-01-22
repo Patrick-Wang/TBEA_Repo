@@ -24,13 +24,12 @@ module tbbzjqk {
         private mComp: Util.CompanyType = Util.CompanyType.HB;
         private mYear: number;
         private mData: Array<string> = [];
-        private mDataSet: Util.DateDataSet;
+        private mDataSet: Util.Ajax = new Util.Ajax("tbbzjqk_update.do");
         private mTableId: string;
         private mEchartId;
         private mMonth:number;
         public init(echartId: string, tableId: string, year: number): void {
             this.mYear = year;
-            this.mDataSet = new Util.DateDataSet("tbbzjqk_update.do");
             this.mTableId = tableId;
             this.mEchartId = echartId;
             this.updateTable();
@@ -50,15 +49,16 @@ module tbbzjqk {
         }
         
         public updateUI() {
-               this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data: string) => {
-                if (null != data) {
-                    this.mData = JSON.parse(data);
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then((data: any) => {
+
+                    this.mData = data;
                     $('h1').text(this.mYear + "年 投标保证金情况");
                     document.title = this.mYear + "年 投标保证金情况";
                     this.updateTable();
                     this.updateEchart();
-                }
-            });
+
+                });
         }
 
         private updateEchart(): void{

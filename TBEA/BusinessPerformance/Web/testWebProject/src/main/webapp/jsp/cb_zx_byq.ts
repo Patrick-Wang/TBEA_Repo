@@ -16,11 +16,15 @@ module cb_zx_byq {
 
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                if (i < 10) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left));
+                 if (i == 0) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 90));
+                } else  if (i == 6) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 120));
+                } else if (i < 10) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 80));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 80));
                 }
 
             }
@@ -76,7 +80,7 @@ module cb_zx_byq {
         private mMxTableId: string;
         private mJttbTableId: string;
         private mGstbTableId: string;
-        private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax = new Util.Ajax("zx_update.do");
         private mComp: Util.CompanyType = Util.CompanyType.SB;
         
         public init(
@@ -94,8 +98,7 @@ module cb_zx_byq {
             this.mJtData = jt;
             this.mGsData = gs;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("zx_update.do");
-            //this.updateMxTable();
+            this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
             this.updateUI();
@@ -106,11 +109,10 @@ module cb_zx_byq {
         }
         
         public updateUI(){
-            this.mDataSet.getDataByCompany(0, 0, this.mComp, (data : string) =>{
-                if (null != data){
-                    this.mMxData = JSON.parse(data);
-                    this.updateMxTable();
-                }
+            this.mDataSet.get({companyId: this.mComp})
+            .then((jsonData : any) =>{
+                this.mMxData = jsonData;
+                this.updateMxTable();
             });
         }
 

@@ -1,8 +1,10 @@
 package com.tbea.test.testWebProject.controller.servlet.hkjhjg;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,12 +54,12 @@ public class HKJHJGController {
 		Date d = DateSelection.getDate(request);
 		Organization org = CompanyManager.getOperationOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
-		
-		String hkjhjg = JSONArray.fromObject(service.getHkjhjgData(d, comp)).toString().replace("null", "0.00");
-		String hkjhzt = JSONArray.fromObject(service.getHkjhztData(d, comp)).toString().replace("null", "0.00");
-		String hkjhxz = JSONArray.fromObject(service.getHkjhxzData(d, comp)).toString().replace("null", "0.00");
-		
-		return hkjhjg + "##" + hkjhzt + "##" + hkjhxz;
+		List<String[][]> result = new ArrayList<String[][]>();
+		result.add(service.getHkjhjgData(d, comp));
+		result.add(new String[][]{service.getHkjhztData(d, comp)});
+		result.add(new String[][]{service.getHkjhxzData(d, comp)});
+		String hkjh = JSONArray.fromObject(result).toString().replace("null", "0.00");		
+		return hkjh;
 	}
 	
 

@@ -55,7 +55,7 @@ body {
 }
 
 .panel-content-border {
-	height: 350px;
+	height: 480px;
 	width: 1000px;
 	border: 2px solid #e3e3e3;
 	margin: 0;
@@ -72,13 +72,7 @@ body {
 	padding: 0;
 }
 
-.right {
-	width: 45%;
-	height: 180px;
-	float: left;
-	padding-top: 20px;
-	margin-left: 225px;
-}
+
 
 .contract {
 	text-align: center;
@@ -184,9 +178,10 @@ th.ui-th-ltr {
 		<tr align="center">
 			<td>
 				<div style="margin-top: 15px">
-					<div class="panel-content-border"">
+					<div class="panel-content-border">
 						<div id="piechart" class="panel-content"></div>
 					</div>
+				</div>
 			</td>
 		</tr>
 		<tr align="center">

@@ -21,6 +21,8 @@ var ztyszkfx;
     })();
     var View = (function () {
         function View() {
+            this.mDataSet = new Util.Ajax("ztyszkfx_update.do");
+            this.mCompIndex = 0;
         }
         View.newInstance = function () {
             return new View();
@@ -28,7 +30,6 @@ var ztyszkfx;
         View.prototype.init = function (echartId, tableId, year, month) {
             this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("ztyszkfx_update.do");
             this.mTableId = tableId;
             this.mEchartId = echartId;
             this.updateTable();
@@ -42,40 +43,31 @@ var ztyszkfx;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getData(this.mMonth, this.mYear, function (arrayData) {
-                if (null != arrayData) {
-                    _this.mData = arrayData;
-                    $('h1').text(_this.mYear + "年 整体应收账款分析表");
-                    document.title = _this.mYear + "年 整体应收账款分析表";
-                    _this.updateTable();
-                    _this.updateEchart();
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear }).then(function (arrayData) {
+                _this.mData = arrayData;
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月 整体应收账款分析表");
+                document.title = _this.mYear + "年" + _this.mMonth + "月 整体应收账款分析表";
+                _this.updateTable();
+                _this.updateEchart();
             });
         };
         View.prototype.updateEchart = function () {
             var ztyszkfxChart = echarts.init($("#" + this.mEchartId)[0]);
             var month = [];
-            for (var i = 1; i <= 12; ++i) {
-                month.push(i + "月");
-            }
-            var legend = ["账面应收账款余额", "保理控制余额", "应收账款实际数", "累计收入", "账面应收占收入比"];
-            var zmysData = [41982, 31876, 51975, 43856, 61498, 32696, 38574, 62641, 28434, 51114, 41563, 68415];
-            var blkzData = [29167, 21401, 47155, 32584, 52523, 19573, 24652, 50217, 17426, 43018, 37107, 60047];
-            var yssjData = [49841, 57498, 34574, 87756, 85353, 57772, 23587, 54536, 48478, 67488, 99837, 10760];
-            var ljsrData = [47291, 67214, 14715, 53258, 45252, 31957, 32465, 25021, 71742, 64301, 83710, 76004];
-            var yszbData = [];
-            for (var i = 0; i < zmysData.length; i++) {
-                yszbData.push((zmysData[i] / (ljsrData[i] / (i + 1) * 12)).toFixed(2));
+            var compMap = [0, 1, 2, 3, 5, 6, 7];
+            var legend = ["本月", "去年同期"];
+            var jn = [];
+            var qitq = [];
+            for (var i = 0; i < 4; i++) {
+                jn.push(parseFloat(this.mData[compMap[this.mCompIndex]][i]).toFixed(2));
+                qitq.push(parseFloat(this.mData[compMap[this.mCompIndex]][i + 5]).toFixed(2));
             }
             var ztyszkfxOption = {
                 title: {
                     text: '整体应收账款分析'
                 },
                 tooltip: {
-                    trigger: 'axis',
-                    formatter: function (v) {
-                        return v[0][1] + '<br/>' + v[0][0] + ' : ' + v[0][2] + '<br/>' + v[1][0] + ' : ' + v[1][2] + '<br/>' + v[2][0] + ' : ' + v[2][2] + '<br/>' + v[3][0] + ' : ' + v[3][2] + '<br/>' + v[4][0] + ' : ' + v[4][2] + '%';
-                    }
+                    trigger: 'axis'
                 },
                 legend: {
                     data: legend
@@ -88,7 +80,7 @@ var ztyszkfx;
                     {
                         type: 'category',
                         boundaryGap: true,
-                        data: month
+                        data: ["账面应收账款余额", "保理控制余额", "应收账款实际数", "收入"]
                     }
                 ],
                 yAxis: [
@@ -105,38 +97,23 @@ var ztyszkfx;
                 series: [
                     {
                         name: legend[0],
-                        type: 'line',
+                        type: 'bar',
                         smooth: true,
-                        data: zmysData
+                        data: jn
                     },
                     {
                         name: legend[1],
-                        type: 'line',
+                        type: 'bar',
                         smooth: true,
-                        data: blkzData
-                    },
-                    {
-                        name: legend[2],
-                        type: 'line',
-                        smooth: true,
-                        data: yssjData
-                    },
-                    {
-                        name: legend[3],
-                        type: 'line',
-                        smooth: true,
-                        data: ljsrData
-                    },
-                    {
-                        name: legend[4],
-                        type: 'line',
-                        smooth: true,
-                        yAxisIndex: 1,
-                        data: yszbData
+                        data: qitq
                     }
                 ]
             };
             ztyszkfxChart.setOption(ztyszkfxOption);
+        };
+        View.prototype.onChartCompSelected = function (v) {
+            this.mCompIndex = v;
+            this.updateEchart();
         };
         View.prototype.updateTable = function () {
             var name = this.mTableId + "_jqgrid_1234";

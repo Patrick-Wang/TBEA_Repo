@@ -13,7 +13,7 @@ var rhkqk;
                 new JQTable.Node("资金回笼指标完成", "zjhlzbwc"),
                 new JQTable.Node("回款计划完成率", "hkjhwcl"),
                 new JQTable.Node("已回款中可降应收的回款金额", "yhkzkjysdhkje"),
-                new JQTable.Node("目前-月底回款计划", "mqydhkjh").append(new JQTable.Node("确保搬出", "qbbc")).append(new JQTable.Node("争取办出", "zqbc")).append(new JQTable.Node("两者合计", "lzhj")),
+                new JQTable.Node("目前-月底回款计划", "mqydhkjh").append(new JQTable.Node("确保办出", "qbbc")).append(new JQTable.Node("争取办出", "zqbc")).append(new JQTable.Node("两者合计", "lzhj")),
                 new JQTable.Node("全月确保", "qyqb"),
                 new JQTable.Node("预计全月计划完成率", "yjqyjhwcl"),
                 new JQTable.Node("截止月底应收账款账面余额", "jzydyszkzmye")
@@ -24,6 +24,7 @@ var rhkqk;
     var View = (function () {
         function View() {
             this.mData = [];
+            this.mDataSet = new Util.Ajax("rhkqk_update.do");
         }
         View.newInstance = function () {
             return new View();
@@ -31,7 +32,6 @@ var rhkqk;
         View.prototype.init = function (tableId, month, year, day) {
             this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("rhkqk_update.do");
             this.mTableId = tableId;
             this.mDay = day;
             this.updateTable();
@@ -48,13 +48,11 @@ var rhkqk;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByDay(this.mMonth, this.mYear, this.mDay, function (dataArray) {
-                if (null != dataArray) {
-                    _this.mData = dataArray;
-                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日  回款情况");
-                    document.title = _this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日  回款情况";
-                    _this.updateTable();
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay }).then(function (dataArray) {
+                _this.mData = dataArray;
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日  回款情况");
+                document.title = _this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日  回款情况";
+                _this.updateTable();
             });
         };
         View.prototype.updateTable = function () {

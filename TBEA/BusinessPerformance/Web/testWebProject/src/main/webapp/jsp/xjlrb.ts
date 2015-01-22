@@ -36,13 +36,12 @@ module xjlrb {
         private mMonth: number;
         private mYear: number;
         private mData: Array<string[]> = [];
-        private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax = new Util.Ajax("xjlrb_update.do");
         private mTableId : string;
         private mDay: number;
         public init(tableId: string, month: number, year: number, day: number): void {
             this.mYear = year;
             this.mMonth = month;
-			this.mDataSet = new Util.DateDataSet("xjlrb_update.do");
             this.mTableId = tableId;
             this.mDay = day;
             this.updateTable();
@@ -62,16 +61,17 @@ module xjlrb {
         	this.mMonth = month;
         }
         
-		public updateUI(){
-			this.mDataSet.getDataByDay(this.mMonth, this.mYear, this.mDay, (dataArray : Array<string[]>) =>{
-				if (null != dataArray){
-					this.mData = dataArray;
-					$('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报");
-					document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报";
-					this.updateTable();
-				}
-			});
-		}
+        public updateUI() {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay })
+                .then((dataArray: any) => {
+
+                    this.mData = dataArray;
+                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报");
+                    document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报";
+                    this.updateTable();
+
+                });
+        }
 
         private updateTable(): void {
         	var name = this.mTableId + "_jqgrid_1234";

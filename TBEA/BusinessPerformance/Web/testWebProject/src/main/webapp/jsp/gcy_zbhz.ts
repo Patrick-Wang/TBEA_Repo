@@ -42,13 +42,12 @@ module gcy_zbhz {
         private mMonth: number;
         private mYear: number;
         private mData: Array<string[]> = [];
-        private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax = new Util.Ajax("gcy_zbhz_update.do");
         private mTableId : string;
         public init(tableId: string, month: number, year: number): void {
             this.mYear = year;
             this.mMonth = month;
             this.mTableId = tableId;
-            this.mDataSet = new Util.DateDataSet("gcy_zbhz_update.do");
             this.updateTable();
             this.updateUI();
         }
@@ -61,16 +60,15 @@ module gcy_zbhz {
         	this.mMonth = month;
         }
         
-		public updateUI(){
-			this.mDataSet.getData(this.mMonth, this.mYear, (dataArray : Array<string[]>) =>{
-				if (null != dataArray){
-					this.mData = dataArray;
-					$('h1').text(this.mYear + "年" + this.mMonth + "月 各产业指标汇总");
-					document.title = this.mYear + "年" + this.mMonth + "月 各产业指标汇总";
-					this.updateTable();
-				}
-			});
-		}
+        public updateUI() {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear })
+                .then((jsonData: any) => {
+                    this.mData = jsonData;
+                    $('h1').text(this.mYear + "年" + this.mMonth + "月 各产业指标汇总");
+                    document.title = this.mYear + "年" + this.mMonth + "月 各产业指标汇总";
+                    this.updateTable();
+                });
+        }
 
         private updateTable(): void {
        	    var name = this.mTableId + "_jqgrid_1234";

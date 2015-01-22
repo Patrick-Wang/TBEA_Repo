@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.yszkpzgh.YSZKPZGHLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.yszkpzgh.YSZKPZGHDLDao;
+import com.tbea.datatransfer.model.dao.zjsb.yszkpzgh.YSZKPZGHSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.yszkpzgh.YSZKPZGHTBDao;
 import com.tbea.datatransfer.model.entity.local.YSZKPZGHLocal;
 import com.tbea.datatransfer.model.entity.zjdl.YSZKPZGHDL;
+import com.tbea.datatransfer.model.entity.zjsb.YSZKPZGHSB;
 import com.tbea.datatransfer.model.entity.zjtb.YSZKPZGHTB;
 
 @Transactional("transactionManager")
@@ -20,6 +22,8 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 
 	private YSZKPZGHTBDao yszkpzghTBDao;
 
+	private YSZKPZGHSBDao yszkpzghSBDao;
+	
 	@Override
 	public boolean transferYSZKPZGH() {
 		boolean result = false;
@@ -83,6 +87,38 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 				yszkpzghLocal.setQybh(301);
 				yszkpzghLocalDao.merge(yszkpzghLocal);
 			}
+
+			// sb
+			yszkpzghLocalDao.deleteYSZKPZGHLocalByQY(1);
+			List<YSZKPZGHSB> yszkpzghSBList = yszkpzghSBDao.getAllYSZKPZGHSB();
+			for (YSZKPZGHSB yszkpzghSB : yszkpzghSBList) {
+				yszkpzghLocal = new YSZKPZGHLocal();
+				yszkpzghLocal.setGxrq(yszkpzghSB.getGxrq());
+				yszkpzghLocal.setYf(yszkpzghSB.getYf());
+				yszkpzghLocal.setGsbm(yszkpzghSB.getGsbm());
+				yszkpzghLocal.setSymljxssr(yszkpzghSB.getSymljxssr());
+				yszkpzghLocal.setByjhxssr(yszkpzghSB.getByjhxssr());
+				yszkpzghLocal.setByysnkzb(yszkpzghSB.getByysnkzb());
+				yszkpzghLocal.setSymzmysye(yszkpzghSB.getSymzmysye());
+				yszkpzghLocal.setByxssrxzysje(yszkpzghSB.getByxssrxzysje());
+				yszkpzghLocal.setBykjyszjhlje(yszkpzghSB.getBykjyszjhlje());
+				yszkpzghLocal.setByghblzjysje(yszkpzghSB.getByghblzjysje());
+				yszkpzghLocal.setByxzblhkcjysje(yszkpzghSB.getByxzblhkcjysje());
+				yszkpzghLocal.setSymykpwfhcsysje(yszkpzghSB
+						.getSymykpwfhcsysje());
+				yszkpzghLocal.setSymyfhwkpzjsjysje(yszkpzghSB
+						.getSymyfhwkpzjsjysje());
+				yszkpzghLocal.setSymblhkcjysje(yszkpzghSB.getSymblhkcjysje());
+				yszkpzghLocal.setSymyscjysje(yszkpzghSB.getSymyscjysje());
+				yszkpzghLocal.setQtcjys(yszkpzghSB.getQtcjys());
+				yszkpzghLocal.setByfhcpxzysje(yszkpzghSB.getByfhcpxzysje());
+				yszkpzghLocal.setByhkjdysje(yszkpzghSB.getByhkjdysje());
+				yszkpzghLocal.setSfdrwc(yszkpzghSB.getSfdrwc());
+				yszkpzghLocal.setQybh(301);
+				yszkpzghLocalDao.merge(yszkpzghLocal);
+			}
+			
+			
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

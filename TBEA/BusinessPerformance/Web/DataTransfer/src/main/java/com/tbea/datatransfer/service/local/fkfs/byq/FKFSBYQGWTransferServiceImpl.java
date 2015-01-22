@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.fkfs.byq.FKFSBYQGWLocalDao;
+import com.tbea.datatransfer.model.dao.zjsb.fkfs.FKFSBYQGWSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.fkfs.FKFSBYQGWTBDao;
 import com.tbea.datatransfer.model.entity.local.FKFSBYQGWLocal;
+import com.tbea.datatransfer.model.entity.zjsb.FKFSBYQGWSB;
 import com.tbea.datatransfer.model.entity.zjtb.FKFSBYQGWTB;
 
 @Transactional("transactionManager")
@@ -15,6 +17,8 @@ public class FKFSBYQGWTransferServiceImpl implements FKFSBYQGWTransferService {
 	private FKFSBYQGWLocalDao fkfsbyqgwLocalDao;
 
 	private FKFSBYQGWTBDao fkfsbyqgwTBDao;
+	
+	private FKFSBYQGWSBDao fkfsbyqgwSBDao;
 
 	@Override
 	public boolean transferFKFSBYQGW() {
@@ -54,6 +58,41 @@ public class FKFSBYQGWTransferServiceImpl implements FKFSBYQGWTransferService {
 				fkfsbyqgwLocal.setQybh(301);
 				fkfsbyqgwLocalDao.merge(fkfsbyqgwLocal);
 			}
+			// sb
+			fkfsbyqgwLocalDao.deleteFKFSBYQGWLocalByQY(1);
+			
+			List<FKFSBYQGWSB> fkfsbyqgwSBList = fkfsbyqgwSBDao
+					.getAllFKFSBYQGWSB();
+			for (FKFSBYQGWTB fkfsbyqgwSB : fkfsbyqgwTBList) {
+				fkfsbyqgwLocal = new FKFSBYQGWLocal();
+				fkfsbyqgwLocal.setGxrq(fkfsbyqgwSB.getGxrq());
+				fkfsbyqgwLocal.setGsbm(fkfsbyqgwSB.getGsbm());
+//				fkfsbyqgwLocal.setNy(fkfsbyqgwTB.getNy());
+				fkfsbyqgwLocal.setGwhtddzlbs(fkfsbyqgwSB.getGwhtddzlbs());
+				fkfsbyqgwLocal.setGwhtddzlje(fkfsbyqgwSB.getGwhtddzlje());
+				fkfsbyqgwLocal.setN3_4_2_1bs(fkfsbyqgwSB.getN3_4_2_1bs());
+				fkfsbyqgwLocal.setN3_4_2_1je(fkfsbyqgwSB.getN3_4_2_1je());
+				fkfsbyqgwLocal.setN3_4_2d5_0d5bs(fkfsbyqgwSB
+						.getN3_4_2d5_0d5bs());
+				fkfsbyqgwLocal.setN3_4_2d5_0d5je(fkfsbyqgwSB
+						.getN3_4_2d5_0d5je());
+				fkfsbyqgwLocal.setN0_9_0_1bs(fkfsbyqgwSB.getN0_9_0_1bs());
+				fkfsbyqgwLocal.setN0_9_0_1je(fkfsbyqgwSB.getN0_9_0_1je());
+				fkfsbyqgwLocal.setN1_4_4_1bs(fkfsbyqgwSB.getN1_4_4_1bs());
+				fkfsbyqgwLocal.setN1_4_4_1je(fkfsbyqgwSB.getN1_4_4_1je());
+				fkfsbyqgwLocal.setN1_4_4d5_0d5bs(fkfsbyqgwSB.getN1_4_4d5_0d5bs());
+				fkfsbyqgwLocal.setN1_4_4d5_0d5je(fkfsbyqgwSB.getN1_4_4d5_0d5je());
+				fkfsbyqgwLocal.setN0_10_0_0bs(fkfsbyqgwSB.getN0_10_0_0bs());
+				fkfsbyqgwLocal.setN0_10_0_0je(fkfsbyqgwSB.getN0_10_0_0je());
+				fkfsbyqgwLocal.setN9d5_0d5bs(fkfsbyqgwSB.getN9d5_0d5bs());
+				fkfsbyqgwLocal.setN9d5_0d5je(fkfsbyqgwSB.getN9d5_0d5je());
+				fkfsbyqgwLocal.setQtbs(fkfsbyqgwSB.getQtbs());
+				fkfsbyqgwLocal.setQtje(fkfsbyqgwSB.getQtje());
+				fkfsbyqgwLocal.setSfdrwc(fkfsbyqgwSB.getSfdrwc());
+				fkfsbyqgwLocal.setQybh(301);
+				fkfsbyqgwLocalDao.merge(fkfsbyqgwLocal);
+			}
+
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

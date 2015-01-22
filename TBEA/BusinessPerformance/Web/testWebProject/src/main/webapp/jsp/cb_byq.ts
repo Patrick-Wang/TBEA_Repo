@@ -2,7 +2,6 @@
 /// <reference path="util.ts" />
 declare var echarts;
 module cb_byq {
-
     class JQGridAssistantFactory {
 
         private static createSubNode(parent: JQTable.Node): JQTable.Node {
@@ -21,11 +20,17 @@ module cb_byq {
                 "人工及制造费用", "投标制造成本", "运费", "投标毛利（单台）", "投标毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                if (i < 6) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left));
+                if (i == 0) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 90));
+                } else if (i == 2 || i == 3) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 200));
+                } else if (i == 5) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 120));
+                } else if (i < 6) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 80));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 80));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -45,8 +50,8 @@ module cb_byq {
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("钢材", "gc"))
             ], gridName);
         }
-        
-         public static createGstbTable(gridName: string): JQTable.JQGridAssistant {
+
+        public static createGstbTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("时间", "1sj", true, JQTable.TextAlign.Left),
                 new JQTable.Node("产值", "1cz"),
@@ -61,122 +66,65 @@ module cb_byq {
             ], gridName);
         }
     }
+    
 
     export class View {
+
         public static newInstance(): View {
             return new View();
         }
 
-
-//		private mfdwData : string[];
-//		private mgwData : string[];
-//		private mnwData : string[];
         private mMxData: string[][];
         private mJtData: string[][];
         private mGsData: string[][];
         private mMonth: number;
-		private mMxTableId : string;
-		private mJttbTableId : string;
-		private mGstbTableId : string;
-        private mDataSet : Util.DateDataSet;
+        private mMxTableId: string;
+        private mJttbTableId: string;
+        private mGstbTableId: string;
+        private mDataSet: Util.Ajax;
         private mComp: Util.CompanyType = Util.CompanyType.SB;
+        
         public init(
-	        mxTableId: string, 
-	        jttbTableId: string, 
-	        gstbTableId: string,
+            mxTableId: string,
+            jttbTableId: string,
+            gstbTableId: string,
             mx: string[][],
             jt: string[][],
             gs: string[][],
             month: number): void {
-			this.mMxTableId = mxTableId;
-			this.mJttbTableId = jttbTableId;
-			this.mGstbTableId = gstbTableId;
-			this.mMxData = mx;
+
+            this.mMxTableId = mxTableId;
+            this.mJttbTableId = jttbTableId;
+            this.mGstbTableId = gstbTableId;
+            this.mMxData = mx;
             this.mJtData = jt;
             this.mGsData = gs;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("tb_update.do");
+            this.mDataSet = new Util.Ajax("tb_update.do");
 
-         
-            //this.updateMxTable();
+            this.updateMxTable();
             this.updateJttbTable();
-          	this.updateGstbTable();
+            this.updateGstbTable();
             this.updateUI();
+
         }
 
-        public onCompanySelected(comp : Util.CompanyType){
+        public onCompanySelected(comp: Util.CompanyType) {
             this.mComp = comp;
         }
-        
-        public updateUI(){
-            this.mDataSet.getDataByCompany(0, 0, this.mComp, (data : string) =>{
-                if (null != data){
-                    this.mMxData = JSON.parse(data);
+
+        public updateUI() {
+            this.mDataSet.get({ companyId: this.mComp })
+                .then((data: string) => {
+                    this.mMxData = data;
                     this.updateMxTable();
-                }
-            });
+                });
         }
-        
-//        private initEchart(echart): void {
-//            var ysyq_payment_Chart = echarts.init(echart)
-//            var ysyq_payment_Option = {
-//                animation: true,
-//                tooltip: {
-//                    trigger: 'axis',
-//                    /* formatter : "{b}<br/>{a} : {c} 万元<br/>{a1} : {c1} 万元", */
-//
-//                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-//                        type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
-//                    }
-//                },
-//                legend: {
-//                    x: 'right',
-//                    data: ["合同金额", "预期阶段", "中标阶段", "完工阶段"],
-//
-//                },
-//                xAxis: [{
-//                    type: 'category',
-//                    data: ['沈变', '衡变', '新变', '天变']
-//                }],
-//                yAxis: [{
-//                    type: 'value'
-//
-//                }],
-//
-//                calculable: true,
-//                series: [{
-//                    name: '合同金额',
-//                    type: 'bar',
-//
-//                    barCategoryGap: "50%",
-//                    data: [63363.11, 55628.27, 58521.55, 69100.58]
-//                }, {
-//                        name: '预期阶段',
-//                        type: 'bar',
-//
-//                        stack: '阶段',
-//                        data: [9098.58, 1240.13, 1140.61, 3154.82]
-//                    }, {
-//                        name: '中标阶段',
-//
-//                        type: 'bar',
-//                        stack: '阶段',
-//                        data: [3934.13, 3200.22, 1382.52, 3934.13]
-//                    }, {
-//                        name: '完工阶段',
-//                        type: 'bar',
-//
-//                        stack: '阶段',
-//                        data: [11980.74, 2240.18, 3487.11, 6980.74]
-//                    }]
-//            };
-//            ysyq_payment_Chart.setOption(ysyq_payment_Option);
-//        }
 
         private updateMxTable(): void {
-         	var name = this.mMxTableId + "_jqgrid_1234";
+            var name = this.mMxTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createMxTable(name);
-			var data = [[""]];
+            var data = [[""]];
             var row = [];
             if (this.mMxData != undefined) {
                 data = [];
@@ -194,13 +142,13 @@ module cb_byq {
                     }
                 }
             }
-           
-            
-            
-			var parent = $("#" + this.mMxTableId);
-			parent.empty();
-			parent.append("<table id='"+ name +"'></table>");
-			
+
+
+
+            var parent = $("#" + this.mMxTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
+
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
@@ -217,35 +165,35 @@ module cb_byq {
                     width: 1250,
                     shrinkToFit: false,
                     autoScroll: true,
-                    rowNum:1000
-//                    userData: {
-//                        'title': "合计"
-//                    },
-//                    footerrow: true,
-//                    userDataOnFooter: true
+                    rowNum: 1000
+                    //                    userData: {
+                    //                        'title': "合计"
+                    //                    },
+                    //                    footerrow: true,
+                    //                    userDataOnFooter: true
                 }));
 
         }
-        
-        
-         private updateJttbTable(): void {
-         	var name = this.mJttbTableId + "_jqgrid_1234";
+
+
+        private updateJttbTable(): void {
+            var name = this.mJttbTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createJttbTable(name);
-			var data = [
-				["沈变"],
-				["衡变"],
-				["新变"],
-				["总计"]];
-             
-            for (var i = 0; i < data.length; ++i){             
-                data[i] = this.format( data[i].concat(this.mJtData[i]))
+            var data = [
+                ["沈变"],
+                ["衡变"],
+                ["新变"],
+                ["总计"]];
+
+            for (var i = 0; i < data.length; ++i) {
+                data[i] = this.format(data[i].concat(this.mJtData[i]))
             }
-            
-            
-			var parent = $("#" + this.mJttbTableId);
-			parent.empty();
-			parent.append("<table id='"+ name +"'></table>");
-			
+
+
+            var parent = $("#" + this.mJttbTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
+
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
@@ -262,15 +210,15 @@ module cb_byq {
                     width: 1250,
                     shrinkToFit: true,
                     autoScroll: true,
-//                    userData: {
-//                        'title': "合计"
-//                    },
-//                    footerrow: true,
-//                    userDataOnFooter: true
+                    //                    userData: {
+                    //                        'title': "合计"
+                    //                    },
+                    //                    footerrow: true,
+                    //                    userDataOnFooter: true
                 }));
 
         }
-        
+
         private format(row: string[]) {
             for (var col = 1; col < row.length; ++col) {
                 if (col == 3) {
@@ -283,23 +231,23 @@ module cb_byq {
             }
             return row
         }
-        
+
         private updateGstbTable(): void {
-         	var name = this.mGstbTableId + "_jqgrid_1234";
+            var name = this.mGstbTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createGstbTable(name);
-			var data = [];
-            for (var i = 0; i < this.mMonth; ++i){               
+            var data = [];
+            for (var i = 0; i < this.mMonth; ++i) {
                 data.push(this.format([(i + 1) + "月"].concat(this.mGsData[i])));
             }
-            
+
             data.push(this.format(["总计"].concat(this.mGsData[this.mMonth])));
-            
-			var parent = $("#" + this.mGstbTableId);
-			parent.empty();
-			parent.append("<table id='"+ name +"'></table>");
-			var height : any = '100%';
-            if (this.mMonth > 4){
-                height = 110;    
+
+            var parent = $("#" + this.mGstbTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
+            var height: any = '100%';
+            if (this.mMonth > 4) {
+                height = 110;
             }
             $("#" + name).jqGrid(
                 tableAssist.decorate({
@@ -317,11 +265,11 @@ module cb_byq {
                     width: 1250,
                     shrinkToFit: true,
                     autoScroll: true,
-//                    userData: {
-//                        'title': "合计"
-//                    },
-//                    footerrow: true,
-//                    userDataOnFooter: true
+                    //                    userData: {
+                    //                        'title': "合计"
+                    //                    },
+                    //                    footerrow: true,
+                    //                    userDataOnFooter: true
                 }));
 
         }

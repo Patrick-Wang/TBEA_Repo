@@ -20,6 +20,7 @@ var yqysysfx;
     })();
     var View = (function () {
         function View() {
+            this.mDataSet = new Util.Ajax("yqysysfx_update.do");
             this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
@@ -28,18 +29,15 @@ var yqysysfx;
         View.prototype.init = function (echartId, tableId) {
             this.mTableId = tableId;
             this.mEchartId = echartId;
-            this.mDataSet = new Util.DateDataSet("yqysysfx_update.do");
             this.updateTable();
             this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByCompany(1, 2014, this.mComp, function (dataArray) {
-                if (null != dataArray) {
-                    _this.mData = JSON.parse(dataArray);
-                    _this.updateTable();
-                    _this.updateEchart();
-                }
+            this.mDataSet.get({ companyId: this.mComp }).then(function (dataArray) {
+                _this.mData = dataArray;
+                _this.updateTable();
+                _this.updateEchart();
             });
         };
         View.prototype.onCompanySelected = function (comp) {

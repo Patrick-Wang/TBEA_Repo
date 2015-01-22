@@ -58,13 +58,12 @@ module hkjhjg {
         private mJGData: Array<string[]>;
         private mZTData: Array<string>;
         private mXZData: Array<string>;
-        private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax = new Util.Ajax("hkjhjg_update.do");
         private mTableIds: string[];
         private mEchartId;
         public init(echartId: string, tableId: string[], month: number, year: number): void {
             this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("hkjhjg_update.do");
             this.mTableIds = tableId;
             this.mEchartId = echartId;
             this.updateJGTable();
@@ -86,54 +85,72 @@ module hkjhjg {
         }
         
         public updateUI() {
-            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data: string) => {
-                if (null != data) {
-                	var tmpData = data.split("##");
-                	
-                	this.mJGData = JSON.parse(tmpData[0]);
-                	
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then((data: any) => {
 
-                	this.mXZData = JSON.parse(tmpData[1]);
-                	
+                    this.mJGData = data[0];
 
-                	this.mZTData = JSON.parse(tmpData[2]);
-                	
+                    this.mZTData = data[1][0];
+
+                    this.mXZData = data[2][0];
+
                     $('h1').text(this.mYear + "年" + this.mMonth + "月 回款计划结构明细");
                     document.title = this.mYear + "年" + this.mMonth + "月 回款计划结构明细";
                     this.updateJGTable();
                     this.updateZTTable();
                     this.updateXZTable();
                     this.updateEchart();
-                }
-            });
+
+                });
         }
         private updateEchart(): void {
             var hkjhjgChart = echarts.init($("#" + this.mEchartId)[0]);
             var legend = ["确保可回逾期应收账款", "确保可回逾期款", "确保可回未到期应收账款"
                           , "确保可回未到期款", "争取可回逾期应收账款", "争取可回逾期款"
                           , "争取可回未到期应收账款", "争取可回未到期款"];
+            var legendNew = [];
             var dataOut = [];
             var qbTotal = 0;
             var zqTotal = 0;
-            
-            for (var i = 0; i < legend.length; ++i) {
-                dataOut.push({ name: legend[i], value: i + 1 });
-                if (i < 4) {
-                	qbTotal += (i + 1);
-                } else {
-                	zqTotal += (i + 1);
-				}
+            var val : any = null;
+            for (var i = 0; i < legend.length - 4; ++i) {
+                val = parseFloat(this.mJGData[1][i]).toFixed(2);
+                if (val > 0){
+                    dataOut.push({ name: legend[i], value: val });
+                    legendNew.push(legend[i]);
+                }
             }
-            var dataIn = [{ name: "确保", value: qbTotal },
-                          { name: "争取", value: zqTotal }];
+            
+            for (var i = 4; i < legend.length; ++i) {
+                val = parseFloat(this.mJGData[2][i - 4]).toFixed(2);
+                if (val > 0){
+                    dataOut.push({ name: legend[i], value: val });
+                    legendNew.push(legend[i]);
+                }
+            }
+            
+            
+            var dataIn = [];
+            val = { name: "确保", value: parseFloat(this.mXZData[0]).toFixed(2) };
+            if (val.value > 0){
+                dataIn.push({ name: "确保", value: parseFloat(this.mXZData[0]).toFixed(2) });
+            }
+            val = { name: "确保", value: parseFloat(this.mXZData[1]).toFixed(2) };
+            if (val.value > 0){
+                dataIn.push({ name: "争取", value: parseFloat(this.mXZData[1]).toFixed(2) });
+            }
+            
+//          [{ name: "确保", value: qbTotal },
+//          { name: "争取", value: zqTotal }];
 
             var hkjhjgOption = {
                 tooltip: {
-                    trigger: 'item'
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 legend: {
                     x: "left",
-                    data: legend,
+                    data: legendNew,
                     orient: "vertical"
                 },
                 toolbox: {
@@ -142,12 +159,12 @@ module hkjhjg {
                 calculable: false,
                 series: [
                     {
-                        name: "1",
+                        name: "款项名称",
                         type: 'pie',
                         radius: [100, 130],
                         data: dataOut
                     }, {
-                        name: "2",
+                        name: "款项名称",
                         type: 'pie',
                         radius: [0, 60],
                          itemStyle : {
@@ -166,59 +183,6 @@ module hkjhjg {
             }
 
             hkjhjgChart.setOption(hkjhjgOption);
-            
-//            var ysyq_payment_Option = {
-//                animation: true,
-//                tooltip: {
-//                    trigger: 'axis',
-//                    /* formatter : "{b}<br/>{a} : {c} 万元<br/>{a1} : {c1} 万元", */
-//
-//                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-//                        type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
-//                    }
-//                },
-//                legend: {
-//                    x: 'right',
-//                    data: ["合同金额", "预期阶段", "中标阶段", "完工阶段"],
-//
-//                },
-//                xAxis: [{
-//                    type: 'category',
-//                    data: ['沈变', '衡变', '新变', '天变']
-//                }],
-//                yAxis: [{
-//                    type: 'value'
-//
-//                }],
-//
-//                calculable: true,
-//                series: [{
-//                    name: '合同金额',
-//                    type: 'bar',
-//
-//                    barCategoryGap: "50%",
-//                    data: [63363.11, 55628.27, 58521.55, 69100.58]
-//                }, {
-//                        name: '预期阶段',
-//                        type: 'bar',
-//
-//                        stack: '阶段',
-//                        data: [9098.58, 1240.13, 1140.61, 3154.82]
-//                    }, {
-//                        name: '中标阶段',
-//
-//                        type: 'bar',
-//                        stack: '阶段',
-//                        data: [3934.13, 3200.22, 1382.52, 3934.13]
-//                    }, {
-//                        name: '完工阶段',
-//                        type: 'bar',
-//
-//                        stack: '阶段',
-//                        data: [11980.74, 2240.18, 3487.11, 6980.74]
-//                    }]
-//            };
-//            ysyq_payment_Chart.setOption(ysyq_payment_Option);
         }
 
         private updateJGTable(): void {

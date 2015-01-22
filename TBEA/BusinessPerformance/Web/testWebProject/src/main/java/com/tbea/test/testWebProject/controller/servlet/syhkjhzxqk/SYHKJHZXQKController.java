@@ -1,8 +1,10 @@
 package com.tbea.test.testWebProject.controller.servlet.syhkjhzxqk;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +55,12 @@ public class SYHKJHZXQKController {
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		
 		
-		String syhkjhzxqk = JSONArray.fromObject(service.getSyhkjhzxqkData(d, comp)).toString().replace("null", "0.00");
+				
+		List<String[][]> hkjhs = new ArrayList<String[][]>();
+		hkjhs.add(service.getSyhkjhzxqkData(d, comp));
+		hkjhs.add(service.getHkjhzxqkXjData(d, comp));
+		String syhkjhzxqk = JSONArray.fromObject(hkjhs).toString().replace("null", "0.00");
+
 		return syhkjhzxqk;
 	}
 	

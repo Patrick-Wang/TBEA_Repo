@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.mrhkhz.MRHKHZLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.mrhkhz.MRHKHZDLDao;
+import com.tbea.datatransfer.model.dao.zjsb.mrhkhz.MRHKHZSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.mrhkhz.MRHKHZTBDao;
 import com.tbea.datatransfer.model.entity.local.MRHKHZLocal;
 import com.tbea.datatransfer.model.entity.zjdl.MRHKHZDL;
+import com.tbea.datatransfer.model.entity.zjsb.MRHKHZSB;
 import com.tbea.datatransfer.model.entity.zjtb.MRHKHZTB;
 
 @Transactional("transactionManager")
@@ -20,6 +22,8 @@ public class MRHKHZTransferServiceImpl implements MRHKHZTransferService {
 
 	private MRHKHZTBDao mrhkhzTBDao;
 
+	private MRHKHZSBDao mrhkhzSBDao;
+	
 	@Override
 	public boolean transferMRHKHZ() {
 		boolean result = false;
@@ -59,6 +63,25 @@ public class MRHKHZTransferServiceImpl implements MRHKHZTransferService {
 				mrhkhzLocal.setQybh(301);
 				mrhkhzLocalDao.merge(mrhkhzLocal);
 			}
+			
+			// sb
+			mrhkhzLocalDao.deleteMRHKHZLocalByQY(1);
+			List<MRHKHZSB> mrhkhzSBList = mrhkhzSBDao.getAllMRHKHZSB();
+			for (MRHKHZSB mrhkhzSB : mrhkhzSBList) {
+				mrhkhzLocal = new MRHKHZLocal();
+				mrhkhzLocal.setGxrq(mrhkhzSB.getGxrq());
+				mrhkhzLocal.setHkrq(mrhkhzSB.getHkrq());
+				mrhkhzLocal.setHkje(mrhkhzSB.getHkje());
+				mrhkhzLocal.setQzqbbc(mrhkhzSB.getQzqbbc());
+				mrhkhzLocal.setQzzqbc(mrhkhzSB.getQzzqbc());
+				mrhkhzLocal.setYhkzkjysdhkje(mrhkhzSB.getYhkzkjysdhkje());
+				mrhkhzLocal.setJzydyszkzmye(mrhkhzSB.getJzydyszkzmye());
+				mrhkhzLocal.setJtxdydzjhlzb(mrhkhzSB.getJtxdydzjhlzb());
+				mrhkhzLocal.setSfdrwc(mrhkhzSB.getSfdrwc());
+				mrhkhzLocal.setQybh(301);
+				mrhkhzLocalDao.merge(mrhkhzLocal);
+			}
+
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

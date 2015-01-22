@@ -138,7 +138,7 @@ module zbhz_overview {
 
 		private getMonth(): string[]{
 			var month: string[] = [];
-		   for (var i = 0; i < this.mMonth; ++i){
+		   for (var i = 0; i < 12; ++i){
 		   		month.push((i + 1) + "月")
 		   }
 		   return month;
@@ -212,7 +212,7 @@ module zbhz_overview {
 			var jdCount = data[0].length;
 			var jd = [];
 			 var legend = ["季度计划", "季度累计", "季度完成率"];
-			for (var i = 1; i <= jdCount; ++i){
+			for (var i = 1; i <= 4; ++i){
 				jd.push("第" + i + "季度");
 			}
 			
@@ -283,7 +283,7 @@ module zbhz_overview {
 			var xYear = [this.mYear - 2 + "年", this.mYear - 1 + "年", this.mYear + "年"]
 			
 			
-			for (var i = 1; i <= jdCount; ++i){
+			for (var i = 1; i <= 4; ++i){
 				jd.push("第" + i + "季度");
 			}
 			
@@ -412,7 +412,7 @@ module zbhz_overview {
 			var jdCount = data[0].length;
 			var jd = [];
 			var legend = [this.mYear - 1 + "年同期季度累计", this.mYear + "年同期季度累计", "同比增长率"];
-			for (var i = 1; i <= jdCount; ++i){
+			for (var i = 1; i <= 4; ++i){
 				jd.push("第" + i + "季度");
 			}
 			

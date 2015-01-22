@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.yszktz.YSZKTZLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.yszktz.YSZKTZDLDao;
+import com.tbea.datatransfer.model.dao.zjsb.yszktz.YSZKTZSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.yszktz.YSZKTZTBDao;
 import com.tbea.datatransfer.model.entity.local.YSZKTZLocal;
 import com.tbea.datatransfer.model.entity.zjdl.YSZKTZDL;
+import com.tbea.datatransfer.model.entity.zjsb.YSZKTZSB;
 import com.tbea.datatransfer.model.entity.zjtb.YSZKTZTB;
 
 @Transactional("transactionManager")
@@ -19,6 +21,8 @@ public class YSZKTZTransferServiceImpl implements YSZKTZTransferService {
 	private YSZKTZDLDao yszktzDLDao;
 	
 	private YSZKTZTBDao yszktzTBDao;
+	
+	private YSZKTZSBDao yszktzSBDao;
 
 	@Override
 	@Transactional("transactionManager")
@@ -76,6 +80,33 @@ public class YSZKTZTransferServiceImpl implements YSZKTZTransferService {
 				yszktzLocal.setQybh(301);
 				yszktzLocalDao.merge(yszktzLocal);
 			}
+			
+			// sb
+			yszktzLocalDao.deleteYSZKTZLocalByQY(1);
+			List<YSZKTZSB> yszktzSBList = yszktzSBDao.getAllYSZKTZSB();
+			for (YSZKTZSB yszktzSB : yszktzSBList) {
+				yszktzLocal = new YSZKTZLocal();
+				yszktzLocal.setGxrq(yszktzSB.getGxrq());
+				yszktzLocal.setHtbh(yszktzSB.getHtbh());
+				yszktzLocal.setKhbh(yszktzSB.getKhbh());
+				yszktzLocal.setKhmc(yszktzSB.getKhmc());
+				yszktzLocal.setKhsshy(yszktzSB.getKhsshy());
+				yszktzLocal.setKxlb(yszktzSB.getKxlb());
+				// yszktzLocal.setKxzt(yszktzTB.getKxzt());
+				yszktzLocal.setYsje(yszktzSB.getYsje());
+				yszktzLocal.setDqrq(yszktzSB.getDqrq());
+				yszktzLocal.setYhxje(yszktzSB.getYhxje());
+				yszktzLocal.setYfhje(yszktzSB.getYfhje());
+				yszktzLocal.setFhrq(yszktzSB.getFhrq());
+				yszktzLocal.setYkpje(yszktzSB.getYkpje());
+				yszktzLocal.setKprq(yszktzSB.getKprq());
+				// yszktzLocal.setYqyyfl(yszktzTB.getYqyyfl());
+				// yszktzLocal.setSftgflsdqs(yszktzTB.getSftgflsdqs());
+				yszktzLocal.setSfdrwc(yszktzSB.getSfdrwc());
+				yszktzLocal.setQybh(301);
+				yszktzLocalDao.merge(yszktzLocal);
+			}
+
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

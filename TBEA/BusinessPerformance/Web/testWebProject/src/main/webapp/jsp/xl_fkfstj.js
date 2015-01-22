@@ -60,6 +60,7 @@ var xl_fkfstj;
     })();
     var View = (function () {
         function View() {
+            this.mDataSet = new Util.Ajax("xlfkfstj_update.do");
             this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
@@ -74,7 +75,6 @@ var xl_fkfstj;
             this.fdwTableId = fdwTableId;
             this.gwTableId = gwTableId;
             this.nwTableId = nwTableId;
-            this.mDataSet = new Util.DateDataSet("xlfkfstj_update.do");
             this.updateUI();
         };
         View.prototype.onYearSelected = function (year) {
@@ -88,32 +88,30 @@ var xl_fkfstj;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
-                if (null != data) {
-                    var fktjData = JSON.parse(data);
-                    _this.updateFdwTable(_this.fdwTableId, _this.fdwTableId + "_jqgrid_1234", JQGridAssistantFactory.createFdwTable(_this.fdwTableId + "_jqgrid_1234"), fktjData[0]);
-                    var rawData = [
-                        ["集中招标"],
-                        ["非集中招标"],
-                        ["合计"]
-                    ];
-                    _this.updateTable(_this.gwTableId, _this.gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(_this.gwTableId + "_jqgrid_1234"), rawData, fktjData[1]);
-                    rawData = [
-                        ["集中招标"],
-                        ["非集中招标"],
-                        ["合计"]
-                    ];
-                    _this.updateTable(_this.nwTableId, _this.nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(_this.nwTableId + "_jqgrid_1234"), rawData, fktjData[2], true);
-                    $('h1').text("线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计");
-                    document.title = "线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计";
-                    var chartDataFdw = [];
-                    for (var i = 0; i < fktjData[0].length - 1; ++i) {
-                        chartDataFdw.push(parseFloat(fktjData[0][i][1]).toFixed(2));
-                    }
-                    _this.updatePieEchart(_this.echartIdFDW, "非电网合同订单总量", chartDataFdw);
-                    _this.updateEchart(_this.echartIdGW, "国网合同订单总量", [{ value: parseFloat(fktjData[1][0][1]).toFixed(2), name: '集中招标' }, { value: parseFloat(fktjData[1][1][1]).toFixed(2), name: '非集中招标' }]);
-                    _this.updateEchart(_this.echartIdNW, "南网合同订单总量", [{ value: parseFloat(fktjData[2][0][1]).toFixed(2), name: '集中招标' }, { value: parseFloat(fktjData[2][1][1]).toFixed(2), name: '非集中招标' }]);
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (data) {
+                var fktjData = data;
+                _this.updateFdwTable(_this.fdwTableId, _this.fdwTableId + "_jqgrid_1234", JQGridAssistantFactory.createFdwTable(_this.fdwTableId + "_jqgrid_1234"), fktjData[0]);
+                var rawData = [
+                    ["集中招标"],
+                    ["非集中招标"],
+                    ["合计"]
+                ];
+                _this.updateTable(_this.gwTableId, _this.gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(_this.gwTableId + "_jqgrid_1234"), rawData, fktjData[1]);
+                rawData = [
+                    ["集中招标"],
+                    ["非集中招标"],
+                    ["合计"]
+                ];
+                _this.updateTable(_this.nwTableId, _this.nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(_this.nwTableId + "_jqgrid_1234"), rawData, fktjData[2], true);
+                $('h1').text("线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计");
+                document.title = "线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计";
+                var chartDataFdw = [];
+                for (var i = 0; i < fktjData[0].length - 1; ++i) {
+                    chartDataFdw.push(parseFloat(fktjData[0][i][1]).toFixed(2));
                 }
+                _this.updatePieEchart(_this.echartIdFDW, "非电网合同订单总量", chartDataFdw);
+                _this.updateEchart(_this.echartIdGW, "国网合同订单总量", [{ value: parseFloat(fktjData[1][0][1]).toFixed(2), name: '集中招标' }, { value: parseFloat(fktjData[1][1][1]).toFixed(2), name: '非集中招标' }]);
+                _this.updateEchart(_this.echartIdNW, "南网合同订单总量", [{ value: parseFloat(fktjData[2][0][1]).toFixed(2), name: '集中招标' }, { value: parseFloat(fktjData[2][1][1]).toFixed(2), name: '非集中招标' }]);
             });
         };
         View.prototype.updatePieEchart = function (chartId, tileTex, data) {

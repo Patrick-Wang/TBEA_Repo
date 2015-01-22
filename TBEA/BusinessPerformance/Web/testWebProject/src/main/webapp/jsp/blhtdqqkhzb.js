@@ -51,7 +51,7 @@ var blhtdqqkhzb;
             this.mYear = args[1];
             this.mTableId = tableId;
             this.mEchartsId = echartId;
-            this.mDataSet = new Util.DateDataSet("blhtdqqkhz_update.do");
+            this.mDataSet = new Util.Ajax("blhtdqqkhz_update.do");
             this.updateTable(this.mTableId);
             this.updateUI();
         };
@@ -66,16 +66,17 @@ var blhtdqqkhzb;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
-                if (null != data) {
-                    var arr = data.split("##");
-                    _this.mChartData = JSON.parse(arr[0]);
-                    _this.mTableData = JSON.parse(arr[1]);
-                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月  保理合同到期情况汇总表");
-                    document.title = _this.mYear + "年" + _this.mMonth + "月  保理合同到期情况汇总表";
-                    _this.updateTable(_this.mTableId);
-                    _this.updateEchart(_this.mEchartsId);
-                }
+            this.mDataSet.get({
+                year: this.mYear,
+                month: this.mMonth,
+                companyId: this.mComp
+            }).then(function (jsonData) {
+                _this.mChartData = jsonData[0];
+                _this.mTableData = jsonData[1];
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月  保理合同到期情况汇总表");
+                document.title = _this.mYear + "年" + _this.mMonth + "月  保理合同到期情况汇总表";
+                _this.updateTable(_this.mTableId);
+                _this.updateEchart(_this.mEchartsId);
             });
         };
         View.prototype.fillData = function (month) {
@@ -89,7 +90,7 @@ var blhtdqqkhzb;
                 }
             }
             else {
-                for (var i = 1; i <= this.mMonth; ++i) {
+                for (var i = 1; i <= 12; ++i) {
                     month.push(i + "月");
                 }
             }

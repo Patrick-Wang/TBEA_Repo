@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.ydhkjhjgb.YDHKJHJGBLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.ydhkjhjgb.YDHKJHJGBDLDao;
+import com.tbea.datatransfer.model.dao.zjsb.ydhkjhjgb.YDHKJHJGBSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.ydhkjhjgb.YDHKJHJGBTBDao;
 import com.tbea.datatransfer.model.entity.local.YDHKJHJGBLocal;
 import com.tbea.datatransfer.model.entity.zjdl.YDHKJHJGBDL;
+import com.tbea.datatransfer.model.entity.zjsb.YDHKJHJGBSB;
 import com.tbea.datatransfer.model.entity.zjtb.YDHKJHJGBTB;
 
 @Transactional("transactionManager")
@@ -20,6 +22,8 @@ public class YDHKJHJGBTransferServiceImpl implements YDHKJHJGBTransferService {
 
 	private YDHKJHJGBTBDao ydhkjhjgbTBDao;
 
+	private YDHKJHJGBSBDao ydhkjhjgbSBDao;
+	
 	@Override
 	public boolean transferYDHKJHJGB() {
 		boolean result = false;
@@ -66,6 +70,28 @@ public class YDHKJHJGBTransferServiceImpl implements YDHKJHJGBTransferService {
 				ydhkjhjgbLocal.setXyqsk(ydhkjhjgbTB.getXyqsk());
 				ydhkjhjgbLocal.setGyqsk(ydhkjhjgbTB.getGyqsk());
 				ydhkjhjgbLocal.setSfdrwc(ydhkjhjgbTB.getSfdrwc());
+				ydhkjhjgbLocal.setQybh(301);
+				ydhkjhjgbLocalDao.merge(ydhkjhjgbLocal);
+			}
+			// sb
+			ydhkjhjgbLocalDao.deleteYDHKJHJGBLocalByQY(1);
+			List<YDHKJHJGBSB> ydhkjhjgbSBList = ydhkjhjgbSBDao
+					.getAllYDHKJHJGBSB();
+			for (YDHKJHJGBSB ydhkjhjgbSB : ydhkjhjgbSBList) {
+				ydhkjhjgbLocal = new YDHKJHJGBLocal();
+				ydhkjhjgbLocal.setGxrq(ydhkjhjgbSB.getGxrq());
+				ydhkjhjgbLocal.setGsbm(ydhkjhjgbSB.getGsbm());
+				ydhkjhjgbLocal.setQbkhyqyszk(ydhkjhjgbSB.getQbkhyqyszk());
+				ydhkjhjgbLocal.setQbkhyqk(ydhkjhjgbSB.getQbkhyqk());
+				ydhkjhjgbLocal.setQbkhwdqyszk(ydhkjhjgbSB.getQbkhwdqyszk());
+				ydhkjhjgbLocal.setQbkhwdqk(ydhkjhjgbSB.getQbkhwdqk());
+				ydhkjhjgbLocal.setZqkhyqyszk(ydhkjhjgbSB.getZqkhyqyszk());
+				ydhkjhjgbLocal.setZqkhyqk(ydhkjhjgbSB.getZqkhyqk());
+				ydhkjhjgbLocal.setZqkhwdqyszk(ydhkjhjgbSB.getZqkhwdqyszk());
+				ydhkjhjgbLocal.setZqkhwdqk(ydhkjhjgbSB.getZqkhwdqk());
+				ydhkjhjgbLocal.setXyqsk(ydhkjhjgbSB.getXyqsk());
+				ydhkjhjgbLocal.setGyqsk(ydhkjhjgbSB.getGyqsk());
+				ydhkjhjgbLocal.setSfdrwc(ydhkjhjgbSB.getSfdrwc());
 				ydhkjhjgbLocal.setQybh(301);
 				ydhkjhjgbLocalDao.merge(ydhkjhjgbLocal);
 			}

@@ -19,6 +19,7 @@ var cqk;
         function View() {
             this.currentSelected = 0;
             this.mComp = 0 /* SB */;
+            this.mDataSet = new Util.Ajax("cqk_update.do");
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -33,7 +34,6 @@ var cqk;
             this.mEchartIdLine = echartIdLine;
             this.mEchartIdPie = echartIdPie;
             this.mEchartIdSquire = echartIdSquire;
-            this.mDataSet = new Util.DateDataSet("cqk_update.do");
             this.updateTable(this.mTableId);
             this.updateUI();
         };
@@ -48,18 +48,15 @@ var cqk;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
-                if (null != data) {
-                    var arr = data.split("##");
-                    _this.mTableData = JSON.parse(arr[0]);
-                    _this.mLineData = JSON.parse(arr[1]);
-                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月  陈欠款");
-                    document.title = _this.mYear + "年" + _this.mMonth + "月  陈欠款";
-                    _this.updateTable(_this.mTableId);
-                    _this.updatePieEchart(_this.mEchartIdPie);
-                    _this.updateLineEchart(_this.mEchartIdLine);
-                    _this.updateSquareEchart(_this.mEchartIdSquire);
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (jsonData) {
+                _this.mTableData = jsonData[0];
+                _this.mLineData = jsonData[1];
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月  陈欠款");
+                document.title = _this.mYear + "年" + _this.mMonth + "月  陈欠款";
+                _this.updateTable(_this.mTableId);
+                _this.updatePieEchart(_this.mEchartIdPie);
+                _this.updateLineEchart(_this.mEchartIdLine);
+                _this.updateSquareEchart(_this.mEchartIdSquire);
             });
         };
         View.prototype.onSelected = function (i) {
@@ -86,7 +83,7 @@ var cqk;
                 data.push(this.mLineData[this.currentSelected * 5 + 2]);
                 data.push(this.mLineData[this.currentSelected * 5 + 3]);
                 data.push(this.mLineData[this.currentSelected * 5 + 4]);
-                for (var i = 1; i <= this.mMonth; ++i) {
+                for (var i = 1; i <= 12; ++i) {
                     month.push(i + "月");
                 }
             }
@@ -153,7 +150,7 @@ var cqk;
             else {
                 data.push(this.mLineData[this.currentSelected * 5]);
                 data.push(this.mLineData[this.currentSelected * 5 + 1]);
-                for (var i = 1; i <= this.mMonth; ++i) {
+                for (var i = 1; i <= 12; ++i) {
                     month.push(i + "月");
                 }
             }
@@ -204,7 +201,7 @@ var cqk;
         };
         View.prototype.updatePieEchart = function (echart) {
             var data = this.mTableData;
-            var legend = ["国网、南网", "省、市电力公司", "五大发电", "其他电源", "石油石化", "轨道交通", "出口合同", "其他"];
+            var legend = ["国网、南网", "省、市电力公司", "五大发电", "其他电源", "石油石化", "轨道交通", "出口合同"];
             var dljpt = 0;
             for (var i = 0; i < 4; ++i) {
                 dljpt += parseInt(this.mTableData[i][3]);
@@ -242,24 +239,8 @@ var cqk;
                     {
                         name: "行业占比",
                         type: 'pie',
-                        radius: [100, 130],
+                        radius: [0, 130],
                         data: dataOut
-                    },
-                    {
-                        name: "行业占比",
-                        type: 'pie',
-                        radius: [0, 60],
-                        itemStyle: {
-                            normal: {
-                                label: {
-                                    position: 'inner'
-                                },
-                                labelLine: {
-                                    show: false
-                                }
-                            }
-                        },
-                        data: dataIn
                     }
                 ]
             };

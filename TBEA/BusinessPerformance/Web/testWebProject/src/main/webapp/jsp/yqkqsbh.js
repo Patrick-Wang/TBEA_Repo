@@ -17,6 +17,7 @@ var yqkqsbh;
     })();
     var View = (function () {
         function View() {
+            this.mDataSet = new Util.Ajax("yqkbhqs_update.do");
             this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
@@ -27,7 +28,6 @@ var yqkqsbh;
             this.mYear = args[1];
             this.mTableId = tableId;
             this.mCharId = echartId;
-            this.mDataSet = new Util.DateDataSet("yqkbhqs_update.do");
             this.updateTable(tableId);
             this.updateUI();
         };
@@ -39,14 +39,12 @@ var yqkqsbh;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
-                if (null != data) {
-                    _this.mData = JSON.parse(data);
-                    $('h1').text(_this.mYear + "年  逾期款趋势变化表");
-                    document.title = _this.mYear + "年  逾期款趋势变化表";
-                    _this.updateEchart(_this.mCharId);
-                    _this.updateTable(_this.mTableId);
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (data) {
+                _this.mData = data;
+                $('h1').text(_this.mYear + "年  逾期款趋势变化表");
+                document.title = _this.mYear + "年  逾期款趋势变化表";
+                _this.updateEchart(_this.mCharId);
+                _this.updateTable(_this.mTableId);
             });
         };
         View.prototype.updateEchart = function (echart) {

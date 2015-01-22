@@ -16,6 +16,7 @@ var yszkjgqkb;
     var View = (function () {
         function View() {
             this.mCurrentSelected = 0;
+            this.mDataSet = new Util.Ajax("yszkjgqk_update.do");
             this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
@@ -32,7 +33,6 @@ var yszkjgqkb;
             this.mEchartIdLine = echartIdLine;
             this.mEchartIdPie = echartIdPie;
             this.mEchartIdSquire = echartIdSquire;
-            this.mDataSet = new Util.DateDataSet("yszkjgqk_update.do");
             this.updateTable(tableId);
             this.updateUI();
         };
@@ -47,20 +47,17 @@ var yszkjgqkb;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
-                if (null != data) {
-                    var arr = data.split("##");
-                    _this.mTableData = JSON.parse(arr[0]);
-                    _this.mBarData = JSON.parse(arr[1]);
-                    _this.mLineData = JSON.parse(arr[2]);
-                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月  应收账款结构情况表");
-                    document.title = _this.mYear + "年" + _this.mMonth + "月  应收账款结构情况表";
-                    _this.updateTable(_this.mTableId);
-                    _this.updatePieEchart(_this.mEchartIdPie);
-                    _this.updateLineEchart(_this.mEchartIdLine);
-                    _this.updateBarEchart(_this.mEchartIdBar);
-                    _this.updateSquareEchart(_this.mEchartIdSquire);
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (data) {
+                _this.mTableData = data[0];
+                _this.mBarData = data[1];
+                _this.mLineData = data[2];
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月  应收账款结构情况表");
+                document.title = _this.mYear + "年" + _this.mMonth + "月  应收账款结构情况表";
+                _this.updateTable(_this.mTableId);
+                _this.updatePieEchart(_this.mEchartIdPie);
+                _this.updateLineEchart(_this.mEchartIdLine);
+                _this.updateBarEchart(_this.mEchartIdBar);
+                _this.updateSquareEchart(_this.mEchartIdSquire);
             });
         };
         View.prototype.onSelected = function (i) {
@@ -73,7 +70,7 @@ var yszkjgqkb;
             var legend = [this.mYear + "应收未收", this.mYear + "未到期款", this.mYear + "未到期质保金"];
             var month = [];
             var data = [];
-            for (var i = 1; i <= this.mMonth; ++i) {
+            for (var i = 1; i <= 12; ++i) {
                 month.push(i + "月");
             }
             var row = [];
@@ -152,7 +149,7 @@ var yszkjgqkb;
         View.prototype.updateSquareEchart = function (echart) {
             var month = [];
             var data = [];
-            for (var i = 1; i <= this.mMonth; ++i) {
+            for (var i = 1; i <= 12; ++i) {
                 month.push(i + "月");
             }
             for (var i = 0; i < 3; ++i) {
@@ -203,7 +200,7 @@ var yszkjgqkb;
         View.prototype.updateLineEchart = function (echart) {
             var month = [];
             var data = [];
-            for (var i = 1; i <= this.mMonth; ++i) {
+            for (var i = 1; i <= 12; ++i) {
                 month.push(i + "月");
             }
             for (var i = 0; i < 2; ++i) {

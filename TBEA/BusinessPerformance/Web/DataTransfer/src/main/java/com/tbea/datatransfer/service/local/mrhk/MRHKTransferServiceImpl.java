@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.mrhk.MRHKLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.mrhk.MRHKDLDao;
+import com.tbea.datatransfer.model.dao.zjsb.mrhk.MRHKSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.mrhk.MRHKTBDao;
 import com.tbea.datatransfer.model.entity.local.MRHKLocal;
 import com.tbea.datatransfer.model.entity.zjdl.MRHKDL;
+import com.tbea.datatransfer.model.entity.zjsb.MRHKSB;
 import com.tbea.datatransfer.model.entity.zjtb.MRHKTB;
 
 @Transactional("transactionManager")
@@ -20,6 +22,8 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 
 	private MRHKTBDao mrhkTBDao;
 
+	private MRHKSBDao mrhkSBDao;
+	
 	@Override
 	public boolean transferMRHK() {
 		boolean result = false;
@@ -50,6 +54,21 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 				mrhkLocal.setHkrq(mrhkTB.getHkrq());
 				mrhkLocal.setHkje(mrhkTB.getHkje());
 				mrhkLocal.setSfdrwc(mrhkTB.getSfdrwc());
+				mrhkLocal.setQybh(301);
+				mrhkLocalDao.merge(mrhkLocal);
+			}
+			
+			// sb
+			mrhkLocalDao.deleteMRHKLocalByQY(1);
+			List<MRHKSB> mrhkSBList = mrhkSBDao.getAllMRHKSB();
+			for (MRHKSB mrhkSB : mrhkSBList) {
+				mrhkLocal = new MRHKLocal();
+				mrhkLocal.setGxrq(mrhkSB.getGxrq());
+				mrhkLocal.setXmgs(mrhkSB.getXmgs());
+				mrhkLocal.setHkxz(mrhkSB.getHkxz());
+				mrhkLocal.setHkrq(mrhkSB.getHkrq());
+				mrhkLocal.setHkje(mrhkSB.getHkje());
+				mrhkLocal.setSfdrwc(mrhkSB.getSfdrwc());
 				mrhkLocal.setQybh(301);
 				mrhkLocalDao.merge(mrhkLocal);
 			}

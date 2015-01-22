@@ -56,13 +56,12 @@ module yszkpzjh {
         private mMonth: number;
         private mYear: number;
         private mData: Array<string[]>;
-        private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax = new Util.Ajax("yszkpzjh_update.do");
         private mTableId : string;
         private mEchartId : string;
         public init(echartId: string, tableId: string, month: number, year: number): void {
         this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("yszkpzjh_update.do");
             this.mTableId = tableId;
             this.mEchartId = echartId;
             this.updateTable(this.mTableId);
@@ -108,24 +107,23 @@ module yszkpzjh {
             return dest;
         }
         
-		public updateUI(){
-			this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data : any) =>{
-				if (null != data){
-					this.mData =   JSON.parse(data);
-					$('#title h1').text(this.mYear + "年" + this.mMonth + "月 应收账款盘子规划");
+        public updateUI() {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then((data: any) => {
+
+                    this.mData = data;
+                    $('#title h1').text(this.mYear + "年" + this.mMonth + "月 应收账款盘子规划");
                     document.title = this.mYear + "年" + this.mMonth + "月 应收账款盘子规划";
                     $("#dataarea tr").css("display", "none");
-                
-					for (var i = 0; i < this.mData.length; ++i){
-                        var curData : any = this.mData[i];
+
+                    for (var i = 0; i < this.mData.length; ++i) {
+                        var curData: any = this.mData[i];
                         $("#dataarea #" + curData.companyType).css("display", "");
-                         $("#dataarea #" + curData.companyType + "block").css("display", "");
-						this.updateTable("list" + curData.companyType, this.convertData(curData));
-					}
-					
-				}
-			});
-		}
+                        $("#dataarea #" + curData.companyType + "block").css("display", "");
+                        this.updateTable("list" + curData.companyType, this.convertData(curData));
+                    }
+                });
+        }
 
         private refreshTable(listName : string, refreshTags : boolean[], list : number[]) : void {
 			for (var i = 0; i < refreshTags.length; i++) {
