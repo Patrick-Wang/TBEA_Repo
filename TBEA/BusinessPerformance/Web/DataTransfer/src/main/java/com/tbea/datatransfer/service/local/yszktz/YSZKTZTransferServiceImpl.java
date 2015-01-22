@@ -37,7 +37,7 @@ public class YSZKTZTransferServiceImpl implements YSZKTZTransferService {
 				yszktzLocal.setKhmc(yszktzDL.getKhmc());
 				yszktzLocal.setKhsshy(yszktzDL.getKhsshy());
 				yszktzLocal.setKxlb(yszktzDL.getKxlb());
-				// yszktzLocal.setKxzt(yszktzDL.getKxzt());
+				 yszktzLocal.setKxzt(yszktzDL.getKxzt());
 				yszktzLocal.setYsje(yszktzDL.getYsje());
 				yszktzLocal.setDqrq(yszktzDL.getDqrq());
 				yszktzLocal.setYhxje(yszktzDL.getYhxje());
@@ -45,8 +45,8 @@ public class YSZKTZTransferServiceImpl implements YSZKTZTransferService {
 				yszktzLocal.setFhrq(yszktzDL.getFhrq());
 				yszktzLocal.setYkpje(yszktzDL.getYkpje());
 				yszktzLocal.setKprq(yszktzDL.getKprq());
-				// yszktzLocal.setYqyyfl(yszktzDL.getYqyyfl());
-				// yszktzLocal.setSftgflsdqs(yszktzDL.getSftgflsdqs());
+				 yszktzLocal.setYqyyfl(yszktzDL.getYqyyfl());
+				 yszktzLocal.setSftgflsdqs(yszktzDL.getSftgflsdqs());
 				yszktzLocal.setSfdrwc(yszktzDL.getSfdrwc());
 				yszktzLocal.setQybh(6);
 				yszktzLocalDao.merge(yszktzLocal);

@@ -12,4 +12,7 @@ public interface YDHKJHJGBLocalDao extends AbstractReadWriteDao<YDHKJHJGBLocal> 
 
 	public void deleteYDHKJHJGBLocalByQY(int qybh);
 
+	public Double getHKJHZEByQY(String date, int qybh);
+	
+	public YDHKJHJGBLocal getHKJHByQY(String date, int qybh);
 }

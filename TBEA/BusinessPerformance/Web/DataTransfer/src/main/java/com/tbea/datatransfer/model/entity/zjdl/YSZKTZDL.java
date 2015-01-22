@@ -30,6 +30,8 @@ public class YSZKTZDL extends AbstractReadOnlyEntity implements Serializable {
 
 	private String kxlb;
 
+	private String kxzt;
+
 	private Double ysje;
 
 	private Date dqrq;
@@ -43,6 +45,10 @@ public class YSZKTZDL extends AbstractReadOnlyEntity implements Serializable {
 	private Double ykpje;
 
 	private Date kprq;
+
+	private Integer yqyyfl;
+
+	private String sftgflsdqs;
 
 	private String sfdrwc;
 
@@ -105,6 +111,14 @@ public class YSZKTZDL extends AbstractReadOnlyEntity implements Serializable {
 		this.kxlb = kxlb;
 	}
 
+	public String getKxzt() {
+		return kxzt;
+	}
+
+	public void setKxzt(String kxzt) {
+		this.kxzt = kxzt;
+	}
+
 	public Double getYsje() {
 		return ysje;
 	}
@@ -161,6 +175,22 @@ public class YSZKTZDL extends AbstractReadOnlyEntity implements Serializable {
 		this.kprq = kprq;
 	}
 
+	public Integer getYqyyfl() {
+		return yqyyfl;
+	}
+
+	public void setYqyyfl(Integer yqyyfl) {
+		this.yqyyfl = yqyyfl;
+	}
+
+	public String getSftgflsdqs() {
+		return sftgflsdqs;
+	}
+
+	public void setSftgflsdqs(String sftgflsdqs) {
+		this.sftgflsdqs = sftgflsdqs;
+	}
+
 	public String getSfdrwc() {
 		return sfdrwc;
 	}
@@ -171,12 +201,13 @@ public class YSZKTZDL extends AbstractReadOnlyEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "YSZKTZDL [id=" + getId() + ", gxrq=" + gxrq + ", htbh=" + htbh
-				+ ", khbh=" + khbh + ", khmc=" + khmc + ", khsshy=" + khsshy
-				+ ", kxlb=" + kxlb + ", ysje=" + ysje + ", dqrq=" + dqrq
-				+ ", yhxje=" + yhxje + ", yfhje=" + yfhje + ", fhrq=" + fhrq
-				+ ", ykpje=" + ykpje + ", kprq=" + kprq + ", sfdrwc=" + sfdrwc
-				+ "]";
+		return "YSZKTZDL [id=" + getId() + ", gxrq=" + gxrq + ", htbh="
+				+ htbh + ", khbh=" + khbh + ", khmc=" + khmc + ", khsshy="
+				+ khsshy + ", kxlb=" + kxlb + ", kxzt=" + kxzt + ", ysje="
+				+ ysje + ", dqrq=" + dqrq + ", yhxje=" + yhxje + ", yfhje="
+				+ yfhje + ", fhrq=" + fhrq + ", ykpje=" + ykpje + ", kprq="
+				+ kprq + ", yqyyfl=" + yqyyfl + ", sftgflsdqs=" + sftgflsdqs
+				+ ", sfdrwc=" + sfdrwc + "]";
 	}
 
 }
