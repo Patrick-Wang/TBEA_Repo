@@ -73,7 +73,8 @@ module cb_byq {
         public static newInstance(): View {
             return new View();
         }
-
+        
+        private mComp: Util.CompanyType = Util.CompanyType.SB;
         private mMxData: string[][];
         private mJtData: string[][];
         private mGsData: string[][];
@@ -82,7 +83,7 @@ module cb_byq {
         private mJttbTableId: string;
         private mGstbTableId: string;
         private mDataSet: Util.Ajax;
-        private mComp: Util.CompanyType = Util.CompanyType.SB;
+        
         
         public init(
             mxTableId: string,
@@ -91,7 +92,7 @@ module cb_byq {
             mx: string[][],
             jt: string[][],
             gs: string[][],
-            month: number): void {
+            month: number) {
 
             this.mMxTableId = mxTableId;
             this.mJttbTableId = jttbTableId;
@@ -115,7 +116,7 @@ module cb_byq {
 
         public updateUI() {
             this.mDataSet.get({ companyId: this.mComp })
-                .then((data: string) => {
+                .then((data: any) => {
                     this.mMxData = data;
                     this.updateMxTable();
                 });
