@@ -52,6 +52,7 @@ var cb_xl;
     })();
     var View = (function () {
         function View() {
+            this.mDataSet = new Util.Ajax("tb_update.do");
             this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
@@ -65,7 +66,6 @@ var cb_xl;
             this.mJtData = jt;
             this.mGsData = gs;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("tb_update.do");
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
@@ -76,11 +76,9 @@ var cb_xl;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByCompany(0, 0, this.mComp, function (data) {
-                if (null != data) {
-                    _this.mMxData = JSON.parse(data);
-                    _this.updateMxTable();
-                }
+            this.mDataSet.get({ companyId: this.mComp }).then(function (jsonData) {
+                _this.mMxData = jsonData;
+                _this.updateMxTable();
             });
         };
         View.prototype.updateMxTable = function () {

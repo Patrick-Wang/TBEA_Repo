@@ -17,6 +17,7 @@ var syhkjhzxqk;
     var View = (function () {
         function View() {
             this.mComp = 1 /* HB */;
+            this.mDataSet = new Util.Ajax("syhkjhzxqk_update.do");
         }
         View.newInstance = function () {
             return new View();
@@ -24,7 +25,6 @@ var syhkjhzxqk;
         View.prototype.init = function (echartId, tableId, month, year) {
             this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("syhkjhzxqk_update.do");
             this.mTableId = tableId;
             this.mEchartId = echartId;
             this.updateTable();
@@ -41,14 +41,12 @@ var syhkjhzxqk;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
-                if (null != data) {
-                    _this.mData = JSON.parse(data);
-                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月 回款计划执行情况");
-                    document.title = _this.mYear + "年" + _this.mMonth + "月 回款计划执行情况";
-                    _this.updateTable();
-                    _this.updateEchart();
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (data) {
+                _this.mData = data;
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月 回款计划执行情况");
+                document.title = _this.mYear + "年" + _this.mMonth + "月 回款计划执行情况";
+                _this.updateTable();
+                _this.updateEchart();
             });
         };
         View.prototype.getMonth = function () {

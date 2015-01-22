@@ -26,7 +26,7 @@ module yqysysfx {
 
 
         private mData: Array<string[]>;
-        private mDataSet: Util.DateDataSet;
+        private mDataSet: Util.Ajax = new Util.Ajax("yqysysfx_update.do");
         private mTableId: string;
         private mEchartId;
         private mComp: Util.CompanyType = Util.CompanyType.SB;
@@ -35,21 +35,21 @@ module yqysysfx {
             // this.initEchart($('#' + echartId)[0]);
             this.mTableId = tableId;
             this.mEchartId = echartId;
-            this.mDataSet = new Util.DateDataSet("yqysysfx_update.do");
             this.updateTable();
             this.updateUI();
         }
 
         public updateUI() {
-            this.mDataSet.getDataByCompany(1, 2014, this.mComp, (dataArray: string) => {
-                if (null != dataArray) {
-                    this.mData = JSON.parse(dataArray);
+            this.mDataSet.get({companyId: this.mComp })
+                .then((dataArray: any) => {
+
+                    this.mData = dataArray;
                     //                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报");
                     //                    document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报";
                     this.updateTable();
                     this.updateEchart();
-                }
-            });
+
+                });
         }
 
         public onCompanySelected(comp: Util.CompanyType) {

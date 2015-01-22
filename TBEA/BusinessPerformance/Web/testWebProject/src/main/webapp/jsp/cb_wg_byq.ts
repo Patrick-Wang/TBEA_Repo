@@ -92,8 +92,8 @@ module cb_wg_byq {
         private mBtdyData: string[][] = [[]];
         private mMonth: number;
         private mYear: number;
-        private mDateDataSet : Util.DateDataSet;
-        private mCompanyDataSet : Util.DateDataSet;
+        private mDateDataSet : Util.Ajax = new Util.Ajax("wg_date_update.do");
+        private mCompanyDataSet : Util.Ajax = new Util.Ajax("wg_update.do");
         private mMxTableId: string;
         private mJttbTableId: string;
         private mGstbTableId: string;
@@ -110,12 +110,7 @@ module cb_wg_byq {
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
             this.mFdyTableId = fdyTableId;
-            this.mCompanyDataSet = new Util.DateDataSet("wg_update.do");
-            this.mDateDataSet = new Util.DateDataSet("wg_date_update.do");
-//            this.mMxData = mx;
-//            this.mJtData = jt;
-//            this.mGsData = gs;
-//            this.mBtdyData = btdy;
+
             this.mMonth = month;//month;
             this.mYear = year;//year;
             this.updateMxTable();
@@ -131,22 +126,20 @@ module cb_wg_byq {
         }
         
         public updateCompany(){
-            this.mCompanyDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data : string) =>{
-                if (null != data){
-                    this.mMxData = JSON.parse(data);
-                    this.updateMxTable();
-                }
+            this.mCompanyDataSet.get({month: this.mMonth, year : this.mYear, companyId : this.mComp})
+            .then((jsonData : any) =>{
+                this.mMxData = jsonData;
+                this.updateMxTable();
             });
         }
 
          public updateDate(){
-            this.mDateDataSet.getData(this.mMonth, this.mYear, (arrayData : any) =>{
-                if (null != arrayData){
-                    this.mJtData = arrayData[0];
-                    this.mBtdyData = arrayData[1];
+            this.mDateDataSet.get({month: this.mMonth, year : this.mYear})
+            .then((jsonData : any) =>{
+                    this.mJtData = jsonData[0];
+                    this.mBtdyData = jsonData[1];
                     this.updateJttbTable();
                     this.updateFdyTable();
-                }
             });
         }
         

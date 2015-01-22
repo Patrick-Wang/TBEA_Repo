@@ -34,13 +34,12 @@ module rhkqk {
         private mMonth: number;
         private mYear: number;
         private mData: Array<string[]> = [];
-        private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax = new Util.Ajax("rhkqk_update.do");
         private mTableId : string;
         private mDay: number;
         public init(tableId: string, month: number, year: number, day: number): void {
             this.mYear = year;
             this.mMonth = month;
-			this.mDataSet = new Util.DateDataSet("rhkqk_update.do");
             this.mTableId = tableId;
             this.mDay = day;
             this.updateTable();
@@ -60,16 +59,15 @@ module rhkqk {
         	this.mMonth = month;
         }
         
-		public updateUI(){
-			this.mDataSet.getDataByDay(this.mMonth, this.mYear, this.mDay, (dataArray : Array<string[]>) =>{
-				if (null != dataArray){
-					this.mData = dataArray;
-					$('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日  回款情况");
-					document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日  回款情况";
-					this.updateTable();
-				}
-			});
-		}
+        public updateUI() {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay })
+                .then((dataArray: any) => {
+                    this.mData = dataArray;
+                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日  回款情况");
+                    document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日  回款情况";
+                    this.updateTable();
+                });
+        }
 
 //        private initEchart(echart): void {
 //            var ysyq_payment_Chart = echarts.init(echart)

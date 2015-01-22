@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.ydsjhkqk.YDSJHKQKLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.ydsjhkqk.YDSJHKQKDLDao;
+import com.tbea.datatransfer.model.dao.zjsb.ydsjhkqk.YDSJHKQKSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.ydsjhkqk.YDSJHKQKTBDao;
 import com.tbea.datatransfer.model.entity.local.YDSJHKQKLocal;
 import com.tbea.datatransfer.model.entity.zjdl.YDSJHKQKDL;
+import com.tbea.datatransfer.model.entity.zjsb.YDSJHKQKSB;
 import com.tbea.datatransfer.model.entity.zjtb.YDSJHKQKTB;
 
 @Transactional("transactionManager")
@@ -19,6 +21,8 @@ public class YDSJHKQKTransferServiceImpl implements YDSJHKQKTransferService {
 	private YDSJHKQKDLDao ydsjhkqkDLDao;
 
 	private YDSJHKQKTBDao ydsjhkqkTBDao;
+
+	private YDSJHKQKSBDao ydsjhkqkSBDao;
 
 	@Override
 	public boolean transferYDSJHKQK() {
@@ -63,6 +67,27 @@ public class YDSJHKQKTransferServiceImpl implements YDSJHKQKTransferService {
 				ydsjhkqkLocal.setQybh(301);
 				ydsjhkqkLocalDao.merge(ydsjhkqkLocal);
 			}
+	
+			// sb
+			ydsjhkqkLocalDao.deleteYDSJHKQKLocalByQY(1);
+			List<YDSJHKQKSB> ydsjhkqkSBList = ydsjhkqkSBDao.getAllYDSJHKQKSB();
+			for (YDSJHKQKSB ydsjhkqkSB : ydsjhkqkSBList) {
+				ydsjhkqkLocal = new YDSJHKQKLocal();
+				ydsjhkqkLocal.setGxrq(ydsjhkqkSB.getGxrq());
+				ydsjhkqkLocal.setGsbm(ydsjhkqkSB.getGsbm());
+				ydsjhkqkLocal.setYqyszksjhk(ydsjhkqkSB.getYqyszksjhk());
+				ydsjhkqkLocal.setYqksjhk(ydsjhkqkSB.getYqksjhk());
+				ydsjhkqkLocal.setWdqyszksjhk(ydsjhkqkSB.getWdqyszksjhk());
+				ydsjhkqkLocal.setWdqksjhk(ydsjhkqkSB.getWdqksjhk());
+				ydsjhkqkLocal.setQbkhhk(ydsjhkqkSB.getQbkhhk());
+				ydsjhkqkLocal.setZqkhhk(ydsjhkqkSB.getZqkhhk());
+				ydsjhkqkLocal.setXkxhhk(ydsjhkqkSB.getXkxhhk());
+				ydsjhkqkLocal.setJhwhk(ydsjhkqkSB.getJhwhk());
+				ydsjhkqkLocal.setSfdrwc(ydsjhkqkSB.getSfdrwc());
+				ydsjhkqkLocal.setQybh(301);
+				ydsjhkqkLocalDao.merge(ydsjhkqkLocal);
+			}
+
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

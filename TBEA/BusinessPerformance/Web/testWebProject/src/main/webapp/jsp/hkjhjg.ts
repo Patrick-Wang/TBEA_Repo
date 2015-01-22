@@ -58,13 +58,12 @@ module hkjhjg {
         private mJGData: Array<string[]>;
         private mZTData: Array<string>;
         private mXZData: Array<string>;
-        private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax = new Util.Ajax("hkjhjg_update.do");
         private mTableIds: string[];
         private mEchartId;
         public init(echartId: string, tableId: string[], month: number, year: number): void {
             this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("hkjhjg_update.do");
             this.mTableIds = tableId;
             this.mEchartId = echartId;
             this.updateJGTable();
@@ -86,24 +85,23 @@ module hkjhjg {
         }
         
         public updateUI() {
-            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data: string) => {
-                if (null != data) {
-                	var tmpData = data.split("##");
-                	
-                	this.mJGData = JSON.parse(tmpData[0]);
-                	
-                	this.mZTData = JSON.parse(tmpData[1]);
-                    
-                    this.mXZData = JSON.parse(tmpData[2]);
-                	
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then((data: any) => {
+
+                    this.mJGData = data[0];
+
+                    this.mZTData = data[1][0];
+
+                    this.mXZData = data[2][0];
+
                     $('h1').text(this.mYear + "年" + this.mMonth + "月 回款计划结构明细");
                     document.title = this.mYear + "年" + this.mMonth + "月 回款计划结构明细";
                     this.updateJGTable();
                     this.updateZTTable();
                     this.updateXZTable();
                     this.updateEchart();
-                }
-            });
+
+                });
         }
         private updateEchart(): void {
             var hkjhjgChart = echarts.init($("#" + this.mEchartId)[0]);

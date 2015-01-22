@@ -65,6 +65,7 @@ var cb_wg_xl;
     })();
     var View = (function () {
         function View() {
+            this.mDataSet = new Util.Ajax("wg_update.do");
             this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
@@ -77,7 +78,6 @@ var cb_wg_xl;
             this.mFdyTableId = fdyTableId;
             this.mCurMonth = month;
             this.mCurYear = year;
-            this.mDataSet = new Util.DateDataSet("wg_update.do");
             this.mMxData = mx;
             this.mJtData = jt;
             this.mGsData = gs;
@@ -100,15 +100,13 @@ var cb_wg_xl;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getData(this.mMonth, this.mYear, function (dataArray) {
-                if (null != dataArray) {
-                    var data = dataArray[0];
-                    _this.mJtData = data;
-                    data = dataArray[1];
-                    _this.mGsData = data;
-                    _this.updateJttbTable();
-                    _this.updateGstbTable();
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear }).then(function (jsonData) {
+                var data = jsonData[0];
+                _this.mJtData = data;
+                data = jsonData[1];
+                _this.mGsData = data;
+                _this.updateJttbTable();
+                _this.updateGstbTable();
             });
         };
         View.prototype.updateMxTable = function () {

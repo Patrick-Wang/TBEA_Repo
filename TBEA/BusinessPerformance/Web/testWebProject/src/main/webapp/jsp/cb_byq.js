@@ -71,7 +71,7 @@ var cb_byq;
             this.mJtData = jt;
             this.mGsData = gs;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("tb_update.do");
+            this.mDataSet = new Util.Ajax("tb_update.do");
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
@@ -82,11 +82,9 @@ var cb_byq;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByCompany(0, 0, this.mComp, function (data) {
-                if (null != data) {
-                    _this.mMxData = JSON.parse(data);
-                    _this.updateMxTable();
-                }
+            this.mDataSet.get({ companyId: this.mComp }).then(function (data) {
+                _this.mMxData = data;
+                _this.updateMxTable();
             });
         };
         View.prototype.updateMxTable = function () {

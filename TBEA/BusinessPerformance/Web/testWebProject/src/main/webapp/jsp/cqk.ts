@@ -36,7 +36,7 @@ module cqk {
         private mComp: Util.CompanyType = Util.CompanyType.SB;
         private mLineData: Array<string[]>;
         private mTableData: Array<string[]>;
-        private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax = new Util.Ajax("cqk_update.do");
         private mTableId : string;
         public init(echartIdPie: string, echartIdSquire: string, echartIdLine: string, tableId: string, args: any[]): void {
             this.mMonth = args[0];
@@ -45,7 +45,6 @@ module cqk {
             this.mEchartIdLine = echartIdLine;
             this.mEchartIdPie = echartIdPie;
             this.mEchartIdSquire = echartIdSquire;
-            this.mDataSet = new Util.DateDataSet("cqk_update.do");
             this.updateTable(this.mTableId);
             this.updateUI();
         }
@@ -63,22 +62,20 @@ module cqk {
         public onCompanySelected(comp : Util.CompanyType){
         	this.mComp = comp;
         }
-        
-		public updateUI(){
-		 	this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data : string) =>{
-				if (null != data){
-					var arr = data.split("##");
-					this.mTableData = JSON.parse(arr[0]);
-					this.mLineData = JSON.parse(arr[1]);
-					$('h1').text(this.mYear + "年" + this.mMonth + "月  陈欠款");
-					document.title = this.mYear + "年" + this.mMonth + "月  陈欠款";
-					this.updateTable(this.mTableId);
-		            this.updatePieEchart(this.mEchartIdPie);
-		            this.updateLineEchart(this.mEchartIdLine);
-		            this.updateSquareEchart(this.mEchartIdSquire);
-				}
-			});
-		}
+
+        public updateUI() {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then((jsonData: any) => {
+                    this.mTableData = jsonData[0];
+                    this.mLineData = jsonData[1];
+                    $('h1').text(this.mYear + "年" + this.mMonth + "月  陈欠款");
+                    document.title = this.mYear + "年" + this.mMonth + "月  陈欠款";
+                    this.updateTable(this.mTableId);
+                    this.updatePieEchart(this.mEchartIdPie);
+                    this.updateLineEchart(this.mEchartIdLine);
+                    this.updateSquareEchart(this.mEchartIdSquire);
+                });
+        }
         
         
 

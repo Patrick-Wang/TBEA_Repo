@@ -21,6 +21,7 @@ var ztyszkfx;
     })();
     var View = (function () {
         function View() {
+            this.mDataSet = new Util.Ajax("ztyszkfx_update.do");
             this.mCompIndex = 0;
         }
         View.newInstance = function () {
@@ -29,7 +30,6 @@ var ztyszkfx;
         View.prototype.init = function (echartId, tableId, year, month) {
             this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("ztyszkfx_update.do");
             this.mTableId = tableId;
             this.mEchartId = echartId;
             this.updateTable();
@@ -43,14 +43,12 @@ var ztyszkfx;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getData(this.mMonth, this.mYear, function (arrayData) {
-                if (null != arrayData) {
-                    _this.mData = arrayData;
-                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月 整体应收账款分析表");
-                    document.title = _this.mYear + "年" + _this.mMonth + "月 整体应收账款分析表";
-                    _this.updateTable();
-                    _this.updateEchart();
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear }).then(function (arrayData) {
+                _this.mData = arrayData;
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月 整体应收账款分析表");
+                document.title = _this.mYear + "年" + _this.mMonth + "月 整体应收账款分析表";
+                _this.updateTable();
+                _this.updateEchart();
             });
         };
         View.prototype.updateEchart = function () {
@@ -108,7 +106,7 @@ var ztyszkfx;
                         type: 'bar',
                         smooth: true,
                         data: qitq
-                    },
+                    }
                 ]
             };
             ztyszkfxChart.setOption(ztyszkfxOption);

@@ -24,7 +24,7 @@ module yqkqsbh {
         private mMonth: number;
         private mYear: number;
         private mData: Array<string[]>;
-        private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax = new Util.Ajax("yqkbhqs_update.do");
         private mTableId : string;
         private mCharId : string;
         private mComp: Util.CompanyType = Util.CompanyType.SB;
@@ -34,7 +34,6 @@ module yqkqsbh {
           
             this.mTableId = tableId;
             this.mCharId = echartId;
-            this.mDataSet = new Util.DateDataSet("yqkbhqs_update.do");
             this.updateTable(tableId);
             this.updateUI();
         }
@@ -48,17 +47,18 @@ module yqkqsbh {
         	this.mComp = comp;
         }
         
-		public updateUI(){
-		 	this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data : string) =>{
-				if (null != data){
-					this.mData = JSON.parse(data);
-					$('h1').text(this.mYear + "年  逾期款趋势变化表");
-					document.title = this.mYear + "年  逾期款趋势变化表";
-					this.updateEchart(this.mCharId);
-					this.updateTable(this.mTableId);
-				}
-			});
-		}
+        public updateUI() {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then((data: any) => {
+
+                    this.mData = data;
+                    $('h1').text(this.mYear + "年  逾期款趋势变化表");
+                    document.title = this.mYear + "年  逾期款趋势变化表";
+                    this.updateEchart(this.mCharId);
+                    this.updateTable(this.mTableId);
+
+                });
+        }
 		
         private updateEchart(echart: string): void {
 

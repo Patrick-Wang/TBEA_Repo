@@ -46,6 +46,7 @@ var hkjhjg;
     var View = (function () {
         function View() {
             this.mComp = 1 /* HB */;
+            this.mDataSet = new Util.Ajax("hkjhjg_update.do");
         }
         View.newInstance = function () {
             return new View();
@@ -53,7 +54,6 @@ var hkjhjg;
         View.prototype.init = function (echartId, tableId, month, year) {
             this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("hkjhjg_update.do");
             this.mTableIds = tableId;
             this.mEchartId = echartId;
             this.updateJGTable();
@@ -72,19 +72,16 @@ var hkjhjg;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
-                if (null != data) {
-                    var tmpData = data.split("##");
-                    _this.mJGData = JSON.parse(tmpData[0]);
-                    _this.mZTData = JSON.parse(tmpData[1]);
-                    _this.mXZData = JSON.parse(tmpData[2]);
-                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月 回款计划结构明细");
-                    document.title = _this.mYear + "年" + _this.mMonth + "月 回款计划结构明细";
-                    _this.updateJGTable();
-                    _this.updateZTTable();
-                    _this.updateXZTable();
-                    _this.updateEchart();
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (data) {
+                _this.mJGData = data[0];
+                _this.mZTData = data[1][0];
+                _this.mXZData = data[2][0];
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月 回款计划结构明细");
+                document.title = _this.mYear + "年" + _this.mMonth + "月 回款计划结构明细";
+                _this.updateJGTable();
+                _this.updateZTTable();
+                _this.updateXZTable();
+                _this.updateEchart();
             });
         };
         View.prototype.updateEchart = function () {

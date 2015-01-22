@@ -1,8 +1,10 @@
 package com.tbea.test.testWebProject.controller.servlet.blhtdqqkhz;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,10 +43,11 @@ public class BLHTDQQKHZController {
 		Date d = DateSelection.getDate(request);
 		Organization org = CompanyManager.getOperationOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
-
-		String blhtdqqk = JSONArray.fromObject(service.getBlhtdqqk(d, comp)).toString().replace("null", "0.00");
-		String blyeqs = JSONArray.fromObject(service.getBlyeqs(d, comp)).toString().replace("null", "0.00");
-		return blyeqs + "##" + blhtdqqk;
+		List<String[][]> result = new ArrayList<String[][]>();
+		result.add(service.getBlyeqs(d, comp));
+		result.add(service.getBlhtdqqk(d, comp));
+		String jsonRet = JSONArray.fromObject(result).toString().replace("null", "0.00");
+		return jsonRet;
 	}
 	
 	@RequestMapping(value = "blhtdqqkhz.do", method = RequestMethod.GET)

@@ -74,7 +74,7 @@ module cb_xl {
         private mMxTableId : string;
         private mJttbTableId : string;
         private mGstbTableId : string;
-         private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax = new Util.Ajax("tb_update.do");
         private mComp: Util.CompanyType = Util.CompanyType.SB;
         public init(
             mxTableId: string, 
@@ -91,7 +91,6 @@ module cb_xl {
             this.mJtData = jt;
             this.mGsData = gs;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("tb_update.do");
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
@@ -102,13 +101,12 @@ module cb_xl {
             this.mComp = comp;
         }
         
-        public updateUI(){
-            this.mDataSet.getDataByCompany(0, 0, this.mComp, (data : string) =>{
-                if (null != data){
-                    this.mMxData = JSON.parse(data);
+        public updateUI() {
+            this.mDataSet.get({ companyId: this.mComp })
+                .then((jsonData: any) => {
+                    this.mMxData = jsonData;
                     this.updateMxTable();
-                }
-            });
+                });
         }
 
 //        private initEchart(echart): void {

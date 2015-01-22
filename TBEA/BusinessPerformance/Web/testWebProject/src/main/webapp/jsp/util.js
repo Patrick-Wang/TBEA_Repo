@@ -85,129 +85,82 @@ var Util;
         CompanyType[CompanyType["ALL"] = 1000] = "ALL";
     })(Util.CompanyType || (Util.CompanyType = {}));
     var CompanyType = Util.CompanyType;
-    var DateDataSet = (function () {
-        function DateDataSet(baseResUrl) {
-            this.mDataMap = {};
-            this.mBaseResUrl = baseResUrl;
+    $.ajaxSetup({ cache: false });
+    var Promise = (function () {
+        function Promise() {
+            this.mSuccessList = [];
+            this.mFailedList = [];
         }
-        DateDataSet.prototype.getData = function (m, y, callBack) {
-            var _this = this;
-            if (undefined == this.mDataMap[y + ""]) {
-                this.mDataMap[y + ""] = {};
-            }
-            if (undefined == this.mDataMap[y + ""][m + ""]) {
-                $.ajax({
-                    type: "GET",
-                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "",
-                    success: function (data) {
-                        var jsnData = JSON.parse(data);
-                        _this.mDataMap[y + ""][m + ""] = jsnData;
-                        callBack(jsnData);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        callBack(null);
-                    }
-                });
-            }
-            else {
-                callBack(this.mDataMap[y + ""][m + ""]);
+        Promise.prototype.succeed = function (data) {
+            for (var i = 0; i < this.mSuccessList.length; ++i) {
+                this.mSuccessList[i](data);
             }
         };
-        DateDataSet.prototype.getDataByDay = function (m, y, d, callBack) {
-            var _this = this;
-            if (undefined == this.mDataMap[y + ""]) {
-                this.mDataMap[y + ""] = {};
-            }
-            if (undefined == this.mDataMap[y + ""][m + ""]) {
-                this.mDataMap[y + ""][m + ""] = {};
-            }
-            if (undefined == this.mDataMap[y + ""][m + ""][d + ""]) {
-                $.ajax({
-                    type: "GET",
-                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "&day=" + d,
-                    success: function (data) {
-                        var jsnData = JSON.parse(data);
-                        _this.mDataMap[y + ""][m + ""][d + ""] = jsnData;
-                        callBack(jsnData);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        callBack(null);
-                    }
-                });
-            }
-            else {
-                callBack(this.mDataMap[y + ""][m + ""][d + ""]);
+        Promise.prototype.failed = function (data) {
+            for (var i = 0; i < this.mFailedList.length; ++i) {
+                this.mFailedList[i](data);
             }
         };
-        DateDataSet.prototype.getDataByYear = function (y, compId, callBack) {
-            var _this = this;
-            if (undefined == this.mDataMap[y + ""]) {
-                this.mDataMap[y + ""] = {};
+        Promise.prototype.then = function (success, failed) {
+            if (null != success && undefined != success) {
+                this.mSuccessList.push(success);
             }
-            if (undefined == this.mDataMap[y + ""][compId + ""]) {
-                $.ajax({
-                    type: "GET",
-                    url: this.mBaseResUrl + "?year=" + y + "&companyId=" + compId,
-                    success: function (data) {
-                        _this.mDataMap[y + ""][compId + ""] = data;
-                        callBack(data);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        callBack(null);
-                    }
-                });
+            if (failed != null && failed != undefined) {
+                this.mFailedList.push(failed);
             }
-            else {
-                callBack(this.mDataMap[y + ""][compId + ""]);
-            }
+            return this;
         };
-        DateDataSet.prototype.getDataByYearOnly = function (y, callBack) {
-            var _this = this;
-            if (undefined == this.mDataMap[y + ""]) {
-                $.ajax({
-                    type: "GET",
-                    url: this.mBaseResUrl + "?year=" + y,
-                    success: function (data) {
-                        _this.mDataMap[y + ""] = JSON.parse(data);
-                        callBack(_this.mDataMap[y + ""]);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        callBack(null);
-                    }
-                });
-            }
-            else {
-                callBack(this.mDataMap[y + ""]);
-            }
-        };
-        DateDataSet.prototype.getDataByCompany = function (m, y, compId, callBack) {
-            var _this = this;
-            if (undefined == this.mDataMap[y + ""]) {
-                this.mDataMap[y + ""] = {};
-            }
-            if (undefined == this.mDataMap[y + ""][m + ""]) {
-                this.mDataMap[y + ""][m + ""] = {};
-            }
-            if (undefined == this.mDataMap[y + ""][m + ""][compId + ""]) {
-                $.ajax({
-                    type: "GET",
-                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "&companyId=" + compId,
-                    success: function (data) {
-                        _this.mDataMap[y + ""][m + ""][compId + ""] = data;
-                        callBack(data);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        callBack(null);
-                    }
-                });
-            }
-            else {
-                callBack(this.mDataMap[y + ""][m + ""][compId + ""]);
-            }
-        };
-        return DateDataSet;
+        return Promise;
     })();
-    Util.DateDataSet = DateDataSet;
+    Util.Promise = Promise;
+    var Ajax = (function () {
+        function Ajax(baseUrl) {
+            this.mCache = {};
+            this.mBaseUrl = baseUrl;
+        }
+        Ajax.prototype.generateKey = function (option) {
+            var keys = [];
+            for (var key in option) {
+                keys.push(key + option[key]);
+            }
+            keys.sort();
+            return keys.join("&");
+        };
+        Ajax.prototype.setCache = function (option, data) {
+            this.mCache[this.generateKey(option)] = data;
+        };
+        Ajax.prototype.getCache = function (option) {
+            return this.mCache[this.generateKey(option)];
+        };
+        Ajax.prototype.get = function (option) {
+            var _this = this;
+            var promise = new Promise();
+            var cacheData = this.getCache(option);
+            if (undefined == cacheData) {
+                $.ajax({
+                    type: "GET",
+                    url: this.mBaseUrl,
+                    data: option,
+                    success: function (data) {
+                        var jsonData = JSON.parse(data);
+                        _this.setCache(option, jsonData);
+                        promise.succeed(jsonData);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        promise.failed(textStatus);
+                    }
+                });
+            }
+            else {
+                setTimeout(function () {
+                    promise.succeed(cacheData);
+                }, 0);
+            }
+            return promise;
+        };
+        return Ajax;
+    })();
+    Util.Ajax = Ajax;
     function formatCurrency(val) {
         if (val === "--" || val === "") {
             return val;
@@ -247,4 +200,8 @@ var Util;
         return parts.join("");
     }
     Util.formatCurrency = formatCurrency;
+    function isExist(val) {
+        return val != undefined;
+    }
+    Util.isExist = isExist;
 })(Util || (Util = {}));

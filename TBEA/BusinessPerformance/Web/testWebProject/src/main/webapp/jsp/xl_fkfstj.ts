@@ -78,7 +78,7 @@ module xl_fkfstj {
         gwTableId: string;
         nwTableId: string;
         echartIdFDW: string;
-        private mDataSet: Util.DateDataSet;
+        private mDataSet: Util.Ajax = new Util.Ajax("xlfkfstj_update.do");
         private mComp: Util.CompanyType = Util.CompanyType.SB;
 
         public init(echartIdFDW: string,
@@ -97,7 +97,6 @@ module xl_fkfstj {
             this.fdwTableId = fdwTableId;
             this.gwTableId = gwTableId;
             this.nwTableId = nwTableId;
-            this.mDataSet = new Util.DateDataSet("xlfkfstj_update.do");
             this.updateUI();
         }
 
@@ -115,9 +114,10 @@ module xl_fkfstj {
         }
 
         public updateUI() {
-            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data: string) => {
-                if (null != data) {
-                    var fktjData = JSON.parse(data);
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then((data: any) => {
+
+                    var fktjData = data;
                     this.updateFdwTable(
                         this.fdwTableId,
                         this.fdwTableId + "_jqgrid_1234",
@@ -140,36 +140,36 @@ module xl_fkfstj {
                         ["集中招标"],
                         ["非集中招标"],
                         ["合计"]];
-                    
+
                     this.updateTable(
                         this.nwTableId,
                         this.nwTableId + "_jqgrid_1234",
                         JQGridAssistantFactory.createNwTable(this.nwTableId + "_jqgrid_1234"),
                         rawData,
                         fktjData[2], true);
-                    
+
                     $('h1').text("线缆 " + this.mYear + "年" + this.mMonth + "月 付款方式统计");
                     document.title = "线缆 " + this.mYear + "年" + this.mMonth + "月 付款方式统计";
-                    
-                    
+
+
                     var chartDataFdw = [];
-                    for (var i = 0; i < fktjData[0].length - 1; ++i){
+                    for (var i = 0; i < fktjData[0].length - 1; ++i) {
                         chartDataFdw.push(parseFloat(fktjData[0][i][1]).toFixed(2));
                     }
-                    
-                     this.updatePieEchart(this.echartIdFDW, "非电网合同订单总量", chartDataFdw);
-                    
-                    
+
+                    this.updatePieEchart(this.echartIdFDW, "非电网合同订单总量", chartDataFdw);
+
+
 
                     this.updateEchart(this.echartIdGW, "国网合同订单总量",
                         [{ value: parseFloat(fktjData[1][0][1]).toFixed(2), name: '集中招标' },
                             { value: parseFloat(fktjData[1][1][1]).toFixed(2), name: '非集中招标' }]);
-                    
+
                     this.updateEchart(this.echartIdNW, "南网合同订单总量",
                         [{ value: parseFloat(fktjData[2][0][1]).toFixed(2), name: '集中招标' },
                             { value: parseFloat(fktjData[2][1][1]).toFixed(2), name: '非集中招标' }]);
-                        }
-                    });
+
+                });
         }
 
 

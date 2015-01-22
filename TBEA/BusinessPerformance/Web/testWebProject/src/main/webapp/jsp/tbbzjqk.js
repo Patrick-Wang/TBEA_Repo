@@ -18,13 +18,13 @@ var tbbzjqk;
         function View() {
             this.mComp = 1 /* HB */;
             this.mData = [];
+            this.mDataSet = new Util.Ajax("tbbzjqk_update.do");
         }
         View.newInstance = function () {
             return new View();
         };
         View.prototype.init = function (echartId, tableId, year) {
             this.mYear = year;
-            this.mDataSet = new Util.DateDataSet("tbbzjqk_update.do");
             this.mTableId = tableId;
             this.mEchartId = echartId;
             this.updateTable();
@@ -41,14 +41,12 @@ var tbbzjqk;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
-                if (null != data) {
-                    _this.mData = JSON.parse(data);
-                    $('h1').text(_this.mYear + "年 投标保证金情况");
-                    document.title = _this.mYear + "年 投标保证金情况";
-                    _this.updateTable();
-                    _this.updateEchart();
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (data) {
+                _this.mData = data;
+                $('h1').text(_this.mYear + "年 投标保证金情况");
+                document.title = _this.mYear + "年 投标保证金情况";
+                _this.updateTable();
+                _this.updateEchart();
             });
         };
         View.prototype.updateEchart = function () {

@@ -17,6 +17,7 @@ var gcy_zbhz;
     var View = (function () {
         function View() {
             this.mData = [];
+            this.mDataSet = new Util.Ajax("gcy_zbhz_update.do");
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -28,7 +29,6 @@ var gcy_zbhz;
             this.mYear = year;
             this.mMonth = month;
             this.mTableId = tableId;
-            this.mDataSet = new Util.DateDataSet("gcy_zbhz_update.do");
             this.updateTable();
             this.updateUI();
         };
@@ -40,13 +40,11 @@ var gcy_zbhz;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getData(this.mMonth, this.mYear, function (dataArray) {
-                if (null != dataArray) {
-                    _this.mData = dataArray;
-                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月 各产业指标汇总");
-                    document.title = _this.mYear + "年" + _this.mMonth + "月 各产业指标汇总";
-                    _this.updateTable();
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear }).then(function (jsonData) {
+                _this.mData = jsonData;
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月 各产业指标汇总");
+                document.title = _this.mYear + "年" + _this.mMonth + "月 各产业指标汇总";
+                _this.updateTable();
             });
         };
         View.prototype.updateTable = function () {

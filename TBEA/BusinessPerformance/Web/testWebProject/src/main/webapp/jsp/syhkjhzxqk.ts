@@ -25,13 +25,12 @@ module syhkjhzxqk {
         private mMonth: number;
         private mYear: number;
         private mData: Array<string[]>;
-        private mDataSet: Util.DateDataSet;
+        private mDataSet: Util.Ajax = new Util.Ajax("syhkjhzxqk_update.do");
         private mTableId: string;
         private mEchartId;
         public init(echartId: string, tableId: string, month: number, year: number): void {
             this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("syhkjhzxqk_update.do");
             this.mTableId = tableId;
             this.mEchartId = echartId;
             this.updateTable();
@@ -49,26 +48,27 @@ module syhkjhzxqk {
         public onCompanySelected(comp : Util.CompanyType){
         	this.mComp = comp;
         }
-        
+
         public updateUI() {
-               this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data: string) => {
-                if (null != data) {
-                    this.mData = JSON.parse(data);
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then((data: any) => {
+
+                    this.mData = data;
                     $('h1').text(this.mYear + "年" + this.mMonth + "月 回款计划执行情况");
                     document.title = this.mYear + "年" + this.mMonth + "月 回款计划执行情况";
                     this.updateTable();
                     this.updateEchart();
-                }
-            });
+
+                });
         }
         
-		private getMonth(): string[]{
-			var month: string[] = [];
-		   for (var i = 0; i < 12; ++i){
-		   		month.push((i + 1) + "月");
-		   }
-		   return month;
-		} 
+        private getMonth(): string[] {
+            var month: string[] = [];
+            for (var i = 0; i < 12; ++i) {
+                month.push((i + 1) + "月");
+            }
+            return month;
+        } 
 
         private updateEchart(): void{
         	var zxqkChart = echarts.init($("#" + this.mEchartId)[0]);

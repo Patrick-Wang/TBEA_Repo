@@ -62,7 +62,7 @@ module byq_fkfstj {
 
         private mMonth: number;
         private mYear: number;
-        private mDataSet: Util.DateDataSet;
+        private mDataSet: Util.Ajax;
         private mComp: Util.CompanyType = Util.CompanyType.SB;
         echartIdGW: string;
         echartIdNW: string;
@@ -89,11 +89,9 @@ module byq_fkfstj {
             this.gwTableId = gwTableId;
             this.nwTableId = nwTableId;
             
-			this.mDataSet = new Util.DateDataSet("byqfkfstj_update.do");
+			this.mDataSet = new Util.Ajax("byqfkfstj_update.do");
 		
-            
-          
-                  this.updateUI();
+            this.updateUI();
         }
 
         
@@ -109,64 +107,65 @@ module byq_fkfstj {
             this.mComp = comp;
         }
         
-         public updateUI() {
-            this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data: string) => {
-                if (null != data) {
-                    var fktjData = JSON.parse(data);
+        public updateUI() {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then((data: any) => {
+
+                    var fktjData = data;
                     var rowData = [
-                ["沈变"],
-                ["衡变"],
-                ["新变"],
-                ["合计"]];
-                    
-            this.updateTable(
-                this.fdwTableId, 
-                this.fdwTableId + "_jqgrid_1234",
-                JQGridAssistantFactory.createFdwTable(this.fdwTableId + "_jqgrid_1234"),
-                rowData, 
-                fktjData[0]);
-                                    rowData = [
-                ["沈变"],
-                ["衡变"],
-                ["新变"],
-                ["合计"]];
-            this.updateTable(
-                this.gwTableId, 
-                this.gwTableId + "_jqgrid_1234",
-                JQGridAssistantFactory.createGwTable(this.gwTableId + "_jqgrid_1234"),
-                rowData, 
-                fktjData[1]);
-                                    rowData = [
-                ["沈变"],
-                ["衡变"],
-                ["新变"],
-                ["合计"]];
-            this.updateTable(
-                this.nwTableId, 
-                this.nwTableId + "_jqgrid_1234",
-                JQGridAssistantFactory.createNwTable(this.nwTableId + "_jqgrid_1234"),
-                rowData, 
-                fktjData[2]);
-                    
+                        ["沈变"],
+                        ["衡变"],
+                        ["新变"],
+                        ["合计"]];
+
+                    this.updateTable(
+                        this.fdwTableId,
+                        this.fdwTableId + "_jqgrid_1234",
+                        JQGridAssistantFactory.createFdwTable(this.fdwTableId + "_jqgrid_1234"),
+                        rowData,
+                        fktjData[0]);
+                    rowData = [
+                        ["沈变"],
+                        ["衡变"],
+                        ["新变"],
+                        ["合计"]];
+                    this.updateTable(
+                        this.gwTableId,
+                        this.gwTableId + "_jqgrid_1234",
+                        JQGridAssistantFactory.createGwTable(this.gwTableId + "_jqgrid_1234"),
+                        rowData,
+                        fktjData[1]);
+                    rowData = [
+                        ["沈变"],
+                        ["衡变"],
+                        ["新变"],
+                        ["合计"]];
+                    this.updateTable(
+                        this.nwTableId,
+                        this.nwTableId + "_jqgrid_1234",
+                        JQGridAssistantFactory.createNwTable(this.nwTableId + "_jqgrid_1234"),
+                        rowData,
+                        fktjData[2]);
+
                     $('h1').text("变压器 " + this.mYear + "年" + this.mMonth + "月 付款方式统计");
                     document.title = "变压器 " + this.mYear + "年" + this.mMonth + "月 付款方式统计";
-                }
-                this.updateEchart(this.echartIdFDW, "非电网合同订单总量",
-                    [{value : parseFloat(fktjData[0][0][1]).toFixed(2), name : '沈变'},
-                     {value : parseFloat(fktjData[0][1][1]).toFixed(2), name : '衡变'},
-                     {value : parseFloat(fktjData[0][2][1]).toFixed(2), name : '新变'}]);
-                this.updateEchart(this.echartIdGW, "国网合同订单总量",
-                        [{value : parseFloat(fktjData[1][0][1]).toFixed(2), name : '沈变'},
-                         {value : parseFloat(fktjData[1][1][1]).toFixed(2), name : '衡变'},
-                         {value : parseFloat(fktjData[1][2][1]).toFixed(2), name : '新变'}]);
-                this.updateEchart(this.echartIdNW, "南网合同订单总量",
-                        [{value : parseFloat(fktjData[2][0][1]).toFixed(2), name : '沈变'},
-                         {value : parseFloat(fktjData[2][1][1]).toFixed(2), name : '衡变'},
-                         {value : parseFloat(fktjData[2][2][1]).toFixed(2), name : '新变'}]);
-            });
-             
-             
-             
+
+                    this.updateEchart(this.echartIdFDW, "非电网合同订单总量",
+                        [{ value: parseFloat(fktjData[0][0][1]).toFixed(2), name: '沈变' },
+                            { value: parseFloat(fktjData[0][1][1]).toFixed(2), name: '衡变' },
+                            { value: parseFloat(fktjData[0][2][1]).toFixed(2), name: '新变' }]);
+                    this.updateEchart(this.echartIdGW, "国网合同订单总量",
+                        [{ value: parseFloat(fktjData[1][0][1]).toFixed(2), name: '沈变' },
+                            { value: parseFloat(fktjData[1][1][1]).toFixed(2), name: '衡变' },
+                            { value: parseFloat(fktjData[1][2][1]).toFixed(2), name: '新变' }]);
+                    this.updateEchart(this.echartIdNW, "南网合同订单总量",
+                        [{ value: parseFloat(fktjData[2][0][1]).toFixed(2), name: '沈变' },
+                            { value: parseFloat(fktjData[2][1][1]).toFixed(2), name: '衡变' },
+                            { value: parseFloat(fktjData[2][2][1]).toFixed(2), name: '新变' }]);
+                });
+
+
+
         }
  
 			private updateEchart(chartId: string, tileTex: string, data: any[]): void{

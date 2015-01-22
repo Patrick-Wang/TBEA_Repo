@@ -46,14 +46,13 @@ module ztyszkfx {
         private mMonth : number;
         private mYear: number;
         private mData: Array<string[]>;
-        private mDataSet: Util.DateDataSet;
+        private mDataSet: Util.Ajax = new Util.Ajax("ztyszkfx_update.do");
         private mTableId: string;
         private mEchartId;
         private mCompIndex : number = 0;
         public init(echartId: string, tableId: string, year: number, month:number): void {
             this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("ztyszkfx_update.do");
             this.mTableId = tableId;
             this.mEchartId = echartId;
             this.updateTable();
@@ -69,15 +68,16 @@ module ztyszkfx {
         }
         
         public updateUI() {
-            this.mDataSet.getData(this.mMonth, this.mYear, (arrayData: Array<string[]>) => {
-                if (null != arrayData) {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear })
+                .then((arrayData: any) => {
+
                     this.mData = arrayData;
-                    $('h1').text(this.mYear + "年" + this.mMonth  + "月 整体应收账款分析表");
-                    document.title = this.mYear + "年" + this.mMonth  + "月 整体应收账款分析表";
+                    $('h1').text(this.mYear + "年" + this.mMonth + "月 整体应收账款分析表");
+                    document.title = this.mYear + "年" + this.mMonth + "月 整体应收账款分析表";
                     this.updateTable();
                     this.updateEchart();
-                }
-            });
+
+                });
         }
 
         private updateEchart(): void {
@@ -140,7 +140,7 @@ module ztyszkfx {
                         type: 'bar',
                         smooth: true,
                         data: qitq
-                    },
+                    }
                 ]
             }
             ztyszkfxChart.setOption(ztyszkfxOption);

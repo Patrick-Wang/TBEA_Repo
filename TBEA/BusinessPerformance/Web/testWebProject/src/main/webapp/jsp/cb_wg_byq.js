@@ -75,6 +75,8 @@ var cb_wg_byq;
             this.mJtData = [[]];
             this.mGsData = [[]];
             this.mBtdyData = [[]];
+            this.mDateDataSet = new Util.Ajax("wg_date_update.do");
+            this.mCompanyDataSet = new Util.Ajax("wg_update.do");
             this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
@@ -85,8 +87,6 @@ var cb_wg_byq;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
             this.mFdyTableId = fdyTableId;
-            this.mCompanyDataSet = new Util.DateDataSet("wg_update.do");
-            this.mDateDataSet = new Util.DateDataSet("wg_date_update.do");
             this.mMonth = month;
             this.mYear = year;
             this.updateMxTable();
@@ -100,22 +100,18 @@ var cb_wg_byq;
         };
         View.prototype.updateCompany = function () {
             var _this = this;
-            this.mCompanyDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, function (data) {
-                if (null != data) {
-                    _this.mMxData = JSON.parse(data);
-                    _this.updateMxTable();
-                }
+            this.mCompanyDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (jsonData) {
+                _this.mMxData = jsonData;
+                _this.updateMxTable();
             });
         };
         View.prototype.updateDate = function () {
             var _this = this;
-            this.mDateDataSet.getData(this.mMonth, this.mYear, function (arrayData) {
-                if (null != arrayData) {
-                    _this.mJtData = arrayData[0];
-                    _this.mBtdyData = arrayData[1];
-                    _this.updateJttbTable();
-                    _this.updateFdyTable();
-                }
+            this.mDateDataSet.get({ month: this.mMonth, year: this.mYear }).then(function (jsonData) {
+                _this.mJtData = jsonData[0];
+                _this.mBtdyData = jsonData[1];
+                _this.updateJttbTable();
+                _this.updateFdyTable();
             });
         };
         View.prototype.onYearSelected = function (year) {

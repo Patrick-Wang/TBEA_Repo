@@ -40,12 +40,11 @@ module hzb_zbhz {
         private mMonth: number;
         private mYear: number;
         private mData: Array<string[]> = [];
-        private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_update.do");
         private mTableId : string;
         public init(tableId: string, month: number, year: number): void {
             this.mYear = year;
             this.mMonth = month;
-			this.mDataSet = new Util.DateDataSet("hzb_zbhz_update.do");
             this.mTableId = tableId;
             this.updateTable();
             this.updateUI();
@@ -59,16 +58,17 @@ module hzb_zbhz {
         	this.mMonth = month;
         }
         
-		public updateUI(){
-			this.mDataSet.getData(this.mMonth, this.mYear, (dataArray : Array<string[]>) =>{
-				if (null != dataArray){
-					this.mData = dataArray;
-					$('h1').text(this.mYear + "年" + this.mMonth + "月 指标汇总");
-					document.title = this.mYear + "年" + this.mMonth + "月 指标汇总";
-					this.updateTable();
-				}
-			});
-		}
+        public updateUI() {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear })
+                .then((dataArray: any) => {
+
+                    this.mData = dataArray;
+                    $('h1').text(this.mYear + "年" + this.mMonth + "月 指标汇总");
+                    document.title = this.mYear + "年" + this.mMonth + "月 指标汇总";
+                    this.updateTable();
+
+                });
+        }
         private updateTable(): void {
         	var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mMonth);

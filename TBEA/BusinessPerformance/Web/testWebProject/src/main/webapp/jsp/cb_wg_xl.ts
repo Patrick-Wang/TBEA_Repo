@@ -94,7 +94,7 @@ module cb_wg_xl {
                 private mYear: number;
         private  mCurMonth: number;
          private mCurYear: number;
-         private mDataSet : Util.DateDataSet;
+         private mDataSet : Util.Ajax = new Util.Ajax("wg_update.do");
         private mMxTableId: string;
         private mJttbTableId: string;
         private mGstbTableId: string;
@@ -117,7 +117,6 @@ module cb_wg_xl {
             this.mFdyTableId = fdyTableId;
             this.mCurMonth = month;
             this.mCurYear = year;
-            this.mDataSet = new Util.DateDataSet("wg_update.do");
             this.mMxData = mx;
             this.mJtData = jt;
             this.mGsData = gs;
@@ -141,24 +140,25 @@ module cb_wg_xl {
         public onMonthSelected(month : number){
             this.mMonth = month;
         }
-        
-        public updateUI(){
-            this.mDataSet.getData(this.mMonth, this.mYear, (dataArray : Array<string[]>) =>{
-                if (null != dataArray){
-                    var data : any = dataArray[0];
-                    this.mJtData = data;
-                    data = dataArray[1];
-                    this.mGsData = data;
 
-                    this.updateJttbTable();
-                    this.updateGstbTable();
-//                    this.mData = dataArray;
-//                    $('h1').text(this.mYear + "年" + this.mMonth + "月 各产业指标汇总");
-//                    document.title = this.mYear + "年" + this.mMonth + "月 各产业指标汇总";
-//                    this.updateTable();
-                }
-            });
-        }
+         public updateUI() {
+             this.mDataSet.get({ month: this.mMonth, year: this.mYear })
+                 .then((jsonData: any) => {
+
+                     var data: any = jsonData[0];
+                     this.mJtData = data;
+                     data = jsonData[1];
+                     this.mGsData = data;
+
+                     this.updateJttbTable();
+                     this.updateGstbTable();
+                     //                    this.mData = dataArray;
+                     //                    $('h1').text(this.mYear + "年" + this.mMonth + "月 各产业指标汇总");
+                     //                    document.title = this.mYear + "年" + this.mMonth + "月 各产业指标汇总";
+                     //                    this.updateTable();
+
+                 });
+         }
 
         
  

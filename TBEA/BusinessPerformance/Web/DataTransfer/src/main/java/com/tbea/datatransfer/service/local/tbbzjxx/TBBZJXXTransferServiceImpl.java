@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.tbbzjxx.TBBZJXXLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.tbbzjxx.TBBZJXXDLDao;
+import com.tbea.datatransfer.model.dao.zjsb.tbbzjxx.TBBZJXXSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.tbbzjxx.TBBZJXXTBDao;
 import com.tbea.datatransfer.model.entity.local.TBBZJXXLocal;
 import com.tbea.datatransfer.model.entity.zjdl.TBBZJXXDL;
+import com.tbea.datatransfer.model.entity.zjsb.TBBZJXXSB;
 import com.tbea.datatransfer.model.entity.zjtb.TBBZJXXTB;
 
 @Transactional("transactionManager")
@@ -19,6 +21,8 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 	private TBBZJXXDLDao tbbzjxxDLDao;
 
 	private TBBZJXXTBDao tbbzjxxTBDao;
+	
+	private TBBZJXXSBDao tbbzjxxSBDao;
 
 	@Override
 	public boolean transferTBBZJXX() {
@@ -53,6 +57,22 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 				tbbzjxxLocal.setQybh(301);
 				tbbzjxxLocalDao.merge(tbbzjxxLocal);
 			}
+			// sb
+			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(1);
+			List<TBBZJXXSB> tbbzjxxSBList = tbbzjxxSBDao.getAllTBBZJXXSB();
+			for (TBBZJXXSB tbbzjxxSB : tbbzjxxSBList) {
+				tbbzjxxLocal = new TBBZJXXLocal();
+				tbbzjxxLocal.setGxrq(tbbzjxxSB.getGxrq());
+				tbbzjxxLocal.setGsbm(tbbzjxxSB.getGsbm());
+				tbbzjxxLocal.setNf(tbbzjxxSB.getNf());
+				tbbzjxxLocal.setYf(tbbzjxxSB.getYf());
+				tbbzjxxLocal.setJe(tbbzjxxSB.getJe());
+				tbbzjxxLocal.setSfdrwc(tbbzjxxSB.getSfdrwc());
+				tbbzjxxLocal.setQybh(301);
+				tbbzjxxLocalDao.merge(tbbzjxxLocal);
+			}
+
+			
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

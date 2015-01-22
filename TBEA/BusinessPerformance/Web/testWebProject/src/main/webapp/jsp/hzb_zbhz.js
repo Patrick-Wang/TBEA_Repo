@@ -16,6 +16,7 @@ var hzb_zbhz;
     var View = (function () {
         function View() {
             this.mData = [];
+            this.mDataSet = new Util.Ajax("hzb_zbhz_update.do");
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -26,7 +27,6 @@ var hzb_zbhz;
         View.prototype.init = function (tableId, month, year) {
             this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("hzb_zbhz_update.do");
             this.mTableId = tableId;
             this.updateTable();
             this.updateUI();
@@ -39,13 +39,11 @@ var hzb_zbhz;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getData(this.mMonth, this.mYear, function (dataArray) {
-                if (null != dataArray) {
-                    _this.mData = dataArray;
-                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月 指标汇总");
-                    document.title = _this.mYear + "年" + _this.mMonth + "月 指标汇总";
-                    _this.updateTable();
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear }).then(function (dataArray) {
+                _this.mData = dataArray;
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月 指标汇总");
+                document.title = _this.mYear + "年" + _this.mMonth + "月 指标汇总";
+                _this.updateTable();
             });
         };
         View.prototype.updateTable = function () {

@@ -57,7 +57,7 @@ module blhtdqqkhzb {
         private mChartData: Array<string[]>;
         private mTableData: Array<string[]>;
         private mComp: Util.CompanyType = Util.CompanyType.HB;
-        private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax;
         private mTableId : string;
         private mEchartsId : string;
         public init(echartId: string, tableId: string, args: any[]): void {
@@ -65,7 +65,7 @@ module blhtdqqkhzb {
             this.mYear = args[1];
             this.mTableId = tableId;
             this.mEchartsId = echartId;
-            this.mDataSet = new Util.DateDataSet("blhtdqqkhz_update.do");
+            this.mDataSet = new Util.Ajax("blhtdqqkhz_update.do");
             this.updateTable(this.mTableId);
             this.updateUI();
         }
@@ -84,19 +84,22 @@ module blhtdqqkhzb {
         	this.mComp = comp;
         }
         
-		public updateUI(){
-		 	this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data : string) =>{
-				if (null != data){
-					var arr = data.split("##");
-					this.mChartData = JSON.parse(arr[0]);
-					this.mTableData = JSON.parse(arr[1]);
-					$('h1').text(this.mYear + "年" + this.mMonth + "月  保理合同到期情况汇总表");
-					document.title = this.mYear + "年" + this.mMonth + "月  保理合同到期情况汇总表";
-					this.updateTable(this.mTableId);
-		          	this.updateEchart(this.mEchartsId);
-				}
-			});
-		}
+        public updateUI() {
+            this.mDataSet.get({
+                    year: this.mYear,
+                    month: this.mMonth,
+                    companyId: this.mComp
+                })
+                .then((jsonData: any) => {
+                    this.mChartData = jsonData[0];
+                    this.mTableData = jsonData[1];
+                    $('h1').text(this.mYear + "年" + this.mMonth + "月  保理合同到期情况汇总表");
+                    document.title = this.mYear + "年" + this.mMonth + "月  保理合同到期情况汇总表";
+                    this.updateTable(this.mTableId);
+                    this.updateEchart(this.mEchartsId);
+                });
+
+        }
         
         private fillData(month: string[]) {
  

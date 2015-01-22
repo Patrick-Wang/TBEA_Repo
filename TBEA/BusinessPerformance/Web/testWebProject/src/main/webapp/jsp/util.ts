@@ -2,14 +2,7 @@ declare var $;
 module Util {
 
 	export enum CompanyType {
-//		SB, HB, XB, TB, LL, XL, DL, 
-//		XNY, GY,
-//		TCNY, NDGS, ZJWL,
-//		JCK,   GCGS,  
-//		ZH, 
-//		SBDCY, XNYCY, NYCY, GCL, JT,
-//		ALL = 100
-   SB       ,// ("沈变公司"),
+        SB       ,// ("沈变公司"),
         HB      ,// ("衡变公司"),
         XB      ,// ("新变厂"),
         TB      ,// ("天变公司"),   
@@ -93,130 +86,222 @@ module Util {
         ALL = 1000
 	}
 
-	export class DateDataSet{
-		private mBaseResUrl : string;
-		private mDataMap : any = {};
-		public constructor(baseResUrl : string){
-			this.mBaseResUrl = baseResUrl;
-		}
-		
-        public getData(m: number, y: number, callBack: (arrayData : Array<string[]>) => void): void{
-			if (undefined == this.mDataMap[y + ""]) {
-                this.mDataMap[y + ""] = {};
+    $.ajaxSetup({cache:false});
+    
+    export class Promise{
+        
+        private mSuccessList : Array<(data : any) => void> = [];
+        private mFailedList : Array<(err : string) => void> = [];
+        
+        public succeed(data : any){
+            for (var i = 0; i < this.mSuccessList.length; ++i){
+                this.mSuccessList[i](data);
             }
-            if (undefined == this.mDataMap[y + ""][m + ""]){
+        }
+        
+         public failed(data : string){
+            for (var i = 0; i < this.mFailedList.length; ++i){
+                this.mFailedList[i](data);
+            }
+        }
+        
+        public then(
+            success : (data : string) => void, 
+            failed ? :(err : string) => void) : Promise{
+            if (null != success && undefined != success){
+                this.mSuccessList.push(success);
+            }    
+
+            if (failed != null && failed != undefined){
+                this.mFailedList.push(failed);
+            }
+            
+            return this;
+        }    
+    }
+    
+    export interface IAjaxOption{
+        year ? : number;
+        month ? : number;
+        day ? : number;
+        companyId ? : number;
+    }
+    
+    export class Ajax {
+        private mBaseUrl: string;
+        private mCache : any = {};
+        
+        public constructor(baseUrl: string) {
+            this.mBaseUrl = baseUrl;
+        }
+
+        private generateKey(option: IAjaxOption){
+            var keys = [];
+            for(var key in option){
+                keys.push(key + option[key]);
+            }
+            keys.sort();
+            return keys.join("&");
+        }
+        
+        private setCache(option: IAjaxOption, data: string) : void{
+            this.mCache[this.generateKey(option)] = data;
+        }
+        
+        private getCache(option: IAjaxOption) : string{
+            return this.mCache[this.generateKey(option)];
+        }
+        
+        public get(option: IAjaxOption): Promise {
+            var promise: Promise = new Promise();
+            var cacheData : string = this.getCache(option);
+            if (undefined == cacheData){
                 $.ajax({
                     type: "GET",
-                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "",
-	                success: (data: any) =>{
-		                    var jsnData = JSON.parse(data);
-							this.mDataMap[y + ""][m + ""] = jsnData;
-		                    callBack(jsnData);
-			        }, 
-			        error: (XMLHttpRequest, textStatus, errorThrown) => {
-	                    callBack(null);
-	                }
-         		});
-			}
-			else {
-        		callBack(this.mDataMap[y + ""][m + ""]);
-    		}
-		}
-		
-		public getDataByDay(m: number, y: number, d: number, callBack: (arrayData : Array<string[]>) => void): void{
-            if (undefined == this.mDataMap[y + ""]) {
-                this.mDataMap[y + ""] = {};
+                    url: this.mBaseUrl,
+                    data: option,
+                    success: (data: any) => {
+                        var jsonData = JSON.parse(data);
+                        this.setCache(option, jsonData);
+                        promise.succeed(jsonData);
+                    },
+                    error: (XMLHttpRequest, textStatus, errorThrown) => {
+                        promise.failed(textStatus);
+                    }
+                });
+            } else{
+                setTimeout(()=>{
+                    promise.succeed(cacheData);    
+                }, 0);
             }
-            if (undefined == this.mDataMap[y + ""][m + ""]){
-            	this.mDataMap[y + ""][m + ""] = {}
-            }
-            if (undefined == this.mDataMap[y + ""][m + ""][d + ""]){
-                $.ajax({
-                    type: "GET",
-                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "&day=" + d,
-	                success: (data: any) =>{
-		                    var jsnData = JSON.parse(data);
-		                    this.mDataMap[y + ""][m + ""][d + ""] = jsnData;
-		                    callBack(jsnData);
-			        },
-			        error: (XMLHttpRequest, textStatus, errorThrown) => {
-	                    callBack(null);
-	                }
-         		});
-			}
-			else {
-        		callBack(this.mDataMap[y + ""][m + ""][d + ""]);
-    		}
-		}
-		
-		
-		public getDataByYear(y: number, compId: CompanyType, callBack: (arrayData : string) => void): void{
-            if (undefined == this.mDataMap[y + ""]) {
-                this.mDataMap[y + ""] = {};
-            }
-           
-            if (undefined == this.mDataMap[y + ""][compId + ""]){
-                $.ajax({
-                    type: "GET",
-                    url: this.mBaseResUrl + "?year=" + y + "&companyId=" + compId,
-	                success: (data: any) =>{
-		                  this.mDataMap[y + ""][compId + ""] = data;
-		                  callBack(data);
-			        },
-			        error: (XMLHttpRequest, textStatus, errorThrown) => {
-	                    callBack(null);
-	                }
-         		});
-			}
-			else {
-        		callBack(this.mDataMap[y + ""][compId + ""]);
-    		}
-		}
-		
-	   public getDataByYearOnly(y: number, callBack: (arrayData : Array<string[]>) => void): void{
-            if (undefined == this.mDataMap[y + ""]){
-                $.ajax({
-                    type: "GET",
-                    url: this.mBaseResUrl + "?year=" + y,
-	                success: (data: any) =>{
-		                  this.mDataMap[y + ""] = JSON.parse(data);
-		                  callBack(this.mDataMap[y + ""]);
-			        },
-			        error: (XMLHttpRequest, textStatus, errorThrown) => {
-	                    callBack(null);
-	                }
-         		});
-			}
-			else {
-        		callBack(this.mDataMap[y + ""]);
-    		}
-		}
-		
-		public getDataByCompany(m: number, y: number, compId: CompanyType, callBack: (arrayData : string) => void): void{
-            if (undefined == this.mDataMap[y + ""]) {
-                this.mDataMap[y + ""] = {};
-            }
-            if (undefined == this.mDataMap[y + ""][m + ""]){
-            	this.mDataMap[y + ""][m + ""] = {}
-            }
-            if (undefined == this.mDataMap[y + ""][m + ""][compId + ""]){
-                $.ajax({
-                    type: "GET",
-                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "&companyId=" + compId,
-	                success: (data: any) =>{
-		                  this.mDataMap[y + ""][m + ""][compId + ""] = data;
-		                  callBack(data);
-			        },
-			        error: (XMLHttpRequest, textStatus, errorThrown) => {
-	                    callBack(null);
-	                }
-         		});
-			}
-			else {
-        		callBack(this.mDataMap[y + ""][m + ""][compId + ""]);
-    		}
-		}
-	}
+            return promise;
+        }
+    }
+    
+//	export class DateDataSet{
+//		private mBaseResUrl : string;
+//		private mDataMap : any = {};
+//		public constructor(baseResUrl : string){
+//			this.mBaseResUrl = baseResUrl;
+//		}
+//		
+//        public getData(m: number, y: number, callBack: (arrayData : Array<string[]>) => void): void{
+//			if (undefined == this.mDataMap[y + ""]) {
+//                this.mDataMap[y + ""] = {};
+//            }
+//            if (undefined == this.mDataMap[y + ""][m + ""]){
+//                $.ajax({
+//                    type: "GET",
+//                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "",
+//	                success: (data: any) =>{
+//		                    var jsnData = JSON.parse(data);
+//							this.mDataMap[y + ""][m + ""] = jsnData;
+//		                    callBack(jsnData);
+//			        }, 
+//			        error: (XMLHttpRequest, textStatus, errorThrown) => {
+//	                    callBack(null);
+//	                }
+//         		});
+//			}
+//			else {
+//        		callBack(this.mDataMap[y + ""][m + ""]);
+//    		}
+//		}
+//		
+//		public getDataByDay(m: number, y: number, d: number, callBack: (arrayData : Array<string[]>) => void): void{
+//            if (undefined == this.mDataMap[y + ""]) {
+//                this.mDataMap[y + ""] = {};
+//            }
+//            if (undefined == this.mDataMap[y + ""][m + ""]){
+//            	this.mDataMap[y + ""][m + ""] = {}
+//            }
+//            if (undefined == this.mDataMap[y + ""][m + ""][d + ""]){
+//                $.ajax({
+//                    type: "GET",
+//                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "&day=" + d,
+//	                success: (data: any) =>{
+//		                    var jsnData = JSON.parse(data);
+//		                    this.mDataMap[y + ""][m + ""][d + ""] = jsnData;
+//		                    callBack(jsnData);
+//			        },
+//			        error: (XMLHttpRequest, textStatus, errorThrown) => {
+//	                    callBack(null);
+//	                }
+//         		});
+//			}
+//			else {
+//        		callBack(this.mDataMap[y + ""][m + ""][d + ""]);
+//    		}
+//		}
+//		
+//		
+//		public getDataByYear(y: number, compId: CompanyType, callBack: (arrayData : string) => void): void{
+//            if (undefined == this.mDataMap[y + ""]) {
+//                this.mDataMap[y + ""] = {};
+//            }
+//           
+//            if (undefined == this.mDataMap[y + ""][compId + ""]){
+//                $.ajax({
+//                    type: "GET",
+//                    url: this.mBaseResUrl + "?year=" + y + "&companyId=" + compId,
+//	                success: (data: any) =>{
+//		                  this.mDataMap[y + ""][compId + ""] = data;
+//		                  callBack(data);
+//			        },
+//			        error: (XMLHttpRequest, textStatus, errorThrown) => {
+//	                    callBack(null);
+//	                }
+//         		});
+//			}
+//			else {
+//        		callBack(this.mDataMap[y + ""][compId + ""]);
+//    		}
+//		}
+//		
+//	   public getDataByYearOnly(y: number, callBack: (arrayData : Array<string[]>) => void): void{
+//            if (undefined == this.mDataMap[y + ""]){
+//                $.ajax({
+//                    type: "GET",
+//                    url: this.mBaseResUrl + "?year=" + y,
+//	                success: (data: any) =>{
+//		                  this.mDataMap[y + ""] = JSON.parse(data);
+//		                  callBack(this.mDataMap[y + ""]);
+//			        },
+//			        error: (XMLHttpRequest, textStatus, errorThrown) => {
+//	                    callBack(null);
+//	                }
+//         		});
+//			}
+//			else {
+//        		callBack(this.mDataMap[y + ""]);
+//    		}
+//		}
+//		
+//		public getDataByCompany(m: number, y: number, compId: CompanyType, callBack: (arrayData : string) => void): void{
+//            if (undefined == this.mDataMap[y + ""]) {
+//                this.mDataMap[y + ""] = {};
+//            }
+//            if (undefined == this.mDataMap[y + ""][m + ""]){
+//            	this.mDataMap[y + ""][m + ""] = {}
+//            }
+//            if (undefined == this.mDataMap[y + ""][m + ""][compId + ""]){
+//                $.ajax({
+//                    type: "GET",
+//                    url: this.mBaseResUrl + "?month=" + m + "&year=" + y + "&companyId=" + compId,
+//	                success: (data: any) =>{
+//		                  this.mDataMap[y + ""][m + ""][compId + ""] = data;
+//		                  callBack(data);
+//			        },
+//			        error: (XMLHttpRequest, textStatus, errorThrown) => {
+//	                    callBack(null);
+//	                }
+//         		});
+//			}
+//			else {
+//        		callBack(this.mDataMap[y + ""][m + ""][compId + ""]);
+//    		}
+//		}
+//	}
 
  
 	export function formatCurrency (val: string): string{
@@ -262,4 +347,8 @@ module Util {
 		
 		return parts.join("");
 	}
+    
+    export function isExist(val: any): boolean{
+        return val != undefined;    
+    }
 }

@@ -47,7 +47,7 @@ module yszkjgqkb {
         private mCurrentSelected: number = 0;
         private mSquireData: string;
         private mLineData: string;
-        private mDataSet : Util.DateDataSet;
+        private mDataSet : Util.Ajax = new Util.Ajax("yszkjgqk_update.do");
         private mTableId : string;
         private mComp: Util.CompanyType = Util.CompanyType.SB;
         public init(echartIdPie: string, echartIdSquire: string, echartIdBar: string, echartIdLine: string, tableId: string, args: any[]): void {
@@ -60,7 +60,6 @@ module yszkjgqkb {
             this.mEchartIdPie = echartIdPie;
             this.mEchartIdSquire = echartIdSquire;
             
-			this.mDataSet = new Util.DateDataSet("yszkjgqk_update.do");
             this.updateTable(tableId);
             this.updateUI();
         }
@@ -78,23 +77,23 @@ module yszkjgqkb {
         	this.mComp = comp;
         }
         
-		public updateUI(){
-		 	this.mDataSet.getDataByCompany(this.mMonth, this.mYear, this.mComp, (data : string) =>{
-				if (null != data){
-					var arr = data.split("##");
-					this.mTableData = JSON.parse(arr[0]);
-					this.mBarData = JSON.parse(arr[1]);
-					this.mLineData = JSON.parse(arr[2]);
-					$('h1').text(this.mYear + "年" + this.mMonth + "月  应收账款结构情况表");
-					document.title = this.mYear + "年" + this.mMonth + "月  应收账款结构情况表";
-					this.updateTable(this.mTableId);
-		            this.updatePieEchart(this.mEchartIdPie);
-		            this.updateLineEchart(this.mEchartIdLine);
-		            this.updateBarEchart(this.mEchartIdBar);
-		            this.updateSquareEchart(this.mEchartIdSquire);
-				}
-			});
-		}
+        public updateUI() {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp})
+                .then((data: any) => {
+
+                    this.mTableData = data[0];
+                    this.mBarData = data[1]
+                    this.mLineData = data[2]
+                    $('h1').text(this.mYear + "年" + this.mMonth + "月  应收账款结构情况表");
+                    document.title = this.mYear + "年" + this.mMonth + "月  应收账款结构情况表";
+                    this.updateTable(this.mTableId);
+                    this.updatePieEchart(this.mEchartIdPie);
+                    this.updateLineEchart(this.mEchartIdLine);
+                    this.updateBarEchart(this.mEchartIdBar);
+                    this.updateSquareEchart(this.mEchartIdSquire);
+
+                });
+        }
 
 
         public onSelected(i: number) {

@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.bl.BLLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.bl.BLDLDao;
+import com.tbea.datatransfer.model.dao.zjsb.bl.BLSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.bl.BLTBDao;
 import com.tbea.datatransfer.model.entity.local.BLLocal;
 import com.tbea.datatransfer.model.entity.zjdl.BLDL;
+import com.tbea.datatransfer.model.entity.zjsb.BLSB;
 import com.tbea.datatransfer.model.entity.zjtb.BLTB;
 
 @Transactional("transactionManager")
@@ -19,6 +21,8 @@ public class BLTransferServiceImpl implements BLTransferService {
 	private BLDLDao blDLDao;
 	
 	private BLTBDao blTBDao;
+	
+	private BLSBDao blSBDao;
 
 	@Override
 	public boolean transferBL() {
@@ -61,6 +65,27 @@ public class BLTransferServiceImpl implements BLTransferService {
 				blLocal.setQybh(301);
 				blLocalDao.merge(blLocal);
 			}
+			
+			
+			// sb
+			blLocalDao.deleteBLLocalByQY(1);
+			List<BLSB> blSBList = blSBDao.getAllBLSB();
+			for (BLSB blTB : blSBList) {
+				blLocal = new BLLocal();
+				blLocal.setGxrq(blTB.getGxrq());
+				blLocal.setBlbh(blTB.getBlbh());
+				blLocal.setHtbh(blTB.getHtbh());
+				blLocal.setBlrq(blTB.getBlrq());
+				blLocal.setKxxz(blTB.getKxxz());
+				blLocal.setBlje(blTB.getBlje());
+				blLocal.setBldqr(blTB.getBldqr());
+				blLocal.setBlhkje(blTB.getBlhkje());
+				blLocal.setBlye(blTB.getBlye());
+				blLocal.setSfdrwc(blTB.getSfdrwc());
+				blLocal.setQybh(301);
+				blLocalDao.merge(blLocal);
+			}
+			
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.htxx.HTXXLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.htxx.HTXXDLDao;
+import com.tbea.datatransfer.model.dao.zjsb.htxx.HTXXSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.htxx.HTXXTBDao;
 import com.tbea.datatransfer.model.entity.local.HTXXLocal;
 import com.tbea.datatransfer.model.entity.zjdl.HTXXDL;
+import com.tbea.datatransfer.model.entity.zjsb.HTXXSB;
 import com.tbea.datatransfer.model.entity.zjtb.HTXXTB;
 
 @Transactional("transactionManager")
@@ -20,6 +22,8 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 	
 	private HTXXTBDao htxxTBDao;
 
+	private HTXXSBDao htxxSBDao;
+	
 	@Override
 	public boolean transferHTXX() {
 		boolean result = false;
@@ -67,6 +71,29 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 				htxxLocal.setQybh(301);
 				htxxLocalDao.merge(htxxLocal);
 			}
+
+			// sb
+			htxxLocalDao.deleteHTXXLocalByQY(1);
+			List<HTXXSB> htxxSBList = htxxSBDao.getAllHTXXSB();
+			for (HTXXSB htxxSB : htxxSBList) {
+				htxxLocal = new HTXXLocal();
+				htxxLocal.setGxrq(htxxSB.getGxrq());
+				htxxLocal.setHtbh(htxxSB.getHtbh());
+				htxxLocal.setXmxx(htxxSB.getXmxx());
+				htxxLocal.setSspq(htxxSB.getSspq());
+				htxxLocal.setKhbh(htxxSB.getKhbh());
+				htxxLocal.setKhmc(htxxSB.getKhmc());
+				htxxLocal.setKhsshy(htxxSB.getKhsshy());
+				htxxLocal.setQdrq(htxxSB.getQdrq());
+				htxxLocal.setCpje(htxxSB.getCpje());
+				htxxLocal.setFy(htxxSB.getFy());
+				htxxLocal.setZje(htxxSB.getZje());
+				htxxLocal.setHtzt(htxxSB.getHtzt());
+				htxxLocal.setSfdrwc(htxxSB.getSfdrwc());
+				htxxLocal.setQybh(301);
+				htxxLocalDao.merge(htxxLocal);
+			}
+			
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -55,11 +55,14 @@ public class YSZKJGQKController {
 		Organization org = CompanyManager.getBMOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		
-		String table = JSONArray.fromObject(service.getYszkjg(d, comp)).toString().replace("null", "0.00");
-		String bar = JSONArray.fromObject(service.getWdqtbbh(d, comp)).toString().replace("null", "0.00");
-		String line = JSONArray.fromObject(service.getJetbbh(d, comp)).toString().replace("null", "0.00");
+		List<String[][]> result = new ArrayList<String[][]>();
+		result.add(service.getYszkjg(d, comp));
+		result.add(service.getWdqtbbh(d, comp));
+		result.add(service.getJetbbh(d, comp));
 		
-		return table + "##" + bar + "##" + line;
+		String jsonRet = JSONArray.fromObject(result).toString().replace("null", "0.00");
+		
+		return jsonRet;
 	}
 	
 	@RequestMapping(value = "yszkjgqk.do", method = RequestMethod.GET)

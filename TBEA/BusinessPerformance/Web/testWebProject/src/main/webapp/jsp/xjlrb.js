@@ -23,6 +23,7 @@ var xjlrb;
     var View = (function () {
         function View() {
             this.mData = [];
+            this.mDataSet = new Util.Ajax("xjlrb_update.do");
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -33,7 +34,6 @@ var xjlrb;
         View.prototype.init = function (tableId, month, year, day) {
             this.mYear = year;
             this.mMonth = month;
-            this.mDataSet = new Util.DateDataSet("xjlrb_update.do");
             this.mTableId = tableId;
             this.mDay = day;
             this.updateTable();
@@ -50,13 +50,11 @@ var xjlrb;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.getDataByDay(this.mMonth, this.mYear, this.mDay, function (dataArray) {
-                if (null != dataArray) {
-                    _this.mData = dataArray;
-                    $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日 现金流日报");
-                    document.title = _this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日 现金流日报";
-                    _this.updateTable();
-                }
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay }).then(function (dataArray) {
+                _this.mData = dataArray;
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日 现金流日报");
+                document.title = _this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日 现金流日报";
+                _this.updateTable();
             });
         };
         View.prototype.updateTable = function () {
