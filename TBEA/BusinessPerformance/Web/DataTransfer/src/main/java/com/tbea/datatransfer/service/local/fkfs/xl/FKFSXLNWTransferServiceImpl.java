@@ -18,6 +18,8 @@ public class FKFSXLNWTransferServiceImpl implements FKFSXLNWTransferService {
 
 	private FKFSXLNWXLDao fkfsxlnwLLDao;
 
+	private FKFSXLNWXLDao fkfsxlnwXLDao;
+
 	@Override
 	public boolean transferFKFSXLNW() {
 		boolean result = false;
@@ -71,6 +73,30 @@ public class FKFSXLNWTransferServiceImpl implements FKFSXLNWTransferService {
 				fkfsxlnwLocal.setQybh(4);
 				fkfsxlnwLocalDao.merge(fkfsxlnwLocal);
 			}
+			// xl
+			fkfsxlnwLocalDao.deleteFKFSXLNWLocalByQY(5);
+			List<FKFSXLNWXL> fkfsxlnwXLList = fkfsxlnwXLDao.getAllFKFSXLNW();
+			for (FKFSXLNWXL fkfsxlnwXL : fkfsxlnwXLList) {
+				fkfsxlnwLocal = new FKFSXLNWLocal();
+				fkfsxlnwLocal.setGxrq(fkfsxlnwXL.getGxrq());
+				fkfsxlnwLocal.setGsbm(fkfsxlnwXL.getGsbm());
+				fkfsxlnwLocal.setSfjzzb(fkfsxlnwXL.getSfjzzb());
+				fkfsxlnwLocal.setNwhtddzlbs(fkfsxlnwXL.getNwhtddzlbs());
+				fkfsxlnwLocal.setNwhtddzlje(fkfsxlnwXL.getNwhtddzlje());
+				fkfsxlnwLocal.setN1_6_2_1bs(fkfsxlnwXL.getN1_6_2_1bs());
+				fkfsxlnwLocal.setN1_6_2_1je(fkfsxlnwXL.getN1_6_2_1je());
+				fkfsxlnwLocal.setN1_2_6_1bs(fkfsxlnwXL.getN1_2_6_1bs());
+				fkfsxlnwLocal.setN1_2_6_1je(fkfsxlnwXL.getN1_2_6_1je());
+				fkfsxlnwLocal.setN0_09_01bs(fkfsxlnwXL.getN0_09_01bs());
+				fkfsxlnwLocal.setN0_09_01je(fkfsxlnwXL.getN0_09_01je());
+				fkfsxlnwLocal.setQtbs(fkfsxlnwXL.getQtbs());
+				fkfsxlnwLocal.setQtje(fkfsxlnwXL.getQtje());
+				fkfsxlnwLocal.setZbqcgynhtbs(fkfsxlnwXL.getZbqcgynhtbs());
+				fkfsxlnwLocal.setZbqcgynhtje(fkfsxlnwXL.getZbqcgynhtje());
+				fkfsxlnwLocal.setSfdrwc(fkfsxlnwXL.getSfdrwc());
+				fkfsxlnwLocal.setQybh(5);
+				fkfsxlnwLocalDao.merge(fkfsxlnwLocal);
+			}
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,6 +127,14 @@ public class FKFSXLNWTransferServiceImpl implements FKFSXLNWTransferService {
 
 	public void setFkfsxlnwLLDao(FKFSXLNWXLDao fkfsxlnwLLDao) {
 		this.fkfsxlnwLLDao = fkfsxlnwLLDao;
+	}
+
+	public FKFSXLNWXLDao getFkfsxlnwXLDao() {
+		return fkfsxlnwXLDao;
+	}
+
+	public void setFkfsxlnwXLDao(FKFSXLNWXLDao fkfsxlnwXLDao) {
+		this.fkfsxlnwXLDao = fkfsxlnwXLDao;
 	}
 
 }

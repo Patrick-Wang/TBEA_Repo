@@ -17,6 +17,8 @@ public class XMTransferServiceImpl implements XMTransferService {
 	private XMXLDao xmDLDao;
 
 	private XMXLDao xmLLDao;
+	
+	private XMXLDao xmXLDao;
 
 	@Override
 	public boolean transferXM() {
@@ -53,6 +55,21 @@ public class XMTransferServiceImpl implements XMTransferService {
 				xmLocal.setQybh(4);
 				xmLocalDao.merge(xmLocal);
 			}
+			// xl
+			xmLocalDao.deleteXMLocalByQY(5);
+			List<XMXL> xmXLList = xmXLDao.getAllXM();
+			for (XMXL xmXL : xmXLList) {
+				xmLocal = new XMLocal();
+				xmLocal.setGxrq(xmXL.getGxrq());
+				xmLocal.setXmbh(xmXL.getXmbh());
+				xmLocal.setXmmc(xmXL.getXmmc());
+				xmLocal.setDdszdw(xmXL.getDdszdw());
+				xmLocal.setYhdwmc(xmXL.getYhdwmc());
+				xmLocal.setKhhylx(xmXL.getKhhylx());
+				xmLocal.setGb(xmXL.getGb());
+				xmLocal.setQybh(5);
+				xmLocalDao.merge(xmLocal);
+			}
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,6 +100,14 @@ public class XMTransferServiceImpl implements XMTransferService {
 
 	public void setXmLLDao(XMXLDao xmLLDao) {
 		this.xmLLDao = xmLLDao;
+	}
+
+	public XMXLDao getXmXLDao() {
+		return xmXLDao;
+	}
+
+	public void setXmXLDao(XMXLDao xmXLDao) {
+		this.xmXLDao = xmXLDao;
 	}
 
 }

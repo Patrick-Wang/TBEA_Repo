@@ -1,4 +1,4 @@
-package com.tbea.datatransfer.model.dao.zjbyq.ydsjhkqk;
+package com.tbea.datatransfer.model.dao.zjbyq.fkfs;
 
 import java.util.List;
 
@@ -10,24 +10,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
 
-import com.tbea.datatransfer.model.entity.zjbyq.YDSJHKQKBYQ;
+import com.tbea.datatransfer.model.entity.zjbyq.FKFSBYQFDWBYQ;
 
-@Transactional("transactionManagersb")
-public class YDSJHKQKSBDaoImpl extends AbstractReadOnlyDaoImpl<YDSJHKQKBYQ>
-		implements YDSJHKQKBYQDao {
+@Transactional("transactionManagerxb")
+public class FKFSBYQFDWXBDaoImpl extends AbstractReadOnlyDaoImpl<FKFSBYQFDWBYQ>
+		implements FKFSBYQFDWBYQDao {
 
 	@Override
-	@PersistenceContext(unitName = "sbDB")
+	@PersistenceContext(unitName = "xbDB")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<YDSJHKQKBYQ> getAllYDSJHKQK() {
-		String sql = "From YDSJHKQKBYQ";
+	public List<FKFSBYQFDWBYQ> getAllFKFSBYQFDW() {
+		String sql = "From FKFSBYQFDWBYQ";
 		Query query = getEntityManager().createQuery(sql);
-		List<YDSJHKQKBYQ> resultList = query.getResultList();
+		List<FKFSBYQFDWBYQ> resultList = query.getResultList();
 		return resultList;
 	}
 

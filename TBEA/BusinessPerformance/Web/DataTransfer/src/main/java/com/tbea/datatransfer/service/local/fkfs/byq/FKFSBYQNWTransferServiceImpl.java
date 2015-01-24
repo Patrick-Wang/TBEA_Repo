@@ -18,6 +18,8 @@ public class FKFSBYQNWTransferServiceImpl implements FKFSBYQNWTransferService {
 
 	private FKFSBYQNWBYQDao fkfsbyqnwSBDao;
 
+	private FKFSBYQNWBYQDao fkfsbyqnwXBDao;
+
 	@Override
 	public boolean transferFKFSBYQNW() {
 		boolean result = false;
@@ -90,6 +92,40 @@ public class FKFSBYQNWTransferServiceImpl implements FKFSBYQNWTransferService {
 				fkfsbyqnwLocal.setQybh(1);
 				fkfsbyqnwLocalDao.merge(fkfsbyqnwLocal);
 			}
+			// xb
+			fkfsbyqnwLocalDao.deleteFKFSBYQNWLocalByQY(3);
+
+			List<FKFSBYQNWBYQ> fkfsbyqnwXBList = fkfsbyqnwXBDao
+					.getAllFKFSBYQNW();
+			for (FKFSBYQNWBYQ fkfsbyqnwXB : fkfsbyqnwXBList) {
+				fkfsbyqnwLocal = new FKFSBYQNWLocal();
+				fkfsbyqnwLocal.setGxrq(fkfsbyqnwXB.getGxrq());
+				fkfsbyqnwLocal.setGsbm(fkfsbyqnwXB.getGsbm());
+				// fkfsbyqnwLocal.setNy(fkfsbyqnwTB.getNy());
+				fkfsbyqnwLocal.setNwhtddzlbs(fkfsbyqnwXB.getNwhtddzlbs());
+				fkfsbyqnwLocal.setNwhtddzlje(fkfsbyqnwXB.getNwhtddzlje());
+				fkfsbyqnwLocal.setN3_3_3_1bs(fkfsbyqnwXB.getN3_3_3_1bs());
+				fkfsbyqnwLocal.setN3_3_3_1je(fkfsbyqnwXB.getN3_3_3_1je());
+				fkfsbyqnwLocal.setN1_4_4_0d5_0d5bs(fkfsbyqnwXB
+						.getN1_4_4_0d5_0d5bs());
+				fkfsbyqnwLocal.setN1_4_4_0d5_0d5je(fkfsbyqnwXB
+						.getN1_4_4_0d5_0d5je());
+				fkfsbyqnwLocal.setN1_2_6d5_0d5bs(fkfsbyqnwXB
+						.getN1_2_6d5_0d5bs());
+				fkfsbyqnwLocal.setN1_2_6d5_0d5je(fkfsbyqnwXB
+						.getN1_2_6d5_0d5je());
+				fkfsbyqnwLocal.setN1_4_4d5_0d5bs(fkfsbyqnwXB
+						.getN1_4_4d5_0d5bs());
+				fkfsbyqnwLocal.setN1_4_4d5_0d5je(fkfsbyqnwXB
+						.getN1_4_4d5_0d5je());
+				fkfsbyqnwLocal.setQtybs(fkfsbyqnwXB.getQtybs());
+				fkfsbyqnwLocal.setQtyje(fkfsbyqnwXB.getQtyje());
+				fkfsbyqnwLocal.setQtebs(fkfsbyqnwXB.getQtebs());
+				fkfsbyqnwLocal.setQteje(fkfsbyqnwXB.getQteje());
+				fkfsbyqnwLocal.setSfdrwc(fkfsbyqnwXB.getSfdrwc());
+				fkfsbyqnwLocal.setQybh(3);
+				fkfsbyqnwLocalDao.merge(fkfsbyqnwLocal);
+			}
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,6 +156,14 @@ public class FKFSBYQNWTransferServiceImpl implements FKFSBYQNWTransferService {
 
 	public void setFkfsbyqnwSBDao(FKFSBYQNWBYQDao fkfsbyqnwSBDao) {
 		this.fkfsbyqnwSBDao = fkfsbyqnwSBDao;
+	}
+
+	public FKFSBYQNWBYQDao getFkfsbyqnwXBDao() {
+		return fkfsbyqnwXBDao;
+	}
+
+	public void setFkfsbyqnwXBDao(FKFSBYQNWBYQDao fkfsbyqnwXBDao) {
+		this.fkfsbyqnwXBDao = fkfsbyqnwXBDao;
 	}
 
 }

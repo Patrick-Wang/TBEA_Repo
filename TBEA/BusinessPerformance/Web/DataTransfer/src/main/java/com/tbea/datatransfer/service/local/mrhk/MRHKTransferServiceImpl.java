@@ -24,6 +24,10 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 
 	private MRHKBYQDao mrhkSBDao;
 
+	private MRHKXLDao mrhkXLDao;
+
+	private MRHKBYQDao mrhkXBDao;
+
 	@Override
 	public boolean transferMRHK() {
 		boolean result = false;
@@ -57,6 +61,20 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 				mrhkLocal.setQybh(4);
 				mrhkLocalDao.merge(mrhkLocal);
 			}
+			// xl
+			mrhkLocalDao.deleteMRHKLocalByQY(5);
+			List<MRHKXL> mrhkXLList = mrhkXLDao.getAllMRHK();
+			for (MRHKXL mrhkXL : mrhkXLList) {
+				mrhkLocal = new MRHKLocal();
+				mrhkLocal.setGxrq(mrhkXL.getGxrq());
+				mrhkLocal.setXmgs(mrhkXL.getXmgs());
+				mrhkLocal.setHkxz(mrhkXL.getHkxz());
+				mrhkLocal.setHkrq(mrhkXL.getHkrq());
+				mrhkLocal.setHkje(mrhkXL.getHkje());
+				mrhkLocal.setSfdrwc(mrhkXL.getSfdrwc());
+				mrhkLocal.setQybh(5);
+				mrhkLocalDao.merge(mrhkLocal);
+			}
 			// tb
 			mrhkLocalDao.deleteMRHKLocalByQY(301);
 			List<MRHKBYQ> mrhkTBList = mrhkTBDao.getAllMRHK();
@@ -84,6 +102,20 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 				mrhkLocal.setHkje(mrhkSB.getHkje());
 				mrhkLocal.setSfdrwc(mrhkSB.getSfdrwc());
 				mrhkLocal.setQybh(1);
+				mrhkLocalDao.merge(mrhkLocal);
+			}
+			// xb
+			mrhkLocalDao.deleteMRHKLocalByQY(3);
+			List<MRHKBYQ> mrhkXBList = mrhkXBDao.getAllMRHK();
+			for (MRHKBYQ mrhkXB : mrhkXBList) {
+				mrhkLocal = new MRHKLocal();
+				mrhkLocal.setGxrq(mrhkXB.getGxrq());
+				mrhkLocal.setXmgs(mrhkXB.getXmgs());
+				mrhkLocal.setHkxz(mrhkXB.getHkxz());
+				mrhkLocal.setHkrq(mrhkXB.getHkrq());
+				mrhkLocal.setHkje(mrhkXB.getHkje());
+				mrhkLocal.setSfdrwc(mrhkXB.getSfdrwc());
+				mrhkLocal.setQybh(3);
 				mrhkLocalDao.merge(mrhkLocal);
 			}
 			result = true;
@@ -132,6 +164,22 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 
 	public void setMrhkLLDao(MRHKXLDao mrhkLLDao) {
 		this.mrhkLLDao = mrhkLLDao;
+	}
+
+	public MRHKXLDao getMrhkXLDao() {
+		return mrhkXLDao;
+	}
+
+	public void setMrhkXLDao(MRHKXLDao mrhkXLDao) {
+		this.mrhkXLDao = mrhkXLDao;
+	}
+
+	public MRHKBYQDao getMrhkXBDao() {
+		return mrhkXBDao;
+	}
+
+	public void setMrhkXBDao(MRHKBYQDao mrhkXBDao) {
+		this.mrhkXBDao = mrhkXBDao;
 	}
 
 }

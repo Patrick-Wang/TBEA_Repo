@@ -17,12 +17,16 @@ public class BLTransferServiceImpl implements BLTransferService {
 	private BLLocalDao blLocalDao;
 
 	private BLXLDao blDLDao;
-	
+
 	private BLXLDao blLLDao;
 
 	private BLBYQDao blTBDao;
 
 	private BLBYQDao blSBDao;
+
+	private BLXLDao blXLDao;
+
+	private BLBYQDao blXBDao;
 
 	@Override
 	public boolean transferBL() {
@@ -65,6 +69,24 @@ public class BLTransferServiceImpl implements BLTransferService {
 				blLocal.setQybh(4);
 				blLocalDao.merge(blLocal);
 			}
+			// xl
+			blLocalDao.deleteBLLocalByQY(5);
+			List<BLXL> blXLList = blXLDao.getAllBL();
+			for (BLXL blXL : blXLList) {
+				blLocal = new BLLocal();
+				blLocal.setGxrq(blXL.getGxrq());
+				blLocal.setBlbh(blXL.getBlbh());
+				blLocal.setHtbh(blXL.getHtbh());
+				blLocal.setBlrq(blXL.getBlrq());
+				blLocal.setKxxz(blXL.getKxxz());
+				blLocal.setBlje(blXL.getBlje());
+				blLocal.setBldqr(blXL.getBldqr());
+				blLocal.setBlhkje(blXL.getBlhkje());
+				blLocal.setBlye(blXL.getBlye());
+				blLocal.setSfdrwc(blXL.getSfdrwc());
+				blLocal.setQybh(5);
+				blLocalDao.merge(blLocal);
+			}
 			// tb
 			blLocalDao.deleteBLLocalByQY(301);
 			List<BLBYQ> blTBList = blTBDao.getAllBL();
@@ -86,8 +108,8 @@ public class BLTransferServiceImpl implements BLTransferService {
 
 			// sb
 			blLocalDao.deleteBLLocalByQY(1);
-			List<BLBYQ> blBYQList = blSBDao.getAllBL();
-			for (BLBYQ blSB : blBYQList) {
+			List<BLBYQ> blSBList = blSBDao.getAllBL();
+			for (BLBYQ blSB : blSBList) {
 				blLocal = new BLLocal();
 				blLocal.setGxrq(blSB.getGxrq());
 				blLocal.setBlbh(blSB.getBlbh());
@@ -100,6 +122,25 @@ public class BLTransferServiceImpl implements BLTransferService {
 				blLocal.setBlye(blSB.getBlye());
 				blLocal.setSfdrwc(blSB.getSfdrwc());
 				blLocal.setQybh(1);
+				blLocalDao.merge(blLocal);
+			}
+
+			// xb
+			blLocalDao.deleteBLLocalByQY(3);
+			List<BLBYQ> blXBList = blXBDao.getAllBL();
+			for (BLBYQ blXB : blXBList) {
+				blLocal = new BLLocal();
+				blLocal.setGxrq(blXB.getGxrq());
+				blLocal.setBlbh(blXB.getBlbh());
+				blLocal.setHtbh(blXB.getHtbh());
+				blLocal.setBlrq(blXB.getBlrq());
+				blLocal.setKxxz(blXB.getKxxz());
+				blLocal.setBlje(blXB.getBlje());
+				blLocal.setBldqr(blXB.getBldqr());
+				blLocal.setBlhkje(blXB.getBlhkje());
+				blLocal.setBlye(blXB.getBlye());
+				blLocal.setSfdrwc(blXB.getSfdrwc());
+				blLocal.setQybh(3);
 				blLocalDao.merge(blLocal);
 			}
 
@@ -149,6 +190,22 @@ public class BLTransferServiceImpl implements BLTransferService {
 
 	public void setBlSBDao(BLBYQDao blSBDao) {
 		this.blSBDao = blSBDao;
+	}
+
+	public BLXLDao getBlXLDao() {
+		return blXLDao;
+	}
+
+	public void setBlXLDao(BLXLDao blXLDao) {
+		this.blXLDao = blXLDao;
+	}
+
+	public BLBYQDao getBlXBDao() {
+		return blXBDao;
+	}
+
+	public void setBlXBDao(BLBYQDao blXBDao) {
+		this.blXBDao = blXBDao;
 	}
 
 }

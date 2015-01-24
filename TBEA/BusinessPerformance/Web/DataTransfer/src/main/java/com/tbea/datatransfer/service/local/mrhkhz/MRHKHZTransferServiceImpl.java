@@ -24,6 +24,10 @@ public class MRHKHZTransferServiceImpl implements MRHKHZTransferService {
 
 	private MRHKHZBYQDao mrhkhzSBDao;
 
+	private MRHKHZXLDao mrhkhzXLDao;
+
+	private MRHKHZBYQDao mrhkhzXBDao;
+
 	@Override
 	public boolean transferMRHKHZ() {
 		boolean result = false;
@@ -63,6 +67,23 @@ public class MRHKHZTransferServiceImpl implements MRHKHZTransferService {
 				mrhkhzLocal.setQybh(4);
 				mrhkhzLocalDao.merge(mrhkhzLocal);
 			}
+			// xl
+			mrhkhzLocalDao.deleteMRHKHZLocalByQY(5);
+			List<MRHKHZXL> mrhkhzXLList = mrhkhzXLDao.getAllMRHKHZ();
+			for (MRHKHZXL mrhkhzXL : mrhkhzXLList) {
+				mrhkhzLocal = new MRHKHZLocal();
+				mrhkhzLocal.setGxrq(mrhkhzXL.getGxrq());
+				mrhkhzLocal.setHkrq(mrhkhzXL.getHkrq());
+				mrhkhzLocal.setHkje(mrhkhzXL.getHkje());
+				mrhkhzLocal.setQzqbbc(mrhkhzXL.getQzqbbc());
+				mrhkhzLocal.setQzzqbc(mrhkhzXL.getQzzqbc());
+				mrhkhzLocal.setYhkzkjysdhkje(mrhkhzXL.getYhkzkjysdhkje());
+				mrhkhzLocal.setJzydyszkzmye(mrhkhzXL.getJzydyszkzmye());
+				mrhkhzLocal.setJtxdydzjhlzb(mrhkhzXL.getJtxdydzjhlzb());
+				mrhkhzLocal.setSfdrwc(mrhkhzXL.getSfdrwc());
+				mrhkhzLocal.setQybh(5);
+				mrhkhzLocalDao.merge(mrhkhzLocal);
+			}
 			// tb
 			mrhkhzLocalDao.deleteMRHKHZLocalByQY(301);
 			List<MRHKHZBYQ> mrhkhzTBList = mrhkhzTBDao.getAllMRHKHZ();
@@ -96,6 +117,23 @@ public class MRHKHZTransferServiceImpl implements MRHKHZTransferService {
 				mrhkhzLocal.setJtxdydzjhlzb(mrhkhzSB.getJtxdydzjhlzb());
 				mrhkhzLocal.setSfdrwc(mrhkhzSB.getSfdrwc());
 				mrhkhzLocal.setQybh(1);
+				mrhkhzLocalDao.merge(mrhkhzLocal);
+			}
+			// xb
+			mrhkhzLocalDao.deleteMRHKHZLocalByQY(3);
+			List<MRHKHZBYQ> mrhkhzXBList = mrhkhzXBDao.getAllMRHKHZ();
+			for (MRHKHZBYQ mrhkhzXB : mrhkhzXBList) {
+				mrhkhzLocal = new MRHKHZLocal();
+				mrhkhzLocal.setGxrq(mrhkhzXB.getGxrq());
+				mrhkhzLocal.setHkrq(mrhkhzXB.getHkrq());
+				mrhkhzLocal.setHkje(mrhkhzXB.getHkje());
+				mrhkhzLocal.setQzqbbc(mrhkhzXB.getQzqbbc());
+				mrhkhzLocal.setQzzqbc(mrhkhzXB.getQzzqbc());
+				mrhkhzLocal.setYhkzkjysdhkje(mrhkhzXB.getYhkzkjysdhkje());
+				mrhkhzLocal.setJzydyszkzmye(mrhkhzXB.getJzydyszkzmye());
+				mrhkhzLocal.setJtxdydzjhlzb(mrhkhzXB.getJtxdydzjhlzb());
+				mrhkhzLocal.setSfdrwc(mrhkhzXB.getSfdrwc());
+				mrhkhzLocal.setQybh(3);
 				mrhkhzLocalDao.merge(mrhkhzLocal);
 			}
 
@@ -145,6 +183,22 @@ public class MRHKHZTransferServiceImpl implements MRHKHZTransferService {
 
 	public void setMrhkhzLLDao(MRHKHZXLDao mrhkhzLLDao) {
 		this.mrhkhzLLDao = mrhkhzLLDao;
+	}
+
+	public MRHKHZXLDao getMrhkhzXLDao() {
+		return mrhkhzXLDao;
+	}
+
+	public void setMrhkhzXLDao(MRHKHZXLDao mrhkhzXLDao) {
+		this.mrhkhzXLDao = mrhkhzXLDao;
+	}
+
+	public MRHKHZBYQDao getMrhkhzXBDao() {
+		return mrhkhzXBDao;
+	}
+
+	public void setMrhkhzXBDao(MRHKHZBYQDao mrhkhzXBDao) {
+		this.mrhkhzXBDao = mrhkhzXBDao;
 	}
 
 }

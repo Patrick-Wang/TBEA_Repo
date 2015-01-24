@@ -17,6 +17,8 @@ public class XLWGTransferServiceImpl implements XLWGTransferService {
 	private XLWGXLDao xlwgDLDao;
 
 	private XLWGXLDao xlwgLLDao;
+	
+	private XLWGXLDao xlwgXLDao;
 
 	@Override
 	public boolean transferXLWG() {
@@ -63,6 +65,26 @@ public class XLWGTransferServiceImpl implements XLWGTransferService {
 				xlwgLocal.setQybh(4);
 				xlwgLocalDao.merge(xlwgLocal);
 			}
+			// xl
+			xlwgLocalDao.deleteXLWGLocalByQY(5);
+			List<XLWGXL> xlwgXLList = xlwgXLDao.getAllXLWG();
+			for (XLWGXL xlwgXL : xlwgXLList) {
+				xlwgLocal = new XLWGLocal();
+				xlwgLocal.setGxrq(xlwgXL.getGxrq());
+				xlwgLocal.setZxcpbh(xlwgXL.getZxcpbh());
+				// xlwgLocal.setDwmc(xlwgXL.getDwmc());
+				xlwgLocal.setWgsj(xlwgXL.getWgsj());
+				xlwgLocal.setCz(xlwgXL.getCz());
+				xlwgLocal.setDjtyl(xlwgXL.getDjtyl());
+				xlwgLocal.setDjtdj(xlwgXL.getDjtdj());
+				xlwgLocal.setTjgf(xlwgXL.getTjgf());
+				xlwgLocal.setLyl(xlwgXL.getLyl());
+				xlwgLocal.setSjlvdj(xlwgXL.getSjlvdj());
+				xlwgLocal.setQtcbhj(xlwgXL.getQtcbhj());
+				xlwgLocal.setYf(xlwgXL.getYf());
+				xlwgLocal.setQybh(5);
+				xlwgLocalDao.merge(xlwgLocal);
+			}
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,6 +115,14 @@ public class XLWGTransferServiceImpl implements XLWGTransferService {
 
 	public void setXlwgLLDao(XLWGXLDao xlwgLLDao) {
 		this.xlwgLLDao = xlwgLLDao;
+	}
+
+	public XLWGXLDao getXlwgXLDao() {
+		return xlwgXLDao;
+	}
+
+	public void setXlwgXLDao(XLWGXLDao xlwgXLDao) {
+		this.xlwgXLDao = xlwgXLDao;
 	}
 
 }

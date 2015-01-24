@@ -24,6 +24,10 @@ public class YDSJHKQKTransferServiceImpl implements YDSJHKQKTransferService {
 
 	private YDSJHKQKBYQDao ydsjhkqkSBDao;
 
+	private YDSJHKQKXLDao ydsjhkqkXLDao;
+
+	private YDSJHKQKBYQDao ydsjhkqkXBDao;
+
 	@Override
 	public boolean transferYDSJHKQK() {
 		boolean result = false;
@@ -67,6 +71,25 @@ public class YDSJHKQKTransferServiceImpl implements YDSJHKQKTransferService {
 				ydsjhkqkLocal.setQybh(4);
 				ydsjhkqkLocalDao.merge(ydsjhkqkLocal);
 			}
+			// xl
+			ydsjhkqkLocalDao.deleteYDSJHKQKLocalByQY(5);
+			List<YDSJHKQKXL> ydsjhkqkXLList = ydsjhkqkXLDao.getAllYDSJHKQK();
+			for (YDSJHKQKXL ydsjhkqkXL : ydsjhkqkXLList) {
+				ydsjhkqkLocal = new YDSJHKQKLocal();
+				ydsjhkqkLocal.setGxrq(ydsjhkqkXL.getGxrq());
+				ydsjhkqkLocal.setGsbm(ydsjhkqkXL.getGsbm());
+				ydsjhkqkLocal.setYqyszksjhk(ydsjhkqkXL.getYqyszksjhk());
+				ydsjhkqkLocal.setYqksjhk(ydsjhkqkXL.getYqksjhk());
+				ydsjhkqkLocal.setWdqyszksjhk(ydsjhkqkXL.getWdqyszksjhk());
+				ydsjhkqkLocal.setWdqksjhk(ydsjhkqkXL.getWdqksjhk());
+				ydsjhkqkLocal.setQbkhhk(ydsjhkqkXL.getQbkhhk());
+				ydsjhkqkLocal.setZqkhhk(ydsjhkqkXL.getZqkhhk());
+				ydsjhkqkLocal.setXkxhhk(ydsjhkqkXL.getXkxhhk());
+				ydsjhkqkLocal.setJhwhk(ydsjhkqkXL.getJhwhk());
+				ydsjhkqkLocal.setSfdrwc(ydsjhkqkXL.getSfdrwc());
+				ydsjhkqkLocal.setQybh(5);
+				ydsjhkqkLocalDao.merge(ydsjhkqkLocal);
+			}
 			// tb
 			ydsjhkqkLocalDao.deleteYDSJHKQKLocalByQY(301);
 			List<YDSJHKQKBYQ> ydsjhkqkTBList = ydsjhkqkTBDao.getAllYDSJHKQK();
@@ -104,6 +127,25 @@ public class YDSJHKQKTransferServiceImpl implements YDSJHKQKTransferService {
 				ydsjhkqkLocal.setJhwhk(ydsjhkqkSB.getJhwhk());
 				ydsjhkqkLocal.setSfdrwc(ydsjhkqkSB.getSfdrwc());
 				ydsjhkqkLocal.setQybh(1);
+				ydsjhkqkLocalDao.merge(ydsjhkqkLocal);
+			}
+			// xb
+			ydsjhkqkLocalDao.deleteYDSJHKQKLocalByQY(3);
+			List<YDSJHKQKBYQ> ydsjhkqkXBList = ydsjhkqkXBDao.getAllYDSJHKQK();
+			for (YDSJHKQKBYQ ydsjhkqkXB : ydsjhkqkXBList) {
+				ydsjhkqkLocal = new YDSJHKQKLocal();
+				ydsjhkqkLocal.setGxrq(ydsjhkqkXB.getGxrq());
+				ydsjhkqkLocal.setGsbm(ydsjhkqkXB.getGsbm());
+				ydsjhkqkLocal.setYqyszksjhk(ydsjhkqkXB.getYqyszksjhk());
+				ydsjhkqkLocal.setYqksjhk(ydsjhkqkXB.getYqksjhk());
+				ydsjhkqkLocal.setWdqyszksjhk(ydsjhkqkXB.getWdqyszksjhk());
+				ydsjhkqkLocal.setWdqksjhk(ydsjhkqkXB.getWdqksjhk());
+				ydsjhkqkLocal.setQbkhhk(ydsjhkqkXB.getQbkhhk());
+				ydsjhkqkLocal.setZqkhhk(ydsjhkqkXB.getZqkhhk());
+				ydsjhkqkLocal.setXkxhhk(ydsjhkqkXB.getXkxhhk());
+				ydsjhkqkLocal.setJhwhk(ydsjhkqkXB.getJhwhk());
+				ydsjhkqkLocal.setSfdrwc(ydsjhkqkXB.getSfdrwc());
+				ydsjhkqkLocal.setQybh(3);
 				ydsjhkqkLocalDao.merge(ydsjhkqkLocal);
 			}
 
@@ -153,6 +195,22 @@ public class YDSJHKQKTransferServiceImpl implements YDSJHKQKTransferService {
 
 	public void setYdsjhkqkSBDao(YDSJHKQKBYQDao ydsjhkqkSBDao) {
 		this.ydsjhkqkSBDao = ydsjhkqkSBDao;
+	}
+
+	public YDSJHKQKXLDao getYdsjhkqkXLDao() {
+		return ydsjhkqkXLDao;
+	}
+
+	public void setYdsjhkqkXLDao(YDSJHKQKXLDao ydsjhkqkXLDao) {
+		this.ydsjhkqkXLDao = ydsjhkqkXLDao;
+	}
+
+	public YDSJHKQKBYQDao getYdsjhkqkXBDao() {
+		return ydsjhkqkXBDao;
+	}
+
+	public void setYdsjhkqkXBDao(YDSJHKQKBYQDao ydsjhkqkXBDao) {
+		this.ydsjhkqkXBDao = ydsjhkqkXBDao;
 	}
 
 }

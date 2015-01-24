@@ -15,8 +15,10 @@ public class FKFSXLFDWTransferServiceImpl implements FKFSXLFDWTransferService {
 	private FKFSXLFDWLocalDao fkfsxlfdwLocalDao;
 
 	private FKFSXLFDWXLDao fkfsxlfdwDLDao;
-	
+
 	private FKFSXLFDWXLDao fkfsxlfdwLLDao;
+
+	private FKFSXLFDWXLDao fkfsxlfdwXLDao;
 
 	@Override
 	public boolean transferFKFSXLFDW() {
@@ -101,6 +103,45 @@ public class FKFSXLFDWTransferServiceImpl implements FKFSXLFDWTransferService {
 				fkfsxlfdwLocal.setQybh(4);
 				fkfsxlfdwLocalDao.merge(fkfsxlfdwLocal);
 			}
+			// xl
+			fkfsxlfdwLocalDao.deleteFKFSXLFDWLocalByQY(5);
+			List<FKFSXLFDWXL> fkfsxlfdwXLList = fkfsxlfdwXLDao
+					.getAllFKFSXLFDW();
+			for (FKFSXLFDWXL fkfsxlfdwXL : fkfsxlfdwXLList) {
+				fkfsxlfdwLocal = new FKFSXLFDWLocal();
+				fkfsxlfdwLocal.setGxrq(fkfsxlfdwXL.getGxrq());
+				fkfsxlfdwLocal.setGsbm(fkfsxlfdwXL.getGsbm());
+				fkfsxlfdwLocal.setKhbh(fkfsxlfdwXL.getKhbh());
+				fkfsxlfdwLocal.setDdzlbs(fkfsxlfdwXL.getDdzlbs());
+				fkfsxlfdwLocal.setDdzlje(fkfsxlfdwXL.getDdzlje());
+				fkfsxlfdwLocal.setWyfkhtbs(fkfsxlfdwXL.getWyfkhtbs());
+				fkfsxlfdwLocal.setWyfkhtje(fkfsxlfdwXL.getWyfkhtje());
+				fkfsxlfdwLocal.setYfkxybfzshtbs(fkfsxlfdwXL.getYfkxybfzshtbs());
+				fkfsxlfdwLocal.setYfkxybfzshtje(fkfsxlfdwXL.getYfkxybfzshtje());
+				fkfsxlfdwLocal.setYfkzbfzsdsszjhtbs(fkfsxlfdwXL
+						.getYfkzbfzsdsszjhtbs());
+				fkfsxlfdwLocal.setYfkzbfzsdsszjhtje(fkfsxlfdwXL
+						.getYfkzbfzsdsszjhtje());
+				fkfsxlfdwLocal.setHwjfhfkblxybfzbshtbs(fkfsxlfdwXL
+						.getHwjfhfkblxybfzbshtbs());
+				fkfsxlfdwLocal.setHwjfhfkblxybfzbshtje(fkfsxlfdwXL
+						.getHwjfhfkblxybfzbshtje());
+				fkfsxlfdwLocal.setZbjbfzshtbs(fkfsxlfdwXL.getZbjbfzshtbs());
+				fkfsxlfdwLocal.setZbjbfzshtje(fkfsxlfdwXL.getZbjbfzshtje());
+				fkfsxlfdwLocal.setZbjbfzwhtbs(fkfsxlfdwXL.getZbjbfzwhtbs());
+				fkfsxlfdwLocal.setZbjbfzwhtje(fkfsxlfdwXL.getZbjbfzwhtje());
+				fkfsxlfdwLocal.setWzbjhtbs(fkfsxlfdwXL.getWzbjhtbs());
+				fkfsxlfdwLocal.setWzbjhtje(fkfsxlfdwXL.getWzbjhtje());
+				fkfsxlfdwLocal.setZbqcgynhtbs(fkfsxlfdwXL.getZbqcgynhtbs());
+				fkfsxlfdwLocal.setZbqcgynhtje(fkfsxlfdwXL.getZbqcgynhtje());
+				fkfsxlfdwLocal.setWddsjhtbs(fkfsxlfdwXL.getWddsjhtbs());
+				fkfsxlfdwLocal.setWddsjhtje(fkfsxlfdwXL.getWddsjhtje());
+				fkfsxlfdwLocal.setXkxhhtbs(fkfsxlfdwXL.getXkxhhtbs());
+				fkfsxlfdwLocal.setXkxhhtje(fkfsxlfdwXL.getXkxhhtje());
+				fkfsxlfdwLocal.setSfdrwc(fkfsxlfdwXL.getSfdrwc());
+				fkfsxlfdwLocal.setQybh(5);
+				fkfsxlfdwLocalDao.merge(fkfsxlfdwLocal);
+			}
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -131,6 +172,14 @@ public class FKFSXLFDWTransferServiceImpl implements FKFSXLFDWTransferService {
 
 	public void setFkfsxlfdwLLDao(FKFSXLFDWXLDao fkfsxlfdwLLDao) {
 		this.fkfsxlfdwLLDao = fkfsxlfdwLLDao;
+	}
+
+	public FKFSXLFDWXLDao getFkfsxlfdwXLDao() {
+		return fkfsxlfdwXLDao;
+	}
+
+	public void setFkfsxlfdwXLDao(FKFSXLFDWXLDao fkfsxlfdwXLDao) {
+		this.fkfsxlfdwXLDao = fkfsxlfdwXLDao;
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.tbea.datatransfer.model.dao.zjxl.yszkpzgh;
+package com.tbea.datatransfer.model.dao.zjxl.yszktz;
 
 import java.util.List;
 
@@ -10,24 +10,26 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
 
-import com.tbea.datatransfer.model.entity.zjxl.YSZKPZGHXL;
+import com.tbea.datatransfer.model.entity.zjxl.YSZKTZXL;
 
-@Transactional("transactionManagerdl")
-public class YSZKPZGHDLDaoImpl extends AbstractReadOnlyDaoImpl<YSZKPZGHXL>
-		implements YSZKPZGHXLDao {
+@Transactional("transactionManagerxl")
+public class YSZKTZXLDaoImpl extends AbstractReadOnlyDaoImpl<YSZKTZXL>
+		implements YSZKTZXLDao {
 
 	@Override
-	@PersistenceContext(unitName = "dlDB")
+	@PersistenceContext(unitName = "xlDB")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<YSZKPZGHXL> getAllYSZKPZGH() {
-		String sql = "From YSZKPZGHXL";
+	public List<YSZKTZXL> getAllYSZKTZ() {
+		// TODO
+//		String sql = "From YSZKTZDL Where DateDiff(dd,gxrq,getDate())<=2";
+		String sql = "From YSZKTZXL";
 		Query query = getEntityManager().createQuery(sql);
-		List<YSZKPZGHXL> resultList = query.getResultList();
+		List<YSZKTZXL> resultList = query.getResultList();
 		return resultList;
 	}
 

@@ -110,7 +110,7 @@ public class FKFSXLNWLocal extends AbstractReadWriteEntity {
 		this.nwhtddzlje = nwhtddzlje;
 	}
 
-	@Column(name = "1_6_2_1bs")
+	@Column(name = "[1_6_2_1bs]")
 	public Integer getN1_6_2_1bs() {
 		return n1_6_2_1bs;
 	}
@@ -119,7 +119,7 @@ public class FKFSXLNWLocal extends AbstractReadWriteEntity {
 		this.n1_6_2_1bs = n1_6_2_1bs;
 	}
 
-	@Column(name = "1_6_2_1je")
+	@Column(name = "[1_6_2_1je]")
 	public Double getN1_6_2_1je() {
 		return n1_6_2_1je;
 	}
@@ -128,7 +128,7 @@ public class FKFSXLNWLocal extends AbstractReadWriteEntity {
 		this.n1_6_2_1je = n1_6_2_1je;
 	}
 
-	@Column(name = "1_2_6_1bs")
+	@Column(name = "[1_2_6_1bs]")
 	public Integer getN1_2_6_1bs() {
 		return n1_2_6_1bs;
 	}
@@ -137,7 +137,7 @@ public class FKFSXLNWLocal extends AbstractReadWriteEntity {
 		this.n1_2_6_1bs = n1_2_6_1bs;
 	}
 
-	@Column(name = "1_2_6_1je")
+	@Column(name = "[1_2_6_1je]")
 	public Double getN1_2_6_1je() {
 		return n1_2_6_1je;
 	}
@@ -146,7 +146,7 @@ public class FKFSXLNWLocal extends AbstractReadWriteEntity {
 		this.n1_2_6_1je = n1_2_6_1je;
 	}
 
-	@Column(name = "0_09_01bs")
+	@Column(name = "[0_09_01bs]")
 	public Integer getN0_09_01bs() {
 		return n0_09_01bs;
 	}
@@ -155,7 +155,7 @@ public class FKFSXLNWLocal extends AbstractReadWriteEntity {
 		this.n0_09_01bs = n0_09_01bs;
 	}
 
-	@Column(name = "0_09_01je")
+	@Column(name = "[0_09_01je]")
 	public Double getN0_09_01je() {
 		return n0_09_01je;
 	}

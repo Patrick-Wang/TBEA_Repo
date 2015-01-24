@@ -24,6 +24,10 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 
 	private TBBZJXXBYQDao tbbzjxxSBDao;
 
+	private TBBZJXXXLDao tbbzjxxXLDao;
+
+	private TBBZJXXBYQDao tbbzjxxXBDao;
+
 	@Override
 	public boolean transferTBBZJXX() {
 		boolean result = false;
@@ -57,6 +61,20 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 				tbbzjxxLocal.setQybh(4);
 				tbbzjxxLocalDao.merge(tbbzjxxLocal);
 			}
+			// xl
+			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(5);
+			List<TBBZJXXXL> tbbzjxxXLList = tbbzjxxXLDao.getAllTBBZJXX();
+			for (TBBZJXXXL tbbzjxxXL : tbbzjxxXLList) {
+				tbbzjxxLocal = new TBBZJXXLocal();
+				tbbzjxxLocal.setGxrq(tbbzjxxXL.getGxrq());
+				tbbzjxxLocal.setGsbm(tbbzjxxXL.getGsbm());
+				tbbzjxxLocal.setNf(tbbzjxxXL.getNf());
+				tbbzjxxLocal.setYf(tbbzjxxXL.getYf());
+				tbbzjxxLocal.setJe(tbbzjxxXL.getJe());
+				tbbzjxxLocal.setSfdrwc(tbbzjxxXL.getSfdrwc());
+				tbbzjxxLocal.setQybh(5);
+				tbbzjxxLocalDao.merge(tbbzjxxLocal);
+			}
 			// tb
 			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(301);
 			List<TBBZJXXBYQ> tbbzjxxTBList = tbbzjxxTBDao.getAllTBBZJXX();
@@ -83,6 +101,20 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 				tbbzjxxLocal.setJe(tbbzjxxSB.getJe());
 				tbbzjxxLocal.setSfdrwc(tbbzjxxSB.getSfdrwc());
 				tbbzjxxLocal.setQybh(1);
+				tbbzjxxLocalDao.merge(tbbzjxxLocal);
+			}
+			// xb
+			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(3);
+			List<TBBZJXXBYQ> tbbzjxxXBList = tbbzjxxXBDao.getAllTBBZJXX();
+			for (TBBZJXXBYQ tbbzjxxXB : tbbzjxxXBList) {
+				tbbzjxxLocal = new TBBZJXXLocal();
+				tbbzjxxLocal.setGxrq(tbbzjxxXB.getGxrq());
+				tbbzjxxLocal.setGsbm(tbbzjxxXB.getGsbm());
+				tbbzjxxLocal.setNf(tbbzjxxXB.getNf());
+				tbbzjxxLocal.setYf(tbbzjxxXB.getYf());
+				tbbzjxxLocal.setJe(tbbzjxxXB.getJe());
+				tbbzjxxLocal.setSfdrwc(tbbzjxxXB.getSfdrwc());
+				tbbzjxxLocal.setQybh(3);
 				tbbzjxxLocalDao.merge(tbbzjxxLocal);
 			}
 
@@ -132,6 +164,22 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 
 	public void setTbbzjxxSBDao(TBBZJXXBYQDao tbbzjxxSBDao) {
 		this.tbbzjxxSBDao = tbbzjxxSBDao;
+	}
+
+	public TBBZJXXXLDao getTbbzjxxXLDao() {
+		return tbbzjxxXLDao;
+	}
+
+	public void setTbbzjxxXLDao(TBBZJXXXLDao tbbzjxxXLDao) {
+		this.tbbzjxxXLDao = tbbzjxxXLDao;
+	}
+
+	public TBBZJXXBYQDao getTbbzjxxXBDao() {
+		return tbbzjxxXBDao;
+	}
+
+	public void setTbbzjxxXBDao(TBBZJXXBYQDao tbbzjxxXBDao) {
+		this.tbbzjxxXBDao = tbbzjxxXBDao;
 	}
 
 }

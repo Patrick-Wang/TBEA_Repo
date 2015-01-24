@@ -29,6 +29,8 @@ public class YSZKTZBYQ extends AbstractReadOnlyEntity implements Serializable {
 	private String khsshy;
 
 	private String kxlb;
+	
+	private String kxzt;
 
 	private Double ysje;
 
@@ -44,6 +46,10 @@ public class YSZKTZBYQ extends AbstractReadOnlyEntity implements Serializable {
 
 	private Date kprq;
 
+	private Integer yqyyfl;
+	
+	private String sftgflsdqs;
+	
 	private String sfdrwc;
 
 	@Id
@@ -105,6 +111,14 @@ public class YSZKTZBYQ extends AbstractReadOnlyEntity implements Serializable {
 		this.kxlb = kxlb;
 	}
 
+	public String getKxzt() {
+		return kxzt;
+	}
+
+	public void setKxzt(String kxzt) {
+		this.kxzt = kxzt;
+	}
+
 	public Double getYsje() {
 		return ysje;
 	}
@@ -161,22 +175,28 @@ public class YSZKTZBYQ extends AbstractReadOnlyEntity implements Serializable {
 		this.kprq = kprq;
 	}
 
+	public Integer getYqyyfl() {
+		return yqyyfl;
+	}
+
+	public void setYqyyfl(Integer yqyyfl) {
+		this.yqyyfl = yqyyfl;
+	}
+
+	public String getSftgflsdqs() {
+		return sftgflsdqs;
+	}
+
+	public void setSftgflsdqs(String sftgflsdqs) {
+		this.sftgflsdqs = sftgflsdqs;
+	}
+
 	public String getSfdrwc() {
 		return sfdrwc;
 	}
 
 	public void setSfdrwc(String sfdrwc) {
 		this.sfdrwc = sfdrwc;
-	}
-
-	@Override
-	public String toString() {
-		return "YSZKTZTB [id=" + getId() + ", gxrq=" + gxrq + ", htbh=" + htbh
-				+ ", khbh=" + khbh + ", khmc=" + khmc + ", khsshy=" + khsshy
-				+ ", kxlb=" + kxlb + ", ysje=" + ysje + ", dqrq=" + dqrq
-				+ ", yhxje=" + yhxje + ", yfhje=" + yfhje + ", fhrq=" + fhrq
-				+ ", ykpje=" + ykpje + ", kprq=" + kprq + ", sfdrwc=" + sfdrwc
-				+ "]";
 	}
 
 }

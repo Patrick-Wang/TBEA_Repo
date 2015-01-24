@@ -17,6 +17,8 @@ public class XLTBTransferServiceImpl implements XLTBTransferService {
 	private XLTBXLDao xltbDLDao;
 
 	private XLTBXLDao xltbLLDao;
+	
+	private XLTBXLDao xltbXLDao;
 
 	@Override
 	public boolean transferXLTB() {
@@ -67,6 +69,28 @@ public class XLTBTransferServiceImpl implements XLTBTransferService {
 				xltbLocal.setQybh(4);
 				xltbLocalDao.merge(xltbLocal);
 			}
+			// xl
+			xltbLocalDao.deleteXLTBLocalByQY(5);
+			List<XLTBXL> xltbXLList = xltbXLDao.getAllXLTB();
+			for (XLTBXL xltbXL : xltbXLList) {
+				xltbLocal = new XLTBLocal();
+				xltbLocal.setGxrq(xltbXL.getGxrq());
+				xltbLocal.setXmbh(xltbXL.getXmbh());
+				xltbLocal.setTbbjsj(xltbXL.getTbbjsj());
+				xltbLocal.setCpdl(xltbXL.getCpdl());
+				xltbLocal.setXlsl(xltbXL.getXlsl());
+				xltbLocal.setCz(xltbXL.getCz());
+				xltbLocal.setYjkbsj(xltbXL.getYjkbsj());
+				xltbLocal.setYczbgl(xltbXL.getYczbgl());
+				xltbLocal.setDjtyl(xltbXL.getDjtyl());
+				xltbLocal.setDjtdj(xltbXL.getDjtdj());
+				xltbLocal.setLyl(xltbXL.getLyl());
+				xltbLocal.setTblvdj(xltbXL.getTblvdj());
+				xltbLocal.setQtcbhj(xltbXL.getQtcbhj());
+				xltbLocal.setYf(xltbXL.getYf());
+				xltbLocal.setQybh(5);
+				xltbLocalDao.merge(xltbLocal);
+			}
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -97,6 +121,14 @@ public class XLTBTransferServiceImpl implements XLTBTransferService {
 
 	public void setXltbLLDao(XLTBXLDao xltbLLDao) {
 		this.xltbLLDao = xltbLLDao;
+	}
+
+	public XLTBXLDao getXltbXLDao() {
+		return xltbXLDao;
+	}
+
+	public void setXltbXLDao(XLTBXLDao xltbXLDao) {
+		this.xltbXLDao = xltbXLDao;
 	}
 
 }
