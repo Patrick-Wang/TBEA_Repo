@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.xltb.XLTBLocalDao;
-import com.tbea.datatransfer.model.dao.zjdl.xltb.XLTBDLDao;
+import com.tbea.datatransfer.model.dao.zjxl.xltb.XLTBXLDao;
 import com.tbea.datatransfer.model.entity.local.XLTBLocal;
 import com.tbea.datatransfer.model.entity.zjxl.XLTBXL;
 
@@ -14,7 +14,9 @@ public class XLTBTransferServiceImpl implements XLTBTransferService {
 
 	private XLTBLocalDao xltbLocalDao;
 
-	private XLTBDLDao xltbDLDao;
+	private XLTBXLDao xltbDLDao;
+
+	private XLTBXLDao xltbLLDao;
 
 	@Override
 	public boolean transferXLTB() {
@@ -43,6 +45,28 @@ public class XLTBTransferServiceImpl implements XLTBTransferService {
 				xltbLocal.setQybh(6);
 				xltbLocalDao.merge(xltbLocal);
 			}
+			// ll
+			xltbLocalDao.deleteXLTBLocalByQY(4);
+			List<XLTBXL> xltbLLList = xltbLLDao.getAllXLTB();
+			for (XLTBXL xltbLL : xltbLLList) {
+				xltbLocal = new XLTBLocal();
+				xltbLocal.setGxrq(xltbLL.getGxrq());
+				xltbLocal.setXmbh(xltbLL.getXmbh());
+				xltbLocal.setTbbjsj(xltbLL.getTbbjsj());
+				xltbLocal.setCpdl(xltbLL.getCpdl());
+				xltbLocal.setXlsl(xltbLL.getXlsl());
+				xltbLocal.setCz(xltbLL.getCz());
+				xltbLocal.setYjkbsj(xltbLL.getYjkbsj());
+				xltbLocal.setYczbgl(xltbLL.getYczbgl());
+				xltbLocal.setDjtyl(xltbLL.getDjtyl());
+				xltbLocal.setDjtdj(xltbLL.getDjtdj());
+				xltbLocal.setLyl(xltbLL.getLyl());
+				xltbLocal.setTblvdj(xltbLL.getTblvdj());
+				xltbLocal.setQtcbhj(xltbLL.getQtcbhj());
+				xltbLocal.setYf(xltbLL.getYf());
+				xltbLocal.setQybh(4);
+				xltbLocalDao.merge(xltbLocal);
+			}
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,12 +83,20 @@ public class XLTBTransferServiceImpl implements XLTBTransferService {
 		this.xltbLocalDao = xltbLocalDao;
 	}
 
-	public XLTBDLDao getXltbDLDao() {
+	public XLTBXLDao getXltbDLDao() {
 		return xltbDLDao;
 	}
 
-	public void setXltbDLDao(XLTBDLDao xltbDLDao) {
+	public void setXltbDLDao(XLTBXLDao xltbDLDao) {
 		this.xltbDLDao = xltbDLDao;
+	}
+
+	public XLTBXLDao getXltbLLDao() {
+		return xltbLLDao;
+	}
+
+	public void setXltbLLDao(XLTBXLDao xltbLLDao) {
+		this.xltbLLDao = xltbLLDao;
 	}
 
 }

@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.bl.BLLocalDao;
-import com.tbea.datatransfer.model.dao.zjdl.bl.BLDLDao;
-import com.tbea.datatransfer.model.dao.zjsb.bl.BLSBDao;
-import com.tbea.datatransfer.model.dao.zjtb.bl.BLTBDao;
+import com.tbea.datatransfer.model.dao.zjbyq.bl.BLBYQDao;
+import com.tbea.datatransfer.model.dao.zjxl.bl.BLXLDao;
 import com.tbea.datatransfer.model.entity.local.BLLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.BLBYQ;
 import com.tbea.datatransfer.model.entity.zjxl.BLXL;
@@ -17,11 +16,13 @@ public class BLTransferServiceImpl implements BLTransferService {
 
 	private BLLocalDao blLocalDao;
 
-	private BLDLDao blDLDao;
+	private BLXLDao blDLDao;
+	
+	private BLXLDao blLLDao;
 
-	private BLTBDao blTBDao;
+	private BLBYQDao blTBDao;
 
-	private BLSBDao blSBDao;
+	private BLBYQDao blSBDao;
 
 	@Override
 	public boolean transferBL() {
@@ -44,6 +45,24 @@ public class BLTransferServiceImpl implements BLTransferService {
 				blLocal.setBlye(blDL.getBlye());
 				blLocal.setSfdrwc(blDL.getSfdrwc());
 				blLocal.setQybh(6);
+				blLocalDao.merge(blLocal);
+			}
+			// ll
+			blLocalDao.deleteBLLocalByQY(4);
+			List<BLXL> blLLList = blLLDao.getAllBL();
+			for (BLXL blLL : blLLList) {
+				blLocal = new BLLocal();
+				blLocal.setGxrq(blLL.getGxrq());
+				blLocal.setBlbh(blLL.getBlbh());
+				blLocal.setHtbh(blLL.getHtbh());
+				blLocal.setBlrq(blLL.getBlrq());
+				blLocal.setKxxz(blLL.getKxxz());
+				blLocal.setBlje(blLL.getBlje());
+				blLocal.setBldqr(blLL.getBldqr());
+				blLocal.setBlhkje(blLL.getBlhkje());
+				blLocal.setBlye(blLL.getBlye());
+				blLocal.setSfdrwc(blLL.getSfdrwc());
+				blLocal.setQybh(4);
 				blLocalDao.merge(blLocal);
 			}
 			// tb
@@ -100,27 +119,35 @@ public class BLTransferServiceImpl implements BLTransferService {
 		this.blLocalDao = blLocalDao;
 	}
 
-	public BLDLDao getBlDLDao() {
+	public BLXLDao getBlDLDao() {
 		return blDLDao;
 	}
 
-	public void setBlDLDao(BLDLDao blDLDao) {
+	public void setBlDLDao(BLXLDao blDLDao) {
 		this.blDLDao = blDLDao;
 	}
 
-	public BLTBDao getBlTBDao() {
+	public BLXLDao getBlLLDao() {
+		return blLLDao;
+	}
+
+	public void setBlLLDao(BLXLDao blLLDao) {
+		this.blLLDao = blLLDao;
+	}
+
+	public BLBYQDao getBlTBDao() {
 		return blTBDao;
 	}
 
-	public void setBlTBDao(BLTBDao blTBDao) {
+	public void setBlTBDao(BLBYQDao blTBDao) {
 		this.blTBDao = blTBDao;
 	}
 
-	public BLSBDao getBlSBDao() {
+	public BLBYQDao getBlSBDao() {
 		return blSBDao;
 	}
 
-	public void setBlSBDao(BLSBDao blSBDao) {
+	public void setBlSBDao(BLBYQDao blSBDao) {
 		this.blSBDao = blSBDao;
 	}
 

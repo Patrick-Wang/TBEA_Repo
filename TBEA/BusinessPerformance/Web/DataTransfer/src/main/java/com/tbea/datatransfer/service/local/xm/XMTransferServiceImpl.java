@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.xm.XMLocalDao;
-import com.tbea.datatransfer.model.dao.zjdl.xm.XMDLDao;
+import com.tbea.datatransfer.model.dao.zjxl.xm.XMXLDao;
 import com.tbea.datatransfer.model.entity.local.XMLocal;
 import com.tbea.datatransfer.model.entity.zjxl.XMXL;
 
@@ -14,7 +14,9 @@ public class XMTransferServiceImpl implements XMTransferService {
 
 	private XMLocalDao xmLocalDao;
 
-	private XMDLDao xmDLDao;
+	private XMXLDao xmDLDao;
+
+	private XMXLDao xmLLDao;
 
 	@Override
 	public boolean transferXM() {
@@ -36,6 +38,21 @@ public class XMTransferServiceImpl implements XMTransferService {
 				xmLocal.setQybh(6);
 				xmLocalDao.merge(xmLocal);
 			}
+			// ll
+			xmLocalDao.deleteXMLocalByQY(4);
+			List<XMXL> xmLLList = xmLLDao.getAllXM();
+			for (XMXL xmLL : xmLLList) {
+				xmLocal = new XMLocal();
+				xmLocal.setGxrq(xmLL.getGxrq());
+				xmLocal.setXmbh(xmLL.getXmbh());
+				xmLocal.setXmmc(xmLL.getXmmc());
+				xmLocal.setDdszdw(xmLL.getDdszdw());
+				xmLocal.setYhdwmc(xmLL.getYhdwmc());
+				xmLocal.setKhhylx(xmLL.getKhhylx());
+				xmLocal.setGb(xmLL.getGb());
+				xmLocal.setQybh(4);
+				xmLocalDao.merge(xmLocal);
+			}
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,12 +69,20 @@ public class XMTransferServiceImpl implements XMTransferService {
 		this.xmLocalDao = xmLocalDao;
 	}
 
-	public XMDLDao getXmDLDao() {
+	public XMXLDao getXmDLDao() {
 		return xmDLDao;
 	}
 
-	public void setXmDLDao(XMDLDao xmDLDao) {
+	public void setXmDLDao(XMXLDao xmDLDao) {
 		this.xmDLDao = xmDLDao;
+	}
+
+	public XMXLDao getXmLLDao() {
+		return xmLLDao;
+	}
+
+	public void setXmLLDao(XMXLDao xmLLDao) {
+		this.xmLLDao = xmLLDao;
 	}
 
 }

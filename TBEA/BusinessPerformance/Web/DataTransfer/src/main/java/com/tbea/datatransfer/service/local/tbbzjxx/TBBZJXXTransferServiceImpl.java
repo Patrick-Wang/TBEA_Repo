@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.tbbzjxx.TBBZJXXLocalDao;
-import com.tbea.datatransfer.model.dao.zjdl.tbbzjxx.TBBZJXXDLDao;
-import com.tbea.datatransfer.model.dao.zjsb.tbbzjxx.TBBZJXXSBDao;
-import com.tbea.datatransfer.model.dao.zjtb.tbbzjxx.TBBZJXXTBDao;
+import com.tbea.datatransfer.model.dao.zjbyq.tbbzjxx.TBBZJXXBYQDao;
+import com.tbea.datatransfer.model.dao.zjxl.tbbzjxx.TBBZJXXXLDao;
 import com.tbea.datatransfer.model.entity.local.TBBZJXXLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.TBBZJXXBYQ;
 import com.tbea.datatransfer.model.entity.zjxl.TBBZJXXXL;
@@ -17,11 +16,13 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 
 	private TBBZJXXLocalDao tbbzjxxLocalDao;
 
-	private TBBZJXXDLDao tbbzjxxDLDao;
+	private TBBZJXXXLDao tbbzjxxDLDao;
 
-	private TBBZJXXTBDao tbbzjxxTBDao;
+	private TBBZJXXXLDao tbbzjxxLLDao;
 
-	private TBBZJXXSBDao tbbzjxxSBDao;
+	private TBBZJXXBYQDao tbbzjxxTBDao;
+
+	private TBBZJXXBYQDao tbbzjxxSBDao;
 
 	@Override
 	public boolean transferTBBZJXX() {
@@ -40,6 +41,20 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 				tbbzjxxLocal.setJe(tbbzjxxDL.getJe());
 				tbbzjxxLocal.setSfdrwc(tbbzjxxDL.getSfdrwc());
 				tbbzjxxLocal.setQybh(6);
+				tbbzjxxLocalDao.merge(tbbzjxxLocal);
+			}
+			// ll
+			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(4);
+			List<TBBZJXXXL> tbbzjxxLLList = tbbzjxxLLDao.getAllTBBZJXX();
+			for (TBBZJXXXL tbbzjxxLL : tbbzjxxLLList) {
+				tbbzjxxLocal = new TBBZJXXLocal();
+				tbbzjxxLocal.setGxrq(tbbzjxxLL.getGxrq());
+				tbbzjxxLocal.setGsbm(tbbzjxxLL.getGsbm());
+				tbbzjxxLocal.setNf(tbbzjxxLL.getNf());
+				tbbzjxxLocal.setYf(tbbzjxxLL.getYf());
+				tbbzjxxLocal.setJe(tbbzjxxLL.getJe());
+				tbbzjxxLocal.setSfdrwc(tbbzjxxLL.getSfdrwc());
+				tbbzjxxLocal.setQybh(4);
 				tbbzjxxLocalDao.merge(tbbzjxxLocal);
 			}
 			// tb
@@ -87,27 +102,35 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 		this.tbbzjxxLocalDao = tbbzjxxLocalDao;
 	}
 
-	public TBBZJXXDLDao getTbbzjxxDLDao() {
+	public TBBZJXXXLDao getTbbzjxxDLDao() {
 		return tbbzjxxDLDao;
 	}
 
-	public void setTbbzjxxDLDao(TBBZJXXDLDao tbbzjxxDLDao) {
+	public void setTbbzjxxDLDao(TBBZJXXXLDao tbbzjxxDLDao) {
 		this.tbbzjxxDLDao = tbbzjxxDLDao;
 	}
 
-	public TBBZJXXTBDao getTbbzjxxTBDao() {
+	public TBBZJXXXLDao getTbbzjxxLLDao() {
+		return tbbzjxxLLDao;
+	}
+
+	public void setTbbzjxxLLDao(TBBZJXXXLDao tbbzjxxLLDao) {
+		this.tbbzjxxLLDao = tbbzjxxLLDao;
+	}
+
+	public TBBZJXXBYQDao getTbbzjxxTBDao() {
 		return tbbzjxxTBDao;
 	}
 
-	public void setTbbzjxxTBDao(TBBZJXXTBDao tbbzjxxTBDao) {
+	public void setTbbzjxxTBDao(TBBZJXXBYQDao tbbzjxxTBDao) {
 		this.tbbzjxxTBDao = tbbzjxxTBDao;
 	}
 
-	public TBBZJXXSBDao getTbbzjxxSBDao() {
+	public TBBZJXXBYQDao getTbbzjxxSBDao() {
 		return tbbzjxxSBDao;
 	}
 
-	public void setTbbzjxxSBDao(TBBZJXXSBDao tbbzjxxSBDao) {
+	public void setTbbzjxxSBDao(TBBZJXXBYQDao tbbzjxxSBDao) {
 		this.tbbzjxxSBDao = tbbzjxxSBDao;
 	}
 

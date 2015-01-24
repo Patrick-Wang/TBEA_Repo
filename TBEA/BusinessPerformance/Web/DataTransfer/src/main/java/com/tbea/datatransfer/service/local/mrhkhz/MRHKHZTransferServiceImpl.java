@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.mrhkhz.MRHKHZLocalDao;
-import com.tbea.datatransfer.model.dao.zjdl.mrhkhz.MRHKHZDLDao;
-import com.tbea.datatransfer.model.dao.zjsb.mrhkhz.MRHKHZSBDao;
-import com.tbea.datatransfer.model.dao.zjtb.mrhkhz.MRHKHZTBDao;
+import com.tbea.datatransfer.model.dao.zjbyq.mrhkhz.MRHKHZBYQDao;
+import com.tbea.datatransfer.model.dao.zjxl.mrhkhz.MRHKHZXLDao;
 import com.tbea.datatransfer.model.entity.local.MRHKHZLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.MRHKHZBYQ;
 import com.tbea.datatransfer.model.entity.zjxl.MRHKHZXL;
@@ -17,11 +16,13 @@ public class MRHKHZTransferServiceImpl implements MRHKHZTransferService {
 
 	private MRHKHZLocalDao mrhkhzLocalDao;
 
-	private MRHKHZDLDao mrhkhzDLDao;
+	private MRHKHZXLDao mrhkhzDLDao;
 
-	private MRHKHZTBDao mrhkhzTBDao;
+	private MRHKHZXLDao mrhkhzLLDao;
 
-	private MRHKHZSBDao mrhkhzSBDao;
+	private MRHKHZBYQDao mrhkhzTBDao;
+
+	private MRHKHZBYQDao mrhkhzSBDao;
 
 	@Override
 	public boolean transferMRHKHZ() {
@@ -43,6 +44,23 @@ public class MRHKHZTransferServiceImpl implements MRHKHZTransferService {
 				mrhkhzLocal.setJtxdydzjhlzb(mrhkhzDL.getJtxdydzjhlzb());
 				mrhkhzLocal.setSfdrwc(mrhkhzDL.getSfdrwc());
 				mrhkhzLocal.setQybh(6);
+				mrhkhzLocalDao.merge(mrhkhzLocal);
+			}
+			// ll
+			mrhkhzLocalDao.deleteMRHKHZLocalByQY(4);
+			List<MRHKHZXL> mrhkhzLLList = mrhkhzLLDao.getAllMRHKHZ();
+			for (MRHKHZXL mrhkhzLL : mrhkhzLLList) {
+				mrhkhzLocal = new MRHKHZLocal();
+				mrhkhzLocal.setGxrq(mrhkhzLL.getGxrq());
+				mrhkhzLocal.setHkrq(mrhkhzLL.getHkrq());
+				mrhkhzLocal.setHkje(mrhkhzLL.getHkje());
+				mrhkhzLocal.setQzqbbc(mrhkhzLL.getQzqbbc());
+				mrhkhzLocal.setQzzqbc(mrhkhzLL.getQzzqbc());
+				mrhkhzLocal.setYhkzkjysdhkje(mrhkhzLL.getYhkzkjysdhkje());
+				mrhkhzLocal.setJzydyszkzmye(mrhkhzLL.getJzydyszkzmye());
+				mrhkhzLocal.setJtxdydzjhlzb(mrhkhzLL.getJtxdydzjhlzb());
+				mrhkhzLocal.setSfdrwc(mrhkhzLL.getSfdrwc());
+				mrhkhzLocal.setQybh(4);
 				mrhkhzLocalDao.merge(mrhkhzLocal);
 			}
 			// tb
@@ -97,28 +115,36 @@ public class MRHKHZTransferServiceImpl implements MRHKHZTransferService {
 		this.mrhkhzLocalDao = mrhkhzLocalDao;
 	}
 
-	public MRHKHZDLDao getMrhkhzDLDao() {
+	public MRHKHZXLDao getMrhkhzDLDao() {
 		return mrhkhzDLDao;
 	}
 
-	public void setMrhkhzDLDao(MRHKHZDLDao mrhkhzDLDao) {
+	public void setMrhkhzDLDao(MRHKHZXLDao mrhkhzDLDao) {
 		this.mrhkhzDLDao = mrhkhzDLDao;
 	}
 
-	public MRHKHZTBDao getMrhkhzTBDao() {
+	public MRHKHZBYQDao getMrhkhzTBDao() {
 		return mrhkhzTBDao;
 	}
 
-	public void setMrhkhzTBDao(MRHKHZTBDao mrhkhzTBDao) {
+	public void setMrhkhzTBDao(MRHKHZBYQDao mrhkhzTBDao) {
 		this.mrhkhzTBDao = mrhkhzTBDao;
 	}
 
-	public MRHKHZSBDao getMrhkhzSBDao() {
+	public MRHKHZBYQDao getMrhkhzSBDao() {
 		return mrhkhzSBDao;
 	}
 
-	public void setMrhkhzSBDao(MRHKHZSBDao mrhkhzSBDao) {
+	public void setMrhkhzSBDao(MRHKHZBYQDao mrhkhzSBDao) {
 		this.mrhkhzSBDao = mrhkhzSBDao;
+	}
+
+	public MRHKHZXLDao getMrhkhzLLDao() {
+		return mrhkhzLLDao;
+	}
+
+	public void setMrhkhzLLDao(MRHKHZXLDao mrhkhzLLDao) {
+		this.mrhkhzLLDao = mrhkhzLLDao;
 	}
 
 }

@@ -1,0 +1,34 @@
+package com.tbea.datatransfer.model.dao.zjxl.mrhkhz;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.springframework.transaction.annotation.Transactional;
+
+import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
+
+import com.tbea.datatransfer.model.entity.zjxl.MRHKHZXL;
+
+@Transactional("transactionManagerll")
+public class MRHKHZLLDaoImpl extends AbstractReadOnlyDaoImpl<MRHKHZXL>
+		implements MRHKHZXLDao {
+
+	@Override
+	@PersistenceContext(unitName = "llDB")
+	public void setEntityManager(EntityManager entityManager) {
+		super.setEntityManager(entityManager);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<MRHKHZXL> getAllMRHKHZ() {
+		String sql = "From MRHKHZXL";
+		Query query = getEntityManager().createQuery(sql);
+		List<MRHKHZXL> resultList = query.getResultList();
+		return resultList;
+	}
+
+}

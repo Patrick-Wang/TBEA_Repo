@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.mrhk.MRHKLocalDao;
-import com.tbea.datatransfer.model.dao.zjdl.mrhk.MRHKDLDao;
-import com.tbea.datatransfer.model.dao.zjsb.mrhk.MRHKSBDao;
-import com.tbea.datatransfer.model.dao.zjtb.mrhk.MRHKTBDao;
+import com.tbea.datatransfer.model.dao.zjbyq.mrhk.MRHKBYQDao;
+import com.tbea.datatransfer.model.dao.zjxl.mrhk.MRHKXLDao;
 import com.tbea.datatransfer.model.entity.local.MRHKLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.MRHKBYQ;
 import com.tbea.datatransfer.model.entity.zjxl.MRHKXL;
@@ -17,11 +16,13 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 
 	private MRHKLocalDao mrhkLocalDao;
 
-	private MRHKDLDao mrhkDLDao;
+	private MRHKXLDao mrhkDLDao;
 
-	private MRHKTBDao mrhkTBDao;
+	private MRHKXLDao mrhkLLDao;
 
-	private MRHKSBDao mrhkSBDao;
+	private MRHKBYQDao mrhkTBDao;
+
+	private MRHKBYQDao mrhkSBDao;
 
 	@Override
 	public boolean transferMRHK() {
@@ -40,6 +41,20 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 				mrhkLocal.setHkje(mrhkDL.getHkje());
 				mrhkLocal.setSfdrwc(mrhkDL.getSfdrwc());
 				mrhkLocal.setQybh(6);
+				mrhkLocalDao.merge(mrhkLocal);
+			}
+			// ll
+			mrhkLocalDao.deleteMRHKLocalByQY(4);
+			List<MRHKXL> mrhkLLList = mrhkLLDao.getAllMRHK();
+			for (MRHKXL mrhkLL : mrhkLLList) {
+				mrhkLocal = new MRHKLocal();
+				mrhkLocal.setGxrq(mrhkLL.getGxrq());
+				mrhkLocal.setXmgs(mrhkLL.getXmgs());
+				mrhkLocal.setHkxz(mrhkLL.getHkxz());
+				mrhkLocal.setHkrq(mrhkLL.getHkrq());
+				mrhkLocal.setHkje(mrhkLL.getHkje());
+				mrhkLocal.setSfdrwc(mrhkLL.getSfdrwc());
+				mrhkLocal.setQybh(4);
 				mrhkLocalDao.merge(mrhkLocal);
 			}
 			// tb
@@ -87,28 +102,36 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 		this.mrhkLocalDao = mrhkLocalDao;
 	}
 
-	public MRHKDLDao getMrhkDLDao() {
+	public MRHKXLDao getMrhkDLDao() {
 		return mrhkDLDao;
 	}
 
-	public void setMrhkDLDao(MRHKDLDao mrhkDLDao) {
+	public void setMrhkDLDao(MRHKXLDao mrhkDLDao) {
 		this.mrhkDLDao = mrhkDLDao;
 	}
 
-	public MRHKTBDao getMrhkTBDao() {
+	public MRHKBYQDao getMrhkTBDao() {
 		return mrhkTBDao;
 	}
 
-	public void setMrhkTBDao(MRHKTBDao mrhkTBDao) {
+	public void setMrhkTBDao(MRHKBYQDao mrhkTBDao) {
 		this.mrhkTBDao = mrhkTBDao;
 	}
 
-	public MRHKSBDao getMrhkSBDao() {
+	public MRHKBYQDao getMrhkSBDao() {
 		return mrhkSBDao;
 	}
 
-	public void setMrhkSBDao(MRHKSBDao mrhkSBDao) {
+	public void setMrhkSBDao(MRHKBYQDao mrhkSBDao) {
 		this.mrhkSBDao = mrhkSBDao;
+	}
+
+	public MRHKXLDao getMrhkLLDao() {
+		return mrhkLLDao;
+	}
+
+	public void setMrhkLLDao(MRHKXLDao mrhkLLDao) {
+		this.mrhkLLDao = mrhkLLDao;
 	}
 
 }

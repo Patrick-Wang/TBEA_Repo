@@ -5,8 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.fkfs.byq.FKFSBYQFDWLocalDao;
-import com.tbea.datatransfer.model.dao.zjsb.fkfs.FKFSBYQFDWSBDao;
-import com.tbea.datatransfer.model.dao.zjtb.fkfs.FKFSBYQFDWTBDao;
+import com.tbea.datatransfer.model.dao.zjbyq.fkfs.FKFSBYQFDWBYQDao;
 import com.tbea.datatransfer.model.entity.local.FKFSBYQFDWLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.FKFSBYQFDWBYQ;
 
@@ -15,9 +14,9 @@ public class FKFSBYQFDWTransferServiceImpl implements FKFSBYQFDWTransferService 
 
 	private FKFSBYQFDWLocalDao fkfsbyqfdwLocalDao;
 
-	private FKFSBYQFDWTBDao fkfsbyqfdwTBDao;
+	private FKFSBYQFDWBYQDao fkfsbyqfdwTBDao;
 
-	private FKFSBYQFDWSBDao fkfsbyqfdwSBDao;
+	private FKFSBYQFDWBYQDao fkfsbyqfdwSBDao;
 
 	@Override
 	public boolean transferFKFSBYQFDW() {
@@ -115,19 +114,19 @@ public class FKFSBYQFDWTransferServiceImpl implements FKFSBYQFDWTransferService 
 		this.fkfsbyqfdwLocalDao = fkfsbyqfdwLocalDao;
 	}
 
-	public FKFSBYQFDWTBDao getFkfsbyqfdwTBDao() {
+	public FKFSBYQFDWBYQDao getFkfsbyqfdwTBDao() {
 		return fkfsbyqfdwTBDao;
 	}
 
-	public void setFkfsbyqfdwTBDao(FKFSBYQFDWTBDao fkfsbyqfdwTBDao) {
+	public void setFkfsbyqfdwTBDao(FKFSBYQFDWBYQDao fkfsbyqfdwTBDao) {
 		this.fkfsbyqfdwTBDao = fkfsbyqfdwTBDao;
 	}
 
-	public FKFSBYQFDWSBDao getFkfsbyqfdwSBDao() {
+	public FKFSBYQFDWBYQDao getFkfsbyqfdwSBDao() {
 		return fkfsbyqfdwSBDao;
 	}
 
-	public void setFkfsbyqfdwSBDao(FKFSBYQFDWSBDao fkfsbyqfdwSBDao) {
+	public void setFkfsbyqfdwSBDao(FKFSBYQFDWBYQDao fkfsbyqfdwSBDao) {
 		this.fkfsbyqfdwSBDao = fkfsbyqfdwSBDao;
 	}
 

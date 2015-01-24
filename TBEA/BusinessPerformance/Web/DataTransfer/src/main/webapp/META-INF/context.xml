@@ -34,5 +34,11 @@
 		url="jdbc:jtds:sqlserver://10.10.90.53;DatabaseName=应收帐款_中间表"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
+		
+    <Resource name="jdbc/ll_db" auth="Container" type="javax.sql.DataSource"
+        username="sa" password="yszk_test_SERVER" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+        url="jdbc:jtds:sqlserver://192.168.7.22;DatabaseName=llyszk"
+        initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
+        removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 </Context>
 

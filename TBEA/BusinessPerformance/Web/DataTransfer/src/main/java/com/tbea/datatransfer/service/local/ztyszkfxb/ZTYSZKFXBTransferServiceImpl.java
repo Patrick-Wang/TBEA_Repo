@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.ztyszkfxb.ZTYSZKFXBLocalDao;
-import com.tbea.datatransfer.model.dao.zjdl.ztyszkfxb.ZTYSZKFXBDLDao;
-import com.tbea.datatransfer.model.dao.zjsb.ztyszkfxb.ZTYSZKFXBSBDao;
-import com.tbea.datatransfer.model.dao.zjtb.ztyszkfxb.ZTYSZKFXBTBDao;
+import com.tbea.datatransfer.model.dao.zjbyq.ztyszkfxb.ZTYSZKFXBBYQDao;
+import com.tbea.datatransfer.model.dao.zjxl.ztyszkfxb.ZTYSZKFXBXLDao;
 import com.tbea.datatransfer.model.entity.local.ZTYSZKFXBLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.ZTYSZKFXBBYQ;
 import com.tbea.datatransfer.model.entity.zjxl.ZTYSZKFXBXL;
@@ -17,11 +16,13 @@ public class ZTYSZKFXBTransferServiceImpl implements ZTYSZKFXBTransferService {
 
 	private ZTYSZKFXBLocalDao ztyszkfxbLocalDao;
 
-	private ZTYSZKFXBDLDao ztyszkfxbDLDao;
+	private ZTYSZKFXBXLDao ztyszkfxbDLDao;
 
-	private ZTYSZKFXBTBDao ztyszkfxbTBDao;
+	private ZTYSZKFXBXLDao ztyszkfxbLLDao;
 
-	private ZTYSZKFXBSBDao ztyszkfxbSBDao;
+	private ZTYSZKFXBBYQDao ztyszkfxbTBDao;
+
+	private ZTYSZKFXBBYQDao ztyszkfxbSBDao;
 
 	@Override
 	public boolean transferZTYSZKFXB() {
@@ -46,6 +47,26 @@ public class ZTYSZKFXBTransferServiceImpl implements ZTYSZKFXBTransferService {
 				ztyszkfxbLocal.setQntqsr(ztyszkfxbDL.getQntqsr());
 				ztyszkfxbLocal.setSfdrwc(ztyszkfxbDL.getSfdrwc());
 				ztyszkfxbLocal.setQybh(6);
+				ztyszkfxbLocalDao.merge(ztyszkfxbLocal);
+			}
+			// ll
+			ztyszkfxbLocalDao.deleteZTYSZKFXBLocalByQY(4);
+			List<ZTYSZKFXBXL> ztyszkfxbLLList = ztyszkfxbLLDao
+					.getAllZTYSZKFXB();
+			for (ZTYSZKFXBXL ztyszkfxbLL : ztyszkfxbLLList) {
+				ztyszkfxbLocal = new ZTYSZKFXBLocal();
+				ztyszkfxbLocal.setGxrq(ztyszkfxbLL.getGxrq());
+				ztyszkfxbLocal.setGsbm(ztyszkfxbLL.getGsbm());
+				ztyszkfxbLocal.setByzmyszkye(ztyszkfxbLL.getByzmyszkye());
+				ztyszkfxbLocal.setByblkzye(ztyszkfxbLL.getByblkzye());
+				ztyszkfxbLocal.setByyszksjs(ztyszkfxbLL.getByyszksjs());
+				ztyszkfxbLocal.setBysr(ztyszkfxbLL.getBysr());
+				ztyszkfxbLocal.setQntqzmyszkye(ztyszkfxbLL.getQntqzmyszkye());
+				ztyszkfxbLocal.setQntqblye(ztyszkfxbLL.getQntqblye());
+				ztyszkfxbLocal.setQntqyszksjs(ztyszkfxbLL.getQntqyszksjs());
+				ztyszkfxbLocal.setQntqsr(ztyszkfxbLL.getQntqsr());
+				ztyszkfxbLocal.setSfdrwc(ztyszkfxbLL.getSfdrwc());
+				ztyszkfxbLocal.setQybh(4);
 				ztyszkfxbLocalDao.merge(ztyszkfxbLocal);
 			}
 			// tb
@@ -104,28 +125,36 @@ public class ZTYSZKFXBTransferServiceImpl implements ZTYSZKFXBTransferService {
 		this.ztyszkfxbLocalDao = ztyszkfxbLocalDao;
 	}
 
-	public ZTYSZKFXBDLDao getZtyszkfxbDLDao() {
+	public ZTYSZKFXBXLDao getZtyszkfxbDLDao() {
 		return ztyszkfxbDLDao;
 	}
 
-	public void setZtyszkfxbDLDao(ZTYSZKFXBDLDao ztyszkfxbDLDao) {
+	public void setZtyszkfxbDLDao(ZTYSZKFXBXLDao ztyszkfxbDLDao) {
 		this.ztyszkfxbDLDao = ztyszkfxbDLDao;
 	}
 
-	public ZTYSZKFXBTBDao getZtyszkfxbTBDao() {
+	public ZTYSZKFXBBYQDao getZtyszkfxbTBDao() {
 		return ztyszkfxbTBDao;
 	}
 
-	public void setZtyszkfxbTBDao(ZTYSZKFXBTBDao ztyszkfxbTBDao) {
+	public void setZtyszkfxbTBDao(ZTYSZKFXBBYQDao ztyszkfxbTBDao) {
 		this.ztyszkfxbTBDao = ztyszkfxbTBDao;
 	}
 
-	public ZTYSZKFXBSBDao getZtyszkfxbSBDao() {
+	public ZTYSZKFXBBYQDao getZtyszkfxbSBDao() {
 		return ztyszkfxbSBDao;
 	}
 
-	public void setZtyszkfxbSBDao(ZTYSZKFXBSBDao ztyszkfxbSBDao) {
+	public void setZtyszkfxbSBDao(ZTYSZKFXBBYQDao ztyszkfxbSBDao) {
 		this.ztyszkfxbSBDao = ztyszkfxbSBDao;
+	}
+
+	public ZTYSZKFXBXLDao getZtyszkfxbLLDao() {
+		return ztyszkfxbLLDao;
+	}
+
+	public void setZtyszkfxbLLDao(ZTYSZKFXBXLDao ztyszkfxbLLDao) {
+		this.ztyszkfxbLLDao = ztyszkfxbLLDao;
 	}
 
 }
