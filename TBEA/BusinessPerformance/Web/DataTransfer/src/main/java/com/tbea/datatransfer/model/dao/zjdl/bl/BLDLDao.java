@@ -4,10 +4,10 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDao;
 
-import com.tbea.datatransfer.model.entity.zjdl.BLDL;
+import com.tbea.datatransfer.model.entity.zjxl.BLXL;
 
-public interface BLDLDao extends AbstractReadOnlyDao<BLDL> {
+public interface BLDLDao extends AbstractReadOnlyDao<BLXL> {
 
-	public List<BLDL> getAllBLDL();
+	public List<BLXL> getAllBL();
 	
 }

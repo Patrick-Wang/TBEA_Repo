@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
 
-import com.tbea.datatransfer.model.entity.zjtb.BLTB;
+import com.tbea.datatransfer.model.entity.zjbyq.BLBYQ;
 
 //@Repository
 @Transactional("transactionManagertb")
-public class BLTBDaoImpl extends AbstractReadOnlyDaoImpl<BLTB> implements
+public class BLTBDaoImpl extends AbstractReadOnlyDaoImpl<BLBYQ> implements
 		BLTBDao {
 
 	@Override
@@ -25,10 +25,10 @@ public class BLTBDaoImpl extends AbstractReadOnlyDaoImpl<BLTB> implements
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<BLTB> getAllBLTB() {
-		String sql = "From BLTB";
+	public List<BLBYQ> getAllBL() {
+		String sql = "From BLBYQ";
 		Query query = getEntityManager().createQuery(sql);
-		List<BLTB> resultList = query.getResultList();
+		List<BLBYQ> resultList = query.getResultList();
 		return resultList;
 	}
 

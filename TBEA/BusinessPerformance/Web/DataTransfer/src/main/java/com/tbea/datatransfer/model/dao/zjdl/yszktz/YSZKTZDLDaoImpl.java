@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
 
-import com.tbea.datatransfer.model.entity.zjdl.YSZKTZDL;
+import com.tbea.datatransfer.model.entity.zjxl.YSZKTZXL;
 
 @Transactional("transactionManagerdl")
-public class YSZKTZDLDaoImpl extends AbstractReadOnlyDaoImpl<YSZKTZDL>
+public class YSZKTZDLDaoImpl extends AbstractReadOnlyDaoImpl<YSZKTZXL>
 		implements YSZKTZDLDao {
 
 	@Override
@@ -24,12 +24,12 @@ public class YSZKTZDLDaoImpl extends AbstractReadOnlyDaoImpl<YSZKTZDL>
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<YSZKTZDL> getAllYSZKTZDL() {
+	public List<YSZKTZXL> getAllYSZKTZ() {
 		// TODO
 //		String sql = "From YSZKTZDL Where DateDiff(dd,gxrq,getDate())<=2";
-		String sql = "From YSZKTZDL";
+		String sql = "From YSZKTZXL";
 		Query query = getEntityManager().createQuery(sql);
-		List<YSZKTZDL> resultList = query.getResultList();
+		List<YSZKTZXL> resultList = query.getResultList();
 		return resultList;
 	}
 

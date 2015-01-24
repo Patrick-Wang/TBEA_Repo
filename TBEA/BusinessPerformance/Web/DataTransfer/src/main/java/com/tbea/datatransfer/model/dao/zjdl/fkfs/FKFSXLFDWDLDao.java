@@ -4,10 +4,10 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDao;
 
-import com.tbea.datatransfer.model.entity.zjdl.FKFSXLFDWDL;
+import com.tbea.datatransfer.model.entity.zjxl.FKFSXLFDWXL;
 
-public interface FKFSXLFDWDLDao extends AbstractReadOnlyDao<FKFSXLFDWDL> {
+public interface FKFSXLFDWDLDao extends AbstractReadOnlyDao<FKFSXLFDWXL> {
 
-	public List<FKFSXLFDWDL> getAllFKFSXLFDWDL();
+	public List<FKFSXLFDWXL> getAllFKFSXLFDW();
 
 }

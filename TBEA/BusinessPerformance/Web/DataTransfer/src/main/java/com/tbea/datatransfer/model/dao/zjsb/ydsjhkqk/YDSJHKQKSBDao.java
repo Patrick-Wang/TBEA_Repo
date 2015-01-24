@@ -4,11 +4,10 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDao;
 
-import com.tbea.datatransfer.model.entity.zjsb.YDSJHKQKSB;
-import com.tbea.datatransfer.model.entity.zjtb.YDSJHKQKTB;
+import com.tbea.datatransfer.model.entity.zjbyq.YDSJHKQKBYQ;
 
-public interface YDSJHKQKSBDao extends AbstractReadOnlyDao<YDSJHKQKSB> {
+public interface YDSJHKQKSBDao extends AbstractReadOnlyDao<YDSJHKQKBYQ> {
 
-	public List<YDSJHKQKSB> getAllYDSJHKQKSB();
+	public List<YDSJHKQKBYQ> getAllYDSJHKQK();
 
 }

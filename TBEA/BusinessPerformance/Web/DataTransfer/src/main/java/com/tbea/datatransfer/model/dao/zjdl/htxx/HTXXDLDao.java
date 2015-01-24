@@ -4,10 +4,10 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDao;
 
-import com.tbea.datatransfer.model.entity.zjdl.HTXXDL;
+import com.tbea.datatransfer.model.entity.zjxl.HTXXXL;
 
-public interface HTXXDLDao extends AbstractReadOnlyDao<HTXXDL> {
+public interface HTXXDLDao extends AbstractReadOnlyDao<HTXXXL> {
 
-	public List<HTXXDL> getAllHTXXDL();
+	public List<HTXXXL> getAllHTXX();
 	
 }

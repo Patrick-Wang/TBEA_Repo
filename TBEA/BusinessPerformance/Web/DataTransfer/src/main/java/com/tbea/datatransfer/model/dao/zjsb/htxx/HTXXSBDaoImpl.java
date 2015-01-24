@@ -10,11 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
 
-import com.tbea.datatransfer.model.entity.zjsb.HTXXSB;
-import com.tbea.datatransfer.model.entity.zjtb.HTXXTB;
+import com.tbea.datatransfer.model.entity.zjbyq.HTXXBYQ;
 
 @Transactional("transactionManagersb")
-public class HTXXSBDaoImpl extends AbstractReadOnlyDaoImpl<HTXXSB> implements
+public class HTXXSBDaoImpl extends AbstractReadOnlyDaoImpl<HTXXBYQ> implements
 		HTXXSBDao {
 
 	@Override
@@ -25,10 +24,10 @@ public class HTXXSBDaoImpl extends AbstractReadOnlyDaoImpl<HTXXSB> implements
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<HTXXSB> getAllHTXXSB() {
-		String sql = "From HTXXSB";
+	public List<HTXXBYQ> getAllHTXX() {
+		String sql = "From HTXXBYQ";
 		Query query = getEntityManager().createQuery(sql);
-		List<HTXXSB> resultList = query.getResultList();
+		List<HTXXBYQ> resultList = query.getResultList();
 		return resultList;
 	}
 

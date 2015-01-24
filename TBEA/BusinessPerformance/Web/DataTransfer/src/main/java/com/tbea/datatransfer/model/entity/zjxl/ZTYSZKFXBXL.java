@@ -1,4 +1,4 @@
-package com.tbea.datatransfer.model.entity.zjsb;
+package com.tbea.datatransfer.model.entity.zjxl;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -14,7 +14,7 @@ import cn.com.tbea.template.model.entity.AbstractReadOnlyEntity;
 
 @Entity
 @Table(name = "yszk_zj_ztyszkfxb")
-public class ZTYSZKFXBSB extends AbstractReadOnlyEntity implements
+public class ZTYSZKFXBXL extends AbstractReadOnlyEntity implements
 		Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -142,7 +142,7 @@ public class ZTYSZKFXBSB extends AbstractReadOnlyEntity implements
 
 	@Override
 	public String toString() {
-		return "ZTYSZKFXBTB [id=" + getId() + ", gxrq=" + gxrq + ", gsbm="
+		return "ZTYSZKFXBDL [id=" + getId() + ", gxrq=" + gxrq + ", gsbm="
 				+ gsbm + ", byzmyszkye=" + byzmyszkye + ", byblkzye="
 				+ byblkzye + ", byyszksjs=" + byyszksjs + ", bysr=" + bysr
 				+ ", qntqzmyszkye=" + qntqzmyszkye + ", qntqblye=" + qntqblye

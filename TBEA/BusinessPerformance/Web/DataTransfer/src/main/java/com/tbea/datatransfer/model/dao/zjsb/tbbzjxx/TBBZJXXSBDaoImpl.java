@@ -10,11 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
 
-import com.tbea.datatransfer.model.entity.zjsb.TBBZJXXSB;
-import com.tbea.datatransfer.model.entity.zjtb.TBBZJXXTB;
+import com.tbea.datatransfer.model.entity.zjbyq.TBBZJXXBYQ;
 
 @Transactional("transactionManagersb")
-public class TBBZJXXSBDaoImpl extends AbstractReadOnlyDaoImpl<TBBZJXXSB>
+public class TBBZJXXSBDaoImpl extends AbstractReadOnlyDaoImpl<TBBZJXXBYQ>
 		implements TBBZJXXSBDao {
 
 	@Override
@@ -25,10 +24,10 @@ public class TBBZJXXSBDaoImpl extends AbstractReadOnlyDaoImpl<TBBZJXXSB>
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<TBBZJXXSB> getAllTBBZJXXSB() {
-		String sql = "From TBBZJXXSB";
+	public List<TBBZJXXBYQ> getAllTBBZJXX() {
+		String sql = "From TBBZJXXBYQ";
 		Query query = getEntityManager().createQuery(sql);
-		List<TBBZJXXSB> resultList = query.getResultList();
+		List<TBBZJXXBYQ> resultList = query.getResultList();
 		return resultList;
 	}
 

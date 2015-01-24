@@ -1,4 +1,4 @@
-package com.tbea.datatransfer.model.entity.zjsb;
+package com.tbea.datatransfer.model.entity.zjxl;
 
 import java.sql.Date;
 
@@ -12,16 +12,18 @@ import javax.persistence.Table;
 import cn.com.tbea.template.model.entity.AbstractReadOnlyEntity;
 
 @Entity
-@Table(name = "yszk_zj_htfkfstj_byq_fdw")
-public class FKFSBYQFDWSB extends AbstractReadOnlyEntity {
+@Table(name = "yszk_zj_htfkfstj_xl_fdw")
+public class FKFSXLFDWXL extends AbstractReadOnlyEntity {
 
 	private Date gxrq;
 
 	private String gsbm;
 
-	private Integer fdwhtddzlbs;
+	private String khbh;
 
-	private Double fdwhtddzlje;
+	private Integer ddzlbs;
+
+	private Double ddzlje;
 
 	private Integer wyfkhtbs;
 
@@ -39,13 +41,25 @@ public class FKFSBYQFDWSB extends AbstractReadOnlyEntity {
 
 	private Double hwjfhfkblxybfzbshtje;
 
+	private Integer zbjbfzshtbs;
+
+	private Double zbjbfzshtje;
+
+	private Integer zbjbfzwhtbs;
+
+	private Double zbjbfzwhtje;
+
+	private Integer wzbjhtbs;
+
+	private Double wzbjhtje;
+
+	private Integer zbqcgynhtbs;
+
+	private Double zbqcgynhtje;
+
 	private Integer wddsjhtbs;
 
 	private Double wddsjhtje;
-
-	private Integer zbqdysegyhtbs;;
-
-	private Double zbqdysegyhtje;
 
 	private Integer xkxhhtbs;
 
@@ -80,20 +94,28 @@ public class FKFSBYQFDWSB extends AbstractReadOnlyEntity {
 		this.gsbm = gsbm;
 	}
 
-	public Integer getFdwhtddzlbs() {
-		return fdwhtddzlbs;
+	public String getKhbh() {
+		return khbh;
 	}
 
-	public void setFdwhtddzlbs(Integer fdwhtddzlbs) {
-		this.fdwhtddzlbs = fdwhtddzlbs;
+	public void setKhbh(String khbh) {
+		this.khbh = khbh;
 	}
 
-	public Double getFdwhtddzlje() {
-		return fdwhtddzlje;
+	public Integer getDdzlbs() {
+		return ddzlbs;
 	}
 
-	public void setFdwhtddzlje(Double fdwhtddzlje) {
-		this.fdwhtddzlje = fdwhtddzlje;
+	public void setDdzlbs(Integer ddzlbs) {
+		this.ddzlbs = ddzlbs;
+	}
+
+	public Double getDdzlje() {
+		return ddzlje;
+	}
+
+	public void setDdzlje(Double ddzlje) {
+		this.ddzlje = ddzlje;
 	}
 
 	public Integer getWyfkhtbs() {
@@ -160,6 +182,70 @@ public class FKFSBYQFDWSB extends AbstractReadOnlyEntity {
 		this.hwjfhfkblxybfzbshtje = hwjfhfkblxybfzbshtje;
 	}
 
+	public Integer getZbjbfzshtbs() {
+		return zbjbfzshtbs;
+	}
+
+	public void setZbjbfzshtbs(Integer zbjbfzshtbs) {
+		this.zbjbfzshtbs = zbjbfzshtbs;
+	}
+
+	public Double getZbjbfzshtje() {
+		return zbjbfzshtje;
+	}
+
+	public void setZbjbfzshtje(Double zbjbfzshtje) {
+		this.zbjbfzshtje = zbjbfzshtje;
+	}
+
+	public Integer getZbjbfzwhtbs() {
+		return zbjbfzwhtbs;
+	}
+
+	public void setZbjbfzwhtbs(Integer zbjbfzwhtbs) {
+		this.zbjbfzwhtbs = zbjbfzwhtbs;
+	}
+
+	public Double getZbjbfzwhtje() {
+		return zbjbfzwhtje;
+	}
+
+	public void setZbjbfzwhtje(Double zbjbfzwhtje) {
+		this.zbjbfzwhtje = zbjbfzwhtje;
+	}
+
+	public Integer getWzbjhtbs() {
+		return wzbjhtbs;
+	}
+
+	public void setWzbjhtbs(Integer wzbjhtbs) {
+		this.wzbjhtbs = wzbjhtbs;
+	}
+
+	public Double getWzbjhtje() {
+		return wzbjhtje;
+	}
+
+	public void setWzbjhtje(Double wzbjhtje) {
+		this.wzbjhtje = wzbjhtje;
+	}
+
+	public Integer getZbqcgynhtbs() {
+		return zbqcgynhtbs;
+	}
+
+	public void setZbqcgynhtbs(Integer zbqcgynhtbs) {
+		this.zbqcgynhtbs = zbqcgynhtbs;
+	}
+
+	public Double getZbqcgynhtje() {
+		return zbqcgynhtje;
+	}
+
+	public void setZbqcgynhtje(Double zbqcgynhtje) {
+		this.zbqcgynhtje = zbqcgynhtje;
+	}
+
 	public Integer getWddsjhtbs() {
 		return wddsjhtbs;
 	}
@@ -174,22 +260,6 @@ public class FKFSBYQFDWSB extends AbstractReadOnlyEntity {
 
 	public void setWddsjhtje(Double wddsjhtje) {
 		this.wddsjhtje = wddsjhtje;
-	}
-
-	public Integer getZbqdysegyhtbs() {
-		return zbqdysegyhtbs;
-	}
-
-	public void setZbqdysegyhtbs(Integer zbqdysegyhtbs) {
-		this.zbqdysegyhtbs = zbqdysegyhtbs;
-	}
-
-	public Double getZbqdysegyhtje() {
-		return zbqdysegyhtje;
-	}
-
-	public void setZbqdysegyhtje(Double zbqdysegyhtje) {
-		this.zbqdysegyhtje = zbqdysegyhtje;
 	}
 
 	public Integer getXkxhhtbs() {
@@ -214,23 +284,6 @@ public class FKFSBYQFDWSB extends AbstractReadOnlyEntity {
 
 	public void setSfdrwc(String sfdrwc) {
 		this.sfdrwc = sfdrwc;
-	}
-
-	@Override
-	public String toString() {
-		return "FKFSBYQFDWTB [id=" + getId() + ", gxrq=" + gxrq + ", gsbm="
-				+ gsbm + ", fdwhtddzlbs=" + fdwhtddzlbs + ", fdwhtddzlje="
-				+ fdwhtddzlje + ", wyfkhtbs=" + wyfkhtbs + ", wyfkhtje="
-				+ wyfkhtje + ", yfkxybfzshtbs=" + yfkxybfzshtbs
-				+ ", yfkxybfzshtje=" + yfkxybfzshtje + ", yfkzbfzsdsszjhtbs="
-				+ yfkzbfzsdsszjhtbs + ", yfkzbfzsdsszjhtje="
-				+ yfkzbfzsdsszjhtje + ", hwjfhfkblxybfzbshtbs="
-				+ hwjfhfkblxybfzbshtbs + ", hwjfhfkblxybfzbshtje="
-				+ hwjfhfkblxybfzbshtje + ", wddsjhtbs=" + wddsjhtbs
-				+ ", wddsjhtje=" + wddsjhtje + ", zbqdysegyhtbs="
-				+ zbqdysegyhtbs + ", zbqdysegyhtje=" + zbqdysegyhtje
-				+ ", xkxhhtbs=" + xkxhhtbs + ", xkxhhtje=" + xkxhhtje
-				+ ", sfdrwc=" + sfdrwc + "]";
 	}
 
 }

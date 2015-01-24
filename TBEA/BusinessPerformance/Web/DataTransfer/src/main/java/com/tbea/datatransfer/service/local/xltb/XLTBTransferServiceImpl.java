@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.datatransfer.model.dao.local.xltb.XLTBLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.xltb.XLTBDLDao;
 import com.tbea.datatransfer.model.entity.local.XLTBLocal;
-import com.tbea.datatransfer.model.entity.zjdl.XLTBDL;
+import com.tbea.datatransfer.model.entity.zjxl.XLTBXL;
 
 @Transactional("transactionManager")
 public class XLTBTransferServiceImpl implements XLTBTransferService {
@@ -23,8 +23,8 @@ public class XLTBTransferServiceImpl implements XLTBTransferService {
 			// dl
 			xltbLocalDao.deleteXLTBLocalByQY(6);
 			XLTBLocal xltbLocal = null;
-			List<XLTBDL> xltbDLList = xltbDLDao.getAllXLTBDL();
-			for (XLTBDL xltbDL : xltbDLList) {
+			List<XLTBXL> xltbDLList = xltbDLDao.getAllXLTB();
+			for (XLTBXL xltbDL : xltbDLList) {
 				xltbLocal = new XLTBLocal();
 				xltbLocal.setGxrq(xltbDL.getGxrq());
 				xltbLocal.setXmbh(xltbDL.getXmbh());

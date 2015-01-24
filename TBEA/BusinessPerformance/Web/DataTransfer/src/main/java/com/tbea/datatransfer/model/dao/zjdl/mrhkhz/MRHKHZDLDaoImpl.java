@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
 
-import com.tbea.datatransfer.model.entity.zjdl.MRHKHZDL;
+import com.tbea.datatransfer.model.entity.zjxl.MRHKHZXL;
 
 @Transactional("transactionManagerdl")
-public class MRHKHZDLDaoImpl extends AbstractReadOnlyDaoImpl<MRHKHZDL>
+public class MRHKHZDLDaoImpl extends AbstractReadOnlyDaoImpl<MRHKHZXL>
 		implements MRHKHZDLDao {
 
 	@Override
@@ -24,10 +24,10 @@ public class MRHKHZDLDaoImpl extends AbstractReadOnlyDaoImpl<MRHKHZDL>
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<MRHKHZDL> getAllMRHKHZDL() {
-		String sql = "From MRHKHZDL";
+	public List<MRHKHZXL> getAllMRHKHZ() {
+		String sql = "From MRHKHZXL";
 		Query query = getEntityManager().createQuery(sql);
-		List<MRHKHZDL> resultList = query.getResultList();
+		List<MRHKHZXL> resultList = query.getResultList();
 		return resultList;
 	}
 

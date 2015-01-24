@@ -9,9 +9,8 @@ import com.tbea.datatransfer.model.dao.zjdl.htxx.HTXXDLDao;
 import com.tbea.datatransfer.model.dao.zjsb.htxx.HTXXSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.htxx.HTXXTBDao;
 import com.tbea.datatransfer.model.entity.local.HTXXLocal;
-import com.tbea.datatransfer.model.entity.zjdl.HTXXDL;
-import com.tbea.datatransfer.model.entity.zjsb.HTXXSB;
-import com.tbea.datatransfer.model.entity.zjtb.HTXXTB;
+import com.tbea.datatransfer.model.entity.zjbyq.HTXXBYQ;
+import com.tbea.datatransfer.model.entity.zjxl.HTXXXL;
 
 @Transactional("transactionManager")
 public class HTXXTransferServiceImpl implements HTXXTransferService {
@@ -19,11 +18,11 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 	private HTXXLocalDao htxxLocalDao;
 
 	private HTXXDLDao htxxDLDao;
-	
+
 	private HTXXTBDao htxxTBDao;
 
 	private HTXXSBDao htxxSBDao;
-	
+
 	@Override
 	public boolean transferHTXX() {
 		boolean result = false;
@@ -31,8 +30,8 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 			// dl
 			htxxLocalDao.deleteHTXXLocalByQY(6);
 			HTXXLocal htxxLocal = null;
-			List<HTXXDL> htxxDLList = htxxDLDao.getAllHTXXDL();
-			for (HTXXDL htxxDL : htxxDLList) {
+			List<HTXXXL> htxxDLList = htxxDLDao.getAllHTXX();
+			for (HTXXXL htxxDL : htxxDLList) {
 				htxxLocal = new HTXXLocal();
 				htxxLocal.setGxrq(htxxDL.getGxrq());
 				htxxLocal.setHtbh(htxxDL.getHtbh());
@@ -52,8 +51,8 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 			}
 			// tb
 			htxxLocalDao.deleteHTXXLocalByQY(301);
-			List<HTXXTB> htxxTBList = htxxTBDao.getAllHTXXTB();
-			for (HTXXTB htxxTB : htxxTBList) {
+			List<HTXXBYQ> htxxTBList = htxxTBDao.getAllHTXX();
+			for (HTXXBYQ htxxTB : htxxTBList) {
 				htxxLocal = new HTXXLocal();
 				htxxLocal.setGxrq(htxxTB.getGxrq());
 				htxxLocal.setHtbh(htxxTB.getHtbh());
@@ -74,8 +73,8 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 
 			// sb
 			htxxLocalDao.deleteHTXXLocalByQY(1);
-			List<HTXXSB> htxxSBList = htxxSBDao.getAllHTXXSB();
-			for (HTXXSB htxxSB : htxxSBList) {
+			List<HTXXBYQ> htxxSBList = htxxSBDao.getAllHTXX();
+			for (HTXXBYQ htxxSB : htxxSBList) {
 				htxxLocal = new HTXXLocal();
 				htxxLocal.setGxrq(htxxSB.getGxrq());
 				htxxLocal.setHtbh(htxxSB.getHtbh());
@@ -90,10 +89,10 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 				htxxLocal.setZje(htxxSB.getZje());
 				htxxLocal.setHtzt(htxxSB.getHtzt());
 				htxxLocal.setSfdrwc(htxxSB.getSfdrwc());
-				htxxLocal.setQybh(301);
+				htxxLocal.setQybh(1);
 				htxxLocalDao.merge(htxxLocal);
 			}
-			
+
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,6 +123,14 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 
 	public void setHtxxTBDao(HTXXTBDao htxxTBDao) {
 		this.htxxTBDao = htxxTBDao;
+	}
+
+	public HTXXSBDao getHtxxSBDao() {
+		return htxxSBDao;
+	}
+
+	public void setHtxxSBDao(HTXXSBDao htxxSBDao) {
+		this.htxxSBDao = htxxSBDao;
 	}
 
 }

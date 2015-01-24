@@ -1,4 +1,4 @@
-package com.tbea.datatransfer.model.entity.zjsb;
+package com.tbea.datatransfer.model.entity.zjbyq;
 
 import java.sql.Date;
 
@@ -13,7 +13,7 @@ import cn.com.tbea.template.model.entity.AbstractReadOnlyEntity;
 
 @Entity
 @Table(name = "yszk_zj_htfkfstj_byq_gwfk")
-public class FKFSBYQGWSB extends AbstractReadOnlyEntity {
+public class FKFSBYQGWBYQ extends AbstractReadOnlyEntity {
 
 	private Date gxrq;
 

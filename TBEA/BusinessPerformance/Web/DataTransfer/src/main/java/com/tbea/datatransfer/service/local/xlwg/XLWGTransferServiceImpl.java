@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.datatransfer.model.dao.local.xlwg.XLWGLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.xlwg.XLWGDLDao;
 import com.tbea.datatransfer.model.entity.local.XLWGLocal;
-import com.tbea.datatransfer.model.entity.zjdl.XLWGDL;
+import com.tbea.datatransfer.model.entity.zjxl.XLWGXL;
 
 @Transactional("transactionManager")
 public class XLWGTransferServiceImpl implements XLWGTransferService {
@@ -23,8 +23,8 @@ public class XLWGTransferServiceImpl implements XLWGTransferService {
 			// dl
 			xlwgLocalDao.deleteXLWGLocalByQY(6);
 			XLWGLocal xlwgLocal = null;
-			List<XLWGDL> xlwgDLList = xlwgDLDao.getAllXLWGDL();
-			for (XLWGDL xlwgDL : xlwgDLList) {
+			List<XLWGXL> xlwgDLList = xlwgDLDao.getAllXLWG();
+			for (XLWGXL xlwgDL : xlwgDLList) {
 				xlwgLocal = new XLWGLocal();
 				xlwgLocal.setGxrq(xlwgDL.getGxrq());
 				xlwgLocal.setZxcpbh(xlwgDL.getZxcpbh());

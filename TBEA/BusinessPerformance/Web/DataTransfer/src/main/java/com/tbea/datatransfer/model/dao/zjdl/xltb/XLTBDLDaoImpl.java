@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
 
-import com.tbea.datatransfer.model.entity.zjdl.XLTBDL;
+import com.tbea.datatransfer.model.entity.zjxl.XLTBXL;
 
 @Transactional("transactionManagerdl")
-public class XLTBDLDaoImpl extends AbstractReadOnlyDaoImpl<XLTBDL> implements
+public class XLTBDLDaoImpl extends AbstractReadOnlyDaoImpl<XLTBXL> implements
 		XLTBDLDao {
 
 	@Override
@@ -24,10 +24,10 @@ public class XLTBDLDaoImpl extends AbstractReadOnlyDaoImpl<XLTBDL> implements
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<XLTBDL> getAllXLTBDL() {
-		String sql = "From XLTBDL";
+	public List<XLTBXL> getAllXLTB() {
+		String sql = "From XLTBXL";
 		Query query = getEntityManager().createQuery(sql);
-		List<XLTBDL> resultList = query.getResultList();
+		List<XLTBXL> resultList = query.getResultList();
 		return resultList;
 	}
 

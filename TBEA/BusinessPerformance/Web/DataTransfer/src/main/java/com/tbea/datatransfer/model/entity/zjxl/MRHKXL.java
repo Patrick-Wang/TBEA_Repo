@@ -1,4 +1,4 @@
-package com.tbea.datatransfer.model.entity.zjsb;
+package com.tbea.datatransfer.model.entity.zjxl;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -13,20 +13,20 @@ import javax.persistence.Table;
 import cn.com.tbea.template.model.entity.AbstractReadOnlyEntity;
 
 @Entity
-@Table(name = "yszk_zj_tbbzjxx")
-public class TBBZJXXSB extends AbstractReadOnlyEntity implements Serializable {
+@Table(name = "yszk_zj_mrhk")
+public class MRHKXL extends AbstractReadOnlyEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Date gxrq;
 
-	private String gsbm;
+	private String xmgs;
 
-	private Integer nf;
+	private String hkxz;
 
-	private Integer yf;
+	private Date hkrq;
 
-	private Double je;
+	private Double hkje;
 
 	private String sfdrwc;
 
@@ -49,36 +49,36 @@ public class TBBZJXXSB extends AbstractReadOnlyEntity implements Serializable {
 		this.gxrq = gxrq;
 	}
 
-	public String getGsbm() {
-		return gsbm;
+	public String getXmgs() {
+		return xmgs;
 	}
 
-	public void setGsbm(String gsbm) {
-		this.gsbm = gsbm;
+	public void setXmgs(String xmgs) {
+		this.xmgs = xmgs;
 	}
 
-	public Integer getNf() {
-		return nf;
+	public String getHkxz() {
+		return hkxz;
 	}
 
-	public void setNf(Integer nf) {
-		this.nf = nf;
+	public void setHkxz(String hkxz) {
+		this.hkxz = hkxz;
 	}
 
-	public Integer getYf() {
-		return yf;
+	public Date getHkrq() {
+		return hkrq;
 	}
 
-	public void setYf(Integer yf) {
-		this.yf = yf;
+	public void setHkrq(Date hkrq) {
+		this.hkrq = hkrq;
 	}
 
-	public Double getJe() {
-		return je;
+	public Double getHkje() {
+		return hkje;
 	}
 
-	public void setJe(Double je) {
-		this.je = je;
+	public void setHkje(Double hkje) {
+		this.hkje = hkje;
 	}
 
 	public String getSfdrwc() {
@@ -91,8 +91,8 @@ public class TBBZJXXSB extends AbstractReadOnlyEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TBBZJXXTB [id=" + getId() + ", gxrq=" + gxrq + ", gsbm="
-				+ gsbm + ", nf=" + nf + ", yf=" + yf + ", je=" + je
+		return "MRHKDL [id=" + getId() + ",gxrq=" + gxrq + ", xmgs=" + xmgs
+				+ ", hkxz=" + hkxz + ", hkrq=" + hkrq + ", hkje=" + hkje
 				+ ", sfdrwc=" + sfdrwc + "]";
 	}
 

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.datatransfer.model.dao.local.xm.XMLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.xm.XMDLDao;
 import com.tbea.datatransfer.model.entity.local.XMLocal;
-import com.tbea.datatransfer.model.entity.zjdl.XMDL;
+import com.tbea.datatransfer.model.entity.zjxl.XMXL;
 
 @Transactional("transactionManager")
 public class XMTransferServiceImpl implements XMTransferService {
@@ -23,8 +23,8 @@ public class XMTransferServiceImpl implements XMTransferService {
 			// dl
 			xmLocalDao.deleteXMLocalByQY(6);
 			XMLocal xmLocal = null;
-			List<XMDL> xmDLList = xmDLDao.getAllXMDL();
-			for (XMDL xmDL : xmDLList) {
+			List<XMXL> xmDLList = xmDLDao.getAllXM();
+			for (XMXL xmDL : xmDLList) {
 				xmLocal = new XMLocal();
 				xmLocal.setGxrq(xmDL.getGxrq());
 				xmLocal.setXmbh(xmDL.getXmbh());

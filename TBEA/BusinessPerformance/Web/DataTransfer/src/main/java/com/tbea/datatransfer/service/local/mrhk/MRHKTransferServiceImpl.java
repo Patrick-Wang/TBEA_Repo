@@ -9,9 +9,8 @@ import com.tbea.datatransfer.model.dao.zjdl.mrhk.MRHKDLDao;
 import com.tbea.datatransfer.model.dao.zjsb.mrhk.MRHKSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.mrhk.MRHKTBDao;
 import com.tbea.datatransfer.model.entity.local.MRHKLocal;
-import com.tbea.datatransfer.model.entity.zjdl.MRHKDL;
-import com.tbea.datatransfer.model.entity.zjsb.MRHKSB;
-import com.tbea.datatransfer.model.entity.zjtb.MRHKTB;
+import com.tbea.datatransfer.model.entity.zjbyq.MRHKBYQ;
+import com.tbea.datatransfer.model.entity.zjxl.MRHKXL;
 
 @Transactional("transactionManager")
 public class MRHKTransferServiceImpl implements MRHKTransferService {
@@ -23,7 +22,7 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 	private MRHKTBDao mrhkTBDao;
 
 	private MRHKSBDao mrhkSBDao;
-	
+
 	@Override
 	public boolean transferMRHK() {
 		boolean result = false;
@@ -31,8 +30,8 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 			// dl
 			mrhkLocalDao.deleteMRHKLocalByQY(6);
 			MRHKLocal mrhkLocal = null;
-			List<MRHKDL> mrhkDLList = mrhkDLDao.getAllMRHKDL();
-			for (MRHKDL mrhkDL : mrhkDLList) {
+			List<MRHKXL> mrhkDLList = mrhkDLDao.getAllMRHK();
+			for (MRHKXL mrhkDL : mrhkDLList) {
 				mrhkLocal = new MRHKLocal();
 				mrhkLocal.setGxrq(mrhkDL.getGxrq());
 				mrhkLocal.setXmgs(mrhkDL.getXmgs());
@@ -45,8 +44,8 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 			}
 			// tb
 			mrhkLocalDao.deleteMRHKLocalByQY(301);
-			List<MRHKTB> mrhkTBList = mrhkTBDao.getAllMRHKTB();
-			for (MRHKTB mrhkTB : mrhkTBList) {
+			List<MRHKBYQ> mrhkTBList = mrhkTBDao.getAllMRHK();
+			for (MRHKBYQ mrhkTB : mrhkTBList) {
 				mrhkLocal = new MRHKLocal();
 				mrhkLocal.setGxrq(mrhkTB.getGxrq());
 				mrhkLocal.setXmgs(mrhkTB.getXmgs());
@@ -57,11 +56,11 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 				mrhkLocal.setQybh(301);
 				mrhkLocalDao.merge(mrhkLocal);
 			}
-			
+
 			// sb
 			mrhkLocalDao.deleteMRHKLocalByQY(1);
-			List<MRHKSB> mrhkSBList = mrhkSBDao.getAllMRHKSB();
-			for (MRHKSB mrhkSB : mrhkSBList) {
+			List<MRHKBYQ> mrhkSBList = mrhkSBDao.getAllMRHK();
+			for (MRHKBYQ mrhkSB : mrhkSBList) {
 				mrhkLocal = new MRHKLocal();
 				mrhkLocal.setGxrq(mrhkSB.getGxrq());
 				mrhkLocal.setXmgs(mrhkSB.getXmgs());
@@ -69,7 +68,7 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 				mrhkLocal.setHkrq(mrhkSB.getHkrq());
 				mrhkLocal.setHkje(mrhkSB.getHkje());
 				mrhkLocal.setSfdrwc(mrhkSB.getSfdrwc());
-				mrhkLocal.setQybh(301);
+				mrhkLocal.setQybh(1);
 				mrhkLocalDao.merge(mrhkLocal);
 			}
 			result = true;
@@ -102,6 +101,14 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 
 	public void setMrhkTBDao(MRHKTBDao mrhkTBDao) {
 		this.mrhkTBDao = mrhkTBDao;
+	}
+
+	public MRHKSBDao getMrhkSBDao() {
+		return mrhkSBDao;
+	}
+
+	public void setMrhkSBDao(MRHKSBDao mrhkSBDao) {
+		this.mrhkSBDao = mrhkSBDao;
 	}
 
 }

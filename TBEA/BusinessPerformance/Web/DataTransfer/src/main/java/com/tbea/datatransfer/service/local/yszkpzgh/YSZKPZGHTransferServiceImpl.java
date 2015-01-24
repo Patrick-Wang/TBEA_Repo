@@ -9,9 +9,8 @@ import com.tbea.datatransfer.model.dao.zjdl.yszkpzgh.YSZKPZGHDLDao;
 import com.tbea.datatransfer.model.dao.zjsb.yszkpzgh.YSZKPZGHSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.yszkpzgh.YSZKPZGHTBDao;
 import com.tbea.datatransfer.model.entity.local.YSZKPZGHLocal;
-import com.tbea.datatransfer.model.entity.zjdl.YSZKPZGHDL;
-import com.tbea.datatransfer.model.entity.zjsb.YSZKPZGHSB;
-import com.tbea.datatransfer.model.entity.zjtb.YSZKPZGHTB;
+import com.tbea.datatransfer.model.entity.zjbyq.YSZKPZGHBYQ;
+import com.tbea.datatransfer.model.entity.zjxl.YSZKPZGHXL;
 
 @Transactional("transactionManager")
 public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
@@ -23,7 +22,7 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 	private YSZKPZGHTBDao yszkpzghTBDao;
 
 	private YSZKPZGHSBDao yszkpzghSBDao;
-	
+
 	@Override
 	public boolean transferYSZKPZGH() {
 		boolean result = false;
@@ -31,8 +30,8 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 			// dl
 			yszkpzghLocalDao.deleteYSZKPZGHLocalByQY(6);
 			YSZKPZGHLocal yszkpzghLocal = null;
-			List<YSZKPZGHDL> yszkpzghDLList = yszkpzghDLDao.getAllYSZKPZGHDL();
-			for (YSZKPZGHDL yszkpzghDL : yszkpzghDLList) {
+			List<YSZKPZGHXL> yszkpzghDLList = yszkpzghDLDao.getAllYSZKPZGH();
+			for (YSZKPZGHXL yszkpzghDL : yszkpzghDLList) {
 				yszkpzghLocal = new YSZKPZGHLocal();
 				yszkpzghLocal.setGxrq(yszkpzghDL.getGxrq());
 				yszkpzghLocal.setYf(yszkpzghDL.getYf());
@@ -60,8 +59,8 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 			}
 			// tb
 			yszkpzghLocalDao.deleteYSZKPZGHLocalByQY(301);
-			List<YSZKPZGHTB> yszkpzghTBList = yszkpzghTBDao.getAllYSZKPZGHTB();
-			for (YSZKPZGHTB yszkpzghTB : yszkpzghTBList) {
+			List<YSZKPZGHBYQ> yszkpzghTBList = yszkpzghTBDao.getAllYSZKPZGH();
+			for (YSZKPZGHBYQ yszkpzghTB : yszkpzghTBList) {
 				yszkpzghLocal = new YSZKPZGHLocal();
 				yszkpzghLocal.setGxrq(yszkpzghTB.getGxrq());
 				yszkpzghLocal.setYf(yszkpzghTB.getYf());
@@ -90,8 +89,9 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 
 			// sb
 			yszkpzghLocalDao.deleteYSZKPZGHLocalByQY(1);
-			List<YSZKPZGHSB> yszkpzghSBList = yszkpzghSBDao.getAllYSZKPZGHSB();
-			for (YSZKPZGHSB yszkpzghSB : yszkpzghSBList) {
+			List<YSZKPZGHBYQ> yszkpzghSBList = yszkpzghSBDao
+					.getAllYSZKPZGH();
+			for (YSZKPZGHBYQ yszkpzghSB : yszkpzghSBList) {
 				yszkpzghLocal = new YSZKPZGHLocal();
 				yszkpzghLocal.setGxrq(yszkpzghSB.getGxrq());
 				yszkpzghLocal.setYf(yszkpzghSB.getYf());
@@ -114,11 +114,10 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 				yszkpzghLocal.setByfhcpxzysje(yszkpzghSB.getByfhcpxzysje());
 				yszkpzghLocal.setByhkjdysje(yszkpzghSB.getByhkjdysje());
 				yszkpzghLocal.setSfdrwc(yszkpzghSB.getSfdrwc());
-				yszkpzghLocal.setQybh(301);
+				yszkpzghLocal.setQybh(1);
 				yszkpzghLocalDao.merge(yszkpzghLocal);
 			}
-			
-			
+
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,6 +148,14 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 
 	public void setYszkpzghTBDao(YSZKPZGHTBDao yszkpzghTBDao) {
 		this.yszkpzghTBDao = yszkpzghTBDao;
+	}
+
+	public YSZKPZGHSBDao getYszkpzghSBDao() {
+		return yszkpzghSBDao;
+	}
+
+	public void setYszkpzghSBDao(YSZKPZGHSBDao yszkpzghSBDao) {
+		this.yszkpzghSBDao = yszkpzghSBDao;
 	}
 
 }

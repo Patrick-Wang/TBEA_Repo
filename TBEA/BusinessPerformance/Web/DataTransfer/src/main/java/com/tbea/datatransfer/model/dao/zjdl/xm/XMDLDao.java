@@ -4,10 +4,10 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadOnlyDao;
 
-import com.tbea.datatransfer.model.entity.zjdl.XMDL;
+import com.tbea.datatransfer.model.entity.zjxl.XMXL;
 
-public interface XMDLDao extends AbstractReadOnlyDao<XMDL> {
+public interface XMDLDao extends AbstractReadOnlyDao<XMXL> {
 
-	public List<XMDL> getAllXMDL();
+	public List<XMXL> getAllXM();
 
 }

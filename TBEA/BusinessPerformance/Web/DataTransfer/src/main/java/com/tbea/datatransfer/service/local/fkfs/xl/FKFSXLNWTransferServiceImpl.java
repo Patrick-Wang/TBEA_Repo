@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.datatransfer.model.dao.local.fkfs.xl.FKFSXLNWLocalDao;
 import com.tbea.datatransfer.model.dao.zjdl.fkfs.FKFSXLNWDLDao;
 import com.tbea.datatransfer.model.entity.local.FKFSXLNWLocal;
-import com.tbea.datatransfer.model.entity.zjdl.FKFSXLNWDL;
+import com.tbea.datatransfer.model.entity.zjxl.FKFSXLNWXL;
 
 @Transactional("transactionManager")
 public class FKFSXLNWTransferServiceImpl implements FKFSXLNWTransferService {
@@ -23,8 +23,8 @@ public class FKFSXLNWTransferServiceImpl implements FKFSXLNWTransferService {
 			// dl
 			fkfsxlnwLocalDao.deleteFKFSXLNWLocalByQY(6);
 			FKFSXLNWLocal fkfsxlnwLocal = null;
-			List<FKFSXLNWDL> fkfsxlnwDLList = fkfsxlnwDLDao.getAllFKFSXLNWDL();
-			for (FKFSXLNWDL fkfsxlnwDL : fkfsxlnwDLList) {
+			List<FKFSXLNWXL> fkfsxlnwDLList = fkfsxlnwDLDao.getAllFKFSXLNW();
+			for (FKFSXLNWXL fkfsxlnwDL : fkfsxlnwDLList) {
 				fkfsxlnwLocal = new FKFSXLNWLocal();
 				fkfsxlnwLocal.setGxrq(fkfsxlnwDL.getGxrq());
 				fkfsxlnwLocal.setGsbm(fkfsxlnwDL.getGsbm());

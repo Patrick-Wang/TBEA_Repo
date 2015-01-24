@@ -9,9 +9,8 @@ import com.tbea.datatransfer.model.dao.zjdl.ztyszkfxb.ZTYSZKFXBDLDao;
 import com.tbea.datatransfer.model.dao.zjsb.ztyszkfxb.ZTYSZKFXBSBDao;
 import com.tbea.datatransfer.model.dao.zjtb.ztyszkfxb.ZTYSZKFXBTBDao;
 import com.tbea.datatransfer.model.entity.local.ZTYSZKFXBLocal;
-import com.tbea.datatransfer.model.entity.zjdl.ZTYSZKFXBDL;
-import com.tbea.datatransfer.model.entity.zjsb.ZTYSZKFXBSB;
-import com.tbea.datatransfer.model.entity.zjtb.ZTYSZKFXBTB;
+import com.tbea.datatransfer.model.entity.zjbyq.ZTYSZKFXBBYQ;
+import com.tbea.datatransfer.model.entity.zjxl.ZTYSZKFXBXL;
 
 @Transactional("transactionManager")
 public class ZTYSZKFXBTransferServiceImpl implements ZTYSZKFXBTransferService {
@@ -21,7 +20,7 @@ public class ZTYSZKFXBTransferServiceImpl implements ZTYSZKFXBTransferService {
 	private ZTYSZKFXBDLDao ztyszkfxbDLDao;
 
 	private ZTYSZKFXBTBDao ztyszkfxbTBDao;
-	
+
 	private ZTYSZKFXBSBDao ztyszkfxbSBDao;
 
 	@Override
@@ -31,9 +30,9 @@ public class ZTYSZKFXBTransferServiceImpl implements ZTYSZKFXBTransferService {
 			// dl
 			ztyszkfxbLocalDao.deleteZTYSZKFXBLocalByQY(6);
 			ZTYSZKFXBLocal ztyszkfxbLocal = null;
-			List<ZTYSZKFXBDL> ztyszkfxbDLList = ztyszkfxbDLDao
-					.getAllZTYSZKFXBDL();
-			for (ZTYSZKFXBDL ztyszkfxbDL : ztyszkfxbDLList) {
+			List<ZTYSZKFXBXL> ztyszkfxbDLList = ztyszkfxbDLDao
+					.getAllZTYSZKFXB();
+			for (ZTYSZKFXBXL ztyszkfxbDL : ztyszkfxbDLList) {
 				ztyszkfxbLocal = new ZTYSZKFXBLocal();
 				ztyszkfxbLocal.setGxrq(ztyszkfxbDL.getGxrq());
 				ztyszkfxbLocal.setGsbm(ztyszkfxbDL.getGsbm());
@@ -51,9 +50,9 @@ public class ZTYSZKFXBTransferServiceImpl implements ZTYSZKFXBTransferService {
 			}
 			// tb
 			ztyszkfxbLocalDao.deleteZTYSZKFXBLocalByQY(301);
-			List<ZTYSZKFXBTB> ztyszkfxbTBList = ztyszkfxbTBDao
-					.getAllZTYSZKFXBTB();
-			for (ZTYSZKFXBTB ztyszkfxbTB : ztyszkfxbTBList) {
+			List<ZTYSZKFXBBYQ> ztyszkfxbTBList = ztyszkfxbTBDao
+					.getAllZTYSZKFXB();
+			for (ZTYSZKFXBBYQ ztyszkfxbTB : ztyszkfxbTBList) {
 				ztyszkfxbLocal = new ZTYSZKFXBLocal();
 				ztyszkfxbLocal.setGxrq(ztyszkfxbTB.getGxrq());
 				ztyszkfxbLocal.setGsbm(ztyszkfxbTB.getGsbm());
@@ -71,9 +70,9 @@ public class ZTYSZKFXBTransferServiceImpl implements ZTYSZKFXBTransferService {
 			}
 			// sb
 			ztyszkfxbLocalDao.deleteZTYSZKFXBLocalByQY(1);
-			List<ZTYSZKFXBSB> ztyszkfxbSBList = ztyszkfxbSBDao
-					.getAllZTYSZKFXBSB();
-			for (ZTYSZKFXBSB ztyszkfxbSB : ztyszkfxbSBList) {
+			List<ZTYSZKFXBBYQ> ztyszkfxbSBList = ztyszkfxbSBDao
+					.getAllZTYSZKFXB();
+			for (ZTYSZKFXBBYQ ztyszkfxbSB : ztyszkfxbSBList) {
 				ztyszkfxbLocal = new ZTYSZKFXBLocal();
 				ztyszkfxbLocal.setGxrq(ztyszkfxbSB.getGxrq());
 				ztyszkfxbLocal.setGsbm(ztyszkfxbSB.getGsbm());
@@ -86,7 +85,7 @@ public class ZTYSZKFXBTransferServiceImpl implements ZTYSZKFXBTransferService {
 				ztyszkfxbLocal.setQntqyszksjs(ztyszkfxbSB.getQntqyszksjs());
 				ztyszkfxbLocal.setQntqsr(ztyszkfxbSB.getQntqsr());
 				ztyszkfxbLocal.setSfdrwc(ztyszkfxbSB.getSfdrwc());
-				ztyszkfxbLocal.setQybh(301);
+				ztyszkfxbLocal.setQybh(1);
 				ztyszkfxbLocalDao.merge(ztyszkfxbLocal);
 			}
 			result = true;
@@ -119,6 +118,14 @@ public class ZTYSZKFXBTransferServiceImpl implements ZTYSZKFXBTransferService {
 
 	public void setZtyszkfxbTBDao(ZTYSZKFXBTBDao ztyszkfxbTBDao) {
 		this.ztyszkfxbTBDao = ztyszkfxbTBDao;
+	}
+
+	public ZTYSZKFXBSBDao getZtyszkfxbSBDao() {
+		return ztyszkfxbSBDao;
+	}
+
+	public void setZtyszkfxbSBDao(ZTYSZKFXBSBDao ztyszkfxbSBDao) {
+		this.ztyszkfxbSBDao = ztyszkfxbSBDao;
 	}
 
 }
