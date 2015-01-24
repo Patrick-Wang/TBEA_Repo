@@ -746,12 +746,6 @@ var JQTable;
             if (option.colModel == undefined) {
                 option.colModel = this.getColModel();
             }
-            if (option.datatype != "local") {
-                option.jsonReader = {
-                    cell: "",
-                    id: "0"
-                };
-            }
             if (option.loadError != undefined) {
                 var onFailed = option.loadError;
                 option.loadError = function () {
