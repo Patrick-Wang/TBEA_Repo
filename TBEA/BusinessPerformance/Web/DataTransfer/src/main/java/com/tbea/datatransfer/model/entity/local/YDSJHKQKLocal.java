@@ -71,7 +71,7 @@ public class YDSJHKQKLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getYqyszksjhk() {
-		return yqyszksjhk;
+		return null == yqyszksjhk ? 0.0D : yqyszksjhk;
 	}
 
 	public void setYqyszksjhk(Double yqyszksjhk) {
@@ -79,7 +79,7 @@ public class YDSJHKQKLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getYqksjhk() {
-		return yqksjhk;
+		return null == yqksjhk ? 0.0D : yqksjhk;
 	}
 
 	public void setYqksjhk(Double yqksjhk) {
@@ -87,7 +87,7 @@ public class YDSJHKQKLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getWdqyszksjhk() {
-		return wdqyszksjhk;
+		return null == wdqyszksjhk ? 0.0D : wdqyszksjhk;
 	}
 
 	public void setWdqyszksjhk(Double wdqyszksjhk) {
@@ -95,7 +95,7 @@ public class YDSJHKQKLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getWdqksjhk() {
-		return wdqksjhk;
+		return null == wdqksjhk ? 0.0D : wdqksjhk;
 	}
 
 	public void setWdqksjhk(Double wdqksjhk) {
@@ -103,7 +103,7 @@ public class YDSJHKQKLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getQbkhhk() {
-		return qbkhhk;
+		return null == qbkhhk ? 0.0D : qbkhhk;
 	}
 
 	public void setQbkhhk(Double qbkhhk) {
@@ -111,7 +111,7 @@ public class YDSJHKQKLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getZqkhhk() {
-		return zqkhhk;
+		return null == zqkhhk ? 0.0D : zqkhhk;
 	}
 
 	public void setZqkhhk(Double zqkhhk) {
@@ -119,7 +119,7 @@ public class YDSJHKQKLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getXkxhhk() {
-		return xkxhhk;
+		return null == xkxhhk ? 0.0D : xkxhhk;
 	}
 
 	public void setXkxhhk(Double xkxhhk) {
@@ -127,7 +127,7 @@ public class YDSJHKQKLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getJhwhk() {
-		return jhwhk;
+		return null == jhwhk ? 0.0D : jhwhk;
 	}
 
 	public void setJhwhk(Double jhwhk) {

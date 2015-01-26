@@ -14,8 +14,8 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 import com.tbea.datatransfer.model.entity.local.YDHKJHJGBLocal;
 
 @Transactional("transactionManager")
-public class YDHKJHJGBLocalDaoImpl extends AbstractReadWriteDaoImpl<YDHKJHJGBLocal>
-		implements YDHKJHJGBLocalDao {
+public class YDHKJHJGBLocalDaoImpl extends
+		AbstractReadWriteDaoImpl<YDHKJHJGBLocal> implements YDHKJHJGBLocalDao {
 
 	@Override
 	@PersistenceContext(unitName = "localDB")
@@ -41,39 +41,39 @@ public class YDHKJHJGBLocalDaoImpl extends AbstractReadWriteDaoImpl<YDHKJHJGBLoc
 	}
 
 	@Override
-	public Double getHKJHZEByQY(String date, int qybh) {
+	public Double getHKJHZEByQY(String date, int qybh, String gsbm) {
 		Double result = null;
 		String sql = "select qbkhyqyszk +  qbkhyqk +  qbkhwdqyszk +  qbkhwdqk"
 				+ " +  zqkhyqyszk +  zqkhyqk +  zqkhwdqyszk +  zqkhwdqk"
 				+ " from YDHKJHJGBLocal where DATEDIFF(mm, gxrq, :date) = 0"
-				+ " Where datediff(mm, hkrq, :date) = 0"
-				+ " and datediff(dd, hkrq, :date) >= 0" + " and qybh = :qybh";
+				+ " and qybh = :qybh and gsbm = :gsbm";
 		Query query = getEntityManager().createQuery(sql);
 		query.setParameter("date", date);
 		query.setParameter("qybh", qybh);
+		query.setParameter("gsbm", gsbm);
 		try {
 			Object resultObject = query.getSingleResult();
-			result = Double.valueOf(String.valueOf(resultObject));
+			result = null == resultObject ? 0.0D : Double.valueOf(String.valueOf(resultObject));
 		} catch (NoResultException noResultException) {
 			noResultException.printStackTrace();
 			result = 0.0D;
 		}
 		return result;
 	}
-	
+
 	@Override
-	public YDHKJHJGBLocal getHKJHByQY(String date, int qybh) {
+	public YDHKJHJGBLocal getHKJHByQY(String date, int qybh, String gsbm) {
 		YDHKJHJGBLocal result = null;
 		String sql = "From YDHKJHJGBLocal where DATEDIFF(mm, gxrq, :date) = 0"
-				+ " Where datediff(mm, hkrq, :date) = 0"
-				+ " and datediff(dd, hkrq, :date) >= 0" + " and qybh = :qybh";
+				+ " and qybh = :qybh and gsbm = :gsbm";
 		Query query = getEntityManager().createQuery(sql);
 		query.setParameter("date", date);
 		query.setParameter("qybh", qybh);
+		query.setParameter("gsbm", gsbm);
 		try {
 			result = (YDHKJHJGBLocal) query.getSingleResult();
 		} catch (NoResultException noResultException) {
-			noResultException.printStackTrace();
+			result = null;
 		}
 		return result;
 	}

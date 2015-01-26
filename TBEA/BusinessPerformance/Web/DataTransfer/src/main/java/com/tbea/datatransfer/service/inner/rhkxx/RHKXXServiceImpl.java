@@ -31,6 +31,7 @@ public class RHKXXServiceImpl implements RHKXXService {
 			Date hkrq = null;
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Integer qybh = null;
+			String gsbm = null;
 			Object[] bcInfo = null;
 			Double qzqbbc = null;
 			Double qzzqbc = null;
@@ -48,18 +49,21 @@ public class RHKXXServiceImpl implements RHKXXService {
 				rhkxx.setHkrq(hkrq);
 				rhkxx.setHkje(mrhkhzLocal.getHkje());
 				qybh = mrhkhzLocal.getQybh();
+				gsbm = String.valueOf(qybh);
 				bcInfo = mrhkhzLocalDao.getYLJBCByQY(formatter.format(hkrq),
 						qybh);
-				qzqbbc = Double.valueOf(String.valueOf(bcInfo[0]));
+				qzqbbc = null == bcInfo[0] ? 0.0D : Double.valueOf(String
+						.valueOf(bcInfo[0]));
 				rhkxx.setQzqbbc(qzqbbc);
-				qzzqbc = Double.valueOf(String.valueOf(bcInfo[1]));
+				qzzqbc = null == bcInfo[1] ? 0.0D : Double.valueOf(String
+						.valueOf(bcInfo[1]));
 				rhkxx.setQzzqbc(qzzqbc);
 				rhkxx.setYhkzkjysdhkje(mrhkhzLocal.getYhkzkjysdhkje());
 				rhkxx.setJzydyszkzmye(mrhkhzLocal.getJzydyszkzmye());
 				jtxdydzjhlzb = mrhkhzLocal.getJtxdydzjhlzb();
 				rhkxx.setJtxdydzjhlzb(jtxdydzjhlzb);
 				gdwzxzddhkjh = ydhkjhjgbLocalDao.getHKJHZEByQY(
-						formatter.format(hkrq), qybh);
+						formatter.format(hkrq), qybh, gsbm);
 				rhkxx.setGdwzxzddhkjh(gdwzxzddhkjh);
 				ylj = mrhkhzLocalDao.getYLJHKByQY(formatter.format(hkrq), qybh);
 				rhkxx.setYlj(ylj);
