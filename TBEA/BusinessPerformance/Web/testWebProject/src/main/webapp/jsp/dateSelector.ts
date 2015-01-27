@@ -77,7 +77,7 @@ module Util {
             return startMon;
         }
 
-        private getLatestDay() : number {
+        private getLatestDay(): number {
             var latestDay: number = this.getDaysInMonth(this.mCurDate.year, this.mCurDate.month);
             if (this.mCurDate.year == this.mEndDate.year && this.mCurDate.month == this.mEndDate.month) {
                 latestDay = this.mEndDate.day;
@@ -98,15 +98,15 @@ module Util {
             if (yearSel.length == 0) {
                 $("#" + this.mCtrlId + " tr").append('<td>' +
                     '<select id="' + this.mCtrlId + 'year"' +
-                    'style="width: 90px; margin-right:5px;"></select>' +
-                    '</td>');
+                    'style="width: 100px;"></select>' +
+                    '</td><td><div style="width:5px;"></div></td>');
                 yearSel = $("#" + this.mCtrlId + "year");
             }
             else {
                 yearSel.empty();
             }
 
-           
+
             for (var i = this.mStartDate.year; i <= this.mEndDate.year; ++i) {
                 if (selYear == i) {
                     yearSel.append('<option value="' + selYear + '" selected="selected">' + selYear + '年</option>');
@@ -122,16 +122,25 @@ module Util {
                     this.onYearSelected(parseInt(newYear));
                 }
             });
+
+            yearSel.multiselect({
+                multiple: false,
+                header: false,
+                minWidth: 80,
+                height: (this.mEndDate.year - this.mStartDate.year + 1) * 28,
+                // noneSelectedText: "请选择月份",
+                selectedList: 1
+            });
         }
 
-        private updateMonth(selMonth : number) {
+        private updateMonth(selMonth: number) {
             if (isExist(this.mEndDate.month)) {
                 var monthSel = $("#" + this.mCtrlId + "month");
                 if (0 == monthSel.length) {
                     $("#" + this.mCtrlId + " tr").append('<td>' +
                         '<select id="' + this.mCtrlId + 'month"' +
-                        'style="width: 90px; margin-right:5px;"></select>' +
-                        '</td>');
+                        'style="width: 100px;"></select>' +
+                        '</td><td><div style="width:5px;"></div></td>');
                     monthSel = $("#" + this.mCtrlId + "month");
                 } else {
                     monthSel.empty();
@@ -147,12 +156,20 @@ module Util {
                         monthSel.append('<option value="' + i + '">' + i + '月</option>');
                     }
                 }
-               
+
                 monthSel.change(() => {
                     var newMonth = monthSel.children('option:selected').val();
                     if (this.mCurDate.month != newMonth) {
                         this.onMonthSelected(parseInt(newMonth));
                     }
+                });
+
+                monthSel.multiselect({
+                    multiple: false,
+                    header: false,
+                    minWidth: 80,
+                    height: (endMonth - startMonth + 1) * 28,
+                    selectedList: 1
                 });
             }
         }
@@ -171,9 +188,15 @@ module Util {
                 if (0 == daySel.length) {
                     $("#" + this.mCtrlId + " tr").append('<td>' +
                         '<select id="' + this.mCtrlId + 'day"' +
-                        'style="width: 90px; margin-right:5px;"></select>' +
-                        '</td>');
+                        'style="width: 100px;"></select>' +
+                        '</td><td><div style="width:5px;"></div></td>');
                     daySel = $("#" + this.mCtrlId + "day");
+                    daySel.multiselect({
+                        multiple: false,
+                        header: "Select an option",
+                        noneSelectedText: "Select an Option",
+                        selectedList: 1
+                    });
                 } else {
                     daySel.empty();
                 }
@@ -197,6 +220,14 @@ module Util {
                     if (this.mCurDate.day != newDay) {
                         this.onDaySelected(parseInt(newDay));
                     }
+                });
+
+                daySel.multiselect({
+                    multiple: false,
+                    header: false,
+                    minWidth: 80,
+                    height: (endDay - startDay + 1) * 28,
+                    selectedList: 1
                 });
             }
         }
@@ -237,7 +268,7 @@ module Util {
 
                 this.updateDay(curDay);
                 this.onDaySelected(curDay);
-            } 
+            }
         }
 
         private onDaySelected(day: number) {

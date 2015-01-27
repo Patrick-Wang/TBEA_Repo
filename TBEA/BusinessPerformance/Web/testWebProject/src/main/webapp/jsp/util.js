@@ -1,5 +1,21 @@
 var Util;
 (function (Util) {
+    (function (EntyType) {
+        EntyType[EntyType["QNJH"] = 0] = "QNJH";
+        EntyType[EntyType["BY20"] = 1] = "BY20";
+        EntyType[EntyType["BY28"] = 2] = "BY28";
+        EntyType[EntyType["BYSJ"] = 3] = "BYSJ";
+    })(Util.EntyType || (Util.EntyType = {}));
+    var EntyType = Util.EntyType;
+    (function (ZBType) {
+        ZBType[ZBType["QNJH"] = 0] = "QNJH";
+        ZBType[ZBType["BY20JH"] = 1] = "BY20JH";
+        ZBType[ZBType["BY28JH"] = 2] = "BY28JH";
+        ZBType[ZBType["BY20YJ"] = 3] = "BY20YJ";
+        ZBType[ZBType["BY28YJ"] = 4] = "BY28YJ";
+        ZBType[ZBType["BYSJ"] = 5] = "BYSJ";
+    })(Util.ZBType || (Util.ZBType = {}));
+    var ZBType = Util.ZBType;
     (function (CompanyType) {
         CompanyType[CompanyType["SB"] = 0] = "SB";
         CompanyType[CompanyType["HB"] = 1] = "HB";
@@ -114,9 +130,11 @@ var Util;
     })();
     Util.Promise = Promise;
     var Ajax = (function () {
-        function Ajax(baseUrl) {
+        function Ajax(baseUrl, useCache) {
+            if (useCache === void 0) { useCache = true; }
             this.mCache = {};
             this.mBaseUrl = baseUrl;
+            this.mUseCache = useCache;
         }
         Ajax.prototype.generateKey = function (option) {
             var keys = [];
@@ -127,10 +145,31 @@ var Util;
             return keys.join("&");
         };
         Ajax.prototype.setCache = function (option, data) {
-            this.mCache[this.generateKey(option)] = data;
+            if (this.mUseCache) {
+                this.mCache[this.generateKey(option)] = data;
+            }
+        };
+        Ajax.prototype.clean = function () {
+            this.mCache = {};
         };
         Ajax.prototype.getCache = function (option) {
             return this.mCache[this.generateKey(option)];
+        };
+        Ajax.prototype.post = function (option) {
+            var promise = new Promise();
+            $.ajax({
+                type: "POST",
+                url: this.mBaseUrl,
+                data: option,
+                success: function (data) {
+                    var jsonData = JSON.parse(data);
+                    promise.succeed(jsonData);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    promise.failed(textStatus);
+                }
+            });
+            return promise;
         };
         Ajax.prototype.get = function (option) {
             var _this = this;

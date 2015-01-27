@@ -454,6 +454,16 @@ module JQTable {
             }
         }
 
+        
+        public getAllData() : Array<string[]>{
+            var grid = $("#" + this.mGridName + "");
+            var ids = grid.jqGrid('getDataIDs');
+            var data : Array<string[]> = [];
+            for (var i in ids){
+                data.push(grid.jqGrid('getRowData', ids[i]));
+            }
+            return data;
+        }
 
         public testDepth(): number {
             var depth = 1;

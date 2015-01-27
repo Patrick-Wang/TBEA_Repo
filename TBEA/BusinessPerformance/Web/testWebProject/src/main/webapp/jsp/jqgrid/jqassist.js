@@ -345,6 +345,15 @@ var JQTable;
                 this.group();
             }
         }
+        JQGridAssistant.prototype.getAllData = function () {
+            var grid = $("#" + this.mGridName + "");
+            var ids = grid.jqGrid('getDataIDs');
+            var data = [];
+            for (var i in ids) {
+                data.push(grid.jqGrid('getRowData', ids[i]));
+            }
+            return data;
+        };
         JQGridAssistant.prototype.testDepth = function () {
             var depth = 1;
             var tmp = 0;

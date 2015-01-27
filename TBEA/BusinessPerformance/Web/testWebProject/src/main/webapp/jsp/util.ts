@@ -1,6 +1,25 @@
 declare var $;
 module Util {
-
+    export enum EntyType {
+        QNJH,
+        BY20,
+        BY28,
+        BYSJ
+    }
+    
+    export enum ZBType {
+        QNJH,
+        BY20JH,
+        BY28JH,
+        BY20YJ,
+        BY28YJ,
+        BYSJ
+    }
+    
+    export interface Permission{
+        entryPlan : boolean;    
+    }
+    
 	export enum CompanyType {
         SB       ,// ("沈变公司"),
         HB      ,// ("衡变公司"),
@@ -106,7 +125,7 @@ module Util {
         }
         
         public then(
-            success : (data : string) => void, 
+            success : (data : any) => void, 
             failed ? :(err : string) => void) : Promise{
             if (null != success && undefined != success){
                 this.mSuccessList.push(success);
@@ -125,14 +144,16 @@ module Util {
         month ? : number;
         day ? : number;
         companyId ? : number;
+        entryType ?: ZBType;
     }
     
     export class Ajax {
         private mBaseUrl: string;
         private mCache : any = {};
-        
-        public constructor(baseUrl: string) {
+        private mUseCache: boolean;
+        public constructor(baseUrl: string, useCache : boolean = true) {
             this.mBaseUrl = baseUrl;
+            this.mUseCache = useCache;
         }
 
         private generateKey(option: IAjaxOption){
@@ -145,11 +166,34 @@ module Util {
         }
         
         private setCache(option: IAjaxOption, data: string) : void{
-            this.mCache[this.generateKey(option)] = data;
+            if (this.mUseCache){
+                this.mCache[this.generateKey(option)] = data;
+            }
+        }
+        
+        public clean() : void{
+            this.mCache = {};    
         }
         
         private getCache(option: IAjaxOption) : string{
             return this.mCache[this.generateKey(option)];
+        }
+        
+        public post(option: IAjaxOption): Promise {
+            var promise: Promise = new Promise();
+            $.ajax({
+                type: "POST",
+                url: this.mBaseUrl,
+                data: option,
+                success: (data: any) => {
+                    var jsonData = JSON.parse(data);
+                    promise.succeed(jsonData);
+                },
+                error: (XMLHttpRequest, textStatus, errorThrown) => {
+                    promise.failed(textStatus);
+                }
+            });
+            return promise;
         }
         
         public get(option: IAjaxOption): Promise {
