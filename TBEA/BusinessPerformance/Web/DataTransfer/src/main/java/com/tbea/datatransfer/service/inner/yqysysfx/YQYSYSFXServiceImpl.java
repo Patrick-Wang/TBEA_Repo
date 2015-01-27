@@ -22,7 +22,6 @@ public class YQYSYSFXServiceImpl implements YQYSYSFXService {
 			Integer flsdhs = null;
 			Double flsdje = null;
 			Integer qybh = null;
-			
 			result = true;
 		} catch (Exception e) {
 			result = false;

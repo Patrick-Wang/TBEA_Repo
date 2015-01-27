@@ -75,7 +75,7 @@ public class YDHKJHJGBLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getQbkhyqyszk() {
-		return qbkhyqyszk;
+		return null == qbkhyqyszk ? 0.0D : qbkhyqyszk;
 	}
 
 	public void setQbkhyqyszk(Double qbkhyqyszk) {
@@ -83,7 +83,7 @@ public class YDHKJHJGBLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getQbkhyqk() {
-		return qbkhyqk;
+		return null == qbkhyqk ? 0.0D : qbkhyqk;
 	}
 
 	public void setQbkhyqk(Double qbkhyqk) {
@@ -91,7 +91,7 @@ public class YDHKJHJGBLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getQbkhwdqyszk() {
-		return qbkhwdqyszk;
+		return null == qbkhwdqyszk ? 0.0D : qbkhwdqyszk;
 	}
 
 	public void setQbkhwdqyszk(Double qbkhwdqyszk) {
@@ -99,7 +99,7 @@ public class YDHKJHJGBLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getQbkhwdqk() {
-		return qbkhwdqk;
+		return null == qbkhwdqk ? 0.0D : qbkhwdqk;
 	}
 
 	public void setQbkhwdqk(Double qbkhwdqk) {
@@ -107,7 +107,7 @@ public class YDHKJHJGBLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getZqkhyqyszk() {
-		return zqkhyqyszk;
+		return null == zqkhyqyszk ? 0.0D : zqkhyqyszk;
 	}
 
 	public void setZqkhyqyszk(Double zqkhyqyszk) {
@@ -115,7 +115,7 @@ public class YDHKJHJGBLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getZqkhyqk() {
-		return zqkhyqk;
+		return null == zqkhyqk ? 0.0D : zqkhyqk;
 	}
 
 	public void setZqkhyqk(Double zqkhyqk) {
@@ -123,7 +123,7 @@ public class YDHKJHJGBLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getZqkhwdqyszk() {
-		return zqkhwdqyszk;
+		return null == zqkhwdqyszk ? 0.0D : zqkhwdqyszk;
 	}
 
 	public void setZqkhwdqyszk(Double zqkhwdqyszk) {
@@ -131,7 +131,7 @@ public class YDHKJHJGBLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getZqkhwdqk() {
-		return zqkhwdqk;
+		return null == zqkhwdqk ? 0.0D : zqkhwdqk;
 	}
 
 	public void setZqkhwdqk(Double zqkhwdqk) {
@@ -139,7 +139,7 @@ public class YDHKJHJGBLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getXyqsk() {
-		return xyqsk;
+		return  null == xyqsk ? 0.0D : xyqsk;
 	}
 
 	public void setXyqsk(Double xyqsk) {
@@ -147,7 +147,7 @@ public class YDHKJHJGBLocal extends AbstractReadWriteEntity implements
 	}
 
 	public Double getGyqsk() {
-		return gyqsk;
+		return null == gyqsk ? 0.0D : gyqsk;
 	}
 
 	public void setGyqsk(Double gyqsk) {

@@ -5,24 +5,28 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.local.tbbzjxx.TBBZJXXLocalDao;
-import com.tbea.datatransfer.model.dao.zjdl.tbbzjxx.TBBZJXXDLDao;
-import com.tbea.datatransfer.model.dao.zjsb.tbbzjxx.TBBZJXXSBDao;
-import com.tbea.datatransfer.model.dao.zjtb.tbbzjxx.TBBZJXXTBDao;
+import com.tbea.datatransfer.model.dao.zjbyq.tbbzjxx.TBBZJXXBYQDao;
+import com.tbea.datatransfer.model.dao.zjxl.tbbzjxx.TBBZJXXXLDao;
 import com.tbea.datatransfer.model.entity.local.TBBZJXXLocal;
-import com.tbea.datatransfer.model.entity.zjdl.TBBZJXXDL;
-import com.tbea.datatransfer.model.entity.zjsb.TBBZJXXSB;
-import com.tbea.datatransfer.model.entity.zjtb.TBBZJXXTB;
+import com.tbea.datatransfer.model.entity.zjbyq.TBBZJXXBYQ;
+import com.tbea.datatransfer.model.entity.zjxl.TBBZJXXXL;
 
 @Transactional("transactionManager")
 public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 
 	private TBBZJXXLocalDao tbbzjxxLocalDao;
 
-	private TBBZJXXDLDao tbbzjxxDLDao;
+	private TBBZJXXXLDao tbbzjxxDLDao;
 
-	private TBBZJXXTBDao tbbzjxxTBDao;
-	
-	private TBBZJXXSBDao tbbzjxxSBDao;
+	private TBBZJXXXLDao tbbzjxxLLDao;
+
+	private TBBZJXXBYQDao tbbzjxxTBDao;
+
+	private TBBZJXXBYQDao tbbzjxxSBDao;
+
+	private TBBZJXXXLDao tbbzjxxXLDao;
+
+	private TBBZJXXBYQDao tbbzjxxXBDao;
 
 	@Override
 	public boolean transferTBBZJXX() {
@@ -31,8 +35,8 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 			// dl
 			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(6);
 			TBBZJXXLocal tbbzjxxLocal = null;
-			List<TBBZJXXDL> tbbzjxxDLList = tbbzjxxDLDao.getAllTBBZJXXDL();
-			for (TBBZJXXDL tbbzjxxDL : tbbzjxxDLList) {
+			List<TBBZJXXXL> tbbzjxxDLList = tbbzjxxDLDao.getAllTBBZJXX();
+			for (TBBZJXXXL tbbzjxxDL : tbbzjxxDLList) {
 				tbbzjxxLocal = new TBBZJXXLocal();
 				tbbzjxxLocal.setGxrq(tbbzjxxDL.getGxrq());
 				tbbzjxxLocal.setGsbm(tbbzjxxDL.getGsbm());
@@ -43,10 +47,38 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 				tbbzjxxLocal.setQybh(6);
 				tbbzjxxLocalDao.merge(tbbzjxxLocal);
 			}
+			// ll
+			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(4);
+			List<TBBZJXXXL> tbbzjxxLLList = tbbzjxxLLDao.getAllTBBZJXX();
+			for (TBBZJXXXL tbbzjxxLL : tbbzjxxLLList) {
+				tbbzjxxLocal = new TBBZJXXLocal();
+				tbbzjxxLocal.setGxrq(tbbzjxxLL.getGxrq());
+				tbbzjxxLocal.setGsbm(tbbzjxxLL.getGsbm());
+				tbbzjxxLocal.setNf(tbbzjxxLL.getNf());
+				tbbzjxxLocal.setYf(tbbzjxxLL.getYf());
+				tbbzjxxLocal.setJe(tbbzjxxLL.getJe());
+				tbbzjxxLocal.setSfdrwc(tbbzjxxLL.getSfdrwc());
+				tbbzjxxLocal.setQybh(4);
+				tbbzjxxLocalDao.merge(tbbzjxxLocal);
+			}
+			// xl
+			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(5);
+			List<TBBZJXXXL> tbbzjxxXLList = tbbzjxxXLDao.getAllTBBZJXX();
+			for (TBBZJXXXL tbbzjxxXL : tbbzjxxXLList) {
+				tbbzjxxLocal = new TBBZJXXLocal();
+				tbbzjxxLocal.setGxrq(tbbzjxxXL.getGxrq());
+				tbbzjxxLocal.setGsbm(tbbzjxxXL.getGsbm());
+				tbbzjxxLocal.setNf(tbbzjxxXL.getNf());
+				tbbzjxxLocal.setYf(tbbzjxxXL.getYf());
+				tbbzjxxLocal.setJe(tbbzjxxXL.getJe());
+				tbbzjxxLocal.setSfdrwc(tbbzjxxXL.getSfdrwc());
+				tbbzjxxLocal.setQybh(5);
+				tbbzjxxLocalDao.merge(tbbzjxxLocal);
+			}
 			// tb
 			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(301);
-			List<TBBZJXXTB> tbbzjxxTBList = tbbzjxxTBDao.getAllTBBZJXXTB();
-			for (TBBZJXXTB tbbzjxxTB : tbbzjxxTBList) {
+			List<TBBZJXXBYQ> tbbzjxxTBList = tbbzjxxTBDao.getAllTBBZJXX();
+			for (TBBZJXXBYQ tbbzjxxTB : tbbzjxxTBList) {
 				tbbzjxxLocal = new TBBZJXXLocal();
 				tbbzjxxLocal.setGxrq(tbbzjxxTB.getGxrq());
 				tbbzjxxLocal.setGsbm(tbbzjxxTB.getGsbm());
@@ -59,8 +91,8 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 			}
 			// sb
 			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(1);
-			List<TBBZJXXSB> tbbzjxxSBList = tbbzjxxSBDao.getAllTBBZJXXSB();
-			for (TBBZJXXSB tbbzjxxSB : tbbzjxxSBList) {
+			List<TBBZJXXBYQ> tbbzjxxSBList = tbbzjxxSBDao.getAllTBBZJXX();
+			for (TBBZJXXBYQ tbbzjxxSB : tbbzjxxSBList) {
 				tbbzjxxLocal = new TBBZJXXLocal();
 				tbbzjxxLocal.setGxrq(tbbzjxxSB.getGxrq());
 				tbbzjxxLocal.setGsbm(tbbzjxxSB.getGsbm());
@@ -68,11 +100,24 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 				tbbzjxxLocal.setYf(tbbzjxxSB.getYf());
 				tbbzjxxLocal.setJe(tbbzjxxSB.getJe());
 				tbbzjxxLocal.setSfdrwc(tbbzjxxSB.getSfdrwc());
-				tbbzjxxLocal.setQybh(301);
+				tbbzjxxLocal.setQybh(1);
+				tbbzjxxLocalDao.merge(tbbzjxxLocal);
+			}
+			// xb
+			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(3);
+			List<TBBZJXXBYQ> tbbzjxxXBList = tbbzjxxXBDao.getAllTBBZJXX();
+			for (TBBZJXXBYQ tbbzjxxXB : tbbzjxxXBList) {
+				tbbzjxxLocal = new TBBZJXXLocal();
+				tbbzjxxLocal.setGxrq(tbbzjxxXB.getGxrq());
+				tbbzjxxLocal.setGsbm(tbbzjxxXB.getGsbm());
+				tbbzjxxLocal.setNf(tbbzjxxXB.getNf());
+				tbbzjxxLocal.setYf(tbbzjxxXB.getYf());
+				tbbzjxxLocal.setJe(tbbzjxxXB.getJe());
+				tbbzjxxLocal.setSfdrwc(tbbzjxxXB.getSfdrwc());
+				tbbzjxxLocal.setQybh(3);
 				tbbzjxxLocalDao.merge(tbbzjxxLocal);
 			}
 
-			
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,20 +134,52 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 		this.tbbzjxxLocalDao = tbbzjxxLocalDao;
 	}
 
-	public TBBZJXXDLDao getTbbzjxxDLDao() {
+	public TBBZJXXXLDao getTbbzjxxDLDao() {
 		return tbbzjxxDLDao;
 	}
 
-	public void setTbbzjxxDLDao(TBBZJXXDLDao tbbzjxxDLDao) {
+	public void setTbbzjxxDLDao(TBBZJXXXLDao tbbzjxxDLDao) {
 		this.tbbzjxxDLDao = tbbzjxxDLDao;
 	}
 
-	public TBBZJXXTBDao getTbbzjxxTBDao() {
+	public TBBZJXXXLDao getTbbzjxxLLDao() {
+		return tbbzjxxLLDao;
+	}
+
+	public void setTbbzjxxLLDao(TBBZJXXXLDao tbbzjxxLLDao) {
+		this.tbbzjxxLLDao = tbbzjxxLLDao;
+	}
+
+	public TBBZJXXBYQDao getTbbzjxxTBDao() {
 		return tbbzjxxTBDao;
 	}
 
-	public void setTbbzjxxTBDao(TBBZJXXTBDao tbbzjxxTBDao) {
+	public void setTbbzjxxTBDao(TBBZJXXBYQDao tbbzjxxTBDao) {
 		this.tbbzjxxTBDao = tbbzjxxTBDao;
+	}
+
+	public TBBZJXXBYQDao getTbbzjxxSBDao() {
+		return tbbzjxxSBDao;
+	}
+
+	public void setTbbzjxxSBDao(TBBZJXXBYQDao tbbzjxxSBDao) {
+		this.tbbzjxxSBDao = tbbzjxxSBDao;
+	}
+
+	public TBBZJXXXLDao getTbbzjxxXLDao() {
+		return tbbzjxxXLDao;
+	}
+
+	public void setTbbzjxxXLDao(TBBZJXXXLDao tbbzjxxXLDao) {
+		this.tbbzjxxXLDao = tbbzjxxXLDao;
+	}
+
+	public TBBZJXXBYQDao getTbbzjxxXBDao() {
+		return tbbzjxxXBDao;
+	}
+
+	public void setTbbzjxxXBDao(TBBZJXXBYQDao tbbzjxxXBDao) {
+		this.tbbzjxxXBDao = tbbzjxxXBDao;
 	}
 
 }

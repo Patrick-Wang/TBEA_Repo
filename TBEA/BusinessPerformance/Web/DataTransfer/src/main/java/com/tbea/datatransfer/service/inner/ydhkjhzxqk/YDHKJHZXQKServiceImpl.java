@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.datatransfer.model.dao.inner.ydhkjhzxqk.YDHKJHZXQKDao;
-import com.tbea.datatransfer.model.dao.local.tbbzjxx.TBBZJXXLocalDao;
 import com.tbea.datatransfer.model.dao.local.ydhkjhjgb.YDHKJHJGBLocalDao;
 import com.tbea.datatransfer.model.dao.local.ydsjhkqk.YDSJHKQKLocalDao;
 import com.tbea.datatransfer.model.entity.inner.YDHKJHZXQK;
@@ -64,6 +63,7 @@ public class YDHKJHZXQKServiceImpl implements YDHKJHZXQKService {
 			String xjwcl = null;
 			String hjwcl = null;
 			Integer qybh = null;
+			String gsbm = null;
 
 			for (YDSJHKQKLocal ydsjhkqkLocal : ydsjhkqkLocalList) {
 				ydhkjhzxqk = new YDHKJHZXQK();
@@ -91,30 +91,33 @@ public class YDHKJHZXQKServiceImpl implements YDHKJHZXQKService {
 
 				// jhhk
 				qybh = ydsjhkqkLocal.getQybh();
+				gsbm = ydsjhkqkLocal.getGsbm();
 				date = dateFormat.format(gxrq);
-				ydjhhkqkLocal = ydhkjhjgbLocalDao.getHKJHByQY(date, qybh);
-				yqyszkjhhk = ydjhhkqkLocal.getQbkhyqyszk()
-						+ ydjhhkqkLocal.getZqkhyqyszk();
-				ydhkjhzxqk.setYqyszkjhhk(yqyszkjhhk);
-				yqkjhhk = ydjhhkqkLocal.getQbkhyqk()
-						+ ydjhhkqkLocal.getZqkhyqk();
-				ydhkjhzxqk.setYqkjhhk(yqkjhhk);
-				wdqyszkjhhk = ydjhhkqkLocal.getQbkhwdqyszk()
-						+ ydjhhkqkLocal.getZqkhwdqyszk();
-				ydhkjhzxqk.setWdqyszkjhhk(wdqyszkjhhk);
-				wdqkjhhk = ydjhhkqkLocal.getQbkhwdqk()
-						+ ydjhhkqkLocal.getZqkhwdqk();
-				ydhkjhzxqk.setWdqkjhhk(wdqkjhhk);
-				qbkhjhhk = ydjhhkqkLocal.getQbkhyqyszk()
-						+ ydjhhkqkLocal.getQbkhyqk()
-						+ ydjhhkqkLocal.getQbkhwdqyszk()
-						+ ydjhhkqkLocal.getQbkhwdqk();
-				ydhkjhzxqk.setQbkhjhhk(qbkhjhhk);
-				zqkhjhhk = ydjhhkqkLocal.getZqkhyqyszk()
-						+ ydjhhkqkLocal.getZqkhyqk()
-						+ ydjhhkqkLocal.getZqkhwdqyszk()
-						+ ydjhhkqkLocal.getZqkhwdqk();
-				ydhkjhzxqk.setZqkhjhhk(zqkhjhhk);
+				ydjhhkqkLocal = ydhkjhjgbLocalDao.getHKJHByQY(date, qybh, gsbm);
+				if (null != ydjhhkqkLocal) {
+					yqyszkjhhk = ydjhhkqkLocal.getQbkhyqyszk()
+							+ ydjhhkqkLocal.getZqkhyqyszk();
+					ydhkjhzxqk.setYqyszkjhhk(yqyszkjhhk);
+					yqkjhhk = ydjhhkqkLocal.getQbkhyqk()
+							+ ydjhhkqkLocal.getZqkhyqk();
+					ydhkjhzxqk.setYqkjhhk(yqkjhhk);
+					wdqyszkjhhk = ydjhhkqkLocal.getQbkhwdqyszk()
+							+ ydjhhkqkLocal.getZqkhwdqyszk();
+					ydhkjhzxqk.setWdqyszkjhhk(wdqyszkjhhk);
+					wdqkjhhk = ydjhhkqkLocal.getQbkhwdqk()
+							+ ydjhhkqkLocal.getZqkhwdqk();
+					ydhkjhzxqk.setWdqkjhhk(wdqkjhhk);
+					qbkhjhhk = ydjhhkqkLocal.getQbkhyqyszk()
+							+ ydjhhkqkLocal.getQbkhyqk()
+							+ ydjhhkqkLocal.getQbkhwdqyszk()
+							+ ydjhhkqkLocal.getQbkhwdqk();
+					ydhkjhzxqk.setQbkhjhhk(qbkhjhhk);
+					zqkhjhhk = ydjhhkqkLocal.getZqkhyqyszk()
+							+ ydjhhkqkLocal.getZqkhyqk()
+							+ ydjhhkqkLocal.getZqkhwdqyszk()
+							+ ydjhhkqkLocal.getZqkhwdqk();
+					ydhkjhzxqk.setZqkhjhhk(zqkhjhhk);
+				}
 
 				// xj
 				jhxj = qbkhjhhk + zqkhjhhk;
@@ -126,7 +129,7 @@ public class YDHKJHZXQKServiceImpl implements YDHKJHZXQKService {
 				jhhj = jhxj;
 				ydhkjhzxqk.setJhhj(jhhj);
 				sjhj = sjxj + xkxhhk + jhwhk;
-				ydhkjhzxqk.setSjxj(sjxj);
+				ydhkjhzxqk.setSjhj(sjhj);
 
 				// wcl
 				yqyszkjhwcl = String.format("%.2f", yqyszksjhk / yqyszkjhhk)
