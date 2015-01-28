@@ -197,7 +197,7 @@ th.ui-th-ltr {
 						<td>
 					</tr>
 					<tr align="right">
-						<td><input type="submit" value="提交" style="width: 80px;"
+						<td><input id="submit" type="submit" value="提交" style="width: 80px;"
 							onclick="view.submit()"></input></td>
 					</tr>
 

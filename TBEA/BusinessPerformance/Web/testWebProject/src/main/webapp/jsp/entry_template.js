@@ -109,18 +109,39 @@ var entry_template;
             }
             return ret;
         };
+        View.prototype.disableEntry = function (tableId) {
+            var parent = $("#" + tableId);
+            parent.empty();
+            parent.append("<div style='font-size:18px'>没有可修改的记录</div>");
+            $("#submit").css("display", "none");
+        };
+        View.prototype.enableEntry = function () {
+            $("#submit").css("display", "");
+        };
         View.prototype.updateTable = function (tableId) {
             var name = tableId + "_jqgrid";
+            var parent = $("#" + tableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
+            this.enableEntry();
             var titles = null;
             switch (this.mOpt.entryType) {
                 case 0 /* QNJH */:
                     titles = ["指标名称", "全年计划"];
                     break;
                 case 1 /* BY20JH */:
+                    if (this.mDateSelector.getDate().month % 3 != 0) {
+                        this.disableEntry(tableId);
+                        return;
+                    }
                 case 3 /* BY20YJ */:
                     titles = this.createPredict(["指标名称", "本月20日预计值"]);
                     break;
                 case 2 /* BY28JH */:
+                    if (this.mDateSelector.getDate().month % 3 != 0) {
+                        this.disableEntry(tableId);
+                        return;
+                    }
                 case 4 /* BY28YJ */:
                     titles = this.createPredict(["指标名称", "本月28日预计值"]);
                     break;
@@ -130,9 +151,6 @@ var entry_template;
             }
             this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
             var data = this.mTableData;
-            var parent = $("#" + tableId);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(this.mTableAssist.decorate({
                 data: this.mTableAssist.getData(data),
                 datatype: "local",

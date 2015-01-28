@@ -220,7 +220,16 @@ var Util;
         DateSelector.prototype.onDaySelected = function (day) {
             this.mCurDate.day = day;
         };
+        DateSelector.prototype.toInt = function (val) {
+            if (typeof (val) == 'string') {
+                return parseInt(val);
+            }
+            return val;
+        };
         DateSelector.prototype.getDate = function () {
+            this.mCurDate.year = this.toInt(this.mCurDate.year);
+            this.mCurDate.month = this.toInt(this.mCurDate.month);
+            this.mCurDate.day = this.toInt(this.mCurDate.day);
             return this.mCurDate;
         };
         return DateSelector;
