@@ -3,7 +3,12 @@ var curPage = location.href.match(/(\w*).html/) ? location.href.match(/(\w*).htm
 
 var activeClass = {};
 var loc = {};
+var entryPlan;
+var entryPredict;
+var approveplan;
+var approvePredict;
 var forkWidth = 149;
+
 switch (curPage) {
     case 'index' :
         activeClass[curPage] = 'active';
@@ -39,8 +44,14 @@ switch (curPage) {
         break;
 }
 
-$('#head')[0].innerHTML = 
-    '<div class="container">'
+
+function init(ePlan, ePredict, aPlan, aPredict)
+{
+	entryPlan = ePlan;
+	entryPredict = ePredict;
+	approveplan = aPlan;
+	approvePredict = aPredict;
+var stringDescription =  '<div class="container">'
         + '<div class="navbar-header">'
           + '<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">'
             + '<span class="sr-only">Toggle navigation</span>'
@@ -52,22 +63,27 @@ $('#head')[0].innerHTML =
         + '</div>'
         + '<div class="navbar-collapse collapse" id="nav-wrap">'
           + '<ul class="nav navbar-nav navbar-right" id="nav" style="max-width:100%;">'
-            + '<li class="' + (activeClass.index || '') + '"><a href="' + (loc.index || '.') + '/index.htm">首页</a></li>'
-            //+ '<li class="' + (activeClass.feature || '') + '"><a href="">导出报表</a></li>'
-            //+ '<li class="' + (activeClass.example || '') + '"><a href="' + (loc.example || '.') + '/example.html">实例</a></li>'
-            //+ '<li class="' + (activeClass.doc || '') + '"><a href="' + (loc.doc || '.') + '/doc.html">文档</a></li>'
-            //+ '<li><a href="http://echarts.baidu.com/build/echarts-' + version + '.rar">下载</a></li>'
-            + '<li class="' + (activeClass.about || '') + '"><a href="">关于我们</a></li>'
+            + '<li class="' + (activeClass.Sample || '') + '" onclick="clickli();" value="1"><a>指标汇总明细</a></li>';
+			if(entryPlan || entryPredict)
+			{
+				 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="clickli();" value="2"><a>指标录入</a></li>';
+			}
+			if(approveplan || approvePredict)
+			{
+				 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="clickli();" value="3"><a>指标审核</a></li>';
+			}
+             stringDescription += '<li class="' + (activeClass.About || '') + '" onclick="clickli();" value="4"><a>财务指标汇总</a></li>'
           + '</ul>'
         + '</div><!--/.nav-collapse -->'
       + '</div>';
-      
-function back2Top() {
-    $("body,html").animate({scrollTop:0},1000);
-    return false;
-}
-$('#footer')[0].style.marginTop = '50px';
-$('#footer')[0].innerHTML =
+
+
+
+
+	$('#head')[0].innerHTML = stringDescription;
+
+	  $('#footer')[0].style.marginTop = '50px';
+	$('#footer')[0].innerHTML =
      '<div class="container">'
         + '<div class="row" style="padding-bottom:20px;">'
             + '<div class="col-md-3">'
@@ -108,15 +124,88 @@ if (document.location.href.indexOf('local') == -1) {
     var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
     document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fb78830c9a5dad062d08b90b2bc0cf5da' type='text/javascript'%3E%3C/script%3E"));   
 }
+	  function fixFork () {
+		var navMarginRight = 0;
+		var bodyWidth = document.body.offsetWidth;
+		var contnetWidth = $('#nav-wrap')[0].offsetWidth;
+		if (bodyWidth < 1440) {
+			navMarginRight = 150 - (bodyWidth - contnetWidth) / 2;
+		}
+		$('#nav')[0].style.marginRight = navMarginRight + 'px';
+	};
+    fixFork();
+    $(window).on('resize', fixFork);
+	$("#nav li").eq(0).addClass("active");
+}
 
-function fixFork () {
-    var navMarginRight = 0;
-    var bodyWidth = document.body.offsetWidth;
-    var contnetWidth = $('#nav-wrap')[0].offsetWidth;
-    if (bodyWidth < 1440) {
-        navMarginRight = 150 - (bodyWidth - contnetWidth) / 2;
-    }
-    $('#nav')[0].style.marginRight = navMarginRight + 'px';
-};
-fixFork();
-$(window).on('resize', fixFork);
+function clickli()
+{
+	switch($("#nav li")[0].value)
+	{
+	case 1:
+		$("#navlist").css("display", "");
+		$("#navlist1").css("display", "none");
+		$("#navlist2").css("display", "none");
+		$("#navlist3").css("display", "none");
+		$("#inputPlanList").css("display", "none");
+		$("#inputPredictionList").css("display", "none");
+		$("#approvePlanList").css("display", "none");
+		$("#approvePredictionList").css("display", "none");
+		$("#nav li").eq(0).addClass("active");
+		break;
+	case 2:
+		$("#navlist").css("display", "none");
+		$("#navlist1").css("display", "");
+		$("#navlist2").css("display", "none");
+		$("#navlist3").css("display", "none");
+		
+		$("#IndexSummary").css("display", "none");
+
+		if(entryPlan)
+		{
+			$("#inputPlanList").css("display", "");
+		}else if(entryPredict){
+			$("#inputPredictionList").css("display", "");
+		}
+		
+		$("#nav li").eq(1).addClass("active");
+	break;
+	case 3:
+		$("#navlist").css("display", "none");
+		$("#navlist1").css("display", "none");
+		$("#navlist2").css("display", "");
+		$("#navlist3").css("display", "none");
+		
+		$("#IndexSummary").css("display", "none");
+
+		if(approveplan)
+		{
+			$("#approvePlanList").css("display", "");
+		}else if(approvePredict){
+			$("#approvePredictionList").css("display", "");
+		}
+		
+		$("#nav li").eq(2).addClass("active");
+	break;
+	case 4:
+		$("#navlist").css("display", "none");
+		$("#navlist1").css("display", "none");
+		$("#navlist2").css("display", "none");
+		$("#navlist3").css("display", "");
+		$("#IndexSummary").css("display", "none");
+		
+		$("#financeList").css("display", "");
+		$("#nav li").eq(3).addClass("active");
+	break;
+	default:
+	break;
+	}
+}
+      
+function back2Top() {
+    $("body,html").animate({scrollTop:0},1000);
+    return false;
+}
+
+
+

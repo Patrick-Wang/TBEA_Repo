@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.model.entity.User;
+import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
 
 
@@ -30,6 +32,9 @@ public class EntryController {
 	@Autowired
 	private EntryService service;
 	
+	@Autowired
+	private ApproveService approveService;
+	
 	@RequestMapping(value = "index.do", method = RequestMethod.GET)
 	public ModelAndView getIndexEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -39,7 +44,11 @@ public class EntryController {
 		map.put("entryPlan", hasPermission);
 		hasPermission = service.hasEntryPredictPermission(usr);
 		map.put("entryPredict", hasPermission);
-		return new ModelAndView("entry_index", map);
+		hasPermission = approveService.hasApprovePlanPermission(usr);
+		map.put("approvePlan", hasPermission);
+		hasPermission = approveService.hasApprovePredictPermission(usr);
+		map.put("approvePredict", hasPermission);
+		return new ModelAndView("index", map);
 	}
 	
 	@RequestMapping(value = "zb.do", method = RequestMethod.GET)

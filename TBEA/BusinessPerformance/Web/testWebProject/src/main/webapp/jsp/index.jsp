@@ -1,22 +1,30 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 
-<html lang="zh-cn">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ECharts">
-    <meta name="author" content="">
-    <title>TBEA 经营管控系统</title>
-	<style type="text/css">
 
-	</style>
-	<script type="text/javascript">
+
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ECharts">
+<meta name="author" content="">
+<title>TBEA 经营管控系统</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
 		document.createElement("footer");
 	</script>
 
-    <link rel="shortcut icon" href="./images/logo.png">
+<link rel="shortcut icon" href="../images/logo.png">
 
 <!--
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -24,31 +32,43 @@
     <link href="http://echarts.baidu.com/doc/asset/css/carousel.css" rel="stylesheet">
     <link href="http://echarts.baidu.com/doc/asset/css/echartsHome.css" rel="stylesheet">
 -->
-    <link href="./css/font-awesome.min.css" rel="stylesheet">
-    <link href="./css/bootstrap.css" rel="stylesheet">
-    <link href="./css/carousel.css" rel="stylesheet">
-    <link href="./css/echartsHome.css" rel="stylesheet">
-	
-<style type="text/css" media="screen">CSS 样式表</style>
-<style type="text/css" media="all">CSS 样式表</style>
-<style type="text/css" media="print">CSS 样式表</style>
+<link href="../css/font-awesome.min.css" rel="stylesheet">
+<link href="../css/bootstrap.css" rel="stylesheet">
+<link href="../css/carousel.css" rel="stylesheet">
+<link href="../css/echartsHome.css" rel="stylesheet">
 
-<link href="./css/index.css" rel="stylesheet">
+<style type="text/css" media="screen">
+CSS
+ 
+样式表
+</style>
+<style type="text/css" media="all">
+CSS
+ 
+样式表
+</style>
+<style type="text/css" media="print">
+CSS
+ 
+样式表
+</style>
+
+<link href="../css/index.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-  <script src="js/html5shiv.min.js"></script>
-  <script src="js/respond.min.js"></script>
-<![endif]-->
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
 <TITLE></TITLE>
 <META charset=utf-8>
 <META content=IE=edge http-equiv=X-UA-Compatible>
 <META name=viewport content="width=device-width, initial-scale=1.0">
 <META name=description content=ECharts>
 <META name=author content="">
-<LINK rel=stylesheet href="css/font-awesome.min.css">
-<LINK rel=stylesheet href="css/bootstrap.css">
-<LINK rel=stylesheet href="css/carousel.css">
-<LINK rel=stylesheet href="css/echartsHome.css">
+<LINK rel=stylesheet href="../css/font-awesome.min.css">
+<LINK rel=stylesheet href="../css/bootstrap.css">
+<LINK rel=stylesheet href="../css/carousel.css">
+<LINK rel=stylesheet href="../css/echartsHome.css">
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 </head>
 
@@ -62,7 +82,7 @@
                 <div class="affix" style="margin-left: -20px; margin-top: auto;" id="chartsTypeNav">
                     <ul id="navlist" style="padding:10px 0;">
 						<li style="background-color: transparent;"><i class="ec-icon ec-icon-line"></i> <a href="./index.html#zbhz" style="color: rgb(62, 152, 197);">经营指标汇总</a></li>
-					<c:if test="${sbdqgSearch}">
+					<c:if test="${true}">
 						<li style="background-color: transparent;"><i class="ec-icon ec-icon-pie"></i> <a href="./index.html#yszk" style="color: rgb(62, 152, 197);">应收账款</a></li>
 						<li style="background-color: transparent;"><i class="ec-icon ec-icon-pie"></i> <a href="./index.html#bl" style="color: rgb(62, 152, 197);">保理状态</a></li>
 						<li style="background-color: transparent;"><i class="ec-icon ec-icon-pie"></i> <a href="./index.html#ht" style="color: rgb(62, 152, 197);">合同付款</a></li>
@@ -101,40 +121,40 @@
                         <div class="thumb3">
                           <ul class="slides">
                             <li >
-                              <a href="ydzb/hzb_zbhz.do" target="_blank"><img src="./images/charts/bar1.png">
+                              <a href="../ydzb/hzb_zbhz.do" target="_blank"><img src="../images/charts/bar1.png">
                               <span><strong>整体指标汇总</strong></span></a>
                             </li><!--/li-->
                             <li>
-                              <a href="ydzb/gcy_zbhz.do" target="_blank"><img src="./images/charts/line2.png">
+                              <a href="../ydzb/gcy_zbhz.do" target="_blank"><img src="../images/charts/line2.png">
                               <span><strong>各产业指标汇总</strong></a>
                             </li><!--/li-->
                             <li>
-                              <a href="ydzb/gdw_zbhz.do" target="_blank"><img src="./images/charts/pie1.png">
+                              <a href="../ydzb/gdw_zbhz.do" target="_blank"><img src="../images/charts/pie1.png">
                               <span><strong>各单位指标汇总</strong></a>
                             </li><!--/li-->
                             <li>
-                              <a href="ydzb/zbhz_overview.do" target="_blank"><img src="./images/charts/scatter1.png">
+                              <a href="../ydzb/zbhz_overview.do" target="_blank"><img src="../images/charts/scatter1.png">
                               <span><strong>指标-利润总额</strong></span></a>
                             </li><!--/li-->
                             <li>
-                              <a href="ydzb/zbhz_overview.do?zb=7" target="_blank"><img src="./images/charts/scatter2.png">
+                              <a href="../ydzb/zbhz_overview.do?zb=7" target="_blank"><img src="../images/charts/scatter2.png">
                               <span><strong>指标-销售收入</strong></span></a>
                             </li><!--/li-->
                             <li>
-                              <a href="ydzb/zbhz_overview.do?zb=23" target="_blank"><img src="./images/charts/scatter4.png" ">
+                              <a href="../ydzb/zbhz_overview.do?zb=23" target="_blank"><img src="../images/charts/scatter4.png" ">
                               <span><strong>指标-应收账款</strong></span></a>
                             </li><!--/li-->
                             <li>
-                              <a href="ydzb/zbhz_overview.do?zb=25" target="_blank"><img src="./images/charts/scatter5.png">
+                              <a href="../ydzb/zbhz_overview.do?zb=25" target="_blank"><img src="../images/charts/scatter5.png">
                               <span><strong>指标-存货</strong></span></a>
                             </li><!--/li-->
 
                             <li >
-                              <a href="ydzb/zbhz_overview.do?zb=8" target="_blank"><img src="./images/charts/scatter3.png">
+                              <a href="../ydzb/zbhz_overview.do?zb=8" target="_blank"><img src="../images/charts/scatter3.png">
                               <span><strong>指标-现金流</strong></span></a>
                             </li><!--/li-->
                             <li >
-                              <a href="ydzb/xjlrb.do" target="_blank"><img src="./images/charts/bar1.png">
+                              <a href="../ydzb/xjlrb.do" target="_blank"><img src="../images/charts/bar1.png">
                               <span><strong>现金流日报</strong></span></a>
                             </li><!--/li-->
 
@@ -150,32 +170,32 @@
                           <ul class="slides">
 						  
 							<li data-thumb="asset/img/example/line1.png">
-							  <a href="yszkpzjh/yszkpzjh.do" target="_blank"><img src="./images/charts/bar1.png">
+							  <a href="../yszkpzjh/yszkpzjh.do" target="_blank"><img src="../images/charts/bar1.png">
 							  <span><strong>应收账款盘子规划</strong></span></a>
 							</li><!--/li-->
 
                             <li data-thumb="asset/img/example/cache.png">
-                              <a href="yszkjgqk/yszkjgqk.do" target="_blank"><img src="./images/charts/line2.png">
+                              <a href="../yszkjgqk/yszkjgqk.do" target="_blank"><img src="../images/charts/line2.png">
                               <span><strong>应收账款结构情况</strong></span></a>
                             </li><!--/li-->
 
                             <li data-thumb="asset/img/example/cache.png">
-                              <a href="yqkbhqs/yqkbhqs.do" target="_blank"><img src="./images/charts/pie1.png">
+                              <a href="../yqkbhqs/yqkbhqs.do" target="_blank"><img src="../images/charts/pie1.png">
                               <span><strong>逾期款趋势变化</strong></span></a>
                             </li><!--/li-->
 
 						    <li data-thumb="asset/img/example/line1.png">
-                              <a href="yqysysfx/yqysysfx.do" target="_blank"><img src="./images/charts/bar1.png">
+                              <a href="../yqysysfx/yqysysfx.do" target="_blank"><img src="../images/charts/bar1.png">
                               <span><strong>逾期应收因素分析</strong></span></a>
                             </li>
 
                             <li>
-                              <a href="CQK/cqk.do" target="_blank"><img src="./images/charts/pie1.png">
+                              <a href="../CQK/cqk.do" target="_blank"><img src="../images/charts/pie1.png">
                               <span><strong>陈欠款分析</strong></span></a>
                             </li><!--/li-->
                             
                            <li data-thumb="asset/img/example/line1.png">
-							  <a href="ztyszkfx/ztyszkfx.do" target="_blank"><img src="./images/charts/bar1.png">
+							  <a href="../ztyszkfx/ztyszkfx.do" target="_blank"><img src="../images/charts/bar1.png">
 							  <span><strong>整体应收账款分析表</strong></span></a>
 							</li><!--/li-->
                           </ul>
@@ -188,7 +208,7 @@
                         <div class="thumb4">
                           <ul class="slides">
                             <li data-thumb="asset/img/example/k1.png">
-                              <a href="blhtdqqkhz/blhtdqqkhz.do" target="_blank"><img src="./images/charts/k1.png">
+                              <a href="../blhtdqqkhz/blhtdqqkhz.do" target="_blank"><img src="../images/charts/k1.png">
                               <span><strong>保理合同到期情况汇总</strong></span></a>
                             </li><!--/li-->
                           </ul>
@@ -201,11 +221,11 @@
                         <div class="thumb4">
                             <ul class="slides">
                                 <li data-thumb="asset/img/example/cache.png">
-                                  <a href="byqfkfstj/byqfkfstj.do" target="_blank"><img src="./images/charts/pie1.png">
+                                  <a href="../byqfkfstj/byqfkfstj.do" target="_blank"><img src="../images/charts/pie1.png">
                                   <span><strong>变压器合同付款方式明细</strong></span></a>
                                 </li>
                                 <li data-thumb="asset/img/example/cache.png">
-                 					<a href="xlfkfstj/xlfkfstj.do" target="_blank"><img src="./images/charts/pie2.png">
+                 					<a href="../xlfkfstj/xlfkfstj.do" target="_blank"><img src="../images/charts/pie2.png">
                                   	<span><strong>线缆合同付款方式明细</strong></span></a>
                                 </li>
                             </ul>
@@ -219,15 +239,15 @@
                         <div class="thumb4">
                           <ul class="slides">
                             <li data-thumb="asset/img/example/cache.png">
-                               <a href="hkjhjg/hkjhjg.do" target="_blank"><img src="./images/charts/scatter2.png">
+                               <a href="../hkjhjg/hkjhjg.do" target="_blank"><img src="../images/charts/scatter2.png">
                               <span><strong>本月回款计划结构明细</strong></span></a>
                             </li>
                             <li data-thumb="asset/img/example/cache.png">
-                              <a href="syhkjhzxqk/syhkjhzxqk.do" target="_blank"><img src="./images/charts/scatter5.png">
+                              <a href="../syhkjhzxqk/syhkjhzxqk.do" target="_blank"><img src="../images/charts/scatter5.png">
                               <span><strong>上月回款计划执行情况</strong></span></a>
                             </li>
                             <li data-thumb="asset/img/example/cache.png">
-                              <a href="rhkqk/rhkqk.do" target="_blank"><img src="./images/charts/scatter5.png">
+                              <a href="../rhkqk/rhkqk.do" target="_blank"><img src="../images/charts/scatter5.png">
                               <span><strong>当日回款明细</strong></span></a>
                             </li>
                           </ul>
@@ -240,24 +260,24 @@
                         <div class="thumb4">
                           <ul class="slides">
                             <li data-thumb="asset/img/example/bar1.png">
-                              <a href="./byqcb/tb.do" target="_blank"><img src="./images/charts/bar1.png">
+                              <a href="../byqcb/tb.do" target="_blank"><img src="../images/charts/bar1.png">
                               <span><strong>变压器投标明细</strong></span></a>
                             </li>
                                                         <li data-thumb="asset/img/example/cache.png">
-                              <a href="./byqcb/zx.do" target="_blank"><img src="./images/charts/bar10.png">
+                              <a href="../byqcb/zx.do" target="_blank"><img src="../images/charts/bar10.png">
                               <span><strong>变压器执行订单明细</strong></span></a>
                             </li>
                              <li data-thumb="asset/img/example/cache.png">
-                              <a href="./byqcb/wg.do" target="_blank"><img src="./images/charts/bar10.png">
+                              <a href="../byqcb/wg.do" target="_blank"><img src="../images/charts/bar10.png">
                               <span><strong>变压器完工订单明细</strong></span></a>
                             </li>
                             <li data-thumb="asset/img/example/cache.png">
-                              <a href="./xlcb/tb.do" target="_blank"><img src="./images/charts/bar2.png">
+                              <a href="../xlcb/tb.do" target="_blank"><img src="../images/charts/bar2.png">
                               <span><strong>线缆投标明细</strong></span></a>
                             </li>
                            
                             <li data-thumb="asset/img/example/bar1.png">
-                              <a href="./xlcb/wg.do" target="_blank"><img src="./images/charts/bar1.png">
+                              <a href="../xlcb/wg.do" target="_blank"><img src="../images/charts/bar1.png">
                               <span><strong>线缆完工订单明细</strong></span></a>
                             </li>
                           </ul>
@@ -270,7 +290,7 @@
                         <div class="thumb4">
                           <ul class="slides">
                             <li data-thumb="asset/img/example/bar1.png">
-                              <a href="tbbzjqk/tbbzjqk.do" target="_blank"><img src="./images/charts/bar1.png">
+                              <a href="tbbzjqk/tbbzjqk.do" target="_blank"><img src="../images/charts/bar1.png">
                               <span><strong>投标保证金情况</strong><br>投标保证金情况</span></a>
                             </li>
                           </ul>
@@ -285,15 +305,15 @@
                         <div class="thumb4">
                           <ul class="slides">
                             <li data-thumb="asset/img/example/bar1.png">
-                              <a href="./byqcb/tb.do" target="_blank"><img src="./images/charts/bar1.png">
+                              <a href="../byqcb/tb.do" target="_blank"><img src="../images/charts/bar1.png">
                               <span><strong>全年计划指标录入</strong></span></a>
                             </li>
                                                         <li data-thumb="asset/img/example/cache.png">
-                              <a href="./byqcb/zx.do" target="_blank"><img src="./images/charts/bar10.png">
+                              <a href="../byqcb/zx.do" target="_blank"><img src="../images/charts/bar10.png">
                               <span><strong>20号计划指标录入</strong></span></a>
                             </li>
                              <li data-thumb="asset/img/example/cache.png">
-                              <a href="./byqcb/wg.do" target="_blank"><img src="./images/charts/bar10.png">
+                              <a href="../byqcb/wg.do" target="_blank"><img src="../images/charts/bar10.png">
                               <span><strong>28号计划指标录入</strong></span></a>
                             </li>
                           </ul>
@@ -308,15 +328,15 @@
                         <div class="thumb4">
                           <ul class="slides">
                             <li data-thumb="asset/img/example/bar1.png">
-                              <a href="./byqcb/tb.do" target="_blank"><img src="./images/charts/bar1.png">
+                              <a href="../byqcb/tb.do" target="_blank"><img src="../images/charts/bar1.png">
                               <span><strong>20号预计指标录入</strong></span></a>
                             </li>
                                                         <li data-thumb="asset/img/example/cache.png">
-                              <a href="./byqcb/zx.do" target="_blank"><img src="./images/charts/bar10.png">
+                              <a href="../byqcb/zx.do" target="_blank"><img src="../images/charts/bar10.png">
                               <span><strong>28号预计指标录入</strong></span></a>
                             </li>
                              <li data-thumb="asset/img/example/cache.png">
-                              <a href="./byqcb/wg.do" target="_blank"><img src="./images/charts/bar10.png">
+                              <a href="../byqcb/wg.do" target="_blank"><img src="../images/charts/bar10.png">
                               <span><strong>实际指标录入</strong></span></a>
                             </li>
                           </ul>
@@ -331,15 +351,15 @@
                         <div class="thumb4">
                           <ul class="slides">
                             <li data-thumb="asset/img/example/bar1.png">
-                              <a href="./byqcb/tb.do" target="_blank"><img src="./images/charts/bar1.png">
+                              <a href="../byqcb/tb.do" target="_blank"><img src="../images/charts/bar1.png">
                               <span><strong>全年计划指标审核</strong></span></a>
                             </li>
                                                         <li data-thumb="asset/img/example/cache.png">
-                              <a href="./byqcb/zx.do" target="_blank"><img src="./images/charts/bar10.png">
+                              <a href="../byqcb/zx.do" target="_blank"><img src="../images/charts/bar10.png">
                               <span><strong>20号计划指标审核</strong></span></a>
                             </li>
                              <li data-thumb="asset/img/example/cache.png">
-                              <a href="./byqcb/wg.do" target="_blank"><img src="./images/charts/bar10.png">
+                              <a href="../byqcb/wg.do" target="_blank"><img src="../images/charts/bar10.png">
                               <span><strong>28号计划指标审核</strong></span></a>
                             </li>
                           </ul>
@@ -354,15 +374,15 @@
                         <div class="thumb4">
                           <ul class="slides">
                             <li data-thumb="asset/img/example/bar1.png">
-                              <a href="./byqcb/tb.do" target="_blank"><img src="./images/charts/bar1.png">
+                              <a href="../byqcb/tb.do" target="_blank"><img src="../images/charts/bar1.png">
                               <span><strong>20预计指标审核</strong></span></a>
                             </li>
                                                         <li data-thumb="asset/img/example/cache.png">
-                              <a href="./byqcb/zx.do" target="_blank"><img src="./images/charts/bar10.png">
+                              <a href="../byqcb/zx.do" target="_blank"><img src="../images/charts/bar10.png">
                               <span><strong>28号预计指标审核</strong></span></a>
                             </li>
                              <li data-thumb="asset/img/example/cache.png">
-                              <a href="./byqcb/wg.do" target="_blank"><img src="./images/charts/bar10.png">
+                              <a href="../byqcb/wg.do" target="_blank"><img src="../images/charts/bar10.png">
                               <span><strong>实际指标审核</strong></span></a>
                             </li>
                           </ul>
@@ -377,15 +397,15 @@
                         <div class="thumb4">
                           <ul class="slides">
                             <li data-thumb="asset/img/example/bar1.png">
-                              <a href="./byqcb/tb.do" target="_blank"><img src="./images/charts/bar1.png">
+                              <a href="../byqcb/tb.do" target="_blank"><img src="../images/charts/bar1.png">
                               <span><strong>财务指标1</strong></span></a>
                             </li>
                                                         <li data-thumb="asset/img/example/cache.png">
-                              <a href="./byqcb/zx.do" target="_blank"><img src="./images/charts/bar10.png">
+                              <a href="../byqcb/zx.do" target="_blank"><img src="../images/charts/bar10.png">
                               <span><strong>财务指标2</strong></span></a>
                             </li>
                              <li data-thumb="asset/img/example/cache.png">
-                              <a href="./byqcb/wg.do" target="_blank"><img src="./images/charts/bar10.png">
+                              <a href="../byqcb/wg.do" target="_blank"><img src="../images/charts/bar10.png">
                               <span><strong>财务指标3</strong></span></a>
                             </li>
                           </ul>
@@ -396,16 +416,16 @@
         </div>
     </div> <!-- /container -->
 
-    <footer id="footer" style="margin-top: 30px;"></footer>
-    <!-- Le javascript
+	<footer id="footer" style="margin-top: 30px;"></footer>
+	<!-- Le javascript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./js/jquery.min.js"></script>
-    <script type="text/javascript" src="./js/echartsHome.js"></script>
-	<script src="./js/h.js" type="text/javascript"></script>
-	<script src="./js/h(1).js" type="text/javascript"></script>
-    <script src="./js/bootstrap.min.js"></script>
-    <script type="text/javascript">
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/echartsHome.js"></script>
+	<script src="../js/h.js" type="text/javascript"></script>
+	<script src="../js/h(1).js" type="text/javascript"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript">
     $(window).load(function (){
       var section = $('[class=section]');
       function loadImage(i) {
@@ -464,8 +484,8 @@
                     $(navDom[i]).children('a')[0].style.color = '#fff';
                 }
                 else {
-                    navDom[i].style.backgroundColor = 'transparent';
-                    $(navDom[i]).children('a')[0].style.color = '#3E98C5';
+                    //navDom[i].style.backgroundColor = 'transparent';
+                    //$(navDom[i]).children('a')[0].style.color = '#3E98C5';
                 }
             }
      
@@ -504,12 +524,14 @@
     $(window).on('resize', _resize);
     _resize();
     });
-	var aplan = false
-	var aPredict = true;
-	var iPlan = true;
-	var iPredict = false;
-	init((iPlan || iPredict), aPredict || aplan);
+   
+	var aplan = ${entryPlan};
+	var aPredict = ${entryPredict};
+	var iPlan = ${approvePlan};
+	var iPredict = ${approvePredict};
+	init(iPlan, iPredict, aPredict, aplan);
     </script>
-  
 
-</body></html>
+
+</body>
+</html>
