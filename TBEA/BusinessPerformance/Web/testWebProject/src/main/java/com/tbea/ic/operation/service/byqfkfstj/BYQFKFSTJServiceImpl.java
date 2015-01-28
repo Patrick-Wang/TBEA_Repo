@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,18 +20,19 @@ import com.tbea.ic.operation.model.dao.byqfkfstj.BYQFKFSDao;
 import com.tbea.ic.operation.model.entity.BYQFDWFKFS;
 import com.tbea.ic.operation.model.entity.BYQGWFKFS;
 import com.tbea.ic.operation.model.entity.BYQNWFKFS;
-import com.tbea.ic.operation.model.entity.XLFDWFKFS;
-import com.tbea.ic.operation.model.entity.XLGWFKFS;
-import com.tbea.ic.operation.model.entity.XLNWFKFS;
 
 @Service
 @Transactional("transactionManager")
 public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 
-	private static Map<Company, Integer> qymap = new HashMap<Company, Integer>();
+	CompanyManager companyManager;
+	
+	private Map<Company, Integer> qymap = new HashMap<Company, Integer>();
 
-	static {
-		Organization org = CompanyManager.getBMOrganization();
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	public void setCompanyManager(CompanyManager companyManager) {
+		this.companyManager = companyManager;
+		Organization org = companyManager.getBMOrganization();
 		qymap.put(org.getCompany(CompanyType.SB), 0);
 		qymap.put(org.getCompany(CompanyType.HB), 1);
 		qymap.put(org.getCompany(CompanyType.XB), 2);
@@ -52,7 +55,7 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 	}
 
 	public String[][] getFdwData(Date d) {
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		List<BYQFDWFKFS> byqfdwfkfss = byqfkfsDao.getFdwfs(d);
 		String[][] result = new String[4][16];
 		Integer col;
@@ -89,7 +92,7 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 	}
 
 	public String[][] getGwData(Date d) {
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		List<BYQGWFKFS> byqgwfkfss = byqfkfsDao.getGwfs(d);
 		String[][] result = new String[4][18];
 		Integer col;
@@ -128,7 +131,7 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 
 	public String[][] getNwData(Date d) {
 		List<BYQNWFKFS> byqgwfkfss = byqfkfsDao.getNwfs(d);
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		String[][] result = new String[4][14];
 		Integer col;
 		for (BYQNWFKFS byqnw : byqgwfkfss) {

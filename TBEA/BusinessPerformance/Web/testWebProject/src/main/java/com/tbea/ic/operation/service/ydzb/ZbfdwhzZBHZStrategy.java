@@ -37,8 +37,8 @@ public abstract class ZbfdwhzZBHZStrategy implements ZBHZStrategy {
 	private Company nycy;// = Company.get(Company.Type.NYCY);
 	private Company gcl;// = Company.get(Company.Type.GCL);
 	
-	public ZbfdwhzZBHZStrategy() {
-		Organization org = CompanyManager.getOperationOrganization();
+	public ZbfdwhzZBHZStrategy(CompanyManager companyManager) {
+		Organization org = companyManager.getOperationOrganization();
 		sbdcy = org.getCompany(CompanyType.SBDCY);
 		xnycy = org.getCompany(CompanyType.XNYCY);
 		nycy = org.getCompany(CompanyType.NYCY);

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,11 +33,14 @@ public class BYQCBController {
 	@Autowired
 	private BYQCBService service;
 
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	@RequestMapping(value = "tb_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getByqtbcb_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 
 		String[][] aTbmx = service.getTbmx(comp);
@@ -68,7 +72,7 @@ public class BYQCBController {
 		map.put("gstb", gstb);
 		map.put("month", month);
 
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		CompanySelection compSelection = new CompanySelection(false,
 				org.getTopCompany(), new CompanySelection.Filter() {
 					@Override
@@ -85,7 +89,7 @@ public class BYQCBController {
 	public @ResponseBody byte[] getByqzxcb_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 
 		String[][] aZxmx = service.getZxmx(comp);
@@ -115,7 +119,7 @@ public class BYQCBController {
 		map.put("gszx", gszx);
 		map.put("month", month);
 
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		CompanySelection compSelection = new CompanySelection(false,
 				org.getTopCompany(), new CompanySelection.Filter() {
 					@Override
@@ -132,7 +136,7 @@ public class BYQCBController {
 	public @ResponseBody byte[] getByqwgcb_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 
 		String[][] aWgmx = service.getWgmx(comp);
@@ -160,7 +164,7 @@ public class BYQCBController {
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		CompanySelection compSelection = new CompanySelection(false,
 				org.getTopCompany(), new CompanySelection.Filter() {
 					@Override

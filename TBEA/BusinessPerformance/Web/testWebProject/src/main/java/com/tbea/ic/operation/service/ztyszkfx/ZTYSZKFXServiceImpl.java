@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +23,15 @@ import com.tbea.ic.operation.model.entity.ZTYSZKFX;
 @Service
 @Transactional("transactionManager")
 public class ZTYSZKFXServiceImpl implements ZTYSZKFXService{
-
+	private Map<Integer, Integer> compMap = new HashMap<Integer, Integer>();
 	
-	private static Map<Integer, Integer> compMap = new HashMap<Integer, Integer>();
-	static {
-		Organization org = CompanyManager.getOperationOrganization();
+	
+	CompanyManager companyManager;
+	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	public void setCompanyManager(CompanyManager companyManager) {
+		this.companyManager = companyManager;
+		Organization org = companyManager.getOperationOrganization();
 		compMap.put(org.getCompany(CompanyType.SB).getId(), 0);
 		compMap.put(org.getCompany(CompanyType.HB).getId(), 1);
 		compMap.put(org.getCompany(CompanyType.XB).getId(), 2);
@@ -34,7 +40,7 @@ public class ZTYSZKFXServiceImpl implements ZTYSZKFXService{
 		compMap.put(org.getCompany(CompanyType.XL).getId(), 6);
 		compMap.put(org.getCompany(CompanyType.DL).getId(), 7);
 	}
-	
+
 	
 	@Autowired
 	ZTYSZKFXDao ztysDao;

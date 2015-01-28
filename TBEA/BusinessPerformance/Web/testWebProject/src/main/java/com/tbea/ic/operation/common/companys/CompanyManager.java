@@ -1,7 +1,12 @@
 package com.tbea.ic.operation.common.companys;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Component;
+
+@Component
 public class CompanyManager {
-	public enum CompanyType {
+	public static enum CompanyType {
 		SB		("沈变公司"),
 		HB		("衡变公司"),
 		XB		("新变厂"),
@@ -109,24 +114,31 @@ public class CompanyManager {
 		}
 	}
 
-	static Organization pzgh = new BMDepartmentPzgh();
-	static Organization opera = new OperationDepartment();
-	static Organization BM = new BMDepartment();
-	static Organization zbhz = new OperationZBHZ(new OperationDepartment());
-
-	public static Organization getBMOrganization() {
+	Organization pzgh = new BMDepartmentPzgh();
+	Organization opera = new OperationDepartment();
+	Organization BM = new BMDepartment();
+	Organization zbhz = new OperationZBHZ(new OperationDepartment());
+	
+	@Resource(type=BMDepartmentDB.class)
+	Organization BMDB;
+ 
+	public Organization getBMDBOrganization() {
+		return BMDB;
+	}
+	
+	public Organization getBMOrganization() {
 		return BM;
 	}
 
-	public static Organization getPzghOrganization() {
+	public Organization getPzghOrganization() {
 		return pzgh;
 	}
 	
-	public static Organization getOperationOrganization() {
+	public Organization getOperationOrganization() {
 		return opera;
 	}
 
-	public static Organization getOperationZBHZOrganization(){
+	public Organization getOperationZBHZOrganization(){
 		return zbhz;
 	}
 

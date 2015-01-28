@@ -14,9 +14,10 @@ public class GcyZBHZStrategy extends ZbfdwhzZBHZStrategy {
 	
 	private static Map<Integer, Integer> qybh_gcyMap = new HashMap<Integer, Integer>();
 	
-	public GcyZBHZStrategy(){
+	public GcyZBHZStrategy(CompanyManager companyManager){
+		super(companyManager);
 		if (qybh_gcyMap.isEmpty()){
-			Organization org = CompanyManager.getOperationOrganization();
+			Organization org = companyManager.getOperationOrganization();
 			for (int i = 0, j = 0; i < CY_TYPES.length; ++i){
 				if (CY_TYPES[i] != null){
 					qybh_gcyMap.put(org.getCompany(CY_TYPES[i]).getId(), i);

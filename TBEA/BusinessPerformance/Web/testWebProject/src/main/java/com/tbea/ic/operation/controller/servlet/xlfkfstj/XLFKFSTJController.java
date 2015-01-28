@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,6 +36,8 @@ public class XLFKFSTJController {
 	@Autowired
 	private XLFKFSTJService service;
 	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
 	
 	@RequestMapping(value = "xlfkfstj_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getZtyszkfx_update(HttpServletRequest request,
@@ -46,11 +49,11 @@ public class XLFKFSTJController {
 //		
 //		String companyId = request.getParameter("companyId");
 //		int cid = Integer.parseInt(companyId);
-//		Organization org = CompanyManager.getBMOrganization();
+//		Organization org = companyManager.getBMOrganization();
 //		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		
 		Date d = DateSelection.getDate(request);
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		
 		
@@ -67,7 +70,7 @@ public class XLFKFSTJController {
 			
 		Map<String, Object> map = new HashMap<String, Object>();
 	
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		CompanySelection compSelection = new CompanySelection(true,
 				org.getTopCompany(), new CompanySelection.Filter() {
 					@Override

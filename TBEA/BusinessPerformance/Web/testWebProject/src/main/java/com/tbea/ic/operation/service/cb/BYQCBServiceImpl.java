@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +35,19 @@ public class BYQCBServiceImpl implements BYQCBService {
 	@Autowired
 	private XMXXDao xmxxDao;
 
+	
+	CompanyManager companyManager;
+	
+	private Organization org = null;
+	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	public void setCompanyManager(CompanyManager companyManager) {
+		this.companyManager = companyManager;
+		org = companyManager.getPzghOrganization();
+	}
+
+
+
 	private static Map<CompanyType, Integer> gsMap = new HashMap<CompanyType, Integer>();
 	static {
 		gsMap.put(CompanyType.SB, 0);
@@ -57,7 +72,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 
 	}
 
-	private Organization org = CompanyManager.getPzghOrganization();
+	
 	
 	private Double valueOf(String val) {
 		if (val != null) {

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,6 +39,9 @@ import com.tbea.ic.operation.service.entry.EntryService;
 @Controller
 @RequestMapping(value = "approve")
 public class ApproveController {
+	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
 	
 	@Autowired
 	private ApproveService service;
@@ -72,7 +76,7 @@ public class ApproveController {
 			DateSelection dateSel = new DateSelection(year, month);
 			dateSel.select(map);
 		}
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		
 		CompanySelection compSel = new CompanySelection(false, org.getTopCompany());
 		compSel.setFirstCompany(CompanyType.HNGCGS);

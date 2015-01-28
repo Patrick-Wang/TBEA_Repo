@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,6 +35,10 @@ import com.tbea.ic.operation.service.yszkjgqk.YSZKJGQKService;
 @Controller
 @RequestMapping(value = "yszkjgqk")
 public class YSZKJGQKController {
+	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	@Autowired
 	private YSZKJGQKService service;
 	private String view = "yszkjgqkb";
@@ -47,12 +52,12 @@ public class YSZKJGQKController {
 //		String companyId = request.getParameter("companyId");
 //		int cid = Integer.parseInt(companyId);
 //		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
-//		Organization org = CompanyManager.getBMOrganization();
+//		Organization org = companyManager.getBMOrganization();
 //		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		
 		
 		Date d = DateSelection.getDate(request);
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		
 		List<String[][]> result = new ArrayList<String[][]>();
@@ -85,9 +90,9 @@ public class YSZKJGQKController {
 		dateSel.select(map);
 		
 		
-		//Organization org = CompanyManager.getBMOrganization();
+		//Organization org = companyManager.getBMOrganization();
 		
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		CompanySelection compSel = new CompanySelection(true, org.getTopCompany());
 		compSel.select(map);
 
@@ -114,7 +119,7 @@ public class YSZKJGQKController {
 //		map.put("onlytop", true);
 //		map.put("both", false);
 		
-//		Organization org = CompanyManager.getOperationOrganization();
+//		Organization org = companyManager.getOperationOrganization();
 //		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
 //		map.put("names", name_ids[0]);
 //		map.put("ids", name_ids[1]);

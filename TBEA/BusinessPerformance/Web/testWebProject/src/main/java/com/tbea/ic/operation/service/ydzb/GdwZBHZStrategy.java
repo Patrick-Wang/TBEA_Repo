@@ -14,11 +14,12 @@ public class GdwZBHZStrategy extends ZbfdwhzZBHZStrategy {
 	
 	private static Map<Integer, Integer> qybh_gdwMap = new HashMap<Integer, Integer>();
 	
-	public GdwZBHZStrategy(){
+	public GdwZBHZStrategy(CompanyManager companyManager){
+		super(companyManager);
 		if (qybh_gdwMap.isEmpty()){
 			Company cy;
 			List<Company> cys;
-			Organization org = CompanyManager.getOperationOrganization();
+			Organization org = companyManager.getOperationOrganization();
 			for (int i = 0, j = 0; i < CY_TYPES.length; ++i){
 				if (CY_TYPES[i] != null){
 					cy = org.getCompany(CY_TYPES[i]);				

@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,13 +29,16 @@ import com.tbea.ic.operation.model.entity.local.ZBHZ;
 
 
 @Service
-@Transactional("transactionManager2")
+@Transactional("transactionManager")
 public class YDZBServiceImpl implements YDZBService {
 
 	@Autowired
 	private YDZBDao ydzbDao;
 	private static Map<String, Integer> zbbh_hzMap = new HashMap<String, Integer>();
 	private static Map<String, String> zbid_mcMap = new HashMap<String, String>();
+	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
 //	5	报表利润
 //	6	利润总额
 //	7	销售收入
@@ -101,7 +106,7 @@ public class YDZBServiceImpl implements YDZBService {
 		String[][] result = new String[zbbh_hzMap.size()][11];
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		List<YDZBBean> ydzbs = ydzbDao.getYDZB_V2(cal, org.getCompany(CompanyType.JT));
 		int index = 0;
 		for (YDZBBean ydzb : ydzbs) {
@@ -129,9 +134,9 @@ public class YDZBServiceImpl implements YDZBService {
 	public String[][] getGcy_zbhzData(Date d) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		List<YDZBBean> ydzbs = ydzbDao.getYDZB(cal, org.getCompany(CompanyType.JT));
-		String[][] result = ZBHZStrategyFactory.createGcyZBHZStrategy().getZBHZData(ydzbs);
+		String[][] result = ZBHZStrategyFactory.createGcyZBHZStrategy(companyManager).getZBHZData(ydzbs);
 		return result;
 	}
 
@@ -139,9 +144,9 @@ public class YDZBServiceImpl implements YDZBService {
 	public String[][] getGdw_zbhzData(Date d) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		List<YDZBBean> ydzbs = ydzbDao.getYDZB(cal, org.getCompany(CompanyType.JT));
-		String[][] result = ZBHZStrategyFactory.createGdwZBHZStrategy().getZBHZData(ydzbs);
+		String[][] result = ZBHZStrategyFactory.createGdwZBHZStrategy(companyManager).getZBHZData(ydzbs);
 		return result;
 	}
 

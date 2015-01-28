@@ -84,7 +84,7 @@
 	<!-- -->
 	<!-- TRANSACTIONS -->
 	<!-- -->
-		<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="transactionManager" />
 	<tx:annotation-driven transaction-manager="transactionManager2" />
 	
 	<aop:aspectj-autoproxy />
@@ -100,8 +100,11 @@
 		<property name="dataSource" ref="dataSource2" />
 	</bean>
 
-		<context:component-scan base-package="com.tbea.ic.operation.model" />
+	<context:component-scan base-package="com.tbea.ic.operation.common.companys" />
+	<context:component-scan base-package="com.tbea.ic.operation.model" />
 	<context:component-scan base-package="com.tbea.ic.operation.service" />
+	
+	
 
 	<!-- -->
 	<!-- DAO -->

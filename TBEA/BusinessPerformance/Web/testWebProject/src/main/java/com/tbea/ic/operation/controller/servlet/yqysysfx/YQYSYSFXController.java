@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,6 +31,9 @@ import com.tbea.ic.operation.service.yqysysfx.YQYSYSFXService;
 @RequestMapping(value = "yqysysfx")
 public class YQYSYSFXController {
 
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	@Autowired
 	private YQYSYSFXService service;
 
@@ -42,10 +46,10 @@ public class YQYSYSFXController {
 			HttpServletResponse response) {
 		// String companyId = request.getParameter("companyId");
 		// int cid = Integer.parseInt(companyId);
-		// Organization org = CompanyManager.getOperationOrganization();
+		// Organization org = companyManager.getOperationOrganization();
 		// Company comp = org.getCompany(CompanyType.valueOf(cid));
 
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 
 		String xjlrb = JSONArray.fromObject(service.getYqysysfxData(comp))
@@ -58,14 +62,14 @@ public class YQYSYSFXController {
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		CompanySelection compSel = new CompanySelection(true, org.getCompany(
 				CompanyType.SBDCY).getSubCompanys());
 		compSel.select(map);
 
 		// Calendar now = Calendar.getInstance();
 		//
-		// Organization org = CompanyManager.getOperationOrganization();
+		// Organization org = companyManager.getOperationOrganization();
 		// String[][] name_ids =
 		// Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
 		// map.put("names", name_ids[0]);

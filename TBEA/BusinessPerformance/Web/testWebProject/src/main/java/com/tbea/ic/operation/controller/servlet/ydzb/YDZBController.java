@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,6 +31,8 @@ import com.tbea.ic.operation.service.ydzb.YDZBService;
 @RequestMapping(value = "ydzb")
 public class YDZBController {
 
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
 
 	@Autowired
 	private YDZBService service;
@@ -146,7 +149,7 @@ public class YDZBController {
 	
 	private String getZbhz_overviewData(Date d, int companyId, String zbid){
 
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		Company comp = org.getCompany(CompanyType.valueOf(companyId));
 
 		String zbhz_overview_yd = JSONArray.fromObject(service.getYdZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
@@ -195,7 +198,7 @@ public class YDZBController {
 		map.put("zbid", zb);
 		map.put("zbmc", service.getZbmc(zb));
 			
-		Organization org = CompanyManager.getOperationZBHZOrganization();
+		Organization org = companyManager.getOperationZBHZOrganization();
 		
 		CompanySelection compSel = new CompanySelection(false, org.getTopCompany());
 		compSel.select(map);

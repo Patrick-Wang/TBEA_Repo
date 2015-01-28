@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,6 +37,8 @@ public class TBBZJQKController {
 	@Autowired
 	private TBBZJQKService service;
 	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
 	
 	@RequestMapping(value = "tbbzjqk_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getTbbzjqk_update(HttpServletRequest request,
@@ -45,12 +48,12 @@ public class TBBZJQKController {
 //		String companyId = request.getParameter("companyId");
 //		int cid = Integer.parseInt(companyId);
 //		Date d = java.sql.Date.valueOf(year + "-" +  month + "-" + 1);
-//		Organization org = CompanyManager.getOperationOrganization();
+//		Organization org = companyManager.getOperationOrganization();
 //		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		
 		
 		Date d = DateSelection.getDate(request);
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		
 		String syhkjhzxqk = JSONArray.fromObject(service.getTbbzjqkData(d, comp)).toString().replace("null", "0.00");
@@ -65,7 +68,7 @@ public class TBBZJQKController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanys());
 		compSel.select(map);
 		return new ModelAndView("tbbzjqk", map);

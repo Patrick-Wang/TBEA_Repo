@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,6 +36,9 @@ public class XLCBController {
 	@Autowired
 	private XLCBService service;
 	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	@RequestMapping(value = "tb_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getXltbcb_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -42,7 +46,7 @@ public class XLCBController {
 		int month = date.get(Calendar.MONTH) + 1;
 		int year = date.get(Calendar.YEAR);
 
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 
 		List<String[]> aZxmx = service.getTbmx(
@@ -71,7 +75,7 @@ public class XLCBController {
 		map.put("gstb", gstb);
 		map.put("month", month);
 		
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		CompanySelection compSelection = new CompanySelection(false,
 				org.getTopCompany(), new CompanySelection.Filter() {
 					@Override
@@ -114,7 +118,7 @@ public class XLCBController {
 		map.put("btdywg", btdywg);
 		
 
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		CompanySelection compSelection = new CompanySelection(false,
 				org.getTopCompany(), new CompanySelection.Filter() {
 					@Override

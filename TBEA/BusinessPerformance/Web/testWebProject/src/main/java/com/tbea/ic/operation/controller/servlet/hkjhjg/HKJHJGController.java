@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,7 +37,8 @@ public class HKJHJGController {
 	@Autowired
 	private HKJHJGService service;
 
-
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
 	
 	@RequestMapping(value = "hkjhjg_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getHkjhjg_update(HttpServletRequest request,
@@ -47,12 +49,12 @@ public class HKJHJGController {
 //		int cid = Integer.parseInt(companyId);
 //		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
 //		
-//		Organization org = CompanyManager.getOperationOrganization();
+//		Organization org = companyManager.getOperationOrganization();
 //		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		
 		
 		Date d = DateSelection.getDate(request);
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		List<String[][]> result = new ArrayList<String[][]>();
 		result.add(service.getHkjhjgData(d, comp));
@@ -71,7 +73,7 @@ public class HKJHJGController {
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);
 
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanys());
 		compSel.setFirstCompany(CompanyType.HB);
 		compSel.select(map);

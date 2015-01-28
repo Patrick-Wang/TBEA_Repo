@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,6 +31,9 @@ import com.tbea.ic.operation.service.cqk.CQKService;
 @RequestMapping(value = "CQK")
 public class CQKController {
 
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	@Autowired
 	private CQKService cqkService;
 
@@ -57,10 +61,10 @@ public class CQKController {
 //		
 		
 		Date d = DateSelection.getDate(request);
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		
-//		Organization org = CompanyManager.getOperationOrganization();
+//		Organization org = companyManager.getOperationOrganization();
 //		Company comp = org.getCompany(CompanyType.valueOf(cid));
 		List<String[][]> result = new ArrayList<String[][]>();
 		result.add(cqkService.getCqkData(d, comp));
@@ -81,7 +85,7 @@ public class CQKController {
 		DateSelection dateSel = new DateSelection(cqkService.getLatestDate(), true, false);
 		dateSel.select(map);
 		
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		CompanySelection compSelection = new CompanySelection(true,
 				org.getCompany(CompanyType.SBDCY).getSubCompanys());
 		compSelection.select(map);

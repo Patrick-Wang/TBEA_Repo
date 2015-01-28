@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,6 +38,8 @@ public class SYHKJHZXQKController {
 	@Autowired
 	private SYHKJHZXQKService service;
 	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
 	
 	@RequestMapping(value = "syhkjhzxqk_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getSyhkjhzxqk_update(HttpServletRequest request,
@@ -51,7 +54,7 @@ public class SYHKJHZXQKController {
 //		Company comp = org.getCompany(CompanyType.valueOf(cid));
 
 		Date d = DateSelection.getDate(request);
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		
 		
@@ -74,7 +77,7 @@ public class SYHKJHZXQKController {
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);
 
-		Organization org = CompanyManager.getOperationOrganization();
+		Organization org = companyManager.getOperationOrganization();
 		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanys());
 		compSel.setFirstCompany(CompanyType.HB);
 		compSel.select(map);

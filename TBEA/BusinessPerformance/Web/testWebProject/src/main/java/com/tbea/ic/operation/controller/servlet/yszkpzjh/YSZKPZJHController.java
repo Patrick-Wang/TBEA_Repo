@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,6 +33,9 @@ import com.tbea.ic.operation.service.yszkpzjh.YSZKPZJHService;
 @RequestMapping(value = "yszkpzjh")
 public class YSZKPZJHController {
 
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	@Autowired
 	private YSZKPZJHService service;
 
@@ -47,11 +51,11 @@ public class YSZKPZJHController {
 //		int cid = Integer.parseInt(companyId);
 //		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
 //		CompanyType compType = CompanyType.valueOf(cid);
-//		Organization org = CompanyManager.getPzghOrganization();
+//		Organization org = companyManager.getPzghOrganization();
 //		Company comp = org.getCompany(compType);	
 		
 		Date d = DateSelection.getDate(request);
-		Organization org = CompanyManager.getPzghOrganization();
+		Organization org = companyManager.getPzghOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		
 		
@@ -91,7 +95,7 @@ public class YSZKPZJHController {
 		dateSel.select(map);
 		
 		
-		Organization org = CompanyManager.getPzghOrganization();
+		Organization org = companyManager.getPzghOrganization();
 		CompanySelection compSelection = new CompanySelection(true,
 				org.getTopCompany());
 		compSelection.setFirstCompany(CompanyType.HB);

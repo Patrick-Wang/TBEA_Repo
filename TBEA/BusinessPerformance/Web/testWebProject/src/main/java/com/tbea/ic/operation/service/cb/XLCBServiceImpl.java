@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +36,9 @@ public class XLCBServiceImpl implements XLCBService{
 	
 	@Autowired
 	private XMXXDao xmxxDao;
+	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
 	
 	private static Map<CompanyType, Integer> gsMap = new HashMap<CompanyType, Integer>();
 //	private static Map<Integer, String> xlzxjdMap = new HashMap<Integer, String>();
@@ -70,7 +75,7 @@ public class XLCBServiceImpl implements XLCBService{
 
 	private void fillTbmx(String[][] tbmx, int row, XMXX xmxx,
 			CBXLTBDD xltbcb, Double zccb, Double tbcbzj) {
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		tbmx[row][0] = org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName();//订单所在单位及项目公司//订单所在单位及项目公司
 		tbmx[row][1] = xltbcb.getTbbjsj() + "";//投标报价时间//投标报价时间
 		tbmx[row][2] = xmxx.getYhdwmc();//用户单位名称
@@ -123,7 +128,7 @@ public class XLCBServiceImpl implements XLCBService{
 		rets.add(gstb);
 		XMXX xmxx;
 		CBXLTBDD xltbcb;
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		Company comp;
 
 		Calendar firstMonth = Calendar.getInstance();
@@ -223,7 +228,7 @@ public class XLCBServiceImpl implements XLCBService{
 		rets.add(dydjwg);
 		CBXLWGDD xlcbwgdd;
 
-		Organization org = CompanyManager.getBMOrganization();
+		Organization org = companyManager.getBMOrganization();
 		Company comp;
 
 		Calendar firstMonth = Calendar.getInstance();
