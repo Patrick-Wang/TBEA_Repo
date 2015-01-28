@@ -63,16 +63,16 @@ var stringDescription =  '<div class="container">'
         + '</div>'
         + '<div class="navbar-collapse collapse" id="nav-wrap">'
           + '<ul class="nav navbar-nav navbar-right" id="nav" style="max-width:100%;">'
-            + '<li class="' + (activeClass.Sample || '') + '" onclick="clickli();" value="1"><a>指标汇总明细</a></li>';
+            + '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="1"><a>指标汇总明细</a></li>';
 			if(entryPlan || entryPredict)
 			{
-				 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="clickli();" value="2"><a>指标录入</a></li>';
+				 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="2"><a>指标录入</a></li>';
 			}
 			if(approveplan || approvePredict)
 			{
-				 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="clickli();" value="3"><a>指标审核</a></li>';
+				 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="3"><a>指标审核</a></li>';
 			}
-             stringDescription += '<li class="' + (activeClass.About || '') + '" onclick="clickli();" value="4"><a>财务指标汇总</a></li>'
+             stringDescription += '<li class="' + (activeClass.About || '') + '" onclick="delegateCall(this);" value="4"><a>财务指标汇总</a></li>'
           + '</ul>'
         + '</div><!--/.nav-collapse -->'
       + '</div>';
@@ -138,20 +138,27 @@ if (document.location.href.indexOf('local') == -1) {
 	$("#nav li").eq(0).addClass("active");
 }
 
-function clickli()
+function clickli(obj)
 {
-	switch($("#nav li")[0].value)
+	var clickval= obj.value;
+	switch(clickval)
 	{
 	case 1:
 		$("#navlist").css("display", "");
 		$("#navlist1").css("display", "none");
 		$("#navlist2").css("display", "none");
 		$("#navlist3").css("display", "none");
-		$("#inputPlanList").css("display", "none");
-		$("#inputPredictionList").css("display", "none");
-		$("#approvePlanList").css("display", "none");
-		$("#approvePredictionList").css("display", "none");
-		$("#nav li").eq(0).addClass("active");
+		
+		$("#IndexSummary").css("display", "");
+		$("#InputList").css("display", "none");
+		$("#approveList").css("display", "none");
+		$("#financeList").css("display", "none");
+		
+//		$("#nav li").eq(1).removeClass("active");
+//		$("#nav li").eq(2).removeClass("active");
+//		$("#nav li").eq(3).removeClass("active");
+//		$("#nav li").eq(0).addClass("active");
+
 		break;
 	case 2:
 		$("#navlist").css("display", "none");
@@ -160,15 +167,14 @@ function clickli()
 		$("#navlist3").css("display", "none");
 		
 		$("#IndexSummary").css("display", "none");
-
-		if(entryPlan)
-		{
-			$("#inputPlanList").css("display", "");
-		}else if(entryPredict){
-			$("#inputPredictionList").css("display", "");
-		}
+		$("#InputList").css("display", "");
+		$("#approveList").css("display", "none");
+		$("#financeList").css("display", "none");
 		
-		$("#nav li").eq(1).addClass("active");
+//		obj
+//		$("#nav li").eq(2).removeClass("active");
+//		$("#nav li").eq(3).removeClass("active");
+//		$("#nav li").eq(1).addClass("active");
 	break;
 	case 3:
 		$("#navlist").css("display", "none");
@@ -177,29 +183,36 @@ function clickli()
 		$("#navlist3").css("display", "none");
 		
 		$("#IndexSummary").css("display", "none");
-
-		if(approveplan)
-		{
-			$("#approvePlanList").css("display", "");
-		}else if(approvePredict){
-			$("#approvePredictionList").css("display", "");
-		}
+		$("#InputList").css("display", "none");
+		$("#approveList").css("display", "");
+		$("#financeList").css("display", "none");
 		
-		$("#nav li").eq(2).addClass("active");
+//		$("#nav li").eq(0).removeClass("active");
+//		$("#nav li").eq(1).removeClass("active");
+//		$("#nav li").eq(3).removeClass("active");
+//		$("#nav li").eq(2).addClass("active");
 	break;
 	case 4:
 		$("#navlist").css("display", "none");
 		$("#navlist1").css("display", "none");
 		$("#navlist2").css("display", "none");
 		$("#navlist3").css("display", "");
-		$("#IndexSummary").css("display", "none");
 		
+		$("#IndexSummary").css("display", "none");
+		$("#InputList").css("display", "none");
+		$("#approveList").css("display", "none");
 		$("#financeList").css("display", "");
-		$("#nav li").eq(3).addClass("active");
+		
+//		$("#nav li").eq(0).removeClass("active");
+//		$("#nav li").eq(1).removeClass("active");
+//		$("#nav li").eq(2).removeClass("active");
+//		$("#nav li").eq(3).addClass("active");
 	break;
 	default:
 	break;
 	}
+	$("#nav li").removeClass("active");
+	$(obj).addClass("active");
 }
       
 function back2Top() {
