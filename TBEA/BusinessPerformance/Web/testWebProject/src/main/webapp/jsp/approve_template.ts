@@ -230,7 +230,7 @@ module approve_template {
         }
 
         private createPredict(title: string[]): Array<string> {
-            var ret: Array<string> = [title[0]];
+            var ret: Array<string> = [];
             var date = this.mDateSelector.getDate();
             var left = date.month % 3;
             if ((this.mOpt.approveType == Util.ZBType.BY20JH ||

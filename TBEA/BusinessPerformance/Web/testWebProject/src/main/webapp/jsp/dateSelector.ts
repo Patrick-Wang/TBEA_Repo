@@ -275,7 +275,17 @@ module Util {
             this.mCurDate.day = day;
         }
 
+        private toInt(val: any) : number{
+            if (typeof (val) == 'string'){
+                return parseInt(val);
+            }
+            return val;
+        }
+        
         public getDate(): Date {
+            this.mCurDate.year = this.toInt(this.mCurDate.year);
+            this.mCurDate.month = this.toInt(this.mCurDate.month);
+            this.mCurDate.day = this.toInt(this.mCurDate.day);
             return this.mCurDate;
         }
 

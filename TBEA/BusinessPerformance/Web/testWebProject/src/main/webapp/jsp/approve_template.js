@@ -162,7 +162,7 @@ var approve_template;
             document.title = header;
         };
         View.prototype.createPredict = function (title) {
-            var ret = [title[0]];
+            var ret = [];
             var date = this.mDateSelector.getDate();
             var left = date.month % 3;
             if ((this.mOpt.approveType == 1 /* BY20JH */ || this.mOpt.approveType == 2 /* BY28JH */) && left == 0) {
