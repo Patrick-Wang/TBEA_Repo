@@ -23,13 +23,16 @@
 		var psw = $('#j_password').val();
 		if ("huanghanjie" == usrName && "hhj" == psw) {
 			$('.errors').hide();
-			window.location.href = 'index.htm';
+			//window.location.href = 'index.htm';
+			document.forms[0].submit();
 		} else if ("admin" == usrName && "1234" == psw) {
 			$('.errors').hide();
-			window.location.href = 'index.htm';
+			//window.location.href = 'index.htm';
+			document.forms[0].submit();
 		} else if ("qgb" == usrName && "1234" == psw) {
 			$('.errors').hide();
-			window.location.href = 'index2.htm';
+			//window.location.href = 'index2.htm';
+			document.forms[0].submit();
 		} else {
 			$('.errors').show();
 		}
@@ -66,7 +69,8 @@
 		<div style="height: 50px;"></div>
 		<div align="center">
 
-			<form id="loginForm" action="" method="post">
+			<form id="loginForm" action="/BusinessManagement/Login/login.do"
+				method="post">
 				<fieldset>
 					<label for="j_username">用户名：</label> <input type="text"
 						name="j_username" id="j_username" onkeydown="doSubmit(event)"
@@ -83,22 +87,22 @@
 			</form>
 
 		</div>
-		
+
 
 		<div
 			style="text-align: center; margin-top: 140px; font-size: 13px; font-weight: 400;">
 
 			<div align="center">
-			<table>
-				<tr>
-					<td><img src="jsp/point.png"></td>
-					<td>
-						<div style="font-size: 14px; font-weight: 400;">
-							提示：为了获得更好的浏览效果，建议您使用IE8.0及以上版本或chrome浏览器登陆本站点</div>
-					</td>
-				</tr>
-			</table>
-		</div>
+				<table>
+					<tr>
+						<td><img src="jsp/point.png"></td>
+						<td>
+							<div style="font-size: 14px; font-weight: 400;">
+								提示：为了获得更好的浏览效果，建议您使用IE8.0及以上版本或chrome浏览器登陆本站点</div>
+						</td>
+					</tr>
+				</table>
+			</div>
 			<br /> <br /> <br />
 			<div>&copy;2014 信息资源管理中心版权所有</div>
 		</div>
