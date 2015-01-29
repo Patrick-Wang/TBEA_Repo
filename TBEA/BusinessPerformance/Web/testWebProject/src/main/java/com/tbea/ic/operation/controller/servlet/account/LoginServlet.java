@@ -13,9 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "Login")
 public class LoginServlet {
 
-	private String view = "homePage";
-
-	private String commandName = "result";
+	private String view = "index";
 
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
 	public ModelAndView importBLHT(HttpServletRequest request,
@@ -24,6 +22,6 @@ public class LoginServlet {
 			@RequestParam(value = "j_password") String j_password) {
 		System.out.println("j_username : " + j_username);
 		System.out.println("j_password : " + j_password);
-		return new ModelAndView(view, commandName, true);
+		return new ModelAndView(view);
 	}
 }
