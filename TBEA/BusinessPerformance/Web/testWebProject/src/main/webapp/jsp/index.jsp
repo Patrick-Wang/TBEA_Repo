@@ -6,9 +6,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
-
-
-
 <html lang="zh-cn">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,8 +18,8 @@
 <style type="text/css">
 </style>
 <script type="text/javascript">
-		document.createElement("footer");
-	</script>
+	document.createElement("footer");
+</script>
 
 <link rel="shortcut icon" href="../images/logo.png">
 
@@ -36,36 +33,8 @@
 <link href="../css/bootstrap.css" rel="stylesheet">
 <link href="../css/carousel.css" rel="stylesheet">
 <link href="../css/echartsHome.css" rel="stylesheet">
-
-<style type="text/css" media="screen">
-CSS
-
-
- 
-
-
-样式表
-</style>
-<style type="text/css" media="all">
-CSS
-
-
- 
-
-
-样式表
-</style>
-<style type="text/css" media="print">
-CSS
-
-
- 
-
-
-样式表
-</style>
-
 <link href="../css/index.css" rel="stylesheet">
+
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
       <script src="js/html5shiv.min.js"></script>
@@ -126,6 +95,7 @@ CSS
 								class="ec-icon ec-icon-force"></i> <a href="#inputPlan"
 								style="color: rgb(62, 152, 197);">计划指标录入</a></li>
 						</c:if>
+
 						<c:if test="${entryPredict}">
 							<li style="background-color: transparent"><i
 								class="ec-icon ec-icon-force"></i> <a href="#inputPrediction"
@@ -139,6 +109,7 @@ CSS
 								class="ec-icon ec-icon-force"></i> <a href="#approvePlan"
 								style="color: rgb(62, 152, 197);">计划指标审核</a></li>
 						</c:if>
+
 						<c:if test="${approvePredict}">
 							<li style="background-color: transparent"><i
 								class="ec-icon ec-icon-force"></i> <a href="#approvePrediction"
@@ -153,332 +124,19 @@ CSS
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-10" id="IndexSummary">
-				<p style="margin: 10px 0 0px 0"></p>
-				<div>
-					<h3>
-						指标汇总明细<a name="zbhz"> </a>
-					</h3>
-					<div class="section">
-						<div class="thumb3">
-							<ul class="slides">
-								<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
-										src="../images/charts/bar1.png"> <span><strong>整体指标汇总</strong></span></a>
-								</li>
-								<!--/li-->
-								<li><a href="../ydzb/gcy_zbhz.do" target="_blank"><img
-										src="../images/charts/line2.png"> <span><strong>各产业指标汇总</strong></a>
-								</li>
-								<!--/li-->
-								<li><a href="../ydzb/gdw_zbhz.do" target="_blank"><img
-										src="../images/charts/pie1.png"> <span><strong>各单位指标汇总</strong></a>
-								</li>
-								<!--/li-->
-								<li><a href="../ydzb/zbhz_overview.do" target="_blank"><img
-										src="../images/charts/scatter1.png"> <span><strong>指标-利润总额</strong></span></a>
-								</li>
-								<!--/li-->
-								<li><a href="../ydzb/zbhz_overview.do?zb=7" target="_blank"><img
-										src="../images/charts/scatter2.png"> <span><strong>指标-销售收入</strong></span></a>
-								</li>
-								<!--/li-->
-								<li><a href="../ydzb/zbhz_overview.do?zb=23"
-									target="_blank"><img src="../images/charts/scatter4.png"">
-										<span><strong>指标-应收账款</strong></span></a></li>
-								<!--/li-->
-								<li><a href="../ydzb/zbhz_overview.do?zb=25"
-									target="_blank"><img src="../images/charts/scatter5.png">
-										<span><strong>指标-存货</strong></span></a></li>
-								<!--/li-->
-
-								<li><a href="../ydzb/zbhz_overview.do?zb=8" target="_blank"><img
-										src="../images/charts/scatter3.png"> <span><strong>指标-现金流</strong></span></a></li>
-								<!--/li-->
-								<li><a href="../ydzb/xjlrb.do" target="_blank"><img
-										src="../images/charts/bar1.png"> <span><strong>现金流日报</strong></span></a>
-								</li>
-								<!--/li-->
-
-							</ul>
-						</div>
-					</div>
-				</div>
-
-				<div>
-					<h3>
-						应收账款<a name="yszk"> </a>
-					</h3>
-					<div class="section">
-						<div class="thumb3">
-							<ul class="slides">
-
-								<li data-thumb="asset/img/example/line1.png"><a
-									href="../yszkpzjh/yszkpzjh.do" target="_blank"><img
-										src="../images/charts/bar1.png"> <span><strong>应收账款盘子规划</strong></span></a>
-								</li>
-								<!--/li-->
-
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../yszkjgqk/yszkjgqk.do" target="_blank"><img
-										src="../images/charts/line2.png"> <span><strong>应收账款结构情况</strong></span></a>
-								</li>
-								<!--/li-->
-
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../yqkbhqs/yqkbhqs.do" target="_blank"><img
-										src="../images/charts/pie1.png"> <span><strong>逾期款趋势变化</strong></span></a>
-								</li>
-								<!--/li-->
-
-								<li data-thumb="asset/img/example/line1.png"><a
-									href="../yqysysfx/yqysysfx.do" target="_blank"><img
-										src="../images/charts/bar1.png"> <span><strong>逾期应收因素分析</strong></span></a>
-								</li>
-
-								<li><a href="../CQK/cqk.do" target="_blank"><img
-										src="../images/charts/pie1.png"> <span><strong>陈欠款分析</strong></span></a>
-								</li>
-								<!--/li-->
-
-								<li data-thumb="asset/img/example/line1.png"><a
-									href="../ztyszkfx/ztyszkfx.do" target="_blank"><img
-										src="../images/charts/bar1.png"> <span><strong>整体应收账款分析表</strong></span></a>
-								</li>
-								<!--/li-->
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div>
-					<h3>
-						保理状态<a name="bl"> </a>
-					</h3>
-					<div class="section">
-						<div class="thumb4">
-							<ul class="slides">
-								<li data-thumb="asset/img/example/k1.png"><a
-									href="../blhtdqqkhz/blhtdqqkhz.do" target="_blank"><img
-										src="../images/charts/k1.png"> <span><strong>保理合同到期情况汇总</strong></span></a>
-								</li>
-								<!--/li-->
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div>
-					<h3>
-						合同付款<a name="ht"> </a>
-					</h3>
-					<div class="section">
-						<div class="thumb4">
-							<ul class="slides">
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../byqfkfstj/byqfkfstj.do" target="_blank"><img
-										src="../images/charts/pie1.png"> <span><strong>变压器合同付款方式明细</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../xlfkfstj/xlfkfstj.do" target="_blank"><img
-										src="../images/charts/pie2.png"> <span><strong>线缆合同付款方式明细</strong></span></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-
-				</div>
-				<div>
-					<h3>
-						回款<a name="hk"> </a>
-					</h3>
-					<div class="section">
-						<div class="thumb4">
-							<ul class="slides">
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../hkjhjg/hkjhjg.do" target="_blank"><img
-										src="../images/charts/scatter2.png"> <span><strong>本月回款计划结构明细</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../syhkjhzxqk/syhkjhzxqk.do" target="_blank"><img
-										src="../images/charts/scatter5.png"> <span><strong>上月回款计划执行情况</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../rhkqk/rhkqk.do" target="_blank"><img
-										src="../images/charts/scatter5.png"> <span><strong>当日回款明细</strong></span></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div>
-					<h3>
-						成本管控<a name="cb"> </a>
-					</h3>
-					<div class="section">
-						<div class="thumb4">
-							<ul class="slides">
-								<li data-thumb="asset/img/example/bar1.png"><a
-									href="../byqcb/tb.do" target="_blank"><img
-										src="../images/charts/bar1.png"> <span><strong>变压器投标明细</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../byqcb/zx.do" target="_blank"><img
-										src="../images/charts/bar10.png"> <span><strong>变压器执行订单明细</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../byqcb/wg.do" target="_blank"><img
-										src="../images/charts/bar10.png"> <span><strong>变压器完工订单明细</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../xlcb/tb.do" target="_blank"><img
-										src="../images/charts/bar2.png"> <span><strong>线缆投标明细</strong></span></a>
-								</li>
-
-								<li data-thumb="asset/img/example/bar1.png"><a
-									href="../xlcb/wg.do" target="_blank"><img
-										src="../images/charts/bar1.png"> <span><strong>线缆完工订单明细</strong></span></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div>
-					<h3>
-						投标保证金<a name="tbbzj"> </a>
-					</h3>
-					<div class="section">
-						<div class="thumb4">
-							<ul class="slides">
-								<li data-thumb="asset/img/example/bar1.png"><a
-									href="tbbzjqk/tbbzjqk.do" target="_blank"><img
-										src="../images/charts/bar1.png"> <span><strong>投标保证金情况</strong><br>投标保证金情况</span></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
+			<div id="IndexSummary" class="col-md-10">
+				<%@include file="index_IndexSummary.jsp"%>
 			</div>
 			<div id="InputList" class="col-md-10" style="display: none">
-				<c:if test="${entryPlan}">
-					<h3>
-						计划指标录入<a name="inputPlan"> </a>
-					</h3>
-					<div class="section">
-						<div class="thumb4">
-							<ul class="slides">
-								<li data-thumb="asset/img/example/bar1.png"><a
-									href="../entry/zb.do?entryType=0" target="_blank"><img
-										src="../images/charts/bar1.png"> <span><strong>全年计划指标录入</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../entry/zb.do?entryType=1" target="_blank"><img
-										src="../images/charts/bar10.png"> <span><strong>20号计划指标录入</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../entry/zb.do?entryType=2" target="_blank"><img
-										src="../images/charts/bar10.png"> <span><strong>28号计划指标录入</strong></span></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</c:if>
-				<c:if test="${entryPredict}">
-					<h3>
-						预计/实际指标录入<a name="inputPrediction"> </a>
-					</h3>
-					<div class="section">
-						<div class="thumb4">
-							<ul class="slides">
-								<li data-thumb="asset/img/example/bar1.png"><a
-									href="../entry/zb.do?entryType=3" target="_blank"><img
-										src="../images/charts/bar1.png"> <span><strong>20号预计指标录入</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../entry/zb.do?entryType=4" target="_blank"><img
-										src="../images/charts/bar10.png"> <span><strong>28号预计指标录入</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../entry/zb.do?entryType=5" target="_blank"><img
-										src="../images/charts/bar10.png"> <span><strong>实际指标录入</strong></span></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</c:if>
+				<%@include file="index_InputList.jsp"%>
 			</div>
 
 			<div id="approveList" class="col-md-10" style="display: none">
-				<c:if test="${approvePlan}">
-
-					<h3>
-						计划指标审核<a name="approvePlan"> </a>
-					</h3>
-					<div class="section">
-						<div class="thumb4">
-							<ul class="slides">
-								<li data-thumb="asset/img/example/bar1.png"><a
-									href="../approve/zb.do?approveType=0" target="_blank"><img
-										src="../images/charts/bar1.png"> <span><strong>全年计划指标审核</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../approve/zb.do?approveType=1" target="_blank"><img
-										src="../images/charts/bar10.png"> <span><strong>20号计划指标审核</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../approve/zb.do?approveType=2" target="_blank"><img
-										src="../images/charts/bar10.png"> <span><strong>28号计划指标审核</strong></span></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-
-				</c:if>
-				<c:if test="${approvePredict}">
-					<h3>
-						预计/实际指标审核<a name="approvePrediction"> </a>
-					</h3>
-					<div class="section">
-						<div class="thumb4">
-							<ul class="slides">
-								<li data-thumb="asset/img/example/bar1.png"><a
-									href="../approve/zb.do?approveType=3" target="_blank"><img
-										src="../images/charts/bar1.png"> <span><strong>20预计指标审核</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../approve/zb.do?approveType=4" target="_blank"><img
-										src="../images/charts/bar10.png"> <span><strong>28号预计指标审核</strong></span></a>
-								</li>
-								<li data-thumb="asset/img/example/cache.png"><a
-									href="../approve/zb.do?approveType=5" target="_blank"><img
-										src="../images/charts/bar10.png"> <span><strong>实际指标审核</strong></span></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</c:if>
+				<%@include file="index_approveList.jsp"%>
 			</div>
 
-
 			<div id="financeList" class="col-md-10" style="display: none">
-				<h3>
-					财务指标汇总<a name="finincial"> </a>
-				</h3>
-				<div class="section">
-					<div class="thumb4">
-						<ul class="slides">
-							<li data-thumb="asset/img/example/bar1.png"><a
-								href="../byqcb/tb.do" target="_blank"><img
-									src="../images/charts/bar1.png"> <span><strong>财务指标1</strong></span></a>
-							</li>
-							<li data-thumb="asset/img/example/cache.png"><a
-								href="../byqcb/zx.do" target="_blank"><img
-									src="../images/charts/bar10.png"> <span><strong>财务指标2</strong></span></a>
-							</li>
-							<li data-thumb="asset/img/example/cache.png"><a
-								href="../byqcb/wg.do" target="_blank"><img
-									src="../images/charts/bar10.png"> <span><strong>财务指标3</strong></span></a>
-							</li>
-						</ul>
-					</div>
-				</div>
+				<%@include file="index_financeList.jsp"%>
 			</div>
 
 		</div>
@@ -489,141 +147,164 @@ CSS
 	<!-- Le javascript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="../js/jquery.min.js"></script>
-	<script type="text/javascript" src="../js/echartsHome.js"></script>
-	<script src="../js/h.js" type="text/javascript"></script>
-	<script src="../js/h(1).js" type="text/javascript"></script>
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/index.js"></script>
+	<script type="text/javascript" src="../js/h.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-	var funResize;
-    $(window).load(function (){
-      var section = $('[class=section]');
-      function loadImage(i) {
-          setTimeout(function (){
-              var list = $('div>ul>li>a', section[i]);
-              var nav = $('ol>li>img', section[i]);
-              var href;
-              var src;
-              if (list.length > 0) {
-                  for (var j = 0, k = list.length; j < k; j++) {
-                      list[j].target = '_blank';
-                      href = list[j].href.slice(list[j].href.lastIndexOf('/') + 1, -5);
-                      src = list[j].firstChild.src.replace(
-                          'cache', href
-                      );
-                      list[j].firstChild.alt = 'ECharts ' + href;
-                      list[j].firstChild.src = src;
-                  }
-              }
-          }, i * 100);
-      }
-      for (var i = 0, l = section.length; i < l; i++) {
-          loadImage(i);
-      }
-      
-    var chartsTypeNav = document.getElementById('chartsTypeNav');
-    function _scroll() {
-        var navHeight = chartsTypeNav.offsetHeight;
-        var viewHeight = document.documentElement.clientHeight;
-        var scrollHeight = document.documentElement.scrollTop
-                           || document.body.scrollTop;
-        var offsetHeight = document.body.offsetHeight;
-        var footHole = offsetHeight - scrollHeight - viewHeight;
-        var maxHeight = viewHeight - (230 - footHole) - 80;
-        if (footHole < 320 && maxHeight < navHeight) {
-            // 见footer
-            //chartsTypeNav.style.marginTop = footHole - 150 + 'px';
-            chartsTypeNav.style.marginTop = maxHeight - navHeight + 'px';
-        }
-        else {
-            // 未见footer
-            chartsTypeNav.style.marginTop = 'auto';
-        }
-        
-        var len = offsetList.length;
-		var height = [];
-		for (var i = 0; i < len - 1; i++) {
-			height.push(offsetList[i + 1].offsetTop - offsetList[i].offsetTop);
-        }
-		
-		var hasLightItem = false;
-            for (var i = 0; i < len - 1; i++) {
-                if (Math.abs(scrollHeight - offsetList[i].offsetTop) < (height[i] / 2) && navDom[i] && !hasLightItem) {
-                    navDom[i].style.backgroundColor = '#3E98C5';
-					hasLightItem = true;
-                    $(navDom[i]).children('a')[0].style.color = '#fff';
-                }
-                else {
-                	if (navDom[i]!= undefined){
-                        navDom[i].style.backgroundColor = 'transparent';
-                        $(navDom[i]).children('a')[0].style.color = '#3E98C5';
-                	}
-                }
-            }
-    }
-    var offsetList = [];
-    var navDom = $('#chartsTypeNav ul:visible li');
-    
-    $('#chartsTypeNav ul').each(function(i, e){
-    	$(e).find("li a").each(function(idx, dom){
-    		$(dom).on('click', scroll2Pos(idx));
-    	});
-    });
-    
-    function _resize() {
-    	 
-        offsetList = [];
-        navDom = $('#chartsTypeNav ul:visible li');
-     	$('.col-md-10:visible h3').each(function(idx, dom){
-            offsetList[idx] = {
-                name : dom.childNodes[1].name, 
-                offsetTop : dom.childNodes[1].offsetTop
-            };
-        });  
-     	
-     	if (1 == navDom.length){
-     		$("#footer").css("marginTop", "300px");
-     	} else if (2 == navDom.length){
-     		$("#footer").css("marginTop", "220px");
-     	} else{
-     		$("#footer").css("marginTop", "180px");
-     	}
-     	
-		
-        offsetList.push({
-            name : 'topic',
-            offsetTop : document.documentElement.scrollHeight - parseInt($("#footer").css("marginTop").replace("px", "")) - $("#footer").height() - parseInt($("#footer").css("paddingTop").replace("px", ""))
-        })
-        setTimeout(_scroll, 500);
-    }
-    funResize = _resize;
-    function scroll2Pos (idx) {
-        return function() {
-            $("body,html").animate(
-                {scrollTop: offsetList[idx].offsetTop + 30},
-                500
-            );
-            return false;
-        }
-    }
-   
-    $(window).on('scroll', _scroll);
-    $(window).on('resize', _resize);
-    _resize();
-    });
-	var iPlan = ${entryPlan};
-	var iPredict = ${entryPredict};  
-	var aplan = ${approvePlan};
-	var aPredict = ${approvePredict};
+		var funResize;
+		$(window)
+				.load(
+						function() {
+							var section = $('[class=section]');
+							function loadImage(i) {
+								setTimeout(
+										function() {
+											var list = $('div>ul>li>a',
+													section[i]);
+											var nav = $('ol>li>img', section[i]);
+											var href;
+											var src;
+											if (list.length > 0) {
+												for (var j = 0, k = list.length; j < k; j++) {
+													list[j].target = '_blank';
+													href = list[j].href
+															.slice(
+																	list[j].href
+																			.lastIndexOf('/') + 1,
+																	-5);
+													src = list[j].firstChild.src
+															.replace('cache',
+																	href);
+													list[j].firstChild.alt = 'ECharts '
+															+ href;
+													list[j].firstChild.src = src;
+												}
+											}
+										}, i * 100);
+							}
+							for (var i = 0, l = section.length; i < l; i++) {
+								loadImage(i);
+							}
 
-	init(iPlan, iPredict, aPredict, aplan);
-	
-	function delegateCall(obj)
-	{
-		clickli(obj);
-		funResize();
-	}
-    </script>
+							var chartsTypeNav = document
+									.getElementById('chartsTypeNav');
+							function _scroll() {
+								var navHeight = chartsTypeNav.offsetHeight;
+								var viewHeight = document.documentElement.clientHeight;
+								var scrollHeight = document.documentElement.scrollTop
+										|| document.body.scrollTop;
+								var offsetHeight = document.body.offsetHeight;
+								var footHole = offsetHeight - scrollHeight
+										- viewHeight;
+								var maxHeight = viewHeight - (230 - footHole)
+										- 80;
+								if (footHole < 320 && maxHeight < navHeight) {
+									// 见footer
+									//chartsTypeNav.style.marginTop = footHole - 150 + 'px';
+									chartsTypeNav.style.marginTop = maxHeight
+											- navHeight + 'px';
+								} else {
+									// 未见footer
+									chartsTypeNav.style.marginTop = 'auto';
+								}
+
+								var len = offsetList.length;
+								var height = [];
+								for (var i = 0; i < len - 1; i++) {
+									height.push(offsetList[i + 1].offsetTop
+											- offsetList[i].offsetTop);
+								}
+
+								var hasLightItem = false;
+								for (var i = 0; i < len - 1; i++) {
+									if (Math.abs(scrollHeight
+											- offsetList[i].offsetTop) < (height[i] / 2)
+											&& navDom[i] && !hasLightItem) {
+										navDom[i].style.backgroundColor = '#3E98C5';
+										hasLightItem = true;
+										$(navDom[i]).children('a')[0].style.color = '#fff';
+									} else {
+										if (navDom[i] != undefined) {
+											navDom[i].style.backgroundColor = 'transparent';
+											$(navDom[i]).children('a')[0].style.color = '#3E98C5';
+										}
+									}
+								}
+							}
+							var offsetList = [];
+							var navDom = $('#chartsTypeNav ul:visible li');
+
+							$('#chartsTypeNav ul').each(function(i, e) {
+								$(e).find("li a").each(function(idx, dom) {
+									$(dom).on('click', scroll2Pos(idx));
+								});
+							});
+
+							function _resize() {
+
+								offsetList = [];
+								navDom = $('#chartsTypeNav ul:visible li');
+								$('.col-md-10:visible h3')
+										.each(
+												function(idx, dom) {
+													offsetList[idx] = {
+														name : dom.childNodes[1].name,
+														offsetTop : dom.childNodes[1].offsetTop
+													};
+												});
+
+								if (1 == navDom.length) {
+									$("#footer").css("marginTop", "300px");
+								} else if (2 == navDom.length) {
+									$("#footer").css("marginTop", "220px");
+								} else {
+									$("#footer").css("marginTop", "180px");
+								}
+
+								offsetList
+										.push({
+											name : 'topic',
+											offsetTop : document.documentElement.scrollHeight
+													- parseInt($("#footer")
+															.css("marginTop")
+															.replace("px", ""))
+													- $("#footer").height()
+													- parseInt($("#footer")
+															.css("paddingTop")
+															.replace("px", ""))
+										})
+								setTimeout(_scroll, 500);
+							}
+							funResize = _resize;
+							function scroll2Pos(idx) {
+								return function() {
+									$("body,html")
+											.animate(
+													{
+														scrollTop : offsetList[idx].offsetTop + 30
+													}, 500);
+									return false;
+								}
+							}
+
+							$(window).on('scroll', _scroll);
+							$(window).on('resize', _resize);
+							_resize();
+						});
+
+		var iPlan = ${entryPlan};
+		var iPredict = ${entryPredict};
+		var aplan = ${approvePlan};
+		var aPredict = ${approvePredict};
+
+		init(iPlan, iPredict, aPredict, aplan);
+
+		function delegateCall(obj) {
+			clickli(obj);
+			funResize();
+		}
+	</script>
 
 
 </body>
