@@ -148,40 +148,40 @@ public class FKFSBYQGWTransferServiceImpl implements FKFSBYQGWTransferService {
 				// fkfsbyqgwLocal.setNy(fkfsbyqgwXB.getNy());
 				fkfsbyqgwLocal.setGwhtddzlbs(Integer.valueOf(String
 						.valueOf(recMap.get("gwhtddzlbs"))));
-				fkfsbyqgwLocal.setGwhtddzlje(Double.valueOf(String
-						.valueOf(recMap.get("gwhtddzlje"))));
+				fkfsbyqgwLocal.setGwhtddzlje(Double.valueOf(String.valueOf(
+						recMap.get("gwhtddzlje")).replace(",", "")));
 				fkfsbyqgwLocal.setN3_4_2_1bs(Integer.valueOf(String
 						.valueOf(recMap.get("3_4_2_1bs"))));
-				fkfsbyqgwLocal.setN3_4_2_1je(Double.valueOf(String
-						.valueOf(recMap.get("3_4_2_1je"))));
+				fkfsbyqgwLocal.setN3_4_2_1je(Double.valueOf(String.valueOf(
+						recMap.get("3_4_2_1je")).replace(",", "")));
 				fkfsbyqgwLocal.setN3_4_2d5_0d5bs(Integer.valueOf(String
 						.valueOf(recMap.get("3_4_2d5_0d5bs"))));
-				fkfsbyqgwLocal.setN3_4_2d5_0d5je(Double.valueOf(String
-						.valueOf(recMap.get("3_4_2d5_0d5je"))));
+				fkfsbyqgwLocal.setN3_4_2d5_0d5je(Double.valueOf(String.valueOf(
+						recMap.get("3_4_2d5_0d5je")).replace(",", "")));
 				fkfsbyqgwLocal.setN0_9_0_1bs(Integer.valueOf(String
 						.valueOf(recMap.get("0_9_0_1bs"))));
-				fkfsbyqgwLocal.setN0_9_0_1je(Double.valueOf(String
-						.valueOf(recMap.get("0_9_0_1je"))));
+				fkfsbyqgwLocal.setN0_9_0_1je(Double.valueOf(String.valueOf(
+						recMap.get("0_9_0_1je")).replace(",", "")));
 				fkfsbyqgwLocal.setN1_4_4_1bs(Integer.valueOf(String
 						.valueOf(recMap.get("1_4_4_1bs"))));
-				fkfsbyqgwLocal.setN1_4_4_1je(Double.valueOf(String
-						.valueOf(recMap.get("1_4_4_1je"))));
+				fkfsbyqgwLocal.setN1_4_4_1je(Double.valueOf(String.valueOf(
+						recMap.get("1_4_4_1je")).replace(",", "")));
 				fkfsbyqgwLocal.setN1_4_4d5_0d5bs(Integer.valueOf(String
 						.valueOf(recMap.get("1_4_4d5_0d5bs"))));
-				fkfsbyqgwLocal.setN1_4_4d5_0d5je(Double.valueOf(String
-						.valueOf(recMap.get("1_4_4d5_0d5je"))));
+				fkfsbyqgwLocal.setN1_4_4d5_0d5je(Double.valueOf(String.valueOf(
+						recMap.get("1_4_4d5_0d5je")).replace(",", "")));
 				fkfsbyqgwLocal.setN0_10_0_0bs(Integer.valueOf(String
 						.valueOf(recMap.get("0_10_0_0bs"))));
-				fkfsbyqgwLocal.setN0_10_0_0je(Double.valueOf(String
-						.valueOf(recMap.get("0_10_0_0je"))));
+				fkfsbyqgwLocal.setN0_10_0_0je(Double.valueOf(String.valueOf(
+						recMap.get("0_10_0_0je")).replace(",", "")));
 				fkfsbyqgwLocal.setN9d5_0d5bs(Integer.valueOf(String
 						.valueOf(recMap.get("9d5_0d5bs"))));
-				fkfsbyqgwLocal.setN9d5_0d5je(Double.valueOf(String
-						.valueOf(recMap.get("9d5_0d5je"))));
+				fkfsbyqgwLocal.setN9d5_0d5je(Double.valueOf(String.valueOf(
+						recMap.get("9d5_0d5je")).replace(",", "")));
 				fkfsbyqgwLocal.setQtbs(Integer.valueOf(String.valueOf(recMap
 						.get("qtbs"))));
-				fkfsbyqgwLocal.setQtje(Double.valueOf(String.valueOf(recMap
-						.get("qtje"))));
+				fkfsbyqgwLocal.setQtje(Double.valueOf(String.valueOf(
+						recMap.get("qtje")).replace(",", "")));
 				fkfsbyqgwLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
 				fkfsbyqgwLocal.setQybh(2);
 				fkfsbyqgwLocalDao.merge(fkfsbyqgwLocal);

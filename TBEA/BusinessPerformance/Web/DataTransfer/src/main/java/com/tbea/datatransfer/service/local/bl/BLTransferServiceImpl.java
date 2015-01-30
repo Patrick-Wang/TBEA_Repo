@@ -164,14 +164,14 @@ public class BLTransferServiceImpl implements BLTransferService {
 						.get("blrq"))));
 				blLocal.setKxxz(Integer.valueOf(String.valueOf(recMap
 						.get("kxxz"))));
-				blLocal.setBlje(Double.valueOf(String.valueOf(recMap
-						.get("blje"))));
+				blLocal.setBlje(Double.valueOf(String.valueOf(
+						recMap.get("blje")).replace(",", "")));
 				blLocal.setBldqr(timeFormat.parse(String.valueOf(recMap
 						.get("bldqr"))));
-				blLocal.setBlhkje(Double.valueOf(String.valueOf(recMap
-						.get("blhkje"))));
-				blLocal.setBlye(Double.valueOf(String.valueOf(recMap
-						.get("blye"))));
+				blLocal.setBlhkje(Double.valueOf(String.valueOf(
+						recMap.get("blhkje")).replace(",", "")));
+				blLocal.setBlye(Double.valueOf(String.valueOf(
+						recMap.get("blye")).replace(",", "")));
 				blLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
 				blLocal.setQybh(2);
 				blLocalDao.merge(blLocal);
