@@ -1,5 +1,7 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+/// <reference path="dateSelector.ts" />
+/// <reference path="companySelector.ts" />
 declare var echarts;
 declare var $;
 module approve_template {
@@ -21,7 +23,7 @@ module approve_template {
         }
     }
 
-    interface IViewOption {
+    export interface IViewOption {
         tableApproveId: string;
         tableUnapproveId: string;
         dateId: string;
@@ -55,8 +57,6 @@ module approve_template {
         private mCompanySelector: Util.CompanySelector;
         private mOpt: IViewOption;
         private mDataSet: Util.Ajax = new Util.Ajax("zb_update.do");
-
-
 
 
         initInstance(opt: IViewOption) {
