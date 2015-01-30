@@ -1,15 +1,19 @@
 package com.tbea.datatransfer.service.local.ydhkjhjgb;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.local.ydhkjhjgb.YDHKJHJGBLocalDao;
 import com.tbea.datatransfer.model.dao.zjbyq.ydhkjhjgb.YDHKJHJGBBYQDao;
 import com.tbea.datatransfer.model.dao.zjxl.ydhkjhjgb.YDHKJHJGBXLDao;
 import com.tbea.datatransfer.model.entity.local.YDHKJHJGBLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.YDHKJHJGBBYQ;
 import com.tbea.datatransfer.model.entity.zjxl.YDHKJHJGBXL;
+import com.tbea.datatransfer.service.webservice.WebServiceClient;
 
 @Transactional("transactionManager")
 public class YDHKJHJGBTransferServiceImpl implements YDHKJHJGBTransferService {
@@ -163,6 +167,33 @@ public class YDHKJHJGBTransferServiceImpl implements YDHKJHJGBTransferService {
 				ydhkjhjgbLocal.setGyqsk(ydhkjhjgbXB.getGyqsk());
 				ydhkjhjgbLocal.setSfdrwc(ydhkjhjgbXB.getSfdrwc());
 				ydhkjhjgbLocal.setQybh(3);
+				ydhkjhjgbLocalDao.merge(ydhkjhjgbLocal);
+			}
+			
+			// hb
+			SimpleDateFormat timeFormat = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
+			ydhkjhjgbLocalDao.deleteYDHKJHJGBLocalByQY(2);
+			WebServiceClient webServiceClient = new WebServiceClient();
+			List<Map<String, Object>> recList = webServiceClient.getRec(
+					"web_test", "123456", "yszk_ws_ydhkjhjgb");
+			for (Map<String, Object> recMap : recList) {
+				ydhkjhjgbLocal = new YDHKJHJGBLocal();
+				ydhkjhjgbLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("gxrq")));
+				ydhkjhjgbLocal.setGsbm(String.valueOf(recMap.get("gsbm")));
+				ydhkjhjgbLocal.setQbkhyqyszk(CommonMethod.objectToDouble(recMap.get("qbkhyqyszk")));
+				ydhkjhjgbLocal.setQbkhyqk(CommonMethod.objectToDouble(recMap.get("qbkhyqk")));
+				ydhkjhjgbLocal.setQbkhwdqyszk(CommonMethod.objectToDouble(recMap.get("qbkhwdqyszk")));
+				ydhkjhjgbLocal.setQbkhwdqk(CommonMethod.objectToDouble(recMap.get("qbkhwdqk")));
+				ydhkjhjgbLocal.setZqkhyqyszk(CommonMethod.objectToDouble(recMap.get("zqkhyqyszk")));
+				ydhkjhjgbLocal.setZqkhyqk(CommonMethod.objectToDouble(recMap.get("zqkhyqk")));
+				ydhkjhjgbLocal.setZqkhwdqyszk(CommonMethod.objectToDouble(recMap.get("zqkhwdqyszk")));
+				ydhkjhjgbLocal.setZqkhwdqk(CommonMethod.objectToDouble(recMap.get("zqkhwdqk")));
+				ydhkjhjgbLocal.setXyqsk(CommonMethod.objectToDouble(recMap.get("xyqsk")));
+				ydhkjhjgbLocal.setGyqsk(CommonMethod.objectToDouble(recMap.get("gyqsk")));
+				ydhkjhjgbLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
+				ydhkjhjgbLocal.setQybh(2);
 				ydhkjhjgbLocalDao.merge(ydhkjhjgbLocal);
 			}
 			result = true;

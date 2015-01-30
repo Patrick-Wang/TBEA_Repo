@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.local.htxx.HTXXLocalDao;
 import com.tbea.datatransfer.model.dao.zjbyq.htxx.HTXXBYQDao;
 import com.tbea.datatransfer.model.dao.zjxl.htxx.HTXXXLDao;
@@ -163,7 +164,7 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 				htxxLocal.setQybh(3);
 				htxxLocalDao.merge(htxxLocal);
 			}
-			
+
 			// hb
 			SimpleDateFormat timeFormat = new SimpleDateFormat(
 					"yyyy-MM-dd HH:mm:ss");
@@ -173,18 +174,21 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 					"web_test", "123456", "yszk_ws_htxx");
 			for (Map<String, Object> recMap : recList) {
 				htxxLocal = new HTXXLocal();
-				htxxLocal.setGxrq(timeFormat.parse(String.valueOf(recMap
-						.get("gxrq"))));
+				htxxLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("gxrq")));
 				htxxLocal.setHtbh(String.valueOf(recMap.get("htbh")));
 				htxxLocal.setXmxx(String.valueOf(recMap.get("Xmxx")));
 				htxxLocal.setSspq(String.valueOf(recMap.get("sspq")));
 				htxxLocal.setKhbh(String.valueOf(recMap.get("Khbh")));
 				htxxLocal.setKhmc(String.valueOf(recMap.get("khmc")));
 				htxxLocal.setKhsshy(String.valueOf(recMap.get("khsshy")));
-				htxxLocal.setQdrq(timeFormat.parse(String.valueOf(recMap.get("qdrq"))));
-				htxxLocal.setCpje(Double.valueOf(String.valueOf(recMap.get("cpje"))));
-				htxxLocal.setFy(Double.valueOf(String.valueOf(recMap.get("fy"))));
-				htxxLocal.setZje(Double.valueOf(String.valueOf(recMap.get("zje"))));
+				htxxLocal.setQdrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("qdrq")));
+				htxxLocal.setCpje(CommonMethod.objectToDouble(recMap
+						.get("cpje")));
+				htxxLocal.setFy(CommonMethod.objectToDouble(recMap.get("fy")));
+				htxxLocal
+						.setZje(CommonMethod.objectToDouble(recMap.get("zje")));
 				htxxLocal.setHtzt(String.valueOf(recMap.get("htzt")));
 				htxxLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
 				htxxLocal.setQybh(2);

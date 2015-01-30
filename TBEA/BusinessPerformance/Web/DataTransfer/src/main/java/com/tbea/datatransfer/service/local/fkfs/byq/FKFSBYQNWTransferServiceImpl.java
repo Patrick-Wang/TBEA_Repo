@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.local.fkfs.byq.FKFSBYQNWLocalDao;
 import com.tbea.datatransfer.model.dao.zjbyq.fkfs.FKFSBYQNWBYQDao;
 import com.tbea.datatransfer.model.entity.local.FKFSBYQNWLocal;
@@ -129,34 +130,49 @@ public class FKFSBYQNWTransferServiceImpl implements FKFSBYQNWTransferService {
 				fkfsbyqnwLocal.setQybh(3);
 				fkfsbyqnwLocalDao.merge(fkfsbyqnwLocal);
 			}
-				
-			// hb		
+
+			// hb
 			SimpleDateFormat timeFormat = new SimpleDateFormat(
 					"yyyy-MM-dd HH:mm:ss");
 			fkfsbyqnwLocalDao.deleteFKFSBYQNWLocalByQY(2);
 			WebServiceClient webServiceClient = new WebServiceClient();
 			List<Map<String, Object>> recList = webServiceClient.getRec(
-						"web_test", "123456", "yszk_ws_htfkfstj_byq_nwfk");
+					"web_test", "123456", "yszk_ws_htfkfstj_byq_nwfk");
 
-			for (Map<String, Object> recMap : recList){
+			for (Map<String, Object> recMap : recList) {
 				fkfsbyqnwLocal = new FKFSBYQNWLocal();
-				fkfsbyqnwLocal.setGxrq(timeFormat.parse(String.valueOf(recMap.get("gxrq"))));
+				fkfsbyqnwLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("gxrq")));
 				fkfsbyqnwLocal.setGsbm(String.valueOf(recMap.get("gsbm")));
 				// fkfsbyqnwLocal.setNy(fkfsbyqnwTB.getNy());
-				fkfsbyqnwLocal.setNwhtddzlbs(Integer.valueOf(String.valueOf(recMap.get("nwhtddzlbs"))));
-				fkfsbyqnwLocal.setNwhtddzlje(Double.valueOf(String.valueOf(recMap.get("nwhtddzlje"))));
-				fkfsbyqnwLocal.setN3_3_3_1bs(Integer.valueOf(String.valueOf(recMap.get("3_3_3_1bs"))));
-				fkfsbyqnwLocal.setN3_3_3_1je(Double.valueOf(String.valueOf(recMap.get("3_3_3_1je"))));
-				fkfsbyqnwLocal.setN1_4_4_0d5_0d5bs(Integer.valueOf(String.valueOf(recMap.get("1_4_4_0d5_0d5bs"))));
-				fkfsbyqnwLocal.setN1_4_4_0d5_0d5je(Double.valueOf(String.valueOf(recMap.get("1_4_4_0d5_0d5je"))));
-				fkfsbyqnwLocal.setN1_2_6d5_0d5bs(Integer.valueOf(String.valueOf(recMap.get("1_2_6d5_0d5bs"))));
-				fkfsbyqnwLocal.setN1_2_6d5_0d5je(Double.valueOf(String.valueOf(recMap.get("1_2_6d5_0d5je"))));
-				fkfsbyqnwLocal.setN1_4_4d5_0d5bs(Integer.valueOf(String.valueOf(recMap.get("1_4_4d5_0d5bs"))));
-				fkfsbyqnwLocal.setN1_4_4d5_0d5je(Double.valueOf(String.valueOf(recMap.get("1_4_4d5_0d5je"))));
-				fkfsbyqnwLocal.setQtybs(Integer.valueOf(String.valueOf(recMap.get("qtybs"))));
-				fkfsbyqnwLocal.setQtyje(Double.valueOf(String.valueOf(recMap.get("qtyje"))));
-				fkfsbyqnwLocal.setQtebs(Integer.valueOf(String.valueOf(recMap.get("qtebs"))));
-				fkfsbyqnwLocal.setQteje(Double.valueOf(String.valueOf(recMap.get("qteje"))));
+				fkfsbyqnwLocal.setNwhtddzlbs(CommonMethod.objectToInteger(String
+						.valueOf(recMap.get("nwhtddzlbs"))));
+				fkfsbyqnwLocal.setNwhtddzlje(CommonMethod.objectToDouble(recMap
+						.get("nwhtddzlje")));
+				fkfsbyqnwLocal.setN3_3_3_1bs(CommonMethod.objectToInteger(String
+						.valueOf(recMap.get("3_3_3_1bs"))));
+				fkfsbyqnwLocal.setN3_3_3_1je(CommonMethod.objectToDouble(recMap
+						.get("3_3_3_1je")));
+				fkfsbyqnwLocal.setN1_4_4_0d5_0d5bs(CommonMethod.objectToInteger(String
+						.valueOf(recMap.get("1_4_4_0d5_0d5bs"))));
+				fkfsbyqnwLocal.setN1_4_4_0d5_0d5je(CommonMethod
+						.objectToDouble(recMap.get("1_4_4_0d5_0d5je")));
+				fkfsbyqnwLocal.setN1_2_6d5_0d5bs(CommonMethod.objectToInteger(String
+						.valueOf(recMap.get("1_2_6d5_0d5bs"))));
+				fkfsbyqnwLocal.setN1_2_6d5_0d5je(CommonMethod
+						.objectToDouble(recMap.get("1_2_6d5_0d5je")));
+				fkfsbyqnwLocal.setN1_4_4d5_0d5bs(CommonMethod.objectToInteger(String
+						.valueOf(recMap.get("1_4_4d5_0d5bs"))));
+				fkfsbyqnwLocal.setN1_4_4d5_0d5je(CommonMethod
+						.objectToDouble(recMap.get("1_4_4d5_0d5je")));
+				fkfsbyqnwLocal.setQtybs(CommonMethod.objectToInteger(recMap
+						.get("qtybs")));
+				fkfsbyqnwLocal.setQtyje(CommonMethod.objectToDouble(recMap
+						.get("qtyje")));
+				fkfsbyqnwLocal.setQtebs(CommonMethod.objectToInteger(recMap
+						.get("qtebs")));
+				fkfsbyqnwLocal.setQteje(CommonMethod.objectToDouble(recMap
+						.get("qteje")));
 				fkfsbyqnwLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
 				fkfsbyqnwLocal.setQybh(2);
 				fkfsbyqnwLocalDao.merge(fkfsbyqnwLocal);
