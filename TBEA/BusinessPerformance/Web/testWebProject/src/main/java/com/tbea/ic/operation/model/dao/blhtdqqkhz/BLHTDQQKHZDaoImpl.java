@@ -76,4 +76,32 @@ public class BLHTDQQKHZDaoImpl extends AbstractReadWriteDaoImpl<BLHTDQQKHZ> impl
 		return null;
 	}
 
+	@Override
+	public List<BLHTDQQKHZ> getBlAfterDate(Calendar cal, List<Company> comps) {
+		Query q = getEntityManager().createQuery(
+				"select b from BLHTDQQKHZ b where b.ny >= :date and b.qybh in (" + Util.toString(comps) + ")");
+		String date = Util.format(cal.getTime());
+		q.setParameter("date", date);
+		return q.getResultList();
+	}
+
+	@Override
+	public List<BLHTDQQKHZ> getBltbbh(Calendar cal, List<Company> comps) {
+		Calendar preYear = Calendar.getInstance();
+		preYear.set(cal.get(Calendar.YEAR) - 1, 0, 1);
+		Calendar preYearMonth = Calendar.getInstance();
+		preYearMonth.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH),
+				cal.get(Calendar.DAY_OF_MONTH));
+		Calendar curYear = Calendar.getInstance();
+		curYear.set(cal.get(Calendar.YEAR), 0, 1);
+		Query q = getEntityManager()
+				.createQuery(
+						"select b from BLHTDQQKHZ b where b.ny >= ?1 and b.ny <= ?2 or b.ny >= ?3 and b.ny <= ?4 and b.qybh in (" + Util.toString(comps) + ")");
+		q.setParameter(1, Util.format(preYear.getTime()));
+		q.setParameter(2, Util.format(preYearMonth.getTime()));
+		q.setParameter(3, Util.format(curYear.getTime()));
+		q.setParameter(4, Util.format(cal.getTime()));
+		return q.getResultList();
+	}
+
 }

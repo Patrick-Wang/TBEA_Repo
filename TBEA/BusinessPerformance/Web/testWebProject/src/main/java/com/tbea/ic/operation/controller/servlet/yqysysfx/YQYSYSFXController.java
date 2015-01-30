@@ -1,8 +1,10 @@
 package com.tbea.ic.operation.controller.servlet.yqysysfx;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -44,16 +46,22 @@ public class YQYSYSFXController {
 	@RequestMapping(value = "yqysysfx_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getYqysysfx_update(HttpServletRequest request,
 			HttpServletResponse response) {
-		// String companyId = request.getParameter("companyId");
-		// int cid = Integer.parseInt(companyId);
-		// Organization org = companyManager.getOperationOrganization();
-		// Company comp = org.getCompany(CompanyType.valueOf(cid));
 
-		Organization org = companyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
-
-		String xjlrb = JSONArray.fromObject(service.getYqysysfxData(comp))
-				.toString().replace("null", "0.00");
+		String xjlrb = null;
+		CompanyType compType = CompanySelection.getCompany(request);
+		Company comp = companyManager.getOperationOrganization().getCompany(compType);
+		if (null == comp) {
+			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
+			if (null != comp) {
+				xjlrb = JSONArray.fromObject(service.getYqysysfxData(comp.getSubCompanys()))
+						.toString().replace("null", "0.00");
+			}
+		}
+		else {
+			xjlrb = JSONArray.fromObject(service.getYqysysfxData(comp))
+					.toString().replace("null", "0.00");
+		}
+			
 		return xjlrb;
 	}
 
@@ -62,20 +70,11 @@ public class YQYSYSFXController {
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		Organization org = companyManager.getOperationOrganization();
-		CompanySelection compSel = new CompanySelection(true, org.getCompany(
-				CompanyType.SBDCY).getSubCompanys());
+		List<Company> comps = new ArrayList<Company>();
+		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanys());
+		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-
-		// Calendar now = Calendar.getInstance();
-		//
-		// Organization org = companyManager.getOperationOrganization();
-		// String[][] name_ids =
-		// Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		// map.put("names", name_ids[0]);
-		// map.put("ids", name_ids[1]);
-		// //map.put("all", CompanyType.SBDCY.ordinal() + "");
-		// map.put("company_size", name_ids[0].length);
 		return new ModelAndView("yqysysfx", map);
 	}
 

@@ -43,11 +43,28 @@ public class BLHTDQQKHZController {
 	public @ResponseBody String getBlhtdqqkhzbById_update(HttpServletRequest request,
 			HttpServletResponse response) {
 		Date d = DateSelection.getDate(request);
-		Organization org = companyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
+//		Organization org = companyManager.getOperationOrganization();
+//		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		List<String[][]> result = new ArrayList<String[][]>();
-		result.add(service.getBlyeqs(d, comp));
-		result.add(service.getBlhtdqqk(d, comp));
+//		result.add(service.getBlyeqs(d, comp));
+//		result.add(service.getBlhtdqqk(d, comp));
+		
+		
+		CompanyType compType = CompanySelection.getCompany(request);
+		Company comp = companyManager.getOperationOrganization().getCompany(compType);
+		if (null == comp) {
+			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
+			if (null != comp) {
+				result.add(service.getBlyeqs(d, comp.getSubCompanys()));
+				result.add(service.getBlhtdqqk(d, comp.getSubCompanys()));
+			}
+		}
+		else {
+			result.add(service.getBlyeqs(d, comp));
+			result.add(service.getBlhtdqqk(d, comp));
+		}
+		
+		
 		String jsonRet = JSONArray.fromObject(result).toString().replace("null", "0.00");
 		return jsonRet;
 	}
@@ -60,11 +77,18 @@ public class BLHTDQQKHZController {
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);
 		
-		Organization org = companyManager.getOperationOrganization();
-		CompanySelection compSelection = new CompanySelection(true,
-				org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		compSelection.setFirstCompany(CompanyType.XL);
-		compSelection.select(map);
+		
+		List<Company> comps = new ArrayList<Company>();
+		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanys());
+		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
+		CompanySelection compSel = new CompanySelection(true, comps);
+		compSel.select(map);
+		
+//		Organization org = companyManager.getOperationOrganization();
+//		CompanySelection compSelection = new CompanySelection(true,
+//				org.getCompany(CompanyType.SBDCY).getSubCompanys());
+//		compSelection.setFirstCompany(CompanyType.XL);
+//		compSelection.select(map);
 		
 		return new ModelAndView(view, map);
 	}

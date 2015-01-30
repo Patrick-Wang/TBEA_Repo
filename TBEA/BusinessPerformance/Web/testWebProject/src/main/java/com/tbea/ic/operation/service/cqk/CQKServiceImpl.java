@@ -19,15 +19,9 @@ import com.tbea.ic.operation.model.entity.local.CQK;
 @Transactional("transactionManager")
 public class CQKServiceImpl implements CQKService {
 
-	public CQKServiceImpl(){
-		
-		System.out.println("service init");
-	}
-	
 	@Autowired
 	private CQKDao cqkDao;
 
-//	private YSZKTZLocalDao yszktzLocalDao;
 	private static Map<String, Integer> hyMap = new HashMap<String, Integer>();
 	static {
 		hyMap.put("国网、南网", 0);
@@ -41,178 +35,66 @@ public class CQKServiceImpl implements CQKService {
 		hyMap.put("合计", 8);
 	}
 
-	private static String[] QYBHArray = { "5", "6", "7", "8", "9", "10", "11" };
-
-//	private void importCQKByHY(String baseMonth, String hyName,
-//			List<String> sshyList, boolean isIncluded, boolean isTotal)
-//			throws Exception {
-//		// Total
-//		CQK cqk = new CQK();
-//		cqk.setNy(baseMonth);
-//		cqk.setHy(hyName);
-//		cqk.setCqk2n(yszktzLocalDao.getCQK(baseMonth, null, 730, sshyList,
-//				isIncluded, isTotal));
-//		cqk.setCqk3n(yszktzLocalDao.getCQK(baseMonth, 730, 1095, sshyList,
-//				isIncluded, isTotal));
-//		cqk.setCqk4njzq(yszktzLocalDao.getCQK(baseMonth, 1095, null, sshyList,
-//				isIncluded, isTotal));
-//		cqk.setZj(yszktzLocalDao.getCQK(baseMonth, null, null, sshyList,
-//				isIncluded, isTotal));
-//		cqk.setQybh(9999);
-//		cqkDao.merge(cqk);
-//		// QY
-//		importCQKByHYAndQY(baseMonth, hyName, sshyList, isIncluded, isTotal);
-//		return;
-//	}
-//
-//	private void importCQKByHYAndQY(String baseMonth, String hyName,
-//			List<String> sshyList, boolean isIncluded, boolean isTotal)
-//			throws Exception {
-//		CQK cqk = null;
-//		Map<String, Double> cqk2nMap = yszktzLocalDao.getCQKByQY(baseMonth,
-//				null, 730, sshyList, isIncluded, isTotal);
-//		Map<String, Double> cqk3nMap = yszktzLocalDao.getCQKByQY(baseMonth,
-//				730, 1095, sshyList, isIncluded, isTotal);
-//		Map<String, Double> cqk4njzqMap = yszktzLocalDao.getCQKByQY(baseMonth,
-//				1095, null, sshyList, isIncluded, isTotal);
-//		Map<String, Double> zjMap = yszktzLocalDao.getCQKByQY(baseMonth, null,
-//				null, sshyList, isIncluded, isTotal);
-//		for (String qybh : QYBHArray) {
-//			cqk = new CQK();
-//			cqk.setNy(baseMonth);
-//			cqk.setHy(hyName);
-//			cqk.setCqk2n(cqk2nMap.get(qybh));
-//			cqk.setCqk3n(cqk3nMap.get(qybh));
-//			cqk.setCqk4njzq(cqk4njzqMap.get(qybh));
-//			cqk.setZj(zjMap.get(qybh));
-//			cqk.setQybh(Integer.valueOf(qybh));
-//			cqkDao.merge(cqk);
-//		}
-//		return;
-//	}
-//
-//	@Override
-//	public boolean importCQK() {
-//		boolean result = false;
-//		try {
-//			List<String> monthList = new ArrayList<String>();
-//			monthList.add("201301");
-//			monthList.add("201302");
-//			monthList.add("201303");
-//			monthList.add("201304");
-//			monthList.add("201305");
-//			monthList.add("201306");
-//			monthList.add("201307");
-//			monthList.add("201308");
-//			monthList.add("201309");
-//			monthList.add("201310");
-//			monthList.add("201311");
-//			monthList.add("201312");
-//			monthList.add("201401");
-//			monthList.add("201402");
-//			monthList.add("201403");
-//			monthList.add("201404");
-//			monthList.add("201405");
-//			monthList.add("201406");
-//			monthList.add("201407");
-//			monthList.add("201408");
-//			monthList.add("201409");
-//			monthList.add("201410");
-//			monthList.add("201411");
-//			monthList.add("201412");
-//			for (String baseMonth : monthList) {
-//				List<String> sshyGWNWList = new ArrayList<String>();
-//				sshyGWNWList.add("01");
-//				sshyGWNWList.add("02");
-//				importCQKByHY(baseMonth, "国网、南网", sshyGWNWList, true, false);
-//
-//				List<String> sshySSDLList = new ArrayList<String>();
-//				sshySSDLList.add("08");
-//				importCQKByHY(baseMonth, "省、市电力系统", sshySSDLList, true, false);
-//
-//				List<String> sshyWDFDList = new ArrayList<String>();
-//				sshyWDFDList.add("03");
-//				sshyWDFDList.add("04");
-//				sshyWDFDList.add("05");
-//				sshyWDFDList.add("06");
-//				sshyWDFDList.add("07");
-//				importCQKByHY(baseMonth, "五大发电", sshyWDFDList, true, false);
-//
-//				List<String> sshyQTDYList = new ArrayList<String>();
-//				sshyQTDYList.add("09");
-//				importCQKByHY(baseMonth, "其他电源", sshyQTDYList, true, false);
-//
-//				List<String> sshySYSHList = new ArrayList<String>();
-//				sshySYSHList.add("16");
-//				importCQKByHY(baseMonth, "石油石化", sshySYSHList, true, false);
-//
-//				List<String> sshyGDJTList = new ArrayList<String>();
-//				sshyGDJTList.add("14");
-//				sshyGDJTList.add("15");
-//				importCQKByHY(baseMonth, "轨道交通", sshyGDJTList, true, false);
-//
-//				List<String> sshyCKHTList = new ArrayList<String>();
-//				sshyCKHTList.add("14");
-//				sshyCKHTList.add("15");
-//				importCQKByHY(baseMonth, "出口合同", sshyCKHTList, true, false);
-//
-//				List<String> sshyQTList = new ArrayList<String>();
-//				sshyQTList.addAll(sshyGWNWList);
-//				sshyQTList.addAll(sshySSDLList);
-//				sshyQTList.addAll(sshyWDFDList);
-//				sshyQTList.addAll(sshyQTDYList);
-//				sshyQTList.addAll(sshySYSHList);
-//				sshyQTList.addAll(sshyGDJTList);
-//				sshyQTList.addAll(sshyCKHTList);
-//				importCQKByHY(baseMonth, "其他", sshyQTList, false, false);
-//
-//				importCQKByHY(baseMonth, "合计", null, false, true);
-//			}
-//			result = true;
-//		} catch (Exception e) {
-//			result = false;
-//		}
-//		return result;
-//	}
-//
-//	public CQKDao getCqkDao() {
-//		return cqkDao;
-//	}
-//
-//	public void setCqkDao(CQKDao cqkDao) {
-//		this.cqkDao = cqkDao;
-//	}
-//
-//	public YSZKTZLocalDao getYszktzLocalDao() {
-//		return yszktzLocalDao;
-//	}
-//
-//	public void setYszktzLocalDao(YSZKTZLocalDao yszktzLocalDao) {
-//		this.yszktzLocalDao = yszktzLocalDao;
-//	}
-
 	// return value format according to cqk
 	// hy one
 	// [... current year data...]
 	// hy two
 	// [... current year data...]
-	@Override
-	public String[][] getCqkData(Date d, Company comp) {
-		List<CQK> list = cqkDao.getCqkData(d, comp);
-
-		String[][] result = new String[hyMap.size()][4];
+	public void setCqkData(String[][] result, List<CQK> list) {
 		for (CQK cqk : list) {
 			if (cqk != null && hyMap.get(cqk.getHy()) != null) {
-				result[hyMap.get(cqk.getHy()).intValue()][0] = cqk
-						.getCqk4njzq() + "";
-				result[hyMap.get(cqk.getHy()).intValue()][1] = cqk.getCqk3n()
-						+ "";
-				result[hyMap.get(cqk.getHy()).intValue()][2] = cqk.getCqk2n()
-						+ "";
-				result[hyMap.get(cqk.getHy()).intValue()][3] = cqk.getZj() + "";
+				result[hyMap.get(cqk.getHy()).intValue()][0] = Util
+						.toDouble(result[hyMap.get(cqk.getHy()).intValue()][0])
+						+ Util.valueOf(cqk.getCqk4njzq()) + "";
+				
+				result[hyMap.get(cqk.getHy()).intValue()][1] = Util
+						.toDouble(result[hyMap.get(cqk.getHy()).intValue()][1])
+						+ Util.valueOf(cqk.getCqk3n()) + "";
+
+				result[hyMap.get(cqk.getHy()).intValue()][2] = Util
+						.toDouble(result[hyMap.get(cqk.getHy()).intValue()][2])
+						+ Util.valueOf(cqk.getCqk2n()) + "";
+
+				result[hyMap.get(cqk.getHy()).intValue()][3] = Util
+						.toDouble(result[hyMap.get(cqk.getHy()).intValue()][3])
+						+ Util.valueOf(cqk.getZj()) + "";
 			}
 		}
-		return result;
+
+	}
+
+	private void setCompareData(String[][] result, Date d,
+			List<CQK> listPreYear, List<CQK> listCurYear) {
+		Calendar time = Calendar.getInstance();
+		int month = 0;
+		for (CQK cqk : listPreYear) {
+			if (cqk != null && hyMap.get(cqk.getHy()) != null) {
+				time.setTime(Util.valueOf(cqk.getNy()));
+				month = time.get(Calendar.MONTH);
+				result[0 + hyMap.get(cqk.getHy()).intValue() * 5][month] = Util
+						.toDouble(result[0 + hyMap.get(cqk.getHy()).intValue() * 5][month])
+						+ Util.valueOf(cqk.getZj()) + "";
+			}
+		}
+
+		for (CQK cqk : listCurYear) {
+			if (cqk != null && hyMap.get(cqk.getHy()) != null) {
+				time.setTime(Util.valueOf(cqk.getNy()));
+				month = time.get(Calendar.MONTH);
+				result[1 + hyMap.get(cqk.getHy()).intValue() * 5][month] = Util
+						.toDouble(result[1 + hyMap.get(cqk.getHy()).intValue() * 5][month])
+						+ Util.valueOf(cqk.getZj()) + "";
+				result[2 + hyMap.get(cqk.getHy()).intValue() * 5][month] = Util
+						.toDouble(result[2 + hyMap.get(cqk.getHy()).intValue() * 5][month])
+						+ Util.valueOf(cqk.getCqk2n()) + "";
+				result[3 + hyMap.get(cqk.getHy()).intValue() * 5][month] = Util
+						.toDouble(result[3 + hyMap.get(cqk.getHy()).intValue() * 5][month])
+						+ Util.valueOf(cqk.getCqk3n()) + "";
+				result[4 + hyMap.get(cqk.getHy()).intValue() * 5][month] = Util
+						.toDouble(result[4 + hyMap.get(cqk.getHy()).intValue() * 5][month])
+						+ Util.valueOf(cqk.getCqk4njzq()) + "";
+			}
+		}
 	}
 
 	// return value format
@@ -241,48 +123,60 @@ public class CQKServiceImpl implements CQKService {
 	// ......
 	@Override
 	public String[][] getCompareData(Date d, Company comp) {
+
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-
 		String[][] result = new String[5 * hyMap.size()][cal
 				.get(Calendar.MONTH) + 1];
+		setCompareData(result, d, cqkDao.getPreYearCQK(d, comp),
+				cqkDao.getCurYearCQK(d, comp));
+		return result;
+	}
 
-		List<CQK> list = cqkDao.getPreYearCQK(d, comp);
-		Calendar time = Calendar.getInstance();
-		int month = 0;
-		for (CQK cqk : list) {
-			if (cqk != null && hyMap.get(cqk.getHy()) != null) {
-				time.setTime(Util.valueOf(cqk.getNy()));
-				month = time.get(Calendar.MONTH);
-				result[0 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk
-						.getZj() + "";
-			}
-		}
-
-		list = cqkDao.getCurYearCQK(d, comp);
-		for (CQK cqk : list) {
-			if (cqk != null && hyMap.get(cqk.getHy()) != null) {
-				time.setTime(Util.valueOf(cqk.getNy()));
-				month = time.get(Calendar.MONTH);
-				result[1 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk
-						.getZj() + "";
-				result[2 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk
-						.getCqk2n() + "";
-				result[3 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk
-						.getCqk3n() + "";
-				result[4 + hyMap.get(cqk.getHy()).intValue() * 5][month] = cqk
-						.getCqk4njzq() + "";
-			}
-		}
+	@Override
+	public String[][] getCompareData(Date d, List<Company> comps) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		String[][] result = new String[5 * hyMap.size()][cal
+				.get(Calendar.MONTH) + 1];
+		setCompareData(result, d, cqkDao.getPreYearCQK(d, comps),
+				cqkDao.getCurYearCQK(d, comps));
 		return result;
 	}
 
 	@Override
 	public Date getLatestDate() {
 		CQK cqk = cqkDao.getLatestCQK();
-		if (null != cqk){
-			return (Date)Util.valueOf(cqk.getNy());
+		if (null != cqk) {
+			return (Date) Util.valueOf(cqk.getNy());
 		}
 		return null;
 	}
+
+	// return value format according to cqk
+	// hy one
+	// [... current year data...]
+	// hy two
+	// [... current year data...]
+	@Override
+	public String[][] getCqkData(Date d, List<Company> comps) {
+		List<CQK> list = cqkDao.getCqkData(d, comps);
+		String[][] result = new String[hyMap.size()][4];
+		setCqkData(result, list);
+		return result;
+	}
+
+	// return value format according to cqk
+	// hy one
+	// [... current year data...]
+	// hy two
+	// [... current year data...]
+	@Override
+	public String[][] getCqkData(Date d, Company comp) {
+		List<CQK> list = cqkDao.getCqkData(d, comp);
+		String[][] result = new String[hyMap.size()][4];
+		setCqkData(result, list);
+		return result;
+	}
+
 }

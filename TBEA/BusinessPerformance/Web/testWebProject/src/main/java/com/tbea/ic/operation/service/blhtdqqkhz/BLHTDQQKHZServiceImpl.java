@@ -14,17 +14,12 @@ import com.tbea.ic.operation.model.dao.blhtdqqkhz.BLHTDQQKHZDao;
 import com.tbea.ic.operation.model.entity.BLHTDQQKHZ;
 
 @Service
-@Transactional("transactionManager2")
+@Transactional("transactionManager")
 public class BLHTDQQKHZServiceImpl implements BLHTDQQKHZService {
 
 	@Autowired
 	private BLHTDQQKHZDao blDao;
 
-	@Override
-	public BLHTDQQKHZ getBLById(int id) {
-		return blDao.getById(id);
-	}
-	
 	
 	private int compareDateMonth(Date d1, Date d2){
 		Calendar cal1 = Calendar.getInstance();
@@ -32,40 +27,48 @@ public class BLHTDQQKHZServiceImpl implements BLHTDQQKHZService {
 		Calendar cal2 = Calendar.getInstance();
         cal2.setTime(d2);
         int delta = (cal1.get(Calendar.YEAR) - cal2.get(Calendar.YEAR)) * 12 + (cal1.get(Calendar.MONTH) - cal2.get(Calendar.MONTH));
-        return d1.after(d2)? delta : -delta;
+        return delta;
 	}
 	
-	//return value format
-	//current year's bl ye
-	//	[...Dqfkhfxsblye, Dqfkhfxsblfs (refer to BLHTDQQKHZ entity)...]
-	//current year's bl fs
-	//	[...Dqfkhfxsblye, Dqfkhfxsblfs (refer to BLHTDQQKHZ entity)...]
-	@Override
-	public String[][] getBlhtdqqk(Date date, Company comp){
-
-    	Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.MONTH, -1);
-	       
-        List<BLHTDQQKHZ> list = blDao.getBlAfterDate(cal, comp);
-
-		
-		String[][] result = new String[2][12]; 
-		
+	
+	
+	private String[][] setBlhtdqqk(String[][] result, Date date, List<BLHTDQQKHZ> list){		
 		BLHTDQQKHZ fourMonthLaterbl = null;
 		int monthDelta;
 		for (BLHTDQQKHZ bl : list){
 			monthDelta = compareDateMonth((Date)Util.valueOf(bl.getNy()), date);
 			if (monthDelta == -1){//n-1 month
-				result[0][0] = bl.getDqfkhfxsblye() + "";
-				result[0][1] = bl.getDqkhfxsblye() + "";
-				result[1][0] = bl.getDqfkhfxsblfs() + "";
-				result[1][1] = bl.getDqkhfxsblfs() + "";
+				
+				result[0][0] = 
+						Util.toDouble(result[0][0]) + 
+						Util.valueOf(bl.getDqfkhfxsblye()) + "";
+				result[0][1] = 
+						Util.toDouble(result[0][1]) + 
+						Util.valueOf(bl.getDqkhfxsblye()) + "";
+				result[1][0] = 
+						Util.toDouble(result[1][0]) + 
+						Util.valueOf(bl.getDqfkhfxsblfs()) + "";
+				result[1][1] = 
+						Util.toDouble(result[1][1]) + 
+						Util.valueOf(bl.getDqkhfxsblfs()) + "";
+				
 			} else if (monthDelta >= 0 && monthDelta < 4){//n, n+1, n+2, n+3 month
-				result[0][0 + 2 * (monthDelta + 1)] = bl.getDqblje() + "";
-				result[0][1 + 2 * (monthDelta + 1)] = bl.getDqblzyhkje()+ "";
-				result[1][0 + 2 * (monthDelta + 1)] = bl.getDqblfs() + "";
-				result[1][1 + 2 * (monthDelta + 1)] = bl.getDqblzyhkfs() + "";
+				result[0][0 + 2 * (monthDelta + 1)] = 
+						Util.toDouble(result[0][0 + 2 * (monthDelta + 1)]) + 
+						Util.valueOf(bl.getDqblje()) + "";
+
+				result[0][1 + 2 * (monthDelta + 1)] = 
+						Util.toDouble(result[0][1 + 2 * (monthDelta + 1)]) + 
+						Util.valueOf(bl.getDqblzyhkje()) + "";
+
+				result[1][0 + 2 * (monthDelta + 1)] = 
+						Util.toDouble(result[1][0 + 2 * (monthDelta + 1)]) + 
+						Util.valueOf(bl.getDqblfs()) + "";
+
+				result[1][1 + 2 * (monthDelta + 1)] = 
+						Util.toDouble(result[1][1 + 2 * (monthDelta + 1)]) + 
+						Util.valueOf(bl.getDqblzyhkfs()) + "";
+
 			} else {// >= n+4 month
 				if (fourMonthLaterbl == null){
 					fourMonthLaterbl = new BLHTDQQKHZ();
@@ -78,10 +81,22 @@ public class BLHTDQQKHZServiceImpl implements BLHTDQQKHZService {
 		}
 		
 		if (fourMonthLaterbl != null){
-			result[0][10] = fourMonthLaterbl.getDqblje() + "";
-			result[0][11] = fourMonthLaterbl.getDqblzyhkje()+ "";
-			result[1][10] = fourMonthLaterbl.getDqblfs() + "";
-			result[1][11] = fourMonthLaterbl.getDqblzyhkfs() + "";
+			result[0][10] = 
+					Util.toDouble(result[0][10]) + 
+					Util.valueOf(fourMonthLaterbl.getDqblje()) + "";
+
+			result[0][11] = 
+					Util.toDouble(result[0][11]) + 
+					Util.valueOf(fourMonthLaterbl.getDqblzyhkje()) + "";
+
+			result[1][10] = 
+					Util.toDouble(result[1][10]) + 
+					Util.valueOf(fourMonthLaterbl.getDqblfs()) + "";
+
+			result[1][11] = 
+					Util.toDouble(result[1][11]) + 
+					Util.valueOf(fourMonthLaterbl.getDqblzyhkfs()) + "";
+
 		} else{
 			result[0][10] = "--";
 			result[0][11] = "--";
@@ -94,33 +109,81 @@ public class BLHTDQQKHZServiceImpl implements BLHTDQQKHZService {
 	
 	
 	//return value format
+	//current year's bl ye
+	//	[...Dqfkhfxsblye, Dqfkhfxsblfs (refer to BLHTDQQKHZ entity)...]
+	//current year's bl fs
+	//	[...Dqfkhfxsblye, Dqfkhfxsblfs (refer to BLHTDQQKHZ entity)...]
+	@Override
+	public String[][] getBlhtdqqk(Date date, Company comp){
+    	Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.MONTH, -1);
+	       
+        List<BLHTDQQKHZ> list = blDao.getBlAfterDate(cal, comp);
+
+		String[][] result = new String[2][12]; 
+
+		setBlhtdqqk(result, date, list);
+		
+		return result;
+	}
+	
+	@Override
+	public String[][] getBlhtdqqk(Date d, List<Company> comps) {
+    	Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        cal.add(Calendar.MONTH, -1);
+        List<BLHTDQQKHZ> list = blDao.getBlAfterDate(cal, comps);
+		String[][] result = new String[2][12];
+		setBlhtdqqk(result, d, list);
+		return result;
+	}
+
+	
+	
+	private void setBlyeqs(String[][] result, Calendar cal,
+			List<BLHTDQQKHZ> list) {
+
+		int curYear = 0;
+		int month = 0;
+		Calendar time = Calendar.getInstance();
+		for (BLHTDQQKHZ bl : list) {
+			time.setTime(Util.valueOf(bl.getNy()));
+			if (time.get(Calendar.YEAR) < cal.get(Calendar.YEAR)) {
+				curYear = 0;
+			} else {
+				curYear = 1;
+			}
+			month = time.get(Calendar.MONTH);
+			result[curYear][month] = Util.toDouble(result[curYear][month])
+					+ bl.getDqfkhfxsblye() + bl.getDqkhfxsblye() + "";
+		}
+
+	}
+	
+	//return value format
 	//	[... previous year's blye from January to current month...]
 	//	[... current year's blye from January to current month...]
 	@Override
 	public String[][] getBlyeqs(Date date, Company comp){
-
     	Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-
 		List<BLHTDQQKHZ> list = blDao.getBltbbh(cal, comp);
-		
 		String[][] result = new String[2][cal.get(Calendar.MONTH) + 1]; 
-
-		Calendar time = Calendar.getInstance();
-		for (BLHTDQQKHZ bl : list){
-			time.setTime(Util.valueOf(bl.getNy()));
-			if (time.get(Calendar.YEAR) < cal.get(Calendar.YEAR)){
-				result[0][time.get(Calendar.MONTH)] =  "" + (bl.getDqfkhfxsblye() + bl.getDqkhfxsblye());
-			}
-			else{
-				result[1][time.get(Calendar.MONTH)] =  "" + (bl.getDqfkhfxsblye() + bl.getDqkhfxsblye());
-			}
-		}
-		
+		setBlyeqs(result, cal, list);
 		return result;
 	}
 
-
+	@Override
+	public String[][] getBlyeqs(Date d, List<Company> comps) {
+    	Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+		List<BLHTDQQKHZ> list = blDao.getBltbbh(cal, comps);
+		String[][] result = new String[2][cal.get(Calendar.MONTH) + 1]; 
+		setBlyeqs(result, cal, list);
+		return result;
+	}
+	
 	@Override
 	public Date getLatestDate() {
 		Calendar cal = Calendar.getInstance();
@@ -134,5 +197,4 @@ public class BLHTDQQKHZServiceImpl implements BLHTDQQKHZService {
 		}
 		return null;
 	}
-
 }

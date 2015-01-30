@@ -54,14 +54,24 @@ public class YSZKJGQKController {
 		
 		Date d = DateSelection.getDate(request);
 		CompanyType compType = CompanySelection.getCompany(request);
-		
+		Company comp = companyManager.getBMOrganization().getCompany(compType);
 		List<String[][]> result = new ArrayList<String[][]>();
-		result.add(service.getYszkjg(d, compType));
-		result.add(service.getWdqtbbh(d, compType));
-		result.add(service.getJetbbh(d, compType));
+		if (null == comp) {
+			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
+			if (null != comp) {
+				List<Company> comps = comp.getSubCompanys();
+				result.add(service.getYszkjg(d, comps));
+				result.add(service.getWdqtbbh(d, comps));
+				result.add(service.getJetbbh(d, comps));
+			}
+		}
+		else {
+			result.add(service.getYszkjg(d, comp));
+			result.add(service.getWdqtbbh(d, comp));
+			result.add(service.getJetbbh(d, comp));
+		}
 		
 		String jsonRet = JSONArray.fromObject(result).toString().replace("null", "0.00");
-		
 		return jsonRet;
 	}
 	
@@ -74,7 +84,6 @@ public class YSZKJGQKController {
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);
 		
-		Organization orgBM = companyManager.getBMOrganization();
 		List<Company> comps = new ArrayList<Company>();
 		comps.addAll(companyManager.getBMOrganization().getTopCompany());
 		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());

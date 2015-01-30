@@ -18,7 +18,7 @@ import com.tbea.ic.operation.model.entity.XLNWFKFS;
 import com.tbea.ic.operation.model.entity.YSZKJGQK;
 
 @Repository
-@Transactional("transactionManager2")
+@Transactional("transactionManager")
 public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		implements YSZKJGQKDao {
 
@@ -102,6 +102,55 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 			return yszks.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public List<YSZKJGQK> getYszkjg(Calendar cal, List<Company> comps) {
+		Query q = getEntityManager().createQuery(
+				"select y from YSZKJGQK y where y.ny = :date and y.qybh in (" + Util.toString(comps) + ")");
+		q.setParameter("date", Util.format(cal.getTime()));
+		return q.getResultList();
+	}
+
+	@Override
+	public List<YSZKJGQK> getWdqtbbh(Calendar cal, List<Company> comps) {
+		Query q = getEntityManager()
+				.createQuery(
+						"select y from YSZKJGQK y where y.ny >= :preYear and y.ny <= :preYearMonth or y.ny >= :curYear and y.ny <= :curYearMonth and y.qybh in (" + Util.toString(comps) + ")");
+		Calendar preYear = Calendar.getInstance();
+		preYear.set(cal.get(Calendar.YEAR) - 1, 0, 1);
+		Calendar preYearMonth = Calendar.getInstance();
+		preYearMonth.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH), 1);
+		Calendar curYear = Calendar.getInstance();
+		curYear.set(cal.get(Calendar.YEAR), 0, 1);
+
+		q.setParameter("preYear", Util.format(preYear.getTime()));
+		q.setParameter("preYearMonth", Util.format(preYearMonth.getTime()));
+		q.setParameter("curYear", Util.format(curYear.getTime()));
+		q.setParameter("curYearMonth", Util.format(cal.getTime()));
+
+		return q.getResultList();
+
+	}
+
+	@Override
+	public List<YSZKJGQK> getJetbbh(Calendar cal, List<Company> comps) {
+		Query q = getEntityManager()
+				.createQuery(
+						"select y from YSZKJGQK y where y.ny >= ?1 and y.ny <= ?2 or y.ny >= ?3 and y.ny <= ?4 and y.qybh in (" + Util.toString(comps) + ")");
+		Calendar preYear = Calendar.getInstance();
+		preYear.set(cal.get(Calendar.YEAR) - 1, 0, 1);
+		Calendar preYearMonth = Calendar.getInstance();
+		preYearMonth
+				.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH), 1);
+		Calendar curYear = Calendar.getInstance();
+		curYear.set(cal.get(Calendar.YEAR), 0, 1);
+
+		q.setParameter(1, Util.format(preYear.getTime()));
+		q.setParameter(2, Util.format(preYearMonth.getTime()));
+		q.setParameter(3, Util.format(curYear.getTime()));
+		q.setParameter(4, Util.format(cal.getTime()));
+		return q.getResultList();
 	}
 
 }

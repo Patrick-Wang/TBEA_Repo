@@ -20,4 +20,10 @@ public interface YSZKJGQKDao extends AbstractReadWriteDao<YSZKJGQK> {
 
 	YSZKJGQK getLatestYszkjg();
 
+	List<YSZKJGQK> getYszkjg(Calendar cal, List<Company> comps);
+
+	List<YSZKJGQK> getWdqtbbh(Calendar cal, List<Company> comps);
+
+	List<YSZKJGQK> getJetbbh(Calendar cal, List<Company> comps);
+
 }
