@@ -6,10 +6,10 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.local.ztyszkfxb.ZTYSZKFXBLocalDao;
 import com.tbea.datatransfer.model.dao.zjbyq.ztyszkfxb.ZTYSZKFXBBYQDao;
 import com.tbea.datatransfer.model.dao.zjxl.ztyszkfxb.ZTYSZKFXBXLDao;
-import com.tbea.datatransfer.model.entity.local.BLLocal;
 import com.tbea.datatransfer.model.entity.local.ZTYSZKFXBLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.ZTYSZKFXBBYQ;
 import com.tbea.datatransfer.model.entity.zjxl.ZTYSZKFXBXL;
@@ -157,41 +157,40 @@ public class ZTYSZKFXBTransferServiceImpl implements ZTYSZKFXBTransferService {
 				ztyszkfxbLocal.setQybh(3);
 				ztyszkfxbLocalDao.merge(ztyszkfxbLocal);
 			}
-			
+
 			// hb
 			SimpleDateFormat timeFormat = new SimpleDateFormat(
 					"yyyy-MM-dd HH:mm:ss");
 			ztyszkfxbLocalDao.deleteZTYSZKFXBLocalByQY(2);
 			WebServiceClient webServiceClient = new WebServiceClient();
 			List<Map<String, Object>> recList = webServiceClient.getRec(
-					"web_test", "123456", "yszk_ws_yszktz");
+					"web_test", "123456", "yszk_ws_ztyszkfxb");
 			for (Map<String, Object> recMap : recList) {
 				ztyszkfxbLocal = new ZTYSZKFXBLocal();
-				ztyszkfxbLocal.setGxrq(timeFormat.parse(String.valueOf(recMap
-						.get("gxrq"))));
+				ztyszkfxbLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("gxrq")));
 				ztyszkfxbLocal.setGsbm(String.valueOf(recMap.get("gsbm")));
-				ztyszkfxbLocal.setByzmyszkye(Double.valueOf(String.valueOf(recMap
-						.get("byzmyszkye"))));
-				ztyszkfxbLocal.setByblkzye(Double.valueOf(String.valueOf(recMap
-						.get("byblkzye"))));
-				ztyszkfxbLocal.setByyszksjs(Double.valueOf(String.valueOf(recMap
-						.get("byyszksjs"))));
-				ztyszkfxbLocal.setBysr(Double.valueOf(String.valueOf(recMap
-						.get("bysr"))));
-				ztyszkfxbLocal.setQntqzmyszkye(Double.valueOf(String.valueOf(recMap
-						.get("qntqzmyszkye"))));
-				ztyszkfxbLocal.setQntqblye(Double.valueOf(String.valueOf(recMap
-						.get("qntqblye"))));
-				ztyszkfxbLocal.setQntqyszksjs(Double.valueOf(String.valueOf(recMap
-						.get("qntqyszksjs"))));
-				ztyszkfxbLocal.setQntqsr(Double.valueOf(String.valueOf(recMap
-						.get("qntqsr"))));
-				ztyszkfxbLocal.setSfdrwc(String.valueOf(recMap
-						.get("sfdrwc")));
+				ztyszkfxbLocal.setByzmyszkye(CommonMethod.objectToDouble(recMap
+						.get("byzmyszkye")));
+				ztyszkfxbLocal.setByblkzye(CommonMethod.objectToDouble(recMap
+						.get("byblkzye")));
+				ztyszkfxbLocal.setByyszksjs(CommonMethod.objectToDouble(recMap
+						.get("byyszksjs")));
+				ztyszkfxbLocal.setBysr(CommonMethod.objectToDouble(recMap
+						.get("bysr")));
+				ztyszkfxbLocal.setQntqzmyszkye(CommonMethod
+						.objectToDouble(recMap.get("qntqzmyszkye")));
+				ztyszkfxbLocal.setQntqblye(CommonMethod.objectToDouble(recMap
+						.get("qntqblye")));
+				ztyszkfxbLocal.setQntqyszksjs(CommonMethod
+						.objectToDouble(recMap.get("qntqyszksjs")));
+				ztyszkfxbLocal.setQntqsr(CommonMethod.objectToDouble(recMap
+						.get("qntqsr")));
+				ztyszkfxbLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
 				ztyszkfxbLocal.setQybh(2);
 				ztyszkfxbLocalDao.merge(ztyszkfxbLocal);
 			}
-			
+
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.local.fkfs.byq.FKFSBYQGWLocalDao;
 import com.tbea.datatransfer.model.dao.zjbyq.fkfs.FKFSBYQGWBYQDao;
 import com.tbea.datatransfer.model.entity.local.FKFSBYQGWLocal;
@@ -142,46 +143,46 @@ public class FKFSBYQGWTransferServiceImpl implements FKFSBYQGWTransferService {
 					"web_test", "123456", "yszk_ws_htfkfstj_byq_gwfk");
 			for (Map<String, Object> recMap : recList) {
 				fkfsbyqgwLocal = new FKFSBYQGWLocal();
-				fkfsbyqgwLocal.setGxrq(timeFormat.parse(String.valueOf(recMap
-						.get("gxrq"))));
+				fkfsbyqgwLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("gxrq")));
 				fkfsbyqgwLocal.setGsbm(String.valueOf(recMap.get("gsbm")));
 				// fkfsbyqgwLocal.setNy(fkfsbyqgwXB.getNy());
 				fkfsbyqgwLocal.setGwhtddzlbs(Integer.valueOf(String
 						.valueOf(recMap.get("gwhtddzlbs"))));
-				fkfsbyqgwLocal.setGwhtddzlje(Double.valueOf(String.valueOf(
-						recMap.get("gwhtddzlje")).replace(",", "")));
+				fkfsbyqgwLocal.setGwhtddzlje(CommonMethod.objectToDouble(recMap
+						.get("gwhtddzlje")));
 				fkfsbyqgwLocal.setN3_4_2_1bs(Integer.valueOf(String
 						.valueOf(recMap.get("3_4_2_1bs"))));
-				fkfsbyqgwLocal.setN3_4_2_1je(Double.valueOf(String.valueOf(
-						recMap.get("3_4_2_1je")).replace(",", "")));
+				fkfsbyqgwLocal.setN3_4_2_1je(CommonMethod.objectToDouble(recMap
+						.get("3_4_2_1je")));
 				fkfsbyqgwLocal.setN3_4_2d5_0d5bs(Integer.valueOf(String
 						.valueOf(recMap.get("3_4_2d5_0d5bs"))));
-				fkfsbyqgwLocal.setN3_4_2d5_0d5je(Double.valueOf(String.valueOf(
-						recMap.get("3_4_2d5_0d5je")).replace(",", "")));
+				fkfsbyqgwLocal.setN3_4_2d5_0d5je(CommonMethod
+						.objectToDouble(recMap.get("3_4_2d5_0d5je")));
 				fkfsbyqgwLocal.setN0_9_0_1bs(Integer.valueOf(String
 						.valueOf(recMap.get("0_9_0_1bs"))));
-				fkfsbyqgwLocal.setN0_9_0_1je(Double.valueOf(String.valueOf(
-						recMap.get("0_9_0_1je")).replace(",", "")));
+				fkfsbyqgwLocal.setN0_9_0_1je(CommonMethod.objectToDouble(recMap
+						.get("0_9_0_1je")));
 				fkfsbyqgwLocal.setN1_4_4_1bs(Integer.valueOf(String
 						.valueOf(recMap.get("1_4_4_1bs"))));
-				fkfsbyqgwLocal.setN1_4_4_1je(Double.valueOf(String.valueOf(
-						recMap.get("1_4_4_1je")).replace(",", "")));
+				fkfsbyqgwLocal.setN1_4_4_1je(CommonMethod.objectToDouble(recMap
+						.get("1_4_4_1je")));
 				fkfsbyqgwLocal.setN1_4_4d5_0d5bs(Integer.valueOf(String
 						.valueOf(recMap.get("1_4_4d5_0d5bs"))));
-				fkfsbyqgwLocal.setN1_4_4d5_0d5je(Double.valueOf(String.valueOf(
-						recMap.get("1_4_4d5_0d5je")).replace(",", "")));
+				fkfsbyqgwLocal.setN1_4_4d5_0d5je(CommonMethod
+						.objectToDouble(recMap.get("1_4_4d5_0d5je")));
 				fkfsbyqgwLocal.setN0_10_0_0bs(Integer.valueOf(String
 						.valueOf(recMap.get("0_10_0_0bs"))));
-				fkfsbyqgwLocal.setN0_10_0_0je(Double.valueOf(String.valueOf(
-						recMap.get("0_10_0_0je")).replace(",", "")));
+				fkfsbyqgwLocal.setN0_10_0_0je(CommonMethod
+						.objectToDouble(recMap.get("0_10_0_0je")));
 				fkfsbyqgwLocal.setN9d5_0d5bs(Integer.valueOf(String
 						.valueOf(recMap.get("9d5_0d5bs"))));
-				fkfsbyqgwLocal.setN9d5_0d5je(Double.valueOf(String.valueOf(
-						recMap.get("9d5_0d5je")).replace(",", "")));
-				fkfsbyqgwLocal.setQtbs(Integer.valueOf(String.valueOf(recMap
-						.get("qtbs"))));
-				fkfsbyqgwLocal.setQtje(Double.valueOf(String.valueOf(
-						recMap.get("qtje")).replace(",", "")));
+				fkfsbyqgwLocal.setN9d5_0d5je(CommonMethod.objectToDouble(recMap
+						.get("9d5_0d5je")));
+				fkfsbyqgwLocal.setQtbs(CommonMethod.objectToInteger(recMap
+						.get("qtbs")));
+				fkfsbyqgwLocal.setQtje(CommonMethod.objectToDouble(recMap
+						.get("qtje")));
 				fkfsbyqgwLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
 				fkfsbyqgwLocal.setQybh(2);
 				fkfsbyqgwLocalDao.merge(fkfsbyqgwLocal);

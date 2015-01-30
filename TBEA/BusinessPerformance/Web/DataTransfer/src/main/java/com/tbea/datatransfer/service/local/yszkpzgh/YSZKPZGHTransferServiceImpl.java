@@ -1,16 +1,15 @@
 package com.tbea.datatransfer.service.local.yszkpzgh;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.local.yszkpzgh.YSZKPZGHLocalDao;
 import com.tbea.datatransfer.model.dao.zjbyq.yszkpzgh.YSZKPZGHBYQDao;
 import com.tbea.datatransfer.model.entity.local.YSZKPZGHLocal;
-import com.tbea.datatransfer.model.entity.local.YSZKTZLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.YSZKPZGHBYQ;
 import com.tbea.datatransfer.service.webservice.WebServiceClient;
 
@@ -120,7 +119,6 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 				yszkpzghLocalDao.merge(yszkpzghLocal);
 			}
 
-			
 			// hb
 			SimpleDateFormat timeFormat = new SimpleDateFormat(
 					"yyyy-MM-dd HH:mm:ss");
@@ -128,51 +126,47 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 			WebServiceClient webServiceClient = new WebServiceClient();
 			List<Map<String, Object>> recList = webServiceClient.getRec(
 					"web_test", "123456", "yszk_ws_yszkpzgh");
-			for (Map<String, Object> recMap : recList) {			
+			for (Map<String, Object> recMap : recList) {
 				yszkpzghLocal = new YSZKPZGHLocal();
-				yszkpzghLocal.setGxrq(timeFormat.parse(String.valueOf(recMap
-						.get("gxrq"))));
-				yszkpzghLocal.setYf(String.valueOf(recMap
-						.get("yf")));
-				yszkpzghLocal.setGsbm(String.valueOf(recMap
-						.get("gsbm")));
-				yszkpzghLocal.setSymljxssr(Double.valueOf(String.valueOf(recMap
-						.get("symljxssr"))));
-				yszkpzghLocal.setByjhxssr(Double.valueOf(String.valueOf(recMap
-						.get("byjhxssr"))));
-				yszkpzghLocal.setByysnkzb(Double.valueOf(String.valueOf(recMap
-						.get("byysnkzb"))));
-				yszkpzghLocal.setSymzmysye(Double.valueOf(String.valueOf(recMap
-						.get("symzmysye"))));
-				yszkpzghLocal.setByxssrxzysje(Double.valueOf(String.valueOf(recMap
-						.get("byxssrxzysje"))));
-				yszkpzghLocal.setBykjyszjhlje(Double.valueOf(String.valueOf(recMap
-						.get("bykjyszjhlje"))));
-				yszkpzghLocal.setByghblzjysje(Double.valueOf(String.valueOf(recMap
-						.get("byghblzjysje"))));
-				yszkpzghLocal.setByxzblhkcjysje(Double.valueOf(String.valueOf(recMap
-						.get("byxzblhkcjysje"))));
-				yszkpzghLocal.setSymykpwfhcsysje(Double.valueOf(String.valueOf(recMap
-						.get("symykpwfhcsysje"))));
-				yszkpzghLocal.setSymyfhwkpzjsjysje(Double.valueOf(String.valueOf(recMap
-						.get("symyfhwkpzjsjysje"))));
-				yszkpzghLocal.setSymblhkcjysje(Double.valueOf(String.valueOf(recMap
-						.get("symblhkcjysje"))));
-				yszkpzghLocal.setSymyscjysje(Double.valueOf(String.valueOf(recMap
-						.get("symyscjysje"))));
-				yszkpzghLocal.setQtcjys(Double.valueOf(String.valueOf(recMap
-						.get("qtcjys"))));
-				yszkpzghLocal.setByfhcpxzysje(Double.valueOf(String.valueOf(recMap
-						.get("byfhcpxzysje"))));
-				yszkpzghLocal.setByhkjdysje(Double.valueOf(String.valueOf(recMap
-						.get("byhkjdysje"))));
-				yszkpzghLocal.setSfdrwc(String.valueOf(recMap
-						.get("sfdrwc")));
+				yszkpzghLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("gxrq")));
+				yszkpzghLocal.setYf(String.valueOf(recMap.get("yf")));
+				yszkpzghLocal.setGsbm(String.valueOf(recMap.get("gsbm")));
+				yszkpzghLocal.setSymljxssr(CommonMethod.objectToDouble(recMap
+						.get("symljxssr")));
+				yszkpzghLocal.setByjhxssr(CommonMethod.objectToDouble(recMap
+						.get("byjhxssr")));
+				yszkpzghLocal.setByysnkzb(CommonMethod.objectToDouble(recMap
+						.get("byysnkzb")));
+				yszkpzghLocal.setSymzmysye(CommonMethod.objectToDouble(recMap
+						.get("symzmysye")));
+				yszkpzghLocal.setByxssrxzysje(CommonMethod
+						.objectToDouble(recMap.get("byxssrxzysje")));
+				yszkpzghLocal.setBykjyszjhlje(CommonMethod
+						.objectToDouble(recMap.get("bykjyszjhlje")));
+				yszkpzghLocal.setByghblzjysje(CommonMethod
+						.objectToDouble(recMap.get("byghblzjysje")));
+				yszkpzghLocal.setByxzblhkcjysje(CommonMethod
+						.objectToDouble(recMap.get("byxzblhkcjysje")));
+				yszkpzghLocal.setSymykpwfhcsysje(CommonMethod
+						.objectToDouble(recMap.get("symykpwfhcsysje")));
+				yszkpzghLocal.setSymyfhwkpzjsjysje(CommonMethod
+						.objectToDouble(recMap.get("symyfhwkpzjsjysje")));
+				yszkpzghLocal.setSymblhkcjysje(CommonMethod
+						.objectToDouble(recMap.get("symblhkcjysje")));
+				yszkpzghLocal.setSymyscjysje(CommonMethod.objectToDouble(recMap
+						.get("symyscjysje")));
+				yszkpzghLocal.setQtcjys(CommonMethod.objectToDouble(recMap
+						.get("qtcjys")));
+				yszkpzghLocal.setByfhcpxzysje(CommonMethod
+						.objectToDouble(recMap.get("byfhcpxzysje")));
+				yszkpzghLocal.setByhkjdysje(CommonMethod.objectToDouble(recMap
+						.get("byhkjdysje")));
+				yszkpzghLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
 				yszkpzghLocal.setQybh(2);
 				yszkpzghLocalDao.merge(yszkpzghLocal);
 			}
-			
-			
+
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

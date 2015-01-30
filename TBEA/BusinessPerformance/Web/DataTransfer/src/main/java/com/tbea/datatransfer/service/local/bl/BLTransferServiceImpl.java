@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.local.bl.BLLocalDao;
 import com.tbea.datatransfer.model.dao.zjbyq.bl.BLBYQDao;
 import com.tbea.datatransfer.model.dao.zjxl.bl.BLXLDao;
@@ -156,22 +157,19 @@ public class BLTransferServiceImpl implements BLTransferService {
 					"web_test", "123456", "yszk_ws_bl");
 			for (Map<String, Object> recMap : recList) {
 				blLocal = new BLLocal();
-				blLocal.setGxrq(timeFormat.parse(String.valueOf(recMap
-						.get("gxrq"))));
+				blLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("gxrq")));
 				blLocal.setBlbh(String.valueOf(recMap.get("blbh")));
 				blLocal.setHtbh(String.valueOf(recMap.get("htbh")));
-				blLocal.setBlrq(timeFormat.parse(String.valueOf(recMap
-						.get("blrq"))));
-				blLocal.setKxxz(Integer.valueOf(String.valueOf(recMap
-						.get("kxxz"))));
-				blLocal.setBlje(Double.valueOf(String.valueOf(
-						recMap.get("blje")).replace(",", "")));
-				blLocal.setBldqr(timeFormat.parse(String.valueOf(recMap
-						.get("bldqr"))));
-				blLocal.setBlhkje(Double.valueOf(String.valueOf(
-						recMap.get("blhkje")).replace(",", "")));
-				blLocal.setBlye(Double.valueOf(String.valueOf(
-						recMap.get("blye")).replace(",", "")));
+				blLocal.setBlrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("blrq")));
+				blLocal.setKxxz(CommonMethod.objectToInteger(recMap.get("kxxz")));
+				blLocal.setBlje(CommonMethod.objectToDouble(recMap.get("blje")));
+				blLocal.setBldqr(CommonMethod.objectToDate(timeFormat,
+						recMap.get("bldqr")));
+				blLocal.setBlhkje(CommonMethod.objectToDouble(recMap
+						.get("blhkje")));
+				blLocal.setBlye(CommonMethod.objectToDouble(recMap.get("blye")));
 				blLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
 				blLocal.setQybh(2);
 				blLocalDao.merge(blLocal);

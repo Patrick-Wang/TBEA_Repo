@@ -1,17 +1,16 @@
 package com.tbea.datatransfer.service.local.yszktz;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.local.yszktz.YSZKTZLocalDao;
 import com.tbea.datatransfer.model.dao.zjbyq.yszktz.YSZKTZBYQDao;
 import com.tbea.datatransfer.model.dao.zjxl.yszktz.YSZKTZXLDao;
 import com.tbea.datatransfer.model.entity.local.YSZKTZLocal;
-import com.tbea.datatransfer.model.entity.local.ZTYSZKFXBLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.YSZKTZBYQ;
 import com.tbea.datatransfer.model.entity.zjxl.YSZKTZXL;
 import com.tbea.datatransfer.service.webservice.WebServiceClient;
@@ -198,48 +197,41 @@ public class YSZKTZTransferServiceImpl implements YSZKTZTransferService {
 			yszktzLocalDao.deleteYSZKTZLocalByQY(2);
 			WebServiceClient webServiceClient = new WebServiceClient();
 			List<Map<String, Object>> recList = webServiceClient.getRec(
-					"web_test", "123456", "yszk_ws_ztyszkfxb");
-			for (Map<String, Object> recMap : recList) {			
-				
+					"web_test", "123456", "yszk_ws_yszktz");
+			for (Map<String, Object> recMap : recList) {
+
 				yszktzLocal = new YSZKTZLocal();
-				yszktzLocal.setGxrq(timeFormat.parse(String.valueOf(recMap
-						.get("gxrq"))));
-				yszktzLocal.setHtbh(String.valueOf(recMap
-						.get("htbh")));
-				yszktzLocal.setKhbh(String.valueOf(recMap
-						.get("Khbh")));
-				yszktzLocal.setKhmc(String.valueOf(recMap
-						.get("Khmc")));
-				yszktzLocal.setKhsshy(String.valueOf(recMap
-						.get("Khsshy")));
-				yszktzLocal.setKxlb(String.valueOf(recMap
-						.get("kxlb")));
-				yszktzLocal.setKxzt(String.valueOf(recMap
-						.get("kxzt")));
-				yszktzLocal.setYsje(Double.valueOf(String.valueOf(recMap
-						.get("ysje"))));
-				yszktzLocal.setDqrq(Date.valueOf(String.valueOf(recMap
-						.get("dqrq"))));
-				yszktzLocal.setYhxje(Double.valueOf(String.valueOf(recMap
-						.get("yhxje"))));
-				yszktzLocal.setYfhje(Double.valueOf(String.valueOf(recMap
-						.get("yfhje"))));
-				yszktzLocal.setFhrq(Date.valueOf(String.valueOf(recMap
-						.get("fhrq"))));
-				yszktzLocal.setYkpje(Double.valueOf(String.valueOf(recMap
-						.get("ykpje"))));
-				yszktzLocal.setKprq(Date.valueOf(String.valueOf(recMap
-						.get("kprq"))));
-				yszktzLocal.setYqyyfl(Integer.valueOf(String.valueOf(recMap
-						.get("yqyyfl"))));
+				yszktzLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("gxrq")));
+				yszktzLocal.setHtbh(String.valueOf(recMap.get("htbh")));
+				yszktzLocal.setKhbh(String.valueOf(recMap.get("Khbh")));
+				yszktzLocal.setKhmc(String.valueOf(recMap.get("Khmc")));
+				yszktzLocal.setKhsshy(String.valueOf(recMap.get("Khsshy")));
+				yszktzLocal.setKxlb(String.valueOf(recMap.get("kxlb")));
+				yszktzLocal.setKxzt(String.valueOf(recMap.get("kxzt")));
+				yszktzLocal.setYsje(CommonMethod.objectToDouble(recMap
+						.get("ysje")));
+				yszktzLocal.setDqrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("dqrq")));
+				yszktzLocal.setYhxje(CommonMethod.objectToDouble(recMap
+						.get("yhxje")));
+				yszktzLocal.setYfhje(CommonMethod.objectToDouble(recMap
+						.get("yfhje")));
+				yszktzLocal.setFhrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("fhrq")));
+				yszktzLocal.setYkpje(CommonMethod.objectToDouble(recMap
+						.get("ykpje")));
+				yszktzLocal.setKprq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("kprq")));
+				yszktzLocal.setYqyyfl(CommonMethod.objectToInteger(recMap
+						.get("yqyyfl")));
 				yszktzLocal.setSftgflsdqs(String.valueOf(recMap
 						.get("sftgflsdqs")));
-				yszktzLocal.setSfdrwc(String.valueOf(recMap
-						.get("sfdrwc")));
+				yszktzLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
 				yszktzLocal.setQybh(2);
 				yszktzLocalDao.merge(yszktzLocal);
 			}
-			
+
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

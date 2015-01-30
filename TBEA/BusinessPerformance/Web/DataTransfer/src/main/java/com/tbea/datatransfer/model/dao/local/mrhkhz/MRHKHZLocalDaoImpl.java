@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.entity.local.MRHKHZLocal;
 
 @Transactional("transactionManager")
@@ -51,14 +52,14 @@ public class MRHKHZLocalDaoImpl extends AbstractReadWriteDaoImpl<MRHKHZLocal>
 		query.setParameter("qybh", qybh);
 		try {
 			Object resultObject = query.getSingleResult();
-			result = Double.valueOf(String.valueOf(resultObject));
+			result = CommonMethod.objectToDouble(resultObject);
 		} catch (NoResultException noResultException) {
 			noResultException.printStackTrace();
 			result = 0.0D;
 		}
 		return result;
 	}
-	
+
 	@Override
 	public Object[] getYLJBCByQY(String date, int qybh) {
 		String sql = "Select sum(qzqbbc) as yljqbbc"
