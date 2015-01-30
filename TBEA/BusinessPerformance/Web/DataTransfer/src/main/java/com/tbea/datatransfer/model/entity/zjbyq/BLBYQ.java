@@ -1,7 +1,7 @@
 package com.tbea.datatransfer.model.entity.zjbyq;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ public class BLBYQ extends AbstractReadOnlyEntity implements Serializable {
 
 	private Date blrq;
 
-	private Double kxxz;
+	private Integer kxxz;
 
 	private Double blje;
 
@@ -83,11 +83,11 @@ public class BLBYQ extends AbstractReadOnlyEntity implements Serializable {
 		this.blrq = blrq;
 	}
 
-	public Double getKxxz() {
+	public Integer getKxxz() {
 		return kxxz;
 	}
 
-	public void setKxxz(Double kxxz) {
+	public void setKxxz(Integer kxxz) {
 		this.kxxz = kxxz;
 	}
 

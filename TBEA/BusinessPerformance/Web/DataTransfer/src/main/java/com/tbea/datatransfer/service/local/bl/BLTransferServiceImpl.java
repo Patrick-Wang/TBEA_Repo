@@ -1,6 +1,8 @@
 package com.tbea.datatransfer.service.local.bl;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +12,7 @@ import com.tbea.datatransfer.model.dao.zjxl.bl.BLXLDao;
 import com.tbea.datatransfer.model.entity.local.BLLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.BLBYQ;
 import com.tbea.datatransfer.model.entity.zjxl.BLXL;
+import com.tbea.datatransfer.service.webservice.WebServiceClient;
 
 @Transactional("transactionManager")
 public class BLTransferServiceImpl implements BLTransferService {
@@ -141,6 +144,36 @@ public class BLTransferServiceImpl implements BLTransferService {
 				blLocal.setBlye(blXB.getBlye());
 				blLocal.setSfdrwc(blXB.getSfdrwc());
 				blLocal.setQybh(3);
+				blLocalDao.merge(blLocal);
+			}
+
+			// hb
+			SimpleDateFormat timeFormat = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
+			blLocalDao.deleteBLLocalByQY(2);
+			WebServiceClient webServiceClient = new WebServiceClient();
+			List<Map<String, Object>> recList = webServiceClient.getRec(
+					"web_test", "123456", "yszk_ws_bl");
+			for (Map<String, Object> recMap : recList) {
+				blLocal = new BLLocal();
+				blLocal.setGxrq(timeFormat.parse(String.valueOf(recMap
+						.get("gxrq"))));
+				blLocal.setBlbh(String.valueOf(recMap.get("blbh")));
+				blLocal.setHtbh(String.valueOf(recMap.get("htbh")));
+				blLocal.setBlrq(timeFormat.parse(String.valueOf(recMap
+						.get("blrq"))));
+				blLocal.setKxxz(Integer.valueOf(String.valueOf(recMap
+						.get("kxxz"))));
+				blLocal.setBlje(Double.valueOf(String.valueOf(recMap
+						.get("blje"))));
+				blLocal.setBldqr(timeFormat.parse(String.valueOf(recMap
+						.get("bldqr"))));
+				blLocal.setBlhkje(Double.valueOf(String.valueOf(recMap
+						.get("blhkje"))));
+				blLocal.setBlye(Double.valueOf(String.valueOf(recMap
+						.get("blye"))));
+				blLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
+				blLocal.setQybh(2);
 				blLocalDao.merge(blLocal);
 			}
 
