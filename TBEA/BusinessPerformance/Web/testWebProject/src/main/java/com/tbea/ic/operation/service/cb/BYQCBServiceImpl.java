@@ -283,7 +283,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 			delta = -1;
 		}
 		jtzx[row][0] = valueOf(jtzx[row][0]) + byqcbzxdd.getCz() + "";
-		jtzx[row][1] = valueOf(jtzx[row][0]) + byqcbzxdd.getCz() - sczcb + "";
+		jtzx[row][1] = valueOf(jtzx[row][1]) + byqcbzxdd.getCz() - sczcb + "";
 		jtzx[row][2] = valueOf(jtzx[row][1]) / valueOf(jtzx[row][0]) + "";
 		
 		jtzx[row][3] = valueOf(jtzx[row][3]) + byqcbzxdd.getGgdj()
@@ -430,7 +430,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 	private void fillwgqk(String[][] jtzx, Integer row, CBBYQWGDD byqcbwgdd,
 			Double sczcb) {
 		jtzx[row][0] = valueOf(jtzx[row][0]) + byqcbwgdd.getSjcz() + "";
-		jtzx[row][1] = valueOf(jtzx[row][0]) + byqcbwgdd.getSjcz() - sczcb + "";
+		jtzx[row][1] = valueOf(jtzx[row][1]) + byqcbwgdd.getSjcz() - sczcb + "";
 		jtzx[row][2] = valueOf(jtzx[row][1]) / valueOf(jtzx[row][0]) + "";
 		
 		jtzx[row][3] = valueOf(jtzx[row][3]) + byqcbwgdd.getGgdj()

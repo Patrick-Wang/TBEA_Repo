@@ -19,7 +19,7 @@ import com.tbea.ic.operation.model.entity.BLHTDQQKHZ;
 import com.tbea.ic.operation.model.entity.ZTYSZKFX;
 
 @Repository
-@Transactional("transactionManager2")
+@Transactional("transactionManager")
 public class BLHTDQQKHZDaoImpl extends AbstractReadWriteDaoImpl<BLHTDQQKHZ> implements BLHTDQQKHZDao {
 
 	@Override

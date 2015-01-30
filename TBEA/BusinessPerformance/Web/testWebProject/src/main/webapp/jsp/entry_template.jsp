@@ -39,6 +39,7 @@
 <script src="../jsp/util.js" type="text/javascript"></script>
 <script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
 <script src="../jsp/dateSelector.js" type="text/javascript"></script>
+<script src="../jsp/companySelector.js" type="text/javascript"></script>
 <script src="../jsp/entry_template.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -48,6 +49,8 @@
         	  view.initInstance({
           				tableId : "table",
           				dateId:	"date",
+          				companyId: "company",
+          				topComps : ${topComps},
           				date : {
           					month : ${!empty month} ? '${month}' : undefined, 
           					year : ${year}
@@ -180,6 +183,9 @@ th.ui-th-ltr {
 					<tr>
 						<td>
 							<div id="date"></div>
+						<td>
+						<td>
+							<div id="company"></div>
 						<td>
 						<td><input id="update" type="button" value="更新"
 							style="width: 80px; margin-left: 10px;" onclick="view.updateUI()"></input>

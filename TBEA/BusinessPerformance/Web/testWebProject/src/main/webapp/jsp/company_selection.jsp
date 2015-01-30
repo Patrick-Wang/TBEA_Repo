@@ -35,7 +35,7 @@
 	<tr>
 
 		<td style="padding-right:5px"><select id="comp_category"
-			onchange="onComp_categorySelected(this, this.value)" style="width: 125px;">
+			onchange="onComp_categorySelected(this, this.value)" >
 				<c:forEach begin="0" end="${fn:length(topComp[0]) - 1}" var="i">
 					<c:choose>
 
@@ -59,14 +59,13 @@
 
 						<c:when test="${i == 0}">
 							<select id="subcomp${i}"
-								onchange="instance.onCompanySelected(this.value)"
-								style="width: 125px;">
+								onchange="instance.onCompanySelected(this.value)">
 						</c:when>
 
 						<c:otherwise>
 							<select id="subcomp${i}"
 								onchange="instance.onCompanySelected(this.value)"
-								style="width: 125px; display: none;">
+								display: none;">
 						</c:otherwise>
 
 

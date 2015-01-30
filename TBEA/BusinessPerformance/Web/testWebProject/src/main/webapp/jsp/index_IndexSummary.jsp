@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <p style="margin: 10px 0 0px 0"></p>
+<c:if test="${!sbqgb}">
 <div>
 	<h3>
 		指标汇总明细<a name="zbhz"> </a>
@@ -50,7 +51,7 @@
 		</div>
 	</div>
 </div>
-
+</c:if>
 <div>
 	<h3>
 		应收账款<a name="yszk"> </a>
@@ -195,7 +196,7 @@
 		<div class="thumb4">
 			<ul class="slides">
 				<li data-thumb="asset/img/example/bar1.png"><a
-					href="tbbzjqk/tbbzjqk.do" target="_blank"><img
+					href="../tbbzjqk/tbbzjqk.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>投标保证金情况</strong><br>投标保证金情况</span></a>
 				</li>
 			</ul>

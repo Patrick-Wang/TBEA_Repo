@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +19,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ZBType;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.entity.User;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
 
@@ -30,34 +35,18 @@ import com.tbea.ic.operation.service.entry.EntryService;
 public class EntryController {
 	
 	@Autowired
-	private EntryService service;
+	private EntryService entryService;
 	
 	@Autowired
 	private ApproveService approveService;
 	
-	@RequestMapping(value = "index.do", method = RequestMethod.GET)
-	public ModelAndView getIndexEntry(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		User usr = new User();
-		boolean hasPermission = service.hasEntryPlanPermission(usr);
-		map.put("entryPlan", hasPermission);
-		hasPermission = service.hasEntryPredictPermission(usr);
-		map.put("entryPredict", hasPermission);
-		hasPermission = approveService.hasApprovePlanPermission(usr);
-		map.put("approvePlan", hasPermission);
-		hasPermission = approveService.hasApprovePredictPermission(usr);
-		map.put("approvePredict", hasPermission);
-		return new ModelAndView("index", map);
-	}
-	
+
 	@RequestMapping(value = "zb.do", method = RequestMethod.GET)
 	public ModelAndView getZBEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Calendar date = Calendar.getInstance();
 		int month = date.get(Calendar.MONTH) + 1;
 		int year = date.get(Calendar.YEAR);
-		
 		
 		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("entryType")));
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -66,10 +55,29 @@ public class EntryController {
 			dateSel.select(map);
 		}
 		else{
-			
 			DateSelection dateSel = new DateSelection(year, month);
 			dateSel.select(map);
 		}
+		Account account = (Account) request.getSession(false).getAttribute("account");
+		
+		List<Company> comps = null;
+		
+		switch (entryType){
+			case QNJH:
+			case BY20JH:
+			case BY28JH:
+				comps = entryService.getValidJHCompanys(account);
+				break;
+				
+			case BY20YJ:
+			case BY28YJ:
+			case BYSJ:
+				comps = entryService.getValidSJCompanys(account);
+				break;	
+		}
+		
+		CompanySelection compSel = new CompanySelection(true, comps);
+		compSel.select(map);
 		
 		map.put("entryType", entryType.ordinal());
 //		User usr = new User();
@@ -84,28 +92,13 @@ public class EntryController {
 	@RequestMapping(value = "zb_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getZBEntryUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("entryType")));
+		CompanyType comp = CompanySelection.getCompany(request);
 		Date date = DateSelection.getDate(request);
-		User usr = new User();
+		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("entryType")));
+		Account account = (Account) request.getSession(false).getAttribute("account");
+
 		String[][] ret = null;
-		ret =  service.getZb(date, usr, entryType);
-//		switch (entryType){
-//			case ZBType.BY20:
-//				ret = service.get20Zb(date);
-//				break;
-//			case ZBType.BY28YJ:
-//				ret = service.get28Zb(date, usr);
-//				break;
-//			case BYSJ:
-//				ret = service.getBySJZb(date);
-//				break;
-//			case QNJH:
-//				ret = service.getByQNZb(date);
-//				break;
-//			default:
-//				break;
-//		}
-		
+		ret =  entryService.getZb(date, account, comp, entryType);
 		String zb = JSONArray.fromObject(ret).toString().replace("null", "");
 		return zb.getBytes("utf-8");
 	}
@@ -118,7 +111,7 @@ public class EntryController {
 		String data = request.getParameter("data");
 		boolean ret = false;
 		User usr = new User();
-		ret = service.updateZb(date, usr, JSONArray.fromObject(data), entryType);
+		ret = entryService.updateZb(date, usr, JSONArray.fromObject(data), entryType);
 		
 		
 //		switch (entryType){

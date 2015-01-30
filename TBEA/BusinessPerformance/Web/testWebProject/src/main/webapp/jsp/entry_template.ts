@@ -33,7 +33,8 @@ module entry_template {
         tableId: string;
         dateId: string;
         date?: Util.Date;
-        //entryType?: Util.EntyType;
+        companyId : string;
+        topComps: string[][];
         entryType?: Util.ZBType;
     }
 
@@ -50,6 +51,7 @@ module entry_template {
 
         private mTableData: Array<string[]>;
         private mDateSelector: Util.DateSelector;
+        private mCompanySelector: Util.CompanySelector;
         private mOpt: IViewOption;
         private mDataSet: Util.Ajax = new Util.Ajax("zb_update.do");
         private mSubmit: Util.Ajax = new Util.Ajax("zb_submit.do");
@@ -57,13 +59,14 @@ module entry_template {
         initInstance(opt: IViewOption) {
             this.mOpt = opt;
             this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+            this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.topComps);
             this.updateTitle();
             this.updateUI();
         }
 
         public updateUI() {
             var date = this.mDateSelector.getDate();
-            this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType })
+            this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId : this.mCompanySelector.getCompany() })
                 .then((data: any) => {
                     this.mTableData = data;
                     this.updateTitle();

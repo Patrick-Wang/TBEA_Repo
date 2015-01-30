@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%-- <%@page import="com.sony.controller.servlet.mail.SendLostPasswordFormBean"%> --%>
 
 <html>
@@ -21,21 +23,13 @@
 	function formSubmit() {
 		var usrName = $('#j_username').val();
 		var psw = $('#j_password').val();
-		if ("huanghanjie" == usrName && "hhj" == psw) {
-			$('.errors').hide();
-			//window.location.href = 'index.htm';
-			document.forms[0].submit();
-		} else if ("admin" == usrName && "1234" == psw) {
-			$('.errors').hide();
-			//window.location.href = 'index.htm';
-			document.forms[0].submit();
-		} else if ("qgb" == usrName && "1234" == psw) {
-			$('.errors').hide();
-			//window.location.href = 'index2.htm';
-			document.forms[0].submit();
-		} else {
+		if (null == usrName || "" == usrName || "" == psw || null == psw) {
 			$('.errors').show();
+		} else {
+			$('.errors').hide();
+			document.forms[0].submit();
 		}
+		
 		//window.location.href='index.htm';
 		//document.forms[0].submit();
 	};
@@ -53,7 +47,7 @@
 			<div>
 				<table>
 					<tr>
-						<td style="padding-top: 0px"><img src="images/login_logo.png"
+						<td style="padding-top: 0px"><img src="${pageContext.request.contextPath}/images/login_logo.png"
 							width="100%" border="0" height="130px"></td>
 					</tr>
 				</table>
@@ -78,7 +72,17 @@
 						type="password" name="j_password" id="j_password"
 						onkeydown="doSubmit(event)" /> <input type="hidden"
 						name="transmissionStr" id="transmissionStr" />
-					<div class="errors" style="display: none">用户名或密码错误，请重新输入。</div>
+					<c:choose>
+						<c:when test="${(!empty error) && error}">
+							<div class="errors">用户名或密码错误，请重新输入。</div>
+						</c:when>
+						<c:otherwise>
+							<div class="errors" style="display: none">用户名或密码错误，请重新输入。</div>
+						</c:otherwise>
+					</c:choose>
+					<c:if test="${(!empty error) && error}">
+					</c:if>
+
 					<div style="position: relative; height: 52px; margin-top: 10px;"
 						onclick="formSubmit();">
 						<span class="small-btn">登录</span>
@@ -95,7 +99,7 @@
 			<div align="center">
 				<table>
 					<tr>
-						<td><img src="jsp/point.png"></td>
+						<td><img src="${pageContext.request.contextPath}/jsp/point.png"></td>
 						<td>
 							<div style="font-size: 14px; font-weight: 400;">
 								提示：为了获得更好的浏览效果，建议您使用IE8.0及以上版本或chrome浏览器登陆本站点</div>

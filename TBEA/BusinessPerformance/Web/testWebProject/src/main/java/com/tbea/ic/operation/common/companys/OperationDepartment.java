@@ -10,7 +10,7 @@ class OperationDepartment extends AbstractOrganization {
 						.append(getCompany(CompanyType.SB, 1))
 						.append(getCompany(CompanyType.HB, 2))
 						.append(getCompany(CompanyType.XB, 3))
-						.append(getCompany(CompanyType.TB, 301))
+						.append(getCompany(CompanyType.TBGS, 301))
 						.append(getCompany(CompanyType.LL, 4))
 						.append(getCompany(CompanyType.XL, 5))
 						.append(getCompany(CompanyType.DL, 6)))

@@ -106,7 +106,9 @@ public class CompanySelection {
 		map.put("subComp", subComps);
 		map.put("onlytop", mTopOnly);
 		map.put("both", !mTopOnly);
-		map.put("firstCompany", name_ids[1][this.firstCompany]);
+		if (name_ids[1].length > 0){
+			map.put("firstCompany", name_ids[1][this.firstCompany]);
+		}
 		if (null != firstCompanyType){
 			map.put("firstCompanyType", firstCompanyType.ordinal());			
 		}
