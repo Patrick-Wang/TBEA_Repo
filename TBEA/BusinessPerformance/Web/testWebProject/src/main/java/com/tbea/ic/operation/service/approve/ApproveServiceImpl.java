@@ -4,18 +4,24 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.sf.json.JSONArray;
 
 import com.tbea.ic.operation.common.ZBType;
+import com.tbea.ic.operation.model.dao.qxgl.QXGLDao;
 import com.tbea.ic.operation.model.entity.User;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 
 @Service
 @Transactional("transactionManager")
 public class ApproveServiceImpl implements ApproveService {
 
+	@Autowired
+	QXGLDao qxglDao;
+	
 	@Override
 	public boolean unapproveZb(Date date, User usr, JSONArray fromObject,
 			ZBType entryType) {
@@ -31,7 +37,7 @@ public class ApproveServiceImpl implements ApproveService {
 	}
 
 	@Override
-	public List<String[][]> getZb(Date date, User usr, ZBType entryType) {
+	public List<String[][]> getZb(Date date, Account account, ZBType entryType) {
 		List<String[][]> ret = new ArrayList<String[][]>();
 		ret.add(new String[][]{
 		 {"1.00", "2.00", "3.00", "4.00", "4.00"},
@@ -59,15 +65,13 @@ public class ApproveServiceImpl implements ApproveService {
 	}
 
 	@Override
-	public boolean hasApprovePlanPermission(User usr) {
-		// TODO Auto-generated method stub
-		return true;
+	public boolean hasApprovePlanPermission(Account account) {
+		return qxglDao.getJhzshCount(account) > 0;
 	}
 
 	@Override
-	public boolean hasApprovePredictPermission(User usr) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean hasApprovePredictPermission(Account account) {
+		return qxglDao.getSjzshCount(account) > 0;
 	}
 
 }

@@ -28,13 +28,14 @@ var entry_template;
         View.prototype.initInstance = function (opt) {
             this.mOpt = opt;
             this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+            this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.topComps);
             this.updateTitle();
             this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
             var date = this.mDateSelector.getDate();
-            this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType }).then(function (data) {
+            this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId: this.mCompanySelector.getCompany() }).then(function (data) {
                 _this.mTableData = data;
                 _this.updateTitle();
                 _this.updateTable(_this.mOpt.tableId);

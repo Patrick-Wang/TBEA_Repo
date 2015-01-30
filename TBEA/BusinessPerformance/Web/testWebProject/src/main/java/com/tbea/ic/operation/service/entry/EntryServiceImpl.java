@@ -1,6 +1,10 @@
 package com.tbea.ic.operation.service.entry;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
 
@@ -9,22 +13,35 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ZBType;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.common.companys.Organization;
+import com.tbea.ic.operation.model.dao.qxgl.QXGLDao;
 import com.tbea.ic.operation.model.entity.Permission;
 import com.tbea.ic.operation.model.entity.User;
+import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.model.entity.jygk.QXGL;
 
 @Service
 @Transactional("transactionManager")
 public class EntryServiceImpl implements EntryService{
 
-	@Override
-	public String[][] getZb(Date date, User usr, ZBType entryType) {
-		return 
-				 new String[][]{
-				 {"1.00", "2.00", "3.00", "4.00", "4.00"},
-				 {"1.00", "2.00", "3.00", "4.00", "4.00"},
-				 {"1.00", "2.00", "3.00", "4.00", "4.00"}
-				 };
-	}
+	@Autowired
+	QXGLDao qxglDao;
+	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
+//	@Override
+//	public String[][] getZb(Date date, User usr, ZBType entryType) {
+//		return 
+//				 new String[][]{
+//				 {"1.00", "2.00", "3.00", "4.00", "4.00"},
+//				 {"1.00", "2.00", "3.00", "4.00", "4.00"},
+//				 {"1.00", "2.00", "3.00", "4.00", "4.00"}
+//				 };
+//	}
 
 	@Override
 	public boolean updateZb(Date date, User usr, JSONArray fromObject,
@@ -34,15 +51,46 @@ public class EntryServiceImpl implements EntryService{
 	}
 
 	@Override
-	public boolean hasEntryPlanPermission(User usr) {
-		// TODO Auto-generated method stub
-		return true;
+	public boolean hasEntryPlanPermission(Account account) {
+		return qxglDao.getJhzlrCount(account) > 0;
 	}
 
 	@Override
-	public boolean hasEntryPredictPermission(User usr) {
-		// TODO Auto-generated method stub
-		return true;
+	public boolean hasEntryPredictPermission(Account account) {	
+		return qxglDao.getSjzlrCount(account)> 0;
+	}
+
+	@Override
+	public List<Company> getValidJHCompanys(Account account) {
+		List<QXGL> qxgls = qxglDao.getJhzlr(account);
+		List<Company> comps = new ArrayList<Company>();
+		Organization org = companyManager.getBMDBOrganization();
+		for (QXGL qxgl : qxgls){
+			comps.add(org.getCompany(qxgl.getDwxx().getId()));
+		}
+		return comps;
+	}
+
+	@Override
+	public List<Company> getValidSJCompanys(Account account) {
+		List<QXGL> qxgls = qxglDao.getSjzlr(account);
+		List<Company> comps = new ArrayList<Company>();
+		Organization org = companyManager.getBMDBOrganization();
+		for (QXGL qxgl : qxgls){
+			comps.add(org.getCompany(qxgl.getDwxx().getId()));
+		}
+		return comps;
+	}
+
+	@Override
+	public String[][] getZb(Date date, Account account, CompanyType comp,
+			ZBType entryType) {
+		return 
+		 new String[][]{
+		 {"1.00", "2.00", "3.00", "4.00", "4.00"},
+		 {"1.00", "2.00", "3.00", "4.00", "4.00"},
+		 {"1.00", "2.00", "3.00", "4.00", "4.00"}
+		 };
 	}
 
 }

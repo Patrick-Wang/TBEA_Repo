@@ -31,6 +31,7 @@ import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.entity.Permission;
 import com.tbea.ic.operation.model.entity.User;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.cb.XLCBService;
 import com.tbea.ic.operation.service.entry.EntryService;
@@ -46,18 +47,18 @@ public class ApproveController {
 	@Autowired
 	private ApproveService service;
 	
-	@RequestMapping(value = "index.do", method = RequestMethod.GET)
-	public ModelAndView getIndexEntry(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		User usr = new User();
-		boolean hasPermission = service.hasApprovePlanPermission(usr);
-		map.put("approvePlan", hasPermission);
-		hasPermission = service.hasApprovePredictPermission(usr);
-		map.put("approvePredict", hasPermission);
-	
-		return new ModelAndView("approve_index", map);
-	}
+//	@RequestMapping(value = "index.do", method = RequestMethod.GET)
+//	public ModelAndView getIndexEntry(HttpServletRequest request,
+//			HttpServletResponse response) throws UnsupportedEncodingException {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		User usr = new User();
+//		boolean hasPermission = service.hasApprovePlanPermission(usr);
+//		map.put("approvePlan", hasPermission);
+//		hasPermission = service.hasApprovePredictPermission(usr);
+//		map.put("approvePredict", hasPermission);
+//	
+//		return new ModelAndView("approve_index", map);
+//	}
 	
 	@RequestMapping(value = "zb.do", method = RequestMethod.GET)
 	public ModelAndView getZBEntry(HttpServletRequest request,
@@ -71,8 +72,7 @@ public class ApproveController {
 			DateSelection dateSel = new DateSelection(year);
 			dateSel.select(map);
 		}
-		else{
-			
+		else{			
 			DateSelection dateSel = new DateSelection(year, month);
 			dateSel.select(map);
 		}
@@ -93,9 +93,9 @@ public class ApproveController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("approveType")));
 		Date date = DateSelection.getDate(request);
-		User usr = new User();
+		Account account = (Account) request.getSession(false).getAttribute("account");
 		List<String[][]> ret = null;
-		ret =  service.getZb(date, usr, entryType);
+		ret =  service.getZb(date, account, entryType);
 	
 		String zb = JSONArray.fromObject(ret).toString().replace("null", "");
 		return zb.getBytes("utf-8");

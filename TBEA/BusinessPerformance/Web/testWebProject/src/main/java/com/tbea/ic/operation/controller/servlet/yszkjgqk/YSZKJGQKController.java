@@ -2,12 +2,9 @@ package com.tbea.ic.operation.controller.servlet.yszkjgqk;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,13 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
-import com.tbea.ic.operation.service.cqk.CQKService;
-import com.tbea.ic.operation.service.yqkbhqs.YQKBHQSService;
 import com.tbea.ic.operation.service.yszkjgqk.YSZKJGQKService;
 
 @Controller
@@ -44,26 +38,27 @@ public class YSZKJGQKController {
 	private String view = "yszkjgqkb";
 	
 	
+//	private Company getCompany(CompanyType compType){
+//		Organization org = companyManager.getBMOrganization();
+//		Company comp = org.getCompany(compType);
+//		if (null == comp){
+//			org = companyManager.getVirtualYSZKOrganization();
+//			comp = org.getCompany(compType);
+//		}
+//		return comp;
+//	}
+	
 	@RequestMapping(value = "yszkjgqk_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getYqkbhqs_update(HttpServletRequest request,
 			HttpServletResponse response) {
-//		int month = Integer.parseInt(request.getParameter("month"));
-//		int year = Integer.parseInt(request.getParameter("year"));
-//		String companyId = request.getParameter("companyId");
-//		int cid = Integer.parseInt(companyId);
-//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
-//		Organization org = companyManager.getBMOrganization();
-//		Company comp = org.getCompany(CompanyType.valueOf(cid));
-		
 		
 		Date d = DateSelection.getDate(request);
-		Organization org = companyManager.getBMOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
+		CompanyType compType = CompanySelection.getCompany(request);
 		
 		List<String[][]> result = new ArrayList<String[][]>();
-		result.add(service.getYszkjg(d, comp));
-		result.add(service.getWdqtbbh(d, comp));
-		result.add(service.getJetbbh(d, comp));
+		result.add(service.getYszkjg(d, compType));
+		result.add(service.getWdqtbbh(d, compType));
+		result.add(service.getJetbbh(d, compType));
 		
 		String jsonRet = JSONArray.fromObject(result).toString().replace("null", "0.00");
 		
@@ -73,57 +68,19 @@ public class YSZKJGQKController {
 	@RequestMapping(value = "yszkjgqk.do", method = RequestMethod.GET)
 	public ModelAndView getYqkbhqs(HttpServletRequest request,
 			HttpServletResponse response) {
-//		Calendar date = Calendar.getInstance();  
-//		Date d = service.getLatestDate();
-//		if (null != d){
-//			date.setTime(d);
-//		}
-//		
-//		int month = date.get(Calendar.MONTH) + 1;
-//		int year = date.get(Calendar.YEAR);
 
 		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("month", month);
-//		map.put("year", year);
-		
+
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);
 		
-		
-		//Organization org = companyManager.getBMOrganization();
-		
-		Organization org = companyManager.getBMOrganization();
-		CompanySelection compSel = new CompanySelection(true, org.getTopCompany());
+		Organization orgBM = companyManager.getBMOrganization();
+		List<Company> comps = new ArrayList<Company>();
+		comps.addAll(companyManager.getBMOrganization().getTopCompany());
+		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 
-		
-//		
-//		List<Company> comps = org.getTopCompany();
-//		List<Company> existComps = new ArrayList<Company>();
-//		for (int i = 0; i < comps.size(); ++i){
-//			if (service.IsCompanyExist(comps.get(i))){
-//				existComps.add(comps.get(i));
-//			}
-//		}
-		
-//		String[][] name_ids = Util.getCompanyNameAndIds(comps);
-//		
-//		map.put("topComp", name_ids);
-		//map.put("topFirst", name_ids);
-//		List<String[][]> subComps = new ArrayList<String[][]>();
-//		for (int i = 0; i < org.getTopCompany().size(); ++i){
-//			name_ids = Util.getCompanyNameAndIds(org.getTopCompany().get(i).getSubCompanys());
-//			subComps.add(name_ids);
-//		}
-//		map.put("subComp", subComps);
-//		map.put("onlytop", true);
-//		map.put("both", false);
-		
-//		Organization org = companyManager.getOperationOrganization();
-//		String[][] name_ids = Util.getCompanyNameAndIds(org.getCompany(CompanyType.SBDCY).getSubCompanys());
-//		map.put("names", name_ids[0]);
-//		map.put("ids", name_ids[1]);
-//		map.put("company_size", name_ids[0].length);
 		return new ModelAndView(view, map);
 	}
 

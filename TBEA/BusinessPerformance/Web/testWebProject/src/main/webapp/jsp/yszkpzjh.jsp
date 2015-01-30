@@ -183,7 +183,7 @@ th.ui-th-column div {
 					<div style="display: block; height: 10px"></div>
 				</td>
 			</tr>
-			<tr id="${topComp[1][i]}" style="display:none;padding-top: 10px">
+			<tr id="${topComp[1][i]}" style="display: none; padding-top: 10px">
 				<td valign="middle" align="center">
 					<div class="companyname">
 						<h1>${topComp[0][i]}</h1>
@@ -211,41 +211,43 @@ th.ui-th-column div {
 					</div>
 				<td>
 			</tr>
-
-			<c:forEach begin="0" end="${fn:length(subComp[i][0]) - 1}" var="j">
-				<tr id="${subComp[i][1][j]}block">
-					<td>
-						<div style="height: 10px"></div>
-					</td>
-				</tr>
-				<tr id="${subComp[i][1][j]}" style="display:none;padding-top: 10px">
-					<td valign="middle" align="center">
-						<div class="companyname">
-							<h1>${subComp[i][0][j]}</h1>
-						</div>
-					</td>
-					<td valign="middle">
-						<div class="lxian"></div>
-					</td>
-					<td valign="middle">
-						<div id="list${subComp[i][1][j]}1" style="float: left;"></div>
-						<div style="float: left;">
-							<div style="float: left;">
-								<div id="list${subComp[i][1][j]}3"></div>
+			<c:if test="${fn:length(subComp[i][0]) > 0}">
+				<c:forEach begin="0" end="${fn:length(subComp[i][0]) - 1}" var="j">
+					<tr id="${subComp[i][1][j]}block">
+						<td>
+							<div style="height: 10px"></div>
+						</td>
+					</tr>
+					<tr id="${subComp[i][1][j]}"
+						style="display: none; padding-top: 10px">
+						<td valign="middle" align="center">
+							<div class="companyname">
+								<h1>${subComp[i][0][j]}</h1>
 							</div>
+						</td>
+						<td valign="middle">
+							<div class="lxian"></div>
+						</td>
+						<td valign="middle">
+							<div id="list${subComp[i][1][j]}1" style="float: left;"></div>
 							<div style="float: left;">
-
-								<div>
-									<div id="list${subComp[i][1][j]}2"></div>
+								<div style="float: left;">
+									<div id="list${subComp[i][1][j]}3"></div>
 								</div>
-								<div>
-									<div id="list${subComp[i][1][j]}4"></div>
+								<div style="float: left;">
+
+									<div>
+										<div id="list${subComp[i][1][j]}2"></div>
+									</div>
+									<div>
+										<div id="list${subComp[i][1][j]}4"></div>
+									</div>
 								</div>
 							</div>
-						</div>
-					<td>
-				</tr>
-			</c:forEach>
+						<td>
+					</tr>
+				</c:forEach>
+			</c:if>
 		</c:forEach>
 
 	</Table>

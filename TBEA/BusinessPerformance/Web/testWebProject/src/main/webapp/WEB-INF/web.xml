@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_3.xsd" version="2.3">
 	<display-name>Business Management</display-name>
 	<welcome-file-list>
-    <welcome-file>login.jsp</welcome-file>
+    <welcome-file>jsp/login.jsp</welcome-file>
   </welcome-file-list>
 	<listener>
 		<listener-class>org.springframework.web.util.WebAppRootListener
