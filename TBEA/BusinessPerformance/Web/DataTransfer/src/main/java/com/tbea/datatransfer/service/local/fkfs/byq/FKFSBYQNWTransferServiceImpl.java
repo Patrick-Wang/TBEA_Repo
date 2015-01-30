@@ -145,23 +145,23 @@ public class FKFSBYQNWTransferServiceImpl implements FKFSBYQNWTransferService {
 						recMap.get("gxrq")));
 				fkfsbyqnwLocal.setGsbm(String.valueOf(recMap.get("gsbm")));
 				// fkfsbyqnwLocal.setNy(fkfsbyqnwTB.getNy());
-				fkfsbyqnwLocal.setNwhtddzlbs(Integer.valueOf(String
+				fkfsbyqnwLocal.setNwhtddzlbs(CommonMethod.objectToInteger(String
 						.valueOf(recMap.get("nwhtddzlbs"))));
 				fkfsbyqnwLocal.setNwhtddzlje(CommonMethod.objectToDouble(recMap
 						.get("nwhtddzlje")));
-				fkfsbyqnwLocal.setN3_3_3_1bs(Integer.valueOf(String
+				fkfsbyqnwLocal.setN3_3_3_1bs(CommonMethod.objectToInteger(String
 						.valueOf(recMap.get("3_3_3_1bs"))));
 				fkfsbyqnwLocal.setN3_3_3_1je(CommonMethod.objectToDouble(recMap
 						.get("3_3_3_1je")));
-				fkfsbyqnwLocal.setN1_4_4_0d5_0d5bs(Integer.valueOf(String
+				fkfsbyqnwLocal.setN1_4_4_0d5_0d5bs(CommonMethod.objectToInteger(String
 						.valueOf(recMap.get("1_4_4_0d5_0d5bs"))));
 				fkfsbyqnwLocal.setN1_4_4_0d5_0d5je(CommonMethod
 						.objectToDouble(recMap.get("1_4_4_0d5_0d5je")));
-				fkfsbyqnwLocal.setN1_2_6d5_0d5bs(Integer.valueOf(String
+				fkfsbyqnwLocal.setN1_2_6d5_0d5bs(CommonMethod.objectToInteger(String
 						.valueOf(recMap.get("1_2_6d5_0d5bs"))));
 				fkfsbyqnwLocal.setN1_2_6d5_0d5je(CommonMethod
 						.objectToDouble(recMap.get("1_2_6d5_0d5je")));
-				fkfsbyqnwLocal.setN1_4_4d5_0d5bs(Integer.valueOf(String
+				fkfsbyqnwLocal.setN1_4_4d5_0d5bs(CommonMethod.objectToInteger(String
 						.valueOf(recMap.get("1_4_4d5_0d5bs"))));
 				fkfsbyqnwLocal.setN1_4_4d5_0d5je(CommonMethod
 						.objectToDouble(recMap.get("1_4_4d5_0d5je")));

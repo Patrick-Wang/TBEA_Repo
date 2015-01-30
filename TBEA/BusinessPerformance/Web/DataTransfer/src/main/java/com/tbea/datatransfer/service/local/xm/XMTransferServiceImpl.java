@@ -1,13 +1,17 @@
 package com.tbea.datatransfer.service.local.xm;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.local.xm.XMLocalDao;
 import com.tbea.datatransfer.model.dao.zjxl.xm.XMXLDao;
 import com.tbea.datatransfer.model.entity.local.XMLocal;
 import com.tbea.datatransfer.model.entity.zjxl.XMXL;
+import com.tbea.datatransfer.service.webservice.WebServiceClient;
 
 @Transactional("transactionManager")
 public class XMTransferServiceImpl implements XMTransferService {
@@ -68,6 +72,27 @@ public class XMTransferServiceImpl implements XMTransferService {
 				xmLocal.setKhhylx(xmXL.getKhhylx());
 				xmLocal.setGb(xmXL.getGb());
 				xmLocal.setQybh(5);
+				xmLocalDao.merge(xmLocal);
+			}
+			
+			// hb			
+			SimpleDateFormat timeFormat = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
+			xmLocalDao.deleteXMLocalByQY(2);
+			WebServiceClient webServiceClient = new WebServiceClient();
+			List<Map<String, Object>> recList = webServiceClient.getRec(
+					"web_test", "123456", "cb_ws_xm");
+			for (Map<String, Object> recMap : recList) {
+				xmLocal = new XMLocal();
+				xmLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("gxrq")));
+				xmLocal.setXmbh(String.valueOf(recMap.get("xmbh")));
+				xmLocal.setXmmc(String.valueOf(recMap.get("xmmc")));
+				xmLocal.setDdszdw(String.valueOf(recMap.get("ddszdw")));
+				xmLocal.setYhdwmc(String.valueOf(recMap.get("yhdwmc")));
+				xmLocal.setKhhylx(String.valueOf(recMap.get("khhylx")));
+				xmLocal.setGb(CommonMethod.objectToInteger(recMap.get("gb")));
+				xmLocal.setQybh(2);
 				xmLocalDao.merge(xmLocal);
 			}
 			result = true;

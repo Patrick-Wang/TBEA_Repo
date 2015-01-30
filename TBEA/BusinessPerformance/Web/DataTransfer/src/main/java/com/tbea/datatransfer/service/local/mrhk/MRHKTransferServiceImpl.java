@@ -1,6 +1,8 @@
 package com.tbea.datatransfer.service.local.mrhk;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +12,7 @@ import com.tbea.datatransfer.model.dao.zjxl.mrhk.MRHKXLDao;
 import com.tbea.datatransfer.model.entity.local.MRHKLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.MRHKBYQ;
 import com.tbea.datatransfer.model.entity.zjxl.MRHKXL;
+import com.tbea.datatransfer.service.webservice.WebServiceClient;
 
 @Transactional("transactionManager")
 public class MRHKTransferServiceImpl implements MRHKTransferService {
@@ -118,6 +121,7 @@ public class MRHKTransferServiceImpl implements MRHKTransferService {
 				mrhkLocal.setQybh(3);
 				mrhkLocalDao.merge(mrhkLocal);
 			}
+
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

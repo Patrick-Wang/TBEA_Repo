@@ -1,15 +1,19 @@
 package com.tbea.datatransfer.service.local.tbbzjxx;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.local.tbbzjxx.TBBZJXXLocalDao;
 import com.tbea.datatransfer.model.dao.zjbyq.tbbzjxx.TBBZJXXBYQDao;
 import com.tbea.datatransfer.model.dao.zjxl.tbbzjxx.TBBZJXXXLDao;
 import com.tbea.datatransfer.model.entity.local.TBBZJXXLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.TBBZJXXBYQ;
 import com.tbea.datatransfer.model.entity.zjxl.TBBZJXXXL;
+import com.tbea.datatransfer.service.webservice.WebServiceClient;
 
 @Transactional("transactionManager")
 public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
@@ -115,6 +119,31 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 				tbbzjxxLocal.setJe(tbbzjxxXB.getJe());
 				tbbzjxxLocal.setSfdrwc(tbbzjxxXB.getSfdrwc());
 				tbbzjxxLocal.setQybh(3);
+				tbbzjxxLocalDao.merge(tbbzjxxLocal);
+			}
+			
+			// hb
+			
+			SimpleDateFormat timeFormat = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
+			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(2);
+			WebServiceClient webServiceClient = new WebServiceClient();
+			List<Map<String, Object>> recList = webServiceClient.getRec(
+					"web_test", "123456", "yszk_ws_tbbzjxx");
+
+			for (Map<String, Object> recMap : recList) {
+				tbbzjxxLocal = new TBBZJXXLocal();
+				tbbzjxxLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
+						recMap.get("gxrq")));
+				tbbzjxxLocal.setGsbm(String.valueOf(recMap.get("gsbm")));
+				tbbzjxxLocal.setNf(CommonMethod.objectToInteger(recMap
+						.get("nf")));
+				tbbzjxxLocal.setYf(CommonMethod.objectToInteger(recMap
+						.get("yf")));
+				tbbzjxxLocal.setJe(CommonMethod.objectToDouble(recMap
+						.get("je")));
+				tbbzjxxLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
+				tbbzjxxLocal.setQybh(2);
 				tbbzjxxLocalDao.merge(tbbzjxxLocal);
 			}
 
