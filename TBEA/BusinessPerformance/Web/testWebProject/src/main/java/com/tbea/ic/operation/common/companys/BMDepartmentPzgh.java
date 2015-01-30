@@ -5,19 +5,21 @@ import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 class BMDepartmentPzgh extends AbstractOrganization {
 
 	public BMDepartmentPzgh() {
-		    append(getCompany(CompanyType.SB, 1)
+		append(
+				getCompany(CompanyType.SB, 1)
 						.append(getCompany(CompanyType.BYQC, 101))
 						.append(getCompany(CompanyType.ZTFGS, 103))
 						.append(getCompany(CompanyType.KJHGQ, 104))
-						.append(getCompany(CompanyType.SKGS, 107))
-			).append(
-					getCompany(CompanyType.HB, 2)
-						.append(getCompany(CompanyType.DQFGS, 201))
-			).append(
-					getCompany(CompanyType.XB, 3)
-						.append(getCompany(CompanyType.TB, 301))
+						.append(getCompany(CompanyType.SKGS, 107)))
+				.append(getCompany(CompanyType.HB, 2).append(
+						getCompany(CompanyType.DQFGS, 201)))
+				.append(getCompany(CompanyType.XB, 3)
+						.append(getCompany(CompanyType.TBGS, 301))
 						.append(getCompany(CompanyType.ZTGS, 302))
-						.append(getCompany(CompanyType.XBGS, 303)));
+						.append(getCompany(CompanyType.XBGS, 303)))
+				.append(getCompany(CompanyType.LL, 4))
+				.append(getCompany(CompanyType.XL, 5))
+				.append(getCompany(CompanyType.DL, 6));
 	}
 	
 //	@Override

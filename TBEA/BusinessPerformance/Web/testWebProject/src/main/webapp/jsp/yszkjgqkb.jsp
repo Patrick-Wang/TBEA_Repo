@@ -141,6 +141,8 @@ th.ui-th-ltr {
 	/* jqGrid columns name wrap  */
 	font-size: 14px;
 }
+
+
 </style>
 </head>
 <body>

@@ -7,6 +7,7 @@ import net.sf.json.JSONArray;
 
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.model.entity.User;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 
 public interface ApproveService {
 
@@ -16,10 +17,10 @@ public interface ApproveService {
 	boolean approveZb(Date date, User usr, JSONArray fromObject,
 			ZBType entryType);
 
-	List<String[][]> getZb(Date date, User usr, ZBType entryType);
+	List<String[][]> getZb(Date date, Account account, ZBType entryType);
 
-	boolean hasApprovePlanPermission(User usr);
+	boolean hasApprovePlanPermission(Account account);
 
-	boolean hasApprovePredictPermission(User usr);
+	boolean hasApprovePredictPermission(Account account);
 
 }

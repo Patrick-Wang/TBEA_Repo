@@ -19,7 +19,7 @@ module Util {
     }
 
     
-    export class ICompanySelectorOption{
+    export class ICompanySelectorOption{ 
         noneSelectedText : string = '项目公司';
         selectedText: string = '# 个项目公司被选中';       
     }
@@ -159,12 +159,12 @@ module Util {
         }
 
         public constructor(
-        multi : boolean, 
-        divId: string, 
-        topComps: string[][], 
-        firstComp?: string, 
-        subComps?: Array<string[][]>, 
-        opt ? : ICompanySelectorOption) {
+            multi : boolean, 
+            divId: string, 
+            topComps: string[][], 
+            firstComp?: string, 
+            subComps?: Array<string[][]>, 
+            opt ? : ICompanySelectorOption) {
             this.mMulti = multi;
             this.mCtrlId = divId + "_table";
             $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');

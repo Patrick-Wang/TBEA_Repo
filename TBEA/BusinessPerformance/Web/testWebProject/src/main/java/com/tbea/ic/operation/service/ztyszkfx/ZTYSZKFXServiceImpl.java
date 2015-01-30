@@ -35,7 +35,7 @@ public class ZTYSZKFXServiceImpl implements ZTYSZKFXService{
 		compMap.put(org.getCompany(CompanyType.SB).getId(), 0);
 		compMap.put(org.getCompany(CompanyType.HB).getId(), 1);
 		compMap.put(org.getCompany(CompanyType.XB).getId(), 2);
-		compMap.put(org.getCompany(CompanyType.TB).getId(), 3);
+		compMap.put(org.getCompany(CompanyType.TBGS).getId(), 3);
 		compMap.put(org.getCompany(CompanyType.LL).getId(), 5);
 		compMap.put(org.getCompany(CompanyType.XL).getId(), 6);
 		compMap.put(org.getCompany(CompanyType.DL).getId(), 7);

@@ -10,7 +10,7 @@ public class CompanyManager {
 		SB		("沈变公司"),
 		HB		("衡变公司"),
 		XB		("新变厂"),
-		TB		("天变公司"),	
+		//TB		("天变公司"),	
 		LL		("鲁缆公司"),
 		XL		("新缆厂"),
 		DL		("德缆公司"),
@@ -87,16 +87,27 @@ public class CompanyManager {
 		GJYWB	("国际业务部"),
 		FLSWB	("法律事务部"),
 		DYCJGJWLMYYXGS	("德阳川疆国际物流贸易有限公司"),
-		XNDQGS	("西南电气公司");
+		XNDQGS	("西南电气公司"),
+		
+		//非正式公司
+		DBSBDCYJT("东北输变电产业集团"),
+		NFSBDCYJT("南方输变电产业集团"),
+		XBCZT("新变厂整体"),
+		BYQCY("变压器产业"),
+		XLCY("线缆产业"),
+		SBDCYJT("输变电产业集团");
 
-	
-
-		private final String value;
+		private String value;
 
 		CompanyType(String value) {
 			this.value = value;
 		}
 
+		public CompanyType setValue(String value){
+			this.value = value;
+			return this;
+		}
+		
 		public String getValue() {
 			return value;
 		}
@@ -121,7 +132,14 @@ public class CompanyManager {
 	
 	@Resource(type=BMDepartmentDB.class)
 	Organization BMDB;
+	
+	Organization virtualYSZK = new VirtualYSZKOrganization(new BMDepartment());
  
+	
+	public Organization getVirtualYSZKOrganization() {
+		return virtualYSZK;
+	}
+	
 	public Organization getBMDBOrganization() {
 		return BMDB;
 	}
