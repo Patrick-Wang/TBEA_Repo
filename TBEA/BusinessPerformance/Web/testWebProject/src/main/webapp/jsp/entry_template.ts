@@ -1,5 +1,6 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+/// <reference path="dateSelector.ts" />
 declare var echarts;
 declare var $;
 module entry_template {

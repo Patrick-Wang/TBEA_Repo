@@ -1,6 +1,8 @@
 package com.tbea.datatransfer.service.local.htxx;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +12,7 @@ import com.tbea.datatransfer.model.dao.zjxl.htxx.HTXXXLDao;
 import com.tbea.datatransfer.model.entity.local.HTXXLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.HTXXBYQ;
 import com.tbea.datatransfer.model.entity.zjxl.HTXXXL;
+import com.tbea.datatransfer.service.webservice.WebServiceClient;
 
 @Transactional("transactionManager")
 public class HTXXTransferServiceImpl implements HTXXTransferService {
@@ -158,6 +161,33 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 				htxxLocal.setHtzt(htxxXB.getHtzt());
 				htxxLocal.setSfdrwc(htxxXB.getSfdrwc());
 				htxxLocal.setQybh(3);
+				htxxLocalDao.merge(htxxLocal);
+			}
+			
+			// hb
+			SimpleDateFormat timeFormat = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
+			htxxLocalDao.deleteHTXXLocalByQY(2);
+			WebServiceClient webServiceClient = new WebServiceClient();
+			List<Map<String, Object>> recList = webServiceClient.getRec(
+					"web_test", "123456", "yszk_ws_htxx");
+			for (Map<String, Object> recMap : recList) {
+				htxxLocal = new HTXXLocal();
+				htxxLocal.setGxrq(timeFormat.parse(String.valueOf(recMap
+						.get("gxrq"))));
+				htxxLocal.setHtbh(String.valueOf(recMap.get("htbh")));
+				htxxLocal.setXmxx(String.valueOf(recMap.get("Xmxx")));
+				htxxLocal.setSspq(String.valueOf(recMap.get("sspq")));
+				htxxLocal.setKhbh(String.valueOf(recMap.get("Khbh")));
+				htxxLocal.setKhmc(String.valueOf(recMap.get("khmc")));
+				htxxLocal.setKhsshy(String.valueOf(recMap.get("khsshy")));
+				htxxLocal.setQdrq(timeFormat.parse(String.valueOf(recMap.get("qdrq"))));
+				htxxLocal.setCpje(Double.valueOf(String.valueOf(recMap.get("cpje"))));
+				htxxLocal.setFy(Double.valueOf(String.valueOf(recMap.get("fy"))));
+				htxxLocal.setZje(Double.valueOf(String.valueOf(recMap.get("zje"))));
+				htxxLocal.setHtzt(String.valueOf(recMap.get("htzt")));
+				htxxLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
+				htxxLocal.setQybh(2);
 				htxxLocalDao.merge(htxxLocal);
 			}
 
