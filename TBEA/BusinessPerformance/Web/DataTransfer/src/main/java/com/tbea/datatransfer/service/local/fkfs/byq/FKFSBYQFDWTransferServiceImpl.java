@@ -1,6 +1,8 @@
 package com.tbea.datatransfer.service.local.fkfs.byq;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +10,7 @@ import com.tbea.datatransfer.model.dao.local.fkfs.byq.FKFSBYQFDWLocalDao;
 import com.tbea.datatransfer.model.dao.zjbyq.fkfs.FKFSBYQFDWBYQDao;
 import com.tbea.datatransfer.model.entity.local.FKFSBYQFDWLocal;
 import com.tbea.datatransfer.model.entity.zjbyq.FKFSBYQFDWBYQ;
+import com.tbea.datatransfer.service.webservice.WebServiceClient;
 
 @Transactional("transactionManager")
 public class FKFSBYQFDWTransferServiceImpl implements FKFSBYQFDWTransferService {
@@ -135,7 +138,56 @@ public class FKFSBYQFDWTransferServiceImpl implements FKFSBYQFDWTransferService 
 				fkfsbyqfdwLocal.setXkxhhtbs(fkfsbyqfdwXB.getXkxhhtbs());
 				fkfsbyqfdwLocal.setXkxhhtje(fkfsbyqfdwXB.getXkxhhtje());
 				fkfsbyqfdwLocal.setSfdrwc(fkfsbyqfdwXB.getSfdrwc());
-				fkfsbyqfdwLocal.setQybh(1);
+				fkfsbyqfdwLocal.setQybh(3);
+				fkfsbyqfdwLocalDao.merge(fkfsbyqfdwLocal);
+			}
+			// hb
+			SimpleDateFormat timeFormat = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
+			fkfsbyqfdwLocalDao.deleteFKFSBYQFDWLocalByQY(2);
+			WebServiceClient webServiceClient = new WebServiceClient();
+			List<Map<String, Object>> recList = webServiceClient.getRec(
+					"web_test", "123456", "yszk_ws_htfkfstj_byq_fdw");
+			for (Map<String, Object> recMap : recList) {
+				fkfsbyqfdwLocal = new FKFSBYQFDWLocal();
+				fkfsbyqfdwLocal.setGxrq(timeFormat.parse(String.valueOf(recMap
+						.get("gxrq"))));
+				fkfsbyqfdwLocal.setGsbm(String.valueOf(recMap.get("gsbm")));
+				// fkfsbyqfdwLocal.setNy(fkfsbyqfdwTB.getNy());
+				fkfsbyqfdwLocal.setFdwhtddzlbs(Integer.valueOf(String
+						.valueOf(recMap.get("fdwhtddzlbs"))));
+				fkfsbyqfdwLocal.setFdwhtddzlje(Double.valueOf(String
+						.valueOf(recMap.get("fdwhtddzlje"))));
+				fkfsbyqfdwLocal.setWyfkhtbs(Integer.valueOf(String
+						.valueOf(recMap.get("wyfkhtbs"))));
+				fkfsbyqfdwLocal.setWyfkhtje(Double.valueOf(String
+						.valueOf(recMap.get("wyfkhtje"))));
+				fkfsbyqfdwLocal.setYfkxybfzshtbs(Integer.valueOf(String
+						.valueOf(recMap.get("yfkxybfzshtbs"))));
+				fkfsbyqfdwLocal.setYfkxybfzshtje(Double.valueOf(String
+						.valueOf(recMap.get("yfkxybfzshtje"))));
+				fkfsbyqfdwLocal.setYfkzbfzsdsszjhtbs(Integer.valueOf(String
+						.valueOf(recMap.get("yfkzbfzsdsszjhtbs"))));
+				fkfsbyqfdwLocal.setYfkzbfzsdsszjhtje(Double.valueOf(String
+						.valueOf(recMap.get("yfkzbfzsdsszjhtje"))));
+				fkfsbyqfdwLocal.setHwjfhfkblxybfzbshtbs(Integer.valueOf(String
+						.valueOf(recMap.get("hwjfhfkblxybfzbshtbs"))));
+				fkfsbyqfdwLocal.setHwjfhfkblxybfzbshtje(Double.valueOf(String
+						.valueOf(recMap.get("hwjfhfkblxybfzbshtje"))));
+				fkfsbyqfdwLocal.setWddsjhtbs(Integer.valueOf(String
+						.valueOf(recMap.get("wddsjhtbs"))));
+				fkfsbyqfdwLocal.setWddsjhtje(Double.valueOf(String
+						.valueOf(recMap.get("wddsjhtje"))));
+				fkfsbyqfdwLocal.setZbqdysegyhtbs(Integer.valueOf(String
+						.valueOf(recMap.get("zbqdysegyhtbs"))));
+				fkfsbyqfdwLocal.setZbqdysegyhtje(Double.valueOf(String
+						.valueOf(recMap.get("zbqdysegyhtje"))));
+				fkfsbyqfdwLocal.setXkxhhtbs(Integer.valueOf(String
+						.valueOf(recMap.get("xkxhhtbs"))));
+				fkfsbyqfdwLocal.setXkxhhtje(Double.valueOf(String
+						.valueOf(recMap.get("xkxhhtje"))));
+				fkfsbyqfdwLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
+				fkfsbyqfdwLocal.setQybh(2);
 				fkfsbyqfdwLocalDao.merge(fkfsbyqfdwLocal);
 			}
 			result = true;

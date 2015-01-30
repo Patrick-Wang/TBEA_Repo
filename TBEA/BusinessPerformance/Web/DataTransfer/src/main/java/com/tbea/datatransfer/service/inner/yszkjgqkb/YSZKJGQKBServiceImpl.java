@@ -1,6 +1,6 @@
 package com.tbea.datatransfer.service.inner.yszkjgqkb;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;

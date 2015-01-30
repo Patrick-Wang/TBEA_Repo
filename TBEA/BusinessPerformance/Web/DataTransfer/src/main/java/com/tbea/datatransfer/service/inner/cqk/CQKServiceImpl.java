@@ -1,6 +1,6 @@
 package com.tbea.datatransfer.service.inner.cqk;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
