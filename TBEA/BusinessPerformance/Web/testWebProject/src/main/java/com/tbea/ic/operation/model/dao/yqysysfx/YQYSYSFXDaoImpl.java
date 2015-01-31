@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.YQYSYSFX;
 import com.tbea.ic.operation.model.entity.local.YQK;
 
@@ -26,8 +28,15 @@ public class YQYSYSFXDaoImpl extends AbstractReadWriteDaoImpl<YQYSYSFX> implemen
 	}
 
 	@Override
-	public List<YQYSYSFX> getYqysysfxList() {
-		Query q = this.getEntityManager().createQuery("select y from YQYSYSFX y");
+	public List<YQYSYSFX> getYqysysfxList(Company comp) {
+		Query q = this.getEntityManager().createQuery("select y from YQYSYSFX y where y.qybh = :id");
+		q.setParameter("id", comp.getId());
+		return q.getResultList();
+	}
+
+	@Override
+	public List<YQYSYSFX> getYqysysfxList(List<Company> comps) {
+		Query q = this.getEntityManager().createQuery("select y from YQYSYSFX y where y.qybh in (" + Util.toString(comps) + ")");
 		return q.getResultList();
 	}
 

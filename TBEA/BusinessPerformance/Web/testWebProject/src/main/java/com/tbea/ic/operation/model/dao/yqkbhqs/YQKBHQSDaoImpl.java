@@ -58,4 +58,22 @@ public class YQKBHQSDaoImpl extends AbstractReadWriteDaoImpl<YQKBHQS> implements
 		return null;
 	}
 
+	@Override
+	public List<YQKBHQS> getYqkbhqsOfThisYear(Calendar cur,
+			List<Company> comps) {
+		 
+
+		Query q = getEntityManager().createQuery(
+				"select y from YQKBHQS y where y.ny >= ?1 and y.ny <= ?2 and y.qybh in (" + Util.toString(comps) + ")");
+		Calendar yearBegin = Calendar.getInstance();
+		yearBegin.set(cur.get(Calendar.YEAR), 0, 1);
+		Calendar yearEnd = Calendar.getInstance();
+		yearEnd.set(cur.get(Calendar.YEAR), 11, 1);
+		String timeBegin = Util.format(yearBegin.getTime());
+		String timeEnd = Util.format(yearEnd.getTime());
+		q.setParameter(1, timeBegin);
+		q.setParameter(2, timeEnd);
+		return q.getResultList();
+	}
+
 }

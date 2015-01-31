@@ -94,4 +94,44 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
 		return null;
 	}
 
+
+	@Override
+	public List<CQK> getCqkData(Date d, List<Company> comps) {
+		Query q = getEntityManager().createQuery("select c from CQK c where c.ny = :date and c.qybh in (" + Util.toString(comps) + ")");
+		Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+		q.setParameter("date", Util.format(d));
+		return  q.getResultList();
+	}
+
+
+	@Override
+	public List<CQK> getCurYearCQK(Date d, List<Company> comps) {
+		Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        Calendar curYear = Calendar.getInstance();
+        curYear.set(cal.get(Calendar.YEAR), 0, 1);
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), 1);
+        Query q = getEntityManager().createQuery("select c from CQK c where c.ny >= ?1 and c.ny <= ?2 and c.qybh in (" + Util.toString(comps) + ")");
+		q.setParameter(1, Util.format(curYear.getTime()));
+		q.setParameter(2, Util.format(d));
+
+		return q.getResultList();
+	}
+
+
+	@Override
+	public List<CQK> getPreYearCQK(Date d, List<Company> comps) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		Calendar preYear = Calendar.getInstance();
+        preYear.set(cal.get(Calendar.YEAR) - 1, 1, 1);
+        Calendar preYearMonth = Calendar.getInstance();
+        preYearMonth.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH), 1);
+        Query q = getEntityManager().createQuery("select c from CQK c where c.ny >= ?1 and c.ny <= ?2 and c.qybh in (" + Util.toString(comps) + ")");
+		q.setParameter(1, Util.format(preYear.getTime()));
+		q.setParameter(2, Util.format(preYearMonth.getTime()));
+		return q.getResultList();
+	}
+
 }

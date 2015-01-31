@@ -25,4 +25,10 @@ public interface CQKDao extends AbstractReadWriteDao<com.tbea.ic.operation.model
 
 	CQK getLatestCQK();
 
+	List<CQK> getCqkData(Date d, List<Company> comps);
+
+	List<CQK> getCurYearCQK(Date d, List<Company> comps);
+
+	List<CQK> getPreYearCQK(Date d, List<Company> comps);
+
 }

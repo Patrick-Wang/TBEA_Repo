@@ -41,34 +41,32 @@ public class CQKController {
 
 	private String commandName = "result";
 
-//	@RequestMapping(value = "importCQK.do", method = RequestMethod.GET)
-//	public ModelAndView importCQK(HttpServletRequest request,
-//			HttpServletResponse response) {
-//		boolean result = cqkService.importCQK();
-//		// System.out.println("result:" + result);
-//		return new ModelAndView(view, commandName, result);
-//	}
-	
+
 	
 	@RequestMapping(value = "cqk_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getBlhtdqqkhzbById_update(HttpServletRequest request,
 			HttpServletResponse response) {
-//		int month = Integer.parseInt(request.getParameter("month"));
-//		int year = Integer.parseInt(request.getParameter("year"));
-//		String companyId = request.getParameter("companyId");
-//		int cid = Integer.parseInt(companyId);
-//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
-//		
-		
+
 		Date d = DateSelection.getDate(request);
-		Organization org = companyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
-		
-//		Organization org = companyManager.getOperationOrganization();
-//		Company comp = org.getCompany(CompanyType.valueOf(cid));
+		CompanyType compType = CompanySelection.getCompany(request);
 		List<String[][]> result = new ArrayList<String[][]>();
+		Company comp = companyManager.getOperationOrganization().getCompany(compType);
+		if (null == comp) {
+			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
+			if (null != comp) {
+				result.add(cqkService.getCqkData(d, comp.getSubCompanys()));
+				result.add(cqkService.getCompareData(d, comp.getSubCompanys()));
+			}
+		}
+		else {
+			result.add(cqkService.getCqkData(d, comp));
+			result.add(cqkService.getCompareData(d, comp));
+		}
+		
+		
 		result.add(cqkService.getCqkData(d, comp));
 		result.add(cqkService.getCompareData(d, comp));
+	
 		String cqkResult = JSONArray.fromObject(result).toString().replace("null", "0.00");
 
 		return cqkResult;
@@ -85,10 +83,12 @@ public class CQKController {
 		DateSelection dateSel = new DateSelection(cqkService.getLatestDate(), true, false);
 		dateSel.select(map);
 		
-		Organization org = companyManager.getOperationOrganization();
-		CompanySelection compSelection = new CompanySelection(true,
-				org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		compSelection.select(map);
+		List<Company> comps = new ArrayList<Company>();
+		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanys());
+		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
+		CompanySelection compSel = new CompanySelection(true, comps);
+		compSel.select(map);
+
 
 		return new ModelAndView("cqk", map);
 	}

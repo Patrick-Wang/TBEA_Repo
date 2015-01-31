@@ -17,4 +17,8 @@ public interface BLHTDQQKHZDao extends AbstractReadWriteDao<BLHTDQQKHZ> {
 
 	BLHTDQQKHZ getLatestBl(Date d);
 
+	List<BLHTDQQKHZ> getBlAfterDate(Calendar cal, List<Company> comps);
+
+	List<BLHTDQQKHZ> getBltbbh(Calendar cal, List<Company> comps);
+
 }
