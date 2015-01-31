@@ -58,18 +58,19 @@ var approve_template;
         View.prototype.getTitles = function () {
             var titles = null;
             switch (this.mOpt.approveType) {
-                case 0 /* QNJH */:
+                case Util.ZBType.QNJH:
                     titles = this.transposition([["全年计划"]]);
                     break;
-                case 1 /* BY20JH */:
-                case 3 /* BY20YJ */:
+                case Util.ZBType.YDJDMJH:
+                    titles = this.transposition([this.createPredict(["月度-季度末计划值"])]);
+                    break;
+                case Util.ZBType.BY20YJ:
                     titles = this.transposition([this.createPredict(["本月20日预计值"])]);
                     break;
-                case 2 /* BY28JH */:
-                case 4 /* BY28YJ */:
+                case Util.ZBType.BY28YJ:
                     titles = this.transposition([this.createPredict(["本月28日预计值"])]);
                     break;
-                case 5 /* BYSJ */:
+                case Util.ZBType.BYSJ:
                     titles = this.transposition([["本月实际"]]);
                     break;
             }
@@ -99,7 +100,7 @@ var approve_template;
                 height: '100%',
                 width: width,
                 shrinkToFit: width == 1000 ? false : true,
-                autoScroll: true
+                autoScroll: true,
             }));
             return tableAssist;
         };
@@ -139,22 +140,19 @@ var approve_template;
             var header = "";
             var date = this.mDateSelector.getDate();
             switch (this.mOpt.approveType) {
-                case 0 /* QNJH */:
+                case Util.ZBType.QNJH:
                     header = date.year + "年 计划数据审核";
                     break;
-                case 1 /* BY20JH */:
-                    header = date.year + "年" + date.month + "月 20日计划值审核";
+                case Util.ZBType.YDJDMJH:
+                    header = date.year + "年" + date.month + "月 季度-月度末计划值审核";
                     break;
-                case 2 /* BY28JH */:
-                    header = date.year + "年" + date.month + "月 28日计划值审核";
-                    break;
-                case 3 /* BY20YJ */:
+                case Util.ZBType.BY20YJ:
                     header = date.year + "年" + date.month + "月 20日预计值审核";
                     break;
-                case 4 /* BY28YJ */:
+                case Util.ZBType.BY28YJ:
                     header = date.year + "年" + date.month + "月 28日预计值审核";
                     break;
-                case 5 /* BYSJ */:
+                case Util.ZBType.BYSJ:
                     header = date.year + "年" + date.month + "月 实际数据审核";
                     break;
             }
@@ -162,10 +160,10 @@ var approve_template;
             document.title = header;
         };
         View.prototype.createPredict = function (title) {
-            var ret = [];
+            var ret = [title[0]];
             var date = this.mDateSelector.getDate();
             var left = date.month % 3;
-            if ((this.mOpt.approveType == 1 /* BY20JH */ || this.mOpt.approveType == 2 /* BY28JH */) && left == 0) {
+            if (this.mOpt.approveType == Util.ZBType.YDJDMJH && left == 0) {
                 if (12 == date.month) {
                     ret.push((date.year + 1) + "年1月计划");
                     ret.push((date.year + 1) + "年2月计划");
@@ -177,12 +175,24 @@ var approve_template;
                     ret.push((date.month + 3) + "月计划");
                 }
             }
-            else if (this.mOpt.approveType == 3 /* BY20YJ */ || this.mOpt.approveType == 4 /* BY28YJ */) {
+            else if (this.mOpt.approveType == Util.ZBType.BY20YJ || this.mOpt.approveType == Util.ZBType.BY28YJ) {
                 ret.push(title[1]);
                 if (0 != left) {
                     var leftMonth = 3 - left;
                     for (var i = 1; i <= leftMonth; ++i) {
                         ret.push((date.month + i) + "月预计");
+                    }
+                }
+                else {
+                    if (12 == date.month) {
+                        ret.push((date.year + 1) + "年1月预计");
+                        ret.push((date.year + 1) + "年2月预计");
+                        ret.push((date.year + 1) + "年3月预计");
+                    }
+                    else {
+                        ret.push((date.month + 1) + "月预计");
+                        ret.push((date.month + 2) + "月预计");
+                        ret.push((date.month + 3) + "月预计");
                     }
                 }
             }

@@ -1,8 +1,8 @@
 /// <reference path="util.ts" />
 declare var $;
-declare var String;
+
 module Util {
-    String.prototype.getWidth = function(fontSize)
+    String.prototype["getWidth"] = function(fontSize)
     {
         var span = document.getElementById("__getwidth");
         if (span == null) {

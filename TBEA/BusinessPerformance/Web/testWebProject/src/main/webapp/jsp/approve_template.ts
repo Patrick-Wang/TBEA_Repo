@@ -6,7 +6,6 @@ declare var echarts;
 declare var $;
 module approve_template {
 
-
     class JQGridAssistantFactory {
 
         public static createFlatTable(gridName: string, title: string[]): JQTable.JQGridAssistant {
@@ -109,11 +108,12 @@ module approve_template {
                 case Util.ZBType.QNJH:
                     titles = this.transposition([["全年计划"]]);
                     break;
-                case Util.ZBType.BY20JH:
+                case Util.ZBType.YDJDMJH:
+                 	titles = this.transposition([this.createPredict(["月度-季度末计划值"])]);
+                    break;
                 case Util.ZBType.BY20YJ:
                     titles = this.transposition([this.createPredict(["本月20日预计值"])]);
                     break;
-                case Util.ZBType.BY28JH:
                 case Util.ZBType.BY28YJ:
                     titles = this.transposition([this.createPredict(["本月28日预计值"])]);
                     break;
@@ -208,11 +208,8 @@ module approve_template {
                 case Util.ZBType.QNJH:
                     header = date.year + "年 计划数据审核";
                     break;
-                case Util.ZBType.BY20JH:
-                    header = date.year + "年" + date.month + "月 20日计划值审核";
-                    break;
-                case Util.ZBType.BY28JH:
-                    header = date.year + "年" + date.month + "月 28日计划值审核";
+                case Util.ZBType.YDJDMJH:
+                    header = date.year + "年" + date.month + "月 季度-月度末计划值审核";
                     break;
                 case Util.ZBType.BY20YJ:
                     header = date.year + "年" + date.month + "月 20日预计值审核";
@@ -230,11 +227,10 @@ module approve_template {
         }
 
         private createPredict(title: string[]): Array<string> {
-            var ret: Array<string> = [];
+            var ret: Array<string> = [title[0]];
             var date = this.mDateSelector.getDate();
             var left = date.month % 3;
-            if ((this.mOpt.approveType == Util.ZBType.BY20JH ||
-                this.mOpt.approveType == Util.ZBType.BY28JH) && left == 0) {
+            if (this.mOpt.approveType == Util.ZBType.YDJDMJH && left == 0) {
                 if (12 == date.month) {
                     ret.push((date.year + 1) + "年1月计划")
                     ret.push((date.year + 1) + "年2月计划")
@@ -253,6 +249,16 @@ module approve_template {
                     for (var i = 1; i <= leftMonth; ++i) {
                         ret.push((date.month + i) + "月预计")
                     }
+                } else{
+	                if (12 == date.month) {
+	                    ret.push((date.year + 1) + "年1月预计")
+	                    ret.push((date.year + 1) + "年2月预计")
+	                    ret.push((date.year + 1) + "年3月预计")
+	                } else {
+	                    ret.push((date.month + 1) + "月预计")
+	                    ret.push((date.month + 2) + "月预计")
+	                    ret.push((date.month + 3) + "月预计")
+	                }
                 }
             }
 

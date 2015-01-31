@@ -140,7 +140,6 @@ public class BLHTDQQKHZServiceImpl implements BLHTDQQKHZService {
 	}
 
 	
-	
 	private void setBlyeqs(String[][] result, Calendar cal,
 			List<BLHTDQQKHZ> list) {
 

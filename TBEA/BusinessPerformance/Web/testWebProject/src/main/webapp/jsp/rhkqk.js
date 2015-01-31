@@ -5,7 +5,7 @@ var rhkqk;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位", "dw", true, 0 /* Left */),
+                new JQTable.Node("单位", "dw", true, JQTable.TextAlign.Left),
                 new JQTable.Node("集团下达月度资金回笼指标", "dwxdydzjhlzb"),
                 new JQTable.Node("各单位自行制定的回款计划", "gdwzxdzdhkjh"),
                 new JQTable.Node("今日回款", "jrhk"),
@@ -85,7 +85,7 @@ var rhkqk;
                 height: '100%',
                 width: 1200,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;

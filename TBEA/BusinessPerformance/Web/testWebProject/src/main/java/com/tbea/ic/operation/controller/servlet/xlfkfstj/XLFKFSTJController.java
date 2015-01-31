@@ -43,24 +43,32 @@ public class XLFKFSTJController {
 	public @ResponseBody byte[] getZtyszkfx_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
-//		int month = Integer.parseInt(request.getParameter("month"));
-//		int year = Integer.parseInt(request.getParameter("year"));
-//		Date d = java.sql.Date.valueOf(year + "-" +  month + "-1");
-//		
-//		String companyId = request.getParameter("companyId");
-//		int cid = Integer.parseInt(companyId);
-//		Organization org = companyManager.getBMOrganization();
-//		Company comp = org.getCompany(CompanyType.valueOf(cid));
-		
 		Date d = DateSelection.getDate(request);
-		Organization org = companyManager.getBMOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
+//		Organization org = companyManager.getBMOrganization();
+//		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		
 		
-		List<String[][]> result=  new ArrayList<String[][]>();
-		result.add(service.getFdwData(d, comp));
-		result.add(service.getGwData(d, comp));
-		result.add(service.getNwData(d, comp));
+		
+		
+		
+		CompanyType compType = CompanySelection.getCompany(request);
+		Company comp = companyManager.getBMOrganization().getCompany(compType);
+		List<String[][]> result = new ArrayList<String[][]>();
+		if (null == comp) {
+			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
+			if (null != comp) {
+				List<Company> comps = comp.getSubCompanys();
+				result.add(service.getFdwData(d, comps));
+				result.add(service.getGwData(d, comps));
+				result.add(service.getNwData(d, comps));
+			}
+		}
+		else {
+			result.add(service.getFdwData(d, comp));
+			result.add(service.getGwData(d, comp));
+			result.add(service.getNwData(d, comp));
+		}
+
 		return JSONArray.fromObject(result).toString().replace("null", "0.00").getBytes("utf-8");
 	}
 	
@@ -69,17 +77,30 @@ public class XLFKFSTJController {
 			HttpServletResponse response) {
 			
 		Map<String, Object> map = new HashMap<String, Object>();
-	
-		Organization org = companyManager.getBMOrganization();
+
+		List<Company> comps = new ArrayList<Company>();
+		comps.addAll(companyManager.getBMOrganization().getTopCompany());
+		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
+
 		CompanySelection compSelection = new CompanySelection(true,
-				org.getTopCompany(), new CompanySelection.Filter() {
+				comps, new CompanySelection.Filter() {
 					@Override
 					public boolean keep(Company comp) {
-						return service.containsCompany(comp);
+						if (null != companyManager.getVirtualYSZKOrganization().getCompany(comp.getType())){
+							List<Company> subComps = comp.getSubCompanys();
+							for (Company com : subComps){
+								if (service.containsCompany(com)){
+									return true;
+								}
+							}
+							return false;
+						}
+						else{
+							return service.containsCompany(comp);
+						}
 					}
 				});
 		compSelection.select(map);
-		
 
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);

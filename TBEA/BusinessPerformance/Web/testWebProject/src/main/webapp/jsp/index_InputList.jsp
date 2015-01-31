@@ -16,11 +16,7 @@
 				</li>
 				<li data-thumb="asset/img/example/cache.png"><a
 					href="../entry/zb.do?entryType=1" target="_blank"><img
-						src="../images/charts/bar10.png"> <span><strong>20号计划指标录入</strong></span></a>
-				</li>
-				<li data-thumb="asset/img/example/cache.png"><a
-					href="../entry/zb.do?entryType=2" target="_blank"><img
-						src="../images/charts/bar10.png"> <span><strong>28号计划指标录入</strong></span></a>
+						src="../images/charts/bar10.png"> <span><strong>季度-月度末计划值录入</strong></span></a>
 				</li>
 			</ul>
 		</div>
@@ -34,15 +30,15 @@
 		<div class="thumb4">
 			<ul class="slides">
 				<li data-thumb="asset/img/example/bar1.png"><a
-					href="../entry/zb.do?entryType=3" target="_blank"><img
+					href="../entry/zb.do?entryType=2" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>20号预计指标录入</strong></span></a>
 				</li>
 				<li data-thumb="asset/img/example/cache.png"><a
-					href="../entry/zb.do?entryType=4" target="_blank"><img
+					href="../entry/zb.do?entryType=3" target="_blank"><img
 						src="../images/charts/bar10.png"> <span><strong>28号预计指标录入</strong></span></a>
 				</li>
 				<li data-thumb="asset/img/example/cache.png"><a
-					href="../entry/zb.do?entryType=5" target="_blank"><img
+					href="../entry/zb.do?entryType=4" target="_blank"><img
 						src="../images/charts/bar10.png"> <span><strong>实际指标录入</strong></span></a>
 				</li>
 			</ul>

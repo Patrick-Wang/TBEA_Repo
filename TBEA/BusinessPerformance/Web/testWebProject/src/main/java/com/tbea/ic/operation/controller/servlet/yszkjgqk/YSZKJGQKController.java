@@ -38,16 +38,6 @@ public class YSZKJGQKController {
 	private String view = "yszkjgqkb";
 	
 	
-//	private Company getCompany(CompanyType compType){
-//		Organization org = companyManager.getBMOrganization();
-//		Company comp = org.getCompany(compType);
-//		if (null == comp){
-//			org = companyManager.getVirtualYSZKOrganization();
-//			comp = org.getCompany(compType);
-//		}
-//		return comp;
-//	}
-	
 	@RequestMapping(value = "yszkjgqk_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getYqkbhqs_update(HttpServletRequest request,
 			HttpServletResponse response) {

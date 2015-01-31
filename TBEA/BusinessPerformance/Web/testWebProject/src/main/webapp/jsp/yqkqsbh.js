@@ -5,7 +5,7 @@ var yqkqsbh;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("月份", "yf", true, 0 /* Left */),
+                new JQTable.Node("月份", "yf", true, JQTable.TextAlign.Left),
                 new JQTable.Node("逾期一个月以内", "yqygyyn"),
                 new JQTable.Node("逾期1-3月", "yqysy"),
                 new JQTable.Node("逾期3-6月", "yqsly"),
@@ -18,7 +18,7 @@ var yqkqsbh;
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("yqkbhqs_update.do");
-            this.mComp = 0 /* SB */;
+            this.mComp = Util.CompanyType.SB;
         }
         View.newInstance = function () {
             return new View();
@@ -81,7 +81,7 @@ var yqkqsbh;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -137,7 +137,7 @@ var yqkqsbh;
                 height: '100%',
                 width: 1000,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;

@@ -44,25 +44,32 @@ public class SYHKJHZXQKController {
 	@RequestMapping(value = "syhkjhzxqk_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getSyhkjhzxqk_update(HttpServletRequest request,
 			HttpServletResponse response) {
-//		int month = Integer.parseInt(request.getParameter("month"));
-//		int year = Integer.parseInt(request.getParameter("year"));
-//		String companyId = request.getParameter("companyId");
-//		int cid = Integer.parseInt(companyId);
-//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
-//		
-//		Organization org = CompanyManager.getOperationOrganization();
-//		Company comp = org.getCompany(CompanyType.valueOf(cid));
-
 		Date d = DateSelection.getDate(request);
-		Organization org = companyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
+//		Organization org = companyManager.getOperationOrganization();
+//		Company comp = org.getCompany(CompanySelection.getCompany(request));
 		
-		
-				
 		List<String[][]> hkjhs = new ArrayList<String[][]>();
-		hkjhs.add(service.getSyhkjhzxqkData(d, comp));
-		hkjhs.add(service.getHkjhzxqkXjData(d, comp));
-		String syhkjhzxqk = JSONArray.fromObject(hkjhs).toString().replace("null", "0.00");
+		
+		CompanyType compType = CompanySelection.getCompany(request);
+		Company comp = companyManager.getOperationOrganization().getCompany(compType);
+		List<String[][]> result = new ArrayList<String[][]>();
+		if (null == comp) {
+			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
+			if (null != comp) {
+				List<Company> comps = comp.getSubCompanys();
+				hkjhs.add(service.getSyhkjhzxqkData(d, comps));
+				hkjhs.add(service.getHkjhzxqkXjData(d, comps));
+			}
+		}
+		else {
+			hkjhs.add(service.getSyhkjhzxqkData(d, comp));
+			hkjhs.add(service.getHkjhzxqkXjData(d, comp));
+		}
+				
+		//List<String[][]> hkjhs = new ArrayList<String[][]>();
+//		hkjhs.add(service.getSyhkjhzxqkData(d, comp));
+//		hkjhs.add(service.getHkjhzxqkXjData(d, comp));
+		String syhkjhzxqk = JSONArray.fromObject(hkjhs).toString().replace("null", "0.00").replace("--", "0.00");
 
 		return syhkjhzxqk;
 	}
@@ -77,9 +84,15 @@ public class SYHKJHZXQKController {
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);
 
-		Organization org = companyManager.getOperationOrganization();
-		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		compSel.setFirstCompany(CompanyType.HB);
+//		Organization org = companyManager.getOperationOrganization();
+//		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanys());
+//		compSel.setFirstCompany(CompanyType.HB);
+//		compSel.select(map);
+		
+		List<Company> comps = new ArrayList<Company>();
+		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanys());
+		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		
 		return new ModelAndView("syhkjhzxqk", map);

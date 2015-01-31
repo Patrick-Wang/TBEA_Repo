@@ -79,8 +79,8 @@ module syhkjhzxqk {
             var sjData = [];
             var wclData = [];
             for (var i  = 0; i < this.mData[1].length; ++i){
-                jhData.push(this.mData[1][i][0]);
-                sjData.push(this.mData[1][i][1]);
+                jhData.push(parseFloat(this.mData[1][i][0]).toFixed(2));
+                sjData.push(parseFloat(this.mData[1][i][1]).toFixed(2));
                 wclData.push((parseFloat(this.mData[1][i][2]) * 100).toFixed(2));
             }
             
@@ -90,10 +90,10 @@ module syhkjhzxqk {
 				},	   
 				tooltip : {
 			        trigger: 'axis',
-			        formatter: function(v) {
+			        formatter: (v) => {
 			            return v[0][1] + '<br/>'
-		                + v[0][0] + ' : ' + v[0][2] + '<br/>'
-		                + v[1][0] + ' : ' + v[1][2] + '<br/>'
+		                + v[0][0] + ' : ' + Util.formatCurrency(v[0][2]) + '<br/>'
+		                + v[1][0] + ' : ' + Util.formatCurrency(v[1][2]) + '<br/>'
 			            + v[2][0] + ' : ' + v[2][2] + '%';
 		        }
 			    },
@@ -176,8 +176,8 @@ module syhkjhzxqk {
                              data[i].push(Util.formatCurrency(this.mData[0][i][j]));
                             }
                         else{
-                             data[i].push((this.mData[0][i][j]));
-                          // data[i].push((parseFloat(this.mData[i][j]) * 100).toFixed(2) + "%");
+                            //data[i].push((this.mData[0][i][j]));
+                           	data[i].push((parseFloat(this.mData[0][i][j]) * 100).toFixed(2) + "%");
                         }
                     }
                 }

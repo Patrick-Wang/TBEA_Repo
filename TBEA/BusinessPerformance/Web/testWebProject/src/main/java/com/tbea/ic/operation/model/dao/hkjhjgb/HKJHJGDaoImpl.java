@@ -16,8 +16,6 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.HKJHJG;
 import com.tbea.ic.operation.model.entity.QYZJK;
-import com.tbea.ic.operation.model.entity.XLNWFKFS;
-import com.tbea.ic.operation.model.entity.local.CQK;
 
 
 @Repository
@@ -50,6 +48,13 @@ public class HKJHJGDaoImpl  extends AbstractReadWriteDaoImpl<QYZJK> implements H
 			return hkjhs.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public List<HKJHJG> getHkjhjg(Date d, List<Company> comps) {
+		Query q = getEntityManager().createQuery("select h from HKJHJG h where h.qybh in (" + Util.toString(comps) + ") and h.ny = :ny");
+		q.setParameter("ny", Util.format(d));
+		return q.getResultList();
 	}
 
 }
