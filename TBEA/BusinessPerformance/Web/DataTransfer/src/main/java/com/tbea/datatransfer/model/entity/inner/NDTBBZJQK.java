@@ -21,7 +21,7 @@ public class NDTBBZJQK extends AbstractReadWriteEntity implements Serializable {
 
 	private Integer yf;
 
-	private Double je;
+	private Double ye;
 
 	private Integer qybh;
 
@@ -52,12 +52,12 @@ public class NDTBBZJQK extends AbstractReadWriteEntity implements Serializable {
 		this.yf = yf;
 	}
 
-	public Double getJe() {
-		return je;
+	public Double getYe() {
+		return ye;
 	}
 
-	public void setJe(Double je) {
-		this.je = je;
+	public void setYe(Double ye) {
+		this.ye = ye;
 	}
 
 	public Integer getQybh() {
@@ -71,7 +71,7 @@ public class NDTBBZJQK extends AbstractReadWriteEntity implements Serializable {
 	@Override
 	public String toString() {
 		return "NDTBBZJQK [id=" + getId() + ", nf=" + nf + ", yf=" + yf
-				+ ", je=" + je + ", qybh=" + qybh + "]";
+				+ ", ye=" + ye + ", qybh=" + qybh + "]";
 	}
 
 }

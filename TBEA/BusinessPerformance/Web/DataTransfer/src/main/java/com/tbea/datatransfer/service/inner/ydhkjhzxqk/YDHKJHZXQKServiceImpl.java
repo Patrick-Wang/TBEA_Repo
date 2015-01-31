@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.inner.ydhkjhzxqk.YDHKJHZXQKDao;
 import com.tbea.datatransfer.model.dao.local.ydhkjhjgb.YDHKJHJGBLocalDao;
 import com.tbea.datatransfer.model.dao.local.ydsjhkqk.YDSJHKQKLocalDao;
@@ -72,21 +73,27 @@ public class YDHKJHZXQKServiceImpl implements YDHKJHZXQKService {
 				ydhkjhzxqk.setNy(ny);
 
 				// sjhk
-				yqyszksjhk = ydsjhkqkLocal.getYqyszksjhk();
+				yqyszksjhk = CommonMethod.objectToDouble(ydsjhkqkLocal
+						.getYqyszksjhk());
 				ydhkjhzxqk.setYqyszksjhk(yqyszksjhk);
-				yqksjhk = ydsjhkqkLocal.getYqksjhk();
+				yqksjhk = CommonMethod.objectToDouble(ydsjhkqkLocal
+						.getYqksjhk());
 				ydhkjhzxqk.setYqksjhk(yqksjhk);
-				wdqyszksjhk = ydsjhkqkLocal.getWdqyszksjhk();
+				wdqyszksjhk = CommonMethod.objectToDouble(ydsjhkqkLocal
+						.getWdqyszksjhk());
 				ydhkjhzxqk.setWdqyszksjhk(wdqyszksjhk);
-				wdqksjhk = ydsjhkqkLocal.getWdqksjhk();
+				wdqksjhk = CommonMethod.objectToDouble(ydsjhkqkLocal
+						.getWdqksjhk());
 				ydhkjhzxqk.setWdqksjhk(wdqksjhk);
-				qbkhsjhk = ydsjhkqkLocal.getQbkhhk();
+				qbkhsjhk = CommonMethod.objectToDouble(ydsjhkqkLocal
+						.getQbkhhk());
 				ydhkjhzxqk.setQbkhsjhk(qbkhsjhk);
-				zqkhsjhk = ydsjhkqkLocal.getZqkhhk();
+				zqkhsjhk = CommonMethod.objectToDouble(ydsjhkqkLocal
+						.getZqkhhk());
 				ydhkjhzxqk.setZqkhsjhk(zqkhsjhk);
-				xkxhhk = ydsjhkqkLocal.getXkxhhk();
+				xkxhhk = CommonMethod.objectToDouble(ydsjhkqkLocal.getXkxhhk());
 				ydhkjhzxqk.setXkxhhk(xkxhhk);
-				jhwhk = ydsjhkqkLocal.getJhwhk();
+				jhwhk = CommonMethod.objectToDouble(ydsjhkqkLocal.getJhwhk());
 				ydhkjhzxqk.setJhwhk(jhwhk);
 
 				// jhhk
@@ -95,27 +102,43 @@ public class YDHKJHZXQKServiceImpl implements YDHKJHZXQKService {
 				date = dateFormat.format(gxrq);
 				ydjhhkqkLocal = ydhkjhjgbLocalDao.getHKJHByQY(date, qybh, gsbm);
 				if (null != ydjhhkqkLocal) {
-					yqyszkjhhk = ydjhhkqkLocal.getQbkhyqyszk()
-							+ ydjhhkqkLocal.getZqkhyqyszk();
+					yqyszkjhhk = CommonMethod.objectToDouble(ydjhhkqkLocal
+							.getQbkhyqyszk())
+							+ CommonMethod.objectToDouble(ydjhhkqkLocal
+									.getZqkhyqyszk());
 					ydhkjhzxqk.setYqyszkjhhk(yqyszkjhhk);
-					yqkjhhk = ydjhhkqkLocal.getQbkhyqk()
-							+ ydjhhkqkLocal.getZqkhyqk();
+					yqkjhhk = CommonMethod.objectToDouble(ydjhhkqkLocal
+							.getQbkhyqk())
+							+ CommonMethod.objectToDouble(ydjhhkqkLocal
+									.getZqkhyqk());
 					ydhkjhzxqk.setYqkjhhk(yqkjhhk);
-					wdqyszkjhhk = ydjhhkqkLocal.getQbkhwdqyszk()
-							+ ydjhhkqkLocal.getZqkhwdqyszk();
+					wdqyszkjhhk = CommonMethod.objectToDouble(ydjhhkqkLocal
+							.getQbkhwdqyszk())
+							+ CommonMethod.objectToDouble(ydjhhkqkLocal
+									.getZqkhwdqyszk());
 					ydhkjhzxqk.setWdqyszkjhhk(wdqyszkjhhk);
-					wdqkjhhk = ydjhhkqkLocal.getQbkhwdqk()
-							+ ydjhhkqkLocal.getZqkhwdqk();
+					wdqkjhhk = CommonMethod.objectToDouble(ydjhhkqkLocal
+							.getQbkhwdqk())
+							+ CommonMethod.objectToDouble(ydjhhkqkLocal
+									.getZqkhwdqk());
 					ydhkjhzxqk.setWdqkjhhk(wdqkjhhk);
-					qbkhjhhk = ydjhhkqkLocal.getQbkhyqyszk()
-							+ ydjhhkqkLocal.getQbkhyqk()
-							+ ydjhhkqkLocal.getQbkhwdqyszk()
-							+ ydjhhkqkLocal.getQbkhwdqk();
+					qbkhjhhk = CommonMethod.objectToDouble(ydjhhkqkLocal
+							.getQbkhyqyszk())
+							+ CommonMethod.objectToDouble(ydjhhkqkLocal
+									.getQbkhyqk())
+							+ CommonMethod.objectToDouble(ydjhhkqkLocal
+									.getQbkhwdqyszk())
+							+ CommonMethod.objectToDouble(ydjhhkqkLocal
+									.getQbkhwdqk());
 					ydhkjhzxqk.setQbkhjhhk(qbkhjhhk);
-					zqkhjhhk = ydjhhkqkLocal.getZqkhyqyszk()
-							+ ydjhhkqkLocal.getZqkhyqk()
-							+ ydjhhkqkLocal.getZqkhwdqyszk()
-							+ ydjhhkqkLocal.getZqkhwdqk();
+					zqkhjhhk = CommonMethod.objectToDouble(ydjhhkqkLocal
+							.getZqkhyqyszk())
+							+ CommonMethod.objectToDouble(ydjhhkqkLocal
+									.getZqkhyqk())
+							+ CommonMethod.objectToDouble(ydjhhkqkLocal
+									.getZqkhwdqyszk())
+							+ CommonMethod.objectToDouble(ydjhhkqkLocal
+									.getZqkhwdqk());
 					ydhkjhzxqk.setZqkhjhhk(zqkhjhhk);
 				}
 
@@ -132,23 +155,30 @@ public class YDHKJHZXQKServiceImpl implements YDHKJHZXQKService {
 				ydhkjhzxqk.setSjhj(sjhj);
 
 				// wcl
-				yqyszkjhwcl = String.format("%.2f", yqyszksjhk / yqyszkjhhk)
-						+ "%";
+				Double zero = 0.0D;
+				yqyszkjhwcl = zero.equals(yqyszkjhhk) ? "-" : (String.format(
+						"%.2f", yqyszksjhk / yqyszkjhhk) + "%");
 				ydhkjhzxqk.setYqyszkjhwcl(yqyszkjhwcl);
-				yqkjhwcl = String.format("%.2f", yqksjhk / yqkjhhk) + "%";
+				yqkjhwcl = zero.equals(yqkjhhk) ? "-" : (String.format("%.2f",
+						yqksjhk / yqkjhhk) + "%");
 				ydhkjhzxqk.setYqkjhwcl(yqkjhwcl);
-				wdqyszkjhwcl = String.format("%.2f", wdqyszksjhk / wdqyszkjhhk)
-						+ "%";
+				wdqyszkjhwcl = zero.equals(wdqyszkjhhk) ? "-" : (String.format(
+						"%.2f", wdqyszksjhk / wdqyszkjhhk) + "%");
 				ydhkjhzxqk.setWdqyszkjhwcl(wdqyszkjhwcl);
-				wdqkjhwcl = String.format("%.2f", wdqksjhk / wdqkjhhk) + "%";
+				wdqkjhwcl = zero.equals(wdqkjhhk) ? "-" : (String.format(
+						"%.2f", wdqksjhk / wdqkjhhk) + "%");
 				ydhkjhzxqk.setWdqkjhwcl(wdqkjhwcl);
-				qbkhjhwcl = String.format("%.2f", qbkhsjhk / qbkhjhhk) + "%";
+				qbkhjhwcl = zero.equals(qbkhjhhk) ? "-" : (String.format(
+						"%.2f", qbkhsjhk / qbkhjhhk) + "%");
 				ydhkjhzxqk.setQbkhjhwcl(qbkhjhwcl);
-				zqkhjhwcl = String.format("%.2f", zqkhsjhk / zqkhjhhk) + "%";
+				zqkhjhwcl = zero.equals(zqkhjhhk) ? "-" : (String.format(
+						"%.2f", zqkhsjhk / zqkhjhhk) + "%");
 				ydhkjhzxqk.setZqkhjhwcl(zqkhjhwcl);
-				xjwcl = String.format("%.2f", sjxj / jhxj) + "%";
+				xjwcl = zero.equals(jhxj) ? "-" : (String.format("%.2f", sjxj
+						/ jhxj) + "%");
 				ydhkjhzxqk.setXjwcl(xjwcl);
-				hjwcl = String.format("%.2f", sjhj / jhhj) + "%";
+				hjwcl = zero.equals(jhhj) ? "-" : (String.format("%.2f", sjhj
+						/ jhhj) + "%");
 				ydhkjhzxqk.setHjwcl(hjwcl);
 
 				ydhkjhzxqk.setQybh(qybh);
