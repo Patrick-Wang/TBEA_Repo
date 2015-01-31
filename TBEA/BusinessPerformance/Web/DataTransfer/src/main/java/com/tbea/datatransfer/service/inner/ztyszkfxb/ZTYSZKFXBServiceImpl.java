@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.inner.ztyszkfxb.ZTYSZKFXBDao;
 import com.tbea.datatransfer.model.dao.local.ztyszkfxb.ZTYSZKFXBLocalDao;
 import com.tbea.datatransfer.model.entity.inner.ZTYSZKFXB;
@@ -41,6 +42,7 @@ public class ZTYSZKFXBServiceImpl implements ZTYSZKFXBService {
 			String sjysjqntqzzb = null;
 			String srjqntqzzb = null;
 
+			Double zero = 0.0D;
 			Calendar now = Calendar.getInstance();
 			int month = now.get(Calendar.MONTH) + 1;
 			for (ZTYSZKFXBLocal ztyszkfxbLocal : ztyszkfxbLocalList) {
@@ -48,47 +50,51 @@ public class ZTYSZKFXBServiceImpl implements ZTYSZKFXBService {
 				ztyszkfxb.setGxrq(ztyszkfxbLocal.getGxrq());
 
 				// by
-				byzmyszkye = ztyszkfxbLocal.getByzmyszkye();
+				byzmyszkye = CommonMethod.objectToDouble(ztyszkfxbLocal
+						.getByzmyszkye());
 				ztyszkfxb.setByzmyszkye(byzmyszkye);
-				byblkzye = ztyszkfxbLocal.getByblkzye();
+				byblkzye = CommonMethod.objectToDouble(ztyszkfxbLocal
+						.getByblkzye());
 				ztyszkfxb.setByblkzye(byblkzye);
-				byyszksjs = ztyszkfxbLocal.getByyszksjs();
+				byyszksjs = CommonMethod.objectToDouble(ztyszkfxbLocal
+						.getByyszksjs());
 				ztyszkfxb.setByyszksjs(byyszksjs);
-				ljsr = ztyszkfxbLocal.getBysr();
+				ljsr = CommonMethod.objectToDouble(ztyszkfxbLocal.getBysr());
 				ztyszkfxb.setLjsr(ljsr);
-				zmyszsrb = String.format("%.2f", byzmyszkye
-						/ (ljsr / month * 12))
-						+ "%";
+				zmyszsrb = zero.equals(ljsr) ? "-" : (String.format("%.2f",
+						byzmyszkye / (ljsr / month * 12)) + "%");
 				ztyszkfxb.setZmyszsrb(zmyszsrb);
 
 				// qntq
-				qntqzmyszkye = ztyszkfxbLocal.getQntqzmyszkye();
+				qntqzmyszkye = CommonMethod.objectToDouble(ztyszkfxbLocal
+						.getQntqzmyszkye());
 				ztyszkfxb.setQntqzmyszkye(qntqzmyszkye);
-				qntqblye = ztyszkfxbLocal.getQntqblye();
+				qntqblye = CommonMethod.objectToDouble(ztyszkfxbLocal
+						.getQntqblye());
 				ztyszkfxb.setQntqblye(qntqblye);
-				qntqyszksjs = ztyszkfxbLocal.getQntqyszksjs();
+				qntqyszksjs = CommonMethod.objectToDouble(ztyszkfxbLocal
+						.getQntqyszksjs());
 				ztyszkfxb.setQntqyszksjs(qntqyszksjs);
-				qntqsr = ztyszkfxbLocal.getQntqsr();
+				qntqsr = CommonMethod
+						.objectToDouble(ztyszkfxbLocal.getQntqsr());
 				ztyszkfxb.setQntqsr(qntqsr);
-				qntqzmyszsrb = String.format("%.2f", qntqzmyszkye
-						/ (qntqsr / month * 12))
-						+ "%";
+				qntqzmyszsrb = zero.equals(qntqsr) ? "-" : (String.format(
+						"%.2f", qntqzmyszkye / (qntqsr / month * 12)) + "%");
 				ztyszkfxb.setQntqzmyszsrb(qntqzmyszsrb);
 
 				// zzb
-				zmyejqntqzzb = String.format("%.2f",
-						(byzmyszkye - qntqzmyszkye) / qntqzmyszkye) + "%";
+				zmyejqntqzzb = zero.equals(qntqzmyszkye) ? "-" : (String
+						.format("%.2f", (byzmyszkye - qntqzmyszkye)
+								/ qntqzmyszkye) + "%");
 				ztyszkfxb.setZmyejqntqzzb(zmyejqntqzzb);
-				bljqntqzzb = String.format("%.2f", (byblkzye - qntqblye)
-						/ qntqblye)
-						+ "%";
+				bljqntqzzb = zero.equals(qntqblye) ? "-" : (String.format(
+						"%.2f", (byblkzye - qntqblye) / qntqblye) + "%");
 				ztyszkfxb.setBljqntqzzb(bljqntqzzb);
-				sjysjqntqzzb = String.format("%.2f", (byyszksjs - qntqyszksjs)
-						/ qntqyszksjs)
-						+ "%";
+				sjysjqntqzzb = zero.equals(qntqyszksjs) ? "-" : (String.format(
+						"%.2f", (byyszksjs - qntqyszksjs) / qntqyszksjs) + "%");
 				ztyszkfxb.setSjysjqntqzzb(sjysjqntqzzb);
-				srjqntqzzb = String.format("%.2f", (ljsr - qntqsr) / qntqsr)
-						+ "%";
+				srjqntqzzb = zero.equals(qntqsr) ? "-" : (String.format("%.2f",
+						(ljsr - qntqsr) / qntqsr) + "%");
 				ztyszkfxb.setSrjqntqzzb(srjqntqzzb);
 
 				ztyszkfxb.setQybh(ztyszkfxbLocal.getQybh());
