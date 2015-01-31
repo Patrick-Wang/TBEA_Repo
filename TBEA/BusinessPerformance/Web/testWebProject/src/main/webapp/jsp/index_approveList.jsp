@@ -18,11 +18,7 @@
 				</li>
 				<li data-thumb="asset/img/example/cache.png"><a
 					href="../approve/zb.do?approveType=1" target="_blank"><img
-						src="../images/charts/bar10.png"> <span><strong>20号计划指标审核</strong></span></a>
-				</li>
-				<li data-thumb="asset/img/example/cache.png"><a
-					href="../approve/zb.do?approveType=2" target="_blank"><img
-						src="../images/charts/bar10.png"> <span><strong>28号计划指标审核</strong></span></a>
+						src="../images/charts/bar10.png"> <span><strong>季度-月度末计划值审核</strong></span></a>
 				</li>
 			</ul>
 		</div>
@@ -37,15 +33,15 @@
 		<div class="thumb4">
 			<ul class="slides">
 				<li data-thumb="asset/img/example/bar1.png"><a
-					href="../approve/zb.do?approveType=3" target="_blank"><img
+					href="../approve/zb.do?approveType=2" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>20预计指标审核</strong></span></a>
 				</li>
 				<li data-thumb="asset/img/example/cache.png"><a
-					href="../approve/zb.do?approveType=4" target="_blank"><img
+					href="../approve/zb.do?approveType=3" target="_blank"><img
 						src="../images/charts/bar10.png"> <span><strong>28号预计指标审核</strong></span></a>
 				</li>
 				<li data-thumb="asset/img/example/cache.png"><a
-					href="../approve/zb.do?approveType=5" target="_blank"><img
+					href="../approve/zb.do?approveType=4" target="_blank"><img
 						src="../images/charts/bar10.png"> <span><strong>实际指标审核</strong></span></a>
 				</li>
 			</ul>

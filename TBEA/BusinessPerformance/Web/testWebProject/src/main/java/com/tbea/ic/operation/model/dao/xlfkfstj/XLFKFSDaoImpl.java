@@ -111,4 +111,31 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 		}
 		return null;
 	}
+
+	@Override
+	public List<XLFDWFKFS> getFdwfkfs(Date d, List<Company> comps) {
+		Query q = entityManager.createQuery(
+				"from XLFDWFKFS where gsbm in (" + Util.toBMString(comps) + ") and ny= :date");
+		//q.setParameter("compId", "0" + comp.getId());
+		q.setParameter("date", Util.format(d));
+		return q.getResultList();
+	}
+
+	@Override
+	public List<XLGWFKFS> getGwfkfs(Date d, List<Company> comps) {
+		Query q = entityManager.createQuery(
+				"from XLGWFKFS where gsbm in (" + Util.toBMString(comps) + ") and ny= :date");
+		//q.setParameter("compId", "0" + comp.getId());
+		q.setParameter("date", Util.format(d));
+		return q.getResultList();
+	}
+
+	@Override
+	public List<XLNWFKFS> getNwfkfs(Date d, List<Company> comps) {
+		Query q = entityManager.createQuery(
+				"from XLNWFKFS where gsbm in (" + Util.toBMString(comps) + ") and ny= :date");
+		//q.setParameter("compId", "0" + comp.getId());
+		q.setParameter("date", Util.format(d));
+		return q.getResultList();
+	}
 }

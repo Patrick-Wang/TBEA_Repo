@@ -1,4 +1,5 @@
 /// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 declare var echarts;
 
 module yqysysfx {

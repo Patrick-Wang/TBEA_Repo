@@ -58,7 +58,7 @@ var cb_byq;
     })();
     var View = (function () {
         function View() {
-            this.mComp = 0 /* SB */;
+            this.mComp = Util.CompanyType.SB;
         }
         View.newInstance = function () {
             return new View();
@@ -153,7 +153,7 @@ var cb_byq;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.format = function (row) {
@@ -196,7 +196,7 @@ var cb_byq;
                 height: height,
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;

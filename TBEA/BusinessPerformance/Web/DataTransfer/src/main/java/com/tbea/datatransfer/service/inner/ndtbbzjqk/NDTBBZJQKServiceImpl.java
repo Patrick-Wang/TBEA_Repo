@@ -27,7 +27,7 @@ public class NDTBBZJQKServiceImpl implements NDTBBZJQKService {
 				ndtbbzjqk = new NDTBBZJQK();
 				ndtbbzjqk.setNf(tbbzjxxLocal.getNf());
 				ndtbbzjqk.setYf(tbbzjxxLocal.getYf());
-				ndtbbzjqk.setJe(tbbzjxxLocal.getJe());
+				ndtbbzjqk.setYe(tbbzjxxLocal.getJe());
 				ndtbbzjqk.setQybh(tbbzjxxLocal.getQybh());
 				ndtbbzjqkDao.merge(ndtbbzjqk);
 			}

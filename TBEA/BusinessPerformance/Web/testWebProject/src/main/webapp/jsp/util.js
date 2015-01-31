@@ -1,19 +1,11 @@
 var Util;
 (function (Util) {
-    (function (EntyType) {
-        EntyType[EntyType["QNJH"] = 0] = "QNJH";
-        EntyType[EntyType["BY20"] = 1] = "BY20";
-        EntyType[EntyType["BY28"] = 2] = "BY28";
-        EntyType[EntyType["BYSJ"] = 3] = "BYSJ";
-    })(Util.EntyType || (Util.EntyType = {}));
-    var EntyType = Util.EntyType;
     (function (ZBType) {
         ZBType[ZBType["QNJH"] = 0] = "QNJH";
-        ZBType[ZBType["BY20JH"] = 1] = "BY20JH";
-        ZBType[ZBType["BY28JH"] = 2] = "BY28JH";
-        ZBType[ZBType["BY20YJ"] = 3] = "BY20YJ";
-        ZBType[ZBType["BY28YJ"] = 4] = "BY28YJ";
-        ZBType[ZBType["BYSJ"] = 5] = "BYSJ";
+        ZBType[ZBType["YDJDMJH"] = 1] = "YDJDMJH";
+        ZBType[ZBType["BY20YJ"] = 2] = "BY20YJ";
+        ZBType[ZBType["BY28YJ"] = 3] = "BY28YJ";
+        ZBType[ZBType["BYSJ"] = 4] = "BYSJ";
     })(Util.ZBType || (Util.ZBType = {}));
     var ZBType = Util.ZBType;
     (function (CompanyType) {

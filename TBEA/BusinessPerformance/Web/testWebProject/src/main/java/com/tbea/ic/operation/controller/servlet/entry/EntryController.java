@@ -64,8 +64,7 @@ public class EntryController {
 		
 		switch (entryType){
 			case QNJH:
-			case BY20JH:
-			case BY28JH:
+			case YDJDMJH:
 				comps = entryService.getValidJHCompanys(account);
 				break;
 				

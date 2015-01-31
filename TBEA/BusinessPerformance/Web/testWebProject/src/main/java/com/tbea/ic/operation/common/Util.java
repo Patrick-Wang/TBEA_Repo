@@ -31,6 +31,14 @@ public class Util {
 		return ret.substring(1);
 	}
 	
+	public static String toBMString(List<Company> comps){
+		String ret = "";
+		for (Company comp : comps){
+			ret += ",0" + comp.getId();
+		}
+		return ret.substring(1);
+	}
+	
 	public static int valueOf(Integer v) {
 		if (null == v) {
 			return 0;

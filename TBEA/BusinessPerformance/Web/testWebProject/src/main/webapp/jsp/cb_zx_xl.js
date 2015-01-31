@@ -71,7 +71,7 @@ var cb_zx_xl;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: false,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.updateJttbTable = function () {
@@ -105,7 +105,7 @@ var cb_zx_xl;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.updateGstbTable = function () {

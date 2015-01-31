@@ -1,7 +1,7 @@
 <Context>
 	<Resource name="jdbc/my_test_db" auth="Container" type="javax.sql.DataSource"
-		username="sa" password="1qaz!QAZ" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://10.1.4.106:1433; DatabaseName=operating_management"
+		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://localhost:1433; DatabaseName=operating_management_test"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 
@@ -12,8 +12,8 @@
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 
 	<Resource name="jdbc/dl_db" auth="Container" type="javax.sql.DataSource"
-		username="sa" password="yszk_test_SERVER" driverClassName="net.sourceforge.jtds.jdbc.Driver"
-		url="jdbc:jtds:sqlserver://192.168.7.22;DatabaseName=ZHBB_ZJ"
+		username="dlxxsa" password="zhhzz" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+		url="jdbc:jtds:sqlserver://172.27.10.5;DatabaseName=ZHBB_ZJ"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 
@@ -36,8 +36,8 @@
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 		
     <Resource name="jdbc/ll_db" auth="Container" type="javax.sql.DataSource"
-        username="sa" password="yszk_test_SERVER" driverClassName="net.sourceforge.jtds.jdbc.Driver"
-        url="jdbc:jtds:sqlserver://192.168.7.22;DatabaseName=llyszk"
+        username="llyszk" password="tbllyszk" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+        url="jdbc:jtds:sqlserver://192.168.12.6;DatabaseName=llyszk"
         initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
         removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 		

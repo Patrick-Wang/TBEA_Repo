@@ -27,4 +27,10 @@ public interface XLFKFSDao {
 	XLGWFKFS getLatestGwfkfs();
 
 	XLNWFKFS getLatestNwfkfs();
+
+	List<XLFDWFKFS> getFdwfkfs(Date d, List<Company> comps);
+
+	List<XLGWFKFS> getGwfkfs(Date d, List<Company> comps);
+
+	List<XLNWFKFS> getNwfkfs(Date d, List<Company> comps);
 }

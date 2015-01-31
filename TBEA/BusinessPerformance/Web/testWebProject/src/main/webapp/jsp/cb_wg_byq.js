@@ -77,7 +77,7 @@ var cb_wg_byq;
             this.mBtdyData = [[]];
             this.mDateDataSet = new Util.Ajax("wg_date_update.do");
             this.mCompanyDataSet = new Util.Ajax("wg_update.do");
-            this.mComp = 0 /* SB */;
+            this.mComp = Util.CompanyType.SB;
         }
         View.newInstance = function () {
             return new View();
@@ -160,7 +160,7 @@ var cb_wg_byq;
                 height: 250,
                 width: 1250,
                 shrinkToFit: false,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.updateJttbTable = function () {
@@ -220,7 +220,7 @@ var cb_wg_byq;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.updateGstbTable = function () {
@@ -247,7 +247,7 @@ var cb_wg_byq;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.updateFdyTable = function () {
@@ -294,7 +294,7 @@ var cb_wg_byq;
                 width: 1250,
                 rowNum: 200,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;
