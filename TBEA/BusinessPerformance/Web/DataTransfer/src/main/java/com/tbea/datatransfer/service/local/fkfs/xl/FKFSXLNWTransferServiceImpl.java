@@ -1,5 +1,7 @@
 package com.tbea.datatransfer.service.local.fkfs.xl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -24,14 +26,18 @@ public class FKFSXLNWTransferServiceImpl implements FKFSXLNWTransferService {
 	public boolean transferFKFSXLNW() {
 		boolean result = false;
 		try {
+			SimpleDateFormat month_sdf = new SimpleDateFormat("yyyyMM");
+			Date gxrq = null;
 			// dl
 			fkfsxlnwLocalDao.deleteFKFSXLNWLocalByQY(6);
 			FKFSXLNWLocal fkfsxlnwLocal = null;
 			List<FKFSXLNWXL> fkfsxlnwDLList = fkfsxlnwDLDao.getAllFKFSXLNW();
 			for (FKFSXLNWXL fkfsxlnwDL : fkfsxlnwDLList) {
 				fkfsxlnwLocal = new FKFSXLNWLocal();
-				fkfsxlnwLocal.setGxrq(fkfsxlnwDL.getGxrq());
+				gxrq = fkfsxlnwDL.getGxrq();
+				fkfsxlnwLocal.setGxrq(gxrq);
 				fkfsxlnwLocal.setGsbm(fkfsxlnwDL.getGsbm());
+				fkfsxlnwLocal.setNy(month_sdf.format(gxrq));
 				fkfsxlnwLocal.setSfjzzb(fkfsxlnwDL.getSfjzzb());
 				fkfsxlnwLocal.setNwhtddzlbs(fkfsxlnwDL.getNwhtddzlbs());
 				fkfsxlnwLocal.setNwhtddzlje(fkfsxlnwDL.getNwhtddzlje());
@@ -54,8 +60,10 @@ public class FKFSXLNWTransferServiceImpl implements FKFSXLNWTransferService {
 			List<FKFSXLNWXL> fkfsxlnwLLList = fkfsxlnwLLDao.getAllFKFSXLNW();
 			for (FKFSXLNWXL fkfsxlnwLL : fkfsxlnwLLList) {
 				fkfsxlnwLocal = new FKFSXLNWLocal();
-				fkfsxlnwLocal.setGxrq(fkfsxlnwLL.getGxrq());
+				gxrq = fkfsxlnwLL.getGxrq();
+				fkfsxlnwLocal.setGxrq(gxrq);
 				fkfsxlnwLocal.setGsbm(fkfsxlnwLL.getGsbm());
+				fkfsxlnwLocal.setNy(month_sdf.format(gxrq));
 				fkfsxlnwLocal.setSfjzzb(fkfsxlnwLL.getSfjzzb());
 				fkfsxlnwLocal.setNwhtddzlbs(fkfsxlnwLL.getNwhtddzlbs());
 				fkfsxlnwLocal.setNwhtddzlje(fkfsxlnwLL.getNwhtddzlje());
@@ -78,8 +86,10 @@ public class FKFSXLNWTransferServiceImpl implements FKFSXLNWTransferService {
 			List<FKFSXLNWXL> fkfsxlnwXLList = fkfsxlnwXLDao.getAllFKFSXLNW();
 			for (FKFSXLNWXL fkfsxlnwXL : fkfsxlnwXLList) {
 				fkfsxlnwLocal = new FKFSXLNWLocal();
-				fkfsxlnwLocal.setGxrq(fkfsxlnwXL.getGxrq());
+				gxrq = fkfsxlnwXL.getGxrq();
+				fkfsxlnwLocal.setGxrq(gxrq);
 				fkfsxlnwLocal.setGsbm(fkfsxlnwXL.getGsbm());
+				fkfsxlnwLocal.setNy(month_sdf.format(gxrq));
 				fkfsxlnwLocal.setSfjzzb(fkfsxlnwXL.getSfjzzb());
 				fkfsxlnwLocal.setNwhtddzlbs(fkfsxlnwXL.getNwhtddzlbs());
 				fkfsxlnwLocal.setNwhtddzlje(fkfsxlnwXL.getNwhtddzlje());

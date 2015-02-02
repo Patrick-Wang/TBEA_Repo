@@ -90,4 +90,54 @@ public class BLLocalDaoImpl extends AbstractReadWriteDaoImpl<BLLocal> implements
 		return result;
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getKHFXS() throws Exception {
+		String sql = "select convert(varchar(6), bldqr, 112) as ny"
+				+ ", sum(blje) as dqblje, count(id) as dqblfs"
+				+ " from yszk_zj_bl where bldqr is not null and kxxz = 2"
+				+ " group by convert(varchar(6), bldqr, 112) order by ny";
+		Query query = getEntityManager().createNativeQuery(sql);
+		List<Object[]> result = (List<Object[]>) query.getResultList();
+		return result;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getFKHFXS() throws Exception {
+		String sql = "select convert(varchar(6), bldqr, 112) as ny"
+				+ ", sum(blje) as dqblje, count(id) as dqblfs"
+				+ " from yszk_zj_bl where bldqr is not null and kxxz = 1"
+				+ " group by convert(varchar(6), bldqr, 112) order by ny";
+		Query query = getEntityManager().createNativeQuery(sql);
+		List<Object[]> result = (List<Object[]>) query.getResultList();
+		return result;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getKHFXSByQY() throws Exception {
+		String sql = "select convert(varchar(6), bldqr, 112) as ny, qybh"
+				+ ", sum(blje) as dqblje, count(id) as dqblfs"
+				+ " from yszk_zj_bl where bldqr is not null and kxxz = 2"
+				+ " group by convert(varchar(6), bldqr, 112), qybh"
+				+ " order by ny";
+		Query query = getEntityManager().createNativeQuery(sql);
+		List<Object[]> result = (List<Object[]>) query.getResultList();
+		return result;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getFKHFXSByQY() throws Exception {
+		String sql = "select convert(varchar(6), bldqr, 112) as ny, qybh"
+				+ ", sum(blje) as dqblje, count(id) as dqblfs"
+				+ " from yszk_zj_bl where bldqr is not null and kxxz = 1"
+				+ " group by convert(varchar(6), bldqr, 112), qybh"
+				+ " order by ny";
+		Query query = getEntityManager().createNativeQuery(sql);
+		List<Object[]> result = (List<Object[]>) query.getResultList();
+		return result;
+	}
+
 }

@@ -35,7 +35,7 @@ public class BLHT extends AbstractReadWriteEntity implements Serializable {
 
 	private Integer dqblzyhkfs;
 
-//	private Integer qybh;
+	private Integer qybh;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -120,13 +120,13 @@ public class BLHT extends AbstractReadWriteEntity implements Serializable {
 		this.dqblzyhkfs = dqblzyhkfs;
 	}
 
-//	public Integer getQybh() {
-//		return qybh;
-//	}
-//
-//	public void setQybh(Integer qybh) {
-//		this.qybh = qybh;
-//	}
+	public Integer getQybh() {
+		return qybh;
+	}
+
+	public void setQybh(Integer qybh) {
+		this.qybh = qybh;
+	}
 
 	@Override
 	public String toString() {
@@ -135,7 +135,7 @@ public class BLHT extends AbstractReadWriteEntity implements Serializable {
 				+ ", dqkhfxsblye=" + dqkhfxsblye + ", dqkhfxsblfs="
 				+ dqkhfxsblfs + ", dqblje=" + dqblje + ", dqblfs=" + dqblfs
 				+ ", dqblzyhkje=" + dqblzyhkje + ", dqblzyhkfs=" + dqblzyhkfs
-				/*+ ", qybh=" + qybh*/ + "]";
+				+ ", qybh=" + qybh + "]";
 	}
 
 }
