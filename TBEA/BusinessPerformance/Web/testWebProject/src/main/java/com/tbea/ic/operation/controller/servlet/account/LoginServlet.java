@@ -24,7 +24,7 @@ import com.tbea.ic.operation.service.login.LoginService;
 @RequestMapping(value = "Login")
 public class LoginServlet {
 
-	private String view = "index";
+	//private String view = "index";
 
 	@Autowired
 	private EntryService entryService;
@@ -35,8 +35,16 @@ public class LoginServlet {
 	@Autowired
 	private LoginService loginService;
 
-	@RequestMapping(value = "login.do", method = RequestMethod.POST)
-	public ModelAndView importBLHT(HttpServletRequest request,
+	@RequestMapping(value = "login.do", method = RequestMethod.GET)
+	public ModelAndView getLogin(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		return new ModelAndView("login");
+	}
+	
+	
+	@RequestMapping(value = "validate.do", method = RequestMethod.POST)
+	public ModelAndView validate(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = "j_username") String j_username,
 			@RequestParam(value = "j_password") String j_password) {
@@ -49,6 +57,7 @@ public class LoginServlet {
 			if (null != currentSession) {
 				currentSession.invalidate();
 			}
+
 
 			HttpSession newSession = request.getSession(true);
 			newSession.setAttribute("account", account);
@@ -64,28 +73,38 @@ public class LoginServlet {
 
 			newSession.setAttribute("approvePredict",
 					approveService.hasApprovePredictPermission(account));
-
-			map.put("entryPlan", newSession.getAttribute("entryPlan"));
-
-			map.put("entryPredict", newSession.getAttribute("entryPredict"));
-
-			map.put("approvePlan", newSession.getAttribute("approvePlan"));
-
-			map.put("approvePredict", newSession.getAttribute("approvePredict"));
-
 			
-//			if ("qgb".equals(j_username)){
-//				map.put("sbqgb", true);
-//			}else {
-//				map.put("sbqgb", false);
-//			}
 			
-			return new ModelAndView(view, map);
+			
+			return new ModelAndView("redirect:/Login/index.do", map);
+
 		} else {
 			map.put("error", true);
+			return new ModelAndView("login", map);
 		}
+	}
+	
+	
+	@RequestMapping(value = "index.do", method = RequestMethod.GET)
+	public ModelAndView getIndex(HttpServletRequest request,
+			HttpServletResponse response) {
 
-		return new ModelAndView("login", map);
+		HttpSession currentSession = request.getSession(false);
 
+		Map<String, Object> map = new HashMap<String, Object>();
+		Account account = (Account) currentSession.getAttribute("account");
+		
+		map.put("sbqgb", account.getName().equals("qgb"));
+		
+		map.put("entryPlan", currentSession.getAttribute("entryPlan"));
+
+		map.put("entryPredict", currentSession.getAttribute("entryPredict"));
+
+		map.put("approvePlan", currentSession.getAttribute("approvePlan"));
+
+		map.put("approvePredict", currentSession.getAttribute("approvePredict"));
+		
+		return new ModelAndView("index", map);
+	
 	}
 }

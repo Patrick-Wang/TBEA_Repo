@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_3.xsd" version="2.3">
 	<display-name>Business Management</display-name>
 	<welcome-file-list>
-    <welcome-file>jsp/login.jsp</welcome-file>
+    <welcome-file>/Login/login.do</welcome-file>
   </welcome-file-list>
 	<listener>
 		<listener-class>org.springframework.web.util.WebAppRootListener
@@ -56,5 +56,14 @@
 	<filter-mapping>
 		<filter-name>JSONResponseContentTypeFilter</filter-name>
 		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>SessionCheckFilter</filter-name>
+		<filter-class>com.tbea.ic.operation.controller.servlet.account.SessionCheckFilter
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SessionCheckFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 </web-app>
