@@ -53,7 +53,7 @@ var cb_xl;
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("tb_update.do");
-            this.mComp = 0 /* SB */;
+            this.mComp = Util.CompanyType.SB;
         }
         View.newInstance = function () {
             return new View();
@@ -147,7 +147,7 @@ var cb_xl;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.format = function (row) {
@@ -190,7 +190,7 @@ var cb_xl;
                 height: height,
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;

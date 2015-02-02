@@ -4,11 +4,11 @@ var byq_fkfstj;
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createSubNode = function (parent) {
-            return parent.append(new JQTable.Node("笔数", "bs", true, 1 /* Right */, 70)).append(new JQTable.Node("金额", "je", true, 1 /* Right */, 80));
+            return parent.append(new JQTable.Node("笔数", "bs", true, JQTable.TextAlign.Right, 70)).append(new JQTable.Node("金额", "je", true, JQTable.TextAlign.Right, 80));
         };
         JQGridAssistantFactory.createFdwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, 0 /* Left */, 70),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("非电网合同订单总量", "fdwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("无预付款合同", "wyfkht")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("预付款<10%合同", "yfkxy10")),
@@ -21,7 +21,7 @@ var byq_fkfstj;
         };
         JQGridAssistantFactory.createGwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, 0 /* Left */, 70),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("国网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:4:2:1", "3421")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:4:2.5:0.5", "342505")),
@@ -35,7 +35,7 @@ var byq_fkfstj;
         };
         JQGridAssistantFactory.createNwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, 0 /* Left */, 70),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("南网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:3:3:1", "3331")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("1:4:4:0.5:0.5", "1440505")),
@@ -49,7 +49,7 @@ var byq_fkfstj;
     })();
     var View = (function () {
         function View() {
-            this.mComp = 0 /* SB */;
+            this.mComp = Util.CompanyType.SB;
         }
         View.newInstance = function () {
             return new View();
@@ -133,7 +133,7 @@ var byq_fkfstj;
                     orient: "vertical"
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 series: [
@@ -177,7 +177,7 @@ var byq_fkfstj;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;

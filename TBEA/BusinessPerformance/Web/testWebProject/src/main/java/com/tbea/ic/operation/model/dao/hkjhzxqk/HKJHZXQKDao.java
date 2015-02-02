@@ -9,12 +9,16 @@ import com.tbea.ic.operation.model.entity.YDSJHKQK;
 
 public interface HKJHZXQKDao {
 
-	List<YDHKJHJG> getHkjhjg(Date d, Company comp);
+	//List<YDHKJHJG> getHkjhjg(Date d, Company comp);
 
 	List<YDSJHKQK> getSjhkqk(Date d, Company comp);
 
 	YDSJHKQK getLatestYdsjhk();
 
 	List<YDSJHKQK> getHkqkXj(Date d, Company comp);
+
+	List<YDSJHKQK> getSjhkqk(Date d, List<Company> comps);
+
+	List<YDSJHKQK> getHkqkXj(Date d, List<Company> comps);
 
 }

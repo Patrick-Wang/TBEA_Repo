@@ -5,8 +5,8 @@ var syhkjhzxqk;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("款项性质", "kxxz", true, 0 /* Left */),
-                new JQTable.Node("款项性质", "kxxz_1", true, 0 /* Left */),
+                new JQTable.Node("款项性质", "kxxz", true, JQTable.TextAlign.Left),
+                new JQTable.Node("款项性质", "kxxz_1", true, JQTable.TextAlign.Left),
                 new JQTable.Node("计划回款", "jhhk"),
                 new JQTable.Node("实际回款", "sjhk"),
                 new JQTable.Node("计划完成率", "jhwcl")
@@ -16,7 +16,7 @@ var syhkjhzxqk;
     })();
     var View = (function () {
         function View() {
-            this.mComp = 1 /* HB */;
+            this.mComp = Util.CompanyType.HB;
             this.mDataSet = new Util.Ajax("syhkjhzxqk_update.do");
         }
         View.newInstance = function () {
@@ -64,8 +64,8 @@ var syhkjhzxqk;
             var sjData = [];
             var wclData = [];
             for (var i = 0; i < this.mData[1].length; ++i) {
-                jhData.push(this.mData[1][i][0]);
-                sjData.push(this.mData[1][i][1]);
+                jhData.push(parseFloat(this.mData[1][i][0]).toFixed(2));
+                sjData.push(parseFloat(this.mData[1][i][1]).toFixed(2));
                 wclData.push((parseFloat(this.mData[1][i][2]) * 100).toFixed(2));
             }
             var zxqkOption = {
@@ -75,14 +75,14 @@ var syhkjhzxqk;
                 tooltip: {
                     trigger: 'axis',
                     formatter: function (v) {
-                        return v[0][1] + '<br/>' + v[0][0] + ' : ' + v[0][2] + '<br/>' + v[1][0] + ' : ' + v[1][2] + '<br/>' + v[2][0] + ' : ' + v[2][2] + '%';
+                        return v[0][1] + '<br/>' + v[0][0] + ' : ' + Util.formatCurrency(v[0][2]) + '<br/>' + v[1][0] + ' : ' + Util.formatCurrency(v[1][2]) + '<br/>' + v[2][0] + ' : ' + v[2][2] + '%';
                     }
                 },
                 legend: {
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -146,7 +146,7 @@ var syhkjhzxqk;
                             data[i].push(Util.formatCurrency(this.mData[0][i][j]));
                         }
                         else {
-                            data[i].push((this.mData[0][i][j]));
+                            data[i].push((parseFloat(this.mData[0][i][j]) * 100).toFixed(2) + "%");
                         }
                     }
                 }
@@ -163,7 +163,7 @@ var syhkjhzxqk;
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
-                width: '100%'
+                width: '100%',
             }));
         };
         return View;

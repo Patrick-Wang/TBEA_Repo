@@ -110,7 +110,11 @@ public class YSZKPZJHServiceImpl implements YSZKPZJHService {
 	public Date getLatestDate() {
 		YSZKPZGH pzgh = yszkpzjhDao.getLatestDate();
 		if (null != pzgh){
-			return (Date) Util.valueOf(pzgh.getYf());
+			if (pzgh.getYf().length() > 3){
+				return (Date) Util.valueOf(pzgh.getYf());
+			}else {
+				return pzgh.getGxrq();
+			}
 		}
 		return null;
 	}

@@ -2,7 +2,7 @@ var zbhz_overview;
 (function (zbhz_overview) {
     var YDZBDataSet = (function () {
         function YDZBDataSet(comId, yd, jd, nd, ydtb, jdtb) {
-            this.companyId = 18 /* JT */;
+            this.companyId = Util.CompanyType.JT;
             this.companyId = comId;
             this.mYd = yd;
             this.mJd = jd;
@@ -71,9 +71,9 @@ var zbhz_overview;
     var View = (function () {
         function View() {
             this.mSelectCy = true;
-            this.mCy = 18 /* JT */;
-            this.mDw = 1000 /* ALL */;
-            this.mComp = 18 /* JT */;
+            this.mCy = Util.CompanyType.JT;
+            this.mDw = Util.CompanyType.ALL;
+            this.mComp = Util.CompanyType.JT;
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -124,7 +124,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -189,7 +189,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -255,7 +255,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -316,7 +316,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -381,7 +381,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [

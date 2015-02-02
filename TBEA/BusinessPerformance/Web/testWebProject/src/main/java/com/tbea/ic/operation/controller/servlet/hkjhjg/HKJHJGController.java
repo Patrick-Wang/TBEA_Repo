@@ -2,7 +2,6 @@ package com.tbea.ic.operation.controller.servlet.hkjhjg;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,12 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
-import com.tbea.ic.operation.service.cqk.CQKService;
 import com.tbea.ic.operation.service.hkjhjg.HKJHJGService;
 
 @Controller
@@ -43,23 +40,32 @@ public class HKJHJGController {
 	@RequestMapping(value = "hkjhjg_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getHkjhjg_update(HttpServletRequest request,
 			HttpServletResponse response) {
-//		int month = Integer.parseInt(request.getParameter("month"));
-//		int year = Integer.parseInt(request.getParameter("year"));
-//		String companyId = request.getParameter("companyId");
-//		int cid = Integer.parseInt(companyId);
-//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
-//		
-//		Organization org = companyManager.getOperationOrganization();
-//		Company comp = org.getCompany(CompanyType.valueOf(cid));
-		
-		
 		Date d = DateSelection.getDate(request);
-		Organization org = companyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
+//		Organization org = companyManager.getOperationOrganization();
+//		Company comp = org.getCompany(CompanySelection.getCompany(request));
+//		List<String[][]> result = new ArrayList<String[][]>();
+//		result.add(service.getHkjhjgData(d, comp));
+//		result.add(new String[][]{service.getHkjhztData(d, comp)});
+//		result.add(new String[][]{service.getHkjhxzData(d, comp)});
+
+		CompanyType compType = CompanySelection.getCompany(request);
+		Company comp = companyManager.getOperationOrganization().getCompany(compType);
 		List<String[][]> result = new ArrayList<String[][]>();
-		result.add(service.getHkjhjgData(d, comp));
-		result.add(new String[][]{service.getHkjhztData(d, comp)});
-		result.add(new String[][]{service.getHkjhxzData(d, comp)});
+		if (null == comp) {
+			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
+			if (null != comp) {
+				List<Company> comps = comp.getSubCompanys();
+				result.add(service.getHkjhjgData(d, comps));
+				result.add(new String[][]{service.getHkjhztData(d, comps)});
+				result.add(new String[][]{service.getHkjhxzData(d, comps)});
+			}
+		}
+		else {
+			result.add(service.getHkjhjgData(d, comp));
+			result.add(new String[][]{service.getHkjhztData(d, comp)});
+			result.add(new String[][]{service.getHkjhxzData(d, comp)});
+		}
+
 		String hkjh = JSONArray.fromObject(result).toString().replace("null", "0.00");		
 		return hkjh;
 	}
@@ -73,9 +79,11 @@ public class HKJHJGController {
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);
 
-		Organization org = companyManager.getOperationOrganization();
-		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanys());
-		compSel.setFirstCompany(CompanyType.HB);
+		List<Company> comps = new ArrayList<Company>();
+		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanys());
+		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
+		CompanySelection compSel = new CompanySelection(true, comps);
+		//compSel.setFirstCompany(CompanyType.HB);
 		compSel.select(map);
 
 		return new ModelAndView("hkjhjg", map);

@@ -1,16 +1,9 @@
 declare var $;
 module Util {
-    export enum EntyType {
-        QNJH,
-        BY20,
-        BY28,
-        BYSJ
-    }
     
     export enum ZBType {
         QNJH,
-        BY20JH,
-        BY28JH,
+        YDJDMJH,
         BY20YJ,
         BY28YJ,
         BYSJ

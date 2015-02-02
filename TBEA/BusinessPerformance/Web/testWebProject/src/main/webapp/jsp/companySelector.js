@@ -1,6 +1,6 @@
 var Util;
 (function (Util) {
-    String.prototype.getWidth = function (fontSize) {
+    String.prototype["getWidth"] = function (fontSize) {
         var span = document.getElementById("__getwidth");
         if (span == null) {
             span = document.createElement("span");

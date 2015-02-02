@@ -1,6 +1,7 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
 /// <reference path="dateSelector.ts" />
+/// <reference path="companySelector.ts" />
 declare var echarts;
 declare var $;
 module entry_template {
@@ -21,13 +22,6 @@ module entry_template {
             return new JQTable.JQGridAssistant(nodes, gridName);
         }
 
-        //        public static createHierarchyTable(gridName: string): JQTable.JQGridAssistant {
-        //            return new JQTable.JQGridAssistant([
-        //                new JQTable.Node("A", "a"),
-        //                new JQTable.Node("B", "b")
-        //                    .append(new JQTable.Node("C", "c"))
-        //            ], gridName);
-        //        }
     }
 
     interface IViewOption {
@@ -100,11 +94,8 @@ module entry_template {
                 case Util.ZBType.QNJH:
                     header = date.year + "年 计划数据录入";
                     break;
-                case Util.ZBType.BY20JH:
-                    header = date.year + "年" + date.month + "月 20日计划值录入";
-                    break;
-                case Util.ZBType.BY28JH:
-                    header = date.year + "年" + date.month + "月 28日计划值录入";
+                case Util.ZBType.YDJDMJH:
+                    header = date.year + "年" + date.month + "月 季度-月度末计划值录入";
                     break;
                 case Util.ZBType.BY20YJ:
                     header = date.year + "年" + date.month + "月 20日预计值录入";
@@ -127,8 +118,7 @@ module entry_template {
             var ret: Array<string> = [title[0]];
             var date = this.mDateSelector.getDate();
             var left = date.month % 3;
-            if ((this.mOpt.entryType == Util.ZBType.BY20JH ||
-                this.mOpt.entryType == Util.ZBType.BY28JH) && 0 == left) {
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH && 0 == left) {
                 if (12 == date.month) {
                     ret.push((date.year + 1) + "年1月计划")
                     ret.push((date.year + 1) + "年2月计划")
@@ -137,8 +127,7 @@ module entry_template {
                     ret.push((date.month + 1) + "月计划")
                     ret.push((date.month + 2) + "月计划")
                     ret.push((date.month + 3) + "月计划")
-                }
-
+                }    
             } else if (this.mOpt.entryType == Util.ZBType.BY20YJ ||
                 this.mOpt.entryType == Util.ZBType.BY28YJ) {
                 ret.push(title[1]);
@@ -146,6 +135,16 @@ module entry_template {
                     var leftMonth = 3 - left;
                     for (var i = 1; i <= leftMonth; ++i) {
                         ret.push((date.month + i) + "月预计")
+                    }
+                } else {
+                    if (12 == date.month) {
+                        ret.push((date.year + 1) + "年1月预计")
+                        ret.push((date.year + 1) + "年2月预计")
+                        ret.push((date.year + 1) + "年3月预计")
+                    } else {
+                        ret.push((date.month + 1) + "月预计")
+                        ret.push((date.month + 2) + "月预计")
+                        ret.push((date.month + 3) + "月预计")
                     }
                 }
             }
@@ -172,25 +171,23 @@ module entry_template {
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             this.enableEntry();
-
+ 
             var titles = null;
             switch (this.mOpt.entryType) {
                 case Util.ZBType.QNJH:
                     titles = ["指标名称", "全年计划"];
                     break;
-                case Util.ZBType.BY20JH:
+                case Util.ZBType.YDJDMJH:
                     if (this.mDateSelector.getDate().month % 3 != 0) {
                         this.disableEntry(tableId);
                         return;
+                    }else{
+                    	titles = this.createPredict(["指标名称"]);
                     }
+                    break;
                 case Util.ZBType.BY20YJ:
                     titles = this.createPredict(["指标名称", "本月20日预计值"]);
                     break;
-                case Util.ZBType.BY28JH:
-                     if (this.mDateSelector.getDate().month % 3 != 0) {
-                        this.disableEntry(tableId);
-                        return;
-                    }
                 case Util.ZBType.BY28YJ:
                     titles = this.createPredict(["指标名称", "本月28日预计值"]);
                     break;

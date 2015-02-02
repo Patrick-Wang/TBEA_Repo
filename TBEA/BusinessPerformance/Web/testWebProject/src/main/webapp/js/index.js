@@ -1,6 +1,6 @@
 var version = '2.0.2';
 var curPage = location.href.match(/(\w*).html/) ? location.href.match(/(\w*).html/)[1] : 'index';
-
+var RELEASE = false; 
 var activeClass = {};
 var loc = {};
 var entryPlan;
@@ -64,15 +64,17 @@ var stringDescription =  '<div class="container">'
         + '<div class="navbar-collapse collapse" id="nav-wrap">'
           + '<ul class="nav navbar-nav navbar-right" id="nav" style="max-width:100%;">'
             + '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="1"><a>指标汇总明细</a></li>';
-			if(entryPlan || entryPredict)
-			{
-				 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="2"><a>指标录入</a></li>';
+			if (!RELEASE){
+				if(entryPlan || entryPredict)
+				{
+					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="2"><a>指标录入</a></li>';
+				}
+				if(approveplan || approvePredict)
+				{
+					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="3"><a>指标审核</a></li>';
+				}
+	             stringDescription += '<li class="' + (activeClass.About || '') + '" onclick="delegateCall(this);" value="4"><a>财务指标汇总</a></li>'
 			}
-			if(approveplan || approvePredict)
-			{
-				 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="3"><a>指标审核</a></li>';
-			}
-             stringDescription += '<li class="' + (activeClass.About || '') + '" onclick="delegateCall(this);" value="4"><a>财务指标汇总</a></li>'
           + '</ul>'
         + '</div><!--/.nav-collapse -->'
       + '</div>';
@@ -90,9 +92,12 @@ var stringDescription =  '<div class="container">'
                 + '<p>友情链接</p>'
                 + '<ul>'
                     + '<li><a href="http://www.tbea.com.cn/default.aspx" target="_blank">TBEA 官网</a></li>'
-                    //+ '<li><a href="http://www.tbea.com.cn/default.aspx" target="_blank">TBEA OA</a></li>'
-                    //+ '<li><a href="http://www.tbea.com.cn/default.aspx" target="_blank">TBEA Portal</a></li>'
-                    //+ '<li><a href="http://www.tbea.com.cn/default.aspx" target="_blank">TBEA E-HR</a></li>'
+                    // + '<li><a href="http://www.tbea.com.cn/default.aspx"
+					// target="_blank">TBEA OA</a></li>'
+                    // + '<li><a href="http://www.tbea.com.cn/default.aspx"
+					// target="_blank">TBEA Portal</a></li>'
+                    // + '<li><a href="http://www.tbea.com.cn/default.aspx"
+					// target="_blank">TBEA E-HR</a></li>'
                 + '</ul>'
             + '</div>'
             + '<div class="col-md-3">'
@@ -100,15 +105,18 @@ var stringDescription =  '<div class="container">'
                 + '<ul>'
                     + '<li><a href="http://www.tbea.com.cn/default.aspx" target="_blank">TBEA OA</a></li>'
                     + '<li><a href="http://www.tbea.com.cn/default.aspx" target="_blank">TBEA E_HR</a></li>'
-                    //+ '<li><a href="http://www.tbea.com.cn/default.aspx" target="_blank">TBEA Portal</a></li>'
+                    // + '<li><a href="http://www.tbea.com.cn/default.aspx"
+					// target="_blank">TBEA Portal</a></li>'
                 + '</ul>'
             + '</div>'
             + '<div class="col-md-3">'
                 + '<p>联系我们</p>'
                 + '<ul>'
                     + '<li><a href="mailto:18624020715(a)163.com">18624020715(a)163.com</a></li>'
-                    //+ '<li><a href="http://www.tbea.com.cn/default.aspx" target="_blank">TBEA 官网</a></li>'
-                    //+ '<li><a href="http://www.tbea.com.cn/default.aspx" target="_blank">TBEA OA</a></li>'
+                    // + '<li><a href="http://www.tbea.com.cn/default.aspx"
+					// target="_blank">TBEA 官网</a></li>'
+                    // + '<li><a href="http://www.tbea.com.cn/default.aspx"
+					// target="_blank">TBEA OA</a></li>'
                 + '</ul>'
             + '</div>'
             + '<div class="col-md-3 flogo">'
@@ -154,10 +162,10 @@ function clickli(obj)
 		$("#approveList").css("display", "none");
 		$("#financeList").css("display", "none");
 		
-//		$("#nav li").eq(1).removeClass("active");
-//		$("#nav li").eq(2).removeClass("active");
-//		$("#nav li").eq(3).removeClass("active");
-//		$("#nav li").eq(0).addClass("active");
+// $("#nav li").eq(1).removeClass("active");
+// $("#nav li").eq(2).removeClass("active");
+// $("#nav li").eq(3).removeClass("active");
+// $("#nav li").eq(0).addClass("active");
 
 		break;
 	case 2:
@@ -171,10 +179,10 @@ function clickli(obj)
 		$("#approveList").css("display", "none");
 		$("#financeList").css("display", "none");
 		
-//		obj
-//		$("#nav li").eq(2).removeClass("active");
-//		$("#nav li").eq(3).removeClass("active");
-//		$("#nav li").eq(1).addClass("active");
+// obj
+// $("#nav li").eq(2).removeClass("active");
+// $("#nav li").eq(3).removeClass("active");
+// $("#nav li").eq(1).addClass("active");
 	break;
 	case 3:
 		$("#navlist").css("display", "none");
@@ -187,10 +195,10 @@ function clickli(obj)
 		$("#approveList").css("display", "");
 		$("#financeList").css("display", "none");
 		
-//		$("#nav li").eq(0).removeClass("active");
-//		$("#nav li").eq(1).removeClass("active");
-//		$("#nav li").eq(3).removeClass("active");
-//		$("#nav li").eq(2).addClass("active");
+// $("#nav li").eq(0).removeClass("active");
+// $("#nav li").eq(1).removeClass("active");
+// $("#nav li").eq(3).removeClass("active");
+// $("#nav li").eq(2).addClass("active");
 	break;
 	case 4:
 		$("#navlist").css("display", "none");
@@ -203,10 +211,10 @@ function clickli(obj)
 		$("#approveList").css("display", "none");
 		$("#financeList").css("display", "");
 		
-//		$("#nav li").eq(0).removeClass("active");
-//		$("#nav li").eq(1).removeClass("active");
-//		$("#nav li").eq(2).removeClass("active");
-//		$("#nav li").eq(3).addClass("active");
+// $("#nav li").eq(0).removeClass("active");
+// $("#nav li").eq(1).removeClass("active");
+// $("#nav li").eq(2).removeClass("active");
+// $("#nav li").eq(3).addClass("active");
 	break;
 	default:
 	break;

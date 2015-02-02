@@ -61,7 +61,7 @@ var xl_fkfstj;
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("xlfkfstj_update.do");
-            this.mComp = 0 /* SB */;
+            this.mComp = Util.CompanyType.SB;
         }
         View.newInstance = function () {
             return new View();
@@ -212,7 +212,7 @@ var xl_fkfstj;
                     orient: "vertical"
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 series: [
@@ -257,7 +257,7 @@ var xl_fkfstj;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: shrink,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.updateFdwTable = function (parentName, childName, tableAssist, rawData) {

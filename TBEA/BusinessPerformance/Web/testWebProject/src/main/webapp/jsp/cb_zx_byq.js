@@ -58,7 +58,7 @@ var cb_zx_byq;
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("zx_update.do");
-            this.mComp = 0 /* SB */;
+            this.mComp = Util.CompanyType.SB;
         }
         View.newInstance = function () {
             return new View();
@@ -122,7 +122,7 @@ var cb_zx_byq;
                 height: 250,
                 width: 1250,
                 shrinkToFit: false,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.updateJttbTable = function () {
@@ -181,7 +181,7 @@ var cb_zx_byq;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.updateGstbTable = function () {
@@ -246,7 +246,7 @@ var cb_zx_byq;
                 width: 1250,
                 rowNum: 200,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;
