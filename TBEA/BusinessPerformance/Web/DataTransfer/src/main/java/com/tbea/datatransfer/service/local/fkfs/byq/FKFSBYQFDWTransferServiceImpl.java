@@ -1,6 +1,7 @@
 package com.tbea.datatransfer.service.local.fkfs.byq;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,8 @@ public class FKFSBYQFDWTransferServiceImpl implements FKFSBYQFDWTransferService 
 	public boolean transferFKFSBYQFDW() {
 		boolean result = false;
 		try {
+			SimpleDateFormat month_sdf = new SimpleDateFormat("yyyyMM");
+			Date gxrq = null;
 			// tb
 			fkfsbyqfdwLocalDao.deleteFKFSBYQFDWLocalByQY(301);
 			FKFSBYQFDWLocal fkfsbyqfdwLocal = null;
@@ -35,9 +38,10 @@ public class FKFSBYQFDWTransferServiceImpl implements FKFSBYQFDWTransferService 
 					.getAllFKFSBYQFDW();
 			for (FKFSBYQFDWBYQ fkfsbyqfdwTB : fkfsbyqfdwTBList) {
 				fkfsbyqfdwLocal = new FKFSBYQFDWLocal();
-				fkfsbyqfdwLocal.setGxrq(fkfsbyqfdwTB.getGxrq());
+				gxrq = fkfsbyqfdwTB.getGxrq();
+				fkfsbyqfdwLocal.setGxrq(gxrq);
 				fkfsbyqfdwLocal.setGsbm(fkfsbyqfdwTB.getGsbm());
-				// fkfsbyqfdwLocal.setNy(fkfsbyqfdwTB.getNy());
+				fkfsbyqfdwLocal.setNy(month_sdf.format(gxrq));
 				fkfsbyqfdwLocal.setFdwhtddzlbs(fkfsbyqfdwTB.getFdwhtddzlbs());
 				fkfsbyqfdwLocal.setFdwhtddzlje(fkfsbyqfdwTB.getFdwhtddzlje());
 				fkfsbyqfdwLocal.setWyfkhtbs(fkfsbyqfdwTB.getWyfkhtbs());
@@ -73,9 +77,10 @@ public class FKFSBYQFDWTransferServiceImpl implements FKFSBYQFDWTransferService 
 					.getAllFKFSBYQFDW();
 			for (FKFSBYQFDWBYQ fkfsbyqfdwSB : fkfsbyqfdwSBList) {
 				fkfsbyqfdwLocal = new FKFSBYQFDWLocal();
-				fkfsbyqfdwLocal.setGxrq(fkfsbyqfdwSB.getGxrq());
+				gxrq = fkfsbyqfdwSB.getGxrq();
+				fkfsbyqfdwLocal.setGxrq(gxrq);
 				fkfsbyqfdwLocal.setGsbm(fkfsbyqfdwSB.getGsbm());
-				// fkfsbyqfdwLocal.setNy(fkfsbyqfdwTB.getNy());
+				fkfsbyqfdwLocal.setNy(month_sdf.format(gxrq));
 				fkfsbyqfdwLocal.setFdwhtddzlbs(fkfsbyqfdwSB.getFdwhtddzlbs());
 				fkfsbyqfdwLocal.setFdwhtddzlje(fkfsbyqfdwSB.getFdwhtddzlje());
 				fkfsbyqfdwLocal.setWyfkhtbs(fkfsbyqfdwSB.getWyfkhtbs());
@@ -111,9 +116,10 @@ public class FKFSBYQFDWTransferServiceImpl implements FKFSBYQFDWTransferService 
 					.getAllFKFSBYQFDW();
 			for (FKFSBYQFDWBYQ fkfsbyqfdwXB : fkfsbyqfdwXBList) {
 				fkfsbyqfdwLocal = new FKFSBYQFDWLocal();
-				fkfsbyqfdwLocal.setGxrq(fkfsbyqfdwXB.getGxrq());
+				gxrq = fkfsbyqfdwXB.getGxrq();
+				fkfsbyqfdwLocal.setGxrq(gxrq);
 				fkfsbyqfdwLocal.setGsbm(fkfsbyqfdwXB.getGsbm());
-				// fkfsbyqfdwLocal.setNy(fkfsbyqfdwTB.getNy());
+				fkfsbyqfdwLocal.setNy(month_sdf.format(gxrq));
 				fkfsbyqfdwLocal.setFdwhtddzlbs(fkfsbyqfdwXB.getFdwhtddzlbs());
 				fkfsbyqfdwLocal.setFdwhtddzlje(fkfsbyqfdwXB.getFdwhtddzlje());
 				fkfsbyqfdwLocal.setWyfkhtbs(fkfsbyqfdwXB.getWyfkhtbs());
@@ -151,10 +157,11 @@ public class FKFSBYQFDWTransferServiceImpl implements FKFSBYQFDWTransferService 
 					"web_test", "123456", "yszk_ws_htfkfstj_byq_fdw");
 			for (Map<String, Object> recMap : recList) {
 				fkfsbyqfdwLocal = new FKFSBYQFDWLocal();
-				fkfsbyqfdwLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
-						recMap.get("gxrq")));
+				gxrq = CommonMethod
+						.objectToDate(timeFormat, recMap.get("gxrq"));
+				fkfsbyqfdwLocal.setGxrq(gxrq);
 				fkfsbyqfdwLocal.setGsbm(String.valueOf(recMap.get("gsbm")));
-				// fkfsbyqfdwLocal.setNy(fkfsbyqfdwTB.getNy());
+				fkfsbyqfdwLocal.setNy(month_sdf.format(gxrq));
 				fkfsbyqfdwLocal.setFdwhtddzlbs(Integer.valueOf(String
 						.valueOf(recMap.get("fdwhtddzlbs"))));
 				fkfsbyqfdwLocal.setFdwhtddzlje(CommonMethod

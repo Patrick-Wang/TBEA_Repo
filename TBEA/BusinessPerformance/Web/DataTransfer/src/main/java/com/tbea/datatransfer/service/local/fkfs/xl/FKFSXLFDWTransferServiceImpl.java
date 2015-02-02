@@ -1,5 +1,7 @@
 package com.tbea.datatransfer.service.local.fkfs.xl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,8 @@ public class FKFSXLFDWTransferServiceImpl implements FKFSXLFDWTransferService {
 	public boolean transferFKFSXLFDW() {
 		boolean result = false;
 		try {
+			SimpleDateFormat month_sdf = new SimpleDateFormat("yyyyMM");
+			Date gxrq = null;
 			// dl
 			fkfsxlfdwLocalDao.deleteFKFSXLFDWLocalByQY(6);
 			FKFSXLFDWLocal fkfsxlfdwLocal = null;
@@ -31,7 +35,9 @@ public class FKFSXLFDWTransferServiceImpl implements FKFSXLFDWTransferService {
 					.getAllFKFSXLFDW();
 			for (FKFSXLFDWXL fkfsxlfdwDL : fkfsxlfdwDLList) {
 				fkfsxlfdwLocal = new FKFSXLFDWLocal();
-				fkfsxlfdwLocal.setGxrq(fkfsxlfdwDL.getGxrq());
+				gxrq = fkfsxlfdwDL.getGxrq();
+				fkfsxlfdwLocal.setGxrq(gxrq);
+				fkfsxlfdwLocal.setNy(month_sdf.format(gxrq));
 				fkfsxlfdwLocal.setGsbm(fkfsxlfdwDL.getGsbm());
 				fkfsxlfdwLocal.setKhbh(fkfsxlfdwDL.getKhbh());
 				fkfsxlfdwLocal.setDdzlbs(fkfsxlfdwDL.getDdzlbs());
@@ -70,7 +76,9 @@ public class FKFSXLFDWTransferServiceImpl implements FKFSXLFDWTransferService {
 					.getAllFKFSXLFDW();
 			for (FKFSXLFDWXL fkfsxlfdwLL : fkfsxlfdwLLList) {
 				fkfsxlfdwLocal = new FKFSXLFDWLocal();
-				fkfsxlfdwLocal.setGxrq(fkfsxlfdwLL.getGxrq());
+				gxrq = fkfsxlfdwLL.getGxrq();
+				fkfsxlfdwLocal.setGxrq(gxrq);
+				fkfsxlfdwLocal.setNy(month_sdf.format(gxrq));
 				fkfsxlfdwLocal.setGsbm(fkfsxlfdwLL.getGsbm());
 				fkfsxlfdwLocal.setKhbh(fkfsxlfdwLL.getKhbh());
 				fkfsxlfdwLocal.setDdzlbs(fkfsxlfdwLL.getDdzlbs());
@@ -109,7 +117,9 @@ public class FKFSXLFDWTransferServiceImpl implements FKFSXLFDWTransferService {
 					.getAllFKFSXLFDW();
 			for (FKFSXLFDWXL fkfsxlfdwXL : fkfsxlfdwXLList) {
 				fkfsxlfdwLocal = new FKFSXLFDWLocal();
-				fkfsxlfdwLocal.setGxrq(fkfsxlfdwXL.getGxrq());
+				gxrq = fkfsxlfdwXL.getGxrq();
+				fkfsxlfdwLocal.setGxrq(gxrq);
+				fkfsxlfdwLocal.setNy(month_sdf.format(gxrq));
 				fkfsxlfdwLocal.setGsbm(fkfsxlfdwXL.getGsbm());
 				fkfsxlfdwLocal.setKhbh(fkfsxlfdwXL.getKhbh());
 				fkfsxlfdwLocal.setDdzlbs(fkfsxlfdwXL.getDdzlbs());
