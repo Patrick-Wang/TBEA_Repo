@@ -40,6 +40,7 @@ public class CBBYQTBDD extends AbstractReadWriteEntity {
 	Double	qtclcb	;
 	Double	rgjzzfy	;
 	Double	yf	;
+	Integer qybh;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -338,6 +339,20 @@ public class CBBYQTBDD extends AbstractReadWriteEntity {
 	 */
 	public void setYf(Double yf) {
 		this.yf = yf;
+	}
+
+	/**
+	 * @return the qybh
+	 */
+	public Integer getQybh() {
+		return qybh;
+	}
+
+	/**
+	 * @param qybh the qybh to set
+	 */
+	public void setQybh(Integer qybh) {
+		this.qybh = qybh;
 	}
 	
 }

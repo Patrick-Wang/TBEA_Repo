@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.controller.servlet.account;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,6 +12,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.tbea.ic.operation.model.entity.jygk.Account;
 
 public class SessionCheckFilter implements Filter {
 
@@ -23,29 +26,40 @@ public class SessionCheckFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
-		if (request instanceof HttpServletRequest){
-			HttpServletRequest httpRequest = (HttpServletRequest)request;
-			HttpServletResponse httpResp = (HttpServletResponse)resp;
-			String	url = httpRequest.getRequestURI();
-			if (url.indexOf("/Login/validate.do") < 0 && url.indexOf("/Login/login.do") < 0){
+		if (request instanceof HttpServletRequest) {
+			HttpServletRequest httpRequest = (HttpServletRequest) request;
+			HttpServletResponse httpResp = (HttpServletResponse) resp;
+			String url = httpRequest.getRequestURI();
+			if (url.indexOf("/Login/validate.do") < 0
+					&& url.indexOf("/Login/login.do") < 0) {
 				HttpSession session = httpRequest.getSession(false);
 				boolean bValid = (null != session);
-				if (bValid){
+				if (bValid) {
 					try {
-						bValid = (null != session.getAttribute("account"));
-					}
-					catch(Exception e){
+						bValid = (null != (Account) session
+								.getAttribute("account"));
+					} catch (Exception e) {
 						bValid = false;
 					}
-					
+
 				}
-				if (!bValid){
+				if (!bValid) {
+					String requestType = httpRequest
+							.getHeader("X-Requested-With");
 					String rootUrl = url.substring(1);
 					int rootPos = rootUrl.indexOf('/');
 					rootUrl = rootUrl.substring(0, rootPos);
-					String redirUrl = "/" + rootUrl  + "/Login/login.do";
-					httpResp.sendRedirect(redirUrl);
-					return;
+					String redirUrl = "/" + rootUrl + "/Login/login.do";
+					if (requestType != null
+							&& requestType.equals("XMLHttpRequest")) {
+						PrintWriter pw = httpResp.getWriter();
+						pw.print("{\"error\" : \"invalidate session\", \"redirect\" : \"" + redirUrl + "\"}");
+						pw.close();
+
+					} else {
+						httpResp.sendRedirect(redirUrl);
+						return;
+					}
 				}
 			}
 		}

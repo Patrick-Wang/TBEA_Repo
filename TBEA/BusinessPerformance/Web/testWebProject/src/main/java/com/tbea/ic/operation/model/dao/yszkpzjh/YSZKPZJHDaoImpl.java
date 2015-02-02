@@ -30,16 +30,16 @@ public class YSZKPZJHDaoImpl extends AbstractReadWriteDaoImpl<YSZKPZGH> implemen
 	
 	@Override
 	public List<YSZKPZGH> getPzjhData(Date d, Company comp) {
-		Query q = this.getEntityManager().createQuery("select y from YSZKPZGH y where y.yf = :date and y.qybh = :comp");
-		q.setParameter("date", Util.format(d));
-		q.setParameter("comp", comp.getId());
+		Query q = this.getEntityManager().createQuery("select y from YSZKPZGH y where DateDiff(mm, y.gxrq, :date) = 0 and y.gsbm = :comp");
+		q.setParameter("date", d);
+		q.setParameter("comp", "0" + comp.getId());
 		return q.getResultList();
 	}
 
 	@Override
 	public YSZKPZGH getLatestDate() {
 		Query q = getEntityManager().createQuery(
-				"from YSZKPZGH order by yf desc");
+				"from YSZKPZGH order by gxrq desc");
 		q.setFirstResult(0);
 		q.setMaxResults(1);
 		List<YSZKPZGH> yszk = q.getResultList();

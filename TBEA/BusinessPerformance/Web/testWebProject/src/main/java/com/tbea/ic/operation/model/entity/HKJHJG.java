@@ -44,6 +44,7 @@ public class HKJHJG {
 	/**
 	 * @return the gsbh
 	 */
+	@Column(name = "gsbm")
 	public String getGsbh() {
 		return gsbh;
 	}

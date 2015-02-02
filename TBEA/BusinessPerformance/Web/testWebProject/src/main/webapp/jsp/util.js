@@ -146,7 +146,15 @@ var Util;
         Ajax.prototype.getCache = function (option) {
             return this.mCache[this.generateKey(option)];
         };
+        Ajax.prototype.validate = function (data) {
+            if (data["error"] == "invalidate session") {
+                window.location.href = data["redirect"];
+                return false;
+            }
+            return true;
+        };
         Ajax.prototype.post = function (option) {
+            var _this = this;
             var promise = new Promise();
             $.ajax({
                 type: "POST",
@@ -154,7 +162,9 @@ var Util;
                 data: option,
                 success: function (data) {
                     var jsonData = JSON.parse(data);
-                    promise.succeed(jsonData);
+                    if (_this.validate(jsonData)) {
+                        promise.succeed(jsonData);
+                    }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     promise.failed(textStatus);
@@ -173,8 +183,10 @@ var Util;
                     data: option,
                     success: function (data) {
                         var jsonData = JSON.parse(data);
-                        _this.setCache(option, jsonData);
-                        promise.succeed(jsonData);
+                        if (_this.validate(jsonData)) {
+                            _this.setCache(option, jsonData);
+                            promise.succeed(jsonData);
+                        }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         promise.failed(textStatus);

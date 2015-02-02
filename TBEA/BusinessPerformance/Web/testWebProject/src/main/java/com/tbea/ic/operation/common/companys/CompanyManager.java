@@ -88,6 +88,7 @@ public class CompanyManager {
 		FLSWB	("法律事务部"),
 		DYCJGJWLMYYXGS	("德阳川疆国际物流贸易有限公司"),
 		XNDQGS	("西南电气公司"),
+		BBXSGS	("本部销售公司"),
 		
 		//非正式公司
 		DBSBDCYJT("东北输变电产业集团"),

@@ -15,6 +15,7 @@ class BMDepartmentPzgh extends AbstractOrganization {
 						getCompany(CompanyType.DQFGS, 201)))
 				.append(getCompany(CompanyType.XB, 3)
 						.append(getCompany(CompanyType.TBGS, 301))
+						.append(getCompany(CompanyType.BBXSGS, 307))
 						.append(getCompany(CompanyType.ZTGS, 302))
 						.append(getCompany(CompanyType.XBGS, 303)))
 				.append(getCompany(CompanyType.LL, 4))
