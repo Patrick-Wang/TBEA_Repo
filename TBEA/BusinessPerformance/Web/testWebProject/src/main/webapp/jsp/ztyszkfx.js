@@ -4,7 +4,7 @@ var ztyszkfx;
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createCurrentYearNode = function (year) {
-            return new JQTable.Node(year + "年", "n" + year).append(new JQTable.Node("本月账面应收账款余额", "byzmyszkye", true, JQTable.TextAlign.Right, 100)).append(new JQTable.Node("本月保理控制余额", "byblkzye", true, JQTable.TextAlign.Right, 100)).append(new JQTable.Node("本月应收账款实际数", "byyszksjs", true, JQTable.TextAlign.Right, 100)).append(new JQTable.Node("本月收入", "bysr", true, JQTable.TextAlign.Right, 100)).append(new JQTable.Node("账面应收占收入比例", "zmyszsrbl", true, JQTable.TextAlign.Right, 100));
+            return new JQTable.Node(year + "年", "n" + year).append(new JQTable.Node("本月账面应收账款余额", "byzmyszkye", true, JQTable.TextAlign.Right, 100)).append(new JQTable.Node("本月保理控制余额", "byblkzye", true, JQTable.TextAlign.Right, 100)).append(new JQTable.Node("本月应收账款实际数", "byyszksjs", true, JQTable.TextAlign.Right, 100)).append(new JQTable.Node("累计收入", "bysr", true, JQTable.TextAlign.Right, 100)).append(new JQTable.Node("账面应收占收入比例", "zmyszsrbl", true, JQTable.TextAlign.Right, 100));
         };
         JQGridAssistantFactory.createPreYearNode = function (year) {
             return new JQTable.Node(year + "年", "n" + year).append(new JQTable.Node("去年同期账面应收账款余额", "qntqzmyszkye", true, JQTable.TextAlign.Right, 100)).append(new JQTable.Node("去年同期保理余额", "qntqblye", true, JQTable.TextAlign.Right, 100)).append(new JQTable.Node("去年同期应收账款实际数", "qntqyszksjs", true, JQTable.TextAlign.Right, 100)).append(new JQTable.Node("去年同期收入", "qntqsr", true, JQTable.TextAlign.Right, 100)).append(new JQTable.Node("账面应收占收入比", "zmyszsrb", true, JQTable.TextAlign.Right, 100));

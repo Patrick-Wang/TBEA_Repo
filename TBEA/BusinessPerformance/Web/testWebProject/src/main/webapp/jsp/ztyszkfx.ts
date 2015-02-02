@@ -11,7 +11,7 @@ module ztyszkfx {
                 .append(new JQTable.Node("本月账面应收账款余额", "byzmyszkye", true, JQTable.TextAlign.Right, 100))
                 .append(new JQTable.Node("本月保理控制余额", "byblkzye", true, JQTable.TextAlign.Right, 100))
                 .append(new JQTable.Node("本月应收账款实际数", "byyszksjs", true, JQTable.TextAlign.Right, 100))
-                .append(new JQTable.Node("本月收入", "bysr", true, JQTable.TextAlign.Right, 100))
+                .append(new JQTable.Node("累计收入", "bysr", true, JQTable.TextAlign.Right, 100))
                 .append(new JQTable.Node("账面应收占收入比例", "zmyszsrbl", true, JQTable.TextAlign.Right, 100));
         }
 

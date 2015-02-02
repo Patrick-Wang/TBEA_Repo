@@ -75,7 +75,6 @@ public class ZTYSZKFXServiceImpl implements ZTYSZKFXService{
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		cal.add(Calendar.MONTH, 1);
 		d = Date.valueOf(cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-1");
 		
 		String[][] ret = new String[10][14];
@@ -138,7 +137,6 @@ public class ZTYSZKFXServiceImpl implements ZTYSZKFXService{
 		if (null != yszk){
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(yszk.getGxrq());
-			cal.add(Calendar.MONTH, -1);
 			return Date.valueOf(cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-1");
 		}
 		return null;
