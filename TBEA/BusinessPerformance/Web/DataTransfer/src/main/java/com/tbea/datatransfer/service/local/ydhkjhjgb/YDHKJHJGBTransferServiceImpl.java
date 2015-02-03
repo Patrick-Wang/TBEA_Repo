@@ -169,7 +169,7 @@ public class YDHKJHJGBTransferServiceImpl implements YDHKJHJGBTransferService {
 				ydhkjhjgbLocal.setQybh(3);
 				ydhkjhjgbLocalDao.merge(ydhkjhjgbLocal);
 			}
-			
+
 			// hb
 			SimpleDateFormat timeFormat = new SimpleDateFormat(
 					"yyyy-MM-dd HH:mm:ss");
@@ -182,16 +182,26 @@ public class YDHKJHJGBTransferServiceImpl implements YDHKJHJGBTransferService {
 				ydhkjhjgbLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
 						recMap.get("gxrq")));
 				ydhkjhjgbLocal.setGsbm(String.valueOf(recMap.get("gsbm")));
-				ydhkjhjgbLocal.setQbkhyqyszk(CommonMethod.objectToDouble(recMap.get("qbkhyqyszk")));
-				ydhkjhjgbLocal.setQbkhyqk(CommonMethod.objectToDouble(recMap.get("qbkhyqk")));
-				ydhkjhjgbLocal.setQbkhwdqyszk(CommonMethod.objectToDouble(recMap.get("qbkhwdqyszk")));
-				ydhkjhjgbLocal.setQbkhwdqk(CommonMethod.objectToDouble(recMap.get("qbkhwdqk")));
-				ydhkjhjgbLocal.setZqkhyqyszk(CommonMethod.objectToDouble(recMap.get("zqkhyqyszk")));
-				ydhkjhjgbLocal.setZqkhyqk(CommonMethod.objectToDouble(recMap.get("zqkhyqk")));
-				ydhkjhjgbLocal.setZqkhwdqyszk(CommonMethod.objectToDouble(recMap.get("zqkhwdqyszk")));
-				ydhkjhjgbLocal.setZqkhwdqk(CommonMethod.objectToDouble(recMap.get("zqkhwdqk")));
-				ydhkjhjgbLocal.setXyqsk(CommonMethod.objectToDouble(recMap.get("xyqsk")));
-				ydhkjhjgbLocal.setGyqsk(CommonMethod.objectToDouble(recMap.get("gyqsk")));
+				ydhkjhjgbLocal.setQbkhyqyszk(CommonMethod.objectToDouble(recMap
+						.get("qbkhyqyszk")));
+				ydhkjhjgbLocal.setQbkhyqk(CommonMethod.objectToDouble(recMap
+						.get("qbkhyqk")));
+				ydhkjhjgbLocal.setQbkhwdqyszk(CommonMethod
+						.objectToDouble(recMap.get("qbkhwdqyszk")));
+				ydhkjhjgbLocal.setQbkhwdqk(CommonMethod.objectToDouble(recMap
+						.get("qbkhwdqk")));
+				ydhkjhjgbLocal.setZqkhyqyszk(CommonMethod.objectToDouble(recMap
+						.get("zqkhyqyszk")));
+				ydhkjhjgbLocal.setZqkhyqk(CommonMethod.objectToDouble(recMap
+						.get("zqkhyqk")));
+				ydhkjhjgbLocal.setZqkhwdqyszk(CommonMethod
+						.objectToDouble(recMap.get("zqkhwdqyszk")));
+				ydhkjhjgbLocal.setZqkhwdqk(CommonMethod.objectToDouble(recMap
+						.get("zqkhwdqk")));
+				ydhkjhjgbLocal.setXyqsk(CommonMethod.objectToDouble(recMap
+						.get("xyqsk")));
+				ydhkjhjgbLocal.setGyqsk(CommonMethod.objectToDouble(recMap
+						.get("gyqsk")));
 				ydhkjhjgbLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
 				ydhkjhjgbLocal.setQybh(2);
 				ydhkjhjgbLocalDao.merge(ydhkjhjgbLocal);
@@ -200,6 +210,8 @@ public class YDHKJHJGBTransferServiceImpl implements YDHKJHJGBTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferYDHKJHJGB:" + result);
 		}
 		return result;
 	}

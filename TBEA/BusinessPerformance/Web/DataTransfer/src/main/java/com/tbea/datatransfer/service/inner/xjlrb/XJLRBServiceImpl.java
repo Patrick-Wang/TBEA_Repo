@@ -67,7 +67,7 @@ public class XJLRBServiceImpl implements XJLRBService {
 			e.printStackTrace();
 			result = false;
 		} finally {
-			System.out.println(result);
+			System.out.println("importXJLRB:" + result);
 		}
 		return result;
 	}

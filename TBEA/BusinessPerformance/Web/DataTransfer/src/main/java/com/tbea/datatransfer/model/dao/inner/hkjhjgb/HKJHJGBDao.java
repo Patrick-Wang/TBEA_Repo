@@ -8,4 +8,6 @@ public interface HKJHJGBDao extends AbstractReadWriteDao<HKJHJGB> {
 
 	public void deleteHKJHJGBByNy(String ny);
 
+	public void truncateHKJHJGB();
+
 }

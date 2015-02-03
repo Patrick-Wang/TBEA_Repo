@@ -128,7 +128,7 @@ public class YSZKJGQKBServiceImpl implements YSZKJGQKBService {
 	public boolean importYSZKJGQKB() {
 		boolean result = false;
 		try {
-
+			yszkjgqkbDao.truncateYSZKJGQKB();
 			SimpleDateFormat nyFormat = new SimpleDateFormat("yyyyMM");
 			String baseMonth = nyFormat.format(new Date(System
 					.currentTimeMillis()));
@@ -175,6 +175,8 @@ public class YSZKJGQKBServiceImpl implements YSZKJGQKBService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("importYSZKJGQKB:" + result);
 		}
 		return result;
 	}

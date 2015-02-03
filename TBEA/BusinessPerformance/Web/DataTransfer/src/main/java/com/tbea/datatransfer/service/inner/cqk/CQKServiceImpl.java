@@ -74,6 +74,7 @@ public class CQKServiceImpl implements CQKService {
 	public boolean importCQK() {
 		boolean result = false;
 		try {
+			cqkDao.truncateCQK();
 			Calendar now = Calendar.getInstance();
 			SimpleDateFormat month_sdf = new SimpleDateFormat("yyyyMM");
 			String baseMonth = month_sdf
@@ -127,6 +128,8 @@ public class CQKServiceImpl implements CQKService {
 			result = true;
 		} catch (Exception e) {
 			result = false;
+		} finally {
+			System.out.println("importCQK:" + result);
 		}
 		return result;
 	}

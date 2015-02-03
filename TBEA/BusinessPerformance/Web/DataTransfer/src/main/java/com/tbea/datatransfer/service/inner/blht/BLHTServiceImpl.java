@@ -144,12 +144,15 @@ public class BLHTServiceImpl implements BLHTService {
 	public boolean importBLHT() {
 		boolean result = false;
 		try {
+			blhtDao.truncateBLHT();
 			importBLHTTotal();
 			importBLHTByQY();
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("importBLHT:" + result);
 		}
 		return result;
 	}

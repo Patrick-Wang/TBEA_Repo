@@ -1,6 +1,7 @@
 package com.tbea.datatransfer.service.inner.ztyszkfxb;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +23,12 @@ public class ZTYSZKFXBServiceImpl implements ZTYSZKFXBService {
 	public boolean importZTYSZKFXB() {
 		boolean result = false;
 		try {
+			ztyszkfxbDao.truncateZTYSZKFXB();
 			ZTYSZKFXB ztyszkfxb = null;
 			List<ZTYSZKFXBLocal> ztyszkfxbLocalList = ztyszkfxbLocalDao
 					.getAllZTYSZKFXBLocal();
+			Date gxrq = null;
+			Integer qybh = null;
 			Double byzmyszkye = null;
 			Double byblkzye = null;
 			Double byyszksjs = null;
@@ -42,12 +46,16 @@ public class ZTYSZKFXBServiceImpl implements ZTYSZKFXBService {
 			String sjysjqntqzzb = null;
 			String srjqntqzzb = null;
 
-			Double zero = 0.0D;
-			Calendar now = Calendar.getInstance();
-			int month = now.get(Calendar.MONTH) + 1;
+			Calendar calendar = Calendar.getInstance();
+			int month = 0;
 			for (ZTYSZKFXBLocal ztyszkfxbLocal : ztyszkfxbLocalList) {
 				ztyszkfxb = new ZTYSZKFXB();
-				ztyszkfxb.setGxrq(ztyszkfxbLocal.getGxrq());
+				gxrq = ztyszkfxbLocal.getGxrq();
+				calendar.setTime(gxrq);
+				month = calendar.get(Calendar.MONTH) + 1;
+				ztyszkfxb.setGxrq(gxrq);
+				qybh = ztyszkfxbLocal.getQybh();
+				ztyszkfxb.setQybh(qybh);
 
 				// by
 				byzmyszkye = CommonMethod.objectToDouble(ztyszkfxbLocal
@@ -59,10 +67,10 @@ public class ZTYSZKFXBServiceImpl implements ZTYSZKFXBService {
 				byyszksjs = CommonMethod.objectToDouble(ztyszkfxbLocal
 						.getByyszksjs());
 				ztyszkfxb.setByyszksjs(byyszksjs);
-				ljsr = CommonMethod.objectToDouble(ztyszkfxbLocal.getBysr());
+				ljsr = ztyszkfxbLocalDao.getLJSRByQYAndDate(qybh, gxrq);
 				ztyszkfxb.setLjsr(ljsr);
-				zmyszsrb = zero.equals(ljsr) ? "-" : (String.format("%.2f",
-						byzmyszkye / (ljsr / month * 12)) + "%");
+				zmyszsrb = CommonMethod.getPercent(byzmyszkye,
+						(ljsr / month * 12));
 				ztyszkfxb.setZmyszsrb(zmyszsrb);
 
 				// qntq
@@ -75,35 +83,33 @@ public class ZTYSZKFXBServiceImpl implements ZTYSZKFXBService {
 				qntqyszksjs = CommonMethod.objectToDouble(ztyszkfxbLocal
 						.getQntqyszksjs());
 				ztyszkfxb.setQntqyszksjs(qntqyszksjs);
-				qntqsr = CommonMethod
-						.objectToDouble(ztyszkfxbLocal.getQntqsr());
+				qntqsr = ztyszkfxbLocalDao.getQNTQLJSRByQYAndDate(qybh, gxrq);
 				ztyszkfxb.setQntqsr(qntqsr);
-				qntqzmyszsrb = zero.equals(qntqsr) ? "-" : (String.format(
-						"%.2f", qntqzmyszkye / (qntqsr / month * 12)) + "%");
+				qntqzmyszsrb = CommonMethod.getPercent(qntqzmyszkye, (qntqsr
+						/ month * 12));
 				ztyszkfxb.setQntqzmyszsrb(qntqzmyszsrb);
 
 				// zzb
-				zmyejqntqzzb = zero.equals(qntqzmyszkye) ? "-" : (String
-						.format("%.2f", (byzmyszkye - qntqzmyszkye)
-								/ qntqzmyszkye) + "%");
+				zmyejqntqzzb = CommonMethod.getPercent(
+						(byzmyszkye - qntqzmyszkye), qntqzmyszkye);
 				ztyszkfxb.setZmyejqntqzzb(zmyejqntqzzb);
-				bljqntqzzb = zero.equals(qntqblye) ? "-" : (String.format(
-						"%.2f", (byblkzye - qntqblye) / qntqblye) + "%");
+				bljqntqzzb = CommonMethod.getPercent((byblkzye - qntqblye),
+						qntqblye);
 				ztyszkfxb.setBljqntqzzb(bljqntqzzb);
-				sjysjqntqzzb = zero.equals(qntqyszksjs) ? "-" : (String.format(
-						"%.2f", (byyszksjs - qntqyszksjs) / qntqyszksjs) + "%");
+				sjysjqntqzzb = CommonMethod.getPercent(
+						(byyszksjs - qntqyszksjs), qntqyszksjs);
 				ztyszkfxb.setSjysjqntqzzb(sjysjqntqzzb);
-				srjqntqzzb = zero.equals(qntqsr) ? "-" : (String.format("%.2f",
-						(ljsr - qntqsr) / qntqsr) + "%");
+				srjqntqzzb = CommonMethod.getPercent((ljsr - qntqsr), qntqsr);
 				ztyszkfxb.setSrjqntqzzb(srjqntqzzb);
 
-				ztyszkfxb.setQybh(ztyszkfxbLocal.getQybh());
 				ztyszkfxbDao.merge(ztyszkfxb);
 			}
 			result = true;
 		} catch (Exception e) {
 			result = false;
 			e.printStackTrace();
+		} finally {
+			System.out.println("importZTYSZKFXB:" + result);
 		}
 		return result;
 	}

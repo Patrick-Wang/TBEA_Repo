@@ -236,6 +236,8 @@ public class YSZKTZTransferServiceImpl implements YSZKTZTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferYSZKTZ:" + result);
 		}
 		return result;
 	}

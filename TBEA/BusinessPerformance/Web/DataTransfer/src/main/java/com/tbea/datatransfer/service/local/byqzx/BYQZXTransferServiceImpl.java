@@ -149,6 +149,8 @@ public class BYQZXTransferServiceImpl implements BYQZXTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferBYQZX:" + result);
 		}
 		return result;
 	}

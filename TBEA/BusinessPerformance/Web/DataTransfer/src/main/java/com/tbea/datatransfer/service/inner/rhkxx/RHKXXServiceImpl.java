@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.inner.rhkxx.RHKXXDao;
 import com.tbea.datatransfer.model.dao.local.mrhkhz.MRHKHZLocalDao;
 import com.tbea.datatransfer.model.dao.local.ydhkjhjgb.YDHKJHJGBLocalDao;
@@ -25,6 +26,7 @@ public class RHKXXServiceImpl implements RHKXXService {
 	public boolean importRHKXX() {
 		boolean result = false;
 		try {
+			rhkxxDao.truncateRHKXX();
 			RHKXX rhkxx = null;
 			List<MRHKHZLocal> mrhkhzLocalList = mrhkhzLocalDao
 					.getAllMRHKHZLocal();
@@ -67,15 +69,15 @@ public class RHKXXServiceImpl implements RHKXXService {
 				rhkxx.setGdwzxzddhkjh(gdwzxzddhkjh);
 				ylj = mrhkhzLocalDao.getYLJHKByQY(formatter.format(hkrq), qybh);
 				rhkxx.setYlj(ylj);
-				zjhlzbwc = String.format("%.2f", ylj / jtxdydzjhlzb) + "%";
+				zjhlzbwc = CommonMethod.getPercent(ylj, jtxdydzjhlzb);
 				rhkxx.setZjhlzbwc(zjhlzbwc);
-				hkjhwcl = String.format("%.2f", ylj / gdwzxzddhkjh) + "%";
+				hkjhwcl = CommonMethod.getPercent(ylj, gdwzxzddhkjh);
 				rhkxx.setHkjhwcl(hkjhwcl);
 				mqzydhkjhhj = qzqbbc + qzzqbc;
 				rhkxx.setMqzydhkjhhj(mqzydhkjhhj);
 				qyqb = qzqbbc + ylj;
 				rhkxx.setQyqb(qyqb);
-				yjqyjhwcl = String.format("%.2f", qyqb / gdwzxzddhkjh) + "%";
+				yjqyjhwcl = CommonMethod.getPercent(qyqb, gdwzxzddhkjh);
 				rhkxx.setYjqyjhwcl(yjqyjhwcl);
 				rhkxx.setQybh(qybh);
 				rhkxxDao.merge(rhkxx);
@@ -84,6 +86,8 @@ public class RHKXXServiceImpl implements RHKXXService {
 		} catch (Exception e) {
 			result = false;
 			e.printStackTrace();
+		} finally {
+			System.out.println("importRHKXX:" + result);
 		}
 		return result;
 	}

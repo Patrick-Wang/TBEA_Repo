@@ -27,6 +27,7 @@ public class YDHKJHZXQKServiceImpl implements YDHKJHZXQKService {
 	public boolean importYDHKJHZXQK() {
 		boolean result = false;
 		try {
+			ydhkjhzxqkDao.truncateYDHKJHZXQK();
 			YDHKJHZXQK ydhkjhzxqk = null;
 			List<YDSJHKQKLocal> ydsjhkqkLocalList = ydsjhkqkLocalDao
 					.getAllYDSJHKQKLocal();
@@ -155,30 +156,22 @@ public class YDHKJHZXQKServiceImpl implements YDHKJHZXQKService {
 				ydhkjhzxqk.setSjhj(sjhj);
 
 				// wcl
-				Double zero = 0.0D;
-				yqyszkjhwcl = zero.equals(yqyszkjhhk) ? "-" : (String.format(
-						"%.2f", yqyszksjhk / yqyszkjhhk) + "%");
+				yqyszkjhwcl = CommonMethod.getPercent(yqyszksjhk, yqyszkjhhk);
 				ydhkjhzxqk.setYqyszkjhwcl(yqyszkjhwcl);
-				yqkjhwcl = zero.equals(yqkjhhk) ? "-" : (String.format("%.2f",
-						yqksjhk / yqkjhhk) + "%");
+				yqkjhwcl = CommonMethod.getPercent(yqksjhk, yqkjhhk);
 				ydhkjhzxqk.setYqkjhwcl(yqkjhwcl);
-				wdqyszkjhwcl = zero.equals(wdqyszkjhhk) ? "-" : (String.format(
-						"%.2f", wdqyszksjhk / wdqyszkjhhk) + "%");
+				wdqyszkjhwcl = CommonMethod
+						.getPercent(wdqyszksjhk, wdqyszkjhhk);
 				ydhkjhzxqk.setWdqyszkjhwcl(wdqyszkjhwcl);
-				wdqkjhwcl = zero.equals(wdqkjhhk) ? "-" : (String.format(
-						"%.2f", wdqksjhk / wdqkjhhk) + "%");
+				wdqkjhwcl = CommonMethod.getPercent(wdqksjhk, wdqkjhhk);
 				ydhkjhzxqk.setWdqkjhwcl(wdqkjhwcl);
-				qbkhjhwcl = zero.equals(qbkhjhhk) ? "-" : (String.format(
-						"%.2f", qbkhsjhk / qbkhjhhk) + "%");
+				qbkhjhwcl = CommonMethod.getPercent(qbkhsjhk, qbkhjhhk);
 				ydhkjhzxqk.setQbkhjhwcl(qbkhjhwcl);
-				zqkhjhwcl = zero.equals(zqkhjhhk) ? "-" : (String.format(
-						"%.2f", zqkhsjhk / zqkhjhhk) + "%");
+				zqkhjhwcl = CommonMethod.getPercent(zqkhsjhk, zqkhjhhk);
 				ydhkjhzxqk.setZqkhjhwcl(zqkhjhwcl);
-				xjwcl = zero.equals(jhxj) ? "-" : (String.format("%.2f", sjxj
-						/ jhxj) + "%");
+				xjwcl = CommonMethod.getPercent(sjxj, jhxj);
 				ydhkjhzxqk.setXjwcl(xjwcl);
-				hjwcl = zero.equals(jhhj) ? "-" : (String.format("%.2f", sjhj
-						/ jhhj) + "%");
+				hjwcl = CommonMethod.getPercent(sjhj, jhhj);
 				ydhkjhzxqk.setHjwcl(hjwcl);
 
 				ydhkjhzxqk.setQybh(qybh);
@@ -188,6 +181,8 @@ public class YDHKJHZXQKServiceImpl implements YDHKJHZXQKService {
 		} catch (Exception e) {
 			result = false;
 			e.printStackTrace();
+		} finally {
+			System.out.println("importYDHKJHZXQK:" + result);
 		}
 		return result;
 	}

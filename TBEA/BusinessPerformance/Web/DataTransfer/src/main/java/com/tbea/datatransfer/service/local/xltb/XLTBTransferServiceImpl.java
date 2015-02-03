@@ -95,6 +95,8 @@ public class XLTBTransferServiceImpl implements XLTBTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferXLTB:" + result);
 		}
 		return result;
 	}

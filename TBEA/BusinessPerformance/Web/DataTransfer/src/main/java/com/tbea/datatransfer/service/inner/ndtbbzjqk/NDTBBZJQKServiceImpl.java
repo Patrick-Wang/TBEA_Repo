@@ -20,6 +20,7 @@ public class NDTBBZJQKServiceImpl implements NDTBBZJQKService {
 	public boolean importNDTBBZJQK() {
 		boolean result = false;
 		try {
+			ndtbbzjqkDao.truncateNDTBBZJQK();
 			NDTBBZJQK ndtbbzjqk = null;
 			List<TBBZJXXLocal> tbbzjxxLocalList = tbbzjxxLocalDao
 					.getAllTBBZJXXLocal();
@@ -35,6 +36,8 @@ public class NDTBBZJQKServiceImpl implements NDTBBZJQKService {
 		} catch (Exception e) {
 			result = false;
 			e.printStackTrace();
+		} finally {
+			System.out.println("importNDTBBZJQK:" + result);
 		}
 		return result;
 	}

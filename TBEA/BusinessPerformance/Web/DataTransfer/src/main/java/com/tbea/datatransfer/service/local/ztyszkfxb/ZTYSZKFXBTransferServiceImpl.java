@@ -195,6 +195,8 @@ public class ZTYSZKFXBTransferServiceImpl implements ZTYSZKFXBTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferZTYSZKFXB:" + result);
 		}
 		return result;
 	}

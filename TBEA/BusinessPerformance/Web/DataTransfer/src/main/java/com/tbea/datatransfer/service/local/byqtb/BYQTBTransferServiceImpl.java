@@ -147,6 +147,8 @@ public class BYQTBTransferServiceImpl implements BYQTBTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferBYQTB:" + result);
 		}
 		return result;
 	}

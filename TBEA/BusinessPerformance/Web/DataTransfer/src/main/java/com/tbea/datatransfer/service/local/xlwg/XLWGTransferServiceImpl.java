@@ -89,6 +89,8 @@ public class XLWGTransferServiceImpl implements XLWGTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferXLWG:" + result);
 		}
 		return result;
 	}

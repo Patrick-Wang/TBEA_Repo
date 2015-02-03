@@ -37,6 +37,14 @@
 		<entry key="10" value="5" />
 		<entry key="11" value="6" />
 	</util:map>
+	<util:map id="sbXMGSMap" map-class="java.util.HashMap"
+		key-type="java.lang.String" value-type="java.lang.String">
+		<entry key="沈变公司" value="01" />
+		<entry key="变压器厂" value="0101" />
+		<entry key="中特分公司" value="0103" />
+		<entry key="康嘉互感器" value="0104" />
+		<entry key="上开公司" value="0107" />
+	</util:map>
 	<!-- -->
 	<!-- INCLUDES -->
 	<!-- -->
@@ -341,12 +349,12 @@
 		class="com.tbea.datatransfer.model.dao.local.fkfs.xl.FKFSXLGWLocalDaoImpl" />
 	<bean id="fkfsxlnwLocalDao"
 		class="com.tbea.datatransfer.model.dao.local.fkfs.xl.FKFSXLNWLocalDaoImpl" />
-    <bean id="byqtbLocalDao"
-        class="com.tbea.datatransfer.model.dao.local.byqtb.BYQTBLocalDaoImpl" />
-    <bean id="byqzxLocalDao"
-        class="com.tbea.datatransfer.model.dao.local.byqzx.BYQZXLocalDaoImpl" />
-    <bean id="byqwgLocalDao"
-        class="com.tbea.datatransfer.model.dao.local.byqwg.BYQWGLocalDaoImpl" />
+	<bean id="byqtbLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.byqtb.BYQTBLocalDaoImpl" />
+	<bean id="byqzxLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.byqzx.BYQZXLocalDaoImpl" />
+	<bean id="byqwgLocalDao"
+		class="com.tbea.datatransfer.model.dao.local.byqwg.BYQWGLocalDaoImpl" />
 
 	<!-- dl -->
 	<bean id="htxxDLDao" class="com.tbea.datatransfer.model.dao.zjxl.htxx.HTXXDLDaoImpl" />
@@ -373,8 +381,8 @@
 		class="com.tbea.datatransfer.model.dao.zjxl.fkfs.FKFSXLGWDLDaoImpl" />
 	<bean id="fkfsxlnwDLDao"
 		class="com.tbea.datatransfer.model.dao.zjxl.fkfs.FKFSXLNWDLDaoImpl" />
-    <bean id="yszkpzghDLDao"
-        class="com.tbea.datatransfer.model.dao.zjxl.yszkpzgh.YSZKPZGHDLDaoImpl" />
+	<bean id="yszkpzghDLDao"
+		class="com.tbea.datatransfer.model.dao.zjxl.yszkpzgh.YSZKPZGHDLDaoImpl" />
 
 	<!-- tb -->
 	<bean id="htxxTBDao"
@@ -429,12 +437,12 @@
 		class="com.tbea.datatransfer.model.dao.zjbyq.fkfs.FKFSBYQGWSBDaoImpl" />
 	<bean id="fkfsbyqnwSBDao"
 		class="com.tbea.datatransfer.model.dao.zjbyq.fkfs.FKFSBYQNWSBDaoImpl" />
-    <bean id="byqtbSBDao"
-        class="com.tbea.datatransfer.model.dao.zjbyq.byqtb.BYQTBSBDaoImpl" />
-    <bean id="byqzxSBDao"
-        class="com.tbea.datatransfer.model.dao.zjbyq.byqzx.BYQZXSBDaoImpl" />
-    <bean id="byqwgSBDao"
-        class="com.tbea.datatransfer.model.dao.zjbyq.byqwg.BYQWGSBDaoImpl" />
+	<bean id="byqtbSBDao"
+		class="com.tbea.datatransfer.model.dao.zjbyq.byqtb.BYQTBSBDaoImpl" />
+	<bean id="byqzxSBDao"
+		class="com.tbea.datatransfer.model.dao.zjbyq.byqzx.BYQZXSBDaoImpl" />
+	<bean id="byqwgSBDao"
+		class="com.tbea.datatransfer.model.dao.zjbyq.byqwg.BYQWGSBDaoImpl" />
 
 	<!-- ll -->
 	<bean id="htxxLLDao" class="com.tbea.datatransfer.model.dao.zjxl.htxx.HTXXLLDaoImpl" />
@@ -461,8 +469,8 @@
 		class="com.tbea.datatransfer.model.dao.zjxl.fkfs.FKFSXLGWLLDaoImpl" />
 	<bean id="fkfsxlnwLLDao"
 		class="com.tbea.datatransfer.model.dao.zjxl.fkfs.FKFSXLNWLLDaoImpl" />
-    <bean id="yszkpzghLLDao"
-        class="com.tbea.datatransfer.model.dao.zjxl.yszkpzgh.YSZKPZGHLLDaoImpl" />
+	<bean id="yszkpzghLLDao"
+		class="com.tbea.datatransfer.model.dao.zjxl.yszkpzgh.YSZKPZGHLLDaoImpl" />
 
 	<!-- xb -->
 	<bean id="htxxXBDao"
@@ -490,12 +498,12 @@
 		class="com.tbea.datatransfer.model.dao.zjbyq.fkfs.FKFSBYQGWXBDaoImpl" />
 	<bean id="fkfsbyqnwXBDao"
 		class="com.tbea.datatransfer.model.dao.zjbyq.fkfs.FKFSBYQNWXBDaoImpl" />
-    <bean id="byqtbXBDao"
-        class="com.tbea.datatransfer.model.dao.zjbyq.byqtb.BYQTBXBDaoImpl" />
-    <bean id="byqzxXBDao"
-        class="com.tbea.datatransfer.model.dao.zjbyq.byqzx.BYQZXXBDaoImpl" />
-    <bean id="byqwgXBDao"
-        class="com.tbea.datatransfer.model.dao.zjbyq.byqwg.BYQWGXBDaoImpl" />
+	<bean id="byqtbXBDao"
+		class="com.tbea.datatransfer.model.dao.zjbyq.byqtb.BYQTBXBDaoImpl" />
+	<bean id="byqzxXBDao"
+		class="com.tbea.datatransfer.model.dao.zjbyq.byqzx.BYQZXXBDaoImpl" />
+	<bean id="byqwgXBDao"
+		class="com.tbea.datatransfer.model.dao.zjbyq.byqwg.BYQWGXBDaoImpl" />
 
 
 	<!-- xl -->
@@ -523,8 +531,8 @@
 		class="com.tbea.datatransfer.model.dao.zjxl.fkfs.FKFSXLGWXLDaoImpl" />
 	<bean id="fkfsxlnwXLDao"
 		class="com.tbea.datatransfer.model.dao.zjxl.fkfs.FKFSXLNWXLDaoImpl" />
-    <bean id="yszkpzghXLDao"
-        class="com.tbea.datatransfer.model.dao.zjxl.yszkpzgh.YSZKPZGHXLDaoImpl" />
+	<bean id="yszkpzghXLDao"
+		class="com.tbea.datatransfer.model.dao.zjxl.yszkpzgh.YSZKPZGHXLDaoImpl" />
 
 	<!-- UTILS -->
 	<!-- -->
@@ -663,6 +671,7 @@
 		<property name="yszkpzghDLDao" ref="yszkpzghDLDao" />
 		<property name="yszkpzghLLDao" ref="yszkpzghLLDao" />
 		<property name="yszkpzghXLDao" ref="yszkpzghXLDao" />
+		<property name="sbXMGSMap" ref="sbXMGSMap" />
 	</bean>
 	<bean id="tbbzjxxTransferService"
 		class="com.tbea.datatransfer.service.local.tbbzjxx.TBBZJXXTransferServiceImpl"
@@ -802,27 +811,27 @@
 		<property name="ztyszkfxbDao" ref="ztyszkfxbDao" />
 		<property name="ztyszkfxbLocalDao" ref="ztyszkfxbLocalDao" />
 	</bean>
-    <bean id="byqtbTransferService"
-        class="com.tbea.datatransfer.service.local.byqtb.BYQTBTransferServiceImpl"
-        scope="prototype">
-        <property name="byqtbLocalDao" ref="byqtbLocalDao" />
-        <property name="byqtbSBDao" ref="byqtbSBDao" />
-        <property name="byqtbXBDao" ref="byqtbXBDao" />
-    </bean>
-    <bean id="byqzxTransferService"
-        class="com.tbea.datatransfer.service.local.byqzx.BYQZXTransferServiceImpl"
-        scope="prototype">
-        <property name="byqzxLocalDao" ref="byqzxLocalDao" />
-        <property name="byqzxSBDao" ref="byqzxSBDao" />
-        <property name="byqzxXBDao" ref="byqzxXBDao" />
-    </bean>
-    <bean id="byqwgTransferService"
-        class="com.tbea.datatransfer.service.local.byqwg.BYQWGTransferServiceImpl"
-        scope="prototype">
-        <property name="byqwgLocalDao" ref="byqwgLocalDao" />
-        <property name="byqwgSBDao" ref="byqwgSBDao" />
-        <property name="byqwgXBDao" ref="byqwgXBDao" />
-    </bean>
+	<bean id="byqtbTransferService"
+		class="com.tbea.datatransfer.service.local.byqtb.BYQTBTransferServiceImpl"
+		scope="prototype">
+		<property name="byqtbLocalDao" ref="byqtbLocalDao" />
+		<property name="byqtbSBDao" ref="byqtbSBDao" />
+		<property name="byqtbXBDao" ref="byqtbXBDao" />
+	</bean>
+	<bean id="byqzxTransferService"
+		class="com.tbea.datatransfer.service.local.byqzx.BYQZXTransferServiceImpl"
+		scope="prototype">
+		<property name="byqzxLocalDao" ref="byqzxLocalDao" />
+		<property name="byqzxSBDao" ref="byqzxSBDao" />
+		<property name="byqzxXBDao" ref="byqzxXBDao" />
+	</bean>
+	<bean id="byqwgTransferService"
+		class="com.tbea.datatransfer.service.local.byqwg.BYQWGTransferServiceImpl"
+		scope="prototype">
+		<property name="byqwgLocalDao" ref="byqwgLocalDao" />
+		<property name="byqwgSBDao" ref="byqwgSBDao" />
+		<property name="byqwgXBDao" ref="byqwgXBDao" />
+	</bean>
 	<!-- -->
 	<!-- CLIENTS -->
 	<!-- -->
@@ -846,6 +855,69 @@
 			cron="0 20 4 * * *" />
 		<task:scheduled ref="zbhzService" method="importZBHZ"
 			cron="0 40 4 * * *" />
+
+		<task:scheduled ref="htxxTransferService" method="transferHTXX"
+			cron="0 20 13 * * *" />
+		<task:scheduled ref="blTransferService" method="transferBL"
+			cron="0 25 13 * * *" />
+		<task:scheduled ref="yszktzTransferService" method="transferYSZKTZ"
+			cron="0 27 13 * * *" />
+		<task:scheduled ref="mrhkTransferService" method="transferMRHK"
+			cron="0 46 13 * * *" />
+		<task:scheduled ref="ztyszkfxbTransferService" method="transferZTYSZKFXB"
+			cron="0 48 13 * * *" />
+		<task:scheduled ref="ydhkjhjgbTransferService" method="transferYDHKJHJGB"
+			cron="0 50 13 * * *" />
+		<task:scheduled ref="ydsjhkqkTransferService" method="transferYDSJHKQK"
+			cron="0 52 13 * * *" />
+		<task:scheduled ref="mrhkhzTransferService" method="transferMRHKHZ"
+			cron="0 54 13 * * *" />
+		<task:scheduled ref="yszkpzghTransferService" method="transferYSZKPZGH"
+			cron="0 56 13 * * *" />
+		<task:scheduled ref="tbbzjxxTransferService" method="transferTBBZJXX"
+			cron="0 58 13 * * *" />
+		<task:scheduled ref="xmTransferService" method="transferXM"
+			cron="0 0 14 * * *" />
+		<task:scheduled ref="xltbTransferService" method="transferXLTB"
+			cron="0 2 14 * * *" />
+		<task:scheduled ref="xlwgTransferService" method="transferXLWG"
+			cron="0 4 14 * * *" />
+		<task:scheduled ref="fkfsbyqfdwTransferService" method="transferFKFSBYQFDW"
+			cron="0 6 14 * * *" />
+		<task:scheduled ref="fkfsbyqgwTransferService" method="transferFKFSBYQGW"
+			cron="0 8 14 * * *" />
+		<task:scheduled ref="fkfsbyqnwTransferService" method="transferFKFSBYQNW"
+			cron="0 10 14 * * *" />
+		<task:scheduled ref="fkfsxlfdwTransferService" method="transferFKFSXLFDW"
+			cron="0 12 14 * * *" />
+		<task:scheduled ref="fkfsxlgwTransferService" method="transferFKFSXLGW"
+			cron="0 14 14 * * *" />
+		<task:scheduled ref="fkfsxlnwTransferService" method="transferFKFSXLNW"
+			cron="0 16 14 * * *" />
+		<task:scheduled ref="byqtbTransferService" method="transferBYQTB"
+			cron="0 18 14 * * *" />
+		<task:scheduled ref="byqzxTransferService" method="transferBYQZX"
+			cron="0 20 14 * * *" />
+		<task:scheduled ref="byqwgTransferService" method="transferBYQWG"
+			cron="0 22 14 * * *" />
+		<task:scheduled ref="blhtService" method="importBLHT"
+			cron="0 24 14 * * *" />
+		<task:scheduled ref="cqkService" method="importCQK"
+			cron="0 26 14 * * *" />
+		<task:scheduled ref="hkjhjgbService" method="importHKJHJGB"
+			cron="0 28 14 * * *" />
+		<task:scheduled ref="ndtbbzjqkService" method="importNDTBBZJQK"
+			cron="0 30 14 * * *" />
+		<task:scheduled ref="rhkxxService" method="importRHKXX"
+			cron="0 32 14 * * *" />
+		<task:scheduled ref="ydhkjhzxqkService" method="importYDHKJHZXQK"
+			cron="0 34 14 * * *" />
+		<task:scheduled ref="yqkqsbhbService" method="importYQKQSBHB"
+			cron="0 36 14 * * *" />
+		<task:scheduled ref="yszkjgqkbService" method="importYSZKJGQKB"
+			cron="0 38 14 * * *" />
+		<task:scheduled ref="ztyszkfxbService" method="importZTYSZKFXB"
+			cron="0 40 14 * * *" />
 
 	</task:scheduled-tasks>
 

@@ -47,4 +47,15 @@ public class CommonMethod {
 		}
 		return output;
 	}
+
+	public static String getPercent(Double first, Double second) {
+		String result = null;
+		Double zero = 0.0D;
+		if (!zero.equals(second)) {
+			result = (String.format("%.2f", first / second * 100) + "%");
+		} else {
+			result = "-";
+		}
+		return result;
+	}
 }

@@ -25,12 +25,14 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 	private YSZKPZGHBYQDao yszkpzghSBDao;
 
 	private YSZKPZGHBYQDao yszkpzghXBDao;
-	
+
 	private YSZKPZGHXLDao yszkpzghDLDao;
-	
+
 	private YSZKPZGHXLDao yszkpzghLLDao;
-	
+
 	private YSZKPZGHXLDao yszkpzghXLDao;
+
+	private Map<String, String> sbXMGSMap;
 
 	@Override
 	public boolean transferYSZKPZGH() {
@@ -74,7 +76,7 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 				yszkpzghLocal = new YSZKPZGHLocal();
 				yszkpzghLocal.setGxrq(yszkpzghSB.getGxrq());
 				yszkpzghLocal.setYf(yszkpzghSB.getYf());
-				yszkpzghLocal.setGsbm(yszkpzghSB.getGsbm());
+				yszkpzghLocal.setGsbm(sbXMGSMap.get(yszkpzghSB.getGsbm()));
 				yszkpzghLocal.setSymljxssr(yszkpzghSB.getSymljxssr());
 				yszkpzghLocal.setByjhxssr(yszkpzghSB.getByjhxssr());
 				yszkpzghLocal.setByysnkzb(yszkpzghSB.getByysnkzb());
@@ -126,7 +128,7 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 				yszkpzghLocal.setQybh(3);
 				yszkpzghLocalDao.merge(yszkpzghLocal);
 			}
-			
+
 			// dl
 			yszkpzghLocalDao.deleteYSZKPZGHLocalByQY(6);
 			List<YSZKPZGHXL> yszkpzghDLList = yszkpzghDLDao.getAllYSZKPZGH();
@@ -156,7 +158,7 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 				yszkpzghLocal.setQybh(6);
 				yszkpzghLocalDao.merge(yszkpzghLocal);
 			}
-			
+
 			// ll
 			yszkpzghLocalDao.deleteYSZKPZGHLocalByQY(4);
 			List<YSZKPZGHXL> yszkpzghLLList = yszkpzghLLDao.getAllYSZKPZGH();
@@ -186,7 +188,7 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 				yszkpzghLocal.setQybh(4);
 				yszkpzghLocalDao.merge(yszkpzghLocal);
 			}
-			
+
 			// xl
 			yszkpzghLocalDao.deleteYSZKPZGHLocalByQY(5);
 			List<YSZKPZGHXL> yszkpzghXLList = yszkpzghXLDao.getAllYSZKPZGH();
@@ -269,6 +271,8 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferYSZKPZGH:" + result);
 		}
 		return result;
 	}
@@ -327,6 +331,14 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 
 	public void setYszkpzghXLDao(YSZKPZGHXLDao yszkpzghXLDao) {
 		this.yszkpzghXLDao = yszkpzghXLDao;
+	}
+
+	public Map<String, String> getSbXMGSMap() {
+		return sbXMGSMap;
+	}
+
+	public void setSbXMGSMap(Map<String, String> sbXMGSMap) {
+		this.sbXMGSMap = sbXMGSMap;
 	}
 
 }
