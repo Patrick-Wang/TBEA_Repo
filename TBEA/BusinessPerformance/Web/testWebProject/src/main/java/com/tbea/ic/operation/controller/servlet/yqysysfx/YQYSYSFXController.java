@@ -47,18 +47,20 @@ public class YQYSYSFXController {
 	public @ResponseBody String getYqysysfx_update(HttpServletRequest request,
 			HttpServletResponse response) {
 
+		Date d = DateSelection.getDate(request);
+		
 		String xjlrb = null;
 		CompanyType compType = CompanySelection.getCompany(request);
 		Company comp = companyManager.getOperationOrganization().getCompany(compType);
 		if (null == comp) {
 			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
 			if (null != comp) {
-				xjlrb = JSONArray.fromObject(service.getYqysysfxData(comp.getSubCompanys()))
+				xjlrb = JSONArray.fromObject(service.getYqysysfxData(d, comp.getSubCompanys()))
 						.toString().replace("null", "0.00");
 			}
 		}
 		else {
-			xjlrb = JSONArray.fromObject(service.getYqysysfxData(comp))
+			xjlrb = JSONArray.fromObject(service.getYqysysfxData(d, comp))
 					.toString().replace("null", "0.00");
 		}
 			
@@ -74,6 +76,8 @@ public class YQYSYSFXController {
 		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanys());
 		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
 		CompanySelection compSel = new CompanySelection(true, comps);
+		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
+		dateSel.select(map);
 		compSel.select(map);
 		return new ModelAndView("yqysysfx", map);
 	}

@@ -37,7 +37,7 @@
     	var instance = yqysysfx.View.newInstance();
         (function () {
         	$(document).ready(function() {
-    			instance.init("chart", "table");
+    			instance.init("chart", "table",${month}, ${year});
     		});
         })();
     </script>
@@ -155,6 +155,7 @@ th.ui-th-ltr {
 			<td>
 				<Table>
 					<tr>
+						<td><%@include file="date_selection.jsp"%>
 						<td><%@include file="company_selection.jsp"%>
 						</td>
 						<td><input type="button" value="更新"
