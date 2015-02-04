@@ -107,46 +107,46 @@ public class YQYSYSFLTransferServiceImpl implements YQYSYSFLTransferService {
 		boolean llResult = false;
 		boolean xlResult = false;
 		boolean dlResult = false;
-		// // sb
-		// try {
-		// List<YQYSYSFLBYQ> yqysysflSBList = yqysysflSBDao.getAllYQYSYSFL();
-		// transferYQYSYSFLBYQByZJB(1, yqysysflSBList);
-		// sbResult = true;
-		// } catch (Exception e) {
-		// sbResult = false;
-		// }
-		// // hb
-		// try {
-		// transferYQYSYSFLBYQByWS(2, "web_test", "123456", "yszk_ws_yqysysfl");
-		// hbResult = true;
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// hbResult = false;
-		// }
-		// // xb
-		// try {
-		// List<YQYSYSFLBYQ> yqysysflXBList = yqysysflXBDao.getAllYQYSYSFL();
-		// transferYQYSYSFLBYQByZJB(3, yqysysflXBList);
-		// xbResult = true;
-		// } catch (Exception e) {
-		// xbResult = false;
-		// }
-		// // tb
-		// try {
-		// List<YQYSYSFLBYQ> yqysysflTBList = yqysysflTBDao.getAllYQYSYSFL();
-		// transferYQYSYSFLBYQByZJB(301, yqysysflTBList);
-		// tbResult = true;
-		// } catch (Exception e) {
-		// tbResult = false;
-		// }
-		// // ll
-		// try {
-		// List<YQYSYSFLXL> yqysysflLLList = yqysysflLLDao.getAllYQYSYSFL();
-		// transferYQYSYSFLXLByZJB(4, yqysysflLLList);
-		// llResult = true;
-		// } catch (Exception e) {
-		// llResult = false;
-		// }
+		// sb
+		try {
+			List<YQYSYSFLBYQ> yqysysflSBList = yqysysflSBDao.getAllYQYSYSFL();
+			transferYQYSYSFLBYQByZJB(1, yqysysflSBList);
+			sbResult = true;
+		} catch (Exception e) {
+			sbResult = false;
+		}
+		// hb
+		try {
+			transferYQYSYSFLBYQByWS(2, "web_test", "123456", "yszk_ws_yqysysfl");
+			hbResult = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			hbResult = false;
+		}
+		// xb
+		try {
+			List<YQYSYSFLBYQ> yqysysflXBList = yqysysflXBDao.getAllYQYSYSFL();
+			transferYQYSYSFLBYQByZJB(3, yqysysflXBList);
+			xbResult = true;
+		} catch (Exception e) {
+			xbResult = false;
+		}
+		// tb
+		try {
+			List<YQYSYSFLBYQ> yqysysflTBList = yqysysflTBDao.getAllYQYSYSFL();
+			transferYQYSYSFLBYQByZJB(301, yqysysflTBList);
+			tbResult = true;
+		} catch (Exception e) {
+			tbResult = false;
+		}
+		// ll
+		try {
+			List<YQYSYSFLXL> yqysysflLLList = yqysysflLLDao.getAllYQYSYSFL();
+			transferYQYSYSFLXLByZJB(4, yqysysflLLList);
+			llResult = true;
+		} catch (Exception e) {
+			llResult = false;
+		}
 		// xl
 		try {
 			List<YQYSYSFLXL> yqysysflXLList = yqysysflXLDao.getAllYQYSYSFL();
@@ -156,29 +156,29 @@ public class YQYSYSFLTransferServiceImpl implements YQYSYSFLTransferService {
 			e.printStackTrace();
 			xlResult = false;
 		}
-		// // dl
-		// try {
-		// List<YQYSYSFLXL> yqysysflDLList = yqysysflDLDao.getAllYQYSYSFL();
-		// transferYQYSYSFLXLByZJB(6, yqysysflDLList);
-		// tbResult = true;
-		// } catch (Exception e) {
-		// tbResult = false;
-		// }
+		// dl
+		try {
+			List<YQYSYSFLXL> yqysysflDLList = yqysysflDLDao.getAllYQYSYSFL();
+			transferYQYSYSFLXLByZJB(6, yqysysflDLList);
+			dlResult = true;
+		} catch (Exception e) {
+			dlResult = false;
+		}
 
-		// if (sbResult && hbResult && xbResult && tbResult && llResult
-		// && xlResult && dlResult) {
-		if (xlResult) {
+		if (sbResult && hbResult && xbResult && tbResult && llResult
+				&& xlResult && dlResult) {
+			// if (xlResult) {
 			result = true;
 			System.out.println("transferYQYSYSFL:true");
 		} else {
 			result = false;
-			// System.out.println("transferYQYSYSFLsb:" + sbResult);
-			// System.out.println("transferYQYSYSFLhb:" + hbResult);
-			// System.out.println("transferYQYSYSFLxb:" + xbResult);
-			// System.out.println("transferYQYSYSFLtb:" + tbResult);
-			// System.out.println("transferYQYSYSFLll:" + llResult);
+			System.out.println("transferYQYSYSFLsb:" + sbResult);
+			System.out.println("transferYQYSYSFLhb:" + hbResult);
+			System.out.println("transferYQYSYSFLxb:" + xbResult);
+			System.out.println("transferYQYSYSFLtb:" + tbResult);
+			System.out.println("transferYQYSYSFLll:" + llResult);
 			System.out.println("transferYQYSYSFLxl:" + xlResult);
-			// System.out.println("transferYQYSYSFLdl:" + dlResult);
+			System.out.println("transferYQYSYSFLdl:" + dlResult);
 		}
 		return result;
 	}
