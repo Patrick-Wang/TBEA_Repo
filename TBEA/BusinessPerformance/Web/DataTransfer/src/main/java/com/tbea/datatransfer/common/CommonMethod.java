@@ -58,4 +58,16 @@ public class CommonMethod {
 		}
 		return result;
 	}
+
+	public static Integer intcat(Integer x, Integer y) {
+		Integer result = null;
+		StringBuffer sb = new StringBuffer();
+		sb = sb.append(x);
+		sb = sb.append(y);
+		try {
+			result = Integer.valueOf(sb.toString());
+		} catch (NumberFormatException e) {
+		}
+		return result;
+	}
 }

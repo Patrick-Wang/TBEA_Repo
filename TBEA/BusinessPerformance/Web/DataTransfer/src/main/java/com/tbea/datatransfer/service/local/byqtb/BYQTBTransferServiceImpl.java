@@ -32,6 +32,7 @@ public class BYQTBTransferServiceImpl implements BYQTBTransferService {
 			List<BYQTB> byqtbSBList = byqtbSBDao.getAllBYQTB();
 			for (BYQTB byqtbSB : byqtbSBList) {
 				byqtbLocal = new BYQTBLocal();
+				byqtbLocal.setId(CommonMethod.intcat(1, byqtbSB.getId()));
 				byqtbLocal.setGxrq(byqtbSB.getGxrq());
 				byqtbLocal.setXmxx(byqtbSB.getXmxx());
 				byqtbLocal.setTbbjsj(byqtbSB.getTbbjsj());
@@ -64,6 +65,7 @@ public class BYQTBTransferServiceImpl implements BYQTBTransferService {
 			List<BYQTB> byqtbXBList = byqtbXBDao.getAllBYQTB();
 			for (BYQTB byqtbXB : byqtbXBList) {
 				byqtbLocal = new BYQTBLocal();
+				byqtbLocal.setId(CommonMethod.intcat(3, byqtbXB.getId()));
 				byqtbLocal.setGxrq(byqtbXB.getGxrq());
 				byqtbLocal.setXmxx(byqtbXB.getXmxx());
 				byqtbLocal.setTbbjsj(byqtbXB.getTbbjsj());
@@ -100,6 +102,8 @@ public class BYQTBTransferServiceImpl implements BYQTBTransferService {
 					"web_test", "123456", "cb_ws_byqtb");
 			for (Map<String, Object> recMap : recList) {
 				byqtbLocal = new BYQTBLocal();
+				byqtbLocal.setId(CommonMethod.intcat(2,
+						CommonMethod.objectToInteger(recMap.get("ID"))));
 				byqtbLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
 						recMap.get("gxrq")));
 				byqtbLocal.setXmxx(String.valueOf(recMap.get("xmxx")));
