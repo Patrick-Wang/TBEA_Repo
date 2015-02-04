@@ -140,8 +140,8 @@ public class MRHKHZTransferServiceImpl implements MRHKHZTransferService {
 				mrhkhzLocal.setQybh(3);
 				mrhkhzLocalDao.merge(mrhkhzLocal);
 			}
-			
-			//hb
+
+			// hb
 			SimpleDateFormat timeFormat = new SimpleDateFormat(
 					"yyyy-MM-dd HH:mm:ss");
 			mrhkhzLocalDao.deleteMRHKHZLocalByQY(2);
@@ -175,6 +175,8 @@ public class MRHKHZTransferServiceImpl implements MRHKHZTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferMRHKHZ:" + result);
 		}
 		return result;
 	}

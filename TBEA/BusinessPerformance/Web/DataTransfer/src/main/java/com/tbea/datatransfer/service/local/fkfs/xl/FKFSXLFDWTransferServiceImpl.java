@@ -156,6 +156,8 @@ public class FKFSXLFDWTransferServiceImpl implements FKFSXLFDWTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferFKFSXLFDW:" + result);
 		}
 		return result;
 	}

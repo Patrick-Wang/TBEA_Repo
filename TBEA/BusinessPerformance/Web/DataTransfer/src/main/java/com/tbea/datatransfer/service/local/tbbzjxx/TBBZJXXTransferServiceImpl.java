@@ -121,9 +121,9 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 				tbbzjxxLocal.setQybh(3);
 				tbbzjxxLocalDao.merge(tbbzjxxLocal);
 			}
-			
+
 			// hb
-			
+
 			SimpleDateFormat timeFormat = new SimpleDateFormat(
 					"yyyy-MM-dd HH:mm:ss");
 			tbbzjxxLocalDao.deleteTBBZJXXLocalByQY(2);
@@ -140,8 +140,8 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 						.get("nf")));
 				tbbzjxxLocal.setYf(CommonMethod.objectToInteger(recMap
 						.get("yf")));
-				tbbzjxxLocal.setJe(CommonMethod.objectToDouble(recMap
-						.get("je")));
+				tbbzjxxLocal
+						.setJe(CommonMethod.objectToDouble(recMap.get("je")));
 				tbbzjxxLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
 				tbbzjxxLocal.setQybh(2);
 				tbbzjxxLocalDao.merge(tbbzjxxLocal);
@@ -151,6 +151,8 @@ public class TBBZJXXTransferServiceImpl implements TBBZJXXTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferTBBZJXX:" + result);
 		}
 		return result;
 	}

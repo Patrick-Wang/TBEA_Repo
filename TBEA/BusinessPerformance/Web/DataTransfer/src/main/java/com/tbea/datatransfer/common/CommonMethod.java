@@ -47,4 +47,27 @@ public class CommonMethod {
 		}
 		return output;
 	}
+
+	public static String getPercent(Double first, Double second) {
+		String result = null;
+		Double zero = 0.0D;
+		if (!zero.equals(second)) {
+			result = (String.format("%.2f", first / second * 100) + "%");
+		} else {
+			result = "-";
+		}
+		return result;
+	}
+
+	public static Integer intcat(Integer x, Integer y) {
+		Integer result = null;
+		StringBuffer sb = new StringBuffer();
+		sb = sb.append(x);
+		sb = sb.append(y);
+		try {
+			result = Integer.valueOf(sb.toString());
+		} catch (NumberFormatException e) {
+		}
+		return result;
+	}
 }

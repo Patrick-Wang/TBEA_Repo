@@ -132,6 +132,8 @@ public class BYQWGTransferServiceImpl implements BYQWGTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferBYQWG:" + result);
 		}
 		return result;
 	}

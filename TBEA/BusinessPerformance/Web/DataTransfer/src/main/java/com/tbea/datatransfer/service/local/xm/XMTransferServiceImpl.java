@@ -21,7 +21,7 @@ public class XMTransferServiceImpl implements XMTransferService {
 	private XMXLDao xmDLDao;
 
 	private XMXLDao xmLLDao;
-	
+
 	private XMXLDao xmXLDao;
 
 	@Override
@@ -74,8 +74,8 @@ public class XMTransferServiceImpl implements XMTransferService {
 				xmLocal.setQybh(5);
 				xmLocalDao.merge(xmLocal);
 			}
-			
-			// hb			
+
+			// hb
 			SimpleDateFormat timeFormat = new SimpleDateFormat(
 					"yyyy-MM-dd HH:mm:ss");
 			xmLocalDao.deleteXMLocalByQY(2);
@@ -99,6 +99,8 @@ public class XMTransferServiceImpl implements XMTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferXM:" + result);
 		}
 		return result;
 	}

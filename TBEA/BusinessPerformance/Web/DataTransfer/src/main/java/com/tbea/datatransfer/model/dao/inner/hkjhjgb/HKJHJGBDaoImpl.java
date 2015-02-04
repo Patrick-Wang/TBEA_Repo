@@ -30,4 +30,11 @@ public class HKJHJGBDaoImpl extends AbstractReadWriteDaoImpl<HKJHJGB> implements
 		query.executeUpdate();
 	}
 
+	@Override
+	public void truncateHKJHJGB() {
+		String sql = "truncate table hkjhjgb";
+		Query query = getEntityManager().createNativeQuery(sql);
+		query.executeUpdate();
+	}
+
 }

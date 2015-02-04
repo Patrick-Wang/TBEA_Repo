@@ -25,174 +25,155 @@ public class FKFSBYQNWTransferServiceImpl implements FKFSBYQNWTransferService {
 
 	private FKFSBYQNWBYQDao fkfsbyqnwXBDao;
 
+	private static SimpleDateFormat month_sdf = new SimpleDateFormat("yyyyMM");
+
+	private static SimpleDateFormat timeFormat = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
+
+	private void transferFKFSBYQNWByZJB(int qybh,
+			List<FKFSBYQNWBYQ> fkfsbyqnwList) {
+		Date gxrq = null;
+		fkfsbyqnwLocalDao.deleteFKFSBYQNWLocalByQY(qybh);
+		FKFSBYQNWLocal fkfsbyqnwLocal = null;
+		for (FKFSBYQNWBYQ fkfsbyqnw : fkfsbyqnwList) {
+			fkfsbyqnwLocal = new FKFSBYQNWLocal();
+			gxrq = fkfsbyqnw.getGxrq();
+			fkfsbyqnwLocal.setGxrq(gxrq);
+			fkfsbyqnwLocal.setNy(month_sdf.format(gxrq));
+			fkfsbyqnwLocal.setGsbm(fkfsbyqnw.getGsbm());
+			fkfsbyqnwLocal.setNwhtddzlbs(fkfsbyqnw.getNwhtddzlbs());
+			fkfsbyqnwLocal.setNwhtddzlje(fkfsbyqnw.getNwhtddzlje());
+			fkfsbyqnwLocal.setN3_3_3_1bs(fkfsbyqnw.getN3_3_3_1bs());
+			fkfsbyqnwLocal.setN3_3_3_1je(fkfsbyqnw.getN3_3_3_1je());
+			fkfsbyqnwLocal.setN1_4_4_0d5_0d5bs(fkfsbyqnw.getN1_4_4_0d5_0d5bs());
+			fkfsbyqnwLocal.setN1_4_4_0d5_0d5je(fkfsbyqnw.getN1_4_4_0d5_0d5je());
+			fkfsbyqnwLocal.setN1_2_6d5_0d5bs(fkfsbyqnw.getN1_2_6d5_0d5bs());
+			fkfsbyqnwLocal.setN1_2_6d5_0d5je(fkfsbyqnw.getN1_2_6d5_0d5je());
+			fkfsbyqnwLocal.setN1_4_4d5_0d5bs(fkfsbyqnw.getN1_4_4d5_0d5bs());
+			fkfsbyqnwLocal.setN1_4_4d5_0d5je(fkfsbyqnw.getN1_4_4d5_0d5je());
+			fkfsbyqnwLocal.setQtybs(fkfsbyqnw.getQtybs());
+			fkfsbyqnwLocal.setQtyje(fkfsbyqnw.getQtyje());
+			fkfsbyqnwLocal.setQtebs(fkfsbyqnw.getQtebs());
+			fkfsbyqnwLocal.setQteje(fkfsbyqnw.getQteje());
+			fkfsbyqnwLocal.setSfdrwc(fkfsbyqnw.getSfdrwc());
+			fkfsbyqnwLocal.setQybh(qybh);
+			fkfsbyqnwLocalDao.merge(fkfsbyqnwLocal);
+		}
+	}
+
+	private void transferFKFSBYQNWByWS(int qybh, String userid,
+			String password, String scheme) {
+
+		Date gxrq = null;
+		fkfsbyqnwLocalDao.deleteFKFSBYQNWLocalByQY(qybh);
+		WebServiceClient webServiceClient = new WebServiceClient();
+		List<Map<String, Object>> recList = webServiceClient.getRec(userid,
+				password, scheme);
+		FKFSBYQNWLocal fkfsbyqnwLocal = null;
+		for (Map<String, Object> recMap : recList) {
+			fkfsbyqnwLocal = new FKFSBYQNWLocal();
+			gxrq = CommonMethod.objectToDate(timeFormat, recMap.get("gxrq"));
+			fkfsbyqnwLocal.setGxrq(gxrq);
+			fkfsbyqnwLocal.setNy(month_sdf.format(gxrq));
+			fkfsbyqnwLocal.setGsbm(String.valueOf(recMap.get("gsbm")));
+			fkfsbyqnwLocal.setNwhtddzlbs(CommonMethod.objectToInteger(String
+					.valueOf(recMap.get("nwhtddzlbs"))));
+			fkfsbyqnwLocal.setNwhtddzlje(CommonMethod.objectToDouble(recMap
+					.get("nwhtddzlje")));
+			fkfsbyqnwLocal.setN3_3_3_1bs(CommonMethod.objectToInteger(String
+					.valueOf(recMap.get("3_3_3_1bs"))));
+			fkfsbyqnwLocal.setN3_3_3_1je(CommonMethod.objectToDouble(recMap
+					.get("3_3_3_1je")));
+			fkfsbyqnwLocal.setN1_4_4_0d5_0d5bs(CommonMethod
+					.objectToInteger(String.valueOf(recMap
+							.get("1_4_4_0d5_0d5bs"))));
+			fkfsbyqnwLocal.setN1_4_4_0d5_0d5je(CommonMethod
+					.objectToDouble(recMap.get("1_4_4_0d5_0d5je")));
+			fkfsbyqnwLocal
+					.setN1_2_6d5_0d5bs(CommonMethod.objectToInteger(String
+							.valueOf(recMap.get("1_2_6d5_0d5bs"))));
+			fkfsbyqnwLocal.setN1_2_6d5_0d5je(CommonMethod.objectToDouble(recMap
+					.get("1_2_6d5_0d5je")));
+			fkfsbyqnwLocal
+					.setN1_4_4d5_0d5bs(CommonMethod.objectToInteger(String
+							.valueOf(recMap.get("1_4_4d5_0d5bs"))));
+			fkfsbyqnwLocal.setN1_4_4d5_0d5je(CommonMethod.objectToDouble(recMap
+					.get("1_4_4d5_0d5je")));
+			fkfsbyqnwLocal.setQtybs(CommonMethod.objectToInteger(recMap
+					.get("qtybs")));
+			fkfsbyqnwLocal.setQtyje(CommonMethod.objectToDouble(recMap
+					.get("qtyje")));
+			fkfsbyqnwLocal.setQtebs(CommonMethod.objectToInteger(recMap
+					.get("qtebs")));
+			fkfsbyqnwLocal.setQteje(CommonMethod.objectToDouble(recMap
+					.get("qteje")));
+			fkfsbyqnwLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
+			fkfsbyqnwLocal.setQybh(qybh);
+			fkfsbyqnwLocalDao.merge(fkfsbyqnwLocal);
+		}
+	}
+
 	@Override
 	public boolean transferFKFSBYQNW() {
 		boolean result = false;
+		boolean sbResult = false;
+		boolean hbResult = false;
+		boolean xbResult = false;
+		boolean tbResult = false;
+		// sb
 		try {
-			SimpleDateFormat month_sdf = new SimpleDateFormat("yyyyMM");
-			Date gxrq = null;
-			// tb
-			fkfsbyqnwLocalDao.deleteFKFSBYQNWLocalByQY(301);
-			FKFSBYQNWLocal fkfsbyqnwLocal = null;
-			List<FKFSBYQNWBYQ> fkfsbyqnwTBList = fkfsbyqnwTBDao
-					.getAllFKFSBYQNW();
-			for (FKFSBYQNWBYQ fkfsbyqnwTB : fkfsbyqnwTBList) {
-				fkfsbyqnwLocal = new FKFSBYQNWLocal();
-				gxrq = fkfsbyqnwTB.getGxrq();
-				fkfsbyqnwLocal.setGxrq(gxrq);
-				fkfsbyqnwLocal.setNy(month_sdf.format(gxrq));
-				fkfsbyqnwLocal.setGsbm(fkfsbyqnwTB.getGsbm());
-				fkfsbyqnwLocal.setNwhtddzlbs(fkfsbyqnwTB.getNwhtddzlbs());
-				fkfsbyqnwLocal.setNwhtddzlje(fkfsbyqnwTB.getNwhtddzlje());
-				fkfsbyqnwLocal.setN3_3_3_1bs(fkfsbyqnwTB.getN3_3_3_1bs());
-				fkfsbyqnwLocal.setN3_3_3_1je(fkfsbyqnwTB.getN3_3_3_1je());
-				fkfsbyqnwLocal.setN1_4_4_0d5_0d5bs(fkfsbyqnwTB
-						.getN1_4_4_0d5_0d5bs());
-				fkfsbyqnwLocal.setN1_4_4_0d5_0d5je(fkfsbyqnwTB
-						.getN1_4_4_0d5_0d5je());
-				fkfsbyqnwLocal.setN1_2_6d5_0d5bs(fkfsbyqnwTB
-						.getN1_2_6d5_0d5bs());
-				fkfsbyqnwLocal.setN1_2_6d5_0d5je(fkfsbyqnwTB
-						.getN1_2_6d5_0d5je());
-				fkfsbyqnwLocal.setN1_4_4d5_0d5bs(fkfsbyqnwTB
-						.getN1_4_4d5_0d5bs());
-				fkfsbyqnwLocal.setN1_4_4d5_0d5je(fkfsbyqnwTB
-						.getN1_4_4d5_0d5je());
-				fkfsbyqnwLocal.setQtybs(fkfsbyqnwTB.getQtybs());
-				fkfsbyqnwLocal.setQtyje(fkfsbyqnwTB.getQtyje());
-				fkfsbyqnwLocal.setQtebs(fkfsbyqnwTB.getQtebs());
-				fkfsbyqnwLocal.setQteje(fkfsbyqnwTB.getQteje());
-				fkfsbyqnwLocal.setSfdrwc(fkfsbyqnwTB.getSfdrwc());
-				fkfsbyqnwLocal.setQybh(301);
-				fkfsbyqnwLocalDao.merge(fkfsbyqnwLocal);
-			}
-			// sb
-			fkfsbyqnwLocalDao.deleteFKFSBYQNWLocalByQY(1);
-
 			List<FKFSBYQNWBYQ> fkfsbyqnwSBList = fkfsbyqnwSBDao
 					.getAllFKFSBYQNW();
-			for (FKFSBYQNWBYQ fkfsbyqnwSB : fkfsbyqnwSBList) {
-				fkfsbyqnwLocal = new FKFSBYQNWLocal();
-				gxrq = fkfsbyqnwSB.getGxrq();
-				fkfsbyqnwLocal.setGxrq(gxrq);
-				fkfsbyqnwLocal.setNy(month_sdf.format(gxrq));
-				fkfsbyqnwLocal.setGsbm(fkfsbyqnwSB.getGsbm());
-				fkfsbyqnwLocal.setNwhtddzlbs(fkfsbyqnwSB.getNwhtddzlbs());
-				fkfsbyqnwLocal.setNwhtddzlje(fkfsbyqnwSB.getNwhtddzlje());
-				fkfsbyqnwLocal.setN3_3_3_1bs(fkfsbyqnwSB.getN3_3_3_1bs());
-				fkfsbyqnwLocal.setN3_3_3_1je(fkfsbyqnwSB.getN3_3_3_1je());
-				fkfsbyqnwLocal.setN1_4_4_0d5_0d5bs(fkfsbyqnwSB
-						.getN1_4_4_0d5_0d5bs());
-				fkfsbyqnwLocal.setN1_4_4_0d5_0d5je(fkfsbyqnwSB
-						.getN1_4_4_0d5_0d5je());
-				fkfsbyqnwLocal.setN1_2_6d5_0d5bs(fkfsbyqnwSB
-						.getN1_2_6d5_0d5bs());
-				fkfsbyqnwLocal.setN1_2_6d5_0d5je(fkfsbyqnwSB
-						.getN1_2_6d5_0d5je());
-				fkfsbyqnwLocal.setN1_4_4d5_0d5bs(fkfsbyqnwSB
-						.getN1_4_4d5_0d5bs());
-				fkfsbyqnwLocal.setN1_4_4d5_0d5je(fkfsbyqnwSB
-						.getN1_4_4d5_0d5je());
-				fkfsbyqnwLocal.setQtybs(fkfsbyqnwSB.getQtybs());
-				fkfsbyqnwLocal.setQtyje(fkfsbyqnwSB.getQtyje());
-				fkfsbyqnwLocal.setQtebs(fkfsbyqnwSB.getQtebs());
-				fkfsbyqnwLocal.setQteje(fkfsbyqnwSB.getQteje());
-				fkfsbyqnwLocal.setSfdrwc(fkfsbyqnwSB.getSfdrwc());
-				fkfsbyqnwLocal.setQybh(1);
-				fkfsbyqnwLocalDao.merge(fkfsbyqnwLocal);
-			}
-			// xb
-			fkfsbyqnwLocalDao.deleteFKFSBYQNWLocalByQY(3);
-
+			transferFKFSBYQNWByZJB(1, fkfsbyqnwSBList);
+			sbResult = true;
+		} catch (Exception e) {
+			sbResult = false;
+		}
+		// hb
+		try {
+			transferFKFSBYQNWByWS(2, "web_test", "123456",
+					"yszk_ws_htfkfstj_byq_nwfk");
+			hbResult = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			hbResult = false;
+		}
+		// xb
+		try {
 			List<FKFSBYQNWBYQ> fkfsbyqnwXBList = fkfsbyqnwXBDao
 					.getAllFKFSBYQNW();
-			for (FKFSBYQNWBYQ fkfsbyqnwXB : fkfsbyqnwXBList) {
-				fkfsbyqnwLocal = new FKFSBYQNWLocal();
-				gxrq = fkfsbyqnwXB.getGxrq();
-				fkfsbyqnwLocal.setGxrq(gxrq);
-				fkfsbyqnwLocal.setNy(month_sdf.format(gxrq));
-				fkfsbyqnwLocal.setGsbm(fkfsbyqnwXB.getGsbm());
-				fkfsbyqnwLocal.setNwhtddzlbs(fkfsbyqnwXB.getNwhtddzlbs());
-				fkfsbyqnwLocal.setNwhtddzlje(fkfsbyqnwXB.getNwhtddzlje());
-				fkfsbyqnwLocal.setN3_3_3_1bs(fkfsbyqnwXB.getN3_3_3_1bs());
-				fkfsbyqnwLocal.setN3_3_3_1je(fkfsbyqnwXB.getN3_3_3_1je());
-				fkfsbyqnwLocal.setN1_4_4_0d5_0d5bs(fkfsbyqnwXB
-						.getN1_4_4_0d5_0d5bs());
-				fkfsbyqnwLocal.setN1_4_4_0d5_0d5je(fkfsbyqnwXB
-						.getN1_4_4_0d5_0d5je());
-				fkfsbyqnwLocal.setN1_2_6d5_0d5bs(fkfsbyqnwXB
-						.getN1_2_6d5_0d5bs());
-				fkfsbyqnwLocal.setN1_2_6d5_0d5je(fkfsbyqnwXB
-						.getN1_2_6d5_0d5je());
-				fkfsbyqnwLocal.setN1_4_4d5_0d5bs(fkfsbyqnwXB
-						.getN1_4_4d5_0d5bs());
-				fkfsbyqnwLocal.setN1_4_4d5_0d5je(fkfsbyqnwXB
-						.getN1_4_4d5_0d5je());
-				fkfsbyqnwLocal.setQtybs(fkfsbyqnwXB.getQtybs());
-				fkfsbyqnwLocal.setQtyje(fkfsbyqnwXB.getQtyje());
-				fkfsbyqnwLocal.setQtebs(fkfsbyqnwXB.getQtebs());
-				fkfsbyqnwLocal.setQteje(fkfsbyqnwXB.getQteje());
-				fkfsbyqnwLocal.setSfdrwc(fkfsbyqnwXB.getSfdrwc());
-				fkfsbyqnwLocal.setQybh(3);
-				fkfsbyqnwLocalDao.merge(fkfsbyqnwLocal);
-			}
+			transferFKFSBYQNWByZJB(3, fkfsbyqnwXBList);
+			xbResult = true;
+		} catch (Exception e) {
+			xbResult = false;
+		}
+		// tb
+		try {
+			List<FKFSBYQNWBYQ> fkfsbyqnwTBList = fkfsbyqnwTBDao
+					.getAllFKFSBYQNW();
+			transferFKFSBYQNWByZJB(301, fkfsbyqnwTBList);
+			tbResult = true;
+		} catch (Exception e) {
+			tbResult = false;
+		}
 
-			// hb
-			SimpleDateFormat timeFormat = new SimpleDateFormat(
-					"yyyy-MM-dd HH:mm:ss");
-			fkfsbyqnwLocalDao.deleteFKFSBYQNWLocalByQY(2);
-			WebServiceClient webServiceClient = new WebServiceClient();
-			List<Map<String, Object>> recList = webServiceClient.getRec(
-					"web_test", "123456", "yszk_ws_htfkfstj_byq_nwfk");
-
-			for (Map<String, Object> recMap : recList) {
-				fkfsbyqnwLocal = new FKFSBYQNWLocal();
-				gxrq = CommonMethod
-						.objectToDate(timeFormat, recMap.get("gxrq"));
-				fkfsbyqnwLocal.setGxrq(gxrq);
-				fkfsbyqnwLocal.setNy(month_sdf.format(gxrq));
-				fkfsbyqnwLocal.setGsbm(String.valueOf(recMap.get("gsbm")));
-				fkfsbyqnwLocal.setNwhtddzlbs(CommonMethod
-						.objectToInteger(String.valueOf(recMap
-								.get("nwhtddzlbs"))));
-				fkfsbyqnwLocal.setNwhtddzlje(CommonMethod.objectToDouble(recMap
-						.get("nwhtddzlje")));
-				fkfsbyqnwLocal
-						.setN3_3_3_1bs(CommonMethod.objectToInteger(String
-								.valueOf(recMap.get("3_3_3_1bs"))));
-				fkfsbyqnwLocal.setN3_3_3_1je(CommonMethod.objectToDouble(recMap
-						.get("3_3_3_1je")));
-				fkfsbyqnwLocal.setN1_4_4_0d5_0d5bs(CommonMethod
-						.objectToInteger(String.valueOf(recMap
-								.get("1_4_4_0d5_0d5bs"))));
-				fkfsbyqnwLocal.setN1_4_4_0d5_0d5je(CommonMethod
-						.objectToDouble(recMap.get("1_4_4_0d5_0d5je")));
-				fkfsbyqnwLocal.setN1_2_6d5_0d5bs(CommonMethod
-						.objectToInteger(String.valueOf(recMap
-								.get("1_2_6d5_0d5bs"))));
-				fkfsbyqnwLocal.setN1_2_6d5_0d5je(CommonMethod
-						.objectToDouble(recMap.get("1_2_6d5_0d5je")));
-				fkfsbyqnwLocal.setN1_4_4d5_0d5bs(CommonMethod
-						.objectToInteger(String.valueOf(recMap
-								.get("1_4_4d5_0d5bs"))));
-				fkfsbyqnwLocal.setN1_4_4d5_0d5je(CommonMethod
-						.objectToDouble(recMap.get("1_4_4d5_0d5je")));
-				fkfsbyqnwLocal.setQtybs(CommonMethod.objectToInteger(recMap
-						.get("qtybs")));
-				fkfsbyqnwLocal.setQtyje(CommonMethod.objectToDouble(recMap
-						.get("qtyje")));
-				fkfsbyqnwLocal.setQtebs(CommonMethod.objectToInteger(recMap
-						.get("qtebs")));
-				fkfsbyqnwLocal.setQteje(CommonMethod.objectToDouble(recMap
-						.get("qteje")));
-				fkfsbyqnwLocal.setSfdrwc(String.valueOf(recMap.get("sfdrwc")));
-				fkfsbyqnwLocal.setQybh(2);
-				fkfsbyqnwLocalDao.merge(fkfsbyqnwLocal);
-			}
+		if (sbResult && hbResult && xbResult && tbResult) {
+			result = true;
+			System.out.println("transferFKFSBYQNW:true");
+		} else {
+			result = false;
+			System.out.println("transferFKFSBYQNWsb:" + sbResult);
+			System.out.println("transferFKFSBYQNWhb:" + hbResult);
+			System.out.println("transferFKFSBYQNWxb:" + xbResult);
+			System.out.println("transferFKFSBYQNWtb:" + tbResult);
+		}
+		try {
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferFKFSBYQNW:" + result);
 		}
 		return result;
 	}

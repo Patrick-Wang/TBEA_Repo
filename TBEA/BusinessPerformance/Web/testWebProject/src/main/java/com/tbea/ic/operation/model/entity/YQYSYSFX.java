@@ -12,16 +12,29 @@ import javax.persistence.Table;
 import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 
 @Entity
-@Table(name = "Yqysysfx")
+@Table(name = "yszk_zj_yqysysfl")
 public class YQYSYSFX extends AbstractReadWriteEntity implements Serializable{
 	
-	private Integer Ysfl;
-	private Integer Hs;
-	private Double je;
-	private Integer Flsdhs;
-	private Double Flsdje;
+	private static final long serialVersionUID = 1L;
+
+	private String nf;
+
+	private String yf;
+
+	private String ysflmc;
+
+	private Integer zhs;
+
+	private Double zje;
+
+	private Integer flqshs;
+
+	private Double flqsje;
+
+	private String sfdrwc;
+
 	private Integer qybh;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -29,86 +42,78 @@ public class YQYSYSFX extends AbstractReadWriteEntity implements Serializable{
 		return super.getId();
 	}
 
-	/**
-	 * @return the ysfl
-	 */
-	public Integer getYsfl() {
-		return Ysfl;
+	public void setId(int id) {
+		super.setId(id);
 	}
 
-	/**
-	 * @return the hs
-	 */
-	public Integer getHs() {
-		return Hs;
+	public String getNf() {
+		return nf;
 	}
 
-	/**
-	 * @return the je
-	 */
-	public Double getJe() {
-		return je;
+	public void setNf(String nf) {
+		this.nf = nf;
 	}
 
-	/**
-	 * @return the flsdhs
-	 */
-	public Integer getFlsdhs() {
-		return Flsdhs;
+	public String getYf() {
+		return yf;
 	}
 
-	/**
-	 * @return the flsdje
-	 */
-	public Double getFlsdje() {
-		return Flsdje;
+	public void setYf(String yf) {
+		this.yf = yf;
 	}
 
-	/**
-	 * @param ysfl the ysfl to set
-	 */
-	public void setYsfl(Integer ysfl) {
-		Ysfl = ysfl;
+	public String getYsflmc() {
+		return ysflmc;
 	}
 
-	/**
-	 * @param hs the hs to set
-	 */
-	public void setHs(Integer hs) {
-		Hs = hs;
+	public void setYsflmc(String ysflmc) {
+		this.ysflmc = ysflmc;
 	}
 
-	/**
-	 * @param je the je to set
-	 */
-	public void setJe(Double je) {
-		this.je = je;
+	public Integer getZhs() {
+		return zhs;
 	}
 
-	/**
-	 * @param flsdhs the flsdhs to set
-	 */
-	public void setFlsdhs(Integer flsdhs) {
-		Flsdhs = flsdhs;
+	public void setZhs(Integer zhs) {
+		this.zhs = zhs;
 	}
 
-	/**
-	 * @param flsdje the flsdje to set
-	 */
-	public void setFlsdje(Double flsdje) {
-		Flsdje = flsdje;
+	public Double getZje() {
+		return zje;
 	}
 
-	/**
-	 * @return the qybh
-	 */
+	public void setZje(Double zje) {
+		this.zje = zje;
+	}
+
+	public Integer getFlqshs() {
+		return flqshs;
+	}
+
+	public void setFlqshs(Integer flqshs) {
+		this.flqshs = flqshs;
+	}
+
+	public Double getFlqsje() {
+		return flqsje;
+	}
+
+	public void setFlqsje(Double flqsje) {
+		this.flqsje = flqsje;
+	}
+
+	public String getSfdrwc() {
+		return sfdrwc;
+	}
+
+	public void setSfdrwc(String sfdrwc) {
+		this.sfdrwc = sfdrwc;
+	}
+
 	public Integer getQybh() {
 		return qybh;
 	}
 
-	/**
-	 * @param qybh the qybh to set
-	 */
 	public void setQybh(Integer qybh) {
 		this.qybh = qybh;
 	}

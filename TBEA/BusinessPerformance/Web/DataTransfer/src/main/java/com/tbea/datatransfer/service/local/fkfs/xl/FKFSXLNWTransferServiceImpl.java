@@ -111,6 +111,8 @@ public class FKFSXLNWTransferServiceImpl implements FKFSXLNWTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferFKFSXLNW:" + result);
 		}
 		return result;
 	}

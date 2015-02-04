@@ -6,4 +6,6 @@ import com.tbea.datatransfer.model.entity.inner.NDTBBZJQK;
 
 public interface NDTBBZJQKDao extends AbstractReadWriteDao<NDTBBZJQK> {
 
+	public void truncateNDTBBZJQK();
+
 }

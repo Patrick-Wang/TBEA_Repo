@@ -3,7 +3,6 @@
 declare var echarts;
 
 module yqysysfx {
-
     class JQGridAssistantFactory {
         public static createTable(gridName): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
@@ -21,6 +20,7 @@ module yqysysfx {
     }
 
     export class View {
+        
         public static newInstance(): View {
             return new View();
         }
@@ -70,6 +70,7 @@ module yqysysfx {
                     if (0 != i % 2) {
                         for (var col in row) {
                             row[col] = Util.formatCurrency(row[col]);
+                           
                         }
                     }
 

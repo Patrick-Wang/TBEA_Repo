@@ -182,6 +182,8 @@ public class YDSJHKQKTransferServiceImpl implements YDSJHKQKTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferYDSJHKQK:" + result);
 		}
 		return result;
 	}

@@ -6,4 +6,6 @@ import com.tbea.datatransfer.model.entity.inner.CQK;
 
 public interface CQKDao extends AbstractReadWriteDao<CQK> {
 
+	public void truncateCQK();
+
 }

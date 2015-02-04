@@ -86,7 +86,7 @@ public class ZBHZServiceImpl implements ZBHZService {
 			e.printStackTrace();
 			result = false;
 		} finally {
-			System.out.println(result);
+			System.out.println("importZBHZ:" + result);
 		}
 		return result;
 	}

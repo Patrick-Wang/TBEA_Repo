@@ -48,6 +48,7 @@ public class YQKQSBHBServiceImpl implements YQKQSBHBService {
 	public boolean importYQKQSBHB() {
 		boolean result = false;
 		try {
+			yqkqsbhbDao.truncateYQKQSBHB();
 			SimpleDateFormat nyFormat = new SimpleDateFormat("yyyyMM");
 			String baseMonth = nyFormat.format(new Date(System
 					.currentTimeMillis()));
@@ -66,6 +67,8 @@ public class YQKQSBHBServiceImpl implements YQKQSBHBService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("importYQKQSBHB:" + result);
 		}
 		return result;
 	}

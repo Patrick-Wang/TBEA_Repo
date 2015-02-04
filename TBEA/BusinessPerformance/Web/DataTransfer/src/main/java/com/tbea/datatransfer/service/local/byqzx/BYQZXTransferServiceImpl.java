@@ -32,8 +32,10 @@ public class BYQZXTransferServiceImpl implements BYQZXTransferService {
 			List<BYQZX> byqzxSBList = byqzxSBDao.getAllBYQZX();
 			for (BYQZX byqzxSB : byqzxSBList) {
 				byqzxLocal = new BYQZXLocal();
+				byqzxLocal.setId(CommonMethod.intcat(1, byqzxSB.getId()));
 				byqzxLocal.setGxrq(byqzxSB.getGxrq());
-				byqzxLocal.setTbcpbh(byqzxSB.getTbcpbh());
+				byqzxLocal
+						.setTbcpbh(CommonMethod.intcat(1, byqzxSB.getTbcpbh()));
 				byqzxLocal.setDdzxjd(byqzxSB.getDdzxjd());
 				byqzxLocal.setHth(byqzxSB.getHth());
 				byqzxLocal.setHtzbsj(byqzxSB.getHtzbsj());
@@ -64,8 +66,10 @@ public class BYQZXTransferServiceImpl implements BYQZXTransferService {
 			List<BYQZX> byqzxXBList = byqzxXBDao.getAllBYQZX();
 			for (BYQZX byqzxXB : byqzxXBList) {
 				byqzxLocal = new BYQZXLocal();
+				byqzxLocal.setId(CommonMethod.intcat(3, byqzxXB.getId()));
 				byqzxLocal.setGxrq(byqzxXB.getGxrq());
-				byqzxLocal.setTbcpbh(byqzxXB.getTbcpbh());
+				byqzxLocal
+						.setTbcpbh(CommonMethod.intcat(3, byqzxXB.getTbcpbh()));
 				byqzxLocal.setDdzxjd(byqzxXB.getDdzxjd());
 				byqzxLocal.setHth(byqzxXB.getHth());
 				byqzxLocal.setHtzbsj(byqzxXB.getHtzbsj());
@@ -100,10 +104,12 @@ public class BYQZXTransferServiceImpl implements BYQZXTransferService {
 					"web_test", "123456", "cb_ws_byqzx");
 			for (Map<String, Object> recMap : recList) {
 				byqzxLocal = new BYQZXLocal();
+				byqzxLocal.setId(CommonMethod.intcat(2,
+						CommonMethod.objectToInteger(recMap.get("ID"))));
 				byqzxLocal.setGxrq(CommonMethod.objectToDate(timeFormat,
 						recMap.get("gxrq")));
-				byqzxLocal.setTbcpbh(CommonMethod.objectToInteger(recMap
-						.get("tbcpbh")));
+				byqzxLocal.setTbcpbh(CommonMethod.intcat(2,
+						CommonMethod.objectToInteger(recMap.get("tbcpbh"))));
 				byqzxLocal.setDdzxjd(CommonMethod.objectToInteger(recMap
 						.get("ddzxjd")));
 				byqzxLocal.setHth(String.valueOf(recMap.get("hth")));
@@ -149,6 +155,8 @@ public class BYQZXTransferServiceImpl implements BYQZXTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferBYQZX:" + result);
 		}
 		return result;
 	}

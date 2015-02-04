@@ -101,7 +101,7 @@ public class YDZBFDWServiceImpl implements YDZBFDWService {
 			e.printStackTrace();
 			result = false;
 		} finally {
-			System.out.println(result);
+			System.out.println("importYDZBFDW:" + result);
 		}
 		return result;
 	}

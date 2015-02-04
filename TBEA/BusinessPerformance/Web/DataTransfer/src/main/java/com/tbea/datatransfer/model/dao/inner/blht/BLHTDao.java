@@ -6,4 +6,6 @@ import com.tbea.datatransfer.model.entity.inner.BLHT;
 
 public interface BLHTDao extends AbstractReadWriteDao<BLHT> {
 
+	public void truncateBLHT();
+
 }

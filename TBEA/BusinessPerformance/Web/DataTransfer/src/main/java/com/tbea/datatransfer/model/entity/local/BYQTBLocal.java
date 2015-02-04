@@ -69,7 +69,7 @@ public class BYQTBLocal extends AbstractReadWriteEntity implements Serializable 
 	private Integer qybh;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	public int getId() {
 		return super.getId();

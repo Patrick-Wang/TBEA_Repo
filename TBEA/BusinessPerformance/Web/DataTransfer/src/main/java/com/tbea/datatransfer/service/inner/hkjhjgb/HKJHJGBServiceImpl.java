@@ -22,6 +22,7 @@ public class HKJHJGBServiceImpl implements HKJHJGBService {
 	public boolean importHKJHJGB() {
 		boolean result = false;
 		try {
+			hkjhjgbDao.truncateHKJHJGB();
 			HKJHJGB hkjhjgb = null;
 			Date tempDate = null;
 			Double qbkhyqyszk = null;
@@ -91,6 +92,8 @@ public class HKJHJGBServiceImpl implements HKJHJGBService {
 		} catch (Exception e) {
 			result = false;
 			e.printStackTrace();
+		} finally {
+			System.out.println("importHKJHJGB:" + result);
 		}
 		return result;
 	}

@@ -179,6 +179,8 @@ public class BLTransferServiceImpl implements BLTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferBL:" + result);
 		}
 		return result;
 	}

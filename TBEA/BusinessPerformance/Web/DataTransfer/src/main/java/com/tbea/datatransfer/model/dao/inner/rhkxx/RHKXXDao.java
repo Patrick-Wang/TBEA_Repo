@@ -6,4 +6,6 @@ import com.tbea.datatransfer.model.entity.inner.RHKXX;
 
 public interface RHKXXDao extends AbstractReadWriteDao<RHKXX> {
 
+	public void truncateRHKXX();
+
 }

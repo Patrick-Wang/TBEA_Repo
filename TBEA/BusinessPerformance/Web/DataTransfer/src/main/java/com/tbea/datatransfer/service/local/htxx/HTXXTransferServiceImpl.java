@@ -199,6 +199,8 @@ public class HTXXTransferServiceImpl implements HTXXTransferService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
+		} finally {
+			System.out.println("transferHTXX:" + result);
 		}
 		return result;
 	}
