@@ -22,6 +22,38 @@ public class Util {
 				+ "-1");
 	}
 
+	public static java.sql.Date toDate(String date){
+		java.sql.Date ret = null;
+		if (date != null){
+			try{//"yyyy-MM-dd"
+				return java.sql.Date.valueOf(date);
+			}catch(Exception e){
+				
+			}
+			try{//"yyyy-MM"
+				return java.sql.Date.valueOf(date + "-1");
+			}catch(Exception e){
+				
+			}
+			try{//"yyyy.MM.dd"
+				return java.sql.Date.valueOf(date.replace('.', '-'));
+			}catch(Exception e){
+				
+			}
+			try{//"yyyy-MM-dd hh:mm:ss"
+				if (date.length() >= "yyyy-MM-dd".length())
+				return java.sql.Date.valueOf(date.substring(0, "yyyy-MM-dd".length()));
+			}catch(Exception e){
+				
+			}
+			try{//"yyyy/MM/dd"
+				return java.sql.Date.valueOf(date.replace('/', '-'));
+			}catch(Exception e){
+				
+			}
+		}
+		return  ret;
+	}
 	
 	public static String toString(List<Company> comps){
 		String ret = "";
@@ -60,7 +92,6 @@ public class Util {
 		try {
 			return Double.valueOf(val);
 		} catch (Exception e) {
-
 		}
 		return 0;
 	}

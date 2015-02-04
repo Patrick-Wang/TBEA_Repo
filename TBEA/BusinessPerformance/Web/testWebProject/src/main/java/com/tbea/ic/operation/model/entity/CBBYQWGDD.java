@@ -34,7 +34,7 @@ public class CBBYQWGDD extends AbstractReadWriteEntity {
 	Double	qtclcb	;
 	Double	rgjzzfy	;
 	Double	yf	;
-
+	Integer qybh;
 	
 	
 	@Id
@@ -274,6 +274,20 @@ public class CBBYQWGDD extends AbstractReadWriteEntity {
 	 */
 	public void setYf(Double yf) {
 		this.yf = yf;
+	}
+
+	/**
+	 * @return the qybh
+	 */
+	public Integer getQybh() {
+		return qybh;
+	}
+
+	/**
+	 * @param qybh the qybh to set
+	 */
+	public void setQybh(Integer qybh) {
+		this.qybh = qybh;
 	}
 
 }

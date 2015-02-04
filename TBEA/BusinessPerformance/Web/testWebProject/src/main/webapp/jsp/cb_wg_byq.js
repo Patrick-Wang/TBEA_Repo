@@ -7,27 +7,27 @@ var cb_wg_byq;
             return parent.append(new JQTable.Node("单价", "dj")).append(new JQTable.Node("用量", "yl"));
         };
         JQGridAssistantFactory.createMxTable = function (gridName) {
-            var title = ["订单所在单位及项目公司", "工作号", "完工时间", "订货单位", "产品型号", "电压等级", "产量（万KVA）", "产值", " 实际硅钢片用量 ", " 实际硅钢片单价 ", " 实际电解铜用量 ", " 实际电解铜单价（无税含加工费） ", " 加工费(含税) ", " 实际变压器油用量 ", " 实际变压器油单价 ", " 实际钢材用量 ", " 实际钢材单价 ", " 实际绝缘纸板用量 ", " 实际绝缘纸板单价 ", " 实际五大主材成本 ", " 实际其他材料成本合计 ", " 实际材料成本总计 ", " 实际人工制造费用 ", " 实际总成本 ", " 运费 ", " 实际毛利额 ", "实际毛利率"];
+            var title = ["订单所在单位", "订单所在项目公司", "工作号", "完工时间", "订货单位", "产品型号", "电压等级", "产量（万KVA）", "产值", " 实际硅钢片用量 ", " 实际硅钢片单价 ", " 实际电解铜用量 ", " 实际电解铜单价（无税含加工费） ", " 加工费(含税) ", " 实际变压器油用量 ", " 实际变压器油单价 ", " 实际钢材用量 ", " 实际钢材单价 ", " 实际绝缘纸板用量 ", " 实际绝缘纸板单价 ", " 实际五大主材成本 ", " 实际其他材料成本合计 ", " 实际材料成本总计 ", " 实际人工制造费用 ", " 实际总成本 ", " 运费 ", " 实际毛利额 ", "实际毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 90));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 90));
                 }
                 else if (i < 7) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 80));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 80));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 80));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 80));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         JQGridAssistantFactory.createJttbTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("完工时间", "wgsj", true, 0 /* Left */),
-                new JQTable.Node("单位", "dw", true, 0 /* Left */),
+                new JQTable.Node("完工时间", "wgsj", true, JQTable.TextAlign.Left),
+                new JQTable.Node("单位", "dw", true, JQTable.TextAlign.Left),
                 new JQTable.Node("合同金额", "htje"),
-                new JQTable.Node("合同金额", "htje_1", true, 2 /* Center */),
+                new JQTable.Node("合同金额", "htje_1", true, JQTable.TextAlign.Center),
                 new JQTable.Node("毛利额", "mle"),
                 new JQTable.Node("毛利率", "mll"),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("硅钢", "gg")),
@@ -39,10 +39,10 @@ var cb_wg_byq;
         };
         JQGridAssistantFactory.createGstbTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位", "1dw", true, 0 /* Left */),
-                new JQTable.Node("完工时间", "1wgsj", true, 0 /* Left */),
+                new JQTable.Node("单位", "1dw", true, JQTable.TextAlign.Left),
+                new JQTable.Node("完工时间", "1wgsj", true, JQTable.TextAlign.Left),
                 new JQTable.Node("合同金额", "1htje"),
-                new JQTable.Node("合同金额", "1htje_1", true, 2 /* Center */),
+                new JQTable.Node("合同金额", "1htje_1", true, JQTable.TextAlign.Center),
                 new JQTable.Node("毛利额", "1mle"),
                 new JQTable.Node("毛利率", "1mll"),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("硅钢", "1gg")),
@@ -54,10 +54,10 @@ var cb_wg_byq;
         };
         JQGridAssistantFactory.createFdyTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("完工时间", "2wgsj", true, 0 /* Left */),
-                new JQTable.Node("电压等级", "2dydj", true, 0 /* Left */),
+                new JQTable.Node("完工时间", "2wgsj", true, JQTable.TextAlign.Left),
+                new JQTable.Node("电压等级", "2dydj", true, JQTable.TextAlign.Left),
                 new JQTable.Node("合同金额", "2htje"),
-                new JQTable.Node("合同金额", "2htje_1", true, 2 /* Center */),
+                new JQTable.Node("合同金额", "2htje_1", true, JQTable.TextAlign.Center),
                 new JQTable.Node("毛利额", "2mle"),
                 new JQTable.Node("毛利率", "2mll"),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("硅钢", "2gg")),

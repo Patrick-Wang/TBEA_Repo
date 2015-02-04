@@ -5,8 +5,8 @@ var yszkjgqkb;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("客户所属行业", "khsshy", true, JQTable.TextAlign.Left),
-                new JQTable.Node("客户所属行业", "khsshy_1", true, JQTable.TextAlign.Left),
+                new JQTable.Node("客户所属行业", "khsshy", true, 0 /* Left */),
+                new JQTable.Node("客户所属行业", "khsshy_1", true, 0 /* Left */),
                 new JQTable.Node("应收账款情况", "zqkh").append(new JQTable.Node("金额", "je")).append(new JQTable.Node("占全部比例", "zqbbl")),
                 new JQTable.Node("欠款构成", "qkgc").append(new JQTable.Node("应收未收(包括到期质保金）", "ysws").append(new JQTable.Node("逾期1个月以内", "yq1yn")).append(new JQTable.Node("逾期1-3月", "yq13y")).append(new JQTable.Node("逾期3-6月", "yq36y")).append(new JQTable.Node("逾期6-12月", "yq612y")).append(new JQTable.Node("逾期1年以上", "yqynys"))).append(new JQTable.Node("未到期款", "wdqk")).append(new JQTable.Node("未到期质保金", "wdqzbj")).append(new JQTable.Node("应收账款合计", "yszkhj"))
             ], gridName);
@@ -17,7 +17,7 @@ var yszkjgqkb;
         function View() {
             this.mCurrentSelected = 0;
             this.mDataSet = new Util.Ajax("yszkjgqk_update.do");
-            this.mComp = Util.CompanyType.SB;
+            this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
             if (View.ins == undefined) {

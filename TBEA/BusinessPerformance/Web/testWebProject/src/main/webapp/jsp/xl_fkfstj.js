@@ -61,7 +61,7 @@ var xl_fkfstj;
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("xlfkfstj_update.do");
-            this.mComp = Util.CompanyType.SB;
+            this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
             return new View();

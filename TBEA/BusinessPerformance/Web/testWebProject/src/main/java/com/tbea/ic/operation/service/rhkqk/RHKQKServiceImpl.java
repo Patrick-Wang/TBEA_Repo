@@ -57,14 +57,14 @@ public class RHKQKServiceImpl implements   RHKQKService{
 				ret[1] += valueOf(rhk.getGdwzxzddhkjh());
 				ret[2] += valueOf(rhk.getHkje());
 				ret[3] += valueOf(rhk.getYlj());
-				ret[4] = ret[0] == 0.0 ? 0.0 : ret[3] / ret[0];
-				ret[5] = ret[1] == 0.0 ? 0.0 : ret[3] / ret[1];
+				ret[4] = ret[0] != 0.0 ? ret[3] / ret[0] : 0.0;
+				ret[5] = ret[1] != 0.0 ? ret[3] / ret[1] : 0.0;
 				ret[6] += valueOf(rhk.getYhkzkjysdhkje());
 				ret[7] += valueOf(rhk.getQzqbbc());
 				ret[8] += valueOf(rhk.getQzzqbc());
 				ret[9] += valueOf(rhk.getMqzydhkjhhj());
 				ret[10] += valueOf(rhk.getQyqb());
-				ret[11] = ret[1] == 0.0 ? 0.0 : ret[10] / ret[1];
+				ret[11] = ret[1] != 0.0 ? ret[10] / ret[1] :  0.0;
 				ret[12] += valueOf(rhk.getJzydyszkzmye());
 			}
 		}

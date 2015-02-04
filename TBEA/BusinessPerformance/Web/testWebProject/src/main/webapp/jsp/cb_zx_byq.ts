@@ -1,5 +1,6 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+/// <reference path="companySelector.ts" />
 declare var echarts;
 module cb_zx_byq {
 
@@ -12,15 +13,15 @@ module cb_zx_byq {
         }
 
         public static createMxTable(gridName: string): JQTable.JQGridAssistant {
-            var title = ["订单所在单位及项目公司","订单执行阶段","工作号","国别","客户行业类型","合同中标时间 ","产品型号","合同号","订货单位","交货时间","产值","硅钢牌号","硅钢数量","硅钢单价","铜用量","铜单价","铜加工费","变压器油规格","变压器油用量","变压器油单价","钢材用量","钢材单价","纸板用量","纸板单价","五大主材成本","其他材料成本","材料合计","人工制造费用","生产总成本","运费","产值测算毛利额","产值测算毛利率"];
+            var title = ["订单所在单位","订单所在项目公司","订单执行阶段","工作号","国别","客户行业类型","合同中标时间 ","产品型号","合同号","订货单位","交货时间","产值","硅钢牌号","硅钢数量","硅钢单价","铜用量","铜单价","铜加工费","变压器油规格","变压器油用量","变压器油单价","钢材用量","钢材单价","纸板用量","纸板单价","五大主材成本","其他材料成本","材料合计","人工制造费用","生产总成本","运费","产值测算毛利额","产值测算毛利率"];
 
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                 if (i == 0) {
+                 if (i == 0 || i == 1) {
                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 90));
-                } else  if (i == 6) {
+                } else  if (i == 7) {
                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 120));
-                } else if (i < 10) {
+                } else if (i < 11) {
                     nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 80));
                 }
                 else {
@@ -81,6 +82,7 @@ module cb_zx_byq {
         private mJttbTableId: string;
         private mGstbTableId: string;
         private mDataSet : Util.Ajax = new Util.Ajax("zx_update.do");
+        private mCompanySelector : Util.CompanySelector;
         private mComp: Util.CompanyType = Util.CompanyType.SB;
         
         public init(
@@ -90,7 +92,11 @@ module cb_zx_byq {
             mx: string[][],
             jt: string[][],
             gs: string[][],
-            month: number): void {
+            month: number,
+            companyId : string,
+            topComps:string[][],
+            subComps?: Array<string[][]>,
+            firstCompany?: string): void {
             this.mMxTableId = mxTableId;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
@@ -98,6 +104,10 @@ module cb_zx_byq {
             this.mJtData = jt;
             this.mGsData = gs;
             this.mMonth = month;
+            
+           // this.mCompanySelector = new Util.CompanySelector(false, companyId, topComps, firstCompany, subComps);
+            
+            
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();

@@ -74,12 +74,12 @@ public class BYQCBServiceImpl implements BYQCBService {
 
 	
 	
-	private Double valueOf(String val) {
-		if (val != null) {
-			return Double.valueOf(val);
-		}
-		return 0.0;
-	}
+//	private Double valueOf(String val) {
+//		if (val != null) {
+//			return Double.valueOf(val);
+//		}
+//		return 0.0;
+//	}
 
 	private void computeDj(String[][] tb, boolean hasDjtf) {
 
@@ -88,21 +88,18 @@ public class BYQCBServiceImpl implements BYQCBService {
 			delta = -1;
 		}
 		for (int i = 0; i < tb.length; ++i) {
-			tb[i][3] = (valueOf(tb[i][4]) == 0 ? 0.0 : valueOf(tb[i][3])
-					/ valueOf(tb[i][4]))
-					+ "";
-			tb[i][5] = (valueOf(tb[i][6]) == 0 ? 0.0 : valueOf(tb[i][5])
-					/ valueOf(tb[i][6]))
-					+ "";
-			tb[i][8 + delta] = (valueOf(tb[i][9 + delta]) == 0 ? 0.0
-					: valueOf(tb[i][8 + delta]) / valueOf(tb[i][9 + delta]))
-					+ "";
-			tb[i][10 + delta] = (valueOf(tb[i][11 + delta]) == 0 ? 0.0
-					: valueOf(tb[i][10 + delta]) / valueOf(tb[i][11 + delta]))
-					+ "";
-			tb[i][12 + delta] = (valueOf(tb[i][13 + delta]) == 0 ? 0.0
-					: valueOf(tb[i][12 + delta]) / valueOf(tb[i][13 + delta]))
-					+ "";
+			tb[i][3] = Util.toDouble(tb[i][4]) != 0 ?  Util.toDouble(tb[i][3])
+					/ Util.toDouble(tb[i][4]) + "" : "0";
+			tb[i][5] = Util.toDouble(tb[i][6]) != 0 ?  Util.toDouble(tb[i][5])	/ Util.toDouble(tb[i][6]) + "": "0";
+			tb[i][8 + delta] = 
+					Util.toDouble(tb[i][9 + delta]) != 0 ?  
+							Util.toDouble(tb[i][8 + delta]) / Util.toDouble(tb[i][9 + delta]) + "":
+							"0";
+			tb[i][10 + delta] = Util.toDouble(tb[i][11 + delta]) != 0 ?  
+					Util.toDouble(tb[i][10 + delta]) / Util.toDouble(tb[i][11 + delta])	+ "": 
+						"0";
+			tb[i][12 + delta] = Util.toDouble(tb[i][13 + delta]) != 0 ?  Util.toDouble(tb[i][12 + delta]) / Util.toDouble(tb[i][13 + delta])
+					+ "": "0";
 		}
 	}
 
@@ -146,36 +143,40 @@ public class BYQCBServiceImpl implements BYQCBService {
 	private void filltbqk(String[][] tb, int row, CBBYQTBDD byqtbcb,
 			Double tbzccb, boolean hasDjtf) {
 
+		if (null == byqtbcb){
+			return ;
+		}
+		
 		int delta = 0;
 		if (!hasDjtf) {
 			delta = -1;
 		}
-		tb[row][0] = valueOf(tb[row][0]) + byqtbcb.getCz() + "";
-		tb[row][1] = valueOf(tb[row][1]) + byqtbcb.getCz() - tbzccb + "";
-		tb[row][2] = valueOf(tb[row][1]) / valueOf(tb[row][0]) + "";
+		tb[row][0] = Util.toDouble(tb[row][0]) + byqtbcb.getCz() + "";
+		tb[row][1] = Util.toDouble(tb[row][1]) + byqtbcb.getCz() - tbzccb + "";
+		tb[row][2] = Util.toDouble(tb[row][0]) != 0 ? Util.toDouble(tb[row][1]) / Util.toDouble(tb[row][0]) + "" : "0";
 		
-		tb[row][3] = valueOf(tb[row][3]) + byqtbcb.getGgdj() * byqtbcb.getGgyl() + "";
-		tb[row][4] = valueOf(tb[row][4]) + byqtbcb.getGgyl() + "";
+		tb[row][3] = Util.toDouble(tb[row][3]) + byqtbcb.getGgdj() * byqtbcb.getGgyl() + "";
+		tb[row][4] = Util.toDouble(tb[row][4]) + byqtbcb.getGgyl() + "";
 			
-		tb[row][5] = valueOf(tb[row][5]) + byqtbcb.getDjtdj()
+		tb[row][5] = Util.toDouble(tb[row][5]) + byqtbcb.getDjtdj()
 				* byqtbcb.getDjtyl() + "";
-		tb[row][6] = valueOf(tb[row][6]) + byqtbcb.getDjtyl() + "";
+		tb[row][6] = Util.toDouble(tb[row][6]) + byqtbcb.getDjtyl() + "";
 
 		tb[row][7] = "0";// 电解铜费用
 		
-		tb[row][8 + delta] = valueOf(tb[row][8 + delta]) + byqtbcb.getZbdj()
+		tb[row][8 + delta] = Util.toDouble(tb[row][8 + delta]) + byqtbcb.getZbdj()
 				* byqtbcb.getZbyl() + "";
-		tb[row][9 + delta] = valueOf(tb[row][9 + delta]) + byqtbcb.getZbyl()
+		tb[row][9 + delta] = Util.toDouble(tb[row][9 + delta]) + byqtbcb.getZbyl()
 				+ "";
 		
-		tb[row][10 + delta] = valueOf(tb[row][10 + delta])
+		tb[row][10 + delta] = Util.toDouble(tb[row][10 + delta])
 				+ byqtbcb.getByqydj() * byqtbcb.getByqyyl() + "";
-		tb[row][11 + delta] = valueOf(tb[row][11 + delta])
+		tb[row][11 + delta] = Util.toDouble(tb[row][11 + delta])
 				+ byqtbcb.getByqyyl() + "";
 		
-		tb[row][12 + delta] = valueOf(tb[row][12 + delta]) + byqtbcb.getGcdj()
+		tb[row][12 + delta] = Util.toDouble(tb[row][12 + delta]) + byqtbcb.getGcdj()
 				* byqtbcb.getGcyl() + "";
-		tb[row][13 + delta] = valueOf(tb[row][13 + delta]) + byqtbcb.getGcyl()
+		tb[row][13 + delta] = Util.toDouble(tb[row][13 + delta]) + byqtbcb.getGcyl()
 				+ "";
 
 
@@ -212,9 +213,19 @@ public class BYQCBServiceImpl implements BYQCBService {
 					* byqtbcb.getZbdj();// 投标五大主材成本
 			Double tbclzcb = (zccb + byqtbcb.getQtclcb()) / 1.17;// 投标材料成本总计
 			Double tbzccb = tbclzcb + byqtbcb.getRgjzzfy();// 投标制造成本
+			
 			fillTbmx(tbmx, i, xmxx, byqtbcb, zccb, tbclzcb, tbzccb);
 
-			filltbqk(jttb, gsMap.get(org.getCompany(byqtbcb.getQybh()).getType()), byqtbcb, tbzccb, true);
+			Company comp = org.getCompany(Integer.valueOf(byqtbcb.getQybh()));
+			if (comp != null) {
+
+				if (comp.getParentCompany() != null) {
+					comp = comp.getParentCompany();
+				}
+			
+				filltbqk(jttb, gsMap.get(org.getCompany(byqtbcb.getQybh()).getType()), byqtbcb, tbzccb, true);
+			}
+			
 			filltbqk(jttb, jttb.length - 1, byqtbcb, tbzccb, true);
 			if (null != byqtbcb.getTbbjsj() && byqtbcb.getTbbjsj().before(date)
 					&& byqtbcb.getTbbjsj().after(firstMonth.getTime())) {
@@ -234,81 +245,102 @@ public class BYQCBServiceImpl implements BYQCBService {
 	private void fillZxmx(String[][] zxmx, int row, XMXX xmxx,
 			CBBYQZXDD byqcbzxdd, CBBYQTBDD tbdd, Double zccb, Double clzcb,
 			Double sczcb) {
-		zxmx[row][0] = org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName();;// 订单所在单位及项目公司订单所在单位及项目公司
-		zxmx[row][1] = byqzxjdMap.get(Integer.valueOf(byqcbzxdd.getDdzxjd()));// 订单执行阶段订单执行阶段
-		zxmx[row][2] = byqcbzxdd.getGzh();// 工作号工作号
-		zxmx[row][3] = xmxx.getGb() == 0 ? "国内订单" : "国际订单" + "";// 国别国别
-		zxmx[row][4] = xmxx.getKhhylx();// 客户行业类型客户行业类型
-		zxmx[row][5] = byqcbzxdd.getHtzbsj() + "";// 合同中标时间合同中标时间
-		zxmx[row][6] = tbdd.getXh() + "";// 产品型号
-		zxmx[row][7] = byqcbzxdd.getHth();// 合同号合同号
-		zxmx[row][8] = xmxx.getYhdwmc();// 用户单位名称订货单位
-		zxmx[row][9] = byqcbzxdd.getJhsj() + "";// 交货时间交货时间
-		zxmx[row][10] = byqcbzxdd.getCz() + "";// 产值产值
-		zxmx[row][11] = byqcbzxdd.getGgph() + "";// 硅钢牌号硅钢牌号
-		zxmx[row][12] = byqcbzxdd.getGgyl() + "";// 硅钢用量（单台）硅钢数量
-		zxmx[row][13] = byqcbzxdd.getGgdj() + "";// 硅钢单价硅钢单价
-		zxmx[row][14] = byqcbzxdd.getDjtyl() + "";// 电解铜用量（单台）铜用量
-		zxmx[row][15] = byqcbzxdd.getDjtdj() + "";// 电解铜单价铜单价
-		zxmx[row][16] = byqcbzxdd.getTjgf() + "";// 铜加工费铜加工费
-		zxmx[row][17] = byqcbzxdd.getByqygg();// 变压器油规格变压器油规格
-		zxmx[row][18] = byqcbzxdd.getByqyyl() + "";// 变压器油用量（单台）变压器油用量
-		zxmx[row][19] = byqcbzxdd.getByqydj() + "";// 变压器油单价变压器油单价
-		zxmx[row][20] = byqcbzxdd.getGcyl() + "";// 钢材用量（单台）钢材用量
-		zxmx[row][21] = byqcbzxdd.getGcdj() + "";// 钢材单价钢材单价
-		zxmx[row][22] = byqcbzxdd.getZbyl() + "";// 纸板用量（单台）纸板用量
-		zxmx[row][23] = byqcbzxdd.getZbdj() + "";// 纸板单价纸板单价
-		zxmx[row][24] = zccb + "";// 五大主材成本
-		zxmx[row][25] = byqcbzxdd.getQtclcb() + "";// 其他材料成本其他材料成本
-		zxmx[row][26] = clzcb + "";// 材料合计
-		zxmx[row][27] = byqcbzxdd.getRgjzzfy() + "";// 人工及制造费用人工制造费用
-		zxmx[row][28] = sczcb + "";// 生产总成本
-		zxmx[row][29] = byqcbzxdd.getYf() + "";// 运费运费
-		zxmx[row][30] = byqcbzxdd.getCz() - sczcb + "";// 产值测算毛利额
-		zxmx[row][31] = (byqcbzxdd.getCz() - sczcb) / byqcbzxdd.getCz() + ""; // 产值测算毛利率
+		List<String> tbmxTmp = new ArrayList<String>();
+		tbmxTmp.add(org.getCompany(byqcbzxdd.getQybh()).getName());
+		tbmxTmp.add(xmxx != null ? org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName() : "");// 订单所在单位及项目公司订单所在单位及项目公司
+		tbmxTmp.add(byqzxjdMap.get(Integer.valueOf(byqcbzxdd.getDdzxjd())));// 订单执行阶段订单执行阶段
+		tbmxTmp.add(byqcbzxdd.getGzh());// 工作号工作号
+		tbmxTmp.add(xmxx != null ? xmxx.getGb() == 0 ? "国内订单" : "国际订单" + "" : "");// 国别国别
+		tbmxTmp.add(xmxx != null ? xmxx.getKhhylx() : "");// 客户行业类型客户行业类型
+		tbmxTmp.add(byqcbzxdd.getHtzbsj() + "");// 合同中标时间合同中标时间
+		tbmxTmp.add(tbdd != null ? tbdd.getXh() + "" : "");// 产品型号
+		tbmxTmp.add(byqcbzxdd.getHth());// 合同号合同号
+		tbmxTmp.add(xmxx != null ? xmxx.getYhdwmc() : "");// 用户单位名称订货单位
+		tbmxTmp.add(byqcbzxdd.getJhsj() + "");// 交货时间交货时间
+		tbmxTmp.add(byqcbzxdd.getCz() + "");// 产值产值
+		tbmxTmp.add(byqcbzxdd.getGgph() + "");// 硅钢牌号硅钢牌号
+		tbmxTmp.add(byqcbzxdd.getGgyl() + "");// 硅钢用量（单台）硅钢数量
+		tbmxTmp.add(byqcbzxdd.getGgdj() + "");// 硅钢单价硅钢单价
+		tbmxTmp.add(byqcbzxdd.getDjtyl() + "");// 电解铜用量（单台）铜用量
+		tbmxTmp.add(byqcbzxdd.getDjtdj() + "");// 电解铜单价铜单价
+		tbmxTmp.add(byqcbzxdd.getTjgf() + "");// 铜加工费铜加工费
+		tbmxTmp.add(byqcbzxdd.getByqygg());// 变压器油规格变压器油规格
+		tbmxTmp.add(byqcbzxdd.getByqyyl() + "");// 变压器油用量（单台）变压器油用量
+		tbmxTmp.add(byqcbzxdd.getByqydj() + "");// 变压器油单价变压器油单价
+		tbmxTmp.add(byqcbzxdd.getGcyl() + "");// 钢材用量（单台）钢材用量
+		tbmxTmp.add(byqcbzxdd.getGcdj() + "");// 钢材单价钢材单价
+		tbmxTmp.add(byqcbzxdd.getZbyl() + "");// 纸板用量（单台）纸板用量
+		tbmxTmp.add(byqcbzxdd.getZbdj() + "");// 纸板单价纸板单价
+		tbmxTmp.add(zccb + "");// 五大主材成本
+		tbmxTmp.add(byqcbzxdd.getQtclcb() + "");// 其他材料成本其他材料成本
+		tbmxTmp.add(clzcb + "");// 材料合计
+		tbmxTmp.add(byqcbzxdd.getRgjzzfy() + "");// 人工及制造费用人工制造费用
+		tbmxTmp.add(sczcb + "");// 生产总成本
+		tbmxTmp.add(byqcbzxdd.getYf() + "");// 运费运费
+		tbmxTmp.add(byqcbzxdd.getCz() - sczcb + "");// 产值测算毛利额
+		tbmxTmp.add(byqcbzxdd.getCz() != 0 ? ((byqcbzxdd.getCz() - sczcb) / byqcbzxdd.getCz() + "") : "0"); // 产值测算毛利率
+		tbmxTmp.toArray(zxmx[row]);
 	}
 
 	private void fillzxqk(String[][] jtzx, Integer row, CBBYQZXDD byqcbzxdd,
 			Double sczcb, boolean hasDjtf) {
+		if (null == byqcbzxdd){
+			return;
+		}
+		
 		int delta = 0;
 		if (!hasDjtf) {
 			delta = -1;
 		}
-		jtzx[row][0] = valueOf(jtzx[row][0]) + byqcbzxdd.getCz() + "";
-		jtzx[row][1] = valueOf(jtzx[row][1]) + byqcbzxdd.getCz() - sczcb + "";
-		jtzx[row][2] = valueOf(jtzx[row][1]) / valueOf(jtzx[row][0]) + "";
+		jtzx[row][0] = Util.toDouble(jtzx[row][0]) + byqcbzxdd.getCz() + "";
+		jtzx[row][1] = Util.toDouble(jtzx[row][1]) + byqcbzxdd.getCz() - sczcb + "";
+		jtzx[row][2] = Util.toDouble(jtzx[row][1]) / Util.toDouble(jtzx[row][0]) + "";
 		
-		jtzx[row][3] = valueOf(jtzx[row][3]) + byqcbzxdd.getGgdj()
+		jtzx[row][3] = Util.toDouble(jtzx[row][3]) + byqcbzxdd.getGgdj()
 				* byqcbzxdd.getGgyl() + "";
-		jtzx[row][4] = valueOf(jtzx[row][4]) + byqcbzxdd.getGgyl() + "";
+		jtzx[row][4] = Util.toDouble(jtzx[row][4]) + byqcbzxdd.getGgyl() + "";
 	
-		jtzx[row][5] = valueOf(jtzx[row][5]) + byqcbzxdd.getDjtdj()
+		jtzx[row][5] = Util.toDouble(jtzx[row][5]) + byqcbzxdd.getDjtdj()
 				* byqcbzxdd.getDjtyl() + "";
-		jtzx[row][6] = valueOf(jtzx[row][6]) + byqcbzxdd.getDjtyl() + "";
+		jtzx[row][6] = Util.toDouble(jtzx[row][6]) + byqcbzxdd.getDjtyl() + "";
 	
 		jtzx[row][7] = "0";// 电解铜费用
 
-		jtzx[row][8 + delta] = valueOf(jtzx[row][8 + delta])
+		jtzx[row][8 + delta] = Util.toDouble(jtzx[row][8 + delta])
 				+ byqcbzxdd.getZbdj() * byqcbzxdd.getZbyl() + "";
-		jtzx[row][9 + delta] = valueOf(jtzx[row][9 + delta])
+		jtzx[row][9 + delta] = Util.toDouble(jtzx[row][9 + delta])
 				+ byqcbzxdd.getZbyl() + "";
 		
-		jtzx[row][10 + delta] = valueOf(jtzx[row][10 + delta])
+		jtzx[row][10 + delta] = Util.toDouble(jtzx[row][10 + delta])
 				+ byqcbzxdd.getByqydj() * byqcbzxdd.getByqyyl() + "";
-		jtzx[row][11 + delta] = valueOf(jtzx[row][11 + delta])
+		jtzx[row][11 + delta] = Util.toDouble(jtzx[row][11 + delta])
 				+ byqcbzxdd.getByqyyl() + "";
 
-		jtzx[row][12 + delta] = valueOf(jtzx[row][12 + delta])
+		jtzx[row][12 + delta] = Util.toDouble(jtzx[row][12 + delta])
 				+ byqcbzxdd.getGcdj() * byqcbzxdd.getGcyl() + "";
-		jtzx[row][13 + delta] = valueOf(jtzx[row][13 + delta])
+		jtzx[row][13 + delta] = Util.toDouble(jtzx[row][13 + delta])
 				+ byqcbzxdd.getGcyl() + "";
 	}
 
+	
+	private Double getTbzzcb(CBBYQTBDD tbdd){
+		Double tbzccb = 0.0;
+		if (tbdd != null){
+			Double tbwdzccb = tbdd.getGgyl() * tbdd.getGgdj() + tbdd.getDjtyl()
+					* tbdd.getDjtdj() + tbdd.getByqyyl() * tbdd.getByqydj()
+					+ tbdd.getGcyl() * tbdd.getGcdj() + tbdd.getZbyl()
+					* tbdd.getZbdj();// 投标五大主材成本
+			Double tbclzcb = (tbwdzccb + tbdd.getQtclcb()) / 1.17;// 投标材料成本总计
+			tbzccb = tbclzcb + tbdd.getRgjzzfy();// 投标制造成本
+		}
+		return tbzccb;
+	}
+	
 	@Override
 	public List<String[][]> getZxmx(Date date) {
 		List<CBBYQZXDD> byqcbzxdds = byqcbDao.getZxdd();
 		List<String[][]> rets = new ArrayList<String[][]>();
-		String[][] zxmx = new String[byqcbzxdds.size()][32];
+		String[][] zxmx = new String[byqcbzxdds.size()][33];
 		String[][] jtzx = new String[4 * 2][14];
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
@@ -319,8 +351,6 @@ public class BYQCBServiceImpl implements BYQCBService {
 		CBBYQZXDD byqcbzxdd;
 		CBBYQTBDD tbdd;
 		XMXX xmxx;
-		
-		Company comp;
 
 		Calendar firstMonth = Calendar.getInstance();
 		firstMonth.set(cal.get(Calendar.YEAR), 1, 1);
@@ -330,7 +360,10 @@ public class BYQCBServiceImpl implements BYQCBService {
 		for (int i = 0; i < byqcbzxdds.size(); ++i) {
 			byqcbzxdd = byqcbzxdds.get(i);
 			tbdd = byqcbDao.getTbddById(byqcbzxdd.getTbcpbh());
-			xmxx = xmxxDao.getXmxxByBh(tbdd.getXmxx());
+			xmxx = null;
+			if (null != tbdd){
+				xmxx = xmxxDao.getXmxxByBh(tbdd.getXmxx());
+			}
 
 			Double zccb = byqcbzxdd.getGgyl() * byqcbzxdd.getGgdj()
 					+ byqcbzxdd.getDjtyl() * byqcbzxdd.getDjtdj()
@@ -340,43 +373,40 @@ public class BYQCBServiceImpl implements BYQCBService {
 			Double clzcb = (zccb + byqcbzxdd.getQtclcb()) / 1.17;// 材料合计
 			Double sczcb = clzcb + byqcbzxdd.getRgjzzfy();// 生产总成本
 
-			Double tbwdzccb = tbdd.getGgyl() * tbdd.getGgdj() + tbdd.getDjtyl()
-					* tbdd.getDjtdj() + tbdd.getByqyyl() * tbdd.getByqydj()
-					+ tbdd.getGcyl() * tbdd.getGcdj() + tbdd.getZbyl()
-					* tbdd.getZbdj();// 投标五大主材成本
-			Double tbclzcb = (tbwdzccb + tbdd.getQtclcb()) / 1.17;// 投标材料成本总计
-			Double tbzccb = tbclzcb + tbdd.getRgjzzfy();// 投标制造成本
+			Double tbzzcb = getTbzzcb(tbdd);
 
 			fillZxmx(zxmx, i, xmxx, byqcbzxdd, tbdd, zccb, clzcb, sczcb);
 
-			comp = org.getCompany(Integer.valueOf(xmxx.getDdszdw()));
+			Company comp = org.getCompany(Integer.valueOf(byqcbzxdd.getQybh()));
 			if (comp != null) {
 
 				if (comp.getParentCompany() != null) {
 					comp = comp.getParentCompany();
 				}
+			
+				filltbqk(
+						jtzx,
+						gsMap.get(comp.getType()) * 2,
+						tbdd, tbzzcb, true);
+				fillzxqk(
+						jtzx,
+						gsMap.get(comp.getType()) * 2 + 1,
+						byqcbzxdd, sczcb, true);
+			}
+			filltbqk(jtzx, jtzx.length - 2, tbdd, tbzzcb, true);
+			fillzxqk(jtzx, jtzx.length - 1, byqcbzxdd, sczcb, true);
+			
+			if (null != byqcbzxdd.getJhsj() && byqcbzxdd.getJhsj().before(date)
+					&& byqcbzxdd.getJhsj().after(firstMonth.getTime())) {
+				tmpCal.setTime(byqcbzxdd.getJhsj());
 
-				filltbqk(jtzx, gsMap.get(comp.getType()) * 2, tbdd, tbzccb,
+				filltbqk(gszx, tmpCal.get(Calendar.MONTH) * 2, tbdd, tbzzcb,
 						true);
-				filltbqk(jtzx, jtzx.length - 2, tbdd, tbzccb, true);
+				filltbqk(gszx, gszx.length - 2, tbdd, tbzzcb, true);
 
-				fillzxqk(jtzx, gsMap.get(comp.getType()) * 2 + 1, byqcbzxdd,
+				fillzxqk(gszx, tmpCal.get(Calendar.MONTH) * 2 + 1, byqcbzxdd,
 						sczcb, true);
-				fillzxqk(jtzx, jtzx.length - 1, byqcbzxdd, sczcb, true);
-
-				if (null != byqcbzxdd.getJhsj()
-						&& byqcbzxdd.getJhsj().before(date)
-						&& byqcbzxdd.getJhsj().after(firstMonth.getTime())) {
-					tmpCal.setTime(byqcbzxdd.getJhsj());
-
-					filltbqk(gszx, tmpCal.get(Calendar.MONTH) * 2, tbdd,
-							tbzccb, true);
-					filltbqk(gszx, gszx.length - 2, tbdd, tbzccb, true);
-
-					fillzxqk(gszx, tmpCal.get(Calendar.MONTH) * 2 + 1,
-							byqcbzxdd, sczcb, true);
-					fillzxqk(gszx, gszx.length - 1, byqcbzxdd, sczcb, true);
-				}
+				fillzxqk(gszx, gszx.length - 1, byqcbzxdd, sczcb, true);
 			}
 
 		}
@@ -390,99 +420,121 @@ public class BYQCBServiceImpl implements BYQCBService {
 	private void fillWgmx(String[][] wg, int row, CBBYQWGDD wgdd,
 			CBBYQZXDD byqcbzxdd, XMXX xmxx, CBBYQTBDD tbdd, Double wdzccb,
 			Double clzcb, Double sjzcb) {
-		wg[row][0] =  org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName();// 订单所在单位及项目公司
-		wg[row][1] = byqcbzxdd != null ? byqcbzxdd.getGzh() : "";// 工作号
-		wg[row][2] = wgdd.getWgsj();// 完工时间//完工时间
-		wg[row][3] = xmxx.getYhdwmc();// 订货单位
-		wg[row][4] = tbdd.getXh(); // 产品型号
-		wg[row][5] = tbdd.getDy(); // 电压等级
-		wg[row][6] = tbdd.getCl(); // 产量 （万KVA）
-		wg[row][7] = wgdd.getSjcz() + "";// 实际产值//产值
-		wg[row][8] = wgdd.getGgyl() + "";// 实际硅钢用量（单台）//实际硅钢片用量
-		wg[row][9] = wgdd.getGgdj() + "";// 实际硅钢单价//实际硅钢片单价
-		wg[row][10] = wgdd.getDjtyl() + "";// 实际电解铜用量（单台）//实际电解铜用量
-		wg[row][11] = wgdd.getDjtdj() + "";// 实际电解铜单价//实际电解铜单价（无税含加工费）
-		wg[row][12] = wgdd.getTjgf() + "";// 铜加工费//加工费(含税)
-		wg[row][13] = wgdd.getByqyyl() + "";// 实际变压器油用量（单台）//实际变压器油用量
-		wg[row][14] = wgdd.getByqydj() + "";// 实际变压器油单价//实际变压器油单价
-		wg[row][15] = wgdd.getGcyl() + "";// 实际钢材用量（单台）//实际钢材用量
-		wg[row][16] = wgdd.getGcdj() + "";// 实际钢材单价//实际钢材单价
-		wg[row][17] = wgdd.getZbyl() + "";// 实际纸板用量（单台）//实际绝缘纸板用量
-		wg[row][18] = wgdd.getZbdj() + "";// 实际纸板单价//实际绝缘纸板单价
-		wg[row][19] = wdzccb + "";// 实际五大主材成本
-		wg[row][20] = wgdd.getQtclcb() + "";// 其他材料成本//实际其他材料成本合计
-		wg[row][21] = clzcb + "";// 实际材料成本总计
-		wg[row][22] = wgdd.getRgjzzfy() + "";// 人工及制造费用//实际人工制造费用
-		wg[row][23] = sjzcb + "";// 实际总成本
-		wg[row][24] = wgdd.getYf() + "";// 运费//运费
-		wg[row][25] = wgdd.getSjcz() - sjzcb + "";// 实际毛利额
-		wg[row][26] = (wgdd.getSjcz() - sjzcb) / wgdd.getSjcz() + "";// 实际毛利率
+		List<String> ret = new ArrayList<String>();
+		ret.add(org.getCompany(wgdd.getQybh()).getName());
+		ret.add(xmxx != null ? org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName() : "");// 订单所在单位及项目公司
+		ret.add(byqcbzxdd != null ? byqcbzxdd != null ? byqcbzxdd.getGzh() : "" : "");// 工作号
+		ret.add(wgdd.getWgsj());// 完工时间//完工时间
+		ret.add(xmxx != null ? xmxx.getYhdwmc() : "");// 订货单位
+		ret.add(tbdd != null ? tbdd.getXh() : ""); // 产品型号
+		ret.add(tbdd != null ? tbdd.getDy() : ""); // 电压等级
+		ret.add(tbdd != null ? tbdd.getCl() : ""); // 产量 （万KVA）
+		ret.add(wgdd.getSjcz() + "");// 实际产值//产值
+		ret.add(wgdd.getGgyl() + "");// 实际硅钢用量（单台）//实际硅钢片用量
+		ret.add(wgdd.getGgdj() + "");// 实际硅钢单价//实际硅钢片单价
+		ret.add(wgdd.getDjtyl() + "");// 实际电解铜用量（单台）//实际电解铜用量
+		ret.add(wgdd.getDjtdj() + "");// 实际电解铜单价//实际电解铜单价（无税含加工费）
+		ret.add(wgdd.getTjgf() + "");// 铜加工费//加工费(含税)
+		ret.add(wgdd.getByqyyl() + "");// 实际变压器油用量（单台）//实际变压器油用量
+		ret.add(wgdd.getByqydj() + "");// 实际变压器油单价//实际变压器油单价
+		ret.add(wgdd.getGcyl() + "");// 实际钢材用量（单台）//实际钢材用量
+		ret.add(wgdd.getGcdj() + "");// 实际钢材单价//实际钢材单价
+		ret.add(wgdd.getZbyl() + "");// 实际纸板用量（单台）//实际绝缘纸板用量
+		ret.add(wgdd.getZbdj() + "");// 实际纸板单价//实际绝缘纸板单价
+		ret.add(wdzccb + "");// 实际五大主材成本
+		ret.add(wgdd.getQtclcb() + "");// 其他材料成本//实际其他材料成本合计
+		ret.add(clzcb + "");// 实际材料成本总计
+		ret.add(wgdd.getRgjzzfy() + "");// 人工及制造费用//实际人工制造费用
+		ret.add(sjzcb + "");// 实际总成本
+		ret.add(wgdd.getYf() + "");// 运费//运费
+		ret.add(wgdd.getSjcz() - sjzcb + "");// 实际毛利额
+		ret.add(wgdd.getSjcz() != 0 ? (wgdd.getSjcz() - sjzcb) / wgdd.getSjcz() + "" : "");// 实际毛利率
+		ret.toArray(wg[row]);
 	}
 
 	private void fillwgqk(String[][] jtzx, Integer row, CBBYQWGDD byqcbwgdd,
 			Double sczcb) {
-		jtzx[row][0] = valueOf(jtzx[row][0]) + byqcbwgdd.getSjcz() + "";
-		jtzx[row][1] = valueOf(jtzx[row][1]) + byqcbwgdd.getSjcz() - sczcb + "";
-		jtzx[row][2] = valueOf(jtzx[row][1]) / valueOf(jtzx[row][0]) + "";
 		
-		jtzx[row][3] = valueOf(jtzx[row][3]) + byqcbwgdd.getGgdj()
+		if (null == byqcbwgdd){
+			return;
+		}
+		
+		jtzx[row][0] = Util.toDouble(jtzx[row][0]) + byqcbwgdd.getSjcz() + "";
+		jtzx[row][1] = Util.toDouble(jtzx[row][1]) + byqcbwgdd.getSjcz() - sczcb + "";
+		jtzx[row][2] = Util.toDouble(jtzx[row][1]) / Util.toDouble(jtzx[row][0]) + "";
+		
+		jtzx[row][3] = Util.toDouble(jtzx[row][3]) + byqcbwgdd.getGgdj()
 				* byqcbwgdd.getGgyl() + "";
-		jtzx[row][4] = valueOf(jtzx[row][4]) + byqcbwgdd.getGgyl() + "";
+		jtzx[row][4] = Util.toDouble(jtzx[row][4]) + byqcbwgdd.getGgyl() + "";
 		
-		jtzx[row][5] = valueOf(jtzx[row][5]) + byqcbwgdd.getDjtdj()
+		jtzx[row][5] = Util.toDouble(jtzx[row][5]) + byqcbwgdd.getDjtdj()
 				* byqcbwgdd.getDjtyl() + "";
-		jtzx[row][6] = valueOf(jtzx[row][6]) + byqcbwgdd.getDjtyl() + "";
+		jtzx[row][6] = Util.toDouble(jtzx[row][6]) + byqcbwgdd.getDjtyl() + "";
 
 		
-		jtzx[row][7] = valueOf(jtzx[row][7]) + byqcbwgdd.getZbdj()
+		jtzx[row][7] = Util.toDouble(jtzx[row][7]) + byqcbwgdd.getZbdj()
 				* byqcbwgdd.getZbyl() + "";
-		jtzx[row][8] = valueOf(jtzx[row][8]) + byqcbwgdd.getZbyl() + "";
+		jtzx[row][8] = Util.toDouble(jtzx[row][8]) + byqcbwgdd.getZbyl() + "";
 		
-		jtzx[row][9] = valueOf(jtzx[row][9]) + byqcbwgdd.getByqydj()
+		jtzx[row][9] = Util.toDouble(jtzx[row][9]) + byqcbwgdd.getByqydj()
 				* byqcbwgdd.getByqyyl() + "";
-		jtzx[row][10] = valueOf(jtzx[row][10]) + byqcbwgdd.getByqyyl()
+		jtzx[row][10] = Util.toDouble(jtzx[row][10]) + byqcbwgdd.getByqyyl()
 				+ "";
 		
-		jtzx[row][11] = valueOf(jtzx[row][11]) + byqcbwgdd.getGcdj()
+		jtzx[row][11] = Util.toDouble(jtzx[row][11]) + byqcbwgdd.getGcdj()
 				* byqcbwgdd.getGcyl() + "";
-		jtzx[row][12] = valueOf(jtzx[row][12]) + byqcbwgdd.getGcyl()
+		jtzx[row][12] = Util.toDouble(jtzx[row][12]) + byqcbwgdd.getGcyl()
 				+ "";		
 	}
-
+	
+	private Double getZxsczcb(CBBYQZXDD byqcbzxdd){
+		Double zx_sczcb = 0.0;
+		if (byqcbzxdd != null){
+			Double zx_zccb = byqcbzxdd.getGgyl() * byqcbzxdd.getGgdj()
+					+ byqcbzxdd.getDjtyl() * byqcbzxdd.getDjtdj()
+					+ byqcbzxdd.getByqyyl() * byqcbzxdd.getByqydj()
+					+ byqcbzxdd.getGcyl() * byqcbzxdd.getGcdj()
+					+ byqcbzxdd.getZbyl() * byqcbzxdd.getZbdj();// 投标五大主材成本
+			Double zx_clzcb = (zx_zccb + byqcbzxdd.getQtclcb()) / 1.17;// 材料合计
+			zx_sczcb = zx_clzcb + byqcbzxdd.getRgjzzfy();// 生产总成本
+		}
+		return zx_sczcb;
+	}
+	
 	@Override
 	public List<String[][]> getWgmx(Date date) {
-		List<CBBYQWGDD> byqcbwgdds = byqcbDao.getWgdd();
-		List<String[][]> rets = new ArrayList<String[][]>();
-		String[][] wgmx = new String[byqcbwgdds.size()][27];
-		String[][] jtwg = new String[4 * 3][13];
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
+		List<CBBYQWGDD> byqcbwgdds = byqcbDao.getWgdd();
+		List<String[][]> rets = new ArrayList<String[][]>();
+		String[][] wgmx = new String[byqcbwgdds.size()][28];
+		String[][] jtwg = new String[4 * 3][13];
 		String[][] gswg = new String[(cal.get(Calendar.MONTH)) * 3 * 3 + 3][13];
 		String[][] dydjwg = new String[7 * 3][13];
-		
+		rets.add(wgmx);
+		rets.add(jtwg);
+		rets.add(gswg);
+		rets.add(dydjwg);
 		CBBYQZXDD byqcbzxdd;
 		CBBYQWGDD byqcbwgdd;
 		CBBYQTBDD tbdd;
 		XMXX xmxx;
-		
 		Company comp;
 
-		Calendar firstMonth = Calendar.getInstance();
-		firstMonth.set(cal.get(Calendar.YEAR), 1, 1);
-
 		Calendar tmpCal = Calendar.getInstance();
-		int len = 0;
 		for (int i = 0; i < byqcbwgdds.size(); ++i) {
 			byqcbwgdd = byqcbwgdds.get(i);
 			byqcbzxdd = byqcbDao.getZxddById(byqcbwgdd.getZxcpbh());
-			if (null == byqcbzxdd)
-				continue;
-			tbdd = byqcbDao.getTbddById(byqcbzxdd.getTbcpbh());
-			if (null == tbdd)
-				continue;
-			xmxx = xmxxDao.getXmxxByBh(tbdd.getXmxx());
-			if (null == xmxx)
-				continue;
+			tbdd = null;
+			xmxx = null;
+
+			if (null != byqcbzxdd) {
+				tbdd = byqcbDao.getTbddById(byqcbzxdd.getTbcpbh());
+			}
+
+			if (null != tbdd) {
+				xmxx = xmxxDao.getXmxxByBh(tbdd.getXmxx());
+			}
 
 			Double wg_zccb = byqcbwgdd.getGgyl() * byqcbwgdd.getGgdj()
 					+ byqcbwgdd.getDjtyl() * byqcbwgdd.getDjtdj()
@@ -491,31 +543,22 @@ public class BYQCBServiceImpl implements BYQCBService {
 					+ byqcbwgdd.getZbyl() * byqcbwgdd.getZbdj();// 投标五大主材成本
 			Double wg_clzcb = (wg_zccb + byqcbwgdd.getQtclcb()) / 1.17;// 材料合计
 			Double wg_sczcb = wg_clzcb + byqcbwgdd.getRgjzzfy();// 生产总成本
-			if (xmxx.getYhdwmc() != null){
-				//System.out.println(xmxx.getYhdwmc());
-				++len;
-				fillWgmx(wgmx, i, byqcbwgdd, byqcbzxdd, xmxx, tbdd, wg_zccb, wg_clzcb, wg_sczcb);
-			
-			Double zx_zccb = byqcbzxdd.getGgyl() * byqcbzxdd.getGgdj()
-					+ byqcbzxdd.getDjtyl() * byqcbzxdd.getDjtdj()
-					+ byqcbzxdd.getByqyyl() * byqcbzxdd.getByqydj()
-					+ byqcbzxdd.getGcyl() * byqcbzxdd.getGcdj()
-					+ byqcbzxdd.getZbyl() * byqcbzxdd.getZbdj();// 投标五大主材成本
-			Double zx_clzcb = (zx_zccb + byqcbzxdd.getQtclcb()) / 1.17;// 材料合计
-			Double zx_sczcb = zx_clzcb + byqcbzxdd.getRgjzzfy();// 生产总成本
 
-			Double tbwdzccb = tbdd.getGgyl() * tbdd.getGgdj() + tbdd.getDjtyl()
-					* tbdd.getDjtdj() + tbdd.getByqyyl() * tbdd.getByqydj()
-					+ tbdd.getGcyl() * tbdd.getGcdj() + tbdd.getZbyl()
-					* tbdd.getZbdj();// 投标五大主材成本
-			Double tbclzcb = (tbwdzccb + tbdd.getQtclcb()) / 1.17;// 投标材料成本总计
-			Double tbzccb = tbclzcb + tbdd.getRgjzzfy();// 投标制造成本
-			if (byqcbwgdd.getWgsj() != null) {
-				tmpCal.setTime(Date.valueOf(byqcbwgdd.getWgsj() + "-1"));
+			fillWgmx(wgmx, i, byqcbwgdd, byqcbzxdd, xmxx, tbdd, wg_sczcb,
+					wg_clzcb, wg_sczcb);
+
+			if (byqcbwgdd.getWgsj() == null) {
+				continue;
+			}
+			try {
+				tmpCal.setTime(Util.toDate(byqcbwgdd.getWgsj()));
 				if (tmpCal.get(Calendar.YEAR) == cal.get(Calendar.YEAR)
 						&& tmpCal.get(Calendar.MONTH) == cal
 								.get(Calendar.MONTH)) {
-					comp = org.getCompany(Integer.valueOf(xmxx.getDdszdw()));
+					Double tbzccb = getTbzzcb(tbdd);
+
+					Double zx_sczcb = getZxsczcb(byqcbzxdd);
+					comp = org.getCompany(Integer.valueOf(byqcbwgdd.getQybh()));
 					if (comp != null) {
 
 						if (comp.getParentCompany() != null) {
@@ -534,10 +577,9 @@ public class BYQCBServiceImpl implements BYQCBService {
 						fillwgqk(jtwg, gsMap.get(comp.getType()) * 3 + 2,
 								byqcbwgdd, wg_sczcb);
 						fillwgqk(jtwg, jtwg.length - 1, byqcbwgdd, wg_sczcb);
-
 					}
 
-					if (tbdd.getDy() != null
+					if (tbdd != null && tbdd.getDy() != null
 							&& dydjMap.containsKey(tbdd.getDy())) {
 
 						filltbqk(dydjwg, dydjMap.get(tbdd.getDy()) * 3, tbdd,
@@ -555,27 +597,14 @@ public class BYQCBServiceImpl implements BYQCBService {
 
 					}
 				}
+			} catch (Exception e) {
+				System.out.println(byqcbwgdd.getWgsj());
+				e.printStackTrace();
 			}
-			}
-
-			//
 		}
-		//
+
 		computeDj(jtwg, false);
 		computeDj(dydjwg, false);
-
-		String[][] newWgmx = new String[len][27];
-		for (int i = 0; i < len; ++i){
-			for (int j = 0; j < 27; ++j){
-				newWgmx[i][j] = wgmx[i][j];;
-			}
-		}
-		
-		rets.add(newWgmx);
-		rets.add(jtwg);
-		rets.add(gswg);
-		rets.add(dydjwg);
-		
 		return rets;
 	}
 
@@ -586,16 +615,10 @@ public class BYQCBServiceImpl implements BYQCBService {
 	
 
 	@Override
-	public boolean IsZxCompanyExist(Company company) {
-		return this.byqcbDao.containsZxCompany(company);
+	public List<Integer> getZxCompany() {
+		return this.byqcbDao.getZxCompany();
 	}
 	
-
-	@Override
-	public boolean IsWgCompanyExist(Company company) {
-		return this.byqcbDao.containsWgCompany(company);
-	}
-
 	@Override
 	public String[][] getTbmx(Company comp) {
 		List<CBBYQTBDD> byqcbtbdds = byqcbDao.getTbdd();
@@ -636,15 +659,18 @@ public class BYQCBServiceImpl implements BYQCBService {
 	@Override
 	public String[][] getZxmx(Company comp) {
 		List<CBBYQZXDD> byqcbzxdds = byqcbDao.getZxdd();
-		String[][] zxmx = new String[byqcbzxdds.size()][32];
+		String[][] zxmx = new String[byqcbzxdds.size()][33];
 		CBBYQZXDD byqcbzxdd;
 		CBBYQTBDD tbdd;
-		XMXX xmxx;
+		XMXX xmxx = null;
 
 		for (int i = 0; i < byqcbzxdds.size(); ++i) {
 			byqcbzxdd = byqcbzxdds.get(i);
 			tbdd = byqcbDao.getTbddById(byqcbzxdd.getTbcpbh());
-			xmxx = xmxxDao.getXmxxByBh(tbdd.getXmxx());
+			xmxx = null;
+			if (null != tbdd && tbdd.getXmxx() != null){
+				xmxx = xmxxDao.getXmxxByBh(tbdd.getXmxx());
+			}
 
 			Double zccb = byqcbzxdd.getGgyl() * byqcbzxdd.getGgdj()
 					+ byqcbzxdd.getDjtyl() * byqcbzxdd.getDjtdj()
@@ -654,7 +680,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 			Double clzcb = (zccb + byqcbzxdd.getQtclcb()) / 1.17;// 材料合计
 			Double sczcb = clzcb + byqcbzxdd.getRgjzzfy();// 生产总成本
 
-			if (Integer.valueOf(xmxx.getDdszdw()) == comp.getId()){
+			if ((null != xmxx && Integer.valueOf(xmxx.getDdszdw()) == comp.getId()) || byqcbzxdd.getQybh() == comp.getId()){
 				fillZxmx(zxmx, i, xmxx, byqcbzxdd, tbdd, zccb, clzcb, sczcb);
 			}
 		}
@@ -664,26 +690,27 @@ public class BYQCBServiceImpl implements BYQCBService {
 
 	@Override
 	public String[][] getWgmx(Company comp) {
-		List<CBBYQWGDD> byqcbwgdds = byqcbDao.getWgdd();
-		String[][] wgmx = new String[byqcbwgdds.size()][27];
+		List<CBBYQWGDD> byqcbwgdds = byqcbDao.getWgdd(comp);
+		String[][] wgmx = new String[byqcbwgdds.size()][28];
 
 		CBBYQZXDD byqcbzxdd;
 		CBBYQWGDD byqcbwgdd;
 		CBBYQTBDD tbdd;
 		XMXX xmxx;
-		
-		int len = 0;
+
 		for (int i = 0; i < byqcbwgdds.size(); ++i) {
 			byqcbwgdd = byqcbwgdds.get(i);
+
 			byqcbzxdd = byqcbDao.getZxddById(byqcbwgdd.getZxcpbh());
-			if (null == byqcbzxdd)
-				continue;
-			tbdd = byqcbDao.getTbddById(byqcbzxdd.getTbcpbh());
-			if (null == tbdd)
-				continue;
-			xmxx = xmxxDao.getXmxxByBh(tbdd.getXmxx());
-			if (null == xmxx)
-				continue;
+			tbdd = null;
+			xmxx = null;
+			if (null != byqcbzxdd) {
+				tbdd = byqcbDao.getTbddById(byqcbzxdd.getTbcpbh());
+			}
+			if (null != tbdd) {
+				xmxx = xmxxDao.getXmxxByBh(tbdd.getXmxx());
+			}
+
 			Double wg_zccb = byqcbwgdd.getGgyl() * byqcbwgdd.getGgdj()
 					+ byqcbwgdd.getDjtyl() * byqcbwgdd.getDjtdj()
 					+ byqcbwgdd.getByqyyl() * byqcbwgdd.getByqydj()
@@ -691,21 +718,13 @@ public class BYQCBServiceImpl implements BYQCBService {
 					+ byqcbwgdd.getZbyl() * byqcbwgdd.getZbdj();// 投标五大主材成本
 			Double wg_clzcb = (wg_zccb + byqcbwgdd.getQtclcb()) / 1.17;// 材料合计
 			Double wg_sczcb = wg_clzcb + byqcbwgdd.getRgjzzfy();// 生产总成本
-			if (xmxx.getYhdwmc() != null){
-				++len;
-				if (Integer.valueOf(xmxx.getDdszdw()) == comp.getId()){
-					fillWgmx(wgmx, i, byqcbwgdd, byqcbzxdd, xmxx, tbdd, wg_zccb, wg_clzcb, wg_sczcb);
-				}
-			}
+
+			fillWgmx(wgmx, i, byqcbwgdd, byqcbzxdd, xmxx, tbdd, wg_zccb,
+					wg_clzcb, wg_sczcb);
+
 		}
 
-		String[][] newWgmx = new String[len][27];
-		for (int i = 0; i < len; ++i){
-			for (int j = 0; j < 27; ++j){
-				newWgmx[i][j] = wgmx[i][j];;
-			}
-		}
-		return newWgmx;
+		return wgmx;
 	}
 
 	@Override
@@ -720,9 +739,14 @@ public class BYQCBServiceImpl implements BYQCBService {
 	public Date getLatestWgDate() {
 		CBBYQWGDD wgdd = byqcbDao.getLatestWgdd();
 		if (null != wgdd){
-			return Date.valueOf(wgdd.getWgsj() + "-1");
+			return Util.toDate(wgdd.getWgsj());
 		}
 		return null;
+	}
+
+	@Override
+	public List<Integer> getWgCompany() {
+		return this.byqcbDao.getWgCompany();
 	}
 
 }

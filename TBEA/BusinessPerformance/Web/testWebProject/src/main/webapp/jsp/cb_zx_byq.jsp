@@ -28,12 +28,23 @@
 	type="text/javascript"></script>
 <script src="../jsp/jqgrid/js/ui.multiselect.js" type="text/javascript"></script>
 <script src="../jsp/util.js" type="text/javascript"></script>
+<script src="../jsp/companySelector.js" type="text/javascript"></script>
 <script src="../jsp/cb_zx_byq.js" type="text/javascript"></script>
+
+
+<!-- 多选菜单 -->
+<link rel="stylesheet" type="text/css" href="../jsp/multi-select/jquery.multiselect.css" />
+<link rel="stylesheet" type="text/css" href="../jsp/multi-select/assets/style.css" />
+<link rel="stylesheet" type="text/css" href="../jsp/multi-select/assets/prettify.css" />
+<script type="text/javascript" src="../jsp/multi-select/assets/prettify.js"></script>
+<script type="text/javascript" src="../jsp/multi-select/jquery.multiselect.js"></script>
+
 
 <script type="text/javascript">
 			var instance = cb_zx_byq.View.newInstance();
             (function () {
                 $(document).ready(function () {
+                	var subComps = '${subComps}';
                 	instance.init(
                 			"table1", 
                 			"table2", 
@@ -41,7 +52,11 @@
                 			JSON.parse('${zxmx}'),
                 			JSON.parse('${jtzx}'),
                 			JSON.parse('${gszx}'),
-                			 ${month});
+                			 ${month},
+                			 "companyId",
+                			 ${topComps},
+               				 ${onlytop} ? undefined : ('' == subComps ? undefined : JSON.parse(subComps)),
+               				'' == '${firstCompanyType}' ? undefined : '${firstCompanyType}');
             })})();
     </script>
 <meta charset="UTF-8">
@@ -146,6 +161,12 @@ th.ui-th-ltr {
 	/* jqGrid columns name wrap  */
 	font-size: 14px;
 }
+
+#update{
+	height:23px;
+	padding: .1em 1em;
+	margin-top: -1px;
+}
 </style>
 </head>
 <body style:"width=1400px">
@@ -157,8 +178,8 @@ th.ui-th-ltr {
 			<td>
 				<Table>
 					<tr>
-						<td><%@include file="company_selection.jsp"%></td>
-						<td><input type="button" value="更新"
+						<td><%@include file="company_selection.jsp"%></div></td>
+						<td><input id="update"  type="button" value="更新"
 							style="width: 80px; margin-left: 10px;"
 							onclick="instance.updateUI()"></input>
 					</tr>
@@ -178,5 +199,9 @@ th.ui-th-ltr {
 
 	<%@include file="loading.jsp"%>
 </body>
+<!-- 	<script type="text/javascript">
+		 $("input:button,input:submit,input:reset").button();  
+		 $("input").button( "option", "icons", {primary:'ui-icon-cancel',secondary:'ui-icon-cancel'} );  
+	</script> -->
 
 </html>

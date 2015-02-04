@@ -1,19 +1,46 @@
 var Util;
 (function (Util) {
     var DateSelector = (function () {
-        function DateSelector(start, end, divId) {
+        function DateSelector(start, end, divId, asSeason) {
+            if (asSeason === void 0) { asSeason = false; }
             this.mDateCache = {};
             this.mStartDate = start;
             this.mEndDate = end;
             this.mCtrlId = divId + "_date";
-            this.mCurDate = { year: this.mEndDate.year };
-            this.mCurDate.month = this.mEndDate.month;
-            this.mCurDate.day = this.mEndDate.day;
+            if (asSeason && Util.isExist(this.mEndDate.month)) {
+                this.mAsSeasion = true;
+                this.mCurDate = { year: this.mEndDate.year };
+                if (this.mEndDate.month < 3) {
+                    this.mEndDate.month = 12;
+                    this.mEndDate.year -= 1;
+                    this.mCurDate.year -= 1;
+                    this.mCurDate.month = 12;
+                }
+                else {
+                    this.mEndDate.month = this.mEndDate.month / 3 * 3;
+                    this.mCurDate.month = this.mEndDate.month;
+                }
+            }
+            else {
+                this.mAsSeasion = false;
+                this.mCurDate = { year: this.mEndDate.year };
+                this.mCurDate.month = this.mEndDate.month;
+                this.mCurDate.day = this.mEndDate.day;
+            }
             if (!Util.isExist(this.mStartDate.month)) {
                 this.mStartDate.month = 1;
             }
             if (!Util.isExist(this.mStartDate.day)) {
                 this.mStartDate.day = 1;
+            }
+            if (this.mAsSeasion) {
+                if (this.mStartDate.month < 3) {
+                    this.mStartDate.year -= 1;
+                    this.mStartDate.month = 12;
+                }
+                else {
+                    this.mStartDate.month = this.mStartDate.month / 3 * 3;
+                }
             }
             $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
             this.updateYear(this.mCurDate.year);
@@ -113,12 +140,26 @@ var Util;
                 }
                 var endMonth = this.getLatestMonth();
                 var startMonth = this.getStartMonth();
-                for (var i = startMonth; i <= endMonth; ++i) {
-                    if (selMonth == i) {
-                        monthSel.append('<option value="' + selMonth + '" selected="selected">' + selMonth + '月</option>');
+                if (!this.mAsSeasion) {
+                    for (var i = startMonth; i <= endMonth; ++i) {
+                        if (selMonth == i) {
+                            monthSel.append('<option value="' + selMonth + '" selected="selected">' + selMonth + '月</option>');
+                        }
+                        else {
+                            monthSel.append('<option value="' + i + '">' + i + '月</option>');
+                        }
                     }
-                    else {
-                        monthSel.append('<option value="' + i + '">' + i + '月</option>');
+                }
+                else {
+                    for (var i = startMonth; i <= endMonth; ++i) {
+                        if (i % 3 == 0) {
+                            if (selMonth == i) {
+                                monthSel.append('<option value="' + selMonth + '" selected="selected">' + i / 3 + '季度</option>');
+                            }
+                            else {
+                                monthSel.append('<option value="' + i + '">' + i / 3 + '季度</option>');
+                            }
+                        }
                     }
                 }
                 monthSel.change(function () {
@@ -131,7 +172,7 @@ var Util;
                     multiple: false,
                     header: false,
                     minWidth: 80,
-                    height: (endMonth - startMonth + 1) * 28,
+                    height: this.mAsSeasion ? 4 * 28 : (endMonth - startMonth + 1) * 28,
                     selectedList: 1
                 });
             }

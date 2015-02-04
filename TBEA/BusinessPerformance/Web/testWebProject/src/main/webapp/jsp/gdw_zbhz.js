@@ -5,8 +5,8 @@ var gdw_zbhz;
         }
         JQGridAssistantFactory.createTable = function (gridName, month) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
-                new JQTable.Node("企业名称", "qymc", true, JQTable.TextAlign.Left),
+                new JQTable.Node("指标", "zb", true, 0 /* Left */),
+                new JQTable.Node("企业名称", "qymc", true, 0 /* Left */),
                 new JQTable.Node("年度计划", "ndjh"),
                 new JQTable.Node("当期", "dq").append(new JQTable.Node("月度计划", "yjh")).append(new JQTable.Node("月度完成", "ywc")).append(new JQTable.Node("月计划完成率", "yjhwcl", true)).append(new JQTable.Node("季度计划", "jdjh")).append(new JQTable.Node("季度累计", "jdlj")).append(new JQTable.Node("季度完成率", "jdwcl")).append(new JQTable.Node("年度累计", "ndlj")).append(new JQTable.Node("累计完成率", "ljwcl")),
                 new JQTable.Node("去年同期", "qntq_1").append(new JQTable.Node("去年同期", "qntq")).append(new JQTable.Node("同比增长", "tbzz")).append(new JQTable.Node("去年同期累计", "qntqlj", true)).append(new JQTable.Node("同比增长", "tbzz_1"))

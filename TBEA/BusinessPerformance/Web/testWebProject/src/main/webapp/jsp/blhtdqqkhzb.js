@@ -27,8 +27,8 @@ var blhtdqqkhzb;
         };
         JQGridAssistantFactory.createTable = function (gridName, month) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("保理到期月份", "bldqyf", true, JQTable.TextAlign.Left, 120),
-                new JQTable.Node("保理到期月份", "bldqyf_1", true, JQTable.TextAlign.Left),
+                new JQTable.Node("保理到期月份", "bldqyf", true, 0 /* Left */, 120),
+                new JQTable.Node("保理到期月份", "bldqyf_1", true, 0 /* Left */),
                 JQGridAssistantFactory.createPreNode(month - 1),
                 JQGridAssistantFactory.createNextNode(month),
                 JQGridAssistantFactory.createNextNode(month + 1),
@@ -41,7 +41,7 @@ var blhtdqqkhzb;
     })();
     var View = (function () {
         function View() {
-            this.mComp = Util.CompanyType.HB;
+            this.mComp = 1 /* HB */;
         }
         View.newInstance = function () {
             return new View();

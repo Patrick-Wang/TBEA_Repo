@@ -15,9 +15,9 @@ public interface BYQCBService {
 	List<String[][]> getWgmx(Date valueOf);
 
 
-	boolean IsZxCompanyExist(Company company);
+	List<Integer> getZxCompany();
 	boolean IsTbCompanyExist(Company company);
-	boolean IsWgCompanyExist(Company company);
+	List<Integer> getWgCompany();
 	
 	String[][] getTbmx(Company comp);
 
@@ -28,5 +28,7 @@ public interface BYQCBService {
 	List<String[][]> getJtwg(Date date);
 
 	Date getLatestWgDate();
+
+	
 
 }

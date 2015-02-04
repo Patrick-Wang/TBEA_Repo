@@ -143,7 +143,7 @@ module rhkqk {
                 if (this.mData[i] instanceof Array) {
                     row = [].concat(this.mData[i]);
                     for (var col in row) {
-                        if (col != 4 && col != 11)
+                        if (col != 4 && col != 5 && col != 11)
                         row[col] = Util.formatCurrency(row[col]);
                     }
                     data[i] = data[i].concat(row);

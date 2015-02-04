@@ -28,7 +28,7 @@ public class CBXLWGDD extends AbstractReadWriteEntity {
 	Double	qtcbhj	;
 	Double	yf	;
 	String dwmc;
-
+	Integer qybh;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -183,6 +183,20 @@ public class CBXLWGDD extends AbstractReadWriteEntity {
 	 */
 	public void setDwmc(String dwmc) {
 		this.dwmc = dwmc;
+	}
+
+	/**
+	 * @return the qybh
+	 */
+	public Integer getQybh() {
+		return qybh;
+	}
+
+	/**
+	 * @param qybh the qybh to set
+	 */
+	public void setQybh(Integer qybh) {
+		this.qybh = qybh;
 	}
 
 	

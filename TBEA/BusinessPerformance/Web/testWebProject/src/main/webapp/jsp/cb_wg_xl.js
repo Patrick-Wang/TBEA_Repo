@@ -65,29 +65,29 @@ var cb_wg_xl;
     })();
     var View = (function () {
         function View() {
+            this.mMxData = [[]];
+            this.mJtData = [[]];
+            this.mGsData = [[]];
+            this.mBtdyData = [[]];
             this.mDataSet = new Util.Ajax("wg_update.do");
             this.mComp = Util.CompanyType.SB;
         }
         View.newInstance = function () {
             return new View();
         };
-        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId, fdyTableId, mx, jt, gs, btdy, month, year) {
+        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId, fdyTableId, month, year) {
             this.mMxTableId = mxTableId;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
             this.mFdyTableId = fdyTableId;
             this.mCurMonth = month;
             this.mCurYear = year;
-            this.mMxData = mx;
-            this.mJtData = jt;
-            this.mGsData = gs;
-            this.mBtdyData = btdy;
             this.mMonth = month;
             this.mYear = year;
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
-            this.updateFdyTable();
+            this.updateUI();
         };
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;
@@ -100,11 +100,14 @@ var cb_wg_xl;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear }).then(function (jsonData) {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (jsonData) {
                 var data = jsonData[0];
+                _this.mMxData = data;
+                var data = jsonData[1];
                 _this.mJtData = data;
-                data = jsonData[1];
+                data = jsonData[2];
                 _this.mGsData = data;
+                _this.updateMxTable();
                 _this.updateJttbTable();
                 _this.updateGstbTable();
             });

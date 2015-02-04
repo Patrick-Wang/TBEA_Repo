@@ -7,10 +7,10 @@ var approve_template;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, true, 0 /* Left */, 125));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left, 125));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, false, 1 /* Right */, 125));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, false, JQTable.TextAlign.Right, 125));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -28,7 +28,12 @@ var approve_template;
         };
         View.prototype.initInstance = function (opt) {
             this.mOpt = opt;
-            this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+            if (this.mOpt.approveType == Util.ZBType.YDJDMJH) {
+                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId, true);
+            }
+            else {
+                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+            }
             this.mCompanySelector = new Util.CompanySelector(true, opt.companyId, opt.topComps, opt.firstCompany, opt.subComps);
             this.updateTitle();
             this.updateUI();

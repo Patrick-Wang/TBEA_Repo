@@ -86,10 +86,10 @@ module cb_wg_xl {
         //      private mfdwData : string[];
         //      private mgwData : string[];
         //      private mnwData : string[];
-          private mMxData: string[][];
-        private mJtData: string[][];
-        private mGsData: string[][];
-         private mBtdyData: string[][];
+          private mMxData: string[][] = [[]];
+        private mJtData: string[][] = [[]];
+        private mGsData: string[][] = [[]];
+         private mBtdyData: string[][] = [[]];
         private mMonth: number;
                 private mYear: number;
         private  mCurMonth: number;
@@ -105,10 +105,6 @@ module cb_wg_xl {
             jttbTableId: string,
             gstbTableId: string,
             fdyTableId : string,
-              mx: string[][],
-            jt: string[][],
-            gs: string[][],
-             btdy: string[][],
             month: number,
             year: number): void {
             this.mMxTableId = mxTableId;
@@ -117,16 +113,13 @@ module cb_wg_xl {
             this.mFdyTableId = fdyTableId;
             this.mCurMonth = month;
             this.mCurYear = year;
-            this.mMxData = mx;
-            this.mJtData = jt;
-            this.mGsData = gs;
-            this.mBtdyData = btdy;
             this.mMonth = month;
             this.mYear = year;
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
-            this.updateFdyTable();
+            this.updateUI();
+           // this.updateFdyTable();
         }
 
          public onCompanySelected(comp : Util.CompanyType){
@@ -142,14 +135,17 @@ module cb_wg_xl {
         }
 
          public updateUI() {
-             this.mDataSet.get({ month: this.mMonth, year: this.mYear })
+             this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId : this.mComp })
                  .then((jsonData: any) => {
 
-                     var data: any = jsonData[0];
+                    var data: any = jsonData[0];
+                     this.mMxData = data;
+                     var data: any = jsonData[1];
                      this.mJtData = data;
-                     data = jsonData[1];
+                     data = jsonData[2];
                      this.mGsData = data;
 
+                    this.updateMxTable();
                      this.updateJttbTable();
                      this.updateGstbTable();
                      //                    this.mData = dataArray;

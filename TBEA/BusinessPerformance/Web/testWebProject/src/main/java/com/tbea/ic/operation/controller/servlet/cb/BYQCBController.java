@@ -122,9 +122,17 @@ public class BYQCBController {
 		Organization org = companyManager.getBMOrganization();
 		CompanySelection compSelection = new CompanySelection(false,
 				org.getTopCompany(), new CompanySelection.Filter() {
+			
+					private List<Integer> comps = service.getZxCompany();
+			
 					@Override
 					public boolean keep(Company comp) {
-						return service.IsZxCompanyExist(comp);
+						for (int i = 0; i < comps.size(); ++i){
+							if (comps.get(i) == comp.getId()){
+								return true;
+							}
+						}
+						return false;
 					}
 				});
 		compSelection.select(map);
@@ -167,9 +175,16 @@ public class BYQCBController {
 		Organization org = companyManager.getBMOrganization();
 		CompanySelection compSelection = new CompanySelection(false,
 				org.getTopCompany(), new CompanySelection.Filter() {
+					private List<Integer> comps = service.getWgCompany();
+					
 					@Override
 					public boolean keep(Company comp) {
-						return service.IsWgCompanyExist(comp);
+						for (int i = 0; i < comps.size(); ++i){
+							if (comps.get(i) == comp.getId()){
+								return true;
+							}
+						}
+						return false;
 					}
 				});
 		compSelection.select(map);

@@ -14,15 +14,33 @@ module Util {
         private mEndDate: Date;
         private mCurDate: Date;
         private mCtrlId: String;
+        private mAsSeasion : boolean;
         private mDateCache: any = {};
-        public constructor(start: Date, end: Date, divId: string) {
+        public constructor(start: Date, end: Date, divId: string, asSeason : boolean = false) {
             this.mStartDate = start;
             this.mEndDate = end;
             this.mCtrlId = divId + "_date";
-            this.mCurDate = <Date>{ year: this.mEndDate.year };
-            this.mCurDate.month = this.mEndDate.month;
-            this.mCurDate.day = this.mEndDate.day;
 
+            
+            if (asSeason && isExist(this.mEndDate.month)){
+                this.mAsSeasion = true;
+                this.mCurDate = <Date>{ year: this.mEndDate.year };
+                if (this.mEndDate.month < 3) {
+                    this.mEndDate.month = 12
+                    this.mEndDate.year -= 1;
+                    this.mCurDate.year -= 1;
+                    this.mCurDate.month = 12;
+                }else{
+                    this.mEndDate.month = this.mEndDate.month / 3 * 3;
+                    this.mCurDate.month = this.mEndDate.month; 
+                }
+            }else{
+                this.mAsSeasion = false;
+                this.mCurDate = <Date>{ year: this.mEndDate.year };
+                this.mCurDate.month = this.mEndDate.month;
+                this.mCurDate.day = this.mEndDate.day;
+            }
+            
             if (!isExist(this.mStartDate.month)) {
                 this.mStartDate.month = 1;
             }
@@ -31,6 +49,17 @@ module Util {
                 this.mStartDate.day = 1;
             }
 
+            if (this.mAsSeasion){
+                if (this.mStartDate.month < 3){
+                    this.mStartDate.year -= 1;
+                    this.mStartDate.month = 12;    
+                }
+                else{
+                    this.mStartDate.month = this.mStartDate.month / 3 * 3;
+                }
+            }
+            
+            
             $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
             this.updateYear(this.mCurDate.year);
             this.updateMonth(this.mCurDate.month);
@@ -148,12 +177,24 @@ module Util {
 
                 var endMonth = this.getLatestMonth();
                 var startMonth = this.getStartMonth();
-
-                for (var i = startMonth; i <= endMonth; ++i) {
-                    if (selMonth == i) {
-                        monthSel.append('<option value="' + selMonth + '" selected="selected">' + selMonth + '月</option>');
-                    } else {
-                        monthSel.append('<option value="' + i + '">' + i + '月</option>');
+    
+                if (!this.mAsSeasion){
+                    for (var i = startMonth; i <= endMonth; ++i) {
+                        if (selMonth == i) {
+                            monthSel.append('<option value="' + selMonth + '" selected="selected">' + selMonth + '月</option>');
+                        } else {
+                            monthSel.append('<option value="' + i + '">' + i + '月</option>');
+                        }
+                    }
+                }else{
+                    for (var i = startMonth; i <= endMonth; ++i) {
+                        if (i % 3 == 0){
+                            if (selMonth == i) {
+                                monthSel.append('<option value="' + selMonth + '" selected="selected">' + i / 3 + '季度</option>');
+                            } else {
+                                monthSel.append('<option value="' + i + '">' + i / 3 + '季度</option>');
+                            }
+                        }
                     }
                 }
 
@@ -168,7 +209,7 @@ module Util {
                     multiple: false,
                     header: false,
                     minWidth: 80,
-                    height: (endMonth - startMonth + 1) * 28,
+                    height: this.mAsSeasion ? 4 * 28 : (endMonth - startMonth + 1) * 28,
                     selectedList: 1
                 });
             }

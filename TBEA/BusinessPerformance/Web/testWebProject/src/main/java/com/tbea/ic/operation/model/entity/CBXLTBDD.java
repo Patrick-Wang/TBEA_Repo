@@ -29,6 +29,7 @@ public class CBXLTBDD extends AbstractReadWriteEntity {
 	Double	ldj	 = 0.0;
 	Double	qtcbhj	;
 	Double	yf	;
+	Integer Qybh;
 
 	
 	@Id
@@ -208,6 +209,20 @@ public class CBXLTBDD extends AbstractReadWriteEntity {
 	 */
 	public void setYf(Double yf) {
 		this.yf = yf;
+	}
+
+	/**
+	 * @return the qybh
+	 */
+	public Integer getQybh() {
+		return Qybh;
+	}
+
+	/**
+	 * @param qybh the qybh to set
+	 */
+	public void setQybh(Integer qybh) {
+		Qybh = qybh;
 	}
 	
 }

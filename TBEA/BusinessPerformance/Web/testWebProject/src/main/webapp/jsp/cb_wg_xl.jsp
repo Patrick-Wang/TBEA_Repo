@@ -39,10 +39,6 @@
                 			"table2", 
                 			"table3", 
                 			"table4",
-                			JSON.parse('${wgmx}'),
-                			JSON.parse('${jtwg}'),
-                			JSON.parse('${gswg}'),
-                			JSON.parse('${btdywg}'),
                 			${month}, ${year});
             })})();
     </script>
@@ -162,7 +158,7 @@ th.ui-th-ltr {
 					<tr>
 						<td><%@include file="company_selection.jsp"%></td>
 						<td><input type="button" value="更新"
-							style="width: 80px; margin-left: 10px;"></input>
+							style="width: 80px; margin-left: 10px;"onclick="instance.updateUI()"></input>
 					</tr>
 				</Table>
 			</td>

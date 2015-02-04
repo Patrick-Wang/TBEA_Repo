@@ -70,31 +70,39 @@ public class BYQCBDaoImpl implements  BYQCBDao{
 	@Override
 	public boolean containsTbCompany(Company company) {
 		Query q = entityManager
-				.createQuery("SELECT c FROM CBBYQTBDD c, XMXX x where c.xmxx = x.xmbh and x.ddszdw = :comp");
-		q.setParameter("comp", "0" + company.getId());
+				.createQuery("SELECT c FROM CBBYQTBDD c where c.qybh = :compid");
+		q.setParameter("compid", company.getId());
 		q.setFirstResult(0);
 		q.setMaxResults(1);
-		return !q.getResultList().isEmpty();
+		List<Object> ret = q.getResultList();
+		if (ret.isEmpty()){
+			q = entityManager.createQuery("SELECT c FROM CBBYQTBDD c, XMXX x where c.xmxx = x.xmbh and x.ddszdw = :comp");
+			q.setParameter("comp", "0" + company.getId());
+			q.setFirstResult(0);
+			q.setMaxResults(1);
+			ret = q.getResultList();
+		}
+		return !ret.isEmpty();
 	}
 	
 	@Override
-	public boolean containsZxCompany(Company company) {
+	public List<Integer> getZxCompany() {
 		Query q = entityManager
-				.createQuery("SELECT z FROM CBBYQZXDD z, CBBYQTBDD t, XMXX x where z.tbcpbh = t.id and t.xmxx = x.xmbh and x.ddszdw = :comp");
-		q.setParameter("comp", "0" + company.getId());
-		q.setFirstResult(0);
-		q.setMaxResults(1);
-		return !q.getResultList().isEmpty();
+				.createQuery("SELECT z.qybh FROM CBBYQZXDD z group by z.qybh");
+		List<Integer> ret = q.getResultList();
+		q = entityManager.createQuery("SELECT x.ddszdw FROM CBBYQZXDD z, CBBYQTBDD t, XMXX x where z.tbcpbh = t.id and t.xmxx = x.xmbh group by x.ddszdw");
+		ret.addAll(q.getResultList());		
+		return ret;
 	}
 	
 	@Override
-	public boolean containsWgCompany(Company company) {
+	public List<Integer> getWgCompany() {
 		Query q = entityManager
-				.createQuery("SELECT w FROM CBBYQWGDD w, CBBYQZXDD z, CBBYQTBDD t, XMXX x where w.zxcpbh = z.id and z.tbcpbh = t.id and t.xmxx = x.xmbh and x.ddszdw = :comp");
-		q.setParameter("comp", "0" + company.getId());
-		q.setFirstResult(0);
-		q.setMaxResults(1);
-		return !q.getResultList().isEmpty();
+				.createQuery("SELECT w.qybh FROM CBBYQWGDD w group by w.qybh");
+		List<Integer> ret = q.getResultList();
+		q = entityManager.createQuery("SELECT x.ddszdw FROM CBBYQWGDD w, CBBYQZXDD z, CBBYQTBDD t, XMXX x where w.zxcpbh = z.id and z.tbcpbh = t.id and t.xmxx = x.xmbh group by x.ddszdw");
+		ret.addAll(q.getResultList());		
+		return ret;
 	}
 
 	@Override
@@ -108,5 +116,19 @@ public class BYQCBDaoImpl implements  BYQCBDao{
 			return wgdds.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public List<CBBYQWGDD> getWgdd(Company comp) {
+		Query q = entityManager.createQuery("SELECT w FROM CBBYQWGDD w, CBBYQZXDD z, CBBYQTBDD t, XMXX x where w.zxcpbh = z.id and z.tbcpbh = t.id and t.xmxx = x.xmbh and  (x.ddszdw = :compId or w.qybh = :compId1)");
+		q.setParameter("compId", "0" + comp.getId());
+		q.setParameter("compId1", comp.getId());
+		List<CBBYQWGDD> ret = q.getResultList();
+		if (ret.isEmpty()){
+			q = entityManager.createQuery("SELECT w FROM CBBYQWGDD w where w.qybh = :compId");
+			q.setParameter("compId", comp.getId());
+			ret = q.getResultList();
+		}
+		return ret;
 	}
 }

@@ -21,7 +21,8 @@ public interface BYQCBDao {
 	CBBYQTBDD getTbddById(Integer tbcpbh);
 	CBBYQZXDD getZxddById(Integer zxcpbh);
 	boolean containsTbCompany(Company company);
-	boolean containsZxCompany(Company company);
-	boolean containsWgCompany(Company company);
+	List<Integer> getZxCompany();
 	CBBYQWGDD getLatestWgdd();
+	List<Integer> getWgCompany();
+	List<CBBYQWGDD> getWgdd(Company comp);
 }

@@ -67,30 +67,29 @@ module cb_xl {
 //      private mfdwData : string[];
 //      private mgwData : string[];
 //      private mnwData : string[];
-        private mMxData: string[][];
-        private mJtData: string[][];
-        private mGsData: string[][];
-        private mMonth: number;
+        private mMxData: string[][] = [[]];
+        private mJtData: string[][] = [[]];
+        private mGsData: string[][] = [[]];
+
         private mMxTableId : string;
         private mJttbTableId : string;
         private mGstbTableId : string;
+                private mMonth: number;
+                private mYear: number;
+
         private mDataSet : Util.Ajax = new Util.Ajax("tb_update.do");
         private mComp: Util.CompanyType = Util.CompanyType.SB;
         public init(
             mxTableId: string, 
             jttbTableId: string, 
             gstbTableId: string,
-            mx: string[][],
-            jt: string[][],
-            gs: string[][],
-            month: number): void {
+            month: number,
+            year :number): void {
             this.mMxTableId = mxTableId;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
-            this.mMxData = mx;
-            this.mJtData = jt;
-            this.mGsData = gs;
             this.mMonth = month;
+            this.mYear = year;
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
@@ -101,12 +100,25 @@ module cb_xl {
             this.mComp = comp;
         }
         
+        public onYearSelected(year : number){
+            this.mYear = year;
+        }
+        
+        public onMonthSelected(month : number){
+            this.mMonth = month;
+        }
+        
+
         public updateUI() {
-            this.mDataSet.get({ companyId: this.mComp })
+            this.mDataSet.get({ month: this.mMonth, year : this.mYear, companyId: this.mComp })
                 .then((jsonData: any) => {
-                    this.mMxData = jsonData;
-                    this.updateMxTable();
-                });
+                this.mMxData = jsonData[0];
+                this.mJtData = jsonData[1];
+                this.mGsData = jsonData[2];
+                this.updateMxTable();
+                this.updateJttbTable();
+                this.updateGstbTable();
+            });
         }
 
 //        private initEchart(echart): void {

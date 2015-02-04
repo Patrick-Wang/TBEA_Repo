@@ -58,7 +58,7 @@ var cb_byq;
     })();
     var View = (function () {
         function View() {
-            this.mComp = Util.CompanyType.SB;
+            this.mComp = 0 /* SB */;
         }
         View.newInstance = function () {
             return new View();

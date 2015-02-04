@@ -60,7 +60,12 @@ module approve_template {
 
         initInstance(opt: IViewOption) {
             this.mOpt = opt;
-            this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+            if (this.mOpt.approveType == Util.ZBType.YDJDMJH){
+                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId, true);
+            }else{
+                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+                }
+           
             this.mCompanySelector = new Util.CompanySelector(
             true, 
                 opt.companyId, 

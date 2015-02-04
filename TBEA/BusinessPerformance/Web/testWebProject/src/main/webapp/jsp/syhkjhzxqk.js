@@ -5,8 +5,8 @@ var syhkjhzxqk;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("款项性质", "kxxz", true, JQTable.TextAlign.Left),
-                new JQTable.Node("款项性质", "kxxz_1", true, JQTable.TextAlign.Left),
+                new JQTable.Node("款项性质", "kxxz", true, 0 /* Left */),
+                new JQTable.Node("款项性质", "kxxz_1", true, 0 /* Left */),
                 new JQTable.Node("计划回款", "jhhk"),
                 new JQTable.Node("实际回款", "sjhk"),
                 new JQTable.Node("计划完成率", "jhwcl")
@@ -16,7 +16,7 @@ var syhkjhzxqk;
     })();
     var View = (function () {
         function View() {
-            this.mComp = Util.CompanyType.HB;
+            this.mComp = 1 /* HB */;
             this.mDataSet = new Util.Ajax("syhkjhzxqk_update.do");
         }
         View.newInstance = function () {

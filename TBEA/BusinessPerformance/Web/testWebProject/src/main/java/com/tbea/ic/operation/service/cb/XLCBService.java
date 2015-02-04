@@ -8,14 +8,20 @@ import com.tbea.ic.operation.common.companys.Company;
 
 public interface XLCBService {
 
-	List<String[][]> getTbmx(Date d);
+	//List<String[][]> getTbmx(Date d);
 
-	List<String[][]> getWgmx(Date d);
+	List<String[][]> getWgmx(Date d, Company company);
 
 	boolean IsTbCompanyExist(Company comp);
 
-	List<String[]> getTbmx(Date date, Company comp);
+	List<String[][]> getTbmx(Date date, Company comp);
 
 	Date getLatestWgDate();
+
+	List<Integer> getWgCompany();
+
+	List<Integer> getTbCompany();
+
+	Date getLatestTbDate();
 
 }

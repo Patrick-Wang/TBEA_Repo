@@ -38,10 +38,8 @@
                 			"table1", 
                 			"table2", 
                 			"table3",
-                			JSON.parse('${tbmx}'),
-                			JSON.parse('${jttb}'),
-                			JSON.parse('${gstb}'),
-                			${month});
+                			${month},
+                			${year});
             })})();
     </script>
 <meta charset="UTF-8">
@@ -159,6 +157,7 @@ th.ui-th-ltr {
 				<Table>
 					<tr>
 						<td><%@include file="company_selection.jsp"%></td>
+						<td><%@include file="date_selection.jsp"%></td>
 						<td><input type="button" value="更新"
 							style="width: 80px; margin-left: 10px;"
 							onclick="instance.updateUI()"></input>

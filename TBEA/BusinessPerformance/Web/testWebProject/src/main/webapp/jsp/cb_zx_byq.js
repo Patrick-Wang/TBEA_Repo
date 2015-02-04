@@ -7,29 +7,29 @@ var cb_zx_byq;
             return parent.append(new JQTable.Node("单价", "dj")).append(new JQTable.Node("用量", "yl"));
         };
         JQGridAssistantFactory.createMxTable = function (gridName) {
-            var title = ["订单所在单位及项目公司", "订单执行阶段", "工作号", "国别", "客户行业类型", "合同中标时间 ", "产品型号", "合同号", "订货单位", "交货时间", "产值", "硅钢牌号", "硅钢数量", "硅钢单价", "铜用量", "铜单价", "铜加工费", "变压器油规格", "变压器油用量", "变压器油单价", "钢材用量", "钢材单价", "纸板用量", "纸板单价", "五大主材成本", "其他材料成本", "材料合计", "人工制造费用", "生产总成本", "运费", "产值测算毛利额", "产值测算毛利率"];
+            var title = ["订单所在单位", "订单所在项目公司", "订单执行阶段", "工作号", "国别", "客户行业类型", "合同中标时间 ", "产品型号", "合同号", "订货单位", "交货时间", "产值", "硅钢牌号", "硅钢数量", "硅钢单价", "铜用量", "铜单价", "铜加工费", "变压器油规格", "变压器油用量", "变压器油单价", "钢材用量", "钢材单价", "纸板用量", "纸板单价", "五大主材成本", "其他材料成本", "材料合计", "人工制造费用", "生产总成本", "运费", "产值测算毛利额", "产值测算毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                if (i == 0) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 90));
+                if (i == 0 || i == 1) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 90));
                 }
-                else if (i == 6) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 120));
+                else if (i == 7) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 120));
                 }
-                else if (i < 10) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 80));
+                else if (i < 11) {
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 80));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 80));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 80));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         JQGridAssistantFactory.createJttbTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位", "dw", true, 0 /* Left */),
+                new JQTable.Node("单位", "dw", true, JQTable.TextAlign.Left),
                 new JQTable.Node("产值", "cz"),
-                new JQTable.Node("产值", "cz_1", true, 2 /* Center */),
+                new JQTable.Node("产值", "cz_1", true, JQTable.TextAlign.Center),
                 new JQTable.Node("毛利额", "mle"),
                 new JQTable.Node("毛利率", "mll"),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("硅钢", "gg")),
@@ -41,9 +41,9 @@ var cb_zx_byq;
         };
         JQGridAssistantFactory.createGstbTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("交货时间", "1sj", true, 0 /* Left */),
+                new JQTable.Node("交货时间", "1sj", true, JQTable.TextAlign.Left),
                 new JQTable.Node("产值", "1cz"),
-                new JQTable.Node("产值", "1cz_1", true, 2 /* Center */),
+                new JQTable.Node("产值", "1cz_1", true, JQTable.TextAlign.Center),
                 new JQTable.Node("毛利额", "1mle"),
                 new JQTable.Node("毛利率", "1mll"),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("硅钢", "1gg")),
@@ -63,7 +63,7 @@ var cb_zx_byq;
         View.newInstance = function () {
             return new View();
         };
-        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId, mx, jt, gs, month) {
+        View.prototype.init = function (mxTableId, jttbTableId, gstbTableId, mx, jt, gs, month, companyId, topComps, subComps, firstCompany) {
             this.mMxTableId = mxTableId;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;

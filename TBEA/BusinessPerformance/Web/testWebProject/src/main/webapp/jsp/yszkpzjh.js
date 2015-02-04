@@ -47,7 +47,7 @@ var yszkpzjh;
     })();
     var View = (function () {
         function View() {
-            this.mComp = Util.CompanyType.SB;
+            this.mComp = 0 /* SB */;
             this.mDataSet = new Util.Ajax("yszkpzjh_update.do");
         }
         View.newInstance = function () {

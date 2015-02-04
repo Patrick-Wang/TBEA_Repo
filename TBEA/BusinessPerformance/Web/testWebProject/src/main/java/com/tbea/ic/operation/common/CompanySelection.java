@@ -102,7 +102,9 @@ public class CompanySelection {
 		map.put("emptyComp", notKeptTopComps);
 		map.put("topComp", name_ids);
 		map.put("topComps", JSONArray.fromObject(name_ids).toString());
-		map.put("subComps", JSONArray.fromObject(subComps).toString());
+		if (!subComps.isEmpty()){
+			map.put("subComps", JSONArray.fromObject(subComps).toString());
+		}
 		map.put("subComp", subComps);
 		map.put("onlytop", mTopOnly);
 		map.put("both", !mTopOnly);

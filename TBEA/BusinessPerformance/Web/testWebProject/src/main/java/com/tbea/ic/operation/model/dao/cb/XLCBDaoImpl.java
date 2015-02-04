@@ -1,5 +1,7 @@
 package com.tbea.ic.operation.model.dao.cb;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -22,9 +24,11 @@ public class XLCBDaoImpl implements XLCBDao{
 	private EntityManager entityManager;
 
 	@Override
-	public List<CBXLTBDD> getTbdd() {
+	public List<CBXLTBDD> getTbdd(Date date) {
 		Query q = entityManager.createQuery(
-				"from CBXLTBDD");
+				"from CBXLTBDD where datediff(yyyy, tbbjsj, :date) = 0 and tbbjsj <= :date1");
+		q.setParameter("date", date);
+		q.setParameter("date1", date);
 		return q.getResultList();
 	}
 
@@ -36,9 +40,15 @@ public class XLCBDaoImpl implements XLCBDao{
 	}
 
 	@Override
-	public List<CBXLWGDD> getWgdd() {
+	public List<CBXLWGDD> getWgdd(Date date) {
 		Query q = entityManager.createQuery(
-				"from CBXLWGDD");
+				"select w from CBXLWGDD w where w.wgsj is not null and length(w.wgsj) >= 6 and substring(w.wgsj, 1, 4) = :year and substring(w.wgsj, 5, 2) <= :month");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		String year = "" + cal.get(Calendar.YEAR);
+		q.setParameter("year", year);
+		String month = "" + (cal.get(Calendar.YEAR) + 1);
+		q.setParameter("month", month);
 		return q.getResultList();
 	}
 
@@ -61,6 +71,34 @@ public class XLCBDaoImpl implements XLCBDao{
 		List<CBXLWGDD> wgdds = q.getResultList();
 		if (!wgdds.isEmpty()){
 			return wgdds.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public List<Integer> getWgCompany() {
+		Query q = entityManager.createQuery("SELECT w.qybh FROM CBXLWGDD w group by w.qybh");
+		return q.getResultList();
+	}
+
+	@Override
+	public List<Integer> getTbCompany() {
+		Query q = entityManager.createQuery("SELECT w.qybh FROM CBXLWGDD w group by w.qybh");
+		List<Integer> ret = q.getResultList();
+		q = entityManager.createQuery("SELECT x.ddszdw FROM CBXLTBDD t, XMXX x where t.xmbh = x.xmbh group by x.ddszdw");
+		ret.addAll(q.getResultList());
+		return ret;
+	}
+
+	@Override
+	public CBXLTBDD getLatestTbdd() {
+		Query q = entityManager.createQuery(
+				"from CBXLTBDD order by tbbjsj desc");
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<CBXLTBDD> tbbjsj = q.getResultList();
+		if (!tbbjsj.isEmpty()){
+			return tbbjsj.get(0);
 		}
 		return null;
 	}
