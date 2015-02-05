@@ -5,15 +5,15 @@ var hkjhjg;
         }
         JQGridAssistantFactory.createJGTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("逾期应收账款", "yqyszk", true, 2 /* Center */),
+                new JQTable.Node("逾期应收账款", "yqyszk", true, JQTable.TextAlign.Center),
                 new JQTable.Node("逾期应收账款", "yqyszk_1"),
-                new JQTable.Node("逾期款", "yqk", true, 2 /* Center */),
+                new JQTable.Node("逾期款", "yqk", true, JQTable.TextAlign.Center),
                 new JQTable.Node("逾期款", "yqk_1"),
-                new JQTable.Node("未到期应收账款", "wdqyszk", true, 2 /* Center */),
+                new JQTable.Node("未到期应收账款", "wdqyszk", true, JQTable.TextAlign.Center),
                 new JQTable.Node("未到期应收账款", "wdqyszk_1"),
-                new JQTable.Node("未到期款", "wdqk", true, 2 /* Center */),
+                new JQTable.Node("未到期款", "wdqk", true, JQTable.TextAlign.Center),
                 new JQTable.Node("未到期款", "wdqk_1"),
-                new JQTable.Node("小计", "xj", true, 2 /* Center */),
+                new JQTable.Node("小计", "xj", true, JQTable.TextAlign.Center),
                 new JQTable.Node("小计", "xj_1")
             ], gridName);
         };
@@ -45,7 +45,7 @@ var hkjhjg;
     })(HKJHType || (HKJHType = {}));
     var View = (function () {
         function View() {
-            this.mComp = 1 /* HB */;
+            this.mComp = Util.CompanyType.HB;
             this.mDataSet = new Util.Ajax("hkjhjg_update.do");
         }
         View.newInstance = function () {

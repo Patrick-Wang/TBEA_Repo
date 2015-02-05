@@ -749,4 +749,9 @@ public class BYQCBServiceImpl implements BYQCBService {
 		return this.byqcbDao.getWgCompany();
 	}
 
+	@Override
+	public List<Integer> getTbCompany() {
+		return this.byqcbDao.getTbCompany();
+	}
+
 }

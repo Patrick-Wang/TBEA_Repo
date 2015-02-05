@@ -40,6 +40,7 @@
 <script src="../jsp/util.js" type="text/javascript"></script>
 <script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
 <script src="../jsp/dateSelector.js" type="text/javascript"></script>
+<script src="../jsp/unitedSelector.js" type="text/javascript"></script>
 <script src="../jsp/companySelector.js" type="text/javascript"></script>
 <script src="../jsp/approve_template.js" type="text/javascript"></script>
 
@@ -52,8 +53,7 @@
           				tableUnapproveId : "table_unapprove",
           				dateId:	"date",
           				companyId: "company",
-          				topComps : ${topComps},
-          				subComps : ${onlytop} ? undefined : ${subComps},
+          				comps : JSON.parse('${nodeData}'),
           				firstCompany : ${firstCompanyType},
           				date : {
           					month : ${!empty month} ? '${month}' : undefined, 

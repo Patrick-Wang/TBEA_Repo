@@ -17,8 +17,8 @@ import javax.persistence.Table;
 import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 
 @Entity
-@Table(name = "jygk_ndjhzb")
-public class NDJHZB  extends AbstractReadWriteEntity implements Serializable{
+@Table(name = "jygk_sjzb")
+public class SJZB extends AbstractReadWriteEntity implements Serializable {
 
 	private static final long serialVersionUID = 1440655104212069401L;
 
@@ -28,19 +28,21 @@ public class NDJHZB  extends AbstractReadWriteEntity implements Serializable{
 	public int getId() {
 		return super.getId();
 	}
-	
+
 	private DWXX dwxx;
-	
+
 	private ZBXX zbxx;
-	
+
 	private Integer nf;
-	
-	private Double ndjhz;
-	
-	private SHZT ndjhshzt;
-	
-	private Date ndjhxgsj;
-	
+
+	private Integer yf;
+
+	private Double sjz;
+
+	private SHZT sjshzt;
+
+	private Date sjxgsj;
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "dwid")
 	public DWXX getDwxx() {
@@ -54,58 +56,63 @@ public class NDJHZB  extends AbstractReadWriteEntity implements Serializable{
 	}
 
 	/**
-	 * @param dwxx the dwxx to set
+	 * @param dwxx
+	 *            the dwxx to set
 	 */
 	public void setDwxx(DWXX dwxx) {
 		this.dwxx = dwxx;
 	}
 
 	/**
-	 * @param zbxx the zbxx to set
+	 * @param zbxx
+	 *            the zbxx to set
 	 */
 	public void setZbxx(ZBXX zbxx) {
 		this.zbxx = zbxx;
 	}
 
 	/**
-	 * @return the ndjhz
+	 * @return the sjz
 	 */
-	public Double getNdjhz() {
-		return ndjhz;
+	public Double getSjz() {
+		return sjz;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "ndjhshzt")
-	public SHZT getNdjhshzt() {
-		return ndjhshzt;
+	@JoinColumn(name = "sjshzt")
+	public SHZT getSjshzt() {
+		return sjshzt;
 	}
 
 	/**
-	 * @return the ndjhxgsj
+	 * @return the sjxgsj
 	 */
-	public Date getNdjhxgsj() {
-		return ndjhxgsj;
+	public Date getSjxgsj() {
+		return sjxgsj;
 	}
 
 	/**
-	 * @param ndjhz the ndjhz to set
+	 * @param sjz
+	 *            the sjz to set
 	 */
-	public void setNdjhz(Double ndjhz) {
-		this.ndjhz = ndjhz;
+	public void setSjz(Double sjz) {
+		this.sjz = sjz;
 	}
 
 	/**
-	 * @param ndjhshzt the ndjhshzt to set
+	 * @param sjshzt
+	 *            the sjshzt to set
 	 */
-	public void setNdjhshzt(SHZT ndjhshzt) {
-		this.ndjhshzt = ndjhshzt;
+	public void setSjshzt(SHZT sjshzt) {
+		this.sjshzt = sjshzt;
 	}
 
 	/**
-	 * @param ndjhxgsj the ndjhxgsj to set
+	 * @param sjxgsj
+	 *            the sjxgsj to set
 	 */
-	public void setNdjhxgsj(Date ndjhxgsj) {
-		this.ndjhxgsj = ndjhxgsj;
+	public void setSjxgsj(Date sjxgsj) {
+		this.sjxgsj = sjxgsj;
 	}
 
 	public Integer getNf() {
@@ -115,5 +122,13 @@ public class NDJHZB  extends AbstractReadWriteEntity implements Serializable{
 	public void setNf(Integer nf) {
 		this.nf = nf;
 	}
-	
+
+	public Integer getYf() {
+		return yf;
+	}
+
+	public void setYf(Integer yf) {
+		this.yf = yf;
+	}
+
 }

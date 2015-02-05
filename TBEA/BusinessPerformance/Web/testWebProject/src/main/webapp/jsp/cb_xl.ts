@@ -240,9 +240,10 @@ module cb_xl {
                 ["新缆"],
                 ["德缆"],
                 ["总计"]];
-             
-            for (var i = 0; i < data.length; ++i){             
-                data[i] = this.format( data[i].concat(this.mJtData[i]))
+            if (this.mJtData.length > 1) {
+                for (var i = 0; i < data.length; ++i) {
+                    data[i] = this.format(data[i].concat(this.mJtData[i]))
+                }
             }
             
             
@@ -292,12 +293,14 @@ module cb_xl {
             var name = this.mGstbTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createGstbTable(name);
             var data = [];
-            for (var i = 0; i < this.mMonth; ++i){               
-                data.push(this.format([(i + 1) + "月"].concat(this.mGsData[i])));
+            
+            if (this.mGsData.length > 1) {
+                for (var i = 0; i < this.mMonth; ++i){               
+                    data.push(this.format([(i + 1) + "月"].concat(this.mGsData[i])));
+                }
+                
+                data.push(this.format(["总计"].concat(this.mGsData[this.mMonth])));
             }
-            
-            data.push(this.format(["总计"].concat(this.mGsData[this.mMonth])));
-            
             var parent = $("#" + this.mGstbTableId);
             parent.empty();
             parent.append("<table id='"+ name +"'></table>");

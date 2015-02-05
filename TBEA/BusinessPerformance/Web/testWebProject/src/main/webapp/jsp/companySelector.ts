@@ -1,4 +1,5 @@
 /// <reference path="util.ts" />
+/// <reference path="unitedSelector.ts" />
 declare var $;
 
 module Util {
@@ -18,46 +19,41 @@ module Util {
         return span.offsetWidth;
     }
 
-    
     export class ICompanySelectorOption{ 
         noneSelectedText : string = '项目公司';
         selectedText: string = '# 个项目公司被选中';       
     }
     
     export class CompanySelector {
-
+        private mUnitedSelector : UnitedSelector;
         private mOpt : ICompanySelectorOption = {
             noneSelectedText : '项目公司',
             selectedText: '# 个项目公司被选中'    
         };
-        private mCtrlId: string;
-        private mTopComps: string[][];
-        private mSubComps: Array<string[][]>;
+
         private mSelectedTop: string;
         private mMulti: boolean;
         
-        private updateTopSel(itemCount : number) {
-            
-            var topSel = $("#" + this.mCtrlId + "_top");
-            topSel.css("width", topSel.children('option:selected').text().getWidth(13) + 25);
-            topSel.multiselect({
-                multiple: $("#" + this.mCtrlId + "_sub").length > 0 ? false : this.mMulti,
-                header: false,
-                minWidth: 80,
-                height　: itemCount * 27 > 600 ? 600 : itemCount * 27 + 3,
-                // noneSelectedText: "请选择月份",
-                selectedList: 1
-            });
-        }
+//        private updateTopSel(topSel : any, itemCount : number, multi : boolean) {
+//            topSel = $(topSel);
+//            topSel.css("width", topSel.children('option:selected').text().getWidth(13) + 25);
+//            topSel.multiselect({
+//                multiple: multi,
+//                header: false,
+//                minWidth: 80,
+//                height　: itemCount * 27 > 600 ? 600 : itemCount * 27 + 3,
+//                // noneSelectedText: "请选择月份",
+//                selectedList: 1
+//            });
+//        }
         
-        private updateSubSel(itemCount : number) {
-            var subSel = $("#" + this.mCtrlId + "_sub");
-            var width = subSel.children('option:selected').text().getWidth(13) + 25;
+        private updateSelect(sel : any, itemCount : number, multi : boolean) {
+            sel = $(sel);
+            var width = sel.children('option:selected').text().getWidth(13) + 25;
             var minWidth = 80;
-            if (this.mMulti) {
-                
-                subSel.multiselect({
-                    multiple: this.mMulti,
+            if (multi) {
+                sel.multiselect({
+                    multiple: multi,
                     header: true,
                     minWidth: 80,
                     noneSelectedText : this.mOpt.noneSelectedText,
@@ -68,14 +64,14 @@ module Util {
                 });
                  var text : any = "n个 项目公司被选中";
                 minWidth = text.getWidth(13) + 50;
-                if (subSel.multiselect("getChecked").length > 1) {
+                if (sel.multiselect("getChecked").length > 1) {
                     width = text.getWidth(13) + 25;
                 }
             }
-            subSel.css("width", width);
-            subSel.multiselect({
-                multiple: this.mMulti,
-                header: true == this.mMulti ? true : false,
+            sel.css("width", width);
+            sel.multiselect({
+                multiple: multi,
+                header: multi,
                 minWidth: minWidth,
                 height　: itemCount * 27 > 600 ? 600 : itemCount * 27 + 3,
                 // noneSelectedText: "请选择月份",
@@ -84,137 +80,73 @@ module Util {
 
         }
         
-        private updateSubComps(firstComp?: string) {
-            if (!isExist(this.mSubComps)) {
-                return;
+        
+        private useMultiSelect(){
+            var sels = this.mUnitedSelector.getSelect();
+            for (var i = 0; i < sels.length - 1; ++i){
+                this.updateSelect(sels[i], $(sels[i]).children().length, false);
             }
-
-            var subSel = $("#" + this.mCtrlId + "_sub");
-            if (subSel.length > 0) {
-                subSel.empty();
-            }
-            else {
-                $("#" + this.mCtrlId + " tr").append('<td>' +
-                    '<select id="' + this.mCtrlId + '_sub" ' +
-                    'style="width: 100px;font-size:13px"></select>' +
-                    '</td><td><div style="width:5px;"></div></td>')
-                subSel = $("#" + this.mCtrlId + "_sub");
-            }
-            
-            var compId = $("#" + this.mCtrlId + "_top").children('option:selected').val();
-            var index = -1;
-            if (undefined == firstComp){
-                firstComp = compId;    
-            }
-            for (var i = 0; i < this.mTopComps[0].length; ++i) {
-                for (var j = 0; j < this.mSubComps[i][1].length; ++j) {
-                    if (firstComp == this.mSubComps[i][1][j]) {
-                        index = i;
-                        break;
-                    }
-                }
-                
-                if (index >= 0){
-                    break;    
-                }
-                if (firstComp == this.mTopComps[1][i]) {
-                    index = i;
-                    break;
-                }
-                
-            }
-            
-            index = index < 0 ? 0: index;
-
-            $("#" + this.mCtrlId + "_top option")[index].selected = "selected";
-            this.mSelectedTop = this.mTopComps[1][index];
-            this.updateTopSel(this.mTopComps[0].length);
-            
-            var found: boolean = false;
-            for (var i = 0; i < this.mSubComps[index][1].length; ++i) {
-                if (firstComp == this.mSubComps[index][1][i]) {
-                    subSel.append('<option value="' + this.mSubComps[index][1][i] + '" selected="selected">' + this.mSubComps[index][0][i] + '</option>');
-                    found = true;
-
-                } else {
-                    subSel.append('<option value="' + this.mSubComps[index][1][i] + '">' + this.mSubComps[index][0][i] + '</option>');
-                }
-            }
-
-            if (!this.mMulti){
-                subSel.append('<option value="' + this.mTopComps[1][index] + '">' + this.mTopComps[0][index] + "本部" + '</option>');
-            }
-
-            if (!found) {
-                $("#" + this.mCtrlId + "_sub option")[0].selected = "selected";
-            }
-
-
-            this.updateSubSel(this.mSubComps[index][0].length);
-            
-            subSel.change(() => {
-                this.updateSubSel(this.mSubComps[index][0].length);
-            })
+         
+            this.updateSelect(sels[sels.length - 1], $(sels[sels.length - 1]).children().length, this.mMulti);
 
         }
-
+        
         public constructor(
             multi : boolean, 
             divId: string, 
-            topComps: string[][], 
-            firstComp?: string, 
-            subComps?: Array<string[][]>, 
+            comps: IDataNode[], 
+            firstComp?: number, 
             opt ? : ICompanySelectorOption) {
             this.mMulti = multi;
-            this.mCtrlId = divId + "_table";
-            $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
-            this.mSubComps = subComps;
-            this.mTopComps = topComps;
+           
             if (isExist(opt)){
                 this.mOpt = opt;    
             }
-
-            $("#" + this.mCtrlId + " tr").append('<td>' +
-                '<select id="' + this.mCtrlId + '_top" ' +
-                'style="width: 10px; font-size:13px"></select>' +
-                '</td><td><div style="width:5px;"></div></td>');
-            var topSel = $("#" + this.mCtrlId + "_top");
-            var found: boolean = false;
-            for (var i = 0; i < topComps[0].length; ++i) {
-                if (firstComp == topComps[1][i]) {
-                    topSel.append('<option value="' + topComps[1][i] + '" selected="selected">' + topComps[0][i] + '</option>');
-                    found = true;
-                    this.mSelectedTop = topComps[1][i];
-                } else {
-                    topSel.append('<option value="' + topComps[1][i] + '">' + topComps[0][i] + '</option>');
+            
+            var virtualRoot = new DataNode(null);
+            var firstCompNode : DataNode;           
+            virtualRoot.appendAll(DataNode.valueOfAll(comps));
+            virtualRoot.accept({visit: (node: DataNode) =>{
+                if (node != virtualRoot && node.getData().id + "" == firstComp + ""){
+                    firstCompNode = node;
+                    return true;
                 }
+                return false;
+            }});
+            
+            if (isExist(firstCompNode)){
+                var path = new std.vector<number>();
+                var parent = firstCompNode.getParent();
+                while (null != parent){
+                    path.insert(0, parent.find(firstCompNode));  
+                    firstCompNode = parent;  
+                    parent = firstCompNode.getParent();
+                }
+                this.mUnitedSelector = new UnitedSelector(comps, divId, path.toArray());
+            }
+            else{
+                this.mUnitedSelector = new UnitedSelector(comps, divId);
             }
             
-            if (!found) {
-                $("#" + this.mCtrlId + "_top option")[0].selected = "selected";
-                this.mSelectedTop = topComps[1][0]
-            }
+            this.useMultiSelect();
             
-            this.updateTopSel(topComps[0].length);
-
-            $("#" + this.mCtrlId + "_top").change(() => {
-                var newTop = topSel.children('option:selected').val();
-                if (newTop != this.mSelectedTop) {
-                    this.mSelectedTop = newTop;
-                    this.updateTopSel(topComps[0].length);
-                    this.updateSubComps();
-                }
-            })
-
-            this.updateSubComps(firstComp);
+            this.mUnitedSelector.change((sel : any)=>{
+                this.useMultiSelect();
+            });
         }
 
         public getCompany(): Util.CompanyType {
-            if (isExist(this.mSubComps)) {
-                return $("#" + this.mCtrlId + "_sub").children('option:selected').val();
-            } else {
-                return $("#" + this.mCtrlId + "_top").children('option:selected').val();
-            }
+            var selNodes = this.mUnitedSelector.getNodes();
+            return selNodes[selNodes.length - 1].getData().id;
+        }
+        
+        public getCompanys(): Util.CompanyType[] {
+            var ret = [];
+            var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
+            checkedOpt.each((i) =>{
+                ret.push(checkedOpt[i].value);
+            })
+            return ret;
         }
 
     }

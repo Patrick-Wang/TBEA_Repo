@@ -37,7 +37,7 @@ public class YQYSYSFXDaoImpl extends AbstractReadWriteDaoImpl<YQYSYSFX> implemen
 		Query q = this.getEntityManager().createQuery("select y from YQYSYSFX y where y.qybh = :id and y.nf = :year and y.yf = :month");
 		q.setParameter("id", comp.getId());
 		q.setParameter("year", year+"");
-		q.setParameter("year", month+"");
+		q.setParameter("month", month+"");
 		return q.getResultList();
 	}
 
@@ -49,7 +49,7 @@ public class YQYSYSFXDaoImpl extends AbstractReadWriteDaoImpl<YQYSYSFX> implemen
 		int month = c.get(Calendar.MONTH) + 1;
 		Query q = this.getEntityManager().createQuery("select y from YQYSYSFX y where y.qybh in (" + Util.toString(comps) + ") and y.nf = :year and y.yf = :month");
 		q.setParameter("year", year+"");
-		q.setParameter("year", month+"");
+		q.setParameter("month", month+"");
 		return q.getResultList();
 	}
 

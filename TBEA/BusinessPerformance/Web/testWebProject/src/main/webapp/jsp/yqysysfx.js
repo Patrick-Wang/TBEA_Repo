@@ -21,7 +21,7 @@ var yqysysfx;
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("yqysysfx_update.do");
-            this.mComp = 0 /* SB */;
+            this.mComp = Util.CompanyType.SB;
         }
         View.newInstance = function () {
             return new View();
@@ -34,7 +34,7 @@ var yqysysfx;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ companyId: this.mComp }).then(function (dataArray) {
+            this.mDataSet.get({ year: this.mYear, month: this.mMonth, companyId: this.mComp }).then(function (dataArray) {
                 _this.mData = dataArray;
                 _this.updateTable();
                 _this.updateEchart();
@@ -42,6 +42,12 @@ var yqysysfx;
         };
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;
+        };
+        View.prototype.onYearSelected = function (year) {
+            this.mYear = year;
+        };
+        View.prototype.onMonthSelected = function (month) {
+            this.mMonth = month;
         };
         View.prototype.updateEchart = function () {
             var yqysysChart = echarts.init($("#" + this.mEchartId)[0]);

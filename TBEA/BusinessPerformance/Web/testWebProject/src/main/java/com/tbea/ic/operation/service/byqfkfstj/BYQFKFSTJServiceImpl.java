@@ -62,7 +62,7 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 		for (BYQFDWFKFS byqfdw : byqfdwfkfss) {
 			if (null != byqfdw) {
 				Company comp = org
-						.getCompany(Integer.valueOf(byqfdw.getGsbm()));
+						.getCompany(Integer.valueOf(byqfdw.getQybh()));
 				col = getIndex(comp);
 				if (null != col) {
 					result[col][0] = byqfdw.getFdwhtddzlbs() + "";
@@ -98,7 +98,7 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 		Integer col;
 		for (BYQGWFKFS byqgw : byqgwfkfss) {
 			if (null != byqgw) {
-				Company comp = org.getCompany(Integer.valueOf(byqgw.getGsbm()));
+				Company comp = org.getCompany(Integer.valueOf(byqgw.getQybh()));
 				col = getIndex(comp);
 				if (null != col) {
 					result[col][0] = byqgw.getGwhtddzlbs() + "";
@@ -136,7 +136,7 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 		Integer col;
 		for (BYQNWFKFS byqnw : byqgwfkfss) {
 			if (null != byqnw) {
-				Company comp = org.getCompany(Integer.valueOf(byqnw.getGsbm()));
+				Company comp = org.getCompany(Integer.valueOf(byqnw.getQybh()));
 				col = getIndex(comp);
 				if (null != col) {
 					result[col][0] = byqnw.getNwhtddzlbs() + "";

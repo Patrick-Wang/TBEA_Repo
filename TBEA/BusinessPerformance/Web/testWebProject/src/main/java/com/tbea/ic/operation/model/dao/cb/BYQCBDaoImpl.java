@@ -131,4 +131,14 @@ public class BYQCBDaoImpl implements  BYQCBDao{
 		}
 		return ret;
 	}
+
+	@Override
+	public List<Integer> getTbCompany() {
+		Query q = entityManager
+				.createQuery("SELECT t.qybh FROM CBBYQTBDD t group by t.qybh");
+		List<Integer> ret = q.getResultList();
+		q = entityManager.createQuery("SELECT x.ddszdw FROM CBBYQTBDD t, XMXX x where t.xmxx = x.xmbh group by x.ddszdw");
+		ret.addAll(q.getResultList());
+		return ret;
+	}
 }

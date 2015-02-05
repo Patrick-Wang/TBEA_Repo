@@ -248,7 +248,7 @@ public class YSZKJGQKServiceImpl implements YSZKJGQKService {
 		String[][] result = new String[hyMap.size()][10];
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		setYszkjg(result, cal,	yszkjgqkDao.getJetbbh(cal, comp));
+		setYszkjg(result, cal,	yszkjgqkDao.getYszkjg(cal, comp));
 		return result;
 	}
 

@@ -351,4 +351,10 @@ public class XLFKFSTJServiceImpl implements XLFKFSTJService {
 		return result;
 	}
 
+	@Override
+	public List<Integer> getCompany() {
+		// TODO Auto-generated method stub
+		return xlfkfsDao.getCompany();
+	}
+
 }

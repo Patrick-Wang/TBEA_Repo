@@ -25,8 +25,8 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 	@Override
 	public List<XLFDWFKFS> getFdwfkfs(Date d, Company comp) {
 		Query q = entityManager.createQuery(
-				"from XLFDWFKFS where gsbm = :compId and ny= :date");
-		q.setParameter("compId", "0" + comp.getId());
+				"from XLFDWFKFS where qybh = :compId and ny= :date");
+		q.setParameter("compId", comp.getId());
 		q.setParameter("date", Util.format(d));
 		return q.getResultList();
 	}
@@ -34,8 +34,8 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 	@Override
 	public List<XLGWFKFS> getGwfkfs(Date d, Company comp) {
 		Query q = entityManager.createQuery(
-				"from XLGWFKFS where gsbm = :compId and ny= :date");
-		q.setParameter("compId", "0" + comp.getId());
+				"from XLGWFKFS where qybh = :compId and ny= :date");
+		q.setParameter("compId", comp.getId());
 		q.setParameter("date", Util.format(d));
 		return q.getResultList();
 	}
@@ -43,8 +43,8 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 	@Override
 	public List<XLNWFKFS> getNwfkfs(Date d, Company comp) {
 		Query q = entityManager.createQuery(
-				"from XLNWFKFS where gsbm = :compId and ny= :date");
-		q.setParameter("compId", "0" + comp.getId());
+				"from XLNWFKFS where qybh = :compId and ny= :date");
+		q.setParameter("compId", comp.getId());
 		q.setParameter("date", Util.format(d));
 		return q.getResultList();
 	}
@@ -52,24 +52,24 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 	@Override
 	public boolean fdwContainsCompany(Company comp) {
 		Query q = entityManager.createQuery(
-				"select count(x) from XLFDWFKFS x where x.gsbm = :compId");
-		q.setParameter("compId", "0" + comp.getId());
+				"select count(x) from XLFDWFKFS x where x.qybh = :compId");
+		q.setParameter("compId", comp.getId());
 		return ((Long)(q.getResultList().get(0))) > 0;
 	}
 
 	@Override
 	public boolean gwContainsCompany(Company comp) {
 		Query q = entityManager.createQuery(
-				"select count(x) from XLGWFKFS x where x.gsbm = :compId");
-		q.setParameter("compId", "0" + comp.getId());
+				"select count(x) from XLGWFKFS x where x.qybh = :compId");
+		q.setParameter("compId", comp.getId());
 		return ((Long)(q.getResultList().get(0))) > 0;
 	}
 
 	@Override
 	public boolean nwContainsCompany(Company comp) {
 		Query q = entityManager.createQuery(
-				"select count(x) from XLNWFKFS x where x.gsbm = :compId");
-		q.setParameter("compId", "0" + comp.getId());
+				"select count(x) from XLNWFKFS x where x.qybh = :compId");
+		q.setParameter("compId", comp.getId());
 		return ((Long)(q.getResultList().get(0))) > 0;
 	}
 
@@ -115,7 +115,7 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 	@Override
 	public List<XLFDWFKFS> getFdwfkfs(Date d, List<Company> comps) {
 		Query q = entityManager.createQuery(
-				"from XLFDWFKFS where gsbm in (" + Util.toBMString(comps) + ") and ny= :date");
+				"from XLFDWFKFS where qybh in (" + Util.toBMString(comps) + ") and ny= :date");
 		//q.setParameter("compId", "0" + comp.getId());
 		q.setParameter("date", Util.format(d));
 		return q.getResultList();
@@ -124,7 +124,7 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 	@Override
 	public List<XLGWFKFS> getGwfkfs(Date d, List<Company> comps) {
 		Query q = entityManager.createQuery(
-				"from XLGWFKFS where gsbm in (" + Util.toBMString(comps) + ") and ny= :date");
+				"from XLGWFKFS where qybh in (" + Util.toBMString(comps) + ") and ny= :date");
 		//q.setParameter("compId", "0" + comp.getId());
 		q.setParameter("date", Util.format(d));
 		return q.getResultList();
@@ -133,9 +133,26 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 	@Override
 	public List<XLNWFKFS> getNwfkfs(Date d, List<Company> comps) {
 		Query q = entityManager.createQuery(
-				"from XLNWFKFS where gsbm in (" + Util.toBMString(comps) + ") and ny= :date");
+				"from XLNWFKFS where qybh in (" + Util.toBMString(comps) + ") and ny= :date");
 		//q.setParameter("compId", "0" + comp.getId());
 		q.setParameter("date", Util.format(d));
 		return q.getResultList();
+	}
+
+	@Override
+	public List<Integer> getCompany() {
+		Query q = entityManager.createQuery(
+				"select qybh from XLGWFKFS group by qybh");
+		 List<Integer> ret = q.getResultList();
+		 
+		 q = entityManager.createQuery(
+					"select qybh from XLNWFKFS group by qybh");
+		 ret.addAll(q.getResultList());
+		 
+		 q = entityManager.createQuery(
+					"select qybh from XLFDWFKFS group by qybh");
+		 ret.addAll(q.getResultList());
+		 
+		return ret;
 	}
 }

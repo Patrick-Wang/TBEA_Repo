@@ -45,15 +45,7 @@ public class YSZKPZJHController {
 	@RequestMapping(value = "yszkpzjh_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getYszkpzjh_update(HttpServletRequest request,
 			HttpServletResponse response) {
-//		int month = Integer.parseInt(request.getParameter("month"));
-//		int year = Integer.parseInt(request.getParameter("year"));
-//		String companyId = request.getParameter("companyId");
-//		int cid = Integer.parseInt(companyId);
-//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + 1);
-//		CompanyType compType = CompanyType.valueOf(cid);
-//		Organization org = companyManager.getPzghOrganization();
-//		Company comp = org.getCompany(compType);	
-		
+
 		Date d = DateSelection.getDate(request);
 		Organization org = companyManager.getPzghOrganization();
 		Company comp = org.getCompany(CompanySelection.getCompany(request));

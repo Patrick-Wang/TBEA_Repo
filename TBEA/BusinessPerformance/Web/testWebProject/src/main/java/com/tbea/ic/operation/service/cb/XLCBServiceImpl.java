@@ -119,9 +119,7 @@ public class XLCBServiceImpl implements XLCBService{
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		String[][] gstb = new String[cal.get(Calendar.MONTH) + 2][7];
-		rets.add(tbmx);
-		rets.add(jttb);
-		rets.add(gstb);
+		List<String[]> tbmxTmp = new ArrayList<String[]>();
 		XMXX xmxx;
 		CBXLTBDD xltbcb;
 		Organization org = companyManager.getBMOrganization();
@@ -152,8 +150,13 @@ public class XLCBServiceImpl implements XLCBService{
 					+ Util.valueOf(xltbcb.getDjtyl()) * Util.valueOf(xltbcb.getDjtdj());// 投标五大主材成本
 			Double tbcbzj = (zccb - Util.valueOf(xltbcb.getQtcbhj())) / 1.17;
 			comp = org.getCompany(xltbcb.getQybh());
-			if (comp.getId() == comp.getId()){
-				fillTbmx(tbmx, i, xmxx, xltbcb, zccb, tbcbzj);
+		
+			if (null != xltbcb.getTbbjsj()){
+				tmpCal.setTime(xltbcb.getTbbjsj());
+				if (comp.getType() == comp.getType() && tmpCal.get(Calendar.MONTH) == cal.get(Calendar.MONTH)){
+					fillTbmx(tbmx, i, xmxx, xltbcb, zccb, tbcbzj);
+					tbmxTmp.add(tbmx[i]);
+				}
 			}
 			
 			if (comp != null) {
@@ -177,7 +180,11 @@ public class XLCBServiceImpl implements XLCBService{
 
 		computeDj(gstb);
 		computeDj(jttb);
-
+		tbmx = new String[tbmxTmp.size()][17];
+		tbmxTmp.toArray(tbmx);
+		rets.add(tbmx);
+		rets.add(jttb);
+		rets.add(gstb);
 		return rets;
 	}
 	
@@ -235,14 +242,11 @@ public class XLCBServiceImpl implements XLCBService{
 		cal.setTime(date);
 		String[][] gswg = new String[(cal.get(Calendar.MONTH) + 1) * 3 * 3 + 3][7];
 		String[][] dydjwg = new String[11 * 3][7];
-		rets.add(wgmx);
-		rets.add(jtwg);
-		rets.add(gswg);
-		rets.add(dydjwg);
+	
 		CBXLWGDD xlcbwgdd;
 
 		Organization org = companyManager.getBMOrganization();
-
+		List<String[]> wgmxTmp = new ArrayList<String[]>();
 		Calendar tmpCal = Calendar.getInstance();
 		Company compTmp;
 		for (int i = 0; i < xlcbwgdds.size(); ++i) {
@@ -257,6 +261,7 @@ public class XLCBServiceImpl implements XLCBService{
 					if (tmpCal.get(Calendar.MONTH) == cal.get(Calendar.MONTH) &&
 							comp.getType() == compTmp.getType()) {
 						fillWgmx(wgmx, i, xlcbwgdd, wg_zccb, sjzcb, comp);
+						wgmxTmp.add(wgmx[i]);
 					}
 
 					
@@ -293,6 +298,13 @@ public class XLCBServiceImpl implements XLCBService{
 		}
 		computeDj(jtwg);
 		computeDj(gswg);
+		wgmx = new String[wgmxTmp.size()][23];
+		wgmxTmp.toArray(wgmx);
+		
+		rets.add(wgmx);
+		rets.add(jtwg);
+		rets.add(gswg);
+		rets.add(dydjwg);
 		return rets;
 	}
 

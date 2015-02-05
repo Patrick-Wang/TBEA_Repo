@@ -84,19 +84,31 @@ public class XLFKFSTJController {
 
 		CompanySelection compSelection = new CompanySelection(true,
 				comps, new CompanySelection.Filter() {
+			
+					private List<Integer> comps = service.getCompany();
+			
+					private boolean contains(Company comp){
+						for (int i = 0; i < comps.size(); ++i){
+							if (comps.get(i) == comp.getId()){
+								return true;
+							}
+						}
+						return false;
+					}
+					
 					@Override
 					public boolean keep(Company comp) {
 						if (null != companyManager.getVirtualYSZKOrganization().getCompany(comp.getType())){
 							List<Company> subComps = comp.getSubCompanys();
 							for (Company com : subComps){
-								if (service.containsCompany(com)){
+								if (contains(com)){
 									return true;
 								}
 							}
 							return false;
 						}
 						else{
-							return service.containsCompany(comp);
+							return contains(comp);
 						}
 					}
 				});

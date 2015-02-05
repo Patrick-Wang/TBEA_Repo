@@ -25,34 +25,41 @@ public class YQYSYSFXServiceImpl implements YQYSYSFXService{
 	
 	private static Map<String, Integer> ysMap = new HashMap<String, Integer>();
 	static {
-		ysMap.put("内部因素", 0);
-		ysMap.put("客户资信", 1);
-		ysMap.put("滚动付款", 2);
-		ysMap.put("项目变化", 3);
-		ysMap.put("合同因素", 4);
-		ysMap.put("手续办理", 5);
-		ysMap.put("其它", 6);
+		ysMap.put("1", 0);
+		ysMap.put("2", 1);
+		ysMap.put("3", 2);
+		ysMap.put("4", 3);
+		ysMap.put("5", 4);
+		ysMap.put("6", 5);
+		ysMap.put("7", 6);
 
 	}
 
 	private void setYqysysfx(String[][] result, List<YQYSYSFX> list,
 			List<Company> comp) {
-		int col = 0;
 		for (YQYSYSFX ysys : list) {
-			if (ysys != null) 
-			{
-			result[0][ysMap.get(ysys.getYsflmc())] = Util.toInt(result[0][ysMap.get(ysys.getYsflmc())])
-					+ Util.valueOf(ysys.getZhs()) + "";
-			result[1][ysMap.get(ysys.getYsflmc())] = Util.toDouble(result[1][ysMap.get(ysys.getYsflmc())])
-					+ Util.valueOf(ysys.getZje()) + "";
-			result[2][ysMap.get(ysys.getYsflmc())] = Util.toInt(result[2][ysMap.get(ysys.getYsflmc())])
-					+ Util.valueOf(ysys.getFlqshs()) + "";
-			result[3][ysMap.get(ysys.getYsflmc())] = Util.toDouble(result[3][ysMap.get(ysys.getYsflmc())])
-					+ Util.valueOf(ysys.getFlqsje()) + "";
+			if (ysys != null) {
+				try{
+					result[0][ysMap.get(ysys.getYsflmc())] = Util
+							.toInt(result[0][ysMap.get(ysys.getYsflmc())])
+							+ Util.valueOf(ysys.getZhs()) + "";
+					result[1][ysMap.get(ysys.getYsflmc())] = Util
+							.toDouble(result[1][ysMap.get(ysys.getYsflmc())])
+							+ Util.valueOf(ysys.getZje()) + "";
+					result[2][ysMap.get(ysys.getYsflmc())] = Util
+							.toInt(result[2][ysMap.get(ysys.getYsflmc())])
+							+ Util.valueOf(ysys.getFlqshs()) + "";
+					result[3][ysMap.get(ysys.getYsflmc())] = Util
+							.toDouble(result[3][ysMap.get(ysys.getYsflmc())])
+							+ Util.valueOf(ysys.getFlqsje()) + "";
+				} 
+				catch(Exception e){
+					e.printStackTrace();
+				}
 			}
 		}
 	}
-	
+
 	public String[][] getYqysysfxData(Date d, Company comp){
 		String[][] result = new String[4][7];
 		List<YQYSYSFX> list = ysysfxDao.getYqysysfxList(d, comp);

@@ -11,25 +11,25 @@ var cb_zx_byq;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0 || i == 1) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 90));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 90));
                 }
                 else if (i == 7) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 120));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 120));
                 }
                 else if (i < 11) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 80));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 80));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 80));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 80));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         JQGridAssistantFactory.createJttbTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位", "dw", true, JQTable.TextAlign.Left),
+                new JQTable.Node("单位", "dw", true, 0 /* Left */),
                 new JQTable.Node("产值", "cz"),
-                new JQTable.Node("产值", "cz_1", true, JQTable.TextAlign.Center),
+                new JQTable.Node("产值", "cz_1", true, 2 /* Center */),
                 new JQTable.Node("毛利额", "mle"),
                 new JQTable.Node("毛利率", "mll"),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("硅钢", "gg")),
@@ -41,9 +41,9 @@ var cb_zx_byq;
         };
         JQGridAssistantFactory.createGstbTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("交货时间", "1sj", true, JQTable.TextAlign.Left),
+                new JQTable.Node("交货时间", "1sj", true, 0 /* Left */),
                 new JQTable.Node("产值", "1cz"),
-                new JQTable.Node("产值", "1cz_1", true, JQTable.TextAlign.Center),
+                new JQTable.Node("产值", "1cz_1", true, 2 /* Center */),
                 new JQTable.Node("毛利额", "1mle"),
                 new JQTable.Node("毛利率", "1mll"),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("硅钢", "1gg")),

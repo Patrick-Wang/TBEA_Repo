@@ -27,9 +27,8 @@ module approve_template {
         tableUnapproveId: string;
         dateId: string;
         companyId: string;
-        topComps:string[][];
-        subComps?: Array<string[][]>;
-        firstCompany?: string;
+        comps : Util.IDataNode[];
+        firstCompany?: number;
         date: Util.Date;
         approveType: Util.ZBType;
     }
@@ -65,13 +64,15 @@ module approve_template {
             }else{
                  this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
                 }
-           
+            //var nodes : Util.IDataNode = {data : {id : 12, value:"12321"}, subNodes : [], parent : undefined};
+            
+           // opt.comps[0].subNodes[0].subNodes.push(nodes);
+           // nodes.parent = opt.comps[0].subNodes[0];
             this.mCompanySelector = new Util.CompanySelector(
-            true, 
+                true, 
                 opt.companyId, 
-                opt.topComps, opt.
-                firstCompany, 
-                opt.subComps
+                opt.comps,
+                opt.firstCompany
 //                ,{
 //                noneSelectedText : '经营单位',
 //                selectedText: '# 个经营单位被选中'     

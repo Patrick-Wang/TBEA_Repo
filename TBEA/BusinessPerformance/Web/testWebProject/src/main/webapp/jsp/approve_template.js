@@ -34,7 +34,7 @@ var approve_template;
             else {
                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
             }
-            this.mCompanySelector = new Util.CompanySelector(true, opt.companyId, opt.topComps, opt.firstCompany, opt.subComps);
+            this.mCompanySelector = new Util.CompanySelector(true, opt.companyId, opt.comps, opt.firstCompany);
             this.updateTitle();
             this.updateUI();
         };

@@ -25,4 +25,5 @@ public interface BYQCBDao {
 	CBBYQWGDD getLatestWgdd();
 	List<Integer> getWgCompany();
 	List<CBBYQWGDD> getWgdd(Company comp);
+	List<Integer> getTbCompany();
 }

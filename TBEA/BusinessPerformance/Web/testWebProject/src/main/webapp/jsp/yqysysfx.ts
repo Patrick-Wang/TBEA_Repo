@@ -31,7 +31,8 @@ module yqysysfx {
         private mTableId: string;
         private mEchartId;
         private mComp: Util.CompanyType = Util.CompanyType.SB;
-
+        private mMonth: number;
+        private mYear: number;
         public init(echartId: string, tableId: string): void {
             // this.initEchart($('#' + echartId)[0]);
             this.mTableId = tableId;
@@ -41,7 +42,7 @@ module yqysysfx {
         }
 
         public updateUI() {
-            this.mDataSet.get({companyId: this.mComp })
+            this.mDataSet.get({year : this.mYear, month : this.mMonth, companyId: this.mComp })
                 .then((dataArray: any) => {
 
                     this.mData = dataArray;
@@ -56,7 +57,14 @@ module yqysysfx {
         public onCompanySelected(comp: Util.CompanyType) {
             this.mComp = comp;
         }
-
+        
+        public onYearSelected(year : number){
+            this.mYear = year;
+        }
+        
+        public onMonthSelected(month : number){
+            this.mMonth = month;
+        }
 
         private updateEchart(): void {
             var yqysysChart = echarts.init($("#" + this.mEchartId)[0]);
@@ -99,7 +107,6 @@ module yqysysfx {
                 },
                 toolbox: {
                     show: true,
-
                 },
                 calculable: true,
 

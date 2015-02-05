@@ -83,7 +83,7 @@ public class XLCBDaoImpl implements XLCBDao{
 
 	@Override
 	public List<Integer> getTbCompany() {
-		Query q = entityManager.createQuery("SELECT w.qybh FROM CBXLWGDD w group by w.qybh");
+		Query q = entityManager.createQuery("SELECT t.qybh FROM CBXLTBDD t group by t.qybh");
 		List<Integer> ret = q.getResultList();
 		q = entityManager.createQuery("SELECT x.ddszdw FROM CBXLTBDD t, XMXX x where t.xmbh = x.xmbh group by x.ddszdw");
 		ret.addAll(q.getResultList());

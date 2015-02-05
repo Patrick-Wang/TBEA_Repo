@@ -33,4 +33,6 @@ public interface XLFKFSDao {
 	List<XLGWFKFS> getGwfkfs(Date d, List<Company> comps);
 
 	List<XLNWFKFS> getNwfkfs(Date d, List<Company> comps);
+
+	List<Integer> getCompany();
 }

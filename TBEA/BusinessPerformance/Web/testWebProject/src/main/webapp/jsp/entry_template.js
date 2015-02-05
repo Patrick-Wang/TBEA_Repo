@@ -7,7 +7,7 @@ var entry_template;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, true, 0 /* Left */));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left));
                 }
                 else {
                     nodes.push(new JQTable.Node(title[i], "_" + i, false));
@@ -61,19 +61,19 @@ var entry_template;
             var header = "";
             var date = this.mDateSelector.getDate();
             switch (this.mOpt.entryType) {
-                case 0 /* QNJH */:
+                case Util.ZBType.QNJH:
                     header = date.year + "年 计划数据录入";
                     break;
-                case 1 /* YDJDMJH */:
+                case Util.ZBType.YDJDMJH:
                     header = date.year + "年" + date.month + "月 季度-月度末计划值录入";
                     break;
-                case 2 /* BY20YJ */:
+                case Util.ZBType.BY20YJ:
                     header = date.year + "年" + date.month + "月 20日预计值录入";
                     break;
-                case 3 /* BY28YJ */:
+                case Util.ZBType.BY28YJ:
                     header = date.year + "年" + date.month + "月 28日预计值录入";
                     break;
-                case 4 /* BYSJ */:
+                case Util.ZBType.BYSJ:
                     header = date.year + "年" + date.month + "月 实际数据录入";
                     break;
             }
@@ -84,7 +84,7 @@ var entry_template;
             var ret = [title[0]];
             var date = this.mDateSelector.getDate();
             var left = date.month % 3;
-            if (this.mOpt.entryType == 1 /* YDJDMJH */ && 0 == left) {
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH && 0 == left) {
                 if (12 == date.month) {
                     ret.push((date.year + 1) + "年1月计划");
                     ret.push((date.year + 1) + "年2月计划");
@@ -96,7 +96,7 @@ var entry_template;
                     ret.push((date.month + 3) + "月计划");
                 }
             }
-            else if (this.mOpt.entryType == 2 /* BY20YJ */ || this.mOpt.entryType == 3 /* BY28YJ */) {
+            else if (this.mOpt.entryType == Util.ZBType.BY20YJ || this.mOpt.entryType == Util.ZBType.BY28YJ) {
                 ret.push(title[1]);
                 if (0 != left) {
                     var leftMonth = 3 - left;
@@ -136,10 +136,10 @@ var entry_template;
             this.enableEntry();
             var titles = null;
             switch (this.mOpt.entryType) {
-                case 0 /* QNJH */:
+                case Util.ZBType.QNJH:
                     titles = ["指标名称", "全年计划"];
                     break;
-                case 1 /* YDJDMJH */:
+                case Util.ZBType.YDJDMJH:
                     if (this.mDateSelector.getDate().month % 3 != 0) {
                         this.disableEntry(tableId);
                         return;
@@ -148,13 +148,13 @@ var entry_template;
                         titles = this.createPredict(["指标名称"]);
                     }
                     break;
-                case 2 /* BY20YJ */:
+                case Util.ZBType.BY20YJ:
                     titles = this.createPredict(["指标名称", "本月20日预计值"]);
                     break;
-                case 3 /* BY28YJ */:
+                case Util.ZBType.BY28YJ:
                     titles = this.createPredict(["指标名称", "本月28日预计值"]);
                     break;
-                case 4 /* BYSJ */:
+                case Util.ZBType.BYSJ:
                     titles = ["指标名称", "本月实际"];
                     break;
             }

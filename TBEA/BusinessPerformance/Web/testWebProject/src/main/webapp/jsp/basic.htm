@@ -12,11 +12,10 @@
 
 <script type="text/javascript" src="multi-select/assets/prettify.js"></script>
 <script type="text/javascript" src="multi-select/jquery.multiselect.js"></script>
-<script type="text/javascript">
-$(function(){
-	$("select").multiselect();
-});
-</script>
+<script type="text/javascript" src="util.js"></script>
+<script type="text/javascript" src="jqgrid/vector.js"></script>
+<script type="text/javascript" src="unitedSelector.js"></script>
+
 </head>
 <body id="test" onload="prettyPrint();">
 
@@ -64,6 +63,34 @@ $(function(){
 	</optgroup>
 	</select>
 </p>
+
+<div id = "aaa"></div>
+<script type="text/javascript">
+
+
+var nodes = [];
+nodes.push(new Util.DataNode({id : "1", value : "ffees"}));
+nodes.push(new Util.DataNode({id : "2", value : "ffedes"}));
+nodes.push(new Util.DataNode({id : "3", value : "fffees"}));
+nodes.push(new Util.DataNode({id : "4", value : "ffeses"}));
+nodes.push(new Util.DataNode({id : "5", value : "ffeaes"}));
+nodes[0].append(new Util.DataNode({id : "5", value : "11"}));
+nodes[0].append(new Util.DataNode({id : "6", value : "6"}));
+nodes[0].append(new Util.DataNode({id : "7", value : "22"}));
+nodes[0].append(new Util.DataNode({id : "9", value : "44"}));
+
+nodes[0].childAt(0).append(new Util.DataNode({id : "9", value : "44"}));
+nodes[0].childAt(0).append(new Util.DataNode({id : "9", value : "18"}));
+nodes[0].childAt(0).append(new Util.DataNode({id : "9", value : "37"}));
+nodes[0].childAt(0).append(new Util.DataNode({id : "9", value : "46"}));
+
+nodes[1].append(new Util.DataNode({id : "5", value : "22[[[]]]"}));
+nodes[1].append(new Util.DataNode({id : "6", value : "[[[-]]"}));
+nodes[1].append(new Util.DataNode({id : "7", value : "0--798097"}));
+nodes[1].append(new Util.DataNode({id : "9", value : "ttki==-"}));
+
+var selector = new Util.UnitedSelector(nodes, "aaa");
+</script>
 
 </body>
 </html>

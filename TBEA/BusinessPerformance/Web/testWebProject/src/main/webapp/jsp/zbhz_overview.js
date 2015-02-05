@@ -2,7 +2,7 @@ var zbhz_overview;
 (function (zbhz_overview) {
     var YDZBDataSet = (function () {
         function YDZBDataSet(comId, yd, jd, nd, ydtb, jdtb) {
-            this.companyId = 17 /* JT */;
+            this.companyId = Util.CompanyType.JT;
             this.companyId = comId;
             this.mYd = yd;
             this.mJd = jd;
@@ -71,9 +71,9 @@ var zbhz_overview;
     var View = (function () {
         function View() {
             this.mSelectCy = true;
-            this.mCy = 17 /* JT */;
-            this.mDw = 1000 /* ALL */;
-            this.mComp = 17 /* JT */;
+            this.mCy = Util.CompanyType.JT;
+            this.mDw = Util.CompanyType.ALL;
+            this.mComp = Util.CompanyType.JT;
         }
         View.newInstance = function () {
             if (View.ins == undefined) {

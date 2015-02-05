@@ -23,4 +23,6 @@ public interface XLFKFSTJService {
 
 	String[][] getNwData(Date d, List<Company> comps);
 
+	List<Integer> getCompany();
+
 }

@@ -29,6 +29,8 @@ public interface BYQCBService {
 
 	Date getLatestWgDate();
 
+	List<Integer> getTbCompany();
+
 	
 
 }
