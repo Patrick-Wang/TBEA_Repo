@@ -320,6 +320,7 @@ var JQTable;
                         index: colId,
                         sortable: false,
                         editable: !nodes[j].isReadOnly(),
+                        editrules: !nodes[j].isReadOnly() ? { number: true } : undefined,
                         cellattr: function (rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
@@ -350,7 +351,11 @@ var JQTable;
             var ids = grid.jqGrid('getDataIDs');
             var data = [];
             for (var i in ids) {
-                data.push(grid.jqGrid('getRowData', ids[i]));
+                var row = [];
+                for (var j in this.mColModel) {
+                    row.push(grid.jqGrid("getCell", ids[i], this.mColModel[j].index));
+                }
+                data.push(row);
             }
             return data;
         };
@@ -378,6 +383,16 @@ var JQTable;
         };
         JQGridAssistant.prototype.getColModel = function () {
             return this.mColModel;
+        };
+        JQGridAssistant.prototype.addRowData = function (rowId, rowData) {
+            var grid = $("#" + this.mGridName + "");
+            var row = {};
+            for (var j in this.mColModel) {
+                if (j < rowData.length) {
+                    row[this.mColModel[j].index] = rowData[j];
+                }
+            }
+            grid.jqGrid("addRowData", rowId, row);
         };
         JQGridAssistant.prototype.id = function (col) {
             var colCount = 0;
@@ -444,6 +459,22 @@ var JQTable;
                 var rowdata = {};
                 for (var j in colums) {
                     rowdata[colums[j].idChain()] = data[i][j];
+                }
+                alldata.push(rowdata);
+            }
+            return alldata;
+        };
+        JQGridAssistant.prototype.getDataWithId = function (data) {
+            var alldata = [];
+            var colums = [];
+            for (var i in this.mTitle) {
+                colums = colums.concat(this.mTitle[i].leaves());
+            }
+            for (var i in data) {
+                var rowdata = {};
+                rowdata["id"] = data[i][0];
+                for (var j in colums) {
+                    rowdata[colums[j].idChain()] = data[i][parseInt(j) + 1];
                 }
                 alldata.push(rowdata);
             }

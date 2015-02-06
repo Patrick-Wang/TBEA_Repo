@@ -26,7 +26,7 @@ public class XLCBDaoImpl implements XLCBDao{
 	@Override
 	public List<CBXLTBDD> getTbdd(Date date) {
 		Query q = entityManager.createQuery(
-				"from CBXLTBDD where datediff(yyyy, tbbjsj, :date) = 0 and tbbjsj <= :date1");
+				"from CBXLTBDD where datediff(yyyy, tbbjsj, :date) = 0 and datediff(MM, tbbjsj, :date1) <= 0");
 		q.setParameter("date", date);
 		q.setParameter("date1", date);
 		return q.getResultList();

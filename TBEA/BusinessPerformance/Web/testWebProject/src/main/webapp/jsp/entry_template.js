@@ -27,8 +27,18 @@ var entry_template;
         };
         View.prototype.initInstance = function (opt) {
             this.mOpt = opt;
-            this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
-            this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.topComps);
+            switch (this.mOpt.entryType) {
+                case Util.ZBType.YDJDMJH:
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId, true);
+                    break;
+                case Util.ZBType.QNJH:
+                case Util.ZBType.BY20YJ:
+                case Util.ZBType.BY28YJ:
+                case Util.ZBType.BYSJ:
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+                    break;
+            }
+            this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
             this.updateTitle();
             this.updateUI();
         };
@@ -161,7 +171,7 @@ var entry_template;
             this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
             var data = this.mTableData;
             $("#" + name).jqGrid(this.mTableAssist.decorate({
-                data: this.mTableAssist.getData(data),
+                data: this.mTableAssist.getDataWithId(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,

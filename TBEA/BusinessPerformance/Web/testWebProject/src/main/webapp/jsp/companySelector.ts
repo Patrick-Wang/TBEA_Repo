@@ -137,7 +137,10 @@ module Util {
 
         public getCompany(): Util.CompanyType {
             var selNodes = this.mUnitedSelector.getNodes();
-            return selNodes[selNodes.length - 1].getData().id;
+            if (selNodes.length > 0) {
+                return selNodes[selNodes.length - 1].getData().id;
+            }
+            return null;
         }
         
         public getCompanys(): Util.CompanyType[] {

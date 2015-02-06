@@ -28,8 +28,8 @@ module entry_template {
         tableId: string;
         dateId: string;
         date?: Util.Date;
-        companyId : string;
-        topComps: string[][];
+        companyId: string;
+        comps: Util.IDataNode[];
         entryType?: Util.ZBType;
     }
 
@@ -53,20 +53,33 @@ module entry_template {
         private mTableAssist: JQTable.JQGridAssistant;
         initInstance(opt: IViewOption) {
             this.mOpt = opt;
-            this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
-            this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.topComps);
+
+            switch (this.mOpt.entryType) {
+
+                case Util.ZBType.YDJDMJH:
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId, true);
+                    break;
+                case Util.ZBType.QNJH:
+                case Util.ZBType.BY20YJ:
+                case Util.ZBType.BY28YJ:
+                case Util.ZBType.BYSJ:
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+                    break;
+            }
+
+            this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
             this.updateTitle();
             this.updateUI();
         }
 
         public updateUI() {
             var date = this.mDateSelector.getDate();
-            this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId : this.mCompanySelector.getCompany() })
+            this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId: this.mCompanySelector.getCompany() })
                 .then((data: any) => {
-                    this.mTableData = data;
-                    this.updateTitle();
-                    this.updateTable(this.mOpt.tableId);
-                });
+                this.mTableData = data;
+                this.updateTitle();
+                this.updateTable(this.mOpt.tableId);
+            });
         }
 
         public submit() {
@@ -77,14 +90,13 @@ module entry_template {
                 month: date.month,
                 entryType: this.mOpt.entryType,
                 data: JSON.stringify(this.mTableAssist.getAllData())
-            })
-                .then((data: ISubmitResult) => {
-                    if (data.result) {
-                        alert("submit 成功");
-                    } else {
-                        alert("submit 失敗");
-                    }
-                });
+            }).then((data: ISubmitResult) => {
+                if (data.result) {
+                    alert("submit 成功");
+                } else {
+                    alert("submit 失敗");
+                }
+            });
         }
 
         private updateTitle() {
@@ -110,7 +122,6 @@ module entry_template {
 
             $('h1').text(header);
             document.title = header;
-
         }
 
         private createPredict(title: string[]): Array<string> {
@@ -127,7 +138,7 @@ module entry_template {
                     ret.push((date.month + 1) + "月计划")
                     ret.push((date.month + 2) + "月计划")
                     ret.push((date.month + 3) + "月计划")
-                }    
+                }
             } else if (this.mOpt.entryType == Util.ZBType.BY20YJ ||
                 this.mOpt.entryType == Util.ZBType.BY28YJ) {
                 ret.push(title[1]);
@@ -151,7 +162,7 @@ module entry_template {
             return ret;
         }
 
-        
+
         private disableEntry(tableId: string) {
             var parent = $("#" + tableId);
             parent.empty();
@@ -163,7 +174,7 @@ module entry_template {
         private enableEntry() {
             $("#submit").css("display", "");
         }
-        
+
         private updateTable(tableId: string): void {
             var name = tableId + "_jqgrid";
 
@@ -171,7 +182,7 @@ module entry_template {
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             this.enableEntry();
- 
+
             var titles = null;
             switch (this.mOpt.entryType) {
                 case Util.ZBType.QNJH:
@@ -181,8 +192,8 @@ module entry_template {
                     if (this.mDateSelector.getDate().month % 3 != 0) {
                         this.disableEntry(tableId);
                         return;
-                    }else{
-                    	titles = this.createPredict(["指标名称"]);
+                    } else {
+                        titles = this.createPredict(["指标名称"]);
                     }
                     break;
                 case Util.ZBType.BY20YJ:
@@ -198,13 +209,11 @@ module entry_template {
             this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
             var data = this.mTableData;
 
-        
-
             $("#" + name).jqGrid(
                 this.mTableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
-                    data: this.mTableAssist.getData(data),
+                    data: this.mTableAssist.getDataWithId(data),
                     datatype: "local",
                     multiselect: false,
                     drag: false,
@@ -217,7 +226,6 @@ module entry_template {
                     shrinkToFit: true,
                     autoScroll: true,
                 }));
-
         }
     }
 }

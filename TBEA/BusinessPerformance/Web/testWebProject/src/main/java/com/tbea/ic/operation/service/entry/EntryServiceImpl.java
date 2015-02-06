@@ -33,16 +33,6 @@ public class EntryServiceImpl implements EntryService{
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 	
-//	@Override
-//	public String[][] getZb(Date date, User usr, ZBType entryType) {
-//		return 
-//				 new String[][]{
-//				 {"1.00", "2.00", "3.00", "4.00", "4.00"},
-//				 {"1.00", "2.00", "3.00", "4.00", "4.00"},
-//				 {"1.00", "2.00", "3.00", "4.00", "4.00"}
-//				 };
-//	}
-
 	@Override
 	public boolean updateZb(Date date, User usr, JSONArray fromObject,
 			ZBType entryType) {
@@ -85,11 +75,10 @@ public class EntryServiceImpl implements EntryService{
 	@Override
 	public String[][] getZb(Date date, Account account, CompanyType comp,
 			ZBType entryType) {
-		return 
-		 new String[][]{
-		 {"1.00", "2.00", "3.00", "4.00", "4.00"},
-		 {"1.00", "2.00", "3.00", "4.00", "4.00"},
-		 {"1.00", "2.00", "3.00", "4.00", "4.00"}
+		return new String[][]{
+			 {"1", "销售收入", "asdf", "ffd", "eew", "334f"},
+			 {"2", "营业额", "ffd", "sdf", "4d0", "4.00"},
+			 {"3", "利润", "2.00", "fa", "4f", "46650"}
 		 };
 	}
 

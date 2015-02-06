@@ -112,24 +112,6 @@ public class EntryController {
 		User usr = new User();
 		ret = entryService.updateZb(date, usr, JSONArray.fromObject(data), entryType);
 		
-		
-//		switch (entryType){
-//			case BY20:
-//				ret = service.update20Zb(date, JSONArray.fromObject(data));
-//				break;
-//			case BY28:
-//				ret = service.update28Zb(date, usr, JSONArray.fromObject(data));
-//				break;
-//			case BYSJ:
-//				ret = service.updateBySJZb(date, JSONArray.fromObject(data));
-//				break;
-//			case QNJH:
-//				ret = service.updateByQNZb(date, JSONArray.fromObject(data));
-//				break;
-//			default:
-//				break;
-//		}
-		
 		String result = "{\"result\":" + ret + "}";
 		return result.getBytes("utf-8");
 	}

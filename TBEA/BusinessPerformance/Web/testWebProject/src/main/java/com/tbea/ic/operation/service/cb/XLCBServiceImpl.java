@@ -128,6 +128,7 @@ public class XLCBServiceImpl implements XLCBService{
 		Calendar firstMonth = Calendar.getInstance();
 		firstMonth.set(cal.get(Calendar.YEAR), 1, 1);
 
+				
 		Calendar tmpCal = Calendar.getInstance();
 		Map<String, XMXX> bhXXMap = new HashMap<String, XMXX>();
 		String xmbh;
@@ -149,20 +150,33 @@ public class XLCBServiceImpl implements XLCBService{
 			Double zccb = Util.valueOf(xltbcb.getLyl()) * Util.valueOf(xltbcb.getLdj())
 					+ Util.valueOf(xltbcb.getDjtyl()) * Util.valueOf(xltbcb.getDjtdj());// 投标五大主材成本
 			Double tbcbzj = (zccb - Util.valueOf(xltbcb.getQtcbhj())) / 1.17;
-			comp = org.getCompany(xltbcb.getQybh());
-		
-			if (null != xltbcb.getTbbjsj()){
+			Company compTmp = org.getCompany(xltbcb.getQybh());
+
+			if (null != xltbcb.getTbbjsj()) {
 				tmpCal.setTime(xltbcb.getTbbjsj());
-				if (comp.getType() == comp.getType() && tmpCal.get(Calendar.MONTH) == cal.get(Calendar.MONTH)){
-					fillTbmx(tbmx, i, xmxx, xltbcb, zccb, tbcbzj);
-					tbmxTmp.add(tbmx[i]);
+				if (tmpCal.get(Calendar.MONTH) == cal.get(Calendar.MONTH)) {
+					if (comp.getType() == compTmp.getType()) {
+
+						fillTbmx(tbmx, i, xmxx, xltbcb, zccb, tbcbzj);
+						tbmxTmp.add(tbmx[i]);
+
+					} else if (xmxx != null && xmxx.getDdszdw() != null
+							&& !xmxx.getDdszdw().isEmpty()) {
+						compTmp = org.getCompany(Integer.valueOf(xmxx
+								.getDdszdw()));
+						if (null != compTmp
+								&& compTmp.getType() == comp.getType()) {
+							fillTbmx(tbmx, i, xmxx, xltbcb, zccb, tbcbzj);
+							tbmxTmp.add(tbmx[i]);
+						}
+					}
 				}
 			}
 			
-			if (comp != null) {
+			if (compTmp != null) {
 
-				if (comp.getParentCompany() != null) {
-					comp = comp.getParentCompany();
+				if (compTmp.getParentCompany() != null) {
+					compTmp = compTmp.getParentCompany();
 				}
 
 				filltbqk(jttb, gsMap.get(comp.getType()), xltbcb, tbcbzj);

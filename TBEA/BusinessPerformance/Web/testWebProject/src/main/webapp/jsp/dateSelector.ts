@@ -178,6 +178,7 @@ module Util {
                 var endMonth = this.getLatestMonth();
                 var startMonth = this.getStartMonth();
     
+                var seasonCount = 0;
                 if (!this.mAsSeasion){
                     for (var i = startMonth; i <= endMonth; ++i) {
                         if (selMonth == i) {
@@ -189,6 +190,7 @@ module Util {
                 }else{
                     for (var i = startMonth; i <= endMonth; ++i) {
                         if (i % 3 == 0){
+                            ++seasonCount;
                             if (selMonth == i) {
                                 monthSel.append('<option value="' + selMonth + '" selected="selected">' + i / 3 + '季度</option>');
                             } else {
@@ -209,7 +211,7 @@ module Util {
                     multiple: false,
                     header: false,
                     minWidth: 80,
-                    height: this.mAsSeasion ? 4 * 28 : (endMonth - startMonth + 1) * 28,
+                    height: this.mAsSeasion ? seasonCount * 28 : (endMonth - startMonth + 1) * 28,
                     selectedList: 1
                 });
             }

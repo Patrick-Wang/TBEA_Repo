@@ -39,6 +39,7 @@
 <script src="../jsp/util.js" type="text/javascript"></script>
 <script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
 <script src="../jsp/dateSelector.js" type="text/javascript"></script>
+<script src="../jsp/unitedSelector.js" type="text/javascript"></script>
 <script src="../jsp/companySelector.js" type="text/javascript"></script>
 <script src="../jsp/entry_template.js" type="text/javascript"></script>
 
@@ -50,7 +51,7 @@
           				tableId : "table",
           				dateId:	"date",
           				companyId: "company",
-          				topComps : ${topComps},
+          				comps : JSON.parse('${nodeData}'),
           				date : {
           					month : ${!empty month} ? '${month}' : undefined, 
           					year : ${year}

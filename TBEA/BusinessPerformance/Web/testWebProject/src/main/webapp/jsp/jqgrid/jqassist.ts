@@ -425,6 +425,7 @@ module JQTable {
                         index: colId,
                         sortable: false,
                         editable: !nodes[j].isReadOnly(),
+                        editrules: !nodes[j].isReadOnly() ? {number:true} : undefined,
                         cellattr: function(rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
@@ -453,14 +454,17 @@ module JQTable {
                 this.group();
             }
         }
-
-        
+      
         public getAllData() : Array<string[]>{
             var grid = $("#" + this.mGridName + "");
             var ids = grid.jqGrid('getDataIDs');
             var data : Array<string[]> = [];
             for (var i in ids){
-                data.push(grid.jqGrid('getRowData', ids[i]));
+                var row = [];
+                for (var j in this.mColModel){
+                    row.push(grid.jqGrid("getCell", ids[i], this.mColModel[j].index));
+                }
+                data.push(row);
             }
             return data;
         }
@@ -493,6 +497,18 @@ module JQTable {
             return this.mColModel;
         }
 
+        
+        public addRowData(rowId: string, rowData: string[]) {
+            var grid = $("#" + this.mGridName + "");
+            var row: any = {};
+            for (var j in this.mColModel) {
+                if (j < rowData.length) {
+                    row[this.mColModel[j].index] = rowData[j];
+                }
+            }
+            grid.jqGrid("addRowData", rowId, row)
+        }
+        
         public id(col: number): string {
             var colCount = 0;
             var leaves = [];
@@ -565,6 +581,24 @@ module JQTable {
                 var rowdata = {};
                 for (var j in colums) {
                     rowdata[colums[j].idChain()] = data[i][j];
+                }
+                alldata.push(rowdata);
+            }
+            return alldata;
+        }
+        
+        public getDataWithId(data: string[][]): any[] {
+            var alldata: any[] = [];
+            var colums: Node[] = [];
+            for (var i in this.mTitle) {
+                colums = colums.concat(this.mTitle[i].leaves());
+            }
+
+            for (var i in data) {
+                var rowdata : any = {};
+                rowdata["id"] = data[i][0];
+                for (var j in colums) {
+                    rowdata[colums[j].idChain()] = data[i][parseInt(j) + 1];
                 }
                 alldata.push(rowdata);
             }

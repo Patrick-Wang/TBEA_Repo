@@ -92,5 +92,5 @@
 </table>
 
 	<script type="text/javascript">
-		onComp_categorySelected($("#comp_category")[0], $("#comp_category")[0].value);
+		onComp_categorySelected($("#comp_category")[0], ${firstCompany});
 	</script>

@@ -27,7 +27,7 @@ module approve_template {
         tableUnapproveId: string;
         dateId: string;
         companyId: string;
-        comps : Util.IDataNode[];
+        comps: Util.IDataNode[];
         firstCompany?: number;
         date: Util.Date;
         approveType: Util.ZBType;
@@ -56,27 +56,23 @@ module approve_template {
         private mOpt: IViewOption;
         private mDataSet: Util.Ajax = new Util.Ajax("zb_update.do");
 
-
         initInstance(opt: IViewOption) {
             this.mOpt = opt;
-            if (this.mOpt.approveType == Util.ZBType.YDJDMJH){
-                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId, true);
-            }else{
-                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
-                }
-            //var nodes : Util.IDataNode = {data : {id : 12, value:"12321"}, subNodes : [], parent : undefined};
-            
-           // opt.comps[0].subNodes[0].subNodes.push(nodes);
-           // nodes.parent = opt.comps[0].subNodes[0];
+            if (this.mOpt.approveType == Util.ZBType.YDJDMJH) {
+                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId, true);
+            } else {
+                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+            }
+
             this.mCompanySelector = new Util.CompanySelector(
-                true, 
-                opt.companyId, 
+                true,
+                opt.companyId,
                 opt.comps,
                 opt.firstCompany
-//                ,{
-//                noneSelectedText : '经营单位',
-//                selectedText: '# 个经营单位被选中'     
-//                }
+            //                ,{
+            //                noneSelectedText : '经营单位',
+            //                selectedText: '# 个经营单位被选中'     
+            //                }
                 );
             this.updateTitle();
             this.updateUI();
@@ -86,36 +82,36 @@ module approve_template {
             var date = this.mDateSelector.getDate();
             this.mDataSet.get({ year: date.year, month: date.month, approveType: this.mOpt.approveType })
                 .then((data: any) => {
-                    this.mTableApproveData = this.transposition(data[0]);
-                    this.mTableUnapproveData = this.transposition(data[1]);
-                    this.updateTitle();
-                    this.mTableApproveAssist = this.updateTable(this.mOpt.tableApproveId, this.mTableApproveData);
-                    this.mTableUnapproveAssist = this.updateTable(this.mOpt.tableUnapproveId, this.mTableUnapproveData);
-                });
+                this.mTableApproveData = this.transposition(data[0]);
+                this.mTableUnapproveData = this.transposition(data[1]);
+                this.updateTitle();
+                this.mTableApproveAssist = this.updateTable(this.mOpt.tableApproveId, this.mTableApproveData);
+                this.mTableUnapproveAssist = this.updateTable(this.mOpt.tableUnapproveId, this.mTableUnapproveData);
+            });
         }
 
-        private transposition(data : string[][]) :　Array<string[]>{
-            var dataRet : Array<string[]> = [];
-           
-            for (var i = 0; i < data[0].length; ++i){
-                dataRet.push([]);         
-               for (var j = 0; j < data.length; ++j){
-                  dataRet[i].push(data[j][i]);   
-               }
-               dataRet[i] = dataRet[i].reverse();
+        private transposition(data: string[][]): 　Array<string[]> {
+            var dataRet: Array<string[]> = [];
+
+            for (var i = 0; i < data[0].length; ++i) {
+                dataRet.push([]);
+                for (var j = 0; j < data.length; ++j) {
+                    dataRet[i].push(data[j][i]);
+                }
+                dataRet[i] = dataRet[i].reverse();
             }
             return dataRet;
         }
-        
-        
-        private getTitles() : string[][]{
+
+
+        private getTitles(): string[][] {
             var titles = null;
             switch (this.mOpt.approveType) {
                 case Util.ZBType.QNJH:
                     titles = this.transposition([["全年计划"]]);
                     break;
                 case Util.ZBType.YDJDMJH:
-                 	titles = this.transposition([this.createPredict(["月度-季度末计划值"])]);
+                    titles = this.transposition([this.createPredict(["月度-季度末计划值"])]);
                     break;
                 case Util.ZBType.BY20YJ:
                     titles = this.transposition([this.createPredict(["本月20日预计值"])]);
@@ -130,13 +126,13 @@ module approve_template {
             return titles;
         }
 
-        public updateTable(tableId: string, tableData : string[][]) :  JQTable.JQGridAssistant{
+        public updateTable(tableId: string, tableData: string[][]): JQTable.JQGridAssistant {
             var name = tableId + "_jqgrid";
             var titles = this.getTitles();
-            var tableAssist : JQTable.JQGridAssistant = JQGridAssistantFactory.createFlatTable(name, ["审核类型"].concat(tableData[0]));
-            var data =  titles;
+            var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createFlatTable(name, ["审核类型"].concat(tableData[0]));
+            var data = titles;
 
-            for (var i = 0; i < data.length; ++i){
+            for (var i = 0; i < data.length; ++i) {
                 data[i] = data[i].concat(tableData[i + 1]);
             }
 
@@ -145,10 +141,10 @@ module approve_template {
             parent.append("<table id='" + name + "'></table>");
 
             var width = (tableData[0].length + 1) * 125;
-            if (width > 1000){
+            if (width > 1000) {
                 width = 1000;
             }
-            
+
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
@@ -159,8 +155,8 @@ module approve_template {
                     drag: false,
                     resize: false,
                     //autowidth : false,
-//                    cellsubmit: 'clientArray',
-//                    cellEdit: false,
+                    //                    cellsubmit: 'clientArray',
+                    //                    cellEdit: false,
                     height: '100%',
                     width: width,
                     shrinkToFit: width == 1000 ? false : true,
@@ -180,12 +176,12 @@ module approve_template {
                 data: JSON.stringify(this.mTableUnapproveAssist.getAllData())
             })
                 .then((data: ISubmitResult) => {
-                    if (data.result) {
-                        alert("submit 成功");
-                    } else {
-                        alert("submit 失敗");
-                    }
-                });
+                if (data.result) {
+                    alert("submit 成功");
+                } else {
+                    alert("submit 失敗");
+                }
+            });
         }
 
 
@@ -199,12 +195,12 @@ module approve_template {
                 data: JSON.stringify(this.mTableApproveAssist.getAllData())
             })
                 .then((data: ISubmitResult) => {
-                    if (data.result) {
-                        alert("submit 成功");
-                    } else {
-                        alert("submit 失敗");
-                    }
-                });
+                if (data.result) {
+                    alert("submit 成功");
+                } else {
+                    alert("submit 失敗");
+                }
+            });
         }
 
         private updateTitle() {
@@ -255,16 +251,16 @@ module approve_template {
                     for (var i = 1; i <= leftMonth; ++i) {
                         ret.push((date.month + i) + "月预计")
                     }
-                } else{
-	                if (12 == date.month) {
-	                    ret.push((date.year + 1) + "年1月预计")
-	                    ret.push((date.year + 1) + "年2月预计")
-	                    ret.push((date.year + 1) + "年3月预计")
-	                } else {
-	                    ret.push((date.month + 1) + "月预计")
-	                    ret.push((date.month + 2) + "月预计")
-	                    ret.push((date.month + 3) + "月预计")
-	                }
+                } else {
+                    if (12 == date.month) {
+                        ret.push((date.year + 1) + "年1月预计")
+                        ret.push((date.year + 1) + "年2月预计")
+                        ret.push((date.year + 1) + "年3月预计")
+                    } else {
+                        ret.push((date.month + 1) + "月预计")
+                        ret.push((date.month + 2) + "月预计")
+                        ret.push((date.month + 3) + "月预计")
+                    }
                 }
             }
 
