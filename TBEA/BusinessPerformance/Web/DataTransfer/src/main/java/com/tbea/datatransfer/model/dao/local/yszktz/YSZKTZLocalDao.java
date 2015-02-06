@@ -27,9 +27,6 @@ public interface YSZKTZLocalDao extends AbstractReadWriteDao<YSZKTZLocal> {
 	public Map<String, Double> getYQKByQY(String baseMonth, Integer startTime,
 			Integer endTime) throws Exception;
 
-	public Double getYSZKJE(String baseMonth, List<String> sshyList,
-			boolean isIncluded, boolean isTotal) throws Exception;
-
 	public Double getYSZKJG(String baseMonth, Integer startTime,
 			Integer endTime, List<String> sshyList, boolean isIncluded,
 			boolean isTotal, boolean isKXLB, boolean isZBJ) throws Exception;

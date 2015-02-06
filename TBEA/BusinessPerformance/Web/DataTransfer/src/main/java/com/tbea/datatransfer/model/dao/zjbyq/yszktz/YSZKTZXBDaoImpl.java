@@ -34,4 +34,13 @@ public class YSZKTZXBDaoImpl extends AbstractReadOnlyDaoImpl<YSZKTZBYQ>
 		return resultList;
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<YSZKTZBYQ> getCurrentYSZKTZ() {
+		String sql = "From YSZKTZBYQ where gxrq = (select MAX(gxrq) from YSZKTZBYQ)";
+		Query query = getEntityManager().createQuery(sql);
+		List<YSZKTZBYQ> resultList = query.getResultList();
+		return resultList;
+	}
+
 }

@@ -185,30 +185,6 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 	}
 
 	@Override
-	public Double getYSZKJE(String baseMonth, List<String> sshyList,
-			boolean isIncluded, boolean isTotal) throws Exception {
-		Double result = 0.0D;
-		String sql = "select sum(ysje) from YSZKTZLocal";
-		if (!isTotal) {
-			sql += " where khsshy";
-			if (!isIncluded) {
-				sql += " not";
-			}
-			sql += " in (:sshyList)";
-		}
-		Query query = getEntityManager().createQuery(sql);
-		if (!isTotal) {
-			query.setParameter("sshyList", sshyList);
-		}
-		try {
-			result = (Double) query.getSingleResult();
-		} catch (NoResultException e) {
-			result = 0.0D;
-		}
-		return result;
-	}
-
-	@Override
 	public Double getYSZKJG(String baseMonth, Integer startTime,
 			Integer endTime, List<String> sshyList, boolean isIncluded,
 			boolean isTotal, boolean isKXLB, boolean isZBJ) throws Exception {

@@ -40,7 +40,7 @@ public class YSZKTZTransferServiceImpl implements YSZKTZTransferService {
 			// dl
 			yszktzLocalDao.deleteYSZKTZLocalByQY(6);
 			YSZKTZLocal yszktzLocal = null;
-			List<YSZKTZXL> yszktzDLList = yszktzDLDao.getAllYSZKTZ();
+			List<YSZKTZXL> yszktzDLList = yszktzDLDao.getCurrentYSZKTZ();
 			for (YSZKTZXL yszktzDL : yszktzDLList) {
 				yszktzLocal = new YSZKTZLocal();
 				yszktzLocal.setGxrq(yszktzDL.getGxrq());
@@ -65,7 +65,7 @@ public class YSZKTZTransferServiceImpl implements YSZKTZTransferService {
 			}
 			// ll
 			yszktzLocalDao.deleteYSZKTZLocalByQY(4);
-			List<YSZKTZXL> yszktzLLList = yszktzLLDao.getAllYSZKTZ();
+			List<YSZKTZXL> yszktzLLList = yszktzLLDao.getCurrentYSZKTZ();
 			for (YSZKTZXL yszktzLL : yszktzLLList) {
 				yszktzLocal = new YSZKTZLocal();
 				yszktzLocal.setGxrq(yszktzLL.getGxrq());
@@ -90,7 +90,7 @@ public class YSZKTZTransferServiceImpl implements YSZKTZTransferService {
 			}
 			// xl
 			yszktzLocalDao.deleteYSZKTZLocalByQY(5);
-			List<YSZKTZXL> yszktzXLList = yszktzXLDao.getAllYSZKTZ();
+			List<YSZKTZXL> yszktzXLList = yszktzXLDao.getCurrentYSZKTZ();
 			for (YSZKTZXL yszktzXL : yszktzXLList) {
 				yszktzLocal = new YSZKTZLocal();
 				yszktzLocal.setGxrq(yszktzXL.getGxrq());
@@ -115,7 +115,7 @@ public class YSZKTZTransferServiceImpl implements YSZKTZTransferService {
 			}
 			// tb
 			yszktzLocalDao.deleteYSZKTZLocalByQY(301);
-			List<YSZKTZBYQ> yszktzTBList = yszktzTBDao.getAllYSZKTZ();
+			List<YSZKTZBYQ> yszktzTBList = yszktzTBDao.getCurrentYSZKTZ();
 			for (YSZKTZBYQ yszktzTB : yszktzTBList) {
 				yszktzLocal = new YSZKTZLocal();
 				yszktzLocal.setGxrq(yszktzTB.getGxrq());
@@ -141,7 +141,7 @@ public class YSZKTZTransferServiceImpl implements YSZKTZTransferService {
 
 			// sb
 			yszktzLocalDao.deleteYSZKTZLocalByQY(1);
-			List<YSZKTZBYQ> yszktzSBList = yszktzSBDao.getAllYSZKTZ();
+			List<YSZKTZBYQ> yszktzSBList = yszktzSBDao.getCurrentYSZKTZ();
 			for (YSZKTZBYQ yszktzSB : yszktzSBList) {
 				yszktzLocal = new YSZKTZLocal();
 				yszktzLocal.setGxrq(yszktzSB.getGxrq());
@@ -167,7 +167,7 @@ public class YSZKTZTransferServiceImpl implements YSZKTZTransferService {
 
 			// xb
 			yszktzLocalDao.deleteYSZKTZLocalByQY(3);
-			List<YSZKTZBYQ> yszktzXBList = yszktzXBDao.getAllYSZKTZ();
+			List<YSZKTZBYQ> yszktzXBList = yszktzXBDao.getCurrentYSZKTZ();
 			for (YSZKTZBYQ yszktzXB : yszktzXBList) {
 				yszktzLocal = new YSZKTZLocal();
 				yszktzLocal.setGxrq(yszktzXB.getGxrq());

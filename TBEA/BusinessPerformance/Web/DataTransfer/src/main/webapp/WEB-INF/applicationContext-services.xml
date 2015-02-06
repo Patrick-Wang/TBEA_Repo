@@ -931,7 +931,7 @@
 		<task:scheduled ref="blhtService" method="importBLHT"
 			cron="0 34 23 * * *" />
 		<task:scheduled ref="cqkService" method="importCQK"
-			cron="0 36 23 * * *" />
+			cron="0 36 23 1 * *" />
 		<task:scheduled ref="hkjhjgbService" method="importHKJHJGB"
 			cron="0 38 23 * * *" />
 		<task:scheduled ref="ndtbbzjqkService" method="importNDTBBZJQK"
@@ -941,9 +941,9 @@
 		<task:scheduled ref="ydhkjhzxqkService" method="importYDHKJHZXQK"
 			cron="0 44 23 * * *" />
 		<task:scheduled ref="yqkqsbhbService" method="importYQKQSBHB"
-			cron="0 46 23 * * *" />
+			cron="0 46 23 1 * *" />
 		<task:scheduled ref="yszkjgqkbService" method="importYSZKJGQKB"
-			cron="0 48 23 * * *" />
+			cron="0 48 23 1 * *" />
 		<task:scheduled ref="ztyszkfxbService" method="importZTYSZKFXB"
 			cron="0 50 23 * * *" />
 

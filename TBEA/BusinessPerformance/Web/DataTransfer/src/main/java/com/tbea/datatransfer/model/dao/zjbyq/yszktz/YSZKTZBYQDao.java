@@ -10,4 +10,6 @@ public interface YSZKTZBYQDao extends AbstractReadOnlyDao<YSZKTZBYQ> {
 
 	public List<YSZKTZBYQ> getAllYSZKTZ();
 
+	public List<YSZKTZBYQ> getCurrentYSZKTZ();
+
 }

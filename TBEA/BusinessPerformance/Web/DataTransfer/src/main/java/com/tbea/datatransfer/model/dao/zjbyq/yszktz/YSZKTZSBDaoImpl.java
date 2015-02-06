@@ -27,8 +27,17 @@ public class YSZKTZSBDaoImpl extends AbstractReadOnlyDaoImpl<YSZKTZBYQ>
 	public List<YSZKTZBYQ> getAllYSZKTZ() {
 		// TODO
 		// gxrq <= 2
-//		String sql = "From YSZKTZTB Where DateDiff(dd,gxrq,getDate())<=2";
+		// String sql = "From YSZKTZTB Where DateDiff(dd,gxrq,getDate())<=2";
 		String sql = "From YSZKTZBYQ";
+		Query query = getEntityManager().createQuery(sql);
+		List<YSZKTZBYQ> resultList = query.getResultList();
+		return resultList;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<YSZKTZBYQ> getCurrentYSZKTZ() {
+		String sql = "From YSZKTZBYQ where gxrq = (select MAX(gxrq) from YSZKTZBYQ)";
 		Query query = getEntityManager().createQuery(sql);
 		List<YSZKTZBYQ> resultList = query.getResultList();
 		return resultList;
