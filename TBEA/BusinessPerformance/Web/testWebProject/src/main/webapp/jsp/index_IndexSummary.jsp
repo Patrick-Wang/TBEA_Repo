@@ -7,51 +7,89 @@
 <c:if test="${!sbqgb}">
 <div>
 	<h3>
-		指标汇总明细<a name="zbhz"> </a>
+		公司指标完成情况<a name="zbhz"> </a>
 	</h3>
 	<div class="section">
 		<div class="thumb3">
 			<ul class="slides">
 				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>整体指标汇总</strong></span></a>
+						src="../images/charts/bar1.png"> <span><strong>整体指标完成情况</strong></span></a>
 				</li>
 				<!--/li-->
+				<c:if test="${CorpAuth}">
 				<li><a href="../ydzb/gcy_zbhz.do" target="_blank"><img
-						src="../images/charts/line2.png"> <span><strong>各产业指标汇总</strong></a>
+						src="../images/charts/line2.png"> <span><strong>财务指标完成情况</strong></a>
 				</li>
 				<!--/li-->
 				<li><a href="../ydzb/gdw_zbhz.do" target="_blank"><img
-						src="../images/charts/pie1.png"> <span><strong>各单位指标汇总</strong></a>
+						src="../images/charts/pie1.png"> <span><strong>利润指标完成情况</strong></a>
 				</li>
 				<!--/li-->
 				<li><a href="../ydzb/zbhz_overview.do" target="_blank"><img
-						src="../images/charts/scatter1.png"> <span><strong>指标-利润总额</strong></span></a>
+						src="../images/charts/scatter1.png"> <span><strong>销售收入指标完成情况</strong></span></a>
 				</li>
 				<!--/li-->
 				<li><a href="../ydzb/zbhz_overview.do?zb=7" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>指标-销售收入</strong></span></a>
+						src="../images/charts/scatter2.png"> <span><strong>净现金流指标完成情况</strong></span></a>
 				</li>
 				<!--/li-->
 				<li><a href="../ydzb/zbhz_overview.do?zb=23" target="_blank"><img
-						src="../images/charts/scatter4.png""> <span><strong>指标-应收账款</strong></span></a></li>
+						src="../images/charts/scatter4.png""> <span><strong>应收账款指标完成情况</strong></span></a></li>
 				<!--/li-->
 				<li><a href="../ydzb/zbhz_overview.do?zb=25" target="_blank"><img
-						src="../images/charts/scatter5.png"> <span><strong>指标-存货</strong></span></a></li>
+						src="../images/charts/scatter5.png"> <span><strong>存货指标完成情况</strong></span></a></li>
 				<!--/li-->
-
-				<li><a href="../ydzb/zbhz_overview.do?zb=8" target="_blank"><img
-						src="../images/charts/scatter3.png"> <span><strong>指标-现金流</strong></span></a></li>
-				<!--/li-->
-				<li><a href="../ydzb/xjlrb.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>现金流日报</strong></span></a>
-				</li>
-				<!--/li-->
-
+				</c:if>
 			</ul>
 		</div>
 	</div>
 </div>
 </c:if>
+
+
+<c:if test="${CoprAuth}">
+<div>
+	<h3>
+		经营指标预测情况<a name="zbPrediction"> </a>
+	</h3>
+	<div class="section">
+		<div class="thumb3">
+			<ul class="slides">
+				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
+						src="../images/charts/bar1.png"> <span><strong>整体指标预测情况</strong></span></a>
+				</li>
+				<!--/li-->
+				<c:if test="${CorpAuth}">
+				<li><a href="../ydzb/gcy_zbhz.do" target="_blank"><img
+						src="../images/charts/line2.png"> <span><strong>财务指标预测完成情况</strong></a>
+				</li>
+				<!--/li-->
+				<li><a href="../ydzb/gdw_zbhz.do" target="_blank"><img
+						src="../images/charts/pie1.png"> <span><strong>利润指标预测情况</strong></a>
+				</li>
+				<!--/li-->
+				<li><a href="../ydzb/zbhz_overview.do" target="_blank"><img
+						src="../images/charts/scatter1.png"> <span><strong>销售收入指标预测情况</strong></span></a>
+				</li>
+				<!--/li-->
+				<li><a href="../ydzb/zbhz_overview.do?zb=7" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>净现金流指标预测情况</strong></span></a>
+				</li>
+				<!--/li-->
+				<li><a href="../ydzb/zbhz_overview.do?zb=23" target="_blank"><img
+						src="../images/charts/scatter4.png""> <span><strong>应收账款指标预测情况</strong></span></a></li>
+				<!--/li-->
+				<li><a href="../ydzb/zbhz_overview.do?zb=25" target="_blank"><img
+						src="../images/charts/scatter5.png"> <span><strong>存货指标预测情况</strong></span></a></li>
+				<!--/li-->
+				</c:if>
+			</ul>
+		</div>
+	</div>
+</div>
+</c:if>
+
+
 <div>
 	<h3>
 		应收账款<a name="yszk"> </a>

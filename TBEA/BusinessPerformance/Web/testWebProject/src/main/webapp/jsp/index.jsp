@@ -63,13 +63,21 @@
 			<div class="col-md-2">
 				<div class="affix" style="margin-left: -20px; margin-top: auto;"
 					id="chartsTypeNav">
+					<!-- 所有公司都显示-->
 					<ul id="navlist" style="padding: 10px 0;">
 					<c:if test="${!sbqgb}">
 						<li style="background-color: transparent;"><i
 							class="ec-icon ec-icon-line"></i> <a href="#zbhz"
-							style="color: rgb(62, 152, 197);">经营指标汇总</a></li>
+							style="color: rgb(62, 152, 197);">经营指标完成情况</a></li>
 					</c:if>
-						<c:if test="${true}">
+					
+					<c:if test="${CorpAuth}">
+						<li style="background-color: transparent;"><i
+							class="ec-icon ec-icon-line"></i> <a href="#zbhz"
+							style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
+					</c:if>
+					
+					<c:if test="${true}">
 							<li style="background-color: transparent;"><i
 								class="ec-icon ec-icon-pie"></i> <a href="#yszk"
 								style="color: rgb(62, 152, 197);">应收账款</a></li>
@@ -88,7 +96,7 @@
 							<li style="background-color: transparent;"><i
 								class="ec-icon ec-icon-force"></i> <a href="#tbbzj"
 								style="color: rgb(62, 152, 197);">投标保证金</a></li>
-						</c:if>
+					</c:if>
 					</ul>
 
 					<ul id="navlist1" style="padding: 10px 0; display: none">

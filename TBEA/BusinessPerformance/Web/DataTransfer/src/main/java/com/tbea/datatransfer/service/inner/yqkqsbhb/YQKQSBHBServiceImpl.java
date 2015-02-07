@@ -1,7 +1,7 @@
 package com.tbea.datatransfer.service.inner.yqkqsbhb;
 
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -48,11 +48,17 @@ public class YQKQSBHBServiceImpl implements YQKQSBHBService {
 	public boolean importYQKQSBHB() {
 		boolean result = false;
 		try {
-			yqkqsbhbDao.truncateYQKQSBHB();
-			SimpleDateFormat nyFormat = new SimpleDateFormat("yyyyMM");
-			String baseMonth = nyFormat.format(new Date(System
-					.currentTimeMillis()));
+			// yqkqsbhbDao.truncateYQKQSBHB();
+			SimpleDateFormat month_sdf = new SimpleDateFormat("yyyyMM");
+			String baseMonth = null;
+			Calendar cur = Calendar.getInstance();
+			// Calendar end = Calendar.getInstance();
+			// cur.set(2013, 1 - 1, 1);
+			// end.setTimeInMillis(System.currentTimeMillis());
+			cur.setTimeInMillis(System.currentTimeMillis());
+			// while (!cur.after(end)) {
 			YQKQSBHB yqkqsbhb = new YQKQSBHB();
+			baseMonth = month_sdf.format(cur.getTime());
 			yqkqsbhb.setNy(baseMonth);
 			yqkqsbhb.setYq1yyn(yszktzLocalDao.getYQK(baseMonth, 0, 1));
 			yqkqsbhb.setYq1_3y(yszktzLocalDao.getYQK(baseMonth, 1, 3));
@@ -62,7 +68,8 @@ public class YQKQSBHBServiceImpl implements YQKQSBHBService {
 			yqkqsbhb.setQybh(9999);
 			yqkqsbhbDao.merge(yqkqsbhb);
 			importYQKByQY(baseMonth);
-
+			// cur.add(cur.MONTH, 1);
+			// }
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

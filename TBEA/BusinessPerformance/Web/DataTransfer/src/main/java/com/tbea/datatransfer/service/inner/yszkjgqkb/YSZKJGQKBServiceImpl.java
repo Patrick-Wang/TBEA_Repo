@@ -1,15 +1,14 @@
 package com.tbea.datatransfer.service.inner.yszkjgqkb;
 
-import java.util.Date;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.datatransfer.common.CommonMethod;
 import com.tbea.datatransfer.model.dao.inner.yszkjgqkb.YSZKJGQKBDao;
 import com.tbea.datatransfer.model.dao.local.yszktz.YSZKTZLocalDao;
 import com.tbea.datatransfer.model.entity.inner.YSZKJGQKB;
@@ -50,7 +49,6 @@ public class YSZKJGQKBServiceImpl implements YSZKJGQKBService {
 		Map<String, Double> wdqzbjMap = yszktzLocalDao.getYSZKJGByQY(baseMonth,
 				null, 0, sshyList, isIncluded, isTotal, true, true);
 		YSZKJGQKB yszkjgqkb = null;
-		NumberFormat nf = new DecimalFormat("0.00%");
 		Double ysje = null;
 		Double ysjezj = null;
 		for (String qybh : QYBHArray) {
@@ -60,11 +58,7 @@ public class YSZKJGQKBServiceImpl implements YSZKJGQKBService {
 			yszkjgqkb.setNy(baseMonth);
 			yszkjgqkb.setHy(hyName);
 			yszkjgqkb.setYsje(ysje);
-			if (null != ysje && null != ysjezj) {
-				yszkjgqkb.setZqbbl(nf.format(ysje / ysjezj));
-			} else {
-				yszkjgqkb.setZqbbl(null);
-			}
+			yszkjgqkb.setZqbbl(CommonMethod.getPercent(ysje, ysjezj));
 			yszkjgqkb.setYq1yyn(yq1yynMap.get(qybh));
 			yszkjgqkb.setYq1_3y(yq1_3yMap.get(qybh));
 			yszkjgqkb.setYq3_6y(yq3_6yMap.get(qybh));
@@ -98,22 +92,21 @@ public class YSZKJGQKBServiceImpl implements YSZKJGQKBService {
 		yszkjgqkb.setNy(baseMonth);
 		yszkjgqkb.setHy(hyName);
 		yszkjgqkb.setYsje(ysje);
-		NumberFormat nf = new DecimalFormat("0.00%");
-		yszkjgqkb.setZqbbl(nf.format(ysje / ysjezj));
+		yszkjgqkb.setZqbbl(CommonMethod.getPercent(ysje, ysjezj));
 		yszkjgqkb.setYq1yyn(yszktzLocalDao.getYSZKJG(baseMonth, 0, 1, sshyList,
 				isIncluded, isTotal, false, false));
 		yszkjgqkb.setYq1_3y(yszktzLocalDao.getYSZKJG(baseMonth, 1, 3, sshyList,
 				isIncluded, isTotal, false, false));
 		yszkjgqkb.setYq3_6y(yszktzLocalDao.getYSZKJG(baseMonth, 3, 6, sshyList,
 				isIncluded, isTotal, false, false));
-		yszkjgqkb.setYq6_12y(yszktzLocalDao.getYSZKJG(baseMonth, 6, 12, sshyList,
-				isIncluded, isTotal, false, false));
+		yszkjgqkb.setYq6_12y(yszktzLocalDao.getYSZKJG(baseMonth, 6, 12,
+				sshyList, isIncluded, isTotal, false, false));
 		yszkjgqkb.setYq1nys(yszktzLocalDao.getYSZKJG(baseMonth, 12, null,
 				sshyList, isIncluded, isTotal, false, false));
-		yszkjgqkb.setWdqk(yszktzLocalDao.getYSZKJG(baseMonth, null, 0, sshyList,
-				isIncluded, isTotal, true, false));
-		yszkjgqkb.setWdqzbj(yszktzLocalDao.getYSZKJG(baseMonth, null, 0, sshyList,
-				isIncluded, isTotal, true, true));
+		yszkjgqkb.setWdqk(yszktzLocalDao.getYSZKJG(baseMonth, null, 0,
+				sshyList, isIncluded, isTotal, true, false));
+		yszkjgqkb.setWdqzbj(yszktzLocalDao.getYSZKJG(baseMonth, null, 0,
+				sshyList, isIncluded, isTotal, true, true));
 		yszkjgqkb.setYszkhj(ysje);
 		// yszkjg.setYszkhj(yszktzLocalDao.getYSZKJG(baseMonth, null, null,
 		// sshyList,
@@ -128,10 +121,16 @@ public class YSZKJGQKBServiceImpl implements YSZKJGQKBService {
 	public boolean importYSZKJGQKB() {
 		boolean result = false;
 		try {
-			yszkjgqkbDao.truncateYSZKJGQKB();
-			SimpleDateFormat nyFormat = new SimpleDateFormat("yyyyMM");
-			String baseMonth = nyFormat.format(new Date(System
-					.currentTimeMillis()));
+			// yszkjgqkbDao.truncateYSZKJGQKB();
+			SimpleDateFormat month_sdf = new SimpleDateFormat("yyyyMM");
+			String baseMonth = null;
+			Calendar cur = Calendar.getInstance();
+			// Calendar end = Calendar.getInstance();
+			// cur.set(2013, 1 - 1, 1);
+			// end.setTimeInMillis(System.currentTimeMillis());
+			cur.setTimeInMillis(System.currentTimeMillis());
+			// while (!cur.after(end)) {
+			baseMonth = month_sdf.format(cur.getTime());
 			List<String> sshyGWList = new ArrayList<String>();
 			sshyGWList.add("01");
 			importYSZKJGByHY(baseMonth, "国网", sshyGWList, true, false);
@@ -171,6 +170,8 @@ public class YSZKJGQKBServiceImpl implements YSZKJGQKBService {
 			importYSZKJGByHY(baseMonth, "其他", sshyQTList, false, false);
 
 			importYSZKJGByHY(baseMonth, "合计", null, false, true);
+			// cur.add(cur.MONTH, 1);
+			// }
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
