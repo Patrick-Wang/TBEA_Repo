@@ -8,22 +8,22 @@ import net.sf.json.JSONArray;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
-import com.tbea.ic.operation.model.entity.User;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 
 public interface EntryService {
-
-	boolean updateZb(Date date, User usr, JSONArray fromObject, ZBType entryType);
-
-	boolean hasEntryPlanPermission(Account account);
-
-	boolean hasEntryPredictPermission(Account account);
 
 	List<Company> getValidJHCompanys(Account account);
 
 	List<Company> getValidSJCompanys(Account account);
 
-	String[][] getZb(Date date, Account account, CompanyType comp,
+	List<String[]> getZb(Date date, Account account, CompanyType comp,
 			ZBType entryType);
+
+	boolean updateZb(Date date, Account account, CompanyType comp,
+			ZBType entryType, JSONArray data);
+
+	public boolean hasEntryPlanPermission(Account account);
+
+	public boolean hasEntryPredictPermission(Account account);
 
 }

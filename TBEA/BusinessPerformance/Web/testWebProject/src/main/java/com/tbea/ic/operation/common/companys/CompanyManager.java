@@ -14,8 +14,8 @@ public class CompanyManager {
 		LL		("鲁缆公司"),
 		XL		("新缆厂"),
 		DL		("德缆公司"),
-		XNY		("新特能源公司"),
-		GY		("新能源"),
+		XTNYGS		("新特能源公司"),
+		XNY		("新能源"),
 		TCNY	("天池能源"),
 		NDGS	("能动公司"),
 		ZJWL	("中疆物流"),
@@ -89,6 +89,10 @@ public class CompanyManager {
 		DYCJGJWLMYYXGS	("德阳川疆国际物流贸易有限公司"),
 		XNDQGS	("西南电气公司"),
 		BBXSGS	("本部销售公司"),
+		HXTG	("和新套管"),
+		KGYJS	("开关研究所"),
+		SBXNY	("沈变新能源"),
+		
 		
 		//非正式公司
 		DBSBDCYJT("东北输变电产业集团"),

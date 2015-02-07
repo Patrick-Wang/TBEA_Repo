@@ -37,10 +37,6 @@ public class YQYSYSFXController {
 	@Autowired
 	private YQYSYSFXService service;
 
-	private String view = "blhtPage";
-
-	private String commandName = "result";
-
 	@RequestMapping(value = "yqysysfx_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getYqysysfx_update(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -61,7 +57,7 @@ public class YQYSYSFXController {
 			xjlrb = JSONArray.fromObject(service.getYqysysfxData(d, comp))
 					.toString().replace("null", "0.00");
 		}
-			
+
 		return xjlrb;
 	}
 

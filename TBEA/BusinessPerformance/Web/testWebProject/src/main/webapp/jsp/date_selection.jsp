@@ -99,6 +99,7 @@
 					style="width: 125px;">
 						<option value="${year}" selected="selected">${year}年</option>
 						<option value="${year - 1}">${year - 1}年</option>
+						<option value="${year - 2}">${year - 2}年</option>
 				</select></td>
 			</c:when>
 
@@ -107,6 +108,7 @@
 					style="width: 125px;">
 						<option value="${year}" selected="selected">${year}年</option>
 						<option value="${year - 1}">${year - 1}年</option>
+						<option value="${year - 2}">${year - 2}年</option>
 				</select></td>
 				<td style="padding-right:5px"><select id="month" onchange="onMonthChanged(this.value)"
 					style="width: 125px;">

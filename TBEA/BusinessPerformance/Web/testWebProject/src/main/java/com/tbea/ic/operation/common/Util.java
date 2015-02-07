@@ -22,6 +22,17 @@ public class Util {
 				+ "-1");
 	}
 
+	public static java.sql.Date toDate(Calendar d){
+		java.sql.Date ret = null;
+		if (d != null){
+				return java.sql.Date.valueOf(
+							d.get(Calendar.YEAR) + "-" + 
+							(d.get(Calendar.MONTH) + 1) + "-" + 
+							d.get(Calendar.DAY_OF_MONTH));
+		}
+		return  ret;
+	}
+	
 	public static java.sql.Date toDate(String date){
 		java.sql.Date ret = null;
 		if (date != null){

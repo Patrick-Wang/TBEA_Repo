@@ -68,7 +68,7 @@ public class ApproveController {
 		int year = date.get(Calendar.YEAR);
 		ZBType approveType = ZBType.valueOf(Integer.valueOf(request.getParameter("approveType")));
 		Map<String, Object> map = new HashMap<String, Object>();
-		if (approveType == ZBType.QNJH){
+		if (approveType == ZBType.NDJH){
 			DateSelection dateSel = new DateSelection(year);
 			dateSel.select(map);
 		}

@@ -19,7 +19,7 @@ var entry_template;
     })();
     var View = (function () {
         function View() {
-            this.mDataSet = new Util.Ajax("zb_update.do");
+            this.mDataSet = new Util.Ajax("zb_update.do", false);
             this.mSubmit = new Util.Ajax("zb_submit.do");
         }
         View.getInstance = function () {
@@ -53,11 +53,22 @@ var entry_template;
         };
         View.prototype.submit = function () {
             var date = this.mDateSelector.getDate();
+            var allData = this.mTableAssist.getAllData();
+            var submitData = [];
+            for (var i = 0; i < allData.length; ++i) {
+                submitData.push([]);
+                for (var j = 0; j < allData[i].length; ++j) {
+                    if (j != 1) {
+                        submitData[i].push(allData[i][j]);
+                    }
+                }
+            }
             this.mSubmit.post({
                 year: date.year,
                 month: date.month,
                 entryType: this.mOpt.entryType,
-                data: JSON.stringify(this.mTableAssist.getAllData())
+                companyId: this.mCompanySelector.getCompany(),
+                data: JSON.stringify(submitData)
             }).then(function (data) {
                 if (data.result) {
                     alert("submit 成功");
@@ -170,6 +181,8 @@ var entry_template;
             }
             this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
             var data = this.mTableData;
+            var lastsel = "";
+            var lastcell = "";
             $("#" + name).jqGrid(this.mTableAssist.decorate({
                 data: this.mTableAssist.getDataWithId(data),
                 datatype: "local",
@@ -182,7 +195,22 @@ var entry_template;
                 width: titles.length * 200,
                 shrinkToFit: true,
                 autoScroll: true,
+                beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
+                    lastsel = iRow;
+                    lastcell = iCol;
+                },
+                afterEditCell: function (rowid, cellname, v, iRow, iCol) {
+                    lastsel = "";
+                    lastcell = "";
+                }
             }));
+            $('html').bind('click', function (e) {
+                if (lastsel != "") {
+                    if ($(e.target).closest("#" + name).length == 0) {
+                        $("#" + name).jqGrid("saveCell", lastsel, lastcell);
+                    }
+                }
+            });
         };
         View.instance = new View();
         return View;

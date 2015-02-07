@@ -21,7 +21,7 @@ var approve_template;
         function View() {
             this.mApprove = new Util.Ajax("zb_approve.do");
             this.mUnapprove = new Util.Ajax("zb_unapprove.do");
-            this.mDataSet = new Util.Ajax("zb_update.do");
+            this.mDataSet = new Util.Ajax("zb_update.do", false);
         }
         View.getInstance = function () {
             return View.instance;
@@ -111,11 +111,21 @@ var approve_template;
         };
         View.prototype.unapprove = function () {
             var date = this.mDateSelector.getDate();
+            var allData = this.mTableUnapproveAssist.getAllData();
+            var submitData = [];
+            for (var i = 0; i < allData.length; ++i) {
+                submitData.push([]);
+                for (var j = 0; j < allData[i].length; ++j) {
+                    if (j != 1) {
+                        submitData[i].push(allData[i][j]);
+                    }
+                }
+            }
             this.mUnapprove.post({
                 year: date.year,
                 month: date.month,
                 approveType: this.mOpt.approveType,
-                data: JSON.stringify(this.mTableUnapproveAssist.getAllData())
+                data: JSON.stringify(allData)
             }).then(function (data) {
                 if (data.result) {
                     alert("submit 成功");
@@ -127,11 +137,21 @@ var approve_template;
         };
         View.prototype.approve = function () {
             var date = this.mDateSelector.getDate();
+            var allData = this.mTableApproveAssist.getAllData();
+            var submitData = [];
+            for (var i = 0; i < allData.length; ++i) {
+                submitData.push([]);
+                for (var j = 0; j < allData[i].length; ++j) {
+                    if (j != 1) {
+                        submitData[i].push(allData[i][j]);
+                    }
+                }
+            }
             this.mApprove.post({
                 year: date.year,
                 month: date.month,
                 approveType: this.mOpt.approveType,
-                data: JSON.stringify(this.mTableApproveAssist.getAllData())
+                data: JSON.stringify(submitData)
             }).then(function (data) {
                 if (data.result) {
                     alert("submit 成功");
