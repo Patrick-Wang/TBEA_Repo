@@ -2,7 +2,7 @@ package com.tbea.ic.operation.common;
 
 
 public enum ZBType {
-    QNJH,
+    NDJH,
     YDJDMJH,
     BY20YJ,
     BY28YJ,

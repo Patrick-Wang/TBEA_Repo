@@ -54,7 +54,7 @@ module approve_template {
         private mDateSelector: Util.DateSelector;
         private mCompanySelector: Util.CompanySelector;
         private mOpt: IViewOption;
-        private mDataSet: Util.Ajax = new Util.Ajax("zb_update.do");
+        private mDataSet: Util.Ajax = new Util.Ajax("zb_update.do", false);
 
         initInstance(opt: IViewOption) {
             this.mOpt = opt;
@@ -168,12 +168,21 @@ module approve_template {
 
         public unapprove() {
             var date = this.mDateSelector.getDate();
-
+            var allData = this.mTableUnapproveAssist.getAllData();
+            var submitData = [];
+            for (var i = 0; i < allData.length; ++i){
+                submitData.push([]);
+                for (var j = 0; j < allData[i].length; ++j){
+                    if (j != 1){
+                        submitData[i].push(allData[i][j])
+                    }
+                }
+            }
             this.mUnapprove.post({
                 year: date.year,
                 month: date.month,
                 approveType: this.mOpt.approveType,
-                data: JSON.stringify(this.mTableUnapproveAssist.getAllData())
+                data: JSON.stringify(allData)
             })
                 .then((data: ISubmitResult) => {
                 if (data.result) {
@@ -187,12 +196,21 @@ module approve_template {
 
         public approve() {
             var date = this.mDateSelector.getDate();
-
+            var allData = this.mTableApproveAssist.getAllData();
+            var submitData = [];
+            for (var i = 0; i < allData.length; ++i){
+                submitData.push([]);
+                for (var j = 0; j < allData[i].length; ++j){
+                    if (j != 1){
+                        submitData[i].push(allData[i][j])
+                    }
+                }
+            }
             this.mApprove.post({
                 year: date.year,
                 month: date.month,
                 approveType: this.mOpt.approveType,
-                data: JSON.stringify(this.mTableApproveAssist.getAllData())
+                data: JSON.stringify(submitData)
             })
                 .then((data: ISubmitResult) => {
                 if (data.result) {

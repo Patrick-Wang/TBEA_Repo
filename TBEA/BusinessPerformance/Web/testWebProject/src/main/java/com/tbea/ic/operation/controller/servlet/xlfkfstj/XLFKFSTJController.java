@@ -44,12 +44,6 @@ public class XLFKFSTJController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Date d = DateSelection.getDate(request);
-//		Organization org = companyManager.getBMOrganization();
-//		Company comp = org.getCompany(CompanySelection.getCompany(request));
-		
-		
-		
-		
 		
 		CompanyType compType = CompanySelection.getCompany(request);
 		Company comp = companyManager.getBMOrganization().getCompany(compType);

@@ -18,7 +18,7 @@ import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 
 @Entity
 @Table(name = "jygk_yj20zb")
-public class YJ20ZB extends AbstractReadWriteEntity implements Serializable {
+public class YJ20ZB extends AbstractReadWriteEntity implements Serializable{
 
 	private static final long serialVersionUID = 1440655104212069401L;
 
@@ -130,5 +130,6 @@ public class YJ20ZB extends AbstractReadWriteEntity implements Serializable {
 	public void setYf(Integer yf) {
 		this.yf = yf;
 	}
+
 
 }

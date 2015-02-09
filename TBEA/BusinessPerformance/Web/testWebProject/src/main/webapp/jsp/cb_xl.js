@@ -11,26 +11,26 @@ var cb_xl;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (0 == i) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 90));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 90));
                 }
                 else if (2 == i) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 300));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 300));
                 }
                 else if (6 == i) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 130));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 130));
                 }
                 else if (i < 5) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 80));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 80));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 80));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 80));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         JQGridAssistantFactory.createJttbTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位", "dw", true, JQTable.TextAlign.Left),
+                new JQTable.Node("单位", "dw", true, 0 /* Left */),
                 new JQTable.Node("产值", "cz"),
                 new JQTable.Node("毛利额", "mle"),
                 new JQTable.Node("毛利率", "mll"),
@@ -40,7 +40,7 @@ var cb_xl;
         };
         JQGridAssistantFactory.createGstbTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("时间", "sj", true, JQTable.TextAlign.Left),
+                new JQTable.Node("时间", "sj", true, 0 /* Left */),
                 new JQTable.Node("产值", "cz"),
                 new JQTable.Node("毛利额", "mle"),
                 new JQTable.Node("毛利率", "mll"),

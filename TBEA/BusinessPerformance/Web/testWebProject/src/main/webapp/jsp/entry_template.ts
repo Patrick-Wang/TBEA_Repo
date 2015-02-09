@@ -48,7 +48,7 @@ module entry_template {
         private mDateSelector: Util.DateSelector;
         private mCompanySelector: Util.CompanySelector;
         private mOpt: IViewOption;
-        private mDataSet: Util.Ajax = new Util.Ajax("zb_update.do");
+        private mDataSet: Util.Ajax = new Util.Ajax("zb_update.do", false);
         private mSubmit: Util.Ajax = new Util.Ajax("zb_submit.do");
         private mTableAssist: JQTable.JQGridAssistant;
         initInstance(opt: IViewOption) {
@@ -84,12 +84,22 @@ module entry_template {
 
         public submit() {
             var date = this.mDateSelector.getDate();
-
+            var allData = this.mTableAssist.getAllData();
+            var submitData = [];
+            for (var i = 0; i < allData.length; ++i){
+                submitData.push([]);
+                for (var j = 0; j < allData[i].length; ++j){
+                    if (j != 1){
+                        submitData[i].push(allData[i][j])
+                    }
+                }
+            }
             this.mSubmit.post({
                 year: date.year,
                 month: date.month,
                 entryType: this.mOpt.entryType,
-                data: JSON.stringify(this.mTableAssist.getAllData())
+                companyId: this.mCompanySelector.getCompany(), 
+                data: JSON.stringify(submitData)
             }).then((data: ISubmitResult) => {
                 if (data.result) {
                     alert("submit 成功");
@@ -208,7 +218,8 @@ module entry_template {
             }
             this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
             var data = this.mTableData;
-
+            var lastsel = "";
+            var lastcell = "";
             $("#" + name).jqGrid(
                 this.mTableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
@@ -225,7 +236,27 @@ module entry_template {
                     width: titles.length * 200,
                     shrinkToFit: true,
                     autoScroll: true,
+                    beforeEditCell:(rowid,cellname,v,iRow,iCol)=>{
+                        lastsel = iRow; 
+                        lastcell = iCol; 
+                    },
+                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
+                        lastsel = ""; 
+                        lastcell = ""; 
+                    } 
                 }));
+            
+          
+          $('html').bind('click', function(e) { //用于点击其他地方保存正在编辑状态下的行
+              if ( lastsel != "" ) { //if a row is selected for edit 
+                  if($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row  
+                    //  $("#" + name).jqGrid('saveRow', lastsel); 
+                      $("#" + name).jqGrid("saveCell",lastsel,lastcell);
+                      //$("#" + name).resetSelection(); 
+                      //lastsel=""; 
+                  } 
+              } 
+          });
         }
     }
 }

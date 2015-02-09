@@ -1,7 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.tbbzjqk;
 
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,14 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
-import com.tbea.ic.operation.service.cqk.CQKService;
-import com.tbea.ic.operation.service.hkjhjg.HKJHJGService;
-import com.tbea.ic.operation.service.syhkjhzxqk.SYHKJHZXQKService;
 import com.tbea.ic.operation.service.tbbzjqk.TBBZJQKService;
 
 @Controller
@@ -43,14 +38,7 @@ public class TBBZJQKController {
 	@RequestMapping(value = "tbbzjqk_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getTbbzjqk_update(HttpServletRequest request,
 			HttpServletResponse response) { 
-//		int year = Integer.parseInt(request.getParameter("year"));
-//		int month = Integer.parseInt(request.getParameter("month"));
-//		String companyId = request.getParameter("companyId");
-//		int cid = Integer.parseInt(companyId);
-//		Date d = java.sql.Date.valueOf(year + "-" +  month + "-" + 1);
-//		Organization org = companyManager.getOperationOrganization();
-//		Company comp = org.getCompany(CompanyType.valueOf(cid));
-		
+	
 		
 		Date d = DateSelection.getDate(request);
 		Organization org = companyManager.getOperationOrganization();

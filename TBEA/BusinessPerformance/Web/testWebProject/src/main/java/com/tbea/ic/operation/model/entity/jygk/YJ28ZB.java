@@ -18,7 +18,7 @@ import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 
 @Entity
 @Table(name = "jygk_yj28zb")
-public class YJ28ZB extends AbstractReadWriteEntity implements Serializable {
+public class YJ28ZB extends AbstractReadWriteEntity implements Serializable{
 
 	private static final long serialVersionUID = 1440655104212869401L;
 

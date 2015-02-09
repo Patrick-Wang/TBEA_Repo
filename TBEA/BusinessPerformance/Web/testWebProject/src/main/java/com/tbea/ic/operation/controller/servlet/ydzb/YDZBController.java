@@ -1,9 +1,7 @@
 package com.tbea.ic.operation.controller.servlet.ydzb;
 
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -202,15 +200,7 @@ public class YDZBController {
 		
 		CompanySelection compSel = new CompanySelection(false, org.getTopCompany());
 		compSel.select(map);
-		
-//		List<Company> coms = org.getBottomCompany();
-//		coms.addAll(org.getCompany(CompanyType.JT).getSubCompanysWithLeaves());
-//		coms.add(org.getCompany(CompanyType.JT));
-		
-//		for (int i = 0;  i < coms.size(); ++i){
-//			map.put("id_" + i, i);
-//			map.put("name_" + i, coms.get(i).getName());
-//		}
+
 		return new ModelAndView("zbhz_overview", map);
 	}
 }

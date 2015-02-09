@@ -461,6 +461,7 @@ module JQTable {
             var data : Array<string[]> = [];
             for (var i in ids){
                 var row = [];
+                row.push(ids[i]);
                 for (var j in this.mColModel){
                     row.push(grid.jqGrid("getCell", ids[i], this.mColModel[j].index));
                 }
