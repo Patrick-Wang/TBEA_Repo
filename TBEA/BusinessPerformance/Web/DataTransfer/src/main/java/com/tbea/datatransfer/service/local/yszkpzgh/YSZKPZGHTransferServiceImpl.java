@@ -76,7 +76,7 @@ public class YSZKPZGHTransferServiceImpl implements YSZKPZGHTransferService {
 				yszkpzghLocal = new YSZKPZGHLocal();
 				yszkpzghLocal.setGxrq(yszkpzghSB.getGxrq());
 				yszkpzghLocal.setYf(yszkpzghSB.getYf());
-				yszkpzghLocal.setGsbm(sbXMGSMap.get(yszkpzghSB.getGsbm()));
+				yszkpzghLocal.setGsbm(yszkpzghSB.getGsbm());
 				yszkpzghLocal.setSymljxssr(yszkpzghSB.getSymljxssr());
 				yszkpzghLocal.setByjhxssr(yszkpzghSB.getByjhxssr());
 				yszkpzghLocal.setByysnkzb(yszkpzghSB.getByysnkzb());
