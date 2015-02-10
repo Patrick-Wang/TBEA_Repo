@@ -11,8 +11,11 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.entity.jygk.NDJHZB;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
+
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 @Repository
 @Transactional("transactionManager")
@@ -51,6 +54,35 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 		return q.getResultList();
 	}
 
+	@Override
+	public List<SJZB> getZbs(Date date, List<Company> comps) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("from SJZB where nf = :nf and yf = :yf and dwxx.id in (" + Util.toString(comps) + ")");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		return q.getResultList();
+	}
+
+	@Override
+	public List<SJZB> getUnapprovedZbs(Date date, List<Company> comps) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("from SJZB where nf = :nf and sjshzt.id = :id and dwxx.id in (" + Util.toString(comps) + ")");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("id", 2);
+		return q.getResultList();
+	}
+
+	@Override
+	public List<SJZB> getApprovedZbs(Date date, List<Company> comps) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("from SJZB where nf = :nf and sjshzt.id = :id and dwxx.id in (" + Util.toString(comps) + ")");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("id", 1);
+		return q.getResultList();
+	}
 
 	
 

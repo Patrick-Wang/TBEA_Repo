@@ -14,4 +14,8 @@ public interface YJ28ZBDao  extends AbstractReadWriteDao<YJ28ZB>{
 
 	List<YJ28ZB> getZbs(Date date, Company company);
 
+	List<YJ28ZB> getApprovedZbs(List<Date> dateList, List<Company> comps);
+
+	List<YJ28ZB> getUnapprovedZbs(List<Date> dateList, List<Company> comps);
+
 }

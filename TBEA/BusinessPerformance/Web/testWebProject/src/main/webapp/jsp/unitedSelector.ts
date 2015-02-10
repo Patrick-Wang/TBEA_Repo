@@ -178,6 +178,14 @@ module Util {
                 this.update(path);
             }
         }
+        
+        public hide(){
+           $("#" + this.mCtrlId).css("display", "none");
+        }
+        
+        public show(){
+           $("#" + this.mCtrlId).css("display", "");
+        }
 
         public change(fnChange : (sel : any)=>void){
             this.mFnChange = fnChange;    
@@ -210,7 +218,10 @@ module Util {
             }
         }
 
-        public getDataNode(path : number[], depth: number) {
+        public getDataNode(path : number[], depth?: number) {
+            if (!isExist(depth)){
+               depth = path.length;
+            }
             var node: DataNode = this.mRoot;
             for (var i = 0; i < depth; ++i) {
                 node = node.childAt(path[i]);

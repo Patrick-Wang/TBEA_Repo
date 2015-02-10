@@ -1,11 +1,15 @@
 package com.tbea.ic.operation.common;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONArray;
 
 public class DateSelection {
 	private Calendar cal = Calendar.getInstance();
@@ -32,6 +36,22 @@ public class DateSelection {
 		}
 		
 		return null;
+	}
+	
+	public static List<Date> getDate(JSONArray years, JSONArray month) {
+		List<Date> dateList = new ArrayList<Date>();
+		for (int i = 0; i < years.size(); ++i) {
+			StringBuilder date = new StringBuilder();
+
+			date.append(years.getInt(i));
+			date.append("-");
+			date.append(month.getInt(i));
+			date.append("-");
+			date.append("1");
+			dateList.add(Date.valueOf(date.toString()));
+
+		}
+		return dateList;
 	}
 	
 	public Date getDate(){

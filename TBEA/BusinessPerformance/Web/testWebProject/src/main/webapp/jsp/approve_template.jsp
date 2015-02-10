@@ -54,7 +54,7 @@
           				dateId:	"date",
           				companyId: "company",
           				comps : JSON.parse('${nodeData}'),
-          				firstCompany : ${firstCompanyType},
+          				firstCompany : '${firstCompanyType}' == '' ? undefined : '${firstCompanyType}',
           				date : {
           					month : ${!empty month} ? '${month}' : undefined, 
           					year : ${year}
@@ -199,7 +199,7 @@ th.ui-th-ltr {
 		</tr>
 		<tr>
 			<td>
-				<table>
+				<table id="approve">
 					<tr>
 						<td>
 							<div id="table_approve"></div>
@@ -215,7 +215,7 @@ th.ui-th-ltr {
 		</tr>
 		<tr>
 			<td>
-				<table>
+				<table id="unapprove">
 					<tr>
 						<td>
 							<div id="table_unapprove"></div>

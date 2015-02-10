@@ -28,6 +28,28 @@ public class CompanySelection {
 		this.mFilter = filter;
 	}
 	
+	public static List<CompanyType> getCompanys(HttpServletRequest request){
+		return getCompanys(request, "companies");
+	}
+	
+	public static List<CompanyType> getCompanys(HttpServletRequest request, String name){
+		String companys = request.getParameter(name);
+		JSONArray ja = JSONArray.fromObject(companys);
+		return getCompanys(ja);
+	}
+	
+	public static List<CompanyType> getCompanys(JSONArray ja){
+		List<CompanyType> compTys = new ArrayList<CompanyType>();
+			for (int i = 0; i < ja.size(); ++i){
+				CompanyType tmp = CompanyType.valueOf(ja.getInt(i));
+				if (null != tmp){
+					compTys.add(tmp);
+				}				
+			}
+
+		return compTys;
+	}
+	
 	public static CompanyType getCompany(HttpServletRequest request){
 		String companyId = request.getParameter("companyId");
 		if (null != companyId){
@@ -144,26 +166,37 @@ public class CompanySelection {
 		List<DataNode> nodes = new ArrayList<DataNode>();
 		DataNode node;
 		Company topComp;
-		for (int i = 0; i < mTopComps.size(); ++i){
-			topComp = mTopComps.get(i);
-			passedComps = FilterCompanys(topComp.getSubCompanys());
-			if (!passedComps.isEmpty()){
-				List<DataNode> subNodes = bind(passedComps);
-				node = bind(topComp);
-				nodes.add(node);
-				node.getSubNodes().addAll(subNodes);
-				if (mFilter.keep(topComp)){
+		
+		if (this.mTopOnly) {
+			for (int i = 0; i < mTopComps.size(); ++i) {
+				topComp = mTopComps.get(i);
+				if (mFilter.keep(topComp)) {
+					node = bind(topComp);
+					nodes.add(node);
+				}
+			}
+		} else {
+			for (int i = 0; i < mTopComps.size(); ++i) {
+				topComp = mTopComps.get(i);
+				passedComps = FilterCompanys(topComp.getSubCompanys());
+				if (!passedComps.isEmpty()) {
+					List<DataNode> subNodes = bind(passedComps);
+					node = bind(topComp);
+					nodes.add(node);
+					node.getSubNodes().addAll(subNodes);
+					if (mFilter.keep(topComp)) {
+						DataNode nodeTmp = bind(topComp);
+						nodeTmp.getData().setValue(topComp.getName() + "本部");
+						node.getSubNodes().add(nodeTmp);
+					}
+
+				} else if (mFilter.keep(topComp)) {
+					node = bind(topComp);
+					nodes.add(node);
 					DataNode nodeTmp = bind(topComp);
 					nodeTmp.getData().setValue(topComp.getName() + "本部");
 					node.getSubNodes().add(nodeTmp);
 				}
-
-			} else if (mFilter.keep(topComp)){
-				node = bind(topComp);
-				nodes.add(node);
-				DataNode nodeTmp = bind(topComp);
-				nodeTmp.getData().setValue(topComp.getName() + "本部");
-				node.getSubNodes().add(nodeTmp);
 			}
 		}
 		map.put("nodeData", JSONArray.fromObject(nodes).toString());

@@ -15,13 +15,295 @@ var approve_template;
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
+        JQGridAssistantFactory.createQnjhTable = function (gridName, title, ids) {
+            var nodes = [];
+            for (var i = 0; i < title.length; ++i) {
+                if (i < 1) {
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 125));
+                }
+                else {
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 125));
+                }
+            }
+            return new JQTable.JQGridAssistant(nodes, gridName);
+        };
+        JQGridAssistantFactory.createSjTable = function (gridName, title, ids) {
+            var nodes = [];
+            for (var i = 0; i < title.length; ++i) {
+                if (i <= 1) {
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 125));
+                }
+                else {
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 125));
+                }
+            }
+            return new JQTable.JQGridAssistant(nodes, gridName);
+        };
         return JQGridAssistantFactory;
+    })();
+    function transposition(data) {
+        var dataRet = [];
+        for (var i = 0; i < data[0].length; ++i) {
+            dataRet.push([]);
+            for (var j = 0; j < data.length; ++j) {
+                dataRet[i].push(data[j][i]);
+            }
+            dataRet[i] = dataRet[i].reverse();
+        }
+        return dataRet;
+    }
+    function resize(data, size) {
+        if (data.length < size) {
+            for (var i = data.length; i < size; ++i) {
+                data.push("");
+            }
+            return data;
+        }
+        else {
+            var dataNew = [];
+            for (var i = 0; i < size; ++i) {
+                dataNew.push(data[i]);
+            }
+            return dataNew;
+        }
+    }
+    var QNJHSubView = (function () {
+        function QNJHSubView(opt) {
+            this.mOpt = opt;
+        }
+        QNJHSubView.prototype.getApprovedData = function () {
+            if (this.mTableApproveAssist != null) {
+                var ids = this.mTableApproveAssist.getCheckedRowIds();
+                $(ids).each(function (i) {
+                    ids[i] = parseInt(ids[i]);
+                });
+                return [ids];
+            }
+            else {
+                return [[]];
+            }
+        };
+        QNJHSubView.prototype.getUnapprovedData = function () {
+            if (this.mTableUnapproveAssist != null) {
+                var ids = this.mTableUnapproveAssist.getCheckedRowIds();
+                $(ids).each(function (i) {
+                    ids[i] = parseInt(ids[i]);
+                });
+                return [ids];
+            }
+            else {
+                return [[]];
+            }
+        };
+        QNJHSubView.prototype.getDate = function () {
+            return this.mData;
+        };
+        QNJHSubView.prototype.process = function (data, date, companies) {
+            this.mData = date;
+            if (data[0].length > 0) {
+                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId);
+            }
+            if (data[1].length > 0) {
+                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId);
+            }
+        };
+        QNJHSubView.prototype.updateTable = function (rawData, comps, tableId) {
+            var tmpData = [];
+            var title = ["单位名称"];
+            var colZbIds = ["dw"];
+            var zbColMap = {};
+            var compMap = {};
+            var companies = [];
+            $(comps).each(function (i) {
+                $(rawData).each(function (j) {
+                    if (rawData[j][0] == "" + comps[i].id) {
+                        compMap["c_" + comps[i].id] = comps[i];
+                    }
+                });
+            });
+            for (var i in compMap) {
+                companies.push(compMap[i]);
+            }
+            $(rawData).each(function (i) {
+                if (!Util.isExist(zbColMap["_" + rawData[i][1]])) {
+                    colZbIds.push(rawData[i][1]);
+                    title.push(rawData[i][2]);
+                    zbColMap["_" + rawData[i][1]] = title.length;
+                }
+            });
+            $(companies).each(function (i) {
+                tmpData.push([companies[i].id, companies[i].value]);
+                $(rawData).each(function (j) {
+                    if (rawData[j][0] == "" + companies[i].id) {
+                        if (tmpData[i].length <= zbColMap["_" + rawData[j][1]]) {
+                            resize(tmpData[i], zbColMap["_" + rawData[j][1]]);
+                        }
+                        tmpData[i][zbColMap["_" + rawData[j][1]]] = rawData[j][3];
+                    }
+                });
+            });
+            var name = tableId + "_jqgrid";
+            var jqAssist = JQGridAssistantFactory.createQnjhTable(name, title, colZbIds);
+            var parent = $("#" + tableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
+            var width = (title.length) * 125;
+            if (width > 1000) {
+                width = 1000;
+            }
+            $("#" + name).jqGrid(jqAssist.decorate({
+                data: jqAssist.getDataWithId(tmpData),
+                datatype: "local",
+                multiselect: true,
+                drag: false,
+                resize: false,
+                height: '100%',
+                width: width,
+                shrinkToFit: width == 1000 ? false : true,
+                autoScroll: true,
+            }));
+            return jqAssist;
+        };
+        return QNJHSubView;
+    })();
+    var YJSJSubView = (function () {
+        function YJSJSubView(opt) {
+            this.mOpt = opt;
+        }
+        YJSJSubView.prototype.getApprovedData = function () {
+            var ret = [[]];
+            if (this.mTableApproveAssist != null) {
+                var checkedRows = this.mTableApproveAssist.getCheckedRowIds();
+                if (checkedRows.length != 0) {
+                    ret = this.format(checkedRows);
+                }
+            }
+            return ret;
+        };
+        YJSJSubView.prototype.format = function (checkedRows) {
+            var ret = [];
+            var comps = [];
+            var years = [];
+            var months = [];
+            $(checkedRows).each(function (i) {
+                var row = checkedRows[i].split("&");
+                $(row).each(function (j) {
+                    row[j] = parseInt(row[j]);
+                });
+                comps.push(row[0]);
+                if (row.length > 1) {
+                    years.push(row[1]);
+                    months.push(row[2]);
+                }
+            });
+            ret.push(comps);
+            if (years.length > 0) {
+                ret.push(years);
+            }
+            if (months.length > 0) {
+                ret.push(months);
+            }
+            return ret;
+        };
+        YJSJSubView.prototype.getUnapprovedData = function () {
+            var ret = [[]];
+            if (this.mTableUnapproveAssist != null) {
+                var checkedRows = this.mTableUnapproveAssist.getCheckedRowIds();
+                if (checkedRows.length != 0) {
+                    ret = this.format(checkedRows);
+                }
+            }
+            return ret;
+        };
+        YJSJSubView.prototype.getDate = function () {
+            return this.mData;
+        };
+        YJSJSubView.prototype.process = function (data, date, companies) {
+            this.mData = date;
+            if (data[0].length > 0) {
+                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId);
+            }
+            if (data[1].length > 0) {
+                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId);
+            }
+        };
+        YJSJSubView.prototype.updateTable = function (rawData, comps, tableId) {
+            var compMap = {};
+            var companies = [];
+            $(comps).each(function (i) {
+                $(rawData).each(function (j) {
+                    if (rawData[j][0] == "" + comps[i].id) {
+                        compMap["c_" + comps[i].id] = comps[i];
+                    }
+                });
+            });
+            for (var i in compMap) {
+                companies.push(compMap[i]);
+            }
+            var title = ["单位名称"];
+            var colZbIds = ["dw", "rq"];
+            var zbColMap = {};
+            $(rawData).each(function (i) {
+                if (!Util.isExist(zbColMap["_" + rawData[i][1]])) {
+                    colZbIds.push(rawData[i][1]);
+                    title.push(rawData[i][2]);
+                    zbColMap["_" + rawData[i][1]] = title.length;
+                }
+            });
+            var hasDate = rawData[0].length > 4;
+            if (hasDate) {
+                title.push("日期");
+                colZbIds.push("rq");
+            }
+            var tmpData = [];
+            $(companies).each(function (i) {
+                tmpData.push([companies[i].id, companies[i].value]);
+                $(rawData).each(function (j) {
+                    if (rawData[j][0] == "" + companies[i].id) {
+                        if (tmpData.length == i) {
+                            if (hasDate) {
+                                tmpData.push([companies[i].id + "&" + rawData[j][4] + "&" + rawData[j][5], companies[i].value, rawData[j][4] + "年" + rawData[j][5]] + "月");
+                            }
+                            else {
+                                tmpData.push([companies[i].id, companies[i].value]);
+                            }
+                        }
+                        if (tmpData[i].length <= zbColMap["_" + rawData[j][1]]) {
+                            resize(tmpData[i], zbColMap["_" + rawData[j][1]]);
+                        }
+                        tmpData[i][zbColMap["_" + rawData[j][1]]] = rawData[j][3];
+                    }
+                });
+            });
+            var name = tableId + "_jqgrid";
+            var jqAssist = JQGridAssistantFactory.createQnjhTable(name, title, colZbIds);
+            var parent = $("#" + tableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
+            var width = (title.length) * 125;
+            if (width > 1000) {
+                width = 1000;
+            }
+            $("#" + name).jqGrid(jqAssist.decorate({
+                data: jqAssist.getDataWithId(tmpData),
+                datatype: "local",
+                multiselect: true,
+                drag: false,
+                resize: false,
+                height: '100%',
+                width: width,
+                shrinkToFit: width == 1000 ? false : true,
+                autoScroll: true,
+            }));
+            return jqAssist;
+        };
+        return YJSJSubView;
     })();
     var View = (function () {
         function View() {
-            this.mApprove = new Util.Ajax("zb_approve.do");
-            this.mUnapprove = new Util.Ajax("zb_unapprove.do");
             this.mDataSet = new Util.Ajax("zb_update.do", false);
+            this.mUnapprove = new Util.Ajax("zb_unapprove.do");
+            this.mApprove = new Util.Ajax("zb_approve.do");
         }
         View.getInstance = function () {
             return View.instance;
@@ -35,131 +317,97 @@ var approve_template;
                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
             }
             this.mCompanySelector = new Util.CompanySelector(true, opt.companyId, opt.comps, opt.firstCompany);
+            this.mCompanySelector.checkAll();
+            switch (this.mOpt.approveType) {
+                case Util.ZBType.QNJH:
+                    this.mCurView = new QNJHSubView(opt);
+                    break;
+                case Util.ZBType.YDJDMJH:
+                    break;
+                case Util.ZBType.BY20YJ:
+                case Util.ZBType.BY28YJ:
+                case Util.ZBType.BYSJ:
+                    this.mCurView = new YJSJSubView(opt);
+                    break;
+            }
             this.updateTitle();
             this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            var date = this.mDateSelector.getDate();
-            this.mDataSet.get({ year: date.year, month: date.month, approveType: this.mOpt.approveType }).then(function (data) {
-                _this.mTableApproveData = _this.transposition(data[0]);
-                _this.mTableUnapproveData = _this.transposition(data[1]);
-                _this.updateTitle();
-                _this.mTableApproveAssist = _this.updateTable(_this.mOpt.tableApproveId, _this.mTableApproveData);
-                _this.mTableUnapproveAssist = _this.updateTable(_this.mOpt.tableUnapproveId, _this.mTableUnapproveData);
-            });
-        };
-        View.prototype.transposition = function (data) {
-            var dataRet = [];
-            for (var i = 0; i < data[0].length; ++i) {
-                dataRet.push([]);
-                for (var j = 0; j < data.length; ++j) {
-                    dataRet[i].push(data[j][i]);
-                }
-                dataRet[i] = dataRet[i].reverse();
+            var comps = this.mCompanySelector.getCompanys();
+            if (comps.length != 0) {
+                var date = this.mDateSelector.getDate();
+                this.mDataSet.post({ year: date.year, month: date.month, approveType: this.mOpt.approveType, companies: JSON.stringify(comps) }).then(function (data) {
+                    _this.updateTitle();
+                    if (data[0].length == 0) {
+                        $("#approve").css("display", "none");
+                    }
+                    else {
+                        $("#approve").css("display", "");
+                    }
+                    if (data[1].length == 0) {
+                        $("#unapprove").css("display", "none");
+                    }
+                    else {
+                        $("#unapprove").css("display", "");
+                    }
+                    _this.mCurView.process(data, _this.mDateSelector.getDate(), _this.mCompanySelector.getRawCompanyData());
+                });
             }
-            return dataRet;
-        };
-        View.prototype.getTitles = function () {
-            var titles = null;
-            switch (this.mOpt.approveType) {
-                case Util.ZBType.QNJH:
-                    titles = this.transposition([["全年计划"]]);
-                    break;
-                case Util.ZBType.YDJDMJH:
-                    titles = this.transposition([this.createPredict(["月度-季度末计划值"])]);
-                    break;
-                case Util.ZBType.BY20YJ:
-                    titles = this.transposition([this.createPredict(["本月20日预计值"])]);
-                    break;
-                case Util.ZBType.BY28YJ:
-                    titles = this.transposition([this.createPredict(["本月28日预计值"])]);
-                    break;
-                case Util.ZBType.BYSJ:
-                    titles = this.transposition([["本月实际"]]);
-                    break;
+            else {
+                alert("请选择公司");
             }
-            return titles;
-        };
-        View.prototype.updateTable = function (tableId, tableData) {
-            var name = tableId + "_jqgrid";
-            var titles = this.getTitles();
-            var tableAssist = JQGridAssistantFactory.createFlatTable(name, ["审核类型"].concat(tableData[0]));
-            var data = titles;
-            for (var i = 0; i < data.length; ++i) {
-                data[i] = data[i].concat(tableData[i + 1]);
-            }
-            var parent = $("#" + tableId);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table>");
-            var width = (tableData[0].length + 1) * 125;
-            if (width > 1000) {
-                width = 1000;
-            }
-            $("#" + name).jqGrid(tableAssist.decorate({
-                data: tableAssist.getData(data),
-                datatype: "local",
-                multiselect: true,
-                drag: false,
-                resize: false,
-                height: '100%',
-                width: width,
-                shrinkToFit: width == 1000 ? false : true,
-                autoScroll: true,
-            }));
-            return tableAssist;
         };
         View.prototype.unapprove = function () {
-            var date = this.mDateSelector.getDate();
-            var allData = this.mTableUnapproveAssist.getAllData();
-            var submitData = [];
-            for (var i = 0; i < allData.length; ++i) {
-                submitData.push([]);
-                for (var j = 0; j < allData[i].length; ++j) {
-                    if (j != 1) {
-                        submitData[i].push(allData[i][j]);
+            var _this = this;
+            var date = this.mCurView.getDate();
+            var compIds = this.mCurView.getUnapprovedData();
+            if (compIds[0].length > 0) {
+                this.mUnapprove.post({
+                    approveType: this.mOpt.approveType,
+                    year: date.year,
+                    month: date.month,
+                    data: JSON.stringify(compIds)
+                }).then(function (data) {
+                    if (data.result) {
+                        alert("submit 成功");
+                        _this.mDateSelector.select(date);
+                        _this.updateUI();
                     }
-                }
+                    else {
+                        alert("submit 失敗");
+                    }
+                });
             }
-            this.mUnapprove.post({
-                year: date.year,
-                month: date.month,
-                approveType: this.mOpt.approveType,
-                data: JSON.stringify(allData)
-            }).then(function (data) {
-                if (data.result) {
-                    alert("submit 成功");
-                }
-                else {
-                    alert("submit 失敗");
-                }
-            });
+            else {
+                alert("请选择公司");
+            }
         };
         View.prototype.approve = function () {
-            var date = this.mDateSelector.getDate();
-            var allData = this.mTableApproveAssist.getAllData();
-            var submitData = [];
-            for (var i = 0; i < allData.length; ++i) {
-                submitData.push([]);
-                for (var j = 0; j < allData[i].length; ++j) {
-                    if (j != 1) {
-                        submitData[i].push(allData[i][j]);
+            var _this = this;
+            var date = this.mCurView.getDate();
+            var compIds = this.mCurView.getApprovedData();
+            if (compIds[0].length > 0) {
+                this.mApprove.post({
+                    approveType: this.mOpt.approveType,
+                    year: date.year,
+                    month: date.month,
+                    data: JSON.stringify(compIds)
+                }).then(function (data) {
+                    if (data.result) {
+                        alert("submit 成功");
+                        _this.mDateSelector.select(date);
+                        _this.updateUI();
                     }
-                }
+                    else {
+                        alert("submit 失敗");
+                    }
+                });
             }
-            this.mApprove.post({
-                year: date.year,
-                month: date.month,
-                approveType: this.mOpt.approveType,
-                data: JSON.stringify(submitData)
-            }).then(function (data) {
-                if (data.result) {
-                    alert("submit 成功");
-                }
-                else {
-                    alert("submit 失敗");
-                }
-            });
+            else {
+                alert("请选择公司");
+            }
         };
         View.prototype.updateTitle = function () {
             var header = "";
