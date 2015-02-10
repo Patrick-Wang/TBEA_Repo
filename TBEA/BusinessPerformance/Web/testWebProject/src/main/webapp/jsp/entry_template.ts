@@ -51,6 +51,7 @@ module entry_template {
         private mDataSet: Util.Ajax = new Util.Ajax("zb_update.do", false);
         private mSubmit: Util.Ajax = new Util.Ajax("zb_submit.do");
         private mTableAssist: JQTable.JQGridAssistant;
+        private mTitleCompanyName : string;
         initInstance(opt: IViewOption) {
             this.mOpt = opt;
 
@@ -66,8 +67,9 @@ module entry_template {
                     this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
                     break;
             }
-
+            this.mTitleCompanyName = opt.comps[0].data.value;
             this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
+            this.mCompanySelector.hide();
             this.updateTitle();
             this.updateUI();
         }
@@ -114,19 +116,19 @@ module entry_template {
             var date = this.mDateSelector.getDate();
             switch (this.mOpt.entryType) {
                 case Util.ZBType.QNJH:
-                    header = date.year + "年 计划数据录入";
+                    header = date.year + "年 " + this.mTitleCompanyName + " 计划数据录入";
                     break;
                 case Util.ZBType.YDJDMJH:
-                    header = date.year + "年" + date.month + "月 季度-月度末计划值录入";
+                    header = date.year + "年" + date.month + "月 " + this.mTitleCompanyName + " 季度-月度末计划值录入";
                     break;
                 case Util.ZBType.BY20YJ:
-                    header = date.year + "年" + date.month + "月 20日预计值录入";
+                    header = date.year + "年" + date.month + "月 " + this.mTitleCompanyName + " 20日预计值录入";
                     break;
                 case Util.ZBType.BY28YJ:
-                    header = date.year + "年" + date.month + "月 28日预计值录入";
+                    header = date.year + "年" + date.month + "月 " + this.mTitleCompanyName + " 28日预计值录入";
                     break;
                 case Util.ZBType.BYSJ:
-                    header = date.year + "年" + date.month + "月 实际数据录入";
+                    header = date.year + "年" + date.month + "月 " + this.mTitleCompanyName + " 实际数据录入";
                     break;
             }
 
@@ -239,21 +241,35 @@ module entry_template {
                     beforeEditCell:(rowid,cellname,v,iRow,iCol)=>{
                         lastsel = iRow; 
                         lastcell = iCol; 
+                        $("input").attr("disabled",true); 
+                        
                     },
-                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
-                        lastsel = ""; 
-                        lastcell = ""; 
-                    } 
+                    afterSaveCell : ()=>{
+                        $("input").attr("disabled",false); 
+    
+                        lastsel=""; 
+                    },
+                    
+                    afterRestoreCell : ()=>{
+                        $("input").attr("disabled",false); 
+                        
+                        lastsel=""; 
+                    }
+//                    ,
+//                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
+//                        lastsel = ""; 
+//                        lastcell = ""; 
+//                    } 
                 }));
             
           
           $('html').bind('click', function(e) { //用于点击其他地方保存正在编辑状态下的行
               if ( lastsel != "" ) { //if a row is selected for edit 
                   if($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row  
-                    //  $("#" + name).jqGrid('saveRow', lastsel); 
+                      //  $("#" + name).jqGrid('saveRow', lastsel); 
                       $("#" + name).jqGrid("saveCell",lastsel,lastcell);
                       //$("#" + name).resetSelection(); 
-                      //lastsel=""; 
+                      lastsel=""; 
                   } 
               } 
           });

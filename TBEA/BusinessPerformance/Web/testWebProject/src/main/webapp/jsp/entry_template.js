@@ -38,7 +38,9 @@ var entry_template;
                     this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
                     break;
             }
+            this.mTitleCompanyName = opt.comps[0].data.value;
             this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
+            this.mCompanySelector.hide();
             this.updateTitle();
             this.updateUI();
         };
@@ -83,19 +85,19 @@ var entry_template;
             var date = this.mDateSelector.getDate();
             switch (this.mOpt.entryType) {
                 case Util.ZBType.QNJH:
-                    header = date.year + "年 计划数据录入";
+                    header = date.year + "年 " + this.mTitleCompanyName + " 计划数据录入";
                     break;
                 case Util.ZBType.YDJDMJH:
-                    header = date.year + "年" + date.month + "月 季度-月度末计划值录入";
+                    header = date.year + "年" + date.month + "月 " + this.mTitleCompanyName + " 季度-月度末计划值录入";
                     break;
                 case Util.ZBType.BY20YJ:
-                    header = date.year + "年" + date.month + "月 20日预计值录入";
+                    header = date.year + "年" + date.month + "月 " + this.mTitleCompanyName + " 20日预计值录入";
                     break;
                 case Util.ZBType.BY28YJ:
-                    header = date.year + "年" + date.month + "月 28日预计值录入";
+                    header = date.year + "年" + date.month + "月 " + this.mTitleCompanyName + " 28日预计值录入";
                     break;
                 case Util.ZBType.BYSJ:
-                    header = date.year + "年" + date.month + "月 实际数据录入";
+                    header = date.year + "年" + date.month + "月 " + this.mTitleCompanyName + " 实际数据录入";
                     break;
             }
             $('h1').text(header);
@@ -198,16 +200,22 @@ var entry_template;
                 beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
                     lastsel = iRow;
                     lastcell = iCol;
+                    $("input").attr("disabled", true);
                 },
-                afterEditCell: function (rowid, cellname, v, iRow, iCol) {
+                afterSaveCell: function () {
+                    $("input").attr("disabled", false);
                     lastsel = "";
-                    lastcell = "";
+                },
+                afterRestoreCell: function () {
+                    $("input").attr("disabled", false);
+                    lastsel = "";
                 }
             }));
             $('html').bind('click', function (e) {
                 if (lastsel != "") {
                     if ($(e.target).closest("#" + name).length == 0) {
                         $("#" + name).jqGrid("saveCell", lastsel, lastcell);
+                        lastsel = "";
                     }
                 }
             });

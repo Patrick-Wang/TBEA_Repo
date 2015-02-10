@@ -60,6 +60,12 @@ var Util;
                 _this.useMultiSelect();
             });
         }
+        CompanySelector.prototype.hide = function () {
+            this.mUnitedSelector.hide();
+        };
+        CompanySelector.prototype.show = function () {
+            this.mUnitedSelector.show();
+        };
         CompanySelector.prototype.updateSelect = function (sel, itemCount, multi) {
             sel = $(sel);
             var width = sel.children('option:selected').text().getWidth(13) + 25;
@@ -103,11 +109,46 @@ var Util;
             }
             return null;
         };
+        CompanySelector.prototype.checkAll = function () {
+            $(this.mUnitedSelector.getSelect()[1]).multiselect("checkAll");
+        };
+        CompanySelector.prototype.getRawCompanyData = function () {
+            var ret = [];
+            var path = this.mUnitedSelector.getPath();
+            var parent = this.mUnitedSelector.getDataNode(path, path.length - 1);
+            var node;
+            var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
+            for (var i = 0; i < parent.childCount(); ++i) {
+                node = parent.childAt(i);
+                checkedOpt.each(function (j) {
+                    if (node.getData().id == checkedOpt[j].value) {
+                        ret.push(node.getData());
+                    }
+                });
+            }
+            return ret;
+        };
+        CompanySelector.prototype.getCompanyNames = function () {
+            var ret = [];
+            var path = this.mUnitedSelector.getPath();
+            var parent = this.mUnitedSelector.getDataNode(path, path.length - 1);
+            var node;
+            var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
+            for (var i = 0; i < parent.childCount(); ++i) {
+                node = parent.childAt(i);
+                checkedOpt.each(function (j) {
+                    if (node.getData().id == checkedOpt[j].value) {
+                        ret.push(node.getData().value);
+                    }
+                });
+            }
+            return ret;
+        };
         CompanySelector.prototype.getCompanys = function () {
             var ret = [];
             var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
             checkedOpt.each(function (i) {
-                ret.push(checkedOpt[i].value);
+                ret.push(parseInt(checkedOpt[i].value));
             });
             return ret;
         };

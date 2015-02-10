@@ -139,6 +139,12 @@ var Util;
                 this.update(path);
             }
         }
+        UnitedSelector.prototype.hide = function () {
+            $("#" + this.mCtrlId).css("display", "none");
+        };
+        UnitedSelector.prototype.show = function () {
+            $("#" + this.mCtrlId).css("display", "");
+        };
         UnitedSelector.prototype.change = function (fnChange) {
             this.mFnChange = fnChange;
         };
@@ -166,6 +172,9 @@ var Util;
             }
         };
         UnitedSelector.prototype.getDataNode = function (path, depth) {
+            if (!Util.isExist(depth)) {
+                depth = path.length;
+            }
             var node = this.mRoot;
             for (var i = 0; i < depth; ++i) {
                 node = node.childAt(path[i]);

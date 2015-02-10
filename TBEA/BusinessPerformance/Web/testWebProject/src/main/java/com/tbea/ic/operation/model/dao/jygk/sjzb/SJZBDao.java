@@ -12,4 +12,10 @@ public interface SJZBDao  extends AbstractReadWriteDao<SJZB>{
 	SJZB getZb(Integer zb, Date date, Company company);
 
 	List<SJZB> getZbs(Date date, Company company);
+
+	List<SJZB> getZbs(Date date, List<Company> comps);
+
+	List<SJZB> getUnapprovedZbs(Date date, List<Company> comps);
+	
+	List<SJZB> getApprovedZbs(Date date, List<Company> comps);
 }

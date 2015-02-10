@@ -346,6 +346,10 @@ var JQTable;
                 this.group();
             }
         }
+        JQGridAssistant.prototype.getCheckedRowIds = function () {
+            var ids = $("#" + this.mGridName + "").jqGrid('getGridParam', 'selarrrow');
+            return ids;
+        };
         JQGridAssistant.prototype.getAllData = function () {
             var grid = $("#" + this.mGridName + "");
             var ids = grid.jqGrid('getDataIDs');

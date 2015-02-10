@@ -34,18 +34,13 @@ module Util {
         private mSelectedTop: string;
         private mMulti: boolean;
         
-//        private updateTopSel(topSel : any, itemCount : number, multi : boolean) {
-//            topSel = $(topSel);
-//            topSel.css("width", topSel.children('option:selected').text().getWidth(13) + 25);
-//            topSel.multiselect({
-//                multiple: multi,
-//                header: false,
-//                minWidth: 80,
-//                height　: itemCount * 27 > 600 ? 600 : itemCount * 27 + 3,
-//                // noneSelectedText: "请选择月份",
-//                selectedList: 1
-//            });
-//        }
+        public hide(){
+           this.mUnitedSelector.hide();
+        }
+        
+        public show(){
+           this.mUnitedSelector.show();
+        }
         
         private updateSelect(sel : any, itemCount : number, multi : boolean) {
             sel = $(sel);
@@ -77,7 +72,6 @@ module Util {
                 // noneSelectedText: "请选择月份",
                 selectedList: 1
             });
-
         }
         
         
@@ -86,9 +80,8 @@ module Util {
             for (var i = 0; i < sels.length - 1; ++i){
                 this.updateSelect(sels[i], $(sels[i]).children().length, false);
             }
-         
-            this.updateSelect(sels[sels.length - 1], $(sels[sels.length - 1]).children().length, this.mMulti);
 
+            this.updateSelect(sels[sels.length - 1], $(sels[sels.length - 1]).children().length, this.mMulti);
         }
         
         public constructor(
@@ -143,12 +136,52 @@ module Util {
             return null;
         }
         
+        public checkAll(){
+            $(this.mUnitedSelector.getSelect()[1]).multiselect("checkAll");
+        }
+
+        public getRawCompanyData(): Util.IData[] {
+            var ret : Util.IData[] = [];
+            var path = this.mUnitedSelector.getPath();
+            var parent: DataNode = this.mUnitedSelector.getDataNode(path, path.length - 1);
+            var node: DataNode;
+            var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
+            
+            for (var i = 0; i < parent.childCount(); ++i){
+                node = parent.childAt(i);
+                checkedOpt.each((j) =>{
+                    if (node.getData().id == checkedOpt[j].value){
+                        ret.push(node.getData());
+                    }
+                });
+            }
+            return ret;
+        }
+        
+         public getCompanyNames(): string[] {
+            var ret : string[] = [];
+            var path = this.mUnitedSelector.getPath();
+            var parent: DataNode = this.mUnitedSelector.getDataNode(path, path.length - 1);
+            var node: DataNode;
+            var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
+            
+            for (var i = 0; i < parent.childCount(); ++i){
+                node = parent.childAt(i);
+                checkedOpt.each((j) =>{
+                    if (node.getData().id == checkedOpt[j].value){
+                        ret.push(node.getData().value);
+                    }
+                });
+            }
+            return ret;
+        }
+
         public getCompanys(): Util.CompanyType[] {
             var ret = [];
             var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
             checkedOpt.each((i) =>{
-                ret.push(checkedOpt[i].value);
-            })
+                ret.push(parseInt(checkedOpt[i].value));
+            });
             return ret;
         }
 

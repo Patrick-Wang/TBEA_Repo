@@ -2,6 +2,7 @@ package com.tbea.ic.operation.service.entry;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -433,6 +434,8 @@ public class EntryServiceImpl implements EntryService{
 
 	
 	private List<String[]> toArray(Map<Integer, String[]> map){
+//		Object[] key_arr = map.keySet().toArray();   
+//		Arrays.sort(key_arr);   
 		List<String[]> ret = new ArrayList<String[]>();
 		for(Integer id : map.keySet()){
 			ret.add(map.get(id));

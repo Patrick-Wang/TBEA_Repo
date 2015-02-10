@@ -455,6 +455,11 @@ module JQTable {
             }
         }
       
+        public getCheckedRowIds() : string[]{
+            var ids = $("#" + this.mGridName + "").jqGrid('getGridParam','selarrrow');
+            return ids;
+        }
+        
         public getAllData() : Array<string[]>{
             var grid = $("#" + this.mGridName + "");
             var ids = grid.jqGrid('getDataIDs');
