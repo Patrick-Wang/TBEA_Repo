@@ -170,11 +170,11 @@ module approve_template {
                     }
                 });
             });
-            
-            for (var i in compMap){
-                 companies.push(compMap[i]);
+
+            for (var i in compMap) {
+                companies.push(compMap[i]);
             }
-            
+
             //make title
             $(rawData).each((i) => {
                 if (!Util.isExist(zbColMap["_" + rawData[i][1]])) {
@@ -183,7 +183,7 @@ module approve_template {
                     zbColMap["_" + rawData[i][1]] = title.length;
                 }
             });
-            
+
             //make data
             $(companies).each((i) => {
                 tmpData.push([companies[i].id, companies[i].value]);
@@ -196,8 +196,6 @@ module approve_template {
                     }
                 });
             });
-
-
 
             var name = tableId + "_jqgrid";
             var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createQnjhTable(name, title, colZbIds);
@@ -223,6 +221,7 @@ module approve_template {
                     //autowidth : false,
                     //cellsubmit: 'clientArray',
                     //cellEdit: false,
+                    rowNum: 150,
                     height: '100%',
                     width: width,
                     shrinkToFit: width == 1000 ? false : true,
@@ -232,7 +231,7 @@ module approve_template {
         }
     }
 
-    class YJSJSubView implements ISubView {
+    class YDSubView implements ISubView {
 
         private mTableUnapproveAssist: JQTable.JQGridAssistant;
         private mTableApproveAssist: JQTable.JQGridAssistant;
@@ -260,28 +259,28 @@ module approve_template {
             var ret: any = [];
             var comps = [];
             var years = [];
-            var months =[];
+            var months = [];
             $(checkedRows).each((i: number) => {
                 var row: any = checkedRows[i].split("&");
                 $(row).each((j) => {
                     row[j] = parseInt(row[j]);
                 });
-                
+
                 comps.push(row[0]);
-                if (row.length > 1){
+                if (row.length > 1) {
                     years.push(row[1]);
                     months.push(row[2]);
                 }
 
             });
             ret.push(comps);
-            if (years.length > 0){
+            if (years.length > 0) {
                 ret.push(years);
             }
-             if (months.length > 0){
+            if (months.length > 0) {
                 ret.push(months);
             }
-            
+
             return ret;
         }
         
@@ -326,14 +325,19 @@ module approve_template {
                     }
                 });
             });
-            
-            for (var i in compMap){
-                 companies.push(compMap[i]);
+
+            for (var i in compMap) {
+                companies.push(compMap[i]);
             }
 
             var title = ["单位名称"];
-            var colZbIds = ["dw", "rq"];
+            var colZbIds = ["dw"];
             var zbColMap = {};
+            var hasDate: boolean = rawData[0].length > 4;
+            if (hasDate) {
+                title.push("日期");
+                colZbIds.push("rq");
+            }
             
             //make title
             $(rawData).each((i) => {
@@ -344,64 +348,40 @@ module approve_template {
                 }
             });
 
-            var hasDate: boolean = rawData[0].length > 4;
-            if (hasDate) {
-                title.push("日期");
-                colZbIds.push("rq");
-            }
+
             var tmpData = [];
+            var compYearMap = {};
             //make data
             $(companies).each((i) => {
-                tmpData.push([companies[i].id, companies[i].value]);
                 $(rawData).each((j) => {
                     if (rawData[j][0] == "" + companies[i].id) {
-                        if (tmpData.length == i) {
-                            if (hasDate) {
-                                tmpData.push([companies[i].id + "&" + rawData[j][4] + "&" + rawData[j][5], companies[i].value, rawData[j][4] + "年" + rawData[j][5]] + "月");
-                            } else {
-                                tmpData.push([companies[i].id, companies[i].value]);
+                        var index = 0;
+                        if (hasDate) {
+                            var key = companies[i].id + "&" + rawData[j][4] + "&" + rawData[j][5];
+                            if (!Util.isExist(compYearMap[key])) {
+                                tmpData.push([key, companies[i].value, rawData[j][4] + "年" + rawData[j][5] + "月"]);
+                                compYearMap[key] = tmpData.length - 1;
                             }
+                            index = compYearMap[key];
+                        } else {
+                            if (!Util.isExist(compYearMap["_" + companies[i].id])) {
+                                tmpData.push([companies[i].id, companies[i].value]);
+                                compYearMap["_" + companies[i].id] = tmpData.length - 1;
+                            }
+                            index = compYearMap["_" + companies[i].id];
                         }
-
-                        if (tmpData[i].length <= zbColMap["_" + rawData[j][1]]) {
-                            resize(tmpData[i], zbColMap["_" + rawData[j][1]]);
-                        }
-                        tmpData[i][zbColMap["_" + rawData[j][1]]] = rawData[j][3];
                     }
+
+                    if (tmpData[index].length <= zbColMap["_" + rawData[j][1]]) {
+                        resize(tmpData[index], zbColMap["_" + rawData[j][1]]);
+                    }
+                    tmpData[index][zbColMap["_" + rawData[j][1]]] = rawData[j][3];
                 });
             });
 
 
-//            $(companies).each((i) => {
-//
-//                $(rawData).each((j) => {
-//                    if (!Util.isExist(zbColMap["_" + rawData[j][1]])) {
-//                        colZbIds.push(rawData[j][1]);
-//                        title.push(rawData[j][2])
-//                        zbColMap["_" + rawData[j][1]] = title.length;
-//                    }
-//                });
-//
-//                $(rawData).each((j) => {
-//                    if (rawData[j][0] == "" + companies[i].id) {
-//                        if (tmpData.length == i) {
-//                            if (hasDate) {
-//                                tmpData.push([companies[i].id + "&" + rawData[j][4] + "&" + rawData[j][5], companies[i].value, rawData[j][4] + "年" + rawData[j][5]] + "月");
-//                            } else {
-//                                tmpData.push([companies[i].id, companies[i].value]);
-//                            }
-//                        }
-//
-//                        if (tmpData[i].length <= zbColMap["_" + rawData[j][1]]) {
-//                            resize(tmpData[i], zbColMap["_" + rawData[j][1]]);
-//                        }
-//                        tmpData[i][zbColMap["_" + rawData[j][1]]] = rawData[j][3];
-//                    }
-//                });
-//            });
-
             var name = tableId + "_jqgrid";
-            var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createQnjhTable(name, title, colZbIds);
+            var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createSjTable(name, title, colZbIds);
 
             var parent = $("#" + tableId);
             parent.empty();
@@ -421,6 +401,7 @@ module approve_template {
                     multiselect: true,
                     drag: false,
                     resize: false,
+                    rowNum: 150,
                     //autowidth : false,
                     //cellsubmit: 'clientArray',
                     //cellEdit: false,
@@ -487,16 +468,14 @@ module approve_template {
             this.mCompanySelector.checkAll();
 
             switch (this.mOpt.approveType) {
-                case Util.ZBType.QNJH:
-                    this.mCurView = new QNJHSubView(opt);
-                    break;
                 case Util.ZBType.YDJDMJH:
-                    //                    this.mCurView = new JDYDJHSubView(opt);
+                    this.mCurView = new YDSubView(opt);
                     break;
+                case Util.ZBType.QNJH:
                 case Util.ZBType.BY20YJ:
                 case Util.ZBType.BY28YJ:
                 case Util.ZBType.BYSJ:
-                    this.mCurView = new YJSJSubView(opt);
+                    this.mCurView = new QNJHSubView(opt);
                     break;
             }
 

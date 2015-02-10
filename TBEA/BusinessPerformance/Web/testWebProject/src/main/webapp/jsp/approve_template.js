@@ -157,6 +157,7 @@ var approve_template;
                 multiselect: true,
                 drag: false,
                 resize: false,
+                rowNum: 150,
                 height: '100%',
                 width: width,
                 shrinkToFit: width == 1000 ? false : true,
@@ -166,11 +167,11 @@ var approve_template;
         };
         return QNJHSubView;
     })();
-    var YJSJSubView = (function () {
-        function YJSJSubView(opt) {
+    var YDSubView = (function () {
+        function YDSubView(opt) {
             this.mOpt = opt;
         }
-        YJSJSubView.prototype.getApprovedData = function () {
+        YDSubView.prototype.getApprovedData = function () {
             var ret = [[]];
             if (this.mTableApproveAssist != null) {
                 var checkedRows = this.mTableApproveAssist.getCheckedRowIds();
@@ -180,7 +181,7 @@ var approve_template;
             }
             return ret;
         };
-        YJSJSubView.prototype.format = function (checkedRows) {
+        YDSubView.prototype.format = function (checkedRows) {
             var ret = [];
             var comps = [];
             var years = [];
@@ -205,7 +206,7 @@ var approve_template;
             }
             return ret;
         };
-        YJSJSubView.prototype.getUnapprovedData = function () {
+        YDSubView.prototype.getUnapprovedData = function () {
             var ret = [[]];
             if (this.mTableUnapproveAssist != null) {
                 var checkedRows = this.mTableUnapproveAssist.getCheckedRowIds();
@@ -215,10 +216,10 @@ var approve_template;
             }
             return ret;
         };
-        YJSJSubView.prototype.getDate = function () {
+        YDSubView.prototype.getDate = function () {
             return this.mData;
         };
-        YJSJSubView.prototype.process = function (data, date, companies) {
+        YDSubView.prototype.process = function (data, date, companies) {
             this.mData = date;
             if (data[0].length > 0) {
                 this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId);
@@ -227,7 +228,7 @@ var approve_template;
                 this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId);
             }
         };
-        YJSJSubView.prototype.updateTable = function (rawData, comps, tableId) {
+        YDSubView.prototype.updateTable = function (rawData, comps, tableId) {
             var compMap = {};
             var companies = [];
             $(comps).each(function (i) {
@@ -241,8 +242,13 @@ var approve_template;
                 companies.push(compMap[i]);
             }
             var title = ["单位名称"];
-            var colZbIds = ["dw", "rq"];
+            var colZbIds = ["dw"];
             var zbColMap = {};
+            var hasDate = rawData[0].length > 4;
+            if (hasDate) {
+                title.push("日期");
+                colZbIds.push("rq");
+            }
             $(rawData).each(function (i) {
                 if (!Util.isExist(zbColMap["_" + rawData[i][1]])) {
                     colZbIds.push(rawData[i][1]);
@@ -250,33 +256,36 @@ var approve_template;
                     zbColMap["_" + rawData[i][1]] = title.length;
                 }
             });
-            var hasDate = rawData[0].length > 4;
-            if (hasDate) {
-                title.push("日期");
-                colZbIds.push("rq");
-            }
             var tmpData = [];
+            var compYearMap = {};
             $(companies).each(function (i) {
-                tmpData.push([companies[i].id, companies[i].value]);
                 $(rawData).each(function (j) {
                     if (rawData[j][0] == "" + companies[i].id) {
-                        if (tmpData.length == i) {
-                            if (hasDate) {
-                                tmpData.push([companies[i].id + "&" + rawData[j][4] + "&" + rawData[j][5], companies[i].value, rawData[j][4] + "年" + rawData[j][5]] + "月");
+                        var index = 0;
+                        if (hasDate) {
+                            var key = companies[i].id + "&" + rawData[j][4] + "&" + rawData[j][5];
+                            if (!Util.isExist(compYearMap[key])) {
+                                tmpData.push([key, companies[i].value, rawData[j][4] + "年" + rawData[j][5] + "月"]);
+                                compYearMap[key] = tmpData.length - 1;
                             }
-                            else {
+                            index = compYearMap[key];
+                        }
+                        else {
+                            if (!Util.isExist(compYearMap["_" + companies[i].id])) {
                                 tmpData.push([companies[i].id, companies[i].value]);
+                                compYearMap["_" + companies[i].id] = tmpData.length - 1;
                             }
+                            index = compYearMap["_" + companies[i].id];
                         }
-                        if (tmpData[i].length <= zbColMap["_" + rawData[j][1]]) {
-                            resize(tmpData[i], zbColMap["_" + rawData[j][1]]);
-                        }
-                        tmpData[i][zbColMap["_" + rawData[j][1]]] = rawData[j][3];
                     }
+                    if (tmpData[index].length <= zbColMap["_" + rawData[j][1]]) {
+                        resize(tmpData[index], zbColMap["_" + rawData[j][1]]);
+                    }
+                    tmpData[index][zbColMap["_" + rawData[j][1]]] = rawData[j][3];
                 });
             });
             var name = tableId + "_jqgrid";
-            var jqAssist = JQGridAssistantFactory.createQnjhTable(name, title, colZbIds);
+            var jqAssist = JQGridAssistantFactory.createSjTable(name, title, colZbIds);
             var parent = $("#" + tableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
@@ -290,6 +299,7 @@ var approve_template;
                 multiselect: true,
                 drag: false,
                 resize: false,
+                rowNum: 150,
                 height: '100%',
                 width: width,
                 shrinkToFit: width == 1000 ? false : true,
@@ -297,7 +307,7 @@ var approve_template;
             }));
             return jqAssist;
         };
-        return YJSJSubView;
+        return YDSubView;
     })();
     var View = (function () {
         function View() {
@@ -319,15 +329,14 @@ var approve_template;
             this.mCompanySelector = new Util.CompanySelector(true, opt.companyId, opt.comps, opt.firstCompany);
             this.mCompanySelector.checkAll();
             switch (this.mOpt.approveType) {
-                case Util.ZBType.QNJH:
-                    this.mCurView = new QNJHSubView(opt);
-                    break;
                 case Util.ZBType.YDJDMJH:
+                    this.mCurView = new YDSubView(opt);
                     break;
+                case Util.ZBType.QNJH:
                 case Util.ZBType.BY20YJ:
                 case Util.ZBType.BY28YJ:
                 case Util.ZBType.BYSJ:
-                    this.mCurView = new YJSJSubView(opt);
+                    this.mCurView = new QNJHSubView(opt);
                     break;
             }
             this.updateTitle();

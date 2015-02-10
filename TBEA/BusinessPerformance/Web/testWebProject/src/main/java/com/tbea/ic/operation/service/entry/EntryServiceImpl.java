@@ -409,11 +409,13 @@ public class EntryServiceImpl implements EntryService{
 	private List<String[]> get28YJ(Date date, Company company) {
 		DWXX dwxx = dwxxDao.getById(company.getId());
 		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		
 		int leftMonth = (cal.get(Calendar.MONTH) + 1) % 3;
 		if (0 == leftMonth){//season end
 			leftMonth = 3;
 		}
-		cal.setTime(date);
+		
 		Map<Integer, String[]> map = creatZBXXMap(dwxx.getSjzbxxs(), leftMonth + 3);
 		for (int i = 0; i <= leftMonth; ++i){
 			updateYJ28Map(map, yj28zbDao.getZbs(Util.toDate(cal), company), i);
@@ -434,10 +436,10 @@ public class EntryServiceImpl implements EntryService{
 
 	
 	private List<String[]> toArray(Map<Integer, String[]> map){
-//		Object[] key_arr = map.keySet().toArray();   
-//		Arrays.sort(key_arr);   
+		Object[] key_arr = map.keySet().toArray();   
+		Arrays.sort(key_arr);   
 		List<String[]> ret = new ArrayList<String[]>();
-		for(Integer id : map.keySet()){
+		for(Object id : key_arr){
 			ret.add(map.get(id));
 		}
 		return ret;
@@ -457,11 +459,13 @@ public class EntryServiceImpl implements EntryService{
 	private List<String[]> get20YJ(Date date, Company company) {	
 		DWXX dwxx = dwxxDao.getById(company.getId());
 		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		
 		int leftMonth = (cal.get(Calendar.MONTH) + 1) % 3;
 		if (0 == leftMonth){//season end
 			leftMonth = 3;
 		}
-		cal.setTime(date);
+		
 		Map<Integer, String[]> map = creatZBXXMap(dwxx.getSjzbxxs(), leftMonth + 3);
 		for (int i = 0; i <= leftMonth; ++i){
 			updateYJ20Map(map, yj20zbDao.getZbs(Util.toDate(cal), company), i);

@@ -19,9 +19,9 @@ public interface ApproveService {
 
 	boolean unapproveNdjhZb(List<Company> comps, Date date);
 
-	boolean approveYj20Zb(List<Company> comps, List<Date> dateList);
+	boolean approveYj20Zb(List<Company> comps, Date date);
 
-	boolean approveYj28Zb(List<Company> comps, List<Date> dateList);
+	boolean approveYj28Zb(List<Company> comps, Date date);
 
 	boolean approveSjZb(List<Company> comps, Date date);
 

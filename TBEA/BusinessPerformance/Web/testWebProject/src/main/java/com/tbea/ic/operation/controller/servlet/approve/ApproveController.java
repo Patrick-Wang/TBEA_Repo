@@ -102,12 +102,12 @@ public class ApproveController {
 		boolean ret = false;
 		switch (entryType){
 		case BY20YJ:
-			//[[compId...], [year...], [month...]]
-			ret = service.approveYj20Zb(comps, DateSelection.getDate(data.getJSONArray(1), data.getJSONArray(2)));
+			//[[compId...]]
+			ret = service.approveYj20Zb(comps, date);
 			break;
 		case BY28YJ:
-			//[[compId...], [year...], [month...]]
-			ret = service.approveYj28Zb(comps, DateSelection.getDate(data.getJSONArray(1), data.getJSONArray(2)));
+			//[[compId...]]
+			ret = service.approveYj28Zb(comps, date);
 			break;
 		case BYSJ:
 			//[[compId...]]
@@ -118,6 +118,7 @@ public class ApproveController {
 			ret = service.approveNdjhZb(comps, date);
 			break;
 		case YDJDMJH:
+			//[[compId...], [year...], [month...]]
 			ret = service.approveYdjdZb(comps, DateSelection.getDate(data.getJSONArray(1), data.getJSONArray(2)));
 			break;
 		default:

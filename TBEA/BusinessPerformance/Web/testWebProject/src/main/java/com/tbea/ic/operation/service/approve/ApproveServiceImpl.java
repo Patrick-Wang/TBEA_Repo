@@ -2,7 +2,9 @@ package com.tbea.ic.operation.service.approve;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import net.sf.json.JSONArray;
 
 import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -28,8 +31,10 @@ import com.tbea.ic.operation.model.dao.jygk.yj28zbdao.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.dao.qxgl.QXGLDao;
 import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.NDJHZB;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
+import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 
@@ -93,10 +98,47 @@ public class ApproveServiceImpl implements ApproveService {
 		return ret;
 	}
 
-	
+    //[[compId ,zbId, zbName, value, year, month] ...] approved 
+    //[[compId ,zbId, zbName, value, year, month] ...] unapproved
     private List<List<String[]>> getYdjdZb(List<Company> comps, Date date) {
-		// TODO Auto-generated method stub
-		return null;
+    	List<List<String[]>> retList = new ArrayList<List<String[]>>();
+		List<String[]> approveList = new ArrayList<String[]>();
+		List<String[]> unapproveList = new ArrayList<String[]>();
+		
+		Organization org = companyManager.getBMOrganization();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int leftMonth = (cal.get(Calendar.MONTH) + 1) % 3;
+		if (0 == leftMonth){//season end
+			leftMonth = 3;
+		}
+		
+		cal.add(Calendar.MONTH, leftMonth);
+		Date dEnd = new Date(cal.getTimeInMillis());
+		cal.add(Calendar.MONTH, 1 - leftMonth);
+		Date dStart = new Date(cal.getTimeInMillis());
+
+		List<YDJHZB> zbs = ydjhzbDao.getZb(comps, dStart, dEnd);
+		for (YDJHZB zb : zbs){
+			String[] zbTmp = new String[6];
+			if (zb.getYdjhshzt().getId() == 1){//approved
+				unapproveList.add(zbTmp);
+			} else{
+				approveList.add(zbTmp);
+			}
+			
+			Company comp = org.getCompany(zb.getDwxx().getId());
+			zbTmp[0] = comp.getType().ordinal() + "";
+			zbTmp[1] = zb.getZbxx().getId() + "";
+			zbTmp[2] = zb.getZbxx().getName();
+			zbTmp[3] = zb.getYdjhz() + "";
+			zbTmp[4] = zb.getNf() + "";
+			zbTmp[5] = zb.getYf() + "";
+		}
+
+		retList.add(approveList);
+		retList.add(unapproveList);
+		return retList;
 	}
 
 
@@ -152,18 +194,61 @@ public class ApproveServiceImpl implements ApproveService {
 		return retList;
 	}
 
-    //[[compId ,zbId, zbName, value, year, month] ...] approved 
-    //[[compId ,zbId, zbName, value, year, month] ...] unapproved
+    //[[compId ,zbId, zbName, value] ...] approved 
+    //[[compId ,zbId, zbName, value] ...] unapproved
 	private List<List<String[]>> get28Zb(List<Company> comps, Date date) {
-		// TODO Auto-generated method stub
-		return null;
+		List<List<String[]>> retList = new ArrayList<List<String[]>>();
+		List<String[]> approveList = new ArrayList<String[]>();
+		List<String[]> unapproveList = new ArrayList<String[]>();
+		Organization org = companyManager.getBMOrganization();
+		List<YJ28ZB> zbs = yj28zbDao.getZb(date, comps);
+		for (YJ28ZB zb : zbs){
+			String[] zbTmp = new String[4];
+			if (zb.getYj28shzt().getId() == 1){//approved
+				unapproveList.add(zbTmp);
+			} else{
+				approveList.add(zbTmp);
+			}
+			
+			Company comp = org.getCompany(zb.getDwxx().getId());
+			zbTmp[0] = comp.getType().ordinal() + "";
+			zbTmp[1] = zb.getZbxx().getId() + "";
+			zbTmp[2] = zb.getZbxx().getName();
+			zbTmp[3] = zb.getYj28z() + "";
+		}
+
+		retList.add(approveList);
+		retList.add(unapproveList);
+		return retList;
 	}
 
-    //[[compId ,zbId, zbName, value, year, month] ...] approved 
-    //[[compId ,zbId, zbName, value, year, month] ...] unapproved
+    //[[compId ,zbId, zbName, value] ...] approved 
+    //[[compId ,zbId, zbName, value] ...] unapproved
 	private List<List<String[]>> get20Zb(List<Company> comps, Date date) {
-		// TODO Auto-generated method stub
-		return null;
+		List<List<String[]>> retList = new ArrayList<List<String[]>>();
+		List<String[]> approveList = new ArrayList<String[]>();
+		List<String[]> unapproveList = new ArrayList<String[]>();
+		
+		Organization org = companyManager.getBMOrganization();
+		List<YJ20ZB> zbs = yj20zbDao.getZb(date, comps);
+		for (YJ20ZB zb : zbs){
+			String[] zbTmp = new String[4];
+			if (zb.getYj20shzt().getId() == 1){//approved
+				unapproveList.add(zbTmp);
+			} else{
+				approveList.add(zbTmp);
+			}
+			
+			Company comp = org.getCompany(zb.getDwxx().getId());
+			zbTmp[0] = comp.getType().ordinal() + "";
+			zbTmp[1] = zb.getZbxx().getId() + "";
+			zbTmp[2] = zb.getZbxx().getName();
+			zbTmp[3] = zb.getYj20z() + "";
+		}
+
+		retList.add(approveList);
+		retList.add(unapproveList);
+		return retList;
 	}
 
 	@Override
@@ -201,19 +286,20 @@ public class ApproveServiceImpl implements ApproveService {
 
 
 	@Override
-	public boolean approveYj20Zb(List<Company> comps, List<Date> dateList) {
-		List<YJ20ZB> zbs = yj20zbDao.getUnapprovedZbs(dateList, comps);
-		for (YJ20ZB yj20zb : zbs){
-			yj20zb.setYj20shzt(shztDao.getById(1));
-			yj20zbDao.merge(yj20zb);
-		}
+	public boolean approveYj20Zb(List<Company> comps, Date date) {
+			List<YJ20ZB> zbs = yj20zbDao.getUnapprovedZbs(date, comps);
+			for (YJ20ZB yj20zb : zbs){
+				yj20zb.setYj20shzt(shztDao.getById(1));
+				yj20zbDao.merge(yj20zb);
+			}
+
 		return true;
 	}
 
 
 	@Override
-	public boolean approveYj28Zb(List<Company> comps, List<Date> dateList) {
-		List<YJ28ZB> zbs = yj28zbDao.getUnapprovedZbs(dateList, comps);
+	public boolean approveYj28Zb(List<Company> comps, Date date) {
+		List<YJ28ZB> zbs = yj28zbDao.getUnapprovedZbs(date, comps);
 		for (YJ28ZB yj28zb : zbs){
 			yj28zb.setYj28shzt(shztDao.getById(1));
 			yj28zbDao.merge(yj28zb);
@@ -257,10 +343,12 @@ public class ApproveServiceImpl implements ApproveService {
 
 	@Override
 	public boolean unapproveYj28Zb(List<Company> comps, List<Date> dateList) {
-		List<YJ28ZB> zbs = yj28zbDao.getApprovedZbs(dateList, comps);
-		for (YJ28ZB yj28zb : zbs){
-			yj28zb.setYj28shzt(shztDao.getById(2));
-			yj28zbDao.merge(yj28zb);
+		for (int i = 0; i < comps.size() && i < dateList.size(); ++i){
+			List<YJ28ZB> zbs = yj28zbDao.getApprovedZbs(dateList.get(i), comps.get(i));
+			for (YJ28ZB yj28zb : zbs){
+				yj28zb.setYj28shzt(shztDao.getById(2));
+				yj28zbDao.merge(yj28zb);
+			}
 		}
 		return true;
 	}
@@ -268,10 +356,12 @@ public class ApproveServiceImpl implements ApproveService {
 
 	@Override
 	public boolean unapproveYj20Zb(List<Company> comps, List<Date> dateList) {
-		List<YJ20ZB> zbs = yj20zbDao.getApprovedZbs(dateList, comps);
-		for (YJ20ZB zb : zbs){
-			zb.setYj20shzt(shztDao.getById(2));
-			yj20zbDao.merge(zb);
+		for (int i = 0; i < comps.size() && i < dateList.size(); ++i){
+			List<YJ20ZB> zbs = yj20zbDao.getApprovedZbs(dateList.get(i), comps.get(i));
+			for (YJ20ZB zb : zbs){
+				zb.setYj20shzt(shztDao.getById(2));
+				yj20zbDao.merge(zb);
+			}
 		}
 		return true;
 	}

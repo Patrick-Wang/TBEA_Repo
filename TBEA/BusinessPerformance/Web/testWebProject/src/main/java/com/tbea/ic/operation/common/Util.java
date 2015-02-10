@@ -77,7 +77,35 @@ public class Util {
 	public static String toBMString(List<Company> comps){
 		String ret = "";
 		for (Company comp : comps){
-			ret += ",0" + comp.getId();
+			ret += "," + comp.getId();
+		}
+		return ret.substring(1);
+	}
+	
+	public static String toBMSString(List<Company> comps){
+		String ret = "";
+		for (Company comp : comps){
+			ret += ",'0" + comp.getId() + "'";
+		}
+		return ret.substring(1);
+	}
+	
+	public static String toYear(List<Date> dateList){
+		String ret = "";
+		Calendar cal = Calendar.getInstance();
+		for (Date d : dateList){
+			cal.setTime(d);
+			ret += ",0" + cal.get(Calendar.YEAR);
+		}
+		return ret.substring(1);
+	}
+	
+	public static String toMonth(List<Date> dateList){
+		String ret = "";
+		Calendar cal = Calendar.getInstance();
+		for (Date d : dateList){
+			cal.setTime(d);
+			ret += ",0" + cal.get(Calendar.MONTH);
 		}
 		return ret.substring(1);
 	}

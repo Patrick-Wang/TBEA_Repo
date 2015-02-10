@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
 
@@ -49,6 +50,20 @@ public class YDJHZBDaoImpl extends AbstractReadWriteDaoImpl<YDJHZB> implements Y
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		q.setParameter("comp", company.getId());
+		return q.getResultList();
+	}
+
+	@Override
+	public List<YDJHZB> getZb(List<Company> comps, Date dStart, Date dEnd) {
+		Calendar calStart = Calendar.getInstance();
+		calStart.setTime(dStart);
+		Calendar calEnd = Calendar.getInstance();
+		calEnd.setTime(dEnd);
+		Query q = this.getEntityManager().createQuery("from YDJHZB where nf >= :nStart and nf <= :nEnd and yf >= :yStart and yf <= :yEnd and dwxx.id in ("+ Util.toBMString(comps) +")");
+		q.setParameter("nStart", calStart.get(Calendar.YEAR));
+		q.setParameter("nEnd", calEnd.get(Calendar.YEAR));
+		q.setParameter("yStart", calStart.get(Calendar.MONTH) + 1);
+		q.setParameter("yEnd", calEnd.get(Calendar.MONTH) + 1);
 		return q.getResultList();
 	}
 

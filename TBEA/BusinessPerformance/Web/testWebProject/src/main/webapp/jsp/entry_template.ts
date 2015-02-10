@@ -93,9 +93,14 @@ module entry_template {
                 for (var j = 0; j < allData[i].length; ++j){
                     if (j != 1){
                         submitData[i].push(allData[i][j])
+                        if (allData[i][j] == ""){
+                            alert(i + "行" + j + "列为空 无法提交");
+                            return;    
+                        }
                     }
                 }
             }
+            
             this.mSubmit.post({
                 year: date.year,
                 month: date.month,
@@ -234,10 +239,11 @@ module entry_template {
                     //autowidth : false,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
-                    height: '100%',
+                    height: data.length > 25 ? 600 : '100%',
                     width: titles.length * 200,
                     shrinkToFit: true,
                     autoScroll: true,
+                    rowNum: 150,
                     beforeEditCell:(rowid,cellname,v,iRow,iCol)=>{
                         lastsel = iRow; 
                         lastcell = iCol; 
