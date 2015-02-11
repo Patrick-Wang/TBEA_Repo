@@ -28,8 +28,9 @@ import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.shzt.SHZTDao;
 import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
-import com.tbea.ic.operation.model.dao.jygk.yj20zbdao.YJ20ZBDao;
-import com.tbea.ic.operation.model.dao.jygk.yj28zbdao.YJ28ZBDao;
+import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
+import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
+import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.dao.qxgl.QXGLDao;
 import com.tbea.ic.operation.model.entity.jygk.Account;
@@ -38,6 +39,7 @@ import com.tbea.ic.operation.model.entity.jygk.NDJHZB;
 import com.tbea.ic.operation.model.entity.jygk.QXGL;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
 import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
+import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
@@ -75,9 +77,46 @@ public class EntryServiceImpl implements EntryService{
 	@Autowired
 	NDJHZBDao ndjhzbDao;
 	
+	@Autowired
+	YDZBZTDao ydzbztDao;
+	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
+	
+	public void setYdzbzt(Company comp, int nf, int yf, ZBType entryType){
+		YDZBZT ydzbzt = ydzbztDao.getYdzbzt(comp, nf, yf);
+		if (null == ydzbzt){
+			ydzbzt = new YDZBZT();
+			ydzbzt.setDwxx(dwxxDao.getById(comp.getId()));
+			ydzbzt.setNf(nf);
+			ydzbzt.setYf(yf);
+			ydzbzt.setZt(0);
+			ydzbztDao.create(ydzbzt);
+		}
+		
+		switch (entryType){
+		case BY20YJ:
+			if (ydzbzt.getZt() < 1){
+				ydzbzt.setZt(1);
+			}
+			break;
+		case BY28YJ:
+			if (ydzbzt.getZt() <= 1){
+				ydzbzt.setZt(2);
+			}
+			break;
+		case BYSJ:
+			if (ydzbzt.getZt() <= 2){
+				ydzbzt.setZt(3);
+			}
+			break;
+		default:
+			break;
+		}
+		ydzbztDao.merge(ydzbzt);
+	}
+	
 	@Override
 	public boolean updateZb(Date date, Account account, CompanyType comp,
 			ZBType entryType, JSONArray data) {
@@ -202,7 +241,8 @@ public class EntryServiceImpl implements EntryService{
 				sjzbDao.merge(zb);
 			}
 		}
-		
+		cal.setTime(date);
+		setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BYSJ);
 		return true;
 	}
 
@@ -243,7 +283,8 @@ public class EntryServiceImpl implements EntryService{
 				cal.add(Calendar.MONTH, 1);
 			}
 		}
-
+		cal.setTime(date);
+		setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY28YJ);
 		return true;
 	}
 
@@ -283,6 +324,9 @@ public class EntryServiceImpl implements EntryService{
 				cal.add(Calendar.MONTH, 1);
 			}
 		}
+		
+		cal.setTime(date);
+		setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
 		
 		return true;
 	}

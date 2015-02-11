@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.model.dao.jygk.yj20zbdao;
+package com.tbea.ic.operation.model.dao.jygk.yj20zb;
 
 import java.sql.Date;
 import java.util.Calendar;
