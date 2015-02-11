@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ZBType;
+import com.tbea.ic.operation.common.CompanySelection.Filter;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.entity.User;
@@ -37,6 +38,23 @@ public class EntryController {
 	@Autowired
 	private EntryService entryService;
 
+	private List<Company> getOwnedCompanies(Account account, ZBType entryType){
+		List<Company> comps = null;
+		
+		switch (entryType){
+			case NDJH:
+			case YDJDMJH:
+				comps = entryService.getValidJHCompanys(account);
+				break;
+				
+			case BY20YJ:
+			case BY28YJ:
+			case BYSJ:
+				comps = entryService.getValidSJCompanys(account);
+				break;	
+		}
+		return comps;
+	}
 
 	@RequestMapping(value = "zb.do", method = RequestMethod.GET)
 	public ModelAndView getZBEntry(HttpServletRequest request,
@@ -55,24 +73,12 @@ public class EntryController {
 			DateSelection dateSel = new DateSelection(year, month);
 			dateSel.select(map);
 		}
+		
 		Account account = (Account) request.getSession(false).getAttribute("account");
-		
-		List<Company> comps = null;
-		
-		switch (entryType){
-			case NDJH:
-			case YDJDMJH:
-				comps = entryService.getValidJHCompanys(account);
-				break;
-				
-			case BY20YJ:
-			case BY28YJ:
-			case BYSJ:
-				comps = entryService.getValidSJCompanys(account);
-				break;	
-		}
-		
+		List<Company> comps = getOwnedCompanies(account, entryType);
+
 		CompanySelection compSel = new CompanySelection(true, comps);
+		
 		compSel.select(map);
 		
 		map.put("entryType", entryType.ordinal());		

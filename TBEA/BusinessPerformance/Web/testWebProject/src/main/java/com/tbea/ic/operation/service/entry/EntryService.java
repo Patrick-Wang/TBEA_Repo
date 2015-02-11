@@ -25,5 +25,4 @@ public interface EntryService {
 	public boolean hasEntryPlanPermission(Account account);
 
 	public boolean hasEntryPredictPermission(Account account);
-
 }

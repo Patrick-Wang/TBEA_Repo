@@ -17,4 +17,10 @@ public interface YDJHZBDao  extends AbstractReadWriteDao<YDJHZB>{
 
 	List<YDJHZB> getZb(List<Company> comps, Date dStart, Date dEnd);
 
+	List<YDJHZB> getUnapprovedZbs(Date date, Company company);
+
+	List<YDJHZB> getApprovedZbs(Date date, Company company);
+
+	List<Integer> getCompanies();
+
 }

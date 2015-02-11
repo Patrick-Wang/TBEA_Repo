@@ -136,6 +136,14 @@ module Util {
             return null;
         }
         
+        public getCompanyName(): string {
+            var selNodes = this.mUnitedSelector.getNodes();
+            if (selNodes.length > 0) {
+                return selNodes[selNodes.length - 1].getData().value;
+            }
+            return null;
+        }
+        
         public checkAll(){
             $(this.mUnitedSelector.getSelect()[1]).multiselect("checkAll");
         }
@@ -145,7 +153,8 @@ module Util {
             var path = this.mUnitedSelector.getPath();
             var parent: DataNode = this.mUnitedSelector.getDataNode(path, path.length - 1);
             var node: DataNode;
-            var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
+            var sels = this.mUnitedSelector.getSelect();
+            var checkedOpt = $(sels[sels.length - 1]).multiselect("getChecked");
             
             for (var i = 0; i < parent.childCount(); ++i){
                 node = parent.childAt(i);
@@ -163,7 +172,8 @@ module Util {
             var path = this.mUnitedSelector.getPath();
             var parent: DataNode = this.mUnitedSelector.getDataNode(path, path.length - 1);
             var node: DataNode;
-            var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
+            var sels = this.mUnitedSelector.getSelect();
+            var checkedOpt = $(sels[sels.length - 1]).multiselect("getChecked");
             
             for (var i = 0; i < parent.childCount(); ++i){
                 node = parent.childAt(i);
@@ -178,7 +188,8 @@ module Util {
 
         public getCompanys(): Util.CompanyType[] {
             var ret = [];
-            var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
+            var sels = this.mUnitedSelector.getSelect();
+            var checkedOpt = $(sels[sels.length - 1]).multiselect("getChecked");
             checkedOpt.each((i) =>{
                 ret.push(parseInt(checkedOpt[i].value));
             });

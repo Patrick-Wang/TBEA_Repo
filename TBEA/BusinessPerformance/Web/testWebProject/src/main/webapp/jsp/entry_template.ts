@@ -67,9 +67,12 @@ module entry_template {
                     this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
                     break;
             }
-            this.mTitleCompanyName = opt.comps[0].data.value;
+
             this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
-            this.mCompanySelector.hide();
+            if (opt.comps.length == 1){
+                this.mCompanySelector.hide();
+            }
+            
             this.updateTitle();
             this.updateUI();
         }
@@ -119,21 +122,22 @@ module entry_template {
         private updateTitle() {
             var header = "";
             var date = this.mDateSelector.getDate();
+            var compName = this.mCompanySelector.getCompanyName();
             switch (this.mOpt.entryType) {
                 case Util.ZBType.QNJH:
-                    header = date.year + "年 " + this.mTitleCompanyName + " 计划数据录入";
+                    header = date.year + "年 " + compName + " 计划数据录入";
                     break;
                 case Util.ZBType.YDJDMJH:
-                    header = date.year + "年" + date.month + "月 " + this.mTitleCompanyName + " 季度-月度末计划值录入";
+                    header = date.year + "年" + date.month + "月 " + compName + " 季度-月度末计划值录入";
                     break;
                 case Util.ZBType.BY20YJ:
-                    header = date.year + "年" + date.month + "月 " + this.mTitleCompanyName + " 20日预计值录入";
+                    header = date.year + "年" + date.month + "月 " + compName + " 20日预计值录入";
                     break;
                 case Util.ZBType.BY28YJ:
-                    header = date.year + "年" + date.month + "月 " + this.mTitleCompanyName + " 28日预计值录入";
+                    header = date.year + "年" + date.month + "月 " + compName + " 28日预计值录入";
                     break;
                 case Util.ZBType.BYSJ:
-                    header = date.year + "年" + date.month + "月 " + this.mTitleCompanyName + " 实际数据录入";
+                    header = date.year + "年" + date.month + "月 " + compName + " 实际数据录入";
                     break;
             }
 

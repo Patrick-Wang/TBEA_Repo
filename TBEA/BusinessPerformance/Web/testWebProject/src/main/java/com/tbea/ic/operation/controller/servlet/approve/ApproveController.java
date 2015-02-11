@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +24,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ZBType;
+import com.tbea.ic.operation.common.CompanySelection.Filter;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
 
 
@@ -40,7 +43,25 @@ public class ApproveController {
 	@Autowired
 	private ApproveService service;
 
-
+	
+	private List<Company> getOwnedCompanies(Account account, ZBType approveType){
+		List<Company> ret = null;
+		switch (approveType){
+		case BY20YJ:
+		case BY28YJ:
+		case BYSJ:
+			ret = service.getValidSjCompanies(account);
+			break;
+		case NDJH:
+		case YDJDMJH:
+			ret = service.getValidJhCompanies(account);
+			break;
+		default:
+			break;
+		}
+		return ret;
+	}
+	
 	@RequestMapping(value = "zb.do", method = RequestMethod.GET)
 	public ModelAndView getZBEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -57,9 +78,18 @@ public class ApproveController {
 			DateSelection dateSel = new DateSelection(year, month);
 			dateSel.select(map);
 		}
-		Organization org = companyManager.getBMOrganization();
+
+		CompanySelection compSel = new CompanySelection(true,
+				getOwnedCompanies((Account)request.getSession(false).getAttribute(
+						"account"), approveType), new Filter() {
+					private List<Integer> comps = service
+							.getCompanies(approveType);
+
+					public boolean keep(Company comp) {
+						return comps.contains(comp.getId());
+					}
+				});
 		
-		CompanySelection compSel = new CompanySelection(false, org.getTopCompany());
 		compSel.select(map);
 		map.put("approveType", approveType.ordinal());
 			
@@ -135,8 +165,8 @@ public class ApproveController {
 		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("approveType")));
 		Date date = DateSelection.getDate(request);
 		
-		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Organization org = companyManager.getBMOrganization();
 		List<CompanyType> types = CompanySelection.getCompanys(data.getJSONArray(0));
 		List<Company> comps = new ArrayList<Company>();
@@ -147,12 +177,12 @@ public class ApproveController {
 		boolean ret = false;
 		switch (entryType){
 		case BY20YJ:
-			 //[[compId...], [year...], [month...]]
-			ret = service.unapproveYj20Zb(comps, DateSelection.getDate(data.getJSONArray(1), data.getJSONArray(2)));
+			 //[[compId...]]
+			ret = service.unapproveYj20Zb(comps, date);
 			break;
 		case BY28YJ:
-			 //[[compId...], [year...], [month...]]
-			ret = service.unapproveYj28Zb(comps, DateSelection.getDate(data.getJSONArray(1), data.getJSONArray(2)));
+			 //[[compId...]]
+			ret = service.unapproveYj28Zb(comps, date);
 			break;
 		case BYSJ:
 			//[[compId...]]
@@ -163,6 +193,8 @@ public class ApproveController {
 			ret = service.unapproveNdjhZb(comps, date);
 			break;
 		case YDJDMJH:
+			//[[compId...], [year...], [month...]]
+			ret = service.unapproveYdjdZb(comps, DateSelection.getDate(data.getJSONArray(1), data.getJSONArray(2)));
 			break;
 		default:
 			break;

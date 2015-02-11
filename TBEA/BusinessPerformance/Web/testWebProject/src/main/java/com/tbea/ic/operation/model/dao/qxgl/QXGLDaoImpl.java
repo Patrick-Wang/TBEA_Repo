@@ -65,6 +65,17 @@ public class QXGLDaoImpl  extends AbstractReadWriteDaoImpl<QXGL> implements QXGL
 		return q.getResultList();
 	}
 
+	@Override
+	public List<QXGL> getSjzsh(Account account) {
+		Query q = getEntityManager().createQuery("from QXGL where account.id = :accountId and jhzsh = 1");
+		q.setParameter("accountId", account.getId());
+		return q.getResultList();
+	}
 
-
+	@Override
+	public List<QXGL> getJhzsh(Account account) {
+		Query q = getEntityManager().createQuery("from QXGL where account.id = :accountId and sjzsh = 1");
+		q.setParameter("accountId", account.getId());
+		return q.getResultList();
+	}
 }

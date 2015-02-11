@@ -29,7 +29,15 @@ public interface ApproveService {
 
 	boolean unapproveSjZb(List<Company> comps, Date date);
 
-	boolean unapproveYj28Zb(List<Company> comps, List<Date> dateList);
+	boolean unapproveYj28Zb(List<Company> comps, Date date);
 
-	boolean unapproveYj20Zb(List<Company> comps, List<Date> dateList);
+	boolean unapproveYj20Zb(List<Company> comps, Date date);
+
+	boolean unapproveYdjdZb(List<Company> comps, List<Date> date);
+
+	List<Integer> getCompanies(ZBType approveType);
+
+	List<Company> getValidSjCompanies(Account account);
+
+	List<Company> getValidJhCompanies(Account account);
 }

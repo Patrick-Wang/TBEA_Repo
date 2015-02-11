@@ -84,6 +84,10 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 		return q.getResultList();
 	}
 
-	
+	@Override
+	public List<Integer> getCompanies() {
+		Query q = this.getEntityManager().createQuery("select dwxx.id from SJZB");
+		return q.getResultList();
+	}
 
 }

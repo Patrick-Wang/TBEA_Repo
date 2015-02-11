@@ -354,14 +354,21 @@ var approve_template;
                     }
                     else {
                         $("#approve").css("display", "");
+                        $("#nothing").css("display", "none");
                     }
                     if (data[1].length == 0) {
                         $("#unapprove").css("display", "none");
                     }
                     else {
                         $("#unapprove").css("display", "");
+                        $("#nothing").css("display", "none");
                     }
-                    _this.mCurView.process(data, _this.mDateSelector.getDate(), _this.mCompanySelector.getRawCompanyData());
+                    if (data[0].length == 0 && data[1].length == 0) {
+                        $("#nothing").css("display", "");
+                    }
+                    else {
+                        _this.mCurView.process(data, _this.mDateSelector.getDate(), _this.mCompanySelector.getRawCompanyData());
+                    }
                 });
             }
             else {
@@ -440,45 +447,6 @@ var approve_template;
             }
             $('h1').text(header);
             document.title = header;
-        };
-        View.prototype.createPredict = function (title) {
-            var ret = [title[0]];
-            var date = this.mDateSelector.getDate();
-            var left = date.month % 3;
-            if (this.mOpt.approveType == Util.ZBType.YDJDMJH && left == 0) {
-                if (12 == date.month) {
-                    ret.push((date.year + 1) + "年1月计划");
-                    ret.push((date.year + 1) + "年2月计划");
-                    ret.push((date.year + 1) + "年3月计划");
-                }
-                else {
-                    ret.push((date.month + 1) + "月计划");
-                    ret.push((date.month + 2) + "月计划");
-                    ret.push((date.month + 3) + "月计划");
-                }
-            }
-            else if (this.mOpt.approveType == Util.ZBType.BY20YJ || this.mOpt.approveType == Util.ZBType.BY28YJ) {
-                ret.push(title[1]);
-                if (0 != left) {
-                    var leftMonth = 3 - left;
-                    for (var i = 1; i <= leftMonth; ++i) {
-                        ret.push((date.month + i) + "月预计");
-                    }
-                }
-                else {
-                    if (12 == date.month) {
-                        ret.push((date.year + 1) + "年1月预计");
-                        ret.push((date.year + 1) + "年2月预计");
-                        ret.push((date.year + 1) + "年3月预计");
-                    }
-                    else {
-                        ret.push((date.month + 1) + "月预计");
-                        ret.push((date.month + 2) + "月预计");
-                        ret.push((date.month + 3) + "月预计");
-                    }
-                }
-            }
-            return ret;
         };
         View.instance = new View();
         return View;

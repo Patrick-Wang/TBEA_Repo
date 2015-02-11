@@ -33,6 +33,7 @@ import com.tbea.ic.operation.model.dao.qxgl.QXGLDao;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.NDJHZB;
+import com.tbea.ic.operation.model.entity.jygk.QXGL;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
 import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
@@ -74,9 +75,9 @@ public class ApproveServiceImpl implements ApproveService {
 	
 
 	@Override
-	public List<List<String[]>> getZb(List<Company> comps, Date date, ZBType entryType) {
+	public List<List<String[]>> getZb(List<Company> comps, Date date, ZBType approveType) {
 		List<List<String[]>> ret = null;
-		switch(entryType){
+		switch(approveType){
 		case BY20YJ:
 			ret = get20Zb(comps, date);
 			break;
@@ -319,15 +320,7 @@ public class ApproveServiceImpl implements ApproveService {
 	}
 
 
-	@Override
-	public boolean approveYdjdZb(List<Company> comps, List<Date> dateList) {
-//		List<SJZB> zbs = sjzbDao.getApprovedZbs(date, comps);
-//		for (SJZB zb : zbs){
-//			zb.setSjshzt(shztDao.getById(2));
-//			sjzbDao.merge(zb);
-//		}
-		return true;
-	}
+
 
 
 	@Override
@@ -342,29 +335,94 @@ public class ApproveServiceImpl implements ApproveService {
 
 
 	@Override
-	public boolean unapproveYj28Zb(List<Company> comps, List<Date> dateList) {
-		for (int i = 0; i < comps.size() && i < dateList.size(); ++i){
-			List<YJ28ZB> zbs = yj28zbDao.getApprovedZbs(dateList.get(i), comps.get(i));
-			for (YJ28ZB yj28zb : zbs){
-				yj28zb.setYj28shzt(shztDao.getById(2));
-				yj28zbDao.merge(yj28zb);
-			}
+	public boolean unapproveYj28Zb(List<Company> comps, Date date) {
+		List<YJ28ZB> zbs = yj28zbDao.getApprovedZbs(date, comps);
+		for (YJ28ZB yj28zb : zbs) {
+			yj28zb.setYj28shzt(shztDao.getById(2));
+			yj28zbDao.merge(yj28zb);
 		}
 		return true;
 	}
-
 
 	@Override
-	public boolean unapproveYj20Zb(List<Company> comps, List<Date> dateList) {
+	public boolean unapproveYj20Zb(List<Company> comps, Date date) {
+		List<YJ20ZB> zbs = yj20zbDao.getApprovedZbs(date, comps);
+		for (YJ20ZB zb : zbs) {
+			zb.setYj20shzt(shztDao.getById(2));
+			yj20zbDao.merge(zb);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean approveYdjdZb(List<Company> comps, List<Date> dateList) {
 		for (int i = 0; i < comps.size() && i < dateList.size(); ++i){
-			List<YJ20ZB> zbs = yj20zbDao.getApprovedZbs(dateList.get(i), comps.get(i));
-			for (YJ20ZB zb : zbs){
-				zb.setYj20shzt(shztDao.getById(2));
-				yj20zbDao.merge(zb);
+			List<YDJHZB> zbs = ydjhzbDao.getUnapprovedZbs(dateList.get(i), comps.get(i));
+			for (YDJHZB zb : zbs) {
+				zb.setYdjhshzt(shztDao.getById(1));
+				ydjhzbDao.merge(zb);
+			}
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean unapproveYdjdZb(List<Company> comps, List<Date> dateList) {
+		for (int i = 0; i < comps.size() && i < dateList.size(); ++i){
+			List<YDJHZB> zbs = ydjhzbDao.getApprovedZbs(dateList.get(i), comps.get(i));
+			for (YDJHZB zb : zbs) {
+				zb.setYdjhshzt(shztDao.getById(2));
+				ydjhzbDao.merge(zb);
 			}
 		}
 		return true;
 	}
 
+	@Override
+	public List<Integer> getCompanies(ZBType approveType) {
+		List<Integer> ret = null;
+		switch(approveType){
+		case BY20YJ:
+			ret = yj20zbDao.getCompanies();
+			break;
+		case BY28YJ:
+			ret = yj28zbDao.getCompanies();
+			break;
+		case BYSJ:
+			ret = sjzbDao.getCompanies();
+			break;
+		case NDJH:
+			ret = ndjhzbDao.getCompanies();
+			break;
+		case YDJDMJH:
+			ret = ydjhzbDao.getCompanies();
+			break;
+		default:
+			break;
+		}
+		return ret;
+	}
+
+	@Override
+	public List<Company> getValidSjCompanies(Account account) {
+		List<QXGL> compIds = qxglDao.getSjzlr(account);
+		List<Company> comps = new ArrayList<Company>();
+		Organization org = companyManager.getBMOrganization();
+		for (int i = 0; i < compIds.size(); ++i){
+			comps.add(org.getCompany(compIds.get(i).getDwxx().getId()));
+		}
+		return comps;
+	}
+
+	@Override
+	public List<Company> getValidJhCompanies(Account account) {
+		List<QXGL> compIds = qxglDao.getJhzsh(account);
+		List<Company> comps = new ArrayList<Company>();
+		Organization org = companyManager.getBMOrganization();
+		for (int i = 0; i < compIds.size(); ++i){
+			comps.add(org.getCompany(compIds.get(i).getDwxx().getId()));
+		}
+		return comps;
+	}
 
 }

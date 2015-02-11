@@ -109,6 +109,13 @@ var Util;
             }
             return null;
         };
+        CompanySelector.prototype.getCompanyName = function () {
+            var selNodes = this.mUnitedSelector.getNodes();
+            if (selNodes.length > 0) {
+                return selNodes[selNodes.length - 1].getData().value;
+            }
+            return null;
+        };
         CompanySelector.prototype.checkAll = function () {
             $(this.mUnitedSelector.getSelect()[1]).multiselect("checkAll");
         };
@@ -117,7 +124,8 @@ var Util;
             var path = this.mUnitedSelector.getPath();
             var parent = this.mUnitedSelector.getDataNode(path, path.length - 1);
             var node;
-            var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
+            var sels = this.mUnitedSelector.getSelect();
+            var checkedOpt = $(sels[sels.length - 1]).multiselect("getChecked");
             for (var i = 0; i < parent.childCount(); ++i) {
                 node = parent.childAt(i);
                 checkedOpt.each(function (j) {
@@ -133,7 +141,8 @@ var Util;
             var path = this.mUnitedSelector.getPath();
             var parent = this.mUnitedSelector.getDataNode(path, path.length - 1);
             var node;
-            var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
+            var sels = this.mUnitedSelector.getSelect();
+            var checkedOpt = $(sels[sels.length - 1]).multiselect("getChecked");
             for (var i = 0; i < parent.childCount(); ++i) {
                 node = parent.childAt(i);
                 checkedOpt.each(function (j) {
@@ -146,7 +155,8 @@ var Util;
         };
         CompanySelector.prototype.getCompanys = function () {
             var ret = [];
-            var checkedOpt = $(this.mUnitedSelector.getSelect()[1]).multiselect("getChecked");
+            var sels = this.mUnitedSelector.getSelect();
+            var checkedOpt = $(sels[sels.length - 1]).multiselect("getChecked");
             checkedOpt.each(function (i) {
                 ret.push(parseInt(checkedOpt[i].value));
             });

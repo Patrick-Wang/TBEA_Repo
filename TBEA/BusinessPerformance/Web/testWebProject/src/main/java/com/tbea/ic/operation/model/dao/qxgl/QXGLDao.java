@@ -18,5 +18,8 @@ public interface QXGLDao {
 	List<QXGL> getSjzlr(Account account);
 
 	List<QXGL> getJhzlr(Account account);
+	
+	List<QXGL> getSjzsh(Account account);
 
+	List<QXGL> getJhzsh(Account account);
 }

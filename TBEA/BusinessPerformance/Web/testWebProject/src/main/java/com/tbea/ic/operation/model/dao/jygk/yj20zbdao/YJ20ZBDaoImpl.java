@@ -101,4 +101,19 @@ public class YJ20ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ20ZB> implements Y
 		return q.getResultList();
 	}
 
+	@Override
+	public List<YJ20ZB> getApprovedZbs(Date date, List<Company> comps) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("from YJ20ZB where nf = :nf and yf = :yf and yj20shzt.id = 1 and dwxx.id in ("+ Util.toBMString(comps) +")");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		return q.getResultList();
+	}
+	@Override
+	public List<Integer> getCompanies() {
+		Query q = this.getEntityManager().createQuery("select dwxx.id from YJ20ZB");
+		return q.getResultList();
+	}
+
 }
