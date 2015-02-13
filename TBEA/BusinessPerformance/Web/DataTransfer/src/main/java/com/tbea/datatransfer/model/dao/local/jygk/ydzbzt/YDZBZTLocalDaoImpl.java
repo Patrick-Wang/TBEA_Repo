@@ -1,4 +1,4 @@
-package com.tbea.datatransfer.model.dao.local.mrhk;
+package com.tbea.datatransfer.model.dao.local.jygk.ydzbzt;
 
 import java.util.List;
 
@@ -10,12 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
-import com.tbea.datatransfer.model.entity.local.MRHKLocal;
+import com.tbea.datatransfer.model.entity.local.jygk.YDZBZTLocal;
 
-//@Repository
 @Transactional("transactionManager")
-public class MRHKLocalDaoImpl extends AbstractReadWriteDaoImpl<MRHKLocal> implements
-		MRHKLocalDao {
+public class YDZBZTLocalDaoImpl extends AbstractReadWriteDaoImpl<YDZBZTLocal>
+		implements YDZBZTLocalDao {
 
 	@Override
 	@PersistenceContext(unitName = "localDB")
@@ -25,25 +24,25 @@ public class MRHKLocalDaoImpl extends AbstractReadWriteDaoImpl<MRHKLocal> implem
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<MRHKLocal> getAllMRHKLocal() {
-		String sql = "From MRHKLocal";
+	public List<YDZBZTLocal> getAllYDZBZTLocal() {
+		String sql = "From YDZBZTLocal";
 		Query query = getEntityManager().createQuery(sql);
-		List<MRHKLocal> resultList = query.getResultList();
+		List<YDZBZTLocal> resultList = query.getResultList();
 		return resultList;
 	}
 
 	@Override
-	public void truncateMRHKLocal() {
-		String sql = "truncate table yszk_zj_mrhk";
+	public void truncateYDZBZTLocal() {
+		String sql = "truncate table jygk_ydzbzt";
 		Query query = getEntityManager().createNativeQuery(sql);
 		query.executeUpdate();
 	}
 
 	@Override
-	public void deleteMRHKLocalByQY(int qybh) {
-		String sql = "Delete From MRHKLocal Where qybh = :qybh";
+	public void deleteYDZBZTLocalByDW(List<Integer> dwidList) {
+		String sql = "Delete From YDZBZTLocal Where dwid in :(dwidList)";
 		Query query = getEntityManager().createQuery(sql);
-		query.setParameter("qybh", qybh);
+		query.setParameter("dwidList", dwidList);
 		query.executeUpdate();
 	}
 
