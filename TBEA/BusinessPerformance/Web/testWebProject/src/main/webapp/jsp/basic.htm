@@ -3,94 +3,182 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>jQuery MultiSelect Widget Demo</title>
-<link rel="stylesheet" type="text/css" href="multi-select/jquery.multiselect.css" />
-<link rel="stylesheet" type="text/css" href="multi-select/assets/style.css" />
-<link rel="stylesheet" type="text/css" href="multi-select/assets/prettify.css" />
+
 <script type="text/javascript" src="./jqgrid/js/jquery.js"></script>
-<link rel="stylesheet" type="text/css" href="jqgrid\themes\jquery-ui-1.11.1.custom\jquery-ui.css" />
-<script type="text/javascript" src="jqgrid\themes\jquery-ui-1.11.1.custom\jquery-ui.js"></script>
 
-<script type="text/javascript" src="multi-select/assets/prettify.js"></script>
-<script type="text/javascript" src="multi-select/jquery.multiselect.js"></script>
-<script type="text/javascript" src="util.js"></script>
-<script type="text/javascript" src="jqgrid/vector.js"></script>
-<script type="text/javascript" src="unitedSelector.js"></script>
 
-</head>
-<body id="test" onload="prettyPrint();">
 
-<h2>Basic Demos</h2>
-
-<p>Both multiselects are created with the following one-liner.  Optgroup support is built in out of the box:</p>
-<pre class="prettyprint">
-$(function(){
-   $("select").multiselect(); 
-});
-</pre>
-
-<h3>Basic</h3>
-<p>
-	<select title="Basic example" multiple="multiple" name="example-basic" size="5">
-	<option value="option1">Option 1</option>
-	<option value="option2">离开房间卡斯加对方卢卡斯的飞机离开阿斯蒂芬</option>
-	<option value="option3">Option 3</option>
-	<option value="option4">Option 4</option>
-	<option value="option5">Option 5</option>
-	<option value="option6">Option 6</option>
-	<option value="option7">Option 7</option>
-	<option value="option8">Option 8</option>
-	<option value="option9">Option 9</option>
-	<option value="option10">Option 10</option>
-	<option value="option11">Option 11</option>
-	<option value="option12">Option 12</option>
-	</select>
-</p>
-
-<h3>With Optgroups</h3>
-<p>Click on an optgroup's heading to toggle the checked state of the entire group.</p>
-<p>
-	<select name="example-optgroup" multiple="multiple" size="5">
-	<optgroup label="Group One">
-		<option value="option1">Option 1</option>
-		<option value="option2">Option 2</option>
-		<option value="option3">Option 3</option>
-	</optgroup>
-	<optgroup label="Group Two">
-		<option value="option4">Option 4</option>
-		<option value="option5">Option 5</option>
-		<option value="option6">Option 6</option>
-		<option value="option7">Option 7</option>
-	</optgroup>
-	</select>
-</p>
-
-<div id = "aaa"></div>
+<link href="message-box/css/style.css" rel="stylesheet" type="text/css">
+<script src="message-box/js/Sweefty.js" type="text/javascript"></script>
+<script src="message-box/js/moaModal.minified.js" type="text/javascript"></script>
 <script type="text/javascript">
+  (function($){
+    var SW = Sweefty();
+    var scroll_options = {
+        speed : 250,
+        on : 'click',
+        easing : 'linear'
+    }
+    
+    SW.trigger('scrollTo',function(ele,obj){
+        
+        obj = $.extend({},scroll_options, obj);
+        var target = $(obj.scrollTo);
+        ele.on(obj.on,function(){
+            $('body,html').animate({
+                'scrollTop' : target.offset().top
+            }, parseInt(obj.speed),obj.easing);
+        });
+    });
+    
+}(jQuery));
+  </script>
+</head>
+<body id="test">
 
 
-var nodes = [];
-nodes.push(new Util.DataNode({id : "1", value : "ffees"}));
-nodes.push(new Util.DataNode({id : "2", value : "ffedes"}));
-nodes.push(new Util.DataNode({id : "3", value : "fffees"}));
-nodes.push(new Util.DataNode({id : "4", value : "ffeses"}));
-nodes.push(new Util.DataNode({id : "5", value : "ffeaes"}));
-nodes[0].append(new Util.DataNode({id : "5", value : "11"}));
-nodes[0].append(new Util.DataNode({id : "6", value : "6"}));
-nodes[0].append(new Util.DataNode({id : "7", value : "22"}));
-nodes[0].append(new Util.DataNode({id : "9", value : "44"}));
+<div id="body">
+<div class="container">
+		<div class="row">
+				<div class="grid_4 column center">
+						<h1 class="bigTitle fittext" data-font=".7" style="font-size: 73px;">Demo</h1>
+				</div>
+		</div>
+		<div class="row">
+				<div class="grid_12 column">
+						<div class="row">
+								<div class="grid_12 column">
+										<div class="block"> <a class="button green demo0 medium saveQuestion">Simple</a> <a class="button green demo1 medium saveQuestion">Top</a> <a class="button green demo2 medium saveQuestion">Zoom</a> <a class="button green demo3 medium saveQuestion">Zoom to Left</a> <a class="button green demo4 medium saveQuestion">Bottom</a> <a class="button green demo5 medium saveQuestion">Height Expand</a> <a class="button green demo6 medium saveQuestion">From Right</a> <a class="button green demo7 medium saveQuestion">From Left</a> <a class="button green demo8 medium saveQuestion">Expand</a> </div>
+								</div>
+						</div>
+				</div>
+		</div>
+		<div class="row"></div>
+		<div class="row">
+				<div class="grid_12 column"></div>
+		</div>
+		<div class="row"></div>
+		<div class="row"></div>
+</div>
+</div>
 
-nodes[0].childAt(0).append(new Util.DataNode({id : "9", value : "44"}));
-nodes[0].childAt(0).append(new Util.DataNode({id : "9", value : "18"}));
-nodes[0].childAt(0).append(new Util.DataNode({id : "9", value : "37"}));
-nodes[0].childAt(0).append(new Util.DataNode({id : "9", value : "46"}));
+<script>
+$(document).ready(function(){
 
-nodes[1].append(new Util.DataNode({id : "5", value : "22[[[]]]"}));
-nodes[1].append(new Util.DataNode({id : "6", value : "[[[-]]"}));
-nodes[1].append(new Util.DataNode({id : "7", value : "0--798097"}));
-nodes[1].append(new Util.DataNode({id : "9", value : "ttki==-"}));
+$(document).modal({
+	
+});
 
-var selector = new Util.UnitedSelector(nodes, "aaa");
+
+$('.demo0').modal({
+	target : '#demoModal1',
+	speed : 250,
+	easing : 'easeInOutBounce',
+	animation : 'none',
+	position: '200px auto',
+	overlayClose : true,
+	on : 'click'
+});
+
+
+$('.demo1').modal({
+	target : '#demoModal1',
+	speed : 750,
+	easing : 'easeInOutExpo',
+	animation : 'top',
+	position: '100px auto',
+	overlayClose : true,
+	on : 'click'
+});
+
+
+$('.demo2').modal({
+	target : '#demoModal1',
+	speed : 500,
+	easing : 'easeInOutExpo',
+
+	animation : 'zoom',
+	position: '1% auto',
+	overlayClose : true
+});
+
+
+$('.demo3').modal({
+	target : '#demoModal1',
+	speed : 500,
+	easing : 'easeOutCirc',
+	animation : 'zoom',
+	position: '1% 1%',
+	overlayClose : true
+});
+
+$('.demo4').modal({
+	target : '#demoModal1',
+	speed : 500,
+	easing : 'easeOutSine',
+	animation : 'bottom',
+	position: 'bottom',
+	overlayClose : true
+});
+
+$('.demo5').modal({
+	target : '#demoModal1',
+	speed : 500,
+	easing : 'easeInOutExpo',
+	animation : 'top height',
+	position: '10% auto',
+	overlayClose : true,
+	on : 'click'
+});
+
+$('.demo6').modal({
+	target : '#demoModal1',
+	speed : 500,
+	easing : 'easeOutBack',
+	animation : 'right',
+	position: 'center',
+	overlayClose : true,
+	on : 'click'
+});
+
+
+$('.demo7').modal({
+	target : '#demoModal1',
+	speed : 500,
+	easing : 'easeOutBack',
+	animation : 'left',
+	position: 'center',
+	overlayClose : true,
+	on : 'click'
+});
+
+$('.demo8').click(function(){
+	$('#demoModal2').modal('view',{
+		speed : 800,
+		easing : 'easeInOutElastic',
+		animation : 'top height width',
+		position: '10% auto',
+		overlayClose : false,
+		on : 'click',
+		overlayColor : '#ccc',
+		overlayOpacity : .9,
+		close : '.close'
+	});
+});
+
+
+});
 </script>
-
+<div id="demoModal1" class="block modal2" style=""> </div>
+<div id="demoModal2" class="block modal2" style="">
+<div style="margin: 125px"> </div>
+<div style="background: #eee;width:100%;overflow: hidden;padding: 5px;"> <a class="button red close medium saveQuestion right">Close Me</a> <a class="button green demo4 medium saveQuestion right">Another Modal</a> </div>
+</div>
+<div id="demoModal3" class="block modal3" style=""> </div>
+<div id="SW_hidden_element" style="margin-left: 50.6%; display: none;"></div>
+<div style="width: 100%; height: 3109px; position: fixed; background-color: rgb(0, 0, 0); overflow: hidden; opacity: 0.7; top: 0px; left: 0px; display: none; z-index: 999996;"></div>
+<div style="width: 100%; height: 3109px; position: absolute; display: none; overflow: hidden; top: 0px; left: 0px; z-index: 999998;">
+<div style="position: relative; width: 100%; z-index: 999997; top: 0px; left: 0px; visibility: hidden;"></div>
+</div>
 </body>
 </html>

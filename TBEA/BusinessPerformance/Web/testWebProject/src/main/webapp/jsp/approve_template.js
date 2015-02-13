@@ -101,13 +101,13 @@ var approve_template;
         QNJHSubView.prototype.process = function (data, date, companies) {
             this.mData = date;
             if (data[0].length > 0) {
-                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId);
+                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId, "未审核");
             }
             if (data[1].length > 0) {
-                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId);
+                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核");
             }
         };
-        QNJHSubView.prototype.updateTable = function (rawData, comps, tableId) {
+        QNJHSubView.prototype.updateTable = function (rawData, comps, tableId, caption) {
             var tmpData = [];
             var title = ["单位名称"];
             var colZbIds = ["dw"];
@@ -162,6 +162,7 @@ var approve_template;
                 width: width,
                 shrinkToFit: width == 1000 ? false : true,
                 autoScroll: true,
+                caption: caption
             }));
             return jqAssist;
         };
@@ -222,13 +223,13 @@ var approve_template;
         YDSubView.prototype.process = function (data, date, companies) {
             this.mData = date;
             if (data[0].length > 0) {
-                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId);
+                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId, "未审核");
             }
             if (data[1].length > 0) {
-                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId);
+                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核");
             }
         };
-        YDSubView.prototype.updateTable = function (rawData, comps, tableId) {
+        YDSubView.prototype.updateTable = function (rawData, comps, tableId, caption) {
             var compMap = {};
             var companies = [];
             $(comps).each(function (i) {
@@ -304,6 +305,7 @@ var approve_template;
                 width: width,
                 shrinkToFit: width == 1000 ? false : true,
                 autoScroll: true,
+                caption: caption
             }));
             return jqAssist;
         };
@@ -340,10 +342,10 @@ var approve_template;
                     break;
             }
             this.updateTitle();
-            this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
+            $("#nodatatips").css("display", "none");
             var comps = this.mCompanySelector.getCompanys();
             if (comps.length != 0) {
                 var date = this.mDateSelector.getDate();
@@ -372,7 +374,7 @@ var approve_template;
                 });
             }
             else {
-                alert("请选择公司");
+                Util.MessageBox.tip("请选择公司");
             }
         };
         View.prototype.unapprove = function () {
@@ -387,17 +389,17 @@ var approve_template;
                     data: JSON.stringify(compIds)
                 }).then(function (data) {
                     if (data.result) {
-                        alert("submit 成功");
+                        Util.MessageBox.tip("反审核  成功");
                         _this.mDateSelector.select(date);
                         _this.updateUI();
                     }
                     else {
-                        alert("submit 失敗");
+                        Util.MessageBox.tip("反审核 失敗");
                     }
                 });
             }
             else {
-                alert("请选择公司");
+                Util.MessageBox.tip("请选择公司");
             }
         };
         View.prototype.approve = function () {
@@ -412,17 +414,17 @@ var approve_template;
                     data: JSON.stringify(compIds)
                 }).then(function (data) {
                     if (data.result) {
-                        alert("submit 成功");
+                        Util.MessageBox.tip("审核 成功");
                         _this.mDateSelector.select(date);
                         _this.updateUI();
                     }
                     else {
-                        alert("submit 失敗");
+                        Util.MessageBox.tip("审核 失敗");
                     }
                 });
             }
             else {
-                alert("请选择公司");
+                Util.MessageBox.tip("请选择公司");
             }
         };
         View.prototype.updateTitle = function () {

@@ -105,13 +105,13 @@ module Util {
         private mSuccessList: Array<(data: any) => void> = [];
         private mFailedList: Array<(err: string) => void> = [];
 
-        public succeed(data: any) {
+        public succeed(data?: any) {
             for (var i = 0; i < this.mSuccessList.length; ++i) {
                 this.mSuccessList[i](data);
             }
         }
 
-        public failed(data: string) {
+        public failed(data?: string) {
             for (var i = 0; i < this.mFailedList.length; ++i) {
                 this.mFailedList[i](data);
             }

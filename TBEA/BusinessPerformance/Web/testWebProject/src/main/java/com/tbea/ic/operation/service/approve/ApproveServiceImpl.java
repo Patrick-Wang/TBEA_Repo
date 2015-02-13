@@ -109,7 +109,7 @@ public class ApproveServiceImpl implements ApproveService {
 		Organization org = companyManager.getBMOrganization();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		int leftMonth = (cal.get(Calendar.MONTH) + 1) % 3;
+		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 		if (0 == leftMonth){//season end
 			leftMonth = 3;
 		}

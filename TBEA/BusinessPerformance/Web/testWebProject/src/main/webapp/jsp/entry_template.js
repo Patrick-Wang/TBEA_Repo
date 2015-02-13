@@ -43,10 +43,11 @@ var entry_template;
                 this.mCompanySelector.hide();
             }
             this.updateTitle();
-            this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
+            $("#nodatatips").css("display", "none");
+            $("#entryarea").css("display", "");
             var date = this.mDateSelector.getDate();
             this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId: this.mCompanySelector.getCompany() }).then(function (data) {
                 _this.mTableData = data;
@@ -58,13 +59,14 @@ var entry_template;
             var date = this.mDateSelector.getDate();
             var allData = this.mTableAssist.getAllData();
             var submitData = [];
+            var colNames = this.mTableAssist.getColNames();
             for (var i = 0; i < allData.length; ++i) {
                 submitData.push([]);
                 for (var j = 0; j < allData[i].length; ++j) {
                     if (j != 1) {
                         submitData[i].push(allData[i][j]);
-                        if (allData[i][j] == "") {
-                            alert(i + "行" + j + "列为空 无法提交");
+                        if (allData[i][j].replace(new RegExp(' ', 'g'), '') == "") {
+                            Util.MessageBox.tip("有空内容 无法提交");
                             return;
                         }
                     }
@@ -78,10 +80,10 @@ var entry_template;
                 data: JSON.stringify(submitData)
             }).then(function (data) {
                 if (data.result) {
-                    alert("submit 成功");
+                    Util.MessageBox.tip("提交 成功");
                 }
                 else {
-                    alert("submit 失敗");
+                    Util.MessageBox.tip("提交 失败");
                 }
             });
         };

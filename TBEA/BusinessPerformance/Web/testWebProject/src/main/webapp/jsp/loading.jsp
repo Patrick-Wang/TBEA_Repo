@@ -73,10 +73,10 @@
       			}
         	}); 
 
-        	window.onresize = function(){
+        	$(window).resize(function(){
         		if (navigator.appName != "Microsoft Internet Explorer"){
         			$("#background").css("height", document.body.scrollHeight + "px");
                     $("#background").css("width", document.body.scrollWidth + "px");
         		}
-        	}
+        	})
 </script>

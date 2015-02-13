@@ -146,16 +146,16 @@ module approve_template {
         process(data: any, date: Util.Date, companies: Util.IData[]): void {
             this.mData = date;
             if (data[0].length > 0) {
-                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId);
+                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId, "未审核");
             }
 
             if (data[1].length > 0) {
-                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId);
+                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核");
             }
         }
 
 
-        private updateTable(rawData: string[][], comps: Util.IData[], tableId: string): JQTable.JQGridAssistant {
+        private updateTable(rawData: string[][], comps: Util.IData[], tableId: string, caption : string): JQTable.JQGridAssistant {
             var tmpData = [];
             var title = ["单位名称"];
             var colZbIds = ["dw"];
@@ -226,6 +226,7 @@ module approve_template {
                     width: width,
                     shrinkToFit: width == 1000 ? false : true,
                     autoScroll: true,
+                    caption: caption
                 }));
             return jqAssist;
         }
@@ -305,16 +306,16 @@ module approve_template {
         process(data: any, date: Util.Date, companies: Util.IData[]): void {
             this.mData = date;
             if (data[0].length > 0) {
-                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId);
+                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId, "未审核");
             }
 
             if (data[1].length > 0) {
-                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId);
+                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核");
             }
         }
 
 
-        private updateTable(rawData: string[][], comps: Util.IData[], tableId: string): JQTable.JQGridAssistant {
+        private updateTable(rawData: string[][], comps: Util.IData[], tableId: string, caption : string): JQTable.JQGridAssistant {
             var compMap = {};
             var companies = [];
             // remove unused company
@@ -409,28 +410,11 @@ module approve_template {
                     width: width,
                     shrinkToFit: width == 1000 ? false : true,
                     autoScroll: true,
+                    caption: caption
                 }));
             return jqAssist;
         }
     }
-    //     class SJSubView implements ISubView{
-    //        
-    //        private mOpt: IViewOption;
-    //        constructor(opt: IViewOption){
-    //            this.mOpt = opt;    
-    //        }
-    //        
-    //        getApprovedData() : string[][]{
-    //            return null;
-    //        }
-    //        
-    //        getUnapprovedData(): string[][]{
-    //            return null;
-    //        }
-    //        process(data : any, date : Util.Date, companies :Util.IData[]) : void{
-    //            
-    //        }
-    //    }
     
     export class View {
         public static instance: View = new View();
@@ -480,10 +464,11 @@ module approve_template {
             }
 
             this.updateTitle();
-            this.updateUI();
+            //this.updateUI();
         }
 
         public updateUI() {
+            $("#nodatatips").css("display" , "none");
             var comps = this.mCompanySelector.getCompanys();
             if (comps.length != 0) {
                 var date = this.mDateSelector.getDate();
@@ -512,7 +497,7 @@ module approve_template {
                     }
                 });
             } else {
-                alert("请选择公司");
+                Util.MessageBox.tip("请选择公司");
             }
         }
 
@@ -527,15 +512,15 @@ module approve_template {
                     data: JSON.stringify(compIds)
                 }).then((data: ISubmitResult) => {
                     if (data.result) {
-                        alert("submit 成功");
+                        Util.MessageBox.tip("反审核  成功");
                         this.mDateSelector.select(date);
                         this.updateUI();
                     } else {
-                        alert("submit 失敗");
+                        Util.MessageBox.tip("反审核 失敗");
                     }
                 });
             } else {
-                alert("请选择公司");
+                Util.MessageBox.tip("请选择公司");
             }
         }
 
@@ -551,15 +536,15 @@ module approve_template {
                     data: JSON.stringify(compIds)
                 }).then((data: ISubmitResult) => {
                     if (data.result) {
-                        alert("submit 成功");
+                        Util.MessageBox.tip("审核 成功");
                         this.mDateSelector.select(date);
                         this.updateUI();
                     } else {
-                        alert("submit 失敗");
+                        Util.MessageBox.tip("审核 失敗");
                     }
                 });
             } else {
-                alert("请选择公司");
+                Util.MessageBox.tip("请选择公司");
             }
         }
 

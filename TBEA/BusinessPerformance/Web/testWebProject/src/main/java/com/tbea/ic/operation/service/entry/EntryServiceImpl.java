@@ -50,6 +50,13 @@ import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 @Transactional("transactionManager")
 public class EntryServiceImpl implements EntryService{
 
+	
+	private final Integer yszkZbId = 32;
+	private final Integer chZbId = 35;
+	private final Integer xssrZbId = 6;
+	private final Double yszb = 0.8;
+	private final Double chzb = 0.8;
+	
 	@Autowired
 	QXGLDao qxglDao;
 	
@@ -121,7 +128,7 @@ public class EntryServiceImpl implements EntryService{
 	public boolean updateZb(Date date, Account account, CompanyType comp,
 			ZBType entryType, JSONArray data) {
 		
-		Company company = companyManager.getBMOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		boolean bRet = false;
 		switch (entryType){
 		case BY20YJ:
@@ -152,7 +159,7 @@ public class EntryServiceImpl implements EntryService{
 		JSONArray row;
 		boolean newEntity = false;
 		cal.setTime(date);
-		leftMonth = (cal.get(Calendar.MONTH) + 1) % 3;
+		leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 		if (0 == leftMonth){//season end
 			leftMonth = 3;
 		}
@@ -186,6 +193,60 @@ public class EntryServiceImpl implements EntryService{
 
 	}
 
+	
+	private boolean isYszkzb(int zbId){
+		return zbId == yszkZbId;
+	}
+	
+	private boolean isChzb(int zbId){
+		return zbId == chZbId;
+	}
+	
+	private boolean isXssrzb(int zbId){
+		return xssrZbId == zbId;
+	}
+	
+
+	private void updateComputedZb(Double xssr, Calendar cal, Company company){
+		if (xssr != null){
+			boolean newEntity = false;
+			NDJHZB zb = ndjhzbDao.getZb(yszkZbId, Util.toDate(cal), company);
+			if (null == zb){
+				newEntity = true;
+				zb = new NDJHZB();
+				zb.setZbxx(zbxxDao.getById(yszkZbId));
+				zb.setDwxx(dwxxDao.getById(company.getId()));
+			}
+			zb.setNdjhshzt(shztDao.getById(2));
+			zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
+			zb.setNf(cal.get(Calendar.YEAR));
+			zb.setNdjhz(xssr * yszb);
+			if (newEntity){
+				ndjhzbDao.persist(zb);
+			} else{
+				ndjhzbDao.merge(zb);
+			}
+			
+			newEntity = false;
+			zb = ndjhzbDao.getZb(yszkZbId, Util.toDate(cal), company);
+			if (null == zb){
+				newEntity = true;
+				zb = new NDJHZB();
+				zb.setZbxx(zbxxDao.getById(yszkZbId));
+				zb.setDwxx(dwxxDao.getById(company.getId()));
+			}
+			zb.setNdjhshzt(shztDao.getById(2));
+			zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
+			zb.setNf(cal.get(Calendar.YEAR));
+			zb.setNdjhz(xssr * chzb);
+			if (newEntity){
+				ndjhzbDao.persist(zb);
+			} else{
+				ndjhzbDao.merge(zb);
+			}
+		}
+	}
+	
 	private boolean updateNDJH(Date date, Company company, JSONArray data) {
 		Calendar cal = Calendar.getInstance();
 		NDJHZB zb;
@@ -193,9 +254,25 @@ public class EntryServiceImpl implements EntryService{
 		JSONArray row;
 		boolean newEntity = false;
 		cal.setTime(date);
+		
+		Organization org = companyManager.getBMDBOrganization();
+		Company sbdcy = org.getCompany(CompanyType.SBDCY);
+		boolean isSbd = sbdcy.contains(company);
+		Double xssr = null;
+		Integer zbId = null;
 		for (int i = 0; i < data.size(); ++i){
 			row = data.getJSONArray(i);
-			zb = zbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
+			zbId = Integer.valueOf(row.getString(0));
+			
+			if (isSbd) {
+				if (isYszkzb(zbId) && isChzb(zbId)){
+					continue;
+				}else if (isXssrzb(zbId)){
+					 xssr = Util.toDouble(row.getString(1));
+				}
+			}
+
+			zb = zbDao.getZb(zbId, Util.toDate(cal), company);
 			if (null == zb){
 				newEntity = true;
 				zb = new NDJHZB();
@@ -212,6 +289,9 @@ public class EntryServiceImpl implements EntryService{
 				zbDao.merge(zb);
 			}
 		}
+		
+		updateComputedZb(xssr, cal, company);
+		
 		return true;
 	}
 
@@ -254,7 +334,7 @@ public class EntryServiceImpl implements EntryService{
 		JSONArray row;
 		boolean newEntity = false;
 		cal.setTime(date);
-		leftMonth = (cal.get(Calendar.MONTH) + 1) % 3;
+		leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 		if (0 == leftMonth){//season end
 			leftMonth = 3;
 		}
@@ -297,7 +377,7 @@ public class EntryServiceImpl implements EntryService{
 		boolean newEntity = false;
 		for (int i = 0; i < data.size(); ++i){
 			cal.setTime(date);
-			leftMonth = (cal.get(Calendar.MONTH) + 1) % 3;
+			leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 			if (0 == leftMonth){//season end
 				leftMonth = 3;
 			}
@@ -366,7 +446,7 @@ public class EntryServiceImpl implements EntryService{
 	@Override
 	public List<String[]> getZb(Date date, Account account, CompanyType comp,
 			ZBType entryType) {
-		Company company = companyManager.getBMOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		List<String[]> ret = null;
 		switch (entryType){
 		case BY20YJ:
@@ -455,7 +535,7 @@ public class EntryServiceImpl implements EntryService{
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		
-		int leftMonth = (cal.get(Calendar.MONTH) + 1) % 3;
+		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 		if (0 == leftMonth){//season end
 			leftMonth = 3;
 		}
@@ -505,7 +585,7 @@ public class EntryServiceImpl implements EntryService{
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		
-		int leftMonth = (cal.get(Calendar.MONTH) + 1) % 3;
+		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 		if (0 == leftMonth){//season end
 			leftMonth = 3;
 		}

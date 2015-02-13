@@ -4,6 +4,9 @@
 <html>
 <head>
 
+<!-- message box -->
+<link href="../jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
+
 <!-- jquery -->
 <script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
 
@@ -42,6 +45,11 @@
 <script src="../jsp/unitedSelector.js" type="text/javascript"></script>
 <script src="../jsp/companySelector.js" type="text/javascript"></script>
 <script src="../jsp/entry_template.js" type="text/javascript"></script>
+
+<!-- message box -->
+<script src="../jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
+<script src="../jsp/message-box/js/moaModal.js" type="text/javascript"></script>
+<script src="../jsp/messageBox.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 	var view = entry_template.View.getInstance();
@@ -188,16 +196,21 @@ th.ui-th-ltr {
 						<td>
 							<div id="company"></div>
 						<td>
-						<td><input id="update" type="button" value="更新"
+						<td><input id="update" type="button" value="选择"
 							style="width: 80px; margin-left: 10px;" onclick="view.updateUI()"></input>
 						</td>
 					</tr>
 				</Table>
 			</td>
 		</tr>
+		<tr align="center">
+			<td>
+				<div style="padding-top:20px;font-size:25px" id="nodatatips">请选择需要录入的数据</div>
+			</td>
+		</tr>
 		<tr>
 			<td>
-				<table>
+				<table id="entryarea" style="display:none">
 					<tr>
 						<td>
 							<div id="table"></div>
