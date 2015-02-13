@@ -1,5 +1,12 @@
 var Util;
 (function (Util) {
+    function addMonth(d, count) {
+        var monthCount = parseInt(d.month + '') + parseInt(d.year + '') * 12 + count;
+        var year = parseInt('' + monthCount / 12) + (monthCount % 12 == 0 ? -1 : 0);
+        var month = monthCount % 12 == 0 ? 12 : monthCount % 12;
+        return { year: year, month: month, day: d.day };
+    }
+    Util.addMonth = addMonth;
     var DateSelector = (function () {
         function DateSelector(start, end, divId, asSeason) {
             if (asSeason === void 0) { asSeason = false; }
@@ -17,7 +24,7 @@ var Util;
                     this.mCurDate.month = 12;
                 }
                 else {
-                    this.mEndDate.month = this.mEndDate.month / 3 * 3;
+                    this.mEndDate.month = this.mEndDate.month - (this.mEndDate.month % 3);
                     this.mCurDate.month = this.mEndDate.month;
                 }
             }
@@ -39,7 +46,7 @@ var Util;
                     this.mStartDate.month = 12;
                 }
                 else {
-                    this.mStartDate.month = this.mStartDate.month / 3 * 3;
+                    this.mStartDate.month = this.mStartDate.month - (this.mStartDate.month % 3);
                 }
             }
             $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');

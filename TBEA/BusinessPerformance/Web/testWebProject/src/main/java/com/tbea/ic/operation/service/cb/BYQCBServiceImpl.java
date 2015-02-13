@@ -50,9 +50,9 @@ public class BYQCBServiceImpl implements BYQCBService {
 
 	private static Map<CompanyType, Integer> gsMap = new HashMap<CompanyType, Integer>();
 	static {
-		gsMap.put(CompanyType.SB, 0);
-		gsMap.put(CompanyType.HB, 1);
-		gsMap.put(CompanyType.XB, 2);
+		gsMap.put(CompanyType.SBGS, 0);
+		gsMap.put(CompanyType.HBGS, 1);
+		gsMap.put(CompanyType.XBC, 2);
 	}
 
 	private static Map<String, Integer> dydjMap = new HashMap<String, Integer>();

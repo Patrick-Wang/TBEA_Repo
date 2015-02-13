@@ -58,7 +58,10 @@ module entry_template {
             switch (this.mOpt.entryType) {
 
                 case Util.ZBType.YDJDMJH:
-                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId, true);
+                    this.mDateSelector = new Util.DateSelector(
+                            { year: this.mOpt.date.year - 1 }, 
+                            Util.addMonth(this.mOpt.date, 3) ,
+                            this.mOpt.dateId, true);
                     break;
                 case Util.ZBType.QNJH:
                 case Util.ZBType.BY20YJ:
@@ -81,6 +84,9 @@ module entry_template {
             $("#nodatatips").css("display", "none");
             $("#entryarea").css("display", "");
             var date = this.mDateSelector.getDate();
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH){
+                date = Util.addMonth(date, -3);
+            }
             this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId: this.mCompanySelector.getCompany() })
                 .then((data: any) => {
                 this.mTableData = data;
@@ -131,7 +137,7 @@ module entry_template {
                     header = date.year + "年 " + compName + " 计划数据录入";
                     break;
                 case Util.ZBType.YDJDMJH:
-                    header = date.year + "年" + date.month + "月 " + compName + " 季度-月度末计划值录入";
+                    header = date.year + "年" + compName + " 季度-月度计划值录入";
                     break;
                 case Util.ZBType.BY20YJ:
                     header = date.year + "年" + date.month + "月 " + compName + " 20日预计值录入";
@@ -152,6 +158,9 @@ module entry_template {
 
             var ret: Array<string> = [title[0]];
             var date = this.mDateSelector.getDate();
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH){
+                date = Util.addMonth(date, -3);
+            }
             var left = date.month % 3;
             if (this.mOpt.entryType == Util.ZBType.YDJDMJH && 0 == left) {
                 if (12 == date.month) {

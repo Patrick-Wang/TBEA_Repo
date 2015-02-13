@@ -7,13 +7,13 @@ class OperationDepartment extends AbstractOrganization {
 	public OperationDepartment() {
 		append(getCompany(CompanyType.JT, 9999)
 				.append(getCompany(CompanyType.SBDCY, 999)
-						.append(getCompany(CompanyType.SB, 1))
-						.append(getCompany(CompanyType.HB, 2))
-						.append(getCompany(CompanyType.XB, 3))
+						.append(getCompany(CompanyType.SBGS, 1))
+						.append(getCompany(CompanyType.HBGS, 2))
+						.append(getCompany(CompanyType.XBC, 3))
 						.append(getCompany(CompanyType.TBGS, 301))
-						.append(getCompany(CompanyType.LL, 4))
-						.append(getCompany(CompanyType.XL, 5))
-						.append(getCompany(CompanyType.DL, 6)))
+						.append(getCompany(CompanyType.LLGS, 4))
+						.append(getCompany(CompanyType.XLC, 5))
+						.append(getCompany(CompanyType.DLGS, 6)))
 				.append(getCompany(CompanyType.XNYCY, 888)
 						.append(getCompany(CompanyType.XTNYGS, 30))
 						.append(getCompany(CompanyType.XNY, 29)))
@@ -23,7 +23,7 @@ class OperationDepartment extends AbstractOrganization {
 						.append(getCompany(CompanyType.ZJWL, 74)))
 				.append(getCompany(CompanyType.GCL, 666)
 						.append(getCompany(CompanyType.JCK, 23))
-						.append(getCompany(CompanyType.GCGS, 70)))
+						.append(getCompany(CompanyType.GCGS_GCL, 70)))
 				.append(getCompany(CompanyType.ZH, 27)));
 	}
 

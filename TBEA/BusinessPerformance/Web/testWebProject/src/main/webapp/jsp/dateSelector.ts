@@ -7,6 +7,13 @@ module Util {
         month?: number;
         day?: number;
     }
+    
+    export function addMonth(d :Date, count : number) : Date{
+        var monthCount = parseInt(d.month + '') + parseInt(d.year + '') * 12 + count;
+        var year = parseInt('' + monthCount / 12) + (monthCount % 12 == 0 ? -1 : 0);
+        var month = monthCount % 12 == 0 ? 12 : monthCount % 12;
+        return {year : year, month : month, day : d.day};
+    }
 
     export class DateSelector {
 
@@ -31,7 +38,7 @@ module Util {
                     this.mCurDate.year -= 1;
                     this.mCurDate.month = 12;
                 }else{
-                    this.mEndDate.month = this.mEndDate.month / 3 * 3;
+                    this.mEndDate.month = this.mEndDate.month - (this.mEndDate.month % 3);
                     this.mCurDate.month = this.mEndDate.month; 
                 }
             }else{
@@ -55,7 +62,7 @@ module Util {
                     this.mStartDate.month = 12;    
                 }
                 else{
-                    this.mStartDate.month = this.mStartDate.month / 3 * 3;
+                    this.mStartDate.month = this.mStartDate.month - (this.mStartDate.month % 3);
                 }
             }
             

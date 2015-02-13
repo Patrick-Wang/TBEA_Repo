@@ -33,9 +33,9 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 	public void setCompanyManager(CompanyManager companyManager) {
 		this.companyManager = companyManager;
 		Organization org = companyManager.getBMOrganization();
-		qymap.put(org.getCompany(CompanyType.SB), 0);
-		qymap.put(org.getCompany(CompanyType.HB), 1);
-		qymap.put(org.getCompany(CompanyType.XB), 2);
+		qymap.put(org.getCompany(CompanyType.SBGS), 0);
+		qymap.put(org.getCompany(CompanyType.HBGS), 1);
+		qymap.put(org.getCompany(CompanyType.XBC), 2);
 	}
 
 	@Autowired

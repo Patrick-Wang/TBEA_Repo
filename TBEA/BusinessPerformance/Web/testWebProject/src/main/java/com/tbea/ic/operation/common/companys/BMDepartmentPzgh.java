@@ -6,21 +6,21 @@ class BMDepartmentPzgh extends AbstractOrganization {
 
 	public BMDepartmentPzgh() {
 		append(
-				getCompany(CompanyType.SB, 1)
+				getCompany(CompanyType.SBGS, 1)
 						.append(getCompany(CompanyType.BYQC, 101))
 						.append(getCompany(CompanyType.ZTFGS, 103))
 						.append(getCompany(CompanyType.KJHGQ, 104))
 						.append(getCompany(CompanyType.SKGS, 107)))
-				.append(getCompany(CompanyType.HB, 2).append(
+				.append(getCompany(CompanyType.HBGS, 2).append(
 						getCompany(CompanyType.DQFGS, 201)))
-				.append(getCompany(CompanyType.XB, 3)
+				.append(getCompany(CompanyType.XBC, 3)
 						.append(getCompany(CompanyType.TBGS, 301))
 						.append(getCompany(CompanyType.BBXSGS, 307))
 						.append(getCompany(CompanyType.ZTGS, 302))
 						.append(getCompany(CompanyType.XBGS, 303)))
-				.append(getCompany(CompanyType.LL, 4))
-				.append(getCompany(CompanyType.XL, 5))
-				.append(getCompany(CompanyType.DL, 6));
+				.append(getCompany(CompanyType.LLGS, 4))
+				.append(getCompany(CompanyType.XLC, 5))
+				.append(getCompany(CompanyType.DLGS, 6));
 	}
 	
 //	@Override

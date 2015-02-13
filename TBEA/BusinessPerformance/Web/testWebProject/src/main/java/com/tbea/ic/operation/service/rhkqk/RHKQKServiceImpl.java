@@ -31,13 +31,13 @@ public class RHKQKServiceImpl implements   RHKQKService{
 	public void setCompanyManager(CompanyManager companyManager) {
 		this.companyManager = companyManager;
 		Organization org = companyManager.getOperationOrganization();
-		compMap.put(org.getCompany(CompanyType.SB).getId(), 0);
-		compMap.put(org.getCompany(CompanyType.HB).getId(), 1);
-		compMap.put(org.getCompany(CompanyType.XB).getId(), 2);
+		compMap.put(org.getCompany(CompanyType.SBGS).getId(), 0);
+		compMap.put(org.getCompany(CompanyType.HBGS).getId(), 1);
+		compMap.put(org.getCompany(CompanyType.XBC).getId(), 2);
 		compMap.put(org.getCompany(CompanyType.TBGS).getId(), 3);
-		compMap.put(org.getCompany(CompanyType.LL).getId(), 4);
-		compMap.put(org.getCompany(CompanyType.XL).getId(), 5);
-		compMap.put(org.getCompany(CompanyType.DL).getId(), 6);
+		compMap.put(org.getCompany(CompanyType.LLGS).getId(), 4);
+		compMap.put(org.getCompany(CompanyType.XLC).getId(), 5);
+		compMap.put(org.getCompany(CompanyType.DLGS).getId(), 6);
 	}
 	
 	@Autowired

@@ -256,7 +256,7 @@ public class EntryServiceImpl implements EntryService{
 		cal.setTime(date);
 		
 		Organization org = companyManager.getBMDBOrganization();
-		Company sbdcy = org.getCompany(CompanyType.SBDCY);
+		Company sbdcy = org.getCompany(CompanyType.SBDCYJT);
 		boolean isSbd = sbdcy.contains(company);
 		Double xssr = null;
 		Integer zbId = null;

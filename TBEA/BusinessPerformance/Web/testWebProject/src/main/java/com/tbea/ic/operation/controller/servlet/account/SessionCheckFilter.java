@@ -36,8 +36,8 @@ public class SessionCheckFilter implements Filter {
 				boolean bValid = (null != session);
 				if (bValid) {
 					try {
-						bValid = (null != (Account) session
-								.getAttribute("account"));
+						Account account = (Account) session.getAttribute("account");
+						bValid = account.getId() != 0;
 					} catch (Exception e) {
 						bValid = false;
 					}
