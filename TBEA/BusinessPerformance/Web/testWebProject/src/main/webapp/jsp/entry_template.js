@@ -60,6 +60,9 @@ var entry_template;
         };
         View.prototype.submit = function () {
             var date = this.mDateSelector.getDate();
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
+                date = Util.addMonth(date, -3);
+            }
             var allData = this.mTableAssist.getAllData();
             var submitData = [];
             var colNames = this.mTableAssist.getColNames();
@@ -123,9 +126,9 @@ var entry_template;
             var left = date.month % 3;
             if (this.mOpt.entryType == Util.ZBType.YDJDMJH && 0 == left) {
                 if (12 == date.month) {
-                    ret.push((date.year + 1) + "年1月计划");
-                    ret.push((date.year + 1) + "年2月计划");
-                    ret.push((date.year + 1) + "年3月计划");
+                    ret.push("1月计划");
+                    ret.push("2月计划");
+                    ret.push("3月计划");
                 }
                 else {
                     ret.push((date.month + 1) + "月计划");

@@ -16,24 +16,16 @@ var Util;
             this.mCtrlId = divId + "_date";
             if (asSeason && Util.isExist(this.mEndDate.month)) {
                 this.mAsSeasion = true;
-                this.mCurDate = { year: this.mEndDate.year };
-                if (this.mEndDate.month < 3) {
-                    this.mEndDate.month = 12;
-                    this.mEndDate.year -= 1;
-                    this.mCurDate.year -= 1;
-                    this.mCurDate.month = 12;
-                }
-                else {
-                    this.mEndDate.month = this.mEndDate.month - (this.mEndDate.month % 3);
-                    this.mCurDate.month = this.mEndDate.month;
-                }
+                this.mEndDate = addMonth(this.mEndDate, -(this.mEndDate.month % 3));
             }
             else {
                 this.mAsSeasion = false;
-                this.mCurDate = { year: this.mEndDate.year };
-                this.mCurDate.month = this.mEndDate.month;
-                this.mCurDate.day = this.mEndDate.day;
             }
+            this.mCurDate = {
+                year: this.mEndDate.year,
+                month: this.mEndDate.month,
+                day: this.mEndDate.day
+            };
             if (!Util.isExist(this.mStartDate.month)) {
                 this.mStartDate.month = 1;
             }
@@ -41,13 +33,7 @@ var Util;
                 this.mStartDate.day = 1;
             }
             if (this.mAsSeasion) {
-                if (this.mStartDate.month < 3) {
-                    this.mStartDate.year -= 1;
-                    this.mStartDate.month = 12;
-                }
-                else {
-                    this.mStartDate.month = this.mStartDate.month - (this.mStartDate.month % 3);
-                }
+                this.mStartDate = addMonth(this.mStartDate, -(this.mStartDate.month % 3));
             }
             $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
             this.updateYear(this.mCurDate.year);

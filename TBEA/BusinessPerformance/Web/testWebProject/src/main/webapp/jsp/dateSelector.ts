@@ -7,12 +7,12 @@ module Util {
         month?: number;
         day?: number;
     }
-    
-    export function addMonth(d :Date, count : number) : Date{
+
+    export function addMonth(d: Date, count: number): Date {
         var monthCount = parseInt(d.month + '') + parseInt(d.year + '') * 12 + count;
         var year = parseInt('' + monthCount / 12) + (monthCount % 12 == 0 ? -1 : 0);
         var month = monthCount % 12 == 0 ? 12 : monthCount % 12;
-        return {year : year, month : month, day : d.day};
+        return { year: year, month: month, day: d.day };
     }
 
     export class DateSelector {
@@ -21,32 +21,26 @@ module Util {
         private mEndDate: Date;
         private mCurDate: Date;
         private mCtrlId: String;
-        private mAsSeasion : boolean;
+        private mAsSeasion: boolean;
         private mDateCache: any = {};
-        public constructor(start: Date, end: Date, divId: string, asSeason : boolean = false) {
+        public constructor(start: Date, end: Date, divId: string, asSeason: boolean = false) {
             this.mStartDate = start;
             this.mEndDate = end;
             this.mCtrlId = divId + "_date";
 
-            
-            if (asSeason && isExist(this.mEndDate.month)){
+
+            if (asSeason && isExist(this.mEndDate.month)) {
                 this.mAsSeasion = true;
-                this.mCurDate = <Date>{ year: this.mEndDate.year };
-                if (this.mEndDate.month < 3) {
-                    this.mEndDate.month = 12
-                    this.mEndDate.year -= 1;
-                    this.mCurDate.year -= 1;
-                    this.mCurDate.month = 12;
-                }else{
-                    this.mEndDate.month = this.mEndDate.month - (this.mEndDate.month % 3);
-                    this.mCurDate.month = this.mEndDate.month; 
-                }
-            }else{
+                this.mEndDate = addMonth(this.mEndDate, -(this.mEndDate.month % 3));
+            } else {
                 this.mAsSeasion = false;
-                this.mCurDate = <Date>{ year: this.mEndDate.year };
-                this.mCurDate.month = this.mEndDate.month;
-                this.mCurDate.day = this.mEndDate.day;
             }
+
+            this.mCurDate = <Date>{
+                year: this.mEndDate.year,
+                month: this.mEndDate.month,
+                day: this.mEndDate.day
+            };
             
             if (!isExist(this.mStartDate.month)) {
                 this.mStartDate.month = 1;
@@ -56,17 +50,10 @@ module Util {
                 this.mStartDate.day = 1;
             }
 
-            if (this.mAsSeasion){
-                if (this.mStartDate.month < 3){
-                    this.mStartDate.year -= 1;
-                    this.mStartDate.month = 12;    
-                }
-                else{
-                    this.mStartDate.month = this.mStartDate.month - (this.mStartDate.month % 3);
-                }
+            if (this.mAsSeasion) {
+                this.mStartDate = addMonth(this.mStartDate, -(this.mStartDate.month % 3));
             }
-            
-            
+
             $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
             this.updateYear(this.mCurDate.year);
             this.updateMonth(this.mCurDate.month);
@@ -184,9 +171,9 @@ module Util {
 
                 var endMonth = this.getLatestMonth();
                 var startMonth = this.getStartMonth();
-    
+
                 var seasonCount = 0;
-                if (!this.mAsSeasion){
+                if (!this.mAsSeasion) {
                     for (var i = startMonth; i <= endMonth; ++i) {
                         if (selMonth == i) {
                             monthSel.append('<option value="' + selMonth + '" selected="selected">' + selMonth + '月</option>');
@@ -194,9 +181,9 @@ module Util {
                             monthSel.append('<option value="' + i + '">' + i + '月</option>');
                         }
                     }
-                }else{
+                } else {
                     for (var i = startMonth; i <= endMonth; ++i) {
-                        if (i % 3 == 0){
+                        if (i % 3 == 0) {
                             ++seasonCount;
                             if (selMonth == i) {
                                 monthSel.append('<option value="' + selMonth + '" selected="selected">' + i / 3 + '季度</option>');
@@ -325,13 +312,13 @@ module Util {
             this.mCurDate.day = day;
         }
 
-        private toInt(val: any) : number{
-            if (typeof (val) == 'string'){
+        private toInt(val: any): number {
+            if (typeof (val) == 'string') {
                 return parseInt(val);
             }
             return val;
         }
-        
+
         public getDate(): Date {
             this.mCurDate.year = this.toInt(this.mCurDate.year);
             this.mCurDate.month = this.toInt(this.mCurDate.month);
