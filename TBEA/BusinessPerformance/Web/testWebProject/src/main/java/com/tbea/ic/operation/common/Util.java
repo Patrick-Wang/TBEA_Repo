@@ -74,6 +74,15 @@ public class Util {
 		return ret.substring(1);
 	}
 	
+	public static String toInteger(List<Integer> comps)
+	{
+		String ret = "";
+		for(Integer comp : comps){
+			ret += "," + comp;
+		}
+		return ret.substring(1);
+	}
+	
 	public static String toBMString(List<Company> comps){
 		String ret = "";
 		for (Company comp : comps){
