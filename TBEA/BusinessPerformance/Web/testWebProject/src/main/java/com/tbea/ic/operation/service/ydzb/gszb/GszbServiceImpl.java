@@ -7,7 +7,9 @@ public class GszbServiceImpl implements GszbService{
 
 	@Override
 	public List<String[]> getGsztzb(Date date) {
-		// TODO Auto-generated method stub
+		GszbPipe pipe = new GszbPipe(null, 0, null, null);
+		pipe.add(new QnjhPipeFilter(null, 0));
+		List<Double[]> ret = pipe.getGszb();
 		return null;
 	}
 	

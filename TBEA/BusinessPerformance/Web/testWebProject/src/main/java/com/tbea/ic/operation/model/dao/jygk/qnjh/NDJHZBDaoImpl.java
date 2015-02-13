@@ -86,4 +86,11 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 		return q.getResultList();
 	}
 
+	@Override
+	public List<Double> getQnjhz(Date date, List<Integer> zbIds,
+			List<Company> companies) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

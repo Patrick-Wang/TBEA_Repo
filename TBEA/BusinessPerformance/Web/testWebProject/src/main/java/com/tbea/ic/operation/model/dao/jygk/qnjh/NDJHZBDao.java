@@ -22,4 +22,6 @@ public interface NDJHZBDao  extends AbstractReadWriteDao<NDJHZB>{
 
 	List<Integer> getCompanies();
 
+	List<Double> getQnjhz(Date date, List<Integer> zbIds, List<Company> companies);
+
 }
