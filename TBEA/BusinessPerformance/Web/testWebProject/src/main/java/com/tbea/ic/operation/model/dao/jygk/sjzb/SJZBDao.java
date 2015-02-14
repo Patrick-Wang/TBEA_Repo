@@ -22,6 +22,8 @@ public interface SJZBDao  extends AbstractReadWriteDao<SJZB>{
 	Double[] GetMonthActualValue(List<Company> comps, Date date, List<Integer> indexlist);
 	Double[] GetSeasonSumValue(List<Company> comps, Date date, List<Integer> indexlist);
 	Double[] GetSeasonSumActualValue(List<Company> comps, Date date, List<Integer> indexlist);
+	List<Object[]> GetYearSumValue(List<Company> comps, Date date, List<Integer> indexlist);
+	List<Object[]> GetMonthPlanValue(List<Company> comps, Date date, List<Integer> indexlist);
 	//List<Double[]> GetSBDSpecialIndex(Date d)
 
 	List<Integer> getCompanies();
