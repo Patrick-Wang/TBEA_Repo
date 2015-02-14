@@ -348,8 +348,15 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 
 	@Override
 	public List<SJZB> getSjzbs(List<YDZBZT> sjzbzts, List<Integer> zbs) {
-		// TODO Auto-generated method stub
-		return null;
+		String strExeSQL = "from SJZB where (";
+		for(int i = 0; i < sjzbzts.size(); i++)
+		{
+			strExeSQL += "(nf = " + sjzbzts.get(i).getNf() + " and yf = " + sjzbzts.get(i).getYf() + " and dwxx.id =" + sjzbzts.get(i).getDwxx().getId() + ") or";
+		}
+		strExeSQL.substring(0, strExeSQL.length() - 2);
+		strExeSQL += ") and  zbxx.id in (" + Util.toInteger(zbs) + ")";
+		Query q = this.getEntityManager().createQuery(strExeSQL);
+		return q.getResultList();
 	}
 
 
