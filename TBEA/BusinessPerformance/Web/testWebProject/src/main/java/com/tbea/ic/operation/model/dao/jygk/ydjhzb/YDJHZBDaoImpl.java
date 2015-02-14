@@ -113,11 +113,11 @@ public class YDJHZBDaoImpl extends AbstractReadWriteDaoImpl<YDJHZB> implements Y
 		calStart.setTime(start);
 		Calendar calEnd = Calendar.getInstance();
 		calEnd.setTime(end);
-		Query q = this.getEntityManager().createQuery("from YDJHZB where " + 
+		Query q = this.getEntityManager().createQuery("select zbxx.id, sum(ydjhz) from YDJHZB where " + 
 		"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dStart) <= 0 and " +
 		"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dEnd) >= 0 and " +
 		"dwxx.id in ("+ Util.toBMString(companies) +")" + 
-		"zbxx.id in (" + Util.toInteger(zbsTmp) + ")" );
+		"zbxx.id in (" + Util.toInteger(zbsTmp) + ")" + "group by zbxx.id");
 		q.setParameter("dStart",start);
 		q.setParameter("dEnd", end);
 		
