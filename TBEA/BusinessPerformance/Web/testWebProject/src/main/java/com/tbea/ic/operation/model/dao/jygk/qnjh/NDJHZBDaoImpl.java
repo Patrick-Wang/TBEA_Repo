@@ -1,8 +1,11 @@
 package com.tbea.ic.operation.model.dao.jygk.qnjh;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -85,12 +88,29 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 		Query q = this.getEntityManager().createQuery("select dwxx.id from NDJHZB");
 		return q.getResultList();
 	}
-
+	
+	//All Year Plan
 	@Override
 	public List<Double> getQnjhz(Date date, List<Integer> zbIds,
 			List<Company> companies) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Double> listYearPlanValue = new ArrayList<Double>();
+		Map<Integer, Integer> hyMap = new HashMap<Integer, Integer>();
+		for(int iSize = 0; iSize < zbIds.size(); iSize++)
+		{
+			hyMap.put(zbIds.get(iSize), iSize);
+			listYearPlanValue.add(0.0);
+		}
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createNativeQuery("select zbid, sum(ndjhz) FROM jygk_ndjhzb where dwid in(" + Util.toString(companies) + ") and "
+				+ "zbid in(" + Util.toInteger(zbIds) + ") and nf = :nf group by zbid;");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		List<Object[]> listRet = q.getResultList();
+		for(int i = 0; i < listRet.size(); i++)
+		{
+			listYearPlanValue.set(hyMap.get(listRet.get(i)[0]), (Double)(listRet.get(i)[1]));
+		}
+		return listYearPlanValue;
 	}
-
 }

@@ -2,6 +2,7 @@ package com.tbea.ic.operation.service.ydzb.gszb;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,10 +82,11 @@ public class SJZBAccumulator {
 				break;
 			}
 		}
-		
-		List<YJ20ZB> yj20zbs = yj20zbDao.getYj20zbs(yd20zbzts);
-		List<YJ28ZB> yj28zbs = yj28zbDao.getYj28zbs(yd28zbzts);
-		List<SJZB> sjzbs = sjzbDao.getSjzbs(sjzbzts);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(start);
+		List<YJ20ZB> yj20zbs = yj20zbDao.getYj20zbs(yd20zbzts, zbs);
+		List<YJ28ZB> yj28zbs = yj28zbDao.getYj28zbs(yd28zbzts, zbs);
+		List<SJZB> sjzbs = sjzbDao.getSjzbs(sjzbzts, zbs);
 	    Integer row;
 		for (int i = 0, len = yj20zbs.size(); i < len; ++i){
 			YJ20ZB yj20Zb = yj20zbs.get(i);

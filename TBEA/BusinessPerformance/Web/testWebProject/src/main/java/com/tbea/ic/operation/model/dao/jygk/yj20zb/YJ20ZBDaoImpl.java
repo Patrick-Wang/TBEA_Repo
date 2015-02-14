@@ -119,7 +119,7 @@ public class YJ20ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ20ZB> implements Y
 	}
 
 	@Override
-	public List<YJ20ZB> getYj20zbs(List<YDZBZT> yd20zbzts) {
+	public List<YJ20ZB> getYj20zbs(List<YDZBZT> yd20zbzts, List<Integer> zbs) {
 		// TODO Auto-generated method stub
 		return null;
 	}
