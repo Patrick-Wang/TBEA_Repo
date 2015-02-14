@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
@@ -39,18 +38,28 @@ public class DyjhSbdPipeFilter implements IPipeFilter {
 		}
 	}
 	
-	private void fillZbs(List<Integer> indexList, List<Double> vals){
+	private void fillZbs(List<Integer> indexList){
 		for (int i = 0, len = indexList.size(); i < len; ++i) {
-			cacheValues.add(indexList.get(i), vals.get(i));
+			cacheValues.add(indexList.get(i), null);
 		}
 	}
 	
 	
-	private List<Company> filterCompany(List<Company> companies){
+	private List<Company> filterSbdCompany(List<Company> companies){
 		List<Company> retComps = new ArrayList<Company>();
 		for (Company comp : companies){
-			if (!comp.getSubCompanys().isEmpty() && comp.getType() != CompanyType.SBDCYJT){
-				retComps.addAll(comp.getSubCompanys());
+			if (!sbdComp.contains(comp)){
+				retComps.add(comp);
+			}
+		}
+		return retComps;
+	}
+	
+	private List<Company> getSbdCompany(List<Company> companies){
+		List<Company> retComps = new ArrayList<Company>();
+		for (Company comp : companies){
+			if (sbdComp.contains(comp)){
+				retComps.add(comp);
 			}
 		}
 		return retComps;
@@ -62,17 +71,18 @@ public class DyjhSbdPipeFilter implements IPipeFilter {
 			List<Integer> indexList = new ArrayList<Integer>();
 			filterZbs(pipe.getZbIds(), zbsTmp, indexList);
 			cacheValues = ydjhzbDao.getDyjhz(pipe.getDate(), zbsTmp,
-					filterCompany(pipe.getCompanies()));
-			List<Integer> zbs = new ArrayList<Integer>();
-			zbs.add(GSZB.YSZK.getValue());
-			zbs.add(GSZB.CH.getValue());
+					filterSbdCompany(pipe.getCompanies()));
 			Date end = pipe.getDate();
 			Calendar cal = Calendar.getInstance();
-			cal.setTime(end);;
+			cal.setTime(end);
 			Date start = Date.valueOf(cal.get(Calendar.YEAR) + "-1-1");
+			List<Double> sbdRet = accumulator.compute(start, end, getSbdCompany(pipe.getCompanies()), zbsTmp);
 			
-			//List<Double> ret = accumulator.compute(start, end, pipe, zbs);
-			//fillZbs(indexList, ret);
+			for (int i = 0; i < zbsTmp.size(); ++i){
+				cacheValues.set(i, cacheValues.get(i) + sbdRet.get(i));
+			}
+
+			fillZbs(indexList);
 		}
 	}
 
@@ -92,10 +102,8 @@ public class DyjhSbdPipeFilter implements IPipeFilter {
 	}
 
 	private void updateZb(int row, int zbId, Double[] zbRow) {
-		if (GSZB.YSZK.getValue() == zbId) {
-			zbRow[col] = Util.valueOf(zbRow[col]) + cacheValues.get(row);
-		} else if (GSZB.CH.getValue() == zbId) {
-			//zbRow[col] = cacheValues.get(xssrRow) / cacheValues.get(rsRow);
+		if (GSZB.YSZK.getValue() == zbId || GSZB.CH.getValue() == zbId) {
+			zbRow[col] = cacheValues.get(row);
 		} 
 	}
 

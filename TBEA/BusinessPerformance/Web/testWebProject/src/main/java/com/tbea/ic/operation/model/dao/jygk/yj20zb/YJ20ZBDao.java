@@ -29,6 +29,6 @@ public interface YJ20ZBDao  extends AbstractReadWriteDao<YJ20ZB> {
 
 	List<Integer> getCompanies();
 
-	List<YJ20ZB> getYj20zbs(List<YDZBZT> yd20zbzts);
+	List<YJ20ZB> getYj20zbs(List<YDZBZT> yd20zbzts, List<Integer> zbs);
 
 }
