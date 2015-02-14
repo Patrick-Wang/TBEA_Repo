@@ -40,7 +40,7 @@ public class YDJHZBLocalDaoImpl extends AbstractReadWriteDaoImpl<YDJHZBLocal>
 
 	@Override
 	public void deleteYDJHZBLocalByDW(List<Integer> dwidList) {
-		String sql = "Delete From YDJHZBLocal Where dwid in :(dwidList)";
+		String sql = "Delete From YDJHZBLocal Where dwid in (:dwidList)";
 		Query query = getEntityManager().createQuery(sql);
 		query.setParameter("dwidList", dwidList);
 		query.executeUpdate();
