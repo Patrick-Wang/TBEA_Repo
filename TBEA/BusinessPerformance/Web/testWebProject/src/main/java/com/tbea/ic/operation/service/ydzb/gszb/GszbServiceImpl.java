@@ -99,15 +99,88 @@ public class GszbServiceImpl implements GszbService{
 		Organization org = companyManager.getBMDBOrganization();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
+
+		
+		Date seasonStart = Date.valueOf(cal.get(Calendar.YEAR) + "-" + ((cal.get(Calendar.MONTH) + 1) - (cal.get(Calendar.MONTH) + 1) % 3 + 1)  + "-1");
+		Date qntqSeason = Date.valueOf((cal.get(Calendar.YEAR) - 1) + "-" + ((cal.get(Calendar.MONTH) + 1) - (cal.get(Calendar.MONTH) + 1) % 3 + 1)  + "-1");
+		Date qntq = Date.valueOf((cal.get(Calendar.YEAR) - 1) + "-" + cal.get(Calendar.MONTH) + "-1");
+		Date firstMonth = Date.valueOf(cal.get(Calendar.YEAR) + "-1-1");
+		Date qnfirstMonth = Date.valueOf((cal.get(Calendar.YEAR) - 1) + "-1-1");
+		
 		GszbPipe pipe = new GszbPipe(gsztzbs, 15, filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys()), date);
-		
+		SJZBAccumulator accumulator = new SJZBAccumulator(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao);
+		//全年计划
 		pipe.add(new QnjhPipeFilter(ndjhzbDao, 0));
-		pipe.add(new DyjhPipeFilter(ydjhzbDao, 1));
-		pipe.add(new DyjhSbdPipeFilter(ydjhzbDao, 1, new SJZBAccumulator(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao), companyManager));
-		pipe.add(new DysjPipeFilter(2, new SJZBAccumulator(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao), date));
-		pipe.add(new JhwclPipeFilter(3, 1, 2));
-		pipe.add(new DysjPipeFilter(4, new SJZBAccumulator(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao), Date.valueOf(cal.get(Calendar.YEAR) + "-" + cal.get(Calendar.MONTH) + "-1")));
 		
+		//当月计划
+		pipe.add(new DyjhPipeFilter(ydjhzbDao, 1, date, date));
+		pipe.add(new DysjSbdPipeFilter(
+				ydjhzbDao, 
+				1, 
+				accumulator, 
+				companyManager,
+				firstMonth, 
+				date));
+		
+		//当月实际
+		pipe.add(new DysjPipeFilter(2, accumulator, date, date));
+		//计划完成率
+		pipe.add(new JhwclPipeFilter(3, 1, 2));
+		//去年同期
+		pipe.add(new DysjPipeFilter(
+				4,
+				accumulator, 
+				qntq,
+				qntq));
+		pipe.add(new DysjSbdPipeFilter(
+				ydjhzbDao, 
+				4, 
+				accumulator, 
+				companyManager,
+				qnfirstMonth,
+				qntq));
+		
+		
+		//同比增幅
+		pipe.add(new TbzzPipeFilter(5, 4, 2));
+		
+		//季度计划
+		pipe.add(new DyjhPipeFilter(ydjhzbDao, 
+				6,
+				seasonStart,
+				date));
+		pipe.add(new DysjSbdPipeFilter(
+				ydjhzbDao, 
+				6, 
+				accumulator, 
+				companyManager,
+				seasonStart,
+				date));
+		
+		//季度累计
+		pipe.add(new DysjPipeFilter(7, accumulator, seasonStart, date));
+		
+		//季度计划完成率
+		pipe.add(new JhwclPipeFilter(8, 6, 7));
+		
+		//去年同期
+		pipe.add(new DysjPipeFilter(9, accumulator, qntqSeason, qntq));
+		
+		//同比增幅
+		pipe.add(new TbzzPipeFilter(10, 9, 7));
+		
+		//年度累计
+		pipe.add(new DysjPipeFilter(11, accumulator, firstMonth, date));
+		
+		//年度累计
+		pipe.add(new JhwclPipeFilter(12, 0, 11));
+		
+		//去年同期
+		pipe.add(new DysjPipeFilter(13, accumulator, qnfirstMonth, qntq));
+		
+		//同比增幅
+		pipe.add(new TbzzPipeFilter(14, 13, 11));
+
 		List<Double[]> gszbs = pipe.getGszb();
 		List<String[]> result = new ArrayList<String[]>();
 		for (int i = 0, len = gsztzbs.size(); i < len; ++i){

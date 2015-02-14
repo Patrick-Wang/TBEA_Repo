@@ -24,6 +24,7 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
+import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
 
 @Controller
 @RequestMapping(value = "ydzb")
@@ -35,10 +36,14 @@ public class YDZBController {
 	@Autowired
 	private YDZBService service;
 
+	@Autowired
+	private GszbService gszbService;
+	
 	@RequestMapping(value = "hzb_zbhz_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getHzb_zbhz_update(HttpServletRequest request,
 			HttpServletResponse response) {
 		Date d = DateSelection.getDate(request);
+		gszbService.getGsztzb(d);
 		String hzb_zbhz = JSONArray.fromObject(service.getHzb_zbhzData(d)).toString().replace("null", "0.00");
 		return hzb_zbhz;
 	}

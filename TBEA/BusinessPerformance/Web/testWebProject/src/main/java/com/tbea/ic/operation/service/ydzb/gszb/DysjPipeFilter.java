@@ -4,11 +4,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
-import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
-
 public class DysjPipeFilter implements IPipeFilter {
 	List<Double> cacheValues;
 	int col;
@@ -17,10 +12,12 @@ public class DysjPipeFilter implements IPipeFilter {
 	Integer rsRow;
 	Integer sxfyRow;
 	SJZBAccumulator accumulator;
-	Date date;
-	public DysjPipeFilter(int col, SJZBAccumulator accumulator, Date date) {
+	Date dateStart;
+	Date dateEnd;
+	public DysjPipeFilter(int col, SJZBAccumulator accumulator, Date dateStart, Date dateEnd) {
 		this.col = col;
-		this.date = date;
+		this.dateStart = dateStart;
+		this.dateEnd = dateEnd;
 		this.accumulator = accumulator;
 	}
 	
@@ -49,7 +46,7 @@ public class DysjPipeFilter implements IPipeFilter {
 			List<Integer> zbsTmp = new ArrayList<Integer>();
 			List<Integer> indexList = new ArrayList<Integer>();
 			filterZbs(pipe.getZbIds(), zbsTmp, indexList);
-			cacheValues = accumulator.compute(this.date, this.date, pipe.getCompanies(), pipe.getZbIds());
+			cacheValues = accumulator.compute(this.dateStart, this.dateEnd, pipe.getCompanies(), pipe.getZbIds());
 			fillZbs(indexList);
 		}
 	}

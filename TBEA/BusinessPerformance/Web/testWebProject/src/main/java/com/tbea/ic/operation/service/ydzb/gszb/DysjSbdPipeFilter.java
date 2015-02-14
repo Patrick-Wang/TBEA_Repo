@@ -10,17 +10,21 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 
-public class DyjhSbdPipeFilter implements IPipeFilter {
+public class DysjSbdPipeFilter implements IPipeFilter {
 
 	YDJHZBDao ydjhzbDao;
 	List<Double> cacheValues;
 	int col;
 	SJZBAccumulator accumulator;
 	Company sbdComp;
-	public DyjhSbdPipeFilter(YDJHZBDao ydjhDao, int col, SJZBAccumulator accumulator, CompanyManager companyManager) {
+	Date startDate;
+	Date endDate;
+	public DysjSbdPipeFilter(YDJHZBDao ydjhDao, int col, SJZBAccumulator accumulator, CompanyManager companyManager, Date startDate, Date endDate) {
 		this.ydjhzbDao = ydjhDao;
 		this.col = col;
 		this.accumulator = accumulator;
+		this.startDate = startDate;
+		this.endDate = endDate;
 		sbdComp = companyManager.getBMDBOrganization().getCompany(CompanyType.SBDCYJT);
 	}
 
@@ -70,13 +74,10 @@ public class DyjhSbdPipeFilter implements IPipeFilter {
 			List<Integer> zbsTmp = new ArrayList<Integer>();
 			List<Integer> indexList = new ArrayList<Integer>();
 			filterZbs(pipe.getZbIds(), zbsTmp, indexList);
-			cacheValues = ydjhzbDao.getDyjhz(pipe.getDate(), pipe.getDate(), zbsTmp,
+			cacheValues = ydjhzbDao.getDyjhz(this.endDate, this.endDate, zbsTmp,
 					filterSbdCompany(pipe.getCompanies()));
-			Date end = pipe.getDate();
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(end);
-			Date start = Date.valueOf(cal.get(Calendar.YEAR) + "-1-1");
-			List<Double> sbdRet = accumulator.compute(start, end, getSbdCompany(pipe.getCompanies()), zbsTmp);
+
+			List<Double> sbdRet = accumulator.compute(this.startDate, this.endDate, getSbdCompany(pipe.getCompanies()), zbsTmp);
 			
 			for (int i = 0; i < zbsTmp.size(); ++i){
 				cacheValues.set(i, cacheValues.get(i) + sbdRet.get(i));
@@ -102,9 +103,7 @@ public class DyjhSbdPipeFilter implements IPipeFilter {
 	}
 
 	private void updateZb(int row, int zbId, Double[] zbRow) {
-		if (GSZB.YSZK.getValue() == zbId || GSZB.CH.getValue() == zbId) {
-			zbRow[col] = cacheValues.get(row);
-		} 
+		zbRow[col] = cacheValues.get(row);
 	}
 
 }

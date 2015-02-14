@@ -5,22 +5,23 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 
-public class JdjhPipeFilter implements IPipeFilter {
+public class JdjhSbdPipeFilter implements IPipeFilter {
 
 	YDJHZBDao ydjhzbDao;
 	List<Double> cacheValues;
 	int col;
-	Integer lrzeRow;
-	Integer xssrRow;
-	Integer rsRow;
-	Integer sxfyRow;
-	
-	public JdjhPipeFilter(YDJHZBDao ydjhDao, int col, CompanyManager companyManager) {
+	SJZBAccumulator accumulator;
+	Company sbdComp;
+	public JdjhSbdPipeFilter(YDJHZBDao ydjhDao, int col, SJZBAccumulator accumulator, CompanyManager companyManager) {
 		this.ydjhzbDao = ydjhDao;
 		this.col = col;
+		this.accumulator = accumulator;
+		sbdComp = companyManager.getBMDBOrganization().getCompany(CompanyType.SBDCYJT);
 	}
 
 	
@@ -43,6 +44,25 @@ public class JdjhPipeFilter implements IPipeFilter {
 		}
 	}
 
+	private List<Company> filterSbdCompany(List<Company> companies){
+		List<Company> retComps = new ArrayList<Company>();
+		for (Company comp : companies){
+			if (!sbdComp.contains(comp)){
+				retComps.add(comp);
+			}
+		}
+		return retComps;
+	}
+	
+	private List<Company> getSbdCompany(List<Company> companies){
+		List<Company> retComps = new ArrayList<Company>();
+		for (Company comp : companies){
+			if (sbdComp.contains(comp)){
+				retComps.add(comp);
+			}
+		}
+		return retComps;
+	}
 	
 	
 	private void updateCacheValues(GszbPipe pipe) {
@@ -67,22 +87,13 @@ public class JdjhPipeFilter implements IPipeFilter {
 	}
 
 	private Double[] getRow(GszbPipe pipe, int row, int zbId) {
-		if (GSZB.LRZE.getValue() == zbId) {
-			lrzeRow = row;
-		} else if (GSZB.XSSR.getValue() == zbId) {
-			xssrRow = row;
-		} else if (GSZB.RS.getValue() == zbId) {
-			rsRow = row;
-		} else if (GSZB.SXFY.getValue() == zbId) {
-			sxfyRow = row;
-		}
 		return pipe.getZb(row);
 	}
 
 	@Override
 	public void filter(int row, GszbPipe pipe) {
 		int zbId = pipe.getZbId(row);
-		if (GSZB.YSZK.getValue() != zbId && GSZB.CH.getValue() != zbId) {
+		if (GSZB.YSZK.getValue() == zbId || GSZB.CH.getValue() == zbId) {
 			updateCacheValues(pipe);
 			Double[] zbRow = getRow(pipe, row, zbId);
 			updateZb(row, zbId, zbRow);
@@ -90,15 +101,7 @@ public class JdjhPipeFilter implements IPipeFilter {
 	}
 
 	private void updateZb(int row, int zbId, Double[] zbRow) {	
-		if (GSZB.RJLR.getValue() == zbId) {
-			zbRow[col] = cacheValues.get(lrzeRow) / cacheValues.get(rsRow);
-		} else if (GSZB.RJSR.getValue() == zbId) {
-			zbRow[col] = cacheValues.get(xssrRow) / cacheValues.get(rsRow);
-		} else if (GSZB.SXFYL.getValue() == zbId) {
-			zbRow[col] = cacheValues.get(sxfyRow) / cacheValues.get(rsRow);
-		} else {
-			zbRow[col] = cacheValues.get(row);
-		} 
+		zbRow[col] = cacheValues.get(row);
 	}
 
 }

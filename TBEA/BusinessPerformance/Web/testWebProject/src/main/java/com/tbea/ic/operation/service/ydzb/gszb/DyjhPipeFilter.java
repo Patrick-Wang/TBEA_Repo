@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.service.ydzb.gszb;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +16,13 @@ public class DyjhPipeFilter implements IPipeFilter {
 	Integer rsRow;
 	Integer sxfyRow;
 
-	public DyjhPipeFilter(YDJHZBDao ndjhzbDao, int col) {
-		this.ydjhzbDao = ndjhzbDao;
+	Date dateStart;
+	Date dateEnd;
+	public DyjhPipeFilter(YDJHZBDao ydjhzbDao, int col, Date dateStart, Date dateEnd) {
+		this.ydjhzbDao = ydjhzbDao;
 		this.col = col;
+		this.dateStart = dateStart;
+		this.dateEnd = dateEnd;
 	}
 	
 	private void filterZbs(List<Integer> zbs, List<Integer> zbsTmp, List<Integer> indexList){
@@ -47,7 +52,7 @@ public class DyjhPipeFilter implements IPipeFilter {
 			List<Integer> zbsTmp = new ArrayList<Integer>();
 			List<Integer> indexList = new ArrayList<Integer>();
 			filterZbs(pipe.getZbIds(), zbsTmp, indexList);
-			cacheValues = ydjhzbDao.getDyjhz(pipe.getDate(), pipe.getDate(), zbsTmp,
+			cacheValues = ydjhzbDao.getDyjhz(dateStart, dateEnd, zbsTmp,
 					pipe.getCompanies());
 			fillZbs(indexList);
 		}
