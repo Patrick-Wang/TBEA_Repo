@@ -118,9 +118,15 @@ public class YJ28ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ28ZB> implements Y
 
 	@Override
 	public List<YJ28ZB> getYj28zbs(List<YDZBZT> yd28zbzts, List<Integer> zbs) {
-		// TODO Auto-generated method stub
-		return null;
+		String strExeSQL = "from YJ28ZB where (";
+		for(int i = 0; i < yd28zbzts.size(); i++)
+		{
+			strExeSQL += "(nf = " + yd28zbzts.get(i).getNf() + " and yf = " + yd28zbzts.get(i).getYf() + " and dwxx.id =" + yd28zbzts.get(i).getDwxx().getId() + ") or";
+		}
+		strExeSQL.substring(0, strExeSQL.length() - 2);
+		strExeSQL += ") and  zbxx.id in (" + Util.toInteger(zbs) + ")";
+		Query q = this.getEntityManager().createQuery(strExeSQL);
+		return q.getResultList();
 	}
-
 
 }
