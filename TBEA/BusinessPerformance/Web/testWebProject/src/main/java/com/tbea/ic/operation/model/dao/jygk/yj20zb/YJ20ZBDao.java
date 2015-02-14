@@ -6,7 +6,10 @@ import java.util.List;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.entity.jygk.SJZB;
+import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
+import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 
 public interface YJ20ZBDao  extends AbstractReadWriteDao<YJ20ZB> {
 
@@ -25,5 +28,11 @@ public interface YJ20ZBDao  extends AbstractReadWriteDao<YJ20ZB> {
 	List<YJ20ZB> getApprovedZbs(Date date, List<Company> comps);
 
 	List<Integer> getCompanies();
+
+	List<YJ20ZB> getYj20zbs(List<YDZBZT> yd20zbzts);
+
+	List<YJ28ZB> getYj28zbs(List<YDZBZT> yd28zbzts);
+
+	List<SJZB> getSjzbs(List<YDZBZT> sjzbzts);
 
 }

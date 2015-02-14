@@ -96,6 +96,13 @@ public class YDJHZBDaoImpl extends AbstractReadWriteDaoImpl<YDJHZB> implements Y
 		return q.getResultList();
 	}
 
+	@Override
+	public List<Double> getDyjhz(Date date, List<Integer> zbsTmp,
+			List<Company> companies) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

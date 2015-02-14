@@ -3,31 +3,32 @@ package com.tbea.ic.operation.service.ydzb.gszb;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
+import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 
-public class QnjhPipeFilter implements IPipeFilter {
+public class DyjhPipeFilter implements IPipeFilter {
 
-	NDJHZBDao ndjhzbDao;
+	YDJHZBDao ydjhzbDao;
 	List<Double> cacheValues;
+	int col;
 	Integer lrzeRow;
 	Integer xssrRow;
 	Integer rsRow;
 	Integer sxfyRow;
-	int col;
 
-	public QnjhPipeFilter(NDJHZBDao ndjhzbDao, int col) {
-		this.ndjhzbDao = ndjhzbDao;
+	public DyjhPipeFilter(YDJHZBDao ndjhzbDao, int col) {
+		this.ydjhzbDao = ndjhzbDao;
 		this.col = col;
 	}
-	
 	
 	private void filterZbs(List<Integer> zbs, List<Integer> zbsTmp, List<Integer> indexList){
 		int zbId = 0;
 		for (int i = 0, len = zbs.size(); i < len; ++i) {
 			zbId = zbs.get(i);
-			if (GSZB.RJLR.getValue() == zbId
-					|| GSZB.RJSR.getValue() == zbId
-					|| GSZB.SXFYL.getValue() == zbId) {
+			if (GSZB.RJLR.getValue() == zbId||
+					GSZB.RJSR.getValue() == zbId||
+					GSZB.SXFYL.getValue() == zbId ||
+					GSZB.YSZK.getValue() == zbId ||
+					GSZB.CH.getValue() == zbId) {
 				indexList.add(i);
 			} else {
 				zbsTmp.add(zbId);
@@ -45,12 +46,9 @@ public class QnjhPipeFilter implements IPipeFilter {
 		if (null == cacheValues) {
 			List<Integer> zbsTmp = new ArrayList<Integer>();
 			List<Integer> indexList = new ArrayList<Integer>();
-			
 			filterZbs(pipe.getZbIds(), zbsTmp, indexList);
-			
-			cacheValues = ndjhzbDao.getQnjhz(pipe.getDate(), zbsTmp,
+			cacheValues = ydjhzbDao.getDyjhz(pipe.getDate(), zbsTmp,
 					pipe.getCompanies());
-			
 			fillZbs(indexList);
 		}
 	}
@@ -87,4 +85,5 @@ public class QnjhPipeFilter implements IPipeFilter {
 			zbRow[col] = cacheValues.get(row);
 		}
 	}
+
 }

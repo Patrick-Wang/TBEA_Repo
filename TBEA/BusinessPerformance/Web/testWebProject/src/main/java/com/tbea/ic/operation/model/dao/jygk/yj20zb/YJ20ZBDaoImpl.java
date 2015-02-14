@@ -15,7 +15,9 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
 import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
+import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
+import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
@@ -114,6 +116,24 @@ public class YJ20ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ20ZB> implements Y
 	public List<Integer> getCompanies() {
 		Query q = this.getEntityManager().createQuery("select dwxx.id from YJ20ZB");
 		return q.getResultList();
+	}
+
+	@Override
+	public List<YJ20ZB> getYj20zbs(List<YDZBZT> yd20zbzts) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<YJ28ZB> getYj28zbs(List<YDZBZT> yd28zbzts) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SJZB> getSjzbs(List<YDZBZT> sjzbzts) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

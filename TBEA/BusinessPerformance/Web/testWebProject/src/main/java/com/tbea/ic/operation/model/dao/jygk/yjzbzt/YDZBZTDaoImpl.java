@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.model.dao.jygk.yjzbzt;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -35,6 +36,13 @@ public class YDZBZTDaoImpl extends AbstractReadWriteDaoImpl<YDZBZT> implements Y
 		if (!zbs.isEmpty()){
 			return zbs.get(0);
 		}
+		return null;
+	}
+
+
+	@Override
+	public List<YDZBZT> getYdzbzt(List<Company> companies, Date start, Date end) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

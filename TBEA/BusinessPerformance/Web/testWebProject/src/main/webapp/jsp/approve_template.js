@@ -7,10 +7,10 @@ var approve_template;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left, 125));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, true, 0 /* Left */, 125));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, false, JQTable.TextAlign.Right, 125));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, false, 1 /* Right */, 125));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -19,10 +19,10 @@ var approve_template;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i < 1) {
-                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 125));
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, 0 /* Left */, 125));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 125));
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, 1 /* Right */, 125));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -31,10 +31,10 @@ var approve_template;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i <= 1) {
-                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 125));
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, 0 /* Left */, 125));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 125));
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, 1 /* Right */, 125));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);

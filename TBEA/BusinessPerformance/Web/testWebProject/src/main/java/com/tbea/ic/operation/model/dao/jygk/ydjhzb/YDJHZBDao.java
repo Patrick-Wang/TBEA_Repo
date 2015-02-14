@@ -23,4 +23,7 @@ public interface YDJHZBDao  extends AbstractReadWriteDao<YDJHZB>{
 
 	List<Integer> getCompanies();
 
+	List<Double> getDyjhz(Date date, List<Integer> zbsTmp,
+			List<Company> companies);
+
 }
