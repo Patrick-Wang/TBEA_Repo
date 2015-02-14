@@ -305,6 +305,50 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 		return null;
 	}
 	
-	//private Double[] GetMonthActualValueByCompNum(listCompsNum)
+	@Override
+	public List<Object[]> GetYearSumValue(List<Company> comps, Date date, List<Integer> indexlist)
+	{
+		Double[] dYearVal= null;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createNativeQuery("select zbid, sum(ndjhz) FROM jygk_ndjhzb where dwid in(" + Util.toString(comps) + ") and "
+				+ "zbid in(" + Util.toInteger(indexlist) + ") and nf = :nf group by zbid order by zbid ;");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		List<Object[]> listYearPlanValue = q.getResultList();
+		return listYearPlanValue;
+	}
+	
+	@Override
+	public List<Object[]> GetMonthPlanValue(List<Company> comps, Date date, List<Integer> indexlist)
+	{
+		Double[] dYearVal= null;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createNativeQuery("select zbid, sum(ydjhz) FROM jygk_ydjhzb where dwid in(" + Util.toString(comps) + ") and "
+				+ "zbid in(" + Util.toInteger(indexlist) + ") and nf = :nf and yf = :yf group by zbid order by zbid ;");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH));
+		List<Object[]> listYearPlanValue = q.getResultList();
+
+		return listYearPlanValue;
+	}
+	
+	@Override
+	public List<Object[]> GetSBDYSPlanValue(List<Company> comps, Date date, List<Integer> indexlist)
+	{
+		Double[] dSBDYSPlanVal= null;
+		Calendar cal = Calendar.getInstance();
+		if (1 == (cal.get(Calendar.MONTH) + 1))
+		{
+			dSBDYSPlanVal = GetMonthActualValue(comps, date, indexlist);
+		}
+		else
+		{
+			GetMonthsActualValue()
+		}
+		Query q = this.getEntityManager().createNativeQuery("select zbid, sum(sjz) FROM jygk_sjzb where dwid in(" + Util.toString(comps) + ") and "
+				+ "zbid = :zbid and nf = :nf and yf = :yf group by zbid order by zbid ;");
+	}
+
 	
 }
