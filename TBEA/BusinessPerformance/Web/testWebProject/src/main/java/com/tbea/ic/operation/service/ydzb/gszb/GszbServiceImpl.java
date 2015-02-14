@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
@@ -62,10 +63,20 @@ public class GszbServiceImpl implements GszbService{
 		return zbxxMap.get(zbId);
 	}
 	
+	private List<Company> filterCompany(List<Company> companies){
+		List<Company> retComps = new ArrayList<Company>();
+		for (Company comp : companies){
+			if (!comp.getSubCompanys().isEmpty()){
+				retComps.addAll(comp.getSubCompanys());
+			}
+		}
+		return retComps;
+	}
+	
 	@Override
 	public List<String[]> getGsztzb(Date date) {
 		Organization org = companyManager.getBMDBOrganization();
-		GszbPipe pipe = new GszbPipe(gsztzbs, 15, org.getCompany(CompanyType.GFGS).getSubCompanys(), date);
+		GszbPipe pipe = new GszbPipe(gsztzbs, 15, filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys()), date);
 		pipe.add(new QnjhPipeFilter(ndjhzbDao, 0));
 		List<Double[]> gszbs = pipe.getGszb();
 		List<String[]> result = new ArrayList<String[]>();

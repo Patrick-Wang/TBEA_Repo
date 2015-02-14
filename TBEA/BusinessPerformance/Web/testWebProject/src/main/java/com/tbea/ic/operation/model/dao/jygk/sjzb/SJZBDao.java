@@ -7,6 +7,7 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
+import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 
 public interface SJZBDao  extends AbstractReadWriteDao<SJZB>{
 	SJZB getZb(Integer zb, Date date, Company company);
@@ -25,4 +26,6 @@ public interface SJZBDao  extends AbstractReadWriteDao<SJZB>{
 	//List<Double[]> GetSBDSpecialIndex(Date d)
 
 	List<Integer> getCompanies();
+
+	List<SJZB> getSjzbs(List<YDZBZT> sjzbzts);
 }

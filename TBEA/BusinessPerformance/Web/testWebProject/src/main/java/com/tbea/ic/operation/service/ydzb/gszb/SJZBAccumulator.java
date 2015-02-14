@@ -83,26 +83,40 @@ public class SJZBAccumulator {
 		}
 		
 		List<YJ20ZB> yj20zbs = yj20zbDao.getYj20zbs(yd20zbzts);
-		List<YJ28ZB> yj28zbs = yj20zbDao.getYj28zbs(yd28zbzts);
-		List<SJZB> sjzbs = yj20zbDao.getSjzbs(sjzbzts);
-		
+		List<YJ28ZB> yj28zbs = yj28zbDao.getYj28zbs(yd28zbzts);
+		List<SJZB> sjzbs = sjzbDao.getSjzbs(sjzbzts);
+	    Integer row;
 		for (int i = 0, len = yj20zbs.size(); i < len; ++i){
 			YJ20ZB yj20Zb = yj20zbs.get(i);
-			Double val = ret.get(zbMap.get(yj20Zb.getId()));
-			algorithm.onCompute(
+			row = zbMap.get(yj20Zb.getId());
+			ret.set(row, algorithm.onCompute(
 					yj20Zb.getId(), 
 					yj20Zb.getDwxx().getId(), 
 					Date.valueOf(yj20Zb.getNf() + "-" + yj20Zb.getYf() + "-1"), 
-					val, 
-					yj20Zb.getYj20z());
+					ret.get(row), 
+					yj20Zb.getYj20z()));
 		}
 		
 		for (int i = 0, len = yj28zbs.size(); i < len; ++i){
-			
+			YJ28ZB yj28Zb = yj28zbs.get(i);
+			row = zbMap.get(yj28Zb.getId());
+			ret.set(row, algorithm.onCompute(
+					yj28Zb.getId(), 
+					yj28Zb.getDwxx().getId(), 
+					Date.valueOf(yj28Zb.getNf() + "-" + yj28Zb.getYf() + "-1"), 
+					ret.get(row), 
+					yj28Zb.getYj28z()));
 		}
 
 		for (int i = 0, len = sjzbs.size(); i < len; ++i){
-			
+			SJZB sjZb = sjzbs.get(i);
+			row = zbMap.get(sjZb.getId());
+			ret.set(row, algorithm.onCompute(
+					sjZb.getId(), 
+					sjZb.getDwxx().getId(), 
+					Date.valueOf(sjZb.getNf() + "-" + sjZb.getYf() + "-1"), 
+					ret.get(row), 
+					sjZb.getSjz()));
 		}
 		
 		return ret;

@@ -21,6 +21,7 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.entity.jygk.NDJHZB;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
+import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 @Repository
@@ -294,6 +295,12 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 	@Override
 	public Double[] GetSeasonSumValue(List<Company> comps, Date date,
 			List<Integer> indexlist) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SJZB> getSjzbs(List<YDZBZT> sjzbzts) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -37,7 +37,7 @@ public class QnjhPipeFilter implements IPipeFilter {
 	
 	private void fillZbs(List<Integer> indexList){
 		for (int i = 0, len = indexList.size(); i < len; ++i) {
-			cacheValues.add(i, null);
+			cacheValues.add(indexList.get(i), null);
 		}
 	}
 

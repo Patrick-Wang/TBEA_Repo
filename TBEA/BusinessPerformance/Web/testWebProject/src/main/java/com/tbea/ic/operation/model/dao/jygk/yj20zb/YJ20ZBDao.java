@@ -31,8 +31,4 @@ public interface YJ20ZBDao  extends AbstractReadWriteDao<YJ20ZB> {
 
 	List<YJ20ZB> getYj20zbs(List<YDZBZT> yd20zbzts);
 
-	List<YJ28ZB> getYj28zbs(List<YDZBZT> yd28zbzts);
-
-	List<SJZB> getSjzbs(List<YDZBZT> sjzbzts);
-
 }

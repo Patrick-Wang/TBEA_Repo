@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
@@ -113,6 +114,12 @@ public class YJ28ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ28ZB> implements Y
 	public List<Integer> getCompanies() {
 		Query q = this.getEntityManager().createQuery("select dwxx.id from YJ28ZB");
 		return q.getResultList();
+	}
+
+	@Override
+	public List<YJ28ZB> getYj28zbs(List<YDZBZT> yd28zbzts) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
