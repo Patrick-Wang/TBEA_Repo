@@ -299,6 +299,7 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 		return null;
 	}
 
+
 //	@Override
 //	public List<Object[]> GetYearSumValue(List<Company> comps, Date date, List<Integer> indexlist)
 //	{

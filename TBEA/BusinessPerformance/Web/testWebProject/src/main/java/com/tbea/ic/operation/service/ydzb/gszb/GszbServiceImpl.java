@@ -15,6 +15,11 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
+import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
+import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
+import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
+import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
+import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 
@@ -22,6 +27,21 @@ public class GszbServiceImpl implements GszbService{
 
 	@Autowired
 	NDJHZBDao ndjhzbDao;
+	
+	@Autowired
+	YDJHZBDao ydjhzbDao;
+	
+	@Autowired
+	YDZBZTDao ydzbztDao;
+	
+	@Autowired
+	SJZBDao sjzbDao;
+	
+	@Autowired
+	YJ20ZBDao yj20zbDao;
+	
+	@Autowired
+	YJ28ZBDao yj28zbDao;
 	
 	@Autowired
 	ZBXXDao zbxxDao;
@@ -78,6 +98,8 @@ public class GszbServiceImpl implements GszbService{
 		Organization org = companyManager.getBMDBOrganization();
 		GszbPipe pipe = new GszbPipe(gsztzbs, 15, filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys()), date);
 		pipe.add(new QnjhPipeFilter(ndjhzbDao, 0));
+		pipe.add(new DyjhPipeFilter(ydjhzbDao, 1));
+		pipe.add(new DyjhSbdPipeFilter(ydjhzbDao, 1, new SJZBAccumulator(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao), companyManager));
 		List<Double[]> gszbs = pipe.getGszb();
 		List<String[]> result = new ArrayList<String[]>();
 		for (int i = 0, len = gsztzbs.size(); i < len; ++i){
