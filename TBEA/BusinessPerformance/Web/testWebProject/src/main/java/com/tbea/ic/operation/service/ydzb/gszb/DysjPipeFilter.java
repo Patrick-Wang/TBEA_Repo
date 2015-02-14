@@ -1,34 +1,36 @@
 package com.tbea.ic.operation.service.ydzb.gszb;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 
-public class DyjhPipeFilter implements IPipeFilter {
-
-	YDJHZBDao ydjhzbDao;
+public class DysjPipeFilter implements IPipeFilter {
 	List<Double> cacheValues;
 	int col;
 	Integer lrzeRow;
 	Integer xssrRow;
 	Integer rsRow;
 	Integer sxfyRow;
-
-	public DyjhPipeFilter(YDJHZBDao ndjhzbDao, int col) {
-		this.ydjhzbDao = ndjhzbDao;
+	SJZBAccumulator accumulator;
+	Date date;
+	public DysjPipeFilter(int col, SJZBAccumulator accumulator, Date date) {
 		this.col = col;
+		this.date = date;
+		this.accumulator = accumulator;
 	}
 	
 	private void filterZbs(List<Integer> zbs, List<Integer> zbsTmp, List<Integer> indexList){
 		int zbId = 0;
 		for (int i = 0, len = zbs.size(); i < len; ++i) {
 			zbId = zbs.get(i);
-			if (GSZB.RJLR.getValue() == zbId||
-					GSZB.RJSR.getValue() == zbId||
-					GSZB.SXFYL.getValue() == zbId ||
-					GSZB.YSZK.getValue() == zbId ||
-					GSZB.CH.getValue() == zbId) {
+			if (GSZB.RJLR.getValue() == zbId
+					|| GSZB.RJSR.getValue() == zbId
+					|| GSZB.SXFYL.getValue() == zbId) {
 				indexList.add(i);
 			} else {
 				zbsTmp.add(zbId);
@@ -47,8 +49,7 @@ public class DyjhPipeFilter implements IPipeFilter {
 			List<Integer> zbsTmp = new ArrayList<Integer>();
 			List<Integer> indexList = new ArrayList<Integer>();
 			filterZbs(pipe.getZbIds(), zbsTmp, indexList);
-			cacheValues = ydjhzbDao.getDyjhz(pipe.getDate(), pipe.getDate(), zbsTmp,
-					pipe.getCompanies());
+			cacheValues = accumulator.compute(this.date, this.date, pipe.getCompanies(), pipe.getZbIds());
 			fillZbs(indexList);
 		}
 	}
@@ -85,5 +86,4 @@ public class DyjhPipeFilter implements IPipeFilter {
 			zbRow[col] = cacheValues.get(row);
 		}
 	}
-
 }

@@ -2,6 +2,7 @@ package com.tbea.ic.operation.service.ydzb.gszb;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,10 +97,17 @@ public class GszbServiceImpl implements GszbService{
 	@Override
 	public List<String[]> getGsztzb(Date date) {
 		Organization org = companyManager.getBMDBOrganization();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
 		GszbPipe pipe = new GszbPipe(gsztzbs, 15, filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys()), date);
+		
 		pipe.add(new QnjhPipeFilter(ndjhzbDao, 0));
 		pipe.add(new DyjhPipeFilter(ydjhzbDao, 1));
 		pipe.add(new DyjhSbdPipeFilter(ydjhzbDao, 1, new SJZBAccumulator(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao), companyManager));
+		pipe.add(new DysjPipeFilter(2, new SJZBAccumulator(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao), date));
+		pipe.add(new JhwclPipeFilter(3, 1, 2));
+		pipe.add(new DysjPipeFilter(4, new SJZBAccumulator(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao), Date.valueOf(cal.get(Calendar.YEAR) + "-" + cal.get(Calendar.MONTH) + "-1")));
+		
 		List<Double[]> gszbs = pipe.getGszb();
 		List<String[]> result = new ArrayList<String[]>();
 		for (int i = 0, len = gsztzbs.size(); i < len; ++i){
