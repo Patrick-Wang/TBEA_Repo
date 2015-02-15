@@ -30,6 +30,7 @@ import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.NjhzbAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.YjhzbAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.AccSbdPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.CopyPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.SpecialPipeFilter;
@@ -202,7 +203,7 @@ public class GszbServiceImpl implements GszbService {
 				.includeCompanies(nonSbdCompanies)
 				.include(GSZB.YSZK)
 				.include(GSZB.CH))
-			.add(new AccPipeFilter(yjhAcc, 1)
+			.add(new AccSbdPipeFilter(yjhAcc, 1)
 				.includeCompanies(sbdCompanies)
 				.include(GSZB.YSZK)
 				.include(GSZB.CH))

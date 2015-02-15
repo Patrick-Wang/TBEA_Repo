@@ -146,7 +146,7 @@ public class AccPipeFilter implements IPipeFilter {
 		}
 	}
 
-	private void updateZb(int row, int zbId, Double[] zbRow) {
+	protected void updateZb(int row, int zbId, Double[] zbRow) {
 		zbRow[col] = Util.valueOf(zbRow[col]) + cacheValues.get(row);
 	}
 }
