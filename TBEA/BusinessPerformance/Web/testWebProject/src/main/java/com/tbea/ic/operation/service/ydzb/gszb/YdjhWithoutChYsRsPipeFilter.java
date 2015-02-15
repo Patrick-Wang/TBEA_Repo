@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 
-public class DyjhPipeFilter implements IPipeFilter {
+public class YdjhWithoutChYsRsPipeFilter implements IPipeFilter {
 
 	YDJHZBDao ydjhzbDao;
 	List<Double> cacheValues;
@@ -18,7 +18,7 @@ public class DyjhPipeFilter implements IPipeFilter {
 
 	Date dateStart;
 	Date dateEnd;
-	public DyjhPipeFilter(YDJHZBDao ydjhzbDao, int col, Date dateStart, Date dateEnd) {
+	public YdjhWithoutChYsRsPipeFilter(YDJHZBDao ydjhzbDao, int col, Date dateStart, Date dateEnd) {
 		this.ydjhzbDao = ydjhzbDao;
 		this.col = col;
 		this.dateStart = dateStart;
@@ -33,7 +33,8 @@ public class DyjhPipeFilter implements IPipeFilter {
 					GSZB.RJSR.getValue() == zbId||
 					GSZB.SXFYL.getValue() == zbId ||
 					GSZB.YSZK.getValue() == zbId ||
-					GSZB.CH.getValue() == zbId) {
+					GSZB.CH.getValue() == zbId ||
+					GSZB.RS.getValue() == zbId) {
 				indexList.add(i);
 			} else {
 				zbsTmp.add(zbId);
@@ -73,10 +74,12 @@ public class DyjhPipeFilter implements IPipeFilter {
 
 	@Override
 	public void filter(int row, GszbPipe pipe) {
-		updateCacheValues(pipe);
 		int zbId = pipe.getZbId(row);
-		Double[] zbRow = getRow(pipe, row, zbId);
-		updateZb(row, zbId, zbRow);
+		if (GSZB.RS.getValue() != zbId) {
+			updateCacheValues(pipe);
+			Double[] zbRow = getRow(pipe, row, zbId);
+			updateZb(row, zbId, zbRow);
+		}
 	}
 
 	private void updateZb(int row, int zbId, Double[] zbRow) {

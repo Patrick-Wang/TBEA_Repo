@@ -20,7 +20,7 @@ public class JhwclPipeFilter implements IPipeFilter {
 	}
 
 	private void updateZb(int row, Double[] zbRow) {
-		if (zbRow[jhCol] < 0 || zbRow[sjCol] < 0 || Math.abs(zbRow[sjCol]) < 0.0000001 || Math.abs(zbRow[sjCol]) < 0.0000001){
+		if (zbRow[jhCol] < 0 || zbRow[sjCol] < 0 || Math.abs(zbRow[sjCol]) < 0.0000001 || Math.abs(zbRow[jhCol]) < 0.0000001){
 			zbRow[col] = null;
 		}else{
 			zbRow[col] = zbRow[sjCol] / zbRow[jhCol];

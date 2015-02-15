@@ -353,8 +353,7 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 		{
 			strExeSQL += "(nf = " + sjzbzts.get(i).getNf() + " and yf = " + sjzbzts.get(i).getYf() + " and dwxx.id =" + sjzbzts.get(i).getDwxx().getId() + ") or";
 		}
-		strExeSQL.substring(0, strExeSQL.length() - 2);
-		strExeSQL += ") and  zbxx.id in (" + Util.toInteger(zbs) + ")";
+		strExeSQL = strExeSQL.substring(0, strExeSQL.length() - 2) + ") and  zbxx.id in (" + Util.toInteger(zbs) + ")";
 		Query q = this.getEntityManager().createQuery(strExeSQL);
 		return q.getResultList();
 	}

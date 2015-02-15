@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DysjPipeFilter implements IPipeFilter {
+public class YdsjWithoutRsPipeFilter implements IPipeFilter {
 	List<Double> cacheValues;
 	int col;
 	Integer lrzeRow;
@@ -14,7 +14,7 @@ public class DysjPipeFilter implements IPipeFilter {
 	SJZBAccumulator accumulator;
 	Date dateStart;
 	Date dateEnd;
-	public DysjPipeFilter(int col, SJZBAccumulator accumulator, Date dateStart, Date dateEnd) {
+	public YdsjWithoutRsPipeFilter(int col, SJZBAccumulator accumulator, Date dateStart, Date dateEnd) {
 		this.col = col;
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
@@ -27,7 +27,8 @@ public class DysjPipeFilter implements IPipeFilter {
 			zbId = zbs.get(i);
 			if (GSZB.RJLR.getValue() == zbId
 					|| GSZB.RJSR.getValue() == zbId
-					|| GSZB.SXFYL.getValue() == zbId) {
+					|| GSZB.SXFYL.getValue() == zbId ||
+					GSZB.RS.getValue() == zbId) {
 				indexList.add(i);
 			} else {
 				zbsTmp.add(zbId);
@@ -66,10 +67,12 @@ public class DysjPipeFilter implements IPipeFilter {
 
 	@Override
 	public void filter(int row, GszbPipe pipe) {
-		updateCacheValues(pipe);
 		int zbId = pipe.getZbId(row);
-		Double[] zbRow = getRow(pipe, row, zbId);
-		updateZb(row, zbId, zbRow);
+		if (GSZB.RS.getValue() != zbId) {
+			updateCacheValues(pipe);
+			Double[] zbRow = getRow(pipe, row, zbId);
+			updateZb(row, zbId, zbRow);
+		}
 	}
 
 	private void updateZb(int row, int zbId, Double[] zbRow) {

@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.model.dao.jygk.qnjh;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -109,7 +110,7 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 		List<Object[]> listRet = q.getResultList();
 		for(int i = 0; i < listRet.size(); i++)
 		{
-			listYearPlanValue.set(hyMap.get(listRet.get(i)[0]), (Double)(listRet.get(i)[1]));
+			listYearPlanValue.set(hyMap.get(listRet.get(i)[0]), ((BigDecimal)(listRet.get(i)[1])).doubleValue());
 		}
 		return listYearPlanValue;
 	}

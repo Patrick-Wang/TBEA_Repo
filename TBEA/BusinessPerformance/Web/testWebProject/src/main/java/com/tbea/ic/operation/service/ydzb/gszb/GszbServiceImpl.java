@@ -10,7 +10,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
@@ -24,30 +27,32 @@ import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 
-public class GszbServiceImpl implements GszbService{
+@Service
+@Transactional("transactionManager")
+public class GszbServiceImpl implements GszbService {
 
 	@Autowired
 	NDJHZBDao ndjhzbDao;
-	
+
 	@Autowired
 	YDJHZBDao ydjhzbDao;
-	
+
 	@Autowired
 	YDZBZTDao ydzbztDao;
-	
+
 	@Autowired
 	SJZBDao sjzbDao;
-	
+
 	@Autowired
 	YJ20ZBDao yj20zbDao;
-	
+
 	@Autowired
 	YJ28ZBDao yj28zbDao;
-	
+
 	@Autowired
 	ZBXXDao zbxxDao;
-	
-	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+
+	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 	private static List<Integer> gsztzbs = new ArrayList<Integer>();
 	static {
@@ -69,29 +74,44 @@ public class GszbServiceImpl implements GszbService{
 		gsztzbs.add(GSZB.SXFYL.getValue());
 		gsztzbs.add(GSZB.JZCSYL.getValue());
 	}
-	
-	
+
 	private static Map<Integer, ZBXX> zbxxMap = new HashMap<Integer, ZBXX>();
-	
-	
-	private ZBXX getZbxx(Integer zbId){
-		if (zbxxMap.isEmpty()){
+
+	private ZBXX getZbxx(Integer zbId) {
+		if (zbxxMap.isEmpty()) {
 			List<ZBXX> zbxxs = zbxxDao.getZbs(gsztzbs);
-			for (ZBXX zbxx : zbxxs){
+			for (ZBXX zbxx : zbxxs) {
 				zbxxMap.put(zbxx.getId(), zbxx);
 			}
 		}
 		return zbxxMap.get(zbId);
 	}
-	
-	private List<Company> filterCompany(List<Company> companies){
+
+	private List<Company> filterCompany(List<Company> companies) {
 		List<Company> retComps = new ArrayList<Company>();
-		for (Company comp : companies){
-			if (!comp.getSubCompanys().isEmpty()){
+		for (Company comp : companies) {
+			if (!comp.getSubCompanys().isEmpty()) {
 				retComps.addAll(comp.getSubCompanys());
 			}
 		}
 		return retComps;
+	}
+
+	private List<String[]> makeResult(List<Double[]> gszbs){
+
+		List<String[]> result = new ArrayList<String[]>();
+		for (int i = 0, len = gsztzbs.size(); i < len; ++i) {
+			String[] zbRow = new String[16];
+			Double[] gszbRow = gszbs.get(i);
+			zbRow[0] = getZbxx(gsztzbs.get(i)).getName();
+			for (int j = zbRow.length - 1; j > 0; --j) {
+				if (null != gszbRow[j - 1]) {
+					zbRow[j] = gszbRow[j - 1] + "";
+				}
+			}
+			result.add(zbRow);
+		}
+		return result;
 	}
 	
 	@Override
@@ -99,101 +119,77 @@ public class GszbServiceImpl implements GszbService{
 		Organization org = companyManager.getBMDBOrganization();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
+		cal.add(Calendar.MONTH, -(cal.get(Calendar.MONTH) + 1) % 3 + 1);
+		Date seasonStart = Util.toDate(cal);
+		
+		cal.setTime(seasonStart);
+		cal.add(Calendar.YEAR, -1);
+		Date qntqSeason = Util.toDate(cal);
+		
+		cal.setTime(date);
+		cal.add(Calendar.YEAR, -1);
+		Date qntq = Util.toDate(cal);
+		
+		cal.setTime(date);
+		cal.set(Calendar.MONTH, 0);
+		Date firstMonth = Util.toDate(cal);
+		
+		cal.setTime(qntq);
+		cal.set(Calendar.MONTH, 0);
+		Date qnfirstMonth = Util.toDate(cal);
 
+		GszbPipe pipe = new GszbPipe(gsztzbs, 15, filterCompany(org.getCompany(
+				CompanyType.GFGS).getSubCompanys()), date);
 		
-		Date seasonStart = Date.valueOf(cal.get(Calendar.YEAR) + "-" + ((cal.get(Calendar.MONTH) + 1) - (cal.get(Calendar.MONTH) + 1) % 3 + 1)  + "-1");
-		Date qntqSeason = Date.valueOf((cal.get(Calendar.YEAR) - 1) + "-" + ((cal.get(Calendar.MONTH) + 1) - (cal.get(Calendar.MONTH) + 1) % 3 + 1)  + "-1");
-		Date qntq = Date.valueOf((cal.get(Calendar.YEAR) - 1) + "-" + cal.get(Calendar.MONTH) + "-1");
-		Date firstMonth = Date.valueOf(cal.get(Calendar.YEAR) + "-1-1");
-		Date qnfirstMonth = Date.valueOf((cal.get(Calendar.YEAR) - 1) + "-1-1");
+		SJZBAccumulator accumulator = new SJZBAccumulator(sjzbDao, yj20zbDao,
+				yj28zbDao, ydzbztDao);
 		
-		GszbPipe pipe = new GszbPipe(gsztzbs, 15, filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys()), date);
-		SJZBAccumulator accumulator = new SJZBAccumulator(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao);
-		//全年计划
-		pipe.add(new QnjhPipeFilter(ndjhzbDao, 0));
-		
-		//当月计划
-		pipe.add(new DyjhPipeFilter(ydjhzbDao, 1, date, date));
-		pipe.add(new DysjSbdPipeFilter(
-				ydjhzbDao, 
-				1, 
-				accumulator, 
-				companyManager,
-				firstMonth, 
-				date));
-		
-		//当月实际
-		pipe.add(new DysjPipeFilter(2, accumulator, date, date));
-		//计划完成率
-		pipe.add(new JhwclPipeFilter(3, 1, 2));
-		//去年同期
-		pipe.add(new DysjPipeFilter(
-				4,
-				accumulator, 
-				qntq,
-				qntq));
-		pipe.add(new DysjSbdPipeFilter(
-				ydjhzbDao, 
-				4, 
-				accumulator, 
-				companyManager,
-				qnfirstMonth,
-				qntq));
-		
-		
-		//同比增幅
-		pipe.add(new TbzzPipeFilter(5, 4, 2));
-		
-		//季度计划
-		pipe.add(new DyjhPipeFilter(ydjhzbDao, 
-				6,
-				seasonStart,
-				date));
-		pipe.add(new DysjSbdPipeFilter(
-				ydjhzbDao, 
-				6, 
-				accumulator, 
-				companyManager,
-				seasonStart,
-				date));
-		
-		//季度累计
-		pipe.add(new DysjPipeFilter(7, accumulator, seasonStart, date));
-		
-		//季度计划完成率
-		pipe.add(new JhwclPipeFilter(8, 6, 7));
-		
-		//去年同期
-		pipe.add(new DysjPipeFilter(9, accumulator, qntqSeason, qntq));
-		
-		//同比增幅
-		pipe.add(new TbzzPipeFilter(10, 9, 7));
-		
-		//年度累计
-		pipe.add(new DysjPipeFilter(11, accumulator, firstMonth, date));
-		
-		//年度累计
-		pipe.add(new JhwclPipeFilter(12, 0, 11));
-		
-		//去年同期
-		pipe.add(new DysjPipeFilter(13, accumulator, qnfirstMonth, qntq));
-		
-		//同比增幅
-		pipe.add(new TbzzPipeFilter(14, 13, 11));
+		pipe.add(new QnjhPipeFilter(ndjhzbDao, 0))// 全年计划
+			.add(new YdjhWithoutChYsRsPipeFilter(ydjhzbDao, 1, date, date))// 当月计划
+			.add(new YdsjSbdWithChYsPipeFilter(1, accumulator, companyManager, firstMonth, date))
+			.add(new YdsjNonSbdWithChYsPipeFilter(ydjhzbDao, 1, accumulator, companyManager, firstMonth, date))
+			.add(new YdjhRsPipeFilter(ydjhzbDao, 1))
+			
+			.add(new YdsjWithoutRsPipeFilter(2, accumulator, date, date))// 当月实际
+			.add(new YdsjRsPipeFilter(2, accumulator, date))
+			
+			.add(new JhwclPipeFilter(3, 1, 2))// 计划完成率
+			
+			.add(new YdsjWithoutRsPipeFilter(4, accumulator, qntq, qntq))// 去年同期
+			.add(new YdsjRsPipeFilter(2, accumulator, qntq))
+			
+			.add(new TbzzPipeFilter(5, 4, 2))// 同比增幅
+			
+			.add(new YdjhWithoutChYsRsPipeFilter(ydjhzbDao, 6, seasonStart, date))// 季度计划
+			.add(new YdzbCopyWithChYsPipeFilter(6, 1))
+			.add(new YdjhRsCopyPipeFilter(6, 1))
+			
+			.add(new YdsjWithoutChYsRsPipeFilter(7, accumulator, seasonStart, date))// 季度累计
+			.add(new YdzbCopyWithChYsPipeFilter(7, 2))
+			.add(new YdzbRsCopyPipeFilter(7, 1))
+			
+			.add(new JhwclPipeFilter(8, 6, 7))// 季度计划完成率
+			
+			.add(new YdsjWithoutChYsRsPipeFilter(9, accumulator, qntqSeason, qntq))// 去年同期
+			.add(new YdsjWithChYsPipeFilter(accumulator, 9, qntq, qntq))
+			.add(new YdsjRsPipeFilter(9, accumulator, qntq))
+			
+			.add(new TbzzPipeFilter(10, 9, 7))// 同比增幅
+			
+			.add(new YdsjWithoutChYsRsPipeFilter(11, accumulator, firstMonth, date))// 年度累计
+			.add(new YdzbCopyWithChYsPipeFilter(11, 2))
+			.add(new YdzbRsCopyPipeFilter(11, 2))
+			
+			.add(new JhwclPipeFilter(12, 0, 11))// 累计计划完成率
+			
+			.add(new YdsjWithoutChYsRsPipeFilter(13, accumulator, qnfirstMonth, qntq))// 去年同期
+			.add(new YdzbCopyWithChYsPipeFilter(13, 9))
+			.add(new YdzbRsCopyPipeFilter(13, 9))
+			
+			.add(new TbzzPipeFilter(14, 13, 11));// 同比增幅
 
-		List<Double[]> gszbs = pipe.getGszb();
-		List<String[]> result = new ArrayList<String[]>();
-		for (int i = 0, len = gsztzbs.size(); i < len; ++i){
-			String[] zbRow = new String[16];
-			Double[] gszbRow = gszbs.get(i);
-			zbRow[0] = getZbxx(gsztzbs.get(i)).getName();
-			for (int j = zbRow.length - 1; j > 0; --j){
-				if (null != gszbRow[j - 1]){
-					zbRow[i] = gszbRow[j - 1] + "";
-				}
-			}
-		}
-		return result;
+
+		return makeResult(pipe.getGszb());
 	}
-	
+
 }

@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.model.dao.jygk.ydjhzb;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -116,17 +117,17 @@ public class YDJHZBDaoImpl extends AbstractReadWriteDaoImpl<YDJHZB> implements Y
 		Query q = this.getEntityManager().createQuery("select zbxx.id, sum(ydjhz) from YDJHZB where " + 
 		"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dStart) <= 0 and " +
 		"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dEnd) >= 0 and " +
-		"dwxx.id in ("+ Util.toBMString(companies) +")" + 
-		"zbxx.id in (" + Util.toInteger(zbsTmp) + ")" + "group by zbxx.id");
+		"dwxx.id in ("+ Util.toBMString(companies) +") and " + 
+		"zbxx.id in (" + Util.toInteger(zbsTmp) + ") " + "group by zbxx.id");
 		q.setParameter("dStart",start);
 		q.setParameter("dEnd", end);
 		
 		List<Object[]> listRet = q.getResultList();
 		for(int i = 0; i < listRet.size(); i++)
 		{
-			listDyjhz.set(hyMap.get(listRet.get(i)[0]), (Double)(listRet.get(i)[1]));
+			listDyjhz.set(hyMap.get(listRet.get(i)[0]), ((Double)(listRet.get(i)[1])));
 		}
-		return null;
+		return listDyjhz;
 	}
 
 	

@@ -123,8 +123,7 @@ public class YJ28ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ28ZB> implements Y
 		{
 			strExeSQL += "(nf = " + yd28zbzts.get(i).getNf() + " and yf = " + yd28zbzts.get(i).getYf() + " and dwxx.id =" + yd28zbzts.get(i).getDwxx().getId() + ") or";
 		}
-		strExeSQL.substring(0, strExeSQL.length() - 2);
-		strExeSQL += ") and  zbxx.id in (" + Util.toInteger(zbs) + ")";
+		strExeSQL = strExeSQL.substring(0, strExeSQL.length() - 2) + ") and  zbxx.id in (" + Util.toInteger(zbs) + ")";
 		Query q = this.getEntityManager().createQuery(strExeSQL);
 		return q.getResultList();
 	}

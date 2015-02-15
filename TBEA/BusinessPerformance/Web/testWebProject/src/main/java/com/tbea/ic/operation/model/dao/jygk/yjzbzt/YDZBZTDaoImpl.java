@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 
@@ -42,8 +43,13 @@ public class YDZBZTDaoImpl extends AbstractReadWriteDaoImpl<YDZBZT> implements Y
 
 	@Override
 	public List<YDZBZT> getYdzbzt(List<Company> companies, Date start, Date end) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q = this.getEntityManager().createQuery("from YDZBZT where " + 
+				"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dStart) <= 0 and " +
+				"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dEnd) >= 0 and " +
+				"dwxx.id in ("+ Util.toBMString(companies) +")");
+				q.setParameter("dStart",start);
+				q.setParameter("dEnd", end);
+		return q.getResultList();
 	}
 
 }

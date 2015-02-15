@@ -5,25 +5,26 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 
-public class JdjhSbdPipeFilter implements IPipeFilter {
+public class YdsjWithChYsPipeFilter implements IPipeFilter {
 
-	YDJHZBDao ydjhzbDao;
 	List<Double> cacheValues;
 	int col;
+	Date startDate;
+	Date endDate;
 	SJZBAccumulator accumulator;
-	Company sbdComp;
-	public JdjhSbdPipeFilter(YDJHZBDao ydjhDao, int col, SJZBAccumulator accumulator, CompanyManager companyManager) {
-		this.ydjhzbDao = ydjhDao;
-		this.col = col;
+	public YdsjWithChYsPipeFilter(SJZBAccumulator accumulator, int col, Date startDate, Date endDate) {
 		this.accumulator = accumulator;
-		sbdComp = companyManager.getBMDBOrganization().getCompany(CompanyType.SBDCYJT);
-	}
+		this.col = col;
+		this.startDate = startDate;
+		this.endDate = endDate;
 
+	}
 	
 	private void filterZbs(List<Integer> zbs, List<Integer> zbsTmp, List<Integer> indexList){
 		int zbId = 0;
@@ -43,45 +44,13 @@ public class JdjhSbdPipeFilter implements IPipeFilter {
 			cacheValues.add(indexList.get(i), null);
 		}
 	}
-
-	private List<Company> filterSbdCompany(List<Company> companies){
-		List<Company> retComps = new ArrayList<Company>();
-		for (Company comp : companies){
-			if (!sbdComp.contains(comp)){
-				retComps.add(comp);
-			}
-		}
-		return retComps;
-	}
-	
-	private List<Company> getSbdCompany(List<Company> companies){
-		List<Company> retComps = new ArrayList<Company>();
-		for (Company comp : companies){
-			if (sbdComp.contains(comp)){
-				retComps.add(comp);
-			}
-		}
-		return retComps;
-	}
-	
-	
+		 
 	private void updateCacheValues(GszbPipe pipe) {
 		if (null == cacheValues) {
 			List<Integer> zbsTmp = new ArrayList<Integer>();
 			List<Integer> indexList = new ArrayList<Integer>();
 			filterZbs(pipe.getZbIds(), zbsTmp, indexList);
-			
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(pipe.getDate());
-			
-			int startMonth = (cal.get(Calendar.MONTH) + 1) - (cal.get(Calendar.MONTH) + 1) % 3 + 1;
-			
-			cacheValues = ydjhzbDao.getDyjhz(
-					Date.valueOf(cal.get(Calendar.YEAR) + "-" + startMonth + "-1"), 
-					pipe.getDate(), 
-					zbsTmp,
-					pipe.getCompanies());
-
+			cacheValues = accumulator.compute(this.startDate, this.endDate,	pipe.getCompanies(), zbsTmp);
 			fillZbs(indexList);
 		}
 	}
@@ -95,12 +64,13 @@ public class JdjhSbdPipeFilter implements IPipeFilter {
 		int zbId = pipe.getZbId(row);
 		if (GSZB.YSZK.getValue() == zbId || GSZB.CH.getValue() == zbId) {
 			updateCacheValues(pipe);
+
 			Double[] zbRow = getRow(pipe, row, zbId);
 			updateZb(row, zbId, zbRow);
 		}
 	}
 
-	private void updateZb(int row, int zbId, Double[] zbRow) {	
+	private void updateZb(int row, int zbId, Double[] zbRow) {
 		zbRow[col] = cacheValues.get(row);
 	}
 

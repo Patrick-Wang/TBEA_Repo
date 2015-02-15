@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.ydzb;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,12 +41,11 @@ public class YDZBController {
 	private GszbService gszbService;
 	
 	@RequestMapping(value = "hzb_zbhz_update.do", method = RequestMethod.GET)
-	public @ResponseBody String getHzb_zbhz_update(HttpServletRequest request,
-			HttpServletResponse response) {
+	public @ResponseBody byte[] getHzb_zbhz_update(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
-		gszbService.getGsztzb(d);
-		String hzb_zbhz = JSONArray.fromObject(service.getHzb_zbhzData(d)).toString().replace("null", "0.00");
-		return hzb_zbhz;
+		String hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d)).toString().replace("null", "\"--\"");
+		return hzb_zbhz.getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "hzb_zbhz.do", method = RequestMethod.GET)
