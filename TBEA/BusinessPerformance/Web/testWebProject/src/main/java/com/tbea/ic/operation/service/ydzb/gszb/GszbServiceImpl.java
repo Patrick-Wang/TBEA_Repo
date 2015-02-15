@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -26,6 +27,15 @@ import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
+import com.tbea.ic.operation.service.ydzb.gszb.acc.NjhzbAccumulator;
+import com.tbea.ic.operation.service.ydzb.gszb.acc.YjhzbAccumulator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.CopyPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.SpecialPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.TbzzPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.acc.*;
 
 @Service
 @Transactional("transactionManager")
@@ -97,6 +107,19 @@ public class GszbServiceImpl implements GszbService {
 		return retComps;
 	}
 
+	
+	private List<Company> getNonSbdCompany(List<Company> companies){
+		Organization org = companyManager.getBMDBOrganization();
+		Company sbd = org.getCompany(CompanyType.SBDCYJT);
+		List<Company> retComps = new ArrayList<Company>();
+		for (Company comp : companies) {
+			if (!sbd.contains(comp)) {
+				retComps.add(comp);
+			}
+		}
+		return retComps;
+	}
+	
 	private List<String[]> makeResult(List<Double[]> gszbs){
 
 		List<String[]> result = new ArrayList<String[]>();
@@ -138,57 +161,157 @@ public class GszbServiceImpl implements GszbService {
 		cal.set(Calendar.MONTH, 0);
 		Date qnfirstMonth = Util.toDate(cal);
 
-		GszbPipe pipe = new GszbPipe(gsztzbs, 15, filterCompany(org.getCompany(
-				CompanyType.GFGS).getSubCompanys()), date);
+		List<Company> allCompanies = filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys());
+		List<Company> nonSbdCompanies = getNonSbdCompany(allCompanies);
+		List<Company> sbdCompanies = org.getCompany(CompanyType.SBDCYJT).getSubCompanys();
 		
-		SJZBAccumulator accumulator = new SJZBAccumulator(sjzbDao, yj20zbDao,
-				yj28zbDao, ydzbztDao);
+		List<Integer> specialZbs = new ArrayList<Integer>();
+		specialZbs.add(GSZB.YSZK.getValue());
+		specialZbs.add(GSZB.CH.getValue());
+		specialZbs.add(GSZB.RJLR.getValue());
+		specialZbs.add(GSZB.RJSR.getValue());
+		specialZbs.add(GSZB.SXFYL.getValue());
+		specialZbs.add(GSZB.RS.getValue());
 		
-		pipe.add(new QnjhPipeFilter(ndjhzbDao, 0))// 全年计划
-			.add(new YdjhWithoutChYsRsPipeFilter(ydjhzbDao, 1, date, date))// 当月计划
-			.add(new YdsjSbdWithChYsPipeFilter(1, accumulator, companyManager, firstMonth, date))
-			.add(new YdsjNonSbdWithChYsPipeFilter(ydjhzbDao, 1, accumulator, companyManager, firstMonth, date))
-			.add(new YdjhRsPipeFilter(ydjhzbDao, 1))
-			
-			.add(new YdsjWithoutRsPipeFilter(2, accumulator, date, date))// 当月实际
-			.add(new YdsjRsPipeFilter(2, accumulator, date))
-			
-			.add(new JhwclPipeFilter(3, 1, 2))// 计划完成率
-			
-			.add(new YdsjWithoutRsPipeFilter(4, accumulator, qntq, qntq))// 去年同期
-			.add(new YdsjRsPipeFilter(2, accumulator, qntq))
-			
-			.add(new TbzzPipeFilter(5, 4, 2))// 同比增幅
-			
-			.add(new YdjhWithoutChYsRsPipeFilter(ydjhzbDao, 6, seasonStart, date))// 季度计划
-			.add(new YdzbCopyWithChYsPipeFilter(6, 1))
-			.add(new YdjhRsCopyPipeFilter(6, 1))
-			
-			.add(new YdsjWithoutChYsRsPipeFilter(7, accumulator, seasonStart, date))// 季度累计
-			.add(new YdzbCopyWithChYsPipeFilter(7, 2))
-			.add(new YdzbRsCopyPipeFilter(7, 1))
-			
-			.add(new JhwclPipeFilter(8, 6, 7))// 季度计划完成率
-			
-			.add(new YdsjWithoutChYsRsPipeFilter(9, accumulator, qntqSeason, qntq))// 去年同期
-			.add(new YdsjWithChYsPipeFilter(accumulator, 9, qntq, qntq))
-			.add(new YdsjRsPipeFilter(9, accumulator, qntq))
-			
-			.add(new TbzzPipeFilter(10, 9, 7))// 同比增幅
-			
-			.add(new YdsjWithoutChYsRsPipeFilter(11, accumulator, firstMonth, date))// 年度累计
-			.add(new YdzbCopyWithChYsPipeFilter(11, 2))
-			.add(new YdzbRsCopyPipeFilter(11, 2))
-			
-			.add(new JhwclPipeFilter(12, 0, 11))// 累计计划完成率
-			
-			.add(new YdsjWithoutChYsRsPipeFilter(13, accumulator, qnfirstMonth, qntq))// 去年同期
-			.add(new YdzbCopyWithChYsPipeFilter(13, 9))
-			.add(new YdzbRsCopyPipeFilter(13, 9))
-			
-			.add(new TbzzPipeFilter(14, 13, 11));// 同比增幅
+		GszbPipe pipe = new GszbPipe(gsztzbs, 15, allCompanies, date);
+		
+		IAccumulator sjAcc = new SjzbAccumulator(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao);
+		IAccumulator yjhAcc = new YjhzbAccumulator(ydjhzbDao);
+		IAccumulator njhAcc = new NjhzbAccumulator(ndjhzbDao);
+		
+		WclPipeFilter wclFilter = new WclPipeFilter();
+		TbzzPipeFilter tbzzFilter = new TbzzPipeFilter();
+		CopyPipeFilter copyFilter = new CopyPipeFilter();
+		
+			// 全年计划
+		pipe.add(new AccPipeFilter(njhAcc, 0)
+				.includeCompanies(allCompanies)
+				.includeZbs(gsztzbs)
+				.excludeZbs(specialZbs)
+				.include(GSZB.RS)
+				.include(GSZB.YSZK)
+				.include(GSZB.CH))
+				
+			// 当月计划
+			.add(new AccPipeFilter(yjhAcc, 1)
+				.includeCompanies(allCompanies)
+				.includeZbs(gsztzbs)
+				.excludeZbs(specialZbs)
+				.include(GSZB.RS))
+			.add(new AccPipeFilter(yjhAcc, 1)
+				.includeCompanies(nonSbdCompanies)
+				.include(GSZB.YSZK)
+				.include(GSZB.CH))
+			.add(new AccPipeFilter(yjhAcc, 1)
+				.includeCompanies(sbdCompanies)
+				.include(GSZB.YSZK)
+				.include(GSZB.CH))
 
+			// 当月实际
+			.add(new AccPipeFilter(sjAcc, 2)
+				.includeCompanies(allCompanies)
+				.includeZbs(gsztzbs)
+				.excludeZbs(specialZbs)
+				.include(GSZB.YSZK)
+				.include(GSZB.CH)
+				.include(GSZB.RS))
+			
+			// 计划完成率
+			.add(wclFilter
+				.add(3, 2, 1))
+			
+			// 去年同期	
+			.add(new AccPipeFilter(sjAcc, 4, qntq)
+				.includeCompanies(allCompanies)
+				.includeZbs(gsztzbs)
+				.excludeZbs(specialZbs)
+				.include(GSZB.YSZK)
+				.include(GSZB.CH)
+				.include(GSZB.RS))
+			
+			// 同比增幅
+			.add(tbzzFilter
+				.add(5, 2, 4))
+				
+			// 季度计划
+			.add(new AccPipeFilter(yjhAcc, 6, seasonStart, date)
+				.includeCompanies(allCompanies)
+				.includeZbs(gsztzbs)
+				.excludeZbs(specialZbs))
+			.add(copyFilter
+				.add(GSZB.CH, 1, 6)
+				.add(GSZB.YSZK, 1, 6)
+				.add(GSZB.RS, 1, 6))
+				
+			// 季度累计
+			.add(new AccPipeFilter(sjAcc, 7, seasonStart, date)
+				.includeCompanies(allCompanies)
+				.includeZbs(gsztzbs)
+				.excludeZbs(specialZbs))
+			.add(copyFilter
+				.add(GSZB.CH, 2, 7)
+				.add(GSZB.YSZK, 2, 7)
+				.add(GSZB.RS, 2, 7))
+				
+			// 季度计划完成率
+			.add(wclFilter
+				.add(8, 7, 6))
+				
+			// 季度去年同期
+			.add(new AccPipeFilter(sjAcc, 9, qntqSeason, qntq)
+				.includeCompanies(allCompanies)
+				.includeZbs(gsztzbs)
+				.excludeZbs(specialZbs))
+			.add(new AccPipeFilter(sjAcc, 9, qntq)
+				.includeCompanies(allCompanies)
+				.include(GSZB.YSZK)
+				.include(GSZB.CH)
+				.include(GSZB.RS))
+			
+			 // 同比增幅
+			.add(tbzzFilter
+				.add(10, 7, 9))
+	
+			// 年度累计
+			.add(new AccPipeFilter(sjAcc, 11, firstMonth, date)
+				.includeCompanies(allCompanies)
+				.includeZbs(gsztzbs)
+				.excludeZbs(specialZbs))
+			.add(copyFilter
+				.add(GSZB.CH, 2, 11)
+				.add(GSZB.YSZK, 2, 11)
+				.add(GSZB.RS, 2, 11))
+			
+		
+			// 累计计划完成率
+			.add(wclFilter
+				.add(12, 11, 0))
+			
+			// 去年同期
+			.add(new AccPipeFilter(sjAcc, 13, qnfirstMonth, qntq)
+				.includeCompanies(allCompanies)
+				.includeZbs(gsztzbs)
+				.excludeZbs(specialZbs))
+			.add(copyFilter
+				.add(GSZB.CH, 9, 13)
+				.add(GSZB.YSZK, 9, 13)
+				.add(GSZB.RS, 9, 13))
+	
+			// 同比增幅
+			.add(tbzzFilter
+				.add(14, 11, 13))
 
+			//添加特殊指标过滤器
+			.add(new SpecialPipeFilter()
+				.exclude(3)// 计划完成率
+				.exclude(5)// 同比增幅
+				.exclude(8)// 季度计划完成率
+				.exclude(10)// 同比增幅
+				.exclude(12)// 累计计划完成率
+				.exclude(14))// 同比增幅
+			.add(tbzzFilter)
+			.add(wclFilter);
+		
 		return makeResult(pipe.getGszb());
 	}
 

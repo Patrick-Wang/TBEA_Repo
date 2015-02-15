@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.service.ydzb.gszb.GSZB;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 
 public class AccPipeFilter implements IPipeFilter {
@@ -16,47 +16,78 @@ public class AccPipeFilter implements IPipeFilter {
 	protected int col;
 	protected Date dateStart;
 	protected Date dateEnd;
-	protected Set<Integer> excludeZbs;
-	protected Set<Company> excludeComps;
+	protected Set<Integer> includeZbs;
+	protected Set<Company> includeComps;
 	protected IAccumulator accumulator;
 	public AccPipeFilter(IAccumulator accumulator, int col, Date dateStart, Date dateEnd) {
-		this.col = col;
+		this(accumulator, col);
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
+	}
+	
+	public AccPipeFilter(IAccumulator accumulator, int col, Date date) {
+		this(accumulator, col, date, date);
+	}
+	
+	public AccPipeFilter(IAccumulator accumulator, int col) {
+		this.col = col;
 		this.accumulator = accumulator;
-		excludeZbs = new HashSet<Integer>();
-		excludeZbs.add(GSZB.YSZK.getValue());
-		excludeZbs.add(GSZB.CH.getValue());
-		excludeZbs.add(GSZB.RJLR.getValue());
-		excludeZbs.add(GSZB.RJSR.getValue());
-		excludeZbs.add(GSZB.SXFYL.getValue());
-		
-		excludeComps = new HashSet<Company>();
+		includeZbs = new HashSet<Integer>();
+		includeComps = new HashSet<Company>();
 	}
 	
-	public AccPipeFilter removeExclude(GSZB zb){
-		excludeZbs.remove(zb.getValue());
+	public AccPipeFilter exclude(GSZB zb){
+		includeZbs.remove(zb.getValue());
 		return this;
 	}
 	
-	public AccPipeFilter addExclude(GSZB zb){
-		excludeZbs.add(zb.getValue());
+	public AccPipeFilter excludeZbs(List<Integer> zbIds){
+		for (Integer zb : zbIds){
+			includeZbs.remove(zb);
+		}
 		return this;
 	}
 	
-	public AccPipeFilter addZbExclude(List<Integer> zbIds){
-		excludeZbs.addAll(zbIds);
+	public AccPipeFilter cleanZb(){
+		includeZbs.clear();
 		return this;
 	}
 	
 	
-	public AccPipeFilter addExclude(Company comp){
-		excludeComps.add(comp);
+	public AccPipeFilter include(GSZB zb){
+		includeZbs.add(zb.getValue());
 		return this;
 	}
 	
-	public AccPipeFilter addExclude(List<Company> comps){
-		excludeComps.addAll(comps);
+	public AccPipeFilter includeZbs(List<Integer> zbIds){
+		includeZbs.addAll(zbIds);
+		return this;
+	}
+	
+	public AccPipeFilter exclude(Company comp){
+		includeComps.remove(comp);
+		return this;
+	}
+	
+	public AccPipeFilter excludeCompanies(List<Company> comps){
+		for (Company comp : comps){
+			includeComps.remove(comp);
+		}
+		return this;
+	}
+	
+	public AccPipeFilter include(Company comp){
+		includeComps.add(comp);
+		return this;
+	}
+	
+	public AccPipeFilter includeCompanies(List<Company> comps){
+		includeComps.addAll(comps);
+		return this;
+	}
+	
+	public AccPipeFilter cleanCompany(){
+		includeComps.clear();
 		return this;
 	}
 	
@@ -65,7 +96,7 @@ public class AccPipeFilter implements IPipeFilter {
 		int zbId = 0;
 		for (int i = 0, len = zbs.size(); i < len; ++i) {
 			zbId = zbs.get(i);
-			if (excludeZbs.contains(zbId)) {
+			if (!includeZbs.contains(zbId)) {
 				excludeList.add(i);
 			} else {
 				zbsTmp.add(zbId);
@@ -80,12 +111,12 @@ public class AccPipeFilter implements IPipeFilter {
 	}
 	
 	private List<Company> filterCompanies(List<Company> comps){
-		if (excludeComps.isEmpty()){
-			return comps;
+		List<Company> compTmps = new ArrayList<Company>();
+		if (includeComps.isEmpty()){
+			return compTmps;
 		} else{
-			List<Company> compTmps = new ArrayList<Company>();
 			for (Company comp : comps){
-				if (!excludeComps.contains(comp)){
+				if (includeComps.contains(comp)){
 					compTmps.add(comp);
 				}
 			}
@@ -98,6 +129,9 @@ public class AccPipeFilter implements IPipeFilter {
 			List<Integer> zbsTmp = new ArrayList<Integer>();
 			List<Integer> excludeList = new ArrayList<Integer>();
 			filterZbs(pipe.getZbIds(), zbsTmp, excludeList);
+			if (dateStart == null){
+				dateStart = dateEnd = pipe.getDate();
+			}
 			cacheValues = accumulator.compute(dateStart, dateEnd, zbsTmp, filterCompanies(pipe.getCompanies()));
 			fillZbs(excludeList);
 		}
@@ -106,7 +140,7 @@ public class AccPipeFilter implements IPipeFilter {
 	@Override
 	public void filter(int row, GszbPipe pipe) {
 		int zbId = pipe.getZbId(row);
-		if (!excludeZbs.contains(zbId)){
+		if (includeZbs.contains(zbId)){
 			updateCacheValues(pipe);
 			updateZb(row, zbId, pipe.getZb(row));
 		}

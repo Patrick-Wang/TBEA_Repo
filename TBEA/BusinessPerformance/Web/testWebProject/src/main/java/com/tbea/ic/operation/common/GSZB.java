@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.gszb;
+package com.tbea.ic.operation.common;
 
 public enum GSZB {
 	LRZE(1),//利润总额

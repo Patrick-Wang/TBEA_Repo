@@ -38,6 +38,9 @@ public class GszbPipe {
 	}
 
 	public GszbPipe add(IPipeFilter filter) {
+		if (filters.contains(filter)){
+			filters.remove(filter);
+		}
 		filters.add(filter);
 		return this;
 	}
@@ -47,9 +50,14 @@ public class GszbPipe {
 	}
 
 	public List<Double[]> getGszb() {
-		for (int i = 0, len = filters.size(); i < len; ++i) {
+		for (int i = 0, len = data.size(); i < len; ++i) {
 			for (int j = 0, size = filters.size(); j < size; ++j) {
-				filters.get(j).filter(i, this);
+				try {
+					filters.get(j).filter(i, this);
+				} catch(Exception e){
+					e.printStackTrace();
+				}
+				
 			}
 		}
 		return data;

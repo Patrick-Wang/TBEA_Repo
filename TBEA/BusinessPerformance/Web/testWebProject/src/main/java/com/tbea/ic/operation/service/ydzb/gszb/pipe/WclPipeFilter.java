@@ -21,8 +21,8 @@ public class WclPipeFilter implements IPipeFilter {
 		Integer[] wcl = null;
 		for (int i = 0, len = wcls.size(); i < len; ++i) {
 			wcl = wcls.get(i);
-			if (wcl[1] < 0 || wcl[2] < 0 || Math.abs(wcl[1]) < 0.0000001
-					|| Math.abs(wcl[2]) < 0.0000001) {
+			if (zbRow[wcl[1]] < 0 || zbRow[wcl[2]] < 0 || Math.abs(zbRow[wcl[1]]) < 0.0000001
+					|| Math.abs(zbRow[wcl[2]]) < 0.0000001) {
 				zbRow[wcl[0]] = null;
 			} else {
 				zbRow[wcl[0]] = zbRow[wcl[1]] / zbRow[wcl[2]];

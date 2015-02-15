@@ -4,20 +4,20 @@ import java.sql.Date;
 import java.util.List;
 
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
+import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 
-public class NdjhAccumulator implements IAccumulator {
+public class YjhzbAccumulator implements IAccumulator {
 
-	NDJHZBDao ndjhzbDao;
+	YDJHZBDao ydjhzbDao;
 	
-	public NdjhAccumulator(NDJHZBDao ndjhzbDao) {
-		this.ndjhzbDao = ndjhzbDao;
+	public YjhzbAccumulator(YDJHZBDao ydjhzbDao) {
+		this.ydjhzbDao = ydjhzbDao;
 	}
 
 	@Override
 	public List<Double> compute(Date start, Date end, List<Integer> zbs,
 			List<Company> companies) {
-		return ndjhzbDao.getQnjhz(end, zbs, companies);
+		return ydjhzbDao.getDyjhz(start, end, zbs, companies);
 	}
 
 }
