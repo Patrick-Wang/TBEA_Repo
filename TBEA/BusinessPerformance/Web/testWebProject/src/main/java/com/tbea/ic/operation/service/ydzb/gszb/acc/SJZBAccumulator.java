@@ -18,7 +18,6 @@ import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 
 public class SjzbAccumulator implements IAccumulator{
-
 	public interface Algorithm {
 		Double onCompute(Integer id, Integer compId, Date date, double acc,
 				double value);
