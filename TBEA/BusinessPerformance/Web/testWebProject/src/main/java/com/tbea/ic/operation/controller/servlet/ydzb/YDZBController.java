@@ -45,6 +45,7 @@ public class YDZBController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
 		String hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d)).toString().replace("null", "\"--\"");
+		
 		return hzb_zbhz.getBytes("utf-8");
 	}
 	
@@ -62,7 +63,8 @@ public class YDZBController {
 	public @ResponseBody String getGcy_zbhz_update( HttpServletRequest request,
 			HttpServletResponse response) {
 		Date d = DateSelection.getDate(request);
-		String gcy_zbhz = JSONArray.fromObject(service.getGcy_zbhzData(d)).toString().replace("null", "0.00");
+		//String gcy_zbhz = JSONArray.fromObject(service.getGcy_zbhzData(d)).toString().replace("null", "0.00");
+		String gcy_zbhz = JSONArray.fromObject(gszbService.getGcyzb(d)).toString().replace("null", "\"--\"");
 		return gcy_zbhz;
 	}
 	

@@ -15,7 +15,7 @@ public class YjhzbAccumulator implements IAccumulator {
 	}
 
 	@Override
-	public List<Double> compute(Date start, Date end, List<Integer> zbs,
+	public List<Double> compute(int col, Date start, Date end, List<Integer> zbs,
 			List<Company> companies) {
 		return ydjhzbDao.getDyjhz(start, end, zbs, companies);
 	}

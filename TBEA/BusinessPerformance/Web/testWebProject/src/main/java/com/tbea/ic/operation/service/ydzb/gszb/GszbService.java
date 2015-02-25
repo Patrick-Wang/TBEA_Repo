@@ -5,4 +5,6 @@ import java.util.List;
 
 public interface GszbService {
 	public List<String[]> getGsztzb(Date date);
+
+	List<String[]> getGcyzb(Date date);
 }

@@ -51,7 +51,7 @@ public class SjzbAccumulator implements IAccumulator{
 		this.ydzbztDao = ydzbztDao;
 	}
 
-	public List<Double> compute(Date start, Date end,
+	public List<Double> compute(int col, Date start, Date end,
 			List<Integer> zbs, List<Company> companies) {
 		List<Double> ret = new ArrayList<Double>();
 		for (int i = 0, len = zbs.size(); i < len; ++i) {

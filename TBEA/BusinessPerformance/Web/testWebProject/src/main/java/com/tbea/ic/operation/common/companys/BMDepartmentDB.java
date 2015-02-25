@@ -30,9 +30,9 @@ public class BMDepartmentDB extends AbstractOrganization {
 		id_typeMap.put(8, CompanyType.NDGS);
 		id_typeMap.put(9, CompanyType.XNYGS);
 		id_typeMap.put(10, CompanyType.XTNYGS);
-		id_typeMap.put(11, CompanyType.JCKGS);
+		id_typeMap.put(11, CompanyType.JCKGS_JYDW);
 		id_typeMap.put(12, CompanyType.GJGCGS_GFGS);
-		id_typeMap.put(13, CompanyType.YHGS);
+		id_typeMap.put(13, CompanyType.ZHGS);
 		id_typeMap.put(101, CompanyType.SBGJMYCTGS);
 		id_typeMap.put(102, CompanyType.SBYTFGS);
 		id_typeMap.put(103, CompanyType.SBKJHGQ);
@@ -75,7 +75,7 @@ public class BMDepartmentDB extends AbstractOrganization {
 		id_typeMap.put(503, CompanyType.DBGS);
 		id_typeMap.put(504, CompanyType.GMB);
 		id_typeMap.put(505, CompanyType.GJGCGS_XL);
-		id_typeMap.put(506, CompanyType.YTWLGS);
+		id_typeMap.put(506, CompanyType.ZTWLGS);
 		id_typeMap.put(507, CompanyType.XSYGS);
 		id_typeMap.put(508, CompanyType.XJFGS);
 		id_typeMap.put(509, CompanyType.BJFGS);
@@ -89,7 +89,7 @@ public class BMDepartmentDB extends AbstractOrganization {
 		id_typeMap.put(703, CompanyType.YXGS);
 		id_typeMap.put(704, CompanyType.MYGS_TCNY);
 		id_typeMap.put(801, CompanyType.DLC);
-		id_typeMap.put(802, CompanyType.YPDCJ);
+		id_typeMap.put(802, CompanyType.ZPDCJ);
 		id_typeMap.put(803, CompanyType.GCGS_ND);
 		id_typeMap.put(804, CompanyType.LHB);
 		id_typeMap.put(805, CompanyType.WYGS);
@@ -106,7 +106,7 @@ public class BMDepartmentDB extends AbstractOrganization {
 		id_typeMap.put(1001, CompanyType.DJGGS);
 		id_typeMap.put(1002, CompanyType.DJGYFGS);
 		id_typeMap.put(1003, CompanyType.DJGEGS);
-		id_typeMap.put(1004, CompanyType.YBDC);
+		id_typeMap.put(1004, CompanyType.ZBDC);
 		id_typeMap.put(1005, CompanyType.XTBLGS);
 		id_typeMap.put(1006, CompanyType.GCFWGS);
 		id_typeMap.put(1007, CompanyType.XTWLGS);
@@ -130,6 +130,10 @@ public class BMDepartmentDB extends AbstractOrganization {
 		id_typeMap.put(10000, CompanyType.SBDCYJT);
 		id_typeMap.put(20000, CompanyType.NYSYB);
 		id_typeMap.put(30000, CompanyType.XNYSYB);
+		id_typeMap.put(40000, CompanyType.JCKGS_SYB);
+		id_typeMap.put(50000, CompanyType.GJGCGS_SYB);
+		id_typeMap.put(60000, CompanyType.ZHGS_SYB);
+		id_typeMap.put(100000, CompanyType.JT);
 	}
 
 	private int m_depth = 0;

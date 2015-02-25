@@ -6,5 +6,5 @@ import java.util.List;
 import com.tbea.ic.operation.common.companys.Company;
 
 public interface IAccumulator {
-	List<Double> compute(Date start, Date end, List<Integer> zbs, List<Company> companies);
+	List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies);
 }

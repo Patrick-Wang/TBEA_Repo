@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.IPipeFilter;
 
 public class GszbPipe {
 	List<IPipeFilter> filters = new ArrayList<IPipeFilter>();
@@ -12,13 +14,15 @@ public class GszbPipe {
 	List<Integer> zbIds;
 	List<Company> companies;
 	Date date;
-	public GszbPipe(List<Integer> zbIds, int colSize, List<Company> companies, Date date) {
+	public GszbPipe(List<Integer> zbIds, List<Company> companies, Date date, IPipeConfigurator pipeConfig) {
 		this.companies = companies;
 		this.date = date;
 		this.zbIds = zbIds;
+		int size = pipeConfig.columnCount();
 		for (int i = 0; i < zbIds.size(); ++i){
-			data.add(new Double[colSize]);
+			data.add(new Double[size]);
 		}
+		pipeConfig.onConfiguring(this);
 	}
 	
 	public Integer getZbId(int row){
@@ -36,7 +40,7 @@ public class GszbPipe {
 	public List<Company> getCompanies() {
 		return companies;
 	}
-
+	
 	public GszbPipe add(IPipeFilter filter) {
 		if (filters.contains(filter)){
 			filters.remove(filter);
