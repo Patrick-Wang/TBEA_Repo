@@ -16,8 +16,8 @@ public class GszbPipe {
 	Date date;
 	public GszbPipe(List<Integer> zbIds, List<Company> companies, Date date, IPipeConfigurator pipeConfig) {
 		this.companies = companies;
-		this.date = date;
 		this.zbIds = zbIds;
+		this.date = date;
 		int size = pipeConfig.columnCount();
 		for (int i = 0; i < zbIds.size(); ++i){
 			data.add(new Double[size]);
@@ -28,8 +28,21 @@ public class GszbPipe {
 	public GszbPipe(List<Integer> zbIds, Company comp, Date date, IPipeConfigurator pipeConfig) {
 		this.companies = new ArrayList<Company>();
 		this.companies.add(comp);
-		this.date = date;
 		this.zbIds = zbIds;
+		this.date = date;
+		int size = pipeConfig.columnCount();
+		for (int i = 0; i < zbIds.size(); ++i){
+			data.add(new Double[size]);
+		}
+		pipeConfig.onConfiguring(this);
+	}
+	
+	public GszbPipe(Integer zb, Company comp, Date date, IPipeConfigurator pipeConfig) {
+		this.companies = new ArrayList<Company>();
+		this.companies.add(comp);
+		this.zbIds = new ArrayList<Integer>();
+		this.zbIds.add(zb);
+		this.date = date;
 		int size = pipeConfig.columnCount();
 		for (int i = 0; i < zbIds.size(); ++i){
 			data.add(new Double[size]);
