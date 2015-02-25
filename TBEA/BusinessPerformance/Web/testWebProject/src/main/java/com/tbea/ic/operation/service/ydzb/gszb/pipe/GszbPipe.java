@@ -25,6 +25,18 @@ public class GszbPipe {
 		pipeConfig.onConfiguring(this);
 	}
 	
+	public GszbPipe(List<Integer> zbIds, Company comp, Date date, IPipeConfigurator pipeConfig) {
+		this.companies = new ArrayList<Company>();
+		this.companies.add(comp);
+		this.date = date;
+		this.zbIds = zbIds;
+		int size = pipeConfig.columnCount();
+		for (int i = 0; i < zbIds.size(); ++i){
+			data.add(new Double[size]);
+		}
+		pipeConfig.onConfiguring(this);
+	}
+	
 	public Integer getZbId(int row){
 		return zbIds.get(row);
 	}

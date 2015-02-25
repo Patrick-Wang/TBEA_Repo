@@ -138,7 +138,6 @@ public class StandardConfigurator implements IPipeConfigurator {
 				.include(GSZB.YSZK).include(GSZB.CH));
 
 		// 当月计划
-
 		if (sbdCompanies.isEmpty()) {
 			pipe.add(new AccPipeFilter(yjhAcc, 1)
 					.includeCompanies(allCompanies).includeZbs(gsztzbs)
