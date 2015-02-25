@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var gcy_zbhz;
 (function (gcy_zbhz) {
     var JQGridAssistantFactory = (function () {
@@ -97,6 +99,11 @@ var gcy_zbhz;
                 ["存 货", "众和公司"],
                 ["存 货", "集团合计"]
             ];
+            //            for (var i = 0; i < data.length; ++i) {
+            //                if (this.mData[i] instanceof Array) {
+            //                    data[i] = data[i].concat(this.mData[i]);
+            //                }
+            //            }
             var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (this.mData[i] instanceof Array) {
@@ -113,11 +120,16 @@ var gcy_zbhz;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: 600,
                 width: 1200,
                 shrinkToFit: true,
