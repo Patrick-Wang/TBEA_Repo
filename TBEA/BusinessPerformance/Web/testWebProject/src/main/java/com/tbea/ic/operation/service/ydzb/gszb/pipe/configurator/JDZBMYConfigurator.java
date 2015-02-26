@@ -304,7 +304,7 @@ public class JDZBMYConfigurator implements IPipeConfigurator {
 
 	@Override
 	public int getColumnCount() {
-		return 25;
+		return 26;
 	}
 
 }

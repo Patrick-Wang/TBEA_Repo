@@ -224,8 +224,25 @@ public class YDZBController {
 	public  @ResponseBody byte[] gethzb_zbhz_prediction_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
+		String month = request.getParameter("month");
+		int iMonth = Integer.valueOf(month);
+		String hzb_zbhz_prediction = null;
+		if (0 == iMonth % 3)
+		{
+			hzb_zbhz_prediction = JSONArray.fromObject(gszbService.getJDZBMY(d)).toString().replace("null", "\"--\"");
+		}
+		
+		if (1 == iMonth % 3)
+		{
+			hzb_zbhz_prediction = JSONArray.fromObject(gszbService.getFirstSeasonPredictionZBsOverview(d)).toString().replace("null", "\"--\"");
+		}
+		
+		if (2 == iMonth % 3)
+		{
+			
+		}
 		//String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
-		String hzb_zbhz_prediction = JSONArray.fromObject(gszbService.getFirstSeasonPredictionZBsOverview(d)).toString().replace("null", "\"--\"");
+		
 		return hzb_zbhz_prediction.getBytes("utf-8");
 	}
 	
