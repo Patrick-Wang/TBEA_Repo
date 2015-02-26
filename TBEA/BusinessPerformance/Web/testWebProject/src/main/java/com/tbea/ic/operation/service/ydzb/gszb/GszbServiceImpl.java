@@ -434,7 +434,7 @@ public class GszbServiceImpl implements GszbService {
 		GszbPipe pipe = new GszbPipe(gsztzbs, filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys()), date, new FirstSeasonPredictionConfigurator(ndjhzbDao, ydjhzbDao,
 				ydzbztDao, sjzbDao, yj20zbDao,
 				yj28zbDao, zbxxDao, companyManager));	
-		return makeResult(pipe.getGszb());
+		return makeResult(gsztzbs, pipe.getGszb());
 	}
 
 	@Override
@@ -457,7 +457,7 @@ public class GszbServiceImpl implements GszbService {
 			}
 			result.add(values);
 		}
-		return makeResult(result);
+		return makeResult(gsztzbs, result);
 	}
 
 }
