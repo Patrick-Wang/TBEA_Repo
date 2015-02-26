@@ -86,7 +86,6 @@ public class GszbPipe {
 				} catch(Exception e){
 					e.printStackTrace();
 				}
-				
 			}
 		}
 		return data;

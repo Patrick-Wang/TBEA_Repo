@@ -17,6 +17,13 @@ public class CompositeAccumulator implements IAccumulator {
 		return addSrc(comp, zb.ordinal(), vals);
 	}
 	
+	public CompositeAccumulator addSrc(Company comp, List<Integer> zbs, List<Double[]> vals){
+		for (int i = 0, len = zbs.size(); i < len; ++i){
+			addSrc(comp, zbs.get(i), vals.get(i));
+		}
+		return this;
+	}
+	
 	public CompositeAccumulator addSrc(Company comp, Integer zb, Double[] vals){
 		srcs.put(zb + comp.getType().name(), vals);
 		return this;
