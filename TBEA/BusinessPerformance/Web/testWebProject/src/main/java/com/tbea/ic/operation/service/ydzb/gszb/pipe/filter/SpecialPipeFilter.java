@@ -1,9 +1,10 @@
-package com.tbea.ic.operation.service.ydzb.gszb.pipe;
+package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import com.tbea.ic.operation.common.GSZB;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 
 public class SpecialPipeFilter implements IPipeFilter {
 

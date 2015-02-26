@@ -2,46 +2,46 @@ package com.tbea.ic.operation.common;
 
 public enum GSZB {
 	LRZE(1),//利润总额
-	QYTCNY(2),//    其中：天池能源
-	QYXJNY(3),//    其中：新疆能源
-	QYYYSLR(4),//    其中：运营商利润
-	QYYEYLRWY(5),//    其中：幼儿园利润（万元）
+	QZTCNY(2),//    其中：天池能源
+	QZXJNY(3),//    其中：新疆能源
+	QZYYSLR(4),//    其中：运营商利润
+	QZYEYLRWY(5),//    其中：幼儿园利润（万元）
 	XSSR(6),//销售收入
-	YYYSR(7),//制造业收入
-	QYDJGSR(8),//    其中：多晶硅收入
-	QYJQKSR(9),//    其中：加气块收入
-	QYGNSR(10),//    其中：国内收入
-	QYGJSR(11),//    其中：国际收入
+	ZZYSR(7),//制造业收入
+	QZDJGSR(8),//    其中：多晶硅收入
+	QZJQKSR(9),//    其中：加气块收入
+	QZGNSR(10),//    其中：国内收入
+	QZGJSR(11),//    其中：国际收入
 	GCXMSR(12),//工程项目收入
-	QYGNSR_1(13),//    其中：国内收入
-	QYGJSR_1(14),//    其中：国际收入
+	QZGNSR_1(13),//    其中：国内收入
+	QZGJSR_1(14),//    其中：国际收入
 	YYSSR(15),//运营商收入
 	WLMYSR(16),//物流贸易收入
-	QYGNSR_2(17),//    其中：国内收入
-	QYGJSR_2(18),//    其中：国际收入
+	QZGNSR_2(17),//    其中：国内收入
+	QZGJSR_2(18),//    其中：国际收入
 	MTXSSR(19),//煤炭销售收入
 	FWLSR(20),//服务类收入
-	QYHJCPWXSR(21),//    其中：合金产品外销收入
-	QYWBCS(22),//    其中：外部创收
-	QYBYCS(23),//    其中：餐饮创收
+	QZHJCPWXSR(21),//    其中：合金产品外销收入
+	QZWBCS(22),//    其中：外部创收
+	QZBYCS(23),//    其中：餐饮创收
 	FBYCS(24),//非餐饮创收
-	QYWXSR(25),//    其中：外销收入
-	QYYEYSR(26),//    其中：幼儿园收入
-	QYMYSR(27),//    其中：贸易收入
+	QZWXSR(25),//    其中：外销收入
+	QZYEYSR(26),//    其中：幼儿园收入
+	QZMYSR(27),//    其中：贸易收入
 	XSLRL(28),//销售利润率
 	JYXJXJL(29),//经营性净现金流
-	QYTCNY_1(30),//    其中：天池能源
-	QYXJNY_1(31),//    其中：新疆能源
+	QZTCNY_1(30),//    其中：天池能源
+	QZXJNY_1(31),//    其中：新疆能源
 	YSZK(32),//应收账款
 	QZYQK(33),//    其中：逾期款
 	BL(34),//保理
 	CH(35),//存货
 	QZJYWY(36),//    其中：积压物资
 	QZKCSP(37),//    其中：库存商品
-	QYYJXMCH(38),//    其中：自建项目存货
-	QYBPBJ(39),//    其中：备品备件
-	QYDCMT(40),//    其中：电厂煤炭
-	QYDCRY(41),//    其中：电厂燃油
+	QZYJXMCH(38),//    其中：自建项目存货
+	QZBPBJ(39),//    其中：备品备件
+	QZDCMT(40),//    其中：电厂煤炭
+	QZDCRY(41),//    其中：电厂燃油
 	NBQCCP(42),//逆变器产成品
 	NBQBCP(43),//逆变器半成品
 	NBQYBL(44),//逆变器原材料
@@ -50,16 +50,16 @@ public enum GSZB {
 	CHKHY(47),//存货考核值
 	HTQYE(48),//合同签约额
 	GJQY(49),//国际签约(万美元）
-	QYDJQY(50),//    其中：单机签约
-	QYCTQY(51),//    其中：成套签约
+	QZDJQY(50),//    其中：单机签约
+	QZCTQY(51),//    其中：成套签约
 	GNQY(52),//国内签约
-	QYDJQY_1(53),//    其中：单机签约
-	QYCTQY_1(54),//    其中：成套签约
+	QZDJQY_1(53),//    其中：单机签约
+	QZCTQY_1(54),//    其中：成套签约
 	XKXHQY(55),//现款现货签约
 	CKXSE(56),//出口销售额
 	ZJHL(57),//资金回笼
-	QYTCNY_2(58),//    其中：天池能源
-	QYXJNY_2(59),//    其中：新疆能源
+	QZTCNY_2(58),//    其中：天池能源
+	QZXJNY_2(59),//    其中：新疆能源
 	BHSCZ(60),//不含税产值
 	RS(61),//人数
 	RJLR(62),//人均利润
@@ -76,8 +76,8 @@ public enum GSZB {
 	FDLWD(73),//发电量（万度）
 	NBQmw(74),//逆变器（MW）
 	MT(75),//煤炭(万吨)
-	QYJEKCL(76),//    其中：将二矿产量
-	QYNLTKCL(77),//    其中：南露天矿产量
+	QZJEKCL(76),//    其中：将二矿产量
+	QZNLTKCL(77),//    其中：南露天矿产量
 	LBD(78),//铝箔（吨）
 	DCYJ(79),//电池组件(MW)
 	svgmvar(80),//SVG（Mvar）
@@ -89,21 +89,21 @@ public enum GSZB {
 	SWDLWD(86),//上网电量（万度）
 	JQKLF(87),//加气块（立方）
 	YGDWQWS(88),//转供电（万千瓦时）
-	QYDLC(89),//    其中：动力厂
-	QYGDJ(90),//    其中：供电局
+	QZDLC(89),//    其中：动力厂
+	QZGDJ(90),//    其中：供电局
 	SJGSF(91),//水井供水（方）
 	YQL(92),//蒸汽量
 	CPCLD(93),//成品产量（吨）
-	QYHJCPCLD(94),//    其中：合金产品产量（吨）
+	QZHJCPCLD(94),//    其中：合金产品产量（吨）
 	YCLD(95),//总产量（吨）
-	QYDYLBCLD(96),//    其中：电子铝箔产量（吨）
+	QZDYLBCLD(96),//    其中：电子铝箔产量（吨）
 	FDYBCLD(97),//非电子箔产量（吨）
 	XBCL(98),//型材产量(吨)
 	JKDL1kv10kvCLkm(99),//架空电缆（1KV、10KV）产量（km）
 	GXLJXCLD(100),//钢芯铝绞线产量（吨）
 	BDXCLkm(101),//布电线产量（km）
 	HCBCLWPM(102),//化成箔产量（万平米）
-	QYYCBWPM(103),//其中：自产箔（万平米）
+	QZYCBWPM(103),//其中：自产箔（万平米）
 	JGBWPM(104),//加工箔（万平米）
 	XL(105),//销量
 	DJGD(106),//多晶硅（吨）
@@ -131,31 +131,31 @@ public enum GSZB {
 	LBSBCBL(128),//铝箔失败成本率（%）
 	DJBSBCBL(129),//电极箔失败成本率（%）
 	GCLYPCLD(130),//高纯铝制品产量（吨）
-	QY4nJYSCPCLD(131),//其中：4N及以上产品产量（吨）
+	QZ4nJYSCPCLD(131),//其中：4N及以上产品产量（吨）
 	_4n6JLKYCCPL(132),//4N6精铝块一次成品率（%）
 	JLGYCCPL(133),//精铝杆一次成品率（%）
 	_4n6JLK13XYSHYppm(134),//4N6精铝块13项元素和值（ppm）
 	SBCBL1(135),//失败成本率1（%）
 	JLYDDH(136),//精铝液电单耗（kwh/吨）
 	LGBYCYHCPL(137),//铝杆棒一次综合成品率（%）
-	QY5154HJGYCCPL(138),//其中：5154合金杆一次成品率（%）
+	QZ5154HJGYCCPL(138),//其中：5154合金杆一次成品率（%）
 	HJGYCCPL(139),//4043&8030&6201合金杆一次成品率（%）
 	GCLGCPYCCPL(140),//高纯铝杆产品一次成品率（%）
 	LBCPYCCPL(141),//铝棒产品一次成品率（%）
 	LDJGPYB99_90YSDJ13XYSFHLEJYS(142),//铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）
 	WBKSL(143),//外部客诉率（%）
-	QYGNKSL(144),//    其中：国内客诉率（%）
+	QZGNKSL(144),//    其中：国内客诉率（%）
 	GWKSL(145),//国外客诉率（%）
 	YLYDDHkwh(146),//原铝液电单耗（kwh/吨）
 	YHCPL(147),//综合成品率（%）
 	WBKSL_1(148),//外部客诉率（%）
-	QYGNKSL_1(149),//其中：国内客诉率（%）
+	QZGNKSL_1(149),//其中：国内客诉率（%）
 	GWKSL_1(150),//    国外客诉率（%）
 	YCBYHFDL(151),//自产箔综合符单率（%）
 	WTJGHCBFDL(152),//委托加工化成箔符单率（%）
 	WBKSL_2(153),//外部客诉率（%）
-	QYGNKSL_2(154),//    其中：国内客诉率（%）
-	QYGWKSL(155),//    其中：国外客诉率（%）
+	QZGNKSL_2(154),//    其中：国内客诉率（%）
+	QZGWKSL(155),//    其中：国外客诉率（%）
 	JBCPL(156),//基材成品率（%）
 	FMPTCPL(157),//粉末喷涂成品率（%）
 	GRCPCPL(158),//隔热产品成品率（%）
@@ -174,7 +174,7 @@ public enum GSZB {
 	WGDDWCBY(171),//外购电单位成本（元/度）
 	YYXLXYLWD(172),//自有线路下站量（万吨）
 	YYXLFYLWD(173),//自有线路发运量（万吨）
-	QYXYWSRWY(174),//其中：新业务收入（万元）
+	QZXYWSRWY(174),//其中：新业务收入（万元）
 	JYYHXSWCL(175),//机组运行小时完成率（%）
 	MLR(176),//毛利润
 	YYDYRLmw(177),//运营电站容量（MW）

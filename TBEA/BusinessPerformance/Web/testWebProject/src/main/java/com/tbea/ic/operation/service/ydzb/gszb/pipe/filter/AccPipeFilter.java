@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.gszb.pipe;
+package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 
 public class AccPipeFilter implements IPipeFilter {
 	protected List<Double> cacheValues;
@@ -132,7 +133,7 @@ public class AccPipeFilter implements IPipeFilter {
 			if (dateStart == null){
 				dateStart = dateEnd = pipe.getDate();
 			}
-			cacheValues = accumulator.compute(dateStart, dateEnd, zbsTmp, filterCompanies(pipe.getCompanies()));
+			cacheValues = accumulator.compute(col, dateStart, dateEnd, zbsTmp, filterCompanies(pipe.getCompanies()));
 			fillZbs(excludeList);
 		}
 	}
@@ -149,4 +150,5 @@ public class AccPipeFilter implements IPipeFilter {
 	protected void updateZb(int row, int zbId, Double[] zbRow) {
 		zbRow[col] = Util.valueOf(zbRow[col]) + cacheValues.get(row);
 	}
+
 }

@@ -24,7 +24,7 @@ class OperationDepartment extends AbstractOrganization {
 				.append(getCompany(CompanyType.GCL, 666)
 						.append(getCompany(CompanyType.JCK, 23))
 						.append(getCompany(CompanyType.GCGS_GCL, 70)))
-				.append(getCompany(CompanyType.ZH, 27)));
+				.append(getCompany(CompanyType.ZHGS, 27)));
 	}
 
 	@Override

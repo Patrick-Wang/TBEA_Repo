@@ -28,7 +28,7 @@ public abstract class ZbfdwhzZBHZStrategy implements ZBHZStrategy {
 		CompanyType.NYCY,
 		CompanyType.GCL,
 		null,//gfhj need to be calculated by program
-		CompanyType.ZH,
+		CompanyType.ZHGS,
 		CompanyType.JT
 	};
 	

@@ -1,10 +1,12 @@
-package com.tbea.ic.operation.service.ydzb.gszb.pipe;
+package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.tbea.ic.operation.common.GSZB;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 
 public class CopyPipeFilter implements IPipeFilter {
 	Map<Integer, List<Integer[]>> copyMap = new HashMap<Integer, List<Integer[]>>();

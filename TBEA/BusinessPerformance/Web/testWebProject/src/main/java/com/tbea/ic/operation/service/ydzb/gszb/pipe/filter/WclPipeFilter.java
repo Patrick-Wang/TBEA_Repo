@@ -1,7 +1,9 @@
-package com.tbea.ic.operation.service.ydzb.gszb.pipe;
+package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 
 
 public class WclPipeFilter implements IPipeFilter {

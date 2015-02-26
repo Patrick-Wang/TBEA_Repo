@@ -2,7 +2,6 @@ package com.tbea.ic.operation.service.ydzb.gszb;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
@@ -27,16 +25,11 @@ import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.NjhzbAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.YjhzbAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.AccSbdPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.CopyPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.acc.CompositeAccumulator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.CompositeConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.StandardConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.SpecialPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.TbzzPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.WclPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.*;
 
 @Service
 @Transactional("transactionManager")
@@ -85,6 +78,45 @@ public class GszbServiceImpl implements GszbService {
 		gsztzbs.add(GSZB.SXFYL.getValue());
 		gsztzbs.add(GSZB.JZCSYL.getValue());
 	}
+	
+	private static List<Integer> zyzbs = new ArrayList<Integer>();
+	static {
+		zyzbs.add(GSZB.LRZE.getValue());
+		zyzbs.add(GSZB.XSSR.getValue());
+		zyzbs.add(GSZB.JYXJXJL.getValue());
+		zyzbs.add(GSZB.YSZK.getValue());
+		zyzbs.add(GSZB.CH.getValue());
+	}
+	
+
+	private static List<Integer> srqyzbs = new ArrayList<Integer>();
+	static {
+		srqyzbs.add(GSZB.XSSR.getValue());
+		srqyzbs.add(GSZB.ZZYSR.getValue());
+		srqyzbs.add(GSZB.GCXMSR.getValue());
+		srqyzbs.add(GSZB.YYSSR.getValue());
+		srqyzbs.add(GSZB.WLMYSR.getValue());
+		//srqyzbs.add(GSZB.DCSR.getValue());
+		srqyzbs.add(GSZB.FWLSR.getValue());
+		srqyzbs.add(GSZB.HTQYE.getValue());
+		srqyzbs.add(GSZB.GJQY.getValue());
+		srqyzbs.add(GSZB.QZDJQY.getValue());
+		srqyzbs.add(GSZB.QZCTQY.getValue());
+		srqyzbs.add(GSZB.GNQY.getValue());
+		srqyzbs.add(GSZB.QZDJQY_1.getValue());
+		srqyzbs.add(GSZB.QZCTQY_1.getValue());
+		//srqyzbs.add(GSZB.X.getValue());
+	}
+	
+	private static List<Integer> topfivezbs = new ArrayList<Integer>();
+	static {
+		zyzbs.add(GSZB.LRZE.getValue());
+		zyzbs.add(GSZB.XSSR.getValue());
+		zyzbs.add(GSZB.JYXJXJL.getValue());
+		zyzbs.add(GSZB.YSZK.getValue());
+		zyzbs.add(GSZB.CH.getValue());
+
+	}
 
 	private static Map<Integer, ZBXX> zbxxMap = new HashMap<Integer, ZBXX>();
 
@@ -109,18 +141,6 @@ public class GszbServiceImpl implements GszbService {
 	}
 
 	
-	private List<Company> getNonSbdCompany(List<Company> companies){
-		Organization org = companyManager.getBMDBOrganization();
-		Company sbd = org.getCompany(CompanyType.SBDCYJT);
-		List<Company> retComps = new ArrayList<Company>();
-		for (Company comp : companies) {
-			if (!sbd.contains(comp)) {
-				retComps.add(comp);
-			}
-		}
-		return retComps;
-	}
-	
 	private List<String[]> makeResult(List<Double[]> gszbs){
 
 		List<String[]> result = new ArrayList<String[]>();
@@ -141,179 +161,141 @@ public class GszbServiceImpl implements GszbService {
 	@Override
 	public List<String[]> getGsztzb(Date date) {
 		Organization org = companyManager.getBMDBOrganization();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(Calendar.MONTH, -(cal.get(Calendar.MONTH) + 1) % 3 + 1);
-		Date seasonStart = Util.toDate(cal);
-		
-		cal.setTime(seasonStart);
-		cal.add(Calendar.YEAR, -1);
-		Date qntqSeason = Util.toDate(cal);
-		
-		cal.setTime(date);
-		cal.add(Calendar.YEAR, -1);
-		Date qntq = Util.toDate(cal);
-		
-		cal.setTime(date);
-		cal.set(Calendar.MONTH, 0);
-		Date firstMonth = Util.toDate(cal);
-		
-		cal.setTime(qntq);
-		cal.set(Calendar.MONTH, 0);
-		Date qnfirstMonth = Util.toDate(cal);
-
-		List<Company> allCompanies = filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys());
-		List<Company> nonSbdCompanies = getNonSbdCompany(allCompanies);
-		List<Company> sbdCompanies = org.getCompany(CompanyType.SBDCYJT).getSubCompanys();
-		
-		List<Integer> specialZbs = new ArrayList<Integer>();
-		specialZbs.add(GSZB.YSZK.getValue());
-		specialZbs.add(GSZB.CH.getValue());
-		specialZbs.add(GSZB.RJLR.getValue());
-		specialZbs.add(GSZB.RJSR.getValue());
-		specialZbs.add(GSZB.SXFYL.getValue());
-		specialZbs.add(GSZB.RS.getValue());
-		
-		GszbPipe pipe = new GszbPipe(gsztzbs, 15, allCompanies, date);
-		
-		IAccumulator sjAcc = new SjzbAccumulator(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao);
-		IAccumulator yjhAcc = new YjhzbAccumulator(ydjhzbDao);
-		IAccumulator njhAcc = new NjhzbAccumulator(ndjhzbDao);
-		
-		WclPipeFilter wclFilter = new WclPipeFilter();
-		TbzzPipeFilter tbzzFilter = new TbzzPipeFilter();
-		CopyPipeFilter copyFilter = new CopyPipeFilter();
-		
-			// 全年计划
-		pipe.add(new AccPipeFilter(njhAcc, 0)
-				.includeCompanies(allCompanies)
-				.includeZbs(gsztzbs)
-				.excludeZbs(specialZbs)
-				.include(GSZB.RS)
-				.include(GSZB.YSZK)
-				.include(GSZB.CH))
-				
-			// 当月计划
-			.add(new AccPipeFilter(yjhAcc, 1)
-				.includeCompanies(allCompanies)
-				.includeZbs(gsztzbs)
-				.excludeZbs(specialZbs)
-				.include(GSZB.RS))
-			.add(new AccPipeFilter(yjhAcc, 1)
-				.includeCompanies(nonSbdCompanies)
-				.include(GSZB.YSZK)
-				.include(GSZB.CH))
-			.add(new AccSbdPipeFilter(yjhAcc, 1)
-				.includeCompanies(sbdCompanies)
-				.include(GSZB.YSZK)
-				.include(GSZB.CH))
-
-			// 当月实际
-			.add(new AccPipeFilter(sjAcc, 2)
-				.includeCompanies(allCompanies)
-				.includeZbs(gsztzbs)
-				.excludeZbs(specialZbs)
-				.include(GSZB.YSZK)
-				.include(GSZB.CH)
-				.include(GSZB.RS))
-			
-			// 计划完成率
-			.add(wclFilter
-				.add(3, 2, 1))
-			
-			// 去年同期	
-			.add(new AccPipeFilter(sjAcc, 4, qntq)
-				.includeCompanies(allCompanies)
-				.includeZbs(gsztzbs)
-				.excludeZbs(specialZbs)
-				.include(GSZB.YSZK)
-				.include(GSZB.CH)
-				.include(GSZB.RS))
-			
-			// 同比增幅
-			.add(tbzzFilter
-				.add(5, 2, 4))
-				
-			// 季度计划
-			.add(new AccPipeFilter(yjhAcc, 6, seasonStart, date)
-				.includeCompanies(allCompanies)
-				.includeZbs(gsztzbs)
-				.excludeZbs(specialZbs))
-			.add(copyFilter
-				.add(GSZB.CH, 1, 6)
-				.add(GSZB.YSZK, 1, 6)
-				.add(GSZB.RS, 1, 6))
-				
-			// 季度累计
-			.add(new AccPipeFilter(sjAcc, 7, seasonStart, date)
-				.includeCompanies(allCompanies)
-				.includeZbs(gsztzbs)
-				.excludeZbs(specialZbs))
-			.add(copyFilter
-				.add(GSZB.CH, 2, 7)
-				.add(GSZB.YSZK, 2, 7)
-				.add(GSZB.RS, 2, 7))
-				
-			// 季度计划完成率
-			.add(wclFilter
-				.add(8, 7, 6))
-				
-			// 季度去年同期
-			.add(new AccPipeFilter(sjAcc, 9, qntqSeason, qntq)
-				.includeCompanies(allCompanies)
-				.includeZbs(gsztzbs)
-				.excludeZbs(specialZbs))
-			.add(new AccPipeFilter(sjAcc, 9, qntq)
-				.includeCompanies(allCompanies)
-				.include(GSZB.YSZK)
-				.include(GSZB.CH)
-				.include(GSZB.RS))
-			
-			 // 同比增幅
-			.add(tbzzFilter
-				.add(10, 7, 9))
-	
-			// 年度累计
-			.add(new AccPipeFilter(sjAcc, 11, firstMonth, date)
-				.includeCompanies(allCompanies)
-				.includeZbs(gsztzbs)
-				.excludeZbs(specialZbs))
-			.add(copyFilter
-				.add(GSZB.CH, 2, 11)
-				.add(GSZB.YSZK, 2, 11)
-				.add(GSZB.RS, 2, 11))
-			
-		
-			// 累计计划完成率
-			.add(wclFilter
-				.add(12, 11, 0))
-			
-			// 去年同期
-			.add(new AccPipeFilter(sjAcc, 13, qnfirstMonth, qntq)
-				.includeCompanies(allCompanies)
-				.includeZbs(gsztzbs)
-				.excludeZbs(specialZbs))
-			.add(copyFilter
-				.add(GSZB.CH, 9, 13)
-				.add(GSZB.YSZK, 9, 13)
-				.add(GSZB.RS, 9, 13))
-	
-			// 同比增幅
-			.add(tbzzFilter
-				.add(14, 11, 13))
-
-			//添加特殊指标过滤器
-			.add(new SpecialPipeFilter()
-				.exclude(3)// 计划完成率
-				.exclude(5)// 同比增幅
-				.exclude(8)// 季度计划完成率
-				.exclude(10)// 同比增幅
-				.exclude(12)// 累计计划完成率
-				.exclude(14))// 同比增幅
-			.add(tbzzFilter)
-			.add(wclFilter);
-		
+		GszbPipe pipe = new GszbPipe(gsztzbs, filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys()), date, new StandardConfigurator(ndjhzbDao, ydjhzbDao,
+				ydzbztDao, sjzbDao, yj20zbDao,
+				yj28zbDao, zbxxDao, companyManager));	
 		return makeResult(pipe.getGszb());
+	}
+	
+	@Override
+	public List<String[]> getGcyzb(Date date) {
+		Organization org = companyManager.getBMDBOrganization();
+		IPipeConfigurator config = new StandardConfigurator(ndjhzbDao, ydjhzbDao,
+				ydzbztDao, sjzbDao, yj20zbDao,
+				yj28zbDao, zbxxDao, companyManager);
+		
+		GszbPipe pipe = new GszbPipe(zyzbs, filterCompany(org.getCompany(CompanyType.SBDCYJT).getSubCompanys()), date, config);
+		List<Double[]> sbdZbs = pipe.getGszb();
+		
+		pipe = new GszbPipe(zyzbs, filterCompany(org.getCompany(CompanyType.XNYSYB).getSubCompanys()), date, config);
+		List<Double[]> xnyZbs = pipe.getGszb();
+		
+		pipe = new GszbPipe(zyzbs, filterCompany(org.getCompany(CompanyType.NYSYB).getSubCompanys()), date, config);
+		List<Double[]> nyZbs = pipe.getGszb();
+		
+		pipe = new GszbPipe(zyzbs, org.getCompany(CompanyType.JCKGS_SYB).getSubCompanys(), date, config);
+		List<Double[]> jckZbs = pipe.getGszb();
+		
+		pipe = new GszbPipe(zyzbs,  org.getCompany(CompanyType.GJGCGS_SYB).getSubCompanys(), date, config);
+		List<Double[]> gjgcZbs = pipe.getGszb();
+		
+		pipe = new GszbPipe(zyzbs, org.getCompany(CompanyType.ZHGS_SYB).getSubCompanys(), date, config);
+		List<Double[]> zhgsZbs = pipe.getGszb();
+		
+		
+		CompositeAccumulator acc = new CompositeAccumulator();
+		for (int i = 0, len = zyzbs.size(); i < len; ++i){
+			acc.addSrc(org.getCompany(CompanyType.SBDCYJT), zyzbs.get(i), sbdZbs.get(i));
+			acc.addSrc(org.getCompany(CompanyType.XNYSYB), zyzbs.get(i), xnyZbs.get(i));
+			acc.addSrc(org.getCompany(CompanyType.NYSYB), zyzbs.get(i), nyZbs.get(i));
+			acc.addSrc(org.getCompany(CompanyType.JCKGS_SYB), zyzbs.get(i), jckZbs.get(i));
+			acc.addSrc(org.getCompany(CompanyType.GJGCGS_SYB), zyzbs.get(i), gjgcZbs.get(i));
+		}
+		
+		List<Company> gfhj = new ArrayList<Company>();
+		gfhj.add(org.getCompany(CompanyType.SBDCYJT));
+		gfhj.add(org.getCompany(CompanyType.XNYSYB));
+		gfhj.add(org.getCompany(CompanyType.NYSYB));
+		gfhj.add(org.getCompany(CompanyType.JCKGS_SYB));
+		gfhj.add(org.getCompany(CompanyType.GJGCGS_SYB));
+		config = new CompositeConfigurator(acc);
+		pipe = new GszbPipe(zyzbs, gfhj, date, config);
+		List<Double[]> gfhjZbs = pipe.getGszb();
+	
+		
+		acc = new CompositeAccumulator();
+		for (int i = 0, len = zyzbs.size(); i < len; ++i){
+			acc.addSrc(org.getCompany(CompanyType.GFGS), zyzbs.get(i), gfhjZbs.get(i));
+			acc.addSrc(org.getCompany(CompanyType.ZHGS_SYB), zyzbs.get(i), zhgsZbs.get(i));
+		}
+		
+		List<Company> jthj = new ArrayList<Company>();
+		jthj.add(org.getCompany(CompanyType.GFGS));
+		jthj.add(org.getCompany(CompanyType.ZHGS_SYB));
+		config = new CompositeConfigurator(acc);
+		pipe = new GszbPipe(zyzbs, jthj, date, config);
+		List<Double[]> jthjZbs = pipe.getGszb();
+		
+		List<String[]> result = new ArrayList<String[]>();
+		for (int i = 0; i < 40; ++i){
+			result.add(new String[config.getColumnCount()]);
+		}
+		
+		makeResult(result, sbdZbs, 0);
+		makeResult(result, xnyZbs, 1);
+		makeResult(result, nyZbs, 2);
+		makeResult(result, jckZbs, 3);
+		makeResult(result, gjgcZbs, 4);
+		makeResult(result, gfhjZbs, 5);
+		makeResult(result, zhgsZbs, 6);
+		makeResult(result, jthjZbs, 7);
+		
+		return result;
+	}
+
+	private void makeResult(List<String[]> result, List<Double[]> zbs, int row) {
+		for (int i = 0; i < zbs.size(); ++i){
+			for (int j = 0; j < zbs.get(i).length; ++j){
+				result.get(i * 8 + row)[j] = zbs.get(i)[j] + "";
+			}
+		}
+	}
+
+	@Override
+	public List<String[]> getCompanyTop5zb(GSZB gszb, Date date) {
+		Organization org = companyManager.getBMDBOrganization();
+		IPipeConfigurator config = new StandardConfigurator(ndjhzbDao, ydjhzbDao,
+				ydzbztDao, sjzbDao, yj20zbDao,
+				yj28zbDao, zbxxDao, companyManager);
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.SBGS).getSubCompanys()), date, config);
+//		List<Double[]> sbgsZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.HBGS).getSubCompanys()), date, config);
+//		List<Double[]> hbgsZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.XBGS).getSubCompanys()), date, config);
+//		List<Double[]> xbgsZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.LLGS).getSubCompanys()), date, config);
+//		List<Double[]> llgsZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.XLC).getSubCompanys()), date, config);
+//		List<Double[]> xlcZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.DLGS).getSubCompanys()), date, config);
+//		List<Double[]> dlZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.XTNYGS).getSubCompanys()), date, config);
+//		List<Double[]> xtnyZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.XNYGS).getSubCompanys()), date, config);
+//		List<Double[]> xnyZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.TCNY).getSubCompanys()), date, config);
+//		List<Double[]> tcnyZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.NDGS).getSubCompanys()), date, config);
+//		List<Double[]> ndgsZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.JCKGS_SYB).getSubCompanys()), date, config);
+//		List<Double[]> jckZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.GJGCGS_SYB).getSubCompanys()), date, config);
+//		List<Double[]> gjgcZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.ZHGS_SYB).getSubCompanys()), date, config);
+//		List<Double[]> zhgsZbs = pipe.getGszb();
+		return null;
 	}
 
 }

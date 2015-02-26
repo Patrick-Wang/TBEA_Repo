@@ -6,25 +6,27 @@ module gcy_zbhz {
 
     class JQGridAssistantFactory {
 
-        public static createTable(gridName: string, month: number): JQTable.JQGridAssistant {
+      public static createTable(gridName: string, month: number): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
-                new JQTable.Node("产业", "cy", true, JQTable.TextAlign.Left),
-                new JQTable.Node("全年", "qn"),
-                new JQTable.Node("当期", "dq")
-                    .append(new JQTable.Node("月度计划", "yjh"))
-                    .append(new JQTable.Node("月度完成", "ywc"))
-                    .append(new JQTable.Node("月计划完成率", "yjhwcl", true, 220))
-                    .append(new JQTable.Node("季度计划", "jdjh"))
-                    .append(new JQTable.Node("季度累计", "jdlj"))
-                    .append(new JQTable.Node("季度完成率", "jdwcl"))
-                    .append(new JQTable.Node("年度累计", "ndlj"))
-                    .append(new JQTable.Node("累计完成率", "ljwcl")),
-                new JQTable.Node("去年同期", "qntq_1")
-                    .append(new JQTable.Node("去年同期", "qntq"))
-                    .append(new JQTable.Node("同比增长", "tbzz"))
-                    .append(new JQTable.Node("去年同期累计", "qntqlj", true, 200))
-                    .append(new JQTable.Node("同比增长", "tbzz_1"))
+                new JQTable.Node("全年计划", "qnjh"),
+                new JQTable.Node("月度", "yd")
+                    .append(new JQTable.Node("当月计划", "y1"))
+                    .append(new JQTable.Node("当月实际", "y2"))
+                    .append(new JQTable.Node("计划完成率", "y3"))
+                    .append(new JQTable.Node("去年同期", "y4"))
+                    .append(new JQTable.Node("同比增幅", "y5")),
+                new JQTable.Node("季度", "jd")
+                    .append(new JQTable.Node("季度计划", "j1"))
+                    .append(new JQTable.Node("季度累计", "j2"))
+                    .append(new JQTable.Node("季度计划完成率", "j3"))
+                    .append(new JQTable.Node("去年同期", "j4"))
+                    .append(new JQTable.Node("同比增幅", "j5")),
+                new JQTable.Node("年度", "nd")
+                    .append(new JQTable.Node("年度累计", "n1"))
+                    .append(new JQTable.Node("累计计划完成率", "n2"))
+                    .append(new JQTable.Node("去年同期", "n3"))
+                    .append(new JQTable.Node("同比增幅", "n4")),
             ], gridName);
         }
     }
@@ -76,8 +78,8 @@ module gcy_zbhz {
             tableAssist.mergeRow(0);
            
             for (var i = 0; i < 5; ++i) {
-                tableAssist.setRowBgColor(i * 7 + 4, 183, 222, 232);
-                tableAssist.setRowBgColor(i * 7 + 6, 183, 222, 232);
+                tableAssist.setRowBgColor(i * 8 + 5, 183, 222, 232);
+                tableAssist.setRowBgColor(i * 8 + 7, 183, 222, 232);
             }
 
 
@@ -85,35 +87,40 @@ module gcy_zbhz {
                 ["报表利润", "输变电产业"],
                 ["报表利润", "新能源产业"],
                 ["报表利润", "能源产业"],
-                ["报表利润", "工程类"],
+                ["报表利润", "进出口公司"],
+                ["报表利润", "国际工程公司"],
                 ["报表利润", "股份合计"],
                 ["报表利润", "众和公司"],
                 ["报表利润", "集团合计"],
                 ["销售收入", "输变电产业"],
                 ["销售收入", "新能源产业"],
                 ["销售收入", "能源产业"],
-                ["销售收入", "工程类"],
+                ["销售收入", "进出口公司"],
+                ["销售收入", "国际工程公司"],
                 ["销售收入", "股份合计"],
                 ["销售收入", "众和公司"],
                 ["销售收入", "集团合计"],
                 ["现金流", "输变电产业"],
                 ["现金流", "新能源产业"],
                 ["现金流", "能源产业"],
-                ["现金流", "工程类"],
+                ["现金流", "进出口公司"],
+                ["现金流", "国际工程公司"],
                 ["现金流", "股份合计"],
                 ["现金流", "众和公司"],
                 ["现金流", "集团合计"],
                 ["应收账款", "输变电产业"],
                 ["应收账款", "新能源产业"],
                 ["应收账款", "能源产业"],
-                ["应收账款", "工程类"],
+                ["应收账款", "进出口公司"],
+                ["应收账款", "国际工程公司"],
                 ["应收账款", "股份合计"],
                 ["应收账款", "众和公司"],
                 ["应收账款", "集团合计"],
                 ["存 货", "输变电产业"],
                 ["存 货", "新能源产业"],
                 ["存 货", "能源产业"],
-                ["存 货", "工程类"],
+                ["存 货", "进出口公司"],
+                ["存 货", "国际工程公司"],
                 ["存 货", "股份合计"],
                 ["存 货", "众和公司"],
                 ["存 货", "集团合计"]];

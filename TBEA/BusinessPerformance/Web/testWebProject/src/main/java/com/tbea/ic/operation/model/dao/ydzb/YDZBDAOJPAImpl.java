@@ -47,7 +47,7 @@ public class YDZBDAOJPAImpl implements YDZBDao {
 		if (company.getType() == CompanyType.JT) {
 			List<Company> cys = company.getLeaves();
 			for (int i = 0; i < cys.size(); ++i) {
-				if (cys.get(i).getType() != CompanyType.ZH) {
+				if (cys.get(i).getType() != CompanyType.ZHGS) {
 					query += " or y.qybh = " + cys.get(i).getId();
 				}
 			}
