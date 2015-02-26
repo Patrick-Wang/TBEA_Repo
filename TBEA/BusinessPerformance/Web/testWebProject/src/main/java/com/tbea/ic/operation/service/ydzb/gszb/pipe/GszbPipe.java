@@ -25,15 +25,22 @@ public class GszbPipe {
 		}
 	}
 	
+	private static List<Integer> addzb(List<Integer> zbIds, Integer zb){
+		zbIds.add(zb);
+		return zbIds;
+	}
+	
+	private static List<Company> addComp(List<Company> comps, Company comp){
+		comps.add(comp);
+		return comps;
+	}
+	
 	public GszbPipe(List<Integer> zbIds, Company comp, Date date, IPipeConfigurator pipeConfig) {
-		this(zbIds, new ArrayList<Company>(), date, pipeConfig);
-		this.companies.add(comp);
+		this(zbIds, addComp(new ArrayList<Company>(), comp), date, pipeConfig);
 	}
 	
 	public GszbPipe(Integer zb, Company comp, Date date, IPipeConfigurator pipeConfig) {
-		this(new ArrayList<Integer>(), new ArrayList<Company>(), date, pipeConfig);
-		this.companies.add(comp);
-		this.zbIds.add(zb);
+		this(addzb(new ArrayList<Integer>(), zb), addComp(new ArrayList<Company>(), comp), date, pipeConfig);
 	}
 	
 	public GszbPipe(Integer zb, List<Company> sbdhj, Date date,
