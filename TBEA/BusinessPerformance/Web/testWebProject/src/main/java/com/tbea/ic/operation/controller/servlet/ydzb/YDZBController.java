@@ -239,7 +239,7 @@ public class YDZBController {
 		
 		if (2 == iMonth % 3)
 		{
-			
+			hzb_zbhz_prediction = JSONArray.fromObject(gszbService.getSecondSeasonPredictionZBsOverview(d)).toString().replace("null", "\"--\"");
 		}
 		//String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
 		

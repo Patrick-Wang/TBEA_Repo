@@ -110,7 +110,7 @@ var hzb_zbhz_prediciton;
                 //                    cellsubmit: 'clientArray',
                 //                    cellEdit: true,
                 height: '100%',
-                width: 1200,
+                width: 1300,
                 shrinkToFit: true,
                 rowNum: 100,
                 autoScroll: true

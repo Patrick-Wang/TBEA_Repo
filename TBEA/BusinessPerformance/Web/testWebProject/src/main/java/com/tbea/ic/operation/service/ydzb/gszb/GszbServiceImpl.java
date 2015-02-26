@@ -32,6 +32,7 @@ import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.CompositeConfig
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.FirstSeasonPredictionConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.JDZBMYConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.SecondSeasonPredictionConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.SrqyConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.StandardConfigurator;
 
@@ -432,6 +433,15 @@ public class GszbServiceImpl implements GszbService {
 	public List<String[]> getFirstSeasonPredictionZBsOverview(Date date) {
 		Organization org = companyManager.getBMDBOrganization();
 		GszbPipe pipe = new GszbPipe(gsztzbs, filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys()), date, new FirstSeasonPredictionConfigurator(ndjhzbDao, ydjhzbDao,
+				ydzbztDao, sjzbDao, yj20zbDao,
+				yj28zbDao, zbxxDao, companyManager));	
+		return makeResult(gsztzbs, pipe.getGszb());
+	}
+	
+	@Override
+	public List<String[]> getSecondSeasonPredictionZBsOverview(Date date) {
+		Organization org = companyManager.getBMDBOrganization();
+		GszbPipe pipe = new GszbPipe(gsztzbs, filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys()), date, new SecondSeasonPredictionConfigurator(ndjhzbDao, ydjhzbDao,
 				ydzbztDao, sjzbDao, yj20zbDao,
 				yj28zbDao, zbxxDao, companyManager));	
 		return makeResult(gsztzbs, pipe.getGszb());
