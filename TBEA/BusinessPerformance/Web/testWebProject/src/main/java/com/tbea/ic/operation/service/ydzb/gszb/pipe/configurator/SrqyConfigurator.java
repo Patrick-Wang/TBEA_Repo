@@ -55,6 +55,17 @@ public class SrqyConfigurator implements IPipeConfigurator {
 		specialZbs.add(zhgsQyId);//众和公司签约
 	}
 	
+	public static String getSpecialZbName(Integer zb){
+		switch(zb){
+		case xnycyQyId:
+			return "新能源产业签约";
+		case nycyQyId:
+			return "能源产业签约";
+		case zhgsQyId:
+			return "众和公司签约";
+		}
+		return null;
+	}
 
 	public static List<Integer> getSpecialZbs(){
 		return specialZbs;

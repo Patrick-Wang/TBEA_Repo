@@ -3,6 +3,7 @@ package com.tbea.ic.operation.service.ydzb.gszb;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -131,13 +132,27 @@ public class GszbServiceImpl implements GszbService {
 	}
 	
 
-	private static Map<Integer, ZBXX> zbxxMap = new HashMap<Integer, ZBXX>();
+	private static Map<Integer, ZBXX> zbxxMap = new Hashtable<Integer, ZBXX>();
 
 	private ZBXX getZbxx(Integer zbId) {
 		if (zbxxMap.isEmpty()) {
-			List<ZBXX> zbxxs = zbxxDao.getZbs(gsztzbs);
+			
+			List<Integer> zbs = new ArrayList<Integer>();
+			zbs.addAll(gsztzbs);
+			zbs.addAll(srqyzbs);
+			
+			List<ZBXX> zbxxs = zbxxDao.getZbs(zbs);
 			for (ZBXX zbxx : zbxxs) {
 				zbxxMap.put(zbxx.getId(), zbxx);
+			}
+			
+			zbs = SrqyConfigurator.getSpecialZbs();
+			ZBXX zbxx = null;
+			for (int i = 0; i < zbs.size(); ++i){
+				zbxx = new ZBXX();
+				zbxx.setId(zbs.get(i));
+				zbxx.setName(SrqyConfigurator.getSpecialZbName(zbs.get(i)));
+				zbxxMap.put(zbs.get(i), zbxx);
 			}
 		}
 		return zbxxMap.get(zbId);
@@ -154,13 +169,13 @@ public class GszbServiceImpl implements GszbService {
 	}
 
 	
-	private List<String[]> makeResult(List<Double[]> gszbs){
+	private List<String[]> makeResult(List<Integer> zbs, List<Double[]> gszbs){
 
 		List<String[]> result = new ArrayList<String[]>();
-		for (int i = 0, len = gsztzbs.size(); i < len; ++i) {
-			String[] zbRow = new String[16];
+		for (int i = 0, len = zbs.size(); i < len; ++i) {
 			Double[] gszbRow = gszbs.get(i);
-			zbRow[0] = getZbxx(gsztzbs.get(i)).getName();
+			String[] zbRow = new String[gszbRow.length + 1];
+			zbRow[0] = getZbxx(zbs.get(i)).getName();
 			for (int j = zbRow.length - 1; j > 0; --j) {
 				if (null != gszbRow[j - 1]) {
 					zbRow[j] = gszbRow[j - 1] + "";
@@ -179,7 +194,7 @@ public class GszbServiceImpl implements GszbService {
 		GszbPipe pipe = new GszbPipe(gsztzbs, filterCompany(comps), date, new StandardConfigurator(ndjhzbDao, ydjhzbDao,
 				ydzbztDao, sjzbDao, yj20zbDao,
 				yj28zbDao, zbxxDao, companyManager));	
-		return makeResult(pipe.getGszb());
+		return makeResult(gsztzbs, pipe.getGszb());
 	}
 	
 	@Override
@@ -256,8 +271,7 @@ public class GszbServiceImpl implements GszbService {
 		List<Company> comps = org.getCompany(CompanyType.GFGS).getSubCompanys();
 		comps.add(org.getCompany(CompanyType.ZHGS_SYB));
 		GszbPipe pipe = new GszbPipe(srqyzbs, filterCompany(comps), date, config);
-		List<Double[]> zbs = pipe.getGszb();
-		return null;
+		return makeResult(srqyzbs, pipe.getGszb());
 	}
 
     //Get Top 5 indexes including "利润，存货、现金流、应收、收入" 

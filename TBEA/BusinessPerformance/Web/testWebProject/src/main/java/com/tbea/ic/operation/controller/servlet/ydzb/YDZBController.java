@@ -2,7 +2,9 @@ package com.tbea.ic.operation.controller.servlet.ydzb;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -46,12 +48,14 @@ public class YDZBController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
 		String hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d)).toString().replace("null", "\"--\"");
-		gszbService.getSrqy(d);
+		//List<String[]> ret = gszbService.getSrqy(d);
 		return hzb_zbhz.getBytes("utf-8");
 	}
 	
+
+	
 	@RequestMapping(value = "hzb_zbhz.do", method = RequestMethod.GET)
-	public ModelAndView getHzb_zbhz(HttpServletRequest request,
+	public ModelAndView getGszb_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -59,7 +63,6 @@ public class YDZBController {
 		dateSel.select(map);
 		return new ModelAndView("hzb_zbhz", map);
 	}
-	
 	@RequestMapping(value = "gcy_zbhz_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getGcy_zbhz_update( HttpServletRequest request,
 			HttpServletResponse response) {
