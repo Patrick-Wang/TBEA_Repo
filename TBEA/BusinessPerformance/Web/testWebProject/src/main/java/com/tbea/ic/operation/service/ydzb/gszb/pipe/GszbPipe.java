@@ -19,7 +19,7 @@ public class GszbPipe {
 		this.zbIds = zbIds;
 		this.date = date;
 		pipeConfig.onConfiguring(this);
-		int size = pipeConfig.columnCount();
+		int size = pipeConfig.getColumnCount();
 		for (int i = 0; i < zbIds.size(); ++i){
 			data.add(new Double[size]);
 		}

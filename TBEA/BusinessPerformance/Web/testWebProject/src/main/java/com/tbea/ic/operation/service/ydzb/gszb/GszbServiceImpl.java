@@ -228,7 +228,7 @@ public class GszbServiceImpl implements GszbService {
 		
 		List<String[]> result = new ArrayList<String[]>();
 		for (int i = 0; i < 40; ++i){
-			result.add(new String[config.columnCount()]);
+			result.add(new String[config.getColumnCount()]);
 		}
 		
 		makeResult(result, sbdZbs, 0);

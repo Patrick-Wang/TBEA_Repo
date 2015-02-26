@@ -213,7 +213,7 @@ public class StandardConfigurator implements IPipeConfigurator {
 	}
 
 	@Override
-	public int columnCount() {
+	public int getColumnCount() {
 		return 15;
 	}
 
