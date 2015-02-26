@@ -10,7 +10,12 @@ public class DateHelper {
 	private Date qntqJdStart;
 	private Date firstMonth;
 	private Date qnfirstMonth;
+	private Date secondMonthinSeason;
+	private Date lastMonthinSeason;
+	private Date qntqJdEnd;
 	
+
+
 	public DateHelper(Date date) {
 		this.cur = date;
 		Calendar cal = Calendar.getInstance();
@@ -21,6 +26,10 @@ public class DateHelper {
 		cal.setTime(jdStart);
 		cal.add(Calendar.YEAR, -1);
 		qntqJdStart = Util.toDate(cal);
+		
+		cal.setTime(qntqJdStart);
+		cal.add(Calendar.MONTH, 2);
+		qntqJdEnd =  Util.toDate(cal);
 		
 		cal.setTime(date);
 		cal.add(Calendar.YEAR, -1);
@@ -33,8 +42,27 @@ public class DateHelper {
 		cal.setTime(qntq);
 		cal.set(Calendar.MONTH, 0);
 		qnfirstMonth = Util.toDate(cal);
+		
+		cal.setTime(date);
+		cal.add(Calendar.MONTH, 1);
+		secondMonthinSeason = Util.toDate(cal);
+		
+		cal.setTime(date);
+		cal.add(Calendar.MONTH, 2);
+		lastMonthinSeason = Util.toDate(cal);
 	}
 
+	public Date getSecondMonthinSeason() {
+		return secondMonthinSeason;
+	}
+
+	public Date getLastMonthinSeason() {
+		return lastMonthinSeason;
+	}
+	
+	public Date getQntqJdEnd() {
+		return qntqJdEnd;
+	}
 	/**
 	 * @return the cur
 	 */

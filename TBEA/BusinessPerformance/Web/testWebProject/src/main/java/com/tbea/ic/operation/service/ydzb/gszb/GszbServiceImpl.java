@@ -221,7 +221,7 @@ public class GszbServiceImpl implements GszbService {
 			}
 		}
 	}
-
+	//Get Top 5 indexes including "利润，存货、现金流、应收、收入" 
 	@Override
 	public List<String[]> getCompanyTop5zb(GSZB gsTop5zb, Date date) {
 		Organization org = companyManager.getBMDBOrganization();
@@ -373,6 +373,15 @@ public class GszbServiceImpl implements GszbService {
 		makeResult(result, zhgsZbs, 17);
 		makeResult(result, jtgshjZbs, 18);
 		return result;
+	}
+
+	@Override
+	public List<String[]> getFirstSeasonPredictionZBsOverview(Date date) {
+		Organization org = companyManager.getBMDBOrganization();
+		GszbPipe pipe = new GszbPipe(gsztzbs, filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys()), date, new StandardConfigurator(ndjhzbDao, ydjhzbDao,
+				ydzbztDao, sjzbDao, yj20zbDao,
+				yj28zbDao, zbxxDao, companyManager));	
+		return null;
 	}
 
 }

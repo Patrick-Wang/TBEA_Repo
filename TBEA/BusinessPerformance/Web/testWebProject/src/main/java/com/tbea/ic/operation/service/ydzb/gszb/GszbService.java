@@ -9,4 +9,5 @@ public interface GszbService {
 
 	List<String[]> getGcyzb(Date date);
 	public List<String[]> getCompanyTop5zb(GSZB gszb, Date date);
+	public List<String[]> getFirstSeasonPredictionZBsOverview(Date date);
 }

@@ -215,4 +215,25 @@ public class YDZBController {
 
 		return new ModelAndView("zbhz_overview", map);
 	}
+	
+	//整体指标预测
+	@RequestMapping(value = "hzb_zbhz_prediction_update.do", method = RequestMethod.GET)
+	public  @ResponseBody String gethzb_zbhz_prediction_update(HttpServletRequest request,
+			HttpServletResponse response) {
+		Date d = DateSelection.getDate(request);
+		//String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
+		String gszb = request.getParameter("zb");
+		String gdw_zbhz = JSONArray.fromObject(gszbService.getCompanyTop5zb(GSZB.valueOf(Integer.valueOf(gszb)), d)).toString().replace("null", "\"--\"");
+		return gdw_zbhz;
+	}
+	
+	@RequestMapping(value = "hzb_zbhz_prediction.do", method = RequestMethod.GET)
+	public ModelAndView gethzb_zbhz_prediction(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		DateSelection dateSel = new DateSelection();
+		dateSel.select(map);
+		return new ModelAndView("hzb_zbhz_Prediction", map);
+	}
 }
