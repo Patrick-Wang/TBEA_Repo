@@ -14,7 +14,7 @@ public class AccSbdPipeFilter extends AccPipeFilter {
 		if (null == month){
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(dateStart);
-			month = cal.get(Calendar.MONTH);
+			month = cal.get(Calendar.MONTH) + 1;
 		}
 		zbRow[col] = Util.valueOf(zbRow[col]) + cacheValues.get(row) / month * 12 * yszb;
 	}

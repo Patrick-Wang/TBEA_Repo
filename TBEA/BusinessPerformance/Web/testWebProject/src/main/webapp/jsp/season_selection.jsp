@@ -6,7 +6,8 @@
 
 <script type="text/javascript">
 	instance.onYearSelected(${year});
-
+	instance.onSeasonChange(1);
+	instance.onMonthDelegateSelected(1);
 </script>
 
 
@@ -31,7 +32,7 @@
 		</td>
 
 		<td style="padding-right:5px">
-		<select id="month" onchange="instance.onMonthChange(this.value)"style="width: 125px;">
+		<select id="month" onchange="instance.onMonthDelegateSelected(this.value)"style="width: 125px;">
 				<option value="1" selected="selected">首月</option>
 				<option value="2">次月</option>
 				<option value="3">末月</option>

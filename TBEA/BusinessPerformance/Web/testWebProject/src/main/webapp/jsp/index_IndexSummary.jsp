@@ -47,7 +47,7 @@
 </c:if>
 
 
-<c:if test="${CoprAuth}">
+
 <div>
 	<h3>
 		经营指标预测情况<a name="zbPrediction"> </a>
@@ -55,7 +55,7 @@
 	<div class="section">
 		<div class="thumb3">
 			<ul class="slides">
-				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
+				<li><a href="../ydzb/hzb_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>整体指标预测情况</strong></span></a>
 				</li>
 				<!--/li-->
@@ -87,7 +87,7 @@
 		</div>
 	</div>
 </div>
-</c:if>
+
 
 
 <div>

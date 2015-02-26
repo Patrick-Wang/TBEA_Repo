@@ -7,7 +7,7 @@ var hzb_zbhz_prediciton;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                new JQTable.Node("指标", "zb", true, 0 /* Left */),
                 new JQTable.Node("年度计划", "ndjh"),
                 new JQTable.Node("季度计划", "jdjh"),
                 new JQTable.Node("当月完成", "dywc").append(new JQTable.Node("本月计划值", "y1")).append(new JQTable.Node("当月预计值", "y2")).append(new JQTable.Node("计划完成率", "y3")).append(new JQTable.Node("去年同期", "y4")).append(new JQTable.Node("同比增幅", "y5")),
@@ -20,7 +20,7 @@ var hzb_zbhz_prediciton;
     var View = (function () {
         function View() {
             this.mData = [];
-            this.mDataSet = new Util.Ajax("hzb_zbhz_update.do");
+            this.mDataSet = new Util.Ajax("hzb_zbhz_prediction_update.do");
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -38,7 +38,7 @@ var hzb_zbhz_prediciton;
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
         };
-        View.prototype.onSeasonSelected = function (season) {
+        View.prototype.onSeasonChange = function (season) {
             this.mSeason = parseInt(season);
         };
         View.prototype.onMonthDelegateSelected = function (month) {

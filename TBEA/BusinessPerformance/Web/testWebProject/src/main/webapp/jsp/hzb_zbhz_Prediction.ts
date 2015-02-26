@@ -48,7 +48,7 @@ module hzb_zbhz_prediciton {
         private mDelegateMonth: number;
        
         private mData: Array<string[]> = [];
-        private mDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_update.do");
+        private mDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_prediction_update.do");
         private mTableId : string;
         public init(tableId: string, year: number): void {
             this.mYear = year;
@@ -63,7 +63,7 @@ module hzb_zbhz_prediciton {
         	this.mYear = year;
         }
         
-        public onSeasonSelected(season : string){
+        public onSeasonChange(season : string){
             this.mSeason = parseInt(season);
         }
         

@@ -218,13 +218,12 @@ public class YDZBController {
 	
 	//整体指标预测
 	@RequestMapping(value = "hzb_zbhz_prediction_update.do", method = RequestMethod.GET)
-	public  @ResponseBody String gethzb_zbhz_prediction_update(HttpServletRequest request,
-			HttpServletResponse response) {
+	public  @ResponseBody byte[] gethzb_zbhz_prediction_update(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
 		//String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
-		String gszb = request.getParameter("zb");
-		String gdw_zbhz = JSONArray.fromObject(gszbService.getCompanyTop5zb(GSZB.valueOf(Integer.valueOf(gszb)), d)).toString().replace("null", "\"--\"");
-		return gdw_zbhz;
+		String hzb_zbhz_prediction = JSONArray.fromObject(gszbService.getFirstSeasonPredictionZBsOverview(d)).toString().replace("null", "\"--\"");
+		return hzb_zbhz_prediction.getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "hzb_zbhz_prediction.do", method = RequestMethod.GET)
