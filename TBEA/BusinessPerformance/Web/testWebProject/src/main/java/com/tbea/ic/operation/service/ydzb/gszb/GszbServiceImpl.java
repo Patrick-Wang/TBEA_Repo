@@ -88,6 +88,26 @@ public class GszbServiceImpl implements GszbService {
 		zyzbs.add(GSZB.CH.getValue());
 	}
 	
+
+	private static List<Integer> srqyzbs = new ArrayList<Integer>();
+	static {
+		srqyzbs.add(GSZB.XSSR.getValue());
+		srqyzbs.add(GSZB.ZZYSR.getValue());
+		srqyzbs.add(GSZB.GCXMSR.getValue());
+		srqyzbs.add(GSZB.YYSSR.getValue());
+		srqyzbs.add(GSZB.WLMYSR.getValue());
+		//srqyzbs.add(GSZB.DCSR.getValue());
+		srqyzbs.add(GSZB.FWLSR.getValue());
+		srqyzbs.add(GSZB.HTQYE.getValue());
+		srqyzbs.add(GSZB.GJQY.getValue());
+		srqyzbs.add(GSZB.QZDJQY.getValue());
+		srqyzbs.add(GSZB.QZCTQY.getValue());
+		srqyzbs.add(GSZB.GNQY.getValue());
+		srqyzbs.add(GSZB.QZDJQY_1.getValue());
+		srqyzbs.add(GSZB.QZCTQY_1.getValue());
+		//srqyzbs.add(GSZB.X.getValue());
+	}
+	
 	private static List<Integer> topfivezbs = new ArrayList<Integer>();
 	static {
 		zyzbs.add(GSZB.LRZE.getValue());
@@ -95,6 +115,7 @@ public class GszbServiceImpl implements GszbService {
 		zyzbs.add(GSZB.JYXJXJL.getValue());
 		zyzbs.add(GSZB.YSZK.getValue());
 		zyzbs.add(GSZB.CH.getValue());
+
 	}
 
 	private static Map<Integer, ZBXX> zbxxMap = new HashMap<Integer, ZBXX>();
@@ -207,7 +228,7 @@ public class GszbServiceImpl implements GszbService {
 		
 		List<String[]> result = new ArrayList<String[]>();
 		for (int i = 0; i < 40; ++i){
-			result.add(new String[config.columnCount()]);
+			result.add(new String[config.getColumnCount()]);
 		}
 		
 		makeResult(result, sbdZbs, 0);
@@ -355,7 +376,7 @@ public class GszbServiceImpl implements GszbService {
 		
 		List<String[]> result = new ArrayList<String[]>();
 		for (int i = 0; i < 40; ++i){
-			result.add(new String[config.columnCount()]);
+			result.add(new String[config.getColumnCount()]);
 		}
 		
 
