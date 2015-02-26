@@ -89,7 +89,7 @@ public class GszbServiceImpl implements GszbService {
 		topfivezbs.add(GSZB.CH.getValue());
 	}
 	
-
+	//公司整体2（收入签约分结构）
 	private static List<Integer> srqyzbs = new ArrayList<Integer>();
 	static {
 		//销售收入
@@ -172,7 +172,9 @@ public class GszbServiceImpl implements GszbService {
 	@Override
 	public List<String[]> getGsztzb(Date date) {
 		Organization org = companyManager.getBMDBOrganization();
-		GszbPipe pipe = new GszbPipe(gsztzbs, filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys()), date, new StandardConfigurator(ndjhzbDao, ydjhzbDao,
+		List<Company> comps = org.getCompany(CompanyType.GFGS).getSubCompanys();
+		comps.add(org.getCompany(CompanyType.ZHGS_SYB));
+		GszbPipe pipe = new GszbPipe(gsztzbs, filterCompany(comps), date, new StandardConfigurator(ndjhzbDao, ydjhzbDao,
 				ydzbztDao, sjzbDao, yj20zbDao,
 				yj28zbDao, zbxxDao, companyManager));	
 		return makeResult(pipe.getGszb());
@@ -240,6 +242,19 @@ public class GszbServiceImpl implements GszbService {
 				result.get(i * 8 + row)[j] = zbs.get(i)[j] + "";
 			}
 		}
+	}
+	
+	@Override
+	public List<String[]> getSrqy(Date date){
+		Organization org = companyManager.getBMDBOrganization();
+		IPipeConfigurator config = new SrqyConfigurator(ndjhzbDao, ydjhzbDao,
+				ydzbztDao, sjzbDao, yj20zbDao,
+				yj28zbDao, zbxxDao, companyManager);
+		List<Company> comps = org.getCompany(CompanyType.GFGS).getSubCompanys();
+		comps.add(org.getCompany(CompanyType.ZHGS_SYB));
+		GszbPipe pipe = new GszbPipe(srqyzbs, filterCompany(comps), date, config);
+		List<Double[]> zbs = pipe.getGszb();
+		return null;
 	}
 
 	@Override
