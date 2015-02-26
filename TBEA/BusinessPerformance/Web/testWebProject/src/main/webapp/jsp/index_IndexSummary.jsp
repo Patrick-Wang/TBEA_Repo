@@ -21,7 +21,7 @@
 						src="../images/charts/line2.png"> <span><strong>财务指标完成情况</strong></a>
 				</li>
 				<!--/li-->
-				<li><a href="../ydzb/gdw_zbhz.do" target="_blank"><img
+				<li><a href="../ydzb/gdw_zbhz.do?zb=1" target="_blank"><img
 						src="../images/charts/pie1.png"> <span><strong>利润指标完成情况</strong></a>
 				</li>
 				<!--/li-->

@@ -50,6 +50,20 @@ public class GszbPipe {
 		pipeConfig.onConfiguring(this);
 	}
 	
+	public GszbPipe(Integer zb, List<Company> sbdhj, Date date,
+			IPipeConfigurator pipeConfig) {
+		this.companies = sbdhj;
+
+		this.zbIds = new ArrayList<Integer>();
+		this.zbIds.add(zb);
+		this.date = date;
+		int size = pipeConfig.columnCount();
+		for (int i = 0; i < zbIds.size(); ++i){
+			data.add(new Double[size]);
+		}
+		pipeConfig.onConfiguring(this);
+	}
+
 	public Integer getZbId(int row){
 		return zbIds.get(row);
 	}

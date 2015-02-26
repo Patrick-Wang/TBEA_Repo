@@ -34,7 +34,7 @@
 		var instance = gdw_zbhz.View.newInstance();
         (function () {
             $(document).ready(function () {
-            	instance.init("table", ${month}, ${year});
+            	instance.init("table", ${month}, ${year}, ${zb});
             });
         })();
     </script>

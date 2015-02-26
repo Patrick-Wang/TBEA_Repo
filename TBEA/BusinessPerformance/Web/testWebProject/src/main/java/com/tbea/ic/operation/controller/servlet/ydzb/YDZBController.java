@@ -25,6 +25,7 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
+import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
 
 @Controller
@@ -82,7 +83,9 @@ public class YDZBController {
 	public  @ResponseBody String getGdw_zbhz_update(HttpServletRequest request,
 			HttpServletResponse response) {
 		Date d = DateSelection.getDate(request);
-		String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
+		//String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
+		String gszb = request.getParameter("zb");
+		String gdw_zbhz = JSONArray.fromObject(gszbService.getCompanyTop5zb(GSZB.valueOf(Integer.valueOf(gszb)), d)).toString().replace("null", "\"--\"");
 		return gdw_zbhz;
 	}
 	
@@ -96,7 +99,9 @@ public class YDZBController {
 //		Map<String, Object> map = new HashMap<String, Object>();
 //		map.put("month", month);
 //		map.put("year", year);
+		String gszb = request.getParameter("zb");
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("zb", gszb);
 		DateSelection dateSel = new DateSelection(service.getLatestGcyDate(), true, false);
 		dateSel.select(map);
 		return new ModelAndView("gdw_zbhz", map);
