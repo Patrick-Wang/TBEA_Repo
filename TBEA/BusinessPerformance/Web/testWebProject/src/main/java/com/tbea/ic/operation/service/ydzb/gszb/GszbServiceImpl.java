@@ -26,12 +26,13 @@ import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.CompositeAccumulator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.CompositeConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.FirstSeasonPredictionConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.JDZBMYConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.SrqyConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.StandardConfigurator;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 
 @Service
 @Transactional("transactionManager")
@@ -420,6 +421,29 @@ public class GszbServiceImpl implements GszbService {
 				ydzbztDao, sjzbDao, yj20zbDao,
 				yj28zbDao, zbxxDao, companyManager));	
 		return makeResult(pipe.getGszb());
+	}
+
+	@Override
+	public List<String[]> getJDZBMY(Date date) {
+		Organization org = companyManager.getBMDBOrganization();
+		List<Company> comps = org.getCompany(CompanyType.GFGS).getSubCompanys();
+		comps.add(org.getCompany(CompanyType.ZHGS_SYB));
+		GszbPipe pipe = new GszbPipe(gsztzbs, filterCompany(comps), date,
+				new JDZBMYConfigurator(ndjhzbDao, ydjhzbDao, ydzbztDao,
+						sjzbDao, yj20zbDao, yj28zbDao, zbxxDao, companyManager));
+		List<Double[]> JDZBMYList =  pipe.getGszb();
+		List<Double[]> result = new ArrayList<Double[]>();
+		Double[] values = null;
+		int length = 0;
+		for (Double[] JDZBMY : JDZBMYList) {
+			length = JDZBMY.length - 1;
+			values = new Double[length];
+			for (int i = 0; i < length; i++) {
+				values[i] = JDZBMY[i];
+			}
+			result.add(values);
+		}
+		return makeResult(result);
 	}
 
 }
