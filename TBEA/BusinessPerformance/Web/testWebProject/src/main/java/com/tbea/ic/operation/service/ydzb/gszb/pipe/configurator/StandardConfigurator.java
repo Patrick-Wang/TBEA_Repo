@@ -136,8 +136,8 @@ public class StandardConfigurator implements IPipeConfigurator {
 			}
 		}
 
-		// 当月实际
-		pipe.add(
+				// 当月实际
+				pipe.add(
 				new AccPipeFilter(sjAcc, 2).includeCompanies(allCompanies)
 						.includeZbs(pipe.getZbIds()).excludeZbs(specialZbs)
 						.include(GSZB.YSZK).include(GSZB.CH).include(GSZB.RS))

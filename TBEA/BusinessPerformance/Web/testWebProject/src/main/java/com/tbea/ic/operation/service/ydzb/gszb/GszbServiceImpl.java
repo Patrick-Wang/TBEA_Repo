@@ -88,6 +88,7 @@ public class GszbServiceImpl implements GszbService {
 		zyzbs.add(GSZB.CH.getValue());
 	}
 	
+
 	private static List<Integer> srqyzbs = new ArrayList<Integer>();
 	static {
 		srqyzbs.add(GSZB.XSSR.getValue());
@@ -105,6 +106,16 @@ public class GszbServiceImpl implements GszbService {
 		srqyzbs.add(GSZB.QZDJQY_1.getValue());
 		srqyzbs.add(GSZB.QZCTQY_1.getValue());
 		//srqyzbs.add(GSZB.X.getValue());
+	}
+	
+	private static List<Integer> topfivezbs = new ArrayList<Integer>();
+	static {
+		zyzbs.add(GSZB.LRZE.getValue());
+		zyzbs.add(GSZB.XSSR.getValue());
+		zyzbs.add(GSZB.JYXJXJL.getValue());
+		zyzbs.add(GSZB.YSZK.getValue());
+		zyzbs.add(GSZB.CH.getValue());
+
 	}
 
 	private static Map<Integer, ZBXX> zbxxMap = new HashMap<Integer, ZBXX>();
@@ -238,6 +249,53 @@ public class GszbServiceImpl implements GszbService {
 				result.get(i * 8 + row)[j] = zbs.get(i)[j] + "";
 			}
 		}
+	}
+
+	@Override
+	public List<String[]> getCompanyTop5zb(GSZB gszb, Date date) {
+		Organization org = companyManager.getBMDBOrganization();
+		IPipeConfigurator config = new StandardConfigurator(ndjhzbDao, ydjhzbDao,
+				ydzbztDao, sjzbDao, yj20zbDao,
+				yj28zbDao, zbxxDao, companyManager);
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.SBGS).getSubCompanys()), date, config);
+//		List<Double[]> sbgsZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.HBGS).getSubCompanys()), date, config);
+//		List<Double[]> hbgsZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.XBGS).getSubCompanys()), date, config);
+//		List<Double[]> xbgsZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.LLGS).getSubCompanys()), date, config);
+//		List<Double[]> llgsZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.XLC).getSubCompanys()), date, config);
+//		List<Double[]> xlcZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.DLGS).getSubCompanys()), date, config);
+//		List<Double[]> dlZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.XTNYGS).getSubCompanys()), date, config);
+//		List<Double[]> xtnyZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.XNYGS).getSubCompanys()), date, config);
+//		List<Double[]> xnyZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.TCNY).getSubCompanys()), date, config);
+//		List<Double[]> tcnyZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.NDGS).getSubCompanys()), date, config);
+//		List<Double[]> ndgsZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.JCKGS_SYB).getSubCompanys()), date, config);
+//		List<Double[]> jckZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.GJGCGS_SYB).getSubCompanys()), date, config);
+//		List<Double[]> gjgcZbs = pipe.getGszb();
+//		
+//		GszbPipe pipe = new GszbPipe(gszb, filterCompany(org.getCompany(CompanyType.ZHGS_SYB).getSubCompanys()), date, config);
+//		List<Double[]> zhgsZbs = pipe.getGszb();
+		return null;
 	}
 
 }
