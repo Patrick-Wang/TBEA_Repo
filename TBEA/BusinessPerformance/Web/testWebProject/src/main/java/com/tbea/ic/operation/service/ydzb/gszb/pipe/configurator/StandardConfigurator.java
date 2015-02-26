@@ -3,8 +3,6 @@ package com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
@@ -47,27 +45,6 @@ public class StandardConfigurator implements IPipeConfigurator {
 	ZBXXDao zbxxDao;
 
 	CompanyManager companyManager;
-
-	static List<Integer> gsztzbs = new ArrayList<Integer>();
-	static {
-		gsztzbs.add(GSZB.LRZE.getValue());
-		gsztzbs.add(GSZB.XSSR.getValue());
-		gsztzbs.add(GSZB.JYXJXJL.getValue());
-		gsztzbs.add(GSZB.YSZK.getValue());
-		gsztzbs.add(GSZB.QZYQK.getValue());
-		gsztzbs.add(GSZB.BL.getValue());
-		gsztzbs.add(GSZB.CH.getValue());
-		gsztzbs.add(GSZB.QZJYWY.getValue());
-		gsztzbs.add(GSZB.HTQYE.getValue());
-		gsztzbs.add(GSZB.ZJHL.getValue());
-		gsztzbs.add(GSZB.BHSCZ.getValue());
-		gsztzbs.add(GSZB.RS.getValue());
-		gsztzbs.add(GSZB.RJLR.getValue());
-		gsztzbs.add(GSZB.RJSR.getValue());
-		gsztzbs.add(GSZB.SXFY.getValue());
-		gsztzbs.add(GSZB.SXFYL.getValue());
-		gsztzbs.add(GSZB.JZCSYL.getValue());
-	}
 
 	static List<Integer> specialZbs = new ArrayList<Integer>();
 	static {
@@ -134,19 +111,19 @@ public class StandardConfigurator implements IPipeConfigurator {
 
 		// 全年计划
 		pipe.add(new AccPipeFilter(njhAcc, 0).includeCompanies(allCompanies)
-				.includeZbs(gsztzbs).excludeZbs(specialZbs).include(GSZB.RS)
+				.includeZbs(pipe.getZbIds()).excludeZbs(specialZbs).include(GSZB.RS)
 				.include(GSZB.YSZK).include(GSZB.CH));
 
 		// 当月计划
 		if (sbdCompanies.isEmpty()) {
 			pipe.add(new AccPipeFilter(yjhAcc, 1)
-					.includeCompanies(allCompanies).includeZbs(gsztzbs)
+					.includeCompanies(allCompanies).includeZbs(pipe.getZbIds())
 					.excludeZbs(specialZbs).include(GSZB.RS).include(GSZB.YSZK)
 					.include(GSZB.CH));
 		} else {
 			pipe.add(
 					new AccPipeFilter(yjhAcc, 1).includeCompanies(allCompanies)
-							.includeZbs(gsztzbs).excludeZbs(specialZbs)
+							.includeZbs(pipe.getZbIds()).excludeZbs(specialZbs)
 							.include(GSZB.RS)).add(
 					new AccSbdPipeFilter(yjhAcc, 1)
 							.includeCompanies(sbdCompanies).include(GSZB.YSZK)
@@ -162,7 +139,7 @@ public class StandardConfigurator implements IPipeConfigurator {
 		// 当月实际
 		pipe.add(
 				new AccPipeFilter(sjAcc, 2).includeCompanies(allCompanies)
-						.includeZbs(gsztzbs).excludeZbs(specialZbs)
+						.includeZbs(pipe.getZbIds()).excludeZbs(specialZbs)
 						.include(GSZB.YSZK).include(GSZB.CH).include(GSZB.RS))
 
 				// 计划完成率
@@ -170,7 +147,7 @@ public class StandardConfigurator implements IPipeConfigurator {
 
 				// 去年同期
 				.add(new AccPipeFilter(sjAcc, 4, dh.getQntq())
-						.includeCompanies(allCompanies).includeZbs(gsztzbs)
+						.includeCompanies(allCompanies).includeZbs(pipe.getZbIds())
 						.excludeZbs(specialZbs).include(GSZB.YSZK)
 						.include(GSZB.CH).include(GSZB.RS))
 
@@ -179,14 +156,14 @@ public class StandardConfigurator implements IPipeConfigurator {
 
 				// 季度计划
 				.add(new AccPipeFilter(yjhAcc, 6, dh.getJdStart(), dh.getCur())
-						.includeCompanies(allCompanies).includeZbs(gsztzbs)
+						.includeCompanies(allCompanies).includeZbs(pipe.getZbIds())
 						.excludeZbs(specialZbs))
 				.add(copyFilter.add(GSZB.CH, 1, 6).add(GSZB.YSZK, 1, 6)
 						.add(GSZB.RS, 1, 6))
 
 				// 季度累计
 				.add(new AccPipeFilter(sjAcc, 7, dh.getJdStart(), dh.getCur())
-						.includeCompanies(allCompanies).includeZbs(gsztzbs)
+						.includeCompanies(allCompanies).includeZbs(pipe.getZbIds())
 						.excludeZbs(specialZbs))
 				.add(copyFilter.add(GSZB.CH, 2, 7).add(GSZB.YSZK, 2, 7)
 						.add(GSZB.RS, 2, 7))
@@ -197,7 +174,7 @@ public class StandardConfigurator implements IPipeConfigurator {
 				// 季度去年同期
 				.add(new AccPipeFilter(sjAcc, 9, dh.getQntqJdStart(), dh
 						.getQntq()).includeCompanies(allCompanies)
-						.includeZbs(gsztzbs).excludeZbs(specialZbs))
+						.includeZbs(pipe.getZbIds()).excludeZbs(specialZbs))
 				.add(new AccPipeFilter(sjAcc, 9, dh.getQntq())
 						.includeCompanies(allCompanies).include(GSZB.YSZK)
 						.include(GSZB.CH).include(GSZB.RS))
@@ -208,7 +185,7 @@ public class StandardConfigurator implements IPipeConfigurator {
 				// 年度累计
 				.add(new AccPipeFilter(sjAcc, 11, dh.getFirstMonth(), dh
 						.getCur()).includeCompanies(allCompanies)
-						.includeZbs(gsztzbs).excludeZbs(specialZbs))
+						.includeZbs(pipe.getZbIds()).excludeZbs(specialZbs))
 				.add(copyFilter.add(GSZB.CH, 2, 11).add(GSZB.YSZK, 2, 11)
 						.add(GSZB.RS, 2, 11))
 
@@ -218,7 +195,7 @@ public class StandardConfigurator implements IPipeConfigurator {
 				// 去年同期
 				.add(new AccPipeFilter(sjAcc, 13, dh.getQnfirstMonth(), dh
 						.getQntq()).includeCompanies(allCompanies)
-						.includeZbs(gsztzbs).excludeZbs(specialZbs))
+						.includeZbs(pipe.getZbIds()).excludeZbs(specialZbs))
 				.add(copyFilter.add(GSZB.CH, 9, 13).add(GSZB.YSZK, 9, 13)
 						.add(GSZB.RS, 9, 13))
 

@@ -135,7 +135,6 @@ public class CompositeConfigurator implements IPipeConfigurator {
 
 	}
 
-
 	@Override
 	public int columnCount() {
 		return 15;
