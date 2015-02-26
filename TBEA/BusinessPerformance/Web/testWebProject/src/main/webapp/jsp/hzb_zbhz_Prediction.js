@@ -74,7 +74,7 @@ var hzb_zbhz_prediciton;
             this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
             this.mDataSet.get({ month: this.mActualMonth, year: this.mYear }).then(function (dataArray) {
                 _this.mData = dataArray;
-                //$('h1').text(this.mYear + "年" + this.mMonth + "季度" + "月 指标汇总");
+                $('h1').text(_this.mYear + "年" + "季度指标预测汇总");
                 //document.title = this.mYear + "年" + this.mMonth + "月 指标汇总";
                 _this.updateTable();
             });

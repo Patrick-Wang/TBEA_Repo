@@ -16,14 +16,14 @@
 	<tr>
 	
 		<td style="padding-right:5px">
-		<select id="year"	onchange="instance.onyearChange(this.value) style="width: 125px;">
+		<select id="year"	onchange="instance.onYearSelected(this.value)" style="width: 125px;">
 				<option value="2014" >2014</option>
 				<option value="2015" selected="selected">2015</option>
 
 		</select>
 
 		<td style="padding-right:5px">
-		<select id="season"	onchange="instance.onSeasonChange(this.value) style="width: 125px;">
+		<select id="season"	onchange="instance.onSeasonChange(this.value)" style="width: 125px;">
 				<option value="1" selected="selected">第一季度</option>
 				<option value="2">第二季度</option>
 				<option value="3">第三季度</option>
@@ -32,7 +32,7 @@
 		</td>
 
 		<td style="padding-right:5px">
-		<select id="month" onchange="instance.onMonthDelegateSelected(this.value)"style="width: 125px;">
+		<select id="month" onchange="instance.onMonthDelegateSelected(this.value)" style="width: 125px;">
 				<option value="1" selected="selected">首月</option>
 				<option value="2">次月</option>
 				<option value="3">末月</option>

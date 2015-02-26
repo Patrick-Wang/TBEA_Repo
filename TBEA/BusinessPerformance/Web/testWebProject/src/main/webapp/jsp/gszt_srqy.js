@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var gszt_srqy;
 (function (gszt_srqy) {
     var JQGridAssistantFactory = (function () {
@@ -53,6 +55,11 @@ var gszt_srqy;
             for (var i = 0; i < data.length; ++i) {
                 if (this.mData[i] instanceof Array) {
                     row = [].concat(this.mData[i]);
+                    //                    for (var col in row) {
+                    //                        if (col != '2' && col != '4' && col != '6' && col != '8' && col != '10') {
+                    //                            row[col] = Util.formatCurrency(row[col]);
+                    //                        }
+                    //                    }
                     data[i] = data[i].concat(row);
                 }
             }
@@ -60,11 +67,16 @@ var gszt_srqy;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(this.mData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: '100%',
                 width: 1200,
                 shrinkToFit: true,

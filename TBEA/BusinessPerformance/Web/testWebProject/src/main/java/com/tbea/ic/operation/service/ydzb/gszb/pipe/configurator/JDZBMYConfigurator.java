@@ -205,7 +205,7 @@ public class JDZBMYConfigurator implements IPipeConfigurator {
 						.add(GSZB.RS, 4, 8))
 
 				// 季度计划完成率
-				.add(wclFilter.add(9, 8, 5))
+				.add(wclFilter.add(9, 8, 1))
 
 				// 季度去年同期
 				.add(new AccPipeFilter(sjAcc, 10, dh.getQntqJdStart(), dh

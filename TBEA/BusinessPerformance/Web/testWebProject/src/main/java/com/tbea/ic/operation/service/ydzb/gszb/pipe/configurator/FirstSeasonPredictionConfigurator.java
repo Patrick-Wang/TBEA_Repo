@@ -178,8 +178,8 @@ public class FirstSeasonPredictionConfigurator implements IPipeConfigurator {
 		.add(new AccPipeFilter(sjAcc, 9, dh.getCur(), dh.getLastMonthinSeason())
 				.includeCompanies(allCompanies).includeZbs(pipe.getZbIds())
 				.excludeZbs(specialZbs))
-		.add(copyFilter.add(GSZB.CH, 3, 9).add(GSZB.YSZK, 3, 9)
-				.add(GSZB.RS, 3, 9))
+		.add(copyFilter.add(GSZB.CH, 8, 9).add(GSZB.YSZK, 8, 9)
+				.add(GSZB.RS, 8, 9))
 
 		// 季度预计完成率
 		.add(wclFilter.add(10, 9, 1))
