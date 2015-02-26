@@ -60,6 +60,11 @@ public class AccPipeFilter implements IPipeFilter {
 		return this;
 	}
 	
+	public AccPipeFilter include(Integer zb){
+		includeZbs.add(zb);
+		return this;
+	}
+	
 	public AccPipeFilter includeZbs(List<Integer> zbIds){
 		includeZbs.addAll(zbIds);
 		return this;

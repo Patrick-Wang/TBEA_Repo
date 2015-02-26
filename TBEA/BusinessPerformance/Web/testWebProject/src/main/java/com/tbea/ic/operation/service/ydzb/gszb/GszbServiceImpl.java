@@ -28,6 +28,7 @@ import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.CompositeAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.CompositeConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.SrqyConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.StandardConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 
@@ -88,24 +89,43 @@ public class GszbServiceImpl implements GszbService {
 		topfivezbs.add(GSZB.CH.getValue());
 	}
 	
-
+	//公司整体2（收入签约分结构）
 	private static List<Integer> srqyzbs = new ArrayList<Integer>();
 	static {
-		srqyzbs.add(GSZB.XSSR.getValue());
-		srqyzbs.add(GSZB.ZZYSR.getValue());
-		srqyzbs.add(GSZB.GCXMSR.getValue());
-		srqyzbs.add(GSZB.YYSSR.getValue());
-		srqyzbs.add(GSZB.WLMYSR.getValue());
-		//srqyzbs.add(GSZB.DCSR.getValue());
-		srqyzbs.add(GSZB.FWLSR.getValue());
-		srqyzbs.add(GSZB.HTQYE.getValue());
-		srqyzbs.add(GSZB.GJQY.getValue());
-		srqyzbs.add(GSZB.QZDJQY.getValue());
-		srqyzbs.add(GSZB.QZCTQY.getValue());
-		srqyzbs.add(GSZB.GNQY.getValue());
-		srqyzbs.add(GSZB.QZDJQY_1.getValue());
-		srqyzbs.add(GSZB.QZCTQY_1.getValue());
-		//srqyzbs.add(GSZB.X.getValue());
+		//销售收入
+		srqyzbs.add(GSZB.XSSR.getValue());//营业收入
+		srqyzbs.add(GSZB.ZZYSR.getValue());//制造业收入（输变电收入、新能源收入、能源煤炭收入、众和制造业收入）
+		srqyzbs.add(GSZB.GCXMSR.getValue());//工程项目收入（输变电收入、新能源产业成套工程收入、能源产业工程收入、进出口公司收入、国际工程公司收入、众和公司收入）
+		srqyzbs.add(GSZB.YYSSR.getValue());//运营商收入（新能源产业运营商收入）
+		srqyzbs.add(GSZB.MTXSSR.getValue());//煤炭销售收入（能源产业收入）
+		srqyzbs.add(GSZB.WLMYSR.getValue());//物流贸易收入（输变电物流收入、能源产业贸易收入、众和公司物流业收入）
+		srqyzbs.add(GSZB.FWLSR.getValue());//服务类收入（新能源产业服务业收入、能源产业服务业收入、众和公司服务业收入）
+		
+		//合同签约额
+		srqyzbs.add(GSZB.HTQYE.getValue());//合同签约额
+		srqyzbs.add(GSZB.GJQY.getValue());//输变电、进出口国际签约
+		srqyzbs.add(GSZB.QZDJQY.getValue());//单机签约（输变电国际单机签约）
+		srqyzbs.add(GSZB.QZCTQY.getValue());//成套签约（输变电国际成套签约、新能源产业国际成套签约、进出口公司国际成套签约、国际工程公司国际成套签约）
+		srqyzbs.add(GSZB.GNQY.getValue());//输变电国内签约
+		srqyzbs.add(GSZB.QZDJQY_1.getValue());//  单机签约（输变电国内单机签约）
+		srqyzbs.add(GSZB.QZCTQY_1.getValue());//  成套签约（输变电国内成套签约）
+		//新能源产业签约
+		//能源产业签约
+		//众和公司签约
+		srqyzbs.addAll(SrqyConfigurator.getSpecialZbs());
+		srqyzbs.add(GSZB.CL.getValue());//产量 
+		srqyzbs.add(GSZB.BYQ.getValue());//变压器(万KVA)
+		srqyzbs.add(GSZB.XLYTL.getValue());//线缆用铜量(吨)
+		srqyzbs.add(GSZB.XLYLL.getValue());//线缆用铝量(吨)
+		srqyzbs.add(GSZB.DJG.getValue());//多晶硅(吨) 
+		srqyzbs.add(GSZB.GP.getValue());//硅片(片)
+		srqyzbs.add(GSZB.FDLWD.getValue());//发电量（万度）（众和公司、新特能源公司、能动公司）
+		srqyzbs.add(GSZB.NBQmw.getValue());//逆变器（MW）
+		srqyzbs.add(GSZB.MT.getValue());//煤炭(万吨)
+		srqyzbs.add(GSZB.QZDYLBCLD.getValue());//电子铝箔（吨）
+		srqyzbs.add(GSZB.DJBHCLPM.getValue());//电极箔化成量（平米）
+		srqyzbs.add(GSZB.LBD.getValue());//铝箔（吨）
+		srqyzbs.add(GSZB.DJBPM.getValue());//电极箔化成量（平米）
 	}
 	
 
@@ -152,7 +172,9 @@ public class GszbServiceImpl implements GszbService {
 	@Override
 	public List<String[]> getGsztzb(Date date) {
 		Organization org = companyManager.getBMDBOrganization();
-		GszbPipe pipe = new GszbPipe(gsztzbs, filterCompany(org.getCompany(CompanyType.GFGS).getSubCompanys()), date, new StandardConfigurator(ndjhzbDao, ydjhzbDao,
+		List<Company> comps = org.getCompany(CompanyType.GFGS).getSubCompanys();
+		comps.add(org.getCompany(CompanyType.ZHGS_SYB));
+		GszbPipe pipe = new GszbPipe(gsztzbs, filterCompany(comps), date, new StandardConfigurator(ndjhzbDao, ydjhzbDao,
 				ydzbztDao, sjzbDao, yj20zbDao,
 				yj28zbDao, zbxxDao, companyManager));	
 		return makeResult(pipe.getGszb());
@@ -221,7 +243,22 @@ public class GszbServiceImpl implements GszbService {
 			}
 		}
 	}
-	//Get Top 5 indexes including "利润，存货、现金流、应收、收入" 
+
+	
+	@Override
+	public List<String[]> getSrqy(Date date){
+		Organization org = companyManager.getBMDBOrganization();
+		IPipeConfigurator config = new SrqyConfigurator(ndjhzbDao, ydjhzbDao,
+				ydzbztDao, sjzbDao, yj20zbDao,
+				yj28zbDao, zbxxDao, companyManager);
+		List<Company> comps = org.getCompany(CompanyType.GFGS).getSubCompanys();
+		comps.add(org.getCompany(CompanyType.ZHGS_SYB));
+		GszbPipe pipe = new GszbPipe(srqyzbs, filterCompany(comps), date, config);
+		List<Double[]> zbs = pipe.getGszb();
+		return null;
+	}
+
+    //Get Top 5 indexes including "利润，存货、现金流、应收、收入" 
 	@Override
 	public List<String[]> getCompanyTop5zb(GSZB gsTop5zb, Date date) {
 		Organization org = companyManager.getBMDBOrganization();

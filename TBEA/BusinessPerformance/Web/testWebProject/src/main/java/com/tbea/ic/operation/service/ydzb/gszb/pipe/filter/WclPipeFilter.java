@@ -1,14 +1,28 @@
 package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 
 
 public class WclPipeFilter implements IPipeFilter {
 	List<Integer[]> wcls = new ArrayList<Integer[]>();
-
+	Set<Integer> excludeZbs = new HashSet<Integer>();
+	
+	public WclPipeFilter exclude(GSZB zb){
+		excludeZbs.add(zb.getValue());
+		return this;
+	}
+	
+	public WclPipeFilter exclude(Integer zb){
+		excludeZbs.add(zb);
+		return this;
+	}
+	
 	public WclPipeFilter add(int dest, int sj, int jh) {
 		wcls.add(new Integer[] { dest, sj, jh });
 		return this;
@@ -16,7 +30,9 @@ public class WclPipeFilter implements IPipeFilter {
 
 	@Override
 	public void filter(int row, GszbPipe pipe) {
-		updateZb(row, pipe.getZb(row));
+		if (!excludeZbs.contains(pipe.getZbId(row))){
+			updateZb(row, pipe.getZb(row));
+		}
 	}
 
 	private void updateZb(int row, Double[] zbRow) {
