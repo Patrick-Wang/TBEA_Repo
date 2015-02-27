@@ -22,7 +22,7 @@ import com.tbea.ic.operation.service.ydzb.gszb.acc.SjzbAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.YjhzbAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.TbzzPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
 
 //收入签约分结构
@@ -95,7 +95,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 		IAccumulator njhAcc = new NjhzbAccumulator(ndjhzbDao);
 
 		WclPipeFilter wclFilter = new WclPipeFilter();
-		TbzzPipeFilter tbzzFilter = new TbzzPipeFilter();
+		ZzlPipeFilter tbzzFilter = new ZzlPipeFilter();
 		
 		Organization org = companyManager.getBMDBOrganization();
 		// 全年计划

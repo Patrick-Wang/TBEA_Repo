@@ -11,7 +11,7 @@ import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.CopyPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.SpecialPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.TbzzPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
 
 public class CompositeConfigurator implements IPipeConfigurator {
@@ -32,7 +32,7 @@ public class CompositeConfigurator implements IPipeConfigurator {
 	    DateHelper dh = new DateHelper(pipe.getDate());
 
 		WclPipeFilter wclFilter = new WclPipeFilter();
-		TbzzPipeFilter tbzzFilter = new TbzzPipeFilter();
+		ZzlPipeFilter tbzzFilter = new ZzlPipeFilter();
 		CopyPipeFilter copyFilter = new CopyPipeFilter();
 		List<Integer> allZbs = pipe.getZbIds();
 			// 全年计划

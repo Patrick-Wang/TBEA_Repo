@@ -25,7 +25,7 @@ import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccSbdPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.CopyPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.SpecialPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.TbzzPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
 
 public class StandardConfigurator implements IPipeConfigurator {
@@ -106,7 +106,7 @@ public class StandardConfigurator implements IPipeConfigurator {
 		IAccumulator njhAcc = new NjhzbAccumulator(ndjhzbDao);
 
 		WclPipeFilter wclFilter = new WclPipeFilter();
-		TbzzPipeFilter tbzzFilter = new TbzzPipeFilter();
+		ZzlPipeFilter tbzzFilter = new ZzlPipeFilter();
 		CopyPipeFilter copyFilter = new CopyPipeFilter();
 
 		// 全年计划
