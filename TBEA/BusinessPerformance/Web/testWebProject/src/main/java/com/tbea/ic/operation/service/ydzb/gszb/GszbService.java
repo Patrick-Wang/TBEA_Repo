@@ -15,4 +15,5 @@ public interface GszbService {
 	List<String[]> getCompanyTop5zb(GSZB gszb, Date date);
 
 	List<String[]> getJDZBMY(Date date);
+	List<String[]> getGcyJDZBMY(Date date);
 }
