@@ -20,7 +20,7 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 	private IAccumulator acc;
 	
 	
-	public ZtzbCompositeConfigurator(IAccumulator acc) {
+	public ZtzbCompositeConfigurator(CompositeAccumulator acc) {
 		super();
 		this.acc = acc;
 	}
@@ -29,13 +29,10 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 	@Override
 	public void onConfiguring(GszbPipe pipe) {
 		List<Company> allCompanies = pipe.getCompanies();
-
-	    DateHelper dh = new DateHelper(pipe.getDate());
-
+		List<Integer> allZbs = pipe.getZbIds();
 		WclPipeFilter wclFilter = new WclPipeFilter();
 		ZzlPipeFilter tbzzFilter = new ZzlPipeFilter();
 		CopyPipeFilter copyFilter = new CopyPipeFilter();
-		List<Integer> allZbs = pipe.getZbIds();
 			// 全年计划
 		pipe.add(new AccPipeFilter(acc, 0)
 				.includeCompanies(allCompanies)
@@ -57,7 +54,7 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 				.add(3, 2, 1))
 			
 			// 去年同期	
-			.add(new AccPipeFilter(acc, 4, dh.getQntq())
+			.add(new AccPipeFilter(acc, 4)
 				.includeCompanies(allCompanies)
 				.includeZbs(allZbs))
 			
@@ -66,7 +63,7 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 				.add(5, 2, 4))
 				
 			// 季度计划
-			.add(new AccPipeFilter(acc, 6, dh.getJdStart(), dh.getCur())
+			.add(new AccPipeFilter(acc, 6)
 				.includeCompanies(allCompanies)
 				.includeZbs(allZbs)
 				.exclude(GSZB.CH)
@@ -78,7 +75,7 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 				.add(GSZB.RS, 1, 6))
 				
 			// 季度累计
-			.add(new AccPipeFilter(acc, 7, dh.getJdStart(), dh.getCur())
+			.add(new AccPipeFilter(acc, 7)
 				.includeCompanies(allCompanies)
 				.includeZbs(allZbs)
 				.exclude(GSZB.CH)
@@ -94,7 +91,7 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 				.add(8, 7, 6))
 				
 			// 季度去年同期
-			.add(new AccPipeFilter(acc, 9, dh.getQntqJdStart(), dh.getQntq())
+			.add(new AccPipeFilter(acc, 9)
 				.includeCompanies(allCompanies)
 				.includeZbs(allZbs))
 			
@@ -103,7 +100,7 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 				.add(10, 7, 9))
 	
 			// 年度累计
-			.add(new AccPipeFilter(acc, 11, dh.getFirstMonth(), dh.getCur())
+			.add(new AccPipeFilter(acc, 11)
 				.includeCompanies(allCompanies)
 				.includeZbs(allZbs)
 				.exclude(GSZB.CH)
@@ -120,7 +117,7 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 				.add(12, 11, 0))
 			
 			// 去年同期
-			.add(new AccPipeFilter(acc, 13, dh.getQnfirstMonth(), dh.getQntq())
+			.add(new AccPipeFilter(acc, 13)
 				.includeCompanies(allCompanies)
 				.includeZbs(allZbs)
 				.exclude(GSZB.CH)
