@@ -116,6 +116,7 @@ public class SjzbAccumulator implements IAccumulator{
 			}
 		}
 
+		zbMap.clear();
 		return ret;
 	}
 

@@ -6,20 +6,9 @@ import java.util.List;
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
-import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
-import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
-import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
-import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
-import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
-import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
-import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.NjhzbAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.SjzbAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.YjhzbAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
@@ -28,21 +17,7 @@ import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
 //收入签约分结构
 public class SrqyConfigurator implements IPipeConfigurator {
 
-	NDJHZBDao ndjhzbDao;
-
-	YDJHZBDao ydjhzbDao;
-
-	YDZBZTDao ydzbztDao;
-
-	SJZBDao sjzbDao;
-
-	YJ20ZBDao yj20zbDao;
-
-	YJ28ZBDao yj28zbDao;
-
-	ZBXXDao zbxxDao;
-
-	CompanyManager companyManager;
+	StandardConfigurator standardConfigurator;
 	
 	private final static int xnycyQyId = 100021;
 	private final static int nycyQyId = 100022;
@@ -71,17 +46,8 @@ public class SrqyConfigurator implements IPipeConfigurator {
 		return specialZbs;
 	}
 	
-	public SrqyConfigurator(NDJHZBDao ndjhzbDao, YDJHZBDao ydjhzbDao,
-			YDZBZTDao ydzbztDao, SJZBDao sjzbDao, YJ20ZBDao yj20zbDao,
-			YJ28ZBDao yj28zbDao, ZBXXDao zbxxDao, CompanyManager companyManager) {
-		this.ndjhzbDao = ndjhzbDao;
-		this.ydjhzbDao = ydjhzbDao;
-		this.ydzbztDao = ydzbztDao;
-		this.sjzbDao = sjzbDao;
-		this.yj20zbDao = yj20zbDao;
-		this.yj28zbDao = yj28zbDao;
-		this.zbxxDao = zbxxDao;
-		this.companyManager = companyManager;
+	public SrqyConfigurator(StandardConfigurator standardConfigurator) {
+		this.standardConfigurator = standardConfigurator;
 	}
 
 	@Override
@@ -89,15 +55,15 @@ public class SrqyConfigurator implements IPipeConfigurator {
 		List<Company> allCompanies = pipe.getCompanies();
 		List<Integer> zbs = pipe.getZbIds();
 		DateHelper dh = new DateHelper(pipe.getDate());
-		IAccumulator sjAcc = new SjzbAccumulator(sjzbDao, yj20zbDao, yj28zbDao,
-				ydzbztDao);
-		IAccumulator yjhAcc = new YjhzbAccumulator(ydjhzbDao);
-		IAccumulator njhAcc = new NjhzbAccumulator(ndjhzbDao);
 
 		WclPipeFilter wclFilter = new WclPipeFilter();
 		ZzlPipeFilter tbzzFilter = new ZzlPipeFilter();
 		
-		Organization org = companyManager.getBMDBOrganization();
+		Organization org = standardConfigurator.getCompanyManager().getBMDBOrganization();
+		
+		IAccumulator sjAcc = standardConfigurator.getSjAcc();
+		IAccumulator yjhAcc = standardConfigurator.getYjhAcc();
+		IAccumulator njhAcc = standardConfigurator.getNjhAcc();
 		// 全年计划
 		pipe.add(new AccPipeFilter(njhAcc, 0)
 				.includeCompanies(allCompanies)

@@ -9,17 +9,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
-import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
-import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
-import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
-import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
-import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
-import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
-import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.NjhzbAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.SjzbAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.YjhzbAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccSbdPipeFilter;
@@ -30,20 +20,9 @@ import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
 
 public class StandardConfigurator implements IPipeConfigurator {
 
-	NDJHZBDao ndjhzbDao;
-
-	YDJHZBDao ydjhzbDao;
-
-	YDZBZTDao ydzbztDao;
-
-	SJZBDao sjzbDao;
-
-	YJ20ZBDao yj20zbDao;
-
-	YJ28ZBDao yj28zbDao;
-
-	ZBXXDao zbxxDao;
-
+	IAccumulator sjAcc;
+	IAccumulator yjhAcc;
+	IAccumulator njhAcc;
 	CompanyManager companyManager;
 
 	static List<Integer> specialZbs = new ArrayList<Integer>();
@@ -55,21 +34,15 @@ public class StandardConfigurator implements IPipeConfigurator {
 		specialZbs.add(GSZB.SXFYL.getValue());
 		specialZbs.add(GSZB.RS.getValue());
 	}
-
-	public StandardConfigurator(NDJHZBDao ndjhzbDao, YDJHZBDao ydjhzbDao,
-			YDZBZTDao ydzbztDao, SJZBDao sjzbDao, YJ20ZBDao yj20zbDao,
-			YJ28ZBDao yj28zbDao, ZBXXDao zbxxDao, CompanyManager companyManager) {
-		this.ndjhzbDao = ndjhzbDao;
-		this.ydjhzbDao = ydjhzbDao;
-		this.ydzbztDao = ydzbztDao;
-		this.sjzbDao = sjzbDao;
-		this.yj20zbDao = yj20zbDao;
-		this.yj28zbDao = yj28zbDao;
-		this.zbxxDao = zbxxDao;
+	
+	public StandardConfigurator(IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc, CompanyManager companyManager) {
+		this.sjAcc = sjAcc;
+		this.yjhAcc = yjhAcc;
+		this.njhAcc = njhAcc;
 		this.companyManager = companyManager;
 	}
 
-	private List<Company> getNonSbdCompany(List<Company> companies) {
+	public List<Company> getNonSbdCompany(List<Company> companies) {
 		Organization org = companyManager.getBMDBOrganization();
 		Company sbd = org.getCompany(CompanyType.SBDCYJT);
 		List<Company> retComps = new ArrayList<Company>();
@@ -81,7 +54,7 @@ public class StandardConfigurator implements IPipeConfigurator {
 		return retComps;
 	}
 
-	private List<Company> getSbdCompany(List<Company> companies) {
+	public List<Company> getSbdCompany(List<Company> companies) {
 		Organization org = companyManager.getBMDBOrganization();
 		Company sbd = org.getCompany(CompanyType.SBDCYJT);
 		List<Company> retComps = new ArrayList<Company>();
@@ -93,6 +66,10 @@ public class StandardConfigurator implements IPipeConfigurator {
 		return retComps;
 	}
 
+	public List<Integer> getSpecialZbs(){
+		return specialZbs;
+	}
+	
 	@Override
 	public void onConfiguring(GszbPipe pipe) {
 		List<Company> allCompanies = pipe.getCompanies();
@@ -100,10 +77,6 @@ public class StandardConfigurator implements IPipeConfigurator {
 		List<Company> sbdCompanies = getSbdCompany(allCompanies);
 
 		DateHelper dh = new DateHelper(pipe.getDate());
-		IAccumulator sjAcc = new SjzbAccumulator(sjzbDao, yj20zbDao, yj28zbDao,
-				ydzbztDao);
-		IAccumulator yjhAcc = new YjhzbAccumulator(ydjhzbDao);
-		IAccumulator njhAcc = new NjhzbAccumulator(ndjhzbDao);
 
 		WclPipeFilter wclFilter = new WclPipeFilter();
 		ZzlPipeFilter tbzzFilter = new ZzlPipeFilter();
@@ -215,6 +188,34 @@ public class StandardConfigurator implements IPipeConfigurator {
 	@Override
 	public int getColumnCount() {
 		return 15;
+	}
+
+	/**
+	 * @return the sjAcc
+	 */
+	public IAccumulator getSjAcc() {
+		return sjAcc;
+	}
+
+	/**
+	 * @return the yjhAcc
+	 */
+	public IAccumulator getYjhAcc() {
+		return yjhAcc;
+	}
+
+	/**
+	 * @return the njhAcc
+	 */
+	public IAccumulator getNjhAcc() {
+		return njhAcc;
+	}
+
+	/**
+	 * @return the companyManager
+	 */
+	public CompanyManager getCompanyManager() {
+		return companyManager;
 	}
 
 }
