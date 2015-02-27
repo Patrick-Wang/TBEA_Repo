@@ -22,6 +22,10 @@ public class Util {
 				+ "-1");
 	}
 
+	public static boolean isZero(Double val){
+		return Math.abs(val) < 0.0000001;
+	}
+	
 	public static java.sql.Date toDate(Calendar d){
 		java.sql.Date ret = null;
 		if (d != null){

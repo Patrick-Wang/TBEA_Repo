@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.tbea.ic.operation.common.GSZB;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 
 
@@ -39,8 +40,12 @@ public class WclPipeFilter implements IPipeFilter {
 		Integer[] wcl = null;
 		for (int i = 0, len = wcls.size(); i < len; ++i) {
 			wcl = wcls.get(i);
-			if (zbRow[wcl[1]] < 0 || zbRow[wcl[2]] < 0 || Math.abs(zbRow[wcl[1]]) < 0.0000001
-					|| Math.abs(zbRow[wcl[2]]) < 0.0000001) {
+			if (null == zbRow[wcl[1]] || 
+				null == zbRow[wcl[2]] || 
+				zbRow[wcl[1]] < 0 || 
+				zbRow[wcl[2]] < 0 || 
+				Util.isZero(zbRow[wcl[1]]) || 
+				Util.isZero(zbRow[wcl[2]])) {
 				zbRow[wcl[0]] = null;
 			} else {
 				zbRow[wcl[0]] = zbRow[wcl[1]] / zbRow[wcl[2]];
