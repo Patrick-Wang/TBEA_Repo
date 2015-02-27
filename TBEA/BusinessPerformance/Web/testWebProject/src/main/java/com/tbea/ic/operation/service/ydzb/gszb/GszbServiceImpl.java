@@ -2,9 +2,12 @@ package com.tbea.ic.operation.service.ydzb.gszb;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -17,6 +20,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
+import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
@@ -24,6 +28,7 @@ import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
+import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.CompositeAccumulator;
@@ -57,8 +62,12 @@ public class GszbServiceImpl implements GszbService {
 	@Autowired
 	ZBXXDao zbxxDao;
 
+	@Autowired
+	DWXXDao dwxxDao;
+	
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
+	
 	private static List<Integer> gsztzbs = new ArrayList<Integer>();
 	static {
 		gsztzbs.add(GSZB.LRZE.getValue());
@@ -126,6 +135,28 @@ public class GszbServiceImpl implements GszbService {
 		srqyzbs.add(GSZB.DJBHCLPM.getValue());//电极箔化成量（平米）
 		srqyzbs.add(GSZB.LBD.getValue());//铝箔（吨）
 		srqyzbs.add(GSZB.DJBPM.getValue());//电极箔化成量（平米）
+	}
+	
+	private Set<Integer> addAll(Set<Integer> src, Set<ZBXX> dest){
+		for (ZBXX zbxx : dest){
+			src.add(zbxx.getId());
+		}
+		return src;
+	}
+	
+	private List<Integer> getAllZbs(List<Company> comps){
+		Set<Integer> zbSet = new HashSet<Integer>();
+		List<DWXX> dwxxs = dwxxDao.getDwxxs(comps);
+		for (DWXX dwxx : dwxxs){
+			addAll(zbSet, dwxx.getSjzbxxs());
+		}
+		Object[] key_arr = zbSet.toArray();   
+		Arrays.sort(key_arr);   
+		List<Integer> ret = new ArrayList<Integer>();
+		for(Object id : key_arr){
+			ret.add((Integer)id);
+		}
+		return ret;
 	}
 	
 
