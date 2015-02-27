@@ -586,7 +586,8 @@ public class GszbServiceImpl implements GszbService {
 		Double[] tempValues = null;
 		int length = 0;
 		List<List<Double[]>> result = new ArrayList<List<Double[]>>();
-
+		
+		
 		for (List<Double[]> JDZBMYList : values) {
 			for (Double[] JDZBMY : JDZBMYList) {
 				length = JDZBMY.length - 1;
@@ -597,6 +598,7 @@ public class GszbServiceImpl implements GszbService {
 				ret.add(tempValues);
 			}
 			result.add(ret);
+			ret = new ArrayList<Double[]>();
 		}
 
 		return makeGroupResult(result);

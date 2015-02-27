@@ -62,7 +62,7 @@ public class ConfiguratorFactory {
 	}
 	
 	public IPipeConfigurator getJdzbmyCompositeConfigurator(CompositeAccumulator acc) {
-		return new ZtzbCompositeConfigurator(acc);
+		return new JDZBMYCompositeConfigurator(acc);
 	}
 	
 }

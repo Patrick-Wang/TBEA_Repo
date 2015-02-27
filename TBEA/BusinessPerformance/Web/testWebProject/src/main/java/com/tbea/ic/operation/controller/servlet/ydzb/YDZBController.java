@@ -260,4 +260,44 @@ public class YDZBController {
 		dateSel.select(map);
 		return new ModelAndView("hzb_zbhz_Prediction", map);
 	}
+	
+	
+	
+	//财务指标预测
+		@RequestMapping(value = "financial_zbhz_prediction_update.do", method = RequestMethod.GET)
+		public  @ResponseBody byte[] getfinancial_zbhz_prediction_update(HttpServletRequest request,
+				HttpServletResponse response) throws UnsupportedEncodingException {
+			Date d = DateSelection.getDate(request);
+			String month = request.getParameter("month");
+			int iMonth = Integer.valueOf(month);
+			String financial_zbhz_prediction = null;
+			if (0 == iMonth % 3)
+			{
+				financial_zbhz_prediction = JSONArray.fromObject(gszbService.getGcyJDZBMY(d)).toString().replace("null", "\"--\"");
+				
+			}
+			
+			if (1 == iMonth % 3)
+			{
+				financial_zbhz_prediction = JSONArray.fromObject(gszbService.getFirstSeasonPredictionZBsOverview(d)).toString().replace("null", "\"--\"");
+			}
+			
+			if (2 == iMonth % 3)
+			{
+				financial_zbhz_prediction = JSONArray.fromObject(gszbService.getJDZBMY(d)).toString().replace("null", "\"--\"");
+			}
+			//String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
+			
+			return financial_zbhz_prediction.getBytes("utf-8");
+		}
+		
+		@RequestMapping(value = "financial_zbhz_prediction.do", method = RequestMethod.GET)
+		public ModelAndView gethzb_company(HttpServletRequest request,
+				HttpServletResponse response) {
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			DateSelection dateSel = new DateSelection();
+			dateSel.select(map);
+			return new ModelAndView("financial_zbhz_prediction", map);
+		}
 }

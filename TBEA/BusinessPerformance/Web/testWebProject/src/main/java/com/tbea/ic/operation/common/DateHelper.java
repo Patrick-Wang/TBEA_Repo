@@ -26,7 +26,8 @@ public class DateHelper {
 		this.cur = date;
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		cal.add(Calendar.MONTH, -(cal.get(Calendar.MONTH) + 1) % 3 + 1);
+		int left = (cal.get(Calendar.MONTH) + 1) % 3;
+		cal.add(Calendar.MONTH,0 == left ? -2 : (-left + 1));
 		jdStart = Util.toDate(cal);
 
 		cal.setTime(jdStart);
