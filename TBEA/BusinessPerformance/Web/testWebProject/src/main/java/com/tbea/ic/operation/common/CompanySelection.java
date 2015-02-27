@@ -81,7 +81,7 @@ public class CompanySelection {
 		
 	}
 	
-	private List<Company> FilterCompanys(List<Company> comps){
+	private List<Company> filterCompanys(List<Company> comps){
 		List<Company> passedComps = new ArrayList<Company>();
 		passedComps = new ArrayList<Company>();
 		Company tmpComp;
@@ -114,6 +114,38 @@ public class CompanySelection {
 		return nodes;
 	}
 	
+	private List<DataNode> select(List<Company> topComps, int depth){
+		if (0 == depth){
+			return null;
+		}
+		List<DataNode> nodes = new ArrayList<DataNode>();
+		DataNode node;
+		Company topComp;
+		for (int i = 0; i < topComps.size(); ++i) {
+			topComp = topComps.get(i);
+			List<DataNode> subNodes = select(topComp.getSubCompanys(), depth - 1);
+			if (null != subNodes) {
+				node = bind(topComp);
+				nodes.add(node);
+				node.getSubNodes().addAll(subNodes);
+				if (mFilter.keep(topComp)) {
+					DataNode nodeTmp = bind(topComp);
+					nodeTmp.getData().setValue(topComp.getName() + "本部");
+					node.getSubNodes().add(nodeTmp);
+				}
+			} else if (mFilter.keep(topComp)) {
+				node = bind(topComp);
+				nodes.add(node);
+			}
+		}
+		return nodes;
+	}
+	
+	public void select(Map<String, Object> map, int depth){
+		List<DataNode> nodes = select(mTopComps, depth);
+		map.put("nodeData", JSONArray.fromObject(nodes).toString());
+	}
+	
 	public void select(Map<String, Object> map){
 		List<Company> topComps = new ArrayList<Company>();
 		List<String[][]> subComps = new ArrayList<String[][]>();
@@ -124,7 +156,7 @@ public class CompanySelection {
 		for (int i = 0; i < mTopComps.size(); ++i){
 			tmpComp = mTopComps.get(i);
 			
-			passedComps = FilterCompanys(tmpComp.getSubCompanys());
+			passedComps = filterCompanys(tmpComp.getSubCompanys());
 			
 			if (!passedComps.isEmpty()){
 				
@@ -178,7 +210,7 @@ public class CompanySelection {
 		} else {
 			for (int i = 0; i < mTopComps.size(); ++i) {
 				topComp = mTopComps.get(i);
-				passedComps = FilterCompanys(topComp.getSubCompanys());
+				passedComps = filterCompanys(topComp.getSubCompanys());
 				if (!passedComps.isEmpty()) {
 					List<DataNode> subNodes = bind(passedComps);
 					node = bind(topComp);
