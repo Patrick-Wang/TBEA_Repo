@@ -28,7 +28,7 @@ import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.CompositeAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.CompositeConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.ZtzbCompositeConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.FirstSeasonPredictionConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.JDZBMYConfigurator;
@@ -221,7 +221,7 @@ public class GszbServiceImpl implements GszbService {
 			acc.addSrc(comp, topfivezbs, ret);
 		}
 
-		config = new CompositeConfigurator(acc);
+		config = new ZtzbCompositeConfigurator(acc);
 		pipe = new GszbPipe(topfivezbs, gfhj, date, config);
 		List<Double[]> gfhjZbs = pipe.getGszb();
 		values.add(gfhjZbs);
@@ -237,7 +237,7 @@ public class GszbServiceImpl implements GszbService {
 		List<Company> jthj = new ArrayList<Company>();
 		jthj.add(org.getCompany(CompanyType.GFGS));
 		jthj.add(org.getCompany(CompanyType.ZHGS_SYB));
-		config = new CompositeConfigurator(acc);
+		config = new ZtzbCompositeConfigurator(acc);
 		pipe = new GszbPipe(topfivezbs, jthj, date, config);
 		List<Double[]> jthjZbs = pipe.getGszb();
 		values.add(jthjZbs);
@@ -346,7 +346,7 @@ public class GszbServiceImpl implements GszbService {
 		sbdgs.add(org.getCompany(CompanyType.LLGS));
 		sbdgs.add(org.getCompany(CompanyType.XLC));
 		sbdgs.add(org.getCompany(CompanyType.DLGS));
-		config = new CompositeConfigurator(acc);
+		config = new ZtzbCompositeConfigurator(acc);
 		pipe = new GszbPipe(gsTop5zb.getValue(), sbdgs, date, config);
 		List<Double[]> sbdhjZbs = pipe.getGszb();
 		acc.addSrc(org.getCompany(CompanyType.SBDCYJT), gsTop5zb.getValue(), sbdhjZbs.get(0));
@@ -355,7 +355,7 @@ public class GszbServiceImpl implements GszbService {
 		List<Company> xnygs = new ArrayList<Company>();
 		xnygs.add(org.getCompany(CompanyType.XTNYGS));
 		xnygs.add(org.getCompany(CompanyType.XNYGS));
-		config = new CompositeConfigurator(acc);
+		config = new ZtzbCompositeConfigurator(acc);
 		pipe = new GszbPipe(gsTop5zb.getValue(), xnygs, date, config);
 		List<Double[]> xnyhjZbs = pipe.getGszb();
 		acc.addSrc(org.getCompany(CompanyType.XNYSYB), gsTop5zb.getValue(), xnyhjZbs.get(0));
@@ -364,7 +364,7 @@ public class GszbServiceImpl implements GszbService {
 		List<Company> nygs = new ArrayList<Company>();
 		nygs.add(org.getCompany(CompanyType.TCNY));
 		nygs.add(org.getCompany(CompanyType.NDGS));
-		config = new CompositeConfigurator(acc);
+		config = new ZtzbCompositeConfigurator(acc);
 		pipe = new GszbPipe(gsTop5zb.getValue(), nygs, date, config);
 		List<Double[]> nyhjZbs = pipe.getGszb();
 		acc.addSrc(org.getCompany(CompanyType.NYSYB), gsTop5zb.getValue(), nyhjZbs.get(0));
@@ -373,7 +373,7 @@ public class GszbServiceImpl implements GszbService {
 		List<Company> gcgs = new ArrayList<Company>();
 		gcgs.add(org.getCompany(CompanyType.JCKGS_SYB));
 		gcgs.add(org.getCompany(CompanyType.GJGCGS_SYB));
-		config = new CompositeConfigurator(acc);
+		config = new ZtzbCompositeConfigurator(acc);
 		pipe = new GszbPipe(gsTop5zb.getValue(), gcgs, date, config);
 		List<Double[]> gcgshjZbs = pipe.getGszb();
 		acc.addSrc(org.getCompany(CompanyType.GJGCGS_SYB), gsTop5zb.getValue(), gcgshjZbs.get(0));
@@ -383,7 +383,7 @@ public class GszbServiceImpl implements GszbService {
 		gfgs.add(org.getCompany(CompanyType.XNYSYB));
 		gfgs.add(org.getCompany(CompanyType.NYSYB));
 		gfgs.add(org.getCompany(CompanyType.GJGCGS_SYB));
-		config = new CompositeConfigurator(acc);
+		config = new ZtzbCompositeConfigurator(acc);
 		pipe = new GszbPipe(gsTop5zb.getValue(), gfgs, date, config);
 		List<Double[]> gfgshjZbs = pipe.getGszb();
 		acc.addSrc(org.getCompany(CompanyType.GFGS), gsTop5zb.getValue(), gfgshjZbs.get(0));
@@ -394,7 +394,7 @@ public class GszbServiceImpl implements GszbService {
 		jtgs.add(org.getCompany(CompanyType.GFGS));
 		jtgs.add(org.getCompany(CompanyType.ZHGS_SYB));
 
-		config = new CompositeConfigurator(acc);
+		config = new ZtzbCompositeConfigurator(acc);
 		pipe = new GszbPipe(gsTop5zb.getValue(), jtgs, date, config);
 		List<Double[]> jtgshjZbs = pipe.getGszb();
 

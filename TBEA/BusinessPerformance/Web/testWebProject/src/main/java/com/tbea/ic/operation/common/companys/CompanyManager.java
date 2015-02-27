@@ -220,11 +220,15 @@ public class CompanyManager {
 	Organization BM = new BMDepartment();
 	Organization zbhz = new OperationZBHZ(new OperationDepartment());
 	
-	@Resource(type=BMDepartmentDB.class)
 	Organization BMDB;
-	
-	Organization virtualYSZK = new VirtualYSZKOrganization(new BMDepartment());
+	Organization virtualYSZK;
  
+	@Resource(type=BMDepartmentDB.class)
+	public void setBMDBOrganization(Organization org) {
+		BMDB = org;
+		virtualYSZK = new VirtualYSZKOrganization(BMDB);
+	}
+	
 	
 	public Organization getVirtualYSZKOrganization() {
 		return virtualYSZK;
