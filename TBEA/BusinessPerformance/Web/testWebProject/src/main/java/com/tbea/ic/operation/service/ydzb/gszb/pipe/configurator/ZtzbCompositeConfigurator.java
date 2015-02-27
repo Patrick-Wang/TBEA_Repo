@@ -14,6 +14,7 @@ import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.SpecialPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
 
+//总体指标
 public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 
 	private IAccumulator acc;
