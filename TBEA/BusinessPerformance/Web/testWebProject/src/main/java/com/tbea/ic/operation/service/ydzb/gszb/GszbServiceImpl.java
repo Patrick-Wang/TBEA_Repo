@@ -29,7 +29,6 @@ import com.tbea.ic.operation.service.ydzb.gszb.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.CompositeAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.ConfiguratorFactory;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.ZtzbCompositeConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.SrqyConfigurator;
 
