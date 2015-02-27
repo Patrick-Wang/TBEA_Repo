@@ -6,7 +6,25 @@ module hzb_zbhz {
 
     class JQGridAssistantFactory {
 
-        public static createTable(gridName: string, month: number): JQTable.JQGridAssistant {
+         public static createSrqyTable(gridName: string): JQTable.JQGridAssistant {
+            return new JQTable.JQGridAssistant([
+                new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),  
+                new JQTable.Node("当期", "dq")
+                    .append(new JQTable.Node("全年计划", "1"))
+                    .append(new JQTable.Node("当月计划", "2"))
+                    .append(new JQTable.Node("当月实际", "3"))
+                    .append(new JQTable.Node("计划完成率", "4"))
+                    .append(new JQTable.Node("累计完成", "5"))
+                    .append(new JQTable.Node("累计完成率", "6")),
+                new JQTable.Node("去年", "qn")
+                    .append(new JQTable.Node("去年同期值", "7"))
+                    .append(new JQTable.Node("同比增长率", "8"))
+                    .append(new JQTable.Node("去年同期累计", "9"))
+                    .append(new JQTable.Node("同比增长率", "10"))
+            ], gridName);
+        }
+        
+        public static createTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                 new JQTable.Node("全年计划", "qnjh"),
@@ -46,6 +64,7 @@ module hzb_zbhz {
         private mData: Array<string[]> = [];
         private mDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_update.do");
         private mTableId : string;
+        private mType : number = 0;
         public init(tableId: string, month: number, year: number): void {
             this.mYear = year;
             this.mMonth = month;
@@ -62,8 +81,12 @@ module hzb_zbhz {
         	this.mMonth = month;
         }
         
+        public onTypeSelected(ty : number){
+            this.mType = ty;
+        }
+        
         public updateUI() {
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear })
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, type : this.mType })
                 .then((dataArray: any) => {
 
                     this.mData = dataArray;
@@ -74,30 +97,38 @@ module hzb_zbhz {
                 });
         }
         private updateTable(): void {
-        	var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mMonth);
+            var name = this.mTableId + "_jqgrid_1234";
+            var tableAssist: JQTable.JQGridAssistant = null;
             var data = [];
+            if (0 == this.mType) {
+                tableAssist = JQGridAssistantFactory.createTable(name);
+                var row = [];
+                for (var i = 0; i < this.mData.length; ++i) {
+                        row = [].concat(this.mData[i]);
+                        //                    for (var col in row) {
+                        //                        if (col != '2' && col != '4' && col != '6' && col != '8' && col != '10') {
+                        //                            row[col] = Util.formatCurrency(row[col]);
+                        //                        }
+                        //                    }
+                        data.push(row);
+                }
+            } else {
+                tableAssist = JQGridAssistantFactory.createSrqyTable(name);
+                var row = [];
+                for (var i = 0; i < this.mData.length; ++i) {
 
-
-//            for (var i = 0; i < data.length; ++i) {
-//                if (this.mData[i] instanceof Array) {
-//                    data[i] = data[i].concat(this.mData[i]);
-//                }
-//            }
-
- 			var row = [];
-            for (var i = 0; i < data.length; ++i) {
-                if (this.mData[i] instanceof Array) {
-                    //row = [].concat(this.mData[i]);
-//                    for (var col in row) {
-//                        if (col != '2' && col != '4' && col != '6' && col != '8' && col != '10') {
-//                            row[col] = Util.formatCurrency(row[col]);
-//                        }
-//                    }
-                    data.push(row);
-                    //data[i] = data[i].concat(row);
+                        row = [].concat(this.mData[i]);
+                        //                    for (var col in row) {
+                        //                        if (col != '2' && col != '4' && col != '6' && col != '8' && col != '10') {
+                        //                            row[col] = Util.formatCurrency(row[col]);
+                        //                        }
+                        //                    }
+                        data.push(row);
                 }
             }
+            
+
+
 
 			var parent = $("#" + this.mTableId);
 			parent.empty();
@@ -106,7 +137,7 @@ module hzb_zbhz {
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
-                    data: tableAssist.getData(this.mData),
+                    data: tableAssist.getData(data),
                     datatype: "local",
                     multiselect: false,
                     drag: false,
@@ -114,10 +145,10 @@ module hzb_zbhz {
                     //autowidth : false,
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
-                    height: '100%',
+                    height: data.length > 23 ? 500 : '100%',
                     width: 1200,
                     shrinkToFit: true,
-                    rowNum: 100,
+                    rowNum: 200,
                     autoScroll: true
                 }));
 

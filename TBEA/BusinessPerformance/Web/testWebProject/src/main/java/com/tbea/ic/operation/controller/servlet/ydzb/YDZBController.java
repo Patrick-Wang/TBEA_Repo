@@ -47,8 +47,13 @@ public class YDZBController {
 	public @ResponseBody byte[] getHzb_zbhz_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
-		String hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d)).toString().replace("null", "\"--\"");
-		//List<String[]> ret = gszbService.getSrqy(d);
+		String type = request.getParameter("type");
+		String hzb_zbhz;
+		if ("0".equals(type)){
+			hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d)).toString().replace("null", "\"--\"");
+		} else{
+			hzb_zbhz = JSONArray.fromObject(gszbService.getSrqy(d)).toString().replace("null", "\"--\"");
+		}
 		return hzb_zbhz.getBytes("utf-8");
 	}
 	

@@ -154,6 +154,14 @@
 					<tr>
 						<td><%@include file="date_selection.jsp"%>
 						</td>
+						<td>
+						<select
+							onchange="instance.onTypeSelected(this.value)"
+							style="width: 125px;">
+								<option value="0" selected="selected">全部</option>
+								<option value="1">收入签约分结构</option>4
+						</select>
+						</td>
 						<td><input type="button" value="更新" style="width : 80px; margin-left:10px;"
 							onclick="instance.updateUI()"></input>
 				</Table>
