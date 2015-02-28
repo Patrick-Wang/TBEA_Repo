@@ -34,7 +34,7 @@ import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
 @RequestMapping(value = "ydzb")
 public class YDZBController {
 
-	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
 	@Autowired
@@ -42,269 +42,310 @@ public class YDZBController {
 
 	@Autowired
 	private GszbService gszbService;
-	
+
 	@RequestMapping(value = "hzb_zbhz_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getHzb_zbhz_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
 		String type = request.getParameter("type");
 		String hzb_zbhz;
-		if ("0".equals(type)){
-			hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d)).toString().replace("null", "\"--\"");
-		} else{
-			hzb_zbhz = JSONArray.fromObject(gszbService.getSrqy(d)).toString().replace("null", "\"--\"");
+		if ("0".equals(type)) {
+			hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d))
+					.toString().replace("null", "\"--\"");
+		} else {
+			hzb_zbhz = JSONArray.fromObject(gszbService.getSrqy(d)).toString()
+					.replace("null", "\"--\"");
 		}
 		return hzb_zbhz.getBytes("utf-8");
 	}
-	
+
 	@RequestMapping(value = "hzb_zbhz.do", method = RequestMethod.GET)
 	public ModelAndView getGszb_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		DateSelection dateSel = new DateSelection(service.getLatestHzbDate(), true, false);
+		DateSelection dateSel = new DateSelection(service.getLatestHzbDate(),
+				true, false);
 		dateSel.select(map);
 		return new ModelAndView("hzb_zbhz", map);
 	}
-	
+
 	@RequestMapping(value = "hzb_companys_update.do", method = RequestMethod.GET)
-	public @ResponseBody byte[] getHzb_companys_update(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
+	public @ResponseBody byte[] getHzb_companys_update(
+			HttpServletRequest request, HttpServletResponse response)
+			throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
 		CompanyType compType = CompanySelection.getCompany(request);
-//		String type = request.getParameter("type");
+		// String type = request.getParameter("type");
 		String hzb_zbhz = "[[]]";
-//		if ("0".equals(type)){
-			hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d)).toString().replace("null", "\"--\"");
-//		} else{
-//			hzb_zbhz = JSONArray.fromObject(gszbService.getSrqy(d)).toString().replace("null", "\"--\"");
-//		}
+		// if ("0".equals(type)){
+		hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d)).toString()
+				.replace("null", "\"--\"");
+		// } else{
+		// hzb_zbhz =
+		// JSONArray.fromObject(gszbService.getSrqy(d)).toString().replace("null",
+		// "\"--\"");
+		// }
 		return hzb_zbhz.getBytes("utf-8");
 	}
-	
+
 	@RequestMapping(value = "hzb_companys.do", method = RequestMethod.GET)
 	public ModelAndView getHzb_companys(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
+		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true,
+				false);
 		dateSel.select(map);
 		Organization org = companyManager.getVirtualJYZBOrganization();
-		
-		CompanySelection compSel = new CompanySelection(false, org.getTopCompany(), new CompanySelection.Filter(){
-			Organization org = companyManager.getVirtualJYZBOrganization();
-			@Override
-			public boolean keep(Company comp) {
-				return 
-//						(comp.getType() != CompanyType.SBGS) &&
-//						(comp.getType() != CompanyType.HBGS) &&
-//						(comp.getType() != CompanyType.XBC) &&
-//						(comp.getType() != CompanyType.DLGS) &&
-//						(comp.getType() != CompanyType.XLC) &&
-//						(comp.getType() != CompanyType.LLGS) &&
-//						(comp.getType() != CompanyType.XNYGS) &&
-//						(comp.getType() != CompanyType.XTNYGS) &&
-//						(comp.getType() != CompanyType.NDGS) &&
-//						(comp.getType() != CompanyType.TCNY) &&
-//						!org.getTopCompany().contains(comp) &&
-						comp.getParentCompany() == null ||(
-						null != comp.getParentCompany() &&
-						comp.getParentCompany().getType() != CompanyType.BYQCY &&
-						comp.getParentCompany().getType() != CompanyType.XLCY &&
-						comp.getParentCompany().getType() != CompanyType.DBSBDCYJT &&
-						comp.getParentCompany().getType() != CompanyType.NFSBDCYJT &&
-						comp.getParentCompany().getType() != CompanyType.XJNY);
-			}
-			
-		});
+
+		CompanySelection compSel = new CompanySelection(false,
+				org.getTopCompany(), new CompanySelection.Filter() {
+					Organization org = companyManager
+							.getVirtualJYZBOrganization();
+
+					@Override
+					public boolean keep(Company comp) {
+						return
+						// (comp.getType() != CompanyType.SBGS) &&
+						// (comp.getType() != CompanyType.HBGS) &&
+						// (comp.getType() != CompanyType.XBC) &&
+						// (comp.getType() != CompanyType.DLGS) &&
+						// (comp.getType() != CompanyType.XLC) &&
+						// (comp.getType() != CompanyType.LLGS) &&
+						// (comp.getType() != CompanyType.XNYGS) &&
+						// (comp.getType() != CompanyType.XTNYGS) &&
+						// (comp.getType() != CompanyType.NDGS) &&
+						// (comp.getType() != CompanyType.TCNY) &&
+						// !org.getTopCompany().contains(comp) &&
+						comp.getParentCompany() == null
+								|| (null != comp.getParentCompany()
+										&& comp.getParentCompany().getType() != CompanyType.BYQCY
+										&& comp.getParentCompany().getType() != CompanyType.XLCY
+										&& comp.getParentCompany().getType() != CompanyType.DBSBDCYJT
+										&& comp.getParentCompany().getType() != CompanyType.NFSBDCYJT && comp
+										.getParentCompany().getType() != CompanyType.XJNY);
+					}
+
+				});
 		compSel.select(map, 3);
 		return new ModelAndView("hzb_companys", map);
 	}
-	
-	
+
 	@RequestMapping(value = "gcy_zbhz_update.do", method = RequestMethod.GET)
-	public @ResponseBody String getGcy_zbhz_update( HttpServletRequest request,
+	public @ResponseBody String getGcy_zbhz_update(HttpServletRequest request,
 			HttpServletResponse response) {
 		Date d = DateSelection.getDate(request);
-		//String gcy_zbhz = JSONArray.fromObject(service.getGcy_zbhzData(d)).toString().replace("null", "0.00");
-		String gcy_zbhz = JSONArray.fromObject(gszbService.getGcyzb(d)).toString().replace("null", "\"--\"");
+		// String gcy_zbhz =
+		// JSONArray.fromObject(service.getGcy_zbhzData(d)).toString().replace("null",
+		// "0.00");
+		String gcy_zbhz = JSONArray.fromObject(gszbService.getGcyzb(d))
+				.toString().replace("null", "\"--\"");
 		return gcy_zbhz;
 	}
-	
+
 	@RequestMapping(value = "gcy_zbhz.do", method = RequestMethod.GET)
 	public ModelAndView getGcy_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		DateSelection dateSel = new DateSelection(service.getLatestGcyDate(), true, false);
+		DateSelection dateSel = new DateSelection(service.getLatestGcyDate(),
+				true, false);
 		dateSel.select(map);
 		return new ModelAndView("gcy_zbhz", map);
 	}
-	
-	
+
 	@RequestMapping(value = "gdw_zbhz_update.do", method = RequestMethod.GET)
-	public  @ResponseBody String getGdw_zbhz_update(HttpServletRequest request,
+	public @ResponseBody String getGdw_zbhz_update(HttpServletRequest request,
 			HttpServletResponse response) {
 		Date d = DateSelection.getDate(request);
-		//String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
+		// String gdw_zbhz =
+		// JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null",
+		// "0.00");
 		String gszb = request.getParameter("zb");
-		String gdw_zbhz = JSONArray.fromObject(gszbService.getCompanyTop5zb(GSZB.valueOf(Integer.valueOf(gszb)), d)).toString().replace("null", "\"--\"");
+		String gdw_zbhz = JSONArray
+				.fromObject(
+						gszbService.getCompanyTop5zb(
+								GSZB.valueOf(Integer.valueOf(gszb)), d))
+				.toString().replace("null", "\"--\"");
 		return gdw_zbhz;
 	}
-	
+
 	@RequestMapping(value = "gdw_zbhz.do", method = RequestMethod.GET)
 	public ModelAndView getGdw_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
-//		Calendar now = Calendar.getInstance();  
-//		int month = now.get(Calendar.MONTH) + 1;
-//		int year = now.get(Calendar.YEAR);
-//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("month", month);
-//		map.put("year", year);
+		// Calendar now = Calendar.getInstance();
+		// int month = now.get(Calendar.MONTH) + 1;
+		// int year = now.get(Calendar.YEAR);
+		// Date d = java.sql.Date.valueOf(year + "-" + month + "-" +
+		// now.get(Calendar.DAY_OF_MONTH));
+		// Map<String, Object> map = new HashMap<String, Object>();
+		// map.put("month", month);
+		// map.put("year", year);
 		String gszb = request.getParameter("zb");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("zb", gszb);
-		DateSelection dateSel = new DateSelection(service.getLatestGcyDate(), true, false);
+		DateSelection dateSel = new DateSelection(service.getLatestGcyDate(),
+				true, false);
 		dateSel.select(map);
 		return new ModelAndView("gdw_zbhz", map);
 	}
 
-	
 	@RequestMapping(value = "xjlrb_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getXjlrb_update(HttpServletRequest request,
 			HttpServletResponse response) {
-//		int month = Integer.parseInt(request.getParameter("month"));
-//		int year = Integer.parseInt(request.getParameter("year"));
-//		int day = Integer.parseInt(request.getParameter("day"));
+		// int month = Integer.parseInt(request.getParameter("month"));
+		// int year = Integer.parseInt(request.getParameter("year"));
+		// int day = Integer.parseInt(request.getParameter("day"));
 		Date d = DateSelection.getDate(request);
-		String xjlrb = JSONArray.fromObject(service.getXjlrbData(d)).toString().replace("null", "0.00");
+		String xjlrb = JSONArray.fromObject(service.getXjlrbData(d)).toString()
+				.replace("null", "0.00");
 		return xjlrb;
 	}
-	
+
 	@RequestMapping(value = "xjlrb.do", method = RequestMethod.GET)
 	public ModelAndView getXjlrb(HttpServletRequest request,
 			HttpServletResponse response) {
-//		Calendar now = Calendar.getInstance();  
-//		int month = now.get(Calendar.MONTH) + 1;
-//		int year = now.get(Calendar.YEAR);
-//		int day = now.get(Calendar.DAY_OF_MONTH);
-//		int dayCount = now.getActualMaximum(Calendar.DAY_OF_MONTH);
+		// Calendar now = Calendar.getInstance();
+		// int month = now.get(Calendar.MONTH) + 1;
+		// int year = now.get(Calendar.YEAR);
+		// int day = now.get(Calendar.DAY_OF_MONTH);
+		// int dayCount = now.getActualMaximum(Calendar.DAY_OF_MONTH);
 		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("month", month);
-//		map.put("year", year);
-//		map.put("day",  day);
-//		map.put("dayCount",  dayCount);
-		
+		// map.put("month", month);
+		// map.put("year", year);
+		// map.put("day", day);
+		// map.put("dayCount", dayCount);
+
 		DateSelection dateSel = new DateSelection(service.getLatestXjlDate());
 		dateSel.select(map);
-		
-		
+
 		return new ModelAndView("xjlrb", map);
 	}
-	
-	
-//	@RequestMapping(value = "yszkrb_qkb.do", method = RequestMethod.GET)
-//	public ModelAndView getYszkrb_qkb(HttpServletRequest request,
-//			HttpServletResponse response) {
-//		Calendar now = Calendar.getInstance();  
-//		int month = now.get(Calendar.MONTH) + 1;
-//		int year = now.get(Calendar.YEAR);
-//		Date d = java.sql.Date.valueOf(year + "-" + month + "-" + now.get(Calendar.DAY_OF_MONTH));
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("month", month);
-//		map.put("year", year);
-//		String yszkrb_qkb = JSONArray.fromObject(service.getYszkrb_qkbData(d)).toString().replace("null", "0.00");
-//		map.put("yszkrb_qkb", yszkrb_qkb);
-//		return new ModelAndView("yszkrb_qkb", map);
-//	}
-	
-	
-	private String getZbhz_overviewData(Date d, int companyId, String zbid){
+
+	// @RequestMapping(value = "yszkrb_qkb.do", method = RequestMethod.GET)
+	// public ModelAndView getYszkrb_qkb(HttpServletRequest request,
+	// HttpServletResponse response) {
+	// Calendar now = Calendar.getInstance();
+	// int month = now.get(Calendar.MONTH) + 1;
+	// int year = now.get(Calendar.YEAR);
+	// Date d = java.sql.Date.valueOf(year + "-" + month + "-" +
+	// now.get(Calendar.DAY_OF_MONTH));
+	// Map<String, Object> map = new HashMap<String, Object>();
+	// map.put("month", month);
+	// map.put("year", year);
+	// String yszkrb_qkb =
+	// JSONArray.fromObject(service.getYszkrb_qkbData(d)).toString().replace("null",
+	// "0.00");
+	// map.put("yszkrb_qkb", yszkrb_qkb);
+	// return new ModelAndView("yszkrb_qkb", map);
+	// }
+
+	private String getZbhz_overviewData(Date d, int companyId, String zbid) {
 
 		Organization org = companyManager.getOperationOrganization();
 		Company comp = org.getCompany(CompanyType.valueOf(companyId));
 
-		String zbhz_overview_yd = JSONArray.fromObject(service.getYdZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
-		String zbhz_overview_jd = JSONArray.fromObject(service.getJdZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
-		String zbhz_overview_nd = JSONArray.fromObject(service.getNdZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
-		String zbhz_overview_ydtb = JSONArray.fromObject(service.getYdtbZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
-		String zbhz_overview_jdtb = JSONArray.fromObject(service.getJdtbZbhz_overviewData(d, comp, zbid)).toString().replace("null", "0.00");
-		
-		return "{\"yd\":" + zbhz_overview_yd + ", \"jd\" : " + zbhz_overview_jd + ", \"nd\":"+ zbhz_overview_nd +" , \"ydtb\":"+ zbhz_overview_ydtb +", \"jdtb\":" + zbhz_overview_jdtb + "}";
+		String zbhz_overview_yd = JSONArray
+				.fromObject(service.getYdZbhz_overviewData(d, comp, zbid))
+				.toString().replace("null", "0.00");
+		String zbhz_overview_jd = JSONArray
+				.fromObject(service.getJdZbhz_overviewData(d, comp, zbid))
+				.toString().replace("null", "0.00");
+		String zbhz_overview_nd = JSONArray
+				.fromObject(service.getNdZbhz_overviewData(d, comp, zbid))
+				.toString().replace("null", "0.00");
+		String zbhz_overview_ydtb = JSONArray
+				.fromObject(service.getYdtbZbhz_overviewData(d, comp, zbid))
+				.toString().replace("null", "0.00");
+		String zbhz_overview_jdtb = JSONArray
+				.fromObject(service.getJdtbZbhz_overviewData(d, comp, zbid))
+				.toString().replace("null", "0.00");
+
+		return "{\"yd\":" + zbhz_overview_yd + ", \"jd\" : " + zbhz_overview_jd
+				+ ", \"nd\":" + zbhz_overview_nd + " , \"ydtb\":"
+				+ zbhz_overview_ydtb + ", \"jdtb\":" + zbhz_overview_jdtb + "}";
 	}
-	
+
 	@RequestMapping(value = "zbhz_overview_update.do", method = RequestMethod.GET)
 	public @ResponseBody String updateZbhz_overview(HttpServletRequest request,
 			HttpServletResponse response) {
 		String companyId = request.getParameter("companyId");
-		if (companyId == null){
+		if (companyId == null) {
 			companyId = CompanyType.JT.ordinal() + "";
 		}
-		
+
 		int cid = Integer.parseInt(companyId);
 		String zb = request.getParameter("zb");
-		if (zb == null){
+		if (zb == null) {
 			zb = "5";
 		}
-		
+
 		Date d = service.getLatestGcyDate();
 		return getZbhz_overviewData(d, cid, zb);
 	}
-	
-	
-	
+
 	@RequestMapping(value = "zbhz_overview.do", method = RequestMethod.GET)
 	public ModelAndView getZbhz_overview(HttpServletRequest request,
 			HttpServletResponse response) {
-		
+
 		String zb = request.getParameter("zb");
-		if (zb == null){
+		if (zb == null) {
 			zb = "5";
 		}
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		DateSelection dateSel = new DateSelection(service.getLatestGcyDate(), true, false);
+		DateSelection dateSel = new DateSelection(service.getLatestGcyDate(),
+				true, false);
 		dateSel.select(map);
 
 		map.put("zbid", zb);
 		map.put("zbmc", service.getZbmc(zb));
-			
+
 		Organization org = companyManager.getOperationZBHZOrganization();
-		
-		CompanySelection compSel = new CompanySelection(false, org.getTopCompany());
+
+		CompanySelection compSel = new CompanySelection(false,
+				org.getTopCompany());
 		compSel.select(map);
 
 		return new ModelAndView("zbhz_overview", map);
 	}
-	
-	//整体指标预测
+
+	// 整体指标预测
 	@RequestMapping(value = "hzb_zbhz_prediction_update.do", method = RequestMethod.GET)
-	public  @ResponseBody byte[] gethzb_zbhz_prediction_update(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
+	public @ResponseBody byte[] gethzb_zbhz_prediction_update(
+			HttpServletRequest request, HttpServletResponse response)
+			throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
 		String month = request.getParameter("month");
 		int iMonth = Integer.valueOf(month);
 		String hzb_zbhz_prediction = null;
-		if (0 == iMonth % 3)
-		{
-			hzb_zbhz_prediction = JSONArray.fromObject(gszbService.getJDZBMY(d)).toString().replace("null", "\"--\"");
+		if (0 == iMonth % 3) {
+			hzb_zbhz_prediction = JSONArray
+					.fromObject(gszbService.getJDZBMY(d)).toString()
+					.replace("null", "\"--\"");
 		}
-		
-		if (1 == iMonth % 3)
-		{
-			hzb_zbhz_prediction = JSONArray.fromObject(gszbService.getFirstSeasonPredictionZBsOverview(d)).toString().replace("null", "\"--\"");
+
+		if (1 == iMonth % 3) {
+			hzb_zbhz_prediction = JSONArray
+					.fromObject(
+							gszbService.getFirstSeasonPredictionZBsOverview(d))
+					.toString().replace("null", "\"--\"");
 		}
-		
-		if (2 == iMonth % 3)
-		{
-			hzb_zbhz_prediction = JSONArray.fromObject(gszbService.getSecondSeasonPredictionZBsOverview(d)).toString().replace("null", "\"--\"");
+
+		if (2 == iMonth % 3) {
+			hzb_zbhz_prediction = JSONArray
+					.fromObject(
+							gszbService.getSecondSeasonPredictionZBsOverview(d))
+					.toString().replace("null", "\"--\"");
 		}
-		//String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
-		
+		// String gdw_zbhz =
+		// JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null",
+		// "0.00");
+
 		return hzb_zbhz_prediction.getBytes("utf-8");
 	}
-	
+
 	@RequestMapping(value = "hzb_zbhz_prediction.do", method = RequestMethod.GET)
 	public ModelAndView gethzb_zbhz_prediction(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -314,44 +355,49 @@ public class YDZBController {
 		dateSel.select(map);
 		return new ModelAndView("hzb_zbhz_Prediction", map);
 	}
-	
-	
-	
-	//财务指标预测
-		@RequestMapping(value = "financial_zbhz_prediction_update.do", method = RequestMethod.GET)
-		public  @ResponseBody byte[] getfinancial_zbhz_prediction_update(HttpServletRequest request,
-				HttpServletResponse response) throws UnsupportedEncodingException {
-			Date d = DateSelection.getDate(request);
-			String month = request.getParameter("month");
-			int iMonth = Integer.valueOf(month);
-			String financial_zbhz_prediction = null;
-			if (0 == iMonth % 3)
-			{
-				financial_zbhz_prediction = JSONArray.fromObject(gszbService.getGcyJDZBMY(d)).toString().replace("null", "\"--\"");
-				
-			}
-			
-			if (1 == iMonth % 3)
-			{
-				financial_zbhz_prediction = JSONArray.fromObject(gszbService.getFirstSeasonPredictionZBsOverview(d)).toString().replace("null", "\"--\"");
-			}
-			
-			if (2 == iMonth % 3)
-			{
-				financial_zbhz_prediction = JSONArray.fromObject(gszbService.getJDZBMY(d)).toString().replace("null", "\"--\"");
-			}
-			//String gdw_zbhz = JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null", "0.00");
-			
-			return financial_zbhz_prediction.getBytes("utf-8");
-		}
-		
-		@RequestMapping(value = "financial_zbhz_prediction.do", method = RequestMethod.GET)
-		public ModelAndView gethzb_company(HttpServletRequest request,
-				HttpServletResponse response) {
 
-			Map<String, Object> map = new HashMap<String, Object>();
-			DateSelection dateSel = new DateSelection();
-			dateSel.select(map);
-			return new ModelAndView("financial_zbhz_prediction", map);
+	// 财务指标预测
+	@RequestMapping(value = "financial_zbhz_prediction_update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getfinancial_zbhz_prediction_update(
+			HttpServletRequest request, HttpServletResponse response)
+			throws UnsupportedEncodingException {
+		Date d = DateSelection.getDate(request);
+		String month = request.getParameter("month");
+		int iMonth = Integer.valueOf(month);
+		String financial_zbhz_prediction = null;
+		if (0 == iMonth % 3) {
+			financial_zbhz_prediction = JSONArray
+					.fromObject(gszbService.getGcyJDZBMY(d)).toString()
+					.replace("null", "\"--\"");
+
 		}
+
+		if (1 == iMonth % 3) {
+			financial_zbhz_prediction = JSONArray
+					.fromObject(
+							gszbService.getFirstSeasonPredictionZBsOverview(d))
+					.toString().replace("null", "\"--\"");
+		}
+
+		if (2 == iMonth % 3) {
+			financial_zbhz_prediction = JSONArray
+					.fromObject(gszbService.getJDZBMY(d)).toString()
+					.replace("null", "\"--\"");
+		}
+		// String gdw_zbhz =
+		// JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null",
+		// "0.00");
+
+		return financial_zbhz_prediction.getBytes("utf-8");
+	}
+
+	@RequestMapping(value = "financial_zbhz_prediction.do", method = RequestMethod.GET)
+	public ModelAndView gethzb_company(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		DateSelection dateSel = new DateSelection();
+		dateSel.select(map);
+		return new ModelAndView("financial_zbhz_prediction", map);
+	}
 }

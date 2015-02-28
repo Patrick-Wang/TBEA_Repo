@@ -45,8 +45,9 @@ module Util {
         private getMaxWidth(opts : any) : number{
             var max = 0;
             var tmp = 0;
+            var fontSize = Util.isMSIE() ? 14 : 13;
             for (var i = 0; i < opts.length; ++i){
-                tmp = $(opts[i]).text().getWidth(13) + 25;
+                tmp = $(opts[i]).text().getWidth(fontSize) + 25;
                 if (max < tmp){
                     max = tmp;    
                 }
@@ -58,6 +59,7 @@ module Util {
             sel = $(sel);
             var width = this.getMaxWidth(sel.children());
             var minWidth = 80;
+            var itemHeight = Util.isMSIE() ? 27.5 : 27;
             if (multi) {
                 sel.multiselect({
                     multiple: multi,
@@ -65,7 +67,7 @@ module Util {
                     minWidth: 80,
                     noneSelectedText : this.mOpt.noneSelectedText,
                     selectedText: this.mOpt.selectedText,
-                    height　: itemCount * 27 > 600 ? 600 : itemCount * 27 + 3,
+                    height　: itemCount * itemHeight + 3,
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
@@ -80,7 +82,7 @@ module Util {
                 multiple: multi,
                 header: multi,
                 minWidth: minWidth,
-                height　: itemCount * 27 > 600 ? 600 : itemCount * 27 + 3,
+                height　: /*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
                 // noneSelectedText: "请选择月份",
                 selectedList: 1
             });

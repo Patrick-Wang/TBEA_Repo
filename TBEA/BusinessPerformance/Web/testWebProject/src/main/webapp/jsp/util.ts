@@ -278,4 +278,8 @@ module Util {
     export function isExist(val: any): boolean {
         return val != undefined;
     }
+    
+    export function isMSIE(){
+        return navigator.appName == "Microsoft Internet Explorer";
+    }
 }

@@ -165,6 +165,18 @@
             /* jqGrid columns name wrap  */
             font-size: 14px;
         }
+        
+        #update {
+			height: 23px;
+			padding: .1em 1em;
+			margin-top: -1px;
+		}
+		
+		.ui-multiselect {
+			padding: 2px 0 2px 4px;
+			text-align: left;
+			font-size: 12px;
+		}
     </style>
 </head>
 <body>
@@ -181,7 +193,7 @@
 						</td>
 						<td><div id="company"></div>
 						</td>
-						<td><input type="button" value="更新" style="width : 80px; margin-left:10px;"
+						<td><input id="update" type="button" value="更新" style="width : 80px; margin-left:10px;"
 							onclick="instance.updateUI()"></input>
 				</Table>
 			</td>
