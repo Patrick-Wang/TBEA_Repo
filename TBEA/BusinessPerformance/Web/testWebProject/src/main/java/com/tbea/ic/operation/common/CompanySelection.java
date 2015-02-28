@@ -114,28 +114,28 @@ public class CompanySelection {
 		return nodes;
 	}
 	
-	private List<DataNode> select(List<Company> topComps, int depth){
-		if (0 == depth){
-			return null;
-		}
+	private List<DataNode> select(List<Company> topComps, int depth) {
 		List<DataNode> nodes = new ArrayList<DataNode>();
-		DataNode node;
-		Company topComp;
-		for (int i = 0; i < topComps.size(); ++i) {
-			topComp = topComps.get(i);
-			List<DataNode> subNodes = select(topComp.getSubCompanys(), depth - 1);
-			if (null != subNodes) {
-				node = bind(topComp);
-				nodes.add(node);
-				node.getSubNodes().addAll(subNodes);
-				if (mFilter.keep(topComp)) {
-					DataNode nodeTmp = bind(topComp);
-					nodeTmp.getData().setValue(topComp.getName() + "本部");
-					node.getSubNodes().add(nodeTmp);
+		if (0 != depth) {
+			DataNode node;
+			Company topComp;
+			for (int i = 0; i < topComps.size(); ++i) {
+				topComp = topComps.get(i);
+				List<DataNode> subNodes = select(topComp.getSubCompanys(),
+						depth - 1);
+				if (!subNodes.isEmpty()) {
+					node = bind(topComp);
+					nodes.add(node);
+					node.getSubNodes().addAll(subNodes);
+					if (mFilter.keep(topComp)) {
+						DataNode nodeTmp = bind(topComp);
+						nodeTmp.getData().setValue(topComp.getName() + "本部");
+						node.getSubNodes().add(nodeTmp);
+					}
+				} else if (mFilter.keep(topComp)) {
+					node = bind(topComp);
+					nodes.add(node);
 				}
-			} else if (mFilter.keep(topComp)) {
-				node = bind(topComp);
-				nodes.add(node);
 			}
 		}
 		return nodes;

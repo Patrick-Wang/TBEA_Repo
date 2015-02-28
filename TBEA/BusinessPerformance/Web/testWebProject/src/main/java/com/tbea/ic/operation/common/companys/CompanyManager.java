@@ -185,8 +185,8 @@ public class CompanyManager {
 		NFSBDCYJT		("南方输变电产业集团"),
 		XBCZT			("新变厂整体"),
 		BYQCY			("变压器产业"),
-		XLCY			("线缆产业");
-		
+		XLCY			("线缆产业"),
+		TCNY_and_XJNY	("天池能源+新疆能源公司");
 		private String value;
 
 		CompanyType(String value) {
@@ -222,13 +222,18 @@ public class CompanyManager {
 	
 	Organization BMDB;
 	Organization virtualYSZK;
+	Organization virtualJYZB;
  
 	@Resource(type=BMDepartmentDB.class)
 	public void setBMDBOrganization(Organization org) {
 		BMDB = org;
 		virtualYSZK = new VirtualYSZKOrganization(BMDB);
+		virtualJYZB = new VirtualJYZBOrganization((VirtualYSZKOrganization) virtualYSZK, BMDB);
 	}
 	
+	public Organization getVirtualJYZBOrganization() {
+		return virtualJYZB;
+	}
 	
 	public Organization getVirtualYSZKOrganization() {
 		return virtualYSZK;

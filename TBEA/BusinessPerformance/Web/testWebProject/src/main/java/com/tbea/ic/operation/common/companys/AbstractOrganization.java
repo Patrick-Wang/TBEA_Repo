@@ -13,6 +13,15 @@ public abstract class AbstractOrganization implements Organization {
 	protected Map<CompanyManager.CompanyType, Company> typeCompMap = new HashMap<CompanyManager.CompanyType, Company>();
 	protected Map<Integer, Company> idCompMap = new HashMap<Integer, Company>();
 	
+	protected Company clone(Organization org, CompanyManager.CompanyType ty){
+		Company otherComp = org.getCompany(ty);
+		Company comp = this.getCompany(otherComp.getType(), otherComp.getId());
+		List<Company> subs = otherComp.getSubCompanys();
+		for (Company sub : subs){
+			comp.append(clone(org, sub.getType()));
+		}
+		return comp;
+	}
 	
 	protected Company getCompany(CompanyManager.CompanyType ty, Integer id) {
 		Company comp = ty.getCompany(id);

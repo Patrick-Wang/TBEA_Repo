@@ -70,11 +70,12 @@ public class YDZBController {
 	@RequestMapping(value = "hzb_companys_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getHzb_companys_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-//		Date d = DateSelection.getDate(request);
+		Date d = DateSelection.getDate(request);
+		CompanyType compType = CompanySelection.getCompany(request);
 //		String type = request.getParameter("type");
-		String hzb_zbhz = null;
+		String hzb_zbhz = "[[]]";
 //		if ("0".equals(type)){
-//			hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d)).toString().replace("null", "\"--\"");
+			hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d)).toString().replace("null", "\"--\"");
 //		} else{
 //			hzb_zbhz = JSONArray.fromObject(gszbService.getSrqy(d)).toString().replace("null", "\"--\"");
 //		}
@@ -86,8 +87,37 @@ public class YDZBController {
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-//		DateSelection dateSel = new DateSelection(service.getLatestHzbDate(), true, false);
-//		dateSel.select(map);
+		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
+		dateSel.select(map);
+		Organization org = companyManager.getVirtualJYZBOrganization();
+		
+		CompanySelection compSel = new CompanySelection(false, org.getTopCompany(), new CompanySelection.Filter(){
+			Organization org = companyManager.getVirtualJYZBOrganization();
+			@Override
+			public boolean keep(Company comp) {
+				return 
+//						(comp.getType() != CompanyType.SBGS) &&
+//						(comp.getType() != CompanyType.HBGS) &&
+//						(comp.getType() != CompanyType.XBC) &&
+//						(comp.getType() != CompanyType.DLGS) &&
+//						(comp.getType() != CompanyType.XLC) &&
+//						(comp.getType() != CompanyType.LLGS) &&
+//						(comp.getType() != CompanyType.XNYGS) &&
+//						(comp.getType() != CompanyType.XTNYGS) &&
+//						(comp.getType() != CompanyType.NDGS) &&
+//						(comp.getType() != CompanyType.TCNY) &&
+//						!org.getTopCompany().contains(comp) &&
+						comp.getParentCompany() == null ||(
+						null != comp.getParentCompany() &&
+						comp.getParentCompany().getType() != CompanyType.BYQCY &&
+						comp.getParentCompany().getType() != CompanyType.XLCY &&
+						comp.getParentCompany().getType() != CompanyType.DBSBDCYJT &&
+						comp.getParentCompany().getType() != CompanyType.NFSBDCYJT &&
+						comp.getParentCompany().getType() != CompanyType.XJNY);
+			}
+			
+		});
+		compSel.select(map, 3);
 		return new ModelAndView("hzb_companys", map);
 	}
 	

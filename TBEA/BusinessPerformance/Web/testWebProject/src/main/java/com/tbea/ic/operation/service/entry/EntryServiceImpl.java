@@ -160,9 +160,7 @@ public class EntryServiceImpl implements EntryService{
 		boolean newEntity = false;
 		cal.setTime(date);
 		leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
-		if (0 == leftMonth){//season end
-			leftMonth = 3;
-		}
+
 		for (int i = 0; i < data.size(); ++i){
 			cal.setTime(date);
 			row = data.getJSONArray(i);
@@ -335,9 +333,7 @@ public class EntryServiceImpl implements EntryService{
 		boolean newEntity = false;
 		cal.setTime(date);
 		leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
-		if (0 == leftMonth){//season end
-			leftMonth = 3;
-		}
+
 		for (int i = 0; i < data.size(); ++i){
 			cal.setTime(date);
 			row = data.getJSONArray(i);
@@ -378,9 +374,7 @@ public class EntryServiceImpl implements EntryService{
 		for (int i = 0; i < data.size(); ++i){
 			cal.setTime(date);
 			leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
-			if (0 == leftMonth){//season end
-				leftMonth = 3;
-			}
+
 			row = data.getJSONArray(i);
 			for (int j = 0; j <= leftMonth && j < (row.size() - 1); ++j){
 				newEntity = false;
@@ -536,9 +530,6 @@ public class EntryServiceImpl implements EntryService{
 		cal.setTime(date);
 		
 		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
-		if (0 == leftMonth){//season end
-			leftMonth = 3;
-		}
 		
 		Map<Integer, String[]> map = creatZBXXMap(dwxx.getSjzbxxs(), leftMonth + 3);
 		for (int i = 0; i <= leftMonth; ++i){
@@ -586,9 +577,6 @@ public class EntryServiceImpl implements EntryService{
 		cal.setTime(date);
 		
 		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
-		if (0 == leftMonth){//season end
-			leftMonth = 3;
-		}
 		
 		Map<Integer, String[]> map = creatZBXXMap(dwxx.getSjzbxxs(), leftMonth + 3);
 		for (int i = 0; i <= leftMonth; ++i){

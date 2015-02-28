@@ -42,9 +42,21 @@ module Util {
            this.mUnitedSelector.show();
         }
         
+        private getMaxWidth(opts : any) : number{
+            var max = 0;
+            var tmp = 0;
+            for (var i = 0; i < opts.length; ++i){
+                tmp = $(opts[i]).text().getWidth(13) + 25;
+                if (max < tmp){
+                    max = tmp;    
+                }
+            }
+            return max;
+        }
+        
         private updateSelect(sel : any, itemCount : number, multi : boolean) {
             sel = $(sel);
-            var width = sel.children('option:selected').text().getWidth(13) + 25;
+            var width = this.getMaxWidth(sel.children());
             var minWidth = 80;
             if (multi) {
                 sel.multiselect({
@@ -57,11 +69,11 @@ module Util {
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
-                 var text : any = "n个 项目公司被选中";
+                var text : any = "n个 项目公司被选中";
                 minWidth = text.getWidth(13) + 50;
-                if (sel.multiselect("getChecked").length > 1) {
-                    width = text.getWidth(13) + 25;
-                }
+//                if (sel.multiselect("getChecked").length > 1) {
+//                    width = text.getWidth(13) + 25;
+//                }
             }
             sel.css("width", width);
             sel.multiselect({
