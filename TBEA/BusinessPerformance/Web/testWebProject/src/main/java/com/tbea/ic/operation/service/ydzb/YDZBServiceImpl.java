@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -226,17 +227,19 @@ public class YDZBServiceImpl implements YDZBService {
 	private List<List<YDZBBean>> getQuarterData(int year, int month, Company company){
 		Calendar cal = Calendar.getInstance();
 		List<List<YDZBBean>> ods = new ArrayList<List<YDZBBean>>();
-		int quarterCount = (month + 1) / 3;
-		int lastQuarter = (month + 1) % 3; 
-		for (int i = 1; i <= quarterCount; ++i){
+		int quarterCount = DateHelper.getJdCount(month);// (month + 1) / 3;
+		for (int i = 1; i < quarterCount; ++i){
 			cal.set(year, i * 3 - 1, 1);
 			ods.add(ydzbDao.getYDZB(cal, company));
 		}
 		
-		if (lastQuarter > 0){
-			cal.set(year, month, 1);
-			ods.add(ydzbDao.getYDZB(cal, company));
-		}
+		cal.set(year, month - 1, 1);
+		ods.add(ydzbDao.getYDZB(cal, company));
+//		int lastQuarter = (month + 1) % 3; 
+//		if (lastQuarter > 0){
+//			cal.set(year, month, 1);
+//			ods.add(ydzbDao.getYDZB(cal, company));
+//		}
 		return ods;
 	}
 	
@@ -245,7 +248,7 @@ public class YDZBServiceImpl implements YDZBService {
 	public String[][] getJdZbhz_overviewData(Date d, Company company, String zb) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		List<List<YDZBBean>> jdData = getQuarterData(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), company);
+		List<List<YDZBBean>> jdData = getQuarterData(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, company);
 		String[][] ret = new String[3][jdData.size()];
 		List<YDZBBean> jdYdzbs;
 		for (int jd = jdData.size() - 1; jd >= 0; --jd){
@@ -322,7 +325,7 @@ public class YDZBServiceImpl implements YDZBService {
 	public String[][] getJdtbZbhz_overviewData(Date d, Company company, String zb) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		List<List<YDZBBean>> curYearJdData = getQuarterData(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), company);
+		List<List<YDZBBean>> curYearJdData = getQuarterData(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, company);
 		String[][] ret = new String[3][curYearJdData.size()];
 		List<YDZBBean> jdYdzbs;
 		for (int jd = curYearJdData.size() - 1; jd >= 0; --jd){
@@ -335,7 +338,7 @@ public class YDZBServiceImpl implements YDZBService {
 			}
 		}
 		
-		List<List<YDZBBean>> preYearJdData = getQuarterData(cal.get(Calendar.YEAR) - 1, (cal.get(Calendar.MONTH) + 3) / 3 * 3 - 1 , company);
+		List<List<YDZBBean>> preYearJdData = getQuarterData(cal.get(Calendar.YEAR) - 1, DateHelper.getJdCount(cal.get(Calendar.MONTH) + 1) * 3 , company);
 		for (int jd = preYearJdData.size() - 1; jd >= 0; --jd){
 			jdYdzbs = preYearJdData.get(jd);
 			for (YDZBBean ydzb : jdYdzbs){

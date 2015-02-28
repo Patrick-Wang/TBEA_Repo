@@ -57,8 +57,6 @@ public class YDZBController {
 		return hzb_zbhz.getBytes("utf-8");
 	}
 	
-
-	
 	@RequestMapping(value = "hzb_zbhz.do", method = RequestMethod.GET)
 	public ModelAndView getGszb_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -68,6 +66,32 @@ public class YDZBController {
 		dateSel.select(map);
 		return new ModelAndView("hzb_zbhz", map);
 	}
+	
+	@RequestMapping(value = "hzb_companys_update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getHzb_companys_update(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+//		Date d = DateSelection.getDate(request);
+//		String type = request.getParameter("type");
+		String hzb_zbhz = null;
+//		if ("0".equals(type)){
+//			hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d)).toString().replace("null", "\"--\"");
+//		} else{
+//			hzb_zbhz = JSONArray.fromObject(gszbService.getSrqy(d)).toString().replace("null", "\"--\"");
+//		}
+		return hzb_zbhz.getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "hzb_companys.do", method = RequestMethod.GET)
+	public ModelAndView getHzb_companys(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+//		DateSelection dateSel = new DateSelection(service.getLatestHzbDate(), true, false);
+//		dateSel.select(map);
+		return new ModelAndView("hzb_companys", map);
+	}
+	
+	
 	@RequestMapping(value = "gcy_zbhz_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getGcy_zbhz_update( HttpServletRequest request,
 			HttpServletResponse response) {

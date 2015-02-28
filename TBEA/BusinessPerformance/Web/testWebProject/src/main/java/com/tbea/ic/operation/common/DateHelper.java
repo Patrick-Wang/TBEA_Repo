@@ -25,10 +25,7 @@ public class DateHelper {
 	public DateHelper(Date date) {
 		this.cur = date;
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		int left = (cal.get(Calendar.MONTH) + 1) % 3;
-		cal.add(Calendar.MONTH,0 == left ? -2 : (-left + 1));
-		jdStart = Util.toDate(cal);
+		jdStart = getJdStart(date);
 
 		cal.setTime(jdStart);
 		cal.add(Calendar.YEAR, -1);
@@ -176,5 +173,32 @@ public class DateHelper {
 	public Date getQntqXjdDnFirstMonth() {
 		return qntqXjdDnFirstMonth;
 	}
-
+	
+	public static int getJdCount(int month){
+		return (month - 1) / 3 + 1;
+	}
+	
+	public static Date getJdStart(Date d){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		int month = cal.get(Calendar.MONTH) + 1;
+		cal.set(Calendar.MONTH, (getJdCount(month) - 1) * 3);
+		return Util.toDate(cal);
+	}
+	
+	public static Date getJdMiddle(Date d){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		int month = cal.get(Calendar.MONTH) + 1;
+		cal.set(Calendar.MONTH, (getJdCount(month) - 1) * 3 + 1);
+		return Util.toDate(cal);
+	}
+	
+	public static Date getJdEnd(Date d){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		int month = cal.get(Calendar.MONTH) + 1;
+		cal.set(Calendar.MONTH, (getJdCount(month) - 1) * 3 + 2);
+		return Util.toDate(cal);
+	}
 }
