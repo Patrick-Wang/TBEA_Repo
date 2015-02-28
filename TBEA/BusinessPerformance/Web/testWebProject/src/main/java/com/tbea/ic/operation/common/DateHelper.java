@@ -201,4 +201,11 @@ public class DateHelper {
 		cal.set(Calendar.MONTH, (getJdCount(month) - 1) * 3 + 2);
 		return Util.toDate(cal);
 	}
+	
+	public Date getPreMonth(){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(this.cur);
+		cal.add(Calendar.MONTH, -1);
+		return Util.toDate(cal);
+	}
 }

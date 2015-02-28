@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import com.tbea.ic.operation.common.GSZB;
+import com.tbea.ic.operation.common.companys.Company;
 
 public interface GszbService {
 	List<String[]> getGsztzb(Date date);
@@ -16,4 +17,5 @@ public interface GszbService {
 
 	List<String[]> getJDZBMY(Date date);
 	List<String[]> getGcyJDZBMY(Date date);
+	List<String[]> getGdwzb(Date d, List<Company> comps);
 }

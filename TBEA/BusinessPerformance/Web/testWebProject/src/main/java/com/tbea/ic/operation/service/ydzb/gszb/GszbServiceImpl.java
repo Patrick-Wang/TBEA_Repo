@@ -182,7 +182,13 @@ public class GszbServiceImpl implements GszbService {
 				zbxxMap.put(zbs.get(i), zbxx);
 			}
 		}
-		return zbxxMap.get(zbId);
+		
+		ZBXX zbxx = zbxxMap.get(zbId);
+		if (null == zbxx){
+			zbxx = zbxxDao.getById(zbId);
+			zbxxMap.put(zbId, zbxx);
+		}
+		return zbxx;
 	}
 
 	private List<Company> filterCompany(List<Company> companies) {
@@ -602,6 +608,21 @@ public class GszbServiceImpl implements GszbService {
 		}
 
 		return makeGroupResult(result);
+	}
+
+	@Override
+	public List<String[]> getGdwzb(Date d, List<Company> comps) {
+		List<Integer> zbs = this.getAllZbs(comps);
+		IPipeConfigurator configurator;
+		Company xnySyb = companyManager.getBMDBOrganization().getCompany(CompanyType.XNYSYB);
+		CompanyType type = comps.get(0).getType();
+		if (type == xnySyb.getType() || xnySyb.contains(type)){
+			configurator = getConfiguratorFactory().getYdhbConfigurator();
+		} else{
+			configurator = getConfiguratorFactory().getStandardConfigurator();
+		}
+		GszbPipe pipe = new GszbPipe(zbs, comps, d, configurator);
+		return makeZbResult(zbs, pipe.getGszb());
 	}
 
 }

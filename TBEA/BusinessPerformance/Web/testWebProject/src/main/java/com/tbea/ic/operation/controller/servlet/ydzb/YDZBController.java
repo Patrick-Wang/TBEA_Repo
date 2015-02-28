@@ -2,6 +2,7 @@ package com.tbea.ic.operation.controller.servlet.ydzb;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -76,16 +77,27 @@ public class YDZBController {
 			throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
 		CompanyType compType = CompanySelection.getCompany(request);
-		// String type = request.getParameter("type");
-		String hzb_zbhz = "[[]]";
-		// if ("0".equals(type)){
-		hzb_zbhz = JSONArray.fromObject(gszbService.getGsztzb(d)).toString()
+		Organization org = companyManager.getBMDBOrganization();
+		List<Company> comps;
+		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
+			comps = org.getCompany(compType).getSubCompanys();
+		} else if (CompanyType.TCNY_and_XJNY == compType){
+			comps = new ArrayList<Company>();
+			comps.add(org.getCompany(CompanyType.TCNY));
+			comps.add(org.getCompany(CompanyType.XJNY));
+		} else if (CompanyType.BYQCY == compType ||
+				CompanyType.XLCY == compType ||
+				CompanyType.DBSBDCYJT == compType ||
+				CompanyType.NFSBDCYJT == compType){
+			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
+			comps = orgJyzb.getCompany(compType).getSubCompanys();
+		} else {
+			comps = new ArrayList<Company>();
+			comps.add(org.getCompany(compType));
+		}
+
+		String hzb_zbhz = JSONArray.fromObject(gszbService.getGdwzb(d, comps)).toString()
 				.replace("null", "\"--\"");
-		// } else{
-		// hzb_zbhz =
-		// JSONArray.fromObject(gszbService.getSrqy(d)).toString().replace("null",
-		// "\"--\"");
-		// }
 		return hzb_zbhz.getBytes("utf-8");
 	}
 

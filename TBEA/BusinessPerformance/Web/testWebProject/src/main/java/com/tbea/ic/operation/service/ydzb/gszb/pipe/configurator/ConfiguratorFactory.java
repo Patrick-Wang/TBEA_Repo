@@ -10,6 +10,7 @@ public class ConfiguratorFactory {
 	private IPipeConfigurator firstSeasonPredictionConfigurator;
 	private IPipeConfigurator secondSeasonPredictionConfigurator;
 	private IPipeConfigurator jdzbmyConfigurator;
+	private IPipeConfigurator ydhbConfigurator;
 	
 	public ConfiguratorFactory(AccumulatorFactory accFac, CompanyManager companyManager){
 		standardConfigurator = new StandardConfigurator(accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc(), companyManager);
@@ -63,6 +64,16 @@ public class ConfiguratorFactory {
 	
 	public IPipeConfigurator getJdzbmyCompositeConfigurator(CompositeAccumulator acc) {
 		return new JDZBMYCompositeConfigurator(acc);
+	}
+	/**
+	 * @return the ydhbConfigurator
+	 */
+	public IPipeConfigurator getYdhbConfigurator() {
+		
+		if (null == ydhbConfigurator){
+			ydhbConfigurator = new YdhbConfigurator((StandardConfigurator)getStandardConfigurator());
+		}
+		return ydhbConfigurator;
 	}
 	
 }

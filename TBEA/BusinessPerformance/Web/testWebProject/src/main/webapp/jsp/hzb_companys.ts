@@ -29,6 +29,31 @@ module hzb_companys {
                     .append(new JQTable.Node("同比增幅", "n4"))
             ], gridName);
         }
+        
+        public static createHbTable(gridName: string): JQTable.JQGridAssistant {
+            return new JQTable.JQGridAssistant([
+                new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                new JQTable.Node("全年计划", "qnjh"),
+                new JQTable.Node("月度", "yd")
+                    .append(new JQTable.Node("当月计划", "y1"))
+                    .append(new JQTable.Node("当月实际", "y2"))
+                    .append(new JQTable.Node("计划完成率", "y3"))
+                    .append(new JQTable.Node("上月同期", "y4"))
+                    .append(new JQTable.Node("环比增幅", "y4"))
+                    .append(new JQTable.Node("同比增幅", "y5")),
+                new JQTable.Node("季度", "jd")
+                    .append(new JQTable.Node("季度计划", "j1"))
+                    .append(new JQTable.Node("季度累计", "j2"))
+                    .append(new JQTable.Node("季度计划完成率", "j3"))
+                    .append(new JQTable.Node("去年同期", "j4"))
+                    .append(new JQTable.Node("同比增幅", "j5")),
+                new JQTable.Node("年度", "nd")
+                    .append(new JQTable.Node("年度累计", "n1"))
+                    .append(new JQTable.Node("累计计划完成率", "n2"))
+                    .append(new JQTable.Node("去年同期", "n3"))
+                    .append(new JQTable.Node("同比增幅", "n4"))
+            ], gridName);
+        }
     }
 
     
@@ -82,11 +107,10 @@ module hzb_companys {
         }
         private updateTable(): void {
         	var name = this.mOpt.tableId + "_jqgrid_1234";
-            var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+           
             var data = [];
-
-
  			var row = [];
+            
             for (var i = 0; i < this.mData.length; ++i) {
 //                if (this.mData[i] instanceof Array) {
                     row = [].concat(this.mData[i]);
@@ -99,7 +123,8 @@ module hzb_companys {
                   //  data[i] = data[i].concat(row);
 //                }
             }
-
+            var tableAssist: JQTable.JQGridAssistant = row.length > 16 ?
+                JQGridAssistantFactory.createHbTable(name) : JQGridAssistantFactory.createTable(name);
 			var parent = $("#" + this.mOpt.tableId);
 			parent.empty();
 			parent.append("<table id='"+ name +"'></table>");
@@ -115,10 +140,10 @@ module hzb_companys {
                     //autowidth : false,
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
-                    height: '100%',
+                    height: data.length > 23 ? 500 : '100%',
                     width: 1200,
                     shrinkToFit: true,
-                    rowNum: 100,
+                    rowNum: 1000,
                     autoScroll: true
                 }));
 

@@ -3,6 +3,8 @@ package com.tbea.ic.operation.common.companys;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+
 public class Company {
 	private CompanyManager.CompanyType type;
 	private Integer id;
@@ -57,6 +59,29 @@ public class Company {
 		this.parentCompany = parentCompany;
 	}
 
+	private boolean contains(List<Company> comps, CompanyType compType){
+		for (Company comp : comps){
+			if (comp.getType() == compType){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean contains(CompanyType compType){
+		if (!contains(subCompanys, compType)){
+			for (int i = 0; i < subCompanys.size(); ++i){
+				if (subCompanys.get(i).contains(compType)){
+					return true;
+				}
+			}
+		}
+		else {
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean contains(Company comp){
 		if (!subCompanys.contains(comp)){
 			for (int i = 0; i < subCompanys.size(); ++i){
