@@ -4,6 +4,16 @@ declare var echarts;
 
 module hzb_companys {
 
+    enum AllZb{
+        zb, qnjh, dyjh, dysj, dyjhwcl, dyqntq, dytbzf, jdjh, jdlj, jdjhwcl, jdqntq, jdtbzf, ndlj, ndljjhwcl, ndqntq, ndtbzf
+    };
+    
+    enum HbZb{
+         zb, qnjh, dyjh, dysj, dyjhwcl, dysytq, dyhbzf, dytbzf, jdjh, jdlj, jdjhwcl, jdqntq, jdtbzf, ndlj, ndljjhwcl, ndqntq, ndtbzf       
+    }
+    
+    
+    
     class JQGridAssistantFactory {
 
         public static createTable(gridName: string): JQTable.JQGridAssistant {
@@ -105,29 +115,74 @@ module hzb_companys {
 
                 });
         }
+        
+        private formatAllData() {
+            var data = [];
+            var row = [];
+            var isRs = false;
+            for (var j = 0; j < this.mData.length; ++j) {
+                row = [].concat(this.mData[j]);
+                isRs = row[AllZb.zb] == '人数';
+                for (var i = 0; i < row.length; ++i) {
+                    if (i == AllZb.dyjhwcl || i == AllZb.dytbzf || i == AllZb.jdjhwcl || i == AllZb.jdtbzf ||
+                        i == AllZb.ndljjhwcl ||　i == AllZb.ndtbzf) {
+                        row[i] = Util.formatPercent(row[i]);
+                    } else if (i != AllZb.zb) {
+                        if (isRs) {
+                            row[i] = parseInt(row[i]);
+                        } else {
+                            row[i] = Util.formatCurrency(row[i]);
+                        }
+                    }
+                }
+                data.push(row);
+            }
+            return data;
+        }
+        
+        private formatHbData() {
+            var data = [];
+            var row = [];
+            var isRs = false;
+            for (var j = 0; j < this.mData.length; ++j) {
+                row = [].concat(this.mData[j]);
+                isRs = row[HbZb.zb] == '人数';
+                for (var i = 0; i < row.length; ++i) {
+                   if (i == HbZb.dyjhwcl || i == HbZb.dyhbzf ||i == HbZb.dytbzf || i == HbZb.jdjhwcl || i == HbZb.jdtbzf ||
+                        i == HbZb.ndljjhwcl ||　i == HbZb.ndtbzf) {
+                        row[i] = Util.formatPercent(row[i]);
+                    } else if (i != HbZb.zb) {
+                        if (isRs) {
+                            row[i] = parseInt(row[i]);
+                        } else {
+                            row[i] = Util.formatCurrency(row[i]);
+                        }
+                    }
+                }
+                data.push(row);
+            }
+            return data;
+        }
+        
         private updateTable(): void {
         	var name = this.mOpt.tableId + "_jqgrid_1234";
-           
-            var data = [];
- 			var row = [];
+            var parent = $("#" + this.mOpt.tableId);
+            parent.empty();
+            parent.append("<table id='"+ name +"'></table>");
+            if (this.mData.length == 0){
+                return;
+            } 
             
-            for (var i = 0; i < this.mData.length; ++i) {
-//                if (this.mData[i] instanceof Array) {
-                    row = [].concat(this.mData[i]);
-//                    for (var col in row) {
-//                        if (col != '2' && col != '4' && col != '6' && col != '8' && col != '10') {
-//                            row[col] = Util.formatCurrency(row[col]);
-//                        }
-//                    }
-                    data.push(row);
-                  //  data[i] = data[i].concat(row);
-//                }
+            var data = [];
+            var tableAssist: JQTable.JQGridAssistant = null;
+            if (this.mData[0].length > 16){
+                tableAssist = JQGridAssistantFactory.createHbTable(name)
+                data = this.formatHbData();
+            } else {
+                tableAssist = JQGridAssistantFactory.createTable(name)
+                data = this.formatAllData();
             }
-            var tableAssist: JQTable.JQGridAssistant = row.length > 16 ?
-                JQGridAssistantFactory.createHbTable(name) : JQGridAssistantFactory.createTable(name);
-			var parent = $("#" + this.mOpt.tableId);
-			parent.empty();
-			parent.append("<table id='"+ name +"'></table>");
+            
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",

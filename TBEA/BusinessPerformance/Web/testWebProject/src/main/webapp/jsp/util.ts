@@ -275,6 +275,14 @@ module Util {
         return parts.join("");
     }
 
+    
+    export function formatPercent(val: string): string{
+        if (val === "--" || val === "" || val === "-") {
+            return val;
+        }
+        return (parseFloat(val) * 100).toFixed(2) + "%"    
+    }
+    
     export function isExist(val: any): boolean {
         return val != undefined;
     }

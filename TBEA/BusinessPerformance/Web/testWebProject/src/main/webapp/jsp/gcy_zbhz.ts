@@ -4,6 +4,12 @@ declare var echarts;
 
 module gcy_zbhz {
 
+    enum DwZb{
+        qnjh, dyjh, dysj, dyjhwcl, dywntq, dytbzf,
+        jdjh, jdlj, jdjhwcl, jdqntq, jdtbzf,
+        ndlj, ndljjhwcl, ndqntq, ndtbzf    
+    }
+    
     class JQGridAssistantFactory {
 
       public static createTable(gridName: string, month: number): JQTable.JQGridAssistant {
@@ -125,24 +131,20 @@ module gcy_zbhz {
                 ["存 货", "股份合计"],
                 ["存 货", "众和公司"],
                 ["存 货", "集团合计"]];
-
-//            for (var i = 0; i < data.length; ++i) {
-//                if (this.mData[i] instanceof Array) {
-//                    data[i] = data[i].concat(this.mData[i]);
-//                }
-//            }
-            
+           
             var row = [];
             for (var i = 0; i < data.length; ++i) {
-                if (this.mData[i] instanceof Array) {
-                    row = [].concat(this.mData[i]);
-                    for (var col in row) {
-                        if (col != '3' && col != '5' && col != '7' && col != '9' && col != '11') {
-                            row[col] = Util.formatCurrency(row[col]);
-                        }
+                row = [].concat(this.mData[i]);
+                for (var j = 0; j < row.length; ++j) {
+                    if (j == DwZb.dyjhwcl || j == DwZb.dytbzf ||
+                        j == DwZb.jdjhwcl || j == DwZb.jdtbzf ||
+                        j == DwZb.ndljjhwcl || j == DwZb.ndtbzf) {
+                        row[j] = Util.formatPercent(row[j]);
+                    } else {
+                        row[j] = Util.formatCurrency(row[j]);
                     }
-                    data[i] = data[i].concat(row);
                 }
+                data[i] = data[i].concat(row);
             }
 
 			var parent = $("#" + this.mTableId);
@@ -150,17 +152,12 @@ module gcy_zbhz {
 			parent.append("<table id='"+ name +"'></table>");
             $("#" + name).jqGrid(
                 tableAssist.decorate({
-                    // url: "TestTable/WGDD_load.do",
-                    // datatype: "json",
                     data: tableAssist.getData(data),
                     datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    //autowidth : false,
-//                    cellsubmit: 'clientArray',
-//                    cellEdit: true,
-                    height: 600,
+                    height: 550,
                     width: 1200,
                     shrinkToFit: true,
                     rowNum: 200,

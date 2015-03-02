@@ -4,9 +4,15 @@ declare var echarts;
 
 module gdw_zbhz {
 
+    enum DwZb{
+        qnjh, dyjh, dysj, dyjhwcl, dyqntq, dytbzf, 
+        jdjh, jdlj, jdjhwcl, jdqntq, jdtbzf,
+        ndlj, ndljjhwcl, ndqntq, ndtbzf    
+    }
+    
     class JQGridAssistantFactory {
 
-        public static createTable(gridName: string, month: number): JQTable.JQGridAssistant {
+        public static createTable(gridName: string): JQTable.JQGridAssistant {
                return new JQTable.JQGridAssistant([
                 new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                 new JQTable.Node("全年计划", "qnjh"),
@@ -76,14 +82,13 @@ module gdw_zbhz {
 
         private updateTable(): void {
        		var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mMonth);
+            var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
             tableAssist.mergeRow(0);
            
             var data = [
                 ["沈变公司"],
                 ["衡变公司"],
                 ["新变厂"],
- 
                 ["鲁缆公司"],
                 ["新缆厂"],
                 ["德缆公司"],
@@ -109,11 +114,15 @@ module gdw_zbhz {
                 }
                 if (this.mData[i] instanceof Array) {
                     row = [].concat(this.mData[i]);
-//                    for (var col in row) {
-//                        if (col != '3' && col != '5' && col != '7' && col != '9' && col != '11') {
-//                            row[col] = Util.formatCurrency(row[col]);
-//                        }
-//                    }
+                    for (var j = 0; j < row.length; ++j){
+                        if (j == DwZb.dyjhwcl || j == DwZb.dytbzf || 
+                        j == DwZb.jdjhwcl || j == DwZb.jdtbzf || 
+                        j == DwZb.ndljjhwcl || j == DwZb.ndtbzf){
+                            row[j] = Util.formatPercent(row[j]);
+                        }else {
+                            row[j] = Util.formatCurrency(row[j]);
+                        }
+                    }
                     data[i] = data[i].concat(row);
                 }
             }

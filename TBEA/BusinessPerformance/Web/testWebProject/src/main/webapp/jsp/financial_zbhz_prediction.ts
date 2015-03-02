@@ -4,6 +4,26 @@ declare var echarts;
 
 module financial_zbhz_prediciton {
 
+    enum FirstMonthZb{
+        ndjh, jdjh, byjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
+        cyyj, myyj, jdyjhj, jdyjwcl, jdqntq, jdtbzf, 
+        ndljwcz, ndzbwcl, ndqntqz, ndtbzf    
+    }
+    
+    enum SecondMonthZb{
+        ndjh, jdjh, byjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
+        jdlj, jdjhwcl, jdqntqz, jdtbzf,
+        jdmyyj, jdyjhj, jdyjwcl, jdyjqntq, jdyjtbzf,
+        ndljwcz, ndzbwcl, ndqntqz, ndtbzf    
+    }
+       
+    enum ThirdMonthZb{
+        ndjh, bjdjh, xjdjh, dyjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
+        jdlj, jdjhwcl, jdqntqz, jdtbzf,
+        ndljwcz, ndzbwcl, ndqntqz, ndtbzf,
+        xjdsyyj, xjdcyyj, xjdmyyj, xjdyjhj, xjdyjwcl, xjdndlj, xjdndljwcl, xjdqntq,xjdtbzf
+    }
+    
     class JQGridAssistantFactory {
 
         public static createTable(gridName: string, gridStyle: number): JQTable.JQGridAssistant {
@@ -157,6 +177,62 @@ module financial_zbhz_prediciton {
 
                 });
         }
+        
+        
+        private formatData(data : string[][], precentList : std.vector<number>){
+            var row = [];
+            for (var j = 0; j < this.mData.length; ++j) {
+                row = [].concat(this.mData[j]);
+                for (var i = 0; i < row.length; ++i) {
+                    if (precentList.contains(i)) {
+                        row[i] = Util.formatPercent(row[i]);
+                    } else {
+                        row[i] = Util.formatCurrency(row[i]);
+                    }
+                }
+                data[j] = data[j].concat(row);
+            }
+            return data;
+        }
+        
+        private formatFirstMonthData(data: string[][]) {
+            var precentList: std.vector<number> = new std.vector<number>();
+            precentList.push(FirstMonthZb.dyjhwcl);
+            precentList.push(FirstMonthZb.dytbzf);
+            precentList.push(FirstMonthZb.jdyjwcl);
+            precentList.push(FirstMonthZb.jdtbzf);
+            precentList.push(FirstMonthZb.ndzbwcl);
+            precentList.push(FirstMonthZb.ndtbzf);
+            return this.formatData(data, precentList);
+        }
+        
+        private formatSecondMonthData(data: string[][]) {
+            var precentList: std.vector<number> = new std.vector<number>();
+            precentList.push(SecondMonthZb.dyjhwcl);
+            precentList.push(SecondMonthZb.dytbzf);
+            precentList.push(SecondMonthZb.jdjhwcl);
+            precentList.push(SecondMonthZb.jdyjtbzf);
+            precentList.push(SecondMonthZb.jdyjwcl);
+            precentList.push(SecondMonthZb.jdtbzf);
+            precentList.push(SecondMonthZb.ndzbwcl);
+            precentList.push(SecondMonthZb.ndtbzf);
+            return this.formatData(data, precentList);
+        }
+        
+        private formatThirdMonthData(data : string[][]) {
+            var precentList: std.vector<number> = new std.vector<number>();
+            precentList.push(ThirdMonthZb.dyjhwcl);
+            precentList.push(ThirdMonthZb.dytbzf);
+            precentList.push(ThirdMonthZb.jdjhwcl);
+            precentList.push(ThirdMonthZb.jdtbzf);
+            precentList.push(ThirdMonthZb.ndzbwcl);
+            precentList.push(ThirdMonthZb.ndtbzf);
+            precentList.push(ThirdMonthZb.xjdyjwcl);
+            precentList.push(ThirdMonthZb.xjdndljwcl);
+            precentList.push(ThirdMonthZb.xjdtbzf);
+            return this.formatData(data, precentList);
+        }
+        
         private updateTable(): void {
         	var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mDelegateMonth);
@@ -166,7 +242,6 @@ module financial_zbhz_prediciton {
                 tableAssist.setRowBgColor(i * 8 + 5, 183, 222, 232);
                 tableAssist.setRowBgColor(i * 8 + 7, 183, 222, 232);
             }
-
 
             var data = [
                 ["报表利润", "输变电产业"],
@@ -209,25 +284,14 @@ module financial_zbhz_prediciton {
                 ["存 货", "股份合计"],
                 ["存 货", "众和公司"],
                 ["存 货", "集团合计"]];
-
-//            for (var i = 0; i < data.length; ++i) {
-//                if (this.mData[i] instanceof Array) {
-//                    data[i] = data[i].concat(this.mData[i]);
-//                }
-//            }
             
-            var row = [];
-            for (var i = 0; i < data.length; ++i) {
-                if (this.mData[i] instanceof Array) {
-                    row = [].concat(this.mData[i]);
-                    for (var col in row) {
-                        if (col != '3' && col != '5' && col != '7' && col != '9' && col != '11') {
-                            row[col] = Util.formatCurrency(row[col]);
-                        }
-                    }
-                    data[i] = data[i].concat(row);
-                }
-            }
+            if (1 == this.mDelegateMonth){
+                data = this.formatFirstMonthData(data);
+            } else if (2 == this.mDelegateMonth){
+                data = this.formatSecondMonthData(data);
+            } else if (3 == this.mDelegateMonth){
+                data = this.formatThirdMonthData(data);
+            } 
 
             var parent = $("#" + this.mTableId);
             parent.empty();

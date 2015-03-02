@@ -4,6 +4,14 @@ declare var echarts;
 
 module hzb_zbhz {
 
+    enum SrqyId{
+        zb, qnjh, dyjh, dysj, jhwcl, ljwc, ljwcl, qntqz, tbzzl, qntqlj, ljtbzzl  
+    };
+    
+    enum ZtId{
+        zb, qnjh, dyjh, dysj, dyjhwcl, dyqntq, dytbzf, jdjh, jdlj, jdjhwcl, jdqntq, jdtbzf, ndlj, ndljjhwcl, ndqntq, ndtbzf   
+    };
+    
     class JQGridAssistantFactory {
 
          public static createSrqyTable(gridName: string): JQTable.JQGridAssistant {
@@ -23,6 +31,7 @@ module hzb_zbhz {
                     .append(new JQTable.Node("同比增长率", "10"))
             ], gridName);
         }
+     
         
         public static createTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
@@ -96,43 +105,74 @@ module hzb_zbhz {
 
                 });
         }
+        
+        private formatSrqyData() {
+            var data = [];
+            var row = [];
+            var isRs = false;
+            for (var j = 0; j < this.mData.length; ++j) {
+                row = [].concat(this.mData[j]);
+                isRs = row[SrqyId.zb] == '人数';
+                for (var i = 0; i < row.length; ++i) {
+                    if (i == SrqyId.jhwcl || i == SrqyId.ljwcl || i == SrqyId.tbzzl || i == SrqyId.ljtbzzl) {
+                        row[i] = Util.formatPercent(row[i]);
+                    } else if (i != SrqyId.zb) {
+                        if (isRs) {
+                            row[i] = parseInt(row[i]);
+                        } else {
+                            row[i] = Util.formatCurrency(row[i]);
+                        }
+                    }
+                }
+                data.push(row);
+            }
+            return data;
+        }
+        
+        private formatZtData() {
+            var data = [];
+            var row = [];
+            var isRs = false;
+            for (var j = 0; j < this.mData.length; ++j) {
+                row = [].concat(this.mData[j]);
+                isRs = row[ZtId.zb] == '人数';
+                for (var i = 0; i < row.length; ++i) {
+                    if (i == ZtId.dyjhwcl || i == ZtId.jdjhwcl || i == ZtId.dytbzf || i == ZtId.jdtbzf || i == ZtId.ndljjhwcl || i == ZtId.ndtbzf) {
+                        row[i] = Util.formatPercent(row[i]);
+                    } else if (i != ZtId.zb) {
+                        if (isRs) {
+                            row[i] = parseInt(row[i]);
+                        } else {
+                            row[i] = Util.formatCurrency(row[i]);
+                        }
+                    }
+                }
+                data.push(row);
+            }
+            return data;
+        }
+        
         private updateTable(): void {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = null;
             var data = [];
-            if (0 == this.mType) {
-                tableAssist = JQGridAssistantFactory.createTable(name);
-                var row = [];
-                for (var i = 0; i < this.mData.length; ++i) {
-                        row = [].concat(this.mData[i]);
-                        //                    for (var col in row) {
-                        //                        if (col != '2' && col != '4' && col != '6' && col != '8' && col != '10') {
-                        //                            row[col] = Util.formatCurrency(row[col]);
-                        //                        }
-                        //                    }
-                        data.push(row);
-                }
-            } else {
-                tableAssist = JQGridAssistantFactory.createSrqyTable(name);
-                var row = [];
-                for (var i = 0; i < this.mData.length; ++i) {
-
-                        row = [].concat(this.mData[i]);
-                        //                    for (var col in row) {
-                        //                        if (col != '2' && col != '4' && col != '6' && col != '8' && col != '10') {
-                        //                            row[col] = Util.formatCurrency(row[col]);
-                        //                        }
-                        //                    }
-                        data.push(row);
-                }
+            var parent = $("#" + this.mTableId);
+            parent.empty();
+            parent.append("<table id='"+ name +"'></table>");
+            
+            if (this.mData.length == 0){
+                return;
             }
             
-
-
-
-			var parent = $("#" + this.mTableId);
-			parent.empty();
-			parent.append("<table id='"+ name +"'></table>");
+            if (0 == this.mType) {
+                tableAssist = JQGridAssistantFactory.createTable(name);
+                data = this.formatZtData();
+            } else {
+                tableAssist = JQGridAssistantFactory.createSrqyTable(name);
+                data = this.formatSrqyData();
+            }
+            
+			
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
