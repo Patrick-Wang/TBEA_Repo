@@ -54,21 +54,33 @@ public class SpecialPipeFilter implements IPipeFilter {
 		if (GSZB.RJLR.getValue() == zbId) {
 			Double[] lrze = pipe.getZb(lrzeRow);
 			for (int i = 0; i < zbRow.length; ++i) {
-				if (!excludeCols.contains(i) && !Util.isZero(Math.abs(rs[i]))) {
+				if (null != lrze[i] && 
+					null != rs[i]  && 
+					!excludeCols.contains(i) && 
+					!Util.isZero(Math.abs(rs[i]))) {
+					
 					zbRow[i] = lrze[i] / rs[i];
 				}
 			}
 		} else if (GSZB.RJSR.getValue() == zbId) {
 			Double[] xssr = pipe.getZb(xssrRow);
 			for (int i = 0; i < zbRow.length; ++i) {
-				if (!excludeCols.contains(i) && !Util.isZero(Math.abs(rs[i]))) {
+				if (null != xssr[i] && 
+					null != rs[i]  && 
+					!excludeCols.contains(i) && 
+					!Util.isZero(Math.abs(rs[i]))) {
+					
 					zbRow[i] = xssr[i] / rs[i];
 				}
 			}
 		} else if (GSZB.SXFYL.getValue() == zbId) {
 			Double[] sxfy = pipe.getZb(sxfyRow);
 			for (int i = 0; i < zbRow.length; ++i) {
-				if (!excludeCols.contains(i) && !Util.isZero(Math.abs(rs[i]))) {
+				if (null != sxfy[i] && 
+					null != rs[i]  && 
+					!excludeCols.contains(i) && 
+					!Util.isZero(Math.abs(rs[i]))) {
+					
 					zbRow[i] = sxfy[i] / rs[i];
 				}
 			}

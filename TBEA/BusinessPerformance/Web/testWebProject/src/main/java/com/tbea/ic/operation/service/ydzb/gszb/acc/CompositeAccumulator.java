@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.tbea.ic.operation.common.GSZB;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 
 public class CompositeAccumulator implements IAccumulator {
@@ -36,13 +37,18 @@ public class CompositeAccumulator implements IAccumulator {
 		return this;
 	}
 	
+	@SuppressWarnings("null")
 	private Double sum(Integer zb, List<Company> companies, int col){
-		Double dRet = 0.0;
+		Double dRet = null;
 		String key;
+		Double dTmp;
 		for (int i = 0, len = companies.size(); i < len; ++i){
 			key = zb + companies.get(i).getType().name();
 			if (srcs.containsKey(key)){
-				dRet += srcs.get(key)[col];
+				dTmp = srcs.get(key)[col];
+				if (null != dTmp){
+					dRet = Util.valueOf(dRet) + dTmp;
+				}
 			}
 		}
 		return dRet;

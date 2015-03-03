@@ -231,6 +231,13 @@ module Util {
     }
     
  
+    export function formatInt(val: string): string {
+        if (val === "--" || val === "") {
+            return val;
+        }
+        return parseInt(val) + "";
+    }
+    
     export function formatCurrency(val: string): string {
 
         if (val === "--" || val === "") {

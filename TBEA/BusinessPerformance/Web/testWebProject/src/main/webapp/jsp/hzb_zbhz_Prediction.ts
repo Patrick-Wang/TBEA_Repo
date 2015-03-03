@@ -186,7 +186,7 @@ module hzb_zbhz_prediciton {
                         row[i] = Util.formatPercent(row[i]);
                     } else {
                         if(isRs){
-                            row[i] = parseInt(row[i]);
+                            row[i] = Util.formatInt(row[i]);
                         }else {
                             row[i] = Util.formatCurrency(row[i]);
                         }

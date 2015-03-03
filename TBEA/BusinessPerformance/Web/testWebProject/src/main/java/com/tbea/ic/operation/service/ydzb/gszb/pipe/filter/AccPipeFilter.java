@@ -153,7 +153,9 @@ public class AccPipeFilter implements IPipeFilter {
 	}
 
 	protected void updateZb(int row, int zbId, Double[] zbRow) {
-		zbRow[col] = Util.valueOf(zbRow[col]) + cacheValues.get(row);
+		if (null != cacheValues.get(row)){
+			zbRow[col] = Util.valueOf(zbRow[col]) + cacheValues.get(row);
+		}
 	}
 
 }

@@ -99,7 +99,7 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 		for(int iSize = 0; iSize < zbIds.size(); iSize++)
 		{
 			hyMap.put(zbIds.get(iSize), iSize);
-			listYearPlanValue.add(0.0);
+			listYearPlanValue.add(null);
 		}
 		
 		Calendar cal = Calendar.getInstance();

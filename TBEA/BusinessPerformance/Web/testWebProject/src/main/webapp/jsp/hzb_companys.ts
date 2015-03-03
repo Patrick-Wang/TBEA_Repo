@@ -129,7 +129,7 @@ module hzb_companys {
                         row[i] = Util.formatPercent(row[i]);
                     } else if (i != AllZb.zb) {
                         if (isRs) {
-                            row[i] = parseInt(row[i]);
+                            row[i] = Util.formatInt(row[i]);
                         } else {
                             row[i] = Util.formatCurrency(row[i]);
                         }
@@ -153,7 +153,7 @@ module hzb_companys {
                         row[i] = Util.formatPercent(row[i]);
                     } else if (i != HbZb.zb) {
                         if (isRs) {
-                            row[i] = parseInt(row[i]);
+                            row[i] = Util.formatInt(row[i]);
                         } else {
                             row[i] = Util.formatCurrency(row[i]);
                         }

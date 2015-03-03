@@ -108,7 +108,7 @@ public class YDJHZBDaoImpl extends AbstractReadWriteDaoImpl<YDJHZB> implements Y
 		for(int iSize = 0; iSize < zbsTmp.size(); iSize++)
 		{
 			hyMap.put(zbsTmp.get(iSize), iSize);
-			listDyjhz.add(0.0);
+			listDyjhz.add(null);
 		}
 		Calendar calStart = Calendar.getInstance();
 		calStart.setTime(start);
