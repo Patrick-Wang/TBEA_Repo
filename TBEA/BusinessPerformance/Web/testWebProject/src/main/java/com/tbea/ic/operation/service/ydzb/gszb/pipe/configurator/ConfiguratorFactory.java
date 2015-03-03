@@ -65,6 +65,7 @@ public class ConfiguratorFactory {
 	public IPipeConfigurator getJdzbmyCompositeConfigurator(CompositeAccumulator acc) {
 		return new JDZBMYCompositeConfigurator(acc);
 	}
+	
 	/**
 	 * @return the ydhbConfigurator
 	 */
@@ -74,6 +75,10 @@ public class ConfiguratorFactory {
 			ydhbConfigurator = new YdhbConfigurator((StandardConfigurator)getStandardConfigurator());
 		}
 		return ydhbConfigurator;
+	}
+	
+	public IPipeConfigurator getSecondSeasonPredictionCompositeConfigurator(CompositeAccumulator acc) {
+		return new SecondSeasonPredictionCompositeConfigurator(acc);
 	}
 	
 }
