@@ -81,4 +81,8 @@ public class ConfiguratorFactory {
 		return new SecondSeasonPredictionCompositeConfigurator(acc);
 	}
 	
+	public IPipeConfigurator getFirstSeasonPredictionCompositeConfigurator(CompositeAccumulator acc) {
+		return new FirstSeasonPredictionCompositeConfigurator(acc);
+	}
+	
 }

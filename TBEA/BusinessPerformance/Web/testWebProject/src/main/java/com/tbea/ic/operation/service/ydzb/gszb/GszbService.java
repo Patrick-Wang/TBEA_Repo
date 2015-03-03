@@ -11,6 +11,8 @@ public interface GszbService {
 	List<String[]> getGcyzb(Date date);
 
 	List<String[]> getFirstSeasonPredictionZBsOverview(Date date);
+	List<String[]> getGcyFirstSeasonPredictionZBs(Date date);
+	
 	List<String[]> getSecondSeasonPredictionZBsOverview(Date date);
 	List<String[]> getGcySecondSeasonPredictionZBs(Date date);
 	
