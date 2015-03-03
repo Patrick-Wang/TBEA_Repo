@@ -66,24 +66,42 @@
 				<li><a href="../ydzb/financial_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/line2.png"> <span><strong>财务指标预测完成情况</strong></a>
 				</li>
-				<!--/li-->
-				<li><a href="../ydzb/gdw_zbhz.do" target="_blank"><img
-						src="../images/charts/pie1.png"> <span><strong>利润指标预测情况</strong></a>
+				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=1" target="_blank"><img
+						src="../images/charts/pie1.png"> <span><strong>利润指标完成情况</strong></a>
 				</li>
 				<!--/li-->
-				<li><a href="../ydzb/zbhz_overview.do" target="_blank"><img
-						src="../images/charts/scatter1.png"> <span><strong>销售收入指标预测情况</strong></span></a>
+				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=6" target="_blank"><img
+						src="../images/charts/scatter1.png"> <span><strong>销售收入指标完成情况</strong></span></a>
 				</li>
 				<!--/li-->
-				<li><a href="../ydzb/zbhz_overview.do?zb=7" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>净现金流指标预测情况</strong></span></a>
+				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=29" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>净现金流指标完成情况</strong></span></a>
 				</li>
 				<!--/li-->
-				<li><a href="../ydzb/zbhz_overview.do?zb=23" target="_blank"><img
-						src="../images/charts/scatter4.png""> <span><strong>应收账款指标预测情况</strong></span></a></li>
+				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=32" target="_blank"><img
+						src="../images/charts/scatter4.png""> <span><strong>应收账款指标完成情况</strong></span></a></li>
 				<!--/li-->
-				<li><a href="../ydzb/zbhz_overview.do?zb=25" target="_blank"><img
-						src="../images/charts/scatter5.png"> <span><strong>存货指标预测情况</strong></span></a></li>
+				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=35" target="_blank"><img
+						src="../images/charts/scatter5.png"> <span><strong>存货指标完成情况</strong></span></a></li>
+				<!--/li-->
+<!-- 				<li><a href="../ydzb/gdw_zbhz.do" target="_blank"><img -->
+<!-- 						src="../images/charts/pie1.png"> <span><strong>利润指标预测情况</strong></a> -->
+				
+<!-- 				</li> -->
+<!-- 				/li -->
+<!-- 				<li><a href="../ydzb/zbhz_overview.do" target="_blank"><img -->
+<!-- 						src="../images/charts/scatter1.png"> <span><strong>销售收入指标预测情况</strong></span></a> -->
+<!-- 				</li> -->
+<!-- 				/li -->
+<!-- 				<li><a href="../ydzb/zbhz_overview.do?zb=7" target="_blank"><img -->
+<!-- 						src="../images/charts/scatter2.png"> <span><strong>净现金流指标预测情况</strong></span></a> -->
+<!-- 				</li> -->
+<!-- 				/li -->
+<!-- 				<li><a href="../ydzb/zbhz_overview.do?zb=23" target="_blank"><img -->
+<!-- 						src="../images/charts/scatter4.png""> <span><strong>应收账款指标预测情况</strong></span></a></li> -->
+<!-- 				/li -->
+<!-- 				<li><a href="../ydzb/zbhz_overview.do?zb=25" target="_blank"><img -->
+<!-- 						src="../images/charts/scatter5.png"> <span><strong>存货指标预测情况</strong></span></a></li> -->
 				<!--/li-->
 <%-- 				</c:if> --%>
 			</ul>

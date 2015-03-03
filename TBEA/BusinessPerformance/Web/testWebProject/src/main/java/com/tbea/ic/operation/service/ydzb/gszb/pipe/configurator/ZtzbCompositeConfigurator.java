@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.CompositeAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
@@ -19,7 +18,7 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 	private IAccumulator acc;
 	
 	
-	public ZtzbCompositeConfigurator(CompositeAccumulator acc) {
+	public ZtzbCompositeConfigurator(IAccumulator acc) {
 		super();
 		this.acc = acc;
 	}

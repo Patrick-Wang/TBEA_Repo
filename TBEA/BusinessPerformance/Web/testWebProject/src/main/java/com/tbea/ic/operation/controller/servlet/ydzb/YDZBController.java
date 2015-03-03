@@ -185,14 +185,7 @@ public class YDZBController {
 	@RequestMapping(value = "gdw_zbhz.do", method = RequestMethod.GET)
 	public ModelAndView getGdw_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
-		// Calendar now = Calendar.getInstance();
-		// int month = now.get(Calendar.MONTH) + 1;
-		// int year = now.get(Calendar.YEAR);
-		// Date d = java.sql.Date.valueOf(year + "-" + month + "-" +
-		// now.get(Calendar.DAY_OF_MONTH));
-		// Map<String, Object> map = new HashMap<String, Object>();
-		// map.put("month", month);
-		// map.put("year", year);
+
 		String gszb = request.getParameter("zb");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("zb", gszb);
@@ -348,7 +341,7 @@ public class YDZBController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection();
 		dateSel.select(map);
-		return new ModelAndView("hzb_zbhz_Prediction", map);
+		return new ModelAndView("hzb_zbhz_prediction", map);
 	}
 
 	// 财务指标预测update
@@ -385,7 +378,7 @@ public class YDZBController {
 	
 	//财务指标预测
 	@RequestMapping(value = "financial_zbhz_prediction.do", method = RequestMethod.GET)
-	public ModelAndView gethzb_company(HttpServletRequest request,
+	public ModelAndView getFinancial_zbhz_prediction(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -393,4 +386,50 @@ public class YDZBController {
 		dateSel.select(map);
 		return new ModelAndView("financial_zbhz_prediction", map);
 	}
+	
+	
+	// 财务指标预测
+		@RequestMapping(value = "gdw_zbhz_prediction_update.do", method = RequestMethod.GET)
+		public @ResponseBody byte[] getGdw_zbhz_prediction_update(
+				HttpServletRequest request, HttpServletResponse response)
+				throws UnsupportedEncodingException {
+			Date d = DateSelection.getDate(request);
+			String month = request.getParameter("month");
+			int iMonth = Integer.valueOf(month);
+			String financial_zbhz_prediction = null;
+			String zb = request.getParameter("zb");
+			GSZB gszb = GSZB.valueOf(Integer.valueOf(zb));
+			if (0 == iMonth % 3) {
+				financial_zbhz_prediction = JSONArray
+						.fromObject(gszbService.getGdwJDZBMY(gszb, d)).toString()
+						.replace("null", "\"--\"");
+
+			}
+
+			if (1 == iMonth % 3) {
+				financial_zbhz_prediction = JSONArray
+						.fromObject(
+								gszbService.getGdwFirstSeasonPredictionZBs(gszb, d))
+						.toString().replace("null", "\"--\"");
+			}
+
+			if (2 == iMonth % 3) {
+				financial_zbhz_prediction = JSONArray
+						.fromObject(gszbService.getGdwSecondSeasonPredictionZBs(gszb, d)).toString()
+						.replace("null", "\"--\"");
+			}
+
+			return financial_zbhz_prediction.getBytes("utf-8");
+		}
+
+		@RequestMapping(value = "gdw_zbhz_prediction.do", method = RequestMethod.GET)
+		public ModelAndView getGdw_zbhz_prediction(HttpServletRequest request,
+				HttpServletResponse response) {
+			String gszb = request.getParameter("zb");			
+			Map<String, Object> map = new HashMap<String, Object>();
+			DateSelection dateSel = new DateSelection();
+			dateSel.select(map);
+			map.put("zb", gszb);
+			return new ModelAndView("gdw_zbhz_prediction", map);
+		}
 }

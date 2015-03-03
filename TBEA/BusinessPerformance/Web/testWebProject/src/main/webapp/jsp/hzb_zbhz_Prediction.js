@@ -80,7 +80,7 @@ var hzb_zbhz_prediciton;
         JQGridAssistantFactory.createTable = function (gridName, gridStyle) {
             if (1 == gridStyle) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("指标", "zb", true, 0 /* Left */),
+                    new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度计划", "ndjh"),
                     new JQTable.Node("本季度计划", "jdjh"),
                     new JQTable.Node("当月完成", "dywc").append(new JQTable.Node("本月计划值", "y1")).append(new JQTable.Node("当月预计值", "y2")).append(new JQTable.Node("计划完成率", "y3")).append(new JQTable.Node("去年同期", "y4")).append(new JQTable.Node("同比增幅", "y5")),
@@ -90,7 +90,7 @@ var hzb_zbhz_prediciton;
             }
             if (2 == gridStyle) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("指标", "zb", true, 0 /* Left */),
+                    new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度计划", "ndjh"),
                     new JQTable.Node("本季度计划", "jdjh"),
                     new JQTable.Node("当月完成", "dywc").append(new JQTable.Node("本月计划值", "y1")).append(new JQTable.Node("当月预计值", "y2")).append(new JQTable.Node("计划完成率", "y3")).append(new JQTable.Node("去年同期", "y4")).append(new JQTable.Node("同比增幅", "y5")),
@@ -101,7 +101,7 @@ var hzb_zbhz_prediciton;
             }
             if (3 == gridStyle) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("指标", "zb", true, 0 /* Left */),
+                    new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度计划", "ndjh"),
                     new JQTable.Node("本季度计划", "jdjh"),
                     new JQTable.Node("下季度计划", "xjdjh"),
@@ -218,6 +218,11 @@ var hzb_zbhz_prediciton;
             }
             else if (3 == this.mDelegateMonth) {
                 data = this.formatThirdMonthData(data);
+            }
+            for (var i = 0; i < data.length; ++i) {
+                if (data[i][0].lastIndexOf("计") >= 0) {
+                    tableAssist.setRowBgColor(i, 183, 222, 232);
+                }
             }
             var parent = $("#" + this.mTableId);
             parent.empty();

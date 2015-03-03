@@ -31,7 +31,7 @@ public class AccumulatorFactory {
 		return yjhcc;
 	}
 	
-	public CompositeAccumulator getCompositeAcc(CompositeAccDataSource dataSource){
+	public IAccumulator getCompositeAcc(CompositeAccDataSource dataSource){
 		return new CompositeAccumulator(dataSource);
 	}
 	

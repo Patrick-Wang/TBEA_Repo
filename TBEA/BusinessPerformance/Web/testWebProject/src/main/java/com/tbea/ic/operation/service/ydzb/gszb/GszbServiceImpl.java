@@ -33,6 +33,7 @@ import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.CompositeAccDataSource;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.CompositeAccumulator;
+import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.ConfiguratorFactory;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.IPipeConfigurator;
@@ -325,12 +326,15 @@ public class GszbServiceImpl implements GszbService {
 		return makeZbResult(srqyzbs, pipe.getGszb());
 	}
 
-	// Get Top 5 indexes including "利润，存货、现金流、应收、收入"
-	@Override
-	public List<String[]> getCompanyTop5zb(GSZB gsTop5zb, Date date) {
+	
+	private List<String[]> getCompanyTop5zb(
+			GSZB gsTop5zb, 
+			Date date, 
+			IPipeConfigurator standardConfig, 
+			IPipeConfigurator compositeConfig,
+			CompositeAccDataSource dataSource){
+		
 		Organization org = companyManager.getBMDBOrganization();
-		IPipeConfigurator standardConfig = getConfiguratorFactory()
-				.getStandardConfigurator();
 		GszbPipe pipe = new GszbPipe(gsTop5zb.getValue(),
 				org.getCompany(CompanyType.SBGS), date, standardConfig);
 		List<Double[]> sbgsZbs = pipe.getGszb();
@@ -382,11 +386,6 @@ public class GszbServiceImpl implements GszbService {
 		pipe = new GszbPipe(gsTop5zb.getValue(),
 				org.getCompany(CompanyType.ZHGS), date, standardConfig);
 		List<Double[]> zhgsZbs = pipe.getGszb();
-
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-
-		IPipeConfigurator compositeConfig = this.getConfiguratorFactory()
-				.getZtzbCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource));
 
 		dataSource.add(org.getCompany(CompanyType.SBGS), gsTop5zb.getValue(),
 				sbgsZbs.get(0));
@@ -502,6 +501,20 @@ public class GszbServiceImpl implements GszbService {
 		values.add(zhgsZbs);// 17);
 		values.add(jtgshjZbs);// 18);
 		return makeGroupResult(values);
+		
+	}
+	
+	// Get Top 5 indexes including "利润，存货、现金流、应收、收入"
+	@Override
+	public List<String[]> getCompanyTop5zb(GSZB gsTop5zb, Date date) {
+		CompositeAccDataSource dataSource = new CompositeAccDataSource();
+		IAccumulator acc = this.getAccFactory().getCompositeAcc(dataSource);
+		return getCompanyTop5zb(
+				gsTop5zb, 
+				date, 
+				this.getConfiguratorFactory().getStandardConfigurator(),
+				this.getConfiguratorFactory().getZtzbCompositeConfigurator(acc), 
+				dataSource);
 	}
 
 	@Override
@@ -716,6 +729,42 @@ public class GszbServiceImpl implements GszbService {
 		values.add(jthjZbs);
 
 		return makeGroupResult(values);
+	}
+
+	@Override
+	public List<String[]> getGdwFirstSeasonPredictionZBs(GSZB gszb, Date date) {
+		CompositeAccDataSource dataSource = new CompositeAccDataSource();
+		IAccumulator acc = this.getAccFactory().getCompositeAcc(dataSource);
+		return getCompanyTop5zb(
+				gszb, 
+				date, 
+				this.getConfiguratorFactory().getFirstSeasonPredictionConfigurator(),
+				this.getConfiguratorFactory().getFirstSeasonPredictionCompositeConfigurator(acc), 
+				dataSource);
+	}
+
+	@Override
+	public List<String[]> getGdwSecondSeasonPredictionZBs(GSZB gszb, Date date) {
+		CompositeAccDataSource dataSource = new CompositeAccDataSource();
+		IAccumulator acc = this.getAccFactory().getCompositeAcc(dataSource);
+		return getCompanyTop5zb(
+				gszb, 
+				date, 
+				this.getConfiguratorFactory().getSecondSeasonPredictionConfigurator(),
+				this.getConfiguratorFactory().getSecondSeasonPredictionCompositeConfigurator(acc), 
+				dataSource);
+	}
+
+	@Override
+	public List<String[]> getGdwJDZBMY(GSZB gszb, Date date) {
+		CompositeAccDataSource dataSource = new CompositeAccDataSource();
+		IAccumulator acc = this.getAccFactory().getCompositeAcc(dataSource);
+		return getCompanyTop5zb(
+				gszb, 
+				date, 
+				this.getConfiguratorFactory().getJDZBMYConfigurator(),
+				this.getConfiguratorFactory().getJdzbmyCompositeConfigurator(acc), 
+				dataSource);
 	}
 
 }

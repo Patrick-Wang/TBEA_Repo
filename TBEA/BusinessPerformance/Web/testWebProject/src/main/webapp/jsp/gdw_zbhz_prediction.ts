@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 declare var echarts;
 
-module hzb_zbhz_prediciton {
+module gdw_zbhz_prediciton {
 
     enum FirstMonthZb{
         zb, ndjh, bjdjh, byjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
@@ -135,14 +135,14 @@ module hzb_zbhz_prediciton {
         private mSeason: number;
         private mActualMonth: number;
         private mDelegateMonth: number;
-       
+        private mZB: number;
         private mData: Array<string[]> = [];
-        private mDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_prediction_update.do");
+        private mDataSet : Util.Ajax = new Util.Ajax("gdw_zbhz_prediction_update.do");
         private mTableId : string;
-        public init(tableId: string, year: number): void {
+        public init(tableId: string, year: number, zb: number): void {
             this.mYear = year;
             this.mTableId = tableId;
-            
+            this.mZB = zb;
             $('h1').text(this.mYear + "年"  + "季度指标预测汇总");
             //this.updateTable();
             //this.updateUI();
@@ -164,7 +164,7 @@ module hzb_zbhz_prediciton {
 
             this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
             
-            this.mDataSet.get({ month: this.mActualMonth, year: this.mYear })
+            this.mDataSet.get({ month: this.mActualMonth, year: this.mYear, zb: this.mZB})
                 .then((dataArray: any) => {
 
                     this.mData = dataArray;
@@ -177,22 +177,16 @@ module hzb_zbhz_prediciton {
         
         private formatData(data : string[][], precentList : std.vector<number>){
             var row = [];
-            var isRs = false;
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
-                isRs = row[0] == "人数";
-                for (var i = 1; i < row.length; ++i) {
+                for (var i = 0; i < row.length; ++i) {
                     if (precentList.contains(i)) {
                         row[i] = Util.formatPercent(row[i]);
                     } else {
-                        if(isRs){
-                            row[i] = Util.formatInt(row[i]);
-                        }else {
-                            row[i] = Util.formatCurrency(row[i]);
-                        }
+                        row[i] = Util.formatCurrency(row[i]);
                     }
                 }
-                data.push(row);
+                data[j] = data[j].concat(row);
             }
             return data;
         }
@@ -238,7 +232,27 @@ module hzb_zbhz_prediciton {
         private updateTable(): void {
         	var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mDelegateMonth);
-            var data = [];
+            var data = [
+                ["沈变公司"],
+                ["衡变公司"],
+                ["新变厂"],
+                ["鲁缆公司"],
+                ["新缆厂"],
+                ["德缆公司"],
+                ["输变电小计"],
+                ["新特能源公司"],
+                ["新能源"],
+                ["新能源小计"],
+                ["天池能源"],
+                ["能动公司"],
+                ["能源小计"],
+                ["进出口公司"],
+                ["国际工程公司"],
+                ["工程小计"],
+                ["股份公司小计"],
+                ["众和公司"],
+                ["集团合计"]
+             ];
 
  			if (1 == this.mDelegateMonth){
                 data = this.formatFirstMonthData(data);
@@ -247,12 +261,13 @@ module hzb_zbhz_prediciton {
             } else if (3 == this.mDelegateMonth){
                 data = this.formatThirdMonthData(data);
             } 
-
+            
             for (var i = 0; i < data.length; ++i) {
                 if (data[i][0].lastIndexOf("计") >= 0) {
                     tableAssist.setRowBgColor(i, 183, 222, 232);
                 }
             }
+            
 			var parent = $("#" + this.mTableId);
 			parent.empty();
 			parent.append("<table id='"+ name +"'></table>");

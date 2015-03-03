@@ -3,6 +3,7 @@ package com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.CompositeAccumulator;
+import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 
 public class ConfiguratorFactory {
 	private IPipeConfigurator standardConfigurator;
@@ -58,11 +59,11 @@ public class ConfiguratorFactory {
 		return jdzbmyConfigurator;
 	}
 	
-	public IPipeConfigurator getZtzbCompositeConfigurator(CompositeAccumulator acc) {
+	public IPipeConfigurator getZtzbCompositeConfigurator(IAccumulator acc) {
 		return new ZtzbCompositeConfigurator(acc);
 	}
 	
-	public IPipeConfigurator getJdzbmyCompositeConfigurator(CompositeAccumulator acc) {
+	public IPipeConfigurator getJdzbmyCompositeConfigurator(IAccumulator acc) {
 		return new JDZBMYCompositeConfigurator(acc);
 	}
 	
@@ -77,11 +78,11 @@ public class ConfiguratorFactory {
 		return ydhbConfigurator;
 	}
 	
-	public IPipeConfigurator getSecondSeasonPredictionCompositeConfigurator(CompositeAccumulator acc) {
+	public IPipeConfigurator getSecondSeasonPredictionCompositeConfigurator(IAccumulator acc) {
 		return new SecondSeasonPredictionCompositeConfigurator(acc);
 	}
 	
-	public IPipeConfigurator getFirstSeasonPredictionCompositeConfigurator(CompositeAccumulator acc) {
+	public IPipeConfigurator getFirstSeasonPredictionCompositeConfigurator(IAccumulator acc) {
 		return new FirstSeasonPredictionCompositeConfigurator(acc);
 	}
 	

@@ -8,18 +8,21 @@ import com.tbea.ic.operation.common.companys.Company;
 
 public interface GszbService {
 	List<String[]> getGsztzb(Date date);
+	List<String[]> getSrqy(Date date);
 	List<String[]> getGcyzb(Date date);
-
+	List<String[]> getCompanyTop5zb(GSZB gszb, Date date);
+	
 	List<String[]> getFirstSeasonPredictionZBsOverview(Date date);
 	List<String[]> getGcyFirstSeasonPredictionZBs(Date date);
+	List<String[]> getGdwFirstSeasonPredictionZBs(GSZB gszb, Date d);
 	
 	List<String[]> getSecondSeasonPredictionZBsOverview(Date date);
 	List<String[]> getGcySecondSeasonPredictionZBs(Date date);
-	
-	List<String[]> getSrqy(Date date);
-	List<String[]> getCompanyTop5zb(GSZB gszb, Date date);
+	List<String[]> getGdwSecondSeasonPredictionZBs(GSZB gszb, Date d);
 
 	List<String[]> getJDZBMY(Date date);
 	List<String[]> getGcyJDZBMY(Date date);
-	List<String[]> getGdwzb(Date d, List<Company> comps);
+	List<String[]> getGdwJDZBMY(GSZB gszb, Date d);
+
+	List<String[]> getGdwzb(Date d, List<Company> comps);	
 }

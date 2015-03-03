@@ -28,13 +28,13 @@
     <script src="../jsp/jqgrid/js/jquery-ui-custom.min.js" type="text/javascript"></script>
     <script src="../jsp/jqgrid/js/ui.multiselect.js" type="text/javascript"></script>
      	<script src="../jsp/util.js" type="text/javascript"></script>
-    <script src="../jsp/hzb_zbhz_prediction.js" type="text/javascript"></script>
+    <script src="../jsp/gdw_zbhz_prediction.js" type="text/javascript"></script>
 
     <script type="text/javascript">
-    	var instance = hzb_zbhz_prediciton.View.newInstance();
+    	var instance = gdw_zbhz_prediciton.View.newInstance();
         (function () {
             $(document).ready(function () {
-            	instance.init("table", ${year});
+            	instance.init("table", ${year}, ${zb});
             });
         })();
     </script>
