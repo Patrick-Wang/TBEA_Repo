@@ -50,7 +50,7 @@ module hzb_zbhz_prediciton {
                     .append(new JQTable.Node("累计完成值", "n1"))
                     .append(new JQTable.Node("年度指标完成率", "n2"))
                     .append(new JQTable.Node("去年同期值", "n3"))
-                    .append(new JQTable.Node("同比增幅", "n4")),
+                    .append(new JQTable.Node("同比增幅", "n4"))
                 ], gridName);
             }
             if (2 == gridStyle)
@@ -80,7 +80,7 @@ module hzb_zbhz_prediciton {
                     .append(new JQTable.Node("累计完成值", "n1"))
                     .append(new JQTable.Node("年度指标完成率", "n2"))
                     .append(new JQTable.Node("去年同期值", "n3"))
-                    .append(new JQTable.Node("同比增幅", "n4")),
+                    .append(new JQTable.Node("同比增幅", "n4"))
                 ], gridName);
             }
                if (3 == gridStyle)
@@ -115,7 +115,7 @@ module hzb_zbhz_prediciton {
                     .append(new JQTable.Node("年度累计", "xjy6"))
                     .append(new JQTable.Node("年度累计完成率", "xjy7"))
                     .append(new JQTable.Node("去年同期", "xjy8"))
-                    .append(new JQTable.Node("同比增幅", "xjy9")),
+                    .append(new JQTable.Node("同比增幅", "xjy9"))
                 ], gridName);
                }
            

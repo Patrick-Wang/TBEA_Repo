@@ -53,7 +53,7 @@ module hzb_zbhz {
                     .append(new JQTable.Node("年度累计", "n1"))
                     .append(new JQTable.Node("累计计划完成率", "n2"))
                     .append(new JQTable.Node("去年同期", "n3"))
-                    .append(new JQTable.Node("同比增幅", "n4")),
+                    .append(new JQTable.Node("同比增幅", "n4"))
             ], gridName);
         }
     }
