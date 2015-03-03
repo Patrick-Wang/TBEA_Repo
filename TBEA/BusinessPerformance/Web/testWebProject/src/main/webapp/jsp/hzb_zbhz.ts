@@ -118,7 +118,7 @@ module hzb_zbhz {
                         row[i] = Util.formatPercent(row[i]);
                     } else if (i != SrqyId.zb) {
                         if (isRs) {
-                            row[i] = parseInt(row[i]);
+                            row[i] = Util.formatInt(row[i]);
                         } else {
                             row[i] = Util.formatCurrency(row[i]);
                         }
@@ -141,7 +141,7 @@ module hzb_zbhz {
                         row[i] = Util.formatPercent(row[i]);
                     } else if (i != ZtId.zb) {
                         if (isRs) {
-                            row[i] = parseInt(row[i]);
+                            row[i] = Util.formatInt(row[i]);
                         } else {
                             row[i] = Util.formatCurrency(row[i]);
                         }
