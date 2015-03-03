@@ -1,14 +1,86 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
 var hzb_zbhz_prediciton;
 (function (hzb_zbhz_prediciton) {
+    var FirstMonthZb;
+    (function (FirstMonthZb) {
+        FirstMonthZb[FirstMonthZb["zb"] = 0] = "zb";
+        FirstMonthZb[FirstMonthZb["ndjh"] = 1] = "ndjh";
+        FirstMonthZb[FirstMonthZb["bjdjh"] = 2] = "bjdjh";
+        FirstMonthZb[FirstMonthZb["byjhz"] = 3] = "byjhz";
+        FirstMonthZb[FirstMonthZb["dyyjz"] = 4] = "dyyjz";
+        FirstMonthZb[FirstMonthZb["dyjhwcl"] = 5] = "dyjhwcl";
+        FirstMonthZb[FirstMonthZb["dyqntq"] = 6] = "dyqntq";
+        FirstMonthZb[FirstMonthZb["dytbzf"] = 7] = "dytbzf";
+        FirstMonthZb[FirstMonthZb["cyyj"] = 8] = "cyyj";
+        FirstMonthZb[FirstMonthZb["myyj"] = 9] = "myyj";
+        FirstMonthZb[FirstMonthZb["jdyjhj"] = 10] = "jdyjhj";
+        FirstMonthZb[FirstMonthZb["jdyjwcl"] = 11] = "jdyjwcl";
+        FirstMonthZb[FirstMonthZb["jdqntq"] = 12] = "jdqntq";
+        FirstMonthZb[FirstMonthZb["jdtbzf"] = 13] = "jdtbzf";
+        FirstMonthZb[FirstMonthZb["ndljwcz"] = 14] = "ndljwcz";
+        FirstMonthZb[FirstMonthZb["ndzbwcl"] = 15] = "ndzbwcl";
+        FirstMonthZb[FirstMonthZb["ndqntqz"] = 16] = "ndqntqz";
+        FirstMonthZb[FirstMonthZb["ndtbzf"] = 17] = "ndtbzf";
+    })(FirstMonthZb || (FirstMonthZb = {}));
+    var SecondMonthZb;
+    (function (SecondMonthZb) {
+        SecondMonthZb[SecondMonthZb["zb"] = 0] = "zb";
+        SecondMonthZb[SecondMonthZb["ndjh"] = 1] = "ndjh";
+        SecondMonthZb[SecondMonthZb["jdjh"] = 2] = "jdjh";
+        SecondMonthZb[SecondMonthZb["byjhz"] = 3] = "byjhz";
+        SecondMonthZb[SecondMonthZb["dyyjz"] = 4] = "dyyjz";
+        SecondMonthZb[SecondMonthZb["dyjhwcl"] = 5] = "dyjhwcl";
+        SecondMonthZb[SecondMonthZb["dyqntq"] = 6] = "dyqntq";
+        SecondMonthZb[SecondMonthZb["dytbzf"] = 7] = "dytbzf";
+        SecondMonthZb[SecondMonthZb["jdlj"] = 8] = "jdlj";
+        SecondMonthZb[SecondMonthZb["jdjhwcl"] = 9] = "jdjhwcl";
+        SecondMonthZb[SecondMonthZb["jdqntqz"] = 10] = "jdqntqz";
+        SecondMonthZb[SecondMonthZb["jdtbzf"] = 11] = "jdtbzf";
+        SecondMonthZb[SecondMonthZb["jdmyyj"] = 12] = "jdmyyj";
+        SecondMonthZb[SecondMonthZb["jdyjhj"] = 13] = "jdyjhj";
+        SecondMonthZb[SecondMonthZb["jdyjwcl"] = 14] = "jdyjwcl";
+        SecondMonthZb[SecondMonthZb["jdyjqntq"] = 15] = "jdyjqntq";
+        SecondMonthZb[SecondMonthZb["jdyjtbzf"] = 16] = "jdyjtbzf";
+        SecondMonthZb[SecondMonthZb["ndljwcz"] = 17] = "ndljwcz";
+        SecondMonthZb[SecondMonthZb["ndzbwcl"] = 18] = "ndzbwcl";
+        SecondMonthZb[SecondMonthZb["ndqntqz"] = 19] = "ndqntqz";
+        SecondMonthZb[SecondMonthZb["ndtbzf"] = 20] = "ndtbzf";
+    })(SecondMonthZb || (SecondMonthZb = {}));
+    var ThirdMonthZb;
+    (function (ThirdMonthZb) {
+        ThirdMonthZb[ThirdMonthZb["zb"] = 0] = "zb";
+        ThirdMonthZb[ThirdMonthZb["ndjh"] = 1] = "ndjh";
+        ThirdMonthZb[ThirdMonthZb["bjdjh"] = 2] = "bjdjh";
+        ThirdMonthZb[ThirdMonthZb["xjdjh"] = 3] = "xjdjh";
+        ThirdMonthZb[ThirdMonthZb["dyjhz"] = 4] = "dyjhz";
+        ThirdMonthZb[ThirdMonthZb["dyyjz"] = 5] = "dyyjz";
+        ThirdMonthZb[ThirdMonthZb["dyjhwcl"] = 6] = "dyjhwcl";
+        ThirdMonthZb[ThirdMonthZb["dyqntq"] = 7] = "dyqntq";
+        ThirdMonthZb[ThirdMonthZb["dytbzf"] = 8] = "dytbzf";
+        ThirdMonthZb[ThirdMonthZb["jdlj"] = 9] = "jdlj";
+        ThirdMonthZb[ThirdMonthZb["jdjhwcl"] = 10] = "jdjhwcl";
+        ThirdMonthZb[ThirdMonthZb["jdqntqz"] = 11] = "jdqntqz";
+        ThirdMonthZb[ThirdMonthZb["jdtbzf"] = 12] = "jdtbzf";
+        ThirdMonthZb[ThirdMonthZb["ndljwcz"] = 13] = "ndljwcz";
+        ThirdMonthZb[ThirdMonthZb["ndzbwcl"] = 14] = "ndzbwcl";
+        ThirdMonthZb[ThirdMonthZb["ndqntqz"] = 15] = "ndqntqz";
+        ThirdMonthZb[ThirdMonthZb["ndtbzf"] = 16] = "ndtbzf";
+        ThirdMonthZb[ThirdMonthZb["xjdsyyj"] = 17] = "xjdsyyj";
+        ThirdMonthZb[ThirdMonthZb["xjdcyyj"] = 18] = "xjdcyyj";
+        ThirdMonthZb[ThirdMonthZb["xjdmyyj"] = 19] = "xjdmyyj";
+        ThirdMonthZb[ThirdMonthZb["xjdyjhj"] = 20] = "xjdyjhj";
+        ThirdMonthZb[ThirdMonthZb["xjdyjwcl"] = 21] = "xjdyjwcl";
+        ThirdMonthZb[ThirdMonthZb["xjdndlj"] = 22] = "xjdndlj";
+        ThirdMonthZb[ThirdMonthZb["xjdndljwcl"] = 23] = "xjdndljwcl";
+        ThirdMonthZb[ThirdMonthZb["xjdqntq"] = 24] = "xjdqntq";
+        ThirdMonthZb[ThirdMonthZb["xjdtbzf"] = 25] = "xjdtbzf";
+    })(ThirdMonthZb || (ThirdMonthZb = {}));
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName, gridStyle) {
             if (1 == gridStyle) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("指标", "zb", true, 0 /* Left */),
                     new JQTable.Node("年度计划", "ndjh"),
                     new JQTable.Node("本季度计划", "jdjh"),
                     new JQTable.Node("当月完成", "dywc").append(new JQTable.Node("本月计划值", "y1")).append(new JQTable.Node("当月预计值", "y2")).append(new JQTable.Node("计划完成率", "y3")).append(new JQTable.Node("去年同期", "y4")).append(new JQTable.Node("同比增幅", "y5")),
@@ -18,7 +90,7 @@ var hzb_zbhz_prediciton;
             }
             if (2 == gridStyle) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("指标", "zb", true, 0 /* Left */),
                     new JQTable.Node("年度计划", "ndjh"),
                     new JQTable.Node("本季度计划", "jdjh"),
                     new JQTable.Node("当月完成", "dywc").append(new JQTable.Node("本月计划值", "y1")).append(new JQTable.Node("当月预计值", "y2")).append(new JQTable.Node("计划完成率", "y3")).append(new JQTable.Node("去年同期", "y4")).append(new JQTable.Node("同比增幅", "y5")),
@@ -29,7 +101,7 @@ var hzb_zbhz_prediciton;
             }
             if (3 == gridStyle) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("指标", "zb", true, 0 /* Left */),
                     new JQTable.Node("年度计划", "ndjh"),
                     new JQTable.Node("本季度计划", "jdjh"),
                     new JQTable.Node("下季度计划", "xjdjh"),
@@ -57,8 +129,6 @@ var hzb_zbhz_prediciton;
             this.mYear = year;
             this.mTableId = tableId;
             $('h1').text(this.mYear + "年" + "季度指标预测汇总");
-            //this.updateTable();
-            //this.updateUI();
         };
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
@@ -75,40 +145,89 @@ var hzb_zbhz_prediciton;
             this.mDataSet.get({ month: this.mActualMonth, year: this.mYear }).then(function (dataArray) {
                 _this.mData = dataArray;
                 $('h1').text(_this.mYear + "年" + "季度指标预测汇总");
-                //document.title = this.mYear + "年" + this.mMonth + "月 指标汇总";
                 _this.updateTable();
             });
+        };
+        View.prototype.formatData = function (data, precentList) {
+            var row = [];
+            var isRs = false;
+            for (var j = 0; j < this.mData.length; ++j) {
+                row = [].concat(this.mData[j]);
+                isRs = row[0] == "人数";
+                for (var i = 1; i < row.length; ++i) {
+                    if (precentList.contains(i)) {
+                        row[i] = Util.formatPercent(row[i]);
+                    }
+                    else {
+                        if (isRs) {
+                            row[i] = Util.formatInt(row[i]);
+                        }
+                        else {
+                            row[i] = Util.formatCurrency(row[i]);
+                        }
+                    }
+                }
+                data.push(row);
+            }
+            return data;
+        };
+        View.prototype.formatFirstMonthData = function (data) {
+            var precentList = new std.vector();
+            precentList.push(5 /* dyjhwcl */);
+            precentList.push(7 /* dytbzf */);
+            precentList.push(11 /* jdyjwcl */);
+            precentList.push(13 /* jdtbzf */);
+            precentList.push(15 /* ndzbwcl */);
+            precentList.push(17 /* ndtbzf */);
+            return this.formatData(data, precentList);
+        };
+        View.prototype.formatSecondMonthData = function (data) {
+            var precentList = new std.vector();
+            precentList.push(5 /* dyjhwcl */);
+            precentList.push(7 /* dytbzf */);
+            precentList.push(9 /* jdjhwcl */);
+            precentList.push(16 /* jdyjtbzf */);
+            precentList.push(14 /* jdyjwcl */);
+            precentList.push(11 /* jdtbzf */);
+            precentList.push(18 /* ndzbwcl */);
+            precentList.push(20 /* ndtbzf */);
+            return this.formatData(data, precentList);
+        };
+        View.prototype.formatThirdMonthData = function (data) {
+            var precentList = new std.vector();
+            precentList.push(6 /* dyjhwcl */);
+            precentList.push(8 /* dytbzf */);
+            precentList.push(10 /* jdjhwcl */);
+            precentList.push(12 /* jdtbzf */);
+            precentList.push(14 /* ndzbwcl */);
+            precentList.push(16 /* ndtbzf */);
+            precentList.push(21 /* xjdyjwcl */);
+            precentList.push(23 /* xjdndljwcl */);
+            precentList.push(25 /* xjdtbzf */);
+            return this.formatData(data, precentList);
         };
         View.prototype.updateTable = function () {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name, this.mDelegateMonth);
             var data = [];
-            var row = [];
-            for (var i = 0; i < data.length; ++i) {
-                if (this.mData[i] instanceof Array) {
-                    //row = [].concat(this.mData[i]);
-                    //                    for (var col in row) {
-                    //                        if (col != '2' && col != '4' && col != '6' && col != '8' && col != '10') {
-                    //                            row[col] = Util.formatCurrency(row[col]);
-                    //                        }
-                    //                    }
-                    data.push(row);
-                }
+            if (1 == this.mDelegateMonth) {
+                data = this.formatFirstMonthData(data);
+            }
+            else if (2 == this.mDelegateMonth) {
+                data = this.formatSecondMonthData(data);
+            }
+            else if (3 == this.mDelegateMonth) {
+                data = this.formatThirdMonthData(data);
             }
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
-                data: tableAssist.getData(this.mData),
+                data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: '100%',
                 width: 1300,
                 shrinkToFit: true,

@@ -234,23 +234,6 @@ public class YDZBController {
 		return new ModelAndView("xjlrb", map);
 	}
 
-	// @RequestMapping(value = "yszkrb_qkb.do", method = RequestMethod.GET)
-	// public ModelAndView getYszkrb_qkb(HttpServletRequest request,
-	// HttpServletResponse response) {
-	// Calendar now = Calendar.getInstance();
-	// int month = now.get(Calendar.MONTH) + 1;
-	// int year = now.get(Calendar.YEAR);
-	// Date d = java.sql.Date.valueOf(year + "-" + month + "-" +
-	// now.get(Calendar.DAY_OF_MONTH));
-	// Map<String, Object> map = new HashMap<String, Object>();
-	// map.put("month", month);
-	// map.put("year", year);
-	// String yszkrb_qkb =
-	// JSONArray.fromObject(service.getYszkrb_qkbData(d)).toString().replace("null",
-	// "0.00");
-	// map.put("yszkrb_qkb", yszkrb_qkb);
-	// return new ModelAndView("yszkrb_qkb", map);
-	// }
 
 	private String getZbhz_overviewData(Date d, int companyId, String zbid) {
 
@@ -351,9 +334,6 @@ public class YDZBController {
 							gszbService.getSecondSeasonPredictionZBsOverview(d))
 					.toString().replace("null", "\"--\"");
 		}
-		// String gdw_zbhz =
-		// JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null",
-		// "0.00");
 
 		return hzb_zbhz_prediction.getBytes("utf-8");
 	}
@@ -387,18 +367,15 @@ public class YDZBController {
 		if (1 == iMonth % 3) {
 			financial_zbhz_prediction = JSONArray
 					.fromObject(
-							gszbService.getFirstSeasonPredictionZBsOverview(d))
+							gszbService.getGcyFirstSeasonPredictionZBs(d))
 					.toString().replace("null", "\"--\"");
 		}
 
 		if (2 == iMonth % 3) {
 			financial_zbhz_prediction = JSONArray
-					.fromObject(gszbService.getJDZBMY(d)).toString()
+					.fromObject(gszbService.getGcySecondSeasonPredictionZBs(d)).toString()
 					.replace("null", "\"--\"");
 		}
-		// String gdw_zbhz =
-		// JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null",
-		// "0.00");
 
 		return financial_zbhz_prediction.getBytes("utf-8");
 	}
