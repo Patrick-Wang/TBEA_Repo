@@ -278,7 +278,9 @@ public class YDZBController {
 		Date d = service.getLatestGcyDate();
 		return getZbhz_overviewData(d, cid, zb);
 	}
-
+	
+	
+	// 整体指标预测
 	@RequestMapping(value = "zbhz_overview.do", method = RequestMethod.GET)
 	public ModelAndView getZbhz_overview(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -306,7 +308,7 @@ public class YDZBController {
 		return new ModelAndView("zbhz_overview", map);
 	}
 
-	// 整体指标预测
+	// 整体指标预测update
 	@RequestMapping(value = "hzb_zbhz_prediction_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] gethzb_zbhz_prediction_update(
 			HttpServletRequest request, HttpServletResponse response)
@@ -337,7 +339,8 @@ public class YDZBController {
 
 		return hzb_zbhz_prediction.getBytes("utf-8");
 	}
-
+	
+	//整体指标预测Update
 	@RequestMapping(value = "hzb_zbhz_prediction.do", method = RequestMethod.GET)
 	public ModelAndView gethzb_zbhz_prediction(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -348,7 +351,7 @@ public class YDZBController {
 		return new ModelAndView("hzb_zbhz_Prediction", map);
 	}
 
-	// 财务指标预测
+	// 财务指标预测update
 	@RequestMapping(value = "financial_zbhz_prediction_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getfinancial_zbhz_prediction_update(
 			HttpServletRequest request, HttpServletResponse response)
@@ -379,7 +382,8 @@ public class YDZBController {
 
 		return financial_zbhz_prediction.getBytes("utf-8");
 	}
-
+	
+	//财务指标预测
 	@RequestMapping(value = "financial_zbhz_prediction.do", method = RequestMethod.GET)
 	public ModelAndView gethzb_company(HttpServletRequest request,
 			HttpServletResponse response) {
