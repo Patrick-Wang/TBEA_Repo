@@ -2,7 +2,6 @@ package com.tbea.ic.operation.service.ydzb.gszb.acc;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +18,7 @@ import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 
 public class SjzbAccumulator implements IAccumulator{
-	public interface Algorithm {
-		Double onCompute(Integer id, Integer compId, Date date, double acc,
-				double value);
-	}
-
+	
 	SJZBDao sjzbDao;
 
 	YJ20ZBDao yj20zbDao;
@@ -34,7 +29,6 @@ public class SjzbAccumulator implements IAccumulator{
 
 	public SjzbAccumulator(SJZBDao sjzbDao, YJ20ZBDao yj20zbDao,
 			YJ28ZBDao yj28zbDao, YDZBZTDao ydzbztDao) {
-		super();
 		this.sjzbDao = sjzbDao;
 		this.yj20zbDao = yj20zbDao;
 		this.yj28zbDao = yj28zbDao;
@@ -67,8 +61,6 @@ public class SjzbAccumulator implements IAccumulator{
 				break;
 			}
 		}
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(start);
 		Integer row;
 		if (!yd20zbzts.isEmpty()) {
 			List<YJ20ZB> yj20zbs = yj20zbDao.getYj20zbs(yd20zbzts, zbs);
