@@ -67,7 +67,7 @@ module Util {
                     minWidth: 80,
                     noneSelectedText : this.mOpt.noneSelectedText,
                     selectedText: this.mOpt.selectedText,
-                    height　: itemCount * itemHeight + 3,
+                    height　: '100%',//itemCount * itemHeight + 3,
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
@@ -82,7 +82,7 @@ module Util {
                 multiple: multi,
                 header: multi,
                 minWidth: minWidth,
-                height　: /*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
+                height　: '100%',///*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
                 // noneSelectedText: "请选择月份",
                 selectedList: 1
             });
