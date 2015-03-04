@@ -109,8 +109,8 @@ module hzb_companys {
                 .then((dataArray: any) => {
 
                     this.mData = dataArray;
-                    $('h1').text(date.year + "年" + date.month + "月 指标汇总");
-                    document.title = date.year + "年" + date.month + "月 指标汇总";
+                    $('h1').text(date.year + "年" + date.month + "月经营单位与项目公司指标汇总");
+                    document.title = date.year + "年" + date.month + "月经营单位与项目公司指标汇总";
                     this.updateTable();
 
                 });
@@ -196,7 +196,7 @@ module hzb_companys {
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
                     height: data.length > 23 ? 500 : '100%',
-                    width: 1200,
+                    width: 1300,
                     shrinkToFit: true,
                     rowNum: 1000,
                     autoScroll: true
