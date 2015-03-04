@@ -64,7 +64,7 @@
 				<div class="affix" style="margin-left: -20px; margin-top: auto;"
 					id="chartsTypeNav">
 					<!-- 所有公司都显示-->
-					<ul id="navlist" style="padding: 10px 0;">
+					<ul id="navlist" style="padding: 10px 0; width: 180px;">
 					<c:if test="${!sbqgb}">
 						<li style="background-color: transparent;"><i
 							class="ec-icon ec-icon-line"></i> <a href="#zbhz"
@@ -127,11 +127,11 @@
 						</c:if>
 					</ul>
 
-					<ul id="navlist3" style="padding: 10px 0; display: none">
+<!-- 					<ul id="navlist3" style="padding: 10px 0; display: none">
 						<li style="background-color: transparent; diplay: none"><i
 							class="ec-icon ec-icon-force"></i> <a href="#finincial"
 							style="color: rgb(62, 152, 197);">财务指标汇总</a></li>
-					</ul>
+					</ul> -->
 				</div>
 			</div>
 			<div id="IndexSummary" class="col-md-10">
@@ -145,9 +145,9 @@
 				<%@include file="index_approveList.jsp"%>
 			</div>
 
-			<div id="financeList" class="col-md-10" style="display: none">
+			<%-- <div id="financeList" class="col-md-10" style="display: none">
 				<%@include file="index_financeList.jsp"%>
-			</div>
+			</div> --%>
 
 		</div>
 	</div>
