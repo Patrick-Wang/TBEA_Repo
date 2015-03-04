@@ -7,7 +7,7 @@
 <c:if test="${!sbqgb}">
 <div>
 	<h3>
-		公司指标完成情况<a name="zbhz"> </a>
+		公司经营指标完成情况<a name="zbhz"> </a>
 	</h3>
 	<div class="section">
 		<div class="thumb3">
@@ -92,7 +92,7 @@
 	</div>
 </div>
 </c:if> 
-
+<c:if test="${SbdAuth}">
 <div>
 	<h3>
 		应收账款<a name="yszk"> </a>
@@ -138,6 +138,7 @@
 		</div>
 	</div>
 </div>
+
 <div>
 	<h3>
 		保理状态<a name="bl"> </a>
@@ -244,3 +245,4 @@
 		</div>
 	</div>
 </div>
+</c:if> 

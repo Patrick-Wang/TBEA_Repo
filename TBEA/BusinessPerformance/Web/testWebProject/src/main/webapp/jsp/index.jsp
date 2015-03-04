@@ -70,14 +70,14 @@
 						class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 						style="color: rgb(62, 152, 197);">经营指标完成情况</a></li>
 
-					<!-- 只有公司权限都显示-->
+					<!-- 只有公司权限显示-->
 					<c:if test="${CorpAuth}">
 						<li style="background-color: transparent;"><i
 							class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 							style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
 					</c:if>
-					
-					<c:if test="${true}">
+					<!-- 只有sbd公司权限显示-->
+					<c:if test="${SbdAuth}">
 							<li style="background-color: transparent;"><i
 								class="ec-icon ec-icon-pie"></i> <a href="#yszk"
 								style="color: rgb(62, 152, 197);">应收账款</a></li>
