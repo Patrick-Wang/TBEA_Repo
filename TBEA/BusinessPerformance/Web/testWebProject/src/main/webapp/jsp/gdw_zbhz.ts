@@ -47,35 +47,30 @@ module gdw_zbhz {
             return View.ins;
         }
 
-        private mMonth: number;
-        private mYear: number;
         private mZB: number;
         private mData: Array<string[]> = [];
         private mDataSet : Util.Ajax = new Util.Ajax("gdw_zbhz_update.do");
         private mTableId : string;
-        public init(tableId: string, month: number, year: number, zb: number): void {
-            this.mYear = year;
-            this.mMonth = month;
+        private mDs : Util.DateSelector;
+        public init(tableId: string, dateId: string, month: number, year: number, zb: number): void {
             this.mZB = zb;
             this.mTableId = tableId;
+            this.mDs = new Util.DateSelector(
+                {year: year - 2, month : 1}, 
+                {year: year, month: month},
+                dateId);
             this.updateTable();
             this.updateUI();
         }
         
-        public onYearSelected(year : number){
-        	this.mYear = year;
-        }
-        
-        public onMonthSelected(month : number){
-        	this.mMonth = month;
-        }
-        
+              
         public updateUI() {
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, zb: this.mZB})
+            var date : Util.Date = this.mDs.getDate();
+            this.mDataSet.get({ month: date.month, year: date.year, zb: this.mZB})
                 .then((dataArray: any) => {
                     this.mData = dataArray;
-                    $('h1').text(this.mYear + "年" + this.mMonth + "月 各单位指标汇总");
-                    document.title = this.mYear + "年" + this.mMonth + "月 各单位指标汇总";
+                    $('h1').text(date.year + "年" + date.month + "月 各单位指标汇总");
+                    document.title = date.year + "年" + date.month + "月 各单位指标汇总";
                     this.updateTable();
                 });
         }
@@ -132,16 +127,11 @@ module gdw_zbhz {
 			parent.append("<table id='"+ name +"'></table>");
             $("#" + name).jqGrid( 
                 tableAssist.decorate({
-                    // url: "TestTable/WGDD_load.do",
-                    // datatype: "json",
                     data: tableAssist.getData(data),
                     datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    //autowidth : false,
-//                    cellsubmit: 'clientArray',
-//                    cellEdit: true,
                     height: "100%",
                     width: 1200,
                     shrinkToFit: true,

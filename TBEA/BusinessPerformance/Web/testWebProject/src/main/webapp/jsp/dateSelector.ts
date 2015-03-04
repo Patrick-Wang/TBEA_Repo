@@ -150,7 +150,7 @@ module Util {
                 multiple: false,
                 header: false,
                 minWidth: 80,
-                height: (this.mEndDate.year - this.mStartDate.year + 1) * 28,
+                height: '100%',//(this.mEndDate.year - this.mStartDate.year + 1) * 28,
                 // noneSelectedText: "请选择月份",
                 selectedList: 1
             });
@@ -205,7 +205,7 @@ module Util {
                     multiple: false,
                     header: false,
                     minWidth: 80,
-                    height: this.mAsSeasion ? seasonCount * 28 : (endMonth - startMonth + 1) * 28,
+                    height: '100%',//this.mAsSeasion ? seasonCount * 28 : (endMonth - startMonth + 1) * 28,
                     selectedList: 1
                 });
             }
@@ -231,6 +231,7 @@ module Util {
                     daySel.multiselect({
                         multiple: false,
                         header: "Select an option",
+                        height:'100%',//
                         noneSelectedText: "Select an Option",
                         selectedList: 1
                     });
@@ -263,7 +264,7 @@ module Util {
                     multiple: false,
                     header: false,
                     minWidth: 80,
-                    height: (endDay - startDay + 1) * 28,
+                    height: '100%',//(endDay - startDay + 1) * 28,
                     selectedList: 1
                 });
             }

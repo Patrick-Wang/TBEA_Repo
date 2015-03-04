@@ -68,26 +68,20 @@ module hzb_zbhz {
             return View.ins;
         }
 
-        private mMonth: number;
-        private mYear: number;
         private mData: Array<string[]> = [];
         private mDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_update.do");
         private mTableId : string;
         private mType : number = 0;
-        public init(tableId: string, month: number, year: number): void {
-            this.mYear = year;
-            this.mMonth = month;
-            this.mTableId = tableId;
+        private mDs : Util.DateSelector;
+        public init(tableId: string, dateId: string, month: number, year: number): void {
+              this.mTableId = tableId;
+             this.mDs = new Util.DateSelector(
+                {year: year - 2, month : 1}, 
+                {year: year, month: month},
+                dateId);
             this.updateTable();
             this.updateUI();
 
-        }
- 		public onYearSelected(year : number){
-        	this.mYear = year;
-        }
-        
-        public onMonthSelected(month : number){
-        	this.mMonth = month;
         }
         
         public onTypeSelected(ty : number){
@@ -95,12 +89,13 @@ module hzb_zbhz {
         }
         
         public updateUI() {
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, type : this.mType })
+            var date : Util.Date = this.mDs.getDate();
+            this.mDataSet.get({ month: date.month, year: date.year, type : this.mType })
                 .then((dataArray: any) => {
 
                     this.mData = dataArray;
-                    $('h1').text(this.mYear + "年" + this.mMonth + "月公司整体指标汇总");
-                    document.title = this.mYear + "年" + this.mMonth + "月公司整体指标汇总";
+                    $('h1').text(date.year + "年" + date.month + "月公司整体指标汇总");
+                    document.title = date.year + "年" + date.month + "月公司整体指标汇总";
                     this.updateTable();
 
                 });

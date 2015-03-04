@@ -12,7 +12,7 @@ module gcy_zbhz {
     
     class JQGridAssistantFactory {
 
-      public static createTable(gridName: string, month: number): JQTable.JQGridAssistant {
+      public static createTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                 new JQTable.Node("产业", "cy"),
@@ -48,40 +48,35 @@ module gcy_zbhz {
             return View.ins;
         }
 
-        private mMonth: number;
-        private mYear: number;
+        private mDs : Util.DateSelector;
         private mData: Array<string[]> = [];
         private mDataSet : Util.Ajax = new Util.Ajax("gcy_zbhz_update.do");
         private mTableId : string;
-        public init(tableId: string, month: number, year: number): void {
-            this.mYear = year;
-            this.mMonth = month;
+        public init(tableId: string, dateId: string, month: number, year: number): void {
+           this.mDs = new Util.DateSelector(
+                {year: year - 2, month : 1}, 
+                {year: year, month: month},
+                dateId);
             this.mTableId = tableId;
             this.updateTable();
             this.updateUI();
         }
         
-        public onYearSelected(year : number){
-        	this.mYear = year;
-        }
-        
-        public onMonthSelected(month : number){
-        	this.mMonth = month;
-        }
         
         public updateUI() {
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear })
+            var date : Util.Date = this.mDs.getDate();
+            this.mDataSet.get({ month: date.month, year: date.year})
                 .then((jsonData: any) => {
                     this.mData = jsonData;
-                    $('h1').text(this.mYear + "年" + this.mMonth + "月 各产业指标汇总");
-                    document.title = this.mYear + "年" + this.mMonth + "月 各产业指标汇总";
+                    $('h1').text(date.year + "年" + date.month + "月 各产业指标汇总");
+                    document.title = date.year + "年" + date.month + "月 各产业指标汇总";
                     this.updateTable();
                 });
         }
 
         private updateTable(): void {
        	    var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mMonth);
+            var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
             tableAssist.mergeRow(0);
            
             for (var i = 0; i < 5; ++i) {

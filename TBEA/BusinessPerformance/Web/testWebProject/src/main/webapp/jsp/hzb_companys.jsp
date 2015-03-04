@@ -208,8 +208,5 @@
 
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
-<script type="text/javascript">
-		 $("input:button,input:submit,input:reset").button();  
-		 $("input").button( "option", "icons", {primary:'ui-icon-cancel',secondary:'ui-icon-cancel'} );  
-</script>
+<script src="../jsp/style_button.js"></script>
 </html>
