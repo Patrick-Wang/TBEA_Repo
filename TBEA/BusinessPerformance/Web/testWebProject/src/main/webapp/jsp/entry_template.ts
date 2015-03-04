@@ -274,7 +274,16 @@ module entry_template {
                     autoScroll: true,
                     rowNum: 150,
                     beforeSaveCell :(rowid,cellname,v,iRow,iCol) =>{
-                        return parseFloat(v);
+                        var ret = parseFloat(v);
+                        if (isNaN (ret)){
+                           $.jgrid.jqModal = {
+                              width: 290,
+                              left : $("#table").offset().left + $("#table").width() / 2 - 290 / 2, 
+                              top : $("#table").offset().top + $("#table").height() / 2 - 90};
+                           return v;
+                        }else{
+                           return ret;
+                        }
                     },
                     beforeEditCell:(rowid,cellname,v,iRow,iCol)=>{
                         lastsel = iRow; 
