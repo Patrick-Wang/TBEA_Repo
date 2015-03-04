@@ -267,7 +267,7 @@ var financial_zbhz_prediciton;
                 multiselect: false,
                 drag: false,
                 resize: false,
-                height: 600,
+                height: 550,
                 width: 1300,
                 shrinkToFit: true,
                 rowNum: 200,

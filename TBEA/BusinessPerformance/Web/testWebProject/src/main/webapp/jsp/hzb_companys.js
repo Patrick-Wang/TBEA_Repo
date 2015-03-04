@@ -87,8 +87,8 @@ var hzb_companys;
             var compType = this.mCompanySelector.getCompany();
             this.mDataSet.get({ year: date.year, month: date.month, companyId: compType }).then(function (dataArray) {
                 _this.mData = dataArray;
-                $('h1').text(date.year + "年" + date.month + "月 指标汇总");
-                document.title = date.year + "年" + date.month + "月 指标汇总";
+                $('h1').text(date.year + "年" + date.month + "月经营单位与项目公司指标汇总");
+                document.title = date.year + "年" + date.month + "月经营单位与项目公司指标汇总";
                 _this.updateTable();
             });
         };
@@ -165,7 +165,7 @@ var hzb_companys;
                 drag: false,
                 resize: false,
                 height: data.length > 23 ? 500 : '100%',
-                width: 1200,
+                width: 1300,
                 shrinkToFit: true,
                 rowNum: 1000,
                 autoScroll: true
