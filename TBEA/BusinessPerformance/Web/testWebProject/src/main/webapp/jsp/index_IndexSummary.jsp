@@ -66,8 +66,9 @@
 				<li><a href="../ydzb/hzb_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>整体指标预测情况</strong></span></a>
 				</li>
+				</c:if> 
 				<!--/li-->
-
+ 				<c:if test="${CorpAuth}">
 				<li><a href="../ydzb/financial_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/line2.png"> <span><strong>财务指标预测完成情况</strong></span></a>
 				</li>
@@ -108,7 +109,9 @@
 <!-- 				<li><a href="../ydzb/zbhz_overview.do?zb=25" target="_blank"><img -->
 <!-- 						src="../images/charts/scatter5.png"> <span><strong>存货指标预测情况</strong></span></a></li> -->
 				<!--/li-->
-			</c:if> 
+
+ 				</c:if> 
+
 			</ul>
 		</div>
 	</div>
