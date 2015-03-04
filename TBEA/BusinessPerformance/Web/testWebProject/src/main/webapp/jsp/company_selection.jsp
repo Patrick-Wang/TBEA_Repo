@@ -75,7 +75,7 @@
 						
 								<c:choose>
 									<c:when test="${j == fn:length(subComp[i][0])}">
-										<option value="${topComp[1][i]}" selected="selected">${topComp[0][i]}本部</option>
+										<option value="${topComp[1][i]}" selected="selected">${topComp[0][i]}总体</option>
 									</c:when>
 									<c:otherwise>
 										<option value="${subComp[i][1][j]}">${subComp[i][0][j]}</option>

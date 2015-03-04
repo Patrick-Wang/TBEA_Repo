@@ -253,6 +253,8 @@ module hzb_zbhz_prediciton {
                     tableAssist.setRowBgColor(i, 183, 222, 232);
                 }
             }
+            
+            
 			var parent = $("#" + this.mTableId);
 			parent.empty();
 			parent.append("<table id='"+ name +"'></table>");
@@ -269,7 +271,7 @@ module hzb_zbhz_prediciton {
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
                     height: '100%',
-                    width: 1300,
+                    width: 1400,
                     shrinkToFit: true,
                     rowNum: 100,
                     autoScroll: true

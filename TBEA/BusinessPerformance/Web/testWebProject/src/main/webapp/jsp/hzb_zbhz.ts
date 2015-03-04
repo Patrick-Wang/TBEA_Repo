@@ -99,8 +99,8 @@ module hzb_zbhz {
                 .then((dataArray: any) => {
 
                     this.mData = dataArray;
-                    $('h1').text(this.mYear + "年" + this.mMonth + "月 指标汇总");
-                    document.title = this.mYear + "年" + this.mMonth + "月 指标汇总";
+                    $('h1').text(this.mYear + "年" + this.mMonth + "月公司整体指标汇总");
+                    document.title = this.mYear + "年" + this.mMonth + "月公司整体指标汇总";
                     this.updateTable();
 
                 });
@@ -186,7 +186,7 @@ module hzb_zbhz {
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
                     height: data.length > 23 ? 500 : '100%',
-                    width: 1200,
+                    width: 1330,
                     shrinkToFit: true,
                     rowNum: 200,
                     autoScroll: true

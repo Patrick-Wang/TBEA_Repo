@@ -11,6 +11,27 @@
           href="../jsp/jqgrid/themes/ui.jqgrid.css">
     <link rel="stylesheet" type="text/css" media="screen"
           href="../jsp/jqgrid/themes/ui.multiselect.css">
+          
+          
+   	<!-- jquery -->
+	<script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
+	
+	<!-- jquery ui -->
+	<!-- jquery ui gray -->
+	<link rel="stylesheet" type="text/css" href="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
+	<script type="text/javascript" src="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
+	<!-- jquery ui blue -->
+	<link rel="stylesheet" type="text/css" media="screen" href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
+	<script src="../jsp/jqgrid/js/jquery-ui-custom.min.js" type="text/javascript"></script>
+	
+	<!-- 多选菜单 -->
+	<link rel="stylesheet" type="text/css" href="../jsp/multi-select/jquery.multiselect.css" />
+	<link rel="stylesheet" type="text/css" href="../jsp/multi-select/assets/style.css" />
+	<link rel="stylesheet" type="text/css" href="../jsp/multi-select/assets/prettify.css" />
+	<script type="text/javascript" src="../jsp/multi-select/assets/prettify.js"></script>
+	<script type="text/javascript" src="../jsp/multi-select/jquery.multiselect.js"></script>       
+          
+         
     <script src="../jsp/jqgrid/js/jquery.js" type="text/javascript"></script>
 
     <script src="../jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
@@ -40,7 +61,7 @@
     </script>
     <meta charset="UTF-8">
 
-    <title>${year}年${month}月 指标汇总</title>
+    <title>${year}年${month}月公司整体指标汇总</title>
 
     <style type="text/css">
         body {
@@ -135,16 +156,28 @@
             height: auto !important;
             padding: 0px;
         }
+        
+         #update {
+			height: 23px;
+			padding: .1em 1em;
+			margin-top: -1px;
+		}
 
         th.ui-th-ltr {
             /* jqGrid columns name wrap  */
             font-size: 14px;
         }
+        
+        .ui-multiselect {
+			padding: 2px 0 2px 4px;
+			text-align: left;
+			font-size: 12px;
+		}
     </style>
 </head>
 <body>
     <div class=" header">
-        <h1>${year}年${month}月 指标汇总</h1>
+        <h1>${year}年${month}月公司整体指标汇总</h1>
     </div>
 
 	<Table align="center">
@@ -162,8 +195,10 @@
 								<option value="1">收入签约分结构</option>4
 						</select>
 						</td>
-						<td><input type="button" value="更新" style="width : 80px; margin-left:10px;"
-							onclick="instance.updateUI()"></input>
+						<td><input id="update" type="button" value="更新" style="width : 80px; margin-left:10px;"
+							onclick="instance.updateUI()" class="ui-button ui-widget ui-state-default ui-corner-all"
+							role="button"
+							aria-disabled="false"></input>
 				</Table>
 			</td>
 		</tr>
@@ -179,5 +214,11 @@
 
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
+
+ <script type="text/javascript">
+ 
+	    $("select").multiselect(false, false ,80, 30, 1);
+
+    </script>
 
 </html>
