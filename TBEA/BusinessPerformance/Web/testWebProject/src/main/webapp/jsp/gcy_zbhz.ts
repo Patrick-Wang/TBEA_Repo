@@ -133,7 +133,7 @@ module gcy_zbhz {
                 ["存 货", "集团合计"]];
            
             var row = [];
-            for (var i = 0; i < data.length; ++i) {
+            for (var i = 0; i < this.mData.length; ++i) {
                 row = [].concat(this.mData[i]);
                 for (var j = 0; j < row.length; ++j) {
                     if (j == DwZb.dyjhwcl || j == DwZb.dytbzf ||

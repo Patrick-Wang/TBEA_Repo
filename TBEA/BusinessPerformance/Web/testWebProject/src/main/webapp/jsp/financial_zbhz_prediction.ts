@@ -308,7 +308,7 @@ module financial_zbhz_prediciton {
                     //autowidth : false,
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
-                    height: 600,
+                    height: 550,
                     width: 1300,
                     shrinkToFit: true,
                     rowNum: 200,

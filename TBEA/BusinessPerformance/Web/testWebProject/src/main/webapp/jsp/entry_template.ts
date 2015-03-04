@@ -243,7 +243,15 @@ module entry_template {
                     break;
             }
             this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
+            
+          for (var i = 0; i < this.mTableData.length; ++i){
+              for (var j = 2; j < this.mTableData[i].length; ++j){
+                  this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) + "";
+              }
+          }
+            
             var data = this.mTableData;
+          
             var lastsel = "";
             var lastcell = "";
             $("#" + name).jqGrid(
@@ -263,6 +271,9 @@ module entry_template {
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 150,
+                    beforeSaveCell :(rowid,cellname,v,iRow,iCol) =>{
+                        return parseFloat(v);
+                    },
                     beforeEditCell:(rowid,cellname,v,iRow,iCol)=>{
                         lastsel = iRow; 
                         lastcell = iCol; 
