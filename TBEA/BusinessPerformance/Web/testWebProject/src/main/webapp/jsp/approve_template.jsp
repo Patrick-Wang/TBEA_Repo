@@ -277,7 +277,7 @@ th.ui-th-ltr {
 		 $("select").multiselect({
 	         multiple: false,
 	         header: false,
-	         minWidth : 80,
+	         minWidth : '100%',
 	        // noneSelectedText: "请选择月份",
 	         selectedList: 1
 	     });

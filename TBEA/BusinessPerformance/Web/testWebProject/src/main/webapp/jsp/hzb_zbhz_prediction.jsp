@@ -7,28 +7,45 @@
 <html>
 <head>
 
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="../jsp/jqgrid/themes/ui.jqgrid.css">
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="../jsp/jqgrid/themes/ui.multiselect.css">
-    <script src="../jsp/jqgrid/js/jquery.js" type="text/javascript"></script>
+<!-- jquery -->
+<script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
 
-    <script src="../jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
-    <script src="../jsp/jqgrid/js/i18n/grid.locale-en.js" type="text/javascript"></script>
+<!-- jquery ui -->
+<!-- jquery ui gray -->
+<link rel="stylesheet" type="text/css" href="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
+<script type="text/javascript" src="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
+<!-- jquery ui blue -->
+<link rel="stylesheet" type="text/css" media="screen" href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
+<script src="../jsp/jqgrid/js/jquery-ui-custom.min.js" type="text/javascript"></script>
+
+<!-- 多选菜单 -->
+<link rel="stylesheet" type="text/css" href="../jsp/multi-select/jquery.multiselect.css" />
+<link rel="stylesheet" type="text/css" href="../jsp/multi-select/assets/style.css" />
+<link rel="stylesheet" type="text/css" href="../jsp/multi-select/assets/prettify.css" />
+<script type="text/javascript" src="../jsp/multi-select/assets/prettify.js"></script>
+<script type="text/javascript" src="../jsp/multi-select/jquery.multiselect.js"></script>
 
 
-    <script src="../jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
-    <script src="../jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
-    <script src="../jsp/jqgrid/js/jquery.contextmenu.js" type="text/javascript"></script>
-    <script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
-    <script src="../jsp/jqgrid/jqassist.js" type="text/javascript"></script>
+<!-- jqgrid -->
+<link rel="stylesheet" type="text/css" media="screen" href="../jsp/jqgrid/themes/ui.jqgrid.css">
+<link rel="stylesheet" type="text/css" media="screen" href="../jsp/jqgrid/themes/ui.multiselect.css">
+<script src="../jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
+<script src="../jsp/jqgrid/js/jquery.contextmenu.js" type="text/javascript"></script>
+<script src="../jsp/jqgrid/js/i18n/grid.locale-cn.js" type="text/javascript"></script>
+<script src="../jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
+<script src="../jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
 
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
-    <script src="../jsp/jqgrid/js/jquery-ui-custom.min.js" type="text/javascript"></script>
-    <script src="../jsp/jqgrid/js/ui.multiselect.js" type="text/javascript"></script>
-     	<script src="../jsp/util.js" type="text/javascript"></script>
-    <script src="../jsp/hzb_zbhz_prediction.js" type="text/javascript"></script>
+<!-- jqgrid assist -->
+<script src="../jsp/jqgrid/jqassist.js" type="text/javascript"></script>
+
+
+<script src="../jsp/util.js" type="text/javascript"></script>
+<script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
+<script src="../jsp/dateSelector.js" type="text/javascript"></script>
+<script src="../jsp/unitedSelector.js" type="text/javascript"></script>
+<script src="../jsp/companySelector.js" type="text/javascript"></script>
+<script src="../jsp/hzb_zbhz_prediction.js" type="text/javascript"></script>
+
 
     <script type="text/javascript">
     	var instance = hzb_zbhz_prediciton.View.newInstance();
@@ -140,6 +157,12 @@
             /* jqGrid columns name wrap  */
             font-size: 14px;
         }
+        
+        #update{
+			height:23px;
+			padding: .1em 1em;
+			margin-top: -1px;
+		}
     </style>
 </head>
 <body>
@@ -154,7 +177,7 @@
 					<tr>
 						<td><%@include file="season_selection.jsp"%>
 						</td>
-						<td><input type="button" value="更新" style="width : 80px; margin-left:10px;"
+						<td><input id="update" type="button" value="更新" style="width : 80px; margin-left:10px;"
 							onclick="instance.updateUI()"></input>
 				</Table>
 			</td>
@@ -171,5 +194,16 @@
 
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
-
+	<script type="text/javascript">
+		 $("input:button,input:submit,input:reset").button();  
+		 $("input").button( "option", "icons", {primary:'ui-icon-cancel',secondary:'ui-icon-cancel'} );  
+		 $("select").multiselect({
+	         multiple: false,
+	         header: false,
+	         minWidth : 80,
+	         height:'100%',
+	        // noneSelectedText: "请选择月份",
+	         selectedList: 1
+	     });
+	</script>
 </html>
