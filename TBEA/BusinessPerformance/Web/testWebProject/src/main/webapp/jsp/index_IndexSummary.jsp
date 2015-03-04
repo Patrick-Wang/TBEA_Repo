@@ -12,14 +12,16 @@
 	<div class="section">
 		<div class="thumb3">
 			<ul class="slides">
+				<c:if test="${CorpAuth}">
 				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>公司整体指标完成情况</strong></span></a>
-				</li>				
+				</li>
+				</c:if>				
 				<li><a href="../ydzb/hzb_companys.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>经营单位及项目公司指标完成情况</strong></span></a>
 				</li>
 				<!--/li-->
-				<%--  <c:if test="${CorpAuth}">--%>
+				<c:if test="${CorpAuth}">
 				<li><a href="../ydzb/gcy_zbhz.do" target="_blank"><img
 						src="../images/charts/line2.png"> <span><strong>财务指标完成情况</strong></span></a>
 				</li>
@@ -44,7 +46,7 @@
 						src="../images/charts/scatter5.png"> <span><strong>存货指标完成情况</strong></span></a>
 						</li>
 				<!--/li-->
-				<%-- </c:if>--%>
+				</c:if>
 			</ul>
 		</div>
 	</div>
@@ -60,11 +62,12 @@
 	<div class="section">
 		<div class="thumb3">
 			<ul class="slides">
+				<c:if test="${CorpAuth}">
 				<li><a href="../ydzb/hzb_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>整体指标预测情况</strong></span></a>
 				</li>
 				<!--/li-->
-<%-- 				<c:if test="${CorpAuth}"> --%>
+
 				<li><a href="../ydzb/financial_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/line2.png"> <span><strong>财务指标预测完成情况</strong></span></a>
 				</li>
@@ -105,7 +108,7 @@
 <!-- 				<li><a href="../ydzb/zbhz_overview.do?zb=25" target="_blank"><img -->
 <!-- 						src="../images/charts/scatter5.png"> <span><strong>存货指标预测情况</strong></span></a></li> -->
 				<!--/li-->
-<%-- 				</c:if> --%>
+			</c:if> 
 			</ul>
 		</div>
 	</div>
