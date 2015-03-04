@@ -33,10 +33,6 @@ public class QXGL extends AbstractReadWriteEntity implements Serializable {
 
 	private boolean sjzsh;
 	
-	private boolean CorpAuth;
-
-	private boolean SbdAuth;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -98,34 +94,6 @@ public class QXGL extends AbstractReadWriteEntity implements Serializable {
 
 	public void setSjzsh(boolean sjzsh) {
 		this.sjzsh = sjzsh;
-	}
-
-	/**
-	 * @return the corpAuth
-	 */
-	public boolean isCorpAuth() {
-		return CorpAuth;
-	}
-
-	/**
-	 * @return the sbdAuth
-	 */
-	public boolean isSbdAuth() {
-		return SbdAuth;
-	}
-
-	/**
-	 * @param corpAuth the corpAuth to set
-	 */
-	public void setCorpAuth(boolean corpAuth) {
-		CorpAuth = corpAuth;
-	}
-
-	/**
-	 * @param sbdAuth the sbdAuth to set
-	 */
-	public void setSbdAuth(boolean sbdAuth) {
-		SbdAuth = sbdAuth;
 	}
 
 }

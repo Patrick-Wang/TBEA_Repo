@@ -203,7 +203,9 @@ module approve_template {
             
               for (var i : any = 0; i < tmpData.length; ++i){
                   for (var j = 2; j < tmpData[i].length; ++j){
-                      tmpData[i][j] = parseFloat(tmpData[i][j]) + "";
+                      if ("" != tmpData[i][j]){
+                        tmpData[i][j] = parseFloat(tmpData[i][j]) + "";
+                      }
                   }
               }
             
@@ -390,7 +392,9 @@ module approve_template {
 
               for (var i : any = 0; i < tmpData.length; ++i){
                   for (var j = hasDate ? 3 : 2; j < tmpData[i].length; ++j){
-                      tmpData[i][j] = parseFloat(tmpData[i][j]) + "";
+                      if ("" != tmpData[i][j]){
+                        tmpData[i][j] = parseFloat(tmpData[i][j]) + "";
+                      }
                   }
               }
             
