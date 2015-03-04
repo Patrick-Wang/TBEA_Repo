@@ -246,7 +246,9 @@ module entry_template {
             
           for (var i = 0; i < this.mTableData.length; ++i){
               for (var j = 2; j < this.mTableData[i].length; ++j){
-                  this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) + "";
+                  if ("" != this.mTableData[i][j]){
+                    this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) + "";
+                  }
               }
           }
             
