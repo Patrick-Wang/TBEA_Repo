@@ -7,7 +7,7 @@
 <c:if test="${!sbqgb}">
 <div>
 	<h3>
-		公司经营指标完成情况<a name="zbhz"> </a>
+		经营指标完成情况<a name="zbhz"> </a>
 	</h3>
 	<div class="section">
 		<div class="thumb3">
