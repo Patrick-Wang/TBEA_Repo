@@ -158,8 +158,13 @@
             font-size: 14px;
         }
         
-        #update{
-			height:23px;
+               .ui-multiselect {
+			padding: 2px 0 2px 4px;
+			text-align: left;
+			font-size: 12px;
+		}
+		 #update {
+			height: 23px;
 			padding: .1em 1em;
 			margin-top: -1px;
 		}
