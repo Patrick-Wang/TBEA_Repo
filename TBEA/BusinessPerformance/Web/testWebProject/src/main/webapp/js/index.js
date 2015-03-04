@@ -104,8 +104,8 @@ var stringDescription =  '<div class="container">'
             + '<div class="col-md-3">'
                 + '<p>更多</p>'
                 + '<ul>'
-                    + '<li><a href="http://www.tbea.com.cn/default.aspx" target="_blank">TBEA OA</a></li>'
-                    + '<li><a href="http://www.tbea.com.cn/default.aspx" target="_blank">TBEA E_HR</a></li>'
+                    + '<li><a href="http://oagroup.tbea.com.cn/HQ/myportal/HQ/" target="_blank">TBEA OA</a></li>'
+                    + '<li><a href="http://192.168.7.76" target="_blank">TBEA E_HR</a></li>'
                     // + '<li><a href="http://www.tbea.com.cn/default.aspx"
 					// target="_blank">TBEA Portal</a></li>'
                 + '</ul>'
@@ -113,7 +113,7 @@ var stringDescription =  '<div class="container">'
             + '<div class="col-md-3">'
                 + '<p>联系我们</p>'
                 + '<ul>'
-                    + '<li><a href="mailto:18624020715(a)163.com">18624020715(a)163.com</a></li>'
+                    + '<li><a href="mailto:anfengling@tbea.com">anfengling@tbea.com</a></li>'
                     // + '<li><a href="http://www.tbea.com.cn/default.aspx"
 					// target="_blank">TBEA 官网</a></li>'
                     // + '<li><a href="http://www.tbea.com.cn/default.aspx"
@@ -125,7 +125,7 @@ var stringDescription =  '<div class="container">'
             + '</div>'
         + '</div>'
         + '<p class="pull-right"><a href="javascript:void(0)" onclick="back2Top()" >Back to top</a></p>'
-        + '<p>&copy; 2014 <a href="http://www.tbea.com.cn/default.aspx" target="_blank">特变电工集团股份有限公司 信息资源管理中心</a></p>'
+        + '<p>&copy; 2015 <a href="http://www.tbea.com.cn/default.aspx" target="_blank">特变电工集团股份有限公司 信息资源管理中心</a></p>'
     + '</div>';
 
 
