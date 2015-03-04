@@ -129,7 +129,7 @@ public class CompanySelection {
 					node.getSubNodes().addAll(subNodes);
 					if (mFilter.keep(topComp)) {
 						DataNode nodeTmp = bind(topComp);
-						nodeTmp.getData().setValue(topComp.getName() + "本部");
+						nodeTmp.getData().setValue(topComp.getName() + "总体");
 						node.getSubNodes().add(nodeTmp);
 					}
 				} else if (mFilter.keep(topComp)) {
@@ -218,7 +218,7 @@ public class CompanySelection {
 					node.getSubNodes().addAll(subNodes);
 					if (mFilter.keep(topComp)) {
 						DataNode nodeTmp = bind(topComp);
-						nodeTmp.getData().setValue(topComp.getName() + "本部");
+						nodeTmp.getData().setValue(topComp.getName() + "总体");
 						node.getSubNodes().add(nodeTmp);
 					}
 
@@ -226,7 +226,7 @@ public class CompanySelection {
 					node = bind(topComp);
 					nodes.add(node);
 					DataNode nodeTmp = bind(topComp);
-					nodeTmp.getData().setValue(topComp.getName() + "本部");
+					nodeTmp.getData().setValue(topComp.getName() + "总体");
 					node.getSubNodes().add(nodeTmp);
 				}
 			}
