@@ -60,32 +60,35 @@ module Util {
             var width = this.getMaxWidth(sel.children());
             var minWidth = 80;
             var itemHeight = Util.isMSIE() ? 27.5 : 27;
+            sel.css("width", width);
             if (multi) {
+                var text : any = "n个 项目公司被选中";
+                minWidth = text.getWidth(13) + 50;
                 sel.multiselect({
                     multiple: multi,
                     header: true,
-                    minWidth: 80,
+                    minWidth: minWidth,
                     noneSelectedText : this.mOpt.noneSelectedText,
                     selectedText: this.mOpt.selectedText,
-                    height　: '100%',//itemCount * itemHeight + 3,
+                    height　: itemCount * itemHeight + 3,
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
-                var text : any = "n个 项目公司被选中";
-                minWidth = text.getWidth(13) + 50;
+                
 //                if (sel.multiselect("getChecked").length > 1) {
 //                    width = text.getWidth(13) + 25;
 //                }
+            } else{
+                sel.multiselect({
+                    multiple: multi,
+                    header: multi,
+                    minWidth: minWidth,
+                    height　: '100%',///*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
+                    // noneSelectedText: "请选择月份",
+                    selectedList: 1
+                }); 
             }
-            sel.css("width", width);
-            sel.multiselect({
-                multiple: multi,
-                header: multi,
-                minWidth: minWidth,
-                height　: '100%',///*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
-                // noneSelectedText: "请选择月份",
-                selectedList: 1
-            });
+            
         }
         
         

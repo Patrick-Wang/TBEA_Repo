@@ -200,6 +200,13 @@ module approve_template {
             var name = tableId + "_jqgrid";
             var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createQnjhTable(name, title, colZbIds);
 
+            
+              for (var i : any = 0; i < tmpData.length; ++i){
+                  for (var j = 2; j < tmpData[i].length; ++j){
+                      tmpData[i][j] = parseFloat(tmpData[i][j]) + "";
+                  }
+              }
+            
             var parent = $("#" + tableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
@@ -381,6 +388,12 @@ module approve_template {
             });
 
 
+              for (var i : any = 0; i < tmpData.length; ++i){
+                  for (var j = hasDate ? 3 : 2; j < tmpData[i].length; ++j){
+                      tmpData[i][j] = parseFloat(tmpData[i][j]) + "";
+                  }
+              }
+            
             var name = tableId + "_jqgrid";
             var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createSjTable(name, title, colZbIds);
 
