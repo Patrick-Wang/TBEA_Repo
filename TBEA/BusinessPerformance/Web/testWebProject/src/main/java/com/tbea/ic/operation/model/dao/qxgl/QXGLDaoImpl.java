@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.QXGL;
 @Repository
@@ -78,4 +79,13 @@ public class QXGLDaoImpl  extends AbstractReadWriteDaoImpl<QXGL> implements QXGL
 		q.setParameter("accountId", account.getId());
 		return q.getResultList();
 	}
+
+	@Override
+	public Long getQxglCount(Account account, Company company) {
+		Query q = getEntityManager().createQuery("select count(q) from QXGL q where q.account.id = :accountId and q.dwxx.id = :compId");
+		q.setParameter("accountId", account.getId());
+		q.setParameter("compId", company.getId());
+		return (Long) q.getSingleResult();
+	}
+	
 }

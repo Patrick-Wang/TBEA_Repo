@@ -74,7 +74,11 @@ public class LoginServlet {
 			newSession.setAttribute("approvePredict",
 					approveService.hasApprovePredictPermission(account));
 			
+			newSession.setAttribute("CorpAuth",
+					loginService.hasCorpAuth(account));
 			
+			newSession.setAttribute("SbdAuth",
+					loginService.hasSbdAuth(account));
 			
 			return new ModelAndView("redirect:/Login/index.do", map);
 
@@ -103,6 +107,10 @@ public class LoginServlet {
 		map.put("approvePlan", currentSession.getAttribute("approvePlan"));
 
 		map.put("approvePredict", currentSession.getAttribute("approvePredict"));
+		
+		map.put("CorpAuth", currentSession.getAttribute("CorpAuth"));
+
+		map.put("SbdAuth", currentSession.getAttribute("SbdAuth"));
 		
 		return new ModelAndView("index", map);
 	
