@@ -79,6 +79,9 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 		List<Integer> dwzbs = mergeZbs(dwxx.getJhzbxxs(), dwxx.getSjzbxxs());
 		Double year = rowSrc.getCell(1).getNumericCellValue();
 		int columCount = rowSrc.getLastCellNum();
+		 HSSFDataFormat format = destWorkbook.createDataFormat(); 
+		 HSSFCellStyle style = destWorkbook.createCellStyle();
+		 style.setDataFormat(format.getFormat("yyyy-MM-dd"));
 		for(int i = 2; i < columCount - 3; ++i){
 			if (null != zbIds.get(i - 2)){
 				if (dwzbs.contains(zbIds.get(i - 2).getId())){
@@ -102,9 +105,8 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 						 cell = rowDest.createCell(5);
 						 cell.setCellValue("");
 						 cell = rowDest.createCell(6);
-						 HSSFDataFormat format = destWorkbook.createDataFormat(); 
 						 cell.setCellValue(rowSrc.getCell(rowSrc.getLastCellNum() - 3).getDateCellValue());
-						 cell.getCellStyle().setDataFormat(format.getFormat("yyyy-MM-dd"));
+						 cell.setCellStyle(style);
 						 
 					 }
 				}
