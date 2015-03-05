@@ -87,6 +87,15 @@ public class Util {
 		return ret.substring(1);
 	}
 	
+	public static String toSimpleString(List<String> arr)
+	{
+		String ret = "";
+		for(String s : arr){
+			ret += "," + s;
+		}
+		return ret.substring(1);
+	}
+	
 	public static String toBMString(List<Company> comps){
 		String ret = "";
 		for (Company comp : comps){

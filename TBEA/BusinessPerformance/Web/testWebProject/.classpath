@@ -23,5 +23,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-examples-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-excelant-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-ooxml-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-ooxml-schemas-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-scratchpad-3.10.1-20140818.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
