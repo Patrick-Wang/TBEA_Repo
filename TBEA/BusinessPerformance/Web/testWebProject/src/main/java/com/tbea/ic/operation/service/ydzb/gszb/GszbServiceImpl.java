@@ -28,6 +28,7 @@ import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.AccumulatorFactory;
@@ -625,7 +626,7 @@ public class GszbServiceImpl implements GszbService {
 		Company xnySyb = companyManager.getBMDBOrganization().getCompany(
 				CompanyType.XNYSYB);
 		CompanyType type = comps.get(0).getType();
-		if (type == xnySyb.getType() || xnySyb.contains(type)) {
+		if (type == xnySyb.getType() || xnySyb.contains(comps.get(0))) {
 			configurator = getConfiguratorFactory().getYdhbConfigurator();
 		} else {
 			configurator = getConfiguratorFactory().getStandardConfigurator();
@@ -767,4 +768,14 @@ public class GszbServiceImpl implements GszbService {
 				dataSource);
 	}
 
+	@Override
+	public List<Company> getCompanies(Account account) {
+		Set<DWXX> dwxxs = account.getDwxxs();
+		List<Company> ret = new ArrayList<Company>();
+		Organization org = companyManager.getBMDBOrganization();
+		for(DWXX dwxx : dwxxs){
+			ret.add(org.getCompany(dwxx.getId()));
+		}
+		return ret;
+	}
 }

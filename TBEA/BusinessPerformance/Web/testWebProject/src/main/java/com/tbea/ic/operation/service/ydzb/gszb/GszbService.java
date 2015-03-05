@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 
 public interface GszbService {
 	List<String[]> getGsztzb(Date date);
@@ -24,5 +25,6 @@ public interface GszbService {
 	List<String[]> getGcyJDZBMY(Date date);
 	List<String[]> getGdwJDZBMY(GSZB gszb, Date d);
 
-	List<String[]> getGdwzb(Date d, List<Company> comps);	
+	List<String[]> getGdwzb(Date d, List<Company> comps);
+	List<Company> getCompanies(Account account);	
 }

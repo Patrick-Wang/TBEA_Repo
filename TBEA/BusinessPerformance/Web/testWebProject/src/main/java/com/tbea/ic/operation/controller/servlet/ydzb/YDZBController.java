@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +26,82 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
+
+
+class CompanyTypeFilter implements CompanySelection.Filter{
+	
+	private List<Company> companies;
+	Organization org;
+	Company dbsbd;
+	Company nfsbd;
+	Company xjtc;
+	public CompanyTypeFilter(List<Company> companies, Organization org){
+		this.org = org;
+		this.companies = companies;
+		dbsbd = org.getCompany(CompanyType.DBSBDCYJT);
+		nfsbd = org.getCompany(CompanyType.NFSBDCYJT);
+		xjtc = org.getCompany(CompanyType.TCNY_and_XJNY);	
+		updateCompanies();
+	}
+		
+	private void addCategory(List<Company> comps, Company category){
+		int count = 0;
+		for (Company comp : category.getSubCompanys()){
+			if(keep(org.getCompany(comp.getType()))){
+				++count;
+			}
+		}
+		if (category.getSubCompanys().size() == count){
+			comps.add(category);
+		}
+	}
+	
+	private void updateCompanies(){
+		List<Company> ret = new ArrayList<Company>();
+		for (int i = 0; i < this.companies.size(); ++i){
+			ret.add(org.getCompany(this.companies.get(i).getType()));
+			companies.set(i, ret.get(i));
+		}
+		addCategory(ret, dbsbd);
+		addCategory(ret, nfsbd);
+		addCategory(ret, xjtc);		
+		this.companies = ret;
+	}
+	
+	private boolean contains(Company comp){
+		for (Company tmpComp : companies){
+			if (tmpComp.contains(comp)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean keep(Company comp) {
+		return !dbsbd.contains(comp) && 
+			!nfsbd.contains(comp) && 
+			!xjtc.contains(comp) && 
+			(companies.contains(comp) || contains(comp));
+	}
+	
+	@Override
+	public boolean keepGroup(Company comp) {
+		for (Company tmpComp : companies){
+			if (comp.contains(tmpComp) ||
+				comp == tmpComp ||
+				tmpComp.contains(comp)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+}
 
 @Controller
 @RequestMapping(value = "ydzb")
@@ -81,11 +153,9 @@ public class YDZBController {
 		List<Company> comps;
 		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
 			comps = org.getCompany(compType).getSubCompanys();
-		} else if (CompanyType.TCNY_and_XJNY == compType){
-			comps = new ArrayList<Company>();
-			comps.add(org.getCompany(CompanyType.TCNY));
-			comps.add(org.getCompany(CompanyType.XJNY));
-		} else if (CompanyType.BYQCY == compType ||
+		} else if (
+				CompanyType.TCNY_and_XJNY == compType ||
+				CompanyType.BYQCY == compType ||
 				CompanyType.XLCY == compType ||
 				CompanyType.DBSBDCYJT == compType ||
 				CompanyType.NFSBDCYJT == compType){
@@ -110,36 +180,13 @@ public class YDZBController {
 				false);
 		dateSel.select(map);
 		Organization org = companyManager.getVirtualJYZBOrganization();
+		CompanySelection compSel = new CompanySelection(
+				false,
+				org.getTopCompany(), 
+				new CompanyTypeFilter(
+						gszbService.getCompanies((Account)request.getSession(false).getAttribute("account")), 
+						org));
 
-		CompanySelection compSel = new CompanySelection(false,
-				org.getTopCompany(), new CompanySelection.Filter() {
-					Organization org = companyManager
-							.getVirtualJYZBOrganization();
-
-					@Override
-					public boolean keep(Company comp) {
-						return
-						// (comp.getType() != CompanyType.SBGS) &&
-						// (comp.getType() != CompanyType.HBGS) &&
-						// (comp.getType() != CompanyType.XBC) &&
-						// (comp.getType() != CompanyType.DLGS) &&
-						// (comp.getType() != CompanyType.XLC) &&
-						// (comp.getType() != CompanyType.LLGS) &&
-						// (comp.getType() != CompanyType.XNYGS) &&
-						// (comp.getType() != CompanyType.XTNYGS) &&
-						// (comp.getType() != CompanyType.NDGS) &&
-						// (comp.getType() != CompanyType.TCNY) &&
-						// !org.getTopCompany().contains(comp) &&
-						comp.getParentCompany() == null
-								|| (null != comp.getParentCompany()
-										&& comp.getParentCompany().getType() != CompanyType.BYQCY
-										&& comp.getParentCompany().getType() != CompanyType.XLCY
-										&& comp.getParentCompany().getType() != CompanyType.DBSBDCYJT
-										&& comp.getParentCompany().getType() != CompanyType.NFSBDCYJT && comp
-										.getParentCompany().getType() != CompanyType.XJNY);
-					}
-
-				});
 		compSel.select(map, 3);
 		return new ModelAndView("hzb_companys", map);
 	}
@@ -148,9 +195,6 @@ public class YDZBController {
 	public @ResponseBody String getGcy_zbhz_update(HttpServletRequest request,
 			HttpServletResponse response) {
 		Date d = DateSelection.getDate(request);
-		// String gcy_zbhz =
-		// JSONArray.fromObject(service.getGcy_zbhzData(d)).toString().replace("null",
-		// "0.00");
 		String gcy_zbhz = JSONArray.fromObject(gszbService.getGcyzb(d))
 				.toString().replace("null", "\"--\"");
 		return gcy_zbhz;
@@ -210,16 +254,7 @@ public class YDZBController {
 	@RequestMapping(value = "xjlrb.do", method = RequestMethod.GET)
 	public ModelAndView getXjlrb(HttpServletRequest request,
 			HttpServletResponse response) {
-		// Calendar now = Calendar.getInstance();
-		// int month = now.get(Calendar.MONTH) + 1;
-		// int year = now.get(Calendar.YEAR);
-		// int day = now.get(Calendar.DAY_OF_MONTH);
-		// int dayCount = now.getActualMaximum(Calendar.DAY_OF_MONTH);
 		Map<String, Object> map = new HashMap<String, Object>();
-		// map.put("month", month);
-		// map.put("year", year);
-		// map.put("day", day);
-		// map.put("dayCount", dayCount);
 
 		DateSelection dateSel = new DateSelection(service.getLatestXjlDate());
 		dateSel.select(map);

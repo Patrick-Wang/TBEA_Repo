@@ -105,6 +105,12 @@ public class XLFKFSTJController {
 							return contains(comp);
 						}
 					}
+					
+					@Override
+					public boolean keepGroup(Company comp) {
+						// TODO Auto-generated method stub
+						return true;
+					}
 				});
 		compSelection.select(map);
 

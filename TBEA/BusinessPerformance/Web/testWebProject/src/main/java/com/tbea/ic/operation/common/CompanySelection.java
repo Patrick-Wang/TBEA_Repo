@@ -15,6 +15,7 @@ import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 public class CompanySelection {
 	public interface Filter {
 		boolean keep(Company comp);
+		boolean keepGroup(Company comp);
 	}
 	private boolean mTopOnly = false;
 	private List<Company> mTopComps;
@@ -65,6 +66,11 @@ public class CompanySelection {
 		this.mTopComps = topComps;
 		this.mFilter = new Filter(){
 			public boolean keep(Company comp){
+				return true;
+			}
+
+			@Override
+			public boolean keepGroup(Company comp) {
 				return true;
 			}
 		};
@@ -121,6 +127,11 @@ public class CompanySelection {
 			Company topComp;
 			for (int i = 0; i < topComps.size(); ++i) {
 				topComp = topComps.get(i);
+				
+				if (!mFilter.keepGroup(topComp)) {
+					continue;
+				}
+				
 				List<DataNode> subNodes = select(topComp.getSubCompanys(),
 						depth - 1);
 				if (!subNodes.isEmpty()) {

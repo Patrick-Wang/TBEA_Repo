@@ -93,11 +93,17 @@ module hzb_companys {
         private mDataSet : Util.Ajax = new Util.Ajax("hzb_companys_update.do");
         public init(opt : IViewOption): void {
            this.mOpt = opt;
-           this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
-           this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
             
-           this.updateTable();
-           this.updateUI();
+           if (opt.comps.length == 0){
+               $('h1').text("没有任何可以查看的公司");
+               $('input').css("display", "none");
+           } else{
+               this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+               this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
+                
+               this.updateTable();
+               this.updateUI();
+           } 
         }
         
 

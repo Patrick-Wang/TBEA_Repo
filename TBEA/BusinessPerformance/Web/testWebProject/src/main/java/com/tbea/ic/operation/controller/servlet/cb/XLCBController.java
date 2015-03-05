@@ -76,6 +76,12 @@ public class XLCBController {
 						}
 						return false;
 					}
+					
+					@Override
+					public boolean keepGroup(Company comp) {
+						// TODO Auto-generated method stub
+						return true;
+					}
 				});
 		compSelection.select(map);
 
@@ -116,6 +122,12 @@ public class XLCBController {
 							}
 						}
 						return false;
+					}
+					
+					@Override
+					public boolean keepGroup(Company comp) {
+						// TODO Auto-generated method stub
+						return true;
 					}
 				});
 		compSelection.select(map);

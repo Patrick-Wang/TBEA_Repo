@@ -59,44 +59,14 @@ public class Company {
 		this.parentCompany = parentCompany;
 	}
 
-	private boolean contains(List<Company> comps, CompanyType compType){
-		for (Company comp : comps){
-			if (comp.getType() == compType){
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public boolean contains(CompanyType compType){
-		if (!contains(subCompanys, compType)){
-			for (int i = 0; i < subCompanys.size(); ++i){
-				if (subCompanys.get(i).contains(compType)){
-					return true;
-				}
-			}
-		}
-		else {
-			return true;
-		}
-		return false;
-	}
-	
 	public boolean contains(Company comp){
-		if (!subCompanys.contains(comp)){
-			for (int i = 0; i < subCompanys.size(); ++i){
-				if (subCompanys.get(i).contains(comp)){
-					return true;
-				}
-			}
+		Company p = comp.getParentCompany();
+		while (null != p && p != this){
+			p = p.getParentCompany();
 		}
-		else {
-			return true;
-		}
-		return false;
+		return null != p;
 	}
 	
-
 	/**
 	 * @param subCompanys the subCompanys to set
 	 */

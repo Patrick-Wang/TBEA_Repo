@@ -88,6 +88,12 @@ public class ApproveController {
 					public boolean keep(Company comp) {
 						return comps.contains(comp.getId());
 					}
+
+					@Override
+					public boolean keepGroup(Company comp) {
+						// TODO Auto-generated method stub
+						return true;
+					}
 				});
 		
 		compSel.select(map);

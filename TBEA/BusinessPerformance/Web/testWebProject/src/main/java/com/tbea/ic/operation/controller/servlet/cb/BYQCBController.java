@@ -86,6 +86,11 @@ public class BYQCBController {
 						}
 						return false;
 					}
+					@Override
+					public boolean keepGroup(Company comp) {
+						// TODO Auto-generated method stub
+						return true;
+					}
 				});
 		compSelection.select(map);
 
@@ -141,6 +146,12 @@ public class BYQCBController {
 						}
 						return false;
 					}
+
+					@Override
+					public boolean keepGroup(Company comp) {
+						// TODO Auto-generated method stub
+						return true;
+					}
 				});
 		compSelection.select(map);
 
@@ -192,6 +203,12 @@ public class BYQCBController {
 							}
 						}
 						return false;
+					}
+
+					@Override
+					public boolean keepGroup(Company comp) {
+						// TODO Auto-generated method stub
+						return true;
 					}
 				});
 		compSelection.select(map);
