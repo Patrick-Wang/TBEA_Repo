@@ -41,14 +41,14 @@ public abstract class AbstractOrganization implements Organization {
 		return this;
 	}
 	
-	private Company queryCompany(List<Company> comps, Integer id) {
+	private Company queryCompany(List<Company> comps, String name) {
 		Company ret = null;
 		if (null != comps) {
 			for (Company sub : comps) {
-				if (sub.getId() == id) {
+				if (sub.getName().equals(name)) {
 					ret = sub;
 				} else {
-					ret = queryCompany(sub.getSubCompanys(), id);
+					ret = queryCompany(sub.getSubCompanys(), name);
 				}
 
 				if (null != ret) {
@@ -59,6 +59,12 @@ public abstract class AbstractOrganization implements Organization {
 		return ret;
 	}
 
+	
+	@Override
+	public Company getCompany(String name){
+		return queryCompany(this.topComps, name);
+	}
+	
 	@Override
 	public Company getCompany(CompanyType type) {
 		return typeCompMap.get(type);
