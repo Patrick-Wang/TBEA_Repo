@@ -111,7 +111,8 @@ module hzb_zbhz {
                 for (var i = 0; i < row.length; ++i) {
                     if (i == SrqyId.jhwcl || i == SrqyId.ljwcl || i == SrqyId.tbzzl || i == SrqyId.ljtbzzl) {
                         row[i] = Util.formatPercent(row[i]);
-                    } else if (i != SrqyId.zb) {
+                    } else if (i != SrqyId.zb) 
+                    { 
                         if (isRs) {
                             row[i] = Util.formatInt(row[i]);
                         } else {
@@ -128,16 +129,21 @@ module hzb_zbhz {
             var data = [];
             var row = [];
             var isRs = false;
+            var isSxfyl = false;
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 isRs = row[ZtId.zb] == '人数';
+                isSxfyl = row[ZtId.zb] == '三项费用率';
                 for (var i = 0; i < row.length; ++i) {
                     if (i == ZtId.dyjhwcl || i == ZtId.jdjhwcl || i == ZtId.dytbzf || i == ZtId.jdtbzf || i == ZtId.ndljjhwcl || i == ZtId.ndtbzf) {
                         row[i] = Util.formatPercent(row[i]);
                     } else if (i != ZtId.zb) {
                         if (isRs) {
                             row[i] = Util.formatInt(row[i]);
-                        } else {
+                        } 
+                        else if (isSxfyl){
+                             row[i] = Util.formatPercentSignal(row[i]);
+                        }else {
                             row[i] = Util.formatCurrency(row[i]);
                         }
                     }

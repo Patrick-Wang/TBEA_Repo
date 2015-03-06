@@ -238,6 +238,7 @@ module Util {
         return parseInt(val) + "";
     }
     
+    
     export function formatCurrency(val: string): string {
 
         if (val === "--" || val === "") {
@@ -289,6 +290,13 @@ module Util {
         }
         return (parseFloat(val) * 100).toFixed(2) + "%"    
     }
+    
+    export function formatPercentSignal(val: string): string{
+        if (val === "--" || val === "" || val === "-") {
+            return val;
+        }
+        return (parseFloat(val)).toFixed(2) + "%"   
+        }
     
     export function isExist(val: any): boolean {
         return val != undefined;

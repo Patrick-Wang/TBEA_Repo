@@ -126,17 +126,30 @@ module hzb_companys {
             var data = [];
             var row = [];
             var isRs = false;
+            var isJzcsyl = false;
+            var isSxfyl = false;
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 isRs = row[AllZb.zb] == '人数';
+                isJzcsyl = row[AllZb.zb] == '净资产收益率';
+                isSxfyl = row[AllZb.zb] == '三项费用率';
                 for (var i = 0; i < row.length; ++i) {
                     if (i == AllZb.dyjhwcl || i == AllZb.dytbzf || i == AllZb.jdjhwcl || i == AllZb.jdtbzf ||
                         i == AllZb.ndljjhwcl ||　i == AllZb.ndtbzf) {
                         row[i] = Util.formatPercent(row[i]);
                     } else if (i != AllZb.zb) {
-                        if (isRs) {
+                        if (isRs) 
+                        {
                             row[i] = Util.formatInt(row[i]);
-                        } else {
+                        } else if (isJzcsyl)
+                        {
+                            row[i] = Util.formatPercent(row[i]);
+                        }else if (isSxfyl)
+                        {
+                            row[i] = Util.formatPercentSignal(row[i]);
+                        }
+                        else 
+                        {
                             row[i] = Util.formatCurrency(row[i]);
                         }
                     }
