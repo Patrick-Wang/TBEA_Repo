@@ -143,7 +143,7 @@ module hzb_companys {
                             row[i] = Util.formatInt(row[i]);
                         } else if (isJzcsyl)
                         {
-                            row[i] = Util.formatPercent(row[i]);
+                            row[i] = Util.formatPercentSignal(row[i]);
                         }else if (isSxfyl)
                         {
                             row[i] = Util.formatPercentSignal(row[i]);
