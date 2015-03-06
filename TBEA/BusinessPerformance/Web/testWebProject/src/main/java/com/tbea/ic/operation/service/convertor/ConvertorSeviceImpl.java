@@ -82,7 +82,7 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 		 HSSFDataFormat format = destWorkbook.createDataFormat(); 
 		 HSSFCellStyle style = destWorkbook.createCellStyle();
 		 style.setDataFormat(format.getFormat("yyyy-MM-dd"));
-		for(int i = 2; i < columCount - 3; ++i){
+		for(int i = 2; i < columCount - 1; ++i){
 			if (null != zbIds.get(i - 2)){
 				if (dwzbs.contains(zbIds.get(i - 2).getId())){
 					 HSSFCell cell = rowSrc.getCell(i);
@@ -105,7 +105,7 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 						 cell = rowDest.createCell(5);
 						 cell.setCellValue("");
 						 cell = rowDest.createCell(6);
-						 cell.setCellValue(rowSrc.getCell(rowSrc.getLastCellNum() - 3).getDateCellValue());
+						 cell.setCellValue(rowSrc.getCell(rowSrc.getLastCellNum() - 1).getDateCellValue());
 						 cell.setCellStyle(style);
 						 
 					 }
@@ -129,20 +129,22 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 				break;
 			}
 			int rowNum = sheet.getLastRowNum();
-			HSSFRow title = sheet.getRow(0);
+			HSSFRow titleId = sheet.getRow(0);
+			HSSFRow title = sheet.getRow(1);
 			List<ZBXX> zbxxs = new ArrayList<ZBXX>();
-			for(int i = 2; i <= title.getLastCellNum() - 3; ++i){
-				 HSSFCell cell = title.getCell(i);
-				 ZBXX zbTmp  = zbxxDao.getZbByName(cell.getStringCellValue());
+			for(int i = 2; i < titleId.getLastCellNum() - 1; ++i){
+				 HSSFCell cell = titleId.getCell(i);
+				 ZBXX zbTmp  = zbxxDao.getById((int)cell.getNumericCellValue());
 				 if (null == zbTmp){
-					 resultBuilder.append("<tr><td>" + cell.getStringCellValue() + "</td><td>指标不存在</td></tr>");
+					 cell = title.getCell(i);
+					 resultBuilder.append("<tr><td>" + cell.getNumericCellValue() + "  " + cell.getStringCellValue() +  "</td><td>指标不存在</td></tr>");
 				 }
 				 zbxxs.add(zbTmp);
 			}
 			
 			HSSFSheet destSheet = destWorkbook.getSheetAt(0);
 			
-			for(int i = 1; i < rowNum; ++i){
+			for(int i = 2; i < rowNum; ++i){
 				convertNdjh(destWorkbook, zbxxs, sheet.getRow(i), destSheet, resultBuilder);
 			}
 			
@@ -152,7 +154,10 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 		response.setHeader("Content-disposition","attachment;filename=\"ndjz.xls\"");
 		
 		destWorkbook.write(response.getOutputStream());
-		
+		String log = resultBuilder.toString();
+		if (log.isEmpty()){
+			return "All is well";
+		}
 		return resultBuilder.toString();
 	
 	}
