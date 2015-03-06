@@ -15,11 +15,16 @@ public abstract class AbstractOrganization implements Organization {
 	
 	protected Company clone(Organization org, CompanyManager.CompanyType ty){
 		Company otherComp = org.getCompany(ty);
-		Company comp = this.getCompany(otherComp.getType(), otherComp.getId());
-		List<Company> subs = otherComp.getSubCompanys();
-		for (Company sub : subs){
-			comp.append(clone(org, sub.getType()));
+		Company comp = null;
+		if (null != otherComp)
+		{
+			comp = this.getCompany(otherComp.getType(), otherComp.getId());
+			List<Company> subs = otherComp.getSubCompanys();
+			for (Company sub : subs){
+				comp.append(clone(org, sub.getType()));
+			}
 		}
+		
 		return comp;
 	}
 	
