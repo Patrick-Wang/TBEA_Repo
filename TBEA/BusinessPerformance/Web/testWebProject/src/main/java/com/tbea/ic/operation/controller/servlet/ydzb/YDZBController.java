@@ -143,6 +143,17 @@ public class YDZBController {
 		return new ModelAndView("hzb_zbhz", map);
 	}
 
+	private void removeJzcsyl(List<String[]> zbData){
+		for (int i = 0; i < zbData.size(); ++i){
+			if ("净资产收益率".equals(zbData.get(i)[0])){
+				for (int j = 1; j < zbData.get(i).length; ++j){
+					zbData.get(i)[j] = null;
+				}
+				break;
+			}
+		}
+	}
+	
 	@RequestMapping(value = "hzb_companys_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getHzb_companys_update(
 			HttpServletRequest request, HttpServletResponse response)
@@ -151,14 +162,17 @@ public class YDZBController {
 		CompanyType compType = CompanySelection.getCompany(request);
 		Organization org = companyManager.getBMDBOrganization();
 		List<Company> comps;
+		boolean removeJzcsyl = false;
 		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
 			comps = org.getCompany(compType).getSubCompanys();
+			removeJzcsyl = true;
 		} else if (
 				CompanyType.TCNY_and_XJNY == compType ||
 				CompanyType.BYQCY == compType ||
 				CompanyType.XLCY == compType ||
 				CompanyType.DBSBDCYJT == compType ||
 				CompanyType.NFSBDCYJT == compType){
+			removeJzcsyl = true;
 			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
 			comps = orgJyzb.getCompany(compType).getSubCompanys();
 		} else {
@@ -166,7 +180,12 @@ public class YDZBController {
 			comps.add(org.getCompany(compType));
 		}
 
-		String hzb_zbhz = JSONArray.fromObject(gszbService.getGdwzb(d, comps)).toString()
+		List<String[]> ret = gszbService.getGdwzb(d, comps);
+		if (removeJzcsyl){
+			removeJzcsyl(ret);
+		}
+		
+		String hzb_zbhz = JSONArray.fromObject(ret).toString()
 				.replace("null", "\"--\"");
 		return hzb_zbhz.getBytes("utf-8");
 	}

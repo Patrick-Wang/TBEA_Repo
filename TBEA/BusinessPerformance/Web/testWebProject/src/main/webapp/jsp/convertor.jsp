@@ -80,17 +80,35 @@
 <title>Excel 数据转换器</title>
 </head>
 <body>
-	<form action="ndjh_convert.do" method="get">
-	  <input name="file" type="submit" value="下载"  style="width:80px"/>
-	</form>
-	</br>
-	<input name="file" type="submit" value="Log" onclick="download()" style="width:80px"/>
+<!-- 	<form action="ndjh_convert.do" method="post" enctype="multipart/form-data">
+	请选择要上传的文件<input type="file" name="upfile" size="50">
+	<input type="submit" value="提交"> 
+	</form>-->
+	<table>
+		<tr>
+			<td><form action="ndjhconvert.do" method="post">
+					<input name="file" type="submit" value="下载年度计划"
+						style="width: 120px" />
+				</form></td>
+			<td><form action="ydjhconvert.do" method="post">
+					<input name="file" type="submit" value="下载月度计划"
+						style="width: 120px" />
+				</form></td>
+			<td><form action="ydsjconvert.do" method="post">
+					<input name="file" type="submit" value="下载月度实际"
+						style="width: 120px" />
+				</form></td>
+		</tr>
+	</table>
+
+	<br/>
+	<input name="file" type="submit" value="Log" onclick="download()" style="width:120px"/>
 	<table id="p1"></table>
 	<script type="text/javascript">
 	 function download() {
          $.ajax({
              type: "GET",
-             url: "ndjh_log.do",
+             url: "log.do",
              success: function (data) {
                  $("#p1")[0].innerHTML = data;
              },

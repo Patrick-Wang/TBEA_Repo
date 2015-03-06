@@ -10,4 +10,8 @@ public interface ConvertorSevice {
 	String convertNdjh(HttpServletRequest request, HttpServletResponse response)
 			throws IOException;
 
+	String convertYdjh(HttpServletRequest request, HttpServletResponse response) throws IOException;
+
+	String convertYdsj(HttpServletRequest request, HttpServletResponse response) throws IOException;
+
 }

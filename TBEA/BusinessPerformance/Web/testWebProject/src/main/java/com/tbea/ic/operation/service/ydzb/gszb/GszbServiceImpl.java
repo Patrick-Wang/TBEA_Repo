@@ -93,7 +93,7 @@ public class GszbServiceImpl implements GszbService {
 		gsztzbs.add(GSZB.RJSR.getValue());
 		gsztzbs.add(GSZB.SXFY.getValue());
 		gsztzbs.add(GSZB.SXFYL.getValue());
-		gsztzbs.add(GSZB.JZCSYL.getValue());
+		//gsztzbs.add(GSZB.JZCSYL.getValue());
 	}
 
 	private static List<Integer> topfivezbs = new ArrayList<Integer>();
