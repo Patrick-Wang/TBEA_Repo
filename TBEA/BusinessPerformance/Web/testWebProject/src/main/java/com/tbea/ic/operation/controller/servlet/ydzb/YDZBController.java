@@ -74,7 +74,7 @@ class CompanyTypeFilter implements CompanySelection.Filter{
 	
 	private boolean contains(Company comp){
 		for (Company tmpComp : companies){
-			if (tmpComp.contains(comp)){
+			if (null != tmpComp && tmpComp.contains(comp)){
 				return true;
 			}
 		}
@@ -201,7 +201,7 @@ public class YDZBController {
 		Organization org = companyManager.getVirtualJYZBOrganization();
 		CompanySelection compSel = new CompanySelection(
 				false,
-				org.getTopCompany(), 
+				org.getCompany(CompanyType.GFGS).getSubCompanys(), 
 				new CompanyTypeFilter(
 						gszbService.getCompanies((Account)request.getSession(false).getAttribute("account")), 
 						org));
