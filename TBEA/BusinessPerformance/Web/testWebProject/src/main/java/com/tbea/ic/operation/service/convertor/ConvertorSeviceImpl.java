@@ -106,7 +106,8 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 					if (null == cell) {
 						continue;
 					}
-					Double value = cell.getNumericCellValue();
+
+					Double value = cell.getNumericCellValue();					
 					if (null != value) {
 						HSSFRow rowDest = destSheet.createRow(destSheet
 								.getLastRowNum() + 1);
@@ -119,6 +120,12 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 						cell = rowDest.createCell(3);
 						cell.setCellValue(year);
 						cell = rowDest.createCell(4);
+						//处理净资产收益率的%
+						if (66 == zbIds.get(i - 2).getId())
+						{
+							value = value * 100;							
+						}
+						//End
 						cell.setCellValue(value);
 						cell = rowDest.createCell(5);
 						cell.setCellValue("");
