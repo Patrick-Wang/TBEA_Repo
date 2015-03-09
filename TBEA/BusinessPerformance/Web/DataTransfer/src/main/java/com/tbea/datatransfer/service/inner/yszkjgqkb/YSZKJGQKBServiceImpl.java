@@ -121,15 +121,15 @@ public class YSZKJGQKBServiceImpl implements YSZKJGQKBService {
 	public boolean importYSZKJGQKB() {
 		boolean result = false;
 		try {
-			// yszkjgqkbDao.truncateYSZKJGQKB();
+//			 yszkjgqkbDao.truncateYSZKJGQKB();
 			SimpleDateFormat month_sdf = new SimpleDateFormat("yyyyMM");
 			String baseMonth = null;
 			Calendar cur = Calendar.getInstance();
-			// Calendar end = Calendar.getInstance();
-			// cur.set(2013, 1 - 1, 1);
-			// end.setTimeInMillis(System.currentTimeMillis());
+//			 Calendar end = Calendar.getInstance();
+//			 cur.set(2013, 1 - 1, 1);
+//			 end.setTimeInMillis(System.currentTimeMillis());
 			cur.setTimeInMillis(System.currentTimeMillis());
-			// while (!cur.after(end)) {
+//			 while (!cur.after(end)) {
 			baseMonth = month_sdf.format(cur.getTime());
 			List<String> sshyGWList = new ArrayList<String>();
 			sshyGWList.add("01");
@@ -170,8 +170,8 @@ public class YSZKJGQKBServiceImpl implements YSZKJGQKBService {
 			importYSZKJGByHY(baseMonth, "其他", sshyQTList, false, false);
 
 			importYSZKJGByHY(baseMonth, "合计", null, false, true);
-			// cur.add(cur.MONTH, 1);
-			// }
+//			 cur.add(cur.MONTH, 1);
+//			 }
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

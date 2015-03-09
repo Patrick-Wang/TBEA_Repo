@@ -36,7 +36,7 @@ public class YSZKTZDLDaoImpl extends AbstractReadOnlyDaoImpl<YSZKTZXL>
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<YSZKTZXL> getCurrentYSZKTZ() {
-		String sql = "From YSZKTZXL where gxrq = (select MAX(gxrq) from YSZKTZXL)";
+		String sql = "From YSZKTZXL where DateDiff(dd, gxrq, (select MAX(gxrq) from YSZKTZBYQ)) = 0";
 		Query query = getEntityManager().createQuery(sql);
 		List<YSZKTZXL> resultList = query.getResultList();
 		return resultList;
