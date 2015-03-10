@@ -48,15 +48,15 @@ public class YQKQSBHBServiceImpl implements YQKQSBHBService {
 	public boolean importYQKQSBHB() {
 		boolean result = false;
 		try {
-			// yqkqsbhbDao.truncateYQKQSBHB();
+//			 yqkqsbhbDao.truncateYQKQSBHB();
 			SimpleDateFormat month_sdf = new SimpleDateFormat("yyyyMM");
 			String baseMonth = null;
 			Calendar cur = Calendar.getInstance();
-			// Calendar end = Calendar.getInstance();
-			// cur.set(2013, 1 - 1, 1);
-			// end.setTimeInMillis(System.currentTimeMillis());
+//			 Calendar end = Calendar.getInstance();
+//			 cur.set(2013, 1 - 1, 1);
+//			 end.setTimeInMillis(System.currentTimeMillis());
 			cur.setTimeInMillis(System.currentTimeMillis());
-			// while (!cur.after(end)) {
+//			 while (!cur.after(end)) {
 			YQKQSBHB yqkqsbhb = new YQKQSBHB();
 			baseMonth = month_sdf.format(cur.getTime());
 			yqkqsbhb.setNy(baseMonth);
@@ -68,8 +68,8 @@ public class YQKQSBHBServiceImpl implements YQKQSBHBService {
 			yqkqsbhb.setQybh(9999);
 			yqkqsbhbDao.merge(yqkqsbhb);
 			importYQKByQY(baseMonth);
-			// cur.add(cur.MONTH, 1);
-			// }
+//			 cur.add(cur.MONTH, 1);
+//			 }
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

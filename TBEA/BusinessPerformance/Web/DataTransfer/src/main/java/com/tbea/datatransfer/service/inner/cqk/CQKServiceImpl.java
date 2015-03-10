@@ -73,15 +73,15 @@ public class CQKServiceImpl implements CQKService {
 	public boolean importCQK() {
 		boolean result = false;
 		try {
-			// cqkDao.truncateCQK();
+//			 cqkDao.truncateCQK();
 			SimpleDateFormat month_sdf = new SimpleDateFormat("yyyyMM");
 			String baseMonth = null;
 			Calendar cur = Calendar.getInstance();
-			// Calendar end = Calendar.getInstance();
-			// cur.set(2013, 1 - 1, 1);
-			// end.setTimeInMillis(System.currentTimeMillis());
+//			 Calendar end = Calendar.getInstance();
+//			 cur.set(2013, 1 - 1, 1);
+//			 end.setTimeInMillis(System.currentTimeMillis());
 			cur.setTimeInMillis(System.currentTimeMillis());
-			// while (!cur.after(end)) {
+//			 while (!cur.after(end)) {
 			baseMonth = month_sdf.format(cur.getTime());
 			List<String> sshyGWNWList = new ArrayList<String>();
 			sshyGWNWList.add("01");
@@ -129,8 +129,8 @@ public class CQKServiceImpl implements CQKService {
 			importCQKByHY(baseMonth, "其他", sshyQTList, false, false);
 
 			importCQKByHY(baseMonth, "合计", null, false, true);
-			// cur.add(cur.MONTH, 1);
-			// }
+//			 cur.add(cur.MONTH, 1);
+//			 }
 			result = true;
 		} catch (Exception e) {
 			result = false;

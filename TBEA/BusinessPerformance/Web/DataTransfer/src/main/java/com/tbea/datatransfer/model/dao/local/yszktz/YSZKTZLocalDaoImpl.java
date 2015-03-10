@@ -47,8 +47,8 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 			List<String> sshyList, boolean isIncluded, boolean isTotal)
 			throws Exception {
 		Double result = 0.0D;
-		String sql = "select sum(ysje - yhxje) from YSZKTZLocal"
-				+ " where fhrq is not null";
+		String sql = "select sum(yfhje - isnull(yhxje,0)) from YSZKTZLocal"
+				+ " where fhrq is not null and yfhje - isnull(yhxje, 0) > 0";
 		if (null != startTime) {
 			sql += " and DateDiff(dd, fhrq, :baseMonth) > :startTime";
 		}
@@ -87,8 +87,8 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 	public Map<String, Double> getCQKByQY(String baseMonth, Integer startTime,
 			Integer endTime, List<String> sshyList, boolean isIncluded,
 			boolean isTotal) throws Exception {
-		String sql = "select qybh, sum(ysje - yhxje) from YSZKTZLocal"
-				+ " where fhrq is not null";
+		String sql = "select qybh, sum(yfhje - isnull(yhxje,0)) from YSZKTZLocal"
+				+ " where fhrq is not null and yfhje - isnull(yhxje, 0) > 0";
 		if (null != startTime) {
 			sql += " and DateDiff(dd, fhrq, :baseMonth) > :startTime";
 		}
@@ -128,8 +128,11 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 	public Double getYQK(String baseMonth, Integer startTime, Integer endTime)
 			throws Exception {
 		Double result = 0.0D;
-		String sql = "select sum(ysje - yhxje) from YSZKTZLocal"
-				+ " where dqrq is not null";
+		String sql = "select sum(yfhje - isnull(yhxje,0)) from YSZKTZLocal"
+				+ " where yfhje - isnull(yhxje, 0) > 0";
+		if (null != startTime || null != endTime) {
+			sql += " and dqrq is not null";
+		}
 		if (null != startTime) {
 			sql += " and DateDiff(mm, dqrq, :baseMonth) >= :startTime";
 		}
@@ -157,8 +160,11 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 	@Override
 	public Map<String, Double> getYQKByQY(String baseMonth, Integer startTime,
 			Integer endTime) throws Exception {
-		String sql = "select qybh, sum(ysje - yhxje) from YSZKTZLocal"
-				+ " where dqrq is not null";
+		String sql = "select qybh, sum(yfhje - isnull(yhxje,0)) from YSZKTZLocal"
+				+ " where yfhje - isnull(yhxje, 0) > 0";
+		if (null != startTime || null != endTime) {
+			sql += " and dqrq is not null";
+		}
 		if (null != startTime) {
 			sql += " and DateDiff(mm, dqrq, :baseMonth) >= :startTime";
 		}
@@ -189,8 +195,11 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 			Integer endTime, List<String> sshyList, boolean isIncluded,
 			boolean isTotal, boolean isKXLB, boolean isZBJ) throws Exception {
 		Double result = 0.0D;
-		String sql = "select sum(ysje - yhxje) from YSZKTZLocal"
-				+ " where dqrq is not null";
+		String sql = "select sum(yfhje - isnull(yhxje,0)) from YSZKTZLocal"
+				+ " where yfhje - isnull(yhxje, 0) > 0";
+		if (null != startTime || null != endTime) {
+			sql += " and dqrq is not null";
+		}
 		if (null != startTime) {
 			sql += " and DateDiff(mm, dqrq, :baseMonth) >= :startTime";
 		}
@@ -237,8 +246,11 @@ public class YSZKTZLocalDaoImpl extends AbstractReadWriteDaoImpl<YSZKTZLocal>
 			Integer startTime, Integer endTime, List<String> sshyList,
 			boolean isIncluded, boolean isTotal, boolean isKXLB, boolean isZBJ)
 			throws Exception {
-		String sql = "select qybh, sum(ysje - yhxje) from YSZKTZLocal"
-				+ " where dqrq is not null";
+		String sql = "select qybh, sum(yfhje - isnull(yhxje,0)) from YSZKTZLocal"
+				+ " where yfhje - isnull(yhxje, 0) > 0";
+		if (null != startTime || null != endTime) {
+			sql += " and dqrq is not null";
+		}
 		if (null != startTime) {
 			sql += " and DateDiff(mm, dqrq, :baseMonth) >= :startTime";
 		}
