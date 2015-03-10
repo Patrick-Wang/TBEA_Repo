@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -92,7 +93,7 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 			return;
 		}
 
-		List<Integer> dwzbs = mergeZbs(dwxx.getJhzbxxs(), dwxx.getSjzbxxs());
+		List<Integer> dwzbs = mergeZbs(dwxx.getJhzbxxs(), new HashSet<ZBXX>());
 		Double year = rowSrc.getCell(1).getNumericCellValue();
 		int columCount = rowSrc.getLastCellNum();
 		HSSFDataFormat format = destWorkbook.createDataFormat();
@@ -146,7 +147,7 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 	}
 
 	
-	private void convertYd(
+	private void convertYd(boolean jh, 
 			HSSFWorkbook destWorkbook, List<ZBXX> zbIds,
 			HSSFRow rowSrc, 
 			HSSFSheet destSheet, 
@@ -159,7 +160,13 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 			return;
 		}
 
-		List<Integer> dwzbs = mergeZbs(dwxx.getJhzbxxs(), dwxx.getSjzbxxs());
+		List<Integer> dwzbs = null;
+		if (jh){
+			dwzbs = mergeZbs(dwxx.getJhzbxxs(), new HashSet<ZBXX>());
+		} else {
+			dwzbs = mergeZbs(new HashSet<ZBXX>(), dwxx.getSjzbxxs());
+		}
+		
 		Double year = rowSrc.getCell(1).getNumericCellValue();
 		Double month = rowSrc.getCell(2).getNumericCellValue();
 		int columCount = zbIds.size() + 3;
@@ -258,7 +265,7 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 	}
 
 	
-	private String convertYd(String path, String pathRaw, String fileName, HttpServletRequest request,
+	private String convertYd(boolean jh, String path, String pathRaw, String fileName, HttpServletRequest request,
 			HttpServletResponse response) throws IOException{
 		StringBuilder resultBuilder = new StringBuilder();
 		HSSFWorkbook destWorkbook = new HSSFWorkbook(new FileInputStream(new File(
@@ -288,7 +295,7 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 			HSSFSheet destSheet = destWorkbook.getSheetAt(0);
 			
 			for(int i = 2; i <= rowNum; ++i){
-				convertYd(destWorkbook, zbxxs, sheet.getRow(i), destSheet, resultBuilder);
+				convertYd(jh, destWorkbook, zbxxs, sheet.getRow(i), destSheet, resultBuilder);
 			}
 			
 			
@@ -307,12 +314,12 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 	@Override
 	public String convertYdjh(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		return convertYd(pathYdjh, pathYdjhRaw, "ydjh.xls", request, response);
+		return convertYd(true, pathYdjh, pathYdjhRaw, "ydjh.xls", request, response);
 	}
 
 	@Override
 	public String convertYdsj(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		return convertYd(pathYdsj, pathYdsjRaw, "ydsj.xls", request, response);
+		return convertYd(false, pathYdsj, pathYdsjRaw, "ydsj.xls", request, response);
 	}
 }
