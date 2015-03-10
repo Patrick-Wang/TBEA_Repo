@@ -165,6 +165,8 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 				if (dwzbs.contains(zbIds.get(i - 3).getId())) {
 					HSSFCell cell = rowSrc.getCell(i);
 					if (null == cell) {
+						resultBuilder.append("<tr><td>" + compName
+								+ "</td><td>" + zbIds.get(i - 3) + " 指标值为空 " +  "</td></tr>");
 						continue;
 					}
 					Double value = cell.getNumericCellValue();
@@ -189,7 +191,13 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 						cell.setCellValue("");
 						//cell.setCellStyle(style);
 
+					} else {
+						resultBuilder.append("<tr><td>" + compName
+								+ "</td><td>" + zbIds.get(i - 3) + " 指标值为空 " +  "</td></tr>");
 					}
+				} else{
+					resultBuilder.append("<tr><td>" + compName
+							+ "</td><td>" + "不包含   “" + zbIds.get(i - 3).getName() +  "” 指标</td></tr>");
 				}
 			}
 		}
