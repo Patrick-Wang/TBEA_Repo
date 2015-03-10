@@ -232,7 +232,7 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 			
 		}while(false);
 		response.setContentType("application/octet-stream"); 
-		response.setHeader("Content-disposition","attachment;filename=\"ndjz.xls\"");
+		response.setHeader("Content-disposition","attachment;filename=\"ndjh.xls\"");
 		
 		destWorkbook.write(response.getOutputStream());
 		String log = resultBuilder.toString();
