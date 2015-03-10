@@ -2,12 +2,10 @@ package com.tbea.ic.operation.service.convertor;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
@@ -24,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.controller.servlet.convertor.Convertor;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
@@ -121,7 +120,7 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 						cell.setCellValue(year);
 						cell = rowDest.createCell(4);
 						//处理净资产收益率的%
-						if (66 == zbIds.get(i - 2).getId())
+						if (GSZB.JZCSYL.getValue() == zbIds.get(i - 2).getId())
 						{
 							value = value * 100;							
 						}
@@ -157,11 +156,11 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 		List<Integer> dwzbs = mergeZbs(dwxx.getJhzbxxs(), dwxx.getSjzbxxs());
 		Double year = rowSrc.getCell(1).getNumericCellValue();
 		Double month = rowSrc.getCell(2).getNumericCellValue();
-		int columCount = rowSrc.getLastCellNum();
+		int columCount = zbIds.size() + 3;
 		HSSFDataFormat format = destWorkbook.createDataFormat();
 		HSSFCellStyle style = destWorkbook.createCellStyle();
 		style.setDataFormat(format.getFormat("yyyy-MM-dd"));
-		for (int i = 3; i < columCount - 1; ++i) {
+		for (int i = 3; i < columCount; ++i) {
 			if (null != zbIds.get(i - 3)) {
 				if (dwzbs.contains(zbIds.get(i - 3).getId())) {
 					HSSFCell cell = rowSrc.getCell(i);
@@ -187,9 +186,8 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 						cell = rowDest.createCell(6);
 						cell.setCellValue("");
 						cell = rowDest.createCell(7);
-						cell.setCellValue(rowSrc.getCell(
-								rowSrc.getLastCellNum() - 1).getDateCellValue());
-						cell.setCellStyle(style);
+						cell.setCellValue("");
+						//cell.setCellStyle(style);
 
 					}
 				}
@@ -263,12 +261,12 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 			HSSFRow titleId = sheet.getRow(0);
 			HSSFRow title = sheet.getRow(1);
 			List<ZBXX> zbxxs = new ArrayList<ZBXX>();
-			for(int i = 3; i < titleId.getLastCellNum() - 1; ++i){
+			for(int i = 3; i < titleId.getLastCellNum(); ++i){
 				 HSSFCell cell = titleId.getCell(i);
 				 ZBXX zbTmp  = zbxxDao.getById((int)cell.getNumericCellValue());
 				 if (null == zbTmp){
-					 cell = title.getCell(i);
-					 resultBuilder.append("<tr><td>" + cell.getNumericCellValue() + "  " + cell.getStringCellValue() +  "</td><td>指标不存在</td></tr>");
+					 HSSFCell cellTmp = title.getCell(i);
+					 resultBuilder.append("<tr><td>" + cell.getNumericCellValue() + "  " + cellTmp.getStringCellValue() +  "</td><td>指标不存在</td></tr>");
 				 }
 				 zbxxs.add(zbTmp);
 			}

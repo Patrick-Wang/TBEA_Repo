@@ -1,6 +1,5 @@
 package com.tbea.ic.operation.controller.servlet.convertor;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
