@@ -133,7 +133,13 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 								rowSrc.getLastCellNum() - 1).getDateCellValue());
 						cell.setCellStyle(style);
 
+					} else {
+						resultBuilder.append("<tr><td>" + compName
+								+ "</td><td>" + zbIds.get(i - 3) + " 指标值为空 " +  "</td></tr>");
 					}
+				} else{
+					resultBuilder.append("<tr><td>" + compName
+							+ "</td><td>" + "不包含   “" + zbIds.get(i - 3).getName() +  "” 指标</td></tr>");
 				}
 			}
 		}
