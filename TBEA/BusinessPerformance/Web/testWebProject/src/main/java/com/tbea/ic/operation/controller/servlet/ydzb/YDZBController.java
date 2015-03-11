@@ -444,7 +444,7 @@ public class YDZBController {
 	}
 	
 	
-	// 财务指标预测
+	// 各单位top5指标预测
 		@RequestMapping(value = "gdw_zbhz_prediction_update.do", method = RequestMethod.GET)
 		public @ResponseBody byte[] getGdw_zbhz_prediction_update(
 				HttpServletRequest request, HttpServletResponse response)
@@ -481,11 +481,14 @@ public class YDZBController {
 		@RequestMapping(value = "gdw_zbhz_prediction.do", method = RequestMethod.GET)
 		public ModelAndView getGdw_zbhz_prediction(HttpServletRequest request,
 				HttpServletResponse response) {
-			String gszb = request.getParameter("zb");			
+			//String gszb = request.getParameter("zb");	
+			int zb = Integer.parseInt(request.getParameter("zb"));
+			String zbName  = service.getZBNameById(zb);
 			Map<String, Object> map = new HashMap<String, Object>();
 			DateSelection dateSel = new DateSelection();
 			dateSel.select(map);
-			map.put("zb", gszb);
+			map.put("zbName", zbName);
+			map.put("zbId", zb);
 			return new ModelAndView("gdw_zbhz_prediction", map);
 		}
 }

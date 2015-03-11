@@ -63,13 +63,13 @@
     	var instance = gdw_zbhz_prediciton.View.newInstance();
         (function () {
             $(document).ready(function () {
-            	instance.init("table", ${year}, ${zb});
+            	instance.init("table", ${year}, ${zbId}, "${zbName}");
             });
         })();
     </script>
     <meta charset="UTF-8">
 
-    <title>${year}年季度 指标预测汇总</title>
+    <title>${year}年季度${zbName}预测完成情况</title>
 
     <style type="text/css">
         body {
@@ -173,7 +173,7 @@
 </head>
 <body>
     <div class=" header">
-        <h1>${year}年季度 指标预测汇总</h1>
+        <h1>${year}年季度${zbName}预测完成情况</h1>
     </div>
 
 	<Table align="center">

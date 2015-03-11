@@ -69,7 +69,7 @@
     </script>
     <meta charset="UTF-8">
 
-    <title>${year}年${month}月 各单位${zb}指标汇总</title>
+    <title>${year}年${month}月各单位${zbName}汇总</title>
 
     <style type="text/css">
         body {
@@ -173,7 +173,7 @@
 </head>
 <body>
     <div class=" header">
-        <h1>${year}年${month}月 各单位指标汇总</h1>
+        <h1>${year}年${month}月各单位${zbName}汇总</h1>
     </div>
 
 	<Table align="center">

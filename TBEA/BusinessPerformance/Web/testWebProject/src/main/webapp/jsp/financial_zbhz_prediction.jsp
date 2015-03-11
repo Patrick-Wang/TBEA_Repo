@@ -69,7 +69,7 @@
     </script>
 <meta charset="UTF-8">
 
-<title>${year}年季度指标预测汇总</title>
+<title>${year}年季度财务指标预测汇总</title>
 
 <style type="text/css">
 body {
