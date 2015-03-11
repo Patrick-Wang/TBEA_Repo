@@ -54,7 +54,7 @@
             			tableId : "table",
           				dateId:	"date",
           				companyId: "company",
-          				comps : JSON.parse('${nodeData}'),
+          				comps : Util.parse('${nodeData}'),
           				date : {
           					month : ${month}, 
           					year : ${year}
