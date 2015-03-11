@@ -100,6 +100,12 @@ module Util {
 
     $.ajaxSetup({ cache: false });
 
+    export function parse(jsstr: string): any {
+        var jsonValue;
+        eval('jsonValue = ' + jsstr); 
+        return jsonValue;
+    }
+    
     export class Promise {
 
         private mSuccessList: Array<(data: any) => void> = [];
@@ -188,7 +194,7 @@ module Util {
                 url: this.mBaseUrl,
                 data: option,
                 success: (data: any) => {
-                    var jsonData = JSON.parse(data);
+                    var jsonData = Util.parse(data);
                     if (this.validate(jsonData)) {
                         promise.succeed(jsonData);
                     }
@@ -210,7 +216,7 @@ module Util {
                     url: this.mBaseUrl,
                     data: option,
                     success: (data: any) => {
-                          var jsonData = JSON.parse(data);
+                          var jsonData = Util.parse(data);
                         if (this.validate(jsonData)) {
                           
                             this.setCache(option, jsonData);
