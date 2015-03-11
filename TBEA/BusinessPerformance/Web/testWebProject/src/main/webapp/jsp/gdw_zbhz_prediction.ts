@@ -136,14 +136,16 @@ module gdw_zbhz_prediciton {
         private mActualMonth: number;
         private mDelegateMonth: number;
         private mZB: number;
+        private mZBName : string;
         private mData: Array<string[]> = [];
         private mDataSet : Util.Ajax = new Util.Ajax("gdw_zbhz_prediction_update.do");
         private mTableId : string;
-        public init(tableId: string, year: number, zb: number): void {
+        public init(tableId: string, year: number, zbId: number, zbName: string): void {
             this.mYear = year;
             this.mTableId = tableId;
-            this.mZB = zb;
-            $('h1').text(this.mYear + "年"  + "季度指标预测汇总");
+            this.mZB = zbId;
+            this.mZBName = zbName;
+            $('h1').text(this.mYear + "年"  + "季度" + this.mZBName + "预测完成情况");
             //this.updateTable();
             //this.updateUI();
 
@@ -168,8 +170,8 @@ module gdw_zbhz_prediciton {
                 .then((dataArray: any) => {
 
                     this.mData = dataArray;
-                    $('h1').text(this.mYear + "年" +  "季度指标预测汇总");
-                    //document.title = this.mYear + "年" + this.mMonth + "月 指标汇总";
+                    $('h1').text(this.mYear + "年" +  "季度" + this.mZBName + "预测完成情况");
+                    document.title = this.mYear + "年" + "季度" +  this.mZBName + "预测完成情况";
                     this.updateTable();
 
                 });

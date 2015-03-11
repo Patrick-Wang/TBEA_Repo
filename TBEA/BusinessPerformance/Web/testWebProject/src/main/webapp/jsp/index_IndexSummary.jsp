@@ -71,22 +71,22 @@
 						src="../images/charts/line2.png"> <span><strong>财务指标预测完成情况</strong></span></a>
 				</li>
 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=1" target="_blank"><img
-						src="../images/charts/pie1.png"> <span><strong>利润指标完成情况</strong></span></a>
+						src="../images/charts/pie1.png"> <span><strong>利润总额预测完成情况</strong></span></a>
 				</li>
 				<!--/li-->
 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=6" target="_blank"><img
-						src="../images/charts/scatter1.png"> <span><strong>销售收入指标完成情况</strong></span></a>
+						src="../images/charts/scatter1.png"> <span><strong>销售收入预测完成情况</strong></span></a>
 				</li>
 				<!--/li-->
 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=29" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>净现金流指标完成情况</strong></span></a>
+						src="../images/charts/scatter2.png"> <span><strong>经营性净现金流预测完成情况</strong></span></a>
 				</li>
 				<!--/li-->
 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=32" target="_blank"><img
-						src="../images/charts/scatter4.png"> <span><strong>应收账款指标完成情况</strong></span></a></li>
+						src="../images/charts/scatter4.png"> <span><strong>应收账款预测完成情况</strong></span></a></li>
 				<!--/li-->
 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=35" target="_blank"><img
-						src="../images/charts/scatter5.png"> <span><strong>存货指标完成情况</strong></span></a></li>
+						src="../images/charts/scatter5.png"> <span><strong>存货预测完成情况</strong></span></a></li>
 			</ul>
 		</div>
 	</div>
