@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.dao.account.AccountDao;
 import com.tbea.ic.operation.model.dao.qxgl.QXGLDao;
 import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.model.entity.jygk.DWXX;
 
 @Service
 @Transactional("transactionManager")
@@ -40,13 +42,26 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public boolean hasCorpAuth(Account account) {
-		return qxglDao.getQxglCount(account, companyManager
-				.getBMDBOrganization().getCompany(CompanyType.GFGS)) > 0;
+		Company gfgs = companyManager.getBMDBOrganization().getCompany(CompanyType.GFGS);
+		for (DWXX dwxx : account.getDwxxs()){
+			if (dwxx.getId() == gfgs.getId()){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public boolean hasSbdAuth(Account account) {
-		return qxglDao.getQxglCount(account, companyManager
-				.getBMDBOrganization().getCompany(CompanyType.SBDCYJT)) > 0;
+//		Company gfgs = companyManager
+//				.getBMDBOrganization().getCompany(CompanyType.GFGS);
+		Company sbd = companyManager.getBMDBOrganization().getCompany(CompanyType.SBDCYJT);
+		for (DWXX dwxx : account.getDwxxs()){
+//			if (dwxx.getId() == gfgs.getId() || dwxx.getId() == sbd.getId()){
+			if (dwxx.getId() == sbd.getId()){
+				return true;
+			}
+		}
+		return false;
 	}
 }
