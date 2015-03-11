@@ -45,7 +45,7 @@ switch (curPage) {
 }
 
 
-function init(ePlan, ePredict, aPlan, aPredict)
+function init(ePlan, ePredict, aPlan, aPredict, userName)
 {
 	entryPlan = ePlan;
 	entryPredict = ePredict;
@@ -73,6 +73,13 @@ var stringDescription =  '<div class="container">'
 				{
 					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="3"><a>指标审核</a></li>';
 				}
+				
+				stringDescription += '<li>' + 
+				'<a class="dropdown-toggle" data-toggle="dropdown">' + userName + '<b class="caret"></b></a>' +
+				'<ul class="dropdown-menu" style="width:100%">' +
+					'<li><div onclick="logout()" align="center">退出</div></li>' +
+				'</ul>' +
+				'</li>';
 				//for 财务指标汇总
 	             //stringDescription += '<li class="' + (activeClass.About || '') + '" onclick="delegateCall(this);" value="4"><a>财务指标汇总</a></li>'
 			}

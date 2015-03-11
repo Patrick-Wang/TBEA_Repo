@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.model.entity.User;
@@ -43,6 +44,16 @@ public class LoginServlet {
 		return new ModelAndView("login");
 	}
 	
+	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
+	public @ResponseBody String getLogout(HttpServletRequest request,
+			HttpServletResponse response) {
+		HttpSession newSession = request.getSession(false);
+		if (null != newSession){
+			newSession.invalidate();
+		}
+
+		return "{\"error\" : \"invalidate session\", \"redirect\" : \"\"}";
+	}
 	
 	@RequestMapping(value = "validate.do", method = RequestMethod.POST)
 	public ModelAndView validate(HttpServletRequest request,
@@ -112,6 +123,8 @@ public class LoginServlet {
 		map.put("CorpAuth", currentSession.getAttribute("CorpAuth"));
 
 		map.put("SbdAuth", currentSession.getAttribute("SbdAuth"));
+		
+		map.put("userName", account.getName());
 		
 		return new ModelAndView("index", map);
 	

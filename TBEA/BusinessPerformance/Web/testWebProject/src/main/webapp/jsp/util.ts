@@ -188,7 +188,7 @@ module Util {
         }
 
         private setCache(option: IAjaxOption, data: string): void {
-            if (this.mUseCache) {
+            if (this.mUseCache && undefined != option) {
                 this.mCache[this.generateKey(option)] = data;
             }
         }
@@ -198,6 +198,9 @@ module Util {
         }
 
         private getCache(option: IAjaxOption): string {
+            if (undefined == option){
+                return undefined;
+            }
             return this.mCache[this.generateKey(option)];
         }
 
@@ -239,7 +242,7 @@ module Util {
                     url: this.mBaseUrl,
                     data: option,
                     success: (data: any) => {
-                          var jsonData = JSON.parse(data);
+                        var jsonData = JSON.parse(data);
                         if (this.validate(jsonData)) {
                           
                             this.setCache(option, jsonData);

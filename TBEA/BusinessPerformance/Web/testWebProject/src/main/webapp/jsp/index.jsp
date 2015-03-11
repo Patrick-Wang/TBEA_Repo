@@ -161,7 +161,20 @@
 	<script type="text/javascript" src="../js/index.js"></script>
 	<script type="text/javascript" src="../js/h.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+	<script src="../jsp/json2.js" type="text/javascript"></script>
+	<script src="../jsp/util.js" type="text/javascript"></script>
 	<script type="text/javascript">
+	
+	function logout(){
+		var logoutAjax = new Util.Ajax("logout.do");
+		logoutAjax.get().then(function onSuccess(){
+			
+		}, function onFailed(){
+			alert("网络错误");
+		});
+	}
+	
+	
 		var funResize;
 		$(window)
 				.load(
@@ -308,7 +321,7 @@
 		var aplan = ${approvePlan};
 		var aPredict = ${approvePredict};
 
-		init(iPlan, iPredict, aPredict, aplan);
+		init(iPlan, iPredict, aPredict, aplan, "${userName}");
 
 		function delegateCall(obj) {
 			clickli(obj);
