@@ -100,12 +100,35 @@ module Util {
 
     $.ajaxSetup({ cache: false });
 
-    export function parse(jsstr: string): any {
-        var jsonValue;
-        eval('jsonValue = ' + jsstr); 
-        return jsonValue;
-    }
-    
+//    export function parse(jsstr: string): any {
+//        var jsonValue;
+//        eval('jsonValue = ' + jsstr); 
+//        return jsonValue;
+//    }
+//    
+//    export function stringify(json : any) : string{
+//        var s = '';
+//
+//        if (typeof (json) == "string") {
+//            s = '"' + json.replace(new RegExp('\\\\',"g"), '\\\\\\\\').replace(new RegExp('"', "g"), '\\"') + '"';
+//        } else if (typeof (json) == "object") {
+//            if (json instanceof Array) {
+//                for (var k in json) {
+//                    s += "," + stringify(json[k]);
+//                }
+//                s = '[' + s.substring(1) + ']';
+//            } else {
+//                for (var k in json) {
+//                    s += ',"' + k + '":' + stringify(json[k]);
+//                }
+//                s = '{' + s.substring(1) + '}';
+//            }
+//        } else {
+//            s += json;
+//        }
+//        return s;
+//    }
+
     export class Promise {
 
         private mSuccessList: Array<(data: any) => void> = [];
@@ -194,7 +217,7 @@ module Util {
                 url: this.mBaseUrl,
                 data: option,
                 success: (data: any) => {
-                    var jsonData = Util.parse(data);
+                    var jsonData = JSON.parse(data);
                     if (this.validate(jsonData)) {
                         promise.succeed(jsonData);
                     }
@@ -216,7 +239,7 @@ module Util {
                     url: this.mBaseUrl,
                     data: option,
                     success: (data: any) => {
-                          var jsonData = Util.parse(data);
+                          var jsonData = JSON.parse(data);
                         if (this.validate(jsonData)) {
                           
                             this.setCache(option, jsonData);

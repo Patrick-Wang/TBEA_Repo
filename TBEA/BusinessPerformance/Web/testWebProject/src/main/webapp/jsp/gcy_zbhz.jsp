@@ -52,7 +52,7 @@
 	<!-- jqgrid assist -->
 	<script src="../jsp/jqgrid/jqassist.js" type="text/javascript"></script>
 	
-	
+	<script src="../jsp/json2.js" type="text/javascript"></script>
 	<script src="../jsp/util.js" type="text/javascript"></script>
 	<script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
 	<script src="../jsp/dateSelector.js" type="text/javascript"></script>
