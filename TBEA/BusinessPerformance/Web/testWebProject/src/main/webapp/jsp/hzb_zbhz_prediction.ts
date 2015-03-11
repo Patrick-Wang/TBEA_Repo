@@ -191,7 +191,7 @@ module hzb_zbhz_prediciton {
                             row[i] = Util.formatInt(row[i]);
                         }else if (isSxfyl)
                         {
-                             row[i] = Util.formatPercentSignal(row[i]);
+                             row[i] = Util.formatPercent(row[i]);
                         }
                         else {
                             row[i] = Util.formatCurrency(row[i]);

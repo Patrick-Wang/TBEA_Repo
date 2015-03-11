@@ -146,7 +146,7 @@ module hzb_companys {
                             row[i] = Util.formatPercentSignal(row[i]);
                         }else if (isSxfyl)
                         {
-                            row[i] = Util.formatPercentSignal(row[i]);
+                            row[i] = Util.formatPercent(row[i]);
                         }
                         else 
                         {

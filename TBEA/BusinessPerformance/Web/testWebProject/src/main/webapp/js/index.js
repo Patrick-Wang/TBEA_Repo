@@ -86,10 +86,7 @@ var stringDescription =  '<div class="container">'
           + '</ul>'
         + '</div><!--/.nav-collapse -->'
       + '</div>';
-
-
-
-
+    
 	$('#head')[0].innerHTML = stringDescription;
 
 	  $('#footer')[0].style.marginTop = '50px';

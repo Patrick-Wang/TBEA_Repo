@@ -110,7 +110,14 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 		List<Object[]> listRet = q.getResultList();
 		for(int i = 0; i < listRet.size(); i++)
 		{
-			listYearPlanValue.set(hyMap.get(listRet.get(i)[0]), ((BigDecimal)(listRet.get(i)[1])).doubleValue());
+			if(null == listRet.get(i)[1])
+			{
+				listYearPlanValue.set(hyMap.get(listRet.get(i)[0]), (Double)(listRet.get(i)[1]));
+			}
+			else
+			{
+				listYearPlanValue.set(hyMap.get(listRet.get(i)[0]), ((BigDecimal)(listRet.get(i)[1])).doubleValue());
+			}
 		}
 		return listYearPlanValue;
 	}
