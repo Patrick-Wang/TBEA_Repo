@@ -49,9 +49,10 @@ public class SpecialPipeFilter implements IPipeFilter {
 
 	private void updateZb(GszbPipe pipe, int zbId, Double[] zbRow) {
 
-		Double[] rs = pipe.getZb(rsRow);
+		
 
 		if (GSZB.RJLR.getValue() == zbId) {
+			Double[] rs = pipe.getZb(rsRow);
 			Double[] lrze = pipe.getZb(lrzeRow);
 			for (int i = 0; i < zbRow.length; ++i) {
 				if (null != lrze[i] && 
@@ -63,6 +64,7 @@ public class SpecialPipeFilter implements IPipeFilter {
 				}
 			}
 		} else if (GSZB.RJSR.getValue() == zbId) {
+			Double[] rs = pipe.getZb(rsRow);
 			Double[] xssr = pipe.getZb(xssrRow);
 			for (int i = 0; i < zbRow.length; ++i) {
 				if (null != xssr[i] && 
@@ -74,14 +76,15 @@ public class SpecialPipeFilter implements IPipeFilter {
 				}
 			}
 		} else if (GSZB.SXFYL.getValue() == zbId) {
+			Double[] xssr = pipe.getZb(xssrRow);
 			Double[] sxfy = pipe.getZb(sxfyRow);
 			for (int i = 0; i < zbRow.length; ++i) {
 				if (null != sxfy[i] && 
-					null != rs[i]  && 
+					null != xssr[i]  && 
 					!excludeCols.contains(i) && 
-					!Util.isZero(Math.abs(rs[i]))) {
+					!Util.isZero(Math.abs(xssr[i]))) {
 					
-					zbRow[i] = sxfy[i] / rs[i];
+					zbRow[i] = sxfy[i] / xssr[i];
 				}
 			}
 		}
