@@ -145,7 +145,7 @@ module financial_zbhz_prediciton {
         public init(tableId: string, year: number): void {
             this.mYear = year;
             this.mTableId = tableId;            
-            $('h1').text(this.mYear + "年" + "季度财务指标预测汇总");
+            $('h1').text(this.mYear + "年" + "季度财务指标预测完成情况");
             //this.updateTable();
             //this.updateUI();
 
@@ -170,8 +170,8 @@ module financial_zbhz_prediciton {
                 .then((dataArray: any) => {
 
                     this.mData = dataArray;
-                    $('h1').text(this.mYear + "年" + "季度财务指标预测汇总");
-                    document.title = this.mYear + "年" + "季度财务指标预测汇总";
+                    $('h1').text(this.mYear + "年" + "季度财务指标预测完成情况");
+                    document.title = this.mYear + "年" + "季度财务指标预测完成情况";
                     this.updateTable();
 
                 });

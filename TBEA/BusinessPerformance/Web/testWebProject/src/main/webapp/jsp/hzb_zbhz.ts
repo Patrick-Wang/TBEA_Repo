@@ -94,8 +94,8 @@ module hzb_zbhz {
                 .then((dataArray: any) => {
 
                     this.mData = dataArray;
-                    $('h1').text(date.year + "年" + date.month + "月公司整体指标汇总");
-                    document.title = date.year + "年" + date.month + "月公司整体指标汇总";
+                    $('h1').text(date.year + "年" + date.month + "月公司整体指标完成情况");
+                    document.title = date.year + "年" + date.month + "月公司整体指标完成情况";
                     this.updateTable();
 
                 });

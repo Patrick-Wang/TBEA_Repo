@@ -69,7 +69,7 @@
     </script>
 <meta charset="UTF-8">
 
-<title>${year}年季度财务指标预测汇总</title>
+<title>${year}年季度财务指标预测完成情况</title>
 
 <style type="text/css">
 body {
@@ -173,7 +173,7 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class=" header">
-		<h1>${year}年季度财务指标预测汇总</h1>
+		<h1>${year}年季度财务指标预测完成情况</h1>
 	</div>
 
 	<Table align="center">
