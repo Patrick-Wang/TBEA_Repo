@@ -236,7 +236,7 @@ public class YDZBController {
 		// String gdw_zbhz =
 		// JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null",
 		// "0.00");
-		String gszb = request.getParameter("zb");
+		String gszb = request.getParameter("zbId");
 		String gdw_zbhz = JSONArray
 				.fromObject(
 						gszbService.getCompanyTop5zb(
@@ -249,9 +249,11 @@ public class YDZBController {
 	public ModelAndView getGdw_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		String gszb = request.getParameter("zb");
+		int zb = Integer.parseInt(request.getParameter("zb"));
+		String zbName  = service.getZBNameById(zb);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("zb", gszb);
+		map.put("zbName", zbName);
+		map.put("zbId", zb);
 		DateSelection dateSel = new DateSelection(service.getLatestGcyDate(),
 				true, false);
 		dateSel.select(map);

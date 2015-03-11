@@ -20,9 +20,11 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.dao.ydzb.YDZBDao;
 import com.tbea.ic.operation.model.entity.XJL;
 import com.tbea.ic.operation.model.entity.YDZBBean;
+import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.model.entity.local.XJLRB;
 import com.tbea.ic.operation.model.entity.local.YDZBFDW;
 import com.tbea.ic.operation.model.entity.local.ZBHZ;
@@ -35,6 +37,9 @@ public class YDZBServiceImpl implements YDZBService {
 
 	@Autowired
 	private YDZBDao ydzbDao;
+	
+	@Autowired
+	private ZBXXDao zbxxDao;
 	private static Map<String, Integer> zbbh_hzMap = new HashMap<String, Integer>();
 	private static Map<String, String> zbid_mcMap = new HashMap<String, String>();
 	
@@ -386,8 +391,7 @@ public class YDZBServiceImpl implements YDZBService {
 		}
 		return null;
 	}
-
-
+	
 	@Override
 	public Date getLatestXjlDate() {
 		XJLRB rb = ydzbDao.getLatestXjlrb();
@@ -395,6 +399,16 @@ public class YDZBServiceImpl implements YDZBService {
 			return rb.getRq();
 		}
 		return null;
+	}
+	
+	@Override
+	public  String getZBNameById(int id) {
+		ZBXX zbxx = zbxxDao.getById(id);
+		if (null != zbxx)
+		{
+			return zbxx.getName();
+		}
+		return null;		
 	}
 
 	

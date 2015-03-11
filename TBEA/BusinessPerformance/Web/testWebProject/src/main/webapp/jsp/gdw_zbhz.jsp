@@ -63,13 +63,13 @@
 		var instance = gdw_zbhz.View.newInstance();
         (function () {
             $(document).ready(function () {
-            	instance.init("table", "date", ${month}, ${year}, ${zb});
+            	instance.init("table", "date", ${month}, ${year}, ${zbId},"${zbName}");
             });
         })();
     </script>
     <meta charset="UTF-8">
 
-    <title>${year}年${month}月 各单位指标汇总</title>
+    <title>${year}年${month}月 各单位${zb}指标汇总</title>
 
     <style type="text/css">
         body {

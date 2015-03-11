@@ -34,5 +34,7 @@ public interface YDZBService {
 	public Date getLatestGcyDate();
 
 	public Date getLatestXjlDate();
+	
+	public  String getZBNameById(int id);
 
 }

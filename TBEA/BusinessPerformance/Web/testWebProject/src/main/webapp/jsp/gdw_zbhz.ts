@@ -47,13 +47,15 @@ module gdw_zbhz {
             return View.ins;
         }
 
-        private mZB: number;
+        private mZBName: string;
+        private mZBId : number;
         private mData: Array<string[]> = [];
         private mDataSet : Util.Ajax = new Util.Ajax("gdw_zbhz_update.do");
         private mTableId : string;
         private mDs : Util.DateSelector;
-        public init(tableId: string, dateId: string, month: number, year: number, zb: number): void {
-            this.mZB = zb;
+        public init(tableId: string, dateId: string, month: number, year: number, zbId: number, zbName: string): void {
+            this.mZBName = zbName;
+            this.mZBId = zbId;
             this.mTableId = tableId;
             this.mDs = new Util.DateSelector(
                 {year: year - 2, month : 1}, 
@@ -66,11 +68,11 @@ module gdw_zbhz {
               
         public updateUI() {
             var date : Util.Date = this.mDs.getDate();
-            this.mDataSet.get({ month: date.month, year: date.year, zb: this.mZB})
+            this.mDataSet.get({ month: date.month, year: date.year, zbId: this.mZBId})
                 .then((dataArray: any) => {
                     this.mData = dataArray;
-                    $('h1').text(date.year + "年" + date.month + "月 各单位指标汇总");
-                    document.title = date.year + "年" + date.month + "月 各单位指标汇总";
+                    $('h1').text(date.year + "年" + date.month + "月 各单位" + this.mZBName + "指标汇总");
+                    document.title = date.year + "年" + date.month + "月 各单位" + this.mZBName + "指标汇总";
                     this.updateTable();
                 });
         }
