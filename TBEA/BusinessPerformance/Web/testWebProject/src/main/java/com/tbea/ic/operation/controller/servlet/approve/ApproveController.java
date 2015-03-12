@@ -107,7 +107,7 @@ public class ApproveController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("approveType")));
 		Date date = DateSelection.getDate(request);
-		Organization org = companyManager.getBMOrganization();
+		Organization org = companyManager.getBMDBOrganization();
 		List<CompanyType> types = CompanySelection.getCompanys(request);
 		List<Company> comps = new ArrayList<Company>();
 		for (CompanyType type : types){
@@ -128,7 +128,7 @@ public class ApproveController {
 
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		
-		Organization org = companyManager.getBMOrganization();
+		Organization org = companyManager.getBMDBOrganization();
 		List<CompanyType> types = CompanySelection.getCompanys(data.getJSONArray(0));
 		List<Company> comps = new ArrayList<Company>();
 		for (CompanyType type : types){
@@ -173,7 +173,7 @@ public class ApproveController {
 		
 		
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
-		Organization org = companyManager.getBMOrganization();
+		Organization org = companyManager.getBMDBOrganization();
 		List<CompanyType> types = CompanySelection.getCompanys(data.getJSONArray(0));
 		List<Company> comps = new ArrayList<Company>();
 		for (CompanyType type : types){
