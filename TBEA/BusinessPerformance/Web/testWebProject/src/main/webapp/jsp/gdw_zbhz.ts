@@ -53,21 +53,22 @@ module gdw_zbhz {
         private mDataSet : Util.Ajax = new Util.Ajax("gdw_zbhz_update.do");
         private mTableId : string;
         private mDs : Util.DateSelector;
-        public init(tableId: string, dateId: string, month: number, year: number, zbId: number, zbName: string): void {
-            this.mZBName = zbName;
-            this.mZBId = zbId;
+        public init(tableId: string, dateId: string, month: number, year: number): void {
             this.mTableId = tableId;
             this.mDs = new Util.DateSelector(
                 {year: year - 2, month : 1}, 
                 {year: year, month: month},
                 dateId);
-            this.updateTable();
-            this.updateUI();
         }
         
+        public onIndexSelected(){
+            this.mZBId = $("#indextype").val();
+            this.mZBName = $("#indextype  option:selected").text();
+        }
               
         public updateUI() {
             var date : Util.Date = this.mDs.getDate();
+            this.onIndexSelected();
             this.mDataSet.get({ month: date.month, year: date.year, zbId: this.mZBId})
                 .then((dataArray: any) => {
                     this.mData = dataArray;

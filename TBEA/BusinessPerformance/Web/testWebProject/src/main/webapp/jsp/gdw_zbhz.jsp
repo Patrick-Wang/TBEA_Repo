@@ -63,13 +63,13 @@
 		var instance = gdw_zbhz.View.newInstance();
         (function () {
             $(document).ready(function () {
-            	instance.init("table", "date", ${month}, ${year}, ${zbId},"${zbName}");
+            	instance.init("table", "date", ${month}, ${year});
             });
         })();
     </script>
     <meta charset="UTF-8">
 
-    <title>${year}年${month}月各单位${zbName}完成情况</title>
+    <title>${year}年${month}月各单位主要经营指标完成情况</title>
 
     <style type="text/css">
         body {
@@ -173,7 +173,7 @@
 </head>
 <body>
     <div class=" header">
-        <h1>${year}年${month}月各单位${zbName}完成情况</h1>
+        <h1>${year}年${month}月各单位主要经营指标完成情况</h1>
     </div>
 
 	<Table align="center">
@@ -181,7 +181,10 @@
 			<td>
 				<Table>
 					<tr>
+						
 						<td><div id="date"></div>
+						</td>
+						<td><%@include file="index_selection.jsp"%>
 						</td>
 						<td><input type="button" value="更新" style="width : 80px; margin-left:10px;"
 							onclick="instance.updateUI()"></input>
@@ -198,4 +201,5 @@
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 <script src="../jsp/style_button.js"></script>
+<script src="../jsp/style_select.js"></script>
 </html>

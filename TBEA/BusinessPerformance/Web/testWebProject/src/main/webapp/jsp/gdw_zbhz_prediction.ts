@@ -140,12 +140,12 @@ module gdw_zbhz_prediciton {
         private mData: Array<string[]> = [];
         private mDataSet : Util.Ajax = new Util.Ajax("gdw_zbhz_prediction_update.do");
         private mTableId : string;
-        public init(tableId: string, year: number, zbId: number, zbName: string): void {
+        public init(tableId: string, year: number, zbId: number): void {
             this.mYear = year;
             this.mTableId = tableId;
-            this.mZB = zbId;
-            this.mZBName = zbName;
-            $('h1').text(this.mYear + "年"  + "季度" + this.mZBName + "预测完成情况");
+            //this.mZB = zbId;
+            //this.mZBName = zbName;
+            //$('h1').text(this.mYear + "年"  + "季度" + this.mZBName + "预测完成情况");
             //this.updateTable();
             //this.updateUI();
 
@@ -162,10 +162,15 @@ module gdw_zbhz_prediciton {
         	this.mDelegateMonth = parseInt(month);
         }
         
+        public onIndexSelected(){
+            this.mZB = $("#indextype").val();
+            this.mZBName = $("#indextype  option:selected").text();
+        }
+        
         public updateUI() {
 
             this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
-            
+            this.onIndexSelected();
             this.mDataSet.get({ month: this.mActualMonth, year: this.mYear, zb: this.mZB})
                 .then((dataArray: any) => {
 

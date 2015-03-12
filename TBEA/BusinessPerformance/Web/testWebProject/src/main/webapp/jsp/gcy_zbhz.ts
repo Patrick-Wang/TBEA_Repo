@@ -68,8 +68,8 @@ module gcy_zbhz {
             this.mDataSet.get({ month: date.month, year: date.year})
                 .then((jsonData: any) => {
                     this.mData = jsonData;
-                    $('h1').text(date.year + "年" + date.month + "月各产业财务指标完成情况");
-                    document.title = date.year + "年" + date.month + "月各产业财务指标完成情况";
+                    $('h1').text(date.year + "年" + date.month + "月各产业五大经营指标完成情况");
+                    document.title = date.year + "年" + date.month + "月各产业五大经营指标完成情况";
                     this.updateTable();
                 });
         }

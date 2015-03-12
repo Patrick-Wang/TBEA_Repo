@@ -249,11 +249,11 @@ public class YDZBController {
 	public ModelAndView getGdw_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		int zb = Integer.parseInt(request.getParameter("zb"));
-		String zbName  = service.getZBNameById(zb);
+		//int zb = Integer.parseInt(request.getParameter("zb"));
+		//String zbName  = service.getZBNameById(zb);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("zbName", zbName);
-		map.put("zbId", zb);
+		//map.put("zbName", zbName);
+		//map.put("zbId", zb);
 		DateSelection dateSel = new DateSelection(service.getLatestGcyDate(),
 				true, false);
 		dateSel.select(map);
@@ -482,13 +482,13 @@ public class YDZBController {
 		public ModelAndView getGdw_zbhz_prediction(HttpServletRequest request,
 				HttpServletResponse response) {
 			//String gszb = request.getParameter("zb");	
-			int zb = Integer.parseInt(request.getParameter("zb"));
-			String zbName  = service.getZBNameById(zb);
+			//int zb = Integer.parseInt(request.getParameter("zb"));
+			//String zbName  = service.getZBNameById(zb);
 			Map<String, Object> map = new HashMap<String, Object>();
 			DateSelection dateSel = new DateSelection();
 			dateSel.select(map);
-			map.put("zbName", zbName);
-			map.put("zbId", zb);
+			//map.put("zbName", zbName);
+			//map.put("zbId", zb);
 			return new ModelAndView("gdw_zbhz_prediction", map);
 		}
 }

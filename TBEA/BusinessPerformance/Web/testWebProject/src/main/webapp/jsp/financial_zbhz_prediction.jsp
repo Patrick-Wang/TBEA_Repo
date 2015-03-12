@@ -69,7 +69,7 @@
     </script>
 <meta charset="UTF-8">
 
-<title>${year}年季度财务指标预测完成情况</title>
+<title>${year}年季度五大经营指标预测完成情况</title>
 
 <style type="text/css">
 body {
@@ -173,7 +173,7 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class=" header">
-		<h1>${year}年季度财务指标预测完成情况</h1>
+		<h1>${year}年季度五大经营指标预测完成情况</h1>
 	</div>
 
 	<Table align="center">
@@ -181,6 +181,8 @@ th.ui-th-ltr {
 			<td>
 				<Table>
 					<tr>
+						<td><%@include file="season_selection.jsp"%>
+						</td>
 						<td><%@include file="season_selection.jsp"%>
 						</td>
 						<td><input type="button" value="更新"

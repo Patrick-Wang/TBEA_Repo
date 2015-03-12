@@ -63,13 +63,13 @@
     	var instance = gdw_zbhz_prediciton.View.newInstance();
         (function () {
             $(document).ready(function () {
-            	instance.init("table", ${year}, ${zbId}, "${zbName}");
+            	instance.init("table", ${year});
             });
         })();
     </script>
     <meta charset="UTF-8">
 
-    <title>${year}年季度${zbName}预测完成情况</title>
+    <title>${year}年季度各单位主要经营指标完成情况</title>
 
     <style type="text/css">
         body {
@@ -173,7 +173,7 @@
 </head>
 <body>
     <div class=" header">
-        <h1>${year}年季度${zbName}预测完成情况</h1>
+        <h1>${year}年季度各单位主要经营指标完成情况</h1>
     </div>
 
 	<Table align="center">
@@ -182,6 +182,8 @@
 				<Table>
 					<tr>
 						<td><%@include file="season_selection.jsp"%>
+						</td>
+						<td><%@include file="index_selection.jsp"%>
 						</td>
 						<td><input type="button" value="更新" style="width : 80px; margin-left:10px;"
 							onclick="instance.updateUI()"></input>
