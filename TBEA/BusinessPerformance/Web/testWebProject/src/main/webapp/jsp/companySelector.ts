@@ -68,9 +68,10 @@ module Util {
                     multiple: multi,
                     header: true,
                     minWidth: minWidth,
+                    minHeight: 20,
                     noneSelectedText : this.mOpt.noneSelectedText,
                     selectedText: this.mOpt.selectedText,
-                    height　: itemCount * itemHeight + 3,
+                    height　: '100%',//itemCount * itemHeight + 3,
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
@@ -139,9 +140,13 @@ module Util {
             }
             
             this.useMultiSelect();
-            
-            this.mUnitedSelector.change((sel : any)=>{
-                this.useMultiSelect();
+            var compDepth = virtualRoot.depth();
+            this.mUnitedSelector.change((sel : any, depth: number)=>{
+                if (this.mMulti && depth == compDepth - 1){
+                    
+                }else {
+                    this.useMultiSelect();
+                }
             });
         }
 
