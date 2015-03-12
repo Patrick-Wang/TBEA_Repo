@@ -143,7 +143,7 @@ module hzb_zbhz_prediciton {
             this.mYear = year;
             this.mTableId = tableId;
             
-            $('h1').text(this.mYear + "年"  + "季度指标预测汇总");
+            $('h1').text(this.mYear + "年"  + "季度指标预测完成情况");
             //this.updateTable();
             //this.updateUI();
 
@@ -168,7 +168,7 @@ module hzb_zbhz_prediciton {
                 .then((dataArray: any) => {
 
                     this.mData = dataArray;
-                    $('h1').text(this.mYear + "年" +  "季度指标预测汇总");
+                    $('h1').text(this.mYear + "年" +  "季度指标预测完成情况");
                     //document.title = this.mYear + "年" + this.mMonth + "月 指标汇总";
                     this.updateTable();
 
@@ -191,7 +191,7 @@ module hzb_zbhz_prediciton {
                             row[i] = Util.formatInt(row[i]);
                         }else if (isSxfyl)
                         {
-                             row[i] = Util.formatPercentSignal(row[i]);
+                             row[i] = Util.formatPercent(row[i]);
                         }
                         else {
                             row[i] = Util.formatCurrency(row[i]);

@@ -70,7 +70,7 @@
     </script>
     <meta charset="UTF-8">
 
-    <title>${year}年${month}月各产业指标汇总</title>
+    <title>${year}年${month}月各产业指标完成情况</title>
 
     <style type="text/css">
         body {
@@ -174,7 +174,7 @@
 </head>
 <body>
     <div class=" header">
-        <h1>${year}年${month}月各产业指标汇总</h1>
+        <h1>${year}年${month}月各产业指标完成情况</h1>
     </div>
 	<Table align="center">
 		<tr>

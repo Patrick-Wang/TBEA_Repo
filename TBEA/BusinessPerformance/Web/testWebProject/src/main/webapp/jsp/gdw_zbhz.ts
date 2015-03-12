@@ -71,8 +71,8 @@ module gdw_zbhz {
             this.mDataSet.get({ month: date.month, year: date.year, zbId: this.mZBId})
                 .then((dataArray: any) => {
                     this.mData = dataArray;
-                    $('h1').text(date.year + "年" + date.month + "月各单位" + this.mZBName + "汇总");
-                    document.title = date.year + "年" + date.month + "月各单位" + this.mZBName + "汇总";
+                    $('h1').text(date.year + "年" + date.month + "月各单位" + this.mZBName + "完成情况");
+                    document.title = date.year + "年" + date.month + "月各单位" + this.mZBName + "完成情况";
                     this.updateTable();
                 });
         }
