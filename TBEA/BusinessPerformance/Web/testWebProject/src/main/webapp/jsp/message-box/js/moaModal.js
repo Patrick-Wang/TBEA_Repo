@@ -30,25 +30,24 @@
     
     var fnReady = function(){
         //overlay div
-    	if (!isMSIE){
-    	
-        _SW_overlay = $('<div id="_swoverlay"></div>').css({
-            width : '100%',
-            height: $(document).height(),
-            position : 'fixed',
-            backgroundColor : '#000',
-            overflow : 'hidden',
-            opacity : 0.7,
-            top : 0,
-            left: 0,
-            display : 'none',
-            zIndex : '999996'
-        }).appendTo('body');
-    	}
+    	//if (!isMSIE){
+	        _SW_overlay = $('<div id="_swoverlay"></div>').css({
+	            width : '100%',
+	            height: '100%',
+	            position : 'fixed',
+	            backgroundColor : '#000',
+	            overflow : 'hidden',
+	            opacity : 0.7,
+	            top : 0,
+	            left: 0,
+	            display : 'none',
+	            zIndex : '999996'
+	        }).appendTo('body');
+    	//}
         //modal wrapper
         _modalWrapper = $('<div id="_swoverlaywrapper"></div>').css({
             width : '100%',
-            height: $(document).height(),
+            height: '100%',
             position : 'absolute',
             display: 'none',
             overflow : 'hidden',
@@ -61,6 +60,7 @@
         _SW_modal = $('<div></div>').css({
             position : 'relative',
             width : '100%',
+            height: '100%',
             zIndex : '999997',
             top : 0,
             left : 0,
@@ -73,10 +73,10 @@
     $(document).ready(fnReady);
     
     
-    $(window).resize(function(){
-    	$("#_swoverlay").css("height", $(document).height());
-    	$("#_swoverlaywrapper").css("height", $(document).height());
-    });
+//    $(window).resize(function(){
+//    	$("#_swoverlay").css("height", '100%');
+//    	$("#_swoverlaywrapper").css("height", '100%');
+//    });
     
 
     
@@ -150,12 +150,12 @@
         }
         
         ele.on(obj.on,function(e){
-        	if (!isMSIE){
+//        	if (!isMSIE){
             _SW_overlay.css({
                 backgroundColor : obj.overlayColor,
                 opacity : obj.overlayOpacity
             });
-        	}
+//        	}
             
             var currentX,currentY;
             if (obj.on !== 'click'){
@@ -179,7 +179,7 @@
             target.appendTo(clone);
             
             _modalWrapper.css({
-                height : $(document).height(),
+                height : '100%',//$(document).height(),
                 width : '100%',
                 display : 'block'
             });
@@ -299,7 +299,7 @@
                         });
                     }
                 });
-                if (!isMSIE){
+//                if (!isMSIE){
                 _SW_overlay.fadeOut(obj.speed + 100,function(){
                     clone.css({
                         visibility : 'hidden',
@@ -308,21 +308,21 @@
                     });
                     _modalWrapper.hide();
                 });
-                } else{
-                	$("table,input,select, h1").each(function(index, e){e.disabled = false;});	
-                }
+//                } else{
+//                	$("table,input,select, h1").each(function(index, e){e.disabled = false;});	
+//                }
                 
                 target.off('close.modal');
             });
             
-            if (!isMSIE){
+//            if (!isMSIE){
             	_SW_overlay.stop().fadeIn(obj.speed,function(){});
-            } else{
-            	setTimeout(function(){
-            		$("table,input,select, h1").each(function(index, e){e.disabled = true;});
-            	}, 200);
-            		
-            }
+//            } else{
+//            	setTimeout(function(){
+//            		$("table,input,select, h1").each(function(index, e){e.disabled = true;});
+//            	}, 200);
+//            		
+//            }
             clone.css({
                 top : top,
                 left: left,

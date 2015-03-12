@@ -63,7 +63,7 @@ module Util {
             sel.css("width", width);
             if (multi) {
                 var text : any = "n个 项目公司被选中";
-                minWidth = text.getWidth(13) + 50;
+                minWidth = text.getWidth(13) + 60;
                 sel.multiselect({
                     multiple: multi,
                     header: true,
@@ -140,9 +140,10 @@ module Util {
             }
             
             this.useMultiSelect();
-            var compDepth = virtualRoot.depth();
+      
             this.mUnitedSelector.change((sel : any, depth: number)=>{
-                if (this.mMulti && depth == compDepth - 1){
+                var compDepth = this.mUnitedSelector.getPath().length;
+                if (this.mMulti && depth == compDepth){
                     
                 }else {
                     this.useMultiSelect();

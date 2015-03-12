@@ -244,7 +244,7 @@ module Util {
             select = $(select);
             select.change((s: any) => {
                 var selOpt = select.children('option:selected');
-                if (selOpt.lenght > 0) {
+                if (selOpt.length > 0) {
                     var path = [];
                     for (var i = 0; i < depth - 1; ++i) {
                         path.push(this.mPath[i]);
