@@ -268,7 +268,7 @@ module entry_template {
                     //autowidth : false,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
-                    height: data.length > 25 ? 600 : '100%',
+                    height: data.length > 25 ? 550 : '100%',
                     width: titles.length * 200,
                     shrinkToFit: true,
                     autoScroll: true,

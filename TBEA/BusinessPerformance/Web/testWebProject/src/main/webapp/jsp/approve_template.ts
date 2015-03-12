@@ -154,7 +154,7 @@ module approve_template {
             }
         }
 
-
+        //comps : selected companies
         private updateTable(rawData: string[][], comps: Util.IData[], tableId: string, caption : string): JQTable.JQGridAssistant {
             var tmpData = [];
             var title = ["单位名称"];
@@ -362,8 +362,9 @@ module approve_template {
             var tmpData = [];
             var compYearMap = {};
             //make data
-            $(companies).each((i) => {
-                $(rawData).each((j) => {
+           
+            $(companies).each((i) => {//walk company
+                $(rawData).each((j) => {//walk zbs
                     if (rawData[j][0] == "" + companies[i].id) {
                         var index = 0;
                         if (hasDate) {
@@ -380,12 +381,12 @@ module approve_template {
                             }
                             index = compYearMap["_" + companies[i].id];
                         }
+                        
+                        if (tmpData[index].length <= zbColMap["_" + rawData[j][1]]) {
+                            resize(tmpData[index], zbColMap["_" + rawData[j][1]]);
+                        }
+                        tmpData[index][zbColMap["_" + rawData[j][1]]] = rawData[j][3];
                     }
-
-                    if (tmpData[index].length <= zbColMap["_" + rawData[j][1]]) {
-                        resize(tmpData[index], zbColMap["_" + rawData[j][1]]);
-                    }
-                    tmpData[index][zbColMap["_" + rawData[j][1]]] = rawData[j][3];
                 });
             });
 

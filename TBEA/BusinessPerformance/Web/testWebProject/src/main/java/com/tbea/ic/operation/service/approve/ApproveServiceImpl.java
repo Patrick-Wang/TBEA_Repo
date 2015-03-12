@@ -106,7 +106,7 @@ public class ApproveServiceImpl implements ApproveService {
 		List<String[]> approveList = new ArrayList<String[]>();
 		List<String[]> unapproveList = new ArrayList<String[]>();
 		
-		Organization org = companyManager.getBMOrganization();
+		Organization org = companyManager.getBMDBOrganization();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
@@ -143,7 +143,7 @@ public class ApproveServiceImpl implements ApproveService {
 	//[[compId ,zbId, zbName, value] ...] approved 
     //[[compId ,zbId, zbName, value] ...] unapproved
 	private List<List<String[]>> getNdjhZb(List<Company> comps, Date date) {
-		Organization org = companyManager.getBMOrganization();
+		Organization org = companyManager.getBMDBOrganization();
 		List<List<String[]>> retList = new ArrayList<List<String[]>>();
 		List<String[]> approveList = new ArrayList<String[]>();
 		List<String[]> unapproveList = new ArrayList<String[]>();
@@ -169,7 +169,7 @@ public class ApproveServiceImpl implements ApproveService {
 	//[[compId ,zbId, zbName, value] ...] approved 
     //[[compId ,zbId, zbName, value] ...] unapproved
 	private List<List<String[]>> getBysjZb(List<Company> comps, Date date) {
-		Organization org = companyManager.getBMOrganization();
+		Organization org = companyManager.getBMDBOrganization();
 		List<List<String[]>> retList = new ArrayList<List<String[]>>();
 		List<String[]> approveList = new ArrayList<String[]>();
 		List<String[]> unapproveList = new ArrayList<String[]>();
@@ -198,7 +198,7 @@ public class ApproveServiceImpl implements ApproveService {
 		List<List<String[]>> retList = new ArrayList<List<String[]>>();
 		List<String[]> approveList = new ArrayList<String[]>();
 		List<String[]> unapproveList = new ArrayList<String[]>();
-		Organization org = companyManager.getBMOrganization();
+		Organization org = companyManager.getBMDBOrganization();
 		List<YJ28ZB> zbs = yj28zbDao.getZb(date, comps);
 		for (YJ28ZB zb : zbs){
 			String[] zbTmp = new String[4];
@@ -227,7 +227,7 @@ public class ApproveServiceImpl implements ApproveService {
 		List<String[]> approveList = new ArrayList<String[]>();
 		List<String[]> unapproveList = new ArrayList<String[]>();
 		
-		Organization org = companyManager.getBMOrganization();
+		Organization org = companyManager.getBMDBOrganization();
 		List<YJ20ZB> zbs = yj20zbDao.getZb(date, comps);
 		for (YJ20ZB zb : zbs){
 			String[] zbTmp = new String[4];
@@ -404,7 +404,7 @@ public class ApproveServiceImpl implements ApproveService {
 	public List<Company> getValidSjCompanies(Account account) {
 		List<QXGL> compIds = qxglDao.getSjzlr(account);
 		List<Company> comps = new ArrayList<Company>();
-		Organization org = companyManager.getBMOrganization();
+		Organization org = companyManager.getBMDBOrganization();
 		for (int i = 0; i < compIds.size(); ++i){
 			comps.add(org.getCompany(compIds.get(i).getDwxx().getId()));
 		}
@@ -415,7 +415,7 @@ public class ApproveServiceImpl implements ApproveService {
 	public List<Company> getValidJhCompanies(Account account) {
 		List<QXGL> compIds = qxglDao.getJhzsh(account);
 		List<Company> comps = new ArrayList<Company>();
-		Organization org = companyManager.getBMOrganization();
+		Organization org = companyManager.getBMDBOrganization();
 		for (int i = 0; i < compIds.size(); ++i){
 			comps.add(org.getCompany(compIds.get(i).getDwxx().getId()));
 		}

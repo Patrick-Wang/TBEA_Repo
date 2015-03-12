@@ -63,14 +63,15 @@ module Util {
             sel.css("width", width);
             if (multi) {
                 var text : any = "n个 项目公司被选中";
-                minWidth = text.getWidth(13) + 50;
+                minWidth = text.getWidth(13) + 60;
                 sel.multiselect({
                     multiple: multi,
                     header: true,
                     minWidth: minWidth,
+                    minHeight: 20,
                     noneSelectedText : this.mOpt.noneSelectedText,
                     selectedText: this.mOpt.selectedText,
-                    height　: itemCount * itemHeight + 3,
+                    height　: '100%',//itemCount * itemHeight + 3,
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
@@ -139,9 +140,14 @@ module Util {
             }
             
             this.useMultiSelect();
-            
-            this.mUnitedSelector.change((sel : any)=>{
-                this.useMultiSelect();
+      
+            this.mUnitedSelector.change((sel : any, depth: number)=>{
+                var compDepth = this.mUnitedSelector.getPath().length;
+                if (this.mMulti && depth == compDepth){
+                    
+                }else {
+                    this.useMultiSelect();
+                }
             });
         }
 

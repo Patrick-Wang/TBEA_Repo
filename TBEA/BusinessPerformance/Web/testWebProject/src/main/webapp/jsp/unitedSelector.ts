@@ -168,7 +168,7 @@ module Util {
         private mRoot: DataNode = new DataNode(null);
         private mCtrlId: string;
         private mPath: number[] = [];
-        private mFnChange : (selector : UnitedSelector)=>void;
+        private mFnChange : (selector : UnitedSelector, depth : number)=>void;
                 
         public constructor(data: IDataNode[], ctrlId: string, path? : number[]) {
             this.mRoot.appendAll(DataNode.valueOfAll(data));
@@ -187,7 +187,7 @@ module Util {
            $("#" + this.mCtrlId).css("display", "");
         }
 
-        public change(fnChange : (sel : any)=>void){
+        public change(fnChange : (sel : any, depth : number)=>void){
             this.mFnChange = fnChange;    
         }
         
@@ -242,21 +242,25 @@ module Util {
                 }
             }
             select = $(select);
-            select.change((s : any) => {
-                var path = [];
-                for (var i = 0; i < depth - 1; ++i) {
-                    path.push(this.mPath[i]);
+            select.change((s: any) => {
+                var selOpt = select.children('option:selected');
+                if (selOpt.length > 0) {
+                    var path = [];
+                    for (var i = 0; i < depth - 1; ++i) {
+                        path.push(this.mPath[i]);
+                    }
+
+                    path[depth - 1] = parseInt(selOpt.eq(0).attr("index"));
+                    var node: DataNode = this.getDataNode(path, depth);
+                    while (node.hasChildren()) {
+                        node = node.childAt(0);
+                        path.push(0);
+                    }
+                    this.update(path);
                 }
-                path[depth - 1] = parseInt(select.children('option:selected').eq(0).attr("index"));
-                var node: DataNode = this.getDataNode(path, depth);
-                while (node.hasChildren()) {
-                    node = node.childAt(0);
-                    path.push(0);
-                }
-                this.update(path);
-                
-                if (isExist(this.mFnChange)){
-                    this.mFnChange(select);    
+
+                if (isExist(this.mFnChange)) {
+                    this.mFnChange(select, depth);
                 }
             });
 
