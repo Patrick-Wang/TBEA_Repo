@@ -92,7 +92,6 @@ module hzb_zbhz {
             var date : Util.Date = this.mDs.getDate();
             this.mDataSet.get({ month: date.month, year: date.year, type : this.mType })
                 .then((dataArray: any) => {
-
                     this.mData = dataArray;
                     $('h1').text(date.year + "年" + date.month + "月公司整体指标完成情况");
                     document.title = date.year + "年" + date.month + "月公司整体指标完成情况";
