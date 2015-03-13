@@ -179,6 +179,12 @@ th.ui-th-ltr {
 	margin-top: -1px;
 }
 
+.ui-multiselect {
+	padding: 2px 0 2px 4px;
+	text-align: left;
+	font-size: 12px;
+}
+
 </style>
 </head>
 <body>
