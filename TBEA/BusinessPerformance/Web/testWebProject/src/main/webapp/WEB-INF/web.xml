@@ -80,4 +80,7 @@
 		<filter-name>SessionCheckFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
+	<session-config>
+ 		<session-timeout>30</session-timeout>
+	</session-config>
 </web-app>

@@ -170,6 +170,11 @@ th.ui-th-ltr {
 	/* jqGrid columns name wrap  */
 	font-size: 14px;
 }
+.ui-multiselect {
+	padding: 2px 0 2px 4px;
+	text-align: left;
+	font-size: 12px;
+}
 </style>
 </head>
 <body>
