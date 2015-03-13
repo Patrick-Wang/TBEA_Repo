@@ -626,11 +626,11 @@ public class GszbServiceImpl implements GszbService {
 		Company xnySyb = companyManager.getBMDBOrganization().getCompany(
 				CompanyType.XNYSYB);
 		CompanyType type = comps.get(0).getType();
-		if (type == xnySyb.getType() || xnySyb.contains(comps.get(0))) {
-			configurator = getConfiguratorFactory().getYdhbConfigurator();
-		} else {
+		//if (type == xnySyb.getType() || xnySyb.contains(comps.get(0))) {
+			//configurator = getConfiguratorFactory().getStandardConfigurator();
+		//} else {
 			configurator = getConfiguratorFactory().getStandardConfigurator();
-		}
+		//}
 		GszbPipe pipe = new GszbPipe(zbs, comps, d, configurator);
 		return makeZbResult(zbs, pipe.getGszb());
 	}

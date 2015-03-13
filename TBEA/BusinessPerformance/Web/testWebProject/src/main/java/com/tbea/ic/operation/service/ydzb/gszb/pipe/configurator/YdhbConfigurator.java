@@ -178,7 +178,7 @@ public class YdhbConfigurator implements IPipeConfigurator {
 						// 添加特殊指标过滤器
 						.add(new SpecialPipeFilter()
 								.exclude(3)// 计划完成率
-								.exclude(5)// 同比增幅
+								.exclude(5)// 环比增幅
 								.exclude(6)// 同比增幅
 								.exclude(9)// 季度计划完成率
 								.exclude(11)// 同比增幅

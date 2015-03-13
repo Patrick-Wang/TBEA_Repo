@@ -163,9 +163,13 @@ module hzb_companys {
             var data = [];
             var row = [];
             var isRs = false;
+            var isJzcsyl = false;
+            var isSxfyl = false;
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 isRs = row[HbZb.zb] == '人数';
+                isJzcsyl = row[AllZb.zb] == '净资产收益率';
+                isSxfyl = row[AllZb.zb] == '三项费用率';
                 for (var i = 0; i < row.length; ++i) {
                    if (i == HbZb.dyjhwcl || i == HbZb.dyhbzf ||i == HbZb.dytbzf || i == HbZb.jdjhwcl || i == HbZb.jdtbzf ||
                         i == HbZb.ndljjhwcl ||　i == HbZb.ndtbzf) {
@@ -173,7 +177,14 @@ module hzb_companys {
                     } else if (i != HbZb.zb) {
                         if (isRs) {
                             row[i] = Util.formatInt(row[i]);
-                        } else {
+                        }else if (isJzcsyl)
+                        {
+                            row[i] = Util.formatPercentSignal(row[i]);
+                        }else if (isSxfyl)
+                        {
+                            row[i] = Util.formatPercent(row[i]);
+                        } 
+                        else {
                             row[i] = Util.formatCurrency(row[i]);
                         }
                     }
@@ -194,13 +205,13 @@ module hzb_companys {
             
             var data = [];
             var tableAssist: JQTable.JQGridAssistant = null;
-            if (this.mData[0].length > 16){
-                tableAssist = JQGridAssistantFactory.createHbTable(name)
-                data = this.formatHbData();
-            } else {
-                tableAssist = JQGridAssistantFactory.createTable(name)
-                data = this.formatAllData();
-            }
+            //if (this.mData[0].length > 16){
+                //tableAssist = JQGridAssistantFactory.createHbTable(name)
+                //data = this.formatHbData();
+            //} else {
+            tableAssist = JQGridAssistantFactory.createTable(name)
+            data = this.formatAllData();
+            //}
             
             $("#" + name).jqGrid(
                 tableAssist.decorate({
