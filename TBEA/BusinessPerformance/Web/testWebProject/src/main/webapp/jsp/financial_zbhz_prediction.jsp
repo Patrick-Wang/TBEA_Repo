@@ -183,8 +183,6 @@ th.ui-th-ltr {
 					<tr>
 						<td><%@include file="season_selection.jsp"%>
 						</td>
-						<td><%@include file="season_selection.jsp"%>
-						</td>
 						<td><input type="button" value="更新"
 							style="width: 80px; margin-left: 10px;"
 							onclick="instance.updateUI()"></input></td>
