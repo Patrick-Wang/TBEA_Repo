@@ -137,12 +137,12 @@ public class CompanySelection {
 				if (!subNodes.isEmpty()) {
 					node = bind(topComp);
 					nodes.add(node);
-					node.getSubNodes().addAll(subNodes);
 					if (mFilter.keep(topComp)) {
 						DataNode nodeTmp = bind(topComp);
 						nodeTmp.getData().setValue(topComp.getName() + "总体");
 						node.getSubNodes().add(nodeTmp);
 					}
+					node.getSubNodes().addAll(subNodes);
 				} else if (mFilter.keep(topComp)) {
 					node = bind(topComp);
 					nodes.add(node);
