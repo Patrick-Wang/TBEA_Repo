@@ -154,6 +154,7 @@ public class YDZBController {
 		}
 	}
 	
+	//各单位经营指标完成情况update
 	@RequestMapping(value = "hzb_companys_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getHzb_companys_update(
 			HttpServletRequest request, HttpServletResponse response)
@@ -189,7 +190,8 @@ public class YDZBController {
 				.replace("null", "\"--\"");
 		return hzb_zbhz.getBytes("utf-8");
 	}
-
+	
+	//各单位经营指标完成情况
 	@RequestMapping(value = "hzb_companys.do", method = RequestMethod.GET)
 	public ModelAndView getHzb_companys(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -209,7 +211,8 @@ public class YDZBController {
 		compSel.select(map, 3);
 		return new ModelAndView("hzb_companys", map);
 	}
-
+	
+	//各产业经营指标完成情况update
 	@RequestMapping(value = "gcy_zbhz_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getGcy_zbhz_update(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -218,7 +221,8 @@ public class YDZBController {
 				.toString().replace("null", "\"--\"");
 		return gcy_zbhz;
 	}
-
+	
+	//各产业经营指标完成情况
 	@RequestMapping(value = "gcy_zbhz.do", method = RequestMethod.GET)
 	public ModelAndView getGcy_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -228,7 +232,8 @@ public class YDZBController {
 		dateSel.select(map);
 		return new ModelAndView("gcy_zbhz", map);
 	}
-
+	
+	//各单位经营指标完成情况update
 	@RequestMapping(value = "gdw_zbhz_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getGdw_zbhz_update(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -244,7 +249,8 @@ public class YDZBController {
 				.toString().replace("null", "\"--\"");
 		return gdw_zbhz;
 	}
-
+	
+	//各单位经营指标完成情况
 	@RequestMapping(value = "gdw_zbhz.do", method = RequestMethod.GET)
 	public ModelAndView getGdw_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -309,7 +315,8 @@ public class YDZBController {
 				+ ", \"nd\":" + zbhz_overview_nd + " , \"ydtb\":"
 				+ zbhz_overview_ydtb + ", \"jdtb\":" + zbhz_overview_jdtb + "}";
 	}
-
+	
+	// 整体指标预测update
 	@RequestMapping(value = "zbhz_overview_update.do", method = RequestMethod.GET)
 	public @ResponseBody String updateZbhz_overview(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -400,7 +407,7 @@ public class YDZBController {
 		return new ModelAndView("hzb_zbhz_prediction", map);
 	}
 
-	// 财务指标预测update
+	//各产业五大经营指标预测update
 	@RequestMapping(value = "financial_zbhz_prediction_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getfinancial_zbhz_prediction_update(
 			HttpServletRequest request, HttpServletResponse response)
@@ -432,7 +439,7 @@ public class YDZBController {
 		return financial_zbhz_prediction.getBytes("utf-8");
 	}
 	
-	//财务指标预测
+	//各产业五大经营指标预测
 	@RequestMapping(value = "financial_zbhz_prediction.do", method = RequestMethod.GET)
 	public ModelAndView getFinancial_zbhz_prediction(HttpServletRequest request,
 			HttpServletResponse response) {
