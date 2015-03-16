@@ -6,8 +6,10 @@ import java.util.List;
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
+import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
@@ -46,8 +48,16 @@ public class SrqyConfigurator implements IPipeConfigurator {
 		return specialZbs;
 	}
 	
-	public SrqyConfigurator(StandardConfigurator standardConfigurator) {
-		this.standardConfigurator = standardConfigurator;
+	IAccumulator sjAcc;
+	IAccumulator yjhAcc;
+	IAccumulator njhAcc;
+	CompanyManager companyManager;
+
+	public SrqyConfigurator(IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc, CompanyManager companyManager) {
+		this.companyManager = companyManager;
+		this.sjAcc = sjAcc;
+		this.yjhAcc = yjhAcc;
+		this.njhAcc = njhAcc;
 	}
 
 	@Override
@@ -58,12 +68,9 @@ public class SrqyConfigurator implements IPipeConfigurator {
 
 		WclPipeFilter wclFilter = new WclPipeFilter();
 		ZzlPipeFilter tbzzFilter = new ZzlPipeFilter();
-		
-		Organization org = standardConfigurator.getCompanyManager().getBMDBOrganization();
-		
-		IAccumulator sjAcc = standardConfigurator.getSjAcc();
-		IAccumulator yjhAcc = standardConfigurator.getYjhAcc();
-		IAccumulator njhAcc = standardConfigurator.getNjhAcc();
+
+		Organization org = companyManager.getBMDBOrganization();
+	
 		// 全年计划
 		pipe.add(new AccPipeFilter(njhAcc, 0)
 				.includeCompanies(allCompanies)

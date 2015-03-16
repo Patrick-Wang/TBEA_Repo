@@ -22,6 +22,7 @@ import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
+import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
@@ -44,6 +45,9 @@ import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.SrqyConfigurato
 @Transactional("transactionManager")
 public class GszbServiceImpl implements GszbService {
 
+	@Autowired
+	SbdNdjhZbDao sbdNdjhzbDao;
+	
 	@Autowired
 	NDJHZBDao ndjhzbDao;
 
@@ -157,7 +161,7 @@ public class GszbServiceImpl implements GszbService {
 	@Autowired
 	public void init() {
 		accFac = new AccumulatorFactory(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao, ydjhzbDao, ndjhzbDao);
-		configFac = new ConfiguratorFactory(accFac, companyManager);
+		configFac = new ConfiguratorFactory(sbdNdjhzbDao, accFac, companyManager);
 	}
 
 	private Set<Integer> addAll(Set<Integer> src, Set<ZBXX> dest) {

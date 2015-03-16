@@ -130,6 +130,11 @@ public class AccPipeFilter implements IPipeFilter {
 		}
 	}
 
+	
+	protected void computeCacheValue(List<Integer> zbs, List<Company> companies){
+		cacheValues = accumulator.compute(col, dateStart, dateEnd, zbs, companies);
+	}
+	
 	private void updateCacheValues(GszbPipe pipe) {
 		if (null == cacheValues) {
 			List<Integer> zbsTmp = new ArrayList<Integer>();
@@ -138,7 +143,9 @@ public class AccPipeFilter implements IPipeFilter {
 			if (dateStart == null){
 				dateStart = dateEnd = pipe.getDate();
 			}
-			cacheValues = accumulator.compute(col, dateStart, dateEnd, zbsTmp, filterCompanies(pipe.getCompanies()));
+			
+			computeCacheValue(zbsTmp, filterCompanies(pipe.getCompanies()));
+			
 			fillZbs(excludeList);
 		}
 	}

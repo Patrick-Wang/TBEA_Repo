@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
@@ -25,6 +26,7 @@ import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
+import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.model.dao.jygk.shzt.SHZTDao;
 import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
@@ -50,12 +52,8 @@ import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 @Transactional("transactionManager")
 public class EntryServiceImpl implements EntryService{
 
-	
-	private final Integer yszkZbId = 32;
-	private final Integer chZbId = 35;
-	private final Integer xssrZbId = 6;
-	private final Double yszb = 0.8;
-	private final Double chzb = 0.8;
+	@Autowired
+	SbdNdjhZbDao sbdNdjhzbDao;
 	
 	@Autowired
 	QXGLDao qxglDao;
@@ -193,32 +191,32 @@ public class EntryServiceImpl implements EntryService{
 
 	
 	private boolean isYszkzb(int zbId){
-		return zbId == yszkZbId;
+		return zbId == GSZB.YSZK.getValue();
 	}
 	
 	private boolean isChzb(int zbId){
-		return zbId == chZbId;
+		return zbId == GSZB.CH.getValue();
 	}
 	
 	private boolean isXssrzb(int zbId){
-		return xssrZbId == zbId;
+		return GSZB.XSSR.getValue() == zbId;
 	}
 	
 
 	private void updateComputedZb(Double xssr, Calendar cal, Company company){
 		if (xssr != null){
 			boolean newEntity = false;
-			NDJHZB zb = ndjhzbDao.getZb(yszkZbId, Util.toDate(cal), company);
+			NDJHZB zb = ndjhzbDao.getZb(GSZB.YSZK.getValue(), Util.toDate(cal), company);
 			if (null == zb){
 				newEntity = true;
 				zb = new NDJHZB();
-				zb.setZbxx(zbxxDao.getById(yszkZbId));
+				zb.setZbxx(zbxxDao.getById(GSZB.YSZK.getValue()));
 				zb.setDwxx(dwxxDao.getById(company.getId()));
 			}
 			zb.setNdjhshzt(shztDao.getById(2));
 			zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
 			zb.setNf(cal.get(Calendar.YEAR));
-			zb.setNdjhz(xssr * yszb);
+			zb.setNdjhz(xssr * sbdNdjhzbDao.getYszb(company));
 			if (newEntity){
 				ndjhzbDao.persist(zb);
 			} else{
@@ -226,17 +224,17 @@ public class EntryServiceImpl implements EntryService{
 			}
 			
 			newEntity = false;
-			zb = ndjhzbDao.getZb(yszkZbId, Util.toDate(cal), company);
+			zb = ndjhzbDao.getZb(GSZB.CH.getValue(), Util.toDate(cal), company);
 			if (null == zb){
 				newEntity = true;
 				zb = new NDJHZB();
-				zb.setZbxx(zbxxDao.getById(yszkZbId));
+				zb.setZbxx(zbxxDao.getById(GSZB.CH.getValue()));
 				zb.setDwxx(dwxxDao.getById(company.getId()));
 			}
 			zb.setNdjhshzt(shztDao.getById(2));
 			zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
 			zb.setNf(cal.get(Calendar.YEAR));
-			zb.setNdjhz(xssr * chzb);
+			zb.setNdjhz(xssr * sbdNdjhzbDao.getChzb(company));
 			if (newEntity){
 				ndjhzbDao.persist(zb);
 			} else{
@@ -252,10 +250,8 @@ public class EntryServiceImpl implements EntryService{
 		JSONArray row;
 		boolean newEntity = false;
 		cal.setTime(date);
-		
-		Organization org = companyManager.getBMDBOrganization();
-		Company sbdcy = org.getCompany(CompanyType.SBDCYJT);
-		boolean isSbd = sbdcy.contains(company);
+
+		boolean isSbd = (sbdNdjhzbDao.getChzb(company) != null);
 		Double xssr = null;
 		Integer zbId = null;
 		for (int i = 0; i < data.size(); ++i){

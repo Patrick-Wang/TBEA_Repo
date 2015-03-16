@@ -1,14 +1,12 @@
 package com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.Organization;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
@@ -18,58 +16,21 @@ import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.SpecialPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
 
-public class StandardConfigurator implements IPipeConfigurator {
+public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 
 	IAccumulator sjAcc;
 	IAccumulator yjhAcc;
 	IAccumulator njhAcc;
-	CompanyManager companyManager;
+	SbdNdjhZbDao sbdzbDao;
 
-	static List<Integer> specialZbs = new ArrayList<Integer>();
-	static {
-		specialZbs.add(GSZB.YSZK.getValue());
-		specialZbs.add(GSZB.CH.getValue());
-		specialZbs.add(GSZB.RJLR.getValue());
-		specialZbs.add(GSZB.RJSR.getValue());
-		specialZbs.add(GSZB.SXFYL.getValue());
-		specialZbs.add(GSZB.RS.getValue());
-		specialZbs.add(GSZB.CL.getValue());
-		specialZbs.add(GSZB.XL.getValue());
-	}
 	
-	public StandardConfigurator(IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc, CompanyManager companyManager) {
+	
+	public StandardConfigurator(SbdNdjhZbDao sbdzbDao, IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc, CompanyManager companyManager) {
+		super(companyManager);
+		this.sbdzbDao = sbdzbDao;
 		this.sjAcc = sjAcc;
 		this.yjhAcc = yjhAcc;
 		this.njhAcc = njhAcc;
-		this.companyManager = companyManager;
-	}
-
-	public List<Company> getNonSbdCompany(List<Company> companies) {
-		Organization org = companyManager.getBMDBOrganization();
-		Company sbd = org.getCompany(CompanyType.SBDCYJT);
-		List<Company> retComps = new ArrayList<Company>();
-		for (Company comp : companies) {
-			if (!sbd.contains(comp)) {
-				retComps.add(comp);
-			}
-		}
-		return retComps;
-	}
-
-	public List<Company> getSbdCompany(List<Company> companies) {
-		Organization org = companyManager.getBMDBOrganization();
-		Company sbd = org.getCompany(CompanyType.SBDCYJT);
-		List<Company> retComps = new ArrayList<Company>();
-		for (Company comp : companies) {
-			if (sbd.contains(comp)) {
-				retComps.add(comp);
-			}
-		}
-		return retComps;
-	}
-
-	public List<Integer> getSpecialZbs(){
-		return specialZbs;
 	}
 	
 	@Override
@@ -108,7 +69,7 @@ public class StandardConfigurator implements IPipeConfigurator {
 					.includeZbs(pipe.getZbIds())
 					.excludeZbs(specialZbs)
 					.include(GSZB.RS))
-				.add(new AccSbdPipeFilter(yjhAcc, 1)
+				.add(new AccSbdPipeFilter(sbdzbDao, yjhAcc, 1)
 					.includeCompanies(sbdCompanies)
 					.include(GSZB.YSZK)
 					.include(GSZB.CH));
@@ -220,33 +181,4 @@ public class StandardConfigurator implements IPipeConfigurator {
 	public int getColumnCount() {
 		return 15;
 	}
-
-	/**
-	 * @return the sjAcc
-	 */
-	public IAccumulator getSjAcc() {
-		return sjAcc;
-	}
-
-	/**
-	 * @return the yjhAcc
-	 */
-	public IAccumulator getYjhAcc() {
-		return yjhAcc;
-	}
-
-	/**
-	 * @return the njhAcc
-	 */
-	public IAccumulator getNjhAcc() {
-		return njhAcc;
-	}
-
-	/**
-	 * @return the companyManager
-	 */
-	public CompanyManager getCompanyManager() {
-		return companyManager;
-	}
-
 }

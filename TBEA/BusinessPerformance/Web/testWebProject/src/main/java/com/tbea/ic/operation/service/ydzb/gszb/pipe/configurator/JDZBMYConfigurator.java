@@ -5,6 +5,8 @@ import java.util.List;
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
@@ -14,23 +16,28 @@ import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.SpecialPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
 
-public class JDZBMYConfigurator implements IPipeConfigurator {
+public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 
-	StandardConfigurator standardConfigurator;
+	IAccumulator sjAcc;
+	IAccumulator yjhAcc;
+	IAccumulator njhAcc;
+	SbdNdjhZbDao sbdzbDao;
 
-	public JDZBMYConfigurator(StandardConfigurator standardConfigurator) {
-		this.standardConfigurator = standardConfigurator;
+	public JDZBMYConfigurator(SbdNdjhZbDao sbdzbDao, IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc, CompanyManager companyManager) {
+		super(companyManager);
+		this.sbdzbDao = sbdzbDao;
+		this.sjAcc = sjAcc;
+		this.yjhAcc = yjhAcc;
+		this.njhAcc = njhAcc;
 	}
 
 	@Override
 	public void onConfiguring(GszbPipe pipe) {
 		List<Company> allCompanies = pipe.getCompanies();
-		List<Company> nonSbdCompanies = standardConfigurator.getNonSbdCompany(allCompanies);
-		List<Company> sbdCompanies = standardConfigurator.getSbdCompany(allCompanies);
-		IAccumulator sjAcc = standardConfigurator.getSjAcc();
-		IAccumulator yjhAcc = standardConfigurator.getYjhAcc();
-		IAccumulator njhAcc = standardConfigurator.getNjhAcc();
-		List<Integer> specialZbs = standardConfigurator.getSpecialZbs();
+		List<Company> nonSbdCompanies = getNonSbdCompany(allCompanies);
+		List<Company> sbdCompanies = getSbdCompany(allCompanies);
+	
+		List<Integer> specialZbs = getSpecialZbs();
 
 		DateHelper dh = new DateHelper(pipe.getDate());
 
@@ -60,7 +67,7 @@ public class JDZBMYConfigurator implements IPipeConfigurator {
 					new AccPipeFilter(yjhAcc, 3).includeCompanies(allCompanies)
 							.includeZbs(gsztzbs).excludeZbs(specialZbs)
 							.include(GSZB.RS)).add(
-					new AccSbdPipeFilter(yjhAcc, 3)
+					new AccSbdPipeFilter(sbdzbDao, yjhAcc, 3)
 							.includeCompanies(sbdCompanies).include(GSZB.YSZK)
 							.include(GSZB.CH));
 
