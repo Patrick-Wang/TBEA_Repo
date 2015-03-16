@@ -14,6 +14,7 @@ import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 public class AccSbdPipeFilter extends AccPipeFilter {
 
 	private Integer month;
+	private Integer year;
 	private SbdNdjhZbDao sbdzbDao;
 
 	
@@ -24,10 +25,10 @@ public class AccSbdPipeFilter extends AccPipeFilter {
 			if (null != xssr){
 				if (zbs.get(i) == GSZB.YSZK.getValue()){
 					valueCache = Util.valueOf(valueCache) + 
-							Util.valueOf(xssr) / month * 12 * sbdzbDao.getYszb(comp);
+							Util.valueOf(xssr) / month * 12 * sbdzbDao.getYszb(year, comp);
 				} else if (zbs.get(i) == GSZB.CH.getValue()){
 					valueCache = Util.valueOf(valueCache) + 
-							Util.valueOf(xssr) / month * 12 * sbdzbDao.getChzb(comp);
+							Util.valueOf(xssr) / month * 12 * sbdzbDao.getChzb(year, comp);
 				} 
 				cacheValues.set(i, valueCache);
 			}
@@ -41,6 +42,7 @@ public class AccSbdPipeFilter extends AccPipeFilter {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(dateEnd);
 			month = cal.get(Calendar.MONTH) + 1;
+			year = cal.get(Calendar.YEAR);
 		}
 		
 		if (null == cacheValues){

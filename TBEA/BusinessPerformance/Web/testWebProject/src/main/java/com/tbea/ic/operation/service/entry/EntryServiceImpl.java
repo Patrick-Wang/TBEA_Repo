@@ -216,7 +216,7 @@ public class EntryServiceImpl implements EntryService{
 			zb.setNdjhshzt(shztDao.getById(2));
 			zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
 			zb.setNf(cal.get(Calendar.YEAR));
-			zb.setNdjhz(xssr * sbdNdjhzbDao.getYszb(company));
+			zb.setNdjhz(xssr * sbdNdjhzbDao.getYszb(cal.get(Calendar.YEAR), company));
 			if (newEntity){
 				ndjhzbDao.persist(zb);
 			} else{
@@ -234,7 +234,7 @@ public class EntryServiceImpl implements EntryService{
 			zb.setNdjhshzt(shztDao.getById(2));
 			zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
 			zb.setNf(cal.get(Calendar.YEAR));
-			zb.setNdjhz(xssr * sbdNdjhzbDao.getChzb(company));
+			zb.setNdjhz(xssr * sbdNdjhzbDao.getChzb(cal.get(Calendar.YEAR), company));
 			if (newEntity){
 				ndjhzbDao.persist(zb);
 			} else{
@@ -251,7 +251,7 @@ public class EntryServiceImpl implements EntryService{
 		boolean newEntity = false;
 		cal.setTime(date);
 
-		boolean isSbd = (sbdNdjhzbDao.getChzb(company) != null);
+		boolean isSbd = (sbdNdjhzbDao.getChzb(cal.get(Calendar.YEAR), company) != null);
 		Double xssr = null;
 		Integer zbId = null;
 		for (int i = 0; i < data.size(); ++i){
