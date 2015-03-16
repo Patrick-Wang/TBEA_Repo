@@ -71,7 +71,7 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 								.includeZbs(gsztzbs)
 								.excludeZbs(specialZbs)
 								.include(GSZB.RS))
-						.add(new AccSbdPipeFilter(sbdzbDao, yjhAcc, 1)
+						.add(new AccSbdPipeFilter(sbdzbDao, sjAcc, 1, dh.getFirstMonth(), dh.getCur())
 								.includeCompanies(sbdCompanies)
 								.include(GSZB.YSZK)
 								.include(GSZB.CH));

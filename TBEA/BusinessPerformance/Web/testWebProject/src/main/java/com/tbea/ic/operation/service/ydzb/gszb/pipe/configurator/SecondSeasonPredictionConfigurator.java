@@ -62,7 +62,7 @@ public class SecondSeasonPredictionConfigurator extends AbstractSbdPipeConfigura
 					new AccPipeFilter(yjhAcc, 2).includeCompanies(allCompanies)
 							.includeZbs(pipe.getZbIds()).excludeZbs(specialZbs)
 							.include(GSZB.RS)).add(
-					new AccSbdPipeFilter(sbdzbDao, yjhAcc, 2)
+					new AccSbdPipeFilter(sbdzbDao, sjAcc, 2, dh.getFirstMonth(), dh.getCur())
 							.includeCompanies(sbdCompanies).include(GSZB.YSZK)
 							.include(GSZB.CH));
 

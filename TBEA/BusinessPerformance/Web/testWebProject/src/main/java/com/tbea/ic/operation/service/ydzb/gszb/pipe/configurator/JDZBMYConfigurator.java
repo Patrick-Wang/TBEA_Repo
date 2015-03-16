@@ -67,7 +67,7 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 					new AccPipeFilter(yjhAcc, 3).includeCompanies(allCompanies)
 							.includeZbs(gsztzbs).excludeZbs(specialZbs)
 							.include(GSZB.RS)).add(
-					new AccSbdPipeFilter(sbdzbDao, yjhAcc, 3)
+					new AccSbdPipeFilter(sbdzbDao, sjAcc, 3, dh.getFirstMonth(), dh.getCur())
 							.includeCompanies(sbdCompanies).include(GSZB.YSZK)
 							.include(GSZB.CH));
 
