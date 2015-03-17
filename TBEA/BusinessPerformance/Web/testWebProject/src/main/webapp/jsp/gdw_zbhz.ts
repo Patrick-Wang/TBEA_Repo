@@ -136,7 +136,7 @@ module gdw_zbhz {
                     drag: false,
                     resize: false,
                     height: "100%",
-                    width: 1200,
+                    width: 1330,
                     shrinkToFit: true,
                     rowNum: 200,
                     autoScroll: true

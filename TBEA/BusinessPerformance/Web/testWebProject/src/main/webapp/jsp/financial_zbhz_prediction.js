@@ -278,7 +278,7 @@ var financial_zbhz_prediciton;
                 //                    cellsubmit: 'clientArray',
                 //                    cellEdit: true,
                 height: 550,
-                width: 1300,
+                width: 1350,
                 shrinkToFit: true,
                 rowNum: 200,
                 autoScroll: true

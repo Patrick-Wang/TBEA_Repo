@@ -291,7 +291,7 @@ module gdw_zbhz_prediciton {
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
                     height: '100%',
-                    width: 1300,
+                    width: 1330,
                     shrinkToFit: true,
                     rowNum: 100,
                     autoScroll: true
