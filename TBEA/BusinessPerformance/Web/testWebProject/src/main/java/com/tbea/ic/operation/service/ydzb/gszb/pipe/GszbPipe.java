@@ -65,6 +65,10 @@ public class GszbPipe {
 		return date;
 	}
 
+	public Integer getRow(Integer zbId){
+		return zbIds.indexOf(zbId);
+	}
+	
 	public List<Integer> getZbIds() {
 		return zbIds;
 	}

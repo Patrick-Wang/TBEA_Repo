@@ -10,7 +10,7 @@ import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccSbdPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.YdjhProportionAccPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.CopyPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.SpecialPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
@@ -62,7 +62,7 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 					new AccPipeFilter(yjhAcc, 2).includeCompanies(allCompanies)
 							.includeZbs(pipe.getZbIds()).excludeZbs(specialZbs)
 							.include(GSZB.RS)).add(
-					new AccSbdPipeFilter(sbdzbDao, sjAcc, 2, dh.getFirstMonth(), dh.getCur())
+					new YdjhProportionAccPipeFilter(sbdzbDao, sjAcc, 2, dh.getFirstMonth(), dh.getCur())
 							.includeCompanies(sbdCompanies).include(GSZB.YSZK)
 							.include(GSZB.CH));
 

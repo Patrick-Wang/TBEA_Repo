@@ -29,8 +29,8 @@ public class FirstSeasonPredictionCompositeConfigurator implements
 		List<Integer> allZbs = pipe.getZbIds();
 
 		// 全年计划
-		pipe.add(
-				new AccPipeFilter(acc, 0).includeCompanies(allCompanies)
+			pipe.add(new AccPipeFilter(acc, 0)
+						.includeCompanies(allCompanies)
 						.includeZbs(allZbs))
 		// 当月计划
 				.add(new AccPipeFilter(acc, 2).includeCompanies(allCompanies)
