@@ -29,5 +29,7 @@ public interface YJ28ZBDao extends AbstractReadWriteDao<YJ28ZB>{
 
 	List<YJ28ZB> getYj28zbs(List<YDZBZT> yd28zbzts, List<Integer> zbs);
 
+	int getApprovedZbsCount(Date date, Company company);
+
 
 }

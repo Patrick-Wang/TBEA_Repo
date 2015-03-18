@@ -25,4 +25,6 @@ public interface EntryService {
 	public boolean hasEntryPlanPermission(Account account);
 
 	public boolean hasEntryPredictPermission(Account account);
+
+	boolean isApproved(Date date, CompanyType comp, ZBType entryType);
 }

@@ -79,14 +79,16 @@ public class ApproveController {
 			dateSel.select(map);
 		}
 
-		CompanySelection compSel = new CompanySelection(true,
-				getOwnedCompanies((Account)request.getSession(false).getAttribute(
-						"account"), approveType), new Filter() {
+		List<Company> companies = getOwnedCompanies((Account) request
+				.getSession(false).getAttribute("account"), approveType);
+		CompanySelection compSel = new CompanySelection(true, companies,
+				new Filter() {
 					private List<Integer> comps = service
 							.getCompanies(approveType);
 
 					public boolean keep(Company comp) {
-						return comps.contains(comp.getId());
+						return companies.contains(comp)
+								&& comps.contains(comp.getId());
 					}
 
 					@Override

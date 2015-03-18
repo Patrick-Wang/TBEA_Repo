@@ -402,7 +402,7 @@ public class ApproveServiceImpl implements ApproveService {
 
 	@Override
 	public List<Company> getValidSjCompanies(Account account) {
-		List<QXGL> compIds = qxglDao.getSjzlr(account);
+		List<QXGL> compIds = qxglDao.getSjzsh(account);
 		List<Company> comps = new ArrayList<Company>();
 		Organization org = companyManager.getBMDBOrganization();
 		for (int i = 0; i < compIds.size(); ++i){

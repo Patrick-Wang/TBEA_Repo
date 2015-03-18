@@ -97,7 +97,9 @@ public class EntryController {
 
 		List<String[]> ret =  entryService.getZb(date, account, comp, entryType);
 		String zb = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
-		return zb.getBytes("utf-8");
+		boolean approved = entryService.isApproved(date, comp, entryType);
+		String result = "{\"readOnly\":" + approved +", \"values\":" + zb + "}";
+		return result.getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "zb_submit.do", method = RequestMethod.POST)
@@ -106,12 +108,13 @@ public class EntryController {
 		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("entryType")));
 		Date date = DateSelection.getDate(request);
 		CompanyType comp = CompanySelection.getCompany(request);
-		String data = request.getParameter("data");
-		boolean ret = false;
-		Account account = (Account) request.getSession(false).getAttribute("account");
-		ret = entryService.updateZb(date, account, comp, entryType, JSONArray.fromObject(data));
-		
-		String result = "{\"result\":" + ret + "}";
+		String ret = "数据已审核，无法修改";
+		if (!entryService.isApproved(date, comp, entryType)){
+			String data = request.getParameter("data");
+			Account account = (Account) request.getSession(false).getAttribute("account");
+			ret = "" + entryService.updateZb(date, account, comp, entryType, JSONArray.fromObject(data));
+		}
+		String result = "{\"result\":\"" + ret + "\"}";
 		return result.getBytes("utf-8");
 	}
 }

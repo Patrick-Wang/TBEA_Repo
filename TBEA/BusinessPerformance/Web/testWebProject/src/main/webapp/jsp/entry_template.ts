@@ -34,7 +34,7 @@ module entry_template {
     }
 
     interface ISubmitResult {
-        result: boolean;
+        result: string;
     }
 
 
@@ -44,6 +44,7 @@ module entry_template {
             return View.instance;
         }
 
+        private mReadOnly:boolean = true;
         private mTableData: Array<string[]>;
         private mDateSelector: Util.DateSelector;
         private mCompanySelector: Util.CompanySelector;
@@ -89,7 +90,8 @@ module entry_template {
             }
             this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId: this.mCompanySelector.getCompany() })
                 .then((data: any) => {
-                this.mTableData = data;
+                this.mReadOnly = data.readOnly;
+                this.mTableData = data.values;
                 this.updateTitle();
                 this.updateTable(this.mOpt.tableId);
             });
@@ -123,11 +125,14 @@ module entry_template {
                 companyId: this.mCompanySelector.getCompany(), 
                 data: JSON.stringify(submitData)
             }).then((data: ISubmitResult) => {
-                if (data.result) {
-                     Util.MessageBox.tip("提交 成功");
-                } else {
-                     Util.MessageBox.tip("提交 失败");
-                }
+
+                    if ("true" == data.result) {
+                         Util.MessageBox.tip("提交 成功");
+                    } else if ("false" == data.result) {
+                         Util.MessageBox.tip("提交 失败");
+                    } else {
+                        Util.MessageBox.tip(data.result);
+                    }
             });
         }
 
@@ -267,7 +272,7 @@ module entry_template {
                     resize: false,
                     //autowidth : false,
                     cellsubmit: 'clientArray',
-                    cellEdit: true,
+                    cellEdit: !this.mReadOnly,
                     height: data.length > 25 ? 550 : '100%',
                     width: titles.length * 200,
                     shrinkToFit: true,

@@ -591,4 +591,24 @@ public class EntryServiceImpl implements EntryService{
 			}			
 		}
 	}
+
+	@Override
+	public boolean isApproved(Date date, CompanyType comp, ZBType entryType) {
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		switch (entryType){
+		case BY20YJ:
+			return yj20zbDao.getApprovedZbsCount(date, company) > 0;
+		case BY28YJ:
+			return yj28zbDao.getApprovedZbsCount(date, company) > 0;
+		case BYSJ:
+			return sjzbDao.getApprovedZbsCount(date, company) > 0;
+		case NDJH:
+			return ndjhzbDao.getApprovedZbsCount(date, company) > 0;
+		case YDJDMJH:
+			return ydjhzbDao.getApprovedZbsCount(date, company) > 0;
+		default:
+			break;
+		}
+		return false;
+	}
 }
