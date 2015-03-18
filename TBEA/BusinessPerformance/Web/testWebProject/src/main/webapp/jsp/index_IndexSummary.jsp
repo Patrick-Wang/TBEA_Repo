@@ -70,13 +70,13 @@
 				<li><a href="../ydzb/financial_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/line2.png"> <span><strong>各产业五大经营指标预测完成情况</strong></span></a>
 				</li>
-				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=1" target="_blank"><img
+				<li><a href="../ydzb/gdw_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/pie1.png"> <span><strong>各单位五大经营指标预测完成情况</strong></span></a>
 				</li>
-<!-- 				/li
-				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=6" target="_blank"><img
-						src="../images/charts/scatter1.png"> <span><strong>销售收入预测完成情况</strong></span></a>
+				<li><a href="../entry/status.do" target="_blank"><img
+						src="../images/charts/scatter1.png"> <span><strong>20号/28号/实际指标预测值填报情况</strong></span></a>
 				</li>
+<!-- 	
 				/li
 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=29" target="_blank"><img
 						src="../images/charts/scatter2.png"> <span><strong>经营性净现金流预测完成情况</strong></span></a>

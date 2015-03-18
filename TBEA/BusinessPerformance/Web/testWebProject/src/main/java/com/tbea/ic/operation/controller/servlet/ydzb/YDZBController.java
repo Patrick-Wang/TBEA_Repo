@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,6 @@ import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
-
 
 class CompanyTypeFilter implements CompanySelection.Filter{
 	
@@ -498,4 +498,6 @@ public class YDZBController {
 			//map.put("zbId", zb);
 			return new ModelAndView("gdw_zbhz_prediction", map);
 		}
+			
+		
 }

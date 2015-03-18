@@ -627,9 +627,9 @@ public class GszbServiceImpl implements GszbService {
 	public List<String[]> getGdwzb(Date d, List<Company> comps) {
 		List<Integer> zbs = this.getAllZbs(comps);
 		IPipeConfigurator configurator;
-		Company xnySyb = companyManager.getBMDBOrganization().getCompany(
-				CompanyType.XNYSYB);
-		CompanyType type = comps.get(0).getType();
+		//Company xnySyb = companyManager.getBMDBOrganization().getCompany(
+		//		CompanyType.XNYSYB);
+		//CompanyType type = comps.get(0).getType();
 		//if (type == xnySyb.getType() || xnySyb.contains(comps.get(0))) {
 			//configurator = getConfiguratorFactory().getStandardConfigurator();
 		//} else {

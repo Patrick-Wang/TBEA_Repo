@@ -56,7 +56,8 @@ public class EntryController {
 		return comps;
 	}
 
-	@RequestMapping(value = "status.do", method = RequestMethod.GET)
+	//取得各个经营单位指标录入的情况
+	@RequestMapping(value = "status_update.do", method = RequestMethod.GET)
 	public  @ResponseBody byte[] getEntryStatus(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
@@ -66,6 +67,19 @@ public class EntryController {
 		String result = JSONArray.fromObject(status).toString().replace("null", "\"\"");
 		return result.getBytes("utf-8");
 	}
+	
+	@RequestMapping(value = "status.do", method = RequestMethod.GET)
+	public ModelAndView getGdw_sjzb_summary(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		DateSelection dateSel = new DateSelection();
+		dateSel.select(map);
+		return new ModelAndView("gdw_indexInput_summary", map);
+	}
+	
+	//End
+	
+	
 	
 	@RequestMapping(value = "zb.do", method = RequestMethod.GET)
 	public ModelAndView getZBEntry(HttpServletRequest request,
