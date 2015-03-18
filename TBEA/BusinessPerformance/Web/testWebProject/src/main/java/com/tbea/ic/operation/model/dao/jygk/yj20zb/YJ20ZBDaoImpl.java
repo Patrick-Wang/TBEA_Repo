@@ -143,4 +143,14 @@ public class YJ20ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ20ZB> implements Y
 		return ((Long)q.getSingleResult()).intValue();
 	}
 
+	@Override
+	public List<Integer> getEntryCompletedCompanies(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("select dwxx.id from YJ20ZB where nf = :nf and yf = :yf group by dwxx.id");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		return q.getResultList();
+	}
+
 }

@@ -45,6 +45,7 @@ import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 
 
 
@@ -85,9 +86,31 @@ public class EntryServiceImpl implements EntryService{
 	@Autowired
 	YDZBZTDao ydzbztDao;
 	
-	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
+	List<Company> mainCompanies = new ArrayList<Company>();
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	public void setCompanyManager(CompanyManager companyManager){
+		Organization org = companyManager.getBMDBOrganization();
+		this.companyManager = companyManager;
+		mainCompanies.add(org.getCompany(CompanyType.SBGS));
+		mainCompanies.add(org.getCompany(CompanyType.HBGS));
+		mainCompanies.add(org.getCompany(CompanyType.XBC));
+		mainCompanies.add(org.getCompany(CompanyType.LLGS));
+		mainCompanies.add(org.getCompany(CompanyType.XLC));
+		mainCompanies.add(org.getCompany(CompanyType.DLGS));
+		mainCompanies.add(org.getCompany(CompanyType.XTNYGS));
+		mainCompanies.add(org.getCompany(CompanyType.XNYGS));
+		mainCompanies.add(org.getCompany(CompanyType.TCNY));
+		mainCompanies.add(org.getCompany(CompanyType.NDGS));
+		mainCompanies.add(org.getCompany(CompanyType.JCKGS_JYDW));
+		mainCompanies.add(org.getCompany(CompanyType.GJGCGS_GFGS));
+		mainCompanies.add(org.getCompany(CompanyType.ZHGS));
+	}
+	
+	
+
+	
 	
 	public void setYdzbzt(Company comp, int nf, int yf, ZBType entryType){
 		YDZBZT ydzbzt = ydzbztDao.getYdzbzt(comp, nf, yf);
@@ -610,5 +633,36 @@ public class EntryServiceImpl implements EntryService{
 			break;
 		}
 		return false;
+	}
+
+	@Override
+	public List<String[]> getEntryStatus(Date date, ZBType entryType) {
+		List<String[]> result = new ArrayList<String[]>();
+		List<Integer> entryCompletedCompanies = null;
+		switch (entryType){
+		case BY20YJ:
+			entryCompletedCompanies = yj20zbDao.getEntryCompletedCompanies(date);
+			break;
+		case BY28YJ:
+			entryCompletedCompanies = yj28zbDao.getEntryCompletedCompanies(date);
+			break;
+		case BYSJ:
+			entryCompletedCompanies = sjzbDao.getEntryCompletedCompanies(date);
+			break;
+		case NDJH:
+			entryCompletedCompanies = ndjhzbDao.getEntryCompletedCompanies(date);
+			break;
+		case YDJDMJH:
+			entryCompletedCompanies = ydjhzbDao.getEntryCompletedCompanies(date);
+			break;
+		default:
+			return result;
+		}
+		
+		for (Company comp : mainCompanies){
+			result.add(new String[]{comp.getName(), entryCompletedCompanies.contains(comp.getId()) + ""});
+		}
+
+		return result;
 	}
 }

@@ -56,6 +56,17 @@ public class EntryController {
 		return comps;
 	}
 
+	@RequestMapping(value = "status.do", method = RequestMethod.GET)
+	public  @ResponseBody byte[] getEntryStatus(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+
+		Date date = DateSelection.getDate(request);
+		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("entryType")));
+		List<String[]> status = entryService.getEntryStatus(date, entryType);
+		String result = JSONArray.fromObject(status).toString().replace("null", "\"\"");
+		return result.getBytes("utf-8");
+	}
+	
 	@RequestMapping(value = "zb.do", method = RequestMethod.GET)
 	public ModelAndView getZBEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {

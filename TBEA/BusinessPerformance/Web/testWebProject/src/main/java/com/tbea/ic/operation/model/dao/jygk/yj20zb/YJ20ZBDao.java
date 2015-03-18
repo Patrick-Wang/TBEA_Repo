@@ -33,4 +33,6 @@ public interface YJ20ZBDao  extends AbstractReadWriteDao<YJ20ZB> {
 
 	int getApprovedZbsCount(Date date, Company company);
 
+	List<Integer> getEntryCompletedCompanies(Date date);
+
 }

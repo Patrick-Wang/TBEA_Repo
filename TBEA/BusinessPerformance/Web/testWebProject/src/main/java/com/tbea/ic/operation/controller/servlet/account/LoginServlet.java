@@ -38,14 +38,14 @@ public class LoginServlet {
 	private LoginService loginService;
 
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
-	public ModelAndView getLogin(HttpServletRequest request,
+	public ModelAndView login(HttpServletRequest request,
 			HttpServletResponse response) {
 		//logger.info("error test");
 		return new ModelAndView("login");
 	}
 	
 	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
-	public @ResponseBody String getLogout(HttpServletRequest request,
+	public @ResponseBody String logout(HttpServletRequest request,
 			HttpServletResponse response) {
 		HttpSession newSession = request.getSession(false);
 		if (null != newSession){

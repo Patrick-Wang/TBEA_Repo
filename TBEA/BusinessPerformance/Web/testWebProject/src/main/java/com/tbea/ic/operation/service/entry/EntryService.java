@@ -27,4 +27,6 @@ public interface EntryService {
 	public boolean hasEntryPredictPermission(Account account);
 
 	boolean isApproved(Date date, CompanyType comp, ZBType entryType);
+
+	List<String[]> getEntryStatus(Date date, ZBType entryType);
 }

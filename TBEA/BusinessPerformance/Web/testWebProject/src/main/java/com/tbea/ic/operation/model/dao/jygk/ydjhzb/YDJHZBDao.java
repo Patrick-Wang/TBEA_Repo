@@ -28,4 +28,6 @@ public interface YDJHZBDao  extends AbstractReadWriteDao<YDJHZB>{
 
 	int getApprovedZbsCount(Date date, Company company);
 
+	List<Integer> getEntryCompletedCompanies(Date date);
+
 }

@@ -32,4 +32,6 @@ public interface SJZBDao  extends AbstractReadWriteDao<SJZB>{
 	List<SJZB> getSjzbs(List<YDZBZT> sjzbzts, List<Integer> zbs);
 
 	int getApprovedZbsCount(Date date, Company company);
+
+	List<Integer> getEntryCompletedCompanies(Date date);
 }
