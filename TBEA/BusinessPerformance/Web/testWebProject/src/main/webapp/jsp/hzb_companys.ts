@@ -128,11 +128,13 @@ module hzb_companys {
             var isRs = false;
             var isJzcsyl = false;
             var isSxfyl = false;
+            var isXslvl = false;
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 isRs = row[AllZb.zb] == '人数';
-                isJzcsyl = row[AllZb.zb] == '净资产收益率';
-                isSxfyl = row[AllZb.zb] == '三项费用率';
+                isJzcsyl = row[AllZb.zb] == '净资产收益率(%)';
+                isSxfyl = row[AllZb.zb] == '三项费用率(%)';
+                isXslvl = row[AllZb.zb] == '销售利润率(%)';
                 for (var i = 0; i < row.length; ++i) {
                     if (i == AllZb.dyjhwcl || i == AllZb.dytbzf || i == AllZb.jdjhwcl || i == AllZb.jdtbzf ||
                         i == AllZb.ndljjhwcl ||　i == AllZb.ndtbzf) {
@@ -148,6 +150,10 @@ module hzb_companys {
                         {
                             row[i] = Util.formatPercent(row[i]);
                         }
+                        else if (isXslvl)
+                        {
+                            row[i] = Util.formatPercentSignal(row[i]);
+                        }
                         else 
                         {
                             row[i] = Util.formatCurrency(row[i]);
@@ -159,6 +165,7 @@ module hzb_companys {
             return data;
         }
         
+        //desperate
         private formatHbData() {
             var data = [];
             var row = [];

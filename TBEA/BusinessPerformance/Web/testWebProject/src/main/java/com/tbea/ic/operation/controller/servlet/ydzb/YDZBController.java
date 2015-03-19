@@ -145,7 +145,7 @@ public class YDZBController {
 
 	private void removeJzcsyl(List<String[]> zbData){
 		for (int i = 0; i < zbData.size(); ++i){
-			if ("净资产收益率".equals(zbData.get(i)[0])){
+			if ("净资产收益率(%)".equals(zbData.get(i)[0])){
 				for (int j = 1; j < zbData.get(i).length; ++j){
 					zbData.get(i)[j] = null;
 				}
