@@ -346,7 +346,8 @@ public class EntryServiceImpl implements EntryService{
 	private boolean update28YJ(Date date, Company company, JSONArray data) {
 		Calendar cal = Calendar.getInstance();
 		int leftMonth;
-		YJ28ZB zb;
+		YJ20ZB zb20;
+		YJ28ZB zb28;
 		YJ28ZBDao zbDao = yj28zbDao;
 		JSONArray row;
 		boolean newEntity = false;
@@ -356,28 +357,50 @@ public class EntryServiceImpl implements EntryService{
 		for (int i = 0; i < data.size(); ++i){
 			cal.setTime(date);
 			row = data.getJSONArray(i);
-			for (int j = 0; j <= leftMonth && j < (row.size() - 1); ++j){
+
+			newEntity = false;
+			zb28 = zbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
+			if (null == zb28){
+				newEntity = true;
+				zb28 = new YJ28ZB();
+				zb28.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
+				zb28.setDwxx(dwxxDao.getById(company.getId()));
+			}
+			zb28.setYj28shzt(shztDao.getById(2));
+			zb28.setYj28xgsj(new java.sql.Date(new java.util.Date().getTime()));
+			zb28.setNf(cal.get(Calendar.YEAR));
+			zb28.setYf(cal.get(Calendar.MONTH) + 1);
+			zb28.setYj28z(Util.toDouble(row.getString(1)));
+			if (newEntity){
+				yj28zbDao.persist(zb28);
+			} else{
+				yj28zbDao.merge(zb28);
+			}
+			cal.add(Calendar.MONTH, 1);
+			
+			for (int j = 1; j <= leftMonth && j < (row.size() - 1); ++j){
 				newEntity = false;
-				zb = zbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
-				if (null == zb){
+				zb20 = yj20zbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
+				if (null == zb20){
 					newEntity = true;
-					zb = new YJ28ZB();
-					zb.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
-					zb.setDwxx(dwxxDao.getById(company.getId()));
+					zb20 = new YJ20ZB();
+					zb20.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
+					zb20.setDwxx(dwxxDao.getById(company.getId()));
 				}
-				zb.setYj28shzt(shztDao.getById(2));
-				zb.setYj28xgsj(new java.sql.Date(new java.util.Date().getTime()));
-				zb.setNf(cal.get(Calendar.YEAR));
-				zb.setYf(cal.get(Calendar.MONTH) + 1);
-				zb.setYj28z(Util.toDouble(row.getString(j + 1)));
+				zb20.setYj20shzt(shztDao.getById(2));
+				zb20.setYj20xgsj(new java.sql.Date(new java.util.Date().getTime()));
+				zb20.setNf(cal.get(Calendar.YEAR));
+				zb20.setYf(cal.get(Calendar.MONTH) + 1);
+				zb20.setYj20z(Util.toDouble(row.getString(j + 1)));
 				if (newEntity){
-					zbDao.persist(zb);
+					yj20zbDao.persist(zb20);
 				} else{
-					zbDao.merge(zb);
+					yj20zbDao.merge(zb20);
 				}
 				cal.add(Calendar.MONTH, 1);
 			}
 		}
+		
 		cal.setTime(date);
 		setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY28YJ);
 		return true;
