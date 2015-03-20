@@ -364,7 +364,8 @@ public class EntryServiceImpl implements EntryService{
 
 		List<Boolean> approvedList = isApproved(date, company.getType(),
 				ZBType.BY28YJ);
-
+		
+		
 		for (int i = 0; i < data.size(); ++i) {
 			cal.setTime(date);
 			row = data.getJSONArray(i);
@@ -607,10 +608,14 @@ public class EntryServiceImpl implements EntryService{
 		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 		
 		Map<Integer, String[]> map = creatZBXXMap(dwxx.getSjzbxxs(), leftMonth + 3);
-		for (int i = 0; i <= leftMonth; ++i){
-			updateYJ28Map(map, yj28zbDao.getZbs(Util.toDate(cal), company), i);
+		updateYJ28Map(map, yj28zbDao.getZbs(Util.toDate(cal), company), 0);
+		cal.add(Calendar.MONTH, 1);
+		
+		for (int i = 1; i <= leftMonth; ++i){
+			updateYJ20Map(map, yj20zbDao.getZbs(Util.toDate(cal), company), i);
 			cal.add(Calendar.MONTH, 1);
 		}
+		
 		return toArray(map);
 	}
 
@@ -686,8 +691,10 @@ public class EntryServiceImpl implements EntryService{
 			}
 			break;
 		case BY28YJ:
-			for (int i = 0; i <= leftMonth; ++i){
-				bResult.add(yj28zbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
+			bResult.add(yj28zbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
+			cal.add(Calendar.MONTH, 1);
+			for (int i = 1; i <= leftMonth; ++i){
+				bResult.add(yj20zbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
 				cal.add(Calendar.MONTH, 1);
 			}
 			break;
