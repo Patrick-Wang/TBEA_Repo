@@ -511,7 +511,7 @@ public class EntryServiceImpl implements EntryService{
 	private List<String[]> getYDJDMJH(Date date, Company company) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		cal.add(Calendar.MONTH, 1);
+		//cal.add(Calendar.MONTH, 1);
 		DWXX dwxx = dwxxDao.getById(company.getId());
 		Map<Integer, String[]> map = creatZBXXMap(dwxx.getJhzbxxs(), 5);
 		for (int i = 0; i < 3; ++i){

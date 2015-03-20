@@ -490,6 +490,9 @@ module approve_template {
             var comps = this.mCompanySelector.getCompanys();
             if (comps.length != 0) {
                 var date = this.mDateSelector.getDate();
+                if (this.mOpt.approveType == Util.ZBType.YDJDMJH){
+                    date = Util.addMonth(date, -2);    
+                }
                 this.mDataSet.post({ year: date.year, month: date.month, approveType: this.mOpt.approveType, companies: JSON.stringify(comps) })
                     .then((data: any) => {
                     this.updateTitle();
@@ -574,7 +577,7 @@ module approve_template {
                     header = date.year + "年 计划数据审核";
                     break;
                 case Util.ZBType.YDJDMJH:
-                    header = date.year + "年" + date.month + "月 季度-月度末计划值审核";
+                    header = date.year + "年" + " 季度-月度末计划值审核";
                     break;
                 case Util.ZBType.BY20YJ:
                     header = date.year + "年" + date.month + "月 20日预计值审核";

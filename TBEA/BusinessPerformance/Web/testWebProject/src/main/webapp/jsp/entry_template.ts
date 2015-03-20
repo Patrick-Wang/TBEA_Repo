@@ -86,7 +86,7 @@ module entry_template {
             $("#entryarea").css("display", "");
             var date = this.mDateSelector.getDate();
             if (this.mOpt.entryType == Util.ZBType.YDJDMJH){
-                date = Util.addMonth(date, -3);
+                date = Util.addMonth(date, -2);
             }
             this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId: this.mCompanySelector.getCompany() })
                 .then((data: any) => {
@@ -145,7 +145,7 @@ module entry_template {
                     header = date.year + "年 " + compName + " 计划数据录入";
                     break;
                 case Util.ZBType.YDJDMJH:
-                    header = date.year + "年" + compName + " 季度-月度计划值录入";
+                    header = date.year + "年 " + compName + " 季度-月度计划值录入";
                     break;
                 case Util.ZBType.BY20YJ:
                     header = date.year + "年" + date.month + "月 " + compName + " 20日预计值录入";

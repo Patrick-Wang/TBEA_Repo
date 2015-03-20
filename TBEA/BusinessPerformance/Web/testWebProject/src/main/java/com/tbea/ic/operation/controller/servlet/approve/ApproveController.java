@@ -118,7 +118,7 @@ public class ApproveController {
 		
 		List<List<String[]>> ret = service.getZb(comps, date, entryType);
 	
-		String zb = JSONArray.fromObject(ret).toString().replace("null", "");
+		String zb = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
 		return zb.getBytes("utf-8");
 	}
 	

@@ -110,11 +110,11 @@ public class ApproveServiceImpl implements ApproveService {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
-		
 		cal.add(Calendar.MONTH, leftMonth);
 		Date dEnd = new Date(cal.getTimeInMillis());
-		cal.add(Calendar.MONTH, 1 - leftMonth);
+		cal.add(Calendar.MONTH, -2);
 		Date dStart = new Date(cal.getTimeInMillis());
+		
 
 		List<YDJHZB> zbs = ydjhzbDao.getZb(comps, dStart, dEnd);
 		for (YDJHZB zb : zbs){
