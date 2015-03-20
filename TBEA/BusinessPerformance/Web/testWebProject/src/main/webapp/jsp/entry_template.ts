@@ -9,13 +9,13 @@ module entry_template {
 
     class JQGridAssistantFactory {
 
-        public static createFlatTable(gridName: string, title: string[]): JQTable.JQGridAssistant {
+        public static createFlatTable(gridName: string, title: string[], readOnly : boolean[]): JQTable.JQGridAssistant {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
                     nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, false));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, readOnly[i - 1]));
                 }
 
             }
@@ -44,7 +44,7 @@ module entry_template {
             return View.instance;
         }
 
-        private mReadOnly:boolean = true;
+        private mReadOnlyArr: Array<boolean>;
         private mTableData: Array<string[]>;
         private mDateSelector: Util.DateSelector;
         private mCompanySelector: Util.CompanySelector;
@@ -90,7 +90,7 @@ module entry_template {
             }
             this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId: this.mCompanySelector.getCompany() })
                 .then((data: any) => {
-                this.mReadOnly = data.readOnly;
+                this.mReadOnlyArr = data.readOnly;
                 this.mTableData = data.values;
                 this.updateTitle();
                 this.updateTable(this.mOpt.tableId);
@@ -112,7 +112,7 @@ module entry_template {
                         submitData[i].push(allData[i][j])
                         if (allData[i][j].replace(new RegExp(' ', 'g'), '') == ""){
                             Util.MessageBox.tip("有空内容 无法提交")
-                            return;    
+                            return;
                         }
                     }
                 }
@@ -209,7 +209,6 @@ module entry_template {
             parent.empty();
             parent.append("<div style='font-size:18px'>没有可修改的记录</div>");
             $("#submit").css("display", "none");
-
         }
 
         private enableEntry() {
@@ -247,7 +246,7 @@ module entry_template {
                     titles = ["指标名称", "本月实际"];
                     break;
             }
-            this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
+            this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles, this.mReadOnlyArr);
             
           for (var i = 0; i < this.mTableData.length; ++i){
               for (var j = 2; j < this.mTableData[i].length; ++j){
@@ -272,7 +271,7 @@ module entry_template {
                     resize: false,
                     //autowidth : false,
                     cellsubmit: 'clientArray',
-                    cellEdit: !this.mReadOnly,
+                    cellEdit: true,
                     height: data.length > 25 ? 550 : '100%',
                     width: titles.length * 200,
                     shrinkToFit: true,

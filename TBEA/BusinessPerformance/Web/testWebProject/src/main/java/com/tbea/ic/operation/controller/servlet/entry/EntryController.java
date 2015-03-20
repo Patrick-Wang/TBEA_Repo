@@ -122,8 +122,8 @@ public class EntryController {
 
 		List<String[]> ret =  entryService.getZb(date, account, comp, entryType);
 		String zb = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
-		boolean approved = entryService.isApproved(date, comp, entryType);
-		String result = "{\"readOnly\":" + approved +", \"values\":" + zb + "}";
+		List<Boolean> approved = entryService.isApproved(date, comp, entryType);
+		String result = "{\"readOnly\":" + JSONArray.fromObject(approved).toString() +", \"values\":" + zb + "}";
 		return result.getBytes("utf-8");
 	}
 	
@@ -134,11 +134,11 @@ public class EntryController {
 		Date date = DateSelection.getDate(request);
 		CompanyType comp = CompanySelection.getCompany(request);
 		String ret = "数据已审核，无法修改";
-		if (!entryService.isApproved(date, comp, entryType)){
-			String data = request.getParameter("data");
-			Account account = (Account) request.getSession(false).getAttribute("account");
-			ret = "" + entryService.updateZb(date, account, comp, entryType, JSONArray.fromObject(data));
-		}
+		//if (!entryService.isApproved(date, comp, entryType)){
+		String data = request.getParameter("data");
+		Account account = (Account) request.getSession(false).getAttribute("account");
+		ret = "" + entryService.updateZb(date, account, comp, entryType, JSONArray.fromObject(data));
+		//}
 		String result = "{\"result\":\"" + ret + "\"}";
 		return result.getBytes("utf-8");
 	}

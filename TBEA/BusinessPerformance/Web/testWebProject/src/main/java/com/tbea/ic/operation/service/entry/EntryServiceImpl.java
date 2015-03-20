@@ -181,30 +181,32 @@ public class EntryServiceImpl implements EntryService{
 		boolean newEntity = false;
 		cal.setTime(date);
 		leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
-
+		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.YDJDMJH);
 		for (int i = 0; i < data.size(); ++i){
 			cal.setTime(date);
 			row = data.getJSONArray(i);
 			for (int j = 0; j < leftMonth && j < (row.size() - 1); ++j){
+				if (!approvedList.get(j)){
+					newEntity = false;
+					ydjhzb = ydjhzbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
+					if (null == ydjhzb){
+						newEntity = true;
+						ydjhzb = new YDJHZB();
+						ydjhzb.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
+						ydjhzb.setDwxx(dwxxDao.getById(company.getId()));
+					}
+					ydjhzb.setYdjhshzt(shztDao.getById(2));
+					ydjhzb.setYdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
+					ydjhzb.setNf(cal.get(Calendar.YEAR));
+					ydjhzb.setYf(cal.get(Calendar.MONTH) + 1);
+					ydjhzb.setYdjhz(Util.toDouble(row.getString(j + 1)));
+					if (newEntity){
+						ydjhzbDao.persist(ydjhzb);
+					} else{
+						ydjhzbDao.merge(ydjhzb);
+					}
+				}
 				cal.add(Calendar.MONTH, 1);
-				newEntity = false;
-				ydjhzb = ydjhzbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
-				if (null == ydjhzb){
-					newEntity = true;
-					ydjhzb = new YDJHZB();
-					ydjhzb.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
-					ydjhzb.setDwxx(dwxxDao.getById(company.getId()));
-				}
-				ydjhzb.setYdjhshzt(shztDao.getById(2));
-				ydjhzb.setYdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
-				ydjhzb.setNf(cal.get(Calendar.YEAR));
-				ydjhzb.setYf(cal.get(Calendar.MONTH) + 1);
-				ydjhzb.setYdjhz(Util.toDouble(row.getString(j + 1)));
-				if (newEntity){
-					ydjhzbDao.persist(ydjhzb);
-				} else{
-					ydjhzbDao.merge(ydjhzb);
-				}
 			}
 		}
 
@@ -274,41 +276,43 @@ public class EntryServiceImpl implements EntryService{
 		boolean newEntity = false;
 		cal.setTime(date);
 
+		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.NDJH);
 		boolean isSbd = (sbdNdjhzbDao.getChzb(cal.get(Calendar.YEAR), company) != null);
 		Double xssr = null;
 		Integer zbId = null;
-		for (int i = 0; i < data.size(); ++i){
-			row = data.getJSONArray(i);
-			zbId = Integer.valueOf(row.getString(0));
-			
-			if (isSbd) {
-				if (isYszkzb(zbId) && isChzb(zbId)){
-					continue;
-				}else if (isXssrzb(zbId)){
-					 xssr = Util.toDouble(row.getString(1));
+		if (!approvedList.get(0)){
+			for (int i = 0; i < data.size(); ++i){
+				row = data.getJSONArray(i);
+				zbId = Integer.valueOf(row.getString(0));
+				
+				if (isSbd) {
+					if (isYszkzb(zbId) && isChzb(zbId)){
+						continue;
+					}else if (isXssrzb(zbId)){
+						 xssr = Util.toDouble(row.getString(1));
+					}
+				}
+	
+				zb = zbDao.getZb(zbId, Util.toDate(cal), company);
+				if (null == zb){
+					newEntity = true;
+					zb = new NDJHZB();
+					zb.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
+					zb.setDwxx(dwxxDao.getById(company.getId()));
+				}
+				zb.setNdjhshzt(shztDao.getById(2));
+				zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
+				zb.setNf(cal.get(Calendar.YEAR));
+				zb.setNdjhz(Util.toDouble(row.getString(1)));
+				if (newEntity){
+					zbDao.persist(zb);
+				} else{
+					zbDao.merge(zb);
 				}
 			}
-
-			zb = zbDao.getZb(zbId, Util.toDate(cal), company);
-			if (null == zb){
-				newEntity = true;
-				zb = new NDJHZB();
-				zb.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
-				zb.setDwxx(dwxxDao.getById(company.getId()));
-			}
-			zb.setNdjhshzt(shztDao.getById(2));
-			zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
-			zb.setNf(cal.get(Calendar.YEAR));
-			zb.setNdjhz(Util.toDouble(row.getString(1)));
-			if (newEntity){
-				zbDao.persist(zb);
-			} else{
-				zbDao.merge(zb);
-			}
+			
+			updateComputedZb(xssr, cal, company);
 		}
-		
-		updateComputedZb(xssr, cal, company);
-		
 		return true;
 	}
 
@@ -318,28 +322,32 @@ public class EntryServiceImpl implements EntryService{
 		JSONArray row;
 		boolean newEntity = false;
 		cal.setTime(date);
-		for (int i = 0; i < data.size(); ++i){
-			row = data.getJSONArray(i);
-			zb = sjzbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
-			if (null == zb){
-				newEntity = true;
-				zb = new SJZB();
-				zb.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
-				zb.setDwxx(dwxxDao.getById(company.getId()));
+		
+		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BYSJ);
+		if (!approvedList.get(0)){
+			for (int i = 0; i < data.size(); ++i){
+				row = data.getJSONArray(i);
+				zb = sjzbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
+				if (null == zb){
+					newEntity = true;
+					zb = new SJZB();
+					zb.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
+					zb.setDwxx(dwxxDao.getById(company.getId()));
+				}
+				zb.setSjshzt(shztDao.getById(2));
+				zb.setSjxgsj(new java.sql.Date(new java.util.Date().getTime()));
+				zb.setNf(cal.get(Calendar.YEAR));
+				zb.setYf(cal.get(Calendar.MONTH) + 1);
+				zb.setSjz(Util.toDouble(row.getString(1)));
+				if (newEntity){
+					sjzbDao.persist(zb);
+				} else{
+					sjzbDao.merge(zb);
+				}
 			}
-			zb.setSjshzt(shztDao.getById(2));
-			zb.setSjxgsj(new java.sql.Date(new java.util.Date().getTime()));
-			zb.setNf(cal.get(Calendar.YEAR));
-			zb.setYf(cal.get(Calendar.MONTH) + 1);
-			zb.setSjz(Util.toDouble(row.getString(1)));
-			if (newEntity){
-				sjzbDao.persist(zb);
-			} else{
-				sjzbDao.merge(zb);
-			}
+			cal.setTime(date);
+			setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BYSJ);
 		}
-		cal.setTime(date);
-		setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BYSJ);
 		return true;
 	}
 
@@ -354,55 +362,69 @@ public class EntryServiceImpl implements EntryService{
 		cal.setTime(date);
 		leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 
-		for (int i = 0; i < data.size(); ++i){
+		List<Boolean> approvedList = isApproved(date, company.getType(),
+				ZBType.BY28YJ);
+
+		for (int i = 0; i < data.size(); ++i) {
 			cal.setTime(date);
 			row = data.getJSONArray(i);
 
-			newEntity = false;
-			zb28 = zbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
-			if (null == zb28){
-				newEntity = true;
-				zb28 = new YJ28ZB();
-				zb28.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
-				zb28.setDwxx(dwxxDao.getById(company.getId()));
-			}
-			zb28.setYj28shzt(shztDao.getById(2));
-			zb28.setYj28xgsj(new java.sql.Date(new java.util.Date().getTime()));
-			zb28.setNf(cal.get(Calendar.YEAR));
-			zb28.setYf(cal.get(Calendar.MONTH) + 1);
-			zb28.setYj28z(Util.toDouble(row.getString(1)));
-			if (newEntity){
-				yj28zbDao.persist(zb28);
-			} else{
-				yj28zbDao.merge(zb28);
+			if (!approvedList.get(0)) {
+				newEntity = false;
+				zb28 = zbDao.getZb(Integer.valueOf(row.getString(0)),
+						Util.toDate(cal), company);
+				if (null == zb28) {
+					newEntity = true;
+					zb28 = new YJ28ZB();
+					zb28.setZbxx(zbxxDao.getById(Integer.valueOf(row
+							.getString(0))));
+					zb28.setDwxx(dwxxDao.getById(company.getId()));
+				}
+				zb28.setYj28shzt(shztDao.getById(2));
+				zb28.setYj28xgsj(new java.sql.Date(new java.util.Date()
+						.getTime()));
+				zb28.setNf(cal.get(Calendar.YEAR));
+				zb28.setYf(cal.get(Calendar.MONTH) + 1);
+				zb28.setYj28z(Util.toDouble(row.getString(1)));
+				if (newEntity) {
+					yj28zbDao.persist(zb28);
+				} else {
+					yj28zbDao.merge(zb28);
+				}
 			}
 			cal.add(Calendar.MONTH, 1);
-			
-			for (int j = 1; j <= leftMonth && j < (row.size() - 1); ++j){
-				newEntity = false;
-				zb20 = yj20zbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
-				if (null == zb20){
-					newEntity = true;
-					zb20 = new YJ20ZB();
-					zb20.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
-					zb20.setDwxx(dwxxDao.getById(company.getId()));
-				}
-				zb20.setYj20shzt(shztDao.getById(2));
-				zb20.setYj20xgsj(new java.sql.Date(new java.util.Date().getTime()));
-				zb20.setNf(cal.get(Calendar.YEAR));
-				zb20.setYf(cal.get(Calendar.MONTH) + 1);
-				zb20.setYj20z(Util.toDouble(row.getString(j + 1)));
-				if (newEntity){
-					yj20zbDao.persist(zb20);
-				} else{
-					yj20zbDao.merge(zb20);
+
+			for (int j = 1; j <= leftMonth && j < (row.size() - 1); ++j) {
+				if (!approvedList.get(j)) {
+					newEntity = false;
+					zb20 = yj20zbDao.getZb(Integer.valueOf(row.getString(0)),
+							Util.toDate(cal), company);
+					if (null == zb20) {
+						newEntity = true;
+						zb20 = new YJ20ZB();
+						zb20.setZbxx(zbxxDao.getById(Integer.valueOf(row
+								.getString(0))));
+						zb20.setDwxx(dwxxDao.getById(company.getId()));
+					}
+					zb20.setYj20shzt(shztDao.getById(2));
+					zb20.setYj20xgsj(new java.sql.Date(new java.util.Date()
+							.getTime()));
+					zb20.setNf(cal.get(Calendar.YEAR));
+					zb20.setYf(cal.get(Calendar.MONTH) + 1);
+					zb20.setYj20z(Util.toDouble(row.getString(j + 1)));
+					if (newEntity) {
+						yj20zbDao.persist(zb20);
+					} else {
+						yj20zbDao.merge(zb20);
+					}
 				}
 				cal.add(Calendar.MONTH, 1);
 			}
 		}
-		
-		cal.setTime(date);
-		setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY28YJ);
+		if (!approvedList.get(0)){
+			cal.setTime(date);
+			setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY28YJ);
+		}
 		return true;
 	}
 
@@ -413,37 +435,48 @@ public class EntryServiceImpl implements EntryService{
 		YJ20ZBDao zbDao = yj20zbDao;
 		JSONArray row;
 		boolean newEntity = false;
-		for (int i = 0; i < data.size(); ++i){
+		
+		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BY20YJ);
+		
+		for (int i = 0; i < data.size(); ++i) {
 			cal.setTime(date);
 			leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 
 			row = data.getJSONArray(i);
-			for (int j = 0; j <= leftMonth && j < (row.size() - 1); ++j){
-				newEntity = false;
-				zb = zbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
-				if (null == zb){
-					newEntity = true;
-					zb = new YJ20ZB();
-					zb.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
-					zb.setDwxx(dwxxDao.getById(company.getId()));
-				}
-				zb.setYj20shzt(shztDao.getById(2));
-				zb.setYj20xgsj(new java.sql.Date(new java.util.Date().getTime()));
-				zb.setNf(cal.get(Calendar.YEAR));
-				zb.setYf(cal.get(Calendar.MONTH) + 1);
-				zb.setYj20z(Util.toDouble(row.getString(j + 1)));
-				if (newEntity){
-					zbDao.persist(zb);
-				} else{
-					zbDao.merge(zb);
+			for (int j = 0; j <= leftMonth && j < (row.size() - 1); ++j) {
+
+				if (!approvedList.get(j)) {
+
+					newEntity = false;
+					zb = zbDao.getZb(Integer.valueOf(row.getString(0)),
+							Util.toDate(cal), company);
+					if (null == zb) {
+						newEntity = true;
+						zb = new YJ20ZB();
+						zb.setZbxx(zbxxDao.getById(Integer.valueOf(row
+								.getString(0))));
+						zb.setDwxx(dwxxDao.getById(company.getId()));
+					}
+					zb.setYj20shzt(shztDao.getById(2));
+					zb.setYj20xgsj(new java.sql.Date(new java.util.Date()
+							.getTime()));
+					zb.setNf(cal.get(Calendar.YEAR));
+					zb.setYf(cal.get(Calendar.MONTH) + 1);
+					zb.setYj20z(Util.toDouble(row.getString(j + 1)));
+					if (newEntity) {
+						zbDao.persist(zb);
+					} else {
+						zbDao.merge(zb);
+					}
 				}
 				cal.add(Calendar.MONTH, 1);
 			}
 		}
 		
-		cal.setTime(date);
-		setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
-		
+		if (!approvedList.get(0)) {
+			cal.setTime(date);
+			setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
+		}
 		return true;
 	}
 
@@ -637,25 +670,43 @@ public class EntryServiceImpl implements EntryService{
 			}			
 		}
 	}
-
+	
 	@Override
-	public boolean isApproved(Date date, CompanyType comp, ZBType entryType) {
+	public List<Boolean> isApproved(Date date, CompanyType comp, ZBType entryType) {
+		List<Boolean> bResult = new ArrayList<Boolean>();
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 		switch (entryType){
 		case BY20YJ:
-			return yj20zbDao.getApprovedZbsCount(date, company) > 0;
+			for (int i = 0; i <= leftMonth; ++i){
+				bResult.add(yj20zbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
+				cal.add(Calendar.MONTH, 1);
+			}
+			break;
 		case BY28YJ:
-			return yj28zbDao.getApprovedZbsCount(date, company) > 0;
+			for (int i = 0; i <= leftMonth; ++i){
+				bResult.add(yj28zbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
+				cal.add(Calendar.MONTH, 1);
+			}
+			break;
 		case BYSJ:
-			return sjzbDao.getApprovedZbsCount(date, company) > 0;
+			bResult.add(sjzbDao.getApprovedZbsCount(date, company) > 0);
+			break;
 		case NDJH:
-			return ndjhzbDao.getApprovedZbsCount(date, company) > 0;
+			bResult.add(ndjhzbDao.getApprovedZbsCount(date, company) > 0);
+			break;
 		case YDJDMJH:
-			return ydjhzbDao.getApprovedZbsCount(date, company) > 0;
+			for (int i = 0; i < 3; ++i){
+				bResult.add(ydjhzbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
+				cal.add(Calendar.MONTH, 1);
+			}
+			break;
 		default:
 			break;
 		}
-		return false;
+		return bResult;
 	}
 
 	@Override
