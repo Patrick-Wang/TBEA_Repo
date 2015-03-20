@@ -100,7 +100,7 @@ module entry_template {
         public submit() {
             var date = this.mDateSelector.getDate();
             if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
-                date = Util.addMonth(date, -3);
+                date = Util.addMonth(date, -2);
             }
             var allData = this.mTableAssist.getAllData();
             var submitData = [];

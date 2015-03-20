@@ -175,17 +175,15 @@ public class EntryServiceImpl implements EntryService{
 
 	private boolean updateYDJDMJH(Date date, Company company, JSONArray data) {
 		Calendar cal = Calendar.getInstance();
-		int leftMonth;
 		YDJHZB ydjhzb;
 		JSONArray row;
 		boolean newEntity = false;
 		cal.setTime(date);
-		leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.YDJDMJH);
 		for (int i = 0; i < data.size(); ++i){
 			cal.setTime(date);
 			row = data.getJSONArray(i);
-			for (int j = 0; j < leftMonth && j < (row.size() - 1); ++j){
+			for (int j = 0; j < approvedList.size() && j < (row.size() - 1); ++j){
 				if (!approvedList.get(j)){
 					newEntity = false;
 					ydjhzb = ydjhzbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);

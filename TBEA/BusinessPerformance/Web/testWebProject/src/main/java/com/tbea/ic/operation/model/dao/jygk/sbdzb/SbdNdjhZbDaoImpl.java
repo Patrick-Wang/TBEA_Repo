@@ -81,14 +81,14 @@ public class SbdNdjhZbDaoImpl implements SbdNdjhZbDao{
 	
 	public Double getYszb(int year, Company comp){
 		if (ysZbs.containsKey(comp.getType())){
-			ysZbs.get(comp.getType()).get(year - baseYear);
+			return ysZbs.get(comp.getType()).get(year - baseYear);
 		}
 		return null;
 	}
 	
 	public Double getChzb(int year, Company comp){
 		if (chZbs.containsKey(comp.getType())){
-			chZbs.get(comp.getType()).get(year - baseYear);
+			return chZbs.get(comp.getType()).get(year - baseYear);
 		}
 		return null;
 	}
