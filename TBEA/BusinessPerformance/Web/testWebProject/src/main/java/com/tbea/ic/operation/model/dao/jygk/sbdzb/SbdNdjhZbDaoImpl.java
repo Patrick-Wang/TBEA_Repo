@@ -92,4 +92,9 @@ public class SbdNdjhZbDaoImpl implements SbdNdjhZbDao{
 		}
 		return null;
 	}
+
+	@Override
+	public boolean contains(Company comp) {
+		return ysZbs.containsKey(comp.getType());
+	}
 }

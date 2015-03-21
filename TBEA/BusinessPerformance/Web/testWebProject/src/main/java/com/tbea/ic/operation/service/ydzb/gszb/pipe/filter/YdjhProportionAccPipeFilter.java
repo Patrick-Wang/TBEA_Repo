@@ -14,36 +14,39 @@ import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 public class YdjhProportionAccPipeFilter extends NdjhProportionAccPipeFilter {
 
 	private Integer month;
-	
-	public YdjhProportionAccPipeFilter(SbdNdjhZbDao sbdzbDao, IAccumulator sjAcc, int col, Date dateStart, Date dateEnd) {
+
+	public YdjhProportionAccPipeFilter(SbdNdjhZbDao sbdzbDao,
+			IAccumulator sjAcc, int col, Date dateStart, Date dateEnd) {
 		super(sbdzbDao, sjAcc, col, dateStart, dateEnd);
 	}
-	
+
 	@Override
 	protected Double onCompute(Integer curZb, List<Double> depValues,
 			Company comp) {
-		if (isSBDJYCompany(comp))
-		{
-			if (xssrRow != null && null != depValues.get(xssrRow)){
-				if (curZb == GSZB.YSZK.getValue()){
-					return Util.valueOf(depValues.get(xssrRow)) / month * 12 * sbdzbDao.getYszb(year, comp);
-				} else if (curZb == GSZB.CH.getValue()){
-					return Util.valueOf(depValues.get(xssrRow)) / month * 12 * sbdzbDao.getChzb(year, comp);
+
+		if (xssrRow != null && null != depValues.get(xssrRow)) {
+			if (curZb == GSZB.YSZK.getValue()) {
+				Double value = sbdzbDao.getYszb(year, comp);
+				if (null != value) {
+					return Util.valueOf(depValues.get(xssrRow)) / month * 12
+							* value;
+				}
+			} else if (curZb == GSZB.CH.getValue()) {
+				Double value = sbdzbDao.getChzb(year, comp);
+				if (null != value) {
+					return Util.valueOf(depValues.get(xssrRow)) / month * 12
+							* value;
 				}
 			}
 		}
-	
 		return null;
 	}
-	
-	protected void computeCacheValue(List<Integer> zbs, List<Company> companies){
+
+	protected void computeCacheValue(List<Integer> zbs, List<Company> companies) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(dateEnd);
 		month = cal.get(Calendar.MONTH) + 1;
 		super.computeCacheValue(zbs, companies);
 	}
-	private boolean isSBDJYCompany(Company comp)
-	{	
-		return comp.getId() == 1 || comp.getId() == 2 || comp.getId() == 3 || comp.getId() == 4 || comp.getId() == 5 || comp.getId() == 6;
-	}
+
 }

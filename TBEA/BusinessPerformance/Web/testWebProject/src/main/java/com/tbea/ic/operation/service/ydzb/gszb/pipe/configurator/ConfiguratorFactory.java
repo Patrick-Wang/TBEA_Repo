@@ -14,11 +14,11 @@ public class ConfiguratorFactory {
 	private IPipeConfigurator ydhbConfigurator;
 	
 	public ConfiguratorFactory(SbdNdjhZbDao sbdzbDao, AccumulatorFactory accFac, CompanyManager companyManager){
-		standardConfigurator = new StandardConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc(), companyManager);
-		firstSeasonPredictionConfigurator = new FirstSeasonPredictionConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc(), companyManager);
-		secondSeasonPredictionConfigurator = new SecondSeasonPredictionConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc(), companyManager);
-		jdzbmyConfigurator = new JDZBMYConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc(), companyManager);
-		ydhbConfigurator = new YdhbConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc(), companyManager);
+		standardConfigurator = new StandardConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
+		firstSeasonPredictionConfigurator = new FirstSeasonPredictionConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
+		secondSeasonPredictionConfigurator = new SecondSeasonPredictionConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
+		jdzbmyConfigurator = new JDZBMYConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
+		ydhbConfigurator = new YdhbConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
 		srqyConfigurator = new SrqyConfigurator(accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc(), companyManager);
 	}
 	/**

@@ -6,4 +6,6 @@ public interface SbdNdjhZbDao {
 	public Double getYszb(int year, Company comp);
 	
 	public Double getChzb(int year, Company comp);
+	
+	public boolean contains(Company comp);
 }

@@ -1,11 +1,11 @@
 package com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
@@ -22,13 +22,10 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 	IAccumulator sjAcc;
 	IAccumulator yjhAcc;
 	IAccumulator njhAcc;
-	SbdNdjhZbDao sbdzbDao;
-
 	
 	
-	public YdhbConfigurator(SbdNdjhZbDao sbdzbDao, IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc, CompanyManager companyManager) {
-		super(companyManager);
-		this.sbdzbDao = sbdzbDao;
+	public YdhbConfigurator(SbdNdjhZbDao sbdzbDao, IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc) {
+		super(sbdzbDao);
 		this.sjAcc = sjAcc;
 		this.yjhAcc = yjhAcc;
 		this.njhAcc = njhAcc;
@@ -37,8 +34,9 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 	@Override
 	public void onConfiguring(GszbPipe pipe) {
 		List<Company> allCompanies = pipe.getCompanies();
-		List<Company> nonSbdCompanies = getNonSbdCompany(allCompanies);
-		List<Company> sbdCompanies = getSbdCompany(allCompanies);
+		List<Company> nonSbdCompanies = new ArrayList<Company>();
+		List<Company> sbdCompanies = new ArrayList<Company>();
+		seperate(allCompanies, sbdCompanies, nonSbdCompanies);
 		List<Integer> specialZbs = getSpecialZbs();
 
 		DateHelper dh = new DateHelper(pipe.getDate());

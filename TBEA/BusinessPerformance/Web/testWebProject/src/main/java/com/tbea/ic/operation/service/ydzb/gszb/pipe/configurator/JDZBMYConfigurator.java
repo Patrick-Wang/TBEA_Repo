@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.DateHelper;
@@ -21,11 +22,9 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 	IAccumulator sjAcc;
 	IAccumulator yjhAcc;
 	IAccumulator njhAcc;
-	SbdNdjhZbDao sbdzbDao;
 
-	public JDZBMYConfigurator(SbdNdjhZbDao sbdzbDao, IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc, CompanyManager companyManager) {
-		super(companyManager);
-		this.sbdzbDao = sbdzbDao;
+	public JDZBMYConfigurator(SbdNdjhZbDao sbdzbDao, IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc) {
+		super(sbdzbDao);
 		this.sjAcc = sjAcc;
 		this.yjhAcc = yjhAcc;
 		this.njhAcc = njhAcc;
@@ -34,8 +33,9 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 	@Override
 	public void onConfiguring(GszbPipe pipe) {
 		List<Company> allCompanies = pipe.getCompanies();
-		List<Company> nonSbdCompanies = getNonSbdCompany(allCompanies);
-		List<Company> sbdCompanies = getSbdCompany(allCompanies);
+		List<Company> nonSbdCompanies = new ArrayList<Company>();
+		List<Company> sbdCompanies = new ArrayList<Company>();
+		seperate(allCompanies, sbdCompanies, nonSbdCompanies);
 	
 		List<Integer> specialZbs = getSpecialZbs();
 
