@@ -101,7 +101,7 @@ module hzb_companys {
                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
                this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
                 
-               this.updateTable();
+               //this.updateTable();
                this.updateUI();
            } 
         }
@@ -207,9 +207,10 @@ module hzb_companys {
             parent.empty();
             parent.append("<table id='"+ name +"'></table>");
             if (this.mData.length == 0){
+                $("#tips").css("display", "");
                 return;
             } 
-            
+            $("#tips").css("display", "none");
             var data = [];
             var tableAssist: JQTable.JQGridAssistant = null;
             //if (this.mData[0].length > 16){

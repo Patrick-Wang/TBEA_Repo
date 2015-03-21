@@ -201,6 +201,7 @@
 		<tr>
 			<td>
 				<div id="table"></div>
+				<div align="center" id="tips" style="margin-top:20px;display:none;font-size:25px">当前项目公司无数据</div>
 			<td>
 		</tr>
 	</Table>
