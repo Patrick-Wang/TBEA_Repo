@@ -182,7 +182,7 @@ module hzb_zbhz_prediciton {
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 isRs = row[0] == "人数";
-                isSxfyl = row[0] == '三项费用率';
+                isSxfyl = row[0] == '三项费用率(%)';
                 for (var i = 1; i < row.length; ++i) {
                     if (precentList.contains(i)) {
                         row[i] = Util.formatPercent(row[i]);

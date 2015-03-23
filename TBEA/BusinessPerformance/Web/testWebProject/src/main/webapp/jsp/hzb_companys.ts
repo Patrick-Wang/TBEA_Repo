@@ -175,8 +175,8 @@ module hzb_companys {
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 isRs = row[HbZb.zb] == '人数';
-                isJzcsyl = row[AllZb.zb] == '净资产收益率';
-                isSxfyl = row[AllZb.zb] == '三项费用率';
+                isJzcsyl = row[AllZb.zb] == '净资产收益率(%)';
+                isSxfyl = row[AllZb.zb] == '三项费用率(%)';
                 for (var i = 0; i < row.length; ++i) {
                    if (i == HbZb.dyjhwcl || i == HbZb.dyhbzf ||i == HbZb.dytbzf || i == HbZb.jdjhwcl || i == HbZb.jdtbzf ||
                         i == HbZb.ndljjhwcl ||　i == HbZb.ndtbzf) {
