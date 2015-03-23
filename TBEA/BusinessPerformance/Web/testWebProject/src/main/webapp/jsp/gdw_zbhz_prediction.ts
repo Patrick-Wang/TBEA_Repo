@@ -5,20 +5,20 @@ declare var echarts;
 module gdw_zbhz_prediciton {
 
     enum FirstMonthZb{
-        zb, ndjh, bjdjh, byjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
+        ndjh, bjdjh, byjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
         cyyj, myyj, jdyjhj, jdyjwcl, jdqntq, jdtbzf, 
         ndljwcz, ndzbwcl, ndqntqz, ndtbzf    
     }
     
     enum SecondMonthZb{
-        zb, ndjh, jdjh, byjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
+        ndjh, jdjh, byjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
         jdlj, jdjhwcl, jdqntqz, jdtbzf,
         jdmyyj, jdyjhj, jdyjwcl, jdyjqntq, jdyjtbzf,
         ndljwcz, ndzbwcl, ndqntqz, ndtbzf    
     }
        
     enum ThirdMonthZb{
-        zb, ndjh, bjdjh, xjdjh, dyjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
+        ndjh, bjdjh, xjdjh, dyjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
         jdlj, jdjhwcl, jdqntqz, jdtbzf,
         ndljwcz, ndzbwcl, ndqntqz, ndtbzf,
         xjdsyyj, xjdcyyj, xjdmyyj, xjdyjhj, xjdyjwcl, xjdndlj, xjdndljwcl, xjdqntq,xjdtbzf
