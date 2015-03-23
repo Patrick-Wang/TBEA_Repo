@@ -132,7 +132,7 @@ module hzb_zbhz {
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 isRs = row[ZtId.zb] == '人数';
-                isSxfyl = row[ZtId.zb] == '三项费用率';
+                isSxfyl = row[ZtId.zb] == '三项费用率(%)';
                 for (var i = 0; i < row.length; ++i) {
                     if (i == ZtId.dyjhwcl || i == ZtId.jdjhwcl || i == ZtId.dytbzf || i == ZtId.jdtbzf || i == ZtId.ndljjhwcl || i == ZtId.ndtbzf) {
                         row[i] = Util.formatPercent(row[i]);
@@ -141,7 +141,7 @@ module hzb_zbhz {
                             row[i] = Util.formatInt(row[i]);
                         } 
                         else if (isSxfyl){
-                             row[i] = Util.formatPercentSignal(row[i]);
+                             row[i] = Util.formatPercent(row[i]);
                         }else {
                             row[i] = Util.formatCurrency(row[i]);
                         }
