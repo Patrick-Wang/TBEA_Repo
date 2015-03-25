@@ -46,4 +46,16 @@ public class YJ20ZBLocalDaoImpl extends AbstractReadWriteDaoImpl<YJ20ZBLocal>
 		query.executeUpdate();
 	}
 
+	@Override
+	public void deleteYJ20ZBLocalByDWAndDate(List<Integer> dwidList, int nf,
+			int yf) {
+		String sql = "Delete From YJ20ZBLocal Where dwid in (:dwidList)"
+				+ " and (nf > :nf or (nf = :nf and yf > :yf))";
+		Query query = getEntityManager().createQuery(sql);
+		query.setParameter("dwidList", dwidList);
+		query.setParameter("nf", nf);
+		query.setParameter("yf", yf);
+		query.executeUpdate();
+	}
+
 }

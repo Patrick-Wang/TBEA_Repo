@@ -14,4 +14,7 @@ public interface SJZBLocalDao extends AbstractReadWriteDao<SJZBLocal> {
 
 	public void deleteSJZBLocalByDW(List<Integer> dwidList);
 
+	public void deleteSJZBLocalByDWAndDate(List<Integer> dwidList, int nf,
+			int yf);
+
 }

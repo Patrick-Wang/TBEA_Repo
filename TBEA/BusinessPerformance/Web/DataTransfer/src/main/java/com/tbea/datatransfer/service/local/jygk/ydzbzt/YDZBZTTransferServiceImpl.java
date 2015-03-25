@@ -27,8 +27,10 @@ public class YDZBZTTransferServiceImpl implements YDZBZTTransferService {
 
 			YDZBZTLocal ydzbztLocal = null;
 			// sb
-			ydzbztLocalDao.deleteYDZBZTLocalByDW(dwidListSB);
-			List<YDZBZT> ydzbztSBList = ydzbztSBDao.getAllYDZBZT();
+			int nf = 2015;
+			int yf = 1;
+			ydzbztLocalDao.deleteYDZBZTLocalByDWAndDate(dwidListSB, nf, yf);
+			List<YDZBZT> ydzbztSBList = ydzbztSBDao.getNewYDZBZT(nf, yf);
 			for (YDZBZT ydzbztSB : ydzbztSBList) {
 				ydzbztLocal = new YDZBZTLocal();
 				ydzbztLocal.setDwid(ydzbztSB.getDwid());

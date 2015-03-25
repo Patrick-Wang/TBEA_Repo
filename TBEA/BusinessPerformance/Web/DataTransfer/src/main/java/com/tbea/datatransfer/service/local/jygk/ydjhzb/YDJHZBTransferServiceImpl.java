@@ -27,8 +27,10 @@ public class YDJHZBTransferServiceImpl implements YDJHZBTransferService {
 
 			YDJHZBLocal ydjhzbLocal = null;
 			// sb
-			ydjhzbLocalDao.deleteYDJHZBLocalByDW(dwidListSB);
-			List<YDJHZB> ydjhzbSBList = ydjhzbSBDao.getAllYDJHZB();
+			int nf = 2015;
+			int yf = 3;
+			ydjhzbLocalDao.deleteYDJHZBLocalByDWAndDate(dwidListSB, nf, yf);
+			List<YDJHZB> ydjhzbSBList = ydjhzbSBDao.getNewYDJHZB(nf, yf);
 			for (YDJHZB ydjhzbSB : ydjhzbSBList) {
 				ydjhzbLocal = new YDJHZBLocal();
 				ydjhzbLocal.setDwid(ydjhzbSB.getDwid());

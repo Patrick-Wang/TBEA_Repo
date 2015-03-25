@@ -27,8 +27,9 @@ public class NDJHZBTransferServiceImpl implements NDJHZBTransferService {
 
 			NDJHZBLocal ndjhzbLocal = null;
 			// sb
-			ndjhzbLocalDao.deleteNDJHZBLocalByDW(dwidListSB);
-			List<NDJHZB> ndjhzbSBList = ndjhzbSBDao.getAllNDJHZB();
+			int nf = 2015;
+			ndjhzbLocalDao.deleteNDJHZBLocalByDWAndDate(dwidListSB, nf);
+			List<NDJHZB> ndjhzbSBList = ndjhzbSBDao.getNewNDJHZB(nf);
 			for (NDJHZB ndjhzbSB : ndjhzbSBList) {
 				ndjhzbLocal = new NDJHZBLocal();
 				ndjhzbLocal.setDwid(ndjhzbSB.getDwid());

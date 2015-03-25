@@ -77,6 +77,9 @@
 	<bean id="dataSourcesb" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/sb_db" />
 	</bean>
+    <bean id="dataSourcesb2" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/sb_db2" />
+    </bean>
 	<bean id="dataSourcell" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/ll_db" />
 	</bean>
@@ -177,6 +180,21 @@
 		</property>
 		<property name="persistenceUnitName" value="sbDB" />
 	</bean>
+	<bean id="entityManagerFactorysb2"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSourcesb2" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" 
+					/> <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
+					/> -->
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="sbDB2" />
+	</bean>
 	<bean id="entityManagerFactoryll"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSourcell" />
@@ -236,6 +254,7 @@
 	<tx:annotation-driven transaction-manager="transactionManagertb" />
 	<tx:annotation-driven transaction-manager="transactionManagertb2" />
 	<tx:annotation-driven transaction-manager="transactionManagersb" />
+	<tx:annotation-driven transaction-manager="transactionManagersb2" />
 	<tx:annotation-driven transaction-manager="transactionManagerll" />
 	<tx:annotation-driven transaction-manager="transactionManagerxb" />
 	<tx:annotation-driven transaction-manager="transactionManagerxl" />
@@ -265,6 +284,10 @@
 	<bean id="transactionManagersb" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactorysb" />
 		<property name="dataSource" ref="dataSourcesb" />
+	</bean>
+	<bean id="transactionManagersb2" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactorysb2" />
+		<property name="dataSource" ref="dataSourcesb2" />
 	</bean>
 	<bean id="transactionManagerll" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactoryll" />
