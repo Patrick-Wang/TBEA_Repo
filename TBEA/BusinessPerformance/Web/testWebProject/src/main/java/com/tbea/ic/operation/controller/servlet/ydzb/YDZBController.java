@@ -38,13 +38,12 @@ class CompanyTypeFilter implements CompanySelection.Filter{
 	Organization org;
 	Company dbsbd;
 	Company nfsbd;
-	Company xjtc;
+//	Company xjtc;
 	public CompanyTypeFilter(List<Company> companies, Organization org){
 		this.org = org;
 		this.companies = companies;
 		dbsbd = org.getCompany(CompanyType.DBSBDCYJT);
 		nfsbd = org.getCompany(CompanyType.NFSBDCYJT);
-		xjtc = org.getCompany(CompanyType.TCNY_and_XJNY);	
 		updateCompanies();
 	}
 		
@@ -68,7 +67,7 @@ class CompanyTypeFilter implements CompanySelection.Filter{
 		}
 		addCategory(ret, dbsbd);
 		addCategory(ret, nfsbd);
-		addCategory(ret, xjtc);		
+		//addCategory(ret, xjtc);		
 		this.companies = ret;
 	}
 	
@@ -85,7 +84,7 @@ class CompanyTypeFilter implements CompanySelection.Filter{
 	public boolean keep(Company comp) {
 		return !dbsbd.contains(comp) && 
 			!nfsbd.contains(comp) && 
-			!xjtc.contains(comp) && 
+			//!xjtc.contains(comp) && 
 			(companies.contains(comp) || contains(comp));
 	}
 	
@@ -168,7 +167,6 @@ public class YDZBController {
 			comps = org.getCompany(compType).getSubCompanys();
 			removeJzcsyl = true;
 		} else if (
-				CompanyType.TCNY_and_XJNY == compType ||
 				CompanyType.BYQCY == compType ||
 				CompanyType.XLCY == compType ||
 				CompanyType.DBSBDCYJT == compType ||
