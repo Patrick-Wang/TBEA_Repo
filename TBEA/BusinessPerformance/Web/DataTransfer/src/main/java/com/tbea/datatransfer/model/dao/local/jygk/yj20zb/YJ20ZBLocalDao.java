@@ -13,5 +13,8 @@ public interface YJ20ZBLocalDao extends AbstractReadWriteDao<YJ20ZBLocal> {
 	public void truncateYJ20ZBLocal();
 
 	public void deleteYJ20ZBLocalByDW(List<Integer> dwidList);
+	
+	public void deleteYJ20ZBLocalByDWAndDate(List<Integer> dwidList, int nf,
+			int yf);
 
 }

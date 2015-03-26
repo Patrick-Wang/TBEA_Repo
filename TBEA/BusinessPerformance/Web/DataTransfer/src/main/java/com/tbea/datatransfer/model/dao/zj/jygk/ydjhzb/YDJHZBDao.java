@@ -10,4 +10,6 @@ public interface YDJHZBDao extends AbstractReadOnlyDao<YDJHZB> {
 
 	public List<YDJHZB> getAllYDJHZB();
 
+	public List<YDJHZB> getNewYDJHZB(int nf, int yf);
+
 }

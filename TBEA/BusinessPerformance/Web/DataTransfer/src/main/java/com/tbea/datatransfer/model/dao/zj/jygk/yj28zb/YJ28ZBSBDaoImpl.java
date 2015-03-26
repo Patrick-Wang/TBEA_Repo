@@ -12,12 +12,12 @@ import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
 
 import com.tbea.datatransfer.model.entity.zj.jygk.YJ28ZB;
 
-@Transactional("transactionManagersb")
+@Transactional("transactionManagersb2")
 public class YJ28ZBSBDaoImpl extends AbstractReadOnlyDaoImpl<YJ28ZB> implements
 		YJ28ZBDao {
 
 	@Override
-	@PersistenceContext(unitName = "sbDB")
+	@PersistenceContext(unitName = "sbDB2")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
 	}

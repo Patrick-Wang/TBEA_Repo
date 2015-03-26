@@ -46,4 +46,14 @@ public class NDJHZBLocalDaoImpl extends AbstractReadWriteDaoImpl<NDJHZBLocal>
 		query.executeUpdate();
 	}
 
+	@Override
+	public void deleteNDJHZBLocalByDWAndDate(List<Integer> dwidList, int nf) {
+		String sql = "Delete From NDJHZBLocal Where dwid in (:dwidList)"
+				+ " and nf > :nf";
+		Query query = getEntityManager().createQuery(sql);
+		query.setParameter("dwidList", dwidList);
+		query.setParameter("nf", nf);
+		query.executeUpdate();
+	}
+
 }

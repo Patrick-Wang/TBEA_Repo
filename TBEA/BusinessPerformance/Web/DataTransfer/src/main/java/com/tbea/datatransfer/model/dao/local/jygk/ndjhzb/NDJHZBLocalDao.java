@@ -13,5 +13,7 @@ public interface NDJHZBLocalDao extends AbstractReadWriteDao<NDJHZBLocal> {
 	public void truncateNDJHZBLocal();
 
 	public void deleteNDJHZBLocalByDW(List<Integer> dwidList);
+	
+	public void deleteNDJHZBLocalByDWAndDate(List<Integer> dwidList, int nf);
 
 }

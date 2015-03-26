@@ -9,5 +9,7 @@ import com.tbea.datatransfer.model.entity.zj.jygk.NDJHZB;
 public interface NDJHZBDao extends AbstractReadOnlyDao<NDJHZB> {
 
 	public List<NDJHZB> getAllNDJHZB();
+	
+	public List<NDJHZB> getNewNDJHZB(int nf);
 
 }

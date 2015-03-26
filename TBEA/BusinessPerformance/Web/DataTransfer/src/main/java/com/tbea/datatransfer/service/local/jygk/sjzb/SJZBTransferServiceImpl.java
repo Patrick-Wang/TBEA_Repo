@@ -27,8 +27,10 @@ public class SJZBTransferServiceImpl implements SJZBTransferService {
 
 			SJZBLocal sjzbLocal = null;
 			// sb
-			sjzbLocalDao.deleteSJZBLocalByDW(dwidListSB);
-			List<SJZB> sjzbSBList = sjzbSBDao.getAllSJZB();
+			int nf = 2015;
+			int yf = 1;
+			sjzbLocalDao.deleteSJZBLocalByDWAndDate(dwidListSB, nf, yf);
+			List<SJZB> sjzbSBList = sjzbSBDao.getNewSJZB(nf, yf);
 			for (SJZB sjzbSB : sjzbSBList) {
 				sjzbLocal = new SJZBLocal();
 				sjzbLocal.setDwid(sjzbSB.getDwid());

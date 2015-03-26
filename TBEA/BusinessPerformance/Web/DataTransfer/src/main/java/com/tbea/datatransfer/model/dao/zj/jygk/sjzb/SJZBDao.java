@@ -10,4 +10,6 @@ public interface SJZBDao extends AbstractReadOnlyDao<SJZB> {
 
 	public List<SJZB> getAllSJZB();
 
+	public List<SJZB> getNewSJZB(int nf, int yf);
+
 }

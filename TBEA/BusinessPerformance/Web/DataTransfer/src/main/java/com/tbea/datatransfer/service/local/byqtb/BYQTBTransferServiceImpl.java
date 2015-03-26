@@ -109,8 +109,7 @@ public class BYQTBTransferServiceImpl implements BYQTBTransferService {
 				byqtbLocal.setXmxx(String.valueOf(recMap.get("xmxx")));
 				byqtbLocal.setTbbjsj(CommonMethod.objectToDate(timeFormat,
 						recMap.get("tbbjsj")));
-				byqtbLocal.setYjjhsj(CommonMethod.objectToDate(timeFormat,
-						recMap.get("yjjhsj")));
+				byqtbLocal.setYjjhsj(String.valueOf(recMap.get("yjjhsj")));
 				byqtbLocal.setXh(String.valueOf(recMap.get("xh")));
 				byqtbLocal.setDy(String.valueOf(recMap.get("dy")));
 				byqtbLocal.setCl(String.valueOf(recMap.get("cl")));

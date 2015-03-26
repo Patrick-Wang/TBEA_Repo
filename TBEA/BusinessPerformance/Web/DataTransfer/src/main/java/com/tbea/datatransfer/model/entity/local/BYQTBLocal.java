@@ -24,7 +24,7 @@ public class BYQTBLocal extends AbstractReadWriteEntity implements Serializable 
 
 	private Date tbbjsj;
 
-	private Date yjjhsj;
+	private String yjjhsj;
 
 	private String xh;
 
@@ -103,11 +103,11 @@ public class BYQTBLocal extends AbstractReadWriteEntity implements Serializable 
 		this.tbbjsj = tbbjsj;
 	}
 
-	public Date getYjjhsj() {
+	public String getYjjhsj() {
 		return yjjhsj;
 	}
 
-	public void setYjjhsj(Date yjjhsj) {
+	public void setYjjhsj(String yjjhsj) {
 		this.yjjhsj = yjjhsj;
 	}
 
