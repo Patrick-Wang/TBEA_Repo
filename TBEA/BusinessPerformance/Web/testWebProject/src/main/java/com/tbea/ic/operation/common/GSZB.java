@@ -12,7 +12,7 @@ public enum GSZB {
 	QZJQKSR(9),//    其中：加气块收入
 	QZGNSR(10),//    其中：国内收入
 	QZGJSR(11),//    其中：国际收入
-	GCXMSR(12),//工程项目收入
+	GCXMSR(12),//	工程项目收入
 	QZGNSR_1(13),//    其中：国内收入
 	QZGJSR_1(14),//    其中：国际收入
 	YYSSR(15),//运营商收入

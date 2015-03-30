@@ -1,6 +1,8 @@
 package com.tbea.ic.operation.controller.servlet.ydzb;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,6 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +32,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.JyzbExcelTemplate;
+import com.tbea.ic.operation.common.JyzbExcelTemplate.SheetType;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
@@ -115,6 +126,56 @@ public class YDZBController {
 	@Autowired
 	private GszbService gszbService;
 
+	
+	@RequestMapping(value = "hzb_zbhz_export.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getHzb_zbhz_export(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = DateSelection.getDate(request);
+		String type = request.getParameter("type");
+		
+		if ("0".equals(type)) {
+			List<String[]> gszb = gszbService.getGsztzb(d);
+			JyzbExcelTemplate template = JyzbExcelTemplate.createTemplate(SheetType.GSZTZB);
+			HSSFWorkbook workbook = template.getWorkbook();
+			HSSFSheet sheet = workbook.getSheetAt(0);
+			int colCount = 0;
+			for (int i = 0; i < gszb.size(); ++i) {
+				HSSFRow row = sheet.createRow(2 + i);
+				colCount = gszb.get(i).length;
+				for (int j = 0; j < colCount; ++j) {
+					HSSFCell cell = row.createCell(j);
+					if (gszb.get(i)[j] != null) {
+						if (0 == j) {
+							cell.setCellValue(gszb.get(i)[j]);
+							cell.setCellStyle(template.getCellStyleHeader());
+						} else if (4 == j || 6 == j || 9 == j || 11 == j
+								|| 13 == j || 15 == j) {
+							cell.setCellValue(Double.valueOf(gszb.get(i)[j]));
+							cell.setCellStyle(template.getCellStylePercent());
+						} else {
+							cell.setCellValue(Double.valueOf(gszb.get(i)[j]));
+							cell.setCellStyle(template.getCellStyleNumber());
+						}
+					}else{
+						cell.setCellValue("--");
+						cell.setCellStyle(template.getCellStyleNull());
+					}
+				}
+			}
+
+			response.setContentType("application/octet-stream"); 
+			response.setHeader("Content-disposition","attachment;filename=\"gsztzb.xls\"");
+			template.write(response.getOutputStream());
+		} else {
+//			hzb_zbhz = JSONArray.fromObject(gszbService.getSrqy(d)).toString()
+//					.replace("null", "\"--\"");
+		}
+		
+		
+		
+		return "".getBytes("utf-8");
+	}
+	
 	@RequestMapping(value = "hzb_zbhz_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getHzb_zbhz_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
