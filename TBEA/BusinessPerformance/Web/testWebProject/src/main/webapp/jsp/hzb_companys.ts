@@ -109,7 +109,7 @@ module hzb_companys {
         public export(fName: string) {
             var date : Util.Date = this.mDateSelector.getDate();
             var compType = this.mCompanySelector.getCompany();
-            $("#export")[0].action = "companys_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, companyId: compType, fileName: fName });
+            $("#export")[0].action = "companys_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, companyId: compType});
             $("#export")[0].submit();
         }
         

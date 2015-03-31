@@ -322,6 +322,7 @@ public class YDZBController {
 		JyzbExcelTemplate template = null;
 		CompanyType compType = CompanySelection.getCompany(request);
 		String compName = compType.getValue();
+		String fileName = compName + "经营指标完成情况";
 		Organization org = companyManager.getBMDBOrganization();
 		List<Company> comps;
 		boolean removeJzcsyl = false;
@@ -357,7 +358,7 @@ public class YDZBController {
 				.addType(15, CellFormatter.CellType.PERCENT);
 
 		HSSFWorkbook workbook = template.getWorkbook();
-		workbook.setSheetName(0, compName);
+		workbook.setSheetName(0, compName + "经营指标完成情况");
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		for (int i = ret.size() - 1; i >= 0; --i) {
 			HSSFRow row = sheet.createRow(2 + i);
@@ -366,7 +367,7 @@ public class YDZBController {
 				formatter.format(j, cell, ret.get(i)[j]);
 			}
 		}
-		template.write(response, request.getParameter("fileName") + ".xls");
+		template.write(response, fileName + ".xls");
 		return "".getBytes("utf-8");
 	}
 	//各单位经营指标完成情况update
@@ -424,6 +425,35 @@ public class YDZBController {
 
 		compSel.select(map, 3);
 		return new ModelAndView("hzb_companys", map);
+	}
+	@RequestMapping(value = "gcy_zbhz_export.do")
+	public @ResponseBody byte[] getgcy_zbhz_export(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = DateSelection.getDate(request);
+		JyzbExcelTemplate template = null;
+		List<String[]> data = null;
+		data = gszbService.getGcyzb(d);
+		template = JyzbExcelTemplate.createTemplate(SheetType.GCY_ZBWC);
+		CellFormatter formatter = template.createCellFormatter()
+				.addType(3, CellFormatter.CellType.PERCENT)
+				.addType(5, CellFormatter.CellType.PERCENT)
+				.addType(8, CellFormatter.CellType.PERCENT)
+				.addType(10, CellFormatter.CellType.PERCENT)
+				.addType(12, CellFormatter.CellType.PERCENT)
+				.addType(14, CellFormatter.CellType.PERCENT);
+
+		HSSFWorkbook workbook = template.getWorkbook();       
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = data.size() - 1; i >= 0; --i) {
+			HSSFRow row = sheet.createRow(3 + i);
+			for (int j = data.get(i).length - 1; j >= 0; --j) {
+				HSSFCell cell = row.createCell(j);
+				formatter.format(j, cell, data.get(i)[j]);
+			}
+		}		
+			
+		template.write(response, request.getParameter("fileName") + ".xls");
+		return "".getBytes("utf-8");
 	}
 	
 	//各产业经营指标完成情况update

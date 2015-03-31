@@ -173,7 +173,7 @@
 		}
 		#exportButton {
 			height: 23px;
-			width:40px;
+			width:100px;
 			padding: .1em 1em;
 			margin-top: -1px;
 		}
@@ -220,7 +220,6 @@
 			<td>
 			<form id="export" method="post">
 				<input id="exportButton" type="button" value="导出"
-					style="width: 80px;"
 					onclick="instance.export($('h1').text())"
 					class="ui-button ui-widget ui-state-default ui-corner-all"
 					role="button" aria-disabled="false"></input>
