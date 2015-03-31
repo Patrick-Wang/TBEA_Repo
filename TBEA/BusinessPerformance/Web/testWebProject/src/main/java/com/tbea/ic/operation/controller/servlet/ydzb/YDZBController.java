@@ -35,6 +35,7 @@ import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.JyzbExcelTemplate;
 import com.tbea.ic.operation.common.JyzbExcelTemplate.CellFormatter;
 import com.tbea.ic.operation.common.JyzbExcelTemplate.SheetType;
+import com.tbea.ic.operation.common.POIUtils;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
@@ -135,10 +136,9 @@ public class YDZBController {
 		String type = request.getParameter("type");
 		JyzbExcelTemplate template = null;
 		List<String[]> data = null;
-		if ("0".equals(type)) {
+		if ("0".equals(type)) {	
 			data = gszbService.getGsztzb(d);
 			template = JyzbExcelTemplate.createTemplate(SheetType.GSZTZB);
-
 			CellFormatter formatter = template.createCellFormatter()
 					.addType(0, CellFormatter.CellType.HEADER)
 					.addType(4, CellFormatter.CellType.PERCENT)
@@ -148,16 +148,15 @@ public class YDZBController {
 					.addType(13, CellFormatter.CellType.PERCENT)
 					.addType(15, CellFormatter.CellType.PERCENT);
 
-			HSSFWorkbook workbook = template.getWorkbook();
+			HSSFWorkbook workbook = template.getWorkbook();       
 			HSSFSheet sheet = workbook.getSheetAt(0);
 			for (int i = data.size() - 1; i >= 0; --i) {
-				HSSFRow row = sheet.createRow(2 + i);
+				HSSFRow row = sheet.createRow(3 + i);
 				for (int j = data.get(i).length - 1; j >= 0; --j) {
 					HSSFCell cell = row.createCell(j);
 					formatter.format(j, cell, data.get(i)[j]);
 				}
-			}
-
+			}		
 			
 		} else {
 			data = gszbService.getSrqy(d);
