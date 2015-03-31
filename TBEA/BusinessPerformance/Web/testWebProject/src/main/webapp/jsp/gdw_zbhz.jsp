@@ -202,6 +202,24 @@
 				<div id="table"></div>
 			<td>
 		</tr>
+		
+		<tr>
+			<td>
+				<div style="height:10px"></div>
+			<td>
+		</tr>
+		<tr>
+			<td>
+			<form id="export" method="post" style="display:none">
+				<input id="update" type="button" value="导出"
+					style="width: 100px;"
+					onclick="instance.export($('h1').text())"
+					class="ui-button ui-widget ui-state-default ui-corner-all"
+					role="button" aria-disabled="false"></input>
+			</form>
+			</td>
+			
+		</tr>
 	</Table>
 	<%@include file="loading.jsp"%>
 </body>
