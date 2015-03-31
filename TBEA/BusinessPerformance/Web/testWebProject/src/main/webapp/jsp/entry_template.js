@@ -1,20 +1,16 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
-/// <reference path="dateSelector.ts" />
-/// <reference path="companySelector.ts" />
 var entry_template;
 (function (entry_template) {
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
-        JQGridAssistantFactory.createFlatTable = function (gridName, title) {
+        JQGridAssistantFactory.createFlatTable = function (gridName, title, readOnly) {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
                     nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, false));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, readOnly[i - 1]));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -47,7 +43,6 @@ var entry_template;
                 this.mCompanySelector.hide();
             }
             this.updateTitle();
-            //this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
@@ -55,10 +50,11 @@ var entry_template;
             $("#entryarea").css("display", "");
             var date = this.mDateSelector.getDate();
             if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
-                date = Util.addMonth(date, -3);
+                date = Util.addMonth(date, -2);
             }
             this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId: this.mCompanySelector.getCompany() }).then(function (data) {
-                _this.mTableData = data;
+                _this.mReadOnlyArr = data.readOnly;
+                _this.mTableData = data.values;
                 _this.updateTitle();
                 _this.updateTable(_this.mOpt.tableId);
             });
@@ -66,7 +62,7 @@ var entry_template;
         View.prototype.submit = function () {
             var date = this.mDateSelector.getDate();
             if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
-                date = Util.addMonth(date, -3);
+                date = Util.addMonth(date, -2);
             }
             var allData = this.mTableAssist.getAllData();
             var submitData = [];
@@ -90,11 +86,14 @@ var entry_template;
                 companyId: this.mCompanySelector.getCompany(),
                 data: JSON.stringify(submitData)
             }).then(function (data) {
-                if (data.result) {
+                if ("true" == data.result) {
                     Util.MessageBox.tip("提交 成功");
                 }
-                else {
+                else if ("false" == data.result) {
                     Util.MessageBox.tip("提交 失败");
+                }
+                else {
+                    Util.MessageBox.tip(data.result);
                 }
             });
         };
@@ -104,10 +103,10 @@ var entry_template;
             var compName = this.mCompanySelector.getCompanyName();
             switch (this.mOpt.entryType) {
                 case Util.ZBType.QNJH:
-                    header = date.year + "年 " + compName + " 全年计划数据录入";
+                    header = date.year + "年 " + compName + " 计划数据录入";
                     break;
                 case Util.ZBType.YDJDMJH:
-                    header = date.year + "年" + compName + " 季度-月度计划值录入";
+                    header = date.year + "年 " + compName + " 季度-月度计划值录入";
                     break;
                 case Util.ZBType.BY20YJ:
                     header = date.year + "年" + date.month + "月 " + compName + " 20日预计值录入";
@@ -203,7 +202,7 @@ var entry_template;
                     titles = ["指标名称", "本月实际"];
                     break;
             }
-            this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
+            this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles, this.mReadOnlyArr);
             for (var i = 0; i < this.mTableData.length; ++i) {
                 for (var j = 2; j < this.mTableData[i].length; ++j) {
                     if ("" != this.mTableData[i][j]) {
@@ -215,17 +214,14 @@ var entry_template;
             var lastsel = "";
             var lastcell = "";
             $("#" + name).jqGrid(this.mTableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: this.mTableAssist.getDataWithId(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
-                height: data.length > 25 ? 600 : '100%',
+                height: data.length > 25 ? 550 : '100%',
                 width: titles.length * 200,
                 shrinkToFit: true,
                 autoScroll: true,
@@ -261,9 +257,7 @@ var entry_template;
             $('html').bind('click', function (e) {
                 if (lastsel != "") {
                     if ($(e.target).closest("#" + name).length == 0) {
-                        //  $("#" + name).jqGrid('saveRow', lastsel); 
                         $("#" + name).jqGrid("saveCell", lastsel, lastcell);
-                        //$("#" + name).resetSelection(); 
                         lastsel = "";
                     }
                 }
