@@ -23,6 +23,7 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -128,6 +129,34 @@ public class YDZBController {
 	@Autowired
 	private GszbService gszbService;
 
+	private List<String[]> getGdwData(Date d, CompanyType compType){
+		List<Company> comps;
+		boolean removeJzcsyl = false;
+		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
+			Organization org = companyManager.getBMDBOrganization();
+			comps = org.getCompany(compType).getSubCompanys();
+			removeJzcsyl = true;
+		} else if (
+				CompanyType.BYQCY == compType ||
+				CompanyType.XLCY == compType ||
+				CompanyType.DBSBDCYJT == compType ||
+				CompanyType.NFSBDCYJT == compType){
+			removeJzcsyl = true;
+			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
+			comps = orgJyzb.getCompany(compType).getSubCompanys();
+		} else {
+			Organization org = companyManager.getBMDBOrganization();
+			comps = new ArrayList<Company>();
+			comps.add(org.getCompany(compType));
+		}
+
+		List<String[]> ret = gszbService.getGdwzb(d, comps);
+		if (removeJzcsyl){
+			removeJzcsyl(ret);
+		}
+		return ret;
+	}
+	
 	
 	@RequestMapping(value = "hzb_zbhz_export.do")
 	public @ResponseBody byte[] getHzb_zbhz_export(HttpServletRequest request,
@@ -156,7 +185,70 @@ public class YDZBController {
 					HSSFCell cell = row.createCell(j);
 					formatter.format(j, cell, data.get(i)[j]);
 				}
-			}		
+			}
+
+			List<CompanyType> compTypes = new ArrayList<CompanyType>();
+			compTypes.add(CompanyType.SBDCYJT);
+			compTypes.add(CompanyType.BYQCY);
+			compTypes.add(CompanyType.XLCY);
+			compTypes.add(CompanyType.DBSBDCYJT);
+			compTypes.add(CompanyType.NFSBDCYJT);
+			compTypes.add(CompanyType.SBGS);
+			compTypes.add(CompanyType.HBGS);
+			compTypes.add(CompanyType.XBC);
+			compTypes.add(CompanyType.LLGS);
+			compTypes.add(CompanyType.XLC);
+			compTypes.add(CompanyType.DLGS);
+			compTypes.add(CompanyType.XNYSYB);
+			compTypes.add(CompanyType.XNYGS);
+			compTypes.add(CompanyType.XTNYGS);
+			compTypes.add(CompanyType.NYSYB);
+			compTypes.add(CompanyType.TCNY);
+			compTypes.add(CompanyType.NDGS);
+			compTypes.add(CompanyType.ZHGS);
+			compTypes.add(CompanyType.JCKGS_JYDW);
+			compTypes.add(CompanyType.GJGCGS_GFGS);
+			
+			
+			 int sheetMergerCount = sheet.getNumMergedRegions();
+			 
+			
+			for (CompanyType ct : compTypes) {
+				int lastRow = sheet.getLastRowNum() + 4;
+				HSSFRow rowFrom = sheet.getRow(0);
+				HSSFRow rowTo = sheet.createRow(lastRow);
+				POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+				rowTo.getCell(0).setCellValue(ct.getValue());
+
+				rowFrom = sheet.getRow(1);
+				rowTo = sheet.createRow(lastRow + 1);
+				POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+
+				rowFrom = sheet.getRow(2);
+				rowTo = sheet.createRow(lastRow + 2);
+				POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+
+				for (int i = 0; i < sheetMergerCount; i++) {
+					CellRangeAddress range = sheet.getMergedRegion(i);
+					range = range.copy();
+					range.setLastRow(range.getLastRow() + lastRow);
+					range.setFirstRow(range.getFirstRow() + lastRow);
+					sheet.addMergedRegion(range);
+				}
+
+				lastRow += 3;
+				data = getGdwData(d, ct);
+				for (int i = data.size() - 1; i >= 0; --i) {
+					HSSFRow row = sheet.createRow(lastRow + i);
+					for (int j = data.get(i).length - 1; j >= 0; --j) {
+						HSSFCell cell = row.createCell(j);
+						formatter.format(j, cell, data.get(i)[j]);
+					}
+				}
+			}
+			
+			
+			
 			
 		} else {
 			data = gszbService.getSrqy(d);
@@ -284,31 +376,31 @@ public class YDZBController {
 			throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
 		CompanyType compType = CompanySelection.getCompany(request);
-		Organization org = companyManager.getBMDBOrganization();
-		List<Company> comps;
-		boolean removeJzcsyl = false;
-		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
-			comps = org.getCompany(compType).getSubCompanys();
-			removeJzcsyl = true;
-		} else if (
-				CompanyType.BYQCY == compType ||
-				CompanyType.XLCY == compType ||
-				CompanyType.DBSBDCYJT == compType ||
-				CompanyType.NFSBDCYJT == compType){
-			removeJzcsyl = true;
-			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
-			comps = orgJyzb.getCompany(compType).getSubCompanys();
-		} else {
-			comps = new ArrayList<Company>();
-			comps.add(org.getCompany(compType));
-		}
-
-		List<String[]> ret = gszbService.getGdwzb(d, comps);
-		if (removeJzcsyl){
-			removeJzcsyl(ret);
-		}
+//		Organization org = companyManager.getBMDBOrganization();
+//		List<Company> comps;
+//		boolean removeJzcsyl = false;
+//		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
+//			comps = org.getCompany(compType).getSubCompanys();
+//			removeJzcsyl = true;
+//		} else if (
+//				CompanyType.BYQCY == compType ||
+//				CompanyType.XLCY == compType ||
+//				CompanyType.DBSBDCYJT == compType ||
+//				CompanyType.NFSBDCYJT == compType){
+//			removeJzcsyl = true;
+//			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
+//			comps = orgJyzb.getCompany(compType).getSubCompanys();
+//		} else {
+//			comps = new ArrayList<Company>();
+//			comps.add(org.getCompany(compType));
+//		}
+//
+//		List<String[]> ret = gszbService.getGdwzb(d, comps);
+//		if (removeJzcsyl){
+//			removeJzcsyl(ret);
+//		}
 		
-		String hzb_zbhz = JSONArray.fromObject(ret).toString()
+		String hzb_zbhz = JSONArray.fromObject(this.getGdwData(d, compType)).toString()
 				.replace("null", "\"--\"");
 		return hzb_zbhz.getBytes("utf-8");
 	}

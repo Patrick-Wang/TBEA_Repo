@@ -114,8 +114,8 @@ public class POIUtils {
 	 */
 	public static void copyCell(HSSFWorkbook wb,HSSFCell srcCell, HSSFCell distCell,
 			boolean copyValueFlag) {
-		HSSFCellStyle newstyle=wb.createCellStyle();
-		copyCellStyle(srcCell.getCellStyle(), newstyle);
+		HSSFCellStyle newstyle = srcCell.getCellStyle();
+		//copyCellStyle(srcCell.getCellStyle(), newstyle);
 
 		//样式
 		distCell.setCellStyle(newstyle);

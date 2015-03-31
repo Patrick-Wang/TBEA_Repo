@@ -317,7 +317,9 @@ public class GszbServiceImpl implements GszbService {
 			zbs = values.get(k);
 			for (int i = 0; i < zbs.size(); ++i) {
 				for (int j = 0; j < zbs.get(i).length; ++j) {
-					result.get(i * len + k)[j] = zbs.get(i)[j] + "";
+					if (zbs.get(i)[j] != null){
+						result.get(i * len + k)[j] = zbs.get(i)[j] + "";
+					}
 				}
 			}
 		}
