@@ -76,10 +76,21 @@ var hzb_companys;
         };
         View.prototype.init = function (opt) {
             this.mOpt = opt;
-            this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
-            this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
-            this.updateTable();
-            this.updateUI();
+            if (opt.comps.length == 0) {
+                $('h1').text("没有任何可以查看的公司");
+                $('input').css("display", "none");
+            }
+            else {
+                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+                this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
+                this.updateUI();
+            }
+        };
+        View.prototype.export = function (fName) {
+            var date = this.mDateSelector.getDate();
+            var compType = this.mCompanySelector.getCompany();
+            $("#export")[0].action = "companys_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, companyId: compType });
+            $("#export")[0].submit();
         };
         View.prototype.updateUI = function () {
             var _this = this;
@@ -87,8 +98,8 @@ var hzb_companys;
             var compType = this.mCompanySelector.getCompany();
             this.mDataSet.get({ year: date.year, month: date.month, companyId: compType }).then(function (dataArray) {
                 _this.mData = dataArray;
-                $('h1').text(date.year + "年" + date.month + "月经营单位与项目公司指标汇总");
-                document.title = date.year + "年" + date.month + "月经营单位与项目公司指标汇总";
+                $('h1').text(date.year + "年" + date.month + "月经营单位与项目公司指标完成情况");
+                document.title = date.year + "年" + date.month + "月经营单位与项目公司指标完成情况";
                 _this.updateTable();
             });
         };
@@ -96,9 +107,15 @@ var hzb_companys;
             var data = [];
             var row = [];
             var isRs = false;
+            var isJzcsyl = false;
+            var isSxfyl = false;
+            var isXslvl = false;
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 isRs = row[0 /* zb */] == '人数';
+                isJzcsyl = row[0 /* zb */] == '净资产收益率(%)';
+                isSxfyl = row[0 /* zb */] == '三项费用率(%)';
+                isXslvl = row[0 /* zb */] == '销售利润率(%)';
                 for (var i = 0; i < row.length; ++i) {
                     if (i == 4 /* dyjhwcl */ || i == 6 /* dytbzf */ || i == 9 /* jdjhwcl */ || i == 11 /* jdtbzf */ || i == 13 /* ndljjhwcl */ || i == 15 /* ndtbzf */) {
                         row[i] = Util.formatPercent(row[i]);
@@ -106,6 +123,15 @@ var hzb_companys;
                     else if (i != 0 /* zb */) {
                         if (isRs) {
                             row[i] = Util.formatInt(row[i]);
+                        }
+                        else if (isJzcsyl) {
+                            row[i] = Util.formatPercentSignal(row[i]);
+                        }
+                        else if (isSxfyl) {
+                            row[i] = Util.formatPercent(row[i]);
+                        }
+                        else if (isXslvl) {
+                            row[i] = Util.formatPercentSignal(row[i]);
                         }
                         else {
                             row[i] = Util.formatCurrency(row[i]);
@@ -120,9 +146,13 @@ var hzb_companys;
             var data = [];
             var row = [];
             var isRs = false;
+            var isJzcsyl = false;
+            var isSxfyl = false;
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 isRs = row[0 /* zb */] == '人数';
+                isJzcsyl = row[0 /* zb */] == '净资产收益率(%)';
+                isSxfyl = row[0 /* zb */] == '三项费用率(%)';
                 for (var i = 0; i < row.length; ++i) {
                     if (i == 4 /* dyjhwcl */ || i == 6 /* dyhbzf */ || i == 7 /* dytbzf */ || i == 10 /* jdjhwcl */ || i == 12 /* jdtbzf */ || i == 14 /* ndljjhwcl */ || i == 16 /* ndtbzf */) {
                         row[i] = Util.formatPercent(row[i]);
@@ -130,6 +160,12 @@ var hzb_companys;
                     else if (i != 0 /* zb */) {
                         if (isRs) {
                             row[i] = Util.formatInt(row[i]);
+                        }
+                        else if (isJzcsyl) {
+                            row[i] = Util.formatPercentSignal(row[i]);
+                        }
+                        else if (isSxfyl) {
+                            row[i] = Util.formatPercent(row[i]);
                         }
                         else {
                             row[i] = Util.formatCurrency(row[i]);
@@ -146,18 +182,14 @@ var hzb_companys;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             if (this.mData.length == 0) {
+                $("#tips").css("display", "");
                 return;
             }
+            $("#tips").css("display", "none");
             var data = [];
             var tableAssist = null;
-            if (this.mData[0].length > 16) {
-                tableAssist = JQGridAssistantFactory.createHbTable(name);
-                data = this.formatHbData();
-            }
-            else {
-                tableAssist = JQGridAssistantFactory.createTable(name);
-                data = this.formatAllData();
-            }
+            tableAssist = JQGridAssistantFactory.createTable(name);
+            data = this.formatAllData();
             $("#" + name).jqGrid(tableAssist.decorate({
                 data: tableAssist.getData(data),
                 datatype: "local",
