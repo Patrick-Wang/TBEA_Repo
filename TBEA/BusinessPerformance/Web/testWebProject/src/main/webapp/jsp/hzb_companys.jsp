@@ -171,6 +171,12 @@
 			padding: .1em 1em;
 			margin-top: -1px;
 		}
+		#exportButton {
+			height: 23px;
+			width:40px;
+			padding: .1em 1em;
+			margin-top: -1px;
+		}
 		
 		.ui-multiselect {
 			padding: 2px 0 2px 4px;
@@ -203,6 +209,24 @@
 				<div id="table"></div>
 				<div align="center" id="tips" style="margin-top:20px;display:none;font-size:25px">当前项目公司无数据</div>
 			<td>
+		</tr>
+		
+		<tr>
+			<td>
+				<div style="height:10px"></div>
+			<td>
+		</tr>
+		<tr>
+			<td>
+			<form id="export" method="post">
+				<input id="exportButton" type="button" value="导出"
+					style="width: 80px;"
+					onclick="instance.export($('h1').text())"
+					class="ui-button ui-widget ui-state-default ui-corner-all"
+					role="button" aria-disabled="false"></input>
+				</form>
+			</td>
+			
 		</tr>
 	</Table>
 	<%@include file="loading.jsp"%>

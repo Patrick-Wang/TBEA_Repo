@@ -223,7 +223,61 @@ public class YDZBController {
 			}
 		}
 	}
-	
+	@RequestMapping(value = "companys_zbhz_export.do")
+	public @ResponseBody byte[] getcompanys_zbhz_export(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		
+		Date d = DateSelection.getDate(request);
+		JyzbExcelTemplate template = null;
+		CompanyType compType = CompanySelection.getCompany(request);
+		String compName = compType.getValue();
+		Organization org = companyManager.getBMDBOrganization();
+		List<Company> comps;
+		boolean removeJzcsyl = false;
+		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
+			comps = org.getCompany(compType).getSubCompanys();
+			removeJzcsyl = true;
+		} else if (
+				CompanyType.BYQCY == compType ||
+				CompanyType.XLCY == compType ||
+				CompanyType.DBSBDCYJT == compType ||
+				CompanyType.NFSBDCYJT == compType){
+			removeJzcsyl = true;
+			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
+			comps = orgJyzb.getCompany(compType).getSubCompanys();
+		} else {
+			comps = new ArrayList<Company>();
+			comps.add(org.getCompany(compType));
+		}
+
+		List<String[]> ret = gszbService.getGdwzb(d, comps);
+		if (removeJzcsyl){
+			removeJzcsyl(ret);
+		}
+		template = JyzbExcelTemplate.createTemplate(SheetType.GS_SYB);
+
+		CellFormatter formatter = template.createCellFormatter()
+				.addType(0, CellFormatter.CellType.HEADER)
+				.addType(4, CellFormatter.CellType.PERCENT)
+				.addType(6, CellFormatter.CellType.PERCENT)
+				.addType(9, CellFormatter.CellType.PERCENT)
+				.addType(11, CellFormatter.CellType.PERCENT)
+				.addType(13, CellFormatter.CellType.PERCENT)
+				.addType(15, CellFormatter.CellType.PERCENT);
+
+		HSSFWorkbook workbook = template.getWorkbook();
+		workbook.setSheetName(0, compName);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = ret.size() - 1; i >= 0; --i) {
+			HSSFRow row = sheet.createRow(2 + i);
+			for (int j = ret.get(i).length - 1; j >= 0; --j) {
+				HSSFCell cell = row.createCell(j);
+				formatter.format(j, cell, ret.get(i)[j]);
+			}
+		}
+		template.write(response, request.getParameter("fileName") + ".xls");
+		return "".getBytes("utf-8");
+	}
 	//各单位经营指标完成情况update
 	@RequestMapping(value = "hzb_companys_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getHzb_companys_update(
