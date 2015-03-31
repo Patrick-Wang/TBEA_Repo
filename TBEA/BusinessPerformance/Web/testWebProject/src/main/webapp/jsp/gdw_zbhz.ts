@@ -65,6 +65,12 @@ module gdw_zbhz {
             this.mZBId = $("#indextype").val();
             this.mZBName = $("#indextype  option:selected").text();
         }
+        
+         public export(fName: string) {
+            var date : Util.Date = this.mDs.getDate();
+            $("#export")[0].action = "gdw_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, top5index: this.mZBId, zbName:this.mZBName});
+            $("#export")[0].submit();
+        }
               
         public updateUI() {
             var date : Util.Date = this.mDs.getDate();
@@ -76,6 +82,7 @@ module gdw_zbhz {
                     document.title = date.year + "年" + date.month + "月各单位" + this.mZBName + "完成情况";
                     this.updateTable();
                 });
+
         }
 
         private updateTable(): void {
@@ -141,6 +148,8 @@ module gdw_zbhz {
                     rowNum: 200,
                     autoScroll: true
                 }));
+            
+           $("#export").css('display','block'); 
 
         }
     }

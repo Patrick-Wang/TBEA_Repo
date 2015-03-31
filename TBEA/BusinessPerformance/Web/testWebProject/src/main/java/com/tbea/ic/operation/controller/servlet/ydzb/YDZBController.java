@@ -475,14 +475,46 @@ public class YDZBController {
 		return new ModelAndView("gcy_zbhz", map);
 	}
 	
+	
+	@RequestMapping(value = "gdw_zbhz_export.do")
+	public @ResponseBody byte[] getgdw_zbhz_export(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = DateSelection.getDate(request);
+		String gszb = request.getParameter("top5index");
+		JyzbExcelTemplate template = null;
+		List<String[]> data = null;
+		data = gszbService.getCompanyTop5zb(GSZB.valueOf(Integer.valueOf(gszb)), d);
+		template = JyzbExcelTemplate.createTemplate(SheetType.GDWZBWCQK);
+		CellFormatter formatter = template.createCellFormatter()
+				.addType(3, CellFormatter.CellType.PERCENT)
+				.addType(5, CellFormatter.CellType.PERCENT)
+				.addType(8, CellFormatter.CellType.PERCENT)
+				.addType(10, CellFormatter.CellType.PERCENT)
+				.addType(12, CellFormatter.CellType.PERCENT)
+				.addType(14, CellFormatter.CellType.PERCENT);
+
+		HSSFWorkbook workbook = template.getWorkbook();
+		String fileNameAndSheetName = "各单位" + request.getParameter("year") + "年" + request.getParameter("month") + "月" + request.getParameter("zbName") + "完成情况";
+		workbook.setSheetName(0, fileNameAndSheetName);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = data.size() - 1; i >= 0; --i) {
+			HSSFRow row = sheet.getRow(3 + i);
+			for (int j = data.get(i).length - 1; j >= 0; --j) {
+				HSSFCell cell = row.createCell(j + 1);
+				formatter.format(j, cell, data.get(i)[j]);
+			}
+		}		
+			
+		template.write(response, fileNameAndSheetName + ".xls");
+		return "".getBytes("utf-8");
+	}
+	
+	
 	//各单位经营指标完成情况update
 	@RequestMapping(value = "gdw_zbhz_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getGdw_zbhz_update(HttpServletRequest request,
 			HttpServletResponse response) {
 		Date d = DateSelection.getDate(request);
-		// String gdw_zbhz =
-		// JSONArray.fromObject(service.getGdw_zbhzData(d)).toString().replace("null",
-		// "0.00");
 		String gszb = request.getParameter("zbId");
 		String gdw_zbhz = JSONArray
 				.fromObject(
@@ -496,12 +528,7 @@ public class YDZBController {
 	@RequestMapping(value = "gdw_zbhz.do", method = RequestMethod.GET)
 	public ModelAndView getGdw_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
-
-		//int zb = Integer.parseInt(request.getParameter("zb"));
-		//String zbName  = service.getZBNameById(zb);
 		Map<String, Object> map = new HashMap<String, Object>();
-		//map.put("zbName", zbName);
-		//map.put("zbId", zb);
 		DateSelection dateSel = new DateSelection(service.getLatestGcyDate(),
 				true, false);
 		dateSel.select(map);
@@ -511,9 +538,6 @@ public class YDZBController {
 	@RequestMapping(value = "xjlrb_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getXjlrb_update(HttpServletRequest request,
 			HttpServletResponse response) {
-		// int month = Integer.parseInt(request.getParameter("month"));
-		// int year = Integer.parseInt(request.getParameter("year"));
-		// int day = Integer.parseInt(request.getParameter("day"));
 		Date d = DateSelection.getDate(request);
 		String xjlrb = JSONArray.fromObject(service.getXjlrbData(d)).toString()
 				.replace("null", "0.00");
