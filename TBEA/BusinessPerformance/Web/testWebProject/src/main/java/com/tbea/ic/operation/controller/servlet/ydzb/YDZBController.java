@@ -442,12 +442,13 @@ public class YDZBController {
 				.addType(12, CellFormatter.CellType.PERCENT)
 				.addType(14, CellFormatter.CellType.PERCENT);
 
-		HSSFWorkbook workbook = template.getWorkbook();       
+		HSSFWorkbook workbook = template.getWorkbook();
+		workbook.setSheetName(0, request.getParameter("fileName"));
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		for (int i = data.size() - 1; i >= 0; --i) {
-			HSSFRow row = sheet.createRow(3 + i);
+			HSSFRow row = sheet.getRow(3 + i);
 			for (int j = data.get(i).length - 1; j >= 0; --j) {
-				HSSFCell cell = row.createCell(j);
+				HSSFCell cell = row.createCell(j + 2);
 				formatter.format(j, cell, data.get(i)[j]);
 			}
 		}		
