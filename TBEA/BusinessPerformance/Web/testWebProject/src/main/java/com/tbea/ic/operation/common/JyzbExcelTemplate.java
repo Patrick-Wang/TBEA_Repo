@@ -38,7 +38,7 @@ public class JyzbExcelTemplate {
 		GSZTZB,
 		SRQYFJG,
 		GS_SYB,
-		GSZT_ZYCWZB,
+		GCY_ZBWC,
 		GDWZBWCQK,
 		JDYJZB_SY,
 		JDFCYZBYJ_SY,
