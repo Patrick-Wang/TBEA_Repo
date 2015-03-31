@@ -175,6 +175,12 @@
 			text-align: left;
 			font-size: 12px;
 		}
+		#exportButton {
+			height: 23px;
+			width:100px;
+			padding: .1em 1em;
+			margin-top: -1px;
+		}
     </style>
 </head>
 <body>
@@ -197,6 +203,22 @@
 			<td>
 				<div id="table"></div>
 			<td>
+		</tr>
+		<tr>
+			<td>
+				<div style="height:10px"></div>
+			<td>
+		</tr>
+		<tr>
+			<td>
+			<form id="export" method="post">
+				<input id="exportButton" type="button" value="导出"
+					onclick="instance.export($('h1').text())"
+					class="ui-button ui-widget ui-state-default ui-corner-all"
+					role="button" aria-disabled="false"></input>
+				</form>
+			</td>
+			
 		</tr>
 	</Table>
 	<%@include file="loading.jsp"%>
