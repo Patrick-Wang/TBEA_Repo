@@ -6,7 +6,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -45,7 +50,60 @@ public class JyzbExcelTemplate {
 		JDFCYZBYJ_MY,
 		JDFDWZBYJ_MY
 	}
+	
 
+
+	public static class CellFormatter{
+		public enum CellType{
+			HEADER,
+			TEXT,
+			DOUBLE,
+			PERCENT
+		}
+		JyzbExcelTemplate template;
+		Map<Integer, CellType> colTypeMap = new HashMap<Integer, CellType>();
+		private CellFormatter(JyzbExcelTemplate template){
+			this.template = template;
+		} 
+		
+		public CellFormatter addType(int col, CellType type){
+			colTypeMap.put(col, type);
+			return this;
+		}
+		
+		public CellFormatter format(int col, HSSFCell cell, String val) {
+			if (null != val) {
+				if (colTypeMap.containsKey(col)) {
+					switch (colTypeMap.get(col)) {
+					case DOUBLE:
+						cell.setCellValue(Double.valueOf(val));
+						cell.setCellStyle(template.getCellStyleNumber());
+						break;
+					case HEADER:
+						cell.setCellValue(val);
+						cell.setCellStyle(template.getCellStyleHeader());
+						break;
+					case PERCENT:
+						cell.setCellValue(Double.valueOf(val));
+						cell.setCellStyle(template.getCellStylePercent());
+						break;
+					case TEXT:
+						break;
+					default:
+						break;
+					}
+				} else {
+					cell.setCellValue(Double.valueOf(val));
+					cell.setCellStyle(template.getCellStyleNumber());
+				}
+			} else {
+				cell.setCellValue("--");
+				cell.setCellStyle(template.getCellStyleNull());
+			}
+			return this;
+		}
+	}
+	
 	public static JyzbExcelTemplate createTemplate(SheetType type) throws IOException{
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
 				pathJdzbTemplate)));
@@ -138,6 +196,10 @@ public class JyzbExcelTemplate {
 		return cellStyleHeader;
 	}
 	
+	public CellFormatter createCellFormatter(){
+		return new CellFormatter(this);
+	}
+	
 	public void write(OutputStream os) throws IOException{
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		int colCount = sheet.getRow(0).getLastCellNum();	
@@ -147,4 +209,9 @@ public class JyzbExcelTemplate {
 		workbook.write(os);
 	}
 	
+	public void write(HttpServletResponse response, String fileName) throws IOException{
+		response.setContentType("application/vnd.ms-excel");
+		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(fileName, "UTF-8")  +"\"");
+		this.write(response.getOutputStream());
+	}
 }

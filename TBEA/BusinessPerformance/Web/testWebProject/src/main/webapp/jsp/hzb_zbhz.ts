@@ -1,5 +1,6 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
 declare var echarts;
 
 module hzb_zbhz {
@@ -98,6 +99,12 @@ module hzb_zbhz {
                     this.updateTable();
 
                 });
+        }
+        
+        public export(fName: string) {
+            var date : Util.Date = this.mDs.getDate();
+            $("#export")[0].action = "hzb_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, type : this.mType, fileName: fName });
+            $("#export")[0].submit();
         }
         
         private formatSrqyData() {

@@ -57,6 +57,7 @@
 <script src="../jsp/dateSelector.js" type="text/javascript"></script>
 <script src="../jsp/unitedSelector.js" type="text/javascript"></script>
 <script src="../jsp/companySelector.js" type="text/javascript"></script>
+<script src="../jsp/messageBox.js" type="text/javascript"></script>
 <script src="../jsp/hzb_zbhz.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -194,13 +195,15 @@ th.ui-th-ltr {
 						<td><select onchange="instance.onTypeSelected(this.value)"
 							style="width: 125px;">
 								<option value="0" selected="selected">全部</option>
-								<option value="1">收入签约分结构</option>4
+								<option value="1">收入签约分结构</option>
 						</select></td>
 						<td><input id="update" type="button" value="更新"
 							style="width: 80px; margin-left: 10px;"
 							onclick="instance.updateUI()"
 							class="ui-button ui-widget ui-state-default ui-corner-all"
 							role="button" aria-disabled="false"></input>
+							</td>
+							</tr>
 				</Table>
 			</td>
 		</tr>
@@ -208,6 +211,23 @@ th.ui-th-ltr {
 			<td>
 				<div id="table"></div>
 			<td>
+		</tr>
+		<tr>
+			<td>
+				<div style="height:10px"></div>
+			<td>
+		</tr>
+		<tr>
+			<td>
+			<form id="export" method="post">
+				<input id="update" type="button" value="导出"
+					style="width: 80px;"
+					onclick="instance.export($('h1').text())"
+					class="ui-button ui-widget ui-state-default ui-corner-all"
+					role="button" aria-disabled="false"></input>
+				</form>
+			</td>
+			
 		</tr>
 	</Table>
 	<%@include file="loading.jsp"%>

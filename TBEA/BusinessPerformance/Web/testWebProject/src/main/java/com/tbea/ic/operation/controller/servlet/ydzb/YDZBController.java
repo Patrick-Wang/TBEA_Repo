@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.JyzbExcelTemplate;
+import com.tbea.ic.operation.common.JyzbExcelTemplate.CellFormatter;
 import com.tbea.ic.operation.common.JyzbExcelTemplate.SheetType;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -127,51 +128,60 @@ public class YDZBController {
 	private GszbService gszbService;
 
 	
-	@RequestMapping(value = "hzb_zbhz_export.do", method = RequestMethod.GET)
+	@RequestMapping(value = "hzb_zbhz_export.do")
 	public @ResponseBody byte[] getHzb_zbhz_export(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Date d = DateSelection.getDate(request);
 		String type = request.getParameter("type");
-		
+		JyzbExcelTemplate template = null;
+		List<String[]> data = null;
 		if ("0".equals(type)) {
-			List<String[]> gszb = gszbService.getGsztzb(d);
-			JyzbExcelTemplate template = JyzbExcelTemplate.createTemplate(SheetType.GSZTZB);
+			data = gszbService.getGsztzb(d);
+			template = JyzbExcelTemplate.createTemplate(SheetType.GSZTZB);
+
+			CellFormatter formatter = template.createCellFormatter()
+					.addType(0, CellFormatter.CellType.HEADER)
+					.addType(4, CellFormatter.CellType.PERCENT)
+					.addType(6, CellFormatter.CellType.PERCENT)
+					.addType(9, CellFormatter.CellType.PERCENT)
+					.addType(11, CellFormatter.CellType.PERCENT)
+					.addType(13, CellFormatter.CellType.PERCENT)
+					.addType(15, CellFormatter.CellType.PERCENT);
+
 			HSSFWorkbook workbook = template.getWorkbook();
 			HSSFSheet sheet = workbook.getSheetAt(0);
-			int colCount = 0;
-			for (int i = 0; i < gszb.size(); ++i) {
+			for (int i = data.size() - 1; i >= 0; --i) {
 				HSSFRow row = sheet.createRow(2 + i);
-				colCount = gszb.get(i).length;
-				for (int j = 0; j < colCount; ++j) {
+				for (int j = data.get(i).length - 1; j >= 0; --j) {
 					HSSFCell cell = row.createCell(j);
-					if (gszb.get(i)[j] != null) {
-						if (0 == j) {
-							cell.setCellValue(gszb.get(i)[j]);
-							cell.setCellStyle(template.getCellStyleHeader());
-						} else if (4 == j || 6 == j || 9 == j || 11 == j
-								|| 13 == j || 15 == j) {
-							cell.setCellValue(Double.valueOf(gszb.get(i)[j]));
-							cell.setCellStyle(template.getCellStylePercent());
-						} else {
-							cell.setCellValue(Double.valueOf(gszb.get(i)[j]));
-							cell.setCellStyle(template.getCellStyleNumber());
-						}
-					}else{
-						cell.setCellValue("--");
-						cell.setCellStyle(template.getCellStyleNull());
-					}
+					formatter.format(j, cell, data.get(i)[j]);
 				}
 			}
 
-			response.setContentType("application/octet-stream"); 
-			response.setHeader("Content-disposition","attachment;filename=\"gsztzb.xls\"");
-			template.write(response.getOutputStream());
+			
 		} else {
-//			hzb_zbhz = JSONArray.fromObject(gszbService.getSrqy(d)).toString()
-//					.replace("null", "\"--\"");
+			data = gszbService.getSrqy(d);
+			template = JyzbExcelTemplate.createTemplate(SheetType.SRQYFJG);
+
+			CellFormatter formatter = template.createCellFormatter()
+					.addType(0, CellFormatter.CellType.HEADER)
+					.addType(4, CellFormatter.CellType.PERCENT)
+					.addType(6, CellFormatter.CellType.PERCENT)
+					.addType(8, CellFormatter.CellType.PERCENT)
+					.addType(10, CellFormatter.CellType.PERCENT);
+			
+			HSSFWorkbook workbook = template.getWorkbook();
+			HSSFSheet sheet = workbook.getSheetAt(0);
+			for (int i = data.size() - 1; i >= 0; --i) {
+				HSSFRow row = sheet.createRow(2 + i);
+				for (int j = data.get(i).length - 1; j >= 0; --j) {
+					HSSFCell cell = row.createCell(j);
+					formatter.format(j, cell, data.get(i)[j]);
+				}
+			}
 		}
 		
-		
+		template.write(response, request.getParameter("fileName") + ".xls");
 		
 		return "".getBytes("utf-8");
 	}
