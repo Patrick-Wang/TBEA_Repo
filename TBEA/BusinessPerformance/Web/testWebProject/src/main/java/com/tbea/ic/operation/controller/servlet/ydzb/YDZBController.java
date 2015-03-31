@@ -323,29 +323,26 @@ public class YDZBController {
 		CompanyType compType = CompanySelection.getCompany(request);
 		String compName = compType.getValue();
 		String fileName = compName + "经营指标完成情况";
-		Organization org = companyManager.getBMDBOrganization();
-		List<Company> comps;
-		boolean removeJzcsyl = false;
-		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
-			comps = org.getCompany(compType).getSubCompanys();
-			removeJzcsyl = true;
-		} else if (
-				CompanyType.BYQCY == compType ||
-				CompanyType.XLCY == compType ||
-				CompanyType.DBSBDCYJT == compType ||
-				CompanyType.NFSBDCYJT == compType){
-			removeJzcsyl = true;
-			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
-			comps = orgJyzb.getCompany(compType).getSubCompanys();
-		} else {
-			comps = new ArrayList<Company>();
-			comps.add(org.getCompany(compType));
-		}
+//		Organization org = companyManager.getBMDBOrganization();
+//		List<Company> comps;
+//		boolean removeJzcsyl = false;
+//		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
+//			comps = org.getCompany(compType).getSubCompanys();
+//			removeJzcsyl = true;
+//		} else if (
+//				CompanyType.BYQCY == compType ||
+//				CompanyType.XLCY == compType ||
+//				CompanyType.DBSBDCYJT == compType ||
+//				CompanyType.NFSBDCYJT == compType){
+//			removeJzcsyl = true;
+//			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
+//			comps = orgJyzb.getCompany(compType).getSubCompanys();
+//		} else {
+//			comps = new ArrayList<Company>();
+//			comps.add(org.getCompany(compType));
+//		}
 
-		List<String[]> ret = gszbService.getGdwzb(d, comps);
-		if (removeJzcsyl){
-			removeJzcsyl(ret);
-		}
+		List<String[]> ret = this.getGdwData(d, compType);
 		template = JyzbExcelTemplate.createTemplate(SheetType.GS_SYB);
 
 		CellFormatter formatter = template.createCellFormatter()

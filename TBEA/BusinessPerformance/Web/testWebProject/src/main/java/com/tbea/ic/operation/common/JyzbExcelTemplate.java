@@ -210,7 +210,7 @@ public class JyzbExcelTemplate {
 	}
 	
 	public void write(HttpServletResponse response, String fileName) throws IOException{
-		response.setContentType("application/vnd.ms-excel");
+		response.setContentType("application/octet-stream");
 		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(fileName, "UTF-8")  +"\"");
 		this.write(response.getOutputStream());
 	}
