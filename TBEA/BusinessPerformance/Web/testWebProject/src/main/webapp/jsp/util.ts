@@ -178,10 +178,10 @@ module Util {
             this.mUseCache = useCache;
         }
 
-        private generateKey(option: IAjaxOption) {
+        public static toUrlParam(option: IAjaxOption) {
             var keys = [];
             for (var key in option) {
-                keys.push(key + option[key]);
+                keys.push(key + "=" + option[key]);
             }
             keys.sort();
             return keys.join("&");
@@ -189,7 +189,7 @@ module Util {
 
         private setCache(option: IAjaxOption, data: string): void {
             if (this.mUseCache && undefined != option) {
-                this.mCache[this.generateKey(option)] = data;
+                this.mCache[Ajax.toUrlParam(option)] = data;
             }
         }
 
@@ -201,7 +201,7 @@ module Util {
             if (undefined == option){
                 return undefined;
             }
-            return this.mCache[this.generateKey(option)];
+            return this.mCache[Ajax.toUrlParam(option)];
         }
 
         private validate(data: string): boolean {
