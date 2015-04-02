@@ -47,36 +47,36 @@ public class DateHelper {
 		cal.set(Calendar.MONTH, 0);
 		qnfirstMonth = Util.toDate(cal);
 
-		cal.setTime(date);
+		cal.setTime(jdStart);
 		cal.add(Calendar.MONTH, 1);
 		secondMonthinSeason = Util.toDate(cal);
 
-		cal.setTime(date);
+		cal.setTime(jdStart);
 		cal.add(Calendar.MONTH, 2);
 		lastMonthinSeason = Util.toDate(cal);
 
-		cal.setTime(date);
+		cal.setTime(lastMonthinSeason);
 		cal.add(Calendar.MONTH, 1);
 		xjdFirstMonth = Util.toDate(cal);
 
-		cal.setTime(date);
+		cal.setTime(lastMonthinSeason);
 		cal.add(Calendar.MONTH, 2);
 		xjdSecondMonth = Util.toDate(cal);
 
-		cal.setTime(date);
+		cal.setTime(lastMonthinSeason);
 		cal.add(Calendar.MONTH, 3);
 		xjdLastMonth = Util.toDate(cal);
 
-		cal.setTime(qntq);
-		cal.add(Calendar.MONTH, 1);
+		cal.setTime(qntqJdStart);
+		cal.add(Calendar.MONTH, 3);
 		qntqXjdFirstMonth = Util.toDate(cal);
 
-		cal.setTime(qntq);
-		cal.add(Calendar.MONTH, 2);
+		cal.setTime(qntqXjdFirstMonth);
+		cal.add(Calendar.MONTH, 1);
 		qntqXjdSecondMonth = Util.toDate(cal);
 
-		cal.setTime(qntq);
-		cal.add(Calendar.MONTH, 3);
+		cal.setTime(qntqXjdSecondMonth);
+		cal.add(Calendar.MONTH, 1);
 		qntqXjdLastMonth = Util.toDate(cal);
 
 		cal.setTime(xjdLastMonth);
