@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 declare var echarts;
 
-module companys_zbhz_prediciton {
+module companys_zbhz_prediction {
 
     enum FirstMonthZb{
         zb, ndjh, bjdjh, byjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,

@@ -57,11 +57,11 @@
 <script src="../jsp/dateSelector.js" type="text/javascript"></script>
 <script src="../jsp/unitedSelector.js" type="text/javascript"></script>
 <script src="../jsp/companySelector.js" type="text/javascript"></script>
-<script src="../jsp/hzb_zbhz_prediction.js" type="text/javascript"></script>
+<script src="../jsp/companys_zbhz_prediction.js" type="text/javascript"></script>
 
 
 <script type="text/javascript">
-    	var instance = companys_zbhz_prediciton.View.newInstance();
+    	var instance = companys_zbhz_prediction.View.newInstance();
         (function () {
             $(document).ready(function () {
             	instance.init("table", ${year}, "company", JSON.parse('${nodeData}'));
