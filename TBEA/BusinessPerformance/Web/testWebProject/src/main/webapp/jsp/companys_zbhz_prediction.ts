@@ -280,7 +280,7 @@ module companys_zbhz_prediction {
                     //autowidth : false,
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
-                    height: '100%',
+                    height: data.length > 23 ? 500 : '100%',
                     width: 1330,
                     shrinkToFit: true,
                     rowNum: 100,
