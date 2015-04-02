@@ -229,7 +229,7 @@ th.ui-th-ltr {
 			<form id="export" method="post">
 				<input id="update" type="button" value="导出"
 					style="width: 80px;"
-					onclick="instance.export($('h1').text())"
+					onclick="instance.exportExcel($('h1').text())"
 					class="ui-button ui-widget ui-state-default ui-corner-all"
 					role="button" aria-disabled="false"></input>
 				</form>

@@ -106,12 +106,13 @@ public class JyzbExcelTemplate {
 	
 	public static JyzbExcelTemplate createTemplate(SheetType type) throws IOException{
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
-				pathJdzbTemplate)));
-		for (int i = SheetType.JDFDWZBYJ_MY.ordinal(); i >= 0; --i){
-			if (i != type.ordinal()){
-				workbook.removeSheetAt(i);
-			}
+				pathJdzbTemplate)));	
+		workbook.cloneSheet(type.ordinal());
+		String name = workbook.getSheetName(type.ordinal());
+		for (int i = 0; i <= SheetType.JDFDWZBYJ_MY.ordinal(); ++i){
+			workbook.removeSheetAt(0);
 		}
+		workbook.setSheetName(0, name);
 		return new JyzbExcelTemplate(workbook);
 	}
 	
@@ -202,6 +203,7 @@ public class JyzbExcelTemplate {
 	
 	public void write(OutputStream os) throws IOException{
 		HSSFSheet sheet = workbook.getSheetAt(0);
+		
 		int colCount = sheet.getRow(0).getLastCellNum();	
 		for (int j = 0; j < colCount; ++j) {
 			sheet.autoSizeColumn(j, true);

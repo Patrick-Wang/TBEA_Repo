@@ -66,7 +66,7 @@ module gdw_zbhz {
             this.mZBName = $("#indextype  option:selected").text();
         }
         
-         public export(fName: string) {
+         public exportExcel(fName: string) {
             var date : Util.Date = this.mDs.getDate();
             $("#export")[0].action = "gdw_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, top5index: this.mZBId, zbName:this.mZBName});
             $("#export")[0].submit();

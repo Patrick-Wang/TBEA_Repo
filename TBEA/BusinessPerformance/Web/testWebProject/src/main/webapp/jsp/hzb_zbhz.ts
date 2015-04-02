@@ -101,7 +101,7 @@ module hzb_zbhz {
                 });
         }
         
-        public export(fName: string) {
+        public exportExcel(fName: string) {
             var date : Util.Date = this.mDs.getDate();
             $("#export")[0].action = "hzb_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, type : this.mType, fileName: fName });
             $("#export")[0].submit();

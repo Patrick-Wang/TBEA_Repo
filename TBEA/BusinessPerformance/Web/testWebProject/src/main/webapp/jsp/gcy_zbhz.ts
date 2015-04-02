@@ -62,7 +62,7 @@ module gcy_zbhz {
             this.updateUI();
         }
         
-        public export(fName: string) {
+        public exportExcel(fName: string) {
             var date : Util.Date = this.mDs.getDate();
             $("#export")[0].action = "gcy_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, fileName: fName});
             $("#export")[0].submit();
