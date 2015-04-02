@@ -183,19 +183,31 @@ module companys_zbhz_prediction {
             var row = [];
             var isRs = false;
             var isSxfyl = false;
+            var isJzcsyl = false;
+            var isXslvl = false;
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 isRs = row[0] == "人数";
+                isJzcsyl = row[0] == '净资产收益率(%)';
                 isSxfyl = row[0] == '三项费用率(%)';
+                isXslvl = row[0] == '销售利润率(%)';
                 for (var i = 1; i < row.length; ++i) {
                     if (precentList.contains(i)) {
                         row[i] = Util.formatPercent(row[i]);
                     } else {
                         if(isRs){
                             row[i] = Util.formatInt(row[i]);
-                        }else if (isSxfyl)
+                        }else if (isJzcsyl)
+                        {
+                            row[i] = Util.formatPercentSignal(row[i]);
+                        }
+                        else if (isSxfyl)
                         {
                              row[i] = Util.formatPercent(row[i]);
+                        }
+                        else if (isXslvl)
+                        {
+                            row[i] = Util.formatPercentSignal(row[i]);
                         }
                         else {
                             row[i] = Util.formatCurrency(row[i]);
