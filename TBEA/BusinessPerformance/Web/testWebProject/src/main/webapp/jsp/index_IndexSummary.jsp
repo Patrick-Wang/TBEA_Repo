@@ -66,6 +66,9 @@
 				<li><a href="../ydzb/hzb_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>整体指标预测完成情况</strong></span></a>
 				</li>
+				<li><a href="../ydzb/hzb_companys_prediction.do" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>经营单位及项目公司指标预测完成情况</strong></span></a>
+				</li>
 				<!--/li-->
 				<li><a href="../ydzb/financial_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/line2.png"> <span><strong>各产业五大经营指标预测完成情况</strong></span></a>

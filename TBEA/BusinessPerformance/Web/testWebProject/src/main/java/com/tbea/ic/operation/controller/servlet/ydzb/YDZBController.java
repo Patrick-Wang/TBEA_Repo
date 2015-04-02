@@ -666,7 +666,7 @@ public class YDZBController {
 						org));
 
 		compSel.select(map, 3);
-		return new ModelAndView("hzb_companys_prediction", map);
+		return new ModelAndView("companys_zbhz_prediction", map);
 	}
 	
 	// 整体指标预测update
