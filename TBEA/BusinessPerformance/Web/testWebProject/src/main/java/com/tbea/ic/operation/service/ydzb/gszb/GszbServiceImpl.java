@@ -525,37 +525,18 @@ public class GszbServiceImpl implements GszbService {
 	}
 
 	@Override
-	public List<String[]> getFirstSeasonPredictionZBsOverview(Date date) {
-		GszbPipe pipe = new GszbPipe(gsztzbs, getMainlyJydw(), date,
-				getConfiguratorFactory().getFirstSeasonPredictionConfigurator());
-		return makeZbResult(gsztzbs, pipe.getGszb());
+	public List<String[]> getGsFirstSeasonPredictionZBsOverview(Date date) {
+		return getFirstSeasonPredictionZBsOverview(date, getMainlyJydw());
 	}
 
 	@Override
-	public List<String[]> getSecondSeasonPredictionZBsOverview(Date date) {
-		GszbPipe pipe = new GszbPipe(gsztzbs, getMainlyJydw(), date,
-				getConfiguratorFactory()
-						.getSecondSeasonPredictionConfigurator());
-		return makeZbResult(gsztzbs, pipe.getGszb());
+	public List<String[]> getGsSecondSeasonPredictionZBsOverview(Date date) {
+		return getSecondSeasonPredictionZBsOverview(date, getMainlyJydw());
 	}
 
 	@Override
-	public List<String[]> getJDZBMY(Date date) {
-		GszbPipe pipe = new GszbPipe(gsztzbs, getMainlyJydw(), date,
-				getConfiguratorFactory().getJDZBMYConfigurator());
-		List<Double[]> JDZBMYList = pipe.getGszb();
-		List<Double[]> result = new ArrayList<Double[]>();
-		Double[] values = null;
-		int length = 0;
-		for (Double[] JDZBMY : JDZBMYList) {
-			length = JDZBMY.length - 1;
-			values = new Double[length];
-			for (int i = 0; i < length; i++) {
-				values[i] = JDZBMY[i];
-			}
-			result.add(values);
-		}
-		return makeZbResult(gsztzbs, result);
+	public List<String[]> getGsJDZBMY(Date date) {
+		return getJDZBMY(date, getMainlyJydw());
 	}
 
 	@Override
@@ -783,5 +764,40 @@ public class GszbServiceImpl implements GszbService {
 			ret.add(org.getCompany(dwxx.getId()));
 		}
 		return ret;
+	}
+
+	@Override
+	public List<String[]> getFirstSeasonPredictionZBsOverview(Date date,
+			List<Company> comps) {
+		GszbPipe pipe = new GszbPipe(gsztzbs, comps, date,
+				getConfiguratorFactory().getFirstSeasonPredictionConfigurator());
+		return makeZbResult(gsztzbs, pipe.getGszb());
+	}
+
+	@Override
+	public List<String[]> getSecondSeasonPredictionZBsOverview(Date date,
+			List<Company> comps) {
+		GszbPipe pipe = new GszbPipe(gsztzbs, comps, date,
+				getConfiguratorFactory().getSecondSeasonPredictionConfigurator());
+		return makeZbResult(gsztzbs, pipe.getGszb());
+	}
+
+	@Override
+	public List<String[]> getJDZBMY(Date date, List<Company> comps) {
+		GszbPipe pipe = new GszbPipe(gsztzbs, comps, date,
+				getConfiguratorFactory().getJDZBMYConfigurator());
+		List<Double[]> JDZBMYList = pipe.getGszb();
+		List<Double[]> result = new ArrayList<Double[]>();
+		Double[] values = null;
+		int length = 0;
+		for (Double[] JDZBMY : JDZBMYList) {
+			length = JDZBMY.length - 1;
+			values = new Double[length];
+			for (int i = 0; i < length; i++) {
+				values[i] = JDZBMY[i];
+			}
+			result.add(values);
+		}
+		return makeZbResult(gsztzbs, result);
 	}
 }

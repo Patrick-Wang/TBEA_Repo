@@ -129,19 +129,24 @@ public class YDZBController {
 	@Autowired
 	private GszbService gszbService;
 
-	private List<String[]> getGdwData(Date d, CompanyType compType){
-		List<Company> comps;
-		boolean removeJzcsyl = false;
-		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
-			Organization org = companyManager.getBMDBOrganization();
-			comps = org.getCompany(compType).getSubCompanys();
-			removeJzcsyl = true;
-		} else if (
-				CompanyType.BYQCY == compType ||
+	
+	private boolean isSyb(CompanyType compType){
+		return CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType;
+	}
+	
+	private boolean isSbdcy(CompanyType compType){
+		return CompanyType.BYQCY == compType ||
 				CompanyType.XLCY == compType ||
 				CompanyType.DBSBDCYJT == compType ||
-				CompanyType.NFSBDCYJT == compType){
-			removeJzcsyl = true;
+				CompanyType.NFSBDCYJT == compType;
+	}
+	
+	private List<Company> getHzbCompany(CompanyType compType){
+		List<Company> comps;
+		if (isSyb(compType)){
+			Organization org = companyManager.getBMDBOrganization();
+			comps = org.getCompany(compType).getSubCompanys();
+		} else if (isSbdcy(compType)){
 			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
 			comps = orgJyzb.getCompany(compType).getSubCompanys();
 		} else {
@@ -149,9 +154,30 @@ public class YDZBController {
 			comps = new ArrayList<Company>();
 			comps.add(org.getCompany(compType));
 		}
-
+		return comps;
+	}
+	
+	private List<String[]> getGdwData(Date d, CompanyType compType){
+		List<Company> comps = getHzbCompany(compType);
+//		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
+//			Organization org = companyManager.getBMDBOrganization();
+//			comps = org.getCompany(compType).getSubCompanys();
+//			removeJzcsyl = true;
+//		} else if (
+//				CompanyType.BYQCY == compType ||
+//				CompanyType.XLCY == compType ||
+//				CompanyType.DBSBDCYJT == compType ||
+//				CompanyType.NFSBDCYJT == compType){
+//			removeJzcsyl = true;
+//			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
+//			comps = orgJyzb.getCompany(compType).getSubCompanys();
+//		} else {
+//			Organization org = companyManager.getBMDBOrganization();
+//			comps = new ArrayList<Company>();
+//			comps.add(org.getCompany(compType));
+//		}
 		List<String[]> ret = gszbService.getGdwzb(d, comps);
-		if (removeJzcsyl){
+		if (this.isSbdcy(compType) || this.isSbdcy(compType)){
 			removeJzcsyl(ret);
 		}
 		return ret;
@@ -218,7 +244,7 @@ public class YDZBController {
 				HSSFRow rowFrom = sheet.getRow(0);
 				HSSFRow rowTo = sheet.createRow(lastRow);
 				POIUtils.copyRow(workbook, rowFrom, rowTo, true);
-				rowTo.getCell(0).setCellValue(ct.getValue());
+				rowTo.getCell(0).setCellValue(ct.getValue() + "当月指标汇总");
 
 				rowFrom = sheet.getRow(1);
 				rowTo = sheet.createRow(lastRow + 1);
@@ -323,25 +349,6 @@ public class YDZBController {
 		CompanyType compType = CompanySelection.getCompany(request);
 		String compName = compType.getValue();
 		String fileName = compName + "经营指标完成情况";
-//		Organization org = companyManager.getBMDBOrganization();
-//		List<Company> comps;
-//		boolean removeJzcsyl = false;
-//		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
-//			comps = org.getCompany(compType).getSubCompanys();
-//			removeJzcsyl = true;
-//		} else if (
-//				CompanyType.BYQCY == compType ||
-//				CompanyType.XLCY == compType ||
-//				CompanyType.DBSBDCYJT == compType ||
-//				CompanyType.NFSBDCYJT == compType){
-//			removeJzcsyl = true;
-//			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
-//			comps = orgJyzb.getCompany(compType).getSubCompanys();
-//		} else {
-//			comps = new ArrayList<Company>();
-//			comps.add(org.getCompany(compType));
-//		}
-
 		List<String[]> ret = this.getGdwData(d, compType);
 		template = JyzbExcelTemplate.createTemplate(SheetType.GS_SYB);
 
@@ -373,31 +380,7 @@ public class YDZBController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
-		CompanyType compType = CompanySelection.getCompany(request);
-//		Organization org = companyManager.getBMDBOrganization();
-//		List<Company> comps;
-//		boolean removeJzcsyl = false;
-//		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
-//			comps = org.getCompany(compType).getSubCompanys();
-//			removeJzcsyl = true;
-//		} else if (
-//				CompanyType.BYQCY == compType ||
-//				CompanyType.XLCY == compType ||
-//				CompanyType.DBSBDCYJT == compType ||
-//				CompanyType.NFSBDCYJT == compType){
-//			removeJzcsyl = true;
-//			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
-//			comps = orgJyzb.getCompany(compType).getSubCompanys();
-//		} else {
-//			comps = new ArrayList<Company>();
-//			comps.add(org.getCompany(compType));
-//		}
-//
-//		List<String[]> ret = gszbService.getGdwzb(d, comps);
-//		if (removeJzcsyl){
-//			removeJzcsyl(ret);
-//		}
-		
+		CompanyType compType = CompanySelection.getCompany(request);	
 		String hzb_zbhz = JSONArray.fromObject(this.getGdwData(d, compType)).toString()
 				.replace("null", "\"--\"");
 		return hzb_zbhz.getBytes("utf-8");
@@ -423,6 +406,7 @@ public class YDZBController {
 		compSel.select(map, 3);
 		return new ModelAndView("hzb_companys", map);
 	}
+	
 	@RequestMapping(value = "gcy_zbhz_export.do")
 	public @ResponseBody byte[] getgcy_zbhz_export(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
@@ -630,6 +614,61 @@ public class YDZBController {
 		return new ModelAndView("zbhz_overview", map);
 	}
 
+	
+	@RequestMapping(value = "hzb_companys_prediction_update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] gethzb_companys_prediction_update(
+			HttpServletRequest request, HttpServletResponse response)
+			throws UnsupportedEncodingException {
+		
+		Date d = DateSelection.getDate(request);
+		CompanyType compType = CompanySelection.getCompany(request);	
+		List<Company> comps = getHzbCompany(compType);
+		String month = request.getParameter("month");
+		int iMonth = Integer.valueOf(month);
+		String hzb_zbhz_prediction = null;
+		if (0 == iMonth % 3) {
+			hzb_zbhz_prediction = JSONArray
+					.fromObject(gszbService.getJDZBMY(d, comps)).toString()
+					.replace("null", "\"--\"");
+		}
+
+		if (1 == iMonth % 3) {
+			hzb_zbhz_prediction = JSONArray
+					.fromObject(
+							gszbService.getFirstSeasonPredictionZBsOverview(d, comps))
+					.toString().replace("null", "\"--\"");
+		}
+
+		if (2 == iMonth % 3) {
+			hzb_zbhz_prediction = JSONArray
+					.fromObject(
+							gszbService.getSecondSeasonPredictionZBsOverview(d, comps))
+					.toString().replace("null", "\"--\"");
+		}
+
+		return hzb_zbhz_prediction.getBytes("utf-8");
+	}
+	
+	//整体指标预测Update
+	@RequestMapping(value = "hzb_companys_prediction.do", method = RequestMethod.GET)
+	public ModelAndView gethzb_companys_prediction(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		DateSelection dateSel = new DateSelection();
+		dateSel.select(map);
+		Organization org = companyManager.getVirtualJYZBOrganization();
+		CompanySelection compSel = new CompanySelection(
+				false,
+				org.getCompany(CompanyType.GFGS).getSubCompanys(), 
+				new CompanyTypeFilter(
+						gszbService.getCompanies((Account)request.getSession(false).getAttribute("account")), 
+						org));
+
+		compSel.select(map, 3);
+		return new ModelAndView("hzb_companys_prediction", map);
+	}
+	
 	// 整体指标预测update
 	@RequestMapping(value = "hzb_zbhz_prediction_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] gethzb_zbhz_prediction_update(
@@ -641,21 +680,21 @@ public class YDZBController {
 		String hzb_zbhz_prediction = null;
 		if (0 == iMonth % 3) {
 			hzb_zbhz_prediction = JSONArray
-					.fromObject(gszbService.getJDZBMY(d)).toString()
+					.fromObject(gszbService.getGsJDZBMY(d)).toString()
 					.replace("null", "\"--\"");
 		}
 
 		if (1 == iMonth % 3) {
 			hzb_zbhz_prediction = JSONArray
 					.fromObject(
-							gszbService.getFirstSeasonPredictionZBsOverview(d))
+							gszbService.getGsFirstSeasonPredictionZBsOverview(d))
 					.toString().replace("null", "\"--\"");
 		}
 
 		if (2 == iMonth % 3) {
 			hzb_zbhz_prediction = JSONArray
 					.fromObject(
-							gszbService.getSecondSeasonPredictionZBsOverview(d))
+							gszbService.getGsSecondSeasonPredictionZBsOverview(d))
 					.toString().replace("null", "\"--\"");
 		}
 
