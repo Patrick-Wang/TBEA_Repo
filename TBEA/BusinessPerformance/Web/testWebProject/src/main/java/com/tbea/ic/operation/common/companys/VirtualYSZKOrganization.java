@@ -21,7 +21,6 @@ class VirtualYSZKOrganization extends AbstractOrganization {
 				.append(clone(BM, CompanyType.SBGS))
 				.append(clone(BM, CompanyType.HBGS))
 				.append(clone(BM, CompanyType.XBC))
-				.append(clone(BM, CompanyType.TBGS))
 		).append(
 				getCompany(CompanyType.XLCY, 5)
 				.append(clone(BM, CompanyType.LLGS))
