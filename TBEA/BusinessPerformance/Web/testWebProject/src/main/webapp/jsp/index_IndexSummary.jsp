@@ -54,7 +54,7 @@
 </c:if>
 
 
-<c:if test="${CorpAuth}">
+
 <div>
 	<h3>
 		经营指标预测情况<a name="zbPrediction"> </a>
@@ -62,14 +62,16 @@
 	<div class="section">
 		<div class="thumb3">
 			<ul class="slides">
-
+				<c:if test="${CorpAuth}">
 				<li><a href="../ydzb/hzb_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>整体指标预测完成情况</strong></span></a>
 				</li>
+				</c:if> 
 				<li><a href="../ydzb/hzb_companys_prediction.do" target="_blank"><img
 						src="../images/charts/scatter2.png"> <span><strong>经营单位及项目公司指标预测完成情况</strong></span></a>
 				</li>
 				<!--/li-->
+				<c:if test="${CorpAuth}">
 				<li><a href="../ydzb/financial_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/line2.png"> <span><strong>各产业五大经营指标预测完成情况</strong></span></a>
 				</li>
@@ -79,6 +81,7 @@
 				<li><a href="../entry/status.do" target="_blank"><img
 						src="../images/charts/scatter1.png"> <span><strong>20号/28号/实际指标预测值填报情况</strong></span></a>
 				</li>
+				</c:if> 
 <!-- 	
 				/li
 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=29" target="_blank"><img
@@ -94,7 +97,7 @@
 		</div>
 	</div>
 </div>
-</c:if> 
+
 <c:if test="${SbdAuth}">
 <div>
 	<h3>
