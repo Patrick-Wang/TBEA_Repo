@@ -111,7 +111,7 @@ button, input, select, textarea { font-family: inherit; /* 1 */ font-size: 100%;
 				</table>
 			</div>
 			<br /> <br /> <br />
-			<div>&copy;2014 信息资源管理中心版权所有</div>
+			<div>&copy;2015 信息资源管理中心版权所有</div>
 		</div>
 	</div>
 </body>
