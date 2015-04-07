@@ -175,6 +175,13 @@ th.ui-th-ltr {
 	text-align: left;
 	font-size: 12px;
 }
+
+#exportButton {
+	height: 23px;
+	width:100px;
+	padding: .1em 1em;
+	margin-top: -1px;
+}
 </style>
 </head>
 <body>
@@ -203,6 +210,11 @@ th.ui-th-ltr {
 		<tr>
 			<td>
 				<div id="table"></div>
+			<td>
+		</tr>
+		<tr>
+			<td>
+				<div style="height:6px"></div>
 			<td>
 		</tr>
 		<tr>

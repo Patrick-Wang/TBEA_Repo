@@ -213,16 +213,16 @@
 		
 		<tr>
 			<td>
-				<div style="height:10px"></div>
+				<div style="height:6px"></div>
 			<td>
 		</tr>
 		<tr>
 			<td>
-			<form id="export" method="post">
-				<input id="exportButton" type="button" value="导出"
-					onclick="instance.exportExcel($('h1').text())"
-					class="ui-button ui-widget ui-state-default ui-corner-all"
-					role="button" aria-disabled="false"></input>
+				<form id="export" method="post">
+					<input id="exportButton" type="button" value="导出"
+						onclick="instance.exportExcel($('h1').text())"
+						class="ui-button ui-widget ui-state-default ui-corner-all"
+						role="button" aria-disabled="false"></input>
 				</form>
 			</td>
 			
