@@ -307,7 +307,7 @@ p {
 	background: url(../images/btn-small.png) 0 0 no-repeat;
 	color: #141414;
 	display: inline-block;
-	font-size: 0.85em;
+	font-size: 0.9em;
 	border-bottom: none;
 	height: 18px;
 	line-height: 18px;
@@ -315,7 +315,6 @@ p {
 	padding: 7px;
 	width: 73px;
 	text-align: center;
-	text-shadow: 0 1px 0 white;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;

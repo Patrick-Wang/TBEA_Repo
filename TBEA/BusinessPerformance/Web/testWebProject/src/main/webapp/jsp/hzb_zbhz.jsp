@@ -209,29 +209,30 @@ th.ui-th-ltr {
 							onclick="instance.updateUI()"
 							class="ui-button ui-widget ui-state-default ui-corner-all"
 							role="button" aria-disabled="false"></input>
-							</td>
-							</tr>
+						</td>
+					</tr>
 				</Table>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<div id="table"></div>
-			<td>
+			</td>
 		</tr>
 		<tr>
 			<td>
-				<div style="height:10px"></div>
-			<td>
+				<div style="height:6px"></div>
+			</td>
 		</tr>
-		<tr>
+		<tr>	
+
 			<td>
-			<form id="export" method="post">
-				<input id="update" type="button" value="导出"
-					style="width: 80px;"
-					onclick="instance.exportExcel($('h1').text())"
-					class="ui-button ui-widget ui-state-default ui-corner-all"
-					role="button" aria-disabled="false"></input>
+				<form id="export" method="post">
+					<input id="update" type="button" value="导出"
+						style="width: 100px;"
+						onclick="instance.exportExcel($('h1').text())"
+						class="ui-button ui-widget ui-state-default ui-corner-all"
+						role="button" aria-disabled="false"></input>
 				</form>
 			</td>
 			

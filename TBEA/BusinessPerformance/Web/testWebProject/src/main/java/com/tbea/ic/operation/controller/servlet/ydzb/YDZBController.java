@@ -615,7 +615,7 @@ public class YDZBController {
 		return new ModelAndView("zbhz_overview", map);
 	}
 
-	@RequestMapping(value = "hzb_companys_prediction_export.do", method = RequestMethod.GET)
+	@RequestMapping(value = "hzb_companys_prediction_export.do")
 	public @ResponseBody byte[] gethzb_companys_prediction_export(
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
