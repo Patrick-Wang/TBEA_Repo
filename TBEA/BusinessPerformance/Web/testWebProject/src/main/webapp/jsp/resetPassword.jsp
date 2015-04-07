@@ -28,6 +28,7 @@
 <script src="../jsp/messageBox.js" type="text/javascript"></script>
  <style type="text/css">
 button, input, select, textarea { font-family: inherit; /* 1 */ font-size: 100%; /* 2 */ margin: 5px; /* 3 */ }
+form input[type=text]:focus { background: #ffffff; }
 </style>
 
 </head>
@@ -60,7 +61,7 @@ button, input, select, textarea { font-family: inherit; /* 1 */ font-size: 100%;
 						<td class="Properties_label"><label>用户名:</label></td>
 						<td width="10"></td>
 						<td> <input type="text" name="j_username" id="j_username" 
-								autocomplete="off" style="display: block; width:265px;padding: 4px">
+								autocomplete="off" style="display: block;width:265px;padding: 4px">
 						</td>
 					</tr>
 					<tr>
