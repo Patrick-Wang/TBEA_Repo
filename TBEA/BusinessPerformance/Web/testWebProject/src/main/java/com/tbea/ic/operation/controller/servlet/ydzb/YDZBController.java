@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.JyzbExcelTemplate;
 import com.tbea.ic.operation.common.JyzbExcelTemplate.CellFormatter;
@@ -614,6 +615,85 @@ public class YDZBController {
 		return new ModelAndView("zbhz_overview", map);
 	}
 
+	@RequestMapping(value = "hzb_companys_prediction_export.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] gethzb_companys_prediction_export(
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		
+		Date d = DateSelection.getDate(request);
+		CompanyType compType = CompanySelection.getCompany(request);	
+		List<Company> comps = getHzbCompany(compType);
+		String month = request.getParameter("month");
+		int iMonth = Integer.valueOf(month);
+		List<String[]> hzb_zbhz_prediction = null;
+		JyzbExcelTemplate template = null;
+		CellFormatter formatter = null;
+		;
+		String fileNameAndSheetName = compType.getValue() + request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
+		
+		if (0 == iMonth % 3) {
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_MY);
+			formatter = template.createCellFormatter()
+					.addType(0, CellFormatter.CellType.HEADER)
+					.addType(6, CellFormatter.CellType.PERCENT)
+					.addType(8, CellFormatter.CellType.PERCENT)
+					.addType(10, CellFormatter.CellType.PERCENT)
+					.addType(12, CellFormatter.CellType.PERCENT)
+					.addType(14, CellFormatter.CellType.PERCENT)
+					.addType(16, CellFormatter.CellType.PERCENT)
+					.addType(21, CellFormatter.CellType.PERCENT)
+					.addType(23, CellFormatter.CellType.PERCENT)
+					.addType(25, CellFormatter.CellType.PERCENT);
+			hzb_zbhz_prediction = gszbService.getJDZBMY(d, comps);
+			fileNameAndSheetName += "末月";
+		}
+
+		if (1 == iMonth % 3) {
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_SY);
+			formatter = template.createCellFormatter()
+					.addType(0, CellFormatter.CellType.HEADER)
+					.addType(5, CellFormatter.CellType.PERCENT)
+					.addType(7, CellFormatter.CellType.PERCENT)
+					.addType(11, CellFormatter.CellType.PERCENT)
+					.addType(13, CellFormatter.CellType.PERCENT)
+					.addType(15, CellFormatter.CellType.PERCENT)
+					.addType(17, CellFormatter.CellType.PERCENT);
+			hzb_zbhz_prediction = gszbService.getFirstSeasonPredictionZBsOverview(d, comps);
+			fileNameAndSheetName += "首月";
+		}
+
+		if (2 == iMonth % 3) {
+			hzb_zbhz_prediction = gszbService.getSecondSeasonPredictionZBsOverview(d, comps);
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_CY);
+			formatter = template.createCellFormatter()
+					.addType(0, CellFormatter.CellType.HEADER)
+					.addType(5, CellFormatter.CellType.PERCENT)
+					.addType(7, CellFormatter.CellType.PERCENT)
+					.addType(9, CellFormatter.CellType.PERCENT)
+					.addType(11, CellFormatter.CellType.PERCENT)
+					.addType(14, CellFormatter.CellType.PERCENT)
+					.addType(16, CellFormatter.CellType.PERCENT)
+					.addType(18, CellFormatter.CellType.PERCENT)
+					.addType(20, CellFormatter.CellType.PERCENT);	
+			fileNameAndSheetName += "次月";
+		}
+		
+		HSSFWorkbook workbook = template.getWorkbook();
+		fileNameAndSheetName += "预计指标完成情况";
+		workbook.setSheetName(0, fileNameAndSheetName);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = hzb_zbhz_prediction.size() - 1; i >= 0; --i) {
+			HSSFRow row = sheet.createRow(3 + i);
+			for (int j = hzb_zbhz_prediction.get(i).length - 1; j >= 0; --j) {
+				HSSFCell cell = row.createCell(j);
+				formatter.format(j, cell, hzb_zbhz_prediction.get(i)[j]);
+			}
+		}		
+			
+		template.write(response, fileNameAndSheetName + ".xls");
+		
+		return "".getBytes("utf-8");
+	}
 	
 	@RequestMapping(value = "hzb_companys_prediction_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] gethzb_companys_prediction_update(
