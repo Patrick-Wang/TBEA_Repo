@@ -29,7 +29,7 @@
 			$('.errors').hide();
 			document.forms[0].submit();
 		}
-		
+
 		//window.location.href='index.htm';
 		//document.forms[0].submit();
 	};
@@ -47,7 +47,8 @@
 			<div>
 				<table>
 					<tr>
-						<td style="padding-top: 0px"><img src="${pageContext.request.contextPath}/images/login_logo.png"
+						<td style="padding-top: 0px"><img
+							src="${pageContext.request.contextPath}/images/login_logo.png"
 							width="100%" border="0" height="130px"></td>
 					</tr>
 				</table>
@@ -83,9 +84,9 @@
 					<c:if test="${(!empty error) && error}">
 					</c:if>
 
-					<div style="position: relative; height: 52px; margin-top: 10px;"
-						onclick="formSubmit();">
-						<span class="small-btn">登录</span>
+					<div style="position: relative; height: 52px; margin-top: 10px;">
+						<a id="a_id" href="${pageContext.request.contextPath}/jsp/resetPassword.jsp">修改密码</a>
+						<span class="small-btn" onclick="formSubmit();">登录</span>
 					</div>
 				</fieldset>
 			</form>
@@ -99,7 +100,8 @@
 			<div align="center">
 				<table>
 					<tr>
-						<td><img src="${pageContext.request.contextPath}/jsp/point.png"></td>
+						<td><img
+							src="${pageContext.request.contextPath}/jsp/point.png"></td>
 						<td>
 							<div style="font-size: 14px; font-weight: 400;">
 								提示：为了获得更好的浏览效果，建议您使用IE8.0及以上版本或chrome浏览器登陆本站点</div>

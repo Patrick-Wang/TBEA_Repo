@@ -31,7 +31,8 @@ public class SessionCheckFilter implements Filter {
 			HttpServletResponse httpResp = (HttpServletResponse) resp;
 			String url = httpRequest.getRequestURI();
 			if (url.indexOf("/Login/validate.do") < 0
-					&& url.indexOf("/Login/login.do") < 0) {
+					&& url.indexOf("/Login/login.do") < 0
+					&& url.indexOf("/Account/resetPassword.do") < 0) {
 				HttpSession session = httpRequest.getSession(false);
 				boolean bValid = (null != session);
 				if (bValid) {
