@@ -164,6 +164,14 @@ module companys_zbhz_prediction {
         	this.mDelegateMonth = parseInt(month);
         }
         
+        public exportExcel(fName: string) {
+            //var date : Util.Date = this.mDateSelector.getDate();
+            var compType = this.mCompanySelector.getCompany();
+            $("#export")[0].action = "companys_zbhz_prediction_export.do?" + Util.Ajax.toUrlParam({ month: this.mActualMonth, year: this.mYear, companyId: compType});
+            $("#export")[0].submit();
+        }
+        
+        
         public updateUI() {
 
             this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
@@ -298,6 +306,7 @@ module companys_zbhz_prediction {
                     rowNum: 100,
                     autoScroll: true
                 }));
+             $("#export").css('display','block'); 
 
         }
     }
