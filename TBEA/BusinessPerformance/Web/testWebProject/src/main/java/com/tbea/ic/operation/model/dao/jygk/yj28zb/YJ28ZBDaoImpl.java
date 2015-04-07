@@ -112,7 +112,7 @@ public class YJ28ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ28ZB> implements Y
 	
 	@Override
 	public List<Integer> getCompanies() {
-		Query q = this.getEntityManager().createQuery("select dwxx.id from YJ28ZB");
+		Query q = this.getEntityManager().createQuery("select dwxx.id from YJ28ZB group by dwxx.id");
 		return q.getResultList();
 	}
 

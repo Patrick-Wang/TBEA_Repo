@@ -86,7 +86,7 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 	
 	@Override
 	public List<Integer> getCompanies() {
-		Query q = this.getEntityManager().createQuery("select dwxx.id from NDJHZB");
+		Query q = this.getEntityManager().createQuery("select dwxx.id from NDJHZB group by dwxx.id");
 		return q.getResultList();
 	}
 	
