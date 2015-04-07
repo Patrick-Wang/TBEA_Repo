@@ -26,6 +26,10 @@
 <script src="../jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
 <script src="../jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="../jsp/messageBox.js" type="text/javascript"></script>
+ <style type="text/css">
+button, input, select, textarea { font-family: inherit; /* 1 */ font-size: 100%; /* 2 */ margin: 5px; /* 3 */ }
+</style>
+
 </head>
 <body onload="afterLoadPage()">
 	<div style="text-align: center;">
@@ -55,31 +59,31 @@
 					<tr>
 						<td class="Properties_label"><label>用户名:</label></td>
 						<td width="10"></td>
-						<td><span class="largeText"> <input name="j_username" id="j_username" type="text"
-								autocomplete="off" style="display: block;">
-						</span></td>
+						<td> <input type="text" name="j_username" id="j_username" 
+								autocomplete="off" style="display: block; width:265px;padding: 4px">
+						</td>
 					</tr>
 					<tr>
 						<td class="Properties_label"><label>原密码:</label></td>
 						<td width="10"></td>
-						<td><span class="largeText"> <input type="password"
-								id="j_password" name="j_password"  type="text" style="display: block;">
-						</span></td>
+						<td><input type="password"
+								id="j_password" name="j_password"  type="text" style="display: block;width:265px;padding: 4px">
+						</td>
 					</tr>
 					<tr>
 						<td class="Properties_label"><label>新密码:</label></td>
 						<td width="10"></td>
-						<td><span class="largeText"> <input type="password"
+						<td><input type="password"
 								name="loadNewPassword" id="loadNewPassword" type="text"
-								style="display: block;">
-						</span></td>
+								style="display: block;width:265px;padding: 4px">
+						</td>
 					</tr>
 					<tr>
 						<td class="Properties_label"><label>确认新密码:</label></td>
 						<td width="10"></td>
-						<td><span class="largeText"> <input type="password"
-								id="reloadNewPassword" name="reloadNewPassword" type="text" style="display: block;">
-						</span></td>
+						<td><input type="password"
+								id="reloadNewPassword" name="reloadNewPassword" type="text" style="display: block;width:265px;padding: 4px">
+						</td>
 					</tr>
 					<tr>
 						<td colspan="3"><span class="btnPassword" id="btnPasswordOK">提交</span>

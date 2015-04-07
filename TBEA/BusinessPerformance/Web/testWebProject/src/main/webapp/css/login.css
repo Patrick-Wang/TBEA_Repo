@@ -77,21 +77,6 @@ margin: 0 auto;
 #loginForm button, #loginForm label {
     margin-top: 0.5em;
 }
-input:not([type="radio"]), textarea {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #CCCCCC;
-    border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.2) inset;
-    outline: medium none;
-    padding: 5px;
-    width: 245px;
-}
-input:focus:not([type="submit"]), textarea:focus {
-    background: none repeat scroll 0 0 #F8FDFE;
-    border-color: #8ED9EE;
-    transition-property: all;
-}
-
 
 fieldset {
     border: 0 none;
@@ -176,7 +161,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     line-height: 34px;
     border-bottom: medium none;
     display: inline-block;
-    font-size: 1.0em;
+    font-size: 15px;
     height: 18px;
     line-height: 18px;
     margin: 0 10px 0 0;

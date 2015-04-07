@@ -69,8 +69,8 @@
 				<fieldset>
 					<label for="j_username">用户名：</label> <input type="text"
 						name="j_username" id="j_username" onkeydown="doSubmit(event)"
-						autocomplete="on" /> <label for="j_password">密码：</label> <input
-						type="password" name="j_password" id="j_password"
+						autocomplete="on" style="width:265px;padding: 4px;"/> <label for="j_password">密码：</label> <input
+						type="password" name="j_password" id="j_password" style="width:265px;padding: 4px;"
 						onkeydown="doSubmit(event)" /> <input type="hidden"
 						name="transmissionStr" id="transmissionStr" />
 					<c:choose>
