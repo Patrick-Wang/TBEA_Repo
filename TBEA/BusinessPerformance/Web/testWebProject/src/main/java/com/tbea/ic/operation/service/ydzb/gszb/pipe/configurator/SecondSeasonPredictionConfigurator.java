@@ -21,7 +21,6 @@ public class SecondSeasonPredictionConfigurator extends AbstractSbdPipeConfigura
 	IAccumulator sjAcc;
 	IAccumulator yjhAcc;
 	IAccumulator njhAcc;
-	SbdNdjhZbDao sbdzbDao;
 
 	public SecondSeasonPredictionConfigurator(SbdNdjhZbDao sbdzbDao, IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc) {
 		super(sbdzbDao);

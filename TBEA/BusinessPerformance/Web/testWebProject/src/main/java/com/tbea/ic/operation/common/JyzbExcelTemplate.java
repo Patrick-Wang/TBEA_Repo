@@ -107,12 +107,20 @@ public class JyzbExcelTemplate {
 	public static JyzbExcelTemplate createTemplate(SheetType type) throws IOException{
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
 				pathJdzbTemplate)));	
-		workbook.cloneSheet(type.ordinal());
-		String name = workbook.getSheetName(type.ordinal());
-		for (int i = 0; i <= SheetType.JDFDWZBYJ_MY.ordinal(); ++i){
+//		workbook.cloneSheet(type.ordinal());
+//		String name = workbook.getSheetName(type.ordinal());
+//		for (int i = 0; i <= SheetType.JDFDWZBYJ_MY.ordinal(); ++i){
+//			workbook.removeSheetAt(0);
+//		}
+//		workbook.setSheetName(0, name);
+		
+		for (int i = 0; i < type.ordinal(); ++i){
 			workbook.removeSheetAt(0);
 		}
-		workbook.setSheetName(0, name);
+		
+		for (int i = type.ordinal() + 1; i <= SheetType.JDFDWZBYJ_MY.ordinal(); ++i){
+			workbook.removeSheetAt(1);
+		}
 		return new JyzbExcelTemplate(workbook);
 	}
 	
