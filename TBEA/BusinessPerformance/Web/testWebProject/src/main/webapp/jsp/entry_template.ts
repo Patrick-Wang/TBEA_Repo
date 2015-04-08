@@ -257,7 +257,6 @@ module entry_template {
           }
             
             var data = this.mTableData;
-          
             var lastsel = "";
             var lastcell = "";
             $("#" + name).jqGrid(
@@ -293,11 +292,20 @@ module entry_template {
                         lastsel = iRow; 
                         lastcell = iCol; 
                         $("input").attr("disabled",true); 
-                        
                     },
+                    
+                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
+                        $("input[type=text]").bind("keydown", function(e){
+                            if (e.keyCode === 13){
+                                setTimeout(function(){
+                                    $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);    
+                                }, 10);
+                            }
+                        });
+                    },
+                    
                     afterSaveCell : ()=>{
                         $("input").attr("disabled",false); 
-    
                         lastsel=""; 
                     },
                     
