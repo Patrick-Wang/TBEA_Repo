@@ -22,6 +22,7 @@ public abstract class AbstractSbdPipeConfigurator implements IPipeConfigurator {
 		specialZbs.add(GSZB.RS.getValue());
 		specialZbs.add(GSZB.CL.getValue());
 		specialZbs.add(GSZB.XL.getValue());
+		specialZbs.add(GSZB.XSLRL.getValue());
 	}
 	
 	protected CompanyManager companyManager;

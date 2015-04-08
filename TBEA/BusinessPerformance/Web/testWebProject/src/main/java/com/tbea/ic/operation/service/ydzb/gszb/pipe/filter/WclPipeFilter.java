@@ -42,8 +42,8 @@ public class WclPipeFilter implements IPipeFilter {
 			wcl = wcls.get(i);
 			if (null == zbRow[wcl[1]] || 
 				null == zbRow[wcl[2]] || 
-				zbRow[wcl[1]] < 0 || 
-				zbRow[wcl[2]] < 0 || 
+				Util.isNegative(zbRow[wcl[1]]) || 
+				Util.isNegative(zbRow[wcl[2]]) || 
 				Util.isZero(zbRow[wcl[1]]) || 
 				Util.isZero(zbRow[wcl[2]])) {
 				zbRow[wcl[0]] = null;

@@ -40,8 +40,8 @@ public class ZzlPipeFilter implements IPipeFilter {
 			zzl = zzls.get(i);
 			if (null == zbRow[zzl[1]] || 
 				null == zbRow[zzl[2]] || 
-				zbRow[zzl[1]] < 0 || 
-				zbRow[zzl[2]] < 0 || 
+				Util.isNegative(zbRow[zzl[2]]) ||
+				Util.isNegative(zbRow[zzl[1]]) ||
 				Util.isZero(zbRow[zzl[1]]) ||
 				Util.isZero(zbRow[zzl[2]])) {
 				zbRow[zzl[0]] = null;

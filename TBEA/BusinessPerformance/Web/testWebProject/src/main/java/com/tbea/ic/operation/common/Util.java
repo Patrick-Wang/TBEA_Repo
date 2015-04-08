@@ -26,6 +26,14 @@ public class Util {
 		return Math.abs(val) < 0.0000001;
 	}
 	
+	public static boolean isPositive(Double val){
+		return val > 0;
+	}
+	
+	public static boolean isNegative(Double val){
+		return val < 0;
+	}
+	
 	public static java.sql.Date toDate(Calendar d){
 		java.sql.Date ret = null;
 		if (d != null){

@@ -30,8 +30,10 @@ public class SpecialPipeFilter implements IPipeFilter {
 			rsRow = row;
 		} else if (GSZB.SXFY.getValue() == zbId) {
 			sxfyRow = row;
-		} else if (GSZB.RJLR.getValue() == zbId || GSZB.RJSR.getValue() == zbId
-				|| GSZB.SXFYL.getValue() == zbId) {
+		} else if (GSZB.RJLR.getValue() == zbId || 
+			GSZB.RJSR.getValue() == zbId || 
+			GSZB.SXFYL.getValue() == zbId || 
+			GSZB.XSLRL.getValue() == zbId) {
 			dret = pipe.getZb(row);
 		}
 
@@ -58,8 +60,8 @@ public class SpecialPipeFilter implements IPipeFilter {
 				if (null != lrze[i] && 
 					null != rs[i]  && 
 					!excludeCols.contains(i) && 
-					!Util.isZero(Math.abs(rs[i]))) {
-					
+					Util.isPositive(lrze[i]) &&
+					Util.isPositive(rs[i])) {
 					zbRow[i] = lrze[i] / rs[i];
 				}
 			}
@@ -67,10 +69,11 @@ public class SpecialPipeFilter implements IPipeFilter {
 			Double[] rs = pipe.getZb(rsRow);
 			Double[] xssr = pipe.getZb(xssrRow);
 			for (int i = 0; i < zbRow.length; ++i) {
-				if (null != xssr[i] && 
-					null != rs[i]  && 
+				if (rs[i] != null &&
+					xssr[i] != null &&
 					!excludeCols.contains(i) && 
-					!Util.isZero(Math.abs(rs[i]))) {
+					Util.isPositive(rs[i]) && 
+					Util.isPositive(xssr[i])) {
 					
 					zbRow[i] = xssr[i] / rs[i];
 				}
@@ -79,12 +82,25 @@ public class SpecialPipeFilter implements IPipeFilter {
 			Double[] xssr = pipe.getZb(xssrRow);
 			Double[] sxfy = pipe.getZb(sxfyRow);
 			for (int i = 0; i < zbRow.length; ++i) {
-				if (null != sxfy[i] && 
-					null != xssr[i]  && 
+				if (sxfy[i] != null &&
+					xssr[i] != null &&
 					!excludeCols.contains(i) && 
-					!Util.isZero(Math.abs(xssr[i]))) {
+					Util.isPositive(xssr[i]) && 
+					Util.isPositive(sxfy[i])) {
 					
 					zbRow[i] = sxfy[i] / xssr[i];
+				}
+			}
+		} else if (GSZB.XSLRL.getValue() == zbId) {
+			Double[] xssr = pipe.getZb(xssrRow);
+			Double[] lrze = pipe.getZb(lrzeRow);
+			for (int i = 0; i < zbRow.length; ++i) {
+				if (lrze[i] != null &&
+					xssr[i] != null &&
+					!excludeCols.contains(i) &&
+					Util.isPositive(xssr[i]) &&
+					Util.isPositive(lrze[i])) {
+					zbRow[i] = lrze[i] / xssr[i];
 				}
 			}
 		}
