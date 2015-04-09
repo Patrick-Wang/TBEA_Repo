@@ -47,13 +47,13 @@ public class BMDepartmentDB extends AbstractOrganization {
 		id_typeMap.put(112, CompanyType.SBWYGS);
 		id_typeMap.put(113, CompanyType.KGYJS);
 		id_typeMap.put(114, CompanyType.SBXNY);
-		id_typeMap.put(115, CompanyType.TBDGYDNYYXGS);
+		id_typeMap.put(115, CompanyType.TBDG_YD_NYYXGS);
 		id_typeMap.put(201, CompanyType.HBDQFGS);
 		id_typeMap.put(202, CompanyType.HNGJWLGS);
 		id_typeMap.put(203, CompanyType.HNGCGS);
 		id_typeMap.put(204, CompanyType.HBYYGS);
 		id_typeMap.put(205, CompanyType.HNYNDQGS);
-		id_typeMap.put(206, CompanyType.NJYNDQGS);
+		id_typeMap.put(206, CompanyType.NJZNDQGS);
 		id_typeMap.put(207, CompanyType.HNYLGS);
 		id_typeMap.put(301, CompanyType.XBCBB);
 		id_typeMap.put(302, CompanyType.TBGS);
@@ -76,7 +76,7 @@ public class BMDepartmentDB extends AbstractOrganization {
 		id_typeMap.put(504, CompanyType.GMB);
 		id_typeMap.put(505, CompanyType.GJGCGS_XL);
 		id_typeMap.put(506, CompanyType.ZTWLGS);
-		id_typeMap.put(507, CompanyType.XSYGS);
+		id_typeMap.put(507, CompanyType.XSZGS);
 		id_typeMap.put(508, CompanyType.XJFGS);
 		id_typeMap.put(509, CompanyType.BJFGS);
 		id_typeMap.put(510, CompanyType.GNFGS);

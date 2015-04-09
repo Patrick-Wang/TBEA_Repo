@@ -12,9 +12,9 @@ module approve_template {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left, 100));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left, 85));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, false, JQTable.TextAlign.Right, 100));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, false, JQTable.TextAlign.Right, 85));
                 }
 
             }
@@ -25,9 +25,9 @@ module approve_template {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i < 1) {
-                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 100));
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 85));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 100));
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 85));
                 }
 
             }
@@ -38,9 +38,9 @@ module approve_template {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i <= 1) {
-                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 100));
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 85));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 100));
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 85));
                 }
 
             }
@@ -81,7 +81,7 @@ module approve_template {
     function resize(data: string[], size) {
         if (data.length < size) {
             for (var i = data.length; i < size; ++i) {
-                data.push("");
+                data.push("--");
             }
             return data;
         } else {
@@ -200,14 +200,27 @@ module approve_template {
             var name = tableId + "_jqgrid";
             var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createQnjhTable(name, title, colZbIds);
 
+            
+            var maxLength = 0;
             for (var i: any = 0; i < tmpData.length; ++i) {
-                for (var j = 2; j < tmpData[i].length; ++j) {
-                    if (title[j - 1] == '人数') {
-                        tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
-                    } else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
-                        tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
-                    } else {
-                        tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
+                if (maxLength < tmpData[i].length) {
+                    maxLength = tmpData[i].length;
+                }
+            }
+
+            for (var i: any = 0; i < tmpData.length; ++i) {
+                for (var j = 2; j < maxLength; ++j) {
+                    if (j < tmpData[i].length) {
+                        if (title[j - 1] == '人数') {
+                            tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
+                        } else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
+                            tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
+                        } else {
+                            tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
+                        }
+                    }
+                    else {
+                        tmpData[i].push("--");
                     }
                 }
             }
@@ -216,10 +229,8 @@ module approve_template {
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
 
-            var width = (title.length) * 100;
-            if (width > 1200) {
-                width = 1200;
-            }
+            var width = (title.length) * 85;
+
 
             $("#" + name).jqGrid(
                 jqAssist.decorate({
@@ -235,8 +246,8 @@ module approve_template {
                     //cellEdit: false,
                     rowNum: 1500,
                     height: '100%',
-                    width: width,
-                    shrinkToFit:  width == 1200 ? false : true,
+                    width: 1200,
+                    shrinkToFit: width > 1200 ? false : true,
                     autoScroll: true,
                     caption: caption
                 }));
@@ -393,19 +404,29 @@ module approve_template {
                 });
             });
 
+            var maxLength = 0;
+            for (var i: any = 0; i < tmpData.length; ++i) {
+                if (maxLength < tmpData[i].length) {
+                    maxLength = tmpData[i].length;
+                }
+            }
 
-              for (var i : any = 0; i < tmpData.length; ++i){
-                  for (var j = hasDate ? 3 : 2; j < tmpData[i].length; ++j){
-                    if (title[j - 1] == '人数') {
-                        tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
-                    } else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
-                        tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
+            for (var i: any = 0; i < tmpData.length; ++i) {
+                for (var j = hasDate ? 3 : 2; j < maxLength; ++j) {
+                    if (j < tmpData[i].length) {
+                        if (title[j - 1] == '人数') {
+                            tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
+                        } else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
+                            tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
+                        } else {
+                            tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
+                        }
                     } else {
-                        tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
+                        tmpData[i].push("--");
                     }
-                  }
-              }
-            
+                }
+            }
+
             var name = tableId + "_jqgrid";
             var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createSjTable(name, title, colZbIds);
 
@@ -413,10 +434,8 @@ module approve_template {
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
 
-            var width = (title.length) * 100;
-            if (width > 1200) {
-                width = 1200;
-            }
+            var width = (title.length) * 85;
+           
 
             $("#" + name).jqGrid(
                 jqAssist.decorate({
@@ -432,8 +451,8 @@ module approve_template {
                     //cellsubmit: 'clientArray',
                     //cellEdit: false,
                     height: '100%',
-                    width: width,
-                    shrinkToFit: width == 1200 ? false : true,
+                    width: 1200,
+                    shrinkToFit: width > 1200 ? false : true,
                     autoScroll: true,
                     caption: caption
                 }));

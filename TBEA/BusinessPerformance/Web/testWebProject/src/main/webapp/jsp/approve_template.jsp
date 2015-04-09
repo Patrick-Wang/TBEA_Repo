@@ -239,6 +239,11 @@ th.ui-th-ltr {
 			</td>
 		</tr>
 		<tr>
+		<td>
+			<div style="height:15px"></div>
+		</td>
+		</tr>
+		<tr>
 			<td>
 				<table id="unapprove" style="display:none">
 					<tr>
