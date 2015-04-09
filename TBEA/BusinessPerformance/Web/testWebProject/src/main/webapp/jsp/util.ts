@@ -276,7 +276,7 @@ module Util {
         if (val === "--" || val === "") {
             return val;
         }
-        val = parseFloat(val).toFixed(2) + "";
+        val = parseFloat(val).toFixed(0) + "";
         var dot: number = val.lastIndexOf('.');
         var intPart: string = "";
         var parts: string[] = [];
@@ -320,15 +320,15 @@ module Util {
         if (val === "--" || val === "" || val === "-") {
             return val;
         }
-        return (parseFloat(val) * 100).toFixed(2) + "%"    
+        return (parseFloat(val) * 100).toFixed(1) + "%"    
     }
     
     export function formatPercentSignal(val: string): string{
         if (val === "--" || val === "" || val === "-") {
             return val;
         }
-        return (parseFloat(val)).toFixed(2) + "%"   
-        }
+        return (parseFloat(val)).toFixed(1) + "%"   
+    }
     
     export function isExist(val: any): boolean {
         return val != undefined;

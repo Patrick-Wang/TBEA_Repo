@@ -157,7 +157,7 @@ module hzb_companys {
                         }
                         else if (isXslvl)
                         {
-                            row[i] = Util.formatPercentSignal(row[i]);
+                            row[i] = Util.formatPercent(row[i]);
                         }
                         else 
                         {
