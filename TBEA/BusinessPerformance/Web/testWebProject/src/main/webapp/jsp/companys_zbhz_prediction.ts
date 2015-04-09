@@ -215,7 +215,7 @@ module companys_zbhz_prediction {
                         }
                         else if (isXslvl)
                         {
-                            row[i] = Util.formatPercentSignal(row[i]);
+                            row[i] = Util.formatPercent(row[i]);
                         }
                         else {
                             row[i] = Util.formatCurrency(row[i]);
