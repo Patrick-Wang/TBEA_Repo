@@ -12,9 +12,9 @@ module approve_template {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left, 125));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left, 100));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, false, JQTable.TextAlign.Right, 125));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, false, JQTable.TextAlign.Right, 100));
                 }
 
             }
@@ -25,9 +25,9 @@ module approve_template {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i < 1) {
-                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 125));
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 100));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 125));
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 100));
                 }
 
             }
@@ -38,9 +38,9 @@ module approve_template {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i <= 1) {
-                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 125));
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 100));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 125));
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 100));
                 }
 
             }
@@ -146,11 +146,11 @@ module approve_template {
         process(data: any, date: Util.Date, companies: Util.IData[]): void {
             this.mData = date;
             if (data[0].length > 0) {
-                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId, "未审核");
+                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId, "未审核数据");
             }
 
             if (data[1].length > 0) {
-                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核");
+                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核数据");
             }
         }
 
@@ -200,22 +200,25 @@ module approve_template {
             var name = tableId + "_jqgrid";
             var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createQnjhTable(name, title, colZbIds);
 
-            
-              for (var i : any = 0; i < tmpData.length; ++i){
-                  for (var j = 2; j < tmpData[i].length; ++j){
-                      if ("" != tmpData[i][j]){
-                        tmpData[i][j] = parseFloat(tmpData[i][j]) + "";
-                      }
-                  }
-              }
-            
+            for (var i: any = 0; i < tmpData.length; ++i) {
+                for (var j = 2; j < tmpData[i].length; ++j) {
+                    if (title[j - 1] == '人数') {
+                        tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
+                    } else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
+                        tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
+                    } else {
+                        tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
+                    }
+                }
+            }
+
             var parent = $("#" + tableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
 
-            var width = (title.length) * 125;
-            if (width > 1000) {
-                width = 1000;
+            var width = (title.length) * 100;
+            if (width > 1200) {
+                width = 1200;
             }
 
             $("#" + name).jqGrid(
@@ -230,10 +233,10 @@ module approve_template {
                     //autowidth : false,
                     //cellsubmit: 'clientArray',
                     //cellEdit: false,
-                    rowNum: 150,
+                    rowNum: 1500,
                     height: '100%',
                     width: width,
-                    shrinkToFit: width == 1000 ? false : true,
+                    shrinkToFit:  width == 1200 ? false : true,
                     autoScroll: true,
                     caption: caption
                 }));
@@ -315,11 +318,11 @@ module approve_template {
         process(data: any, date: Util.Date, companies: Util.IData[]): void {
             this.mData = date;
             if (data[0].length > 0) {
-                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId, "未审核");
+                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId, "未审核数据");
             }
 
             if (data[1].length > 0) {
-                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核");
+                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核数据");
             }
         }
 
@@ -393,9 +396,13 @@ module approve_template {
 
               for (var i : any = 0; i < tmpData.length; ++i){
                   for (var j = hasDate ? 3 : 2; j < tmpData[i].length; ++j){
-                      if ("" != tmpData[i][j]){
-                        tmpData[i][j] = parseFloat(tmpData[i][j]) + "";
-                      }
+                    if (title[j - 1] == '人数') {
+                        tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
+                    } else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
+                        tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
+                    } else {
+                        tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
+                    }
                   }
               }
             
@@ -406,9 +413,9 @@ module approve_template {
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
 
-            var width = (title.length) * 125;
-            if (width > 1000) {
-                width = 1000;
+            var width = (title.length) * 100;
+            if (width > 1200) {
+                width = 1200;
             }
 
             $("#" + name).jqGrid(
@@ -420,13 +427,13 @@ module approve_template {
                     multiselect: true,
                     drag: false,
                     resize: false,
-                    rowNum: 150,
+                    rowNum: 1000,
                     //autowidth : false,
                     //cellsubmit: 'clientArray',
                     //cellEdit: false,
                     height: '100%',
                     width: width,
-                    shrinkToFit: width == 1000 ? false : true,
+                    shrinkToFit: width == 1200 ? false : true,
                     autoScroll: true,
                     caption: caption
                 }));
@@ -574,7 +581,7 @@ module approve_template {
             var date = this.mDateSelector.getDate();
             switch (this.mOpt.approveType) {
                 case Util.ZBType.QNJH:
-                    header = date.year + "年 计划数据审核";
+                    header = date.year + "年 全年计划数据审核";
                     break;
                 case Util.ZBType.YDJDMJH:
                     header = date.year + "年" + " 季度-月度末计划值审核";
