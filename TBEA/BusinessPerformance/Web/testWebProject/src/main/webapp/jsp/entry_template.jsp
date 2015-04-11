@@ -187,7 +187,24 @@ th.ui-th-ltr {
 
 </style>
 </head>
-<body>
+<script type="text/javascript">
+  function cellkeydown(event) { 
+        if (event.ctrlKey && event.keyCode == 86) { 
+            var ss = document.getElementById("textArea"); 
+            ss.focus(); 
+            ss.select(); 
+            // 等50毫秒，keyPress事件发生了再去处理数据 
+            setTimeout("dealwithData()",50); 
+        }     
+    } 
+    function dealwithData(event) { 
+            var ss = document.getElementById("textArea"); 
+            /* alert(ss.value);  */
+            ss.blur(); 
+    } 
+</script>
+
+<body onkeydown="return cellkeydown(event)">
 	<div class="header">
 		<h1></h1>
 	</div>
@@ -237,6 +254,8 @@ th.ui-th-ltr {
 		 $("input:button,input:submit,input:reset").button();  
 		 $("input").button( "option", "icons", {primary:'ui-icon-cancel',secondary:'ui-icon-cancel'} );  
 	</script>
+	<div> 
+    <textarea id="textArea" style="width:0px;height:0px;margin-top:0px;margin-left:0px;margin-right:0px;margin-bottom:0px;padding-bottom:0px;padding-left:0px;padding-top:0px;padding-right:0px;border-width:0px;"></textarea></div>
 </body>
 
 </html>

@@ -38,7 +38,7 @@ public enum GSZB {
 	CH(35),//存货
 	QZJYWY(36),//    其中：积压物资
 	QZKCSP(37),//    其中：库存商品
-	QZYJXMCH(38),//    其中：自建项目存货
+	QZZJXMCH(38),//    其中：自建项目存货
 	QZBPBJ(39),//    其中：备品备件
 	QZDCMT(40),//    其中：电厂煤炭
 	QZDCRY(41),//    其中：电厂燃油

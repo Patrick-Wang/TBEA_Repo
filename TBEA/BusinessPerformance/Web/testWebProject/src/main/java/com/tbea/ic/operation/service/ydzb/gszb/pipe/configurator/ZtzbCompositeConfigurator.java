@@ -65,10 +65,12 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 				.includeCompanies(allCompanies)
 				.includeZbs(allZbs)
 				.exclude(GSZB.CH)
+				.exclude(GSZB.QZZJXMCH)
 				.exclude(GSZB.YSZK)
 				.exclude(GSZB.RS))
 			.add(copyFilter
 				.add(GSZB.CH, 1, 6)
+				.add(GSZB.QZZJXMCH, 1, 6)
 				.add(GSZB.YSZK, 1, 6)
 				.add(GSZB.RS, 1, 6))
 				
@@ -77,10 +79,12 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 				.includeCompanies(allCompanies)
 				.includeZbs(allZbs)
 				.exclude(GSZB.CH)
+				.exclude(GSZB.QZZJXMCH)
 				.exclude(GSZB.YSZK)
 				.exclude(GSZB.RS))
 			.add(copyFilter
 				.add(GSZB.CH, 2, 7)
+				.add(GSZB.QZZJXMCH, 2, 7)
 				.add(GSZB.YSZK, 2, 7)
 				.add(GSZB.RS, 2, 7))
 				
@@ -102,10 +106,12 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 				.includeCompanies(allCompanies)
 				.includeZbs(allZbs)
 				.exclude(GSZB.CH)
+				.exclude(GSZB.QZZJXMCH)
 				.exclude(GSZB.YSZK)
 				.exclude(GSZB.RS))
 			.add(copyFilter
 				.add(GSZB.CH, 2, 11)
+				.add(GSZB.QZZJXMCH, 2, 11)
 				.add(GSZB.YSZK, 2, 11)
 				.add(GSZB.RS, 2, 11))
 			
@@ -119,10 +125,12 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 				.includeCompanies(allCompanies)
 				.includeZbs(allZbs)
 				.exclude(GSZB.CH)
+				.exclude(GSZB.QZZJXMCH)
 				.exclude(GSZB.YSZK)
 				.exclude(GSZB.RS))
 			.add(copyFilter
 				.add(GSZB.CH, 9, 13)
+				.add(GSZB.QZZJXMCH, 9, 13)
 				.add(GSZB.YSZK, 9, 13)
 				.add(GSZB.RS, 9, 13))
 	

@@ -6,7 +6,6 @@ import java.util.List;
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
@@ -52,7 +51,8 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 					.excludeZbs(specialZbs)
 					.include(GSZB.RS)
 					.include(GSZB.YSZK)
-					.include(GSZB.CH));
+					.include(GSZB.CH)
+					.include(GSZB.QZZJXMCH));
 
 		// 当月计划
 		if (sbdCompanies.isEmpty()) {
@@ -62,13 +62,15 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 					.excludeZbs(specialZbs)
 					.include(GSZB.RS)
 					.include(GSZB.YSZK)
-					.include(GSZB.CH));
+					.include(GSZB.CH)
+					.include(GSZB.QZZJXMCH));
 		} else {
 			pipe.add(new AccPipeFilter(yjhAcc, 1)
 					.includeCompanies(allCompanies)
 					.includeZbs(pipe.getZbIds())
 					.excludeZbs(specialZbs)
-					.include(GSZB.RS))
+					.include(GSZB.RS)
+					.include(GSZB.QZZJXMCH))
 				.add(new YdjhProportionAccPipeFilter(sbdzbDao, sjAcc, 1, dh.getFirstMonth(), dh.getCur())
 					.includeCompanies(sbdCompanies)
 					.include(GSZB.YSZK)
@@ -78,7 +80,8 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 				pipe.add(new AccPipeFilter(yjhAcc, 1)
 						.includeCompanies(nonSbdCompanies)
 						.include(GSZB.YSZK)
-						.include(GSZB.CH));
+						.include(GSZB.CH)
+						.include(GSZB.QZZJXMCH));
 			}
 		}
 
@@ -89,6 +92,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 					.excludeZbs(specialZbs)
 					.include(GSZB.YSZK)
 					.include(GSZB.CH)
+					.include(GSZB.QZZJXMCH)
 					.include(GSZB.RS))
 
 				// 计划完成率
@@ -101,6 +105,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.excludeZbs(specialZbs)
 						.include(GSZB.YSZK)
 						.include(GSZB.CH)
+						.include(GSZB.QZZJXMCH)
 						.include(GSZB.RS))
 
 				// 同比增幅
@@ -111,7 +116,9 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(specialZbs))
-				.add(copyFilter.add(GSZB.CH, 1, 6)
+				.add(copyFilter
+						.add(GSZB.CH, 1, 6)
+						.add(GSZB.QZZJXMCH, 1, 6)
 						.add(GSZB.YSZK, 1, 6)
 						.add(GSZB.RS, 1, 6))
 
@@ -120,7 +127,9 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(specialZbs))
-				.add(copyFilter.add(GSZB.CH, 2, 7)
+				.add(copyFilter
+						.add(GSZB.CH, 2, 7)
+						.add(GSZB.QZZJXMCH, 2, 7)
 						.add(GSZB.YSZK, 2, 7)
 						.add(GSZB.RS, 2, 7))
 
@@ -135,7 +144,9 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 				.add(new AccPipeFilter(sjAcc, 9, dh.getQntq())
 						.includeCompanies(allCompanies)
 						.include(GSZB.YSZK)
-						.include(GSZB.CH).include(GSZB.RS))
+						.include(GSZB.CH)
+						.include(GSZB.QZZJXMCH)
+						.include(GSZB.RS))
 
 				// 同比增幅
 				.add(tbzzFilter.add(10, 7, 9))
@@ -145,7 +156,9 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(specialZbs))
-				.add(copyFilter.add(GSZB.CH, 2, 11)
+				.add(copyFilter
+						.add(GSZB.CH, 2, 11)
+						.add(GSZB.QZZJXMCH, 2, 11)
 						.add(GSZB.YSZK, 2, 11)
 						.add(GSZB.RS, 2, 11))
 
@@ -159,6 +172,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.excludeZbs(specialZbs))
 				.add(copyFilter
 						.add(GSZB.CH, 9, 13)
+						.add(GSZB.QZZJXMCH, 9, 13)
 						.add(GSZB.YSZK, 9, 13)
 						.add(GSZB.RS, 9, 13))
 

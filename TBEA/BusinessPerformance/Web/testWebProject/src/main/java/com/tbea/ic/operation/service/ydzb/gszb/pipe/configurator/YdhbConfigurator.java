@@ -53,7 +53,8 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 						.excludeZbs(specialZbs)
 						.include(GSZB.RS)
 						.include(GSZB.YSZK)
-						.include(GSZB.CH));
+						.include(GSZB.CH)
+						.include(GSZB.QZZJXMCH));
 
 				// 当月计划
 				if (sbdCompanies.isEmpty()) {
@@ -63,12 +64,14 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 								.excludeZbs(specialZbs)
 								.include(GSZB.RS)
 								.include(GSZB.YSZK)
-								.include(GSZB.CH));
+								.include(GSZB.CH)
+								.include(GSZB.QZZJXMCH));
 				} else {
 					pipe.add(new AccPipeFilter(yjhAcc, 1).includeCompanies(allCompanies)
 								.includeZbs(gsztzbs)
 								.excludeZbs(specialZbs)
-								.include(GSZB.RS))
+								.include(GSZB.RS)
+								.include(GSZB.QZZJXMCH))
 						.add(new YdjhProportionAccPipeFilter(sbdzbDao, sjAcc, 1, dh.getFirstMonth(), dh.getCur())
 								.includeCompanies(sbdCompanies)
 								.include(GSZB.YSZK)
@@ -90,6 +93,7 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 							.excludeZbs(specialZbs)
 							.include(GSZB.YSZK)
 							.include(GSZB.CH)
+							.include(GSZB.QZZJXMCH)
 							.include(GSZB.RS))
 
 						// 计划完成率
@@ -101,6 +105,7 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 								.excludeZbs(specialZbs)
 								.include(GSZB.YSZK)
 								.include(GSZB.CH)
+								.include(GSZB.QZZJXMCH)
 								.include(GSZB.RS))
 
 						// 上月实际
@@ -110,6 +115,7 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 								.excludeZbs(specialZbs)
 								.include(GSZB.YSZK)
 								.include(GSZB.CH)
+								.include(GSZB.QZZJXMCH)
 								.include(GSZB.RS))
 						
 						//环比增幅
@@ -125,6 +131,7 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 								.excludeZbs(specialZbs))
 						.add(copyFilter
 								.add(GSZB.CH, 1, 7)
+								.add(GSZB.QZZJXMCH, 1, 7)
 								.add(GSZB.YSZK, 1, 7)
 								.add(GSZB.RS, 1, 7))
 
@@ -135,6 +142,7 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 								.excludeZbs(specialZbs))
 						.add(copyFilter
 								.add(GSZB.CH, 2, 8)
+								.add(GSZB.QZZJXMCH, 2, 8)
 								.add(GSZB.YSZK, 2, 8)
 								.add(GSZB.RS, 2, 8))
 
@@ -150,6 +158,7 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 								.includeCompanies(allCompanies)
 								.include(GSZB.YSZK)
 								.include(GSZB.CH)
+								.include(GSZB.QZZJXMCH)
 								.include(GSZB.RS))
 
 						// 同比增幅
@@ -160,7 +169,9 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 								.includeCompanies(allCompanies)
 								.includeZbs(gsztzbs)
 								.excludeZbs(specialZbs))
-						.add(copyFilter.add(GSZB.CH, 2, 12)
+						.add(copyFilter
+								.add(GSZB.CH, 2, 12)
+								.add(GSZB.QZZJXMCH, 2, 12)
 								.add(GSZB.YSZK, 2, 12)
 								.add(GSZB.RS, 2, 12))
 
@@ -175,6 +186,7 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 								.excludeZbs(specialZbs))
 						.add(copyFilter
 								.add(GSZB.CH, 10, 14)
+								.add(GSZB.QZZJXMCH, 10, 14)
 								.add(GSZB.YSZK, 10, 14)
 								.add(GSZB.RS, 10, 14))
 
