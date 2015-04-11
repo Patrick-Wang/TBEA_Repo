@@ -420,10 +420,20 @@ public class EntryServiceImpl implements EntryService{
 				cal.add(Calendar.MONTH, 1);
 			}
 		}
+		cal.setTime(date);
 		if (!approvedList.get(0)){
-			cal.setTime(date);
+			
 			setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY28YJ);
 		}
+		
+		cal.add(Calendar.MONTH, 1);
+		for (int i = 1; i < approvedList.size(); ++i){
+			if (!approvedList.get(i)){
+				setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
+			}
+			cal.add(Calendar.MONTH, 1);
+		}
+		
 		return true;
 	}
 
@@ -472,10 +482,14 @@ public class EntryServiceImpl implements EntryService{
 			}
 		}
 		
-		if (!approvedList.get(0)) {
-			cal.setTime(date);
-			setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
+		cal.setTime(date);
+		for (int i =0; i < approvedList.size(); ++i){
+			if (!approvedList.get(i)){
+				setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
+			}
+			cal.add(Calendar.MONTH, 1);
 		}
+		
 		return true;
 	}
 
