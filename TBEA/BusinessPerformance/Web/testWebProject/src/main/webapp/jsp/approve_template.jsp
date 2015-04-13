@@ -77,7 +77,7 @@
           				comps : JSON.parse('${nodeData}'),
           				firstCompany : '${firstCompanyType}' == '' ? undefined : '${firstCompanyType}',
           				date : {
-          					month : ${!empty month} ? '${month}' : undefined, 
+          					month : ${!empty month} ? parseInt('${month}') : undefined, 
           					year : ${year}
           				},
           				approveType : ${approveType}
