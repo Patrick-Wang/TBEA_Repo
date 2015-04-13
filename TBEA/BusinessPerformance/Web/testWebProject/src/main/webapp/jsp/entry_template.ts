@@ -276,6 +276,14 @@ module entry_template {
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 150,
+                    
+                    onSelectCell : (id,nm,tmp,iRow,iCol) =>{
+                       console.log(iRow +', ' + iCol);
+                    },
+                    
+//                    onCellSelect: (ri,ci,tdHtml,e) =>{
+//                       console.log(ri +', ' + ci);
+//                    },
                     beforeSaveCell :(rowid,cellname,v,iRow,iCol) =>{
                         var ret = parseFloat(v);
                         if (isNaN (ret)){
@@ -291,6 +299,7 @@ module entry_template {
                     beforeEditCell:(rowid,cellname,v,iRow,iCol)=>{
                         lastsel = iRow; 
                         lastcell = iCol; 
+                        console.log(iRow +', ' + iCol);
                         $("input").attr("disabled",true); 
                     },
                     
