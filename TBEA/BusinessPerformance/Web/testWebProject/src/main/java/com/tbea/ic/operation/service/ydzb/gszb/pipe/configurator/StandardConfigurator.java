@@ -112,7 +112,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 				.add(tbzzFilter.add(5, 2, 4))
 
 				// 季度计划
-				.add(new AccPipeFilter(yjhAcc, 6, dh.getJdStart(), dh.getCur())
+				.add(new AccPipeFilter(yjhAcc, 6, dh.getJdStart(), dh.getJdEnd(dh.getCur()))
 						.includeCompanies(allCompanies)
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(specialZbs))

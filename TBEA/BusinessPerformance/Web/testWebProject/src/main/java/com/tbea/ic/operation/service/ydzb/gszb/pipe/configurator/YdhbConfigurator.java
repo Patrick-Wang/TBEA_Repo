@@ -125,7 +125,7 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 						.add(zzlFilter.add(6, 2, 16))
 
 						// 季度计划
-						.add(new AccPipeFilter(yjhAcc, 7, dh.getJdStart(), dh.getCur())
+						.add(new AccPipeFilter(yjhAcc, 7, dh.getJdStart(), dh.getJdEnd(dh.getCur()))
 								.includeCompanies(allCompanies)
 								.includeZbs(gsztzbs)
 								.excludeZbs(specialZbs))

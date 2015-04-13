@@ -122,7 +122,7 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 				.add(tbzzFilter.add(7, 4, 6))
 
 				// 季度计划
-				.add(new AccPipeFilter(yjhAcc, 1, dh.getJdStart(), dh.getCur())
+				.add(new AccPipeFilter(yjhAcc, 1, dh.getJdStart(), dh.getJdEnd(dh.getCur()))
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
 						.excludeZbs(specialZbs))

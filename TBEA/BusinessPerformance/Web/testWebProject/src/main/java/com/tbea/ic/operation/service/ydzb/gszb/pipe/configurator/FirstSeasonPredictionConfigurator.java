@@ -86,7 +86,7 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 			}
 		}
 		// 季度计划
-		pipe.add(new AccPipeFilter(yjhAcc, 1, dh.getJdStart(), dh.getCur())
+		pipe.add(new AccPipeFilter(yjhAcc, 1, dh.getJdStart(), dh.getJdEnd(dh.getCur()))
 				.includeCompanies(allCompanies)
 				.includeZbs(pipe.getZbIds())
 				.excludeZbs(specialZbs))
