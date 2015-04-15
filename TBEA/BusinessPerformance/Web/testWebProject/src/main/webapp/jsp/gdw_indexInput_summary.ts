@@ -11,6 +11,7 @@ module gdw_indexinput_summary {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("公司名称", "gsmc", true, JQTable.TextAlign.Left),
                 new JQTable.Node("预计指标填写情况", "inputCondition", true, JQTable.TextAlign.Left),
+                new JQTable.Node("填写时间", "inputTime", true, JQTable.TextAlign.Left),
             ], gridName);
 
         }
@@ -68,12 +69,14 @@ module gdw_indexinput_summary {
             var row = [];
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
-                if (row.length == 2 && null != row[1]) {
+                if (row.length == 3 && null != row[1]) {
                     if (row[1] == "true") {
                         row[1] = "已提交";
                     }
-                    else {
+                    if (row[1] == "false") {
                         row[1] = "尚未提交";
+                        row[2] = "--";
+                        
                     }
                 }
                 //mdata[j] = data[j].concat(row);
