@@ -2,9 +2,12 @@ package com.tbea.ic.operation.service.approve;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import net.sf.json.JSONArray;
 
 import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
@@ -38,6 +42,7 @@ import com.tbea.ic.operation.model.entity.jygk.SJZB;
 import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
+import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 
 @Service
 @Transactional("transactionManager")
@@ -105,33 +110,40 @@ public class ApproveServiceImpl implements ApproveService {
     	List<List<String[]>> retList = new ArrayList<List<String[]>>();
 		List<String[]> approveList = new ArrayList<String[]>();
 		List<String[]> unapproveList = new ArrayList<String[]>();
-		
-		Organization org = companyManager.getBMDBOrganization();
+		List<DWXX> dwxxs = dwxxDao.getDwxxs(comps);
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
-		cal.add(Calendar.MONTH, leftMonth);
-		Date dEnd = new Date(cal.getTimeInMillis());
-		cal.add(Calendar.MONTH, -2);
-		Date dStart = new Date(cal.getTimeInMillis());
+		cal.setTime(DateHelper.getJdStart(date));
 		
-
-		List<YDJHZB> zbs = ydjhzbDao.getZb(comps, dStart, dEnd);
-		for (YDJHZB zb : zbs){
-			String[] zbTmp = new String[6];
-			if (zb.getYdjhshzt().getId() == 1){//approved
-				unapproveList.add(zbTmp);
-			} else{
-				approveList.add(zbTmp);
+		for (int m = 0; m < 3; ++m){
+			Date d = Util.toDate(cal);
+			for (Company comp : comps) {
+				boolean isApproved = ydjhzbDao.getApprovedZbsCount(d, comp) > 0;
+				DWXX dwxx = findDwxx(dwxxs, comp);
+				if (null != dwxx) {
+					List<ZBXX> allZbs = toSortList(dwxx.getJhzbxxs());
+					List<YDJHZB> zbs = ydjhzbDao.getZbs(d, comp);
+	
+					for (int i = 0, len = allZbs.size(); i < len; ++i) {
+						String[] zbTmp = new String[4];
+						zbTmp[0] = comp.getType().ordinal() + "";
+						zbTmp[1] = allZbs.get(i).getId() + "";
+						zbTmp[2] = allZbs.get(i).getName();
+						YDJHZB zb = findYdjhzb(allZbs.get(i).getId(), zbs);
+						if (null != zb) {
+							zbTmp[3] = zb.getYdjhz() + "";
+						}
+						zbTmp[4] = cal.get(Calendar.YEAR) + "";
+						zbTmp[5] = cal.get(Calendar.MONTH) + 1 + "";
+						
+						if (isApproved) {// approved
+							unapproveList.add(zbTmp);
+						} else {
+							approveList.add(zbTmp);
+						}
+					}
+				}
 			}
-			
-			Company comp = org.getCompany(zb.getDwxx().getId());
-			zbTmp[0] = comp.getType().ordinal() + "";
-			zbTmp[1] = zb.getZbxx().getId() + "";
-			zbTmp[2] = zb.getZbxx().getName();
-			zbTmp[3] = zb.getYdjhz() + "";
-			zbTmp[4] = zb.getNf() + "";
-			zbTmp[5] = zb.getYf() + "";
+			cal.add(Calendar.MONTH, 1);
 		}
 
 		retList.add(approveList);
@@ -139,28 +151,114 @@ public class ApproveServiceImpl implements ApproveService {
 		return retList;
 	}
 
+    private DWXX findDwxx(List<DWXX> dwxxs, Company comp){
+    	for (DWXX dwxx : dwxxs){
+    		if (dwxx.getId() == comp.getId()){
+    			return dwxx;
+    		}
+    	}
+    	return null;
+    }
 
+    private List<ZBXX> toSortList(Set<ZBXX> zbSet) {
+    	List<ZBXX> zbList = new ArrayList<ZBXX>();
+    	boolean inserted = false;
+    	for (ZBXX zbxx : zbSet) {
+    		inserted = false;
+    		for (int i = 0; i < zbList.size(); ++i){
+    			if (zbList.get(i).getId() > zbxx.getId()){
+    				inserted = true;
+    				zbList.add(i, zbxx);
+    				break;
+    			}
+    		}
+    		if (!inserted){
+    			zbList.add(zbxx);
+    		}
+		}
+		return zbList;
+	}
+    
+    private NDJHZB findNdzb(Integer id, List<NDJHZB> ndjhzbs){
+    	for (NDJHZB ndjhzb : ndjhzbs){
+    		if (ndjhzb.getZbxx().getId() == id){
+    			return ndjhzb;
+    		}
+    	}
+    	return null;
+    }
+    
+    private YDJHZB findYdjhzb(Integer id, List<YDJHZB> ydjhzbs){
+    	for (YDJHZB ydjhzb : ydjhzbs){
+    		if (ydjhzb.getZbxx().getId() == id){
+    			return ydjhzb;
+    		}
+    	}
+    	return null;
+    }
+    
+    private SJZB findSjzb(Integer id, List<SJZB> zbs){
+    	for (SJZB zb : zbs){
+    		if (zb.getZbxx().getId() == id){
+    			return zb;
+    		}
+    	}
+    	return null;
+    }
+    
+    private YJ28ZB findYj28zb(Integer id, List<YJ28ZB> zbs){
+    	for (YJ28ZB zb : zbs){
+    		if (zb.getZbxx().getId() == id){
+    			return zb;
+    		}
+    	}
+    	return null;
+    }
+    
+    private YJ20ZB findYj20zb(Integer id, List<YJ20ZB> zbs){
+    	for (YJ20ZB zb : zbs){
+    		if (zb.getZbxx().getId() == id){
+    			return zb;
+    		}
+    	}
+    	return null;
+    }
+    
+    
 	//[[compId ,zbId, zbName, value] ...] approved 
     //[[compId ,zbId, zbName, value] ...] unapproved
 	private List<List<String[]>> getNdjhZb(List<Company> comps, Date date) {
-		Organization org = companyManager.getBMDBOrganization();
 		List<List<String[]>> retList = new ArrayList<List<String[]>>();
 		List<String[]> approveList = new ArrayList<String[]>();
 		List<String[]> unapproveList = new ArrayList<String[]>();
-		List<NDJHZB> ndjhzbs = ndjhzbDao.getZbs(date, comps);
-		for (NDJHZB ndjhzb : ndjhzbs){
-			String[] zbTmp = new String[4];
-			if (ndjhzb.getNdjhshzt().getId() == 1){//approved
-				unapproveList.add(zbTmp);
-			} else{
-				approveList.add(zbTmp);
+		List<DWXX> dwxxs = dwxxDao.getDwxxs(comps);
+		
+		for (Company comp: comps){
+			boolean isApproved = ndjhzbDao.getApprovedZbsCount(date, comp) > 0;
+			DWXX dwxx = findDwxx(dwxxs, comp);
+			if (null != dwxx){
+				List<ZBXX> allZbs = toSortList(dwxx.getJhzbxxs());
+				List<NDJHZB> ndjhzbs = ndjhzbDao.getZbs(date, comp);
+				
+				for (int i = 0, len = allZbs.size(); i < len; ++i){
+					String[] zbTmp = new String[4];
+					zbTmp[0] = comp.getType().ordinal() + "";
+					zbTmp[1] = allZbs.get(i).getId() + "";
+					zbTmp[2] = allZbs.get(i).getName();
+					NDJHZB ndjhzb = findNdzb(allZbs.get(i).getId(), ndjhzbs);
+					if (null != ndjhzb){
+						zbTmp[3] = ndjhzb.getNdjhz() + "";
+					}
+					
+					if (isApproved){//approved
+						unapproveList.add(zbTmp);
+					} else{
+						approveList.add(zbTmp);
+					}
+				}
 			}
-			Company comp = org.getCompany(ndjhzb.getDwxx().getId());
-			zbTmp[0] = comp.getType().ordinal() + "";
-			zbTmp[1] = ndjhzb.getZbxx().getId() + "";
-			zbTmp[2] = ndjhzb.getZbxx().getName();
-			zbTmp[3] = ndjhzb.getNdjhz() + "";
 		}
+		
 		retList.add(approveList);
 		retList.add(unapproveList);
 		return retList;
@@ -169,24 +267,37 @@ public class ApproveServiceImpl implements ApproveService {
 	//[[compId ,zbId, zbName, value] ...] approved 
     //[[compId ,zbId, zbName, value] ...] unapproved
 	private List<List<String[]>> getBysjZb(List<Company> comps, Date date) {
-		Organization org = companyManager.getBMDBOrganization();
 		List<List<String[]>> retList = new ArrayList<List<String[]>>();
 		List<String[]> approveList = new ArrayList<String[]>();
 		List<String[]> unapproveList = new ArrayList<String[]>();
-		List<SJZB> sjzbs = sjzbDao.getZbs(date, comps);
-		for (SJZB sjzb : sjzbs){
-			String[] zbTmp = new String[4];
-			if (sjzb.getSjshzt().getId() == 1){//approved
-				unapproveList.add(zbTmp);
-			} else{
-				approveList.add(zbTmp);
+		List<DWXX> dwxxs = dwxxDao.getDwxxs(comps);
+
+		for (Company comp : comps) {
+			boolean isApproved = sjzbDao.getApprovedZbsCount(date, comp) > 0;
+			DWXX dwxx = findDwxx(dwxxs, comp);
+			if (null != dwxx) {
+				List<ZBXX> allZbs = toSortList(dwxx.getSjzbxxs());
+				List<SJZB> zbs = sjzbDao.getZbs(date, comp);
+
+				for (int i = 0, len = allZbs.size(); i < len; ++i) {
+					String[] zbTmp = new String[4];
+					zbTmp[0] = comp.getType().ordinal() + "";
+					zbTmp[1] = allZbs.get(i).getId() + "";
+					zbTmp[2] = allZbs.get(i).getName();
+					SJZB zb = findSjzb(allZbs.get(i).getId(), zbs);
+					if (null != zb) {
+						zbTmp[3] = zb.getSjz() + "";
+					}
+
+					if (isApproved) {// approved
+						unapproveList.add(zbTmp);
+					} else {
+						approveList.add(zbTmp);
+					}
+				}
 			}
-			Company comp = org.getCompany(sjzb.getDwxx().getId());
-			zbTmp[0] = comp.getType().ordinal() + "";
-			zbTmp[1] = sjzb.getZbxx().getId() + "";
-			zbTmp[2] = sjzb.getZbxx().getName();
-			zbTmp[3] = sjzb.getSjz() + "";
 		}
+
 		retList.add(approveList);
 		retList.add(unapproveList);
 		return retList;
@@ -198,21 +309,32 @@ public class ApproveServiceImpl implements ApproveService {
 		List<List<String[]>> retList = new ArrayList<List<String[]>>();
 		List<String[]> approveList = new ArrayList<String[]>();
 		List<String[]> unapproveList = new ArrayList<String[]>();
-		Organization org = companyManager.getBMDBOrganization();
-		List<YJ28ZB> zbs = yj28zbDao.getZb(date, comps);
-		for (YJ28ZB zb : zbs){
-			String[] zbTmp = new String[4];
-			if (zb.getYj28shzt().getId() == 1){//approved
-				unapproveList.add(zbTmp);
-			} else{
-				approveList.add(zbTmp);
+		List<DWXX> dwxxs = dwxxDao.getDwxxs(comps);
+
+		for (Company comp : comps) {
+			boolean isApproved = yj28zbDao.getApprovedZbsCount(date, comp) > 0;
+			DWXX dwxx = findDwxx(dwxxs, comp);
+			if (null != dwxx) {
+				List<ZBXX> allZbs = toSortList(dwxx.getSjzbxxs());
+				List<YJ28ZB> zbs = yj28zbDao.getZbs(date, comp);
+
+				for (int i = 0, len = allZbs.size(); i < len; ++i) {
+					String[] zbTmp = new String[4];
+					zbTmp[0] = comp.getType().ordinal() + "";
+					zbTmp[1] = allZbs.get(i).getId() + "";
+					zbTmp[2] = allZbs.get(i).getName();
+					YJ28ZB zb = findYj28zb(allZbs.get(i).getId(), zbs);
+					if (null != zb) {
+						zbTmp[3] = zb.getYj28z() + "";
+					}
+
+					if (isApproved) {// approved
+						unapproveList.add(zbTmp);
+					} else {
+						approveList.add(zbTmp);
+					}
+				}
 			}
-			
-			Company comp = org.getCompany(zb.getDwxx().getId());
-			zbTmp[0] = comp.getType().ordinal() + "";
-			zbTmp[1] = zb.getZbxx().getId() + "";
-			zbTmp[2] = zb.getZbxx().getName();
-			zbTmp[3] = zb.getYj28z() + "";
 		}
 
 		retList.add(approveList);
@@ -226,24 +348,34 @@ public class ApproveServiceImpl implements ApproveService {
 		List<List<String[]>> retList = new ArrayList<List<String[]>>();
 		List<String[]> approveList = new ArrayList<String[]>();
 		List<String[]> unapproveList = new ArrayList<String[]>();
-		
-		Organization org = companyManager.getBMDBOrganization();
-		List<YJ20ZB> zbs = yj20zbDao.getZb(date, comps);
-		for (YJ20ZB zb : zbs){
-			String[] zbTmp = new String[4];
-			if (zb.getYj20shzt().getId() == 1){//approved
-				unapproveList.add(zbTmp);
-			} else{
-				approveList.add(zbTmp);
-			}
-			
-			Company comp = org.getCompany(zb.getDwxx().getId());
-			zbTmp[0] = comp.getType().ordinal() + "";
-			zbTmp[1] = zb.getZbxx().getId() + "";
-			zbTmp[2] = zb.getZbxx().getName();
-			zbTmp[3] = zb.getYj20z() + "";
-		}
+		List<DWXX> dwxxs = dwxxDao.getDwxxs(comps);
 
+		for (Company comp : comps) {
+			boolean isApproved = yj28zbDao.getApprovedZbsCount(date, comp) > 0;
+			DWXX dwxx = findDwxx(dwxxs, comp);
+			if (null != dwxx) {
+				List<ZBXX> allZbs = toSortList(dwxx.getSjzbxxs());
+				List<YJ20ZB> zbs = yj20zbDao.getZbs(date, comp);
+
+				for (int i = 0, len = allZbs.size(); i < len; ++i) {
+					String[] zbTmp = new String[4];
+					zbTmp[0] = comp.getType().ordinal() + "";
+					zbTmp[1] = allZbs.get(i).getId() + "";
+					zbTmp[2] = allZbs.get(i).getName();
+					YJ20ZB zb = findYj20zb(allZbs.get(i).getId(), zbs);
+					if (null != zb) {
+						zbTmp[3] = zb.getYj20z() + "";
+					}
+
+					if (isApproved) {// approved
+						unapproveList.add(zbTmp);
+					} else {
+						approveList.add(zbTmp);
+					}
+				}
+			}
+		}
+		
 		retList.add(approveList);
 		retList.add(unapproveList);
 		return retList;

@@ -169,6 +169,22 @@ public class YDJHZBDaoImpl extends AbstractReadWriteDaoImpl<YDJHZB> implements Y
 		return null;
 	}
 
+	@Override
+	public List<YDJHZB> getZb(Company comp, Date dStart, Date dEnd) {
+		Calendar calStart = Calendar.getInstance();
+		calStart.setTime(dStart);
+		Calendar calEnd = Calendar.getInstance();
+		calEnd.setTime(dEnd);
+		Query q = this.getEntityManager().createQuery("from YDJHZB where " + 
+		"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dStart) <= 0 and " +
+		"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dEnd) >= 0 and " +
+		"dwxx.id = :compId");
+		q.setParameter("dStart",dStart);
+		q.setParameter("dEnd", dEnd);
+		q.setParameter("compId", comp.getId());
+		return q.getResultList();
+	}
+
 	
 
 }
