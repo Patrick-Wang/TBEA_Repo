@@ -86,7 +86,7 @@ var hzb_companys;
                 this.updateUI();
             }
         };
-        View.prototype.export = function (fName) {
+        View.prototype.exportExcel = function (fName) {
             var date = this.mDateSelector.getDate();
             var compType = this.mCompanySelector.getCompany();
             $("#export")[0].action = "companys_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, companyId: compType });
@@ -131,7 +131,7 @@ var hzb_companys;
                             row[i] = Util.formatPercent(row[i]);
                         }
                         else if (isXslvl) {
-                            row[i] = Util.formatPercentSignal(row[i]);
+                            row[i] = Util.formatPercent(row[i]);
                         }
                         else {
                             row[i] = Util.formatCurrency(row[i]);

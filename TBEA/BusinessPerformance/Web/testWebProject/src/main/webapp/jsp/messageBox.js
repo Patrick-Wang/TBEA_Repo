@@ -36,15 +36,23 @@ var Util;
         MessageBox.selfCancel = function () {
             MessageBox.promise.failed();
         };
-        MessageBox.confirm = function (msg) {
+        MessageBox.confirm = function (msg, okOnly) {
+            if (okOnly === void 0) { okOnly = false; }
             var container = MessageBox.getContainer();
             if (container.children().length > 0) {
-                $("#self_tip").children().eq(0).text(msg);
+                $("#self_confirm").children().eq(0).text(msg);
             }
             else {
-                container.append('<div id="self_confirm" class="block modal2" align="center"><span style="font-size:20px;text-align:center">' + msg + '</span></div>');
+                var children;
+                if (okOnly) {
+                    children = '<div style="margin: 20px"> </div>' + '<div id="self_fill" style="margin-left:-12px; overflow: hidden;padding: 5px;margin-bottom:5px">' + '<input type="submit" class="button green close medium saveQuestion right" value="    确 认    " onclick="Util.MessageBox.selfOk()"></input></div>';
+                }
+                else {
+                    children = '<div style="margin: 20px"> </div>' + '<div id="self_fill" style="margin-left:-12px; margin-right:-12px;background: #ccc;overflow: hidden;padding: 5px;margin-bottom:5px">' + '<input type="submit" class="button blue close medium saveQuestion right" value="    确 认    " onclick="Util.MessageBox.selfOk()"></input>' + '<input type="submit" class="button blue close medium saveQuestion right" value="    取 消    " onclick="Util.MessageBox.selfCancel()"></input> </div>';
+                }
+                container.append('<div id="self_confirm" class="block modal2" align="center"><span style="display:block;line-height:100px;font-size:20px;color:blue;">' + msg + '</span></div>');
                 var confirm = container.children().eq(0);
-                confirm.append('<div style="margin: 100px"> </div>' + '<div id="self_fill" style="margin-left:-12px; margin-right:-12px;background: #ccc;overflow: hidden;padding: 5px;margin-bottom:5px">' + '<input type="submit" class="button gray close medium saveQuestion right" value="    确 认    " onclick="Util.MessageBox.selfOk()"></input>' + '<input type="submit" class="button gray close medium saveQuestion right" value="    取 消    " onclick="Util.MessageBox.selfCancel()"></input> </div>');
+                confirm.append(children);
             }
             confirm.modal('view', {
                 speed: 500,

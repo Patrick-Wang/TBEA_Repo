@@ -29,7 +29,7 @@ var entry_template;
             this.mOpt = opt;
             switch (this.mOpt.entryType) {
                 case Util.ZBType.YDJDMJH:
-                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, Util.addMonth(this.mOpt.date, 3), this.mOpt.dateId, true);
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId, true);
                     break;
                 case Util.ZBType.QNJH:
                 case Util.ZBType.BY20YJ:
@@ -226,6 +226,8 @@ var entry_template;
                 shrinkToFit: true,
                 autoScroll: true,
                 rowNum: 150,
+                onSelectCell: function (id, nm, tmp, iRow, iCol) {
+                },
                 beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
                     var ret = parseFloat(v);
                     if (isNaN(ret)) {
@@ -244,6 +246,15 @@ var entry_template;
                     lastsel = iRow;
                     lastcell = iCol;
                     $("input").attr("disabled", true);
+                },
+                afterEditCell: function (rowid, cellname, v, iRow, iCol) {
+                    $("input[type=text]").bind("keydown", function (e) {
+                        if (e.keyCode === 13) {
+                            setTimeout(function () {
+                                $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
+                            }, 10);
+                        }
+                    });
                 },
                 afterSaveCell: function () {
                     $("input").attr("disabled", false);

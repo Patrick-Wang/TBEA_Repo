@@ -1,7 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
-/// <reference path="dateSelector.ts" />
-/// <reference path="companySelector.ts" />
 var approve_template;
 (function (approve_template) {
     var JQGridAssistantFactory = (function () {
@@ -11,10 +7,10 @@ var approve_template;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, true, 0 /* Left */, 125));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left, 85));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, false, 1 /* Right */, 125));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, false, JQTable.TextAlign.Right, 85));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -23,10 +19,10 @@ var approve_template;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i < 1) {
-                    nodes.push(new JQTable.Node(title[i], ids[i], true, 0 /* Left */, 125));
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 85));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], ids[i], false, 1 /* Right */, 125));
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 85));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -35,10 +31,10 @@ var approve_template;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i <= 1) {
-                    nodes.push(new JQTable.Node(title[i], ids[i], true, 0 /* Left */, 125));
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 85));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], ids[i], false, 1 /* Right */, 125));
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 85));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -59,7 +55,7 @@ var approve_template;
     function resize(data, size) {
         if (data.length < size) {
             for (var i = data.length; i < size; ++i) {
-                data.push("");
+                data.push("--");
             }
             return data;
         }
@@ -87,7 +83,6 @@ var approve_template;
                 return [[]];
             }
         };
-        //[[compId ...]]
         QNJHSubView.prototype.getUnapprovedData = function () {
             if (this.mTableUnapproveAssist != null) {
                 var ids = this.mTableUnapproveAssist.getCheckedRowIds();
@@ -103,18 +98,15 @@ var approve_template;
         QNJHSubView.prototype.getDate = function () {
             return this.mData;
         };
-        //[[compId ,zbId, zbName, value] ...] approved 
-        //[[compId ,zbId, zbName, value] ...] unapproved
         QNJHSubView.prototype.process = function (data, date, companies) {
             this.mData = date;
             if (data[0].length > 0) {
-                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId, "未审核");
+                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId, "未审核数据");
             }
             if (data[1].length > 0) {
-                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核");
+                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核数据");
             }
         };
-        //comps : selected companies
         QNJHSubView.prototype.updateTable = function (rawData, comps, tableId, caption) {
             var tmpData = [];
             var title = ["单位名称"];
@@ -122,7 +114,6 @@ var approve_template;
             var zbColMap = {};
             var compMap = {};
             var companies = [];
-            // remove unused company
             $(comps).each(function (i) {
                 $(rawData).each(function (j) {
                     if (rawData[j][0] == "" + comps[i].id) {
@@ -133,7 +124,6 @@ var approve_template;
             for (var i in compMap) {
                 companies.push(compMap[i]);
             }
-            //make title
             $(rawData).each(function (i) {
                 if (!Util.isExist(zbColMap["_" + rawData[i][1]])) {
                     colZbIds.push(rawData[i][1]);
@@ -141,7 +131,6 @@ var approve_template;
                     zbColMap["_" + rawData[i][1]] = title.length;
                 }
             });
-            //make data
             $(companies).each(function (i) {
                 tmpData.push([companies[i].id, companies[i].value]);
                 $(rawData).each(function (j) {
@@ -155,35 +144,44 @@ var approve_template;
             });
             var name = tableId + "_jqgrid";
             var jqAssist = JQGridAssistantFactory.createQnjhTable(name, title, colZbIds);
+            var maxLength = 0;
             for (var i = 0; i < tmpData.length; ++i) {
-                for (var j = 2; j < tmpData[i].length; ++j) {
-                    if ("" != tmpData[i][j]) {
-                        tmpData[i][j] = parseFloat(tmpData[i][j]) + "";
+                if (maxLength < tmpData[i].length) {
+                    maxLength = tmpData[i].length;
+                }
+            }
+            for (var i = 0; i < tmpData.length; ++i) {
+                for (var j = 2; j < maxLength; ++j) {
+                    if (j < tmpData[i].length) {
+                        if (title[j - 1] == '人数') {
+                            tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
+                        }
+                        else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
+                            tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
+                        }
+                        else {
+                            tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
+                        }
+                    }
+                    else {
+                        tmpData[i].push("--");
                     }
                 }
             }
             var parent = $("#" + tableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
-            var width = (title.length) * 125;
-            if (width > 1000) {
-                width = 1000;
-            }
+            var width = (title.length) * 85;
             $("#" + name).jqGrid(jqAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: jqAssist.getDataWithId(tmpData),
                 datatype: "local",
                 multiselect: true,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //cellsubmit: 'clientArray',
-                //cellEdit: false,
-                rowNum: 150,
+                rowNum: 1500,
                 height: '100%',
-                width: width,
-                shrinkToFit: width == 1000 ? false : true,
+                width: 1200,
+                shrinkToFit: width > 1200 ? false : true,
                 autoScroll: true,
                 caption: caption
             }));
@@ -230,7 +228,6 @@ var approve_template;
             }
             return ret;
         };
-        //[[compId...], [year...], [month...]]
         YDSubView.prototype.getUnapprovedData = function () {
             var ret = [[]];
             if (this.mTableUnapproveAssist != null) {
@@ -244,21 +241,18 @@ var approve_template;
         YDSubView.prototype.getDate = function () {
             return this.mData;
         };
-        //[[compId ,zbId, zbName, value, year?, month?] ...] approved 
-        //[[compId ,zbId, zbName, value, year?, month?] ...] unapproved
         YDSubView.prototype.process = function (data, date, companies) {
             this.mData = date;
             if (data[0].length > 0) {
-                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId, "未审核");
+                this.mTableApproveAssist = this.updateTable(data[0], companies, this.mOpt.tableApproveId, "未审核数据");
             }
             if (data[1].length > 0) {
-                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核");
+                this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核数据");
             }
         };
         YDSubView.prototype.updateTable = function (rawData, comps, tableId, caption) {
             var compMap = {};
             var companies = [];
-            // remove unused company
             $(comps).each(function (i) {
                 $(rawData).each(function (j) {
                     if (rawData[j][0] == "" + comps[i].id) {
@@ -277,7 +271,6 @@ var approve_template;
                 title.push("日期");
                 colZbIds.push("rq");
             }
-            //make title
             $(rawData).each(function (i) {
                 if (!Util.isExist(zbColMap["_" + rawData[i][1]])) {
                     colZbIds.push(rawData[i][1]);
@@ -287,7 +280,6 @@ var approve_template;
             });
             var tmpData = [];
             var compYearMap = {};
-            //make data
             $(companies).each(function (i) {
                 $(rawData).each(function (j) {
                     if (rawData[j][0] == "" + companies[i].id) {
@@ -314,10 +306,27 @@ var approve_template;
                     }
                 });
             });
+            var maxLength = 0;
             for (var i = 0; i < tmpData.length; ++i) {
-                for (var j = hasDate ? 3 : 2; j < tmpData[i].length; ++j) {
-                    if ("" != tmpData[i][j]) {
-                        tmpData[i][j] = parseFloat(tmpData[i][j]) + "";
+                if (maxLength < tmpData[i].length) {
+                    maxLength = tmpData[i].length;
+                }
+            }
+            for (var i = 0; i < tmpData.length; ++i) {
+                for (var j = hasDate ? 3 : 2; j < maxLength; ++j) {
+                    if (j < tmpData[i].length) {
+                        if (title[j - 1] == '人数') {
+                            tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
+                        }
+                        else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
+                            tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
+                        }
+                        else {
+                            tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
+                        }
+                    }
+                    else {
+                        tmpData[i].push("--");
                     }
                 }
             }
@@ -326,25 +335,17 @@ var approve_template;
             var parent = $("#" + tableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
-            var width = (title.length) * 125;
-            if (width > 1000) {
-                width = 1000;
-            }
+            var width = (title.length) * 85;
             $("#" + name).jqGrid(jqAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: jqAssist.getDataWithId(tmpData),
                 datatype: "local",
                 multiselect: true,
                 drag: false,
                 resize: false,
-                rowNum: 150,
-                //autowidth : false,
-                //cellsubmit: 'clientArray',
-                //cellEdit: false,
+                rowNum: 1000,
                 height: '100%',
-                width: width,
-                shrinkToFit: width == 1000 ? false : true,
+                width: 1200,
+                shrinkToFit: width > 1200 ? false : true,
                 autoScroll: true,
                 caption: caption
             }));
@@ -383,7 +384,6 @@ var approve_template;
                     break;
             }
             this.updateTitle();
-            //this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
@@ -477,7 +477,7 @@ var approve_template;
             var date = this.mDateSelector.getDate();
             switch (this.mOpt.approveType) {
                 case Util.ZBType.QNJH:
-                    header = date.year + "年 计划数据审核";
+                    header = date.year + "年 全年计划数据审核";
                     break;
                 case Util.ZBType.YDJDMJH:
                     header = date.year + "年" + " 季度-月度末计划值审核";

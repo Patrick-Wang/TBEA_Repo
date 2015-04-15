@@ -124,7 +124,7 @@ public class ApproveServiceImpl implements ApproveService {
 					List<YDJHZB> zbs = ydjhzbDao.getZbs(d, comp);
 	
 					for (int i = 0, len = allZbs.size(); i < len; ++i) {
-						String[] zbTmp = new String[4];
+						String[] zbTmp = new String[6];
 						zbTmp[0] = comp.getType().ordinal() + "";
 						zbTmp[1] = allZbs.get(i).getId() + "";
 						zbTmp[2] = allZbs.get(i).getName();
