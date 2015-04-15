@@ -136,9 +136,25 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 	public List<Integer> getEntryCompletedCompanies(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("select dwxx.id from NDJHZB where nf = :nf and yf = :yf group by dwxx.id");
+		Query q = this.getEntityManager().createQuery("select dwxx.id from NDJHZB where nf = :nf group by dwxx.id");
 		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		return q.getResultList();
 	}
+
+	@Override
+	public Date getEntryTime(Date date, Company comp) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("from NDJHZB where nf = :nf and dwxx.id = :compId");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("compId", comp.getId());
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<NDJHZB> ret = q.getResultList();
+		if (!ret.isEmpty()){
+			return ret.get(0).getNdjhxgsj();
+		}
+		return null;
+	}
+
 }

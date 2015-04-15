@@ -28,4 +28,6 @@ public interface NDJHZBDao  extends AbstractReadWriteDao<NDJHZB>{
 
 	List<Integer> getEntryCompletedCompanies(Date date);
 
+	Date getEntryTime(Date date, Company comp);
+
 }

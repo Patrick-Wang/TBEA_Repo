@@ -278,7 +278,7 @@ module entry_template {
                     rowNum: 150,
                     
                     onSelectCell : (id,nm,tmp,iRow,iCol) =>{
-                       console.log(iRow +', ' + iCol);
+//                       console.log(iRow +', ' + iCol);
                     },
                     
 //                    onCellSelect: (ri,ci,tdHtml,e) =>{
@@ -299,7 +299,7 @@ module entry_template {
                     beforeEditCell:(rowid,cellname,v,iRow,iCol)=>{
                         lastsel = iRow; 
                         lastcell = iCol; 
-                        console.log(iRow +', ' + iCol);
+//                        console.log(iRow +', ' + iCol);
                         $("input").attr("disabled",true); 
                     },
                     

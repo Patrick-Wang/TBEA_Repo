@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
+import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
@@ -147,6 +148,23 @@ public class YJ28ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ28ZB> implements Y
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		return q.getResultList();
+	}
+
+	@Override
+	public Date getEntryTime(Date date, Company comp) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("from YJ28ZB where nf = :nf and yf = :yf and dwxx.id = :compId");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("compId", comp.getId());
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<YJ28ZB> ret = q.getResultList();
+		if (!ret.isEmpty()){
+			return ret.get(0).getYj28xgsj();
+		}
+		return null;
 	}
 
 }

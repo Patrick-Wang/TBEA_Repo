@@ -33,5 +33,7 @@ public interface YJ28ZBDao extends AbstractReadWriteDao<YJ28ZB>{
 
 	List<Integer> getEntryCompletedCompanies(Date date);
 
+	Date getEntryTime(Date date, Company comp);
+
 
 }

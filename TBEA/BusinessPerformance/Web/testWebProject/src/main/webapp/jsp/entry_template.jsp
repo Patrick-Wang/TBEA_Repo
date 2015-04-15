@@ -199,7 +199,7 @@ th.ui-th-ltr {
     } 
     function dealwithData(event) { 
             var ss = document.getElementById("textArea"); 
-            console.log(ss.value); 
+            /*  console.log(ss.value);  */
             ss.blur(); 
     } 
 </script>

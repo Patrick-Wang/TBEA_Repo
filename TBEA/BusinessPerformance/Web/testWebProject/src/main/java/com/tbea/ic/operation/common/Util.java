@@ -15,6 +15,11 @@ public class Util {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMM");
 		return formatter.format(d);
 	}
+	
+	public static String formatToDay(Date d) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		return formatter.format(d);
+	}
 
 	// d => yyyyMM
 	public static Date valueOf(String d) {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -45,6 +46,10 @@ import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
+import com.tbea.ic.operation.service.entry.zbCalculator.GeneralZbCalculator;
+import com.tbea.ic.operation.service.entry.zbCalculator.NdjhZbCalculator;
+import com.tbea.ic.operation.service.entry.zbCalculator.ZbCalculator;
+import com.tbea.ic.operation.service.entry.zbInjector.SimpleZbInjectorFactory;
 
 
 
@@ -85,7 +90,23 @@ public class EntryServiceImpl implements EntryService{
 	@Autowired
 	YDZBZTDao ydzbztDao;
 	
+	final static Set<Integer> calculatedZbs = new HashSet<Integer>();
+
+	static {
+		calculatedZbs.add(GSZB.RJSR.getValue());
+		calculatedZbs.add(GSZB.RJLR.getValue());
+		calculatedZbs.add(GSZB.SXFYL.getValue());
+		calculatedZbs.add(GSZB.XSLRL.getValue());
+	};
+	
+	
 	CompanyManager companyManager;
+	
+	ZbCalculator ndjhzbCalc;
+	ZbCalculator ydjhzbCalc;
+	ZbCalculator yd28Calc;
+	ZbCalculator yj20Calc;
+	ZbCalculator sjzbCalc;
 
 	List<Company> mainCompanies = new ArrayList<Company>();
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
@@ -107,8 +128,14 @@ public class EntryServiceImpl implements EntryService{
 		mainCompanies.add(org.getCompany(CompanyType.ZHGS));
 	}
 	
-	
-
+	@Autowired
+	public void init(){
+		ndjhzbCalc = new NdjhZbCalculator(SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, ndjhzbDao), sbdNdjhzbDao);
+		ydjhzbCalc = new GeneralZbCalculator(SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, ydjhzbDao));
+		yd28Calc = new GeneralZbCalculator(SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, yj28zbDao));
+		yj20Calc = new GeneralZbCalculator(SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, yj20zbDao));
+		sjzbCalc = new GeneralZbCalculator(SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, sjzbDao));
+	}
 	
 	
 	public void setYdzbzt(Company comp, int nf, int yf, ZBType entryType){
@@ -174,178 +201,111 @@ public class EntryServiceImpl implements EntryService{
 
 	private boolean updateYDJDMJH(Date date, Company company, JSONArray data) {
 		Calendar cal = Calendar.getInstance();
-		YDJHZB ydjhzb;
-		JSONArray row;
-		boolean newEntity = false;
 		cal.setTime(date);
-		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.YDJDMJH);
-		for (int i = 0; i < data.size(); ++i){
-			cal.setTime(date);
-			row = data.getJSONArray(i);
-			for (int j = 0; j < approvedList.size() && j < (row.size() - 1); ++j){
-				if (!approvedList.get(j)){
-					newEntity = false;
-					ydjhzb = ydjhzbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
-					if (null == ydjhzb){
-						newEntity = true;
-						ydjhzb = new YDJHZB();
-						ydjhzb.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
-						ydjhzb.setDwxx(dwxxDao.getById(company.getId()));
-					}
-					ydjhzb.setYdjhshzt(shztDao.getById(2));
-					ydjhzb.setYdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
-					ydjhzb.setNf(cal.get(Calendar.YEAR));
-					ydjhzb.setYf(cal.get(Calendar.MONTH) + 1);
-					ydjhzb.setYdjhz(Util.toDouble(row.getString(j + 1)));
-					if (newEntity){
-						ydjhzbDao.create(ydjhzb);
-					}else{
-						ydjhzbDao.merge(ydjhzb);
-					}
+		Set<Integer> unenteredZb = getUnenteredJhzb(company, data);
+		List<Boolean> approvedList = isApproved(date, company.getType(),
+				ZBType.YDJDMJH);
+		
+		Integer zbId;
+		JSONArray row;
+		Double val;
+		
+		for (int c = 0; c < approvedList.size(); ++c) {
+			if (!approvedList.get(c)) {
+				ydjhzbCalc.reset();
+				for (int r = 0; r < data.size(); ++r) {
+					row = data.getJSONArray(r);
+					zbId = Integer.valueOf(row.getString(0));
+					val = Util.toDouble(row.getString(c + 1));
+					ydjhzbCalc.compute(zbId, val, cal, company);
 				}
-				cal.add(Calendar.MONTH, 1);
+
+				for (Integer id : unenteredZb) {
+					ydjhzbCalc.compute(id, null, cal, company);
+				}
 			}
+
+			cal.add(Calendar.MONTH, 1);
 		}
 
 		return true;
 
 	}
 
-	
-	private boolean isYszkzb(int zbId){
-		return zbId == GSZB.YSZK.getValue();
-	}
-	
-	private boolean isChzb(int zbId){
-		return zbId == GSZB.CH.getValue();
-	}
-	
-	private boolean isXssrzb(int zbId){
-		return GSZB.XSSR.getValue() == zbId;
-	}
-	
-
-	private void updateComputedZb(Double xssr, Calendar cal, Company company){
-		if (xssr != null){
-			boolean newEntity = false;
-			NDJHZB zb = ndjhzbDao.getZb(GSZB.YSZK.getValue(), Util.toDate(cal), company);
-			if (null == zb){
-				newEntity = true;
-				zb = new NDJHZB();
-				zb.setZbxx(zbxxDao.getById(GSZB.YSZK.getValue()));
-				zb.setDwxx(dwxxDao.getById(company.getId()));
-			}
-			zb.setNdjhshzt(shztDao.getById(2));
-			zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
-			zb.setNf(cal.get(Calendar.YEAR));
-			zb.setNdjhz(xssr * sbdNdjhzbDao.getYszb(cal.get(Calendar.YEAR), company));
-			if (newEntity) {
-				ndjhzbDao.create(zb);
-			} else {
-				ndjhzbDao.merge(zb);
-			}
-			
-			newEntity = false;
-			zb = ndjhzbDao.getZb(GSZB.CH.getValue(), Util.toDate(cal), company);
-			if (null == zb){
-				newEntity = true;
-				zb = new NDJHZB();
-				zb.setZbxx(zbxxDao.getById(GSZB.CH.getValue()));
-				zb.setDwxx(dwxxDao.getById(company.getId()));
-			}
-			zb.setNdjhshzt(shztDao.getById(2));
-			zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
-			zb.setNf(cal.get(Calendar.YEAR));
-			zb.setNdjhz(xssr * sbdNdjhzbDao.getChzb(cal.get(Calendar.YEAR), company));
-			if (newEntity) {
-				ndjhzbDao.create(zb);
-			} else {
-				ndjhzbDao.merge(zb);
-			}
-		}
-	}
-	
-	private boolean updateNDJH(Date date, Company company, JSONArray data) {
-		Calendar cal = Calendar.getInstance();
-		NDJHZB zb;
-		NDJHZBDao zbDao = ndjhzbDao;
+	private Set<Integer> getUnenteredSjzb(Company company, JSONArray data){
+		Integer zbId;
 		JSONArray row;
-		cal.setTime(date);
-		boolean newEntity = false;
-		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.NDJH);
-		boolean isSbd = (sbdNdjhzbDao.getChzb(cal.get(Calendar.YEAR), company) != null);
-		Double xssr = null;
-		Integer zbId = null;
-		if (!approvedList.get(0)){
-			for (int i = 0; i < data.size(); ++i){
-				row = data.getJSONArray(i);
-				zbId = Integer.valueOf(row.getString(0));
-				newEntity = false;
-				if (isSbd) {
-					if (isYszkzb(zbId) && isChzb(zbId)){
-						continue;
-					}else if (isXssrzb(zbId)){
-						 xssr = Util.toDouble(row.getString(1));
-					}
-				}
+		DWXX dwxx = dwxxDao.getById(company.getId());
+		Set<Integer> zbIdSet = toZBIDSet(dwxx.getSjzbxxs());
+		for (int r = 0; r < data.size(); ++r) {
+			row = data.getJSONArray(r);
+			zbId = Integer.valueOf(row.getString(0));
+			zbIdSet.remove(zbId);
+		}
+		return zbIdSet;
+	}
 	
-				zb = zbDao.getZb(zbId, Util.toDate(cal), company);
-				
-				if (null == zb){
-					newEntity = true;
-					zb = new NDJHZB();
-					zb.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
-					zb.setDwxx(dwxxDao.getById(company.getId()));
-				}
-				
-				zb.setNdjhshzt(shztDao.getById(2));
-				zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
-				zb.setNf(cal.get(Calendar.YEAR));
-				zb.setNdjhz(Util.toDouble(row.getString(1)));
-				if (newEntity){
-					zbDao.create(zb);
-				} else{
-					zbDao.merge(zb);
-				}
+	private Set<Integer> getUnenteredJhzb(Company company, JSONArray data){
+		Integer zbId;
+		JSONArray row;
+		DWXX dwxx = dwxxDao.getById(company.getId());
+		Set<Integer> zbIdSet = toZBIDSet(dwxx.getJhzbxxs());
+		for (int r = 0; r < data.size(); ++r) {
+			row = data.getJSONArray(r);
+			zbId = Integer.valueOf(row.getString(0));
+			zbIdSet.remove(zbId);
+		}
+		return zbIdSet;
+	}
+
+	private boolean updateNDJH(Date date, Company company, JSONArray data) {
+		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.NDJH);
+		if (!approvedList.get(0)){
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			JSONArray row;
+			ndjhzbCalc.reset();
+			for (int r = 0; r < data.size(); ++r){
+				row = data.getJSONArray(r);
+				ndjhzbCalc.compute(
+						Integer.valueOf(row.getString(0)), 
+						Util.toDouble(row.getString(1)), 
+						cal, 
+						company);
 				
 			}
 			
-			updateComputedZb(xssr, cal, company);
+			Set<Integer> unenteredZb = getUnenteredJhzb(company, data);
+			for (Integer id : unenteredZb) {
+				ndjhzbCalc.compute(id, null, cal, company);
+			}
+
 		}
 		return true;
 	}
 
 	private boolean updateBYSJ(Date date, Company company, JSONArray data) {
-		Calendar cal = Calendar.getInstance();
-		SJZB zb;
-		JSONArray row;
-		cal.setTime(date);
-		boolean newEntity = false;
 		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BYSJ);
 		if (!approvedList.get(0)){
-			for (int i = 0; i < data.size(); ++i){
-				newEntity = false;
-				row = data.getJSONArray(i);
-				zb = sjzbDao.getZb(Integer.valueOf(row.getString(0)), Util.toDate(cal), company);
-				if (null == zb){
-					newEntity = true;
-					zb = new SJZB();
-					zb.setZbxx(zbxxDao.getById(Integer.valueOf(row.getString(0))));
-					zb.setDwxx(dwxxDao.getById(company.getId()));
-					
-				}
-				zb.setSjshzt(shztDao.getById(2));
-				zb.setSjxgsj(new java.sql.Date(new java.util.Date().getTime()));
-				zb.setNf(cal.get(Calendar.YEAR));
-				zb.setYf(cal.get(Calendar.MONTH) + 1);
-				zb.setSjz(Util.toDouble(row.getString(1)));
-				if (newEntity) {
-					sjzbDao.create(zb);
-				} else {
-					sjzbDao.merge(zb);
-				}
-			}
+			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
+			JSONArray row;
+			sjzbCalc.reset();
+			for (int i = 0; i < data.size(); ++i){
+				row = data.getJSONArray(i);
+				sjzbCalc.compute(
+						Integer.valueOf(row.getString(0)), 
+						Util.toDouble(row.getString(1)), 
+						cal, 
+						company);
+
+			}
+
+			Set<Integer> unenteredZb = getUnenteredSjzb(company, data);
+			for (Integer id : unenteredZb) {
+				sjzbCalc.compute(id, null, cal, company);
+			}
+
 			setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BYSJ);
 		}
 		return true;
@@ -353,145 +313,88 @@ public class EntryServiceImpl implements EntryService{
 
 	private boolean update28YJ(Date date, Company company, JSONArray data) {
 		Calendar cal = Calendar.getInstance();
-		int leftMonth;
-		YJ20ZB zb20;
-		YJ28ZB zb28;
-		YJ28ZBDao zbDao = yj28zbDao;
+		cal.setTime(date);
+		Integer zbId;
 		JSONArray row;
-		cal.setTime(date);
-		leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 
-		List<Boolean> approvedList = isApproved(date, company.getType(),
-				ZBType.BY28YJ);
+		Set<Integer> unenteredZb = getUnenteredSjzb(company, data);
+		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BY28YJ);
 		
-		boolean newEntity = false;
-		for (int i = 0; i < data.size(); ++i) {
-			cal.setTime(date);
-			row = data.getJSONArray(i);
-
-			if (!approvedList.get(0)) {
-				newEntity = false;
-				zb28 = zbDao.getZb(Integer.valueOf(row.getString(0)),
-						Util.toDate(cal), company);
-				if (null == zb28) {
-					newEntity = true;
-					zb28 = new YJ28ZB();
-					zb28.setZbxx(zbxxDao.getById(Integer.valueOf(row
-							.getString(0))));
-					zb28.setDwxx(dwxxDao.getById(company.getId()));
-					
-				}
-				zb28.setYj28shzt(shztDao.getById(2));
-				zb28.setYj28xgsj(new java.sql.Date(new java.util.Date()
-						.getTime()));
-				zb28.setNf(cal.get(Calendar.YEAR));
-				zb28.setYf(cal.get(Calendar.MONTH) + 1);
-				zb28.setYj28z(Util.toDouble(row.getString(1)));
-				if (newEntity){
-					zbDao.create(zb28);
-				} else{
-					zbDao.merge(zb28);
-				}
-				
+		if (!approvedList.get(0)) {
+			yd28Calc.reset();
+			for (int r = 0; r < data.size(); ++r) {
+				row = data.getJSONArray(r);
+				zbId = Integer.valueOf(row.getString(0));
+				yd28Calc.compute(
+						zbId, 
+						Util.toDouble(row.getString(1)), 
+						cal, 
+						company);			
 			}
-			cal.add(Calendar.MONTH, 1);
-
-			for (int j = 1; j <= leftMonth && j < (row.size() - 1); ++j) {
-				if (!approvedList.get(j)) {
-					newEntity = false;
-					zb20 = yj20zbDao.getZb(Integer.valueOf(row.getString(0)),
-							Util.toDate(cal), company);
-					if (null == zb20) {
-						newEntity = true;
-						zb20 = new YJ20ZB();
-						zb20.setZbxx(zbxxDao.getById(Integer.valueOf(row
-								.getString(0))));
-						zb20.setDwxx(dwxxDao.getById(company.getId()));
-					}
-					zb20.setYj20shzt(shztDao.getById(2));
-					zb20.setYj20xgsj(new java.sql.Date(new java.util.Date()
-							.getTime()));
-					zb20.setNf(cal.get(Calendar.YEAR));
-					zb20.setYf(cal.get(Calendar.MONTH) + 1);
-					zb20.setYj20z(Util.toDouble(row.getString(j + 1)));
-					if (newEntity){
-						yj20zbDao.create(zb20);
-					} else{
-						yj20zbDao.merge(zb20);
-					}
-				}
-				cal.add(Calendar.MONTH, 1);
+			
+			for (Integer id : unenteredZb) {
+				yd28Calc.compute(id, null, cal, company);
 			}
-		}
-		cal.setTime(date);
-		if (!approvedList.get(0)){
+			
 			setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY28YJ);
 		}
-
-		cal.add(Calendar.MONTH, 1);
-		for (int i = 1; i < approvedList.size(); ++i){
-			if (!approvedList.get(i)){
+		
+		
+		for (int c = 1; c < approvedList.size(); ++c){
+			cal.add(Calendar.MONTH, 1);
+			if (!approvedList.get(0)) {
+				yj20Calc.reset();
+				for (int r = 0; r < data.size(); ++r) {
+					row = data.getJSONArray(r);
+					zbId = Integer.valueOf(row.getString(0));
+					yj20Calc.compute(
+							zbId, 
+							Util.toDouble(row.getString(c + 1)), 
+							cal, 
+							company);			
+				}
+				
+				for (Integer id : unenteredZb) {
+					yj20Calc.compute(id, null, cal, company);
+				}
+				
 				setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
 			}
-			cal.add(Calendar.MONTH, 1);
-		}
-		
+		}		
 		return true;
 	}
 
 	private boolean update20YJ(Date date, Company company, JSONArray data) {
 		Calendar cal = Calendar.getInstance();
-		int leftMonth;
-		YJ20ZB zb;
-		YJ20ZBDao zbDao = yj20zbDao;
-		JSONArray row;
-		boolean newEntity = false;
-		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BY20YJ);
-		
-		for (int i = 0; i < data.size(); ++i) {
-			cal.setTime(date);
-			leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
-
-			row = data.getJSONArray(i);
-			for (int j = 0; j <= leftMonth && j < (row.size() - 1); ++j) {
-
-				if (!approvedList.get(j)) {
-					newEntity = false;
-					zb = zbDao.getZb(Integer.valueOf(row.getString(0)),
-							Util.toDate(cal), company);
-					if (null == zb) {
-						newEntity = true;
-						zb = new YJ20ZB();
-						zb.setZbxx(zbxxDao.getById(Integer.valueOf(row
-								.getString(0))));
-						zb.setDwxx(dwxxDao.getById(company.getId()));
-						
-					}
-					zb.setYj20shzt(shztDao.getById(2));
-					zb.setYj20xgsj(new java.sql.Date(new java.util.Date()
-							.getTime()));
-					zb.setNf(cal.get(Calendar.YEAR));
-					zb.setYf(cal.get(Calendar.MONTH) + 1);
-					zb.setYj20z(Util.toDouble(row.getString(j + 1)));
-					if (newEntity) {
-						zbDao.create(zb);
-					} else {
-						zbDao.merge(zb);
-					}
-
-				}
-				cal.add(Calendar.MONTH, 1);
-			}
-		}
-		
 		cal.setTime(date);
-		for (int i =0; i < approvedList.size(); ++i){
-			if (!approvedList.get(i)){
+
+		JSONArray row;
+		Integer zbId;
+		
+		Set<Integer> unenteredZb = getUnenteredSjzb(company, data);
+		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BY20YJ);
+		for (int c = 0; c < approvedList.size(); ++c){
+			if (!approvedList.get(0)) {
+				yj20Calc.reset();
+				for (int r = 0; r < data.size(); ++r) {
+					row = data.getJSONArray(r);
+					zbId = Integer.valueOf(row.getString(0));
+					yj20Calc.compute(
+							zbId, 
+							Util.toDouble(row.getString(c + 1)), 
+							cal, 
+							company);			
+				}
+				
+				for (Integer id : unenteredZb) {
+					yj20Calc.compute(id, null, cal, company);
+				}
+				
 				setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
 			}
 			cal.add(Calendar.MONTH, 1);
-		}
-		
+		}		
+
 		return true;
 	}
 
@@ -657,12 +560,22 @@ public class EntryServiceImpl implements EntryService{
 	private Map<Integer, String[]> creatZBXXMap(Set<ZBXX> zbxxs, int size){
 		Map<Integer, String[]> map = new HashMap<Integer, String[]>();
 		for (ZBXX zbxx : zbxxs){
-			String[] row = new String[size];
-			map.put(zbxx.getId(), row);
-			row[0] = zbxx.getId() + "";
-			row[1] = zbxx.getName();
+			if (!calculatedZbs.contains(zbxx.getId())){
+				String[] row = new String[size];
+				map.put(zbxx.getId(), row);
+				row[0] = zbxx.getId() + "";
+				row[1] = zbxx.getName();
+			}
 		}
 		return map;
+	}
+	
+	private Set<Integer> toZBIDSet(Set<ZBXX> zbxxs){
+		Set<Integer> ret = new HashSet<Integer>();
+		for (ZBXX zbxx : zbxxs){
+			ret.add(zbxx.getId());
+		}
+		return ret;
 	}
 	
 	private List<String[]> get20YJ(Date date, Company company) {	
@@ -734,6 +647,7 @@ public class EntryServiceImpl implements EntryService{
 	public List<String[]> getEntryStatus(Date date, ZBType entryType) {
 		List<String[]> result = new ArrayList<String[]>();
 		List<Integer> entryCompletedCompanies = null;
+		List<Date> entryTime = null;
 		switch (entryType){
 		case BY20YJ:
 			entryCompletedCompanies = yj20zbDao.getEntryCompletedCompanies(date);
@@ -754,8 +668,35 @@ public class EntryServiceImpl implements EntryService{
 			return result;
 		}
 		
-		for (Company comp : mainCompanies){
-			result.add(new String[]{comp.getName(), entryCompletedCompanies.contains(comp.getId()) + ""});
+		for (Company comp : mainCompanies){			
+			if (entryCompletedCompanies.contains(comp.getId())){
+				Date time = null;
+				switch (entryType){
+				case BY20YJ:
+					time = yj20zbDao.getEntryTime(date, comp);
+					break;
+				case BY28YJ:
+					entryCompletedCompanies = yj28zbDao.getEntryCompletedCompanies(date);
+					time = yj28zbDao.getEntryTime(date, comp);
+					break;
+				case BYSJ:
+					entryCompletedCompanies = sjzbDao.getEntryCompletedCompanies(date);
+					time = sjzbDao.getEntryTime(date, comp);
+					break;
+				case NDJH:
+					entryCompletedCompanies = ndjhzbDao.getEntryCompletedCompanies(date);
+					time = ndjhzbDao.getEntryTime(date, comp);
+					break;
+				case YDJDMJH:
+					entryCompletedCompanies = ydjhzbDao.getEntryCompletedCompanies(date);
+					time = ydjhzbDao.getEntryTime(date, comp);
+					break;
+				}
+				
+				result.add(new String[]{comp.getName(), "true", null != time ? Util.formatToDay(time) : null});
+			} else{
+				result.add(new String[]{comp.getName(), "false", null});
+			}
 		}
 
 		return result;
