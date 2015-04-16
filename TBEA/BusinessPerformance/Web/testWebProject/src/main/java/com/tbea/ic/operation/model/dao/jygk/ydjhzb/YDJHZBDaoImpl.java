@@ -185,6 +185,17 @@ public class YDJHZBDaoImpl extends AbstractReadWriteDaoImpl<YDJHZB> implements Y
 		return q.getResultList();
 	}
 
+	@Override
+	public int getSavedZbsCount(Date date, Company company) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("select count(*) from YDJHZB where nf = :nf and yf = :yf and ydjhshzt.id = 3 and  dwxx.id = :comp");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("comp", company.getId());
+		return ((Long)q.getSingleResult()).intValue();
+	}
+
 	
 
 }

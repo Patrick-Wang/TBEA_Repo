@@ -34,4 +34,6 @@ public interface YDJHZBDao  extends AbstractReadWriteDao<YDJHZB>{
 
 	Date getEntryTime(Date date, Company comp);
 
+	int getSavedZbsCount(Date date, Company company);
+
 }

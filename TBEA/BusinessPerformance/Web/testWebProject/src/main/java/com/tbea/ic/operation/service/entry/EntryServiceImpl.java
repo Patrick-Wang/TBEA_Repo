@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBType;
@@ -50,6 +51,7 @@ import com.tbea.ic.operation.service.entry.zbCalculator.GeneralZbCalculator;
 import com.tbea.ic.operation.service.entry.zbCalculator.NdjhZbCalculator;
 import com.tbea.ic.operation.service.entry.zbCalculator.ZbCalculator;
 import com.tbea.ic.operation.service.entry.zbInjector.SimpleZbInjectorFactory;
+import com.tbea.ic.operation.common.ZBStatus;
 
 
 
@@ -139,14 +141,15 @@ public class EntryServiceImpl implements EntryService{
 	
 	
 	public void setYdzbzt(Company comp, int nf, int yf, ZBType entryType){
+		boolean newEntity = false;
 		YDZBZT ydzbzt = ydzbztDao.getYdzbzt(comp, nf, yf);
 		if (null == ydzbzt){
+			newEntity = true;
 			ydzbzt = new YDZBZT();
 			ydzbzt.setDwxx(dwxxDao.getById(comp.getId()));
 			ydzbzt.setNf(nf);
 			ydzbzt.setYf(yf);
 			ydzbzt.setZt(0);
-			ydzbztDao.create(ydzbzt);
 		}
 		
 		switch (entryType){
@@ -168,30 +171,35 @@ public class EntryServiceImpl implements EntryService{
 		default:
 			break;
 		}
-		ydzbztDao.merge(ydzbzt);
+		
+		if (newEntity){
+			ydzbztDao.create(ydzbzt);
+		}else{
+			ydzbztDao.merge(ydzbzt);
+		}
 	}
 	
 	@Override
-	public boolean updateZb(Date date, Account account, CompanyType comp,
+	public boolean submitZb(Date date, Account account, CompanyType comp,
 			ZBType entryType, JSONArray data) {
 		
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		boolean bRet = false;
 		switch (entryType){
 		case BY20YJ:
-			bRet = update20YJ(date, company, data);
+			bRet = update20YJ(date, company, data, false);
 			break;
 		case BY28YJ:
-			bRet = update28YJ(date, company, data);
+			bRet = update28YJ(date, company, data, false);
 			break;
 		case BYSJ:
-			bRet = updateBYSJ(date, company, data);
+			bRet = updateBYSJ(date, company, data, false);
 			break;
 		case NDJH:
-			bRet = updateNDJH(date, company, data);
+			bRet = updateNDJH(date, company, data, false);
 			break;
 		case YDJDMJH:
-			bRet = updateYDJDMJH(date, company, data);
+			bRet = updateYDJDMJH(date, company, data, false);
 			break;
 		default:
 			break;
@@ -199,13 +207,14 @@ public class EntryServiceImpl implements EntryService{
 		return bRet;
 	}
 
-	private boolean updateYDJDMJH(Date date, Company company, JSONArray data) {
+	private boolean updateYDJDMJH(Date date, Company company, JSONArray data, boolean isSaving) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		Set<Integer> unenteredZb = getUnenteredJhzb(company, data);
 		List<Boolean> approvedList = isApproved(date, company.getType(),
 				ZBType.YDJDMJH);
 		
+		ZBStatus status = isSaving ? ZBStatus.SAVED : ZBStatus.SUBMITTED;
 		Integer zbId;
 		JSONArray row;
 		Double val;
@@ -216,12 +225,14 @@ public class EntryServiceImpl implements EntryService{
 				for (int r = 0; r < data.size(); ++r) {
 					row = data.getJSONArray(r);
 					zbId = Integer.valueOf(row.getString(0));
-					val = Util.toDouble(row.getString(c + 1));
-					ydjhzbCalc.compute(zbId, val, cal, company);
+					if (!row.getString(c + 1).isEmpty()) {
+						val = Util.toDouble(row.getString(c + 1));
+						ydjhzbCalc.compute(zbId, val, cal, company, status);
+					}
 				}
 
 				for (Integer id : unenteredZb) {
-					ydjhzbCalc.compute(id, null, cal, company);
+					ydjhzbCalc.compute(id, null, cal, company, status);
 				}
 			}
 
@@ -258,62 +269,70 @@ public class EntryServiceImpl implements EntryService{
 		return zbIdSet;
 	}
 
-	private boolean updateNDJH(Date date, Company company, JSONArray data) {
+	private boolean updateNDJH(Date date, Company company, JSONArray data, boolean isSaving) {
 		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.NDJH);
 		if (!approvedList.get(0)){
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
 			JSONArray row;
-			ndjhzbCalc.reset();
-			for (int r = 0; r < data.size(); ++r){
-				row = data.getJSONArray(r);
-				ndjhzbCalc.compute(
-						Integer.valueOf(row.getString(0)), 
-						Util.toDouble(row.getString(1)), 
-						cal, 
-						company);
-				
-			}
+			ZBStatus status = isSaving ? ZBStatus.SAVED : ZBStatus.SUBMITTED;
 			
+			ndjhzbCalc.reset();
+			for (int r = 0; r < data.size(); ++r) {
+				row = data.getJSONArray(r);
+				if (!row.getString(1).isEmpty()) {
+					ndjhzbCalc.compute(Integer.valueOf(row.getString(0)),
+							Util.toDouble(row.getString(1)), cal, company,
+							status);
+				}
+
+			}
+
 			Set<Integer> unenteredZb = getUnenteredJhzb(company, data);
 			for (Integer id : unenteredZb) {
-				ndjhzbCalc.compute(id, null, cal, company);
+				ndjhzbCalc.compute(id, null, cal, company,
+						status);
 			}
 
 		}
 		return true;
 	}
 
-	private boolean updateBYSJ(Date date, Company company, JSONArray data) {
+	private boolean updateBYSJ(Date date, Company company, JSONArray data, boolean isSaving) {
 		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BYSJ);
 		if (!approvedList.get(0)){
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
+			ZBStatus status = isSaving ? ZBStatus.SAVED : ZBStatus.SUBMITTED;
 			JSONArray row;
 			sjzbCalc.reset();
-			for (int i = 0; i < data.size(); ++i){
+			for (int i = 0; i < data.size(); ++i) {
 				row = data.getJSONArray(i);
-				sjzbCalc.compute(
-						Integer.valueOf(row.getString(0)), 
-						Util.toDouble(row.getString(1)), 
-						cal, 
-						company);
+				if (!row.getString(1).isEmpty()) {
+					sjzbCalc.compute(Integer.valueOf(row.getString(0)),
+							Util.toDouble(row.getString(1)), cal, company,
+							status);
+				}
 
 			}
 
 			Set<Integer> unenteredZb = getUnenteredSjzb(company, data);
 			for (Integer id : unenteredZb) {
-				sjzbCalc.compute(id, null, cal, company);
+				sjzbCalc.compute(id, null, cal, company, status);
 			}
 
-			setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BYSJ);
+			if (!isSaving) {
+				setYdzbzt(company, cal.get(Calendar.YEAR),
+						cal.get(Calendar.MONTH) + 1, ZBType.BYSJ);
+			}
 		}
 		return true;
 	}
 
-	private boolean update28YJ(Date date, Company company, JSONArray data) {
+	private boolean update28YJ(Date date, Company company, JSONArray data, boolean isSaving) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
+		ZBStatus status = isSaving ? ZBStatus.SAVED : ZBStatus.SUBMITTED;
 		Integer zbId;
 		JSONArray row;
 
@@ -325,75 +344,87 @@ public class EntryServiceImpl implements EntryService{
 			for (int r = 0; r < data.size(); ++r) {
 				row = data.getJSONArray(r);
 				zbId = Integer.valueOf(row.getString(0));
-				yd28Calc.compute(
-						zbId, 
-						Util.toDouble(row.getString(1)), 
-						cal, 
-						company);			
+				if (!row.getString(1).isEmpty()) {
+					yd28Calc.compute(
+							zbId, 
+							Util.toDouble(row.getString(1)), 
+							cal, 
+							company,
+							status);	
+				}
 			}
 			
 			for (Integer id : unenteredZb) {
-				yd28Calc.compute(id, null, cal, company);
+				yd28Calc.compute(id, null, cal, company,
+						status);
 			}
 			
-			setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY28YJ);
+			if (!isSaving) {
+				setYdzbzt(company, cal.get(Calendar.YEAR),
+						cal.get(Calendar.MONTH) + 1, ZBType.BY28YJ);
+			}
 		}
 		
-		
-		for (int c = 1; c < approvedList.size(); ++c){
+		for (int c = 1; c < approvedList.size(); ++c) {
 			cal.add(Calendar.MONTH, 1);
 			if (!approvedList.get(0)) {
 				yj20Calc.reset();
 				for (int r = 0; r < data.size(); ++r) {
 					row = data.getJSONArray(r);
 					zbId = Integer.valueOf(row.getString(0));
-					yj20Calc.compute(
-							zbId, 
-							Util.toDouble(row.getString(c + 1)), 
-							cal, 
-							company);			
+					if (!row.getString(c + 1).isEmpty()) {
+						yj20Calc.compute(zbId,
+								Util.toDouble(row.getString(c + 1)), cal,
+								company, status);
+					}
 				}
-				
+
 				for (Integer id : unenteredZb) {
-					yj20Calc.compute(id, null, cal, company);
+					yj20Calc.compute(id, null, cal, company, status);
 				}
-				
-				setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
+
+				if (!isSaving) {
+					setYdzbzt(company, cal.get(Calendar.YEAR),
+							cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
+				}
 			}
-		}		
+		}
 		return true;
 	}
 
-	private boolean update20YJ(Date date, Company company, JSONArray data) {
+	private boolean update20YJ(Date date, Company company, JSONArray data, boolean isSaving) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-
+		ZBStatus status = isSaving ? ZBStatus.SAVED : ZBStatus.SUBMITTED;
 		JSONArray row;
 		Integer zbId;
 		
 		Set<Integer> unenteredZb = getUnenteredSjzb(company, data);
 		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BY20YJ);
-		for (int c = 0; c < approvedList.size(); ++c){
+		for (int c = 0; c < approvedList.size(); ++c) {
 			if (!approvedList.get(0)) {
 				yj20Calc.reset();
 				for (int r = 0; r < data.size(); ++r) {
 					row = data.getJSONArray(r);
 					zbId = Integer.valueOf(row.getString(0));
-					yj20Calc.compute(
-							zbId, 
-							Util.toDouble(row.getString(c + 1)), 
-							cal, 
-							company);			
+					if (!row.getString(c + 1).isEmpty()) {
+						yj20Calc.compute(zbId,
+								Util.toDouble(row.getString(c + 1)), cal,
+								company, status);
+					}
 				}
-				
+
 				for (Integer id : unenteredZb) {
-					yj20Calc.compute(id, null, cal, company);
+					yj20Calc.compute(id, null, cal, company, status);
 				}
-				
-				setYdzbzt(company, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
+
+				if (!isSaving) {
+					setYdzbzt(company, cal.get(Calendar.YEAR),
+							cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
+				}
 			}
 			cal.add(Calendar.MONTH, 1);
-		}		
+		}
 
 		return true;
 	}
@@ -603,6 +634,47 @@ public class EntryServiceImpl implements EntryService{
 		}
 	}
 	
+	
+	@Override
+	public List<Boolean> isSaved(Date date, CompanyType comp, ZBType entryType) {
+		List<Boolean> bResult = new ArrayList<Boolean>();
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
+		switch (entryType){
+		case BY20YJ:
+			for (int i = 0; i <= leftMonth; ++i){
+				bResult.add(yj20zbDao.getSavedZbsCount(Util.toDate(cal), company) > 0);
+				cal.add(Calendar.MONTH, 1);
+			}
+			break;
+		case BY28YJ:
+			bResult.add(yj28zbDao.getSavedZbsCount(Util.toDate(cal), company) > 0);
+			cal.add(Calendar.MONTH, 1);
+			for (int i = 1; i <= leftMonth; ++i){
+				bResult.add(yj20zbDao.getSavedZbsCount(Util.toDate(cal), company) > 0);
+				cal.add(Calendar.MONTH, 1);
+			}
+			break;
+		case BYSJ:
+			bResult.add(sjzbDao.getSavedZbsCount(date, company) > 0);
+			break;
+		case NDJH:
+			bResult.add(ndjhzbDao.getSavedZbsCount(date, company) > 0);
+			break;
+		case YDJDMJH:
+			for (int i = 0; i < 3; ++i){
+				bResult.add(ydjhzbDao.getSavedZbsCount(Util.toDate(cal), company) > 0);
+				cal.add(Calendar.MONTH, 1);
+			}
+			break;
+		default:
+			break;
+		}
+		return bResult;
+	}
+	
 	@Override
 	public List<Boolean> isApproved(Date date, CompanyType comp, ZBType entryType) {
 		List<Boolean> bResult = new ArrayList<Boolean>();
@@ -647,7 +719,6 @@ public class EntryServiceImpl implements EntryService{
 	public List<String[]> getEntryStatus(Date date, ZBType entryType) {
 		List<String[]> result = new ArrayList<String[]>();
 		List<Integer> entryCompletedCompanies = null;
-		List<Date> entryTime = null;
 		switch (entryType){
 		case BY20YJ:
 			entryCompletedCompanies = yj20zbDao.getEntryCompletedCompanies(date);
@@ -700,5 +771,32 @@ public class EntryServiceImpl implements EntryService{
 		}
 
 		return result;
+	}
+
+	@Override
+	public boolean saveZb(Date date, Account account, CompanyType comp,
+			ZBType entryType, JSONArray data) {
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		boolean bRet = false;
+		switch (entryType){
+		case BY20YJ:
+			bRet = update20YJ(date, company, data, true);
+			break;
+		case BY28YJ:
+			bRet = update28YJ(date, company, data, true);
+			break;
+		case BYSJ:
+			bRet = updateBYSJ(date, company, data, true);
+			break;
+		case NDJH:
+			bRet = updateNDJH(date, company, data, true);
+			break;
+		case YDJDMJH:
+			bRet = updateYDJDMJH(date, company, data, true);
+			break;
+		default:
+			break;
+		}
+		return bRet;
 	}
 }

@@ -369,6 +369,7 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 		return ((Long)q.getSingleResult()).intValue();
 	}
 
+	
 	@Override
 	public List<Integer> getEntryCompletedCompanies(Date date) {
 		Calendar cal = Calendar.getInstance();
@@ -394,6 +395,17 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 			return ret.get(0).getSjxgsj();
 		}
 		return null;
+	}
+
+	@Override
+	public int getSavedZbsCount(Date date, Company company) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("select count(*) from SJZB where nf = :nf and yf = :yf and sjshzt.id = 3 and  dwxx.id = :comp");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("comp", company.getId());
+		return ((Long)q.getSingleResult()).intValue();
 	}
 
 

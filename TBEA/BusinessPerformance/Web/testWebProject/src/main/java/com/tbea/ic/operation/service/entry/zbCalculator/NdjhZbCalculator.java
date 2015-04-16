@@ -6,6 +6,7 @@ import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.entry.zbInjector.ZbInjector;
+import com.tbea.ic.operation.common.ZBStatus;
 
 public class NdjhZbCalculator extends AbstractZbCalculator {
 
@@ -18,20 +19,22 @@ public class NdjhZbCalculator extends AbstractZbCalculator {
 
 	@Override
 	protected void onHandling(Integer zbId, Double val, Calendar cal,
-			Company comp) {
+			Company comp, ZBStatus status) {
 
 		if (GSZB.YSZK.getValue() == zbId && null != xssr) {
 			Double chzb = sbdNdjhzbDao.getYszb(cal.get(Calendar.YEAR), comp);
 			if (null != chzb) {
-				injector.inject(zbId, xssr * chzb, cal, comp);
+				injector.inject(zbId, xssr * chzb, cal, comp, status);
 			}
 		} else if (GSZB.CH.getValue() == zbId && null != xssr) {
 			Double yszb = sbdNdjhzbDao.getYszb(cal.get(Calendar.YEAR), comp);
 			if (null != yszb) {
-				injector.inject(zbId, xssr * yszb, cal, comp);
+				injector.inject(zbId, xssr * yszb, cal, comp, status);
 			}
 		} else {
-			injector.inject(zbId, val, cal, comp);
+			if (null != val){
+				injector.inject(zbId, val, cal, comp, status);
+			}
 		}
 	}
 

@@ -9,6 +9,7 @@ import com.tbea.ic.operation.model.dao.jygk.shzt.SHZTDao;
 import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
+import com.tbea.ic.operation.common.ZBStatus;
 
 class Yj20ZbInjector extends ZbInjector {
 
@@ -21,7 +22,7 @@ class Yj20ZbInjector extends ZbInjector {
 	}
 
 	@Override
-	public void inject(Integer zbId, double val, Calendar cal, Company comp) {
+	public void inject(Integer zbId, double val, Calendar cal, Company comp, ZBStatus status) {
 		boolean newEntity = false;
 		YJ20ZB zb = yj20zbDao.getZb(zbId,
 				Util.toDate(cal), comp);
@@ -32,7 +33,7 @@ class Yj20ZbInjector extends ZbInjector {
 			zb.setDwxx(dwxxDao.getById(comp.getId()));
 			
 		}
-		zb.setYj20shzt(shztDao.getById(2));
+		zb.setYj20shzt(shztDao.getById(status.ordinal()));
 		zb.setYj20xgsj(new java.sql.Date(new java.util.Date()
 				.getTime()));
 		zb.setNf(cal.get(Calendar.YEAR));

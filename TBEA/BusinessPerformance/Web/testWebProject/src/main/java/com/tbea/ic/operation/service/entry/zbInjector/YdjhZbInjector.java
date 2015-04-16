@@ -9,6 +9,7 @@ import com.tbea.ic.operation.model.dao.jygk.shzt.SHZTDao;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
+import com.tbea.ic.operation.common.ZBStatus;
 
 class YdjhZbInjector extends ZbInjector {
 
@@ -21,24 +22,25 @@ class YdjhZbInjector extends ZbInjector {
 	}
 
 	@Override
-	public void inject(Integer zbId, double val, Calendar cal, Company comp) {
+	public void inject(Integer zbId, double val, Calendar cal, Company comp, ZBStatus status) {
 		boolean newEntity = false;
-		YDJHZB ydjhzb = ydjhzbDao.getZb(zbId, Util.toDate(cal), comp);
-		if (null == ydjhzb){
+		YDJHZB zb = ydjhzbDao.getZb(zbId, Util.toDate(cal), comp);
+		if (null == zb){
 			newEntity = true;
-			ydjhzb = new YDJHZB();
-			ydjhzb.setZbxx(zbxxDao.getById(zbId));
-			ydjhzb.setDwxx(dwxxDao.getById(comp.getId()));
+			zb = new YDJHZB();
+			zb.setZbxx(zbxxDao.getById(zbId));
+			zb.setDwxx(dwxxDao.getById(comp.getId()));
 		}
-		ydjhzb.setYdjhshzt(shztDao.getById(2));
-		ydjhzb.setYdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
-		ydjhzb.setNf(cal.get(Calendar.YEAR));
-		ydjhzb.setYf(cal.get(Calendar.MONTH) + 1);
-		ydjhzb.setYdjhz(val);
+		
+		zb.setYdjhshzt(shztDao.getById(status.ordinal()));
+		zb.setYdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
+		zb.setNf(cal.get(Calendar.YEAR));
+		zb.setYf(cal.get(Calendar.MONTH) + 1);
+		zb.setYdjhz(val);
 		if (newEntity){
-			ydjhzbDao.create(ydjhzb);
+			ydjhzbDao.create(zb);
 		}else{
-			ydjhzbDao.merge(ydjhzb);
+			ydjhzbDao.merge(zb);
 		}
 	}
 

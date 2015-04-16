@@ -76,11 +76,10 @@ public class EntryController {
 		dateSel.select(map);
 		return new ModelAndView("gdw_indexInput_summary", map);
 	}
-	
 	//End
 	
 	
-	
+
 	@RequestMapping(value = "zb.do", method = RequestMethod.GET)
 	public ModelAndView getZBEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -110,8 +109,6 @@ public class EntryController {
 		return new ModelAndView("entry_template", map);
 	}
 
-	
-	
 	@RequestMapping(value = "zb_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getZBEntryUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -133,12 +130,22 @@ public class EntryController {
 		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("entryType")));
 		Date date = DateSelection.getDate(request);
 		CompanyType comp = CompanySelection.getCompany(request);
-		String ret = "数据已审核，无法修改";
-		//if (!entryService.isApproved(date, comp, entryType)){
 		String data = request.getParameter("data");
 		Account account = (Account) request.getSession(false).getAttribute("account");
-		ret = "" + entryService.updateZb(date, account, comp, entryType, JSONArray.fromObject(data));
-		//}
+		String ret = "" + entryService.submitZb(date, account, comp, entryType, JSONArray.fromObject(data));
+		String result = "{\"result\":\"" + ret + "\"}";
+		return result.getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "zb_save.do", method = RequestMethod.POST)
+	public @ResponseBody byte[] getZBEntrySave(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("entryType")));
+		Date date = DateSelection.getDate(request);
+		CompanyType comp = CompanySelection.getCompany(request);
+		String data = request.getParameter("data");
+		Account account = (Account) request.getSession(false).getAttribute("account");
+		String ret = "" + entryService.saveZb(date, account, comp, entryType, JSONArray.fromObject(data));
 		String result = "{\"result\":\"" + ret + "\"}";
 		return result.getBytes("utf-8");
 	}

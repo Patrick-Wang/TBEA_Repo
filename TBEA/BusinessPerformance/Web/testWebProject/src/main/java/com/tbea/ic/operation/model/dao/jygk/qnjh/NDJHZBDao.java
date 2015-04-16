@@ -30,4 +30,6 @@ public interface NDJHZBDao  extends AbstractReadWriteDao<NDJHZB>{
 
 	Date getEntryTime(Date date, Company comp);
 
+	int getSavedZbsCount(Date date, Company company);
+
 }

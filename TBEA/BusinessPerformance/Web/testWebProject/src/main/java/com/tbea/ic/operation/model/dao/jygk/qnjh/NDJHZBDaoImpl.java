@@ -157,4 +157,14 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 		return null;
 	}
 
+	@Override
+	public int getSavedZbsCount(Date date, Company company) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("select count(*) from NDJHZB where nf = :nf and ndjhshzt.id = 3 and  dwxx.id = :comp");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("comp", company.getId());
+		return ((Long)q.getSingleResult()).intValue();
+	}
+
 }

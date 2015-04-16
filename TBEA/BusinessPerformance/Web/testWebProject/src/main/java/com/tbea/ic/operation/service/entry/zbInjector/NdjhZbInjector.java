@@ -10,6 +10,7 @@ import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.model.dao.jygk.shzt.SHZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.NDJHZB;
+import com.tbea.ic.operation.common.ZBStatus;
 
 class NdjhZbInjector extends ZbInjector {
 
@@ -21,10 +22,8 @@ class NdjhZbInjector extends ZbInjector {
 		this.ndjhzbDao = ndjhzbDao;
 	}
 
-
-
 	@Override
-	public void inject(Integer zbId, double val, Calendar cal, Company comp) {
+	public void inject(Integer zbId, double val, Calendar cal, Company comp, ZBStatus status) {
 		boolean newEntity = false;
 		NDJHZB zb = ndjhzbDao.getZb(zbId, Util.toDate(cal), comp);
 		if (null == zb){
@@ -33,7 +32,7 @@ class NdjhZbInjector extends ZbInjector {
 			zb.setZbxx(zbxxDao.getById(zbId));
 			zb.setDwxx(dwxxDao.getById(comp.getId()));
 		}
-		zb.setNdjhshzt(shztDao.getById(2));
+		zb.setNdjhshzt(shztDao.getById(status.ordinal()));	
 		zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
 		zb.setNf(cal.get(Calendar.YEAR));
 		zb.setNdjhz(val);
@@ -43,6 +42,5 @@ class NdjhZbInjector extends ZbInjector {
 		} else {
 			ndjhzbDao.merge(zb);
 		}
-		
-	}	
+	}
 }

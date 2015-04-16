@@ -19,7 +19,7 @@ public interface EntryService {
 	List<String[]> getZb(Date date, Account account, CompanyType comp,
 			ZBType entryType);
 
-	boolean updateZb(Date date, Account account, CompanyType comp,
+	boolean submitZb(Date date, Account account, CompanyType comp,
 			ZBType entryType, JSONArray data);
 
 	public boolean hasEntryPlanPermission(Account account);
@@ -29,4 +29,9 @@ public interface EntryService {
 	List<Boolean> isApproved(Date date, CompanyType comp, ZBType entryType);
 
 	List<String[]> getEntryStatus(Date date, ZBType entryType);
+
+	boolean saveZb(Date date, Account account, CompanyType comp,
+			ZBType entryType, JSONArray data);
+
+	List<Boolean> isSaved(Date date, CompanyType comp, ZBType entryType);
 }

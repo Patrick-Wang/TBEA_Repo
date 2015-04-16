@@ -208,7 +208,7 @@ th.ui-th-ltr {
 	<div class="header">
 		<h1></h1>
 	</div>
-	<Table align="center">
+	<Table align="center" cellspacing="0" cellpadding="0">
 		<tr>
 			<td>
 				<Table>
@@ -233,17 +233,31 @@ th.ui-th-ltr {
 		</tr>
 		<tr>
 			<td>
-				<table id="entryarea" style="display:none">
+				<table id="entryarea" style="display: none" cellspacing="0" cellpadding="0">
 					<tr>
 						<td>
 							<div id="table"></div>
 						<td>
 					</tr>
-					<tr align="right">
-						<td><input id="submit" type="submit" value="提交" style="width: 80px;"
-							onclick="view.submit()"></input></td>
+					<tr>
+						<td>
+							<div style="height:10px"></div>
+						<td>
 					</tr>
-
+					<tr align="right">
+						<td>
+							<Table cellspacing="0" cellpadding="0">
+								<tr align="right">
+									<td><input id="submit" type="submit" value="提交"
+										style="width: 80px;" onclick="view.submit()"></input>
+									<td>
+									<td><input id="save" type="submit" value="保存"
+										style="width: 80px;" onclick="view.save()"></input>
+									<td>
+								</tr>
+							</Table>
+						</td>
+					</tr>
 				</table>
 			</td>
 		</tr>

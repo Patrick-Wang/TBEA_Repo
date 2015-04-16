@@ -51,6 +51,7 @@ module entry_template {
         private mOpt: IViewOption;
         private mDataSet: Util.Ajax = new Util.Ajax("zb_update.do", false);
         private mSubmit: Util.Ajax = new Util.Ajax("zb_submit.do");
+        private mSave: Util.Ajax = new Util.Ajax("zb_save.do");
         private mTableAssist: JQTable.JQGridAssistant;
         private mTitleCompanyName : string;
         initInstance(opt: IViewOption) {
@@ -97,6 +98,41 @@ module entry_template {
             });
         }
 
+         public save() {
+            var date = this.mDateSelector.getDate();
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
+                date = Util.addMonth(date, -2);
+            }
+            var allData = this.mTableAssist.getAllData();
+            var submitData = [];
+            var colNames = this.mTableAssist.getColNames();
+            for (var i = 0; i < allData.length; ++i){
+                submitData.push([]);
+                for (var j = 0; j < allData[i].length; ++j){
+                    if (j != 1){
+                        submitData[i].push(allData[i][j])
+                        allData[i][j] = allData[i][j].replace(new RegExp(' ', 'g'), '')
+                    }
+                }
+            }
+            
+            this.mSave.post({
+                year: date.year,
+                month: date.month,
+                entryType: this.mOpt.entryType,
+                companyId: this.mCompanySelector.getCompany(), 
+                data: JSON.stringify(submitData)
+            }).then((data: ISubmitResult) => {
+                    if ("true" == data.result) {
+                         Util.MessageBox.tip("提交 成功");
+                    } else if ("false" == data.result) {
+                         Util.MessageBox.tip("提交 失败");
+                    } else {
+                        Util.MessageBox.tip(data.result);
+                    }
+            });
+        }
+        
         public submit() {
             var date = this.mDateSelector.getDate();
             if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {

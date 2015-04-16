@@ -6,8 +6,9 @@ import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.entry.zbInjector.ZbInjector;
+import com.tbea.ic.operation.common.ZBStatus;
 
 public interface ZbCalculator{
 	public void reset();
-	public void compute(Integer zbId, Double val, Calendar cal, Company comp);
+	public void compute(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status);
 }
