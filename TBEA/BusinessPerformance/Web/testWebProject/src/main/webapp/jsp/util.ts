@@ -324,6 +324,13 @@ module Util {
         return (parseFloat(val) * 100).toFixed(1) + "%"    
     }
     
+    export function formatFordot1(val: string): string{
+        if (val === "--" || val === "" || val === "-") {
+            return val;
+        }
+        return (parseFloat(val)).toFixed(1);   
+    }
+    
     export function formatPercentSignal(val: string): string{
         if (val === "--" || val === "" || val === "-") {
             return val;

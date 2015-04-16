@@ -106,7 +106,7 @@ module hzb_zbhz {
             $("#export")[0].action = "hzb_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, type : this.mType, fileName: fName });
             $("#export")[0].submit();
         }
-        
+        //收入签约
         private formatSrqyData() {
             var data = [];
             var row = [];
@@ -130,16 +130,20 @@ module hzb_zbhz {
             }
             return data;
         }
-        
+        //整体指标数据
         private formatZtData() {
             var data = [];
             var row = [];
             var isRs = false;
             var isSxfyl = false;
+            var isRjlr = false;
+            var isRjsr = false;
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 isRs = row[ZtId.zb] == '人数';
                 isSxfyl = row[ZtId.zb] == '三项费用率(%)';
+                isRjlr = row[ZtId.zb] == '人均利润';
+                isRjsr = row[ZtId.zb] == '人均收入';
                 for (var i = 0; i < row.length; ++i) {
                     if (i == ZtId.dyjhwcl || i == ZtId.jdjhwcl || i == ZtId.dytbzf || i == ZtId.jdtbzf || i == ZtId.ndljjhwcl || i == ZtId.ndtbzf) {
                         row[i] = Util.formatPercent(row[i]);
@@ -147,6 +151,14 @@ module hzb_zbhz {
                         if (isRs) {
                             row[i] = Util.formatInt(row[i]);
                         } 
+                        else if (isRjlr)
+                        {
+                            row[i] = Util.formatFordot1(row[i]);
+                        }
+                        else if (isRjsr)
+                        {
+                            row[i] = Util.formatFordot1(row[i]);
+                        }  
                         else if (isSxfyl){
                              row[i] = Util.formatPercent(row[i]);
                         }else {
