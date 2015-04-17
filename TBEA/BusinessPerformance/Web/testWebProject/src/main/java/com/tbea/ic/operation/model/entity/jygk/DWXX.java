@@ -53,7 +53,7 @@ public class DWXX extends AbstractReadWriteEntity implements Serializable {
 		this.name = name;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_ID")
 	public DWXX getParent() {
 		return parent;

@@ -43,13 +43,13 @@ public class YDJHZB extends AbstractReadWriteEntity implements Serializable {
 
 	private Date ydjhxgsj;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dwid")
 	public DWXX getDwxx() {
 		return dwxx;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "zbid")
 	public ZBXX getZbxx() {
 		return zbxx;
@@ -78,7 +78,7 @@ public class YDJHZB extends AbstractReadWriteEntity implements Serializable {
 		return ydjhz;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ydjhshzt")
 	public SHZT getYdjhshzt() {
 		return ydjhshzt;

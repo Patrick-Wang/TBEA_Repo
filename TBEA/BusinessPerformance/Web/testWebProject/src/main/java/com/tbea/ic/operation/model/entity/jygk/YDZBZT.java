@@ -36,7 +36,7 @@ public class YDZBZT extends AbstractReadWriteEntity implements Serializable {
 
 	private Integer zt;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dwid")
 	public DWXX getDwxx() {
 		return dwxx;

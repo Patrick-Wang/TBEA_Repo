@@ -44,7 +44,7 @@ public class QXGL extends AbstractReadWriteEntity implements Serializable {
 		super.setId(id);
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "account_ID")
 	public Account getAccount() {
 		return account;
@@ -54,7 +54,7 @@ public class QXGL extends AbstractReadWriteEntity implements Serializable {
 		this.account = account;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dwid")
 	public DWXX getDwxx() {
 		return dwxx;

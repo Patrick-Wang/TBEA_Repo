@@ -495,9 +495,15 @@ public class EntryServiceImpl implements EntryService{
 		cal.setTime(date);
 		//cal.add(Calendar.MONTH, 1);
 		DWXX dwxx = dwxxDao.getById(company.getId());
-		Map<Integer, String[]> map = creatZBXXMap(dwxx.getJhzbxxs(), 5);
+		
+		Set<ZBXX> zbxxs = dwxx.getJhzbxxs();
+		
+		
+		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 5);
 		for (int i = 0; i < 3; ++i){
 			List<YDJHZB> zbs = ydjhzbDao.getZbs(Util.toDate(cal), company);
+			unifyYdjhZbs(zbxxs, zbs);
+			
 			cal.add(Calendar.MONTH, 1);
 			updateYJJDMap(map, zbs, i);
 		}
@@ -507,6 +513,22 @@ public class EntryServiceImpl implements EntryService{
 
 
 	
+	private void unifyYdjhZbs(Set<ZBXX> zbxxs, List<YDJHZB> zbs) {
+		boolean found = false;
+		for (YDJHZB zb : zbs){
+			found = false;
+			for (ZBXX zbxx: zbxxs){
+				if (zb.getZbxx().getId() == zbxx.getId()){
+					found = true;
+					break;
+				}
+			}
+			if (!found){
+				ydjhzbDao.delete(zb);
+			}
+		}
+	}
+
 	private void updateYJJDMap(Map<Integer, String[]> map, List<YDJHZB> zbs, int col) {
 		for(YDJHZB zb : zbs){
 			String[] row = map.get(zb.getZbxx().getId());
@@ -520,8 +542,13 @@ public class EntryServiceImpl implements EntryService{
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		DWXX dwxx = dwxxDao.getById(company.getId());
-		Map<Integer, String[]> map = creatZBXXMap(dwxx.getJhzbxxs(), 3);
-		List<NDJHZB> zbs = ndjhzbDao.getZbs(Util.toDate(cal), company);
+		
+		Set<ZBXX> zbxxs = dwxx.getJhzbxxs();
+		List<NDJHZB> zbs =  ndjhzbDao.getZbs(Util.toDate(cal), company);
+		unifyNdjhZbs(zbxxs, zbs);
+
+		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 3);
+		
 
 		for(NDJHZB zb : zbs){
 			String[] row = map.get(zb.getZbxx().getId());
@@ -533,19 +560,57 @@ public class EntryServiceImpl implements EntryService{
 	}
 
 
+	private void unifyNdjhZbs(Set<ZBXX> zbxxs, List<NDJHZB> zbs) {
+		boolean found = false;
+		for (NDJHZB zb : zbs){
+			found = false;
+			for (ZBXX zbxx: zbxxs){
+				if (zb.getZbxx().getId() == zbxx.getId()){
+					found = true;
+					break;
+				}
+			}
+			if (!found){
+				ndjhzbDao.delete(zb);
+			}
+		}
+	}
+
 	private List<String[]> getBYSJ(Date date, Company company) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		DWXX dwxx = dwxxDao.getById(company.getId());
-		Map<Integer, String[]> map = creatZBXXMap(dwxx.getSjzbxxs(), 3);
-		List<SJZB> zbs = sjzbDao.getZbs(Util.toDate(cal), company);
-		for(SJZB zb : zbs){
+		
+		Set<ZBXX> zbxxs = dwxx.getSjzbxxs();
+		List<SJZB> sjzbs =  sjzbDao.getZbs(Util.toDate(cal), company);
+		unifySjZbs(zbxxs, sjzbs);
+		
+		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 3);
+
+		for(SJZB zb : sjzbs){
 			String[] row = map.get(zb.getZbxx().getId());
 			if (null != row){
 				row[2] = zb.getSjz() + "";
 			}
 		}
+		
 		return toArray(map);
+	}
+
+	private void unifySjZbs(Set<ZBXX> zbxxs, List<SJZB> zbs) {
+		boolean found = false;
+		for (SJZB zb : zbs){
+			found = false;
+			for (ZBXX zbxx: zbxxs){
+				if (zb.getZbxx().getId() == zbxx.getId()){
+					found = true;
+					break;
+				}
+			}
+			if (!found){
+				sjzbDao.delete(zb);
+			}
+		}
 	}
 
 	private List<String[]> get28YJ(Date date, Company company) {
@@ -554,17 +619,54 @@ public class EntryServiceImpl implements EntryService{
 		cal.setTime(date);
 		
 		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
+		Set<ZBXX> zbxxs = dwxx.getSjzbxxs();
+		List<YJ28ZB> yj28zbs =  yj28zbDao.getZbs(Util.toDate(cal), company);
+		unify28Zbs(zbxxs, yj28zbs);
 		
-		Map<Integer, String[]> map = creatZBXXMap(dwxx.getSjzbxxs(), leftMonth + 3);
-		updateYJ28Map(map, yj28zbDao.getZbs(Util.toDate(cal), company), 0);
+		Map<Integer, String[]> map = creatZBXXMap(zbxxs, leftMonth + 3);
+		updateYJ28Map(map, yj28zbs, 0);
 		cal.add(Calendar.MONTH, 1);
 		
 		for (int i = 1; i <= leftMonth; ++i){
-			updateYJ20Map(map, yj20zbDao.getZbs(Util.toDate(cal), company), i);
+			List<YJ20ZB> yj20zbs =  yj20zbDao.getZbs(Util.toDate(cal), company);
+			unify20Zbs(zbxxs, yj20zbs);
+			updateYJ20Map(map, yj20zbs, i);
 			cal.add(Calendar.MONTH, 1);
 		}
 		
 		return toArray(map);
+	}
+
+	private void unify20Zbs(Set<ZBXX> zbxxs, List<YJ20ZB> yj20zbs) {
+		boolean found = false;
+		for (YJ20ZB zb : yj20zbs){
+			found = false;
+			for (ZBXX zbxx: zbxxs){
+				if (zb.getZbxx().getId() == zbxx.getId()){
+					found = true;
+					break;
+				}
+			}
+			if (!found){
+				yj20zbDao.delete(zb);
+			}
+		}
+	}
+
+	private void unify28Zbs(Set<ZBXX> zbxxs, List<YJ28ZB> yj28zbs) {
+		boolean found = false;
+		for (YJ28ZB zb : yj28zbs){
+			found = false;
+			for (ZBXX zbxx: zbxxs){
+				if (zb.getZbxx().getId() == zbxx.getId()){
+					found = true;
+					break;
+				}
+			}
+			if (!found){
+				yj28zbDao.delete(zb);
+			}
+		}
 	}
 
 	private void updateYJ28Map(Map<Integer, String[]> map, List<YJ28ZB> zbs, int col) {
@@ -610,15 +712,19 @@ public class EntryServiceImpl implements EntryService{
 	}
 	
 	private List<String[]> get20YJ(Date date, Company company) {	
-		DWXX dwxx = dwxxDao.getById(company.getId());
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
+		DWXX dwxx = dwxxDao.getById(company.getId());
+		Set<ZBXX> zbxxs = dwxx.getSjzbxxs();
 		
 		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 		
-		Map<Integer, String[]> map = creatZBXXMap(dwxx.getSjzbxxs(), leftMonth + 3);
+		Map<Integer, String[]> map = creatZBXXMap(zbxxs, leftMonth + 3);
 		for (int i = 0; i <= leftMonth; ++i){
-			updateYJ20Map(map, yj20zbDao.getZbs(Util.toDate(cal), company), i);
+			List<YJ20ZB> zbs = yj20zbDao.getZbs(Util.toDate(cal), company);
+			unify20Zbs(zbxxs, zbs);
+			
+			updateYJ20Map(map, zbs, i);
 			cal.add(Calendar.MONTH, 1);
 		}
 		return toArray(map);
@@ -630,7 +736,7 @@ public class EntryServiceImpl implements EntryService{
 			tmp =  map.get(zbs.get(i).getZbxx().getId());
 			if (null != tmp){
 				tmp[col + 2] = zbs.get(i).getYj20z() + "";
-			}			
+			}		
 		}
 	}
 	
