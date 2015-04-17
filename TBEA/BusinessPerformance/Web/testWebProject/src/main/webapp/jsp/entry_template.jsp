@@ -248,12 +248,13 @@ th.ui-th-ltr {
 						<td>
 							<Table cellspacing="0" cellpadding="0">
 								<tr align="right">
-									<td><input id="submit" type="submit" value="提交"
-										style="width: 80px;" onclick="view.submit()"></input>
-									<td>
 									<td><input id="save" type="submit" value="保存"
 										style="width: 80px;" onclick="view.save()"></input>
-									<td>
+									</td>
+									<td><div style="width:8px"></div></td>
+									<td><input id="submit" type="submit" value="提交"
+										style="width: 80px;" onclick="view.submit()"></input>
+									</td>
 								</tr>
 							</Table>
 						</td>

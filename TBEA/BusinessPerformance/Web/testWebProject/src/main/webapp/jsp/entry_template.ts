@@ -124,9 +124,9 @@ module entry_template {
                 data: JSON.stringify(submitData)
             }).then((data: ISubmitResult) => {
                     if ("true" == data.result) {
-                         Util.MessageBox.tip("提交 成功");
+                         Util.MessageBox.tip("保存 成功");
                     } else if ("false" == data.result) {
-                         Util.MessageBox.tip("提交 失败");
+                         Util.MessageBox.tip("保存 失败");
                     } else {
                         Util.MessageBox.tip(data.result);
                     }
@@ -321,7 +321,7 @@ module entry_template {
 //                       console.log(ri +', ' + ci);
 //                    },
                     beforeSaveCell :(rowid,cellname,v,iRow,iCol) =>{
-                        var ret = parseFloat(v);
+                        var ret = parseFloat( v.replace(new RegExp(',', 'g'), ''));
                         if (isNaN (ret)){
                            $.jgrid.jqModal = {
                               width: 290,
