@@ -160,6 +160,12 @@ module hzb_zbhz_prediciton {
         	this.mDelegateMonth = parseInt(month);
         }
         
+        public exportExcel(fName: string) {
+            this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
+            $("#export")[0].action = "hzb_zbhz_prediction_export.do?" + Util.Ajax.toUrlParam({ month: this.mActualMonth, year: this.mYear });
+            $("#export")[0].submit();
+        }
+        
         public updateUI() {
 
             this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
@@ -294,7 +300,7 @@ module hzb_zbhz_prediciton {
                     rowNum: 100,
                     autoScroll: true
                 }));
-
+             $("#export").css('display','block'); 
         }
     }
 }

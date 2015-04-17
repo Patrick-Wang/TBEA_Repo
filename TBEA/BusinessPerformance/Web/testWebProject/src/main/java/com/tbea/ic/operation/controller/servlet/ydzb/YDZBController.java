@@ -54,6 +54,7 @@ class CompanyTypeFilter implements CompanySelection.Filter{
 	Organization org;
 	Company dbsbd;
 	Company nfsbd;
+	
 //	Company xjtc;
 	public CompanyTypeFilter(List<Company> companies, Organization org){
 		this.org = org;
@@ -122,6 +123,30 @@ class CompanyTypeFilter implements CompanySelection.Filter{
 @RequestMapping(value = "ydzb")
 public class YDZBController {
 
+	static List<CompanyType> compTypes = new ArrayList<CompanyType>();
+	static{
+		compTypes.add(CompanyType.SBDCYJT);
+		compTypes.add(CompanyType.BYQCY);
+		compTypes.add(CompanyType.XLCY);
+		compTypes.add(CompanyType.DBSBDCYJT);
+		compTypes.add(CompanyType.NFSBDCYJT);
+		compTypes.add(CompanyType.SBGS);
+		compTypes.add(CompanyType.HBGS);
+		compTypes.add(CompanyType.XBC);
+		compTypes.add(CompanyType.LLGS);
+		compTypes.add(CompanyType.XLC);
+		compTypes.add(CompanyType.DLGS);
+		compTypes.add(CompanyType.XNYSYB);
+		compTypes.add(CompanyType.XNYGS);
+		compTypes.add(CompanyType.XTNYGS);
+		compTypes.add(CompanyType.NYSYB);
+		compTypes.add(CompanyType.TCNY);
+		compTypes.add(CompanyType.NDGS);
+		compTypes.add(CompanyType.ZHGS);
+		compTypes.add(CompanyType.JCKGS_JYDW);
+		compTypes.add(CompanyType.GJGCGS_GFGS);
+	}
+	
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
@@ -179,7 +204,7 @@ public class YDZBController {
 //			comps.add(org.getCompany(compType));
 //		}
 		List<String[]> ret = gszbService.getGdwzb(d, comps);
-		if (this.isSbdcy(compType) || this.isSbdcy(compType)){
+		if (this.isSbdcy(compType)){
 			removeJzcsyl(ret);
 		}
 		return ret;
@@ -215,30 +240,10 @@ public class YDZBController {
 				}
 			}
 
-			List<CompanyType> compTypes = new ArrayList<CompanyType>();
-			compTypes.add(CompanyType.SBDCYJT);
-			compTypes.add(CompanyType.BYQCY);
-			compTypes.add(CompanyType.XLCY);
-			compTypes.add(CompanyType.DBSBDCYJT);
-			compTypes.add(CompanyType.NFSBDCYJT);
-			compTypes.add(CompanyType.SBGS);
-			compTypes.add(CompanyType.HBGS);
-			compTypes.add(CompanyType.XBC);
-			compTypes.add(CompanyType.LLGS);
-			compTypes.add(CompanyType.XLC);
-			compTypes.add(CompanyType.DLGS);
-			compTypes.add(CompanyType.XNYSYB);
-			compTypes.add(CompanyType.XNYGS);
-			compTypes.add(CompanyType.XTNYGS);
-			compTypes.add(CompanyType.NYSYB);
-			compTypes.add(CompanyType.TCNY);
-			compTypes.add(CompanyType.NDGS);
-			compTypes.add(CompanyType.ZHGS);
-			compTypes.add(CompanyType.JCKGS_JYDW);
-			compTypes.add(CompanyType.GJGCGS_GFGS);
+
 			
 			
-			 int sheetMergerCount = sheet.getNumMergedRegions();
+			int sheetMergerCount = sheet.getNumMergedRegions();
 			 
 			
 			for (CompanyType ct : compTypes) {
@@ -684,19 +689,39 @@ public class YDZBController {
 		fileNameAndSheetName += "预计指标完成情况";
 		workbook.setSheetName(0, fileNameAndSheetName);
 		HSSFSheet sheet = workbook.getSheetAt(0);
+		//sheet.getRow(0).getCell(0).setCellValue(compType.getValue() + "预计指标完成情况");
 		for (int i = hzb_zbhz_prediction.size() - 1; i >= 0; --i) {
 			HSSFRow row = sheet.createRow(3 + i);
 			for (int j = hzb_zbhz_prediction.get(i).length - 1; j >= 0; --j) {
 				HSSFCell cell = row.createCell(j);
 				formatter.format(j, cell, hzb_zbhz_prediction.get(i)[j]);
 			}
-		}		
+		}
 			
 		template.write(response, fileNameAndSheetName + ".xls");
 		
 		return "".getBytes("utf-8");
 	}
 	
+	//整体指标预测Update
+	@RequestMapping(value = "hzb_companys_prediction.do", method = RequestMethod.GET)
+	public ModelAndView gethzb_companys_prediction(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		DateSelection dateSel = new DateSelection();
+		dateSel.select(map);
+		Organization org = companyManager.getVirtualJYZBOrganization();
+		CompanySelection compSel = new CompanySelection(
+				false,
+				org.getCompany(CompanyType.GFGS).getSubCompanys(), 
+				new CompanyTypeFilter(
+						gszbService.getCompanies((Account)request.getSession(false).getAttribute("account")), 
+						org));
+		compSel.select(map, 3);
+		return new ModelAndView("companys_zbhz_prediction", map);
+	}
+		
 	@RequestMapping(value = "hzb_companys_prediction_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] gethzb_companys_prediction_update(
 			HttpServletRequest request, HttpServletResponse response)
@@ -731,26 +756,129 @@ public class YDZBController {
 		return hzb_zbhz_prediction.getBytes("utf-8");
 	}
 	
-	//整体指标预测Update
-	@RequestMapping(value = "hzb_companys_prediction.do", method = RequestMethod.GET)
-	public ModelAndView gethzb_companys_prediction(HttpServletRequest request,
-			HttpServletResponse response) {
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		DateSelection dateSel = new DateSelection();
-		dateSel.select(map);
-		Organization org = companyManager.getVirtualJYZBOrganization();
-		CompanySelection compSel = new CompanySelection(
-				false,
-				org.getCompany(CompanyType.GFGS).getSubCompanys(), 
-				new CompanyTypeFilter(
-						gszbService.getCompanies((Account)request.getSession(false).getAttribute("account")), 
-						org));
+	// 整体指标预测export
+	@RequestMapping(value = "hzb_zbhz_prediction_export.do")
+	public @ResponseBody byte[] gethzb_zbhz_prediction_export(
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		Date d = DateSelection.getDate(request);
+		String month = request.getParameter("month");
+		int iMonth = Integer.valueOf(month);
+		List<String[]> hzb_zbhz_prediction = null;
+		JyzbExcelTemplate template = null;
+		CellFormatter formatter = null;
+		String fileNameAndSheetName = request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
+		
+		if (0 == iMonth % 3) {
+			hzb_zbhz_prediction = gszbService.getGsJDZBMY(d);
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_MY);
+			formatter = template.createCellFormatter()
+					.addType(0, CellFormatter.CellType.HEADER)
+					.addType(6, CellFormatter.CellType.PERCENT)
+					.addType(8, CellFormatter.CellType.PERCENT)
+					.addType(10, CellFormatter.CellType.PERCENT)
+					.addType(12, CellFormatter.CellType.PERCENT)
+					.addType(14, CellFormatter.CellType.PERCENT)
+					.addType(16, CellFormatter.CellType.PERCENT)
+					.addType(21, CellFormatter.CellType.PERCENT)
+					.addType(23, CellFormatter.CellType.PERCENT)
+					.addType(25, CellFormatter.CellType.PERCENT);
+			fileNameAndSheetName += "末月";
+		}
 
-		compSel.select(map, 3);
-		return new ModelAndView("companys_zbhz_prediction", map);
+		if (1 == iMonth % 3) {
+			hzb_zbhz_prediction = gszbService.getGsFirstSeasonPredictionZBsOverview(d);
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_SY);
+			formatter = template.createCellFormatter()
+					.addType(0, CellFormatter.CellType.HEADER)
+					.addType(5, CellFormatter.CellType.PERCENT)
+					.addType(7, CellFormatter.CellType.PERCENT)
+					.addType(11, CellFormatter.CellType.PERCENT)
+					.addType(13, CellFormatter.CellType.PERCENT)
+					.addType(15, CellFormatter.CellType.PERCENT)
+					.addType(17, CellFormatter.CellType.PERCENT);
+			fileNameAndSheetName += "首月";
+		}
+
+		if (2 == iMonth % 3) {
+			hzb_zbhz_prediction = gszbService.getGsSecondSeasonPredictionZBsOverview(d);
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_CY);
+			formatter = template.createCellFormatter()
+					.addType(0, CellFormatter.CellType.HEADER)
+					.addType(5, CellFormatter.CellType.PERCENT)
+					.addType(7, CellFormatter.CellType.PERCENT)
+					.addType(9, CellFormatter.CellType.PERCENT)
+					.addType(11, CellFormatter.CellType.PERCENT)
+					.addType(14, CellFormatter.CellType.PERCENT)
+					.addType(16, CellFormatter.CellType.PERCENT)
+					.addType(18, CellFormatter.CellType.PERCENT)
+					.addType(20, CellFormatter.CellType.PERCENT);	
+			fileNameAndSheetName += "次月";
+		}
+		
+		HSSFWorkbook workbook = template.getWorkbook();
+		fileNameAndSheetName += "指标汇总预测";
+		workbook.setSheetName(0, fileNameAndSheetName);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = hzb_zbhz_prediction.size() - 1; i >= 0; --i) {
+			HSSFRow row = sheet.createRow(3 + i);
+			for (int j = hzb_zbhz_prediction.get(i).length - 1; j >= 0; --j) {
+				HSSFCell cell = row.createCell(j);
+				formatter.format(j, cell, hzb_zbhz_prediction.get(i)[j]);
+			}
+		}		
+			
+		
+		int sheetMergerCount = sheet.getNumMergedRegions();
+		List<String[]> data = null;
+		for (CompanyType ct : compTypes) {
+			int lastRow = sheet.getLastRowNum() + 4;
+
+			HSSFRow rowFrom = sheet.getRow(0);
+			HSSFRow rowTo = sheet.createRow(lastRow);
+			POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+			rowTo.getCell(0).setCellValue(ct.getValue() + "指标预测");
+			
+			rowFrom = sheet.getRow(1);
+			rowTo = sheet.createRow(lastRow + 1);
+			POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+
+			rowFrom = sheet.getRow(2);
+			rowTo = sheet.createRow(lastRow + 2);
+			POIUtils.copyRow(workbook, rowFrom, rowTo, true);		
+
+			for (int i = 0; i < sheetMergerCount; i++) {
+				CellRangeAddress range = sheet.getMergedRegion(i);
+				range = range.copy();
+				range.setLastRow(range.getLastRow() + lastRow);
+				range.setFirstRow(range.getFirstRow() + lastRow);
+				sheet.addMergedRegion(range);
+			}
+
+			lastRow += 3;
+			if (0 == iMonth % 3) {
+				data = gszbService.getJDZBMY(d, getHzbCompany(ct));
+			}else if (1 == iMonth % 3) {
+				data = gszbService.getFirstSeasonPredictionZBsOverview(d, getHzbCompany(ct));
+			}else if (2 == iMonth % 3) {
+				data = gszbService.getSecondSeasonPredictionZBsOverview(d, getHzbCompany(ct));
+			}
+			for (int i = data.size() - 1; i >= 0; --i) {
+				HSSFRow row = sheet.createRow(lastRow + i);
+				for (int j = data.get(i).length - 1; j >= 0; --j) {
+					HSSFCell cell = row.createCell(j);
+					formatter.format(j, cell, data.get(i)[j]);
+				}
+			}
+		}
+		
+		
+		template.write(response, fileNameAndSheetName + ".xls");
+		
+		return "".getBytes("utf-8");
 	}
-	
+
 	// 整体指标预测update
 	@RequestMapping(value = "hzb_zbhz_prediction_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] gethzb_zbhz_prediction_update(
