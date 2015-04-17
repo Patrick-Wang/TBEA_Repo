@@ -35,6 +35,7 @@ import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.JyzbExcelTemplate;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.JyzbExcelTemplate.CellFormatter;
 import com.tbea.ic.operation.common.JyzbExcelTemplate.SheetType;
 import com.tbea.ic.operation.common.POIUtils;
@@ -393,7 +394,8 @@ public class YDZBController {
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true,
+
+		DateSelection dateSel = new DateSelection(DateHelper.getJdEnd(Util.toDate(Calendar.getInstance())), true,
 				false);
 		dateSel.select(map);
 		Organization org = companyManager.getVirtualJYZBOrganization();

@@ -51,6 +51,7 @@ import com.tbea.ic.operation.service.entry.zbCalculator.GeneralZbCalculator;
 import com.tbea.ic.operation.service.entry.zbCalculator.NdjhZbCalculator;
 import com.tbea.ic.operation.service.entry.zbCalculator.ZbCalculator;
 import com.tbea.ic.operation.service.entry.zbInjector.SimpleZbInjectorFactory;
+import com.tbea.ic.operation.service.entry.zbInjector.ZbInjector;
 import com.tbea.ic.operation.common.ZBStatus;
 
 
@@ -104,11 +105,11 @@ public class EntryServiceImpl implements EntryService{
 	
 	CompanyManager companyManager;
 	
-	ZbCalculator ndjhzbCalc;
-	ZbCalculator ydjhzbCalc;
-	ZbCalculator yd28Calc;
-	ZbCalculator yj20Calc;
-	ZbCalculator sjzbCalc;
+	ZbInjector ndjhzbInjector;
+	ZbInjector ydjhzbInjector;
+	ZbInjector yd28Injector;
+	ZbInjector yj20Injector;
+	ZbInjector sjzbInjector;
 
 	List<Company> mainCompanies = new ArrayList<Company>();
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
@@ -129,17 +130,36 @@ public class EntryServiceImpl implements EntryService{
 		mainCompanies.add(org.getCompany(CompanyType.GJGCGS_GFGS));
 		mainCompanies.add(org.getCompany(CompanyType.ZHGS));
 	}
-	
+		
 	@Autowired
 	public void init(){
-		ndjhzbCalc = new NdjhZbCalculator(SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, ndjhzbDao), sbdNdjhzbDao);
-		ydjhzbCalc = new GeneralZbCalculator(SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, ydjhzbDao));
-		yd28Calc = new GeneralZbCalculator(SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, yj28zbDao));
-		yj20Calc = new GeneralZbCalculator(SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, yj20zbDao));
-		sjzbCalc = new GeneralZbCalculator(SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, sjzbDao));
+		ndjhzbInjector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, ndjhzbDao);
+		ydjhzbInjector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, ydjhzbDao);
+		yd28Injector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, yj28zbDao);
+		yj20Injector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, yj20zbDao);
+		sjzbInjector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, sjzbDao);
 	}
 	
-	
+	private ZbCalculator createYdjhzbCalc() {
+		return new GeneralZbCalculator(ydjhzbInjector);
+	}
+
+	private ZbCalculator createNdjhzbCalc() {
+		return new NdjhZbCalculator(ndjhzbInjector, this.sbdNdjhzbDao);
+	}
+
+	private ZbCalculator createYj28Calc() {
+		return new GeneralZbCalculator(yd28Injector);
+	}
+
+	private ZbCalculator createYj20Calc() {
+		return new GeneralZbCalculator(yj20Injector);
+	}
+
+	private ZbCalculator createSjzbCalc() {
+		return new GeneralZbCalculator(sjzbInjector);
+	}
+
 	public void setYdzbzt(Company comp, int nf, int yf, ZBType entryType){
 		boolean newEntity = false;
 		YDZBZT ydzbzt = ydzbztDao.getYdzbzt(comp, nf, yf);
@@ -221,18 +241,18 @@ public class EntryServiceImpl implements EntryService{
 		
 		for (int c = 0; c < approvedList.size(); ++c) {
 			if (!approvedList.get(c)) {
-				ydjhzbCalc.reset();
+				ZbCalculator calc = this.createYdjhzbCalc();
 				for (int r = 0; r < data.size(); ++r) {
 					row = data.getJSONArray(r);
 					zbId = Integer.valueOf(row.getString(0));
 					if (!row.getString(c + 1).isEmpty()) {
 						val = Util.toDouble(row.getString(c + 1));
-						ydjhzbCalc.compute(zbId, val, cal, company, status);
+						calc.compute(zbId, val, cal, company, status);
 					}
 				}
 
 				for (Integer id : unenteredZb) {
-					ydjhzbCalc.compute(id, null, cal, company, status);
+					calc.compute(id, null, cal, company, status);
 				}
 			}
 
@@ -277,11 +297,11 @@ public class EntryServiceImpl implements EntryService{
 			JSONArray row;
 			ZBStatus status = isSaving ? ZBStatus.SAVED : ZBStatus.SUBMITTED;
 			
-			ndjhzbCalc.reset();
+			ZbCalculator calc = this.createNdjhzbCalc();
 			for (int r = 0; r < data.size(); ++r) {
 				row = data.getJSONArray(r);
 				if (!row.getString(1).isEmpty()) {
-					ndjhzbCalc.compute(Integer.valueOf(row.getString(0)),
+					calc.compute(Integer.valueOf(row.getString(0)),
 							Util.toDouble(row.getString(1)), cal, company,
 							status);
 				}
@@ -290,7 +310,7 @@ public class EntryServiceImpl implements EntryService{
 
 			Set<Integer> unenteredZb = getUnenteredJhzb(company, data);
 			for (Integer id : unenteredZb) {
-				ndjhzbCalc.compute(id, null, cal, company,
+				calc.compute(id, null, cal, company,
 						status);
 			}
 
@@ -305,11 +325,11 @@ public class EntryServiceImpl implements EntryService{
 			cal.setTime(date);
 			ZBStatus status = isSaving ? ZBStatus.SAVED : ZBStatus.SUBMITTED;
 			JSONArray row;
-			sjzbCalc.reset();
+			ZbCalculator calc = this.createSjzbCalc();
 			for (int i = 0; i < data.size(); ++i) {
 				row = data.getJSONArray(i);
 				if (!row.getString(1).isEmpty()) {
-					sjzbCalc.compute(Integer.valueOf(row.getString(0)),
+					calc.compute(Integer.valueOf(row.getString(0)),
 							Util.toDouble(row.getString(1)), cal, company,
 							status);
 				}
@@ -318,7 +338,7 @@ public class EntryServiceImpl implements EntryService{
 
 			Set<Integer> unenteredZb = getUnenteredSjzb(company, data);
 			for (Integer id : unenteredZb) {
-				sjzbCalc.compute(id, null, cal, company, status);
+				calc.compute(id, null, cal, company, status);
 			}
 
 			if (!isSaving) {
@@ -340,12 +360,12 @@ public class EntryServiceImpl implements EntryService{
 		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BY28YJ);
 		
 		if (!approvedList.get(0)) {
-			yd28Calc.reset();
+			ZbCalculator calc = this.createYj28Calc();
 			for (int r = 0; r < data.size(); ++r) {
 				row = data.getJSONArray(r);
 				zbId = Integer.valueOf(row.getString(0));
 				if (!row.getString(1).isEmpty()) {
-					yd28Calc.compute(
+					calc.compute(
 							zbId, 
 							Util.toDouble(row.getString(1)), 
 							cal, 
@@ -355,7 +375,7 @@ public class EntryServiceImpl implements EntryService{
 			}
 			
 			for (Integer id : unenteredZb) {
-				yd28Calc.compute(id, null, cal, company,
+				calc.compute(id, null, cal, company,
 						status);
 			}
 			
@@ -368,19 +388,19 @@ public class EntryServiceImpl implements EntryService{
 		for (int c = 1; c < approvedList.size(); ++c) {
 			cal.add(Calendar.MONTH, 1);
 			if (!approvedList.get(0)) {
-				yj20Calc.reset();
+				ZbCalculator calc = this.createYj20Calc();
 				for (int r = 0; r < data.size(); ++r) {
 					row = data.getJSONArray(r);
 					zbId = Integer.valueOf(row.getString(0));
 					if (!row.getString(c + 1).isEmpty()) {
-						yj20Calc.compute(zbId,
+						calc.compute(zbId,
 								Util.toDouble(row.getString(c + 1)), cal,
 								company, status);
 					}
 				}
 
 				for (Integer id : unenteredZb) {
-					yj20Calc.compute(id, null, cal, company, status);
+					calc.compute(id, null, cal, company, status);
 				}
 
 				if (!isSaving) {
@@ -403,19 +423,19 @@ public class EntryServiceImpl implements EntryService{
 		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BY20YJ);
 		for (int c = 0; c < approvedList.size(); ++c) {
 			if (!approvedList.get(0)) {
-				yj20Calc.reset();
+				ZbCalculator calc = this.createYj20Calc();
 				for (int r = 0; r < data.size(); ++r) {
 					row = data.getJSONArray(r);
 					zbId = Integer.valueOf(row.getString(0));
 					if (!row.getString(c + 1).isEmpty()) {
-						yj20Calc.compute(zbId,
+						calc.compute(zbId,
 								Util.toDouble(row.getString(c + 1)), cal,
 								company, status);
 					}
 				}
 
 				for (Integer id : unenteredZb) {
-					yj20Calc.compute(id, null, cal, company, status);
+					calc.compute(id, null, cal, company, status);
 				}
 
 				if (!isSaving) {
