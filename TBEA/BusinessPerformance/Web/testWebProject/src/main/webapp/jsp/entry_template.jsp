@@ -65,7 +65,7 @@
           					year : ${year}
           				},
           				entryType : ${entryType},
-          				chiefApproveStatus : 1
+          				DeputyApproveStatus : 1
           			});
           });
       })();
@@ -264,9 +264,11 @@ th.ui-th-ltr {
 									<td>
 										<table>
 											<tr align = "right">
-												<td><input id="submitToChief" type="submit" value="内部审核"
-													style="width: 80px;" onclick="view.submit()"></input>
+											<c:if test="${isin13Comps}">
+												<td><input id="submitToDeputy" type="submit" value="内部审核"
+													style="width: 80px;" onclick="view.submitToDeputy()"></input>
 												</td>
+											</c:if>
 												<td><div style="width:6px"></div>
 												</td>
 												<td><input id="submit" type="submit" value="提交"
@@ -278,12 +280,12 @@ th.ui-th-ltr {
 							    </tr>										
 								<tr>							
 									<td>
-										<div id="ChiefAgree" style="font-size: 20px; color: red ;font-weight: 400; display:none">
+										<div id="DeputyAgree" style="font-size: 20px; color: red ;font-weight: 400; display:none">
 											经营副总已经审核数据。
 										</div>
 									</td>
 									<td>
-										<div id="ChiefDisagree" style="font-size: 20px; color: red ;font-weight: 400; display:none">
+										<div id="DeputyDisagree" style="font-size: 20px; color: red ;font-weight: 400; display:none">
 											经营副总数据还未审核数据。
 										</div>
 									</td>

@@ -149,4 +149,18 @@ public class EntryController {
 		String result = "{\"result\":\"" + ret + "\"}";
 		return result.getBytes("utf-8");
 	}
+	
+	@RequestMapping(value = "zb_submitToDeputy.do", method = RequestMethod.POST)
+	public @ResponseBody byte[] getZBApprovementFromDeputy(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("entryType")));
+		Date date = DateSelection.getDate(request);
+		CompanyType comp = CompanySelection.getCompany(request);
+		String data = request.getParameter("data");
+		Account account = (Account) request.getSession(false).getAttribute("account");
+		String ret = null;
+		//String ret = "" + entryService.saveZb(date, account, comp, entryType, JSONArray.fromObject(data));
+		String result = "{\"result\":\"" + ret + "\"}";
+		return result.getBytes("utf-8");
+	}
 }

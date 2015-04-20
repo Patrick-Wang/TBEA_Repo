@@ -31,7 +31,7 @@ module entry_template {
         companyId: string;
         comps: Util.IDataNode[];
         entryType?: Util.ZBType;
-        chiefApproveStatus: number;
+        DeputyApproveStatus: number;
     }
 
     interface ISubmitResult {
@@ -53,13 +53,14 @@ module entry_template {
         private mDataSet: Util.Ajax = new Util.Ajax("zb_update.do", false);
         private mSubmit: Util.Ajax = new Util.Ajax("zb_submit.do");
         private mSave: Util.Ajax = new Util.Ajax("zb_save.do");
+        private mSubmitToDeputy: Util.Ajax = new Util.Ajax("zb_submitToDeputy.do");
         private mTableAssist: JQTable.JQGridAssistant;
         private mTitleCompanyName : string;
         private mChiefApproveStatus:number;
         initInstance(opt: IViewOption) {
            
             this.mOpt = opt;
-             this.mChiefApproveStatus = opt.chiefApproveStatus;
+             this.mChiefApproveStatus = opt.DeputyApproveStatus;
             switch (this.mOpt.entryType) {
 
                 case Util.ZBType.YDJDMJH:
@@ -174,6 +175,41 @@ module entry_template {
                     }
             });
         }
+        
+         public submitToDeputy() {
+            var date = this.mDateSelector.getDate();
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
+                date = Util.addMonth(date, -2);
+            }
+            var allData = this.mTableAssist.getAllData();
+            var submitData = [];
+            var colNames = this.mTableAssist.getColNames();
+            for (var i = 0; i < allData.length; ++i){
+                submitData.push([]);
+                for (var j = 0; j < allData[i].length; ++j){
+                    if (j != 1){
+                        submitData[i].push(allData[i][j])
+                        allData[i][j] = allData[i][j].replace(new RegExp(' ', 'g'), '')
+                    }
+                }
+            }
+            
+            this.mSubmitToDeputy.post({
+                year: date.year,
+                month: date.month,
+                entryType: this.mOpt.entryType,
+                companyId: this.mCompanySelector.getCompany(), 
+                data: JSON.stringify(submitData)
+            }).then((data: ISubmitResult) => {
+                    if ("true" == data.result) {
+                         Util.MessageBox.tip("提交内部审核 成功");
+                    } else if ("false" == data.result) {
+                         Util.MessageBox.tip("提交内部审核  失败");
+                    } else {
+                        Util.MessageBox.tip(data.result);
+                    }
+            });
+        }
 
         private updateTitle() {
             var header = "";
@@ -197,11 +233,11 @@ module entry_template {
                     break;
             }
             
-            if (1 == this.mOpt.chiefApproveStatus)
+            if (1 == this.mOpt.DeputyApproveStatus)
             {
                 $('#CheifAgree').css("display","block");
             }
-            else if (2 == this.mOpt.chiefApproveStatus)
+            else if (2 == this.mOpt.DeputyApproveStatus)
             {
                 $('#CheifDisagree').css("display","block");
             }
