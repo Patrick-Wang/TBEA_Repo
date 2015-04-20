@@ -6,7 +6,8 @@ public enum ZBStatus{
 	APPROVED,
 	SUBMITTED,
 	SAVED,
-	APPROVED_2;
+	APPROVED_2,
+	SUBMITTED_2;
 	public static ZBStatus valueOf(int tyOrd){
 		ZBStatus[] types = ZBStatus.values();
 		if (types.length > tyOrd){
