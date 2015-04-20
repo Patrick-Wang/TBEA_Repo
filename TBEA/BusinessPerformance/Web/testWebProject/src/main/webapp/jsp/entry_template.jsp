@@ -64,7 +64,8 @@
           					month : ${!empty month} ? '${month}' : undefined, 
           					year : ${year}
           				},
-          				entryType : ${entryType}
+          				entryType : ${entryType},
+          				chiefApproveStatus : 1
           			});
           });
       })();
@@ -231,6 +232,12 @@ th.ui-th-ltr {
 				<div style="padding-top:20px;font-size:25px" id="nodatatips">请选择需要录入的数据</div>
 			</td>
 		</tr>
+		<tr >
+			<td>
+			<div style="height:5px"></div>
+			</td>
+		</tr>
+		
 		<tr>
 			<td>
 				<table id="entryarea" style="display: none" cellspacing="0" cellpadding="0">
@@ -241,28 +248,50 @@ th.ui-th-ltr {
 					</tr>
 					<tr>
 						<td>
-							<div style="height:10px"></div>
+							<div style="height:15px"></div>
 						<td>
 					</tr>
-					<tr align="right">
+					<tr>
 						<td>
 							<Table cellspacing="0" cellpadding="0">
-								<tr align="right">
-<!-- 									<td><input id="save" type="submit" value="保存" -->
-<!-- 										style="width: 80px;" onclick="view.save()"></input> -->
-<!-- 									</td> -->
-<!-- 									<td><div style="width:8px"></div></td> -->
-									<td><input id="submit" type="submit" value="提交"
-										style="width: 80px;" onclick="view.submit()"></input>
+								<tr align="left">
+									<td ><input id="save" type="submit" value="保存"
+										style="width: 80px;" onclick="view.save()"></input> 
+									</td>
+									<td>
+									<div style="width:140px"></div>
+									</td>
+									<td>
+										<table>
+											<tr align = "right">
+												<td><input id="submitToChief" type="submit" value="内部审核"
+													style="width: 80px;" onclick="view.submit()"></input>
+												</td>
+												<td><div style="width:6px"></div>
+												</td>
+												<td><input id="submit" type="submit" value="提交"
+													style="width: 80px;" onclick="view.submit()"></input>
+												</td>
+											</tr>
+										</table>
+									</td>
+							    </tr>										
+								<tr>							
+									<td>
+										<div id="ChiefAgree" style="font-size: 20px; color: red ;font-weight: 400; display:none">
+											经营副总已经审核数据。
+										</div>
+									</td>
+									<td>
+										<div id="ChiefDisagree" style="font-size: 20px; color: red ;font-weight: 400; display:none">
+											经营副总数据还未审核数据。
+										</div>
 									</td>
 								</tr>
 							</Table>
 						</td>
 					</tr>
 				</table>
-			</td>
-		</tr>
-
 	</Table>
 	<%@include file="loading.jsp"%>
 	<script type="text/javascript">

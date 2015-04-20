@@ -6,7 +6,6 @@ import java.util.List;
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;

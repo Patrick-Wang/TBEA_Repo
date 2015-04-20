@@ -26,6 +26,8 @@ public class Account extends AbstractReadWriteEntity implements Serializable {
 	private String name;
 
 	private String password;
+	
+	private int role;
 
 	private Set<DWXX> dwxxs;
 	
@@ -54,6 +56,14 @@ public class Account extends AbstractReadWriteEntity implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public int getRole(){
+		return role;
+	}
+	
+	public void setRole(int role){
+		this.role = role;
 	}
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

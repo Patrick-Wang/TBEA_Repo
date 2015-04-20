@@ -31,6 +31,7 @@ module entry_template {
         companyId: string;
         comps: Util.IDataNode[];
         entryType?: Util.ZBType;
+        chiefApproveStatus: number;
     }
 
     interface ISubmitResult {
@@ -54,9 +55,11 @@ module entry_template {
         private mSave: Util.Ajax = new Util.Ajax("zb_save.do");
         private mTableAssist: JQTable.JQGridAssistant;
         private mTitleCompanyName : string;
+        private mChiefApproveStatus:number;
         initInstance(opt: IViewOption) {
+           
             this.mOpt = opt;
-
+             this.mChiefApproveStatus = opt.chiefApproveStatus;
             switch (this.mOpt.entryType) {
 
                 case Util.ZBType.YDJDMJH:
@@ -192,6 +195,18 @@ module entry_template {
                 case Util.ZBType.BYSJ:
                     header = date.year + "年" + date.month + "月 " + compName + " 实际数据录入";
                     break;
+            }
+            
+            if (1 == this.mOpt.chiefApproveStatus)
+            {
+                $('#CheifAgree').css("display","block");
+            }
+            else if (2 == this.mOpt.chiefApproveStatus)
+            {
+                $('#CheifDisagree').css("display","block");
+            }
+            else
+            {
             }
 
             $('h1').text(header);
