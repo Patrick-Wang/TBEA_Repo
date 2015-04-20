@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
 import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
@@ -28,12 +29,13 @@ public interface YDJHZBDao  extends AbstractReadWriteDao<YDJHZB>{
 	List<Double> getDyjhz(Date start, Date end, List<Integer> zbsTmp,
 			List<Company> companies);
 
-	int getApprovedZbsCount(Date date, Company company);
+	//int getApprovedZbsCount(Date date, Company company);
 
 	List<Integer> getEntryCompletedCompanies(Date date);
 
 	Date getEntryTime(Date date, Company comp);
 
-	int getSavedZbsCount(Date date, Company company);
+	//int getSavedZbsCount(Date date, Company company);
 
+	ZBStatus getZbStatus(Date date, Company company);
 }

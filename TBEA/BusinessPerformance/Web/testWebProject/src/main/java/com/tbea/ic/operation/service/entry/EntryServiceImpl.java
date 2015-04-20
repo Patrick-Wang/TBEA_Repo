@@ -206,19 +206,19 @@ public class EntryServiceImpl implements EntryService{
 		boolean bRet = false;
 		switch (entryType){
 		case BY20YJ:
-			bRet = update20YJ(date, company, data, false);
+			bRet = update20YJ(date, company, data, ZBStatus.SUBMITTED);
 			break;
 		case BY28YJ:
-			bRet = update28YJ(date, company, data, false);
+			bRet = update28YJ(date, company, data, ZBStatus.SUBMITTED);
 			break;
 		case BYSJ:
-			bRet = updateBYSJ(date, company, data, false);
+			bRet = updateBYSJ(date, company, data, ZBStatus.SUBMITTED);
 			break;
 		case NDJH:
-			bRet = updateNDJH(date, company, data, false);
+			bRet = updateNDJH(date, company, data, ZBStatus.SUBMITTED);
 			break;
 		case YDJDMJH:
-			bRet = updateYDJDMJH(date, company, data, false);
+			bRet = updateYDJDMJH(date, company, data, ZBStatus.SUBMITTED);
 			break;
 		default:
 			break;
@@ -226,20 +226,18 @@ public class EntryServiceImpl implements EntryService{
 		return bRet;
 	}
 
-	private boolean updateYDJDMJH(Date date, Company company, JSONArray data, boolean isSaving) {
+	private boolean updateYDJDMJH(Date date, Company company, JSONArray data, ZBStatus status) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		Set<Integer> unenteredZb = getUnenteredJhzb(company, data);
-		List<Boolean> approvedList = isApproved(date, company.getType(),
-				ZBType.YDJDMJH);
-		
-		ZBStatus status = isSaving ? ZBStatus.SAVED : ZBStatus.SUBMITTED;
+		List<ZBStatus> approvedList = getZbStatus(date, company.getType(), ZBType.YDJDMJH);
+
 		Integer zbId;
 		JSONArray row;
 		Double val;
 		
 		for (int c = 0; c < approvedList.size(); ++c) {
-			if (!approvedList.get(c)) {
+			if (ZBStatus.APPROVED != approvedList.get(c)) {
 				ZbCalculator calc = this.createYdjhzbCalc();
 				for (int r = 0; r < data.size(); ++r) {
 					row = data.getJSONArray(r);
@@ -288,13 +286,12 @@ public class EntryServiceImpl implements EntryService{
 		return zbIdSet;
 	}
 
-	private boolean updateNDJH(Date date, Company company, JSONArray data, boolean isSaving) {
-		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.NDJH);
-		if (!approvedList.get(0)){
+	private boolean updateNDJH(Date date, Company company, JSONArray data, ZBStatus status) {
+		List<ZBStatus> approvedList = getZbStatus(date, company.getType(), ZBType.NDJH);
+		if (ZBStatus.APPROVED != approvedList.get(0)){
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
 			JSONArray row;
-			ZBStatus status = isSaving ? ZBStatus.SAVED : ZBStatus.SUBMITTED;
 			
 			ZbCalculator calc = this.createNdjhzbCalc();
 			for (int r = 0; r < data.size(); ++r) {
@@ -317,12 +314,11 @@ public class EntryServiceImpl implements EntryService{
 		return true;
 	}
 
-	private boolean updateBYSJ(Date date, Company company, JSONArray data, boolean isSaving) {
-		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BYSJ);
-		if (!approvedList.get(0)){
+	private boolean updateBYSJ(Date date, Company company, JSONArray data, ZBStatus status) {
+		List<ZBStatus> approvedList = getZbStatus(date, company.getType(), ZBType.BYSJ);
+		if (ZBStatus.APPROVED != approvedList.get(0)){
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
-			ZBStatus status = isSaving ? ZBStatus.SAVED : ZBStatus.SUBMITTED;
 			JSONArray row;
 			ZbCalculator calc = this.createSjzbCalc();
 			for (int i = 0; i < data.size(); ++i) {
@@ -340,7 +336,7 @@ public class EntryServiceImpl implements EntryService{
 				calc.compute(id, null, cal, company, status);
 			}
 
-			if (!isSaving) {
+			if (status != ZBStatus.SAVED) {
 				setYdzbzt(company, cal.get(Calendar.YEAR),
 						cal.get(Calendar.MONTH) + 1, ZBType.BYSJ);
 			}
@@ -348,17 +344,16 @@ public class EntryServiceImpl implements EntryService{
 		return true;
 	}
 
-	private boolean update28YJ(Date date, Company company, JSONArray data, boolean isSaving) {
+	private boolean update28YJ(Date date, Company company, JSONArray data, ZBStatus status) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		ZBStatus status = isSaving ? ZBStatus.SAVED : ZBStatus.SUBMITTED;
 		Integer zbId;
 		JSONArray row;
 
 		Set<Integer> unenteredZb = getUnenteredSjzb(company, data);
-		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BY28YJ);
+		List<ZBStatus> approvedList = getZbStatus(date, company.getType(), ZBType.BY28YJ);
 		
-		if (!approvedList.get(0)) {
+		if (ZBStatus.APPROVED != approvedList.get(0)) {
 			ZbCalculator calc = this.createYj28Calc();
 			for (int r = 0; r < data.size(); ++r) {
 				row = data.getJSONArray(r);
@@ -378,7 +373,7 @@ public class EntryServiceImpl implements EntryService{
 						status);
 			}
 			
-			if (!isSaving) {
+			if (status != ZBStatus.SAVED) {
 				setYdzbzt(company, cal.get(Calendar.YEAR),
 						cal.get(Calendar.MONTH) + 1, ZBType.BY28YJ);
 			}
@@ -386,7 +381,7 @@ public class EntryServiceImpl implements EntryService{
 		
 		for (int c = 1; c < approvedList.size(); ++c) {
 			cal.add(Calendar.MONTH, 1);
-			if (!approvedList.get(0)) {
+			if (ZBStatus.APPROVED != approvedList.get(0)) {
 				ZbCalculator calc = this.createYj20Calc();
 				for (int r = 0; r < data.size(); ++r) {
 					row = data.getJSONArray(r);
@@ -402,7 +397,7 @@ public class EntryServiceImpl implements EntryService{
 					calc.compute(id, null, cal, company, status);
 				}
 
-				if (!isSaving) {
+				if (status != ZBStatus.SAVED) {
 					setYdzbzt(company, cal.get(Calendar.YEAR),
 							cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
 				}
@@ -411,17 +406,16 @@ public class EntryServiceImpl implements EntryService{
 		return true;
 	}
 
-	private boolean update20YJ(Date date, Company company, JSONArray data, boolean isSaving) {
+	private boolean update20YJ(Date date, Company company, JSONArray data, ZBStatus status) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		ZBStatus status = isSaving ? ZBStatus.SAVED : ZBStatus.SUBMITTED;
 		JSONArray row;
 		Integer zbId;
 		
 		Set<Integer> unenteredZb = getUnenteredSjzb(company, data);
-		List<Boolean> approvedList = isApproved(date, company.getType(), ZBType.BY20YJ);
+		List<ZBStatus> approvedList = getZbStatus(date, company.getType(), ZBType.BY20YJ);
 		for (int c = 0; c < approvedList.size(); ++c) {
-			if (!approvedList.get(0)) {
+			if (ZBStatus.APPROVED != approvedList.get(0)) {
 				ZbCalculator calc = this.createYj20Calc();
 				for (int r = 0; r < data.size(); ++r) {
 					row = data.getJSONArray(r);
@@ -437,7 +431,7 @@ public class EntryServiceImpl implements EntryService{
 					calc.compute(id, null, cal, company, status);
 				}
 
-				if (!isSaving) {
+				if (status != ZBStatus.SAVED) {
 					setYdzbzt(company, cal.get(Calendar.YEAR),
 							cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
 				}
@@ -761,8 +755,8 @@ public class EntryServiceImpl implements EntryService{
 	
 	
 	@Override
-	public List<Boolean> isSaved(Date date, CompanyType comp, ZBType entryType) {
-		List<Boolean> bResult = new ArrayList<Boolean>();
+	public List<ZBStatus> getZbStatus(Date date, CompanyType comp, ZBType entryType) {
+		List<ZBStatus> result = new ArrayList<ZBStatus>();
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
@@ -770,75 +764,75 @@ public class EntryServiceImpl implements EntryService{
 		switch (entryType){
 		case BY20YJ:
 			for (int i = 0; i <= leftMonth; ++i){
-				bResult.add(yj20zbDao.getSavedZbsCount(Util.toDate(cal), company) > 0);
+				result.add(yj20zbDao.getZbStatus(Util.toDate(cal), company));
 				cal.add(Calendar.MONTH, 1);
 			}
 			break;
 		case BY28YJ:
-			bResult.add(yj28zbDao.getSavedZbsCount(Util.toDate(cal), company) > 0);
+			result.add(yj28zbDao.getZbStatus(Util.toDate(cal), company));
 			cal.add(Calendar.MONTH, 1);
 			for (int i = 1; i <= leftMonth; ++i){
-				bResult.add(yj20zbDao.getSavedZbsCount(Util.toDate(cal), company) > 0);
+				result.add(yj20zbDao.getZbStatus(Util.toDate(cal), company));
 				cal.add(Calendar.MONTH, 1);
 			}
 			break;
 		case BYSJ:
-			bResult.add(sjzbDao.getSavedZbsCount(date, company) > 0);
+			result.add(sjzbDao.getZbStatus(date, company));
 			break;
 		case NDJH:
-			bResult.add(ndjhzbDao.getSavedZbsCount(date, company) > 0);
+			result.add(ndjhzbDao.getZbStatus(date, company));
 			break;
 		case YDJDMJH:
 			for (int i = 0; i < 3; ++i){
-				bResult.add(ydjhzbDao.getSavedZbsCount(Util.toDate(cal), company) > 0);
+				result.add(ydjhzbDao.getZbStatus(Util.toDate(cal), company));
 				cal.add(Calendar.MONTH, 1);
 			}
 			break;
 		default:
 			break;
 		}
-		return bResult;
+		return result;
 	}
 	
-	@Override
-	public List<Boolean> isApproved(Date date, CompanyType comp, ZBType entryType) {
-		List<Boolean> bResult = new ArrayList<Boolean>();
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
-		switch (entryType){
-		case BY20YJ:
-			for (int i = 0; i <= leftMonth; ++i){
-				bResult.add(yj20zbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
-				cal.add(Calendar.MONTH, 1);
-			}
-			break;
-		case BY28YJ:
-			bResult.add(yj28zbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
-			cal.add(Calendar.MONTH, 1);
-			for (int i = 1; i <= leftMonth; ++i){
-				bResult.add(yj20zbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
-				cal.add(Calendar.MONTH, 1);
-			}
-			break;
-		case BYSJ:
-			bResult.add(sjzbDao.getApprovedZbsCount(date, company) > 0);
-			break;
-		case NDJH:
-			bResult.add(ndjhzbDao.getApprovedZbsCount(date, company) > 0);
-			break;
-		case YDJDMJH:
-			for (int i = 0; i < 3; ++i){
-				bResult.add(ydjhzbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
-				cal.add(Calendar.MONTH, 1);
-			}
-			break;
-		default:
-			break;
-		}
-		return bResult;
-	}
+//	@Override
+//	public List<Boolean> isApproved(Date date, CompanyType comp, ZBType entryType) {
+//		List<Boolean> bResult = new ArrayList<Boolean>();
+//		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(date);
+//		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
+//		switch (entryType){
+//		case BY20YJ:
+//			for (int i = 0; i <= leftMonth; ++i){
+//				bResult.add(yj20zbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
+//				cal.add(Calendar.MONTH, 1);
+//			}
+//			break;
+//		case BY28YJ:
+//			bResult.add(yj28zbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
+//			cal.add(Calendar.MONTH, 1);
+//			for (int i = 1; i <= leftMonth; ++i){
+//				bResult.add(yj20zbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
+//				cal.add(Calendar.MONTH, 1);
+//			}
+//			break;
+//		case BYSJ:
+//			bResult.add(sjzbDao.getApprovedZbsCount(date, company) > 0);
+//			break;
+//		case NDJH:
+//			bResult.add(ndjhzbDao.getApprovedZbsCount(date, company) > 0);
+//			break;
+//		case YDJDMJH:
+//			for (int i = 0; i < 3; ++i){
+//				bResult.add(ydjhzbDao.getApprovedZbsCount(Util.toDate(cal), company) > 0);
+//				cal.add(Calendar.MONTH, 1);
+//			}
+//			break;
+//		default:
+//			break;
+//		}
+//		return bResult;
+//	}
 
 	@Override
 	public List<String[]> getEntryStatus(Date date, ZBType entryType) {
@@ -905,19 +899,19 @@ public class EntryServiceImpl implements EntryService{
 		boolean bRet = false;
 		switch (entryType){
 		case BY20YJ:
-			bRet = update20YJ(date, company, data, true);
+			bRet = update20YJ(date, company, data, ZBStatus.SUBMITTED);
 			break;
 		case BY28YJ:
-			bRet = update28YJ(date, company, data, true);
+			bRet = update28YJ(date, company, data, ZBStatus.SUBMITTED);
 			break;
 		case BYSJ:
-			bRet = updateBYSJ(date, company, data, true);
+			bRet = updateBYSJ(date, company, data, ZBStatus.SUBMITTED);
 			break;
 		case NDJH:
-			bRet = updateNDJH(date, company, data, true);
+			bRet = updateNDJH(date, company, data, ZBStatus.SUBMITTED);
 			break;
 		case YDJDMJH:
-			bRet = updateYDJDMJH(date, company, data, true);
+			bRet = updateYDJDMJH(date, company, data, ZBStatus.SUBMITTED);
 			break;
 		default:
 			break;

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
@@ -358,16 +359,16 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 		return q.getResultList();
 	}
 
-	@Override
-	public int getApprovedZbsCount(Date date, Company company) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("select count(*) from SJZB where nf = :nf and yf = :yf and sjshzt.id = 1 and  dwxx.id = :comp");
-		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
-		q.setParameter("comp", company.getId());
-		return ((Long)q.getSingleResult()).intValue();
-	}
+//	@Override
+//	public int getApprovedZbsCount(Date date, Company company) {
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(date);
+//		Query q = this.getEntityManager().createQuery("select count(*) from SJZB where nf = :nf and yf = :yf and sjshzt.id = 1 and  dwxx.id = :comp");
+//		q.setParameter("nf", cal.get(Calendar.YEAR));
+//		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+//		q.setParameter("comp", company.getId());
+//		return ((Long)q.getSingleResult()).intValue();
+//	}
 
 	
 	@Override
@@ -397,17 +398,32 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 		return null;
 	}
 
+//	@Override
+//	public int getSavedZbsCount(Date date, Company company) {
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(date);
+//		Query q = this.getEntityManager().createQuery("select count(*) from SJZB where nf = :nf and yf = :yf and sjshzt.id = 3 and  dwxx.id = :comp");
+//		q.setParameter("nf", cal.get(Calendar.YEAR));
+//		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+//		q.setParameter("comp", company.getId());
+//		return ((Long)q.getSingleResult()).intValue();
+//	}
+
 	@Override
-	public int getSavedZbsCount(Date date, Company company) {
+	public ZBStatus getZbStatus(Date date, Company company) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("select count(*) from SJZB where nf = :nf and yf = :yf and sjshzt.id = 3 and  dwxx.id = :comp");
+		Query q = this.getEntityManager().createQuery("select sjshzt.id from SJZB where nf = :nf and yf = :yf and dwxx.id = :comp");
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		q.setParameter("comp", company.getId());
-		return ((Long)q.getSingleResult()).intValue();
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<Object> ret = q.getResultList();
+		if (ret.isEmpty()){
+			return ZBStatus.NONE;
+		}
+		return ZBStatus.valueOf(((Integer)ret.get(0)));
 	}
-
-
 	
 }

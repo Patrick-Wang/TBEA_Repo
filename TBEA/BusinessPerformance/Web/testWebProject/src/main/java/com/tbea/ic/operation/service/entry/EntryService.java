@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sf.json.JSONArray;
 
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
@@ -26,12 +27,12 @@ public interface EntryService {
 
 	public boolean hasEntryPredictPermission(Account account);
 
-	List<Boolean> isApproved(Date date, CompanyType comp, ZBType entryType);
+//	List<Boolean> isApproved(Date date, CompanyType comp, ZBType entryType);
 
 	List<String[]> getEntryStatus(Date date, ZBType entryType);
 
 	boolean saveZb(Date date, Account account, CompanyType comp,
 			ZBType entryType, JSONArray data);
 
-	List<Boolean> isSaved(Date date, CompanyType comp, ZBType entryType);
+	List<ZBStatus> getZbStatus(Date date, CompanyType comp, ZBType entryType);
 }

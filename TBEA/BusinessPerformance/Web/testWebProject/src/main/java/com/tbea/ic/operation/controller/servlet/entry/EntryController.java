@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.CompanySelection.Filter;
 import com.tbea.ic.operation.common.companys.Company;
@@ -119,7 +120,7 @@ public class EntryController {
 
 		List<String[]> ret =  entryService.getZb(date, account, comp, entryType);
 		String zb = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
-		List<Boolean> approved = entryService.isApproved(date, comp, entryType);
+		List<ZBStatus> approved = entryService.getZbStatus(date, comp, entryType);
 		String result = "{\"readOnly\":" + JSONArray.fromObject(approved).toString() +", \"values\":" + zb + "}";
 		return result.getBytes("utf-8");
 	}

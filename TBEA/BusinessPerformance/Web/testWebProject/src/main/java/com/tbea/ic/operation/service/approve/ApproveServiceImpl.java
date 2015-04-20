@@ -183,8 +183,8 @@ public class ApproveServiceImpl implements ApproveService {
 		for (int m = 0; m < 3; ++m) {
 			Date d = Util.toDate(cal);
 			for (Company comp : comps) {
-				boolean isApproved = ydjhzbDao.getApprovedZbsCount(d, comp) > 0;
-				boolean isSaved = ydjhzbDao.getSavedZbsCount(d, comp) > 0;
+				ZBStatus status = ydjhzbDao.getZbStatus(date, comp);
+
 				DWXX dwxx = findDwxx(dwxxs, comp);
 				if (null != dwxx) {
 					List<ZBXX> allZbs = toSortList(dwxx.getJhzbxxs());
@@ -202,10 +202,16 @@ public class ApproveServiceImpl implements ApproveService {
 						zbTmp[4] = cal.get(Calendar.YEAR) + "";
 						zbTmp[5] = cal.get(Calendar.MONTH) + 1 + "";
 
-						if (isApproved) {// approved
+						switch(status){
+						case APPROVED:
 							unapproveList.add(zbTmp);
-						} else if (!isSaved){
+							break;
+						case APPROVED_2:
+						case SUBMITTED:
 							approveList.add(zbTmp);
+							break;
+						default:
+							break;
 						}
 					}
 				}
@@ -227,8 +233,8 @@ public class ApproveServiceImpl implements ApproveService {
 		List<DWXX> dwxxs = dwxxDao.getDwxxs(comps);
 
 		for (Company comp : comps) {
-			boolean isApproved = ndjhzbDao.getApprovedZbsCount(date, comp) > 0;
-			boolean isSaved = ndjhzbDao.getSavedZbsCount(date, comp) > 0;
+			ZBStatus status = ndjhzbDao.getZbStatus(date, comp);
+
 			DWXX dwxx = findDwxx(dwxxs, comp);
 			if (null != dwxx) {
 				List<ZBXX> allZbs = toSortList(dwxx.getJhzbxxs());
@@ -244,10 +250,16 @@ public class ApproveServiceImpl implements ApproveService {
 						zbTmp[3] = ndjhzb.getNdjhz() + "";
 					}
 
-					if (isApproved) {// approved
+					switch(status){
+					case APPROVED:
 						unapproveList.add(zbTmp);
-					} else if (!isSaved){
+						break;
+					case APPROVED_2:
+					case SUBMITTED:
 						approveList.add(zbTmp);
+						break;
+					default:
+						break;
 					}
 				}
 			}
@@ -267,8 +279,7 @@ public class ApproveServiceImpl implements ApproveService {
 		List<DWXX> dwxxs = dwxxDao.getDwxxs(comps);
 
 		for (Company comp : comps) {
-			boolean isApproved = sjzbDao.getApprovedZbsCount(date, comp) > 0;
-			boolean isSaved = sjzbDao.getSavedZbsCount(date, comp) > 0;
+			ZBStatus status = sjzbDao.getZbStatus(date, comp);
 			DWXX dwxx = findDwxx(dwxxs, comp);
 			if (null != dwxx) {
 				List<ZBXX> allZbs = toSortList(dwxx.getSjzbxxs());
@@ -284,10 +295,16 @@ public class ApproveServiceImpl implements ApproveService {
 						zbTmp[3] = zb.getSjz() + "";
 					}
 
-					if (isApproved) {// approved
+					switch(status){
+					case APPROVED:
 						unapproveList.add(zbTmp);
-					} else if (!isSaved){
+						break;
+					case APPROVED_2:
+					case SUBMITTED:
 						approveList.add(zbTmp);
+						break;
+					default:
+						break;
 					}
 				}
 			}
@@ -307,8 +324,7 @@ public class ApproveServiceImpl implements ApproveService {
 		List<DWXX> dwxxs = dwxxDao.getDwxxs(comps);
 
 		for (Company comp : comps) {
-			boolean isApproved = yj28zbDao.getApprovedZbsCount(date, comp) > 0;
-			boolean isSaved = yj28zbDao.getSavedZbsCount(date, comp) > 0;
+			ZBStatus status = yj28zbDao.getZbStatus(date, comp);
 			DWXX dwxx = findDwxx(dwxxs, comp);
 			if (null != dwxx) {
 				List<ZBXX> allZbs = toSortList(dwxx.getSjzbxxs());
@@ -324,10 +340,16 @@ public class ApproveServiceImpl implements ApproveService {
 						zbTmp[3] = zb.getYj28z() + "";
 					}
 
-					if (isApproved) {// approved
+					switch(status){
+					case APPROVED:
 						unapproveList.add(zbTmp);
-					} else if(!isSaved){
+						break;
+					case APPROVED_2:
+					case SUBMITTED:
 						approveList.add(zbTmp);
+						break;
+					default:
+						break;
 					}
 				}
 			}
@@ -347,8 +369,7 @@ public class ApproveServiceImpl implements ApproveService {
 		List<DWXX> dwxxs = dwxxDao.getDwxxs(comps);
 
 		for (Company comp : comps) {
-			boolean isApproved = yj20zbDao.getApprovedZbsCount(date, comp) > 0;
-			boolean isSaved = yj20zbDao.getSavedZbsCount(date, comp) > 0;
+			ZBStatus status = yj20zbDao.getZbStatus(date, comp);
 			DWXX dwxx = findDwxx(dwxxs, comp);
 			if (null != dwxx) {
 				List<ZBXX> allZbs = toSortList(dwxx.getSjzbxxs());
@@ -364,10 +385,17 @@ public class ApproveServiceImpl implements ApproveService {
 						zbTmp[3] = zb.getYj20z() + "";
 					}
 
-					if (isApproved) {// approved
+					
+					switch(status){
+					case APPROVED:
 						unapproveList.add(zbTmp);
-					} else if (!isSaved){
+						break;
+					case APPROVED_2:
+					case SUBMITTED:
 						approveList.add(zbTmp);
+						break;
+					default:
+						break;
 					}
 				}
 			}
