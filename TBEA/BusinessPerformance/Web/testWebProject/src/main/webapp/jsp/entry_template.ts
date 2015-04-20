@@ -6,22 +6,20 @@ declare var echarts;
 declare var $;
 module entry_template {
 
-
     class JQGridAssistantFactory {
 
-        public static createFlatTable(gridName: string, title: string[], readOnly : boolean[]): JQTable.JQGridAssistant {
+        public static createFlatTable(gridName: string, title: string[], statusList : string[]): JQTable.JQGridAssistant {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
                     nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, readOnly[i - 1]));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, statusList[i - 1] == Util.ZBStatus.APPROVED));
                 }
 
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         }
-
     }
 
     interface IViewOption {
@@ -45,7 +43,7 @@ module entry_template {
             return View.instance;
         }
 
-        private mReadOnlyArr: Array<boolean>;
+        private mStatusList: Array<string>;
         private mTableData: Array<string[]>;
         private mDateSelector: Util.DateSelector;
         private mCompanySelector: Util.CompanySelector;
@@ -95,7 +93,7 @@ module entry_template {
             }
             this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId: this.mCompanySelector.getCompany() })
                 .then((data: any) => {
-                this.mReadOnlyArr = data.readOnly;
+                this.mStatusList = data.status;
                 this.mTableData = data.values;
                 this.updateTitle();
                 this.updateTable(this.mOpt.tableId);
@@ -333,7 +331,7 @@ module entry_template {
                     titles = ["指标名称", "本月实际"];
                     break;
             }
-            this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles, this.mReadOnlyArr);
+            this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles, this.mStatusList);
             
           for (var i = 0; i < this.mTableData.length; ++i){
               for (var j = 2; j < this.mTableData[i].length; ++j){

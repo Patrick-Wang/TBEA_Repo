@@ -1,6 +1,15 @@
 declare var $;
 module Util {
 
+    
+    export class ZBStatus{
+        static NONE : string = "NONE";
+        static APPROVED : string = "APPROVED";
+        static SUBMITTED : string = "SUBMITTED";
+        static SAVED : string = "SAVED";
+        static APPROVED_2 : string = "APPROVED_2";
+    }
+    
     export enum ZBType {
         QNJH,
         YDJDMJH,
