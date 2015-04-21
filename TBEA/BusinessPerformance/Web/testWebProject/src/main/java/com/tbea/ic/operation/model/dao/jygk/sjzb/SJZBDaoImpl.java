@@ -76,9 +76,9 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 	public List<SJZB> getUnapprovedZbs(Date date, List<Company> comps) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("from SJZB where nf = :nf and sjshzt.id = :id and dwxx.id in (" + Util.toString(comps) + ")");
+		Query q = this.getEntityManager().createQuery("from SJZB where nf = :nf and yf = :yf and sjshzt.id = 2 and dwxx.id in (" + Util.toString(comps) + ")");
 		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("id", 2);
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		return q.getResultList();
 	}
 
@@ -86,9 +86,9 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 	public List<SJZB> getApprovedZbs(Date date, List<Company> comps) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("from SJZB where nf = :nf and sjshzt.id = :id and dwxx.id in (" + Util.toString(comps) + ")");
+		Query q = this.getEntityManager().createQuery("from SJZB where nf = :nf and yf = :yf and sjshzt.id = 1 and dwxx.id in (" + Util.toString(comps) + ")");
 		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("id", 1);
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		return q.getResultList();
 	}
 

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,12 +24,11 @@ import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
-import com.tbea.ic.operation.common.CompanySelection.Filter;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
-import com.tbea.ic.operation.model.entity.User;
 import com.tbea.ic.operation.model.entity.jygk.Account;
-import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
 
 
@@ -38,7 +38,9 @@ public class EntryController {
 	
 	@Autowired
 	private EntryService entryService;
-
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	private List<Company> getOwnedCompanies(Account account, ZBType entryType){
 		List<Company> comps = null;
 		
@@ -78,11 +80,7 @@ public class EntryController {
 		return new ModelAndView("gdw_indexInput_summary", map);
 	}
 	//End
-	private int[] testfunc ()
-	{
-		int a[] = {0};
-		return a;
-	}
+
 
 	@RequestMapping(value = "zb.do", method = RequestMethod.GET)
 	public ModelAndView getZBEntry(HttpServletRequest request,
@@ -124,7 +122,12 @@ public class EntryController {
 		List<String[]> ret =  entryService.getZb(date, account, comp, entryType);
 		String zb = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
 		List<ZBStatus> approved = entryService.getZbStatus(date, comp, entryType);
-		String result = "{\"status\":" + JSONArray.fromObject(approved).toString() +", \"values\":" + zb + "}";
+		Organization org = companyManager.getBMDBOrganization();
+		Company company = org.getCompany(comp);
+		Company zhgs = org.getCompany(CompanyType.ZHGS);
+		String result = "{\"status\":" + JSONArray.fromObject(approved).toString() +
+						", \"values\":" + zb +
+						", \"isJydw\":" + ((4 == company.level() && !zhgs.contains(company)) || comp == CompanyType.ZHGS) + "}";
 		return result.getBytes("utf-8");
 	}
 	

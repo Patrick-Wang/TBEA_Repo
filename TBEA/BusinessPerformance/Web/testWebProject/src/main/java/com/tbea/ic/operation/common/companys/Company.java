@@ -17,6 +17,15 @@ public class Company {
 		this.id = id;
 	}
 
+	public Integer level(){
+		Integer level = 0;
+		Company p = parentCompany;
+		while (p != null){
+			p = p.getParentCompany();
+			++level;
+		}
+		return level;
+	}
 
 	public Integer getId() {
 		return id;
