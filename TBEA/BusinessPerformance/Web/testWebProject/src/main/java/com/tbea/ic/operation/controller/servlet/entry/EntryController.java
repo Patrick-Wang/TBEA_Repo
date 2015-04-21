@@ -78,8 +78,11 @@ public class EntryController {
 		return new ModelAndView("gdw_indexInput_summary", map);
 	}
 	//End
-	
-	
+	private int[] testfunc ()
+	{
+		int a[] = {0};
+		return a;
+	}
 
 	@RequestMapping(value = "zb.do", method = RequestMethod.GET)
 	public ModelAndView getZBEntry(HttpServletRequest request,
@@ -121,7 +124,7 @@ public class EntryController {
 		List<String[]> ret =  entryService.getZb(date, account, comp, entryType);
 		String zb = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
 		List<ZBStatus> approved = entryService.getZbStatus(date, comp, entryType);
-		String result = "{\"readOnly\":" + JSONArray.fromObject(approved).toString() +", \"values\":" + zb + "}";
+		String result = "{\"status\":" + JSONArray.fromObject(approved).toString() +", \"values\":" + zb + "}";
 		return result.getBytes("utf-8");
 	}
 	
@@ -159,8 +162,7 @@ public class EntryController {
 		CompanyType comp = CompanySelection.getCompany(request);
 		String data = request.getParameter("data");
 		Account account = (Account) request.getSession(false).getAttribute("account");
-		String ret = null;
-		//String ret = "" + entryService.saveZb(date, account, comp, entryType, JSONArray.fromObject(data));
+		String ret = "" + entryService.submitToDeputy(date, account, comp, entryType, JSONArray.fromObject(data));
 		String result = "{\"result\":\"" + ret + "\"}";
 		return result.getBytes("utf-8");
 	}

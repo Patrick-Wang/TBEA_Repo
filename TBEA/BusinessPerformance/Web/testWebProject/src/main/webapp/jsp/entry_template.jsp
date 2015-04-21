@@ -64,8 +64,7 @@
           					month : ${!empty month} ? '${month}' : undefined, 
           					year : ${year}
           				},
-          				entryType : ${entryType},
-          				DeputyApproveStatus : 1
+          				entryType : ${entryType}
           			});
           });
       })();
@@ -253,17 +252,14 @@ th.ui-th-ltr {
 					</tr>
 					<tr>
 						<td>
-							<Table cellspacing="0" cellpadding="0">
-								<tr align="left">
-									<td ><input id="save" type="submit" value="保存"
+							<Table width = "100%" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="30%"><input id="save" type="submit" value="保存"
 										style="width: 80px;" onclick="view.save()"></input> 
 									</td>
-									<td>
-									<div style="width:140px"></div>
-									</td>
-									<td>
+									<td width="70%" align = "right">
 										<table>
-											<tr align = "right">
+											<tr>
 											<c:if test="${isin13Comps}">
 												<td><input id="submitToDeputy" type="submit" value="内部审核"
 													style="width: 80px;" onclick="view.submitToDeputy()"></input>
@@ -280,13 +276,7 @@ th.ui-th-ltr {
 							    </tr>										
 								<tr>							
 									<td>
-										<div id="DeputyAgree" style="font-size: 20px; color: red ;font-weight: 400; display:none">
-											经营副总已经审核数据。
-										</div>
-									</td>
-									<td>
-										<div id="DeputyDisagree" style="font-size: 20px; color: red ;font-weight: 400; display:none">
-											经营副总数据还未审核数据。
+										<div id="DeputyApprovementStatus" style="font-size: 20px; color: red ;font-weight: 400; display:none">
 										</div>
 									</td>
 								</tr>

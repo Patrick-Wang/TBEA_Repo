@@ -8,6 +8,7 @@ module Util {
         static SUBMITTED : string = "SUBMITTED";
         static SAVED : string = "SAVED";
         static APPROVED_2 : string = "APPROVED_2";
+        static SUBMITTED_2 :string = "SUBMITTED_2"
     }
     
     export enum ZBType {

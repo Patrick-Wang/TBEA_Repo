@@ -918,4 +918,31 @@ public class EntryServiceImpl implements EntryService{
 		}
 		return bRet;
 	}
+	
+	@Override
+	public boolean submitToDeputy(Date date, Account account, CompanyType comp,
+			ZBType entryType, JSONArray data) {
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		boolean bRet = false;
+		switch (entryType){
+		case BY20YJ:
+			bRet = update20YJ(date, company, data, ZBStatus.APPROVED_2);
+			break;
+		case BY28YJ:
+			bRet = update28YJ(date, company, data, ZBStatus.APPROVED_2);
+			break;
+		case BYSJ:
+			bRet = updateBYSJ(date, company, data, ZBStatus.APPROVED_2);
+			break;
+		case NDJH:
+			bRet = updateNDJH(date, company, data, ZBStatus.APPROVED_2);
+			break;
+		case YDJDMJH:
+			bRet = updateYDJDMJH(date, company, data, ZBStatus.APPROVED_2);
+			break;
+		default:
+			break;
+		}
+		return bRet;
+	}
 }

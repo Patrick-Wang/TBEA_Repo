@@ -33,6 +33,10 @@ public interface EntryService {
 
 	boolean saveZb(Date date, Account account, CompanyType comp,
 			ZBType entryType, JSONArray data);
+	
+	//Add Approvement function for Deputy Manager 
+	boolean submitToDeputy(Date date, Account account, CompanyType comp,
+			ZBType entryType, JSONArray data);
 
 	List<ZBStatus> getZbStatus(Date date, CompanyType comp, ZBType entryType);
 }
