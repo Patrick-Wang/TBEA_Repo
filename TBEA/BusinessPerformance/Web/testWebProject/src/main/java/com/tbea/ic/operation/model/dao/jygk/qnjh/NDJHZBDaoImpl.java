@@ -106,7 +106,7 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		Query q = this.getEntityManager().createNativeQuery("select zbid, sum(ndjhz) FROM jygk_ndjhzb where dwid in(" + Util.toString(companies) + ") and "
-				+ "zbid in(" + Util.toInteger(zbIds) + ") and nf = :nf group by zbid;");
+				+ "zbid in(" + Util.toInteger(zbIds) + ") and nf = :nf and ndjhshzt in (1,2,4) group by zbid;");
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		List<Object[]> listRet = q.getResultList();
 		for(int i = 0; i < listRet.size(); i++)

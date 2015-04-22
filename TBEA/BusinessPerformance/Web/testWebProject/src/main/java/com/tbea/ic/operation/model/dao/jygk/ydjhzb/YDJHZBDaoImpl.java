@@ -120,7 +120,7 @@ public class YDJHZBDaoImpl extends AbstractReadWriteDaoImpl<YDJHZB> implements Y
 		"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dStart) <= 0 and " +
 		"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dEnd) >= 0 and " +
 		"dwxx.id in ("+ Util.toBMString(companies) +") and " + 
-		"zbxx.id in (" + Util.toInteger(zbsTmp) + ") " + "group by zbxx.id");
+		"zbxx.id in (" + Util.toInteger(zbsTmp) + ") " + "and ydjhshzt.id in (1,2,4) group by zbxx.id");
 		q.setParameter("dStart",start);
 		q.setParameter("dEnd", end);
 		
