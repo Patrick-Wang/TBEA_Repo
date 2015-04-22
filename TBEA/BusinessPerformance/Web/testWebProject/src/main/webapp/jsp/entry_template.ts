@@ -98,6 +98,10 @@ module entry_template {
                 this.updateTitle();
                 this.updateTable(this.mOpt.tableId);
                 this.updateApproveStatusFromDeputy(date.year, date.month, this.mOpt.entryType);
+                if(data.isJydw)
+                {
+                    $('#submitToDeputy').css("display", "block");
+                }   
             });
             
         }
@@ -142,10 +146,17 @@ module entry_template {
                         approveContent += MatchArray[i] + "月,";
                     } 
                 }
-                approveContent = approveContent.substring(0, approveContent.length - 1);
-                unapproveContent = unapproveContent.substring(0, unapproveContent.length - 1);
+                if (undefined != approveContent)
+                {
+                    approveContent = approveContent.substring(0, approveContent.length - 1);
                 approveContent += "计划数据";
-                unapproveContent += "计划数据";
+                }    
+                if (undefined != approveContent)
+                {
+                    unapproveContent = unapproveContent.substring(0, unapproveContent.length - 1);               
+                    unapproveContent += "计划数据";
+                }
+                
                 this.addContent(isShowapprovecontent, isShowunapprovecontent, approveContent, unapproveContent);
             }
             //20号实际数据和28号实际数据
@@ -186,10 +197,10 @@ module entry_template {
                     }
                 }
                 
-                if (Util.ZBType.BY20YJ == entryType) {
+                if ((Util.ZBType.BY20YJ == entryType) && (isShowapprovecontent || isShowunapprovecontent)) {
                     approveContent += "20号实际数据";
                     unapproveContent += "20号实际数据";
-                } else {
+                } else if ((Util.ZBType.BY28YJ == entryType) && (isShowapprovecontent || isShowunapprovecontent)){
                     approveContent += "28号实际数据";
                     unapproveContent += "28号实际数据";
                 }                
@@ -227,7 +238,7 @@ module entry_template {
         
         private addContent(approveMark: boolean, unapproveMark: boolean, approveContent: string, unapproveContent: string)
         {
-            var mergecontent;
+            var mergecontent: string;
             if (approveMark) {
                 $('#DeputyApprovementStatus').css("display", "block");
                 mergecontent += approveContent + "被经营副总审核!";
@@ -237,7 +248,11 @@ module entry_template {
                 $('#DeputyApprovementStatus').css("display", "block");
                 mergecontent += "," + unapproveContent + "尚未被经营副总审核!";
             }
-            $('#DeputyApprovementStatus').text(mergecontent);
+            if (undefined != mergecontent)
+            {
+                $('#DeputyApprovementStatus').text(mergecontent);
+            }
+            
         }    
         
          public save() {

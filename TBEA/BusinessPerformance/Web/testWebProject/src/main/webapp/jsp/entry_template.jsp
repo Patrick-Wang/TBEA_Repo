@@ -260,11 +260,11 @@ th.ui-th-ltr {
 									<td width="70%" align = "right">
 										<table>
 											<tr>
-											<c:if test="${isin13Comps}">
+											
 												<td><input id="submitToDeputy" type="submit" value="内部审核"
-													style="width: 80px;" onclick="view.submitToDeputy()"></input>
+													style="width: 80px;display:none" onclick="view.submitToDeputy()"></input>
 												</td>
-											</c:if>
+											
 												<td><div style="width:6px"></div>
 												</td>
 												<td><input id="submit" type="submit" value="提交"
