@@ -127,7 +127,7 @@ public class EntryController {
 		Company zhgs = org.getCompany(CompanyType.ZHGS);
 		String result = "{\"status\":" + JSONArray.fromObject(approved).toString() +
 						", \"values\":" + zb +
-						", \"isJydw\":" + ((4 == company.level() && !zhgs.contains(company)) || comp == CompanyType.ZHGS) + "}"; 
+						", \"isJydw\":" + ((2 == company.level() && !zhgs.contains(company)) || comp == CompanyType.ZHGS) + "}"; 
 		
 		return result.getBytes("utf-8");
 	}
