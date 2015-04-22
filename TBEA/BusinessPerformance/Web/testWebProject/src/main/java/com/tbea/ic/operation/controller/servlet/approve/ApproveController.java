@@ -107,22 +107,25 @@ public class ApproveController {
 	@RequestMapping(value = "zb_update.do", method = RequestMethod.POST)
 	public @ResponseBody byte[] getZBApproveUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("approveType")));
+		ZBType entryType = ZBType.valueOf(Integer.valueOf(request
+				.getParameter("approveType")));
 		Date date = DateSelection.getDate(request);
 		Organization org = companyManager.getBMDBOrganization();
 		List<CompanyType> types = CompanySelection.getCompanys(request);
 		List<Company> comps = new ArrayList<Company>();
-		for (CompanyType type : types){
-			comps.add(org.getCompany(type));			
+		for (CompanyType type : types) {
+			comps.add(org.getCompany(type));
 		}
-		Account account = (Account) request
-		.getSession(false).getAttribute("account");
-		List<List<String[]>> ret = service.getZb(account, comps, date, entryType);
-	
-		String zb = JSONArray.fromObject(ret).toString().replace("null", "\"--\"");
+		Account account = (Account) request.getSession(false).getAttribute(
+				"account");
+		List<List<String[]>> ret = service.getZb(account, comps, date,
+				entryType);
+
+		String zb = JSONArray.fromObject(ret).toString()
+				.replace("null", "\"--\"");
 		return zb.getBytes("utf-8");
 	}
-	
+
 	@RequestMapping(value = "zb_approve.do", method = RequestMethod.POST)
 	public @ResponseBody byte[] approveZB(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -137,28 +140,29 @@ public class ApproveController {
 		for (CompanyType type : types){
 			comps.add(org.getCompany(type));			
 		}
-		
+		Account account = (Account) request.getSession(false).getAttribute(
+				"account");
 		boolean ret = false;
 		switch (entryType){
 		case BY20YJ:
 			//[[compId...]]
-			ret = service.approveYj20Zb(comps, date);
+			ret = service.approveYj20Zb(account, comps, date);
 			break;
 		case BY28YJ:
 			//[[compId...]]
-			ret = service.approveYj28Zb(comps, date);
+			ret = service.approveYj28Zb(account, comps, date);
 			break;
 		case BYSJ:
 			//[[compId...]]
-			ret = service.approveSjZb(comps, date);
+			ret = service.approveSjZb(account, comps, date);
 			break;
 		case NDJH:
 			//[[compId...]]
-			ret = service.approveNdjhZb(comps, date);
+			ret = service.approveNdjhZb(account, comps, date);
 			break;
 		case YDJDMJH:
 			//[[compId...], [year...], [month...]]
-			ret = service.approveYdjdZb(comps, DateSelection.getDate(data.getJSONArray(1), data.getJSONArray(2)));
+			ret = service.approveYdjdZb(account, comps, DateSelection.getDate(data.getJSONArray(1), data.getJSONArray(2)));
 			break;
 		default:
 			break;
@@ -184,26 +188,28 @@ public class ApproveController {
 		}
 		
 		boolean ret = false;
+		Account account = (Account) request.getSession(false).getAttribute(
+				"account");
 		switch (entryType){
 		case BY20YJ:
 			 //[[compId...]]
-			ret = service.unapproveYj20Zb(comps, date);
+			ret = service.unapproveYj20Zb(account, comps, date);
 			break;
 		case BY28YJ:
 			 //[[compId...]]
-			ret = service.unapproveYj28Zb(comps, date);
+			ret = service.unapproveYj28Zb(account, comps, date);
 			break;
 		case BYSJ:
 			//[[compId...]]
-			ret = service.unapproveSjZb(comps, date);
+			ret = service.unapproveSjZb(account, comps, date);
 			break;
 		case NDJH:
 			//[[compId ...]]
-			ret = service.unapproveNdjhZb(comps, date);
+			ret = service.unapproveNdjhZb(account, comps, date);
 			break;
 		case YDJDMJH:
 			//[[compId...], [year...], [month...]]
-			ret = service.unapproveYdjdZb(comps, DateSelection.getDate(data.getJSONArray(1), data.getJSONArray(2)));
+			ret = service.unapproveYdjdZb(account, comps, DateSelection.getDate(data.getJSONArray(1), data.getJSONArray(2)));
 			break;
 		default:
 			break;

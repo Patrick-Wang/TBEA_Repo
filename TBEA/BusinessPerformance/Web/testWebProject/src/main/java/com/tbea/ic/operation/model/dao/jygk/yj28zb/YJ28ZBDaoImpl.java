@@ -56,26 +56,26 @@ public class YJ28ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ28ZB> implements Y
 		return q.getResultList();
 	}
 
-	@Override
-	public List<YJ28ZB> getApprovedZbs(Date date, Company company) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("from YJ28ZB where nf = :nf and yf = :yf and yj28shzt.id = 1 and  dwxx.id = :comp");
-		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
-		q.setParameter("comp", company.getId());
-		return q.getResultList();
-	}
-
-	@Override
-	public List<YJ28ZB> getUnapprovedZbs(Date date, List<Company> comps) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("from YJ28ZB where nf = :nf and yf = :yf and yj28shzt.id = 2 and dwxx.id in ("+ Util.toBMString(comps) +")");
-		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
-		return q.getResultList();
-	}
+//	@Override
+//	public List<YJ28ZB> getApprovedZbs(Date date, Company company) {
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(date);
+//		Query q = this.getEntityManager().createQuery("from YJ28ZB where nf = :nf and yf = :yf and yj28shzt.id = 1 and  dwxx.id = :comp");
+//		q.setParameter("nf", cal.get(Calendar.YEAR));
+//		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+//		q.setParameter("comp", company.getId());
+//		return q.getResultList();
+//	}
+//
+//	@Override
+//	public List<YJ28ZB> getUnapprovedZbs(Date date, List<Company> comps) {
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(date);
+//		Query q = this.getEntityManager().createQuery("from YJ28ZB where nf = :nf and yf = :yf and yj28shzt.id = 2 and dwxx.id in ("+ Util.toBMString(comps) +")");
+//		q.setParameter("nf", cal.get(Calendar.YEAR));
+//		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+//		return q.getResultList();
+//	}
 
 	@Override
 	public List<YJ28ZB> getZb(List<Company> comps, Date dStart, Date dEnd) {
@@ -102,15 +102,15 @@ public class YJ28ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ28ZB> implements Y
 		return q.getResultList();
 	}
 
-	@Override
-	public List<YJ28ZB> getApprovedZbs(Date date, List<Company> comps) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("from YJ28ZB where nf = :nf and yf = :yf and yj28shzt.id = 1 and dwxx.id in ("+ Util.toBMString(comps) +")");
-		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
-		return q.getResultList();
-	}
+//	@Override
+//	public List<YJ28ZB> getApprovedZbs(Date date, List<Company> comps) {
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(date);
+//		Query q = this.getEntityManager().createQuery("from YJ28ZB where nf = :nf and yf = :yf and yj28shzt.id = 1 and dwxx.id in ("+ Util.toBMString(comps) +")");
+//		q.setParameter("nf", cal.get(Calendar.YEAR));
+//		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+//		return q.getResultList();
+//	}
 	
 	@Override
 	public List<Integer> getCompanies() {
@@ -194,5 +194,15 @@ public class YJ28ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ28ZB> implements Y
 			return ZBStatus.NONE;
 		}
 		return ZBStatus.valueOf(((Integer)ret.get(0)));
+	}
+
+	@Override
+	public List<YJ28ZB> getZbs(Date date, List<Company> comps) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("from YJ28ZB where nf = :nf and yf = :yf and dwxx.id in ("+ Util.toBMString(comps) +")");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		return q.getResultList();
 	}
 }

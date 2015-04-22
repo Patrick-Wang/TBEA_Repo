@@ -17,9 +17,9 @@ public interface SJZBDao  extends AbstractReadWriteDao<SJZB>{
 
 	List<SJZB> getZbs(Date date, List<Company> comps);
 
-	List<SJZB> getUnapprovedZbs(Date date, List<Company> comps);
+//	List<SJZB> getUnapprovedZbs(Date date, List<Company> comps);
 	
-	List<SJZB> getApprovedZbs(Date date, List<Company> comps);
+//	List<SJZB> getApprovedZbs(Date date, List<Company> comps);
 	
 	Double[] GetMonthActualValue(List<Company> comps, Date date, List<Integer> indexlist);
 	Double[] GetSeasonSumValue(List<Company> comps, Date date, List<Integer> indexlist);

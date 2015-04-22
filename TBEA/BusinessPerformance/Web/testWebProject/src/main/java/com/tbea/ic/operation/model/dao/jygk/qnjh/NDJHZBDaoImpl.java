@@ -65,25 +65,25 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 		return q.getResultList();
 	}
 
-	@Override
-	public List<NDJHZB> getUnapprovedZbs(Date date, List<Company> comps) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("from NDJHZB where nf = :nf and ndjhshzt.id = :id and dwxx.id in (" + Util.toString(comps) + ")");
-		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("id", 2);
-		return q.getResultList();
-	}
-
-	@Override
-	public List<NDJHZB> getApprovedZbs(Date date, List<Company> comps) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("from NDJHZB where nf = :nf and ndjhshzt.id = :id and dwxx.id in (" + Util.toString(comps) + ")");
-		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("id", 1);
-		return q.getResultList();
-	}
+//	@Override
+//	public List<NDJHZB> getUnapprovedZbs(Date date, List<Company> comps) {
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(date);
+//		Query q = this.getEntityManager().createQuery("from NDJHZB where nf = :nf and ndjhshzt.id = :id and dwxx.id in (" + Util.toString(comps) + ")");
+//		q.setParameter("nf", cal.get(Calendar.YEAR));
+//		q.setParameter("id", 2);
+//		return q.getResultList();
+//	}
+//
+//	@Override
+//	public List<NDJHZB> getApprovedZbs(Date date, List<Company> comps) {
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(date);
+//		Query q = this.getEntityManager().createQuery("from NDJHZB where nf = :nf and ndjhshzt.id = :id and dwxx.id in (" + Util.toString(comps) + ")");
+//		q.setParameter("nf", cal.get(Calendar.YEAR));
+//		q.setParameter("id", 1);
+//		return q.getResultList();
+//	}
 	
 	@Override
 	public List<Integer> getCompanies() {

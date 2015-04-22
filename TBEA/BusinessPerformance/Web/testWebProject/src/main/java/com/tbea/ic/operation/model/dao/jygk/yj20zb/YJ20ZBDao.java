@@ -18,15 +18,15 @@ public interface YJ20ZBDao  extends AbstractReadWriteDao<YJ20ZB> {
 
 	List<YJ20ZB> getZbs(Date date, Company company);
 
-	List<YJ20ZB> getApprovedZbs(Date date, Company company);
+//	List<YJ20ZB> getApprovedZbs(Date date, Company company);
 
-	List<YJ20ZB> getUnapprovedZbs(Date date, List<Company> comps);
+//	List<YJ20ZB> getUnapprovedZbs(Date date, List<Company> comps);
 
 	List<YJ20ZB> getZb(List<Company> comps, Date date, Date dEnd);
 
 	List<YJ20ZB> getZb(Date date, List<Company> comps);
 
-	List<YJ20ZB> getApprovedZbs(Date date, List<Company> comps);
+//	List<YJ20ZB> getApprovedZbs(Date date, List<Company> comps);
 
 	List<Integer> getCompanies();
 
@@ -41,4 +41,6 @@ public interface YJ20ZBDao  extends AbstractReadWriteDao<YJ20ZB> {
 //	int getSavedZbsCount(Date date, Company company);
 
 	ZBStatus getZbStatus(Date date, Company company);
+
+	List<YJ20ZB> getZbs(Date date, List<Company> comps);
 }

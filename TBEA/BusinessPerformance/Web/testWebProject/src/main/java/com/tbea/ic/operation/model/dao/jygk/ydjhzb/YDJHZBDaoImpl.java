@@ -74,27 +74,27 @@ public class YDJHZBDaoImpl extends AbstractReadWriteDaoImpl<YDJHZB> implements Y
 		return q.getResultList();
 	}
 
-	@Override
-	public List<YDJHZB> getUnapprovedZbs(Date date, Company company) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("from YDJHZB where nf = :nf and yf = :yf and dwxx.id = :comp and ydjhshzt.id = 2");
-		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
-		q.setParameter("comp", company.getId());
-		return q.getResultList();
-	}
+//	@Override
+//	public List<YDJHZB> getUnapprovedZbs(Date date, Company company) {
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(date);
+//		Query q = this.getEntityManager().createQuery("from YDJHZB where nf = :nf and yf = :yf and dwxx.id = :comp and ydjhshzt.id = 2");
+//		q.setParameter("nf", cal.get(Calendar.YEAR));
+//		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+//		q.setParameter("comp", company.getId());
+//		return q.getResultList();
+//	}
 
-	@Override
-	public List<YDJHZB> getApprovedZbs(Date date, Company company) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("from YDJHZB where nf = :nf and yf = :yf and dwxx.id = :comp and ydjhshzt.id = 1");
-		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
-		q.setParameter("comp", company.getId());
-		return q.getResultList();
-	}
+//	@Override
+//	public List<YDJHZB> getApprovedZbs(Date date, Company company) {
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(date);
+//		Query q = this.getEntityManager().createQuery("from YDJHZB where nf = :nf and yf = :yf and dwxx.id = :comp and ydjhshzt.id = 1");
+//		q.setParameter("nf", cal.get(Calendar.YEAR));
+//		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+//		q.setParameter("comp", company.getId());
+//		return q.getResultList();
+//	}
 
 	@Override
 	public List<Integer> getCompanies() {
