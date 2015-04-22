@@ -63,21 +63,21 @@ var stringDescription =  '<div class="container">'
         + '</div>'
         + '<div class="navbar-collapse collapse" id="nav-wrap">'
           + '<ul class="nav navbar-nav navbar-right" id="nav" style="max-width:100%;">'
-            + '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="1"><a>指标汇总明细</a></li>';
+            + '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="1"><a style="cursor:pointer">指标汇总明细</a></li>';
 			if (!RELEASE){
 				if(entryPlan || entryPredict)
 				{
-					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="2"><a>指标录入</a></li>';
+					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="2"><a style="cursor:pointer">指标录入</a></li>';
 				}
 				if(approveplan || approvePredict)
 				{
-					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="3"><a>指标审核</a></li>';
+					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="3"><a style="cursor:pointer">指标审核</a></li>';
 				}
 				
 				stringDescription += '<li>' + 
-				'<a class="dropdown-toggle" data-toggle="dropdown">' + userName + '<b class="caret"></b></a>' +
+				'<a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">' + userName + '<b class="caret"></b></a>' +
 				'<ul class="dropdown-menu" style="width:100%">' +
-					'<li><div onclick="logout()" align="center">退出</div></li>' +
+					'<li><div onclick="logout()" align="center" style="cursor:pointer">退出</div></li>' +
 				'</ul>' +
 				'</li>';
 				//for 财务指标汇总

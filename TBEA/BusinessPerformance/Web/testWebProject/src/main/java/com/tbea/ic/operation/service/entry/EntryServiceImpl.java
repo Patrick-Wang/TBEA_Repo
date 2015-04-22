@@ -159,7 +159,7 @@ public class EntryServiceImpl implements EntryService{
 		return new GeneralZbCalculator(sjzbInjector);
 	}
 
-	public void setYdzbzt(Company comp, int nf, int yf, ZBType entryType){
+	public static void setYdzbzt(YDZBZTDao ydzbztDao, DWXXDao dwxxDao, Company comp, int nf, int yf, ZBType entryType){
 		boolean newEntity = false;
 		YDZBZT ydzbzt = ydzbztDao.getYdzbzt(comp, nf, yf);
 		if (null == ydzbzt){
@@ -337,7 +337,7 @@ public class EntryServiceImpl implements EntryService{
 			}
 
 			if (status == ZBStatus.SUBMITTED) {
-				setYdzbzt(company, cal.get(Calendar.YEAR),
+				setYdzbzt(ydzbztDao, dwxxDao, company, cal.get(Calendar.YEAR),
 						cal.get(Calendar.MONTH) + 1, ZBType.BYSJ);
 			}
 		}
@@ -374,7 +374,7 @@ public class EntryServiceImpl implements EntryService{
 			}
 			
 			if (status == ZBStatus.SUBMITTED) {
-				setYdzbzt(company, cal.get(Calendar.YEAR),
+				setYdzbzt(ydzbztDao, dwxxDao, company, cal.get(Calendar.YEAR),
 						cal.get(Calendar.MONTH) + 1, ZBType.BY28YJ);
 			}
 		}
@@ -398,7 +398,7 @@ public class EntryServiceImpl implements EntryService{
 				}
 
 				if (status == ZBStatus.SUBMITTED) {
-					setYdzbzt(company, cal.get(Calendar.YEAR),
+					setYdzbzt(ydzbztDao, dwxxDao, company, cal.get(Calendar.YEAR),
 							cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
 				}
 			}
@@ -432,7 +432,7 @@ public class EntryServiceImpl implements EntryService{
 				}
 
 				if (status == ZBStatus.SUBMITTED) {
-					setYdzbzt(company, cal.get(Calendar.YEAR),
+					setYdzbzt(ydzbztDao, dwxxDao, company, cal.get(Calendar.YEAR),
 							cal.get(Calendar.MONTH) + 1, ZBType.BY20YJ);
 				}
 			}

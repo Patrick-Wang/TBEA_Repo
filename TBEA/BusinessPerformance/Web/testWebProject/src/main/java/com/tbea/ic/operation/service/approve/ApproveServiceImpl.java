@@ -26,6 +26,7 @@ import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
+import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.dao.qxgl.QXGLDao;
 import com.tbea.ic.operation.model.entity.jygk.Account;
@@ -38,6 +39,7 @@ import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.approve.OnGetStatus;
+import com.tbea.ic.operation.service.entry.EntryServiceImpl;
 
 @Service
 @Transactional("transactionManager")
@@ -70,6 +72,10 @@ public class ApproveServiceImpl implements ApproveService {
 	@Autowired
 	NDJHZBDao ndjhzbDao;
 
+	
+	@Autowired
+	YDZBZTDao ydzbztDao;
+	
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
@@ -452,6 +458,13 @@ public class ApproveServiceImpl implements ApproveService {
 				yj20zb.setYj20shzt(shztDao.getById(approveStatus));
 				yj20zbDao.merge(yj20zb);
 			}
+			
+			if (approveStatus == ZBStatus.APPROVED_2
+					.ordinal()){
+				for(Company company : comps){
+					setYdzbzt(date, company, ZBType.BY20YJ);
+				}
+			}
 		}
 		return true;
 	}
@@ -475,6 +488,13 @@ public class ApproveServiceImpl implements ApproveService {
 				yj28zb.setYj28shzt(shztDao.getById(approveStatus));
 				yj28zbDao.merge(yj28zb);
 			}
+			
+			if (approveStatus == ZBStatus.APPROVED_2
+					.ordinal()){
+				for(Company company : comps){
+					setYdzbzt(date, company, ZBType.BY28YJ);
+				}
+			}
 		}
 		return true;
 	}
@@ -496,7 +516,14 @@ public class ApproveServiceImpl implements ApproveService {
 			List<SJZB> zbs = sjzbDao.getZbs(date, comps);
 			for (SJZB zb : zbs) {
 				zb.setSjshzt(shztDao.getById(approveStatus));
-				sjzbDao.merge(zb);
+				sjzbDao.merge(zb);			
+			}
+			
+			if (approveStatus == ZBStatus.APPROVED_2
+					.ordinal()){
+				for(Company company : comps){
+					setYdzbzt(date, company, ZBType.BYSJ);
+				}
 			}
 		}
 		return true;
@@ -566,6 +593,13 @@ public class ApproveServiceImpl implements ApproveService {
 		return true;
 	}
 
+	private void setYdzbzt(Date date, Company comp, ZBType type){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		EntryServiceImpl.setYdzbzt(ydzbztDao, dwxxDao, comp, cal.get(Calendar.YEAR),
+				cal.get(Calendar.MONTH) + 1, type);
+	}
+	
 	@Override
 	public boolean approveYdjdZb(Account account, List<Company> comps,
 			List<Date> dateList) {
