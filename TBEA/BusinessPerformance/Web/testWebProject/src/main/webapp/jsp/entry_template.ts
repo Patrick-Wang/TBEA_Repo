@@ -98,6 +98,8 @@ module entry_template {
                 this.updateTitle();
                 this.updateTable(this.mOpt.tableId);
                 this.updateApproveStatusFromDeputy(date.year, date.month, this.mOpt.entryType);
+                $('#save').css("display", "block");
+                $('#submit').css("display", "block");
                 if(data.isJydw)
                 {
                     $('#submitToDeputy').css("display", "block");

@@ -255,7 +255,7 @@ th.ui-th-ltr {
 							<Table width = "100%" cellspacing="0" cellpadding="0">
 								<tr>
 									<td width="30%"><input id="save" type="submit" value="保存"
-										style="width: 80px;" onclick="view.save()"></input> 
+										style="width: 80px;dispaly:none" onclick="view.save()"></input> 
 									</td>
 									<td width="70%" align = "right">
 										<table>
@@ -268,7 +268,7 @@ th.ui-th-ltr {
 												<td><div style="width:6px"></div>
 												</td>
 												<td><input id="submit" type="submit" value="提交"
-													style="width: 80px;" onclick="view.submit()"></input>
+													style="width: 80px; dispaly:none" onclick="view.submit()"></input>
 												</td>
 											</tr>
 										</table>
