@@ -203,9 +203,9 @@ th.ui-th-ltr {
 		</tr>
 	</Table>
 	<%@include file="loading.jsp"%>
-
-</body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 <script src="../jsp/style_button.js"></script>
 <script src="../jsp/style_select.js"></script>
+</body>
+
 </html>

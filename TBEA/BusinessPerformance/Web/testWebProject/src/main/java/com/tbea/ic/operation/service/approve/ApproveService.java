@@ -9,7 +9,7 @@ import com.tbea.ic.operation.model.entity.jygk.Account;
 
 public interface ApproveService {
 
-	List<List<String[]>> getZb(List<Company> comps, Date date, ZBType entryType);
+	List<List<String[]>> getZb(Account account, List<Company> comps, Date date, ZBType entryType);
 
 	boolean hasApprovePlanPermission(Account account);
 

@@ -115,8 +115,9 @@ public class ApproveController {
 		for (CompanyType type : types){
 			comps.add(org.getCompany(type));			
 		}
-		
-		List<List<String[]>> ret = service.getZb(comps, date, entryType);
+		Account account = (Account) request
+		.getSession(false).getAttribute("account");
+		List<List<String[]>> ret = service.getZb(account, comps, date, entryType);
 	
 		String zb = JSONArray.fromObject(ret).toString().replace("null", "\"--\"");
 		return zb.getBytes("utf-8");

@@ -72,7 +72,7 @@ public class ApproveServiceImpl implements ApproveService {
 	CompanyManager companyManager;
 
 	@Override
-	public List<List<String[]>> getZb(List<Company> comps, Date date,
+	public List<List<String[]>> getZb(Account account, List<Company> comps, Date date,
 			ZBType approveType) {
 		List<List<String[]>> ret = null;
 		switch (approveType) {
