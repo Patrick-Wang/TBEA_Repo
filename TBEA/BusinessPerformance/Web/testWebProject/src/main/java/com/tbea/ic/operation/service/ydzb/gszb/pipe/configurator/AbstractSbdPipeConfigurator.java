@@ -12,18 +12,28 @@ public abstract class AbstractSbdPipeConfigurator implements IPipeConfigurator {
 
 	protected SbdNdjhZbDao sbdzbDao;
 	
-	static List<Integer> specialZbs = new ArrayList<Integer>();
+	static List<Integer> invisiableZbs = new ArrayList<Integer>();
+	static List<Integer> timePointNumberZbs = new ArrayList<Integer>();
+	static List<Integer> ratioZbs = new ArrayList<Integer>();
+
 	static {
-		specialZbs.add(GSZB.YSZK.getValue());
-		specialZbs.add(GSZB.CH.getValue());
-		specialZbs.add(GSZB.RJLR.getValue());
-		specialZbs.add(GSZB.RJSR.getValue());
-		specialZbs.add(GSZB.SXFYL.getValue());
-		specialZbs.add(GSZB.RS.getValue());
-		specialZbs.add(GSZB.CL.getValue());
-		specialZbs.add(GSZB.XL.getValue());
-		specialZbs.add(GSZB.XSLRL.getValue());
-		specialZbs.add(GSZB.QZZJXMCH.getValue());
+		timePointNumberZbs.add(GSZB.YSZK.getValue());
+		timePointNumberZbs.add(GSZB.CH.getValue());
+		timePointNumberZbs.add(GSZB.RS.getValue());
+		timePointNumberZbs.add(GSZB.QZZJXMCH.getValue());
+		timePointNumberZbs.add(GSZB.QZYQK.getValue());
+		timePointNumberZbs.add(GSZB.QZKCSP.getValue());
+	}
+
+	static {
+		ratioZbs.add(GSZB.RJLR.getValue());
+		ratioZbs.add(GSZB.RJSR.getValue());
+		ratioZbs.add(GSZB.SXFYL.getValue());
+		ratioZbs.add(GSZB.XSLRL.getValue());
+	}
+
+	static {
+		invisiableZbs.add(GSZB.CL.getValue());		
 	}
 	
 	protected CompanyManager companyManager;
@@ -32,8 +42,16 @@ public abstract class AbstractSbdPipeConfigurator implements IPipeConfigurator {
 		this.sbdzbDao = sbdzbDao;
 	}
 	
-	protected List<Integer> getSpecialZbs(){
-		return specialZbs;
+	protected List<Integer> getInvisiableZbs(){
+		return invisiableZbs;
+	}
+	
+	protected List<Integer> getTimePointNumberZbs(){
+		return timePointNumberZbs;
+	}
+	
+	protected List<Integer> getRatioZbs(){
+		return ratioZbs;
 	}
 	
 	protected void seperate(List<Company> companies, List<Company> sbdComps, List<Company> nonSbdComps){

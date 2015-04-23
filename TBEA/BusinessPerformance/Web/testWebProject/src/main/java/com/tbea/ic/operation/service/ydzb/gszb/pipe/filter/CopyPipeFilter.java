@@ -15,18 +15,27 @@ public class CopyPipeFilter implements IPipeFilter {
 	}
 	
 	public CopyPipeFilter(GSZB zb, int colFrom, int colTo) {
-		List<Integer[]> colMap = new ArrayList<Integer[]>();
+		add(zb, colFrom, colTo);
+	}
+	
+	public CopyPipeFilter add(Integer zb, int colFrom, int colTo){
+		List<Integer[]> colMap = this.copyMap.get(zb);
+		if (null == colMap){
+			colMap = new ArrayList<Integer[]>();
+			this.copyMap.put(zb, colMap);
+		}
 		colMap.add(new Integer[]{colFrom, colTo});
-		this.copyMap.put(zb.getValue(), colMap);
+		return this;
 	}
 	
 	public CopyPipeFilter add(GSZB zb, int colFrom, int colTo){
-		List<Integer[]> colMap = this.copyMap.get(zb.getValue());
-		if (null == colMap){
-			colMap = new ArrayList<Integer[]>();
-			this.copyMap.put(zb.getValue(), colMap);
+		return add(zb.getValue(), colFrom, colTo);
+	}
+	
+	public CopyPipeFilter add(List<Integer> zbs, int colFrom, int colTo){
+		for (Integer zb : zbs){
+			add(zb, colFrom, colTo);
 		}
-		colMap.add(new Integer[]{colFrom, colTo});
 		return this;
 	}
 	

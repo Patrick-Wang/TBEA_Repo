@@ -12,7 +12,7 @@ import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.YdjhProportionAccPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.CopyPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.SpecialPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.RatioPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
 
@@ -36,8 +36,6 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 		List<Company> sbdCompanies = new ArrayList<Company>();
 		seperate(allCompanies, sbdCompanies, nonSbdCompanies);
 	
-		List<Integer> specialZbs = getSpecialZbs();
-
 		DateHelper dh = new DateHelper(pipe.getDate());
 
 		WclPipeFilter wclFilter = new WclPipeFilter();
@@ -49,38 +47,34 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 		pipe.add(new AccPipeFilter(njhAcc, 0)
 				.includeCompanies(allCompanies)
 				.includeZbs(gsztzbs)
-				.excludeZbs(specialZbs)
-				.include(GSZB.RS)
-				.include(GSZB.YSZK)
-				.include(GSZB.CH)
-				.include(GSZB.QZZJXMCH));
+				.excludeZbs(getInvisiableZbs())
+				.excludeZbs(getRatioZbs()));
+		
 		// 下季度全年计划
 		pipe.add(new AccPipeFilter(njhAcc, 25, dh.getXjdLastMonth())
 				.includeCompanies(allCompanies)
 				.includeZbs(gsztzbs)
-				.excludeZbs(specialZbs)
-				.include(GSZB.RS)
-				.include(GSZB.YSZK)
-				.include(GSZB.CH)
-				.include(GSZB.QZZJXMCH));
+				.excludeZbs(getInvisiableZbs())
+				.excludeZbs(getRatioZbs()));
+
 
 		// 当月计划
 		if (sbdCompanies.isEmpty()) {
 			pipe.add(new AccPipeFilter(yjhAcc, 3)
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
-					.excludeZbs(specialZbs)
-					.include(GSZB.RS)
-					.include(GSZB.YSZK)
-					.include(GSZB.CH)
-					.include(GSZB.QZZJXMCH));
+					.excludeZbs(getInvisiableZbs())
+					.excludeZbs(getRatioZbs()));
+
 		} else {
 			pipe.add(new AccPipeFilter(yjhAcc, 3)
 					.includeCompanies(allCompanies)
 							.includeZbs(gsztzbs)
-							.excludeZbs(specialZbs)
-							.include(GSZB.RS)
-							.include(GSZB.QZZJXMCH))
+							.excludeZbs(getInvisiableZbs())
+							.excludeZbs(getRatioZbs())
+							.exclude(GSZB.YSZK)
+							.exclude(GSZB.CH))
+							
 				.add(new YdjhProportionAccPipeFilter(sbdzbDao, sjAcc, 3, dh.getFirstMonth(), dh.getCur())
 							.includeCompanies(sbdCompanies)
 							.include(GSZB.YSZK)
@@ -98,11 +92,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 		pipe.add(new AccPipeFilter(sjAcc, 4)
 				.includeCompanies(allCompanies)
 				.includeZbs(gsztzbs)
-				.excludeZbs(specialZbs)
-				.include(GSZB.YSZK)
-				.include(GSZB.CH)
-				.include(GSZB.QZZJXMCH)
-				.include(GSZB.RS))
+				.excludeZbs(getInvisiableZbs())
+				.excludeZbs(getRatioZbs()))
 
 				// 计划完成率
 				.add(wclFilter.add(5, 4, 3))
@@ -111,11 +102,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 				.add(new AccPipeFilter(sjAcc, 6, dh.getQntq())
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs)
-						.include(GSZB.YSZK)
-						.include(GSZB.CH)
-						.include(GSZB.QZZJXMCH)
-						.include(GSZB.RS))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 
 				// 同比增幅
 				.add(tbzzFilter.add(7, 4, 6))
@@ -124,36 +112,31 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 				.add(new AccPipeFilter(yjhAcc, 1, dh.getJdStart(), dh.getJdEnd(dh.getCur()))
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 				.add(copyFilter
-						.add(GSZB.CH, 3, 1)
-						.add(GSZB.QZZJXMCH, 3, 1)
-						.add(GSZB.YSZK, 3, 1)
-						.add(GSZB.RS, 3, 1))
+						.add(getTimePointNumberZbs(), 3, 1))
 
 				// 下季度计划
 				.add(new AccPipeFilter(yjhAcc, 2, dh.getXjdFirstMonth(), dh
 						.getXjdLastMonth())
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 				.add(new AccPipeFilter(yjhAcc, 2, dh.getXjdLastMonth())
 						.includeCompanies(allCompanies)
-						.include(GSZB.YSZK)
-						.include(GSZB.CH)
-						.include(GSZB.QZZJXMCH)
-						.include(GSZB.RS))
+						.includeZbs(getTimePointNumberZbs()))
 
 				// 季度累计
 				.add(new AccPipeFilter(sjAcc, 8, dh.getJdStart(), dh.getCur())
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 				.add(copyFilter
-						.add(GSZB.CH, 4, 8)
-						.add(GSZB.QZZJXMCH, 4, 8)
-						.add(GSZB.YSZK, 4, 8)
-						.add(GSZB.RS, 4, 8))
+						.add(getTimePointNumberZbs(), 4, 8))
+
 
 				// 季度计划完成率
 				.add(wclFilter.add(9, 8, 1))
@@ -163,13 +146,11 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.getQntq())
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 				.add(new AccPipeFilter(sjAcc, 10, dh.getQntq())
 						.includeCompanies(allCompanies)
-						.include(GSZB.YSZK)
-						.include(GSZB.CH)
-						.include(GSZB.QZZJXMCH)
-						.include(GSZB.RS))
+						.includeZbs(getTimePointNumberZbs()))
 
 				// 同比增幅
 				.add(tbzzFilter
@@ -180,12 +161,10 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.getCur())
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 				.add(copyFilter
-						.add(GSZB.CH, 4, 12)
-						.add(GSZB.QZZJXMCH, 4, 12)
-						.add(GSZB.YSZK, 4, 12)
-						.add(GSZB.RS, 4, 12))
+						.add(getTimePointNumberZbs(), 4, 12))
 
 				// 累计计划完成率
 				.add(wclFilter.add(13, 12, 0))
@@ -195,12 +174,10 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.getQntq())
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 				.add(copyFilter
-						.add(GSZB.CH, 10, 14)
-						.add(GSZB.QZZJXMCH, 10, 14)
-						.add(GSZB.YSZK, 10, 14)
-						.add(GSZB.RS, 10, 14))
+						.add(getTimePointNumberZbs(), 10, 14))
 
 				// 同比增幅
 				.add(tbzzFilter.add(15, 12, 14))
@@ -209,44 +186,34 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 				.add(new AccPipeFilter(sjAcc, 16, dh.getXjdFirstMonth())
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs)
-						.include(GSZB.YSZK)
-						.include(GSZB.CH)
-						.include(GSZB.QZZJXMCH)
-						.include(GSZB.RS))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 
 				// 下季度次月预计
 				.add(new AccPipeFilter(sjAcc, 17, dh.getXjdSecondMonth())
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs)
-						.include(GSZB.YSZK)
-						.include(GSZB.CH)
-						.include(GSZB.QZZJXMCH)
-						.include(GSZB.RS))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 
 				// 下季度末月预计
 				.add(new AccPipeFilter(sjAcc, 18, dh.getXjdLastMonth())
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs)
-						.include(GSZB.YSZK)
-						.include(GSZB.CH)
-						.include(GSZB.QZZJXMCH)
-						.include(GSZB.RS))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 
 				// 下季度预计合计
 				.add(new AccPipeFilter(sjAcc, 19, dh.getXjdFirstMonth(), dh
 						.getXjdLastMonth())
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 				.add(new AccPipeFilter(sjAcc, 19, dh.getXjdLastMonth())
 						.includeCompanies(allCompanies)
-						.include(GSZB.YSZK)
-						.include(GSZB.CH)
-						.include(GSZB.QZZJXMCH)
-						.include(GSZB.RS))
+						.includeZbs(getTimePointNumberZbs()))
+
 
 				// 下季度预计完成率
 				.add(wclFilter.add(20, 19, 2))
@@ -256,12 +223,10 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.getXjdLastMonth())
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 				.add(copyFilter
-						.add(GSZB.CH, 19, 21)
-						.add(GSZB.QZZJXMCH, 19, 21)
-						.add(GSZB.YSZK, 19, 21)
-						.add(GSZB.RS, 19, 21))
+						.add(getTimePointNumberZbs(), 19, 21))
 
 				// 下季度年度累计完成率
 				.add(wclFilter
@@ -272,20 +237,18 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						dh.getQntqXjdLastMonth())
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(specialZbs))
+						.excludeZbs(getInvisiableZbs())
+						.excludeZbs(getRatioZbs()))
 				.add(new AccPipeFilter(sjAcc, 23, dh.getQntqXjdLastMonth())
 						.includeCompanies(allCompanies)
-						.include(GSZB.YSZK)
-						.include(GSZB.CH)
-						.include(GSZB.QZZJXMCH)
-						.include(GSZB.RS))
+						.includeZbs(getTimePointNumberZbs()))
 
 				// 下季度年度累计同比增幅
 				.add(tbzzFilter
 						.add(24, 21, 23))
 
 				// 添加特殊指标过滤器
-				.add(new SpecialPipeFilter().exclude(5)// 计划完成率
+				.add(new RatioPipeFilter().exclude(5)// 计划完成率
 						.exclude(7)// 同比增幅
 						.exclude(9)// 季度计划完成率
 						.exclude(11)// 同比增幅

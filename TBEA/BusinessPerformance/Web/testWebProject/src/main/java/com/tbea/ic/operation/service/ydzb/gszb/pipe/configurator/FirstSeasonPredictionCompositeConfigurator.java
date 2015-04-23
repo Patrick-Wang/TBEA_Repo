@@ -6,7 +6,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.SpecialPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.RatioPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
 
@@ -90,7 +90,7 @@ public class FirstSeasonPredictionCompositeConfigurator implements
 				.add(tbzzFilter.add(16, 13, 15))
 
 				// 添加特殊指标过滤器
-				.add(new SpecialPipeFilter().exclude(4)// 计划完成率
+				.add(new RatioPipeFilter().exclude(4)// 计划完成率
 						.exclude(6)// 同比增幅
 						.exclude(10)// 季度计划完成率
 						.exclude(12)// 同比增幅

@@ -8,7 +8,7 @@ import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.CopyPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.SpecialPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.RatioPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
 
@@ -139,7 +139,7 @@ public class ZtzbCompositeConfigurator implements IPipeConfigurator {
 				.add(14, 11, 13))
 
 			//添加特殊指标过滤器
-			.add(new SpecialPipeFilter()
+			.add(new RatioPipeFilter()
 				.exclude(3)// 计划完成率
 				.exclude(5)// 同比增幅
 				.exclude(8)// 季度计划完成率
