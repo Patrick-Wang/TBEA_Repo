@@ -193,7 +193,7 @@ module companys_zbhz_prediction {
         
         private formatData(data: string[][], precentList: std.vector<number>, zhCols: number[]) {
             var zhZb = [
-                '人均发电量', 
+                '人均发电量（万度/人）', 
                 '外购电单位成本（元/度）', 
                 '铝杆棒一次综合成品率（%）', 
                 '其中：5154合金杆一次成品率（%）', 
