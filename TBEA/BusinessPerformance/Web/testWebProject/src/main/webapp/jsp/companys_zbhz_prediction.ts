@@ -191,106 +191,51 @@ module companys_zbhz_prediction {
                 });
         }
         
-        private formatData(data : string[][], precentList : std.vector<number>, TType: TableType){
-               
-            var formaterChain : Util.FormatHandler = new Util.FormatPercentHandler([], precentList.toArray());
-            if (TType == TableType.firstMonthinSeason)
-            {
-              
-                formaterChain.next(new Util.FormatIntHandler(["人数"]))
+        private formatData(data: string[][], precentList: std.vector<number>, zhCols: number[]) {
+            var zhZb = [
+                '人均发电量', 
+                '外购电单位成本（元/度）', 
+                '铝杆棒一次综合成品率（%）', 
+                '其中：5154合金杆一次成品率（%）', 
+                '4043&8030&6201合金杆一次成品率（%）', 
+                '高纯铝杆产品一次成品率（%）', 
+                '铝棒产品一次成品率（%）', 
+                '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）', 
+                '失败成本率1（%）', 
+                '外部客诉率（%）', 
+                '4N6精铝块一次成品率（%）', 
+                '精铝杆一次成品率（%）', 
+                '综合成品率（%）', 
+                '基材成品率（%）', 
+                '粉末喷涂成品率（%）', 
+                '隔热产品成品率（%）', 
+                '失败成本率（%）', 
+                '自产箔综合符单率（%）', 
+                '委托加工化成箔符单率（%）', 
+                '架空电缆（1KV、10KV）合格率（%）', 
+                '钢芯铝绞线合格率（%）', 
+                '布电线合格率（%）'];
+            
+            var formaterChain: Util.FormatHandler = new Util.FormatPercentHandler([], precentList.toArray());
+            formaterChain.next(new Util.FormatIntHandler(["人数"]))
                 .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
                 .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)']))
-                .next(new Util.FormatFordotHandler(1, ['人均利润', '人均利润','精铝块13项元素和值（ppm）']))
-                .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], [FirstMonthZb.dyyjz, FirstMonthZb.dyqntq, FirstMonthZb.cyyj, 
-                                                                                     FirstMonthZb.myyj, FirstMonthZb.jdyjhj, FirstMonthZb.jdqntq, 
-                                                                                     FirstMonthZb.ndljwcz, FirstMonthZb.ndqntqz]))
-                .next(new Util.FormatFordotHandler(2, ['人均发电量', '外购电单位成本（元/度）', '铝杆棒一次综合成品率（%）', '其中：5154合金杆一次成品率（%）', '4043&8030&6201合金杆一次成品率（%）','高纯铝杆产品一次成品率（%）'
-                                                       ,'铝棒产品一次成品率（%）', '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）', '失败成本率1（%）', '外部客诉率（%）','4N6精铝块一次成品率（%）','精铝杆一次成品率（%）'
-                                                       ,'综合成品率（%）','基材成品率（%）','粉末喷涂成品率（%）','隔热产品成品率（%）', '失败成本率（%）','自产箔综合符单率（%）','委托加工化成箔符单率（%）','架空电缆（1KV、10KV）合格率（%）'
-                                                       ,'钢芯铝绞线合格率（%）','布电线合格率（%）']))
+                .next(new Util.FormatFordotHandler(1, ['人均利润', '人均利润', '精铝块13项元素和值（ppm）']))
+                .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], zhCols))
+                .next(new Util.FormatFordotHandler(2, zhZb))
                 .next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）']))
                 .next(new Util.FormatCurrencyHandler());
-            }else if (TType == TableType.secondMonthinSeason)
-            {
-                 formaterChain.next(new Util.FormatIntHandler(["人数"]))
-                .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
-                .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)']))
-                .next(new Util.FormatFordotHandler(1, ['人均利润', '人均利润','精铝块13项元素和值（ppm）']))
-                .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], [SecondMonthZb.dyyjz, SecondMonthZb.dyqntq, SecondMonthZb.jdlj, 
-                                                                                     SecondMonthZb.jdqntqz, SecondMonthZb.jdmyyj, SecondMonthZb.jdyjhj, 
-                                                                                     SecondMonthZb.jdyjqntq, SecondMonthZb.ndljwcz, SecondMonthZb.ndqntqz]))
-                .next(new Util.FormatFordotHandler(2,['人均发电量', '外购电单位成本（元/度）', '铝杆棒一次综合成品率（%）', '其中：5154合金杆一次成品率（%）', '4043&8030&6201合金杆一次成品率（%）','高纯铝杆产品一次成品率（%）'
-                                                       ,'铝棒产品一次成品率（%）', '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）', '失败成本率1（%）', '外部客诉率（%）','4N6精铝块一次成品率（%）','精铝杆一次成品率（%）'
-                                                       ,'综合成品率（%）','基材成品率（%）','粉末喷涂成品率（%）','隔热产品成品率（%）', '失败成本率（%）','自产箔综合符单率（%）','委托加工化成箔符单率（%）','架空电缆（1KV、10KV）合格率（%）'
-                                                       ,'钢芯铝绞线合格率（%）','布电线合格率（%）']))
-                .next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）']))
-                .next(new Util.FormatCurrencyHandler());
-            }else if (TType == TableType.thirdMonthinSeason)
-            {
-                 formaterChain.next(new Util.FormatIntHandler(["人数"]))
-                .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
-                .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)']))
-                .next(new Util.FormatFordotHandler(1, ['人均利润', '人均利润','精铝块13项元素和值（ppm）']))
-                .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], [ThirdMonthZb.dyyjz, ThirdMonthZb.dyqntq, ThirdMonthZb.jdlj, 
-                                                                                     ThirdMonthZb.jdqntqz, ThirdMonthZb.ndljwcz, ThirdMonthZb.ndqntqz, 
-                                                                                     ThirdMonthZb.xjdsyyj, ThirdMonthZb.xjdcyyj, ThirdMonthZb.xjdmyyj,
-                                                                                     ThirdMonthZb.xjdyjhj, ThirdMonthZb.xjdndlj, ThirdMonthZb.xjdqntq]))
-                .next(new Util.FormatFordotHandler(2,['人均发电量', '外购电单位成本（元/度）', '铝杆棒一次综合成品率（%）', '其中：5154合金杆一次成品率（%）', '4043&8030&6201合金杆一次成品率（%）','高纯铝杆产品一次成品率（%）'
-                                                       ,'铝棒产品一次成品率（%）', '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）', '失败成本率1（%）', '外部客诉率（%）','4N6精铝块一次成品率（%）','精铝杆一次成品率（%）'
-                                                       ,'综合成品率（%）','基材成品率（%）','粉末喷涂成品率（%）','隔热产品成品率（%）', '失败成本率（%）','自产箔综合符单率（%）','委托加工化成箔符单率（%）','架空电缆（1KV、10KV）合格率（%）'
-                                                       ,'钢芯铝绞线合格率（%）','布电线合格率（%）']))
-                .next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）']))
-                .next(new Util.FormatCurrencyHandler());
-            }
-            var row = []; 
+            var row = [];
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
-//                isRs = row[0] == "人数";
-//                isJzcsyl = row[0] == '净资产收益率(%)';
-//                isSxfyl = row[0] == '三项费用率(%)';
-//                isXslvl = row[0] == '销售利润率(%)';
-//                isRjlr = row[0] == '人均利润';
-//                isRjsr = row[0] == '人均收入';
-                
-                
-                
                 for (var i = 1; i < row.length; ++i) {
                     row[i] = formaterChain.handle(row[0], i, row[i]);
-//                    if (precentList.contains(i)) {
-//                        row[i] = Util.formatPercent(row[i]);
-//                    } else {
-//                        if(isRs){
-//                            row[i] = Util.formatInt(row[i]);
-//                        }else if (isJzcsyl)
-//                        {
-//                            row[i] = Util.formatPercentSignal(row[i]);
-//                        }
-//                        else if (isSxfyl)
-//                        {
-//                             row[i] = Util.formatPercent(row[i]);
-//                        }
-//                        else if (isXslvl)
-//                        {
-//                            row[i] = Util.formatPercent(row[i]);
-//                        }
-//                        else if (isRjlr)
-//                        {
-//                            row[i] = Util.formatFordot1(row[i]);
-//                        }
-//                        else if (isRjsr)
-//                        {
-//                            row[i] = Util.formatFordot1(row[i]);
-//                        }  
-//                        else {
-//                            row[i] = Util.formatCurrency(row[i]);
-//                        }
-//                    }
                 }
                 data.push(row);
             }
             return data;
         }
-        
+
         private formatFirstMonthData(data: string[][]) {
             var precentList: std.vector<number> = new std.vector<number>();
             precentList.push(FirstMonthZb.dyjhwcl);
@@ -299,9 +244,18 @@ module companys_zbhz_prediction {
             precentList.push(FirstMonthZb.jdtbzf);
             precentList.push(FirstMonthZb.ndzbwcl);
             precentList.push(FirstMonthZb.ndtbzf);
-            return this.formatData(data, precentList, TableType.firstMonthinSeason);
+            return this.formatData(data, precentList, [
+                FirstMonthZb.dyyjz,
+                FirstMonthZb.dyqntq,
+                FirstMonthZb.cyyj,
+                FirstMonthZb.myyj,
+                FirstMonthZb.jdyjhj,
+                FirstMonthZb.jdqntq,
+                FirstMonthZb.ndljwcz,
+                FirstMonthZb.ndqntqz
+            ]);
         }
-        
+
         private formatSecondMonthData(data: string[][]) {
             var precentList: std.vector<number> = new std.vector<number>();
             precentList.push(SecondMonthZb.dyjhwcl);
@@ -312,10 +266,20 @@ module companys_zbhz_prediction {
             precentList.push(SecondMonthZb.jdtbzf);
             precentList.push(SecondMonthZb.ndzbwcl);
             precentList.push(SecondMonthZb.ndtbzf);
-            return this.formatData(data, precentList, TableType.secondMonthinSeason);
+            return this.formatData(data, precentList, [
+                SecondMonthZb.dyyjz,
+                SecondMonthZb.dyqntq,
+                SecondMonthZb.jdlj,
+                SecondMonthZb.jdqntqz,
+                SecondMonthZb.jdmyyj,
+                SecondMonthZb.jdyjhj,
+                SecondMonthZb.jdyjqntq,
+                SecondMonthZb.ndljwcz,
+                SecondMonthZb.ndqntqz
+            ]);
         }
-        
-        private formatThirdMonthData(data : string[][]) {
+
+        private formatThirdMonthData(data: string[][]) {
             var precentList: std.vector<number> = new std.vector<number>();
             precentList.push(ThirdMonthZb.dyjhwcl);
             precentList.push(ThirdMonthZb.dytbzf);
@@ -326,7 +290,20 @@ module companys_zbhz_prediction {
             precentList.push(ThirdMonthZb.xjdyjwcl);
             precentList.push(ThirdMonthZb.xjdndljwcl);
             precentList.push(ThirdMonthZb.xjdtbzf);
-            return this.formatData(data, precentList, TableType.thirdMonthinSeason);
+            return this.formatData(data, precentList, [
+                ThirdMonthZb.dyyjz,
+                ThirdMonthZb.dyqntq,
+                ThirdMonthZb.jdlj,
+                ThirdMonthZb.jdqntqz,
+                ThirdMonthZb.ndljwcz,
+                ThirdMonthZb.ndqntqz,
+                ThirdMonthZb.xjdsyyj,
+                ThirdMonthZb.xjdcyyj,
+                ThirdMonthZb.xjdmyyj,
+                ThirdMonthZb.xjdyjhj,
+                ThirdMonthZb.xjdndlj,
+                ThirdMonthZb.xjdqntq
+            ]);
         }
         
         private updateTable(): void {
