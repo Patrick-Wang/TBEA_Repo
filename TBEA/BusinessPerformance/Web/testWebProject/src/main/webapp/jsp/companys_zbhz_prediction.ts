@@ -24,6 +24,10 @@ module companys_zbhz_prediction {
         xjdsyyj, xjdcyyj, xjdmyyj, xjdyjhj, xjdyjwcl, xjdndlj, xjdndljwcl, xjdqntq,xjdtbzf
     }
     
+    enum TableType{
+        firstMonthinSeason, secondMonthinSeason, thirdMonthinSeason
+    }
+    
     class JQGridAssistantFactory {
 
         public static createTable(gridName: string, gridStyle: number): JQTable.JQGridAssistant {
@@ -187,7 +191,7 @@ module companys_zbhz_prediction {
                 });
         }
         
-        private formatData(data : string[][], precentList : std.vector<number>){
+        private formatData(data : string[][], precentList : std.vector<number>, TType: TableType){
             var row = [];
             var isRs = false;
             var isSxfyl = false;
@@ -196,13 +200,30 @@ module companys_zbhz_prediction {
             var isRjlr = false;
             var isRjsr = false;
             
+            
             var formaterChain : Util.FormatHandler;
             formaterChain = new Util.FormatPercentHandler([], precentList.toArray());
-            formaterChain.next(new Util.FormatIntHandler(["人数"], []))
-            .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)'], []))
-            .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)'], []))
-            .next(new Util.FormatFordot1Handler(['人均利润', '人均利润'], []))
-            .next(new Util.FormatCurrencyHandler([], []))
+            if (TType == TableType.firstMonthinSeason)
+            {
+                formaterChain.next(new Util.FormatIntHandler(["人数"], []))
+                .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)'], []))
+                .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)'], []))
+                .next(new Util.FormatFordot1Handler(['人均利润', '人均利润'], []))
+                .next(new Util.FormatCurrencyHandler([], []));
+            }else if (TType == TableType.secondMonthinSeason)
+            {
+                
+            }else if (TType == TableType.thirdMonthinSeason)
+            {
+                
+            }
+
+                                         
+                
+            
+            
+            
+            
 
             
             for (var j = 0; j < this.mData.length; ++j) {
@@ -261,7 +282,7 @@ module companys_zbhz_prediction {
             precentList.push(FirstMonthZb.jdtbzf);
             precentList.push(FirstMonthZb.ndzbwcl);
             precentList.push(FirstMonthZb.ndtbzf);
-            return this.formatData(data, precentList);
+            return this.formatData(data, precentList, TableType.firstMonthinSeason);
         }
         
         private formatSecondMonthData(data: string[][]) {
@@ -274,7 +295,7 @@ module companys_zbhz_prediction {
             precentList.push(SecondMonthZb.jdtbzf);
             precentList.push(SecondMonthZb.ndzbwcl);
             precentList.push(SecondMonthZb.ndtbzf);
-            return this.formatData(data, precentList);
+            return this.formatData(data, precentList, TableType.secondMonthinSeason);
         }
         
         private formatThirdMonthData(data : string[][]) {
@@ -288,7 +309,7 @@ module companys_zbhz_prediction {
             precentList.push(ThirdMonthZb.xjdyjwcl);
             precentList.push(ThirdMonthZb.xjdndljwcl);
             precentList.push(ThirdMonthZb.xjdtbzf);
-            return this.formatData(data, precentList);
+            return this.formatData(data, precentList, TableType.thirdMonthinSeason);
         }
         
         private updateTable(): void {
