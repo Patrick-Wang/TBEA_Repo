@@ -11,22 +11,11 @@ module Util {
             return "";
         }
         
-        private containsZb(zb: string): boolean {
-            for (var i = 0; i < this.mZbs.length; ++i) {
-                if (this.mZbs[i] == zb) {
+        match(zb: string, col: number): boolean {
+            if (this.mZbs.length == 0 || this.mZbs.indexOf(zb) >= 0) {
+                if (this.mCols.length == 0 || this.mCols.indexOf(col) >= 0) {
                     return true;
                 }
-            }
-        }
-        
-        match(zb: string, col: number): boolean {
-            if (this.mZbs.length == 0 || this.containsZb(zb)) {
-                for (var i = 0; i < this.mCols.length; ++i) {
-                    if (this.mCols[i] == col) {
-                        return true;
-                    }
-                }
-                return this.mCols.length == 0;
             }
             return false;
         }
