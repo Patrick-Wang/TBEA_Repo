@@ -2,15 +2,21 @@ declare var $;
 module Util {
 
 
-    export class FormatHandler{
-        private mNextHandler : FormatHandler;
-        private mZbs :string[];
-        private mCols:number[];
+    export interface FormatHandler {
+        handle(zb: string, col: number, val: string): string;
+        next(handler: FormatHandler);
+    }
 
-        handle(zb:string, col:number, val:string) : string{
+
+    class AbstractFormatHandler implements FormatHandler {
+        private mNextHandler: AbstractFormatHandler;
+        private mZbs: string[];
+        private mCols: number[];
+
+        handle(zb: string, col: number, val: string): string {
             return "";
         }
-        
+
         match(zb: string, col: number): boolean {
             if (this.mZbs.length == 0 || this.mZbs.indexOf(zb) >= 0) {
                 if (this.mCols.length == 0 || this.mCols.indexOf(col) >= 0) {
@@ -19,104 +25,107 @@ module Util {
             }
             return false;
         }
-        
-        constructor(zbs:string[], cols:number[]){
+
+        constructor(zbs: string[], cols: number[]) {
             this.mZbs = zbs;
             this.mCols = cols;
         }
-        
-        callNext(zb:string, col:number, val:string) : string{
-            if (this.mNextHandler != undefined){
-                return this.mNextHandler.handle(zb, col, val);    
+
+        callNext(zb: string, col: number, val: string): string {
+            if (this.mNextHandler != undefined) {
+                return this.mNextHandler.handle(zb, col, val);
             }
             return "--";
         }
-        
-        next(handler : FormatHandler) : FormatHandler{
+
+        next(handler: AbstractFormatHandler): AbstractFormatHandler {
             this.mNextHandler = handler;
             return handler;
         }
     }
-    
-    
-    export class FormatIntHandler extends FormatHandler{
-        handle(zb:string, col:number, val:string) : string{
-           if (this.match(zb, col)){
-                return Util.formatInt(val);    
-           }else{
-                return this.callNext(zb, col, val);  
-           }
+
+
+    export class FormatIntHandler extends AbstractFormatHandler {
+        handle(zb: string, col: number, val: string): string {
+            if (this.match(zb, col)) {
+                return Util.formatInt(val);
+            } else {
+                return this.callNext(zb, col, val);
+            }
         }
-        
-        constructor(zbs:string[], cols:number[]){
+
+        constructor(zbs: string[] = [], cols: number[] = []) {
             super(zbs, cols);
         }
     }
-    
-    export class FormatCurrencyHandler extends FormatHandler{
-        handle(zb:string, col:number, val:string) : string{
-           if (this.match(zb, col)){
-                return Util.formatCurrency(val);    
-           }else{
-                return this.callNext(zb, col, val);  
-           }
+
+    export class FormatCurrencyHandler extends AbstractFormatHandler {
+        handle(zb: string, col: number, val: string): string {
+            if (this.match(zb, col)) {
+                return Util.formatCurrency(val);
+            } else {
+                return this.callNext(zb, col, val);
+            }
         }
-        
-        constructor(zbs:string[], cols:number[]){
+
+        constructor(zbs: string[] = [], cols: number[] = []) {
             super(zbs, cols);
         }
     }
-    
-    export class FormatPercentHandler extends FormatHandler{
-        handle(zb:string, col:number, val:string) : string{
-           if (this.match(zb, col)){
-                return Util.formatPercent(val);    
-           }else{
-                return this.callNext(zb, col, val);  
-           }
+
+    export class FormatPercentHandler extends AbstractFormatHandler {
+        handle(zb: string, col: number, val: string): string {
+            if (this.match(zb, col)) {
+                return Util.formatPercent(val);
+            } else {
+                return this.callNext(zb, col, val);
+            }
         }
-        
-        constructor(zbs:string[], cols:number[]){
+
+        constructor(zbs: string[] = [], cols: number[] = []) {
             super(zbs, cols);
         }
     }
-    
-     export class FormatPercentSignalHandler extends FormatHandler{
-        handle(zb:string, col:number, val:string) : string{
-           if (this.match(zb, col)){
-                return Util.formatPercentSignal(val);    
-           }else{
-                return this.callNext(zb, col, val);  
-           }
+
+    export class FormatPercentSignalHandler extends AbstractFormatHandler {
+        handle(zb: string, col: number, val: string): string {
+            if (this.match(zb, col)) {
+                return Util.formatPercentSignal(val);
+            } else {
+                return this.callNext(zb, col, val);
+            }
         }
-        
-        constructor(zbs:string[], cols:number[]){
+
+        constructor(zbs: string[] = [], cols: number[] = []) {
             super(zbs, cols);
         }
     }
-    
-    export class FormatFordot1Handler extends FormatHandler{
-        handle(zb:string, col:number, val:string) : string{
-           if (this.match(zb, col)){
-                return Util.formatFordot1(val);    
-           }else{
-                return this.callNext(zb, col, val);  
-           }
-        }
+
+    export class FormatFordotHandler extends AbstractFormatHandler {
         
-        constructor(zbs:string[], cols:number[]){
+        private mDotCount : number;
+        handle(zb: string, col: number, val: string): string {
+            if (this.match(zb, col)) {
+                return Util.formatFordot(val, this.mDotCount);
+            } else {
+                return this.callNext(zb, col, val);
+            }
+        }
+
+        constructor(dotCount : number = 1, zbs: string[] = [], cols: number[] = []) {
             super(zbs, cols);
+            this.mDotCount = dotCount;
         }
     }
-    
-    export class ZBStatus{
-        static NONE : string = "NONE";
-        static APPROVED : string = "APPROVED";
-        static SUBMITTED : string = "SUBMITTED";
-        static SAVED : string = "SAVED";
-        static APPROVED_2 : string = "APPROVED_2";
-        static SUBMITTED_2 :string = "SUBMITTED_2"
-        
+
+    export class ZBStatus {
+        static NONE: string = "NONE";
+        static APPROVED: string = "APPROVED";
+        static SUBMITTED: string = "SUBMITTED";
+        static SAVED: string = "SAVED";
+        static APPROVED_2: string = "APPROVED_2";
+        static SUBMITTED_2: string = "SUBMITTED_2"
+
     }
     
     export enum ZBType {
@@ -440,6 +449,13 @@ module Util {
             return val;
         }
         return (parseFloat(val) * 100).toFixed(1) + "%"    
+    }
+    
+    export function formatFordot(val: string, dotCount : number = 1): string{
+        if (val === "--" || val === "" || val === "-") {
+            return val;
+        }
+        return (parseFloat(val)).toFixed(dotCount);   
     }
     
     export function formatFordot1(val: string): string{

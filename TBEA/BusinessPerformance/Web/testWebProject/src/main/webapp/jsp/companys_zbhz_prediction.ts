@@ -192,40 +192,57 @@ module companys_zbhz_prediction {
         }
         
         private formatData(data : string[][], precentList : std.vector<number>, TType: TableType){
-            var row = [];
-            var isRs = false;
-            var isSxfyl = false;
-            var isJzcsyl = false;
-            var isXslvl = false;
-            var isRjlr = false;
-            var isRjsr = false;
-            
-            
-            var formaterChain : Util.FormatHandler;
-            formaterChain = new Util.FormatPercentHandler([], precentList.toArray());
+               
+            var formaterChain : Util.FormatHandler = new Util.FormatPercentHandler([], precentList.toArray());
             if (TType == TableType.firstMonthinSeason)
             {
-                formaterChain.next(new Util.FormatIntHandler(["人数"], []))
-                .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)'], []))
-                .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)'], []))
-                .next(new Util.FormatFordot1Handler(['人均利润', '人均利润'], []))
-                .next(new Util.FormatCurrencyHandler([], []));
+              
+                formaterChain.next(new Util.FormatIntHandler(["人数"]))
+                .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
+                .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)']))
+                .next(new Util.FormatFordotHandler(1, ['人均利润', '人均利润','精铝块13项元素和值（ppm）']))
+                .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], [FirstMonthZb.dyyjz, FirstMonthZb.dyqntq, FirstMonthZb.cyyj, 
+                                                                                     FirstMonthZb.myyj, FirstMonthZb.jdyjhj, FirstMonthZb.jdqntq, 
+                                                                                     FirstMonthZb.ndljwcz, FirstMonthZb.ndqntqz]))
+                .next(new Util.FormatFordotHandler(2, ['人均发电量', '外购电单位成本（元/度）', '铝杆棒一次综合成品率（%）', '其中：5154合金杆一次成品率（%）', '4043&8030&6201合金杆一次成品率（%）','高纯铝杆产品一次成品率（%）'
+                                                       ,'铝棒产品一次成品率（%）', '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）', '失败成本率1（%）', '外部客诉率（%）','4N6精铝块一次成品率（%）','精铝杆一次成品率（%）'
+                                                       ,'综合成品率（%）','基材成品率（%）','粉末喷涂成品率（%）','隔热产品成品率（%）', '失败成本率（%）','自产箔综合符单率（%）','委托加工化成箔符单率（%）','架空电缆（1KV、10KV）合格率（%）'
+                                                       ,'钢芯铝绞线合格率（%）','布电线合格率（%）']))
+                .next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）']))
+                .next(new Util.FormatCurrencyHandler());
             }else if (TType == TableType.secondMonthinSeason)
             {
-                
+                 formaterChain.next(new Util.FormatIntHandler(["人数"]))
+                .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
+                .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)']))
+                .next(new Util.FormatFordotHandler(1, ['人均利润', '人均利润','精铝块13项元素和值（ppm）']))
+                .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], [SecondMonthZb.dyyjz, SecondMonthZb.dyqntq, SecondMonthZb.jdlj, 
+                                                                                     SecondMonthZb.jdqntqz, SecondMonthZb.jdmyyj, SecondMonthZb.jdyjhj, 
+                                                                                     SecondMonthZb.jdyjqntq, SecondMonthZb.ndljwcz, SecondMonthZb.ndqntqz]))
+                .next(new Util.FormatFordotHandler(2,['人均发电量', '外购电单位成本（元/度）', '铝杆棒一次综合成品率（%）', '其中：5154合金杆一次成品率（%）', '4043&8030&6201合金杆一次成品率（%）','高纯铝杆产品一次成品率（%）'
+                                                       ,'铝棒产品一次成品率（%）', '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）', '失败成本率1（%）', '外部客诉率（%）','4N6精铝块一次成品率（%）','精铝杆一次成品率（%）'
+                                                       ,'综合成品率（%）','基材成品率（%）','粉末喷涂成品率（%）','隔热产品成品率（%）', '失败成本率（%）','自产箔综合符单率（%）','委托加工化成箔符单率（%）','架空电缆（1KV、10KV）合格率（%）'
+                                                       ,'钢芯铝绞线合格率（%）','布电线合格率（%）']))
+                .next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）']))
+                .next(new Util.FormatCurrencyHandler());
             }else if (TType == TableType.thirdMonthinSeason)
             {
-                
+                 formaterChain.next(new Util.FormatIntHandler(["人数"]))
+                .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
+                .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)']))
+                .next(new Util.FormatFordotHandler(1, ['人均利润', '人均利润','精铝块13项元素和值（ppm）']))
+                .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], [ThirdMonthZb.dyyjz, ThirdMonthZb.dyqntq, ThirdMonthZb.jdlj, 
+                                                                                     ThirdMonthZb.jdqntqz, ThirdMonthZb.ndljwcz, ThirdMonthZb.ndqntqz, 
+                                                                                     ThirdMonthZb.xjdsyyj, ThirdMonthZb.xjdcyyj, ThirdMonthZb.xjdmyyj,
+                                                                                     ThirdMonthZb.xjdyjhj, ThirdMonthZb.xjdndlj, ThirdMonthZb.xjdqntq]))
+                .next(new Util.FormatFordotHandler(2,['人均发电量', '外购电单位成本（元/度）', '铝杆棒一次综合成品率（%）', '其中：5154合金杆一次成品率（%）', '4043&8030&6201合金杆一次成品率（%）','高纯铝杆产品一次成品率（%）'
+                                                       ,'铝棒产品一次成品率（%）', '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）', '失败成本率1（%）', '外部客诉率（%）','4N6精铝块一次成品率（%）','精铝杆一次成品率（%）'
+                                                       ,'综合成品率（%）','基材成品率（%）','粉末喷涂成品率（%）','隔热产品成品率（%）', '失败成本率（%）','自产箔综合符单率（%）','委托加工化成箔符单率（%）','架空电缆（1KV、10KV）合格率（%）'
+                                                       ,'钢芯铝绞线合格率（%）','布电线合格率（%）']))
+                .next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）']))
+                .next(new Util.FormatCurrencyHandler());
             }
-
-                                         
-                
-            
-            
-            
-            
-
-            
+            var row = []; 
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
 //                isRs = row[0] == "人数";
