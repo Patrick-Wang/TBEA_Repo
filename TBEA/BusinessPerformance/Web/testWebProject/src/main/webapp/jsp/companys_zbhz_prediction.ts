@@ -196,13 +196,12 @@ module companys_zbhz_prediction {
             var isRjlr = false;
             var isRjsr = false;
             
-            var formaterChain : Util.FormatHandler;
-            formaterChain = new Util.FormatPercentHandler([], precentList.toArray());
-            formaterChain.next(new Util.FormatIntHandler(["人数"], []))
-            .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)'], []))
-            .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)'], []))
-            .next(new Util.FormatFordot1Handler(['人均利润', '人均利润'], []))
-            .next(new Util.FormatCurrencyHandler([], []))
+            var formaterChain : Util.FormatHandler = new Util.FormatPercentHandler([], precentList.toArray());
+            formaterChain.next(new Util.FormatIntHandler(["人数"]))
+            .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
+            .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)']))
+            .next(new Util.FormatFordotHandler(1, ['人均利润', '人均利润']))
+            .next(new Util.FormatCurrencyHandler())
 
             
             for (var j = 0; j < this.mData.length; ++j) {
