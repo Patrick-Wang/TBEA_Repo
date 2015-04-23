@@ -136,6 +136,22 @@ module hzb_companys {
             var isXslvl = false;
             var isRjlr = false;
             var isRjsr = false;
+            //special index
+            var isBmdh = false; 
+            var isCydl = false; 
+            var isRjfdl = false;
+            var isWgdcb = false;
+            var isLbzhcpl = false;
+            var is5154 = false;
+            var is4043 = false;
+            var isGclcpl = false;
+            var islbcpl = false;
+            var is142 = false;
+            var is135 = false;
+            var is143 = false;
+            var is132 = false;
+            var is133 = false;
+            var is134 = false;
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 isRs = row[AllZb.zb] == '人数';
@@ -144,35 +160,52 @@ module hzb_companys {
                 isXslvl = row[AllZb.zb] == '销售利润率(%)';
                 isRjlr = row[AllZb.zb] == '人均利润';
                 isRjsr = row[AllZb.zb] == '人均收入';
+                isBmdh = row[AllZb.zb] == '标煤单耗（g/度）';
+                isCydl = row[AllZb.zb] == '厂用电率（%）';
+                isRjfdl = row[AllZb.zb] == '人均发电量';
+                isWgdcb = row[AllZb.zb] == '外购电单位成本（元/度）';
+                isLbzhcpl = row[AllZb.zb] == '铝杆棒一次综合成品率（%）';
+                is5154 = row[AllZb.zb] == '其中：5154合金杆一次成品率（%）';
+                is4043 = row[AllZb.zb] == '4043&8030&6201合金杆一次成品率（%）';
+                isGclcpl = row[AllZb.zb] == '高纯铝杆产品一次成品率（%）';
+                islbcpl = row[AllZb.zb] == '铝棒产品一次成品率（%）';
+                is142 = row[AllZb.zb] == '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）';
+                is135 = row[AllZb.zb] == '失败成本率1（%）';
+                is143 = row[AllZb.zb] == '外部客诉率（%）';
+                is132 = row[AllZb.zb] == '4N6精铝块一次成品率（%）';
+                is133 = row[AllZb.zb] == '精铝杆一次成品率（%）';
+                is134 = row[AllZb.zb] == '精铝块13项元素和值（ppm）';
                 for (var i = 0; i < row.length; ++i) {
                     if (i == AllZb.dyjhwcl || i == AllZb.dytbzf || i == AllZb.jdjhwcl || i == AllZb.jdtbzf ||
-                        i == AllZb.ndljjhwcl ||　i == AllZb.ndtbzf) {
+                        i == AllZb.ndljjhwcl || 　i == AllZb.ndtbzf) {
                         row[i] = Util.formatPercent(row[i]);
-                    } else if (i != AllZb.zb) {
-                        if (isRs) 
-                        {
+                    }
+                    else if (i != AllZb.zb) {
+                        if (isRs) {
                             row[i] = Util.formatInt(row[i]);
-                        } else if (isJzcsyl)
-                        {
+                        } else if (isJzcsyl) {
                             row[i] = Util.formatPercentSignal(row[i]);
-                        }else if (isSxfyl)
-                        {
+                        } else if (isSxfyl || isXslvl) {
                             row[i] = Util.formatPercent(row[i]);
                         }
-                        else if (isXslvl)
-                        {
-                            row[i] = Util.formatPercent(row[i]);
-                        }
-                        else if (isRjlr)
-                        {
+                        else if (isRjlr || isRjsr) {
                             row[i] = Util.formatFordot1(row[i]);
                         }
-                        else if (isRjsr)
+                        else if (isBmdh || isCydl) {
+                            if (i == AllZb.dysj || i == AllZb.dyqntq || i == AllZb.jdlj || i == AllZb.jdqntq || i == AllZb.ndlj || i == AllZb.ndqntq) {
+                                row[i] = Util.formatFordot2(row[i]);
+                            }
+                            else {
+                                row[i] = Util.formatCurrency(row[i]);
+                            }
+                        }
+                        else if (isRjfdl || isWgdcb || isLbzhcpl || is5154 
+                        || is4043 || isGclcpl || islbcpl || is142
+                        || is135 || is143 || is132 || is133)
                         {
-                            row[i] = Util.formatFordot1(row[i]);
-                        }  
-                        else 
-                        {
+                            row[i] = Util.formatFordot2(row[i]);
+                        }   
+                        else {
                             row[i] = Util.formatCurrency(row[i]);
                         }
                     }
