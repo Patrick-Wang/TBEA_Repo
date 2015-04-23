@@ -195,44 +195,58 @@ module companys_zbhz_prediction {
             var isXslvl = false;
             var isRjlr = false;
             var isRjsr = false;
+            
+            var formaterChain : Util.FormatHandler;
+            formaterChain = new Util.FormatPercentHandler([], precentList.toArray());
+            formaterChain.next(new Util.FormatIntHandler(["人数"], []))
+            .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)'], []))
+            .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)'], []))
+            .next(new Util.FormatFordot1Handler(['人均利润', '人均利润'], []))
+            .next(new Util.FormatCurrencyHandler([], []))
+
+            
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
-                isRs = row[0] == "人数";
-                isJzcsyl = row[0] == '净资产收益率(%)';
-                isSxfyl = row[0] == '三项费用率(%)';
-                isXslvl = row[0] == '销售利润率(%)';
-                isRjlr = row[0] == '人均利润';
-                isRjsr = row[0] == '人均收入';
+//                isRs = row[0] == "人数";
+//                isJzcsyl = row[0] == '净资产收益率(%)';
+//                isSxfyl = row[0] == '三项费用率(%)';
+//                isXslvl = row[0] == '销售利润率(%)';
+//                isRjlr = row[0] == '人均利润';
+//                isRjsr = row[0] == '人均收入';
+                
+                
+                
                 for (var i = 1; i < row.length; ++i) {
-                    if (precentList.contains(i)) {
-                        row[i] = Util.formatPercent(row[i]);
-                    } else {
-                        if(isRs){
-                            row[i] = Util.formatInt(row[i]);
-                        }else if (isJzcsyl)
-                        {
-                            row[i] = Util.formatPercentSignal(row[i]);
-                        }
-                        else if (isSxfyl)
-                        {
-                             row[i] = Util.formatPercent(row[i]);
-                        }
-                        else if (isXslvl)
-                        {
-                            row[i] = Util.formatPercent(row[i]);
-                        }
-                        else if (isRjlr)
-                        {
-                            row[i] = Util.formatFordot1(row[i]);
-                        }
-                        else if (isRjsr)
-                        {
-                            row[i] = Util.formatFordot1(row[i]);
-                        }  
-                        else {
-                            row[i] = Util.formatCurrency(row[i]);
-                        }
-                    }
+                    row[i] = formaterChain.handle(row[0], i, row[i]);
+//                    if (precentList.contains(i)) {
+//                        row[i] = Util.formatPercent(row[i]);
+//                    } else {
+//                        if(isRs){
+//                            row[i] = Util.formatInt(row[i]);
+//                        }else if (isJzcsyl)
+//                        {
+//                            row[i] = Util.formatPercentSignal(row[i]);
+//                        }
+//                        else if (isSxfyl)
+//                        {
+//                             row[i] = Util.formatPercent(row[i]);
+//                        }
+//                        else if (isXslvl)
+//                        {
+//                            row[i] = Util.formatPercent(row[i]);
+//                        }
+//                        else if (isRjlr)
+//                        {
+//                            row[i] = Util.formatFordot1(row[i]);
+//                        }
+//                        else if (isRjsr)
+//                        {
+//                            row[i] = Util.formatFordot1(row[i]);
+//                        }  
+//                        else {
+//                            row[i] = Util.formatCurrency(row[i]);
+//                        }
+//                    }
                 }
                 data.push(row);
             }

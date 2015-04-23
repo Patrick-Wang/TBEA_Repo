@@ -1,6 +1,124 @@
 declare var $;
 module Util {
 
+
+    export class FormatHandler{
+        private mNextHandler : FormatHandler;
+        private mZbs :string[];
+        private mCols:number[];
+
+        handle(zb:string, col:number, val:string) : string{
+            return "";
+        }
+        
+        private containsZb(zb: string): boolean {
+            for (var i = 0; i < this.mZbs.length; ++i) {
+                if (this.mZbs[i] == zb) {
+                    return true;
+                }
+            }
+        }
+        
+        match(zb: string, col: number): boolean {
+            if (this.mZbs.length == 0 || this.containsZb(zb)) {
+                for (var i = 0; i < this.mCols.length; ++i) {
+                    if (this.mCols[i] == col) {
+                        return true;
+                    }
+                }
+                return this.mCols.length == 0;
+            }
+            return false;
+        }
+        
+        constructor(zbs:string[], cols:number[]){
+            this.mZbs = zbs;
+            this.mCols = cols;
+        }
+        
+        callNext(zb:string, col:number, val:string) : string{
+            if (this.mNextHandler != undefined){
+                return this.mNextHandler.handle(zb, col, val);    
+            }
+            return "--";
+        }
+        
+        next(handler : FormatHandler) : FormatHandler{
+            this.mNextHandler = handler;
+            return handler;
+        }
+    }
+    
+    
+    export class FormatIntHandler extends FormatHandler{
+        handle(zb:string, col:number, val:string) : string{
+           if (this.match(zb, col)){
+                return Util.formatInt(val);    
+           }else{
+                return this.callNext(zb, col, val);  
+           }
+        }
+        
+        constructor(zbs:string[], cols:number[]){
+            super(zbs, cols);
+        }
+    }
+    
+    export class FormatCurrencyHandler extends FormatHandler{
+        handle(zb:string, col:number, val:string) : string{
+           if (this.match(zb, col)){
+                return Util.formatCurrency(val);    
+           }else{
+                return this.callNext(zb, col, val);  
+           }
+        }
+        
+        constructor(zbs:string[], cols:number[]){
+            super(zbs, cols);
+        }
+    }
+    
+    export class FormatPercentHandler extends FormatHandler{
+        handle(zb:string, col:number, val:string) : string{
+           if (this.match(zb, col)){
+                return Util.formatPercent(val);    
+           }else{
+                return this.callNext(zb, col, val);  
+           }
+        }
+        
+        constructor(zbs:string[], cols:number[]){
+            super(zbs, cols);
+        }
+    }
+    
+     export class FormatPercentSignalHandler extends FormatHandler{
+        handle(zb:string, col:number, val:string) : string{
+           if (this.match(zb, col)){
+                return Util.formatPercentSignal(val);    
+           }else{
+                return this.callNext(zb, col, val);  
+           }
+        }
+        
+        constructor(zbs:string[], cols:number[]){
+            super(zbs, cols);
+        }
+    }
+    
+    export class FormatFordot1Handler extends FormatHandler{
+        handle(zb:string, col:number, val:string) : string{
+           if (this.match(zb, col)){
+                return Util.formatFordot1(val);    
+           }else{
+                return this.callNext(zb, col, val);  
+           }
+        }
+        
+        constructor(zbs:string[], cols:number[]){
+            super(zbs, cols);
+        }
+    }
     
     export class ZBStatus{
         static NONE : string = "NONE";
