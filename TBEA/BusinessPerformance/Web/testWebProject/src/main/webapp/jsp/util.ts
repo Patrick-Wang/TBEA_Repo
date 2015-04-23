@@ -448,6 +448,19 @@ module Util {
         }
         return (parseFloat(val)).toFixed(1);   
     }
+    export function formatFordot2(val: string): string{
+        if (val === "--" || val === "" || val === "-") {
+            return val;
+        }
+        return (parseFloat(val)).toFixed(2);   
+    }
+    
+    export function formatFordot4(val: string): string{
+        if (val === "--" || val === "" || val === "-") {
+            return val;
+        }
+        return (parseFloat(val)).toFixed(4);   
+    }
     
     export function formatPercentSignal(val: string): string{
         if (val === "--" || val === "" || val === "-") {
