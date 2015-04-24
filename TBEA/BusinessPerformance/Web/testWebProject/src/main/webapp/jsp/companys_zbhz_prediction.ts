@@ -151,10 +151,7 @@ module companys_zbhz_prediction {
             this.mCompanyId = companyId;
             this.mComps = comps;
             this.mCompanySelector = new Util.CompanySelector(false, this.mCompanyId, this.mComps);
-            $('h1').text(this.mYear + "年"  + "季度项目公司及经营单位指标预测完成情况");
-            //this.updateTable();
-            //this.updateUI();
-
+            this.updateTextandTitle();
         }
  		public onYearSelected(year : number){
         	this.mYear = year;
@@ -182,61 +179,19 @@ module companys_zbhz_prediction {
             var compType = this.mCompanySelector.getCompany();
             this.mDataSet.get({ month: this.mActualMonth, year: this.mYear, companyId: compType })
                 .then((dataArray: any) => {
-
-                    this.mData = dataArray;
-                    $('h1').text(this.mYear + "年" +  "季度项目公司及经营单位指标预测完成情况");
-                    //document.title = this.mYear + "年" + this.mMonth + "月 指标汇总";
+                    this.mData = dataArray;                   
                     this.updateTable();
-
+                    this.updateTextandTitle();
                 });
         }
         
-        private formatData(data: string[][], precentList: std.vector<number>, zhCols: number[]) {
-            var zhZb = [
-                '人均发电量（万度/人）', 
-                '外购电单位成本（元/度）', 
-                '铝杆棒一次综合成品率（%）', 
-                '其中：5154合金杆一次成品率（%）', 
-                '4043&8030&6201合金杆一次成品率（%）', 
-                '高纯铝杆产品一次成品率（%）', 
-                '铝棒产品一次成品率（%）', 
-                '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）', 
-                '失败成本率1（%）', 
-                '外部客诉率（%）', 
-                '4N6精铝块一次成品率（%）', 
-                '精铝杆一次成品率（%）', 
-                '综合成品率（%）', 
-                '基材成品率（%）', 
-                '粉末喷涂成品率（%）', 
-                '隔热产品成品率（%）', 
-                '失败成本率（%）', 
-                '自产箔综合符单率（%）', 
-                '委托加工化成箔符单率（%）', 
-                '架空电缆（1KV、10KV）合格率（%）', 
-                '钢芯铝绞线合格率（%）', 
-                '布电线合格率（%）'];
-            
-            var formaterChain: Util.FormatHandler = new Util.FormatPercentHandler([], precentList.toArray());
-            formaterChain.next(new Util.FormatIntHandler(["人数"]))
-                .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
-                .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)']))
-                .next(new Util.FormatFordotHandler(1, ['人均利润', '人均利润', '精铝块13项元素和值（ppm）']))
-                .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], zhCols))
-                .next(new Util.FormatFordotHandler(2, zhZb))
-                .next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）']))
-                .next(new Util.FormatCurrencyHandler());
-            var row = [];
-            for (var j = 0; j < this.mData.length; ++j) {
-                row = [].concat(this.mData[j]);
-                for (var i = 1; i < row.length; ++i) {
-                    row[i] = formaterChain.handle(row[0], i, row[i]);
-                }
-                data.push(row);
-            }
-            return data;
+        private updateTextandTitle()
+        {
+             $('h1').text(this.mYear + "年" +  "季度项目公司及经营单位指标预测完成情况");
+             document.title = this.mYear + "年" + "季度项目公司及经营单位指标预测完成情况";
         }
-
-        private formatFirstMonthData(data: string[][]) {
+        
+        private formatFirstMonthData(outputData: string[][]) {
             var precentList: std.vector<number> = new std.vector<number>();
             precentList.push(FirstMonthZb.dyjhwcl);
             precentList.push(FirstMonthZb.dytbzf);
@@ -244,7 +199,7 @@ module companys_zbhz_prediction {
             precentList.push(FirstMonthZb.jdtbzf);
             precentList.push(FirstMonthZb.ndzbwcl);
             precentList.push(FirstMonthZb.ndtbzf);
-            return this.formatData(data, precentList, [
+            return Util.formatData(outputData, this.mData, precentList, [
                 FirstMonthZb.dyyjz,
                 FirstMonthZb.dyqntq,
                 FirstMonthZb.cyyj,
@@ -256,7 +211,7 @@ module companys_zbhz_prediction {
             ]);
         }
 
-        private formatSecondMonthData(data: string[][]) {
+        private formatSecondMonthData(outputData: string[][]) {
             var precentList: std.vector<number> = new std.vector<number>();
             precentList.push(SecondMonthZb.dyjhwcl);
             precentList.push(SecondMonthZb.dytbzf);
@@ -266,7 +221,7 @@ module companys_zbhz_prediction {
             precentList.push(SecondMonthZb.jdtbzf);
             precentList.push(SecondMonthZb.ndzbwcl);
             precentList.push(SecondMonthZb.ndtbzf);
-            return this.formatData(data, precentList, [
+            return Util.formatData(outputData, this.mData, precentList, [
                 SecondMonthZb.dyyjz,
                 SecondMonthZb.dyqntq,
                 SecondMonthZb.jdlj,
@@ -279,7 +234,7 @@ module companys_zbhz_prediction {
             ]);
         }
 
-        private formatThirdMonthData(data: string[][]) {
+        private formatThirdMonthData(outputData: string[][]) {
             var precentList: std.vector<number> = new std.vector<number>();
             precentList.push(ThirdMonthZb.dyjhwcl);
             precentList.push(ThirdMonthZb.dytbzf);
@@ -290,7 +245,7 @@ module companys_zbhz_prediction {
             precentList.push(ThirdMonthZb.xjdyjwcl);
             precentList.push(ThirdMonthZb.xjdndljwcl);
             precentList.push(ThirdMonthZb.xjdtbzf);
-            return this.formatData(data, precentList, [
+            return Util.formatData(outputData, this.mData, precentList, [
                 ThirdMonthZb.dyyjz,
                 ThirdMonthZb.dyqntq,
                 ThirdMonthZb.jdlj,
@@ -309,22 +264,15 @@ module companys_zbhz_prediction {
         private updateTable(): void {
         	var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mDelegateMonth);
-            var data = [];
+            var outputdata : string [][] = [];
 
  			if (1 == this.mDelegateMonth){
-                data = this.formatFirstMonthData(data);
+                this.formatFirstMonthData(outputdata);
             } else if (2 == this.mDelegateMonth){
-                data = this.formatSecondMonthData(data);
+                this.formatSecondMonthData(outputdata);
             } else if (3 == this.mDelegateMonth){
-                data = this.formatThirdMonthData(data);
+                this.formatThirdMonthData(outputdata);
             } 
-
-            for (var i = 0; i < data.length; ++i) {
-                if (data[i][0].lastIndexOf("计") >= 0) {
-                    tableAssist.setRowBgColor(i, 183, 222, 232);
-                }
-            }
-            
             
 			var parent = $("#" + this.mTableId);
 			parent.empty();
@@ -333,7 +281,7 @@ module companys_zbhz_prediction {
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
-                    data: tableAssist.getData(data),
+                    data: tableAssist.getData(outputdata),
                     datatype: "local",
                     multiselect: false,
                     drag: false,
@@ -341,7 +289,7 @@ module companys_zbhz_prediction {
                     //autowidth : false,
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
-                    height: data.length > 23 ? 500 : '100%',
+                    height: outputdata.length > 23 ? 500 : '100%',
                     width: 1330,
                     shrinkToFit: true,
                     rowNum: 100,

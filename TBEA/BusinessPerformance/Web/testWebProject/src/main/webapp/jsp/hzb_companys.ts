@@ -100,8 +100,6 @@ module hzb_companys {
            } else{
                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
                this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
-                
-               //this.updateTable();
                this.updateUI();
            } 
         }
@@ -120,135 +118,15 @@ module hzb_companys {
                 .then((dataArray: any) => {
 
                     this.mData = dataArray;
-                    $('h1').text(date.year + "年" + date.month + "月经营单位与项目公司指标完成情况");
-                    document.title = date.year + "年" + date.month + "月经营单位与项目公司指标完成情况";
+                    this.updateTextandTitle(date);
                     this.updateTable();
 
                 });
         }
         
-        private formatAllData() {
-            var data = [];
-            var row = [];
-            var isRs = false;
-            var isJzcsyl = false;
-            var isSxfyl = false;
-            var isXslvl = false;
-            var isRjlr = false;
-            var isRjsr = false;
-            //special index
-            var isBmdh = false; 
-            var isCydl = false; 
-            var isRjfdl = false;
-            var isWgdcb = false;
-            var isLbzhcpl = false;
-            var is5154 = false;
-            var is4043 = false;
-            var isGclcpl = false;
-            var islbcpl = false;
-            var is142 = false;
-            var is135 = false;
-            var is143 = false;
-            var is132 = false;
-            var is133 = false;
-            var is134 = false;
-            for (var j = 0; j < this.mData.length; ++j) {
-                row = [].concat(this.mData[j]);
-                isRs = row[AllZb.zb] == '人数';
-                isJzcsyl = row[AllZb.zb] == '净资产收益率(%)';
-                isSxfyl = row[AllZb.zb] == '三项费用率(%)';
-                isXslvl = row[AllZb.zb] == '销售利润率(%)';
-                isRjlr = row[AllZb.zb] == '人均利润';
-                isRjsr = row[AllZb.zb] == '人均收入';
-                isBmdh = row[AllZb.zb] == '标煤单耗（g/度）';
-                isCydl = row[AllZb.zb] == '厂用电率（%）';
-                isRjfdl = row[AllZb.zb] == '人均发电量';
-                isWgdcb = row[AllZb.zb] == '外购电单位成本（元/度）';
-                isLbzhcpl = row[AllZb.zb] == '铝杆棒一次综合成品率（%）';
-                is5154 = row[AllZb.zb] == '其中：5154合金杆一次成品率（%）';
-                is4043 = row[AllZb.zb] == '4043&8030&6201合金杆一次成品率（%）';
-                isGclcpl = row[AllZb.zb] == '高纯铝杆产品一次成品率（%）';
-                islbcpl = row[AllZb.zb] == '铝棒产品一次成品率（%）';
-                is142 = row[AllZb.zb] == '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）';
-                is135 = row[AllZb.zb] == '失败成本率1（%）';
-                is143 = row[AllZb.zb] == '外部客诉率（%）';
-                is132 = row[AllZb.zb] == '4N6精铝块一次成品率（%）';
-                is133 = row[AllZb.zb] == '精铝杆一次成品率（%）';
-                is134 = row[AllZb.zb] == '精铝块13项元素和值（ppm）';
-                for (var i = 0; i < row.length; ++i) {
-                    if (i == AllZb.dyjhwcl || i == AllZb.dytbzf || i == AllZb.jdjhwcl || i == AllZb.jdtbzf ||
-                        i == AllZb.ndljjhwcl || 　i == AllZb.ndtbzf) {
-                        row[i] = Util.formatPercent(row[i]);
-                    }
-                    else if (i != AllZb.zb) {
-                        if (isRs) {
-                            row[i] = Util.formatInt(row[i]);
-                        } else if (isJzcsyl) {
-                            row[i] = Util.formatPercentSignal(row[i]);
-                        } else if (isSxfyl || isXslvl) {
-                            row[i] = Util.formatPercent(row[i]);
-                        }
-                        else if (isRjlr || isRjsr) {
-                            row[i] = Util.formatFordot1(row[i]);
-                        }
-                        else if (isBmdh || isCydl) {
-                            if (i == AllZb.dysj || i == AllZb.dyqntq || i == AllZb.jdlj || i == AllZb.jdqntq || i == AllZb.ndlj || i == AllZb.ndqntq) {
-                                row[i] = Util.formatFordot2(row[i]);
-                            }
-                            else {
-                                row[i] = Util.formatCurrency(row[i]);
-                            }
-                        }
-                        else if (isRjfdl || isWgdcb || isLbzhcpl || is5154 
-                        || is4043 || isGclcpl || islbcpl || is142
-                        || is135 || is143 || is132 || is133)
-                        {
-                            row[i] = Util.formatFordot2(row[i]);
-                        }   
-                        else {
-                            row[i] = Util.formatCurrency(row[i]);
-                        }
-                    }
-                }
-                data.push(row);
-            }
-            return data;
-        }
-        
-        //desperate
-        private formatHbData() {
-            var data = [];
-            var row = [];
-            var isRs = false;
-            var isJzcsyl = false;
-            var isSxfyl = false;
-            for (var j = 0; j < this.mData.length; ++j) {
-                row = [].concat(this.mData[j]);
-                isRs = row[HbZb.zb] == '人数';
-                isJzcsyl = row[AllZb.zb] == '净资产收益率(%)';
-                isSxfyl = row[AllZb.zb] == '三项费用率(%)';
-                for (var i = 0; i < row.length; ++i) {
-                   if (i == HbZb.dyjhwcl || i == HbZb.dyhbzf ||i == HbZb.dytbzf || i == HbZb.jdjhwcl || i == HbZb.jdtbzf ||
-                        i == HbZb.ndljjhwcl ||　i == HbZb.ndtbzf) {
-                        row[i] = Util.formatPercent(row[i]);
-                    } else if (i != HbZb.zb) {
-                        if (isRs) {
-                            row[i] = Util.formatInt(row[i]);
-                        }else if (isJzcsyl)
-                        {
-                            row[i] = Util.formatPercentSignal(row[i]);
-                        }else if (isSxfyl)
-                        {
-                            row[i] = Util.formatPercent(row[i]);
-                        } 
-                        else {
-                            row[i] = Util.formatCurrency(row[i]);
-                        }
-                    }
-                }
-                data.push(row);
-            }
-            return data;
+        private updateTextandTitle(date: Util.Date) {
+            $('h1').text(date.year + "年" + date.month + "月经营单位与项目公司指标完成情况");
+            document.title = date.year + "年" + date.month + "月经营单位与项目公司指标完成情况";
         }
         
         private updateTable(): void {
@@ -261,21 +139,23 @@ module hzb_companys {
                 return;
             } 
             $("#tips").css("display", "none");
-            var data = [];
+
             var tableAssist: JQTable.JQGridAssistant = null;
-            //if (this.mData[0].length > 16){
-                //tableAssist = JQGridAssistantFactory.createHbTable(name)
-                //data = this.formatHbData();
-            //} else {
             tableAssist = JQGridAssistantFactory.createTable(name)
-            data = this.formatAllData();
-            //}
+            var outputData: string[][];
+            Util.formatData(outputData, this.mData, this.initPercentList(), [AllZb.dysj,
+                AllZb.dyqntq,
+                AllZb.jdlj,
+                AllZb.jdqntq,
+                AllZb.ndlj,
+                AllZb.ndqntq,
+            ]);
             
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
-                    data: tableAssist.getData(data),
+                    data: tableAssist.getData(outputData),
                     datatype: "local",
                     multiselect: false,
                     drag: false,
@@ -283,7 +163,7 @@ module hzb_companys {
                     //autowidth : false,
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
-                    height: data.length > 23 ? 500 : '100%',
+                    height: outputData.length > 23 ? 500 : '100%',
                     width: 1300,
                     shrinkToFit: true,
                     rowNum: 1000,
@@ -291,5 +171,17 @@ module hzb_companys {
                 }));
 
         }
+        
+        private initPercentList(): std.vector<number>
+        {
+            var precentList: std.vector<number> = new std.vector<number>();
+            precentList.push(AllZb.dyjhwcl);
+            precentList.push(AllZb.dytbzf);
+            precentList.push(AllZb.jdjhwcl);
+            precentList.push(AllZb.jdtbzf);
+            precentList.push(AllZb.ndljjhwcl);
+            precentList.push(AllZb.ndtbzf);
+            return precentList;
+        } 
     }
 }

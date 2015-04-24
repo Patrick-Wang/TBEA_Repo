@@ -389,7 +389,51 @@ module Util {
         }
     }
     
- 
+    export function formatData(outputData: string[][], inputData: string [][], precentList: std.vector<number>, specialsjzhCols: number[]) {
+        var zhZb = [
+            '人均发电量（万度/人）',
+            '外购电单位成本（元/度）',
+            '铝杆棒一次综合成品率（%）',
+            '其中：5154合金杆一次成品率（%）',
+            '4043&8030&6201合金杆一次成品率（%）',
+            '高纯铝杆产品一次成品率（%）',
+            '铝棒产品一次成品率（%）',
+            '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）',
+            '失败成本率1（%）',
+            '外部客诉率（%）',
+            '4N6精铝块一次成品率（%）',
+            '精铝杆一次成品率（%）',
+            '综合成品率（%）',
+            '基材成品率（%）',
+            '粉末喷涂成品率（%）',
+            '隔热产品成品率（%）',
+            '失败成本率（%）',
+            '自产箔综合符单率（%）',
+            '委托加工化成箔符单率（%）',
+            '架空电缆（1KV、10KV）合格率（%）',
+            '钢芯铝绞线合格率（%）',
+            '布电线合格率（%）'];
+
+        var formaterChain: Util.FormatHandler = new Util.FormatPercentHandler([], precentList.toArray());
+        formaterChain.next(new Util.FormatIntHandler(["人数"]))
+            .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
+            .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)']))
+            .next(new Util.FormatFordotHandler(1, ['人均利润', '人均利润', '精铝块13项元素和值（ppm）']))
+            .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], specialsjzhCols))
+            .next(new Util.FormatFordotHandler(2, zhZb))
+            .next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）']))
+            .next(new Util.FormatCurrencyHandler());
+        var row = [];
+        for (var j = 0; j < inputData.length; ++j) {
+            row = [].concat(inputData[j]);
+            for (var i = 1; i < row.length; ++i) {
+                row[i] = formaterChain.handle(row[0], i, row[i]);
+            }
+            outputData.push(row);
+        }
+        return;
+    }
+    
     export function formatInt(val: string): string {
         if (val === "--" || val === "") {
             return val;
@@ -457,27 +501,7 @@ module Util {
         }
         return (parseFloat(val)).toFixed(dotCount);   
     }
-    
-    export function formatFordot1(val: string): string{
-        if (val === "--" || val === "" || val === "-") {
-            return val;
-        }
-        return (parseFloat(val)).toFixed(1);   
-    }
-    export function formatFordot2(val: string): string{
-        if (val === "--" || val === "" || val === "-") {
-            return val;
-        }
-        return (parseFloat(val)).toFixed(2);   
-    }
-    
-    export function formatFordot4(val: string): string{
-        if (val === "--" || val === "" || val === "-") {
-            return val;
-        }
-        return (parseFloat(val)).toFixed(4);   
-    }
-    
+
     export function formatPercentSignal(val: string): string{
         if (val === "--" || val === "" || val === "-") {
             return val;
