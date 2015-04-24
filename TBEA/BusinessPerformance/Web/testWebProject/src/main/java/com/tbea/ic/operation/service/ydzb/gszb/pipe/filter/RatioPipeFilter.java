@@ -30,10 +30,9 @@ public class RatioPipeFilter implements IPipeFilter {
 			rsRow = row;
 		} else if (GSZB.SXFY.getValue() == zbId) {
 			sxfyRow = row;
-		} else if (GSZB.RJLR.getValue() == zbId || 
-			GSZB.RJSR.getValue() == zbId || 
-			GSZB.SXFYL.getValue() == zbId || 
-			GSZB.XSLRL.getValue() == zbId) {
+		} else if (GSZB.RJLR.getValue() == zbId || GSZB.RJSR.getValue() == zbId
+				|| GSZB.SXFYL.getValue() == zbId
+				|| GSZB.XSLRL.getValue() == zbId) {
 			dret = pipe.getZb(row);
 		}
 
@@ -51,53 +50,57 @@ public class RatioPipeFilter implements IPipeFilter {
 
 	private void updateZb(GszbPipe pipe, int zbId, Double[] zbRow) {
 		if (GSZB.RJLR.getValue() == zbId) {
-			Double[] rs = pipe.getZb(rsRow);
-			Double[] lrze = pipe.getZb(lrzeRow);
-			for (int i = 0; i < zbRow.length; ++i) {
-				if (null != lrze[i] && 
-					null != rs[i]  && 
-					!excludeCols.contains(i) && 
-					Util.isPositive(lrze[i]) &&
-					Util.isPositive(rs[i])) {
-					zbRow[i] = lrze[i] / rs[i];
+			if (rsRow != null && lrzeRow != null) {
+				Double[] rs = pipe.getZb(rsRow);
+				Double[] lrze = pipe.getZb(lrzeRow);
+				for (int i = 0; i < zbRow.length; ++i) {
+					if (null != lrze[i] && null != rs[i]
+							&& !excludeCols.contains(i)
+							&& Util.isPositive(lrze[i])
+							&& Util.isPositive(rs[i])) {
+						zbRow[i] = lrze[i] / rs[i];
+					}
 				}
 			}
 		} else if (GSZB.RJSR.getValue() == zbId) {
-			Double[] rs = pipe.getZb(rsRow);
-			Double[] xssr = pipe.getZb(xssrRow);
-			for (int i = 0; i < zbRow.length; ++i) {
-				if (rs[i] != null &&
-					xssr[i] != null &&
-					!excludeCols.contains(i) && 
-					Util.isPositive(rs[i]) && 
-					Util.isPositive(xssr[i])) {
-					
-					zbRow[i] = xssr[i] / rs[i];
+			if (rsRow != null && xssrRow != null) {
+				Double[] rs = pipe.getZb(rsRow);
+				Double[] xssr = pipe.getZb(xssrRow);
+				for (int i = 0; i < zbRow.length; ++i) {
+					if (rs[i] != null && xssr[i] != null
+							&& !excludeCols.contains(i)
+							&& Util.isPositive(rs[i])
+							&& Util.isPositive(xssr[i])) {
+
+						zbRow[i] = xssr[i] / rs[i];
+					}
 				}
 			}
 		} else if (GSZB.SXFYL.getValue() == zbId) {
-			Double[] xssr = pipe.getZb(xssrRow);
-			Double[] sxfy = pipe.getZb(sxfyRow);
-			for (int i = 0; i < zbRow.length; ++i) {
-				if (sxfy[i] != null &&
-					xssr[i] != null &&
-					!excludeCols.contains(i) && 
-					Util.isPositive(xssr[i]) && 
-					Util.isPositive(sxfy[i])) {
-					
-					zbRow[i] = sxfy[i] / xssr[i];
+			if (xssrRow != null && sxfyRow != null) {
+				Double[] xssr = pipe.getZb(xssrRow);
+				Double[] sxfy = pipe.getZb(sxfyRow);
+				for (int i = 0; i < zbRow.length; ++i) {
+					if (sxfy[i] != null && xssr[i] != null
+							&& !excludeCols.contains(i)
+							&& Util.isPositive(xssr[i])
+							&& Util.isPositive(sxfy[i])) {
+
+						zbRow[i] = sxfy[i] / xssr[i];
+					}
 				}
 			}
 		} else if (GSZB.XSLRL.getValue() == zbId) {
-			Double[] xssr = pipe.getZb(xssrRow);
-			Double[] lrze = pipe.getZb(lrzeRow);
-			for (int i = 0; i < zbRow.length; ++i) {
-				if (lrze[i] != null &&
-					xssr[i] != null &&
-					!excludeCols.contains(i) &&
-					Util.isPositive(xssr[i]) &&
-					Util.isPositive(lrze[i])) {
-					zbRow[i] = lrze[i] / xssr[i];
+			if (xssrRow != null && lrzeRow != null) {
+				Double[] xssr = pipe.getZb(xssrRow);
+				Double[] lrze = pipe.getZb(lrzeRow);
+				for (int i = 0; i < zbRow.length; ++i) {
+					if (lrze[i] != null && xssr[i] != null
+							&& !excludeCols.contains(i)
+							&& Util.isPositive(xssr[i])
+							&& Util.isPositive(lrze[i])) {
+						zbRow[i] = lrze[i] / xssr[i];
+					}
 				}
 			}
 		}
