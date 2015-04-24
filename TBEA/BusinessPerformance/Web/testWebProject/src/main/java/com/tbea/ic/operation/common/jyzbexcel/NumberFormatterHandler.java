@@ -1,5 +1,7 @@
 package com.tbea.ic.operation.common.jyzbexcel;
 
+import java.math.BigDecimal;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 
 public class NumberFormatterHandler extends AbstractFormatterHandler {
@@ -28,18 +30,22 @@ public class NumberFormatterHandler extends AbstractFormatterHandler {
 
 	@Override
 	protected void onHandle(JyzbExcelTemplate template, HSSFCell cell, String val) {
-		cell.setCellValue(Double.valueOf(val));
+		BigDecimal   b   =   new   BigDecimal(Double.valueOf(val));
 		switch(type){
 		case RESERVE_0:
+			cell.setCellValue(b.setScale(0, BigDecimal.ROUND_HALF_UP).doubleValue());
 			cell.setCellStyle(template.getCellStyleNumber0());
 			break;
 		case RESERVE_1:
+			cell.setCellValue(b.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
 			cell.setCellStyle(template.getCellStyleNumber1());
 			break;
 		case RESERVE_2:
+			cell.setCellValue(b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 			cell.setCellStyle(template.getCellStyleNumber2());
 			break;
 		case RESERVE_4:
+			cell.setCellValue(b.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue());
 			cell.setCellStyle(template.getCellStyleNumber4());
 			break;
 		default:

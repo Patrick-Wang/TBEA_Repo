@@ -142,7 +142,7 @@ module hzb_companys {
 
             var tableAssist: JQTable.JQGridAssistant = null;
             tableAssist = JQGridAssistantFactory.createTable(name)
-            var outputData: string[][];
+            var outputData: string[][] = [];
             Util.formatData(outputData, this.mData, this.initPercentList(), [AllZb.dysj,
                 AllZb.dyqntq,
                 AllZb.jdlj,

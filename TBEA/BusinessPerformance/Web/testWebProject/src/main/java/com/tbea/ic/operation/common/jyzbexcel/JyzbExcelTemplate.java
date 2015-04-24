@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -76,15 +77,19 @@ public class JyzbExcelTemplate {
 				if (colTypeMap.containsKey(col)) {
 					switch (colTypeMap.get(col)) {
 					case DOUBLE:
-						cell.setCellValue(Double.valueOf(val));
-						cell.setCellStyle(template.getCellStyleNumber2());
+						BigDecimal b = new BigDecimal(Double.valueOf(val));
+						cell.setCellValue(b.setScale(1,
+								BigDecimal.ROUND_HALF_UP).doubleValue());
+						cell.setCellStyle(template.getCellStyleNumber1());
 						break;
 					case HEADER:
 						cell.setCellValue(val);
 						cell.setCellStyle(template.getCellStyleHeader());
 						break;
 					case PERCENT:
-						cell.setCellValue(Double.valueOf(val));
+						cell.setCellValue(String.format("%.1f",
+								Double.valueOf(val))
+								+ "%");
 						cell.setCellStyle(template.getCellStylePercent());
 						break;
 					case TEXT:
@@ -93,8 +98,10 @@ public class JyzbExcelTemplate {
 						break;
 					}
 				} else {
-					cell.setCellValue(Double.valueOf(val));
-					cell.setCellStyle(template.getCellStyleNumber2());
+					BigDecimal b = new BigDecimal(Double.valueOf(val));
+					cell.setCellValue(b.setScale(1, BigDecimal.ROUND_HALF_UP)
+							.doubleValue());
+					cell.setCellStyle(template.getCellStyleNumber1());
 				}
 			} else {
 				cell.setCellValue("--");
@@ -147,8 +154,8 @@ public class JyzbExcelTemplate {
 		
 		cellStyleNumber0 = workbook
 				.createCellStyle();
-		cellStyleNumber0.setDataFormat(HSSFDataFormat
-				.getBuiltinFormat("0"));
+//		cellStyleNumber0.setDataFormat(HSSFDataFormat
+//				.getBuiltinFormat("0"));
 		cellStyleNumber0.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
 		cellStyleNumber0.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleNumber0.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
@@ -156,8 +163,8 @@ public class JyzbExcelTemplate {
 		
 		cellStyleNumber2 = workbook
 				.createCellStyle();
-		cellStyleNumber2.setDataFormat(HSSFDataFormat
-				.getBuiltinFormat("0.00"));
+//		cellStyleNumber2.setDataFormat(HSSFDataFormat
+//				.getBuiltinFormat("0.00"));
 		cellStyleNumber2.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
 		cellStyleNumber2.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleNumber2.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
@@ -165,8 +172,8 @@ public class JyzbExcelTemplate {
 		
 		cellStyleNumber4 = workbook
 				.createCellStyle();
-		cellStyleNumber4.setDataFormat(HSSFDataFormat
-				.getBuiltinFormat("0.0000"));
+//		cellStyleNumber4.setDataFormat(HSSFDataFormat
+//				.getBuiltinFormat("0.0000"));
 		cellStyleNumber4.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
 		cellStyleNumber4.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleNumber4.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
@@ -174,8 +181,8 @@ public class JyzbExcelTemplate {
 		
 		cellStyleNumber1 = workbook
 				.createCellStyle();
-		cellStyleNumber1.setDataFormat(HSSFDataFormat
-				.getBuiltinFormat("0.0"));
+//		cellStyleNumber1.setDataFormat(HSSFDataFormat
+//				.getBuiltinFormat("0.0"));
 		cellStyleNumber1.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
 		cellStyleNumber1.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleNumber1.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
@@ -183,8 +190,9 @@ public class JyzbExcelTemplate {
 		
 		cellStylePercent = workbook
 				.createCellStyle();
-		cellStylePercent.setDataFormat(HSSFDataFormat
-				.getBuiltinFormat("0.0%"));
+//		cellStylePercent.setDataFormat(HSSFDataFormat
+//				.getBuiltinFormat("0.00%"));
+		cellStylePercent.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
 		cellStylePercent.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
 		cellStylePercent.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStylePercent.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    

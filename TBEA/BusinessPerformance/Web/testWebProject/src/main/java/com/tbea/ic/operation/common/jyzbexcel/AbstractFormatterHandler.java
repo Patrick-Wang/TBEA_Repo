@@ -18,6 +18,9 @@ public abstract class AbstractFormatterHandler implements FormatterHandler {
 	}
 	
 	protected static List<Integer> toList(Integer[] rows){
+		if (null == rows){
+			return null;
+		}
 		List<Integer> ret = new ArrayList<Integer>();
 		for (int i = 0; i < rows.length; ++i){
 			ret.add(rows[i]);
@@ -26,6 +29,9 @@ public abstract class AbstractFormatterHandler implements FormatterHandler {
 	}
 	
 	protected static List<String> toList(String[] rows){
+		if (null == rows){
+			return null;
+		}
 		List<String> ret = new ArrayList<String>();
 		for (int i = 0; i < rows.length; ++i){
 			ret.add(rows[i]);
@@ -57,16 +63,17 @@ public abstract class AbstractFormatterHandler implements FormatterHandler {
 	abstract protected void onHandle(JyzbExcelTemplate template, HSSFCell cell, String val);
 	
 	@Override
-	public void handle(String zbName, Integer col, JyzbExcelTemplate template, HSSFCell cell, String val) {
-		if (match(zbName, col)){
-			if (val != null){
+	public void handle(String zbName, Integer col, JyzbExcelTemplate template,
+			HSSFCell cell, String val) {
+		if (val != null) {
+			if (match(zbName, col)) {
 				onHandle(template, cell, val);
-			}else{
-				cell.setCellValue("--");
-				cell.setCellStyle(template.getCellStyleNull());
+			} else {
+				callNext(zbName, col, template, cell, val);
 			}
-		} else{
-			callNext(zbName, col, template, cell, val);
+		} else {
+			cell.setCellValue("--");
+			cell.setCellStyle(template.getCellStyleNull());
 		}
 	}
 

@@ -19,7 +19,7 @@ public class PercentSingleFormatterHandler extends AbstractFormatterHandler {
 
 	@Override
 	protected void onHandle(JyzbExcelTemplate template, HSSFCell cell, String val) {
-		cell.setCellValue(Double.valueOf(val) / 100.0);
+		cell.setCellValue(String.format("%.1f", Double.valueOf(val) / 100.0) + "%");
 		cell.setCellStyle(template.getCellStylePercent());
 	}
 
