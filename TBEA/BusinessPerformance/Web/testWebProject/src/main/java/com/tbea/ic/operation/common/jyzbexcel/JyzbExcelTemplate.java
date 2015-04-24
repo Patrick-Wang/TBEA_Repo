@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.common;
+package com.tbea.ic.operation.common.jyzbexcel;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -77,7 +77,7 @@ public class JyzbExcelTemplate {
 					switch (colTypeMap.get(col)) {
 					case DOUBLE:
 						cell.setCellValue(Double.valueOf(val));
-						cell.setCellStyle(template.getCellStyleNumber());
+						cell.setCellStyle(template.getCellStyleNumber2());
 						break;
 					case HEADER:
 						cell.setCellValue(val);
@@ -94,7 +94,7 @@ public class JyzbExcelTemplate {
 					}
 				} else {
 					cell.setCellValue(Double.valueOf(val));
-					cell.setCellStyle(template.getCellStyleNumber());
+					cell.setCellStyle(template.getCellStyleNumber2());
 				}
 			} else {
 				cell.setCellValue("--");
@@ -127,7 +127,10 @@ public class JyzbExcelTemplate {
 	
 	HSSFWorkbook workbook;
 	HSSFCellStyle cellStyleNull;
-	HSSFCellStyle cellStyleNumber;
+	HSSFCellStyle cellStyleNumber2;
+	HSSFCellStyle cellStyleNumber4;
+	HSSFCellStyle cellStyleNumber1;
+	HSSFCellStyle cellStyleNumber0;
 	HSSFCellStyle cellStylePercent;
 	HSSFCellStyle cellStyleHeader;
 	
@@ -142,19 +145,46 @@ public class JyzbExcelTemplate {
 		cellStyleNull.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
 		cellStyleNull.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
 		
-		cellStyleNumber = workbook
+		cellStyleNumber0 = workbook
 				.createCellStyle();
-		cellStyleNumber.setDataFormat(HSSFDataFormat
+		cellStyleNumber0.setDataFormat(HSSFDataFormat
+				.getBuiltinFormat("0"));
+		cellStyleNumber0.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+		cellStyleNumber0.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+		cellStyleNumber0.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+		cellStyleNumber0.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
+		
+		cellStyleNumber2 = workbook
+				.createCellStyle();
+		cellStyleNumber2.setDataFormat(HSSFDataFormat
 				.getBuiltinFormat("0.00"));
-		cellStyleNumber.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-		cellStyleNumber.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-		cellStyleNumber.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-		cellStyleNumber.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
+		cellStyleNumber2.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+		cellStyleNumber2.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+		cellStyleNumber2.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+		cellStyleNumber2.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
+		
+		cellStyleNumber4 = workbook
+				.createCellStyle();
+		cellStyleNumber4.setDataFormat(HSSFDataFormat
+				.getBuiltinFormat("0.0000"));
+		cellStyleNumber4.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+		cellStyleNumber4.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+		cellStyleNumber4.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+		cellStyleNumber4.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
+		
+		cellStyleNumber1 = workbook
+				.createCellStyle();
+		cellStyleNumber1.setDataFormat(HSSFDataFormat
+				.getBuiltinFormat("0.0"));
+		cellStyleNumber1.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+		cellStyleNumber1.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+		cellStyleNumber1.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+		cellStyleNumber1.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
 		
 		cellStylePercent = workbook
 				.createCellStyle();
 		cellStylePercent.setDataFormat(HSSFDataFormat
-				.getBuiltinFormat("0.00%"));
+				.getBuiltinFormat("0.0%"));
 		cellStylePercent.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
 		cellStylePercent.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStylePercent.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
@@ -189,8 +219,20 @@ public class JyzbExcelTemplate {
 	/**
 	 * @return the cellStyleNumber
 	 */
-	public HSSFCellStyle getCellStyleNumber() {
-		return cellStyleNumber;
+	public HSSFCellStyle getCellStyleNumber2() {
+		return cellStyleNumber2;
+	}
+	
+	public HSSFCellStyle getCellStyleNumber4() {
+		return cellStyleNumber4;
+	}
+	
+	public HSSFCellStyle getCellStyleNumber1() {
+		return cellStyleNumber1;
+	}
+	
+	public HSSFCellStyle getCellStyleNumber0() {
+		return cellStyleNumber0;
 	}
 	/**
 	 * @return the cellStylePercent
