@@ -23,6 +23,7 @@ public abstract class AbstractSbdPipeConfigurator implements IPipeConfigurator {
 		timePointNumberZbs.add(GSZB.QZZJXMCH.getValue());
 		timePointNumberZbs.add(GSZB.QZYQK.getValue());
 		timePointNumberZbs.add(GSZB.QZKCSP.getValue());
+		//timePointNumberZbs.add(GSZB.QZJYWY.getValue());
 	}
 
 	static {

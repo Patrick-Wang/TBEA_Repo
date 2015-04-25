@@ -1,5 +1,15 @@
 declare var $;
+
 module Util {
+
+    function indexOf(arr, val){
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == val) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
 
     export interface FormatHandler {
@@ -18,8 +28,8 @@ module Util {
         }
 
         match(zb: string, col: number): boolean {
-            if (this.mZbs.length == 0 || this.mZbs.indexOf(zb) >= 0) {
-                if (this.mCols.length == 0 || this.mCols.indexOf(col) >= 0) {
+            if (this.mZbs.length == 0 || indexOf(this.mZbs, zb) >= 0) {
+                if (this.mCols.length == 0 || indexOf(this.mCols, col) >= 0) {
                     return true;
                 }
             }
