@@ -205,11 +205,11 @@ module hzb_zbhz_prediciton {
                         }
                         else if (isRjlr)
                         {
-                            row[i] = Util.formatFordot1(row[i]);
+                            row[i] = Util.formatFordot(row[i], 1);
                         }
                         else if (isRjsr)
                         {
-                            row[i] = Util.formatFordot1(row[i]);
+                            row[i] = Util.formatFordot(row[i], 1);
                         }  
                         else {
                             row[i] = Util.formatCurrency(row[i]);

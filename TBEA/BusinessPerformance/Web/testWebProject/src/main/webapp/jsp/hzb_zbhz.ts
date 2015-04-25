@@ -153,11 +153,11 @@ module hzb_zbhz {
                         } 
                         else if (isRjlr)
                         {
-                            row[i] = Util.formatFordot1(row[i]);
+                            row[i] = Util.formatFordot(row[i], 1);
                         }
                         else if (isRjsr)
                         {
-                            row[i] = Util.formatFordot1(row[i]);
+                            row[i] = Util.formatFordot(row[i], 1);
                         }  
                         else if (isSxfyl){
                              row[i] = Util.formatPercent(row[i]);

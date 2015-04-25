@@ -188,27 +188,8 @@ public class YDZBController {
 	
 	private List<String[]> getGdwData(Date d, CompanyType compType){
 		List<Company> comps = getHzbCompany(compType);
-//		if (CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType){
-//			Organization org = companyManager.getBMDBOrganization();
-//			comps = org.getCompany(compType).getSubCompanys();
-//			removeJzcsyl = true;
-//		} else if (
-//				CompanyType.BYQCY == compType ||
-//				CompanyType.XLCY == compType ||
-//				CompanyType.DBSBDCYJT == compType ||
-//				CompanyType.NFSBDCYJT == compType){
-//			removeJzcsyl = true;
-//			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
-//			comps = orgJyzb.getCompany(compType).getSubCompanys();
-//		} else {
-//			Organization org = companyManager.getBMDBOrganization();
-//			comps = new ArrayList<Company>();
-//			comps.add(org.getCompany(compType));
-//		}
 		List<String[]> ret = gszbService.getGdwzb(d, comps);
-		if (this.isSbdcy(compType)){
-			removeJzcsyl(ret);
-		}
+		removeJzcsyl(compType, ret);
 		return ret;
 	}
 	
@@ -232,13 +213,18 @@ public class YDZBController {
 					.addType(13, CellFormatter.CellType.PERCENT)
 					.addType(15, CellFormatter.CellType.PERCENT);
 
+			FormatterHandler formatterChain = this.getFormatterChain(
+					new Integer[]{4, 6, 9, 11, 13, 15}, new Integer[]{1, 2});
+			
+			
 			HSSFWorkbook workbook = template.getWorkbook();       
 			HSSFSheet sheet = workbook.getSheetAt(0);
 			for (int i = data.size() - 1; i >= 0; --i) {
 				HSSFRow row = sheet.createRow(3 + i);
 				for (int j = data.get(i).length - 1; j >= 0; --j) {
 					HSSFCell cell = row.createCell(j);
-					formatter.format(j, cell, data.get(i)[j]);
+//					formatter.format(j, cell, data.get(i)[j]);
+					formatterChain.handle(data.get(i)[0], j, template, cell, data.get(i)[j]);
 				}
 			}
 
@@ -339,13 +325,15 @@ public class YDZBController {
 		return new ModelAndView("hzb_zbhz", map);
 	}
 
-	private void removeJzcsyl(List<String[]> zbData){
-		for (int i = 0; i < zbData.size(); ++i){
-			if ("净资产收益率(%)".equals(zbData.get(i)[0])){
-				for (int j = 1; j < zbData.get(i).length; ++j){
-					zbData.get(i)[j] = null;
+	private void removeJzcsyl(CompanyType compType, List<String[]> zbData){
+		if (isSyb(compType) || isSbdcy(compType)){
+			for (int i = 0; i < zbData.size(); ++i){
+				if ("净资产收益率(%)".equals(zbData.get(i)[0])){
+					for (int j = 1; j < zbData.get(i).length; ++j){
+						zbData.get(i)[j] = null;
+					}
+					break;
 				}
-				break;
 			}
 		}
 	}
@@ -381,13 +369,13 @@ public class YDZBController {
 		.next(new PercentFormatterHandler(null, percentCols))
 		.next(new NumberFormatterHandler(NumberType.RESERVE_0, new String[]{"人数"}))
 		.next(new PercentSingleFormatterHandler(new String[]{"净资产收益率(%)"}))
-		.next(new PercentFormatterHandler(new String[]{"净资产收益率(%)", "销售利润率(%)"}))
+		.next(new PercentFormatterHandler(new String[]{"三项费用率(%)", "销售利润率(%)"}))
 		.next(new NumberFormatterHandler(NumberType.RESERVE_1, new String[]{"人均利润", "人均利润", "精铝块13项元素和值（ppm）"}))
-		.next(new NumberFormatterHandler(NumberType.RESERVE_2, new String[]{"标煤单耗（g/度）", "厂用电率（%）"}, jhCols))
-		.next(new NumberFormatterHandler(NumberType.RESERVE_1, new String[]{"标煤单耗（g/度）", "厂用电率（%）"}))
+		.next(new NumberFormatterHandler(NumberType.RESERVE_0, new String[]{"标煤单耗（g/度）", "厂用电率（%）"}, jhCols))
+		.next(new NumberFormatterHandler(NumberType.RESERVE_2, new String[]{"标煤单耗（g/度）", "厂用电率（%）"}))
 		.next(new NumberFormatterHandler(NumberType.RESERVE_2, zhZb))
 		.next(new NumberFormatterHandler(NumberType.RESERVE_4, new String[]{"单位供电成本（元/度）"}))
-		.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		.next(new NumberFormatterHandler(NumberType.RESERVE_0));
 		return formatterChain;
 	}
 	
@@ -404,17 +392,8 @@ public class YDZBController {
 		template = JyzbExcelTemplate.createTemplate(SheetType.GS_SYB);
 
 		FormatterHandler formatterChain = this.getFormatterChain(
-				new Integer[]{4, 6, 9, 11, 12, 15}, new Integer[]{1, 2});
+				new Integer[]{4, 6, 9, 11, 13, 15}, new Integer[]{1, 2});
 		
-//		CellFormatter formatter = template.createCellFormatter()
-//				.addType(0, CellFormatter.CellType.HEADER)
-//				.addType(4, CellFormatter.CellType.PERCENT)
-//				.addType(6, CellFormatter.CellType.PERCENT)
-//				.addType(9, CellFormatter.CellType.PERCENT)
-//				.addType(11, CellFormatter.CellType.PERCENT)
-//				.addType(13, CellFormatter.CellType.PERCENT)
-//				.addType(15, CellFormatter.CellType.PERCENT);
-
 		HSSFWorkbook workbook = template.getWorkbook();
 		workbook.setSheetName(0, compName + "经营指标完成情况");
 		HSSFSheet sheet = workbook.getSheetAt(0);
@@ -423,7 +402,6 @@ public class YDZBController {
 			for (int j = ret.get(i).length - 1; j >= 0; --j) {
 				HSSFCell cell = row.createCell(j);
 				formatterChain.handle(ret.get(i)[0], j, template, cell, ret.get(i)[j]);
-//				formatter.format(j, cell, ret.get(i)[j]);
 			}
 		}
 		template.write(response, fileName + ".xls");
