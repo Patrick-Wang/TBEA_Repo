@@ -189,7 +189,7 @@ public class ApproveServiceImpl implements ApproveService {
 		for (int m = 0; m < 3; ++m) {
 			Date d = Util.toDate(cal);
 			for (Company comp : comps) {
-				ZBStatus status = ydjhzbDao.getZbStatus(date, comp);
+				ZBStatus status = ydjhzbDao.getZbStatus(d, comp);
 
 				if (!validateConsistency(account, status)) {
 					continue;
