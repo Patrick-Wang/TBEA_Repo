@@ -98,7 +98,9 @@ module hzb_companys {
                $('h1').text("没有任何可以查看的公司");
                $('input').css("display", "none");
            } else{
-               this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+               var month = this.mOpt.date.month + (2 - (this.mOpt.date.month - 1) % 3);
+               this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, { year: this.mOpt.date.year, month: month }, this.mOpt.dateId);
+               this.mDateSelector.select(this.mOpt.date);
                this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
                this.updateUI();
            } 

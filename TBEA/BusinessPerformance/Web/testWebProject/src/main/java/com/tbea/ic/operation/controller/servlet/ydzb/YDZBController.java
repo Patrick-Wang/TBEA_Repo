@@ -426,7 +426,7 @@ public class YDZBController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		DateSelection dateSel = new DateSelection(DateHelper.getJdEnd(Util.toDate(Calendar.getInstance())), true,
+		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true,
 				false);
 		dateSel.select(map);
 		Organization org = companyManager.getVirtualJYZBOrganization();
