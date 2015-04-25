@@ -415,7 +415,7 @@ public class EntryServiceImpl implements EntryService{
 		Set<Integer> unenteredZb = getUnenteredSjzb(company, data);
 		List<ZBStatus> approvedList = getZbStatus(date, company.getType(), ZBType.BY20YJ);
 		for (int c = 0; c < approvedList.size(); ++c) {
-			if (ZBStatus.APPROVED != approvedList.get(0)) {
+			if (ZBStatus.APPROVED != approvedList.get(c)) {
 				ZbCalculator calc = this.createYj20Calc();
 				for (int r = 0; r < data.size(); ++r) {
 					row = data.getJSONArray(r);

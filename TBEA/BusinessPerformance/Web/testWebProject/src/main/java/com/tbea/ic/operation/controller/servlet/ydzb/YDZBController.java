@@ -370,7 +370,7 @@ public class YDZBController {
 		.next(new NumberFormatterHandler(NumberType.RESERVE_0, new String[]{"人数"}))
 		.next(new PercentSingleFormatterHandler(new String[]{"净资产收益率(%)"}))
 		.next(new PercentFormatterHandler(new String[]{"三项费用率(%)", "销售利润率(%)"}))
-		.next(new NumberFormatterHandler(NumberType.RESERVE_1, new String[]{"人均利润", "人均利润", "精铝块13项元素和值（ppm）"}))
+		.next(new NumberFormatterHandler(NumberType.RESERVE_1, new String[]{"人均利润", "人均收入", "精铝块13项元素和值（ppm）"}))
 		.next(new NumberFormatterHandler(NumberType.RESERVE_0, new String[]{"标煤单耗（g/度）", "厂用电率（%）"}, jhCols))
 		.next(new NumberFormatterHandler(NumberType.RESERVE_2, new String[]{"标煤单耗（g/度）", "厂用电率（%）"}))
 		.next(new NumberFormatterHandler(NumberType.RESERVE_2, zhZb))
@@ -909,7 +909,7 @@ public class YDZBController {
 			}else if (2 == iMonth % 3) {
 				data = gszbService.getSecondSeasonPredictionZBsOverview(d, getHzbCompany(ct));
 			}
-			removeJzcsyl(ct, data);
+			removeJzcsyl(ct, data);  
 			for (int i = data.size() - 1; i >= 0; --i) {
 				HSSFRow row = sheet.createRow(lastRow + i);
 				for (int j = data.get(i).length - 1; j >= 0; --j) {
