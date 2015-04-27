@@ -242,7 +242,7 @@ module entry_template {
             var mergecontent: string = "";
             if (approveMark) {
                 $('#DeputyApprovementStatus').css("display", "block");
-                mergecontent += approveContent + "被经营副总审核!";
+                mergecontent += approveContent + "被经营副总审核!" + "<br/>";
             }
 
             if (unapproveMark) {
@@ -251,7 +251,8 @@ module entry_template {
             }
             if ("" != mergecontent)
             {
-                $('#DeputyApprovementStatus').text(mergecontent);
+              
+                $('#DeputyApprovementStatus')[0].innerHTML = mergecontent;
             }
             
         }    

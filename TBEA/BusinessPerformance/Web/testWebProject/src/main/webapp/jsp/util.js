@@ -1,5 +1,151 @@
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 var Util;
 (function (Util) {
+    function indexOf(arr, val) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == val) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    var AbstractFormatHandler = (function () {
+        function AbstractFormatHandler(zbs, cols) {
+            this.mZbs = zbs;
+            this.mCols = cols;
+        }
+        AbstractFormatHandler.prototype.handle = function (zb, col, val) {
+            return "";
+        };
+        AbstractFormatHandler.prototype.match = function (zb, col) {
+            if (this.mZbs.length == 0 || indexOf(this.mZbs, zb) >= 0) {
+                if (this.mCols.length == 0 || indexOf(this.mCols, col) >= 0) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        AbstractFormatHandler.prototype.callNext = function (zb, col, val) {
+            if (this.mNextHandler != undefined) {
+                return this.mNextHandler.handle(zb, col, val);
+            }
+            return "--";
+        };
+        AbstractFormatHandler.prototype.next = function (handler) {
+            this.mNextHandler = handler;
+            return handler;
+        };
+        return AbstractFormatHandler;
+    })();
+    var FormatIntHandler = (function (_super) {
+        __extends(FormatIntHandler, _super);
+        function FormatIntHandler(zbs, cols) {
+            if (zbs === void 0) { zbs = []; }
+            if (cols === void 0) { cols = []; }
+            _super.call(this, zbs, cols);
+        }
+        FormatIntHandler.prototype.handle = function (zb, col, val) {
+            if (this.match(zb, col)) {
+                return Util.formatInt(val);
+            }
+            else {
+                return this.callNext(zb, col, val);
+            }
+        };
+        return FormatIntHandler;
+    })(AbstractFormatHandler);
+    Util.FormatIntHandler = FormatIntHandler;
+    var FormatCurrencyHandler = (function (_super) {
+        __extends(FormatCurrencyHandler, _super);
+        function FormatCurrencyHandler(zbs, cols) {
+            if (zbs === void 0) { zbs = []; }
+            if (cols === void 0) { cols = []; }
+            _super.call(this, zbs, cols);
+        }
+        FormatCurrencyHandler.prototype.handle = function (zb, col, val) {
+            if (this.match(zb, col)) {
+                return Util.formatCurrency(val);
+            }
+            else {
+                return this.callNext(zb, col, val);
+            }
+        };
+        return FormatCurrencyHandler;
+    })(AbstractFormatHandler);
+    Util.FormatCurrencyHandler = FormatCurrencyHandler;
+    var FormatPercentHandler = (function (_super) {
+        __extends(FormatPercentHandler, _super);
+        function FormatPercentHandler(zbs, cols) {
+            if (zbs === void 0) { zbs = []; }
+            if (cols === void 0) { cols = []; }
+            _super.call(this, zbs, cols);
+        }
+        FormatPercentHandler.prototype.handle = function (zb, col, val) {
+            if (this.match(zb, col)) {
+                return Util.formatPercent(val);
+            }
+            else {
+                return this.callNext(zb, col, val);
+            }
+        };
+        return FormatPercentHandler;
+    })(AbstractFormatHandler);
+    Util.FormatPercentHandler = FormatPercentHandler;
+    var FormatPercentSignalHandler = (function (_super) {
+        __extends(FormatPercentSignalHandler, _super);
+        function FormatPercentSignalHandler(zbs, cols) {
+            if (zbs === void 0) { zbs = []; }
+            if (cols === void 0) { cols = []; }
+            _super.call(this, zbs, cols);
+        }
+        FormatPercentSignalHandler.prototype.handle = function (zb, col, val) {
+            if (this.match(zb, col)) {
+                return Util.formatPercentSignal(val);
+            }
+            else {
+                return this.callNext(zb, col, val);
+            }
+        };
+        return FormatPercentSignalHandler;
+    })(AbstractFormatHandler);
+    Util.FormatPercentSignalHandler = FormatPercentSignalHandler;
+    var FormatFordotHandler = (function (_super) {
+        __extends(FormatFordotHandler, _super);
+        function FormatFordotHandler(dotCount, zbs, cols) {
+            if (dotCount === void 0) { dotCount = 1; }
+            if (zbs === void 0) { zbs = []; }
+            if (cols === void 0) { cols = []; }
+            _super.call(this, zbs, cols);
+            this.mDotCount = dotCount;
+        }
+        FormatFordotHandler.prototype.handle = function (zb, col, val) {
+            if (this.match(zb, col)) {
+                return Util.formatFordot(val, this.mDotCount);
+            }
+            else {
+                return this.callNext(zb, col, val);
+            }
+        };
+        return FormatFordotHandler;
+    })(AbstractFormatHandler);
+    Util.FormatFordotHandler = FormatFordotHandler;
+    var ZBStatus = (function () {
+        function ZBStatus() {
+        }
+        ZBStatus.NONE = "NONE";
+        ZBStatus.APPROVED = "APPROVED";
+        ZBStatus.SUBMITTED = "SUBMITTED";
+        ZBStatus.SAVED = "SAVED";
+        ZBStatus.APPROVED_2 = "APPROVED_2";
+        ZBStatus.SUBMITTED_2 = "SUBMITTED_2";
+        return ZBStatus;
+    })();
+    Util.ZBStatus = ZBStatus;
     (function (ZBType) {
         ZBType[ZBType["QNJH"] = 0] = "QNJH";
         ZBType[ZBType["YDJDMJH"] = 1] = "YDJDMJH";
@@ -206,6 +352,44 @@ var Util;
         return Ajax;
     })();
     Util.Ajax = Ajax;
+    function formatData(outputData, inputData, precentList, specialsjzhCols) {
+        var zhZb = [
+            '人均发电量（万度/人）',
+            '外购电单位成本（元/度）',
+            '铝杆棒一次综合成品率（%）',
+            '其中：5154合金杆一次成品率（%）',
+            '4043&8030&6201合金杆一次成品率（%）',
+            '高纯铝杆产品一次成品率（%）',
+            '铝棒产品一次成品率（%）',
+            '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）',
+            '失败成本率1（%）',
+            '外部客诉率（%）',
+            '4N6精铝块一次成品率（%）',
+            '精铝杆一次成品率（%）',
+            '综合成品率（%）',
+            '基材成品率（%）',
+            '粉末喷涂成品率（%）',
+            '隔热产品成品率（%）',
+            '失败成本率（%）',
+            '自产箔综合符单率（%）',
+            '委托加工化成箔符单率（%）',
+            '架空电缆（1KV、10KV）合格率（%）',
+            '钢芯铝绞线合格率（%）',
+            '布电线合格率（%）'
+        ];
+        var formaterChain = new Util.FormatPercentHandler([], precentList.toArray());
+        formaterChain.next(new Util.FormatIntHandler(["人数"])).next(new Util.FormatPercentSignalHandler(['净资产收益率(%)'])).next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)'])).next(new Util.FormatFordotHandler(1, ['人均利润', '人均收入', '精铝块13项元素和值（ppm）'])).next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], specialsjzhCols)).next(new Util.FormatFordotHandler(2, zhZb)).next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）'])).next(new Util.FormatCurrencyHandler());
+        var row = [];
+        for (var j = 0; j < inputData.length; ++j) {
+            row = [].concat(inputData[j]);
+            for (var i = 1; i < row.length; ++i) {
+                row[i] = formaterChain.handle(row[0], i, row[i]);
+            }
+            outputData.push(row);
+        }
+        return;
+    }
+    Util.formatData = formatData;
     function formatInt(val) {
         if (val === "--" || val === "") {
             return val;
@@ -227,6 +411,14 @@ var Util;
         return (parseFloat(val) * 100).toFixed(1) + "%";
     }
     Util.formatPercent = formatPercent;
+    function formatFordot(val, dotCount) {
+        if (dotCount === void 0) { dotCount = 1; }
+        if (val === "--" || val === "" || val === "-") {
+            return val;
+        }
+        return (parseFloat(val)).toFixed(dotCount);
+    }
+    Util.formatFordot = formatFordot;
     function formatPercentSignal(val) {
         if (val === "--" || val === "" || val === "-") {
             return val;
