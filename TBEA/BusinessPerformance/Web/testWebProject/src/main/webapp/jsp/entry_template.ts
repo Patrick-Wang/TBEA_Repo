@@ -344,7 +344,10 @@ module entry_template {
                 for (var j = 0; j < allData[i].length; ++j){
                     if (j != 1){
                         submitData[i].push(allData[i][j])
-                        allData[i][j] = allData[i][j].replace(new RegExp(' ', 'g'), '')
+                        if (allData[i][j].replace(new RegExp(' ', 'g'), '') == ""){
+                            Util.MessageBox.tip("有空内容 无法提交")
+                            return;
+                        }
                     }
                 }
             }
