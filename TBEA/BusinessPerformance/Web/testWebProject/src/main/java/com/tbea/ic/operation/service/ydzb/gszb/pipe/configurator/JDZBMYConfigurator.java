@@ -69,16 +69,16 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 		} else {
 			pipe.add(new AccPipeFilter(yjhAcc, 3)
 					.includeCompanies(allCompanies)
-							.includeZbs(gsztzbs)
-							.excludeZbs(getInvisiableZbs())
-							.excludeZbs(getRatioZbs())
-							.exclude(GSZB.YSZK)
-							.exclude(GSZB.CH))
+					.includeZbs(gsztzbs)
+					.excludeZbs(getInvisiableZbs())
+					.excludeZbs(getRatioZbs())
+					.exclude(GSZB.YSZK)
+					.exclude(GSZB.CH))
 							
 				.add(new YdjhProportionAccPipeFilter(sbdzbDao, sjAcc, 3, dh.getFirstMonth(), dh.getCur())
-							.includeCompanies(sbdCompanies)
-							.include(GSZB.YSZK)
-							.include(GSZB.CH));
+					.includeCompanies(sbdCompanies)
+					.include(GSZB.YSZK)
+					.include(GSZB.CH));
 
 			if (!nonSbdCompanies.isEmpty()) {
 				pipe.add(new AccPipeFilter(yjhAcc, 3)
@@ -113,7 +113,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 3, 1))
 
@@ -123,7 +124,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(new AccPipeFilter(yjhAcc, 2, dh.getXjdLastMonth())
 						.includeCompanies(allCompanies)
 						.includeZbs(getTimePointNumberZbs()))
@@ -133,7 +135,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 4, 8))
 
@@ -147,7 +150,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(new AccPipeFilter(sjAcc, 10, dh.getQntq())
 						.includeCompanies(allCompanies)
 						.includeZbs(getTimePointNumberZbs()))
@@ -162,7 +166,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 4, 12))
 
@@ -175,7 +180,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 10, 14))
 
@@ -209,7 +215,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(new AccPipeFilter(sjAcc, 19, dh.getXjdLastMonth())
 						.includeCompanies(allCompanies)
 						.includeZbs(getTimePointNumberZbs()))
@@ -224,7 +231,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 19, 21))
 
@@ -238,7 +246,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(new AccPipeFilter(sjAcc, 23, dh.getQntqXjdLastMonth())
 						.includeCompanies(allCompanies)
 						.includeZbs(getTimePointNumberZbs()))

@@ -106,7 +106,8 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 1, 6))
 
@@ -116,7 +117,8 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 2, 7))
 
@@ -128,10 +130,11 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
-				.add(new AccPipeFilter(sjAcc, 9, dh.getQntq())
-						.includeCompanies(allCompanies)
-						.includeZbs(getTimePointNumberZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
+				.add(copyFilter
+						.add(getTimePointNumberZbs(), 4, 9))
+
 
 				// 同比增幅
 				.add(tbzzFilter.add(10, 7, 9))
@@ -141,7 +144,8 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 2, 11))
 
@@ -153,7 +157,8 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.includeCompanies(allCompanies)
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+						.excludeZbs(getTimePointNumberZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 9, 13))
 

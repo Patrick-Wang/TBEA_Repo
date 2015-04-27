@@ -114,7 +114,8 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
 					.excludeZbs(getInvisiableZbs())
-					.excludeZbs(getRatioZbs()))
+					.excludeZbs(getRatioZbs())
+					.excludeZbs(getTimePointNumberZbs()))
 			.add(copyFilter
 					.add(getTimePointNumberZbs(), 1, 7))
 
@@ -123,7 +124,8 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
 					.excludeZbs(getInvisiableZbs())
-					.excludeZbs(getRatioZbs()))
+					.excludeZbs(getRatioZbs())
+					.excludeZbs(getTimePointNumberZbs()))
 			.add(copyFilter
 					.add(getTimePointNumberZbs(), 2, 8))
 
@@ -136,7 +138,8 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
 					.excludeZbs(getInvisiableZbs())
-					.excludeZbs(getRatioZbs()))
+					.excludeZbs(getRatioZbs())
+					.excludeZbs(getTimePointNumberZbs()))
 			.add(new AccPipeFilter(sjAcc, 10, dh.getQntq())
 					.includeCompanies(allCompanies)
 					.includeZbs(getTimePointNumberZbs()))
@@ -149,7 +152,8 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
 					.excludeZbs(getInvisiableZbs())
-					.excludeZbs(getRatioZbs()))
+					.excludeZbs(getRatioZbs())
+					.excludeZbs(getTimePointNumberZbs()))
 			.add(copyFilter
 					.add(getTimePointNumberZbs(), 2, 12))
 
@@ -162,7 +166,8 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
 					.excludeZbs(getInvisiableZbs())
-					.excludeZbs(getRatioZbs()))
+					.excludeZbs(getRatioZbs())
+					.excludeZbs(getTimePointNumberZbs()))
 			.add(copyFilter
 					.add(getTimePointNumberZbs(), 10, 14))
 
