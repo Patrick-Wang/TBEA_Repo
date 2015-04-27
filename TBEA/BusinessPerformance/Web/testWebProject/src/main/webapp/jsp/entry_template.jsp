@@ -254,18 +254,18 @@ th.ui-th-ltr {
 						<td>
 							<Table width = "100%" cellspacing="0" cellpadding="0">
 								<tr>
-<!-- 								<td width="30%"><input id="save" type="submit" value="保存"
+									<td width="30%"><input id="save" type="submit" value="保存"
 										style="width: 80px;dispaly:none" onclick="view.save()"></input> 
-									</td> -->
+									</td>
 									<td width="70%" align = "right">
 										<table>
 											<tr>
 											
-											<!-- 	<td><input id="submitToDeputy" type="submit" value="内部审核"
+												<td><input id="submitToDeputy" type="submit" value="内部审核"
 													style="width: 80px;display:none" onclick="view.submitToDeputy()"></input>
 												</td>
 											
-												<td><div style="width:6px"></div> -->
+												<td><div style="width:6px"></div>
 												</td>
 												<td><input id="submit" type="submit" value="提交"
 													style="width: 80px; dispaly:none" onclick="view.submit()"></input>
