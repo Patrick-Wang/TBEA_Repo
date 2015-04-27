@@ -16,7 +16,6 @@ module entry_template {
                 } else {
                     nodes.push(new JQTable.Node(title[i], "_" + i, statusList[i - 1] == Util.ZBStatus.APPROVED));
                 }
-
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         }
@@ -110,28 +109,28 @@ module entry_template {
         
         public updateApproveStatusFromDeputy(year: number, month: number, entryType: Util.ZBType) {
             //年度计划数经营副总审核状态
-            var isShowapprovecontent: boolean = false;
-            var isShowunapprovecontent: boolean = false;
-            var approveContent: string;
-            var unapproveContent: string;
+            var isShowSubmit_2: boolean = false;
+            var isShowapprove_2: boolean = false;
+            var approveContent: string = "";
+            var unapproveContent: string = "";
             //年度计划数据和实际计划数据
             if ((Util.ZBType.QNJH == entryType || Util.ZBType.BYSJ) && this.mStatusList.length == 1) {
                 if (this.mStatusList[0] == Util.ZBStatus.SUBMITTED_2) {
-                    isShowunapprovecontent = true;
+                    isShowSubmit_2 = true;
                     if (Util.ZBType.QNJH == entryType) {
                         unapproveContent = year + "年计划数据";
                     } else {
                         unapproveContent = month + "月实际数据";
                     }
                 } else if (this.mStatusList[0] == Util.ZBStatus.APPROVED_2) {
-                    isShowapprovecontent = true;
+                    isShowapprove_2 = true;
                     if (Util.ZBType.QNJH == entryType) {
                         approveContent = year + "年计划数据";
                     } else {
                         approveContent = month + "月实际数据";
                     }
                 }
-                this.addContent(isShowapprovecontent, isShowunapprovecontent, approveContent, unapproveContent);
+                this.addContent(isShowapprove_2, isShowSubmit_2, approveContent, unapproveContent);
             }
             
             //月度-季度计划数经营副总审核状态
@@ -141,25 +140,25 @@ module entry_template {
                 
                 for (var i = 0; i < this.mStatusList.length; i++) {
                     if (this.mStatusList[i] == Util.ZBStatus.SUBMITTED_2) {
-                        isShowapprovecontent = true;
+                        isShowSubmit_2 = true;
                         unapproveContent += MatchArray[i] + "月,";
                     } else if (this.mStatusList[i] == Util.ZBStatus.APPROVED_2) {
-                        isShowunapprovecontent = true;
+                        isShowapprove_2 = true;
                         approveContent += MatchArray[i] + "月,";
                     } 
                 }
-                if (undefined != approveContent)
+                if ("" != approveContent && isShowapprove_2)
                 {
                     approveContent = approveContent.substring(0, approveContent.length - 1);
-                approveContent += "计划数据";
+                    approveContent += "计划数据";
                 }    
-                if (undefined != approveContent)
+                if ("" != unapproveContent && isShowSubmit_2)
                 {
                     unapproveContent = unapproveContent.substring(0, unapproveContent.length - 1);               
                     unapproveContent += "计划数据";
                 }
                 
-                this.addContent(isShowapprovecontent, isShowunapprovecontent, approveContent, unapproveContent);
+                this.addContent(isShowapprove_2, isShowSubmit_2, approveContent, unapproveContent);
             }
             //20号实际数据和28号实际数据
             if ((Util.ZBType.BY20YJ == entryType || Util.ZBType.BY28YJ == entryType ) && this.mStatusList.length > 1) {
@@ -170,18 +169,18 @@ module entry_template {
                     for (var i = 0; i < this.mStatusList.length; i++) {
                         if (i == 0) {
                             if (this.mStatusList[0] == Util.ZBStatus.SUBMITTED_2) {
-                                isShowapprovecontent = true;
+                                isShowSubmit_2 = true;
                                 unapproveContent += year + "年" + MatchArray[i] + "月,";
                             } else if (this.mStatusList[0] == Util.ZBStatus.APPROVED_2) {
-                                isShowunapprovecontent = true;
+                                isShowapprove_2 = true;
                                 approveContent += year + "年" + MatchArray[i] + "月,";
                             }
                         } else {
                             if (this.mStatusList[i] == Util.ZBStatus.SUBMITTED_2) {
-                                isShowapprovecontent = true;
+                                isShowSubmit_2 = true;
                                 unapproveContent += (year + 1) + "年" + MatchArray[i] + "月,";
                             } else if (this.mStatusList[i] == Util.ZBStatus.APPROVED_2) {
-                                isShowunapprovecontent = true;
+                                isShowapprove_2 = true;
                                 approveContent += (year + 1) + "年" + MatchArray[i] + "月,";
                             }
                         }
@@ -189,24 +188,24 @@ module entry_template {
                 } else {
                     for (var i = 0; i < this.mStatusList.length; i++) {
                         if (this.mStatusList[i] == Util.ZBStatus.SUBMITTED_2) {
-                            isShowapprovecontent = true;
+                            isShowSubmit_2 = true;
                             approveContent += MatchArray[i] + "月,";
 
                         } else if (this.mStatusList[i] == Util.ZBStatus.APPROVED_2) {
-                            isShowunapprovecontent = true;
+                            isShowapprove_2 = true;
                             unapproveContent += MatchArray[i] + "月,";
                         } 
                     }
                 }
                 
-                if ((Util.ZBType.BY20YJ == entryType) && (isShowapprovecontent || isShowunapprovecontent)) {
+                if ((Util.ZBType.BY20YJ == entryType) && (isShowSubmit_2 || isShowapprove_2)) {
                     approveContent += "20号实际数据";
                     unapproveContent += "20号实际数据";
-                } else if ((Util.ZBType.BY28YJ == entryType) && (isShowapprovecontent || isShowunapprovecontent)){
+                } else if ((Util.ZBType.BY28YJ == entryType) && (isShowSubmit_2 || isShowapprove_2)){
                     approveContent += "28号实际数据";
                     unapproveContent += "28号实际数据";
                 }                
-                this.addContent(isShowapprovecontent, isShowunapprovecontent, approveContent, unapproveContent);
+                this.addContent(isShowapprove_2, isShowSubmit_2, approveContent, unapproveContent);
             }
         }
         
@@ -240,7 +239,7 @@ module entry_template {
         
         private addContent(approveMark: boolean, unapproveMark: boolean, approveContent: string, unapproveContent: string)
         {
-            var mergecontent: string;
+            var mergecontent: string = "";
             if (approveMark) {
                 $('#DeputyApprovementStatus').css("display", "block");
                 mergecontent += approveContent + "被经营副总审核!";
@@ -248,9 +247,9 @@ module entry_template {
 
             if (unapproveMark) {
                 $('#DeputyApprovementStatus').css("display", "block");
-                mergecontent += "," + unapproveContent + "尚未被经营副总审核!";
+                mergecontent += unapproveContent + "尚未被经营副总审核!";
             }
-            if (undefined != mergecontent)
+            if ("" != mergecontent)
             {
                 $('#DeputyApprovementStatus').text(mergecontent);
             }

@@ -274,15 +274,20 @@ th.ui-th-ltr {
 										</table>
 									</td>
 							    </tr>										
-								<tr>							
-									<td>
-										<div id="DeputyApprovementStatus" style="font-size: 20px; color: red ;font-weight: 400; display:none">
-										</div>
-									</td>
-								</tr>
 							</Table>
 						</td>
 					</tr>
+					<tr>
+						<td>
+							<div style="height:15px"></div>
+						<td>
+					</tr>
+					<tr>							
+									<td>
+										<div id="DeputyApprovementStatus" style="font-size: 30px; color: red ;font-weight: 400; display:none">
+										</div>
+									</td>
+								</tr>
 				</table>
 	</Table>
 	<%@include file="loading.jsp"%>
