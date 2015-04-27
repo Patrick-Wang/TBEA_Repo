@@ -17,9 +17,10 @@ module Util {
 
         static tip(msg: string): void {
             var container: any = MessageBox.getContainer();
-            if (container.children().length > 0) {
+            if (container.attr("finish") == "true") {
                 $("#self_tip").children().eq(0).text(msg);
             } else {
+                container.attr("finish", "true");
                 container.append('<div id="self_tip" class="block modal2" align="center" >' +
                     '<span style="display:block;line-height:170px;height:100%;font-size:20px;color:blue;">' + msg + '</span></div>');
             }
@@ -53,9 +54,10 @@ module Util {
 
         static confirm(msg: string, okOnly : boolean = false): Util.Promise {
             var container: any = MessageBox.getContainer();
-            if (container.children().length > 0) {
+            if (container.attr("finish") == "true") {
                 $("#self_confirm").children().eq(0).text(msg);
             } else {
+                container.attr("finish", "true");
                 var children;
                 if (okOnly){
                     children = '<div style="margin: 20px"> </div>' +
