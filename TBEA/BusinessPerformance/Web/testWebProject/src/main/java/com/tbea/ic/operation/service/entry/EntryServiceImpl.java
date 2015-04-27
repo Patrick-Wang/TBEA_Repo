@@ -859,19 +859,19 @@ public class EntryServiceImpl implements EntryService{
 		boolean bRet = false;
 		switch (entryType){
 		case BY20YJ:
-			bRet = update20YJ(date, company, data, ZBStatus.SUBMITTED);
+			bRet = update20YJ(date, company, data, ZBStatus.SAVED);
 			break;
 		case BY28YJ:
-			bRet = update28YJ(date, company, data, ZBStatus.SUBMITTED);
+			bRet = update28YJ(date, company, data, ZBStatus.SAVED);
 			break;
 		case BYSJ:
-			bRet = updateBYSJ(date, company, data, ZBStatus.SUBMITTED);
+			bRet = updateBYSJ(date, company, data, ZBStatus.SAVED);
 			break;
 		case NDJH:
-			bRet = updateNDJH(date, company, data, ZBStatus.SUBMITTED);
+			bRet = updateNDJH(date, company, data, ZBStatus.SAVED);
 			break;
 		case YDJDMJH:
-			bRet = updateYDJDMJH(date, company, data, ZBStatus.SUBMITTED);
+			bRet = updateYDJDMJH(date, company, data, ZBStatus.SAVED);
 			break;
 		default:
 			break;
