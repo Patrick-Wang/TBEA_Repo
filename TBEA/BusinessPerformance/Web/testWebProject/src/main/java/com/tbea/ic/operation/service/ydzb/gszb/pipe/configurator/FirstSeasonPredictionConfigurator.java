@@ -68,9 +68,9 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 					.exclude(GSZB.CH))
 						
 				.add(new YdjhProportionAccPipeFilter(sbdzbDao, sjAcc, 2, dh.getFirstMonth(), dh.getCur())
-						.includeCompanies(sbdCompanies)
-						.include(GSZB.YSZK)
-						.include(GSZB.CH));
+					.includeCompanies(sbdCompanies)
+					.include(GSZB.YSZK)
+					.include(GSZB.CH));
 
 			if (!nonSbdCompanies.isEmpty()) {
 				pipe.add(new AccPipeFilter(yjhAcc, 2)
