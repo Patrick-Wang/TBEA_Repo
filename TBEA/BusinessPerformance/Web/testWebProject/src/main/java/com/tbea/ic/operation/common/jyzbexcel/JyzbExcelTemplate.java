@@ -146,7 +146,7 @@ public class JyzbExcelTemplate {
 		
 		cellStyleNull = workbook
 				.createCellStyle();
-		cellStyleNull.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cellStyleNull.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
 		cellStyleNull.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
 		cellStyleNull.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleNull.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
