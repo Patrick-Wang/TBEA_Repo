@@ -43,4 +43,13 @@ class NdjhZbInjector extends ZbInjector {
 			ndjhzbDao.merge(zb);
 		}
 	}
+
+	@Override
+	public void remove(Integer zbId, Calendar cal, Company comp) {
+		NDJHZB zb = ndjhzbDao.getZb(zbId, Util.toDate(cal), comp);
+		if (null != zb){
+			ndjhzbDao.delete(zb);
+		}
+	}
+
 }

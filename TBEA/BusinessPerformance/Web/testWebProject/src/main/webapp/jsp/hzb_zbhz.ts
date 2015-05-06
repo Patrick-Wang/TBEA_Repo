@@ -106,6 +106,13 @@ module hzb_zbhz {
             $("#export")[0].action = "hzb_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, type : this.mType, fileName: fName });
             $("#export")[0].submit();
         }
+        
+        public exportExcelXmgs(fName: string) {
+            var date : Util.Date = this.mDs.getDate();
+            $("#exportxmgs")[0].action = "hzb_zbhz_xmgs_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, type : this.mType, fileName: fName });
+            $("#exportxmgs")[0].submit();
+        }
+        
         //收入签约
         private formatSrqyData() {
             var data = [];

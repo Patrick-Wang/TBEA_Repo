@@ -23,5 +23,7 @@ public abstract class ZbInjector {
 	}
 	
 	abstract public void inject(Integer zbId, double val, Calendar cal, Company comp, ZBStatus status);	
+	
+	abstract public void remove(Integer zbId, Calendar cal, Company comp);	
 
 }
