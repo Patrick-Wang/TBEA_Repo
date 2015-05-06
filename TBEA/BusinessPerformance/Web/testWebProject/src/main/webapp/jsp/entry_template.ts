@@ -197,18 +197,26 @@ module entry_template {
                         } 
                     }
                 }
-                
-                if ("" != approve_2Content && isShowapprove_2)
-                {
-                    approve_2Content = approve_2Content.substring(0, approve_2Content.length - 1);
-                    approve_2Content += "实际数据";
-                }    
-                if ("" != submit_2Content && isShowSubmit_2)
-                {
-                    submit_2Content = submit_2Content.substring(0, submit_2Content.length - 1);               
-                    submit_2Content += "实际数据";
+                if (Util.ZBType.BY20YJ == entryType) {
+                    if ("" != approve_2Content && isShowapprove_2) {
+                        approve_2Content = approve_2Content.substring(0, approve_2Content.length - 1);
+                        approve_2Content += "20号预计数据";
+                    }
+                    if ("" != submit_2Content && isShowSubmit_2) {
+                        submit_2Content = submit_2Content.substring(0, submit_2Content.length - 1);
+                        submit_2Content += "20号预计数据";
+                    }
+                } else if (Util.ZBType.BY28YJ == entryType) {
+                    if ("" != approve_2Content && isShowapprove_2) {
+                        approve_2Content = approve_2Content.substring(0, approve_2Content.length - 1);
+                        approve_2Content += "预计数据";
+                    }
+                    if ("" != submit_2Content && isShowSubmit_2) {
+                        submit_2Content = submit_2Content.substring(0, submit_2Content.length - 1);
+                        submit_2Content += "预计数据";
+                    }
                 }
-       
+                   
                 this.addContent(isShowapprove_2, isShowSubmit_2, approve_2Content, submit_2Content);
             }
         }

@@ -608,6 +608,79 @@ public class YDZBController {
 		return "".getBytes("utf-8");
 	}
 	
+	@RequestMapping(value = "gcy_zbhz_prediction_export.do")
+	public @ResponseBody byte[] getgcy_zbhz_prediction_export(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		//Integer iMonth = Integer.parseInt(request.getParameter("month"));
+		//String year = request.getParameter("year");
+		Date d = DateSelection.getDate(request);
+		int month = Integer.parseInt(request.getParameter("month"));
+		String year = request.getParameter("year");
+		JyzbExcelTemplate template = null;
+		List<String[]> data = null;
+		String fileNameAndSheetName = null; 
+		CellFormatter formatter = null;
+		if (0 == month % 3) {
+			data = gszbService.getGcyJDZBMY(d);
+			fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度末月五大经营指标预测完成情况";
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDFCYZBYJ_MY);
+			formatter = template.createCellFormatter()
+					.addType(5, CellFormatter.CellType.PERCENT)
+					.addType(7, CellFormatter.CellType.PERCENT)					
+					.addType(9, CellFormatter.CellType.PERCENT)
+					.addType(11, CellFormatter.CellType.PERCENT)
+					.addType(13, CellFormatter.CellType.PERCENT)
+					.addType(15, CellFormatter.CellType.PERCENT)
+					.addType(20, CellFormatter.CellType.PERCENT)
+					.addType(22, CellFormatter.CellType.PERCENT)
+					.addType(24, CellFormatter.CellType.PERCENT);
+			
+		}
+
+		if (1 == month % 3) {
+			data = gszbService.getGcyFirstSeasonPredictionZBs(d);
+			fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度首月五大经营指标预测完成情况";
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDFCYZBYJ_SY);
+			formatter = template.createCellFormatter()
+					.addType(4, CellFormatter.CellType.PERCENT)
+					.addType(6, CellFormatter.CellType.PERCENT)					
+					.addType(10, CellFormatter.CellType.PERCENT)
+					.addType(12, CellFormatter.CellType.PERCENT)
+					.addType(14, CellFormatter.CellType.PERCENT)
+					.addType(16, CellFormatter.CellType.PERCENT);
+					
+		}
+
+		if (2 == month % 3) {
+			data = gszbService.getGcySecondSeasonPredictionZBs(d);
+			fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度次月五大经营指标预测完成情况";
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDFCYZBYJ_CY);
+			formatter = template.createCellFormatter()
+					.addType(4, CellFormatter.CellType.PERCENT)
+					.addType(6, CellFormatter.CellType.PERCENT)	
+					.addType(8, CellFormatter.CellType.PERCENT)	
+					.addType(11, CellFormatter.CellType.PERCENT)
+					.addType(13, CellFormatter.CellType.PERCENT)
+					.addType(15, CellFormatter.CellType.PERCENT)
+					.addType(17, CellFormatter.CellType.PERCENT);
+		}
+		
+
+		HSSFWorkbook workbook = template.getWorkbook();
+		workbook.setSheetName(0, fileNameAndSheetName);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = data.size() - 1; i >= 0; --i) {
+			HSSFRow row = sheet.getRow(2 + i);
+			for (int j = data.get(i).length - 1; j >= 0; --j) {
+				HSSFCell cell = row.getCell(j + 2);
+				formatter.format(j, cell, data.get(i)[j]);
+			}
+		}		
+			
+		template.write(response, fileNameAndSheetName + ".xls");
+		return "".getBytes("utf-8");
+	}
+	
 	//各产业经营指标完成情况update
 	@RequestMapping(value = "gcy_zbhz_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getGcy_zbhz_update(HttpServletRequest request,
