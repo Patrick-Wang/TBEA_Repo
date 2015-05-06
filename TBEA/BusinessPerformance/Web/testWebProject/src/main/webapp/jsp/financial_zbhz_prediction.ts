@@ -177,6 +177,12 @@ module financial_zbhz_prediciton {
                 });
         }
         
+         public exportExcel() {
+            this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
+            $("#export")[0].action = "gcy_zbhz_prediction_export.do?" + Util.Ajax.toUrlParam({ month: this.mActualMonth, year: this.mYear });
+            $("#export")[0].submit();
+        }
+        
         
         private formatData(data : string[][], precentList : std.vector<number>){
             var row = [];
@@ -313,6 +319,7 @@ module financial_zbhz_prediciton {
                     rowNum: 200,
                     autoScroll: true
                 }));
+             $("#export").css('display','block'); 
 
         }
     }

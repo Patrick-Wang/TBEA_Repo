@@ -175,6 +175,12 @@ th.ui-th-ltr {
 	text-align: left;
 	font-size: 12px;
 }
+#exportButton {
+			height: 23px;
+			width:100px;
+			padding: .1em 1em;
+			margin-top: -1px;
+		}
 </style>
 </head>
 <body>
@@ -201,6 +207,22 @@ th.ui-th-ltr {
 				<div id="table"></div>
 			<td>
 		</tr>
+		<tr>
+			<td>
+				<div style="height:10px"></div>
+			<td>
+		</tr>
+		<tr>
+			<td>
+				<form id="export" method="post" style="display:none">
+					<input id="exportButton" type="button" value="导出"
+						onclick="instance.exportExcel()"
+						class="ui-button ui-widget ui-state-default ui-corner-all"
+						role="button" aria-disabled="false"></input>
+				</form>
+			</td>
+			
+		</tr> 
 	</Table>
 	<%@include file="loading.jsp"%>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
