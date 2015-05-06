@@ -177,12 +177,12 @@ th.ui-th-ltr {
 	font-size: 12px;
 }
 
-#exportButton {
+.exportButton {
 	height: 23px;
-	width:100px;
+	width:140px;
 	padding: .1em 1em;
 	margin-top: -1px;
-		
+}
 
 </style>
 
@@ -225,16 +225,33 @@ th.ui-th-ltr {
 			</td>
 		</tr>
 		<tr>	
-
+		<td>
+			<Table>
+					<tr>
 			<td>
 				<form id="export" method="post">
-					<input id="update" type="button" value="导出"
+					<input class="exportButton" type="button" value="导出"
 						style="width: 100px;"
 						onclick="instance.exportExcel($('h1').text())"
 						class="ui-button ui-widget ui-state-default ui-corner-all"
 						role="button" aria-disabled="false"></input>
 				</form>
 			</td>
+			<td>
+				<form id="exportxmgs" method="post">
+					<input class="exportButton" type="button" value="导出项目公司"
+						style="width: 120px;"
+						onclick="instance.exportExcelXmgs($('h1').text())"
+						class="ui-button ui-widget ui-state-default ui-corner-all"
+						role="button" aria-disabled="false"></input>
+				</form>
+			</td>
+			</tr>
+				</Table>
+			</td>
+			
+			
+		</tr>
 			
 		</tr>
 	</Table>

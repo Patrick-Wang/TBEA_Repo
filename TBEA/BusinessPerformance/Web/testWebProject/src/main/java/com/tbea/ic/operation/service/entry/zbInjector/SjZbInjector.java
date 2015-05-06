@@ -9,6 +9,7 @@ import com.tbea.ic.operation.model.dao.jygk.shzt.SHZTDao;
 import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
+import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
 import com.tbea.ic.operation.common.ZBStatus;
 
 class SjZbInjector extends ZbInjector {
@@ -44,5 +45,11 @@ class SjZbInjector extends ZbInjector {
 		}
 	}
 	
-
+	@Override
+	public void remove(Integer zbId, Calendar cal, Company comp) {
+		SJZB zb = sjzbDao.getZb(zbId, Util.toDate(cal), comp);
+		if (null != zb){
+			sjzbDao.delete(zb);
+		}
+	}
 }

@@ -8,6 +8,7 @@ import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.shzt.SHZTDao;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
+import com.tbea.ic.operation.model.entity.jygk.NDJHZB;
 import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
 import com.tbea.ic.operation.common.ZBStatus;
 
@@ -41,6 +42,14 @@ class YdjhZbInjector extends ZbInjector {
 			ydjhzbDao.create(zb);
 		}else{
 			ydjhzbDao.merge(zb);
+		}
+	}
+
+	@Override
+	public void remove(Integer zbId, Calendar cal, Company comp) {
+		YDJHZB zb = ydjhzbDao.getZb(zbId, Util.toDate(cal), comp);
+		if (null != zb){
+			ydjhzbDao.delete(zb);
 		}
 	}
 

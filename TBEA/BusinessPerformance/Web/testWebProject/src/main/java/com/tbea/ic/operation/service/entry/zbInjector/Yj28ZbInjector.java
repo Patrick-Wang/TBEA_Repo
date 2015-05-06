@@ -46,4 +46,11 @@ class Yj28ZbInjector extends ZbInjector {
 		}	
 	}
 
+	@Override
+	public void remove(Integer zbId, Calendar cal, Company comp) {
+		YJ28ZB zb = yj28zbDao.getZb(zbId, Util.toDate(cal), comp);
+		if (null != zb){
+			yj28zbDao.delete(zb);
+		}
+	}
 }
