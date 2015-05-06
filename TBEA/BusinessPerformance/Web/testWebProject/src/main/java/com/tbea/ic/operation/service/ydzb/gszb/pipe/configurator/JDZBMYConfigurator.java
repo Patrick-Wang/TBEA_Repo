@@ -136,7 +136,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
-						.excludeZbs(getTimePointNumberZbs()))
+						.excludeZbs(getTimePointNumberZbs())
+						.excludeZbs(getZhHiddenZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 4, 8))
 
@@ -151,7 +152,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
-						.excludeZbs(getTimePointNumberZbs()))
+						.excludeZbs(getTimePointNumberZbs())
+						.excludeZbs(getZhHiddenZbs()))
 				.add(new AccPipeFilter(sjAcc, 10, dh.getQntq())
 						.includeCompanies(allCompanies)
 						.includeZbs(getTimePointNumberZbs()))
@@ -167,7 +169,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
-						.excludeZbs(getTimePointNumberZbs()))
+						.excludeZbs(getTimePointNumberZbs())
+						.excludeZbs(getZhHiddenZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 4, 12))
 
@@ -181,7 +184,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
-						.excludeZbs(getTimePointNumberZbs()))
+						.excludeZbs(getTimePointNumberZbs())
+						.excludeZbs(getZhHiddenZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 10, 14))
 
@@ -232,7 +236,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
-						.excludeZbs(getTimePointNumberZbs()))
+						.excludeZbs(getTimePointNumberZbs())
+						.excludeZbs(getZhHiddenZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 19, 21))
 
@@ -247,7 +252,8 @@ public class JDZBMYConfigurator extends AbstractSbdPipeConfigurator {
 						.includeZbs(gsztzbs)
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
-						.excludeZbs(getTimePointNumberZbs()))
+						.excludeZbs(getTimePointNumberZbs())
+						.excludeZbs(getZhHiddenZbs()))
 				.add(new AccPipeFilter(sjAcc, 23, dh.getQntqXjdLastMonth())
 						.includeCompanies(allCompanies)
 						.includeZbs(getTimePointNumberZbs()))

@@ -118,7 +118,8 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
-						.excludeZbs(getTimePointNumberZbs()))
+						.excludeZbs(getTimePointNumberZbs())
+						.excludeZbs(getZhHiddenZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 2, 7))
 
@@ -131,7 +132,8 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
-						.excludeZbs(getTimePointNumberZbs()))
+						.excludeZbs(getTimePointNumberZbs())
+						.excludeZbs(getZhHiddenZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 4, 9))
 
@@ -145,7 +147,8 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
-						.excludeZbs(getTimePointNumberZbs()))
+						.excludeZbs(getTimePointNumberZbs())
+						.excludeZbs(getZhHiddenZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 2, 11))
 
@@ -158,7 +161,8 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 						.includeZbs(pipe.getZbIds())
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
-						.excludeZbs(getTimePointNumberZbs()))
+						.excludeZbs(getTimePointNumberZbs())
+						.excludeZbs(getZhHiddenZbs()))
 				.add(copyFilter
 						.add(getTimePointNumberZbs(), 9, 13))
 
