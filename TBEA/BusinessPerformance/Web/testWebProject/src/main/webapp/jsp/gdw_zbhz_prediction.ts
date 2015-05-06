@@ -182,6 +182,11 @@ module gdw_zbhz_prediciton {
                 });
         }
         
+        public exportExcel() {
+            $("#export")[0].action = "gdw_zbhz_prediction_export.do?" + Util.Ajax.toUrlParam({ month: this.mActualMonth, year: this.mYear, top5index: this.mZB, zbName:this.mZBName});
+            $("#export")[0].submit();
+        }
+        
         private formatData(data : string[][], precentList : std.vector<number>){
             var row = [];
             for (var j = 0; j < this.mData.length; ++j) {
@@ -296,7 +301,7 @@ module gdw_zbhz_prediciton {
                     rowNum: 100,
                     autoScroll: true
                 }));
-
+         $("#export").css('display','block'); 
         }
     }
 }

@@ -88,7 +88,7 @@ public class JyzbExcelTemplate {
 						break;
 					case PERCENT:
 						cell.setCellValue(String.format("%.1f",
-								Double.valueOf(val))
+								Double.valueOf(val) * 100)
 								+ "%");
 						cell.setCellStyle(template.getCellStylePercent());
 						break;
@@ -99,7 +99,7 @@ public class JyzbExcelTemplate {
 					}
 				} else {
 					BigDecimal b = new BigDecimal(Double.valueOf(val));
-					cell.setCellValue(b.setScale(1, BigDecimal.ROUND_HALF_UP)
+					cell.setCellValue(b.setScale(0, BigDecimal.ROUND_HALF_UP)
 							.doubleValue());
 					cell.setCellStyle(template.getCellStyleNumber1());
 				}

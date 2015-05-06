@@ -319,8 +319,8 @@ module financial_zbhz_prediciton {
                     rowNum: 200,
                     autoScroll: true
                 }));
+            
              $("#export").css('display','block'); 
-
         }
     }
 }
