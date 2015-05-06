@@ -116,7 +116,8 @@ public class SecondSeasonPredictionConfigurator extends AbstractSbdPipeConfigura
 				.includeZbs(pipe.getZbIds())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs())
-				.excludeZbs(getTimePointNumberZbs()))
+				.excludeZbs(getTimePointNumberZbs())
+				.excludeZbs(getZhHiddenZbs()))
 		.add(copyFilter
 				.add(getTimePointNumberZbs(), 3, 7))
 
@@ -130,7 +131,8 @@ public class SecondSeasonPredictionConfigurator extends AbstractSbdPipeConfigura
 				.includeZbs(pipe.getZbIds())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs())
-				.excludeZbs(getTimePointNumberZbs()))
+				.excludeZbs(getTimePointNumberZbs())
+				.excludeZbs(getZhHiddenZbs()))
 		.add(new AccPipeFilter(sjAcc, 9, dh.getQntq())
 				.includeCompanies(allCompanies)
 				.includeZbs(getTimePointNumberZbs()))
@@ -183,7 +185,8 @@ public class SecondSeasonPredictionConfigurator extends AbstractSbdPipeConfigura
 				.includeZbs(pipe.getZbIds())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs())
-				.excludeZbs(getTimePointNumberZbs()))
+				.excludeZbs(getTimePointNumberZbs())
+				.excludeZbs(getZhHiddenZbs()))
 		.add(copyFilter
 				.add(getTimePointNumberZbs(), 3, 16))
 
@@ -197,7 +200,8 @@ public class SecondSeasonPredictionConfigurator extends AbstractSbdPipeConfigura
 				.includeZbs(pipe.getZbIds())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs())
-				.excludeZbs(getTimePointNumberZbs()))
+				.excludeZbs(getTimePointNumberZbs())
+				.excludeZbs(getZhHiddenZbs()))
 		.add(copyFilter
 				.add(getTimePointNumberZbs(), 5, 18))
 

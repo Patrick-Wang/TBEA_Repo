@@ -142,7 +142,8 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 				.includeZbs(pipe.getZbIds())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs())
-				.excludeZbs(getTimePointNumberZbs()))
+				.excludeZbs(getTimePointNumberZbs())
+				.excludeZbs(getZhHiddenZbs()))
 		.add(new AccPipeFilter(sjAcc, 11, dh.getQntqJdStart())
 				.includeCompanies(allCompanies)
 				.includeZbs(getTimePointNumberZbs()))
@@ -156,7 +157,8 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 				.includeZbs(pipe.getZbIds())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs())
-				.excludeZbs(getTimePointNumberZbs()))
+				.excludeZbs(getTimePointNumberZbs())
+				.excludeZbs(getZhHiddenZbs()))
 		.add(copyFilter
 				.add(getTimePointNumberZbs(), 3, 13))
 
@@ -169,7 +171,8 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 				.includeZbs(pipe.getZbIds())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs())
-				.excludeZbs(getTimePointNumberZbs()))
+				.excludeZbs(getTimePointNumberZbs())
+				.excludeZbs(getZhHiddenZbs()))
 		.add(copyFilter
 				.add(getTimePointNumberZbs(), 5, 15))
 
