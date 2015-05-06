@@ -9,7 +9,7 @@ public class Company {
 	private CompanyManager.CompanyType type;
 	private Integer id;
 	private Company parentCompany;
-	private List<Company> subCompanys = new ArrayList<Company>();;
+	private List<Company> subCompanys = new ArrayList<Company>();
 	
 	
 	public Company(Integer id, CompanyManager.CompanyType type) {

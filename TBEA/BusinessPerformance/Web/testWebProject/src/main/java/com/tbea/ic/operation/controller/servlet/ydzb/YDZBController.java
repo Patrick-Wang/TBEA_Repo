@@ -170,27 +170,43 @@ public class YDZBController {
 				CompanyType.NFSBDCYJT == compType;
 	}
 	
-	private List<Company> getHzbCompany(CompanyType compType){
+	private List<Company> getJydw(CompanyType sybOrJydw){
 		List<Company> comps;
-		if (isSyb(compType)){
+		if (isSyb(sybOrJydw)){
 			Organization org = companyManager.getBMDBOrganization();
-			comps = org.getCompany(compType).getSubCompanys();
-		} else if (isSbdcy(compType)){
+			comps = org.getCompany(sybOrJydw).getSubCompanys();
+		} else if (isSbdcy(sybOrJydw)){
 			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
-			comps = orgJyzb.getCompany(compType).getSubCompanys();
+			comps = orgJyzb.getCompany(sybOrJydw).getSubCompanys();
 		} else {
 			Organization org = companyManager.getBMDBOrganization();
 			comps = new ArrayList<Company>();
-			comps.add(org.getCompany(compType));
+			comps.add(org.getCompany(sybOrJydw));
 		}
 		return comps;
 	}
 	
-	private List<String[]> getGdwData(Date d, CompanyType compType){
-		List<Company> comps = getHzbCompany(compType);
-		List<String[]> ret = gszbService.getGdwzb(d, comps);
-		removeJzcsyl(compType, ret);
+	
+	private List<Company> getXmgs(CompanyType sybOrJydw){
+		List<Company> jydws = getJydw(sybOrJydw);
+		List<Company> xmgs = new ArrayList<Company>();
+		for (Company jydw : jydws){
+			xmgs.addAll(jydw.getSubCompanys());
+		}
+		return xmgs;
+	}
+	
+	private List<String[]> getSybOrJydwData(Date d, CompanyType sybOrJydw){
+		List<Company> jydws = getJydw(sybOrJydw);
+		List<String[]> ret = gszbService.getGdwzb(d, jydws);
+		removeJzcsyl(sybOrJydw, ret);
 		return ret;
+	}
+	
+	private List<String[]> getXmgsData(Date d, Company xmgs){
+		List<Company> xmgses = new ArrayList<Company>();
+		xmgses.add(xmgs);
+		return gszbService.getGdwzb(d, xmgses);
 	}
 	
 	
@@ -223,23 +239,24 @@ public class YDZBController {
 				HSSFRow row = sheet.createRow(3 + i);
 				for (int j = data.get(i).length - 1; j >= 0; --j) {
 					HSSFCell cell = row.createCell(j);
-//					formatter.format(j, cell, data.get(i)[j]);
 					formatterChain.handle(data.get(i)[0], j, template, cell, data.get(i)[j]);
 				}
 			}
 
 
-			
-			
 			int sheetMergerCount = sheet.getNumMergedRegions();
 			 
-			
+			String compName;
 			for (CompanyType ct : compTypes) {
+				
+				data = getSybOrJydwData(d, ct);
+				compName = ct.getValue();
+				
 				int lastRow = sheet.getLastRowNum() + 1;
 				HSSFRow rowFrom = sheet.getRow(0);
 				HSSFRow rowTo = sheet.createRow(lastRow);
 				POIUtils.copyRow(workbook, rowFrom, rowTo, true);
-				rowTo.getCell(0).setCellValue(ct.getValue() + "当月指标汇总");
+				rowTo.getCell(0).setCellValue(compName + "当月指标汇总");
 
 				rowFrom = sheet.getRow(1);
 				rowTo = sheet.createRow(lastRow + 1);
@@ -258,7 +275,6 @@ public class YDZBController {
 				}
 
 				lastRow += 3;
-				data = getGdwData(d, ct);
 				for (int i = data.size() - 1; i >= 0; --i) {
 					HSSFRow row = sheet.createRow(lastRow + i);
 					for (int j = data.get(i).length - 1; j >= 0; --j) {
@@ -268,7 +284,45 @@ public class YDZBController {
 				}
 			}
 			
-			
+			for (CompanyType ct : compTypes) {
+				List<Company> comps = getXmgs(ct);
+				for (Company comp : comps) {
+
+					data = getXmgsData(d, comp);
+					compName = comp.getName();
+
+					int lastRow = sheet.getLastRowNum() + 1;
+					HSSFRow rowFrom = sheet.getRow(0);
+					HSSFRow rowTo = sheet.createRow(lastRow);
+					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+					rowTo.getCell(0).setCellValue(compName + "当月指标汇总");
+
+					rowFrom = sheet.getRow(1);
+					rowTo = sheet.createRow(lastRow + 1);
+					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+
+					rowFrom = sheet.getRow(2);
+					rowTo = sheet.createRow(lastRow + 2);
+					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+
+					for (int i = 0; i < sheetMergerCount; i++) {
+						CellRangeAddress range = sheet.getMergedRegion(i);
+						range = range.copy();
+						range.setLastRow(range.getLastRow() + lastRow);
+						range.setFirstRow(range.getFirstRow() + lastRow);
+						sheet.addMergedRegion(range);
+					}
+
+					lastRow += 3;
+					for (int i = data.size() - 1; i >= 0; --i) {
+						HSSFRow row = sheet.createRow(lastRow + i);
+						for (int j = data.get(i).length - 1; j >= 0; --j) {
+							HSSFCell cell = row.createCell(j);
+							formatter.format(j, cell, data.get(i)[j]);
+						}
+					}
+				}
+			}
 			
 			
 		} else {
@@ -295,6 +349,88 @@ public class YDZBController {
 		
 		template.write(response, request.getParameter("fileName") + ".xls");
 		
+		return "".getBytes("utf-8");
+	}
+	
+	
+	@RequestMapping(value = "hzb_zbhz_xmgs_export.do")
+	public @ResponseBody byte[] getHzb_zbhz_xmgs_export(
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		Date d = DateSelection.getDate(request);
+		JyzbExcelTemplate template = null;
+		List<String[]> data = null;
+
+		data = gszbService.getGsztzb(d);
+		template = JyzbExcelTemplate.createTemplate(SheetType.GSZTZB);
+		CellFormatter formatter = template.createCellFormatter()
+				.addType(0, CellFormatter.CellType.HEADER)
+				.addType(4, CellFormatter.CellType.PERCENT)
+				.addType(6, CellFormatter.CellType.PERCENT)
+				.addType(9, CellFormatter.CellType.PERCENT)
+				.addType(11, CellFormatter.CellType.PERCENT)
+				.addType(13, CellFormatter.CellType.PERCENT)
+				.addType(15, CellFormatter.CellType.PERCENT);
+
+		FormatterHandler formatterChain = this.getFormatterChain(new Integer[] {
+				4, 6, 9, 11, 13, 15 }, new Integer[] { 1, 2 });
+
+		HSSFWorkbook workbook = template.getWorkbook();
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = data.size() - 1; i >= 0; --i) {
+			HSSFRow row = sheet.createRow(3 + i);
+			for (int j = data.get(i).length - 1; j >= 0; --j) {
+				HSSFCell cell = row.createCell(j);
+				formatterChain.handle(data.get(i)[0], j, template, cell,
+						data.get(i)[j]);
+			}
+		}
+
+		int sheetMergerCount = sheet.getNumMergedRegions();
+
+		String compName;
+		for (CompanyType ct : compTypes) {
+			List<Company> comps = getXmgs(ct);
+			for (Company comp : comps) {
+
+				data = getXmgsData(d, comp);
+				compName = comp.getName();
+
+				int lastRow = sheet.getLastRowNum() + 1;
+				HSSFRow rowFrom = sheet.getRow(0);
+				HSSFRow rowTo = sheet.createRow(lastRow);
+				POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+				rowTo.getCell(0).setCellValue(compName + "当月指标汇总");
+
+				rowFrom = sheet.getRow(1);
+				rowTo = sheet.createRow(lastRow + 1);
+				POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+
+				rowFrom = sheet.getRow(2);
+				rowTo = sheet.createRow(lastRow + 2);
+				POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+
+				for (int i = 0; i < sheetMergerCount; i++) {
+					CellRangeAddress range = sheet.getMergedRegion(i);
+					range = range.copy();
+					range.setLastRow(range.getLastRow() + lastRow);
+					range.setFirstRow(range.getFirstRow() + lastRow);
+					sheet.addMergedRegion(range);
+				}
+
+				lastRow += 3;
+				for (int i = data.size() - 1; i >= 0; --i) {
+					HSSFRow row = sheet.createRow(lastRow + i);
+					for (int j = data.get(i).length - 1; j >= 0; --j) {
+						HSSFCell cell = row.createCell(j);
+						formatter.format(j, cell, data.get(i)[j]);
+					}
+				}
+			}
+		}
+
+		template.write(response, request.getParameter("fileName") + ".xls");
+
 		return "".getBytes("utf-8");
 	}
 	
@@ -388,7 +524,7 @@ public class YDZBController {
 		CompanyType compType = CompanySelection.getCompany(request);
 		String compName = compType.getValue();
 		String fileName = compName + "经营指标完成情况";
-		List<String[]> ret = this.getGdwData(d, compType);
+		List<String[]> ret = this.getSybOrJydwData(d, compType);
 		template = JyzbExcelTemplate.createTemplate(SheetType.GS_SYB);
 
 		FormatterHandler formatterChain = this.getFormatterChain(
@@ -414,7 +550,7 @@ public class YDZBController {
 			throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
 		CompanyType compType = CompanySelection.getCompany(request);	
-		String hzb_zbhz = JSONArray.fromObject(this.getGdwData(d, compType)).toString()
+		String hzb_zbhz = JSONArray.fromObject(this.getSybOrJydwData(d, compType)).toString()
 				.replace("null", "\"--\"");
 		return hzb_zbhz.getBytes("utf-8");
 	}
@@ -487,7 +623,7 @@ public class YDZBController {
 	public ModelAndView getGcy_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		DateSelection dateSel = new DateSelection(service.getLatestGcyDate(),
+		DateSelection dateSel = new DateSelection(Calendar.getInstance(),
 				true, false);
 		dateSel.select(map);
 		return new ModelAndView("gcy_zbhz", map);
@@ -547,7 +683,7 @@ public class YDZBController {
 	public ModelAndView getGdw_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		DateSelection dateSel = new DateSelection(service.getLatestGcyDate(),
+		DateSelection dateSel = new DateSelection(Calendar.getInstance(),
 				true, false);
 		dateSel.select(map);
 		return new ModelAndView("gdw_zbhz", map);
@@ -655,7 +791,7 @@ public class YDZBController {
 		
 		Date d = DateSelection.getDate(request);
 		CompanyType compType = CompanySelection.getCompany(request);	
-		List<Company> comps = getHzbCompany(compType);
+		List<Company> comps = getJydw(compType);
 		String month = request.getParameter("month");
 		int iMonth = Integer.valueOf(month);
 		List<String[]> hzb_zbhz_prediction = null;
@@ -767,7 +903,7 @@ public class YDZBController {
 		
 		Date d = DateSelection.getDate(request);
 		CompanyType compType = CompanySelection.getCompany(request);	
-		List<Company> comps = getHzbCompany(compType);
+		List<Company> comps = getJydw(compType);
 		String month = request.getParameter("month");
 		int iMonth = Integer.valueOf(month);
 		String hzb_zbhz_prediction = null;
@@ -903,11 +1039,11 @@ public class YDZBController {
 
 			lastRow += 3;
 			if (0 == iMonth % 3) {
-				data = gszbService.getJDZBMY(d, getHzbCompany(ct));
+				data = gszbService.getJDZBMY(d, getJydw(ct));
 			}else if (1 == iMonth % 3) {
-				data = gszbService.getFirstSeasonPredictionZBsOverview(d, getHzbCompany(ct));
+				data = gszbService.getFirstSeasonPredictionZBsOverview(d, getJydw(ct));
 			}else if (2 == iMonth % 3) {
-				data = gszbService.getSecondSeasonPredictionZBsOverview(d, getHzbCompany(ct));
+				data = gszbService.getSecondSeasonPredictionZBsOverview(d, getJydw(ct));
 			}
 			removeJzcsyl(ct, data);  
 			for (int i = data.size() - 1; i >= 0; --i) {
