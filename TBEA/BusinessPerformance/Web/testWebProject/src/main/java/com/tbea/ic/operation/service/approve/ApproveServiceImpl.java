@@ -19,6 +19,7 @@ import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
+import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.shzt.SHZTDao;
@@ -76,9 +77,28 @@ public class ApproveServiceImpl implements ApproveService {
 	@Autowired
 	YDZBZTDao ydzbztDao;
 	
-	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
+	List<Company> mainCompanies = new ArrayList<Company>();
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	public void setCompanyManager(CompanyManager companyManager){
+		Organization org = companyManager.getBMDBOrganization();
+		this.companyManager = companyManager;
+		mainCompanies.add(org.getCompany(CompanyType.SBGS));
+		mainCompanies.add(org.getCompany(CompanyType.HBGS));
+		mainCompanies.add(org.getCompany(CompanyType.XBC));
+		mainCompanies.add(org.getCompany(CompanyType.LLGS));
+		mainCompanies.add(org.getCompany(CompanyType.XLC));
+		mainCompanies.add(org.getCompany(CompanyType.DLGS));
+		mainCompanies.add(org.getCompany(CompanyType.XTNYGS));
+		mainCompanies.add(org.getCompany(CompanyType.XNYGS));
+		mainCompanies.add(org.getCompany(CompanyType.TCNY));
+		mainCompanies.add(org.getCompany(CompanyType.NDGS));
+		mainCompanies.add(org.getCompany(CompanyType.JCKGS_JYDW));
+		mainCompanies.add(org.getCompany(CompanyType.GJGCGS_GFGS));
+		mainCompanies.add(org.getCompany(CompanyType.ZHGS));
+	}
+	
 	@Override
 	public List<List<String[]>> getZb(Account account, List<Company> comps,
 			Date date, ZBType approveType) {
@@ -701,6 +721,66 @@ public class ApproveServiceImpl implements ApproveService {
 			comps.add(org.getCompany(compIds.get(i).getDwxx().getId()));
 		}
 		return comps;
+	}
+
+	@Override
+	public List<String[]> getApproveStatus(Date date, ZBType entryType) {
+		List<String[]> result = new ArrayList<String[]>();
+		List<Integer> approveCompletedCompanies = null;
+		switch (entryType) {
+		case BY20YJ:
+			approveCompletedCompanies = yj20zbDao
+					.getApprovedCompletedCompanies(date);
+			break;
+		case BY28YJ:
+			approveCompletedCompanies = yj28zbDao
+					.getApprovedCompletedCompanies(date);
+			break;
+		case BYSJ:
+			approveCompletedCompanies = sjzbDao
+					.getApprovedCompletedCompanies(date);
+			break;
+		case NDJH:
+			approveCompletedCompanies = ndjhzbDao
+					.getApprovedCompletedCompanies(date);
+			break;
+		case YDJDMJH:
+			approveCompletedCompanies = ydjhzbDao
+					.getApprovedCompletedCompanies(date);
+			break;
+		default:
+			return result;
+		}
+
+		for (Company comp : mainCompanies) {
+			if (approveCompletedCompanies.contains(comp.getId())) {
+				Date time = null;
+				switch (entryType) {
+				case BY20YJ:
+					time = yj20zbDao.getApprovedTime(date, comp);
+					break;
+				case BY28YJ:
+					time = yj28zbDao.getApprovedTime(date, comp);
+					break;
+				case BYSJ:
+					time = sjzbDao.getApprovedTime(date, comp);
+					break;
+				case NDJH:
+					time = ndjhzbDao.getApprovedTime(date, comp);
+					break;
+				case YDJDMJH:
+					time = ydjhzbDao.getApprovedTime(date, comp);
+					break;
+				}
+
+				result.add(new String[] { comp.getName(), "true",
+						null != time ? Util.formatToDay(time) : null });
+			} else {
+				result.add(new String[] { comp.getName(), "false", null });
+			}
+		}
+
+		return result;
 	}
 
 }

@@ -214,4 +214,31 @@ public class YDJHZBDaoImpl extends AbstractReadWriteDaoImpl<YDJHZB> implements Y
 		return ZBStatus.valueOf(((Integer)ret.get(0)));
 	}
 
+	@Override
+	public List<Integer> getApprovedCompletedCompanies(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("select dwxx.id from YDJHZB where nf = :nf and yf = :yf and ydjhshzt.id = 1 group by dwxx.id");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		return q.getResultList();
+	}
+
+	@Override
+	public Date getApprovedTime(Date date, Company comp) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("from YDJHZB where nf = :nf and yf = :yf and dwxx.id = :compId");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("compId", comp.getId());
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<YDJHZB> ret = q.getResultList();
+		if (!ret.isEmpty()){
+			return ret.get(0).getYdjhshsj();
+		}
+		return null;
+	}
+
 }

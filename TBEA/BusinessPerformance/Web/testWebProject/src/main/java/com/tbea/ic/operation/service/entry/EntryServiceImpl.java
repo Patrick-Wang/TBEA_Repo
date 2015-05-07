@@ -826,19 +826,15 @@ public class EntryServiceImpl implements EntryService{
 					time = yj20zbDao.getEntryTime(date, comp);
 					break;
 				case BY28YJ:
-					entryCompletedCompanies = yj28zbDao.getEntryCompletedCompanies(date);
 					time = yj28zbDao.getEntryTime(date, comp);
 					break;
 				case BYSJ:
-					entryCompletedCompanies = sjzbDao.getEntryCompletedCompanies(date);
 					time = sjzbDao.getEntryTime(date, comp);
 					break;
 				case NDJH:
-					entryCompletedCompanies = ndjhzbDao.getEntryCompletedCompanies(date);
 					time = ndjhzbDao.getEntryTime(date, comp);
 					break;
 				case YDJDMJH:
-					entryCompletedCompanies = ydjhzbDao.getEntryCompletedCompanies(date);
 					time = ydjhzbDao.getEntryTime(date, comp);
 					break;
 				}

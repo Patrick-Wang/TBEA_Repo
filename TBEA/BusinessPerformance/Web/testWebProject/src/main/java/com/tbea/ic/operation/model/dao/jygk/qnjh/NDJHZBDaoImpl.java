@@ -184,4 +184,29 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 		return ZBStatus.valueOf(((Integer)ret.get(0)));
 	}
 
+	@Override
+	public List<Integer> getApprovedCompletedCompanies(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("select dwxx.id from NDJHZB where nf = :nf and ndjhshzt.id = 1 group by dwxx.id");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		return q.getResultList();
+	}
+
+	@Override
+	public Date getApprovedTime(Date date, Company comp) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("from NDJHZB where nf = :nf and dwxx.id = :compId");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("compId", comp.getId());
+		q.setFirstResult(0);
+		q.setMaxResults(1);
+		List<NDJHZB> ret = q.getResultList();
+		if (!ret.isEmpty()){
+			return ret.get(0).getNdjhshsj();
+		}
+		return null;
+	}
+
 }
