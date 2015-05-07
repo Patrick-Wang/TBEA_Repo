@@ -213,9 +213,29 @@ module approve_template {
                     if (j < tmpData[i].length) {
                         if (title[j - 1] == '人数') {
                             tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
-                        } else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
+                        } else if (title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
                             tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
-                        } else {
+                        } else if (title[j - 1] == '人均收入' || title[j - 1] == '人均利润' || title[j - 1] == '精铝块13项元素和值（ppm）') {
+                            tmpData[i][j] = Util.formatFordot(tmpData[i][j]) + "";
+                        } else if (title[j - 1] == '净资产收益率(%)') {
+                            tmpData[i][j] = Util.formatPercentSignal(tmpData[i][j]) + "";
+                        } else if (title[j - 1] == '单位供电成本（元/度）') {
+                            tmpData[i][j] = Util.formatFordot(tmpData[i][j], 4) + "";
+                        } else if (title[j - 1] == '标煤单耗（g/度）' || title[j - 1] == '厂用电率（%）') {
+                            if (this.mOpt.approveType == Util.ZBType.BY20YJ || this.mOpt.approveType == Util.ZBType.BY28YJ || this.mOpt.approveType == Util.ZBType.BYSJ) {
+                                tmpData[i][j] = Util.formatFordot(tmpData[i][j], 2) + "";
+                            }
+                            else {
+                                tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
+                            }
+                        } else if (title[j - 1] == '人均发电量（万度/人）' || title[j - 1] == '外购电单位成本（元/度）' || title[j - 1] == '铝杆棒一次综合成品率（%）' || title[j - 1] == '其中：5154合金杆一次成品率（%）'
+                            || title[j - 1] == '4043&8030&6201合金杆一次成品率（%）' || title[j - 1] == '高纯铝杆产品一次成品率（%）' || title[j - 1] == '铝棒产品一次成品率（%）' || title[j - 1] == '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）'
+                            || title[j - 1] == '失败成本率1（%）' || title[j - 1] == '外部客诉率（%）' || title[j - 1] == '4N6精铝块一次成品率（%）' || title[j - 1] == '精铝杆一次成品率（%）'
+                            || title[j - 1] == '综合成品率（%）' || title[j - 1] == '基材成品率（%）' || title[j - 1] == '粉末喷涂成品率（%）' || title[j - 1] == '隔热产品成品率（%）' || title[j - 1] == '失败成本率（%）'
+                            || title[j - 1] == '自产箔综合符单率（%）' || title[j - 1] == '委托加工化成箔符单率（%）' || title[j - 1] == '架空电缆（1KV、10KV）合格率（%）' || title[j - 1] == '钢芯铝绞线合格率（%）' || title[j - 1] == '布电线合格率（%）') {
+                            tmpData[i][j] = Util.formatFordot(tmpData[i][j], 2) + "";
+                        }
+                        else {
                             tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
                         }
                     }
@@ -416,15 +436,34 @@ module approve_template {
                     if (j < tmpData[i].length) {
                         if (title[j - 1] == '人数') {
                             tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
-                        } else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
+                        } else if (title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
                             tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
-                        } else {
+                        } else if (title[j - 1] == '人均收入' || title[j - 1] == '人均利润' || title[j - 1] == '精铝块13项元素和值（ppm）') {
+                            tmpData[i][j] = Util.formatFordot(tmpData[i][j]) + "";
+                        } else if (title[j - 1] == '净资产收益率(%)') {
+                            tmpData[i][j] = Util.formatPercentSignal(tmpData[i][j]) + "";
+                        } else if (title[j - 1] == '单位供电成本（元/度）') {
+                            tmpData[i][j] = Util.formatFordot(tmpData[i][j], 4) + "";
+                        } else if (title[j - 1] == '标煤单耗（g/度）' || title[j - 1] == '厂用电率（%）') {
+                            if (this.mOpt.approveType == Util.ZBType.BY20YJ || this.mOpt.approveType == Util.ZBType.BY28YJ || this.mOpt.approveType == Util.ZBType.BYSJ) {
+                                tmpData[i][j] = Util.formatFordot(tmpData[i][j], 2) + "";
+                            }
+                            else {
+                                tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
+                            }
+                        } else if (title[j - 1] == '人均发电量（万度/人）' || title[j - 1] == '外购电单位成本（元/度）' || title[j - 1] == '铝杆棒一次综合成品率（%）' || title[j - 1] == '其中：5154合金杆一次成品率（%）'
+                            || title[j - 1] == '4043&8030&6201合金杆一次成品率（%）' || title[j - 1] == '高纯铝杆产品一次成品率（%）' || title[j - 1] == '铝棒产品一次成品率（%）' || title[j - 1] == '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）'
+                            || title[j - 1] == '失败成本率1（%）' || title[j - 1] == '外部客诉率（%）' || title[j - 1] == '4N6精铝块一次成品率（%）' || title[j - 1] == '精铝杆一次成品率（%）'
+                            || title[j - 1] == '综合成品率（%）' || title[j - 1] == '基材成品率（%）' || title[j - 1] == '粉末喷涂成品率（%）' || title[j - 1] == '隔热产品成品率（%）' || title[j - 1] == '失败成本率（%）'
+                            || title[j - 1] == '自产箔综合符单率（%）' || title[j - 1] == '委托加工化成箔符单率（%）' || title[j - 1] == '架空电缆（1KV、10KV）合格率（%）' || title[j - 1] == '钢芯铝绞线合格率（%）' || title[j - 1] == '布电线合格率（%）') {
+                            tmpData[i][j] = Util.formatFordot(tmpData[i][j], 2) + "";
+                        }
+                        else {
                             tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
                         }
                     } else {
                         tmpData[i].push("--");
                     }
-                }
             }
 
             var name = tableId + "_jqgrid";
