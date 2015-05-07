@@ -42,6 +42,10 @@ public class YJ20ZB extends AbstractReadWriteEntity implements Serializable{
 	private SHZT yj20shzt;
 
 	private Date yj20xgsj;
+	
+	private Date yj20shsj;
+
+
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dwid")
@@ -130,6 +134,13 @@ public class YJ20ZB extends AbstractReadWriteEntity implements Serializable{
 	public void setYf(Integer yf) {
 		this.yf = yf;
 	}
+	
+	public Date getYj20shsj() {
+		return yj20shsj;
+	}
 
+	public void setYj20shsj(Date yj20shsj) {
+		this.yj20shsj = yj20shsj;
+	}
 
 }
