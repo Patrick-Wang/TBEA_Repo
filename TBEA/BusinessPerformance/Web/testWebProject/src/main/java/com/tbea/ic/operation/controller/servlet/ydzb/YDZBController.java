@@ -283,48 +283,6 @@ public class YDZBController {
 					}
 				}
 			}
-			
-			for (CompanyType ct : compTypes) {
-				List<Company> comps = getXmgs(ct);
-				for (Company comp : comps) {
-
-					data = getXmgsData(d, comp);
-					compName = comp.getName();
-
-					int lastRow = sheet.getLastRowNum() + 1;
-					HSSFRow rowFrom = sheet.getRow(0);
-					HSSFRow rowTo = sheet.createRow(lastRow);
-					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
-					rowTo.getCell(0).setCellValue(compName + "当月指标汇总");
-
-					rowFrom = sheet.getRow(1);
-					rowTo = sheet.createRow(lastRow + 1);
-					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
-
-					rowFrom = sheet.getRow(2);
-					rowTo = sheet.createRow(lastRow + 2);
-					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
-
-					for (int i = 0; i < sheetMergerCount; i++) {
-						CellRangeAddress range = sheet.getMergedRegion(i);
-						range = range.copy();
-						range.setLastRow(range.getLastRow() + lastRow);
-						range.setFirstRow(range.getFirstRow() + lastRow);
-						sheet.addMergedRegion(range);
-					}
-
-					lastRow += 3;
-					for (int i = data.size() - 1; i >= 0; --i) {
-						HSSFRow row = sheet.createRow(lastRow + i);
-						for (int j = data.get(i).length - 1; j >= 0; --j) {
-							HSSFCell cell = row.createCell(j);
-							formatter.format(j, cell, data.get(i)[j]);
-						}
-					}
-				}
-			}
-			
-			
 		} else {
 			data = gszbService.getSrqy(d);
 			template = JyzbExcelTemplate.createTemplate(SheetType.SRQYFJG);
@@ -361,7 +319,7 @@ public class YDZBController {
 		JyzbExcelTemplate template = null;
 		List<String[]> data = null;
 
-		data = gszbService.getGsztzb(d);
+		//data = gszbService.getGsztzb(d);
 		template = JyzbExcelTemplate.createTemplate(SheetType.GSZTZB);
 		CellFormatter formatter = template.createCellFormatter()
 				.addType(0, CellFormatter.CellType.HEADER)
@@ -372,22 +330,22 @@ public class YDZBController {
 				.addType(13, CellFormatter.CellType.PERCENT)
 				.addType(15, CellFormatter.CellType.PERCENT);
 
-		FormatterHandler formatterChain = this.getFormatterChain(new Integer[] {
-				4, 6, 9, 11, 13, 15 }, new Integer[] { 1, 2 });
-
+//		FormatterHandler formatterChain = this.getFormatterChain(new Integer[] {
+//				4, 6, 9, 11, 13, 15 }, new Integer[] { 1, 2 });
+//
 		HSSFWorkbook workbook = template.getWorkbook();
 		HSSFSheet sheet = workbook.getSheetAt(0);
-		for (int i = data.size() - 1; i >= 0; --i) {
-			HSSFRow row = sheet.createRow(3 + i);
-			for (int j = data.get(i).length - 1; j >= 0; --j) {
-				HSSFCell cell = row.createCell(j);
-				formatterChain.handle(data.get(i)[0], j, template, cell,
-						data.get(i)[j]);
-			}
-		}
+//		for (int i = data.size() - 1; i >= 0; --i) {
+//			HSSFRow row = sheet.createRow(3 + i);
+//			for (int j = data.get(i).length - 1; j >= 0; --j) {
+//				HSSFCell cell = row.createCell(j);
+//				formatterChain.handle(data.get(i)[0], j, template, cell,
+//						data.get(i)[j]);
+//			}
+//		}
 
 		int sheetMergerCount = sheet.getNumMergedRegions();
-
+		int lastRow = 0;
 		String compName;
 		for (CompanyType ct : compTypes) {
 			List<Company> comps = getXmgs(ct);
@@ -395,30 +353,37 @@ public class YDZBController {
 
 				data = getXmgsData(d, comp);
 				compName = comp.getName();
+				if (0 == lastRow){
+					HSSFRow rowFrom = sheet.getRow(0);
+					rowFrom.getCell(0).setCellValue(compName + "当月指标汇总");
+					lastRow += 3;
+				}else{
+					lastRow = sheet.getLastRowNum() + 1;
+					HSSFRow rowFrom = sheet.getRow(0);
+					HSSFRow rowTo = sheet.createRow(lastRow);
+					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+					rowTo.getCell(0).setCellValue(compName + "当月指标汇总");
 
-				int lastRow = sheet.getLastRowNum() + 1;
-				HSSFRow rowFrom = sheet.getRow(0);
-				HSSFRow rowTo = sheet.createRow(lastRow);
-				POIUtils.copyRow(workbook, rowFrom, rowTo, true);
-				rowTo.getCell(0).setCellValue(compName + "当月指标汇总");
+					rowFrom = sheet.getRow(1);
+					rowTo = sheet.createRow(lastRow + 1);
+					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
 
-				rowFrom = sheet.getRow(1);
-				rowTo = sheet.createRow(lastRow + 1);
-				POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+					rowFrom = sheet.getRow(2);
+					rowTo = sheet.createRow(lastRow + 2);
+					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
 
-				rowFrom = sheet.getRow(2);
-				rowTo = sheet.createRow(lastRow + 2);
-				POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+					for (int i = 0; i < sheetMergerCount; i++) {
+						CellRangeAddress range = sheet.getMergedRegion(i);
+						range = range.copy();
+						range.setLastRow(range.getLastRow() + lastRow);
+						range.setFirstRow(range.getFirstRow() + lastRow);
+						sheet.addMergedRegion(range);
+					}
 
-				for (int i = 0; i < sheetMergerCount; i++) {
-					CellRangeAddress range = sheet.getMergedRegion(i);
-					range = range.copy();
-					range.setLastRow(range.getLastRow() + lastRow);
-					range.setFirstRow(range.getFirstRow() + lastRow);
-					sheet.addMergedRegion(range);
+					lastRow += 3;
 				}
-
-				lastRow += 3;
+				
+				
 				for (int i = data.size() - 1; i >= 0; --i) {
 					HSSFRow row = sheet.createRow(lastRow + i);
 					for (int j = data.get(i).length - 1; j >= 0; --j) {
@@ -515,6 +480,18 @@ public class YDZBController {
 		return formatterChain;
 	}
 	
+	//各单位经营指标完成情况update
+	@RequestMapping(value = "hzb_companys_update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getHzb_companys_update(
+			HttpServletRequest request, HttpServletResponse response)
+			throws UnsupportedEncodingException {
+		Date d = DateSelection.getDate(request);
+		CompanyType compType = CompanySelection.getCompany(request);	
+		String hzb_zbhz = JSONArray.fromObject(this.getSybOrJydwData(d, compType)).toString()
+				.replace("null", "\"--\"");
+		return hzb_zbhz.getBytes("utf-8");
+	}
+	
 	@RequestMapping(value = "companys_zbhz_export.do")
 	public @ResponseBody byte[] getcompanys_zbhz_export(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
@@ -526,7 +503,7 @@ public class YDZBController {
 		String fileName = compName + "经营指标完成情况";
 		List<String[]> ret = this.getSybOrJydwData(d, compType);
 		template = JyzbExcelTemplate.createTemplate(SheetType.GS_SYB);
-
+	
 		FormatterHandler formatterChain = this.getFormatterChain(
 				new Integer[]{4, 6, 9, 11, 13, 15}, new Integer[]{1, 2});
 		
@@ -543,18 +520,7 @@ public class YDZBController {
 		template.write(response, fileName + ".xls");
 		return "".getBytes("utf-8");
 	}
-	//各单位经营指标完成情况update
-	@RequestMapping(value = "hzb_companys_update.do", method = RequestMethod.GET)
-	public @ResponseBody byte[] getHzb_companys_update(
-			HttpServletRequest request, HttpServletResponse response)
-			throws UnsupportedEncodingException {
-		Date d = DateSelection.getDate(request);
-		CompanyType compType = CompanySelection.getCompany(request);	
-		String hzb_zbhz = JSONArray.fromObject(this.getSybOrJydwData(d, compType)).toString()
-				.replace("null", "\"--\"");
-		return hzb_zbhz.getBytes("utf-8");
-	}
-	
+
 	//各单位经营指标完成情况
 	@RequestMapping(value = "hzb_companys.do", method = RequestMethod.GET)
 	public ModelAndView getHzb_companys(HttpServletRequest request,
@@ -1003,6 +969,112 @@ public class YDZBController {
 		return hzb_zbhz_prediction.getBytes("utf-8");
 	}
 	
+	// 整体指标预测export
+	@RequestMapping(value = "hzb_zbhz_prediction_xmgs_export.do")
+	public @ResponseBody byte[] gethzb_zbhz_prediction_xmgs_export(
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		Date d = DateSelection.getDate(request);
+		String month = request.getParameter("month");
+		int iMonth = Integer.valueOf(month);
+		JyzbExcelTemplate template = null;
+		String fileNameAndSheetName = request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
+		FormatterHandler formatterChain = null;
+		if (0 == iMonth % 3) {
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_MY);
+			formatterChain = this.getFormatterChain(
+					new Integer[]{6, 8, 10, 12, 14, 16, 21, 23, 25}, new Integer[]{1, 2, 3, 4});
+			fileNameAndSheetName += "末月";
+		}
+
+		if (1 == iMonth % 3) {
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_SY);
+			formatterChain = this.getFormatterChain(
+					new Integer[]{5, 7, 11, 13, 15, 17}, new Integer[]{1, 2, 3});
+			fileNameAndSheetName += "首月";
+		}
+
+		if (2 == iMonth % 3) {
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_CY);
+			formatterChain = this.getFormatterChain(
+					new Integer[]{5, 7, 9, 11, 14, 16, 18, 20}, new Integer[]{1, 2, 3});
+			fileNameAndSheetName += "次月";
+		}
+		
+		HSSFWorkbook workbook = template.getWorkbook();
+		fileNameAndSheetName += "指标汇总预测";
+		workbook.setSheetName(0, fileNameAndSheetName);
+		HSSFSheet sheet = workbook.getSheetAt(0);		
+		
+		int sheetMergerCount = sheet.getNumMergedRegions();
+		List<String[]> data = null;
+		int lastRow = 0;
+		for (CompanyType ct : compTypes) {
+
+			List<Company> comps = this.getXmgs(ct);
+
+			for (Company xmgs : comps) {
+
+				if (lastRow == 0) {
+					HSSFRow rowTo = sheet.getRow(0);
+					rowTo.getCell(0).setCellValue(xmgs.getName() + "指标预测");
+				} else {
+					lastRow = sheet.getLastRowNum() + 1;
+					HSSFRow rowFrom = sheet.getRow(0);
+					HSSFRow rowTo = sheet.createRow(lastRow);
+					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+					rowTo.getCell(0).setCellValue(xmgs.getName() + "指标预测");
+
+					rowFrom = sheet.getRow(1);
+					rowTo = sheet.createRow(lastRow + 1);
+					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+
+					rowFrom = sheet.getRow(2);
+					rowTo = sheet.createRow(lastRow + 2);
+					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+
+					for (int i = 0; i < sheetMergerCount; i++) {
+						CellRangeAddress range = sheet.getMergedRegion(i);
+						range = range.copy();
+						range.setLastRow(range.getLastRow() + lastRow);
+						range.setFirstRow(range.getFirstRow() + lastRow);
+						sheet.addMergedRegion(range);
+					}
+				}
+				
+				lastRow += 3;
+				if (0 == iMonth % 3) {
+					List<Company> xmgsTmp = new ArrayList<Company>();
+					xmgsTmp.add(xmgs);
+					data = gszbService.getJDZBMY(d, xmgsTmp);
+				} else if (1 == iMonth % 3) {
+					List<Company> xmgsTmp = new ArrayList<Company>();
+					xmgsTmp.add(xmgs);
+					data = gszbService.getFirstSeasonPredictionZBsOverview(d,
+							xmgsTmp);
+				} else if (2 == iMonth % 3) {
+					List<Company> xmgsTmp = new ArrayList<Company>();
+					xmgsTmp.add(xmgs);
+					data = gszbService.getSecondSeasonPredictionZBsOverview(d,
+							xmgsTmp);
+				}
+
+				for (int i = data.size() - 1; i >= 0; --i) {
+					HSSFRow row = sheet.createRow(lastRow + i);
+					for (int j = data.get(i).length - 1; j >= 0; --j) {
+						HSSFCell cell = row.createCell(j);
+						formatterChain.handle(data.get(i)[0], j, template,
+								cell, data.get(i)[j]);
+					}
+				}
+			}
+		}
+		
+		
+		template.write(response, fileNameAndSheetName + ".xls");
+		
+		return "".getBytes("utf-8");
+	}
 
 	// 整体指标预测export
 	@RequestMapping(value = "hzb_zbhz_prediction_export.do")
