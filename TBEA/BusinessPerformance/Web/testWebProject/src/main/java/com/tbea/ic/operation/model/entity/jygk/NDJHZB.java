@@ -40,6 +40,8 @@ public class NDJHZB  extends AbstractReadWriteEntity implements Serializable{
 	
 	private Date ndjhxgsj;
 	
+	private Date ndjhshsj;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dwid")
 	public DWXX getDwxx() {
@@ -113,6 +115,14 @@ public class NDJHZB  extends AbstractReadWriteEntity implements Serializable{
 
 	public void setNf(Integer nf) {
 		this.nf = nf;
+	}
+
+	public Date getNdjhshsj() {
+		return ndjhshsj;
+	}
+
+	public void setNdjhshsj(Date ndjhshsj) {
+		this.ndjhshsj = ndjhshsj;
 	}
 	
 }

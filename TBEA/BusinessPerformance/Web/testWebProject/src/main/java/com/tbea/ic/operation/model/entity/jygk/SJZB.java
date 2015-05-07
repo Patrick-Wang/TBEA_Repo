@@ -42,6 +42,8 @@ public class SJZB extends AbstractReadWriteEntity implements Serializable {
 	private SHZT sjshzt;
 
 	private Date sjxgsj;
+	
+	private Date sjshsj;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dwid")
@@ -129,6 +131,14 @@ public class SJZB extends AbstractReadWriteEntity implements Serializable {
 
 	public void setYf(Integer yf) {
 		this.yf = yf;
+	}
+
+	public Date getSjshsj() {
+		return sjshsj;
+	}
+
+	public void setSjshsj(Date sjshsj) {
+		this.sjshsj = sjshsj;
 	}
 
 }
