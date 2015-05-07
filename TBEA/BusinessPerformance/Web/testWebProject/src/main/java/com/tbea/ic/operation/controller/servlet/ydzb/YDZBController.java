@@ -625,10 +625,11 @@ public class YDZBController {
 					.addType(4, CellFormatter.CellType.PERCENT)
 					.addType(6, CellFormatter.CellType.PERCENT)	
 					.addType(8, CellFormatter.CellType.PERCENT)	
-					.addType(11, CellFormatter.CellType.PERCENT)
+					.addType(10, CellFormatter.CellType.PERCENT)
 					.addType(13, CellFormatter.CellType.PERCENT)
 					.addType(15, CellFormatter.CellType.PERCENT)
-					.addType(17, CellFormatter.CellType.PERCENT);
+					.addType(17, CellFormatter.CellType.PERCENT)
+					.addType(19, CellFormatter.CellType.PERCENT);
 		}
 		
 
@@ -701,6 +702,7 @@ public class YDZBController {
 		template.write(response, fileNameAndSheetName + ".xls");
 		return "".getBytes("utf-8");
 	}
+	
 	
 	
 	//各单位经营指标完成情况update
@@ -1340,6 +1342,82 @@ public class YDZBController {
 			//map.put("zbName", zbName);
 			//map.put("zbId", zb);
 			return new ModelAndView("gdw_zbhz_prediction", map);
+		}
+		
+		//各单位指标预测导出
+		@RequestMapping(value = "gdw_zbhz_prediction_export.do")
+		public @ResponseBody byte[] getgdw_zbhz_prediction_export(HttpServletRequest request,
+				HttpServletResponse response) throws IOException {
+			Date d = DateSelection.getDate(request);
+			int month = Integer.parseInt(request.getParameter("month"));
+			String zb = request.getParameter("top5index");
+			GSZB gszb = GSZB.valueOf(Integer.valueOf(zb));
+			String zbName = request.getParameter("zbName");
+			String year = request.getParameter("year");
+			JyzbExcelTemplate template = null;
+			List<String[]> data = null;
+			String fileNameAndSheetName = null; 
+			CellFormatter formatter = null;
+			if (0 == month % 3) {
+				data = gszbService.getGdwJDZBMY(gszb, d);
+				fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度末月"+ zbName + "预测完成情况";
+				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_SY);
+				formatter = template.createCellFormatter()
+						.addType(5, CellFormatter.CellType.PERCENT)
+						.addType(7, CellFormatter.CellType.PERCENT)					
+						.addType(9, CellFormatter.CellType.PERCENT)
+						.addType(11, CellFormatter.CellType.PERCENT)
+						.addType(13, CellFormatter.CellType.PERCENT)
+						.addType(15, CellFormatter.CellType.PERCENT)
+						.addType(20, CellFormatter.CellType.PERCENT)
+						.addType(22, CellFormatter.CellType.PERCENT)
+						.addType(24, CellFormatter.CellType.PERCENT);
+				
+			}
+
+			if (1 == month % 3) {
+				data = gszbService.getGdwFirstSeasonPredictionZBs(gszb, d);
+				fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度首月"+ zbName + "预测完成情况";
+				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_CY);
+				formatter = template.createCellFormatter()
+						.addType(4, CellFormatter.CellType.PERCENT)
+						.addType(6, CellFormatter.CellType.PERCENT)					
+						.addType(10, CellFormatter.CellType.PERCENT)
+						.addType(12, CellFormatter.CellType.PERCENT)
+						.addType(14, CellFormatter.CellType.PERCENT)
+						.addType(16, CellFormatter.CellType.PERCENT);
+						
+			}
+
+			if (2 == month % 3) {
+				data = gszbService.getGdwSecondSeasonPredictionZBs(gszb, d);
+				fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度次月"+ zbName + "预测完成情况";
+				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_MY);
+				formatter = template.createCellFormatter()
+						.addType(4, CellFormatter.CellType.PERCENT)
+						.addType(6, CellFormatter.CellType.PERCENT)	
+						.addType(8, CellFormatter.CellType.PERCENT)	
+						.addType(10, CellFormatter.CellType.PERCENT)
+						.addType(13, CellFormatter.CellType.PERCENT)
+						.addType(15, CellFormatter.CellType.PERCENT)
+						.addType(17, CellFormatter.CellType.PERCENT)
+						.addType(19, CellFormatter.CellType.PERCENT);
+			}
+			
+
+			HSSFWorkbook workbook = template.getWorkbook();
+			workbook.setSheetName(0, fileNameAndSheetName);
+			HSSFSheet sheet = workbook.getSheetAt(0);
+			for (int i = data.size() - 1; i >= 0; --i) {
+				HSSFRow row = sheet.getRow(2 + i);
+				for (int j = data.get(i).length - 1; j >= 0; --j) {
+					HSSFCell cell = row.getCell(j + 1);
+					formatter.format(j, cell, data.get(i)[j]);
+				}
+			}		
+				
+			template.write(response, fileNameAndSheetName + ".xls");
+			return "".getBytes("utf-8");
 		}
 			
 		
