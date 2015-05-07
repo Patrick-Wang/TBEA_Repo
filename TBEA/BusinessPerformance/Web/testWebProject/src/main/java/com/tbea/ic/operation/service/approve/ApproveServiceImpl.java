@@ -411,6 +411,7 @@ public class ApproveServiceImpl implements ApproveService {
 			List<NDJHZB> ndjhzbs = ndjhzbDao.getZbs(date, comps);
 			for (NDJHZB ndjhzb : ndjhzbs) {
 				ndjhzb.setNdjhshzt(shztDao.getById(approveStatus));
+				ndjhzb.setNdjhshsj(new java.sql.Date(new java.util.Date().getTime()));
 				ndjhzbDao.merge(ndjhzb);
 			}
 		}
@@ -456,6 +457,7 @@ public class ApproveServiceImpl implements ApproveService {
 			List<YJ20ZB> zbs = yj20zbDao.getZbs(date, comps);
 			for (YJ20ZB yj20zb : zbs) {
 				yj20zb.setYj20shzt(shztDao.getById(approveStatus));
+				yj20zb.setYj20shsj(new java.sql.Date(new java.util.Date().getTime()));
 				yj20zbDao.merge(yj20zb);
 			}
 			
@@ -486,6 +488,7 @@ public class ApproveServiceImpl implements ApproveService {
 			List<YJ28ZB> zbs = yj28zbDao.getZbs(date, comps);
 			for (YJ28ZB yj28zb : zbs) {
 				yj28zb.setYj28shzt(shztDao.getById(approveStatus));
+				yj28zb.setYj28shsj(new java.sql.Date(new java.util.Date().getTime()));
 				yj28zbDao.merge(yj28zb);
 			}
 			
@@ -516,6 +519,7 @@ public class ApproveServiceImpl implements ApproveService {
 			List<SJZB> zbs = sjzbDao.getZbs(date, comps);
 			for (SJZB zb : zbs) {
 				zb.setSjshzt(shztDao.getById(approveStatus));
+				zb.setSjshsj(new java.sql.Date(new java.util.Date().getTime()));
 				sjzbDao.merge(zb);			
 			}
 			
@@ -621,6 +625,7 @@ public class ApproveServiceImpl implements ApproveService {
 						comps.get(i));
 				for (YDJHZB zb : zbs) {
 					zb.setYdjhshzt(shztDao.getById(approveStatus));
+					zb.setYdjhshsj(new java.sql.Date(new java.util.Date().getTime()));
 					ydjhzbDao.merge(zb);
 				}
 			}
