@@ -155,7 +155,7 @@ module approve_template {
         }
 
         //comps : selected companies
-        private updateTable(rawData: string[][], comps: Util.IData[], tableId: string, caption : string): JQTable.JQGridAssistant {
+        private updateTable(rawData: string[][], comps: Util.IData[], tableId: string, caption: string): JQTable.JQGridAssistant {
             var tmpData = [];
             var title = ["单位名称"];
             var colZbIds = ["dw"];
@@ -200,7 +200,7 @@ module approve_template {
             var name = tableId + "_jqgrid";
             var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createQnjhTable(name, title, colZbIds);
 
-            
+
             var maxLength = 0;
             for (var i: any = 0; i < tmpData.length; ++i) {
                 if (maxLength < tmpData[i].length) {
@@ -358,7 +358,7 @@ module approve_template {
         }
 
 
-        private updateTable(rawData: string[][], comps: Util.IData[], tableId: string, caption : string): JQTable.JQGridAssistant {
+        private updateTable(rawData: string[][], comps: Util.IData[], tableId: string, caption: string): JQTable.JQGridAssistant {
             var compMap = {};
             var companies = [];
             // remove unused company
@@ -415,7 +415,7 @@ module approve_template {
                             }
                             index = compYearMap["_" + companies[i].id];
                         }
-                        
+
                         if (tmpData[index].length <= zbColMap["_" + rawData[j][1]]) {
                             resize(tmpData[index], zbColMap["_" + rawData[j][1]]);
                         }
@@ -464,41 +464,42 @@ module approve_template {
                     } else {
                         tmpData[i].push("--");
                     }
+                }
+
+                var name = tableId + "_jqgrid";
+                var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createSjTable(name, title, colZbIds);
+
+                var parent = $("#" + tableId);
+                parent.empty();
+                parent.append("<table id='" + name + "'></table>");
+
+                var width = (title.length) * 85;
+
+
+                $("#" + name).jqGrid(
+                    jqAssist.decorate({
+                        // url: "TestTable/WGDD_load.do",
+                        // datatype: "json",
+                        data: jqAssist.getDataWithId(tmpData),
+                        datatype: "local",
+                        multiselect: true,
+                        drag: false,
+                        resize: false,
+                        rowNum: 1000,
+                        //autowidth : false,
+                        //cellsubmit: 'clientArray',
+                        //cellEdit: false,
+                        height: '100%',
+                        width: 1200,
+                        shrinkToFit: width > 1200 ? false : true,
+                        autoScroll: true,
+                        caption: caption
+                    }));
+                return jqAssist;
             }
-
-            var name = tableId + "_jqgrid";
-            var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createSjTable(name, title, colZbIds);
-
-            var parent = $("#" + tableId);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table>");
-
-            var width = (title.length) * 85;
-           
-
-            $("#" + name).jqGrid(
-                jqAssist.decorate({
-                    // url: "TestTable/WGDD_load.do",
-                    // datatype: "json",
-                    data: jqAssist.getDataWithId(tmpData),
-                    datatype: "local",
-                    multiselect: true,
-                    drag: false,
-                    resize: false,
-                    rowNum: 1000,
-                    //autowidth : false,
-                    //cellsubmit: 'clientArray',
-                    //cellEdit: false,
-                    height: '100%',
-                    width: 1200,
-                    shrinkToFit: width > 1200 ? false : true,
-                    autoScroll: true,
-                    caption: caption
-                }));
-            return jqAssist;
         }
     }
-    
+
     export class View {
         public static instance: View = new View();
         public static getInstance(): View {
@@ -551,12 +552,12 @@ module approve_template {
         }
 
         public updateUI() {
-            $("#nodatatips").css("display" , "none");
+            $("#nodatatips").css("display", "none");
             var comps = this.mCompanySelector.getCompanys();
             if (comps.length != 0) {
                 var date = this.mDateSelector.getDate();
-                if (this.mOpt.approveType == Util.ZBType.YDJDMJH){
-                    date = Util.addMonth(date, -2);    
+                if (this.mOpt.approveType == Util.ZBType.YDJDMJH) {
+                    date = Util.addMonth(date, -2);
                 }
                 this.mDataSet.post({ year: date.year, month: date.month, approveType: this.mOpt.approveType, companies: JSON.stringify(comps) })
                     .then((data: any) => {
@@ -574,11 +575,11 @@ module approve_template {
                         $("#unapprove").css("display", "");
                         $("#nothing").css("display", "none");
                     }
-                    
+
                     if (data[0].length == 0 && data[1].length == 0) {
-                       $("#nothing").css("display", "");
-                    } 
-                    else{
+                        $("#nothing").css("display", "");
+                    }
+                    else {
                         this.mCurView.process(data, this.mDateSelector.getDate(), this.mCompanySelector.getRawCompanyData());
                     }
                 });
