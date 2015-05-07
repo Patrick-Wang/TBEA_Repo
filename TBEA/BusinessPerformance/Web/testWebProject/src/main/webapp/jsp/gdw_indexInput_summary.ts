@@ -12,6 +12,7 @@ module gdw_indexinput_summary {
                 new JQTable.Node("公司名称", "gsmc", true, JQTable.TextAlign.Left),
                 new JQTable.Node("预计指标填写情况", "inputCondition", true, JQTable.TextAlign.Left),
                 new JQTable.Node("填写时间", "inputTime", true, JQTable.TextAlign.Left),
+                new JQTable.Node("审核时间", "approveTime", true, JQTable.TextAlign.Left),
             ], gridName);
 
         }
@@ -62,6 +63,7 @@ module gdw_indexinput_summary {
                 this.updateTable();
 
             });
+
         }
 
         private formatData() {

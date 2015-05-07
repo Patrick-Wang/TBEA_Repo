@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var ztyszkfx;
 (function (ztyszkfx) {
     var JQGridAssistantFactory = (function () {
@@ -140,11 +142,14 @@ var ztyszkfx;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
