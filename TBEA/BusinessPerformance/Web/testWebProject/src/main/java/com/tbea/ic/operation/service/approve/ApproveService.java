@@ -41,5 +41,5 @@ public interface ApproveService {
 
 	List<Company> getValidJhCompanies(Account account);
 
-	List<String[]> getApproveStatus(Date date, ZBType entryType);
+	List<String[]> getApproveStatus(Date date, ZBType entryType, List<Company> mainCompanies);
 }

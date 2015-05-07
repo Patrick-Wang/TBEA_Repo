@@ -101,7 +101,7 @@ public class EntryServiceImpl implements EntryService{
 		calculatedZbs.add(GSZB.XSLRL.getValue());
 	};
 	
-	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 	
 	ZbInjector ndjhzbInjector;
@@ -109,26 +109,6 @@ public class EntryServiceImpl implements EntryService{
 	ZbInjector yd28Injector;
 	ZbInjector yj20Injector;
 	ZbInjector sjzbInjector;
-
-	List<Company> mainCompanies = new ArrayList<Company>();
-	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-	public void setCompanyManager(CompanyManager companyManager){
-		Organization org = companyManager.getBMDBOrganization();
-		this.companyManager = companyManager;
-		mainCompanies.add(org.getCompany(CompanyType.SBGS));
-		mainCompanies.add(org.getCompany(CompanyType.HBGS));
-		mainCompanies.add(org.getCompany(CompanyType.XBC));
-		mainCompanies.add(org.getCompany(CompanyType.LLGS));
-		mainCompanies.add(org.getCompany(CompanyType.XLC));
-		mainCompanies.add(org.getCompany(CompanyType.DLGS));
-		mainCompanies.add(org.getCompany(CompanyType.XTNYGS));
-		mainCompanies.add(org.getCompany(CompanyType.XNYGS));
-		mainCompanies.add(org.getCompany(CompanyType.TCNY));
-		mainCompanies.add(org.getCompany(CompanyType.NDGS));
-		mainCompanies.add(org.getCompany(CompanyType.JCKGS_JYDW));
-		mainCompanies.add(org.getCompany(CompanyType.GJGCGS_GFGS));
-		mainCompanies.add(org.getCompany(CompanyType.ZHGS));
-	}
 		
 	@Autowired
 	public void init(){
@@ -795,7 +775,7 @@ public class EntryServiceImpl implements EntryService{
 	}
 	
 	@Override
-	public List<String[]> getEntryStatus(Date date, ZBType entryType) {
+	public List<String[]> getEntryStatus(Date date, ZBType entryType, List<Company> mainCompanies) {
 		List<String[]> result = new ArrayList<String[]>();
 		List<Integer> entryCompletedCompanies = null;
 		switch (entryType){

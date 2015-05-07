@@ -29,7 +29,7 @@ public interface EntryService {
 
 //	List<Boolean> isApproved(Date date, CompanyType comp, ZBType entryType);
 
-	List<String[]> getEntryStatus(Date date, ZBType entryType);
+	List<String[]> getEntryStatus(Date date, ZBType entryType, List<Company> mainCompanies);
 
 	boolean saveZb(Date date, Account account, CompanyType comp,
 			ZBType entryType, JSONArray data);
