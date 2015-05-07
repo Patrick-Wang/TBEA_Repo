@@ -1088,23 +1088,11 @@ public class YDZBController {
 		int iMonth = Integer.valueOf(month);
 		List<String[]> hzb_zbhz_prediction = null;
 		JyzbExcelTemplate template = null;
-//		CellFormatter formatter = null;
 		String fileNameAndSheetName = request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
 		FormatterHandler formatterChain = null;
 		if (0 == iMonth % 3) {
 			hzb_zbhz_prediction = gszbService.getGsJDZBMY(d);
 			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_MY);
-//			formatter = template.createCellFormatter()
-//					.addType(0, CellFormatter.CellType.HEADER)
-//					.addType(6, CellFormatter.CellType.PERCENT)
-//					.addType(8, CellFormatter.CellType.PERCENT)
-//					.addType(10, CellFormatter.CellType.PERCENT)
-//					.addType(12, CellFormatter.CellType.PERCENT)
-//					.addType(14, CellFormatter.CellType.PERCENT)
-//					.addType(16, CellFormatter.CellType.PERCENT)
-//					.addType(21, CellFormatter.CellType.PERCENT)
-//					.addType(23, CellFormatter.CellType.PERCENT)
-//					.addType(25, CellFormatter.CellType.PERCENT);
 			formatterChain = this.getFormatterChain(
 					new Integer[]{6, 8, 10, 12, 14, 16, 21, 23, 25}, new Integer[]{1, 2, 3, 4});
 			fileNameAndSheetName += "末月";
@@ -1113,14 +1101,6 @@ public class YDZBController {
 		if (1 == iMonth % 3) {
 			hzb_zbhz_prediction = gszbService.getGsFirstSeasonPredictionZBsOverview(d);
 			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_SY);
-//			formatter = template.createCellFormatter()
-//					.addType(0, CellFormatter.CellType.HEADER)
-//					.addType(5, CellFormatter.CellType.PERCENT)
-//					.addType(7, CellFormatter.CellType.PERCENT)
-//					.addType(11, CellFormatter.CellType.PERCENT)
-//					.addType(13, CellFormatter.CellType.PERCENT)
-//					.addType(15, CellFormatter.CellType.PERCENT)
-//					.addType(17, CellFormatter.CellType.PERCENT);
 			formatterChain = this.getFormatterChain(
 					new Integer[]{5, 7, 11, 13, 15, 17}, new Integer[]{1, 2, 3});
 			fileNameAndSheetName += "首月";
@@ -1129,16 +1109,6 @@ public class YDZBController {
 		if (2 == iMonth % 3) {
 			hzb_zbhz_prediction = gszbService.getGsSecondSeasonPredictionZBsOverview(d);
 			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_CY);
-//			formatter = template.createCellFormatter()
-//					.addType(0, CellFormatter.CellType.HEADER)
-//					.addType(5, CellFormatter.CellType.PERCENT)
-//					.addType(7, CellFormatter.CellType.PERCENT)
-//					.addType(9, CellFormatter.CellType.PERCENT)
-//					.addType(11, CellFormatter.CellType.PERCENT)
-//					.addType(14, CellFormatter.CellType.PERCENT)
-//					.addType(16, CellFormatter.CellType.PERCENT)
-//					.addType(18, CellFormatter.CellType.PERCENT)
-//					.addType(20, CellFormatter.CellType.PERCENT);	
 			formatterChain = this.getFormatterChain(
 					new Integer[]{5, 7, 9, 11, 14, 16, 18, 20}, new Integer[]{1, 2, 3});
 			fileNameAndSheetName += "次月";
