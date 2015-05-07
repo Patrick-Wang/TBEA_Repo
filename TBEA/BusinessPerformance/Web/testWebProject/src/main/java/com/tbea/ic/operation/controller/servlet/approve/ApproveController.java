@@ -218,18 +218,6 @@ public class ApproveController {
 		String result = "{\"result\":" + ret + "}";
 		return result.getBytes("utf-8");
 	}
-	
-	//取得各个经营单位指标录入的情况
-	@RequestMapping(value = "status.do", method = RequestMethod.GET)
-	public  @ResponseBody byte[] getApproveStatus(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-
-		Date date = DateSelection.getDate(request);
-		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("approveType")));
-		List<String[]> status = service.getApproveStatus(date, entryType);
-		String result = JSONArray.fromObject(status).toString().replace("null", "\"\"");
-		return result.getBytes("utf-8");
-	}
 
 	
 }
