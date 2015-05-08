@@ -22,6 +22,7 @@ public class ZBDispatcher {
 		case APPROVED:
 			unapproveList.add(zbArr);
 			break;
+		case APPROVED_2:
 		case SUBMITTED:
 		case SUBMITTED_2:
 			approveList.add(zbArr);

@@ -230,7 +230,7 @@ public class ApproveServiceImpl implements ApproveService {
 				return true;
 			}
 		} else {
-			if (status == ZBStatus.APPROVED || status == ZBStatus.SUBMITTED) {
+			if (status == ZBStatus.APPROVED || status == ZBStatus.SUBMITTED || status == ZBStatus.APPROVED_2) {
 				return true;
 			}
 		}

@@ -48,7 +48,7 @@ public class PreApprovedCompanyFilter {
 					retComps.add(comps.get(i));
 				}
 			}else{
-				if (status == ZBStatus.SUBMITTED){
+				if (status == ZBStatus.SUBMITTED || status == ZBStatus.APPROVED_2){
 					retComps.add(comps.get(i));
 				}
 			}
