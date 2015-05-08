@@ -124,6 +124,8 @@ public class LoginServlet {
 		
 		map.put("userName", account.getName());
 		
+		map.put("admin", "admin".equals(account.getName()));
+		
 		return new ModelAndView("index", map);
 	
 	}

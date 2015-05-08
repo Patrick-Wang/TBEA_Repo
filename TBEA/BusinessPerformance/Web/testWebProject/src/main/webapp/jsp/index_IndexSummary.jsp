@@ -4,6 +4,25 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <p style="margin: 10px 0 0px 0"></p>
+
+
+<c:if test="${admin}">
+<div>
+	<h3>
+		Dashboard<a name="dashboard"> </a>
+	</h3>
+	<div class="section">
+		<div class="thumb3">
+			<ul class="slides">
+				<li><a href="../dashboard/user_status.do" target="_blank"><img
+						src="../images/charts/bar1.png"> <span><strong>在线用户状态</strong></span></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+</c:if>
+
 <c:if test="${!sbqgb}">
 <div>
 	<h3>
@@ -11,7 +30,7 @@
 	</h3>
 	<div class="section">
 		<div class="thumb3">
-			<ul class="slides">
+			<ul class="slides">			
 				<c:if test="${CorpAuth}">
 				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>公司整体指标完成情况</strong></span></a>

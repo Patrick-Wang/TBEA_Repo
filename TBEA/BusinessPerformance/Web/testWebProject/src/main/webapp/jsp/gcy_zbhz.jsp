@@ -209,7 +209,7 @@
 				<div style="height:10px"></div>
 			<td>
 		</tr>
- 		<tr>
+ 	<!-- 	<tr>
 			<td>
 			<form id="export" method="post">
 				<input id="exportButton" type="button" value="导出"
@@ -219,7 +219,7 @@
 				</form>
 			</td>
 			
-		</tr>
+		</tr> -->
 	</Table>
 	<%@include file="loading.jsp"%>
 

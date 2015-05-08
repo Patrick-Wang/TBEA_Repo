@@ -37,8 +37,8 @@ module userStatus {
         }
 
         private updateTitle(){
-             $('h1').text("用户状态 Dashboard");
-             document.title = "用户状态 Dashboard"; 
+             $('h1').text("用户在线状态 ");
+             document.title = "用户在线状态"; 
         }
 
         private updateTable(tableId: string): void {

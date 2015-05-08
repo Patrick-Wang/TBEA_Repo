@@ -65,7 +65,11 @@
 					id="chartsTypeNav">
 					<!-- 所有公司都显示-->
 					<ul id="navlist" style="padding: 10px 0; width: 180px;">
-
+					<c:if test="${admin}">
+					<li style="background-color: transparent;"><i
+						class="ec-icon ec-icon-line"></i> <a href="#dashboard"
+						style="color: rgb(62, 152, 197);">Dashboard</a></li>
+					</c:if>
 					<li style="background-color: transparent;"><i
 						class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 						style="color: rgb(62, 152, 197);">经营指标完成情况</a></li>
