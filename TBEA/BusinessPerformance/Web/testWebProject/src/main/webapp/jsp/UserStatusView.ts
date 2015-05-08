@@ -47,7 +47,7 @@ module userStatus {
                 JQGridAssistantFactory.createFlatTable(name, [
                 "用户名", "sid", "登录时间", "最近访问时间"]);
 
-            $('#text')[0].innerHTML = ("● 在线户数数 : " + this.mData.active_user_count + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp"+ 
+            $('#text')[0].innerHTML = ("● 在线户数 : " + this.mData.active_user_count + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp"+ 
                             "● 最近访问用户: " + this.mData.latest_active_user + "&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;"+
                             "● 最近访问时间: " + this.mData.last_accessed_time);
             
