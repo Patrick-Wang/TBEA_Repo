@@ -45,11 +45,19 @@ module userStatus {
             var name = tableId + "_jqgrid";
             var tableAssist: JQTable.JQGridAssistant =
                 JQGridAssistantFactory.createFlatTable(name, [
-                "用户名", "sid", "登录时间", "最近访问时间"]);
+                "用户名", "SID", "登录时间", "最近访问时间"]);
 
-            $('#text')[0].innerHTML = ("● 在线户数 : " + this.mData.active_user_count + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp"+ 
-                            "● 最近访问用户: " + this.mData.latest_active_user + "&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;"+
-                            "● 最近访问时间: " + this.mData.last_accessed_time);
+            var summary = "● 在线户数 : " + this.mData.active_user_count + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp";
+          
+            if (undefined != this.mData.latest_active_user){
+                summary += "● 最近访问用户 : " + this.mData.latest_active_user + "&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;"
+            } 
+            
+            if(undefined != this.mData.last_accessed_time){
+                summary += "● 最近访问用户 : " + this.mData.last_accessed_time;
+            } 
+            
+            $('#text')[0].innerHTML = summary;
             
             var data = [];
             for (var i = 0; i < this.mData.users.length; ++i) {

@@ -1,5 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
 var zbhz_overview;
 (function (zbhz_overview) {
     var YDZBDataSet = (function () {
@@ -93,14 +91,6 @@ var zbhz_overview;
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;
         };
-        //		private getCurrentCompany() :　Util.CompanyType{
-        //			if (this.mDw != Util.CompanyType.ALL){
-        //				return this.mDw;
-        //			}
-        //			else{
-        //				return this.mCy;
-        //			}
-        //		}
         View.prototype.updateUI = function () {
             var _this = this;
             this.mDataSetMgr.getData(this.mComp, function (dataSet) {
