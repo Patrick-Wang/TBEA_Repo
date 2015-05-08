@@ -104,13 +104,16 @@ public class DashboardController {
 		
 		JSONArray arrUsers = new JSONArray();
 		HttpSession latestActiveSession = null;
-		Account account;
-
+		Account account = (Account) request.getSession().getAttribute("account");;
+		if (null == account || !"admin".equals(account.getName())) {
+			return new ModelAndView("");
+		}
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		int activeCount = 0;
 		for (HttpSession session : sessions) {
 			account = (Account) session.getAttribute("account");
-			if (null == account || "sunfd".equals(account.getName())) {
+			if (null == account || "admin".equals(account.getName())) {
 				continue;
 			}
 			++activeCount;
