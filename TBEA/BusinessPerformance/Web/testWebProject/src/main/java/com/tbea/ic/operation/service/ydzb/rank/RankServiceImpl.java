@@ -3,6 +3,7 @@ package com.tbea.ic.operation.service.ydzb.rank;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.service.ydzb.pipe.CompanyBasedPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 
 
 @Service
@@ -90,14 +92,32 @@ public class RankServiceImpl implements RankService {
 	}
 
 	
-	@Override
-	public List<String[]> getLrzeRank(Date date) {
-		CompanyBasedPipe pipe = new CompanyBasedPipe(GSZB.LRZE.getValue(), date, getConfiguratorFactory().getLrzbRankConfigurator());
+	private List<Double[]> getLrRank(Date date, IPipeConfigurator dwPipeConfig, IPipeConfigurator dataConfig){
+		CompanyBasedPipe pipe = new CompanyBasedPipe(GSZB.LRZE.getValue(), date, dwPipeConfig);
 		List<Company> jydw = BMDepartmentDB.getJydw(companyManager);
 		for (Company comp : jydw){
-			pipe.add(comp, getConfiguratorFactory().getLrzbDataConfigurator());
+			pipe.add(comp, dataConfig);
 		}
-		return makeResult(pipe.getData());
+		return pipe.getData();
+		
+	}
+	
+	@Override
+	public List<String[]> getJhlrRank(Date date) {
+		List<Double[]> ret = getLrRank(date, getConfiguratorFactory().getJhlrRankConfigurator(), getConfiguratorFactory().getJhlrDataConfigurator());
+		return makeResult(ret);
+	}
+	
+	@Override
+	public List<String[]> getLjlrRank(Date date) {
+		List<Double[]> ret = getLrRank(date, getConfiguratorFactory().getLjlrRankConfigurator(), getConfiguratorFactory().getLjlrDataConfigurator());
+		return makeResult(ret);
+	}
+	
+	@Override
+	public List<String[]> getJxjlRank(Date date) {
+		List<Double[]> ret = getLrRank(date, getConfiguratorFactory().getJxjlRankConfigurator(), getConfiguratorFactory().getJxjlDataConfigurator());
+		return makeResult(ret);
 	}
 
 }

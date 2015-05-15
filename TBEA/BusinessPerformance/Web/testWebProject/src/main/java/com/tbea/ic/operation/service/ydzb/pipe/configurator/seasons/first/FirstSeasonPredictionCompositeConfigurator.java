@@ -34,12 +34,11 @@ AbstractCompositeConfigurator {
 	@Override
 	protected void onConfiguring(IPipe pipe, IAccumulator acc, Integer zb,
 			CompanyType type, List<Company> subComps, WclPipeFilter wclFilter, ZzlPipeFilter tbzzFilter) {
-		
 
-		// 全年计划
+		    // 全年计划
 			pipe.add(new AccPipeFilter(acc, 0, zb, type)
 						.includeCompanies(subComps))
-		// 当月计划
+				// 当月计划
 				.add(new AccPipeFilter(acc, 2, zb, type)
 					.includeCompanies(subComps)
 						)

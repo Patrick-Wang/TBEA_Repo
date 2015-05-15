@@ -1,10 +1,10 @@
-package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank;
+package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.jhlr;
 
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.companybased.RankPipeFilter;
 
-public class LrzbRankConfigurator  implements IPipeConfigurator{
+public class JhlrRankConfigurator  implements IPipeConfigurator{
 
 	@Override
 	public void onConfiguring(IPipe pipe) {

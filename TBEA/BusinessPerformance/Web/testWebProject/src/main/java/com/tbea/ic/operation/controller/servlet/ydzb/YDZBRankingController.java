@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
 import com.tbea.ic.operation.service.ydzb.rank.RankService;
@@ -52,12 +51,15 @@ public class YDZBRankingController {
 		Date d = DateSelection.getDate(request);
 		int rankingType = Integer.valueOf(request.getParameter("rankingType"));
 		String ranking_val = null;
-		if (rankingType == 1 || rankingType == 3)
-		{
-			ranking_val = JSONArray.fromObject(rankService.getLrzeRank(d)).toString().replace("null", "\"--\"");
-		}else if (rankingType == 2)
-		{
-			
+		if (rankingType == 1) {
+			ranking_val = JSONArray.fromObject(rankService.getJhlrRank(d))
+					.toString().replace("null", "\"--\"");
+		} else if (rankingType == 2) {
+			ranking_val = JSONArray.fromObject(rankService.getLjlrRank(d))
+					.toString().replace("null", "\"--\"");
+		} else if (rankingType == 3) {
+			ranking_val = JSONArray.fromObject(rankService.getJxjlRank(d))
+					.toString().replace("null", "\"--\"");
 		}
 		return ranking_val;
 	}
