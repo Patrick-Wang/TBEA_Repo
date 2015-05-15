@@ -73,8 +73,6 @@ public class GszbServiceImpl implements GszbService {
 
 	@Autowired
 	DWXXDao dwxxDao;
-
-	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
 	AccumulatorFactory accFac;
@@ -111,6 +109,61 @@ public class GszbServiceImpl implements GszbService {
 		topfivezbs.add(GSZB.CH.getValue());
 	}
 
+	
+	private static Map<CompanyType, List<Company>> gdwTop5ComputeMap = new HashMap<CompanyType, List<Company>>();
+	private static Map<CompanyType, List<Company>> gcyTop5ComputeMap = new HashMap<CompanyType, List<Company>>();
+
+
+	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
+	public void setCompanyManager(CompanyManager mgr){
+		companyManager = mgr;
+		Organization org = mgr.getBMDBOrganization();
+		List<Company> companies = new ArrayList<Company>();
+		gcyTop5ComputeMap.put(CompanyType.GFGS, companies);
+		companies.add(org.getCompany(CompanyType.SBDCYJT));
+		companies.add(org.getCompany(CompanyType.XNYSYB));
+		companies.add(org.getCompany(CompanyType.NYSYB));
+		companies.add(org.getCompany(CompanyType.JCKGS_SYB));
+		companies.add(org.getCompany(CompanyType.GJGCGS_SYB));
+		companies = new ArrayList<Company>();
+		gcyTop5ComputeMap.put(CompanyType.GJB, companies);
+		companies.add(org.getCompany(CompanyType.GFGS));
+		companies.add(org.getCompany(CompanyType.ZHGS_SYB));
+
+		companies = new ArrayList<Company>();
+		gdwTop5ComputeMap.put(CompanyType.SBDCYJT, companies);
+		companies.add(org.getCompany(CompanyType.SBGS));
+		companies.add(org.getCompany(CompanyType.HBGS));
+		companies.add(org.getCompany(CompanyType.XBC));
+		companies.add(org.getCompany(CompanyType.LLGS));
+		companies.add(org.getCompany(CompanyType.XLC));
+		companies.add(org.getCompany(CompanyType.DLGS));
+		companies = new ArrayList<Company>();
+		gdwTop5ComputeMap.put(CompanyType.XNYSYB, companies);
+		companies.add(org.getCompany(CompanyType.XTNYGS));
+		companies.add(org.getCompany(CompanyType.XNYGS));
+		companies = new ArrayList<Company>();
+		gdwTop5ComputeMap.put(CompanyType.NYSYB, companies);
+		companies.add(org.getCompany(CompanyType.TCNY));
+		companies.add(org.getCompany(CompanyType.NDGS));
+		companies = new ArrayList<Company>();
+		gdwTop5ComputeMap.put(CompanyType.GJGCGS_SYB, companies);
+		companies.add(org.getCompany(CompanyType.JCKGS_JYDW));
+		companies.add(org.getCompany(CompanyType.GJGCGS_GFGS));
+		companies = new ArrayList<Company>();
+		gdwTop5ComputeMap.put(CompanyType.GFGS, companies);
+		companies.add(org.getCompany(CompanyType.SBDCYJT));
+		companies.add(org.getCompany(CompanyType.XNYSYB));
+		companies.add(org.getCompany(CompanyType.NYSYB));
+		companies.add(org.getCompany(CompanyType.GJGCGS_SYB));
+		companies = new ArrayList<Company>();
+		gdwTop5ComputeMap.put(CompanyType.GJB, companies);
+		companies.add(org.getCompany(CompanyType.ZHGS));
+		companies.add(org.getCompany(CompanyType.GFGS));
+	}
+	
+	
+	
 	// 公司整体2（收入签约分结构）
 	private static List<Integer> srqyzbs = new ArrayList<Integer>();
 	static {
@@ -315,46 +368,7 @@ public class GszbServiceImpl implements GszbService {
 		return makeZbResult(srqyzbs, pipe.getData());
 	}
 
-	private static Map<CompanyType, CompanyType[]> gdwTop5ComputeMap = new HashMap<CompanyType, CompanyType[]>();
-	static {
-		gdwTop5ComputeMap.put(CompanyType.SBDCYJT, new CompanyType[]{
-				CompanyType.SBGS,
-				CompanyType.HBGS,
-				CompanyType.XBC,
-				CompanyType.LLGS,
-				CompanyType.XLC,
-				CompanyType.DLGS});
-		gdwTop5ComputeMap.put(CompanyType.XNYSYB, new CompanyType[]{
-				CompanyType.XTNYGS,
-				CompanyType.XNYGS});
-		gdwTop5ComputeMap.put(CompanyType.NYSYB, new CompanyType[]{
-				CompanyType.TCNY,
-				CompanyType.NDGS});
-		gdwTop5ComputeMap.put(CompanyType.GJGCGS_SYB, new CompanyType[]{
-				CompanyType.JCKGS_JYDW,
-				CompanyType.GJGCGS_GFGS});
-		gdwTop5ComputeMap.put(CompanyType.GFGS, new CompanyType[]{
-				CompanyType.SBDCYJT,
-				CompanyType.XNYSYB,
-				CompanyType.NYSYB,
-				CompanyType.GJGCGS_SYB});
-		gdwTop5ComputeMap.put(CompanyType.GJB, new CompanyType[]{
-				CompanyType.ZHGS,
-				CompanyType.GFGS});
-	}
 	
-	private static Map<CompanyType, CompanyType[]> gcyTop5ComputeMap = new HashMap<CompanyType, CompanyType[]>();
-	static {
-		gcyTop5ComputeMap.put(CompanyType.GFGS, new CompanyType[]{
-				CompanyType.SBDCYJT,
-				CompanyType.XNYSYB,
-				CompanyType.NYSYB,
-				CompanyType.JCKGS_SYB,
-				CompanyType.GJGCGS_SYB});
-		gcyTop5ComputeMap.put(CompanyType.GJB, new CompanyType[]{
-				CompanyType.GFGS,
-				CompanyType.ZHGS_SYB});
-	}
 	private List<String[]> getCompanyTop5zb(
 			GSZB gsTop5zb, 
 			Date date, 
