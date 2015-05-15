@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.GSZB;
+import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
@@ -33,14 +34,14 @@ import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.AccumulatorFactory;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.composite.CompositeAccDataSource;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.CompanyBasedPipe;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.IndicatorBasedPipe;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.ConfiguratorFactory;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.IPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.srqy.SrqyConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccDataSource;
+import com.tbea.ic.operation.service.ydzb.pipe.CompanyBasedPipe;
+import com.tbea.ic.operation.service.ydzb.pipe.IndicatorBasedPipe;
+import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
+import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.srqy.SrqyConfigurator;
 
 
 @Service
@@ -271,23 +272,6 @@ public class GszbServiceImpl implements GszbService {
 		return zbxx;
 	}
 
-	private List<Company> getJydw(List<Company> sybs) {
-		List<Company> jydws = new ArrayList<Company>();
-		for (Company syb : sybs) {
-			if (!syb.getSubCompanys().isEmpty()) {
-				jydws.addAll(syb.getSubCompanys());
-			}
-		}
-		return jydws;
-	}
-	
-	private List<Company> getMainlyJydw(){
-		Organization org = companyManager.getBMDBOrganization();
-		List<Company> sybs = org.getCompany(CompanyType.GFGS).getSubCompanys();
-		sybs.add(org.getCompany(CompanyType.ZHGS_SYB));
-		return getJydw(sybs);
-	}
-
 	private List<String[]> makeZbResult(List<Integer> zbs, List<Double[]> gszbs) {
 
 		List<String[]> result = new ArrayList<String[]>();
@@ -307,7 +291,7 @@ public class GszbServiceImpl implements GszbService {
 
 	@Override
 	public List<String[]> getGsztzb(Date date) {
-		IndicatorBasedPipe pipe = new IndicatorBasedPipe(gsztzbs, getMainlyJydw(), date,
+		IndicatorBasedPipe pipe = new IndicatorBasedPipe(gsztzbs, BMDepartmentDB.getMainlyJydw(companyManager), date,
 				getConfiguratorFactory().getStandardConfigurator());
 		return makeZbResult(gsztzbs, pipe.getData());
 	}
@@ -354,7 +338,8 @@ public class GszbServiceImpl implements GszbService {
 	@Override
 	public List<String[]> getLrzeRank(Date date) {
 		CompanyBasedPipe pipe = new CompanyBasedPipe(GSZB.LRZE.getValue(), date, getConfiguratorFactory().getLrzbRankConfigurator());
-		for (Company comp : getMainlyJydw()){
+		List<Company> jydw = BMDepartmentDB.getJydw(companyManager);
+		for (Company comp : jydw){
 			pipe.add(comp, getConfiguratorFactory().getLrzbDataConfigurator());
 		}
 		return makeResult(pipe.getData());
@@ -363,7 +348,7 @@ public class GszbServiceImpl implements GszbService {
 	
 	@Override
 	public List<String[]> getSrqy(Date date) {	
-		IndicatorBasedPipe pipe = new IndicatorBasedPipe(srqyzbs, getMainlyJydw(), date,
+		IndicatorBasedPipe pipe = new IndicatorBasedPipe(srqyzbs, BMDepartmentDB.getMainlyJydw(companyManager), date,
 				getConfiguratorFactory().getSrqyConfigurator());
 		return makeZbResult(srqyzbs, pipe.getData());
 	}
@@ -417,17 +402,17 @@ public class GszbServiceImpl implements GszbService {
 
 	@Override
 	public List<String[]> getGsFirstSeasonPredictionZBsOverview(Date date) {
-		return getFirstSeasonPredictionZBsOverview(date, gsztzbs, getMainlyJydw());
+		return getFirstSeasonPredictionZBsOverview(date, gsztzbs, BMDepartmentDB.getJydw(companyManager));
 	}
 
 	@Override
 	public List<String[]> getGsSecondSeasonPredictionZBsOverview(Date date) {
-		return getSecondSeasonPredictionZBsOverview(date, gsztzbs, getMainlyJydw());
+		return getSecondSeasonPredictionZBsOverview(date, gsztzbs, BMDepartmentDB.getJydw(companyManager));
 	}
 
 	@Override
 	public List<String[]> getGsJDZBMY(Date date) {
-		return getJDZBMY(date, gsztzbs, getMainlyJydw());
+		return getJDZBMY(date, gsztzbs, BMDepartmentDB.getJydw(companyManager));
 	}
 
 	@Override

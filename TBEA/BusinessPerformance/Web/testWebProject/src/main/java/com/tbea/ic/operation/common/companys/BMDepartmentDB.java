@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.common.companys;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -192,5 +193,25 @@ public class BMDepartmentDB extends AbstractOrganization {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	public static List<Company> getJydw(List<Company> sybs) {
+		List<Company> jydws = new ArrayList<Company>();
+		for (Company syb : sybs) {
+			if (!syb.getSubCompanys().isEmpty()) {
+				jydws.addAll(syb.getSubCompanys());
+			}
+		}
+		return jydws;
+	}
+	
+	public static List<Company> getJydw(CompanyManager mgr) {
+		return getJydw(mgr.getBMDBOrganization().getCompany(CompanyType.GFGS).getSubCompanys());
+	}
+	
+	public static List<Company> getMainlyJydw(CompanyManager mgr){
+		Organization org = mgr.getBMDBOrganization();
+		List<Company> sybs = org.getCompany(CompanyType.GFGS).getSubCompanys();
+		sybs.add(org.getCompany(CompanyType.ZHGS_SYB));
+		return getJydw(sybs);
+	}
 }
