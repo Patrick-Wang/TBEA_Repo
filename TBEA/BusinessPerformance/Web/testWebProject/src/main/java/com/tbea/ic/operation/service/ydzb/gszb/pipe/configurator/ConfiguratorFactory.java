@@ -49,6 +49,7 @@ public class ConfiguratorFactory {
 		jdzbmyConfigurator = new JDZBMYConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
 		ydhbConfigurator = new YdhbConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
 		srqyConfigurator = new SrqyConfigurator(accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc(), companyManager);
+		lrzeDataConfigurator = new LrzbDataConfigurator(accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());		
 	}
 	/**
 	 * @return the standardConfigurator
