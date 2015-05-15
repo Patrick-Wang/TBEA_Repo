@@ -53,7 +53,7 @@ public class YDZBRankingController {
 		String ranking_val = null;
 		if (rankingType == 1)
 		{
-			ranking_val = JSONArray.fromObject(rankService.getLrzeRank(d)).toString().replace("null", "\"--\"");
+			ranking_val = JSONArray.fromObject(rankService.getJhlrRank(d)).toString().replace("null", "\"--\"");
 		}
 		return ranking_val;
 	}
