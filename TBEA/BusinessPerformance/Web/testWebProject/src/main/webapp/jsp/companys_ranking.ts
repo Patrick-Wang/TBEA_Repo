@@ -26,13 +26,13 @@ module companys_ranking {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度完成率排名", "yearRanking", true, JQTable.TextAlign.Left)
-                        .append(new JQTable.Node("年度计划", "n1"))
-                        .append(new JQTable.Node("年度累计完成", "n2"))
+                        .append(new JQTable.Node("年度累计", "n1"))
+                        .append(new JQTable.Node("去年同期累计", "n2"))
                         .append(new JQTable.Node("同比增长", "n3"))
                         .append(new JQTable.Node("年度排名", "n4")),
                     new JQTable.Node("月度完成率排名", "monthRanking", true, JQTable.TextAlign.Left)
-                        .append(new JQTable.Node("月度计划", "y1"))
-                        .append(new JQTable.Node("月度完成", "y2"))
+                        .append(new JQTable.Node("当月完成", "y1"))
+                        .append(new JQTable.Node("去年同期", "y2"))
                         .append(new JQTable.Node("同比增长", "y3"))
                         .append(new JQTable.Node("月度排名", "y4")),
                 ], gridName);
