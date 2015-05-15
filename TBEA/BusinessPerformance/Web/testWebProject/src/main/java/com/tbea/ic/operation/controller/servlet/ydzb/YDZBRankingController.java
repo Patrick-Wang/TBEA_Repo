@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.controller.servlet.ydzb;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public class YDZBRankingController {
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		DateSelection dateSel = new DateSelection(service.getLatestHzbDate(),
+		DateSelection dateSel = new DateSelection(Calendar.getInstance(),
 				true, false);
 		dateSel.select(map);
 		return new ModelAndView("companys_ranking", map);
