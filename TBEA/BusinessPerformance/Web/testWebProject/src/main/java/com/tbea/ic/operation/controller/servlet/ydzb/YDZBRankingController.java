@@ -43,29 +43,17 @@ public class YDZBRankingController {
 		return new ModelAndView("companys_ranking", map);
 	}
 	
-	@RequestMapping(value = "gdw_zbhz_update.do", method = RequestMethod.GET)
-	public @ResponseBody String getGdw_zbhz_update(HttpServletRequest request,
-			HttpServletResponse response) {
-		Date d = DateSelection.getDate(request);
-		String gszb = request.getParameter("zbId");
-		String gdw_zbhz = JSONArray
-				.fromObject(
-						gszbService.getCompanyTop5zb(
-								GSZB.valueOf(Integer.valueOf(gszb)), d))
-				.toString().replace("null", "\"--\"");
-		return gdw_zbhz;
-	}
 	
 	@RequestMapping(value = "companys_ranking_update.do", method = RequestMethod.GET)
 	public @ResponseBody String getCompanys_Ranking_Update(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		Map<String, Object> map = new HashMap<String, Object>();
+		Date d = DateSelection.getDate(request);
 		int rankingType = Integer.valueOf(request.getParameter("rankingType"));
 		String ranking_val = null;
 		if (rankingType == 1)
 		{
-			
+			ranking_val = JSONArray.fromObject(gszbService.getLrzeRank(d)).toString().replace("null", "\"--\"");
 		}
 		return ranking_val;
 	}
