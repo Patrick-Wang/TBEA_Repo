@@ -12,13 +12,21 @@ public class CompanyBasedPipe extends IndicatorBasedPipe {
 	private List<IPipeConfigurator> pipeConfigs = new ArrayList<IPipeConfigurator>();
 	private IPipeConfigurator dwPipeConfig;
 	private List<List<Company>> realCompsList = new ArrayList<List<Company>>();
-
+	private List<Integer> dependZbs = new ArrayList<Integer>();
+	
 	public CompanyBasedPipe(Integer zb, Date date, IPipeConfigurator dwPipeConfig) {
 		super(zb, new ArrayList<Company>(), date, null);
 		this.dwPipeConfig = dwPipeConfig;
 		this.data.clear();
 	}
 
+	public CompanyBasedPipe add(Integer dependZb) {
+		if (!dependZbs.contains(dependZb)) {
+			dependZbs.add(dependZb);
+		}
+		return this;
+	}
+	
 	public CompanyBasedPipe add(Company comp, IPipeConfigurator dwPipeConfig) {
 		if (!this.companies.contains(comp)) {
 			this.companies.add(comp);
@@ -47,12 +55,15 @@ public class CompanyBasedPipe extends IndicatorBasedPipe {
 	@Override
 	public List<Double[]> getData() {
 		this.data.clear();
+		List<Integer> tmpZbs = new ArrayList<Integer>();
+		tmpZbs.addAll(this.dependZbs);
+		tmpZbs.add(zbIds.get(0));
 		for (int i = 0; i < this.companies.size(); ++i) {
 			if (this.pipeConfigs.get(i) != null) {
-				IndicatorBasedPipe pipe = new IndicatorBasedPipe(this.getZbIds().get(0),
+				IndicatorBasedPipe pipe = new IndicatorBasedPipe(tmpZbs,
 						this.realCompsList.get(i), date,
 						this.pipeConfigs.get(i));
-				this.data.add(pipe.getData().get(0));
+				this.data.add(pipe.getData().get(tmpZbs.size() - 1));
 			} else {
 				this.data.add(new Double[this.dwPipeConfig.getColumnCount()]);
 			}
