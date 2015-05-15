@@ -51,9 +51,15 @@ public class YDZBRankingController {
 		Date d = DateSelection.getDate(request);
 		int rankingType = Integer.valueOf(request.getParameter("rankingType"));
 		String ranking_val = null;
-		if (rankingType == 1)
-		{
-			ranking_val = JSONArray.fromObject(rankService.getJhlrRank(d)).toString().replace("null", "\"--\"");
+		if (rankingType == 1) {
+			ranking_val = JSONArray.fromObject(rankService.getJhlrRank(d))
+					.toString().replace("null", "\"--\"");
+		} else if (rankingType == 2) {
+			ranking_val = JSONArray.fromObject(rankService.getLjlrRank(d))
+					.toString().replace("null", "\"--\"");
+		} else if (rankingType == 3) {
+			ranking_val = JSONArray.fromObject(rankService.getJxjlRank(d))
+					.toString().replace("null", "\"--\"");
 		}
 		return ranking_val;
 	}

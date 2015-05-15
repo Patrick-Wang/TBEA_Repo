@@ -2,30 +2,42 @@
 /// <reference path="util.ts" />
 declare var echarts;
 
-enum RANKING{GSMC,NDJH, NDLJWC,JHWCL,YEARRANKING, YDJH, YDWC,YDWCL,MONTHRANKING}
+enum RANKINKType1{GSMC,NDJH, NDLJWC,JHWCLORTB,YEARRANKING, YDJH, YDWC,YDWCLORTB,MONTHRANKING};
 
 module companys_ranking {
 
     class JQGridAssistantFactory {
-
-        public static createTable(gridName: string): JQTable.JQGridAssistant {
-
-            return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
-                new JQTable.Node("年度完成率排名", "yearRanking", true, JQTable.TextAlign.Left)
-                    .append(new JQTable.Node("年度计划", "n1"))
-                    .append(new JQTable.Node("年度累计完成", "n2"))
-                    .append(new JQTable.Node("计划完成率", "n3"))
-                    .append(new JQTable.Node("年度排名", "n4")),
-                new JQTable.Node("月度完成率排名", "monthRanking", true, JQTable.TextAlign.Left)
-                    .append(new JQTable.Node("月度计划", "y1"))
-                    .append(new JQTable.Node("月度完成", "y2"))
-                    .append(new JQTable.Node("月度完成率", "y3"))
-                    .append(new JQTable.Node("月度排名", "y4")),
-            ], gridName); 
-
+        public static createTable(gridName: string, RankingType: number): JQTable.JQGridAssistant {
+            if (RankingType == 1 || RankingType == 3) {
+                return new JQTable.JQGridAssistant([
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("年度完成率排名", "yearRanking", true, JQTable.TextAlign.Left)
+                        .append(new JQTable.Node("年度计划", "n1"))
+                        .append(new JQTable.Node("年度累计完成", "n2"))
+                        .append(new JQTable.Node("计划完成率", "n3"))
+                        .append(new JQTable.Node("年度排名", "n4")),
+                    new JQTable.Node("月度完成率排名", "monthRanking", true, JQTable.TextAlign.Left)
+                        .append(new JQTable.Node("月度计划", "y1"))
+                        .append(new JQTable.Node("月度完成", "y2"))
+                        .append(new JQTable.Node("月度完成率", "y3"))
+                        .append(new JQTable.Node("月度排名", "y4")),
+                ], gridName);
+            } else if (RankingType == 2) {
+                return new JQTable.JQGridAssistant([
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("年度完成率排名", "yearRanking", true, JQTable.TextAlign.Left)
+                        .append(new JQTable.Node("年度计划", "n1"))
+                        .append(new JQTable.Node("年度累计完成", "n2"))
+                        .append(new JQTable.Node("同比增长", "n3"))
+                        .append(new JQTable.Node("年度排名", "n4")),
+                    new JQTable.Node("月度完成率排名", "monthRanking", true, JQTable.TextAlign.Left)
+                        .append(new JQTable.Node("月度计划", "y1"))
+                        .append(new JQTable.Node("月度完成", "y2"))
+                        .append(new JQTable.Node("同比增长", "y3"))
+                        .append(new JQTable.Node("月度排名", "y4")),
+                ], gridName);
+            }
         }
-
     }
 
     export class View {
@@ -69,7 +81,7 @@ module companys_ranking {
                 this.mData = dataArray;
                 $('h1').text(date.year + "年" + date.month + "月" + "经营单位指标排名情况");
                 document.title = date.year + "年" + date.month + "月" + "经营单位指标排名情况";
-                this.updateTable();
+                this.updateTable(this.mIndex);
 
             });
 
@@ -83,10 +95,10 @@ module companys_ranking {
                 mdata[i] = data[i].concat(row);
                 for(var j = 1; j < mdata[i].length; j++)
                 {
-                    if (RANKING.YEARRANKING == j ||  RANKING.MONTHRANKING == j){
+                    if (RANKINKType1.YEARRANKING == j ||  RANKINKType1.MONTHRANKING == j){
                        mdata[i][j] = Util.formatInt(mdata[i][j]); 
                     }
-                    else if (RANKING.JHWCL == j || RANKING.YDWCL == j){
+                    else if (RANKINKType1.JHWCLORTB == j || RANKINKType1.YDWCLORTB == j){
                         mdata[i][j] = Util.formatPercent(mdata[i][j]); 
                     }else{
                         mdata[i][j] = Util.formatCurrency(mdata[i][j]);
@@ -96,7 +108,7 @@ module companys_ranking {
             return mdata;
         }
 
-        private updateTable(): void {
+        private updateTable(rankingType: number): void {
             var name = this.mTableId + "_jqgrid_1234";
             
              var data = [
@@ -114,7 +126,7 @@ module companys_ranking {
                 ["国际工程公司"]];
             var tableAssist: JQTable.JQGridAssistant = null;
 
-            tableAssist = JQGridAssistantFactory.createTable(name)
+            tableAssist = JQGridAssistantFactory.createTable(name, rankingType);
             data = this.formatData(data);
             var parent = $("#" + this.mTableId);
             parent.empty();
