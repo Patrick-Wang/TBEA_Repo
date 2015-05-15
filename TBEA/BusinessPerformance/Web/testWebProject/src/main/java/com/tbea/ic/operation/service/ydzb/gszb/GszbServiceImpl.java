@@ -337,10 +337,10 @@ public class GszbServiceImpl implements GszbService {
 	
 	@Override
 	public List<String[]> getLrzeRank(Date date) {
-		CompanyBasedPipe pipe = new CompanyBasedPipe(GSZB.LRZE.getValue(), date, getConfiguratorFactory().getLrzbRankConfigurator());
+		CompanyBasedPipe pipe = new CompanyBasedPipe(GSZB.LRZE.getValue(), date, getConfiguratorFactory().getJhlrRankConfigurator());
 		List<Company> jydw = BMDepartmentDB.getJydw(companyManager);
 		for (Company comp : jydw){
-			pipe.add(comp, getConfiguratorFactory().getLrzbDataConfigurator());
+			pipe.add(comp, getConfiguratorFactory().getJhlrDataConfigurator());
 		}
 		return makeResult(pipe.getData());
 	}

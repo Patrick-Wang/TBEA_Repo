@@ -124,8 +124,6 @@ AbstractCompositeConfigurator{
 
 			// 下季度年度累计同比增幅
 			.add(tbzzFilter.add(24, 21, 23))
-
-
 			.add(tbzzFilter).add(wclFilter);
 	}
 

@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank;
+package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.jhlr;
 
 import java.util.List;
 
@@ -10,14 +10,14 @@ import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.AccPipeFilter;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.WclPipeFilter;
 
-public class LrzbDataConfigurator  implements IPipeConfigurator{
+public class JhlrDataConfigurator  implements IPipeConfigurator{
 
 	IAccumulator sjAcc;
 	IAccumulator yjhAcc;
 	IAccumulator njhAcc;
 
 
-	public LrzbDataConfigurator(IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc) {
+	public JhlrDataConfigurator(IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc) {
 		this.sjAcc = sjAcc;
 		this.yjhAcc = yjhAcc;
 		this.njhAcc = njhAcc;
