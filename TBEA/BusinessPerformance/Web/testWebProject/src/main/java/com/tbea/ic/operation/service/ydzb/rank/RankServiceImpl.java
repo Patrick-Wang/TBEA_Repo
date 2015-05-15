@@ -92,8 +92,8 @@ public class RankServiceImpl implements RankService {
 	}
 
 	
-	private List<Double[]> getLrRank(Date date, IPipeConfigurator dwPipeConfig, IPipeConfigurator dataConfig){
-		CompanyBasedPipe pipe = new CompanyBasedPipe(GSZB.LRZE.getValue(), date, dwPipeConfig);
+	private List<Double[]> getRank(GSZB zb, Date date, IPipeConfigurator dwPipeConfig, IPipeConfigurator dataConfig){
+		CompanyBasedPipe pipe = new CompanyBasedPipe(zb.getValue(), date, dwPipeConfig);
 		List<Company> jydw = BMDepartmentDB.getJydw(companyManager);
 		for (Company comp : jydw){
 			pipe.add(comp, dataConfig);
@@ -104,19 +104,19 @@ public class RankServiceImpl implements RankService {
 	
 	@Override
 	public List<String[]> getJhlrRank(Date date) {
-		List<Double[]> ret = getLrRank(date, getConfiguratorFactory().getJhlrRankConfigurator(), getConfiguratorFactory().getJhlrDataConfigurator());
+		List<Double[]> ret = getRank(GSZB.LRZE, date, getConfiguratorFactory().getJhlrRankConfigurator(), getConfiguratorFactory().getJhlrDataConfigurator());
 		return makeResult(ret);
 	}
 	
 	@Override
 	public List<String[]> getLjlrRank(Date date) {
-		List<Double[]> ret = getLrRank(date, getConfiguratorFactory().getLjlrRankConfigurator(), getConfiguratorFactory().getLjlrDataConfigurator());
+		List<Double[]> ret = getRank(GSZB.LRZE, date, getConfiguratorFactory().getLjlrRankConfigurator(), getConfiguratorFactory().getLjlrDataConfigurator());
 		return makeResult(ret);
 	}
 	
 	@Override
 	public List<String[]> getJxjlRank(Date date) {
-		List<Double[]> ret = getLrRank(date, getConfiguratorFactory().getJxjlRankConfigurator(), getConfiguratorFactory().getJxjlDataConfigurator());
+		List<Double[]> ret = getRank(GSZB.JYXJXJL, date, getConfiguratorFactory().getJxjlRankConfigurator(), getConfiguratorFactory().getJxjlDataConfigurator());
 		return makeResult(ret);
 	}
 
