@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
+import com.tbea.ic.operation.service.ydzb.rank.RankService;
 
 
 @Controller
@@ -29,7 +30,7 @@ public class YDZBRankingController {
 	private YDZBService service;
 
 	@Autowired
-	private GszbService gszbService;
+	private RankService rankService;
 	
 	@RequestMapping(value = "companys_ranking.do", method = RequestMethod.GET)
 	public ModelAndView getCompanys_Ranking(HttpServletRequest request,
@@ -52,7 +53,7 @@ public class YDZBRankingController {
 		String ranking_val = null;
 		if (rankingType == 1)
 		{
-			ranking_val = JSONArray.fromObject(gszbService.getLrzeRank(d)).toString().replace("null", "\"--\"");
+			ranking_val = JSONArray.fromObject(rankService.getLrzeRank(d)).toString().replace("null", "\"--\"");
 		}
 		return ranking_val;
 	}

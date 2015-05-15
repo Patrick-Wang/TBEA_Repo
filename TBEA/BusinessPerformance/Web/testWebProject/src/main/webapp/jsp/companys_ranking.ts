@@ -2,6 +2,8 @@
 /// <reference path="util.ts" />
 declare var echarts;
 
+enum RANKING{GSMC,NDJH, NDLJWC,JHWCL,YEARRANKING, YDJH, YDWC,YDWCL,MONTHRANKING}
+
 module companys_ranking {
 
     class JQGridAssistantFactory {
@@ -73,39 +75,47 @@ module companys_ranking {
 
         }
 
-        private formatData() {
-            var data = [];
+        private formatData(data: string[][]) {
             var row = [];
-            for (var j = 0; j < this.mData.length; ++j) {
-                row = [].concat(this.mData[j]);
-                if (null != row[1]) {
-                    if (row[1] == "true") {
-                        row[1] = "已提交";
+            var mdata = [];
+            for (var i = 0; i < this.mData.length; ++i) {
+                row = [].concat(this.mData[i]);
+                mdata[i] = data[i].concat(row);
+                for(var j = 1; j < mdata[i].length; j++)
+                {
+                    if (RANKING.YEARRANKING == j ||  RANKING.MONTHRANKING == j){
+                       mdata[i][j] = Util.formatInt(mdata[i][j]); 
                     }
-                    if (row[1] == "false") {
-                        row[1] = "尚未提交";
-                        row[2] = "--";
-                    }
-                    
-                    if (row[3] == ""){
-                        row[3] = "--";
-                    }
-                }
-                //mdata[j] = data[j].concat(row);
-                data.push(row);
-            }
-            return data;
+                    else if (RANKING.JHWCL == j || RANKING.YDWCL == j){
+                        mdata[i][j] = Util.formatPercent(mdata[i][j]); 
+                    }else{
+                        mdata[i][j] = Util.formatCurrency(mdata[i][j]);
+                    }   
+                }                 
+            }            
+            return mdata;
         }
 
         private updateTable(): void {
             var name = this.mTableId + "_jqgrid_1234";
-            var data = [];
+            
+             var data = [
+                ["沈变公司"],
+                ["衡变公司"],
+                ["新变厂",],
+                ["鲁缆公司"],
+                ["新缆厂"],
+                ["德缆公司"],
+                ["天池能源"],
+                ["能动公司"],
+                ["新能源公司"],
+                ["新特能源公司"],
+                ["进出口公司"],
+                ["国际工程公司"]];
             var tableAssist: JQTable.JQGridAssistant = null;
 
             tableAssist = JQGridAssistantFactory.createTable(name)
-            //data = this.formatData();
-
-
+            data = this.formatData(data);
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
