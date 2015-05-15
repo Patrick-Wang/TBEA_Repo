@@ -58,12 +58,13 @@ public class CompanyBasedPipe extends IndicatorBasedPipe {
 		List<Integer> tmpZbs = new ArrayList<Integer>();
 		tmpZbs.addAll(this.dependZbs);
 		tmpZbs.add(zbIds.get(0));
-		for (int i = 0; i < this.companies.size(); ++i) {
+		int sizeTmp = tmpZbs.size();
+		for (int i = 0, len = this.companies.size(); i < len; ++i) {
 			if (this.pipeConfigs.get(i) != null) {
 				IndicatorBasedPipe pipe = new IndicatorBasedPipe(tmpZbs,
 						this.realCompsList.get(i), date,
 						this.pipeConfigs.get(i));
-				this.data.add(pipe.getData().get(tmpZbs.size() - 1));
+				this.data.add(pipe.getData().get(sizeTmp - 1));
 			} else {
 				this.data.add(new Double[this.dwPipeConfig.getColumnCount()]);
 			}
