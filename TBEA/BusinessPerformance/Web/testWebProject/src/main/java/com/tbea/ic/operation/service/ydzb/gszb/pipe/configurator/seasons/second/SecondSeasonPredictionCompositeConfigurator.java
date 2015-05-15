@@ -19,7 +19,7 @@ AbstractCompositeConfigurator {
 
 	public SecondSeasonPredictionCompositeConfigurator(IAccumulator acc,
 			CompositeAccDataSource cads,
-			Map<CompanyType, CompanyType[]> computeMap) {
+			Map<CompanyType, List<Company>> computeMap) {
 		super(acc, cads, computeMap);
 		// TODO Auto-generated constructor stub
 	}

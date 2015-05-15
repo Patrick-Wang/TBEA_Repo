@@ -20,7 +20,7 @@ AbstractCompositeConfigurator {
 
 	public ZtzbCompositeConfigurator(IAccumulator acc,
 			CompositeAccDataSource cads,
-			Map<CompanyType, CompanyType[]> computeMap) {
+			Map<CompanyType, List<Company>> computeMap) {
 		super(acc, cads, computeMap);
 	}
 
