@@ -1,10 +1,12 @@
-package com.tbea.ic.operation.service.ydzb.gszb.acc;
+package com.tbea.ic.operation.service.ydzb.gszb.acc.composite;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
 
 public class CompositeAccumulator implements IAccumulator {
 

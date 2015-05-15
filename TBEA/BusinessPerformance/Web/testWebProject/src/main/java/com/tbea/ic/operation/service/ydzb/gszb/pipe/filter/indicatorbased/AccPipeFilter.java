@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter;
+package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -10,7 +10,9 @@ import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.IndicatorBasedPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.IPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.IPipeFilter;
 
 public class AccPipeFilter implements IPipeFilter {
 	protected List<Double> cacheValues;
@@ -135,7 +137,7 @@ public class AccPipeFilter implements IPipeFilter {
 		cacheValues = accumulator.compute(col, dateStart, dateEnd, zbs, companies);
 	}
 	
-	private void updateCacheValues(GszbPipe pipe) {
+	private void updateCacheValues(IPipe pipe) {
 		if (null == cacheValues) {
 			List<Integer> zbsTmp = new ArrayList<Integer>();
 			List<Integer> excludeList = new ArrayList<Integer>();
@@ -151,11 +153,11 @@ public class AccPipeFilter implements IPipeFilter {
 	}
 
 	@Override
-	public void filter(int row, GszbPipe pipe) {
-		int zbId = pipe.getZbId(row);
+	public void filter(int row, IPipe pipe) {
+		int zbId = pipe.getRowId(row);
 		if (includeZbs.contains(zbId)){
 			updateCacheValues(pipe);
-			updateZb(row, zbId, pipe.getZb(row));
+			updateZb(row, zbId, pipe.getData(row));
 		}
 	}
 

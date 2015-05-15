@@ -1,17 +1,44 @@
 package com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator;
 
+import java.util.Map;
+
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
+import com.tbea.ic.operation.service.ydzb.gszb.acc.composite.CompositeAccDataSource;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.rank.LrzbDataConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.rank.LrzbRankConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.seasons.first.FirstSeasonPredictionCompositeConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.seasons.first.FirstSeasonPredictionConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.seasons.second.SecondSeasonPredictionCompositeConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.seasons.second.SecondSeasonPredictionConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.seasons.third.JDZBMYCompositeConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.seasons.third.JDZBMYConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.srqy.SrqyConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.ydhb.YdhbConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.ztzb.ZtzbCompositeConfigurator;
 
 public class ConfiguratorFactory {
-	private IPipeConfigurator standardConfigurator;
-	private IPipeConfigurator srqyConfigurator;
-	private IPipeConfigurator firstSeasonPredictionConfigurator;
-	private IPipeConfigurator secondSeasonPredictionConfigurator;
-	private IPipeConfigurator jdzbmyConfigurator;
-	private IPipeConfigurator ydhbConfigurator;
+	IPipeConfigurator standardConfigurator;
+	IPipeConfigurator srqyConfigurator;
+	IPipeConfigurator firstSeasonPredictionConfigurator;
+	IPipeConfigurator secondSeasonPredictionConfigurator;
+	IPipeConfigurator jdzbmyConfigurator;
+	IPipeConfigurator ydhbConfigurator;
+	LrzbDataConfigurator lrzeDataConfigurator;
+	LrzbRankConfigurator lrzeRankConfigurator = new LrzbRankConfigurator();
+	/**
+	 * @return the lrzbConfigurator
+	 */
+	public IPipeConfigurator getLrzbDataConfigurator() {
+		return lrzeDataConfigurator;
+	}
+	
+	public IPipeConfigurator getLrzbRankConfigurator() {
+		return lrzeRankConfigurator;
+	}
 	
 	public ConfiguratorFactory(SbdNdjhZbDao sbdzbDao, AccumulatorFactory accFac, CompanyManager companyManager){
 		standardConfigurator = new StandardConfigurator(sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
@@ -52,12 +79,12 @@ public class ConfiguratorFactory {
 		return jdzbmyConfigurator;
 	}
 	
-	public IPipeConfigurator getZtzbCompositeConfigurator(IAccumulator acc) {
-		return new ZtzbCompositeConfigurator(acc);
+	public IPipeConfigurator getZtzbCompositeConfigurator(IAccumulator acc, CompositeAccDataSource cads, Map<CompanyType, CompanyType[]> computeMap) {
+		return new ZtzbCompositeConfigurator(acc, cads, computeMap);
 	}
 	
-	public IPipeConfigurator getJdzbmyCompositeConfigurator(IAccumulator acc) {
-		return new JDZBMYCompositeConfigurator(acc);
+	public IPipeConfigurator getJdzbmyCompositeConfigurator(IAccumulator acc, CompositeAccDataSource cads, Map<CompanyType, CompanyType[]> computeMap) {
+		return new JDZBMYCompositeConfigurator(acc, cads, computeMap);
 	}
 	
 	/**
@@ -67,12 +94,12 @@ public class ConfiguratorFactory {
 		return ydhbConfigurator;
 	}
 	
-	public IPipeConfigurator getSecondSeasonPredictionCompositeConfigurator(IAccumulator acc) {
-		return new SecondSeasonPredictionCompositeConfigurator(acc);
+	public IPipeConfigurator getSecondSeasonPredictionCompositeConfigurator(IAccumulator acc, CompositeAccDataSource cads, Map<CompanyType, CompanyType[]> computeMap) {
+		return new SecondSeasonPredictionCompositeConfigurator(acc, cads, computeMap);
 	}
 	
-	public IPipeConfigurator getFirstSeasonPredictionCompositeConfigurator(IAccumulator acc) {
-		return new FirstSeasonPredictionCompositeConfigurator(acc);
+	public IPipeConfigurator getFirstSeasonPredictionCompositeConfigurator(IAccumulator acc, CompositeAccDataSource cads, Map<CompanyType, CompanyType[]> computeMap) {
+		return new FirstSeasonPredictionCompositeConfigurator(acc, cads, computeMap);
 	}
 	
 }

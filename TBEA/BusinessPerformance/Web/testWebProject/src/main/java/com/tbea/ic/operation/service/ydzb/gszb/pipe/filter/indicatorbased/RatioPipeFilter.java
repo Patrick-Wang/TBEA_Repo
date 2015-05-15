@@ -1,11 +1,13 @@
-package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter;
+package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.IndicatorBasedPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.IPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.IPipeFilter;
 
 public class RatioPipeFilter implements IPipeFilter {
 
@@ -20,7 +22,7 @@ public class RatioPipeFilter implements IPipeFilter {
 		return this;
 	}
 
-	private Double[] getRow(GszbPipe pipe, int row, int zbId) {
+	private Double[] getRow(IPipe pipe, int row, int zbId) {
 		Double[] dret = null;
 		if (GSZB.LRZE.getValue() == zbId) {
 			lrzeRow = row;
@@ -33,26 +35,26 @@ public class RatioPipeFilter implements IPipeFilter {
 		} else if (GSZB.RJLR.getValue() == zbId || GSZB.RJSR.getValue() == zbId
 				|| GSZB.SXFYL.getValue() == zbId
 				|| GSZB.XSLRL.getValue() == zbId) {
-			dret = pipe.getZb(row);
+			dret = pipe.getData(row);
 		}
 
 		return dret;
 	}
 
 	@Override
-	public void filter(int row, GszbPipe pipe) {
-		int zbId = pipe.getZbId(row);
+	public void filter(int row, IPipe pipe) {
+		int zbId = pipe.getRowId(row);
 		Double[] zbRow = getRow(pipe, row, zbId);
 		if (null != zbRow) {
 			updateZb(pipe, zbId, zbRow);
 		}
 	}
 
-	private void updateZb(GszbPipe pipe, int zbId, Double[] zbRow) {
+	private void updateZb(IPipe pipe, int zbId, Double[] zbRow) {
 		if (GSZB.RJLR.getValue() == zbId) {
 			if (rsRow != null && lrzeRow != null) {
-				Double[] rs = pipe.getZb(rsRow);
-				Double[] lrze = pipe.getZb(lrzeRow);
+				Double[] rs = pipe.getData(rsRow);
+				Double[] lrze = pipe.getData(lrzeRow);
 				for (int i = 0; i < zbRow.length; ++i) {
 					if (null != lrze[i] && null != rs[i]
 							&& !excludeCols.contains(i)
@@ -64,8 +66,8 @@ public class RatioPipeFilter implements IPipeFilter {
 			}
 		} else if (GSZB.RJSR.getValue() == zbId) {
 			if (rsRow != null && xssrRow != null) {
-				Double[] rs = pipe.getZb(rsRow);
-				Double[] xssr = pipe.getZb(xssrRow);
+				Double[] rs = pipe.getData(rsRow);
+				Double[] xssr = pipe.getData(xssrRow);
 				for (int i = 0; i < zbRow.length; ++i) {
 					if (rs[i] != null && xssr[i] != null
 							&& !excludeCols.contains(i)
@@ -78,8 +80,8 @@ public class RatioPipeFilter implements IPipeFilter {
 			}
 		} else if (GSZB.SXFYL.getValue() == zbId) {
 			if (xssrRow != null && sxfyRow != null) {
-				Double[] xssr = pipe.getZb(xssrRow);
-				Double[] sxfy = pipe.getZb(sxfyRow);
+				Double[] xssr = pipe.getData(xssrRow);
+				Double[] sxfy = pipe.getData(sxfyRow);
 				for (int i = 0; i < zbRow.length; ++i) {
 					if (sxfy[i] != null && xssr[i] != null
 							&& !excludeCols.contains(i)
@@ -92,8 +94,8 @@ public class RatioPipeFilter implements IPipeFilter {
 			}
 		} else if (GSZB.XSLRL.getValue() == zbId) {
 			if (xssrRow != null && lrzeRow != null) {
-				Double[] xssr = pipe.getZb(xssrRow);
-				Double[] lrze = pipe.getZb(lrzeRow);
+				Double[] xssr = pipe.getData(xssrRow);
+				Double[] lrze = pipe.getData(lrzeRow);
 				for (int i = 0; i < zbRow.length; ++i) {
 					if (lrze[i] != null && xssr[i] != null
 							&& !excludeCols.contains(i)

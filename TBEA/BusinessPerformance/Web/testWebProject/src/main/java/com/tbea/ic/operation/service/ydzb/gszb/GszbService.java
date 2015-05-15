@@ -29,5 +29,6 @@ public interface GszbService {
 	List<String[]> getGdwJDZBMY(GSZB gszb, Date d);
 
 	List<String[]> getGdwzb(Date d, List<Company> comps);
-	List<Company> getCompanies(Account account);	
+	List<Company> getCompanies(Account account);
+	List<String[]> getLrzeRank(Date date);	
 }

@@ -3,6 +3,7 @@ package com.tbea.ic.operation.service.ydzb.gszb;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
@@ -33,13 +34,14 @@ import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.AccumulatorFactory;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.CompositeAccDataSource;
-import com.tbea.ic.operation.service.ydzb.gszb.acc.CompositeAccumulator;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.acc.composite.CompositeAccDataSource;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.CompanyBasedPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.IndicatorBasedPipe;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.ConfiguratorFactory;
 import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.IPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.SrqyConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.srqy.SrqyConfigurator;
+
 
 @Service
 @Transactional("transactionManager")
@@ -252,88 +254,107 @@ public class GszbServiceImpl implements GszbService {
 
 	@Override
 	public List<String[]> getGsztzb(Date date) {
-		GszbPipe pipe = new GszbPipe(gsztzbs, getMainlyJydw(), date,
+		IndicatorBasedPipe pipe = new IndicatorBasedPipe(gsztzbs, getMainlyJydw(), date,
 				getConfiguratorFactory().getStandardConfigurator());
-		return makeZbResult(gsztzbs, pipe.getGszb());
+		return makeZbResult(gsztzbs, pipe.getData());
 	}
 
 	@Override
 	public List<String[]> getGcyzb(Date date) {
 		Organization org = companyManager.getBMDBOrganization();
-		IPipeConfigurator standardConfig = getConfiguratorFactory()
+		IPipeConfigurator option = getConfiguratorFactory()
 				.getStandardConfigurator();
-		List<Company> gfhj = new ArrayList<Company>();
-		gfhj.add(org.getCompany(CompanyType.SBDCYJT));
-		gfhj.add(org.getCompany(CompanyType.XNYSYB));
-		gfhj.add(org.getCompany(CompanyType.NYSYB));
-		gfhj.add(org.getCompany(CompanyType.JCKGS_SYB));
-		gfhj.add(org.getCompany(CompanyType.GJGCGS_SYB));
-
-		List<List<Double[]>> values = new ArrayList<List<Double[]>>();
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		IPipeConfigurator compositeConfig = getConfiguratorFactory()
-				.getZtzbCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource));
-		GszbPipe pipe = null;
-		for (Company comp : gfhj) {
-			pipe = new GszbPipe(topfivezbs, comp.getSubCompanys(), date,
-					standardConfig);
-			List<Double[]> ret = pipe.getGszb();
-			values.add(ret);
-			dataSource.add(comp, topfivezbs, ret);
+		List<Double[]> values = new ArrayList<Double[]>();
+		for (Integer zb : topfivezbs){
+			CompositeAccDataSource dataSource = new CompositeAccDataSource();
+			CompanyBasedPipe pipe = new CompanyBasedPipe(zb, date, getConfiguratorFactory()
+					.getZtzbCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource), dataSource, gcyTop5ComputeMap));
+			pipe.add(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanys())
+				.add(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.NYSYB), option, org.getCompany(CompanyType.NYSYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.JCKGS_SYB), option, org.getCompany(CompanyType.JCKGS_SYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.GJGCGS_SYB), option, org.getCompany(CompanyType.GJGCGS_SYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.GFGS), null)
+				.add(org.getCompany(CompanyType.ZHGS_SYB), option, org.getCompany(CompanyType.ZHGS_SYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.GJB), null);
+			values.addAll(pipe.getData());
 		}
 
-		pipe = new GszbPipe(topfivezbs, gfhj, date, compositeConfig);
-		List<Double[]> gfhjZbs = pipe.getGszb();
-		values.add(gfhjZbs);
-
-		pipe = new GszbPipe(topfivezbs, org.getCompany(CompanyType.ZHGS_SYB)
-				.getSubCompanys(), date, standardConfig);
-		List<Double[]> zhgsZbs = pipe.getGszb();
-		values.add(zhgsZbs);
-
-		dataSource.add(org.getCompany(CompanyType.GFGS), topfivezbs, gfhjZbs);
-		dataSource.add(org.getCompany(CompanyType.ZHGS_SYB), topfivezbs, zhgsZbs);
-
-		List<Company> jthj = new ArrayList<Company>();
-		jthj.add(org.getCompany(CompanyType.GFGS));
-		jthj.add(org.getCompany(CompanyType.ZHGS_SYB));
-
-		pipe = new GszbPipe(topfivezbs, jthj, date, compositeConfig);
-		List<Double[]> jthjZbs = pipe.getGszb();
-		values.add(jthjZbs);
-
-		return makeGroupResult(values);
+		return makeResult(values);
 	}
 
-	private List<String[]> makeGroupResult(List<List<Double[]>> values) {
-		List<Double[]> zbs;
+	private List<String[]> makeResult(List<Double[]> values) {
 		List<String[]> result = new ArrayList<String[]>();
-		int size = values.size() * values.get(0).size();
-		for (int i = 0; i < size; ++i) {
-			result.add(new String[values.get(0).get(0).length]);
-		}
 
-		for (int k = 0, len = values.size(); k < len; ++k) {
-			zbs = values.get(k);
-			for (int i = 0; i < zbs.size(); ++i) {
-				for (int j = 0; j < zbs.get(i).length; ++j) {
-					if (zbs.get(i)[j] != null){
-						result.get(i * len + k)[j] = zbs.get(i)[j] + "";
-					}
+		for (int i = 0; i < values.size(); ++i) {
+			result.add(new String[values.get(i).length]);
+			for (int j = 0; j < values.get(i).length; ++j) {
+				if (values.get(i)[j] != null){
+					result.get(i)[j] = values.get(i)[j] + "";
 				}
 			}
 		}
 		return result;
 	}
-	
-	@Override
-	public List<String[]> getSrqy(Date date) {
-		GszbPipe pipe = new GszbPipe(srqyzbs, getMainlyJydw(), date,
-				getConfiguratorFactory().getSrqyConfigurator());
-		return makeZbResult(srqyzbs, pipe.getGszb());
-	}
 
 	
+	@Override
+	public List<String[]> getLrzeRank(Date date) {
+		CompanyBasedPipe pipe = new CompanyBasedPipe(GSZB.LRZE.getValue(), date, getConfiguratorFactory().getLrzbRankConfigurator());
+		for (Company comp : getMainlyJydw()){
+			pipe.add(comp, getConfiguratorFactory().getLrzbDataConfigurator());
+		}
+		return makeResult(pipe.getData());
+	}
+	
+	
+	@Override
+	public List<String[]> getSrqy(Date date) {	
+		IndicatorBasedPipe pipe = new IndicatorBasedPipe(srqyzbs, getMainlyJydw(), date,
+				getConfiguratorFactory().getSrqyConfigurator());
+		return makeZbResult(srqyzbs, pipe.getData());
+	}
+
+	private static Map<CompanyType, CompanyType[]> gdwTop5ComputeMap = new HashMap<CompanyType, CompanyType[]>();
+	static {
+		gdwTop5ComputeMap.put(CompanyType.SBDCYJT, new CompanyType[]{
+				CompanyType.SBGS,
+				CompanyType.HBGS,
+				CompanyType.XBC,
+				CompanyType.LLGS,
+				CompanyType.XLC,
+				CompanyType.DLGS});
+		gdwTop5ComputeMap.put(CompanyType.XNYSYB, new CompanyType[]{
+				CompanyType.XTNYGS,
+				CompanyType.XNYGS});
+		gdwTop5ComputeMap.put(CompanyType.NYSYB, new CompanyType[]{
+				CompanyType.TCNY,
+				CompanyType.NDGS});
+		gdwTop5ComputeMap.put(CompanyType.GJGCGS_SYB, new CompanyType[]{
+				CompanyType.JCKGS_JYDW,
+				CompanyType.GJGCGS_GFGS});
+		gdwTop5ComputeMap.put(CompanyType.GFGS, new CompanyType[]{
+				CompanyType.SBDCYJT,
+				CompanyType.XNYSYB,
+				CompanyType.NYSYB,
+				CompanyType.GJGCGS_SYB});
+		gdwTop5ComputeMap.put(CompanyType.GJB, new CompanyType[]{
+				CompanyType.ZHGS,
+				CompanyType.GFGS});
+	}
+	
+	private static Map<CompanyType, CompanyType[]> gcyTop5ComputeMap = new HashMap<CompanyType, CompanyType[]>();
+	static {
+		gcyTop5ComputeMap.put(CompanyType.GFGS, new CompanyType[]{
+				CompanyType.SBDCYJT,
+				CompanyType.XNYSYB,
+				CompanyType.NYSYB,
+				CompanyType.JCKGS_SYB,
+				CompanyType.GJGCGS_SYB});
+		gcyTop5ComputeMap.put(CompanyType.GJB, new CompanyType[]{
+				CompanyType.GFGS,
+				CompanyType.ZHGS_SYB});
+	}
 	private List<String[]> getCompanyTop5zb(
 			GSZB gsTop5zb, 
 			Date date, 
@@ -342,172 +363,28 @@ public class GszbServiceImpl implements GszbService {
 			CompositeAccDataSource dataSource){
 		
 		Organization org = companyManager.getBMDBOrganization();
-		GszbPipe pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.SBGS), date, standardConfig);
-		List<Double[]> sbgsZbs = pipe.getGszb();
+		CompanyBasedPipe pipe = new CompanyBasedPipe(gsTop5zb.getValue(), date, compositeConfig);
+		pipe.add(org.getCompany(CompanyType.SBGS), standardConfig)
+			.add(org.getCompany(CompanyType.HBGS), standardConfig)
+			.add(org.getCompany(CompanyType.XBC), standardConfig)
+			.add(org.getCompany(CompanyType.LLGS), standardConfig)
+			.add(org.getCompany(CompanyType.XLC), standardConfig)
+			.add(org.getCompany(CompanyType.DLGS), standardConfig)
+			.add(org.getCompany(CompanyType.SBDCYJT), null)
+			.add(org.getCompany(CompanyType.XTNYGS), standardConfig)
+			.add(org.getCompany(CompanyType.XNYGS), standardConfig)
+			.add(org.getCompany(CompanyType.XNYSYB), null)
+			.add(org.getCompany(CompanyType.TCNY), standardConfig)
+			.add(org.getCompany(CompanyType.NDGS), standardConfig)
+			.add(org.getCompany(CompanyType.NYSYB), null)
+			.add(org.getCompany(CompanyType.JCKGS_JYDW), standardConfig)
+			.add(org.getCompany(CompanyType.GJGCGS_GFGS), standardConfig)
+			.add(org.getCompany(CompanyType.GJGCGS_SYB), null)
+			.add(org.getCompany(CompanyType.GFGS), null)
+			.add(org.getCompany(CompanyType.ZHGS), standardConfig)
+			.add(org.getCompany(CompanyType.GJB), null);
 
-		pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.HBGS), date, standardConfig);
-		List<Double[]> hbgsZbs = pipe.getGszb();
-
-		pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.XBC), date, standardConfig);
-		List<Double[]> xbgsZbs = pipe.getGszb();
-
-		pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.LLGS), date, standardConfig);
-		List<Double[]> llgsZbs = pipe.getGszb();
-
-		pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.XLC), date, standardConfig);
-		List<Double[]> xlcZbs = pipe.getGszb();
-
-		pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.DLGS), date, standardConfig);
-		List<Double[]> dlZbs = pipe.getGszb();
-
-		pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.XTNYGS), date, standardConfig);
-		List<Double[]> xtnyZbs = pipe.getGszb();
-
-		pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.XNYGS), date, standardConfig);
-		List<Double[]> xnyZbs = pipe.getGszb();
-
-		pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.TCNY), date, standardConfig);
-		List<Double[]> tcnyZbs = pipe.getGszb();
-
-		pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.NDGS), date, standardConfig);
-		List<Double[]> ndgsZbs = pipe.getGszb();
-
-		pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.JCKGS_JYDW), date, standardConfig);
-		List<Double[]> jckZbs = pipe.getGszb();
-
-		pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.GJGCGS_GFGS), date, standardConfig);
-		List<Double[]> gjgcZbs = pipe.getGszb();
-
-		pipe = new GszbPipe(gsTop5zb.getValue(),
-				org.getCompany(CompanyType.ZHGS), date, standardConfig);
-		List<Double[]> zhgsZbs = pipe.getGszb();
-
-		dataSource.add(org.getCompany(CompanyType.SBGS), gsTop5zb.getValue(),
-				sbgsZbs.get(0));
-		dataSource.add(org.getCompany(CompanyType.HBGS), gsTop5zb.getValue(),
-				hbgsZbs.get(0));
-		dataSource.add(org.getCompany(CompanyType.XBC), gsTop5zb.getValue(),
-				xbgsZbs.get(0));
-		dataSource.add(org.getCompany(CompanyType.LLGS), gsTop5zb.getValue(),
-				llgsZbs.get(0));
-		dataSource.add(org.getCompany(CompanyType.XLC), gsTop5zb.getValue(),
-				xlcZbs.get(0));
-		dataSource.add(org.getCompany(CompanyType.DLGS), gsTop5zb.getValue(),
-				dlZbs.get(0));
-
-		dataSource.add(org.getCompany(CompanyType.XTNYGS), gsTop5zb.getValue(),
-				xtnyZbs.get(0));
-		dataSource.add(org.getCompany(CompanyType.XNYGS), gsTop5zb.getValue(),
-				xnyZbs.get(0));
-		dataSource.add(org.getCompany(CompanyType.TCNY), gsTop5zb.getValue(),
-				tcnyZbs.get(0));
-		dataSource.add(org.getCompany(CompanyType.NDGS), gsTop5zb.getValue(),
-				ndgsZbs.get(0));
-		dataSource.add(org.getCompany(CompanyType.JCKGS_JYDW), gsTop5zb.getValue(),
-				jckZbs.get(0));
-		dataSource.add(org.getCompany(CompanyType.GJGCGS_GFGS),
-				gsTop5zb.getValue(), gjgcZbs.get(0));
-		dataSource.add(org.getCompany(CompanyType.ZHGS), gsTop5zb.getValue(),
-				zhgsZbs.get(0));
-
-		// 输变电指标
-		List<Company> sbdgs = new ArrayList<Company>();
-		sbdgs.add(org.getCompany(CompanyType.SBGS));
-		sbdgs.add(org.getCompany(CompanyType.HBGS));
-		sbdgs.add(org.getCompany(CompanyType.XBC));
-		sbdgs.add(org.getCompany(CompanyType.LLGS));
-		sbdgs.add(org.getCompany(CompanyType.XLC));
-		sbdgs.add(org.getCompany(CompanyType.DLGS));
-		pipe = new GszbPipe(gsTop5zb.getValue(), sbdgs, date, compositeConfig);
-		List<Double[]> sbdhjZbs = pipe.getGszb();
-		dataSource.add(org.getCompany(CompanyType.SBDCYJT), gsTop5zb.getValue(),
-				sbdhjZbs.get(0));
-
-		// 新能源指标
-		List<Company> xnygs = new ArrayList<Company>();
-		xnygs.add(org.getCompany(CompanyType.XTNYGS));
-		xnygs.add(org.getCompany(CompanyType.XNYGS));
-		pipe = new GszbPipe(gsTop5zb.getValue(), xnygs, date, compositeConfig);
-		List<Double[]> xnyhjZbs = pipe.getGszb();
-		dataSource.add(org.getCompany(CompanyType.XNYSYB), gsTop5zb.getValue(),
-				xnyhjZbs.get(0));
-
-		// 能源指标
-		List<Company> nygs = new ArrayList<Company>();
-		nygs.add(org.getCompany(CompanyType.TCNY));
-		nygs.add(org.getCompany(CompanyType.NDGS));
-		pipe = new GszbPipe(gsTop5zb.getValue(), nygs, date, compositeConfig);
-		List<Double[]> nyhjZbs = pipe.getGszb();
-		dataSource.add(org.getCompany(CompanyType.NYSYB), gsTop5zb.getValue(),
-				nyhjZbs.get(0));
-
-		// 工程公司指标
-		List<Company> gcgs = new ArrayList<Company>();
-		gcgs.add(org.getCompany(CompanyType.JCKGS_JYDW));
-		gcgs.add(org.getCompany(CompanyType.GJGCGS_GFGS));
-		pipe = new GszbPipe(gsTop5zb.getValue(), gcgs, date, compositeConfig);
-		List<Double[]> gcgshjZbs = pipe.getGszb();
-		dataSource.add(org.getCompany(CompanyType.GJGCGS_SYB), gsTop5zb.getValue(),
-				gcgshjZbs.get(0));
-
-		// 股份合计指标
-		List<Company> gfgs = new ArrayList<Company>();
-		gfgs.add(org.getCompany(CompanyType.SBDCYJT));
-		gfgs.add(org.getCompany(CompanyType.XNYSYB));
-		gfgs.add(org.getCompany(CompanyType.NYSYB));
-		gfgs.add(org.getCompany(CompanyType.GJGCGS_SYB));
-		pipe = new GszbPipe(gsTop5zb.getValue(), gfgs, date, compositeConfig);
-		List<Double[]> gfgshjZbs = pipe.getGszb();
-		dataSource.add(org.getCompany(CompanyType.GFGS), gsTop5zb.getValue(),
-				gfgshjZbs.get(0));
-
-		// 集团合计指标
-		List<Company> jtgs = new ArrayList<Company>();
-		jtgs.add(org.getCompany(CompanyType.GFGS));
-		jtgs.add(org.getCompany(CompanyType.ZHGS));
-		pipe = new GszbPipe(gsTop5zb.getValue(), jtgs, date, compositeConfig);
-		List<Double[]> jtgshjZbs = pipe.getGszb();
-
-		List<String[]> result = new ArrayList<String[]>();
-		for (int i = 0; i < 40; ++i) {
-			result.add(new String[compositeConfig.getColumnCount()]);
-		}
-
-		List<List<Double[]>> values = new ArrayList<List<Double[]>>();
-		values.add(sbgsZbs);// 0);
-		values.add(hbgsZbs);// 1);
-		values.add(xbgsZbs);// 2);
-		values.add(llgsZbs);// 3);
-		values.add(xlcZbs);// 4);
-		values.add(dlZbs);// 5);
-		values.add(sbdhjZbs);// 6);
-		values.add(xtnyZbs);// 7);
-
-		values.add(xnyZbs);// 8);
-		values.add(xnyhjZbs);// 9);
-		values.add(tcnyZbs);// 10);
-		values.add(ndgsZbs);// 11);
-		values.add(nyhjZbs);// 12);
-		values.add(jckZbs);// 13);
-		values.add(gjgcZbs);// 14);
-		values.add(gcgshjZbs);// 15);
-
-		values.add(gfgshjZbs);// 16);
-		values.add(zhgsZbs);// 17);
-		values.add(jtgshjZbs);// 18);
-		return makeGroupResult(values);
+		return makeResult(pipe.getData());
 		
 	}
 	
@@ -520,7 +397,7 @@ public class GszbServiceImpl implements GszbService {
 				gsTop5zb, 
 				date, 
 				this.getConfiguratorFactory().getStandardConfigurator(),
-				this.getConfiguratorFactory().getZtzbCompositeConfigurator(acc), 
+				this.getConfiguratorFactory().getZtzbCompositeConfigurator(acc, dataSource, gdwTop5ComputeMap), 
 				dataSource);
 	}
 
@@ -541,69 +418,40 @@ public class GszbServiceImpl implements GszbService {
 
 	@Override
 	public List<String[]> getGcyJDZBMY(Date date) {
+		
 		Organization org = companyManager.getBMDBOrganization();
-		IPipeConfigurator standardConfig = getConfiguratorFactory()
+		IPipeConfigurator option = getConfiguratorFactory()
 				.getJDZBMYConfigurator();
-		List<Company> gfhj = new ArrayList<Company>();
-		gfhj.add(org.getCompany(CompanyType.SBDCYJT));
-		gfhj.add(org.getCompany(CompanyType.XNYSYB));
-		gfhj.add(org.getCompany(CompanyType.NYSYB));
-		gfhj.add(org.getCompany(CompanyType.JCKGS_SYB));
-		gfhj.add(org.getCompany(CompanyType.GJGCGS_SYB));
-
-		List<List<Double[]>> values = new ArrayList<List<Double[]>>();
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-
-		IPipeConfigurator compositeConfig = getConfiguratorFactory()
-				.getJdzbmyCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource));
-		GszbPipe pipe = null;
-		for (Company comp : gfhj) {
-			pipe = new GszbPipe(topfivezbs, comp.getSubCompanys(), date,
-					standardConfig);
-			List<Double[]> ret = pipe.getGszb();
-			values.add(ret);
-			dataSource.add(comp, topfivezbs, ret);
+		List<Double[]> values = new ArrayList<Double[]>();
+		for (Integer zb : topfivezbs){
+			CompositeAccDataSource dataSource = new CompositeAccDataSource();
+			CompanyBasedPipe pipe = new CompanyBasedPipe(zb, date, getConfiguratorFactory()
+					.getJdzbmyCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource), dataSource, gcyTop5ComputeMap));
+			pipe.add(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanys())
+				.add(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.NYSYB), option, org.getCompany(CompanyType.NYSYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.JCKGS_SYB), option, org.getCompany(CompanyType.JCKGS_SYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.GJGCGS_SYB), option, org.getCompany(CompanyType.GJGCGS_SYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.GFGS), null)
+				.add(org.getCompany(CompanyType.ZHGS_SYB), option, org.getCompany(CompanyType.ZHGS_SYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.GJB), null);
+			values.addAll(pipe.getData());
 		}
 
-		pipe = new GszbPipe(topfivezbs, gfhj, date, compositeConfig);
-		List<Double[]> gfhjZbs = pipe.getGszb();
-		values.add(gfhjZbs);
-
-		pipe = new GszbPipe(topfivezbs, org.getCompany(CompanyType.ZHGS_SYB)
-				.getSubCompanys(), date, standardConfig);
-		List<Double[]> zhgsZbs = pipe.getGszb();
-		values.add(zhgsZbs);
-
-		dataSource.add(org.getCompany(CompanyType.GFGS), topfivezbs, gfhjZbs);
-		dataSource.add(org.getCompany(CompanyType.ZHGS_SYB), topfivezbs, zhgsZbs);
-
-		List<Company> jthj = new ArrayList<Company>();
-		jthj.add(org.getCompany(CompanyType.GFGS));
-		jthj.add(org.getCompany(CompanyType.ZHGS_SYB));
-
-		pipe = new GszbPipe(topfivezbs, jthj, date, compositeConfig);
-		List<Double[]> jthjZbs = pipe.getGszb();
-		values.add(jthjZbs);
-
-		List<Double[]> ret = new ArrayList<Double[]>();
 		Double[] tempValues = null;
 		int length = 0;
-		List<List<Double[]>> result = new ArrayList<List<Double[]>>();
+		List<Double[]> result = new ArrayList<Double[]>();
 
-		for (List<Double[]> JDZBMYList : values) {
-			for (Double[] JDZBMY : JDZBMYList) {
-				length = JDZBMY.length - 1;
-				tempValues = new Double[length];
-				for (int i = 0; i < length; i++) {
-					tempValues[i] = JDZBMY[i];
-				}
-				ret.add(tempValues);
+		for (Double[] JDZBMY : values) {
+			length = JDZBMY.length - 1;
+			tempValues = new Double[length];
+			for (int i = 0; i < length; i++) {
+				tempValues[i] = JDZBMY[i];
 			}
-			result.add(ret);
-			ret = new ArrayList<Double[]>();
+			result.add(tempValues);
 		}
 
-		return makeGroupResult(result);
+		return makeResult(result);
 	}
 
 	@Override
@@ -618,105 +466,54 @@ public class GszbServiceImpl implements GszbService {
 		//} else {
 			configurator = getConfiguratorFactory().getStandardConfigurator();
 		//}
-		GszbPipe pipe = new GszbPipe(zbs, comps, d, configurator);
-		return makeZbResult(zbs, pipe.getGszb());
+		IndicatorBasedPipe pipe = new IndicatorBasedPipe(zbs, comps, d, configurator);
+		return makeZbResult(zbs, pipe.getData());
 	}
 
 	@Override
-	public List<String[]> getGcySecondSeasonPredictionZBs(Date date) {
+	public List<String[]> getGcySecondSeasonPredictionZBs(Date date) {	
 		Organization org = companyManager.getBMDBOrganization();
-		IPipeConfigurator standardConfig = getConfiguratorFactory()
+		IPipeConfigurator option = getConfiguratorFactory()
 				.getSecondSeasonPredictionConfigurator();
-		List<Company> gfhj = new ArrayList<Company>();
-		gfhj.add(org.getCompany(CompanyType.SBDCYJT));
-		gfhj.add(org.getCompany(CompanyType.XNYSYB));
-		gfhj.add(org.getCompany(CompanyType.NYSYB));
-		gfhj.add(org.getCompany(CompanyType.JCKGS_SYB));
-		gfhj.add(org.getCompany(CompanyType.GJGCGS_SYB));
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		List<List<Double[]>> values = new ArrayList<List<Double[]>>();
-
-		IPipeConfigurator compositeConfig = getConfiguratorFactory()
-				.getSecondSeasonPredictionCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource));
-		GszbPipe pipe = null;
-		for (Company comp : gfhj) {
-			pipe = new GszbPipe(topfivezbs, comp.getSubCompanys(), date,
-					standardConfig);
-			List<Double[]> ret = pipe.getGszb();
-			values.add(ret);
-			dataSource.add(comp, topfivezbs, ret);
+		List<Double[]> values = new ArrayList<Double[]>();
+		for (Integer zb : topfivezbs){
+			CompositeAccDataSource dataSource = new CompositeAccDataSource();
+			CompanyBasedPipe pipe = new CompanyBasedPipe(zb, date, getConfiguratorFactory()
+					.getSecondSeasonPredictionCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource), dataSource, gcyTop5ComputeMap));
+			pipe.add(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanys())
+				.add(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.NYSYB), option, org.getCompany(CompanyType.NYSYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.JCKGS_SYB), option, org.getCompany(CompanyType.JCKGS_SYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.GJGCGS_SYB), option, org.getCompany(CompanyType.GJGCGS_SYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.GFGS), null)
+				.add(org.getCompany(CompanyType.ZHGS_SYB), option, org.getCompany(CompanyType.ZHGS_SYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.GJB), null);
+			values.addAll(pipe.getData());
 		}
-
-		pipe = new GszbPipe(topfivezbs, gfhj, date, compositeConfig);
-		List<Double[]> gfhjZbs = pipe.getGszb();
-		values.add(gfhjZbs);
-
-		pipe = new GszbPipe(topfivezbs, org.getCompany(CompanyType.ZHGS_SYB)
-				.getSubCompanys(), date, standardConfig);
-		List<Double[]> zhgsZbs = pipe.getGszb();
-		values.add(zhgsZbs);
-
-		dataSource.add(org.getCompany(CompanyType.GFGS), topfivezbs, gfhjZbs);
-		dataSource.add(org.getCompany(CompanyType.ZHGS_SYB), topfivezbs, zhgsZbs);
-
-		List<Company> jthj = new ArrayList<Company>();
-		jthj.add(org.getCompany(CompanyType.GFGS));
-		jthj.add(org.getCompany(CompanyType.ZHGS_SYB));
-
-		pipe = new GszbPipe(topfivezbs, jthj, date, compositeConfig);
-		List<Double[]> jthjZbs = pipe.getGszb();
-		values.add(jthjZbs);
-
-		return makeGroupResult(values);
+		return makeResult(values);
 	}
 
 	@Override
 	public List<String[]> getGcyFirstSeasonPredictionZBs(Date date) {
 		Organization org = companyManager.getBMDBOrganization();
-		IPipeConfigurator standardConfig = getConfiguratorFactory()
+		IPipeConfigurator option = getConfiguratorFactory()
 				.getFirstSeasonPredictionConfigurator();
-		List<Company> gfhj = new ArrayList<Company>();
-		gfhj.add(org.getCompany(CompanyType.SBDCYJT));
-		gfhj.add(org.getCompany(CompanyType.XNYSYB));
-		gfhj.add(org.getCompany(CompanyType.NYSYB));
-		gfhj.add(org.getCompany(CompanyType.JCKGS_SYB));
-		gfhj.add(org.getCompany(CompanyType.GJGCGS_SYB));
-
-		List<List<Double[]>> values = new ArrayList<List<Double[]>>();
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-
-		IPipeConfigurator compositeConfig = getConfiguratorFactory()
-				.getFirstSeasonPredictionCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource));
-		GszbPipe pipe = null;
-		for (Company comp : gfhj) {
-			pipe = new GszbPipe(topfivezbs, comp.getSubCompanys(), date,
-					standardConfig);
-			List<Double[]> ret = pipe.getGszb();
-			values.add(ret);
-			dataSource.add(comp, topfivezbs, ret);
+		List<Double[]> values = new ArrayList<Double[]>();
+		for (Integer zb : topfivezbs){
+			CompositeAccDataSource dataSource = new CompositeAccDataSource();
+			CompanyBasedPipe pipe = new CompanyBasedPipe(zb, date, getConfiguratorFactory()
+					.getFirstSeasonPredictionCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource), dataSource, gcyTop5ComputeMap));
+			pipe.add(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanys())
+				.add(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.NYSYB), option, org.getCompany(CompanyType.NYSYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.JCKGS_SYB), option, org.getCompany(CompanyType.JCKGS_SYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.GJGCGS_SYB), option, org.getCompany(CompanyType.GJGCGS_SYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.GFGS), null)
+				.add(org.getCompany(CompanyType.ZHGS_SYB), option, org.getCompany(CompanyType.ZHGS_SYB).getSubCompanys())
+				.add(org.getCompany(CompanyType.GJB), null);
+			values.addAll(pipe.getData());
 		}
-
-		pipe = new GszbPipe(topfivezbs, gfhj, date, compositeConfig);
-		List<Double[]> gfhjZbs = pipe.getGszb();
-		values.add(gfhjZbs);
-
-		pipe = new GszbPipe(topfivezbs, org.getCompany(CompanyType.ZHGS_SYB)
-				.getSubCompanys(), date, standardConfig);
-		List<Double[]> zhgsZbs = pipe.getGszb();
-		values.add(zhgsZbs);
-
-		dataSource.add(org.getCompany(CompanyType.GFGS), topfivezbs, gfhjZbs);
-		dataSource.add(org.getCompany(CompanyType.ZHGS_SYB), topfivezbs, zhgsZbs);
-
-		List<Company> jthj = new ArrayList<Company>();
-		jthj.add(org.getCompany(CompanyType.GFGS));
-		jthj.add(org.getCompany(CompanyType.ZHGS_SYB));
-
-		pipe = new GszbPipe(topfivezbs, jthj, date, compositeConfig);
-		List<Double[]> jthjZbs = pipe.getGszb();
-		values.add(jthjZbs);
-
-		return makeGroupResult(values);
+		return makeResult(values);
 	}
 
 	@Override
@@ -727,7 +524,7 @@ public class GszbServiceImpl implements GszbService {
 				gszb, 
 				date, 
 				this.getConfiguratorFactory().getFirstSeasonPredictionConfigurator(),
-				this.getConfiguratorFactory().getFirstSeasonPredictionCompositeConfigurator(acc), 
+				this.getConfiguratorFactory().getFirstSeasonPredictionCompositeConfigurator(acc, dataSource, gdwTop5ComputeMap), 
 				dataSource);
 	}
 
@@ -739,7 +536,7 @@ public class GszbServiceImpl implements GszbService {
 				gszb, 
 				date, 
 				this.getConfiguratorFactory().getSecondSeasonPredictionConfigurator(),
-				this.getConfiguratorFactory().getSecondSeasonPredictionCompositeConfigurator(acc), 
+				this.getConfiguratorFactory().getSecondSeasonPredictionCompositeConfigurator(acc, dataSource, gdwTop5ComputeMap), 
 				dataSource);
 	}
 
@@ -751,7 +548,7 @@ public class GszbServiceImpl implements GszbService {
 				gszb, 
 				date, 
 				this.getConfiguratorFactory().getJDZBMYConfigurator(),
-				this.getConfiguratorFactory().getJdzbmyCompositeConfigurator(acc), 
+				this.getConfiguratorFactory().getJdzbmyCompositeConfigurator(acc, dataSource, gdwTop5ComputeMap), 
 				dataSource);
 	}
 
@@ -768,22 +565,22 @@ public class GszbServiceImpl implements GszbService {
 
 	List<String[]> getFirstSeasonPredictionZBsOverview(Date date, List<Integer> zbs, 
 			List<Company> comps) {
-		GszbPipe pipe = new GszbPipe(zbs, comps, date,
+		IndicatorBasedPipe pipe = new IndicatorBasedPipe(zbs, comps, date,
 				getConfiguratorFactory().getFirstSeasonPredictionConfigurator());
-		return makeZbResult(zbs, pipe.getGszb());
+		return makeZbResult(zbs, pipe.getData());
 	}
 	
 	List<String[]> getSecondSeasonPredictionZBsOverview(Date date, List<Integer> zbs, 
 			List<Company> comps) {
-		GszbPipe pipe = new GszbPipe(zbs, comps, date,
+		IndicatorBasedPipe pipe = new IndicatorBasedPipe(zbs, comps, date,
 				getConfiguratorFactory().getSecondSeasonPredictionConfigurator());
-		return makeZbResult(zbs, pipe.getGszb());
+		return makeZbResult(zbs, pipe.getData());
 	}
 	
 	List<String[]> getJDZBMY(Date date, List<Integer> zbs, List<Company> comps) {
-		GszbPipe pipe = new GszbPipe(zbs, comps, date,
+		IndicatorBasedPipe pipe = new IndicatorBasedPipe(zbs, comps, date,
 				getConfiguratorFactory().getJDZBMYConfigurator());
-		List<Double[]> JDZBMYList = pipe.getGszb();
+		List<Double[]> JDZBMYList = pipe.getData();
 		List<Double[]> result = new ArrayList<Double[]>();
 		Double[] values = null;
 		int length = 0;

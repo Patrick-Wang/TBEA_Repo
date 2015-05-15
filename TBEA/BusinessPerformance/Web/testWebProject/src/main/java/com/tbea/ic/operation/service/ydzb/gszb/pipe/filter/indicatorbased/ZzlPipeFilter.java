@@ -1,12 +1,14 @@
-package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter;
+package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.IPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.IPipeFilter;
 
 public class ZzlPipeFilter implements IPipeFilter {
 	List<Integer[]> zzls = new ArrayList<Integer[]>();
@@ -28,9 +30,9 @@ public class ZzlPipeFilter implements IPipeFilter {
 	}
 
 	@Override
-	public void filter(int row, GszbPipe pipe) {
-		if (!excludeZbs.contains(pipe.getZbId(row))){
-			updateZb(row, pipe.getZb(row));
+	public void filter(int row, IPipe pipe) {
+		if (!excludeZbs.contains(pipe.getRowId(row))){
+			updateZb(row, pipe.getData(row));
 		}
 	}
 

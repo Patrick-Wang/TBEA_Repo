@@ -8,13 +8,13 @@ import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.YdjhProportionAccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.CopyPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.RatioPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.IPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased.CopyPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased.RatioPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased.YdjhProportionAccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased.ZzlPipeFilter;
 
 public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 
@@ -31,7 +31,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 	}
 	
 	@Override
-	public void onConfiguring(GszbPipe pipe) {
+	public void onConfiguring(IPipe pipe) {
 		List<Company> allCompanies = pipe.getCompanies();
 		List<Company> nonSbdCompanies = new ArrayList<Company>();
 		List<Company> sbdCompanies = new ArrayList<Company>();

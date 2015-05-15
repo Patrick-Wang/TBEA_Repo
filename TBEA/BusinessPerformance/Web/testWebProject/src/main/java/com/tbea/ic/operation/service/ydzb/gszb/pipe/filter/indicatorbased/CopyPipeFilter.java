@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter;
+package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.IndicatorBasedPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.IPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.IPipeFilter;
 
 public class CopyPipeFilter implements IPipeFilter {
 	Map<Integer, List<Integer[]>> copyMap = new HashMap<Integer, List<Integer[]>>();
@@ -40,10 +42,10 @@ public class CopyPipeFilter implements IPipeFilter {
 	}
 	
 	@Override
-	public void filter(int row, GszbPipe pipe) {
-		Integer zbId = pipe.getZbId(row);
+	public void filter(int row, IPipe pipe) {
+		Integer zbId = pipe.getRowId(row);
 		if (copyMap.containsKey(zbId)){
-			updateZb(zbId, pipe.getZb(row));
+			updateZb(zbId, pipe.getData(row));
 		}
 	}
 

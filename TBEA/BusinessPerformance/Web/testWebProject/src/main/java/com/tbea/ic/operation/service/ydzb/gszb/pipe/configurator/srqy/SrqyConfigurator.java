@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator;
+package com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.srqy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,12 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.service.ydzb.gszb.acc.IAccumulator;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.GszbPipe;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.ZzlPipeFilter;
-import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.IPipe;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.configurator.StandardConfigurator;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased.ZzlPipeFilter;
 
 //收入签约分结构
 public class SrqyConfigurator implements IPipeConfigurator {
@@ -60,7 +62,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 	}
 
 	@Override
-	public void onConfiguring(GszbPipe pipe) {
+	public void onConfiguring(IPipe pipe) {
 		List<Company> allCompanies = pipe.getCompanies();
 		List<Integer> zbs = pipe.getZbIds();
 		DateHelper dh = new DateHelper(pipe.getDate());

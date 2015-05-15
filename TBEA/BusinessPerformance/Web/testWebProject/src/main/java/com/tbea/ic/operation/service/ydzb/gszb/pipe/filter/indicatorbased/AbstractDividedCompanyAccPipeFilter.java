@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter;
+package com.tbea.ic.operation.service.ydzb.gszb.pipe.filter.indicatorbased;
 
 import java.sql.Date;
 import java.util.ArrayList;

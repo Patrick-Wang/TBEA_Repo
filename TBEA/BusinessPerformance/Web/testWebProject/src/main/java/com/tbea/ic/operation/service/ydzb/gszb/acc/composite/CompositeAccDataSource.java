@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.gszb.acc;
+package com.tbea.ic.operation.service.ydzb.gszb.acc.composite;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,5 +32,9 @@ public class CompositeAccDataSource {
 			}
 		}
 		return null;
+	}
+	
+	public void clear(){
+		data.clear();
 	}
 }
