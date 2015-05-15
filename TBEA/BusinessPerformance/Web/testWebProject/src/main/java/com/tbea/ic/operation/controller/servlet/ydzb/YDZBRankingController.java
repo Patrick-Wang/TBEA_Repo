@@ -52,9 +52,12 @@ public class YDZBRankingController {
 		Date d = DateSelection.getDate(request);
 		int rankingType = Integer.valueOf(request.getParameter("rankingType"));
 		String ranking_val = null;
-		if (rankingType == 1)
+		if (rankingType == 1 || rankingType == 3)
 		{
 			ranking_val = JSONArray.fromObject(rankService.getLrzeRank(d)).toString().replace("null", "\"--\"");
+		}else if (rankingType == 2)
+		{
+			
 		}
 		return ranking_val;
 	}
