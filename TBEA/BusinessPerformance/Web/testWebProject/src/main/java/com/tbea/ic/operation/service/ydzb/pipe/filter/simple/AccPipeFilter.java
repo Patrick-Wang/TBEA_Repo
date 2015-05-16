@@ -156,7 +156,7 @@ public class AccPipeFilter implements IPipeFilter {
 		int zbId = pipe.getRowId(row);
 		if (includeZbs.contains(zbId)){
 			updateCacheValues(pipe);
-			updateZb(row, zbId, pipe.getData(row));
+			updateZb(row, zbId, pipe.getRow(row));
 		}
 	}
 

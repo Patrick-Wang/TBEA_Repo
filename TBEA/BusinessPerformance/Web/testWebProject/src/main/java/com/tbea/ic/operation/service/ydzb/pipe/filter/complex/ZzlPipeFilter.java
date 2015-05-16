@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.IPipeFilter;
 
@@ -14,8 +14,8 @@ public class ZzlPipeFilter implements IPipeFilter {
 	List<Integer[]> zzls = new ArrayList<Integer[]>();
 	Set<Integer> includeComps = new HashSet<Integer>();
 	
-	public ZzlPipeFilter include(CompanyType comp){
-		includeComps.add(comp.ordinal());
+	public ZzlPipeFilter include(Company comp){
+		includeComps.add(comp.getType().ordinal());
 		return this;
 	}
 	
@@ -27,7 +27,7 @@ public class ZzlPipeFilter implements IPipeFilter {
 	@Override
 	public void filter(int row, IPipe pipe) {
 		if (includeComps.contains(pipe.getRowId(row))){
-			updateZb(row, pipe.getData(row));
+			updateZb(row, pipe.getRow(row));
 		}
 	}
 

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.IPipeFilter;
 
 public interface IPipe {
@@ -18,11 +19,13 @@ public interface IPipe {
 	
 	public IPipe add(IPipeFilter filter) ;
 
-	public Double[] getData(int row);
-
 	public List<Double[]> getData();
 	
 	public int getColumnCount();
 	
 	public int getRowCount();
+	
+	public Double[] getRow(int indicator, Company comp);
+	
+	public Double[] getRow(int row);
 }

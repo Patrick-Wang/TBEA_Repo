@@ -134,26 +134,26 @@ public class ConfiguratorFactory {
 
 	public IPipeConfigurator getZtzbCompositeConfigurator(IAccumulator acc,
 			CompositeAccDataSource cads,
-			Map<CompanyType, List<Company>> computeMap) {
+			Map<Company, List<Company>> computeMap) {
 		return new ZtzbCompositeConfigurator(acc, cads, computeMap);
 	}
 
 	public IPipeConfigurator getThirdSeasonPredictionCompositeConfigurator(IAccumulator acc,
 			CompositeAccDataSource cads,
-			Map<CompanyType, List<Company>> computeMap) {
+			Map<Company, List<Company>> computeMap) {
 		return new ThirdSeasonPredictionCompositeConfigurator(acc, cads, computeMap);
 	}
 
 	public IPipeConfigurator getSecondSeasonPredictionCompositeConfigurator(
 			IAccumulator acc, CompositeAccDataSource cads,
-			Map<CompanyType, List<Company>> computeMap) {
+			Map<Company, List<Company>> computeMap) {
 		return new SecondSeasonPredictionCompositeConfigurator(acc, cads,
 				computeMap);
 	}
 
 	public IPipeConfigurator getFirstSeasonPredictionCompositeConfigurator(
 			IAccumulator acc, CompositeAccDataSource cads,
-			Map<CompanyType, List<Company>> computeMap) {
+			Map<Company, List<Company>> computeMap) {
 		return new FirstSeasonPredictionCompositeConfigurator(acc, cads,
 				computeMap);
 	}

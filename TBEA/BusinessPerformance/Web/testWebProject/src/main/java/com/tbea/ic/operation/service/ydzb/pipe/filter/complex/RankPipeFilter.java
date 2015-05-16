@@ -31,7 +31,7 @@ public class RankPipeFilter implements IPipeFilter {
 		Integer maxRow = 0;
 		Double tmpVal = null;
 		for (int i = 0; i < rows.size(); ++i) {
-			tmpVal = pipe.getData(rows.get(i))[refCol];
+			tmpVal = pipe.getRow(rows.get(i))[refCol];
 			if (null != tmpVal && maxVal < tmpVal) {
 				maxRow = i;
 				maxVal = tmpVal;
@@ -51,7 +51,7 @@ public class RankPipeFilter implements IPipeFilter {
 		Integer maxRow;
 		for (int i = 0; i < len; ++i) {
 			maxRow = max(rows, refCol, pipe);
-			pipe.getData(rows.get(maxRow))[destCol] = (double) (i + 1);
+			pipe.getRow(rows.get(maxRow))[destCol] = (double) (i + 1);
 			rows.remove(maxRow.intValue());
 		}
 	}

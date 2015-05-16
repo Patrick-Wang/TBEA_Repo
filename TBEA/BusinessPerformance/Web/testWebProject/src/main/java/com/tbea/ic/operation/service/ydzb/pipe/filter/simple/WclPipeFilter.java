@@ -8,7 +8,6 @@ import java.util.Set;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.SimplePipe;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.IPipeFilter;
 
 
@@ -34,7 +33,7 @@ public class WclPipeFilter implements IPipeFilter {
 	@Override
 	public void filter(int row, IPipe pipe) {
 		if (!excludeZbs.contains(pipe.getRowId(row))){
-			updateZb(row, pipe.getData(row));
+			updateZb(row, pipe.getRow(row));
 		}
 	}
 

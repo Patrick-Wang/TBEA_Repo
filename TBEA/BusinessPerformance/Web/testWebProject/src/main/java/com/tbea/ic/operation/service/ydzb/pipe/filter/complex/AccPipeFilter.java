@@ -19,20 +19,20 @@ public class AccPipeFilter implements IPipeFilter {
 	protected Date dateStart;
 	protected Date dateEnd;
 	protected List<Integer> zbs;
-	protected CompanyType comp;
+	protected Company comp;
 	protected Set<Company> includeComps;
 	protected IAccumulator accumulator;
-	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, CompanyType comp, Date dateStart, Date dateEnd) {
+	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, Company comp, Date dateStart, Date dateEnd) {
 		this(accumulator, col, zbs, comp);
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
 	}
 	
-	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, CompanyType comp, Date date) {
+	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, Company comp, Date date) {
 		this(accumulator, col, zbs, comp, date, date);
 	}
 	
-	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, CompanyType comp) {
+	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, Company comp) {
 		this.col = col;
 		this.zbs = zbs;
 		this.comp = comp;
@@ -99,11 +99,10 @@ public class AccPipeFilter implements IPipeFilter {
 
 	@Override
 	public void filter(int row, IPipe pipe) {
-		if (null == cacheValues && this.comp.ordinal() == pipe.getRowId(row)){
+		if (null == cacheValues && this.comp.getType().ordinal() == pipe.getRowId(row)){
 			updateCacheValues(pipe);
-			int step = pipe.getCompanies().size();
-			for (int i = row / pipe.getCompanies().size(); i < cacheValues.size(); ++i){
-				updateZb(pipe, i, pipe.getData(row + i * step));
+			for (int i = 0; i < this.zbs.size(); ++i){
+				updateZb(pipe, i, pipe.getRow(this.zbs.get(i), this.comp));
 			}
 		}
 	}

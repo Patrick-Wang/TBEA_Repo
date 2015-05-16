@@ -32,7 +32,7 @@ public class ZzlPipeFilter implements IPipeFilter {
 	@Override
 	public void filter(int row, IPipe pipe) {
 		if (!excludeZbs.contains(pipe.getRowId(row))){
-			updateZb(row, pipe.getData(row));
+			updateZb(row, pipe.getRow(row));
 		}
 	}
 

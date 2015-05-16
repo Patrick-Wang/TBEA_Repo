@@ -19,7 +19,7 @@ AbstractCompositeConfigurator{
 	
 	public ThirdSeasonPredictionCompositeConfigurator(IAccumulator acc,
 			CompositeAccDataSource cads,
-			Map<CompanyType, List<Company>> computeMap) {
+			Map<Company, List<Company>> computeMap) {
 		super(acc, cads, computeMap);
 		// TODO Auto-generated constructor stub
 	}
@@ -31,7 +31,7 @@ AbstractCompositeConfigurator{
 
 	@Override
 	protected void onConfiguring(IPipe pipe, IAccumulator acc, List<Integer> zbs,
-			CompanyType type, List<Company> subComps, WclPipeFilter wclFilter, ZzlPipeFilter tbzzFilter) {
+			Company type, List<Company> subComps, WclPipeFilter wclFilter, ZzlPipeFilter tbzzFilter) {
 
 		// 全年计划
 		pipe.add(new AccPipeFilter(acc, 0, zbs, type)

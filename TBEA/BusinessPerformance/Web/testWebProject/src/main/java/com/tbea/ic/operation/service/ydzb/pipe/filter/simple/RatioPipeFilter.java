@@ -34,7 +34,7 @@ public class RatioPipeFilter implements IPipeFilter {
 		} else if (GSZB.RJLR.getValue() == zbId || GSZB.RJSR.getValue() == zbId
 				|| GSZB.SXFYL.getValue() == zbId
 				|| GSZB.XSLRL.getValue() == zbId) {
-			dret = pipe.getData(row);
+			dret = pipe.getRow(row);
 		}
 
 		return dret;
@@ -52,8 +52,8 @@ public class RatioPipeFilter implements IPipeFilter {
 	private void updateZb(IPipe pipe, int zbId, Double[] zbRow) {
 		if (GSZB.RJLR.getValue() == zbId) {
 			if (rsRow != null && lrzeRow != null) {
-				Double[] rs = pipe.getData(rsRow);
-				Double[] lrze = pipe.getData(lrzeRow);
+				Double[] rs = pipe.getRow(rsRow);
+				Double[] lrze = pipe.getRow(lrzeRow);
 				for (int i = 0; i < zbRow.length; ++i) {
 					if (null != lrze[i] && null != rs[i]
 							&& !excludeCols.contains(i)
@@ -65,8 +65,8 @@ public class RatioPipeFilter implements IPipeFilter {
 			}
 		} else if (GSZB.RJSR.getValue() == zbId) {
 			if (rsRow != null && xssrRow != null) {
-				Double[] rs = pipe.getData(rsRow);
-				Double[] xssr = pipe.getData(xssrRow);
+				Double[] rs = pipe.getRow(rsRow);
+				Double[] xssr = pipe.getRow(xssrRow);
 				for (int i = 0; i < zbRow.length; ++i) {
 					if (rs[i] != null && xssr[i] != null
 							&& !excludeCols.contains(i)
@@ -79,8 +79,8 @@ public class RatioPipeFilter implements IPipeFilter {
 			}
 		} else if (GSZB.SXFYL.getValue() == zbId) {
 			if (xssrRow != null && sxfyRow != null) {
-				Double[] xssr = pipe.getData(xssrRow);
-				Double[] sxfy = pipe.getData(sxfyRow);
+				Double[] xssr = pipe.getRow(xssrRow);
+				Double[] sxfy = pipe.getRow(sxfyRow);
 				for (int i = 0; i < zbRow.length; ++i) {
 					if (sxfy[i] != null && xssr[i] != null
 							&& !excludeCols.contains(i)
@@ -93,8 +93,8 @@ public class RatioPipeFilter implements IPipeFilter {
 			}
 		} else if (GSZB.XSLRL.getValue() == zbId) {
 			if (xssrRow != null && lrzeRow != null) {
-				Double[] xssr = pipe.getData(xssrRow);
-				Double[] lrze = pipe.getData(lrzeRow);
+				Double[] xssr = pipe.getRow(xssrRow);
+				Double[] lrze = pipe.getRow(lrzeRow);
 				for (int i = 0; i < zbRow.length; ++i) {
 					if (lrze[i] != null && xssr[i] != null
 							&& !excludeCols.contains(i)

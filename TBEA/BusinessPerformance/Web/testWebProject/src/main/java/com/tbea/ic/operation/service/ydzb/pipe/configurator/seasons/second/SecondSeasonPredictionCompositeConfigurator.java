@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccDataSource;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
@@ -19,7 +18,7 @@ AbstractCompositeConfigurator {
 
 	public SecondSeasonPredictionCompositeConfigurator(IAccumulator acc,
 			CompositeAccDataSource cads,
-			Map<CompanyType, List<Company>> computeMap) {
+			Map<Company, List<Company>> computeMap) {
 		super(acc, cads, computeMap);
 		// TODO Auto-generated constructor stub
 	}
@@ -31,7 +30,7 @@ AbstractCompositeConfigurator {
 
 	@Override
 	protected void onConfiguring(IPipe pipe, IAccumulator acc, List<Integer> zbs,
-			CompanyType type, List<Company> subComps, WclPipeFilter wclFilter, ZzlPipeFilter tbzzFilter) {
+			Company type, List<Company> subComps, WclPipeFilter wclFilter, ZzlPipeFilter tbzzFilter) {
 
 		// 全年计划
 		pipe.add(new AccPipeFilter(acc, 0, zbs, type)

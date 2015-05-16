@@ -69,7 +69,7 @@ public abstract class BasePipe implements IPipe{
 	}
 
 	@Override
-	public Double[] getData(int row) {
+	public Double[] getRow(int row) {
 		return data.get(row);
 	}
 	

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 
 public class ComplexPipe extends BasePipe{
@@ -129,5 +130,10 @@ public class ComplexPipe extends BasePipe{
 			}
 		}
 		return data;
+	}
+
+	@Override
+	public Double[] getRow(int indicator, Company comp) {
+		return getRow(this.companies.indexOf(comp) + this.indicators.indexOf(indicator) * this.companies.size());
 	}
 }

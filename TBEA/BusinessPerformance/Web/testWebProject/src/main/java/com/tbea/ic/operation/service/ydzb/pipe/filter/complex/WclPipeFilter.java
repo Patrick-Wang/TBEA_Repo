@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.IPipeFilter;
@@ -15,8 +16,8 @@ public class WclPipeFilter implements IPipeFilter {
 	List<Integer[]> wcls = new ArrayList<Integer[]>();
 	Set<Integer> includeComps = new HashSet<Integer>();
 	
-	public WclPipeFilter include(CompanyType comp){
-		includeComps.add(comp.ordinal());
+	public WclPipeFilter include(Company comp){
+		includeComps.add(comp.getType().ordinal());
 		return this;
 	}
 	
@@ -28,7 +29,7 @@ public class WclPipeFilter implements IPipeFilter {
 	@Override
 	public void filter(int row, IPipe pipe) {
 		if (includeComps.contains(pipe.getRowId(row))){
-			updateZb(row, pipe.getData(row));
+			updateZb(row, pipe.getRow(row));
 		}
 	}
 
