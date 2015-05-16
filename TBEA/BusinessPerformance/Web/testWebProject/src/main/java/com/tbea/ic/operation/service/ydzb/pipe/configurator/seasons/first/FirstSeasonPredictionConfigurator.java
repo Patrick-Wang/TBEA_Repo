@@ -10,12 +10,12 @@ import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.AbstractSbdPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.CopyPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.RatioPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.WclPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.YdjhProportionAccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.ZzlPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.CopyPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.RatioPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.YdjhProportionAccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.ZzlPipeFilter;
 
 public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurator{
 
@@ -46,7 +46,7 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 		// 全年计划
 		pipe.add(new AccPipeFilter(njhAcc, 0)
 				.includeCompanies(allCompanies)
-				.includeZbs(pipe.getZbIds())
+				.includeZbs(pipe.getIndicators())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs()));
 		
@@ -56,13 +56,13 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 		if (sbdCompanies.isEmpty()) {
 			pipe.add(new AccPipeFilter(yjhAcc, 2)
 					.includeCompanies(allCompanies)
-					.includeZbs(pipe.getZbIds())
+					.includeZbs(pipe.getIndicators())
 					.excludeZbs(getInvisiableZbs())
 					.excludeZbs(getRatioZbs()));
 		} else {
 			pipe.add(new AccPipeFilter(yjhAcc, 2)
 					.includeCompanies(allCompanies)
-					.includeZbs(pipe.getZbIds())
+					.includeZbs(pipe.getIndicators())
 					.excludeZbs(getInvisiableZbs())
 					.excludeZbs(getRatioZbs())
 					.exclude(GSZB.YSZK)
@@ -83,7 +83,7 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 		// 季度计划
 		pipe.add(new AccPipeFilter(yjhAcc, 1, dh.getJdStart(), DateHelper.getJdEnd(dh.getCur()))
 				.includeCompanies(allCompanies)
-				.includeZbs(pipe.getZbIds())
+				.includeZbs(pipe.getIndicators())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs())
 				.excludeZbs(getTimePointNumberZbs()))
@@ -93,7 +93,7 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 		// 当月实际
 		.add(new AccPipeFilter(sjAcc, 3)
 				.includeCompanies(allCompanies)
-				.includeZbs(pipe.getZbIds())
+				.includeZbs(pipe.getIndicators())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs()))
 
@@ -103,7 +103,7 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 		// 去年同期
 		.add(new AccPipeFilter(sjAcc, 5, dh.getQntq())
 				.includeCompanies(allCompanies)
-				.includeZbs(pipe.getZbIds())
+				.includeZbs(pipe.getIndicators())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs()))
 
@@ -113,21 +113,21 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 		//次月预计		
 		.add(new AccPipeFilter(sjAcc, 7, dh.getSecondMonthinSeason())
 			.includeCompanies(allCompanies)
-			.includeZbs(pipe.getZbIds())
+			.includeZbs(pipe.getIndicators())
 			.excludeZbs(getInvisiableZbs())
 			.excludeZbs(getRatioZbs()))
 
 		//末月预计
 		.add(new AccPipeFilter(sjAcc, 8, dh.getLastMonthinSeason())
 			.includeCompanies(allCompanies)
-			.includeZbs(pipe.getZbIds())
+			.includeZbs(pipe.getIndicators())
 			.excludeZbs(getInvisiableZbs())
 			.excludeZbs(getRatioZbs()))
 		
 		// 季度预计合计
 		.add(new AccPipeFilter(sjAcc, 9, dh.getCur(), dh.getLastMonthinSeason())
 				.includeCompanies(allCompanies)
-				.includeZbs(pipe.getZbIds())
+				.includeZbs(pipe.getIndicators())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs())
 				.excludeZbs(getTimePointNumberZbs()))
@@ -140,7 +140,7 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 		// 季度去年同期
 		.add(new AccPipeFilter(sjAcc, 11, dh.getQntqJdStart(), dh.getQntqJdEnd())
 				.includeCompanies(allCompanies)
-				.includeZbs(pipe.getZbIds())
+				.includeZbs(pipe.getIndicators())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs())
 				.excludeZbs(getTimePointNumberZbs())
@@ -155,7 +155,7 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 		// 年度累计
 		.add(new AccPipeFilter(sjAcc, 13, dh.getFirstMonth(), dh.getCur())
 				.includeCompanies(allCompanies)
-				.includeZbs(pipe.getZbIds())
+				.includeZbs(pipe.getIndicators())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs())
 				.excludeZbs(getTimePointNumberZbs())
@@ -169,7 +169,7 @@ public class FirstSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 		// 去年同期
 		.add(new AccPipeFilter(sjAcc, 15, dh.getQnfirstMonth(), dh.getQntq())
 				.includeCompanies(allCompanies)
-				.includeZbs(pipe.getZbIds())
+				.includeZbs(pipe.getIndicators())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs())
 				.excludeZbs(getTimePointNumberZbs())

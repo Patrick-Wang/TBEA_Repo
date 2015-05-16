@@ -16,12 +16,14 @@ import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.jxjl.JxjlDa
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.jxjl.JxjlRankConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.ljlr.LjlrDataConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.ljlr.LjlrRankConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.rjlr.RjlrDataConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.rjlr.RjlrRankConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.first.FirstSeasonPredictionCompositeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.first.FirstSeasonPredictionConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.second.SecondSeasonPredictionCompositeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.second.SecondSeasonPredictionConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.third.JDZBMYCompositeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.third.JDZBMYConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.third.ThirdSeasonPredictionCompositeConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.third.ThirdSeasonPredictionConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.srqy.SrqyConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ydhb.YdhbConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ztzb.ZtzbCompositeConfigurator;
@@ -31,7 +33,7 @@ public class ConfiguratorFactory {
 	IPipeConfigurator srqyConfigurator;
 	IPipeConfigurator firstSeasonPredictionConfigurator;
 	IPipeConfigurator secondSeasonPredictionConfigurator;
-	IPipeConfigurator jdzbmyConfigurator;
+	IPipeConfigurator thirdSeasonPredictionConfigurator;
 	IPipeConfigurator ydhbConfigurator;
 	IPipeConfigurator jhlrDataConfigurator;
 	IPipeConfigurator jhlrRankConfigurator = new JhlrRankConfigurator();
@@ -39,6 +41,8 @@ public class ConfiguratorFactory {
 	IPipeConfigurator jxjlRankConfigurator = new JxjlRankConfigurator((JhlrRankConfigurator) jhlrRankConfigurator);
 	IPipeConfigurator ljlrDataConfigurator;
 	IPipeConfigurator ljlrRankConfigurator = new LjlrRankConfigurator((JhlrRankConfigurator) jhlrRankConfigurator);
+	IPipeConfigurator rjlrDataConfigurator;
+	IPipeConfigurator rjlrRankConfigurator = new RjlrRankConfigurator();
 
 	
 	public ConfiguratorFactory(SbdNdjhZbDao sbdzbDao,
@@ -51,7 +55,7 @@ public class ConfiguratorFactory {
 		secondSeasonPredictionConfigurator = new SecondSeasonPredictionConfigurator(
 				sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(),
 				accFac.getNjhAcc());
-		jdzbmyConfigurator = new JDZBMYConfigurator(sbdzbDao,
+		thirdSeasonPredictionConfigurator = new ThirdSeasonPredictionConfigurator(sbdzbDao,
 				accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
 		ydhbConfigurator = new YdhbConfigurator(sbdzbDao, accFac.getSjAcc(),
 				accFac.getYjhAcc(), accFac.getNjhAcc());
@@ -62,6 +66,22 @@ public class ConfiguratorFactory {
 		jxjlDataConfigurator = new JxjlDataConfigurator((JhlrDataConfigurator) jhlrDataConfigurator);
 		ljlrDataConfigurator = new LjlrDataConfigurator(accFac.getSjAcc(),
 				accFac.getYjhAcc(), accFac.getNjhAcc());
+		rjlrDataConfigurator = new RjlrDataConfigurator(sbdzbDao, accFac.getSjAcc(),
+				accFac.getYjhAcc(), accFac.getNjhAcc());
+	}
+
+	/**
+	 * @return the rjlrDataConfigurator
+	 */
+	public IPipeConfigurator getRjlrDataConfigurator() {
+		return rjlrDataConfigurator;
+	}
+
+	/**
+	 * @return the rjlrRankConfigurator
+	 */
+	public IPipeConfigurator getRjlrRankConfigurator() {
+		return rjlrRankConfigurator;
 	}
 
 	public IPipeConfigurator getJxjlDataConfigurator() {
@@ -104,8 +124,8 @@ public class ConfiguratorFactory {
 		return secondSeasonPredictionConfigurator;
 	}
 
-	public IPipeConfigurator getJDZBMYConfigurator() {
-		return jdzbmyConfigurator;
+	public IPipeConfigurator getThirdSeasonPredictionConfigurator() {
+		return thirdSeasonPredictionConfigurator;
 	}
 
 	public IPipeConfigurator getYdhbConfigurator() {
@@ -118,10 +138,10 @@ public class ConfiguratorFactory {
 		return new ZtzbCompositeConfigurator(acc, cads, computeMap);
 	}
 
-	public IPipeConfigurator getJdzbmyCompositeConfigurator(IAccumulator acc,
+	public IPipeConfigurator getThirdSeasonPredictionCompositeConfigurator(IAccumulator acc,
 			CompositeAccDataSource cads,
 			Map<CompanyType, List<Company>> computeMap) {
-		return new JDZBMYCompositeConfigurator(acc, cads, computeMap);
+		return new ThirdSeasonPredictionCompositeConfigurator(acc, cads, computeMap);
 	}
 
 	public IPipeConfigurator getSecondSeasonPredictionCompositeConfigurator(

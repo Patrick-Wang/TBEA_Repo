@@ -2,7 +2,7 @@ package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.rjlr;
 
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.companybased.RankPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.complex.RankPipeFilter;
 
 public class RjlrRankConfigurator  implements IPipeConfigurator{
 

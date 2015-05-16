@@ -12,7 +12,7 @@ public interface IPipe {
 
 	public Integer getRowId(int row);
 	
-	public List<Integer> getZbIds();
+	public List<Integer> getIndicators();
 
 	public List<Company> getCompanies();
 	

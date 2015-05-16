@@ -13,9 +13,9 @@ import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.StandardConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.WclPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.ZzlPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.ZzlPipeFilter;
 
 //收入签约分结构
 public class SrqyConfigurator implements IPipeConfigurator {
@@ -64,7 +64,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 	@Override
 	public void onConfiguring(IPipe pipe) {
 		List<Company> allCompanies = pipe.getCompanies();
-		List<Integer> zbs = pipe.getZbIds();
+		List<Integer> zbs = pipe.getIndicators();
 		DateHelper dh = new DateHelper(pipe.getDate());
 
 		WclPipeFilter wclFilter = new WclPipeFilter();

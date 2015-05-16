@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased;
+package com.tbea.ic.operation.service.ydzb.pipe.filter.simple;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -140,7 +140,7 @@ public class AccPipeFilter implements IPipeFilter {
 		if (null == cacheValues) {
 			List<Integer> zbsTmp = new ArrayList<Integer>();
 			List<Integer> excludeList = new ArrayList<Integer>();
-			filterZbs(pipe.getZbIds(), zbsTmp, excludeList);
+			filterZbs(pipe.getIndicators(), zbsTmp, excludeList);
 			if (dateStart == null){
 				dateStart = dateEnd = pipe.getDate();
 			}

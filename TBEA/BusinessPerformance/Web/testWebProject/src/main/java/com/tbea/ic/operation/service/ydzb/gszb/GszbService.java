@@ -23,12 +23,11 @@ public interface GszbService {
 	List<String[]> getGcySecondSeasonPredictionZBs(Date date);
 	List<String[]> getGdwSecondSeasonPredictionZBs(GSZB gszb, Date d);
 
-	List<String[]> getJDZBMY(Date date, List<Company> coms);
-	List<String[]> getGsJDZBMY(Date date);
-	List<String[]> getGcyJDZBMY(Date date);
-	List<String[]> getGdwJDZBMY(GSZB gszb, Date d);
+	List<String[]> getThirdSeasonPredictionZBsOverview(Date date, List<Company> coms);
+	List<String[]> getGsThirdSeasonPredictionZBsOverview(Date date);
+	List<String[]> getGcyThirdSeasonPredictionZBs(Date date);
+	List<String[]> getGdwThirdSeasonPredictionZBs(GSZB gszb, Date d);
 
 	List<String[]> getGdwzb(Date d, List<Company> comps);
 	List<Company> getCompanies(Account account);
-	List<String[]> getLrzeRank(Date date);	
 }

@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased;
+package com.tbea.ic.operation.service.ydzb.pipe.filter.simple;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,7 +6,6 @@ import java.util.Set;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.IndicatorBasedPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.IPipeFilter;
 
 public class RatioPipeFilter implements IPipeFilter {

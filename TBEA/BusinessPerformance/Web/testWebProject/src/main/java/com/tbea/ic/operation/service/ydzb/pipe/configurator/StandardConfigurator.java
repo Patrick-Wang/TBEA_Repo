@@ -9,12 +9,12 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.CopyPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.RatioPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.WclPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.YdjhProportionAccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.ZzlPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.CopyPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.RatioPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.YdjhProportionAccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.ZzlPipeFilter;
 
 public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 
@@ -47,7 +47,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 		// 全年计划
 		pipe.add(new AccPipeFilter(njhAcc, 0)
 					.includeCompanies(allCompanies)
-					.includeZbs(pipe.getZbIds())
+					.includeZbs(pipe.getIndicators())
 					.excludeZbs(getInvisiableZbs())
 					.excludeZbs(getRatioZbs()));
 
@@ -55,14 +55,14 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 		if (sbdCompanies.isEmpty()) {
 			pipe.add(new AccPipeFilter(yjhAcc, 1)
 					.includeCompanies(allCompanies)
-					.includeZbs(pipe.getZbIds())
+					.includeZbs(pipe.getIndicators())
 					.excludeZbs(getInvisiableZbs())
 					.excludeZbs(getRatioZbs()));
 
 		} else {
 			pipe.add(new AccPipeFilter(yjhAcc, 1)
 					.includeCompanies(allCompanies)
-					.includeZbs(pipe.getZbIds())
+					.includeZbs(pipe.getIndicators())
 					.excludeZbs(getInvisiableZbs())
 					.excludeZbs(getRatioZbs())
 					.exclude(GSZB.YSZK)
@@ -84,7 +84,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 				// 当月实际
 			pipe.add(new AccPipeFilter(sjAcc, 2)
 					.includeCompanies(allCompanies)
-					.includeZbs(pipe.getZbIds())
+					.includeZbs(pipe.getIndicators())
 					.excludeZbs(getInvisiableZbs())
 					.excludeZbs(getRatioZbs()))
 
@@ -94,7 +94,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 				// 去年同期
 				.add(new AccPipeFilter(sjAcc, 4, dh.getQntq())
 						.includeCompanies(allCompanies)
-						.includeZbs(pipe.getZbIds())
+						.includeZbs(pipe.getIndicators())
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs()))
 
@@ -104,7 +104,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 				// 季度计划
 				.add(new AccPipeFilter(yjhAcc, 6, dh.getJdStart(), DateHelper.getJdEnd(dh.getCur()))
 						.includeCompanies(allCompanies)
-						.includeZbs(pipe.getZbIds())
+						.includeZbs(pipe.getIndicators())
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
 						.excludeZbs(getTimePointNumberZbs()))
@@ -115,7 +115,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 				// 季度累计
 				.add(new AccPipeFilter(sjAcc, 7, dh.getJdStart(), dh.getCur())
 						.includeCompanies(allCompanies)
-						.includeZbs(pipe.getZbIds())
+						.includeZbs(pipe.getIndicators())
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
 						.excludeZbs(getTimePointNumberZbs())
@@ -129,7 +129,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 				// 季度去年同期
 				.add(new AccPipeFilter(sjAcc, 9, dh.getQntqJdStart(), dh.getQntq())
 						.includeCompanies(allCompanies)
-						.includeZbs(pipe.getZbIds())
+						.includeZbs(pipe.getIndicators())
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
 						.excludeZbs(getTimePointNumberZbs())
@@ -144,7 +144,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 				// 年度累计
 				.add(new AccPipeFilter(sjAcc, 11, dh.getFirstMonth(), dh.getCur())
 						.includeCompanies(allCompanies)
-						.includeZbs(pipe.getZbIds())
+						.includeZbs(pipe.getIndicators())
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
 						.excludeZbs(getTimePointNumberZbs())
@@ -158,7 +158,7 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 				// 去年同期
 				.add(new AccPipeFilter(sjAcc, 13, dh.getQnfirstMonth(), dh.getQntq())
 						.includeCompanies(allCompanies)
-						.includeZbs(pipe.getZbIds())
+						.includeZbs(pipe.getIndicators())
 						.excludeZbs(getInvisiableZbs())
 						.excludeZbs(getRatioZbs())
 						.excludeZbs(getTimePointNumberZbs())

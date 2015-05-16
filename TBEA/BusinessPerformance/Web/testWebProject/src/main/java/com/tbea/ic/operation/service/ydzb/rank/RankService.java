@@ -10,4 +10,6 @@ public interface RankService {
 	List<String[]> getLjlrRank(Date date);
 
 	List<String[]> getJxjlRank(Date date);	
+	
+	List<String[]> getRjlrRank(Date date);	
 }

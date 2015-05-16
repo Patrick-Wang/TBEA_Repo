@@ -9,9 +9,9 @@ import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccDataSou
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.AbstractCompositeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.companybased.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.companybased.WclPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.companybased.ZzlPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.complex.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.complex.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.complex.ZzlPipeFilter;
 
 //总体指标
 public class ZtzbCompositeConfigurator  extends
@@ -30,21 +30,21 @@ AbstractCompositeConfigurator {
 	}
 
 	@Override
-	protected void onConfiguring(IPipe pipe, IAccumulator acc, Integer zb,
+	protected void onConfiguring(IPipe pipe, IAccumulator acc, List<Integer> zbs,
 			CompanyType type, List<Company> subComps,
 			WclPipeFilter wclFilter, ZzlPipeFilter tbzzFilter) {
 
 		// 全年计划
-		pipe.add(new AccPipeFilter(acc, 0, zb, type)
+		pipe.add(new AccPipeFilter(acc, 0, zbs, type)
 				.includeCompanies(subComps))
 				
 			// 当月计划
-			.add(new AccPipeFilter(acc, 1, zb, type)
+			.add(new AccPipeFilter(acc, 1, zbs, type)
 				.includeCompanies(subComps))
 		
 			
 			// 当月实际
-			.add(new AccPipeFilter(acc, 2, zb, type)
+			.add(new AccPipeFilter(acc, 2, zbs, type)
 				.includeCompanies(subComps))
 			
 			// 计划完成率
@@ -52,7 +52,7 @@ AbstractCompositeConfigurator {
 				.add(3, 2, 1))
 			
 			// 去年同期	
-			.add(new AccPipeFilter(acc, 4, zb, type)
+			.add(new AccPipeFilter(acc, 4, zbs, type)
 				.includeCompanies(subComps))
 			
 			// 同比增幅
@@ -60,11 +60,11 @@ AbstractCompositeConfigurator {
 				.add(5, 2, 4))
 				
 			// 季度计划
-			.add(new AccPipeFilter(acc, 6, zb, type)
+			.add(new AccPipeFilter(acc, 6, zbs, type)
 				.includeCompanies(subComps))
 				
 			// 季度累计
-			.add(new AccPipeFilter(acc, 7, zb, type)
+			.add(new AccPipeFilter(acc, 7, zbs, type)
 				.includeCompanies(subComps))
 				
 			// 季度计划完成率
@@ -72,7 +72,7 @@ AbstractCompositeConfigurator {
 				.add(8, 7, 6))
 				
 			// 季度去年同期
-			.add(new AccPipeFilter(acc, 9, zb, type)
+			.add(new AccPipeFilter(acc, 9, zbs, type)
 				.includeCompanies(subComps))
 			
 			 // 同比增幅
@@ -80,7 +80,7 @@ AbstractCompositeConfigurator {
 				.add(10, 7, 9))
 	
 			// 年度累计
-			.add(new AccPipeFilter(acc, 11, zb, type)
+			.add(new AccPipeFilter(acc, 11, zbs, type)
 				.includeCompanies(subComps))
 
 			
@@ -90,7 +90,7 @@ AbstractCompositeConfigurator {
 				.add(12, 11, 0))
 			
 			// 去年同期
-			.add(new AccPipeFilter(acc, 13, zb, type)
+			.add(new AccPipeFilter(acc, 13, zbs, type)
 				.includeCompanies(subComps))
 	
 			// 同比增幅

@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased;
+package com.tbea.ic.operation.service.ydzb.pipe.filter.simple;
 
 import java.sql.Date;
 import java.util.Calendar;

@@ -8,8 +8,8 @@ import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccDataSource;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.companybased.WclPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.companybased.ZzlPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.complex.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.complex.ZzlPipeFilter;
 
 public abstract class AbstractCompositeConfigurator implements
 		IPipeConfigurator {
@@ -27,25 +27,27 @@ public abstract class AbstractCompositeConfigurator implements
 	@Override
 	public void onConfiguring(IPipe pipe) {
 		List<Company> allCompanies = pipe.getCompanies();
-		Integer zb = pipe.getZbIds().get(0);
+		List<Integer> allZbs = pipe.getIndicators();
 		
 		WclPipeFilter wclFilter = new WclPipeFilter();
 		ZzlPipeFilter tbzzFilter = new ZzlPipeFilter();
 		
 		this.cads.clear();
 		//配置数据源
-		for (int i = 0; i < pipe.getRowCount(); ++i){
-			this.cads.add(allCompanies.get(i), zb, pipe.getData(i));
+		for (int i = 0, len = pipe.getIndicators().size(); i < len; ++i){
+			for (int j = 0, size = allCompanies.size(); j < size; ++j){
+				this.cads.add(allCompanies.get(j), allZbs.get(i), pipe.getData(i * size + j));
+			}
 		}
-
+		
 		for (CompanyType type : computeMap.keySet()){
 			wclFilter.include(type);
 			tbzzFilter.include(type);
-			onConfiguring(pipe, acc, zb, type, computeMap.get(type), wclFilter, tbzzFilter);
+			onConfiguring(pipe, acc, allZbs, type, computeMap.get(type), wclFilter, tbzzFilter);
 		}
 	}
 
 
-	protected abstract void onConfiguring(IPipe pipe, IAccumulator acc, Integer zb, CompanyType type,
+	protected abstract void onConfiguring(IPipe pipe, IAccumulator acc, List<Integer> zbs, CompanyType type,
 			List<Company> subComps, WclPipeFilter wclFilter, ZzlPipeFilter tbzzFilter);
 }

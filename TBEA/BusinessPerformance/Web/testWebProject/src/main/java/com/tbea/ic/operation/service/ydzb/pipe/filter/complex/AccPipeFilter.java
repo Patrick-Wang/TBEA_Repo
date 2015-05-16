@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.filter.companybased;
+package com.tbea.ic.operation.service.ydzb.pipe.filter.complex;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -18,23 +18,23 @@ public class AccPipeFilter implements IPipeFilter {
 	protected int col;
 	protected Date dateStart;
 	protected Date dateEnd;
-	protected int zb;
+	protected List<Integer> zbs;
 	protected CompanyType comp;
 	protected Set<Company> includeComps;
 	protected IAccumulator accumulator;
-	public AccPipeFilter(IAccumulator accumulator, int col, int zb, CompanyType comp, Date dateStart, Date dateEnd) {
-		this(accumulator, col, zb, comp);
+	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, CompanyType comp, Date dateStart, Date dateEnd) {
+		this(accumulator, col, zbs, comp);
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
 	}
 	
-	public AccPipeFilter(IAccumulator accumulator, int col, int zb, CompanyType comp, Date date) {
-		this(accumulator, col, zb, comp, date, date);
+	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, CompanyType comp, Date date) {
+		this(accumulator, col, zbs, comp, date, date);
 	}
 	
-	public AccPipeFilter(IAccumulator accumulator, int col, int zb, CompanyType comp) {
+	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, CompanyType comp) {
 		this.col = col;
-		this.zb = zb;
+		this.zbs = zbs;
 		this.comp = comp;
 		this.accumulator = accumulator;
 
@@ -84,10 +84,8 @@ public class AccPipeFilter implements IPipeFilter {
 	}
 
 	
-	protected void computeCacheValue(List<Company> companies){
-		List<Integer> zbs = new ArrayList<Integer>();
-		zbs.add(this.zb);
-		cacheValues = accumulator.compute(col, dateStart, dateEnd, zbs, companies);
+	protected List<Double> computeCacheValue(List<Integer> zbs, List<Company> companies){
+		return accumulator.compute(col, dateStart, dateEnd, zbs, companies);
 	}
 	
 	private void updateCacheValues(IPipe pipe) {
@@ -95,21 +93,24 @@ public class AccPipeFilter implements IPipeFilter {
 			if (dateStart == null){
 				dateStart = dateEnd = pipe.getDate();
 			}
-			computeCacheValue(filterCompanies(pipe.getCompanies()));
+			cacheValues = computeCacheValue(zbs, filterCompanies(pipe.getCompanies()));
 		}
 	}
 
 	@Override
 	public void filter(int row, IPipe pipe) {
-		if (this.comp == pipe.getCompanies().get(row).getType()){
+		if (null == cacheValues && this.comp.ordinal() == pipe.getRowId(row)){
 			updateCacheValues(pipe);
-			updateZb(row, pipe.getData(row));
+			int step = pipe.getCompanies().size();
+			for (int i = row / pipe.getCompanies().size(); i < cacheValues.size(); ++i){
+				updateZb(pipe, i, pipe.getData(row + i * step));
+			}
 		}
 	}
 
-	protected void updateZb(int row, Double[] zbRow) {
-		if (null != cacheValues.get(0)){
-			zbRow[col] = Util.valueOf(zbRow[col]) + cacheValues.get(0);
+	protected void updateZb(IPipe pipe, int cacheRow, Double[] zbRow) {
+		if (null != cacheValues.get(cacheRow)){
+			zbRow[col] = Util.valueOf(zbRow[col]) + cacheValues.get(cacheRow);
 		}
 	}
 

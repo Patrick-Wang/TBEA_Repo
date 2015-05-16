@@ -587,7 +587,7 @@ public class YDZBController {
 		String fileNameAndSheetName = null; 
 		CellFormatter formatter = null;
 		if (0 == month % 3) {
-			data = gszbService.getGcyJDZBMY(d);
+			data = gszbService.getGcyThirdSeasonPredictionZBs(d);
 			fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度末月五大经营指标预测完成情况";
 			template = JyzbExcelTemplate.createTemplate(SheetType.JDFCYZBYJ_MY);
 			formatter = template.createCellFormatter()
@@ -857,7 +857,7 @@ public class YDZBController {
 //					.addType(21, CellFormatter.CellType.PERCENT)
 //					.addType(23, CellFormatter.CellType.PERCENT)
 //					.addType(25, CellFormatter.CellType.PERCENT);
-			hzb_zbhz_prediction = gszbService.getJDZBMY(d, comps);
+			hzb_zbhz_prediction = gszbService.getThirdSeasonPredictionZBsOverview(d, comps);
 			fileNameAndSheetName += "末月";
 		}
 
@@ -950,7 +950,7 @@ public class YDZBController {
 		String hzb_zbhz_prediction = null;
 		if (0 == iMonth % 3) {
 			hzb_zbhz_prediction = JSONArray
-					.fromObject(gszbService.getJDZBMY(d, comps)).toString()
+					.fromObject(gszbService.getThirdSeasonPredictionZBsOverview(d, comps)).toString()
 					.replace("null", "\"--\"");
 		}
 
@@ -1048,7 +1048,7 @@ public class YDZBController {
 				if (0 == iMonth % 3) {
 					List<Company> xmgsTmp = new ArrayList<Company>();
 					xmgsTmp.add(xmgs);
-					data = gszbService.getJDZBMY(d, xmgsTmp);
+					data = gszbService.getThirdSeasonPredictionZBsOverview(d, xmgsTmp);
 				} else if (1 == iMonth % 3) {
 					List<Company> xmgsTmp = new ArrayList<Company>();
 					xmgsTmp.add(xmgs);
@@ -1091,7 +1091,7 @@ public class YDZBController {
 		String fileNameAndSheetName = request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
 		FormatterHandler formatterChain = null;
 		if (0 == iMonth % 3) {
-			hzb_zbhz_prediction = gszbService.getGsJDZBMY(d);
+			hzb_zbhz_prediction = gszbService.getGsThirdSeasonPredictionZBsOverview(d);
 			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_MY);
 			formatterChain = this.getFormatterChain(
 					new Integer[]{6, 8, 10, 12, 14, 16, 21, 23, 25}, new Integer[]{1, 2, 3, 4});
@@ -1156,7 +1156,7 @@ public class YDZBController {
 
 			lastRow += 3;
 			if (0 == iMonth % 3) {
-				data = gszbService.getJDZBMY(d, getJydw(ct));
+				data = gszbService.getThirdSeasonPredictionZBsOverview(d, getJydw(ct));
 			}else if (1 == iMonth % 3) {
 				data = gszbService.getFirstSeasonPredictionZBsOverview(d, getJydw(ct));
 			}else if (2 == iMonth % 3) {
@@ -1190,7 +1190,7 @@ public class YDZBController {
 		String hzb_zbhz_prediction = null;
 		if (0 == iMonth % 3) {
 			hzb_zbhz_prediction = JSONArray
-					.fromObject(gszbService.getGsJDZBMY(d)).toString()
+					.fromObject(gszbService.getGsThirdSeasonPredictionZBsOverview(d)).toString()
 					.replace("null", "\"--\"");
 		}
 
@@ -1233,7 +1233,7 @@ public class YDZBController {
 		String financial_zbhz_prediction = null;
 		if (0 == iMonth % 3) {
 			financial_zbhz_prediction = JSONArray
-					.fromObject(gszbService.getGcyJDZBMY(d)).toString()
+					.fromObject(gszbService.getGcyThirdSeasonPredictionZBs(d)).toString()
 					.replace("null", "\"--\"");
 
 		}
@@ -1279,7 +1279,7 @@ public class YDZBController {
 			GSZB gszb = GSZB.valueOf(Integer.valueOf(zb));
 			if (0 == iMonth % 3) {
 				financial_zbhz_prediction = JSONArray
-						.fromObject(gszbService.getGdwJDZBMY(gszb, d)).toString()
+						.fromObject(gszbService.getGdwThirdSeasonPredictionZBs(gszb, d)).toString()
 						.replace("null", "\"--\"");
 
 			}
@@ -1329,7 +1329,7 @@ public class YDZBController {
 			String fileNameAndSheetName = null; 
 			CellFormatter formatter = null;
 			if (0 == month % 3) {
-				data = gszbService.getGdwJDZBMY(gszb, d);
+				data = gszbService.getGdwThirdSeasonPredictionZBs(gszb, d);
 				fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度末月"+ zbName + "预测完成情况";
 				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_SY);
 				formatter = template.createCellFormatter()

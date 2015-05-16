@@ -7,8 +7,8 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.WclPipeFilter;
 
 public class JhlrDataConfigurator  implements IPipeConfigurator{
 
@@ -32,12 +32,12 @@ public class JhlrDataConfigurator  implements IPipeConfigurator{
 			// 全年计划
 			pipe.add(new AccPipeFilter(njhAcc, 0)
 						.includeCompanies(allCompanies)
-						.includeZbs(pipe.getZbIds()))
+						.includeZbs(pipe.getIndicators()))
 	
 			// 年度累计
 			.add(new AccPipeFilter(sjAcc, 1, dh.getFirstMonth(), dh.getCur())
 							.includeCompanies(allCompanies)
-							.includeZbs(pipe.getZbIds()))
+							.includeZbs(pipe.getIndicators()))
 	
 			// 累计计划完成率
 			.add(wclFilter.add(2, 1, 0))
@@ -45,12 +45,12 @@ public class JhlrDataConfigurator  implements IPipeConfigurator{
 			// 当月计划
 			.add(new AccPipeFilter(yjhAcc, 4)
 						.includeCompanies(allCompanies)
-						.includeZbs(pipe.getZbIds()))
+						.includeZbs(pipe.getIndicators()))
 	
 			// 当月实际
 			.add(new AccPipeFilter(sjAcc, 5)
 					.includeCompanies(allCompanies)
-					.includeZbs(pipe.getZbIds()))
+					.includeZbs(pipe.getIndicators()))
 	
 			// 计划完成率
 			.add(wclFilter.add(6, 5, 4));

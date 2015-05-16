@@ -8,15 +8,15 @@ import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.IndicatorBasedPipe;
+import com.tbea.ic.operation.service.ydzb.pipe.SimplePipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.AbstractSbdPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.CopyPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.RatioPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.WclPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.YdjhProportionAccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.indicatorbased.ZzlPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.CopyPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.RatioPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.YdjhProportionAccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.ZzlPipeFilter;
 
 //月度环比
 public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
@@ -45,7 +45,7 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 		WclPipeFilter wclFilter = new WclPipeFilter();
 		ZzlPipeFilter zzlFilter = new ZzlPipeFilter();
 		CopyPipeFilter copyFilter = new CopyPipeFilter();
-		List<Integer> gsztzbs = pipe.getZbIds();
+		List<Integer> gsztzbs = pipe.getIndicators();
 		
 		// 全年计划
 		pipe.add(new AccPipeFilter(njhAcc, 0)
