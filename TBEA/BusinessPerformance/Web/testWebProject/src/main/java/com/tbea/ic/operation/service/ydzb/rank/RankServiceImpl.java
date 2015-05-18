@@ -96,7 +96,7 @@ public class RankServiceImpl implements RankService {
 		AdvancedPipe pipe = new AdvancedPipe(zb.getValue(), date, dwPipeConfig);
 		List<Company> jydw = BMDepartmentDB.getJydw(companyManager);
 		for (Company comp : jydw){
-			pipe.add(comp, dataConfig);
+			pipe.addCompany(comp, dataConfig);
 		}
 		return pipe.getData();
 		
@@ -125,11 +125,22 @@ public class RankServiceImpl implements RankService {
 		AdvancedPipe pipe = new AdvancedPipe(GSZB.RJLR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
 		List<Company> jydw = BMDepartmentDB.getJydw(companyManager);
 		for (Company comp : jydw){
-			pipe.add(comp, getConfiguratorFactory().getRjlrDataConfigurator());
+			pipe.addCompany(comp, getConfiguratorFactory().getRjlrDataConfigurator());
 		}
-		pipe.add(GSZB.LRZE.getValue());
-		pipe.add(GSZB.RS.getValue());
+		pipe.addDependentIndictor(GSZB.LRZE.getValue());
+		pipe.addDependentIndictor(GSZB.RS.getValue());
 		return makeResult(pipe.getData());
 	}
 
+	@Override
+	public List<String[]> getRjsrRank(Date date) {
+		AdvancedPipe pipe = new AdvancedPipe(GSZB.RJSR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
+		List<Company> jydw = BMDepartmentDB.getJydw(companyManager);
+		for (Company comp : jydw){
+			pipe.addCompany(comp, getConfiguratorFactory().getRjlrDataConfigurator());
+		}
+		pipe.addDependentIndictor(GSZB.XSSR.getValue());
+		pipe.addDependentIndictor(GSZB.RS.getValue());
+		return makeResult(pipe.getData());
+	}
 }

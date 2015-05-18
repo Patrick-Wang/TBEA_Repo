@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 
 public class AdvancedPipe extends BasePipe{
@@ -29,44 +28,44 @@ public class AdvancedPipe extends BasePipe{
 	// ************************************************
 	
 	
-	private List<IPipeConfigurator> pipeConfigs = new ArrayList<IPipeConfigurator>();
-	private IPipeConfigurator dwPipeConfig;
-	private List<List<Company>> realCompsList = new ArrayList<List<Company>>();
+	private List<IPipeConfigurator> companyPipeConfigs = new ArrayList<IPipeConfigurator>();
+	private IPipeConfigurator advancedPipeConfig;
+	private List<List<Company>> basicCompanies = new ArrayList<List<Company>>();
 	private List<Integer> dependIndicators = new ArrayList<Integer>();
 	
-	public AdvancedPipe(Integer indicator, Date date, IPipeConfigurator dwPipeConfig) {
+	public AdvancedPipe(Integer indicator, Date date, IPipeConfigurator advancedPipeConfig) {
 		super(indicator, new ArrayList<Company>(), date);
-		this.dwPipeConfig = dwPipeConfig;
+		this.advancedPipeConfig = advancedPipeConfig;
 	}
 	
-	public AdvancedPipe(List<Integer> indicators, Date date, IPipeConfigurator dwPipeConfig) {
+	public AdvancedPipe(List<Integer> indicators, Date date, IPipeConfigurator advancedPipeConfig) {
 		super(indicators, new ArrayList<Company>(), date);
-		this.dwPipeConfig = dwPipeConfig;
+		this.advancedPipeConfig = advancedPipeConfig;
 	}
 
-	public AdvancedPipe add(Integer dependIndicator) {
+	public AdvancedPipe addDependentIndictor(Integer dependIndicator) {
 		if (!dependIndicators.contains(dependIndicator)) {
 			dependIndicators.add(dependIndicator);
 		}
 		return this;
 	}
 	
-	public AdvancedPipe add(Company comp, IPipeConfigurator dwPipeConfig) {
+	public AdvancedPipe addCompany(Company comp, IPipeConfigurator dwPipeConfig) {
 		if (!this.companies.contains(comp)) {
 			this.companies.add(comp);
-			this.pipeConfigs.add(dwPipeConfig);
+			this.companyPipeConfigs.add(dwPipeConfig);
 			List<Company> realComps = new ArrayList<Company>();
 			realComps.add(comp);
-			this.realCompsList.add(realComps);
+			this.basicCompanies.add(realComps);
 		}
 		return this;
 	}
 
-	public AdvancedPipe add(Company comp, IPipeConfigurator dwPipeConfig, List<Company> realComps) {
+	public AdvancedPipe addCompany(Company comp, IPipeConfigurator dwPipeConfig, List<Company> realComps) {
 		if (!this.companies.contains(comp)) {
 			this.companies.add(comp);
-			this.pipeConfigs.add(dwPipeConfig);
-			this.realCompsList.add(realComps);
+			this.companyPipeConfigs.add(dwPipeConfig);
+			this.basicCompanies.add(realComps);
 		}
 		return this;
 	}
@@ -103,23 +102,22 @@ public class AdvancedPipe extends BasePipe{
 	public List<Double[]> getData() {
 		this.data = create(this.companies.size() * indicators.size());
 		List<Integer> tmpIndicators = new ArrayList<Integer>();
-		tmpIndicators.addAll(this.dependIndicators);
+		tmpIndicators.addAll(dependIndicators);
 		tmpIndicators.addAll(indicators);
-		int indicatorsSize = indicators.size();
 		int dependIndicatorsSize = dependIndicators.size();
-		int tmpZbSize = indicatorsSize + dependIndicatorsSize;
+		int tmpIndicatorSize = tmpIndicators.size();
 		for (int i = 0, len = this.companies.size(); i < len; ++i) {
-			if (this.pipeConfigs.get(i) != null) {
+			if (this.companyPipeConfigs.get(i) != null) {
 				BasicPipe pipe = new BasicPipe(tmpIndicators,
-						this.realCompsList.get(i), date,
-						this.pipeConfigs.get(i));
-				addList(i, len, pipe.getData().subList(dependIndicatorsSize, tmpZbSize));
+						this.basicCompanies.get(i), date,
+						this.companyPipeConfigs.get(i));
+				addList(i, len, pipe.getData().subList(dependIndicatorsSize, tmpIndicatorSize));
 			} else {
-				addList(i, len, create(indicators.size(), this.dwPipeConfig.getColumnCount()));
+				addList(i, len, create(indicators.size(), this.advancedPipeConfig.getColumnCount()));
 			}
 		}
 
-		this.dwPipeConfig.onConfiguring(this);
+		this.advancedPipeConfig.onConfiguring(this);
 		for (int i = 0, len = data.size(); i < len; ++i) {
 			for (int j = 0, size = filters.size(); j < size; ++j) {
 				try {

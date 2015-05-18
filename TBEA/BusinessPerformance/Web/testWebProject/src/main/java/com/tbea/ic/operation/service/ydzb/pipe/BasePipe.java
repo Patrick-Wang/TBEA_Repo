@@ -60,7 +60,7 @@ public abstract class BasePipe implements IPipe{
 	}
 	
 	@Override
-	public IPipe add(IPipeFilter filter) {
+	public IPipe addFilter(IPipeFilter filter) {
 		if (filters.contains(filter)){
 			filters.remove(filter);
 		}

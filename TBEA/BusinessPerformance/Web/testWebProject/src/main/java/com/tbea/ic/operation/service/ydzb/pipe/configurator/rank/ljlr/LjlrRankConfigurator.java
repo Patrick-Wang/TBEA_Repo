@@ -1,14 +1,14 @@
-package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.jxjl;
+package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.ljlr;
 
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.jhlr.JhlrRankConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.jhlr.JhlrRankConfigurator;
 
-public class JxjlRankConfigurator  implements IPipeConfigurator{
+public class LjlrRankConfigurator  implements IPipeConfigurator{
 
 	IPipeConfigurator jhlrConfig;
 	
-	public JxjlRankConfigurator(JhlrRankConfigurator jhlrConfig) {
+	public LjlrRankConfigurator(JhlrRankConfigurator jhlrConfig) {
 		this.jhlrConfig = jhlrConfig;
 	}
 

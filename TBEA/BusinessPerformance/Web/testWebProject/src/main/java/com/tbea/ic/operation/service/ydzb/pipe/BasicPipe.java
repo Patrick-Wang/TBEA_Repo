@@ -4,9 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 
 public class BasicPipe extends BasePipe{
@@ -53,6 +51,11 @@ public class BasicPipe extends BasePipe{
 	public Integer getRowId(int row){
 		return indicators.get(row);
 	}
+	
+	@Override
+	public Double[] getRow(int indicator, Company comp) {
+		return getRow(this.indicators.indexOf(indicator));
+	}
 
 	@Override
 	public List<Double[]> getData() {
@@ -66,10 +69,5 @@ public class BasicPipe extends BasePipe{
 			}
 		}
 		return data;
-	}
-
-	@Override
-	public Double[] getRow(int indicator, Company comp) {
-		return getRow(this.indicators.indexOf(indicator));
 	}
 }

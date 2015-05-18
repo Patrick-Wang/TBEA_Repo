@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.ljlr;
+package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.ljlr;
 
 import java.util.List;
 
@@ -30,30 +30,30 @@ public class LjlrDataConfigurator  implements IPipeConfigurator{
 		DateHelper dh = new DateHelper(pipe.getDate());
 		ZzlPipeFilter zzlFilter = new ZzlPipeFilter();
 			// 年度累计
-		pipe.add(new AccPipeFilter(sjAcc, 0, dh.getFirstMonth(), dh.getCur())
+		pipe.addFilter(new AccPipeFilter(sjAcc, 0, dh.getFirstMonth(), dh.getCur())
 				.includeCompanies(allCompanies)
 				.includeZbs(pipe.getIndicators()))
 	
 			 //去年同期累计
-			.add(new AccPipeFilter(sjAcc, 1, dh.getQnfirstMonth(), dh.getQntq())
+			.addFilter(new AccPipeFilter(sjAcc, 1, dh.getQnfirstMonth(), dh.getQntq())
 				.includeCompanies(allCompanies)
 				.includeZbs(pipe.getIndicators()))
 				
 			//同比增长
-			.add(zzlFilter.add(2, 0, 1))
+			.addFilter(zzlFilter.add(2, 0, 1))
 	
 			// 当月实际
-			.add(new AccPipeFilter(sjAcc, 4, dh.getCur())
+			.addFilter(new AccPipeFilter(sjAcc, 4, dh.getCur())
 					.includeCompanies(allCompanies)
 					.includeZbs(pipe.getIndicators()))
 	
 			// 去年同期
-			.add(new AccPipeFilter(sjAcc, 5, dh.getQntq())
+			.addFilter(new AccPipeFilter(sjAcc, 5, dh.getQntq())
 					.includeCompanies(allCompanies)
 					.includeZbs(pipe.getIndicators()))
 
 			//同比增长
-			.add(zzlFilter.add(6, 4, 5));
+			.addFilter(zzlFilter.add(6, 4, 5));
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.rjlr;
+package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.rjlr;
 
 import java.util.List;
 
@@ -31,28 +31,28 @@ public class RjlrDataConfigurator extends AbstractSbdPipeConfigurator{
 			DateHelper dh = new DateHelper(pipe.getDate());
 
 			// 年度累计
-			pipe.add(new AccPipeFilter(sjAcc, 0, dh.getFirstMonth(), dh.getCur())
+			pipe.addFilter(new AccPipeFilter(sjAcc, 0, dh.getFirstMonth(), dh.getCur())
 					.includeCompanies(allCompanies)
 					.includeZbs(pipe.getIndicators())
 					.excludeZbs(getInvisiableZbs())
 					.excludeZbs(getRatioZbs())
 					.excludeZbs(getTimePointNumberZbs())
 					.excludeZbs(getZhHiddenZbs()))
-			.add(new AccPipeFilter(sjAcc, 0)
+			.addFilter(new AccPipeFilter(sjAcc, 0)
 					.includeCompanies(allCompanies)
 					.includeZbs(pipe.getIndicators())
 					.excludeZbs(getInvisiableZbs())
 					.excludeZbs(getRatioZbs()))
 
 			// 当月实际
-			.add(new AccPipeFilter(sjAcc, 2)
+			.addFilter(new AccPipeFilter(sjAcc, 2)
 				.includeCompanies(allCompanies)
 				.includeZbs(pipe.getIndicators())
 				.excludeZbs(getInvisiableZbs())
 				.excludeZbs(getRatioZbs()))
 
 			// 添加特殊指标过滤器
-			.add(new RatioPipeFilter());
+			.addFilter(new RatioPipeFilter());
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.gdw.jhlr;
+package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.jhlr;
 
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
@@ -9,7 +9,7 @@ public class JhlrRankConfigurator  implements IPipeConfigurator{
 	@Override
 	public void onConfiguring(IPipe pipe) {
 			//年度、月度排名
-			pipe.add(new RankPipeFilter()
+			pipe.addFilter(new RankPipeFilter()
 				.add(2, 3)
 				.add(6, 7));
 	}

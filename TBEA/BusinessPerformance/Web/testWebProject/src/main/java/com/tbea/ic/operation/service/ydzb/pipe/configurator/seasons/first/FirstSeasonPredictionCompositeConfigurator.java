@@ -36,74 +36,74 @@ AbstractCompositeConfigurator {
 			Company type, List<Company> subComps, WclPipeFilter wclFilter, ZzlPipeFilter tbzzFilter) {
 
 		    // 全年计划
-			pipe.add(new AccPipeFilter(acc, 0, zbs, type)
+			pipe.addFilter(new AccPipeFilter(acc, 0, zbs, type)
 						.includeCompanies(subComps))
 				// 当月计划
-				.add(new AccPipeFilter(acc, 2, zbs, type)
+				.addFilter(new AccPipeFilter(acc, 2, zbs, type)
 					.includeCompanies(subComps)
 						)
 				// 季度计划
-				.add(new AccPipeFilter(acc, 1, zbs, type)
+				.addFilter(new AccPipeFilter(acc, 1, zbs, type)
 					.includeCompanies(subComps)
 						)
 
 				// 当月实际
-				.add(new AccPipeFilter(acc, 3, zbs, type)
+				.addFilter(new AccPipeFilter(acc, 3, zbs, type)
 					.includeCompanies(subComps)
 						)
 
 				// 计划完成率
-				.add(wclFilter.add(4, 3, 2))
+				.addFilter(wclFilter.add(4, 3, 2))
 
 				// 去年同期
-				.add(new AccPipeFilter(acc, 5, zbs, type)
+				.addFilter(new AccPipeFilter(acc, 5, zbs, type)
 					.includeCompanies(subComps)
 						)
 
 				// 同比增幅
-				.add(tbzzFilter.add(6, 3, 5))
+				.addFilter(tbzzFilter.add(6, 3, 5))
 
 				// 次月预计
-				.add(new AccPipeFilter(acc, 7, zbs, type)
+				.addFilter(new AccPipeFilter(acc, 7, zbs, type)
 					.includeCompanies(subComps)
 						)
 
 				// 末月预计
-				.add(new AccPipeFilter(acc, 8, zbs, type)
+				.addFilter(new AccPipeFilter(acc, 8, zbs, type)
 					.includeCompanies(subComps)
 						)
 
 				// 季度预计合计
-				.add(new AccPipeFilter(acc, 9, zbs, type)
+				.addFilter(new AccPipeFilter(acc, 9, zbs, type)
 					.includeCompanies(subComps)
 						)
 
 				// 季度预计完成率
-				.add(wclFilter.add(10, 9, 1))
+				.addFilter(wclFilter.add(10, 9, 1))
 
 				// 季度去年同期
-				.add(new AccPipeFilter(acc, 11, zbs, type)
+				.addFilter(new AccPipeFilter(acc, 11, zbs, type)
 					.includeCompanies(subComps)
 						)
 
 				// 同比增幅
-				.add(tbzzFilter.add(12, 9, 11))
+				.addFilter(tbzzFilter.add(12, 9, 11))
 
 				// 年度累计
-				.add(new AccPipeFilter(acc, 13, zbs, type)
+				.addFilter(new AccPipeFilter(acc, 13, zbs, type)
 					.includeCompanies(subComps)
 						)
 
 				// 累计计划完成率
-				.add(wclFilter.add(14, 13, 0))
+				.addFilter(wclFilter.add(14, 13, 0))
 
 				// 去年同期
-				.add(new AccPipeFilter(acc, 15, zbs, type)
+				.addFilter(new AccPipeFilter(acc, 15, zbs, type)
 					.includeCompanies(subComps)	)
 
 				// 同比增幅
-				.add(tbzzFilter.add(16, 13, 15))
-				.add(tbzzFilter).add(wclFilter);
+				.addFilter(tbzzFilter.add(16, 13, 15))
+				.addFilter(tbzzFilter).addFilter(wclFilter);
 		
 	}
 
