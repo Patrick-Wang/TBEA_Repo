@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.SimplePipe;
+import com.tbea.ic.operation.service.ydzb.pipe.BasicPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.IPipeFilter;
 
 public class CopyPipeFilter implements IPipeFilter {

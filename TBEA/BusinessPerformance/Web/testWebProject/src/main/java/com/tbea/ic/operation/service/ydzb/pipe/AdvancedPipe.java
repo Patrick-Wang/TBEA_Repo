@@ -8,7 +8,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 
-public class ComplexPipe extends BasePipe{
+public class AdvancedPipe extends BasePipe{
 
 	
 	//*****table data format (for multiple company)****
@@ -34,24 +34,24 @@ public class ComplexPipe extends BasePipe{
 	private List<List<Company>> realCompsList = new ArrayList<List<Company>>();
 	private List<Integer> dependIndicators = new ArrayList<Integer>();
 	
-	public ComplexPipe(Integer indicator, Date date, IPipeConfigurator dwPipeConfig) {
+	public AdvancedPipe(Integer indicator, Date date, IPipeConfigurator dwPipeConfig) {
 		super(indicator, new ArrayList<Company>(), date);
 		this.dwPipeConfig = dwPipeConfig;
 	}
 	
-	public ComplexPipe(List<Integer> indicators, Date date, IPipeConfigurator dwPipeConfig) {
+	public AdvancedPipe(List<Integer> indicators, Date date, IPipeConfigurator dwPipeConfig) {
 		super(indicators, new ArrayList<Company>(), date);
 		this.dwPipeConfig = dwPipeConfig;
 	}
 
-	public ComplexPipe add(Integer dependIndicator) {
+	public AdvancedPipe add(Integer dependIndicator) {
 		if (!dependIndicators.contains(dependIndicator)) {
 			dependIndicators.add(dependIndicator);
 		}
 		return this;
 	}
 	
-	public ComplexPipe add(Company comp, IPipeConfigurator dwPipeConfig) {
+	public AdvancedPipe add(Company comp, IPipeConfigurator dwPipeConfig) {
 		if (!this.companies.contains(comp)) {
 			this.companies.add(comp);
 			this.pipeConfigs.add(dwPipeConfig);
@@ -62,7 +62,7 @@ public class ComplexPipe extends BasePipe{
 		return this;
 	}
 
-	public ComplexPipe add(Company comp, IPipeConfigurator dwPipeConfig, List<Company> realComps) {
+	public AdvancedPipe add(Company comp, IPipeConfigurator dwPipeConfig, List<Company> realComps) {
 		if (!this.companies.contains(comp)) {
 			this.companies.add(comp);
 			this.pipeConfigs.add(dwPipeConfig);
@@ -110,7 +110,7 @@ public class ComplexPipe extends BasePipe{
 		int tmpZbSize = indicatorsSize + dependIndicatorsSize;
 		for (int i = 0, len = this.companies.size(); i < len; ++i) {
 			if (this.pipeConfigs.get(i) != null) {
-				SimplePipe pipe = new SimplePipe(tmpIndicators,
+				BasicPipe pipe = new BasicPipe(tmpIndicators,
 						this.realCompsList.get(i), date,
 						this.pipeConfigs.get(i));
 				addList(i, len, pipe.getData().subList(dependIndicatorsSize, tmpZbSize));

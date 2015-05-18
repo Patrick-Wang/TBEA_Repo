@@ -35,8 +35,8 @@ import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccDataSource;
-import com.tbea.ic.operation.service.ydzb.pipe.ComplexPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.SimplePipe;
+import com.tbea.ic.operation.service.ydzb.pipe.AdvancedPipe;
+import com.tbea.ic.operation.service.ydzb.pipe.BasicPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
@@ -291,7 +291,7 @@ public class GszbServiceImpl implements GszbService {
 
 	@Override
 	public List<String[]> getGsztzb(Date date) {
-		SimplePipe pipe = new SimplePipe(gsztzbs, BMDepartmentDB.getMainlyJydw(companyManager), date,
+		BasicPipe pipe = new BasicPipe(gsztzbs, BMDepartmentDB.getMainlyJydw(companyManager), date,
 				getConfiguratorFactory().getStandardConfigurator());
 		return makeZbResult(gsztzbs, pipe.getData());
 	}
@@ -303,7 +303,7 @@ public class GszbServiceImpl implements GszbService {
 				.getStandardConfigurator();
 
 		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		ComplexPipe pipe = new ComplexPipe(topfivezbs, date, getConfiguratorFactory()
+		AdvancedPipe pipe = new AdvancedPipe(topfivezbs, date, getConfiguratorFactory()
 				.getZtzbCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource), dataSource, gcyTop5ComputeMap));
 		pipe.add(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanys())
 			.add(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanys())
@@ -334,7 +334,7 @@ public class GszbServiceImpl implements GszbService {
 	
 	@Override
 	public List<String[]> getSrqy(Date date) {	
-		SimplePipe pipe = new SimplePipe(srqyzbs, BMDepartmentDB.getMainlyJydw(companyManager), date,
+		BasicPipe pipe = new BasicPipe(srqyzbs, BMDepartmentDB.getMainlyJydw(companyManager), date,
 				getConfiguratorFactory().getSrqyConfigurator());
 		return makeZbResult(srqyzbs, pipe.getData());
 	}
@@ -348,7 +348,7 @@ public class GszbServiceImpl implements GszbService {
 			CompositeAccDataSource dataSource){
 		
 		Organization org = companyManager.getBMDBOrganization();
-		ComplexPipe pipe = new ComplexPipe(gsTop5zb.getValue(), date, compositeConfig);
+		AdvancedPipe pipe = new AdvancedPipe(gsTop5zb.getValue(), date, compositeConfig);
 		pipe.add(org.getCompany(CompanyType.SBGS), standardConfig)
 			.add(org.getCompany(CompanyType.HBGS), standardConfig)
 			.add(org.getCompany(CompanyType.XBC), standardConfig)
@@ -410,7 +410,7 @@ public class GszbServiceImpl implements GszbService {
 		List<Double[]> values = new ArrayList<Double[]>();
 
 		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		ComplexPipe pipe = new ComplexPipe(topfivezbs, date, getConfiguratorFactory()
+		AdvancedPipe pipe = new AdvancedPipe(topfivezbs, date, getConfiguratorFactory()
 				.getThirdSeasonPredictionCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource), dataSource, gcyTop5ComputeMap));
 		pipe.add(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanys())
 			.add(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanys())
@@ -450,7 +450,7 @@ public class GszbServiceImpl implements GszbService {
 		//} else {
 			configurator = getConfiguratorFactory().getStandardConfigurator();
 		//}
-		SimplePipe pipe = new SimplePipe(zbs, comps, d, configurator);
+		BasicPipe pipe = new BasicPipe(zbs, comps, d, configurator);
 		return makeZbResult(zbs, pipe.getData());
 	}
 
@@ -461,7 +461,7 @@ public class GszbServiceImpl implements GszbService {
 				.getSecondSeasonPredictionConfigurator();
 
 		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		ComplexPipe pipe = new ComplexPipe(topfivezbs, date, getConfiguratorFactory()
+		AdvancedPipe pipe = new AdvancedPipe(topfivezbs, date, getConfiguratorFactory()
 				.getSecondSeasonPredictionCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource), dataSource, gcyTop5ComputeMap));
 		pipe.add(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanys())
 			.add(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanys())
@@ -482,7 +482,7 @@ public class GszbServiceImpl implements GszbService {
 				.getFirstSeasonPredictionConfigurator();
 
 		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		ComplexPipe pipe = new ComplexPipe(topfivezbs, date, getConfiguratorFactory()
+		AdvancedPipe pipe = new AdvancedPipe(topfivezbs, date, getConfiguratorFactory()
 				.getFirstSeasonPredictionCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource), dataSource, gcyTop5ComputeMap));
 		pipe.add(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanys())
 			.add(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanys())
@@ -545,20 +545,20 @@ public class GszbServiceImpl implements GszbService {
 
 	List<String[]> getFirstSeasonPredictionZBsOverview(Date date, List<Integer> zbs, 
 			List<Company> comps) {
-		SimplePipe pipe = new SimplePipe(zbs, comps, date,
+		BasicPipe pipe = new BasicPipe(zbs, comps, date,
 				getConfiguratorFactory().getFirstSeasonPredictionConfigurator());
 		return makeZbResult(zbs, pipe.getData());
 	}
 	
 	List<String[]> getSecondSeasonPredictionZBsOverview(Date date, List<Integer> zbs, 
 			List<Company> comps) {
-		SimplePipe pipe = new SimplePipe(zbs, comps, date,
+		BasicPipe pipe = new BasicPipe(zbs, comps, date,
 				getConfiguratorFactory().getSecondSeasonPredictionConfigurator());
 		return makeZbResult(zbs, pipe.getData());
 	}
 	
 	List<String[]> getJDZBMY(Date date, List<Integer> zbs, List<Company> comps) {
-		SimplePipe pipe = new SimplePipe(zbs, comps, date,
+		BasicPipe pipe = new BasicPipe(zbs, comps, date,
 				getConfiguratorFactory().getThirdSeasonPredictionConfigurator());
 		List<Double[]> JDZBMYList = pipe.getData();
 		List<Double[]> result = new ArrayList<Double[]>();

@@ -9,7 +9,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 
-public class SimplePipe extends BasePipe{
+public class BasicPipe extends BasePipe{
 	
 	//*****table data format (only for one company)****
 	// ************************************************
@@ -23,7 +23,7 @@ public class SimplePipe extends BasePipe{
 	// ......
 	// ************************************************
 
-	public SimplePipe(List<Integer> zbIds, List<Company> companies,
+	public BasicPipe(List<Integer> zbIds, List<Company> companies,
 			Date date, IPipeConfigurator pipeConfig) {
 		super(zbIds, companies, date);
 		if (null != pipeConfig) {
@@ -35,15 +35,15 @@ public class SimplePipe extends BasePipe{
 		}
 	}
 
-	public SimplePipe(List<Integer> zbIds, Company comp, Date date, IPipeConfigurator pipeConfig) {
+	public BasicPipe(List<Integer> zbIds, Company comp, Date date, IPipeConfigurator pipeConfig) {
 		this(zbIds, addComp(new ArrayList<Company>(), comp), date, pipeConfig);
 	}
 	
-	public SimplePipe(Integer zb, Company comp, Date date, IPipeConfigurator pipeConfig) {
+	public BasicPipe(Integer zb, Company comp, Date date, IPipeConfigurator pipeConfig) {
 		this(addzb(new ArrayList<Integer>(), zb), addComp(new ArrayList<Company>(), comp), date, pipeConfig);
 	}
 	
-	public SimplePipe(Integer zb, List<Company> companies, Date date,
+	public BasicPipe(Integer zb, List<Company> companies, Date date,
 			IPipeConfigurator pipeConfig) {
 		this(addzb(new ArrayList<Integer>(), zb), companies, date, pipeConfig);
 	}
