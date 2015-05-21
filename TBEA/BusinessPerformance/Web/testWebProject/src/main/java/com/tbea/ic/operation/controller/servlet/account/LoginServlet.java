@@ -38,7 +38,9 @@ public class LoginServlet {
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request,
 			HttpServletResponse response) {
-		//logger.info("error test");
+		if (request.getSession(false) != null){
+			return new ModelAndView("redirect:/Login/index.do");
+		}
 		return new ModelAndView("login");
 	}
 	
