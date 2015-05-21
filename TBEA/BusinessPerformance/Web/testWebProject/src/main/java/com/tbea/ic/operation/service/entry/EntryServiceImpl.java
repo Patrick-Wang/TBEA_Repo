@@ -774,15 +774,6 @@ public class EntryServiceImpl implements EntryService{
 		return result;
 	}
 	
-	private Object[] findCompany(List<Object[]> entryCompletedCompanies, Integer compId){
-		for (Object[] obj : entryCompletedCompanies){
-			if (obj[0].equals(compId)){
-				return obj;
-			}
-		}
-		return null;
-	}
-	
 	private Map<Integer, String> toCompanyMap(List<Object[]> entryCompletedCompanies){
 		 Map<Integer, String>  compMap = new HashMap<Integer, String>();
 		for (Object[] obj : entryCompletedCompanies){

@@ -423,7 +423,7 @@ module JQTable {
                     this.mColModel.push({
                         name: colId,
                         index: colId,
-                        sortable: false,
+                        sortable: true,
                         editable: !nodes[j].isReadOnly(),
                         editrules: !nodes[j].isReadOnly() ? {number:true} : undefined,
                         cellattr: function(rowId, tv, rawObject, cm, rdata) {

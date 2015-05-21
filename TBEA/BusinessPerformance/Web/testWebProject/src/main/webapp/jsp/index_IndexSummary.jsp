@@ -119,7 +119,7 @@
 
 
 <c:if test="${CorpAuth}">
-<div>
+<!-- <div>
 	<h3>
 		经营指标排名情况<a name="zbRanking"> </a>
 	</h3>
@@ -129,7 +129,7 @@
 				<li><a href="../ydzbRanking/companys_ranking.do" target="_blank"><img
 						src="../images/charts/scatter2.png"> <span><strong>各单位经营指标排名情况</strong></span></a>
 				</li>
-				<!-- 	
+					
 				/li
 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=29" target="_blank"><img
 						src="../images/charts/scatter2.png"> <span><strong>经营性净现金流预测完成情况</strong></span></a>
@@ -139,11 +139,11 @@
 						src="../images/charts/scatter4.png"> <span><strong>应收账款预测完成情况</strong></span></a></li>
 				/li
 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=35" target="_blank"><img
-						src="../images/charts/scatter5.png"> <span><strong>存货预测完成情况</strong></span></a></li> -->
+						src="../images/charts/scatter5.png"> <span><strong>存货预测完成情况</strong></span></a></li>
 			</ul>
 		</div>
 	</div>
-</div>
+</div> -->
 </c:if>
 
 <c:if test="${SbdAuth}">
