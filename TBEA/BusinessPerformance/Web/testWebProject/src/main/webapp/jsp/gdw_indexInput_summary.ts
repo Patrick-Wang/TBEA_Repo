@@ -72,14 +72,11 @@ module gdw_indexinput_summary {
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
                 if (null != row[1]) {
-                    if (row[1] == "true") {
-                        row[1] = "已提交";
-                    }
-                    if (row[1] == "false") {
+                    if (row[1] == "") {
                         row[1] = "尚未提交";
                         row[2] = "--";
                     }
-                    
+
                     if (row[3] == ""){
                         row[3] = "--";
                     }

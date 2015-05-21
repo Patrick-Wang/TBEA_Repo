@@ -774,32 +774,49 @@ public class EntryServiceImpl implements EntryService{
 		return result;
 	}
 	
+	private Object[] findCompany(List<Object[]> entryCompletedCompanies, Integer compId){
+		for (Object[] obj : entryCompletedCompanies){
+			if (obj[0].equals(compId)){
+				return obj;
+			}
+		}
+		return null;
+	}
+	
+	private Map<Integer, String> toCompanyMap(List<Object[]> entryCompletedCompanies){
+		 Map<Integer, String>  compMap = new HashMap<Integer, String>();
+		for (Object[] obj : entryCompletedCompanies){
+			compMap.put((Integer)obj[0], (String)obj[1]);
+		}
+		return compMap;
+	}
+	
 	@Override
 	public List<String[]> getEntryStatus(Date date, ZBType entryType, List<Company> mainCompanies) {
 		List<String[]> result = new ArrayList<String[]>();
-		List<Integer> entryCompletedCompanies = null;
+		 Map<Integer, String> entryCompletedCompanies = null;
 		switch (entryType){
 		case BY20YJ:
-			entryCompletedCompanies = yj20zbDao.getEntryCompletedCompanies(date);
+			entryCompletedCompanies = toCompanyMap(yj20zbDao.getEntryCompletedCompanies(date));
 			break;
 		case BY28YJ:
-			entryCompletedCompanies = yj28zbDao.getEntryCompletedCompanies(date);
+			entryCompletedCompanies = toCompanyMap(yj28zbDao.getEntryCompletedCompanies(date));
 			break;
 		case BYSJ:
-			entryCompletedCompanies = sjzbDao.getEntryCompletedCompanies(date);
+			entryCompletedCompanies = toCompanyMap(sjzbDao.getEntryCompletedCompanies(date));
 			break;
 		case NDJH:
-			entryCompletedCompanies = ndjhzbDao.getEntryCompletedCompanies(date);
+			entryCompletedCompanies = toCompanyMap(ndjhzbDao.getEntryCompletedCompanies(date));
 			break;
 		case YDJDMJH:
-			entryCompletedCompanies = ydjhzbDao.getEntryCompletedCompanies(date);
+			entryCompletedCompanies = toCompanyMap(ydjhzbDao.getEntryCompletedCompanies(date));
 			break;
 		default:
 			return result;
 		}
 		
-		for (Company comp : mainCompanies){			
-			if (entryCompletedCompanies.contains(comp.getId())){
+		for (Company comp : mainCompanies){	
+				if (entryCompletedCompanies.containsKey(comp.getId())){
 				Date time = null;
 				switch (entryType){
 				case BY20YJ:
@@ -819,9 +836,9 @@ public class EntryServiceImpl implements EntryService{
 					break;
 				}
 				
-				result.add(new String[]{comp.getName(), "true", null != time ? Util.formatToDay(time) : null});
+				result.add(new String[]{comp.getName(), entryCompletedCompanies.get(comp.getId()), null != time ? Util.formatToDay(time) : null});
 			} else{
-				result.add(new String[]{comp.getName(), "false", null});
+				result.add(new String[]{comp.getName(), null, null});
 			}
 		}
 

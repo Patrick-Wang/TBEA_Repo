@@ -372,10 +372,10 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 
 	
 	@Override
-	public List<Integer> getEntryCompletedCompanies(Date date) {
+	public List<Object[]> getEntryCompletedCompanies(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("select dwxx.id from SJZB where nf = :nf and yf = :yf group by dwxx.id");
+		Query q = this.getEntityManager().createQuery("select dwxx.id, sjshzt.name from SJZB where nf = :nf and yf = :yf group by dwxx.id, sjshzt.name");
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		return q.getResultList();
