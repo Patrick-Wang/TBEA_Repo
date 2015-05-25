@@ -13,9 +13,9 @@ import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.StandardConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.WclPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.ZzlPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.ZzlPipeFilter;
 
 //收入签约分结构
 public class SrqyConfigurator implements IPipeConfigurator {

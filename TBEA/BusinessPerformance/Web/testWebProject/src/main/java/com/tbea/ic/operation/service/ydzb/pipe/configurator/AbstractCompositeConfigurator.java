@@ -8,8 +8,8 @@ import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccDataSource;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.complex.WclPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.complex.ZzlPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.advanced.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.advanced.ZzlPipeFilter;
 
 public abstract class AbstractCompositeConfigurator implements
 		IPipeConfigurator {

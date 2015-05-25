@@ -8,9 +8,9 @@ import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccDataSou
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.AbstractCompositeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.complex.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.complex.WclPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.complex.ZzlPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.advanced.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.advanced.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.advanced.ZzlPipeFilter;
 
 public class SecondSeasonPredictionCompositeConfigurator extends
 AbstractCompositeConfigurator {

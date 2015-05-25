@@ -8,8 +8,8 @@ import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.AbstractSbdPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.RatioPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.RatioPipeFilter;
 
 public class RjlrDataConfigurator extends AbstractSbdPipeConfigurator{
 

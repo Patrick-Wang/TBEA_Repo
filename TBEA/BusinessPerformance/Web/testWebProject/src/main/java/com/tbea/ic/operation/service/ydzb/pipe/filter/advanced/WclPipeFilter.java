@@ -1,27 +1,23 @@
-package com.tbea.ic.operation.service.ydzb.pipe.filter.simple;
+package com.tbea.ic.operation.service.ydzb.pipe.filter.advanced;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.IPipeFilter;
 
 
 public class WclPipeFilter implements IPipeFilter {
 	List<Integer[]> wcls = new ArrayList<Integer[]>();
-	Set<Integer> excludeZbs = new HashSet<Integer>();
+	Set<Integer> includeComps = new HashSet<Integer>();
 	
-	public WclPipeFilter exclude(GSZB zb){
-		excludeZbs.add(zb.getValue());
-		return this;
-	}
-	
-	public WclPipeFilter exclude(Integer zb){
-		excludeZbs.add(zb);
+	public WclPipeFilter include(Company comp){
+		includeComps.add(comp.getType().ordinal());
 		return this;
 	}
 	
@@ -32,7 +28,7 @@ public class WclPipeFilter implements IPipeFilter {
 
 	@Override
 	public void filter(int row, IPipe pipe) {
-		if (!excludeZbs.contains(pipe.getRowId(row))){
+		if (includeComps.contains(pipe.getRowId(row))){
 			updateZb(row, pipe.getRow(row));
 		}
 	}

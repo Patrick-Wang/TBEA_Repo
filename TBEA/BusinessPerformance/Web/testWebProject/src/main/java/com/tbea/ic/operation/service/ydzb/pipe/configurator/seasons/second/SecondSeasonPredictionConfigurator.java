@@ -10,12 +10,12 @@ import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.AbstractSbdPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.CopyPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.RatioPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.WclPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.YdjhProportionAccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.simple.ZzlPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.AccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.CopyPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.RatioPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.WclPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.YdjhProportionAccPipeFilter;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.ZzlPipeFilter;
 
 public class SecondSeasonPredictionConfigurator extends AbstractSbdPipeConfigurator {
 

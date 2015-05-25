@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.filter.simple;
+package com.tbea.ic.operation.service.ydzb.pipe.filter.basic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
