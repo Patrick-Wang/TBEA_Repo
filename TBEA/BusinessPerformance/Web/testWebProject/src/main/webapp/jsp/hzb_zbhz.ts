@@ -71,8 +71,8 @@ module hzb_zbhz {
 
         private mData: Array<string[]> = [];
         private mDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_update.do");
-        private mXmgsDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_xmgs_compute.do");
-        private mJydwDataSet: Util.Ajax = new Util.Ajax("hzb_zbhz_jydw_compute.do");
+        private mXmgsDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_xmgs_compute.do", false);
+        private mJydwDataSet: Util.Ajax = new Util.Ajax("hzb_zbhz_jydw_compute.do", false);
         private mTableId : string;
         private mType : number = 0;
         private mDs : Util.DateSelector;
