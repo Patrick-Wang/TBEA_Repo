@@ -109,6 +109,7 @@ module hzb_zbhz {
             this.mJydwDataSet.get({ month: date.month, year: date.year, type : this.mType, fileName: fName}).then((tmStamp)=>{
                   $("#exportJydw")[0].action = "general_export.do?" + Util.Ajax.toUrlParam({ timeStamp: tmStamp.timeStamp });
                   $("#exportJydw")[0].submit();
+                
             })
         }
         
