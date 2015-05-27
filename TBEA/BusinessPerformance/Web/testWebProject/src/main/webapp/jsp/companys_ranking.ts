@@ -69,7 +69,7 @@ module companys_ranking {
         }
 
         public onIndexSelected() {
-            this.mIndex = $("#indextype").val();
+            this.mIndex = $("#ranktype").val();
             //this.mIndex = $("#indextype  option:selected").text();
         }
 

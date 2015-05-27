@@ -53,7 +53,9 @@
             });
         })();
     </script>
-    <meta charset="UTF-8">
+
+
+<meta charset="UTF-8">
 
     <title>${year}年${month}月经营单位指标排名情况</title>
 
@@ -179,8 +181,17 @@
 			<td>
 				<Table>
 					<tr>
-						<td><div id="date"></div>
+						<td><div id="date"></div></td>
+						<td><div style = "width:60px"></div>	</td>
+						<td>
+							<div id="t1">
+							<input type="radio" name="rank" value="JY" id="JYcompanys" checked="checked"><label for="JYcompanys">经营单位排名</label>
+							<input type="radio" name="rank" value="PRO" id="Procompanys" ><label for ="Procompanys">项目公司排名</label>
+							</div>						
 						</td>
+						<td><div style = "width:10px"/></td>
+						
+						
 						<td><%@include file="ranking_selection.jsp"%></div>
 						</td>
 						<td><input id="update" type="button" value="更新" style="width : 80px; margin-left:10px;"
@@ -199,5 +210,36 @@
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
 <script src="../jsp/style_button.js"></script>
-<script src="../jsp/style_select.js"></script>
+
+
+<script type="text/javascript">
+		$(function(){
+		 showCont();
+		 $("input[name=rank]").click(function(){
+		  showCont();
+		 });
+		});
+		function showCont(){
+		 switch($("input[name=rank]:checked").attr("id")){
+		  case "JYcompanys":
+		   //alert("one");
+		   $("#ranktype").empty();
+		   var option = $("<option>").text(1).val(1)
+		   $("#ranktype").append(option);
+		   $("#ranktype").multiselect({
+               multiple: false,
+               // noneSelectedText: "请选择月份",
+           });
+		   //$("#sellInfo1").show();
+		   break;
+		  case "Procompanys":
+		   $("#sellInfo1").hide();
+		   $("#sellInfo2").show();
+		   break;
+		  default:
+		   break;
+ }
+		}
+		 </script>
+		 <script src="../jsp/style_select.js"></script>
 </html>

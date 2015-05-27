@@ -72,6 +72,7 @@ module hzb_zbhz {
         private mData: Array<string[]> = [];
         private mDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_update.do");
         private mXmgsDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_xmgs_compute.do");
+        private mJydwDataSet: Util.Ajax = new Util.Ajax("hzb_zbhz_jydw_compute.do");
         private mTableId : string;
         private mType : number = 0;
         private mDs : Util.DateSelector;
@@ -102,14 +103,19 @@ module hzb_zbhz {
                 });
         }
         
-        public exportExcel(fName: string) {
+        public exportExcelJydw(fName: string) {
             var date : Util.Date = this.mDs.getDate();
-            $("#export")[0].action = "hzb_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, type : this.mType, fileName: fName });
-            $("#export")[0].submit();
+            $("#loadingText").text("经营单位整体指标完成情况导出中，请稍后。。。");
+            this.mJydwDataSet.get({ month: date.month, year: date.year, type : this.mType, fileName: fName}).then((tmStamp)=>{
+                  $("#exportJydw")[0].action = "general_export.do?" + Util.Ajax.toUrlParam({ timeStamp: tmStamp.timeStamp });
+                  $("#exportJydw")[0].submit();
+            })
         }
         
         public exportExcelXmgs(fName: string) {
             var date : Util.Date = this.mDs.getDate();
+            var fName = date.year + "年" + date.month + "月项目公司整体指标完成情况"; 
+            $("#loadingText").text("项目公司整体指标完成情况导出中，请稍后。。。");
             this.mXmgsDataSet.get({ month: date.month, year: date.year, type : this.mType, fileName: fName}).then((tmStamp)=>{
                   $("#exportxmgs")[0].action = "general_export.do?" + Util.Ajax.toUrlParam({ timeStamp: tmStamp.timeStamp });
                   $("#exportxmgs")[0].submit();
