@@ -229,10 +229,10 @@ th.ui-th-ltr {
 			<Table>
 					<tr>
 			<td>
-				<form id="export" method="post">
+				<form id="exportJydw" method="post">
 					<input class="exportButton" type="button" value="导出"
 						style="width: 100px;"
-						onclick="instance.exportExcel($('h1').text())"
+						onclick="instance.exportExcelJydw($('h1').text())"
 						class="ui-button ui-widget ui-state-default ui-corner-all"
 						role="button" aria-disabled="false"></input>
 				</form>

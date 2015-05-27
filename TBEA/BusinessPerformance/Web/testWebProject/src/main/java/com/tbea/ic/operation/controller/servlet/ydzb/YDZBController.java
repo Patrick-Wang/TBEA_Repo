@@ -209,10 +209,10 @@ public class YDZBController {
 		return gszbService.getGdwzb(d, xmgses);
 	}
 	
-	
-	@RequestMapping(value = "hzb_zbhz_export.do")
-	public @ResponseBody byte[] getHzb_zbhz_export(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	@RequestMapping(value = "hzb_zbhz_jydw_compute.do")
+	public @ResponseBody byte[] gethzb_zbhz_jydw_compute(
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		Date d = DateSelection.getDate(request);
 		String type = request.getParameter("type");
 		JyzbExcelTemplate template = null;
@@ -233,7 +233,9 @@ public class YDZBController {
 					new Integer[]{4, 6, 9, 11, 13, 15}, new Integer[]{1, 2});
 			
 			
-			HSSFWorkbook workbook = template.getWorkbook();       
+			HSSFWorkbook workbook = template.getWorkbook();  
+			String fileNameAndSheetName = request.getParameter("fileName");
+			workbook.setSheetName(0, fileNameAndSheetName);
 			HSSFSheet sheet = workbook.getSheetAt(0);
 			for (int i = data.size() - 1; i >= 0; --i) {
 				HSSFRow row = sheet.createRow(3 + i);
@@ -304,12 +306,12 @@ public class YDZBController {
 				}
 			}
 		}
-		
-		template.write(response, request.getParameter("fileName") + ".xls");
-		
-		return "".getBytes("utf-8");
+		String timeStamp = "" + Calendar.getInstance().getTimeInMillis();
+		request.getSession(false).setAttribute(timeStamp + "template", template);
+		request.getSession(false).setAttribute(timeStamp + "fileName", request.getParameter("fileName") + ".xls");
+		return ("{\"timeStamp\" : \"" + timeStamp + "\"}").getBytes("utf-8");
+
 	}
-	
 	
 	@RequestMapping(value = "hzb_zbhz_xmgs_compute.do")
 	public @ResponseBody byte[] getHzb_zbhz_xmgs_compute(
@@ -334,6 +336,8 @@ public class YDZBController {
 //				4, 6, 9, 11, 13, 15 }, new Integer[] { 1, 2 });
 //
 		HSSFWorkbook workbook = template.getWorkbook();
+		String fileNameAndSheetName = request.getParameter("fileName");
+		workbook.setSheetName(0, fileNameAndSheetName);
 		HSSFSheet sheet = workbook.getSheetAt(0);
 //		for (int i = data.size() - 1; i >= 0; --i) {
 //			HSSFRow row = sheet.createRow(3 + i);
@@ -1081,6 +1085,7 @@ public class YDZBController {
 			return ("{\"timeStamp\" : \"" + timeStamp + "\"}").getBytes("utf-8");
 		}
 	
+
 	@RequestMapping(value = "general_export.do")
 	public @ResponseBody byte[] general_export(
 			HttpServletRequest request, HttpServletResponse response)
