@@ -56,7 +56,7 @@ public class SYHKJHZXQKController {
 		if (null == comp) {
 			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
 			if (null != comp) {
-				List<Company> comps = comp.getSubCompanys();
+				List<Company> comps = comp.getSubCompanies();
 				hkjhs.add(service.getSyhkjhzxqkData(d, comps));
 				hkjhs.add(service.getHkjhzxqkXjData(d, comps));
 			}
@@ -90,7 +90,7 @@ public class SYHKJHZXQKController {
 //		compSel.select(map);
 		
 		List<Company> comps = new ArrayList<Company>();
-		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanys());
+		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanies());
 		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);

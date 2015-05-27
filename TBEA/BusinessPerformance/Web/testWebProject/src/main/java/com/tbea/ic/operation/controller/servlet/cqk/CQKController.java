@@ -54,8 +54,8 @@ public class CQKController {
 		if (null == comp) {
 			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
 			if (null != comp) {
-				result.add(cqkService.getCqkData(d, comp.getSubCompanys()));
-				result.add(cqkService.getCompareData(d, comp.getSubCompanys()));
+				result.add(cqkService.getCqkData(d, comp.getSubCompanies()));
+				result.add(cqkService.getCompareData(d, comp.getSubCompanies()));
 			}
 		}
 		else {
@@ -84,7 +84,7 @@ public class CQKController {
 		dateSel.select(map);
 		
 		List<Company> comps = new ArrayList<Company>();
-		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanys());
+		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanies());
 		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);

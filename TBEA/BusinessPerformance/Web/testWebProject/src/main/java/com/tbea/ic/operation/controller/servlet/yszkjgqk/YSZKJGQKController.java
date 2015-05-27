@@ -48,7 +48,7 @@ public class YSZKJGQKController {
 		if (null == comp) {
 			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
 			if (null != comp) {
-				List<Company> comps = comp.getSubCompanys();
+				List<Company> comps = comp.getSubCompanies();
 				result.add(service.getYszkjg(d, comps));
 				result.add(service.getWdqtbbh(d, comps));
 				result.add(service.getJetbbh(d, comps));

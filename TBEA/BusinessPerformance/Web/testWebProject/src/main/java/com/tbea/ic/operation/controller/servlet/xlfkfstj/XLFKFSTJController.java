@@ -51,7 +51,7 @@ public class XLFKFSTJController {
 		if (null == comp) {
 			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
 			if (null != comp) {
-				List<Company> comps = comp.getSubCompanys();
+				List<Company> comps = comp.getSubCompanies();
 				result.add(service.getFdwData(d, comps));
 				result.add(service.getGwData(d, comps));
 				result.add(service.getNwData(d, comps));
@@ -93,7 +93,7 @@ public class XLFKFSTJController {
 					@Override
 					public boolean keep(Company comp) {
 						if (null != companyManager.getVirtualYSZKOrganization().getCompany(comp.getType())){
-							List<Company> subComps = comp.getSubCompanys();
+							List<Company> subComps = comp.getSubCompanies();
 							for (Company com : subComps){
 								if (contains(com)){
 									return true;

@@ -54,8 +54,8 @@ public class BLHTDQQKHZController {
 		if (null == comp) {
 			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
 			if (null != comp) {
-				result.add(service.getBlyeqs(d, comp.getSubCompanys()));
-				result.add(service.getBlhtdqqk(d, comp.getSubCompanys()));
+				result.add(service.getBlyeqs(d, comp.getSubCompanies()));
+				result.add(service.getBlhtdqqk(d, comp.getSubCompanies()));
 			}
 		}
 		else {
@@ -78,7 +78,7 @@ public class BLHTDQQKHZController {
 		
 		
 		List<Company> comps = new ArrayList<Company>();
-		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanys());
+		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanies());
 		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);

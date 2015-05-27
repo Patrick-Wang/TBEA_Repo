@@ -132,7 +132,7 @@ public class CompanySelection {
 					continue;
 				}
 				
-				List<DataNode> subNodes = select(topComp.getSubCompanys(),
+				List<DataNode> subNodes = select(topComp.getSubCompanies(),
 						depth - 1);
 				if (!subNodes.isEmpty()) {
 					node = bind(topComp);
@@ -167,7 +167,7 @@ public class CompanySelection {
 		for (int i = 0; i < mTopComps.size(); ++i){
 			tmpComp = mTopComps.get(i);
 			
-			passedComps = filterCompanys(tmpComp.getSubCompanys());
+			passedComps = filterCompanys(tmpComp.getSubCompanies());
 			
 			if (!passedComps.isEmpty()){
 				
@@ -221,7 +221,7 @@ public class CompanySelection {
 		} else {
 			for (int i = 0; i < mTopComps.size(); ++i) {
 				topComp = mTopComps.get(i);
-				passedComps = filterCompanys(topComp.getSubCompanys());
+				passedComps = filterCompanys(topComp.getSubCompanies());
 				if (!passedComps.isEmpty()) {
 					List<DataNode> subNodes = bind(passedComps);
 					node = bind(topComp);

@@ -54,7 +54,7 @@ public class HKJHJGController {
 		if (null == comp) {
 			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
 			if (null != comp) {
-				List<Company> comps = comp.getSubCompanys();
+				List<Company> comps = comp.getSubCompanies();
 				result.add(service.getHkjhjgData(d, comps));
 				result.add(new String[][]{service.getHkjhztData(d, comps)});
 				result.add(new String[][]{service.getHkjhxzData(d, comps)});
@@ -80,7 +80,7 @@ public class HKJHJGController {
 		dateSel.select(map);
 
 		List<Company> comps = new ArrayList<Company>();
-		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanys());
+		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanies());
 		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
 		CompanySelection compSel = new CompanySelection(true, comps);
 		//compSel.setFirstCompany(CompanyType.HB);

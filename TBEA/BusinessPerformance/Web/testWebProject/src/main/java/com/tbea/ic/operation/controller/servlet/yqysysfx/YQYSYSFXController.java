@@ -49,7 +49,7 @@ public class YQYSYSFXController {
 		if (null == comp) {
 			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
 			if (null != comp) {
-				xjlrb = JSONArray.fromObject(service.getYqysysfxData(d, comp.getSubCompanys()))
+				xjlrb = JSONArray.fromObject(service.getYqysysfxData(d, comp.getSubCompanies()))
 						.toString().replace("null", "0.00");
 			}
 		}
@@ -67,7 +67,7 @@ public class YQYSYSFXController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Company> comps = new ArrayList<Company>();
-		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanys());
+		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanies());
 		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
 		CompanySelection compSel = new CompanySelection(true, comps);
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);

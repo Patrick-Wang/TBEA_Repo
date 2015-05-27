@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ZBType;
+import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
@@ -48,44 +49,45 @@ public class DashboardController {
 	List<Company> mainCompanies = new ArrayList<Company>();
 	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-	public void setCompanyManager(CompanyManager companyManager){
-		Organization org = companyManager.getBMDBOrganization();
-		mainCompanies.add(org.getCompany(CompanyType.SBGS));
-		mainCompanies.add(org.getCompany(CompanyType.HBGS));
-		mainCompanies.add(org.getCompany(CompanyType.XBC));
-		mainCompanies.add(org.getCompany(CompanyType.LLGS));
-		mainCompanies.add(org.getCompany(CompanyType.XLC));
-		mainCompanies.add(org.getCompany(CompanyType.DLGS));
-		mainCompanies.add(org.getCompany(CompanyType.XTNYGS));
-		mainCompanies.add(org.getCompany(CompanyType.XNYGS));
-		mainCompanies.add(org.getCompany(CompanyType.TCNY));
-		mainCompanies.add(org.getCompany(CompanyType.NDGS));
-		mainCompanies.add(org.getCompany(CompanyType.JCKGS_JYDW));
-		mainCompanies.add(org.getCompany(CompanyType.GJGCGS_GFGS));
-		mainCompanies.add(org.getCompany(CompanyType.ZHGS));
-	}
-	
-	//取得各个经营单位指标录入的情况
+	CompanyManager companyManager;
+
 	@RequestMapping(value = "status_update.do", method = RequestMethod.GET)
-	public  @ResponseBody byte[] getEntryStatus(HttpServletRequest request,
+	public @ResponseBody byte[] getEntryStatus(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Date date = DateSelection.getDate(request);
-		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("entryType")));
-		List<String[]> entryStatus = entryService.getEntryStatus(date, entryType, mainCompanies);
-		List<String[]> approveStatus = approveService.getApproveStatus(date, entryType, mainCompanies);
-		List<String[]> aggStatus = new ArrayList<String[]>();
-		for(int i = 0; i < entryStatus.size(); ++i){
-			aggStatus.add(new String[]{
-					entryStatus.get(i)[0],
-					entryStatus.get(i)[1],
-					entryStatus.get(i)[2],
-					approveStatus.get(i)[2]});
+		Account account = (Account) request.getSession()
+				.getAttribute("account");
+		List<Company> jydws = null;
+		if (account.getName().equals("fujianghua")) {
+			jydws = BMDepartmentDB.getMainlyJydw(companyManager);
+		} else if (account.getName().equals(
+				companyManager.getBMDBOrganization()
+						.getCompany(CompanyType.ZHGS).getName())) {
+			jydws = BMDepartmentDB.getMainlyJydw(companyManager);
 		}
-		String result = JSONArray.fromObject(aggStatus).toString().replace("null", "\"\"");
+		String result = "";
+		if (null != jydws) {
+
+			ZBType entryType = ZBType.valueOf(Integer.valueOf(request
+					.getParameter("entryType")));
+			List<String[]> entryStatus = entryService.getEntryStatus(date,
+					entryType, jydws);
+			List<String[]> approveStatus = approveService.getApproveStatus(
+					date, entryType, jydws);
+			List<String[]> aggStatus = new ArrayList<String[]>();
+			for (int i = 0; i < entryStatus.size(); ++i) {
+				aggStatus.add(new String[] { entryStatus.get(i)[0],
+						entryStatus.get(i)[1], entryStatus.get(i)[2],
+						approveStatus.get(i)[2] });
+			}
+			result = JSONArray.fromObject(aggStatus).toString()
+					.replace("null", "\"\"");
+
+		}
 		return result.getBytes("utf-8");
 	}
-	
+
 	@RequestMapping(value = "status.do", method = RequestMethod.GET)
 	public ModelAndView getGdw_sjzb_summary(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -94,7 +96,6 @@ public class DashboardController {
 		dateSel.select(map);
 		return new ModelAndView("gdw_indexInput_summary", map);
 	}
-	//End
 	
 	@RequestMapping(value = "user_status.do")
 	public ModelAndView getUser_status(HttpServletRequest request,
@@ -104,7 +105,7 @@ public class DashboardController {
 		
 		JSONArray arrUsers = new JSONArray();
 		HttpSession latestActiveSession = null;
-		Account account = (Account) request.getSession().getAttribute("account");;
+		Account account = (Account) request.getSession().getAttribute("account");
 		if (null == account || !"admin".equals(account.getName())) {
 			return new ModelAndView("");
 		}

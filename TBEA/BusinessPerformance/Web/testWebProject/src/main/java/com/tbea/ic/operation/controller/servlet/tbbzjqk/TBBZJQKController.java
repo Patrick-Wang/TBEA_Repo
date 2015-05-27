@@ -57,7 +57,7 @@ public class TBBZJQKController {
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);
 		Organization org = companyManager.getOperationOrganization();
-		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanys());
+		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanies());
 		compSel.select(map);
 		return new ModelAndView("tbbzjqk", map);
 	}
