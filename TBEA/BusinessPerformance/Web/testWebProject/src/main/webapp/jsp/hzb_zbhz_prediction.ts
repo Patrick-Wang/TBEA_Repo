@@ -138,8 +138,8 @@ module hzb_zbhz_prediciton {
        
         private mData: Array<string[]> = [];
         private mDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_prediction_update.do");
-        private mJydwDataSet: Util.Ajax = new Util.Ajax("hzb_zbhz_prediction_jydw_compute.do");
-        private mXmgsDataSet: Util.Ajax = new Util.Ajax("hzb_zbhz_prediction_xmgs_compute.do");
+        private mJydwDataSet: Util.Ajax = new Util.Ajax("hzb_zbhz_prediction_jydw_compute.do", false);
+        private mXmgsDataSet: Util.Ajax = new Util.Ajax("hzb_zbhz_prediction_xmgs_compute.do", false);
         private mTableId : string;
         public init(tableId: string, year: number): void {
             this.mYear = year;
