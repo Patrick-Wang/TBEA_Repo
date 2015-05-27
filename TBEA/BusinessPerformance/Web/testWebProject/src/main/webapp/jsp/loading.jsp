@@ -21,7 +21,7 @@
 .lprogressBar {
 	border: solid 2px #86A5AD;
 	display: block;
-	width: 270px;
+	width: 330px;
 	height: 66px;
 	position: fixed;
 	top: 50%;
@@ -44,7 +44,7 @@
 			<td valign="middle" style="width: 60px; height: 60px;" align="center">
 				<div class="loading" style="width: 30px; height: 30px;"></div>
 			</td>
-			<td>数据加载中，请稍等...</td>
+			<td id="loadingText" style = "width:320px">数据加载中，请稍等...</td>
 		</tr>
 	</table>
 </div>
