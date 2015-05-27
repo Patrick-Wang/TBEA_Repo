@@ -197,8 +197,7 @@ th.ui-th-ltr {
 			<td>
 				<Table>
 					<tr>
-						<td><div id="date"></div>
-						</td>
+						<td><div id="date"></div></td>
 						<td><select onchange="instance.onTypeSelected(this.value)"
 							style="width: 125px;">
 								<option value="0" selected="selected">全部</option>
@@ -208,8 +207,7 @@ th.ui-th-ltr {
 							style="width: 80px; margin-left: 10px;"
 							onclick="instance.updateUI()"
 							class="ui-button ui-widget ui-state-default ui-corner-all"
-							role="button" aria-disabled="false"></input>
-						</td>
+							role="button" aria-disabled="false"></input></td>
 					</tr>
 				</Table>
 			</td>
@@ -221,39 +219,38 @@ th.ui-th-ltr {
 		</tr>
 		<tr>
 			<td>
-				<div style="height:6px"></div>
+				<div style="height: 6px"></div>
 			</td>
 		</tr>
-		<tr>	
-		<td>
-			<Table>
+		<tr>
+			<td>
+				<Table>
 					<tr>
-			<td>
-				<form id="exportJydw" method="post">
-					<input class="exportButton" type="button" value="导出"
-						style="width: 100px;"
-						onclick="instance.exportExcelJydw($('h1').text())"
-						class="ui-button ui-widget ui-state-default ui-corner-all"
-						role="button" aria-disabled="false"></input>
-				</form>
-			</td>
-			<td>
-				<form id="exportxmgs" method="post">
-					<input class="exportButton" type="button" value="导出项目公司"
-						style="width: 120px;"
-						onclick="instance.exportExcelXmgs($('h1').text())"
-						class="ui-button ui-widget ui-state-default ui-corner-all"
-						role="button" aria-disabled="false"></input>
-				</form>
-			</td>
-			</tr>
+						<td>
+							<form id="exportJydw" method="post">
+								<input class="exportButton" type="button" value="导出"
+									style="width: 100px;"
+									onclick="instance.exportExcelJydw($('h1').text())"
+									class="ui-button ui-widget ui-state-default ui-corner-all"
+									role="button" aria-disabled="false"></input>
+							</form>
+						</td>
+						<td>
+							<form id="exportxmgs" method="post">
+								<input class="exportButton" type="button" value="导出项目公司"
+									style="width: 120px;"
+									onclick="instance.exportExcelXmgs($('h1').text())"
+									class="ui-button ui-widget ui-state-default ui-corner-all"
+									role="button" aria-disabled="false"></input>
+							</form>
+						</td>
+					</tr>
 				</Table>
 			</td>
-			
-			
+
+
 		</tr>
-			
-		</tr>
+
 	</Table>
 	<%@include file="loading.jsp"%>
 	<script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>

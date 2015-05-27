@@ -105,7 +105,7 @@ module hzb_zbhz {
         
         public exportExcelJydw(fName: string) {
             var date : Util.Date = this.mDs.getDate();
-            $("#loadingText").text("经营单位整体指标完成情况导出中，请稍后。。。");
+            $("#loadingText").text("经营单位整体指标完成情况导出中。。。");
             this.mJydwDataSet.get({ month: date.month, year: date.year, type : this.mType, fileName: fName}).then((tmStamp)=>{
                   $("#exportJydw")[0].action = "general_export.do?" + Util.Ajax.toUrlParam({ timeStamp: tmStamp.timeStamp });
                   $("#exportJydw")[0].submit();
@@ -115,7 +115,7 @@ module hzb_zbhz {
         public exportExcelXmgs(fName: string) {
             var date : Util.Date = this.mDs.getDate();
             var fName = date.year + "年" + date.month + "月项目公司整体指标完成情况"; 
-            $("#loadingText").text("项目公司整体指标完成情况导出中，请稍后。。。");
+            $("#loadingText").text("项目公司整体指标完成情况导出中。。。");
             this.mXmgsDataSet.get({ month: date.month, year: date.year, type : this.mType, fileName: fName}).then((tmStamp)=>{
                   $("#exportxmgs")[0].action = "general_export.do?" + Util.Ajax.toUrlParam({ timeStamp: tmStamp.timeStamp });
                   $("#exportxmgs")[0].submit();

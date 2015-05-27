@@ -977,7 +977,7 @@ public class YDZBController {
 		return hzb_zbhz_prediction.getBytes("utf-8");
 	}
 	
-	// 整体指标预测export
+	// 项目公司整体指标预测export
 		@RequestMapping(value = "hzb_zbhz_prediction_xmgs_compute.do")
 		public @ResponseBody byte[] gethzb_zbhz_prediction_xmgs_compute(
 				HttpServletRequest request, HttpServletResponse response)
@@ -1097,8 +1097,8 @@ public class YDZBController {
 	}
 
 	// 整体指标预测export
-	@RequestMapping(value = "hzb_zbhz_prediction_export.do")
-	public @ResponseBody byte[] gethzb_zbhz_prediction_export(
+	@RequestMapping(value = "hzb_zbhz_prediction_jydw_compute.do")
+	public @ResponseBody byte[] gethzb_zbhz_prediction_jydw_compute(
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		Date d = DateSelection.getDate(request);
@@ -1191,9 +1191,11 @@ public class YDZBController {
 			}
 		}
 		
-		template.write(response, fileNameAndSheetName + ".xls");
+		String timeStamp = "" + Calendar.getInstance().getTimeInMillis();
+		request.getSession(false).setAttribute(timeStamp + "template", template);
+		request.getSession(false).setAttribute(timeStamp + "fileName", fileNameAndSheetName + ".xls");
 		
-		return "".getBytes("utf-8");
+		return ("{\"timeStamp\" : \"" + timeStamp + "\"}").getBytes("utf-8");
 	}
 
 	// 整体指标预测update

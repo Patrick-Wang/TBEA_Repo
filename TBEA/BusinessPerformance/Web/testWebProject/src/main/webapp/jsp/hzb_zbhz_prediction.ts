@@ -138,6 +138,8 @@ module hzb_zbhz_prediciton {
        
         private mData: Array<string[]> = [];
         private mDataSet : Util.Ajax = new Util.Ajax("hzb_zbhz_prediction_update.do");
+        private mJydwDataSet: Util.Ajax = new Util.Ajax("hzb_zbhz_prediction_jydw_compute.do");
+        private mXmgsDataSet: Util.Ajax = new Util.Ajax("hzb_zbhz_prediction_xmgs_compute.do");
         private mTableId : string;
         public init(tableId: string, year: number): void {
             this.mYear = year;
@@ -160,11 +162,24 @@ module hzb_zbhz_prediciton {
         	this.mDelegateMonth = parseInt(month);
         }
         
-        public exportExcel(fName: string) {
+         public exportExcelJydw() {         
             this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
-            $("#export")[0].action = "hzb_zbhz_prediction_export.do?" + Util.Ajax.toUrlParam({ month: this.mActualMonth, year: this.mYear });
-            $("#export")[0].submit();
+            $("#loadingText").text("经营单位整体指标预测完成情况导出中。。。");
+            this.mJydwDataSet.get({ month: this.mActualMonth, year: this.mYear}).then((tmStamp)=>{
+                  $("#exportJydw")[0].action = "general_export.do?" + Util.Ajax.toUrlParam({ timeStamp: tmStamp.timeStamp });
+                  $("#exportJydw")[0].submit();
+            })
         }
+        
+        public exportExcelXmgs() {
+            this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
+            $("#loadingText").text("项目公司整体指标预测完成情况导出中。。。");
+            this.mXmgsDataSet.get({ month: this.mActualMonth, year: this.mYear}).then((tmStamp)=>{
+                  $("#exportxmgs")[0].action = "general_export.do?" + Util.Ajax.toUrlParam({ timeStamp: tmStamp.timeStamp });
+                  $("#exportxmgs")[0].submit();
+            })
+        }
+        
         
         public updateUI() {
 
@@ -300,7 +315,8 @@ module hzb_zbhz_prediciton {
                     rowNum: 100,
                     autoScroll: true
                 }));
-             $("#export").css('display','block'); 
+             $("#exportJydw").css('display','block');
+             $("#exportxmgs").css('display','block');  
         }
     }
 }

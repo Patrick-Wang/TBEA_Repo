@@ -212,17 +212,31 @@ th.ui-th-ltr {
 		</tr>
 		<tr>
 			<td>
-				<div style="height:6px"></div>
+				<div style="height: 6px"></div>
 			<td>
 		</tr>
 		<tr>
 			<td>
-				<form id="export" method="post" style="display:none">
-					<input id="exportButton" type="button" value="导出"
-						onclick="instance.exportExcel($('h1').text())"
-						class="ui-button ui-widget ui-state-default ui-corner-all"
-						role="button" aria-disabled="false"></input>
-				</form>
+				<Table>
+					<tr>
+						<td>
+							<form id="exportJydw" method="post" style="display: none">
+								<input id="exportButton" type="button" value="导出"
+									style="width: 100px;" onclick="instance.exportExcelJydw()"
+									class="ui-button ui-widget ui-state-default ui-corner-all"
+									role="button" aria-disabled="false"></input>
+							</form>
+						</td>
+						<td>
+							<form id="exportxmgs" method="post" style="display: none">
+								<input class="exportButton" type="button" value="导出项目公司"
+									style="width: 120px;" onclick="instance.exportExcelXmgs()"
+									class="ui-button ui-widget ui-state-default ui-corner-all"
+									role="button" aria-disabled="false"></input>
+							</form>
+						</td>
+					</tr>
+				</Table>
 			</td>
 		</tr>
 	</Table>
