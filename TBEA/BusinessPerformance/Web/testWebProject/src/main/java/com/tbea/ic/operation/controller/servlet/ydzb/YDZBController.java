@@ -31,6 +31,7 @@ import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.POIUtils;
+import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
@@ -182,16 +183,6 @@ public class YDZBController {
 			comps.add(org.getCompany(sybOrJydw));
 		}
 		return comps;
-	}
-	
-	
-	private List<Company> getXmgs(CompanyType sybOrJydw){
-		List<Company> jydws = getJydw(sybOrJydw);
-		List<Company> xmgs = new ArrayList<Company>();
-		for (Company jydw : jydws){
-			xmgs.addAll(jydw.getSubCompanies());
-		}
-		return xmgs;
 	}
 	
 	private List<String[]> getSybOrJydwData(Date d, CompanyType sybOrJydw){
@@ -346,10 +337,15 @@ public class YDZBController {
 		int sheetMergerCount = sheet.getNumMergedRegions();
 		int lastRow = 0;
 		String compName;
-		for (CompanyType ct : compTypes) {
-			List<Company> comps = getXmgs(ct);
+		List<Company> jydws = BMDepartmentDB.getMainlyJydw(companyManager);
+		for (Company jydw : jydws) {
+			
+			List<Company> comps = jydw.getSubCompanies();
 			for (Company comp : comps) {
-
+				if (isInvalidXmgs(comp)){
+					continue;
+				}
+				
 				data = getXmgsData(d, comp);
 				compName = comp.getName();
 				if (0 == lastRow){
@@ -991,114 +987,132 @@ public class YDZBController {
 		return hzb_zbhz_prediction.getBytes("utf-8");
 	}
 	
+	
+	private boolean isInvalidXmgs(Company comp){
+		if (CompanyType.XLGGS == comp.getType() ||
+				CompanyType.SBZXGS == comp.getType() ||
+				CompanyType.KGYJS == comp.getType() ||
+				CompanyType.SBXNY == comp.getType() ||
+				CompanyType.GJSYB == comp.getType() ||
+				CompanyType.JJWL == comp.getType() ||
+				CompanyType.XJZXGS == comp.getType() ||
+				CompanyType.FNSYB == comp.getType() ||
+				CompanyType.XNYYJY == comp.getType()){
+			return true;
+		}
+		return false;
+	}
+	
 	// 项目公司整体指标预测export
-		@RequestMapping(value = "hzb_zbhz_prediction_xmgs_compute.do")
-		public @ResponseBody byte[] gethzb_zbhz_prediction_xmgs_compute(
-				HttpServletRequest request, HttpServletResponse response)
-				throws IOException {
-			Date d = DateSelection.getDate(request);
-			String month = request.getParameter("month");
-			int iMonth = Integer.valueOf(month);
-			JyzbExcelTemplate template = null;
-			String fileNameAndSheetName = request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
-			FormatterHandler formatterChain = null;
-			if (0 == iMonth % 3) {
-				template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_MY);
-				formatterChain = this.getFormatterChainWithHeader(
-						new Integer[]{6, 8, 10, 12, 14, 16, 21, 23, 25}, new Integer[]{1, 2, 3, 4});
-				fileNameAndSheetName += "末月";
-			}
+	@RequestMapping(value = "hzb_zbhz_prediction_xmgs_compute.do")
+	public @ResponseBody byte[] gethzb_zbhz_prediction_xmgs_compute(
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		Date d = DateSelection.getDate(request);
+		String month = request.getParameter("month");
+		int iMonth = Integer.valueOf(month);
+		JyzbExcelTemplate template = null;
+		String fileNameAndSheetName = request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
+		FormatterHandler formatterChain = null;
+		if (0 == iMonth % 3) {
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_MY);
+			formatterChain = this.getFormatterChainWithHeader(
+					new Integer[]{6, 8, 10, 12, 14, 16, 21, 23, 25}, new Integer[]{1, 2, 3, 4});
+			fileNameAndSheetName += "末月";
+		}
 
-			if (1 == iMonth % 3) {
-				template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_SY);
-				formatterChain = this.getFormatterChainWithHeader(
-						new Integer[]{5, 7, 11, 13, 15, 17}, new Integer[]{1, 2, 3});
-				fileNameAndSheetName += "首月";
-			}
+		if (1 == iMonth % 3) {
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_SY);
+			formatterChain = this.getFormatterChainWithHeader(
+					new Integer[]{5, 7, 11, 13, 15, 17}, new Integer[]{1, 2, 3});
+			fileNameAndSheetName += "首月";
+		}
 
-			if (2 == iMonth % 3) {
-				template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_CY);
-				formatterChain = this.getFormatterChainWithHeader(
-						new Integer[]{5, 7, 9, 11, 14, 16, 18, 20}, new Integer[]{1, 2, 3});
-				fileNameAndSheetName += "次月";
-			}
-			
-			HSSFWorkbook workbook = template.getWorkbook();
-			fileNameAndSheetName += "指标汇总预测";
-			workbook.setSheetName(0, fileNameAndSheetName);
-			HSSFSheet sheet = workbook.getSheetAt(0);		
-			
-			int sheetMergerCount = sheet.getNumMergedRegions();
-			List<String[]> data = null;
-			int lastRow = 0;
-			for (CompanyType ct : compTypes) {
+		if (2 == iMonth % 3) {
+			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_CY);
+			formatterChain = this.getFormatterChainWithHeader(
+					new Integer[]{5, 7, 9, 11, 14, 16, 18, 20}, new Integer[]{1, 2, 3});
+			fileNameAndSheetName += "次月";
+		}
+		
+		HSSFWorkbook workbook = template.getWorkbook();
+		fileNameAndSheetName += "指标汇总预测";
+		workbook.setSheetName(0, fileNameAndSheetName);
+		HSSFSheet sheet = workbook.getSheetAt(0);		
+		
+		int sheetMergerCount = sheet.getNumMergedRegions();
+		List<String[]> data = null;
+		int lastRow = 0;
+		List<Company> jydws = BMDepartmentDB.getMainlyJydw(companyManager);
+		for (Company jydw : jydws) {
+			List<Company> comps = jydw.getSubCompanies();
+			for (Company xmgs : comps) {
+				if (isInvalidXmgs(xmgs)){
+					continue;
+				}
+				
+				if (lastRow == 0) {
+					HSSFRow rowTo = sheet.getRow(0);
+					rowTo.getCell(0).setCellValue(xmgs.getName() + "指标预测");
+				} else {
+					lastRow = sheet.getLastRowNum() + 1;
+					HSSFRow rowFrom = sheet.getRow(0);
+					HSSFRow rowTo = sheet.createRow(lastRow);
+					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
+					rowTo.getCell(0).setCellValue(xmgs.getName() + "指标预测");
 
-				List<Company> comps = this.getXmgs(ct);
+					rowFrom = sheet.getRow(1);
+					rowTo = sheet.createRow(lastRow + 1);
+					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
 
-				for (Company xmgs : comps) {
+					rowFrom = sheet.getRow(2);
+					rowTo = sheet.createRow(lastRow + 2);
+					POIUtils.copyRow(workbook, rowFrom, rowTo, true);
 
-					if (lastRow == 0) {
-						HSSFRow rowTo = sheet.getRow(0);
-						rowTo.getCell(0).setCellValue(xmgs.getName() + "指标预测");
-					} else {
-						lastRow = sheet.getLastRowNum() + 1;
-						HSSFRow rowFrom = sheet.getRow(0);
-						HSSFRow rowTo = sheet.createRow(lastRow);
-						POIUtils.copyRow(workbook, rowFrom, rowTo, true);
-						rowTo.getCell(0).setCellValue(xmgs.getName() + "指标预测");
-
-						rowFrom = sheet.getRow(1);
-						rowTo = sheet.createRow(lastRow + 1);
-						POIUtils.copyRow(workbook, rowFrom, rowTo, true);
-
-						rowFrom = sheet.getRow(2);
-						rowTo = sheet.createRow(lastRow + 2);
-						POIUtils.copyRow(workbook, rowFrom, rowTo, true);
-
-						for (int i = 0; i < sheetMergerCount; i++) {
-							CellRangeAddress range = sheet.getMergedRegion(i);
-							range = range.copy();
-							range.setLastRow(range.getLastRow() + lastRow);
-							range.setFirstRow(range.getFirstRow() + lastRow);
-							sheet.addMergedRegion(range);
-						}
+					for (int i = 0; i < sheetMergerCount; i++) {
+						CellRangeAddress range = sheet.getMergedRegion(i);
+						range = range.copy();
+						range.setLastRow(range.getLastRow() + lastRow);
+						range.setFirstRow(range.getFirstRow() + lastRow);
+						sheet.addMergedRegion(range);
 					}
-					
-					lastRow += 3;
-					if (0 == iMonth % 3) {
-						List<Company> xmgsTmp = new ArrayList<Company>();
-						xmgsTmp.add(xmgs);
-						data = gszbService.getThirdSeasonPredictionZBsOverview(d, xmgsTmp);
-					} else if (1 == iMonth % 3) {
-						List<Company> xmgsTmp = new ArrayList<Company>();
-						xmgsTmp.add(xmgs);
-						data = gszbService.getFirstSeasonPredictionZBsOverview(d,
-								xmgsTmp);
-					} else if (2 == iMonth % 3) {
-						List<Company> xmgsTmp = new ArrayList<Company>();
-						xmgsTmp.add(xmgs);
-						data = gszbService.getSecondSeasonPredictionZBsOverview(d,
-								xmgsTmp);
-					}
+				}
+				
+				lastRow += 3;
+				if (0 == iMonth % 3) {
+					List<Company> xmgsTmp = new ArrayList<Company>();
+					xmgsTmp.add(xmgs);
+					data = gszbService.getThirdSeasonPredictionZBsOverview(d, xmgsTmp);
+				} else if (1 == iMonth % 3) {
+					List<Company> xmgsTmp = new ArrayList<Company>();
+					xmgsTmp.add(xmgs);
+					data = gszbService.getFirstSeasonPredictionZBsOverview(d,
+							xmgsTmp);
+				} else if (2 == iMonth % 3) {
+					List<Company> xmgsTmp = new ArrayList<Company>();
+					xmgsTmp.add(xmgs);
+					data = gszbService.getSecondSeasonPredictionZBsOverview(d,
+							xmgsTmp);
+				}
 
-					for (int i = 0, ilen = data.size(); i < ilen; ++i) {
-						HSSFRow row = sheet.createRow(lastRow + i);
-						for (int j = 0, jlen = data.get(i).length; j < jlen; ++j) {
-							HSSFCell cell = row.createCell(j);
-							formatterChain.handle(data.get(i)[0], j, template,
-									cell, data.get(i)[j]);
-						}
+				for (int i = 0, ilen = data.size(); i < ilen; ++i) {
+					HSSFRow row = sheet.createRow(lastRow + i);
+					for (int j = 0, jlen = data.get(i).length; j < jlen; ++j) {
+						HSSFCell cell = row.createCell(j);
+						formatterChain.handle(data.get(i)[0], j, template,
+								cell, data.get(i)[j]);
 					}
 				}
 			}
-			
-			String timeStamp = "" + Calendar.getInstance().getTimeInMillis();
-			request.getSession(false).setAttribute(timeStamp + "template", template);
-			request.getSession(false).setAttribute(timeStamp + "fileName", fileNameAndSheetName + ".xls");
-			
-			return ("{\"timeStamp\" : \"" + timeStamp + "\"}").getBytes("utf-8");
 		}
-	
+		
+		String timeStamp = "" + Calendar.getInstance().getTimeInMillis();
+		request.getSession(false).setAttribute(timeStamp + "template", template);
+		request.getSession(false).setAttribute(timeStamp + "fileName", fileNameAndSheetName + ".xls");
+		
+		return ("{\"timeStamp\" : \"" + timeStamp + "\"}").getBytes("utf-8");
+	}
+
 
 	@RequestMapping(value = "general_export.do")
 	public @ResponseBody byte[] general_export(
