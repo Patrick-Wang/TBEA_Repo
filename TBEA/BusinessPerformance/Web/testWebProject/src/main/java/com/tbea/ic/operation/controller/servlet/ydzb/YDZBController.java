@@ -1107,6 +1107,8 @@ public class YDZBController {
 		String timeStamp = request.getParameter("timeStamp");
 		JyzbExcelTemplate template = (JyzbExcelTemplate) request.getSession(false).getAttribute(timeStamp + "template");
 		template.write(response, (String) request.getSession(false).getAttribute(timeStamp + "fileName"));
+		request.getSession(false).removeAttribute(timeStamp + "template");
+		request.getSession(false).removeAttribute(timeStamp + "fileName");
 		return "".getBytes("utf-8");
 	}
 
