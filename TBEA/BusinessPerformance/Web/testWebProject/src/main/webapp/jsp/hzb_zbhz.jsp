@@ -237,7 +237,7 @@ th.ui-th-ltr {
 						role="button" aria-disabled="false"></input>
 				</form>
 			</td>
-			<!-- <td>
+			<td>
 				<form id="exportxmgs" method="post">
 					<input class="exportButton" type="button" value="导出项目公司"
 						style="width: 120px;"
@@ -245,7 +245,7 @@ th.ui-th-ltr {
 						class="ui-button ui-widget ui-state-default ui-corner-all"
 						role="button" aria-disabled="false"></input>
 				</form>
-			</td> -->
+			</td>
 			</tr>
 				</Table>
 			</td>
