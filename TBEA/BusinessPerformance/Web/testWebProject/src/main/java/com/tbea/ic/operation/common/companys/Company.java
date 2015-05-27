@@ -9,7 +9,7 @@ public class Company {
 	private CompanyManager.CompanyType type;
 	private Integer id;
 	private Company parentCompany;
-	private List<Company> subCompanys = new ArrayList<Company>();
+	private List<Company> subCompanies = new ArrayList<Company>();
 	
 	
 	public Company(Integer id, CompanyManager.CompanyType type) {
@@ -37,14 +37,14 @@ public class Company {
 	}
 
 
-	public List<Company> getSubCompanys() {
-		return subCompanys;
+	public List<Company> getSubCompanies() {
+		return subCompanies;
 	}
 
 	public List<Company> getSubCompanysWithoutLeaves() {
 		List<Company> comps = new ArrayList<Company>();
-		for (Company comp : subCompanys){
-			if (comp.getSubCompanys().isEmpty()){
+		for (Company comp : subCompanies){
+			if (comp.getSubCompanies().isEmpty()){
 				comps.add(comp);
 			}
 		}
@@ -53,8 +53,8 @@ public class Company {
 	
 	public List<Company> getSubCompanysWithLeaves() {
 		List<Company> comps = new ArrayList<Company>();
-		for (Company comp : subCompanys){
-			if (!comp.getSubCompanys().isEmpty()){
+		for (Company comp : subCompanies){
+			if (!comp.getSubCompanies().isEmpty()){
 				comps.add(comp);
 			}
 		}
@@ -80,7 +80,7 @@ public class Company {
 	 * @param subCompanys the subCompanys to set
 	 */
 	public Company append(Company subCompany) {
-		subCompanys.add(subCompany);
+		subCompanies.add(subCompany);
 		subCompany.setParentCompany(this);
 		return this;
 	}
@@ -95,11 +95,11 @@ public class Company {
 	
 	public List<Company> getLeaves(){
 		List<Company> bottomComps = new ArrayList<Company>();
-		if (subCompanys.isEmpty()){
+		if (subCompanies.isEmpty()){
 			bottomComps.add(this);
 		}
 		else{
-			for (Company sub : subCompanys){
+			for (Company sub : subCompanies){
 				bottomComps.addAll(sub.getLeaves());
 			}
 		}

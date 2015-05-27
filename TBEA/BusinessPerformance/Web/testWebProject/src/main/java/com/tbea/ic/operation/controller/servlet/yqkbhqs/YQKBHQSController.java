@@ -50,7 +50,7 @@ public class YQKBHQSController {
 		if (null == comp) {
 			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
 			if (null != comp) {
-				yqkbhqs = JSONArray.fromObject(service.getYqkbhqsData(d, comp.getSubCompanys()))
+				yqkbhqs = JSONArray.fromObject(service.getYqkbhqsData(d, comp.getSubCompanies()))
 						.toString().replace("null", "0.00");
 			}
 		}
@@ -73,7 +73,7 @@ public class YQKBHQSController {
 		dateSel.select(map);
 
 		List<Company> comps = new ArrayList<Company>();
-		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanys());
+		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanies());
 		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);

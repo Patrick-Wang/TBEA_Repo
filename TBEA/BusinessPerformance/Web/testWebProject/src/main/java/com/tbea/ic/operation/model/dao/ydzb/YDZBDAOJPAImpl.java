@@ -36,9 +36,9 @@ public class YDZBDAOJPAImpl implements YDZBDao {
 		String query = "select y from YDZBFDW y where y.ny = ?1";
 		query += " and( y.qybh = " + company.getId();
 
-		if (!company.getSubCompanys().isEmpty()) {
+		if (!company.getSubCompanies().isEmpty()) {
 
-			List<Company> cys = company.getSubCompanys();
+			List<Company> cys = company.getSubCompanies();
 			for (int i = 0; i < cys.size(); ++i) {
 				query += " or y.qybh = " + cys.get(i).getId();
 			}

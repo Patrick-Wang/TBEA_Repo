@@ -19,7 +19,7 @@ public abstract class AbstractOrganization implements Organization {
 		if (null != otherComp)
 		{
 			comp = this.getCompany(otherComp.getType(), otherComp.getId());
-			List<Company> subs = otherComp.getSubCompanys();
+			List<Company> subs = otherComp.getSubCompanies();
 			for (Company sub : subs){
 				comp.append(clone(org, sub.getType()));
 			}
@@ -48,7 +48,7 @@ public abstract class AbstractOrganization implements Organization {
 				if (sub.getName().equals(name)) {
 					ret = sub;
 				} else {
-					ret = queryCompany(sub.getSubCompanys(), name);
+					ret = queryCompany(sub.getSubCompanies(), name);
 				}
 
 				if (null != ret) {

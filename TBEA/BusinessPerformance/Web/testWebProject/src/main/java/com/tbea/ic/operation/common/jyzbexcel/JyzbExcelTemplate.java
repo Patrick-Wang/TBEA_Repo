@@ -54,62 +54,62 @@ public class JyzbExcelTemplate {
 	
 
 
-	public static class CellFormatter{
-		public enum CellType{
-			HEADER,
-			TEXT,
-			DOUBLE,
-			PERCENT
-		}
-		JyzbExcelTemplate template;
-		Map<Integer, CellType> colTypeMap = new HashMap<Integer, CellType>();
-		private CellFormatter(JyzbExcelTemplate template){
-			this.template = template;
-		} 
-		
-		public CellFormatter addType(int col, CellType type){
-			colTypeMap.put(col, type);
-			return this;
-		}
-		
-		public CellFormatter format(int col, HSSFCell cell, String val) {
-			if (null != val) {
-				if (colTypeMap.containsKey(col)) {
-					switch (colTypeMap.get(col)) {
-					case DOUBLE:
-						BigDecimal b = new BigDecimal(Double.valueOf(val));
-						cell.setCellValue(b.setScale(1,
-								BigDecimal.ROUND_HALF_UP).doubleValue());
-						cell.setCellStyle(template.getCellStyleNumber1());
-						break;
-					case HEADER:
-						cell.setCellValue(val);
-						cell.setCellStyle(template.getCellStyleHeader());
-						break;
-					case PERCENT:
-						cell.setCellValue(String.format("%.1f",
-								Double.valueOf(val) * 100)
-								+ "%");
-						cell.setCellStyle(template.getCellStylePercent());
-						break;
-					case TEXT:
-						break;
-					default:
-						break;
-					}
-				} else {
-					BigDecimal b = new BigDecimal(Double.valueOf(val));
-					cell.setCellValue(b.setScale(0, BigDecimal.ROUND_HALF_UP)
-							.doubleValue());
-					cell.setCellStyle(template.getCellStyleNumber1());
-				}
-			} else {
-				cell.setCellValue("--");
-				cell.setCellStyle(template.getCellStyleNull());
-			}
-			return this;
-		}
-	}
+//	public static class CellFormatter{
+//		public enum CellType{
+//			HEADER,
+//			TEXT,
+//			DOUBLE,
+//			PERCENT
+//		}
+//		JyzbExcelTemplate template;
+//		Map<Integer, CellType> colTypeMap = new HashMap<Integer, CellType>();
+//		private CellFormatter(JyzbExcelTemplate template){
+//			this.template = template;
+//		} 
+//		
+//		public CellFormatter addType(int col, CellType type){
+//			colTypeMap.put(col, type);
+//			return this;
+//		}
+//		
+//		public CellFormatter format(int col, HSSFCell cell, String val) {
+//			if (null != val) {
+//				if (colTypeMap.containsKey(col)) {
+//					switch (colTypeMap.get(col)) {
+//					case DOUBLE:
+//						BigDecimal b = new BigDecimal(Double.valueOf(val));
+//						cell.setCellValue(b.setScale(1,
+//								BigDecimal.ROUND_HALF_UP).doubleValue());
+//						cell.setCellStyle(template.getCellStyleNumber1());
+//						break;
+//					case HEADER:
+//						cell.setCellValue(val);
+//						cell.setCellStyle(template.getCellStyleHeader());
+//						break;
+//					case PERCENT:
+//						cell.setCellValue(String.format("%.1f",
+//								Double.valueOf(val) * 100)
+//								+ "%");
+//						cell.setCellStyle(template.getCellStylePercent());
+//						break;
+//					case TEXT:
+//						break;
+//					default:
+//						break;
+//					}
+//				} else {
+//					BigDecimal b = new BigDecimal(Double.valueOf(val));
+//					cell.setCellValue(b.setScale(0, BigDecimal.ROUND_HALF_UP)
+//							.doubleValue());
+//					cell.setCellStyle(template.getCellStyleNumber1());
+//				}
+//			} else {
+//				cell.setCellValue("--");
+//				cell.setCellStyle(template.getCellStyleNull());
+//			}
+//			return this;
+//		}
+//	}
 	
 	public static JyzbExcelTemplate createTemplate(SheetType type) throws IOException{
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
@@ -160,7 +160,7 @@ public class JyzbExcelTemplate {
 		cellStyleNumber0.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleNumber0.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
 		cellStyleNumber0.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-		
+		cellStyleNumber0.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
 		cellStyleNumber2 = workbook
 				.createCellStyle();
 //		cellStyleNumber2.setDataFormat(HSSFDataFormat
@@ -169,7 +169,7 @@ public class JyzbExcelTemplate {
 		cellStyleNumber2.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleNumber2.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
 		cellStyleNumber2.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-		
+		cellStyleNumber2.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
 		cellStyleNumber4 = workbook
 				.createCellStyle();
 //		cellStyleNumber4.setDataFormat(HSSFDataFormat
@@ -178,7 +178,7 @@ public class JyzbExcelTemplate {
 		cellStyleNumber4.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleNumber4.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
 		cellStyleNumber4.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-		
+		cellStyleNumber4.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
 		cellStyleNumber1 = workbook
 				.createCellStyle();
 //		cellStyleNumber1.setDataFormat(HSSFDataFormat
@@ -187,6 +187,7 @@ public class JyzbExcelTemplate {
 		cellStyleNumber1.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleNumber1.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
 		cellStyleNumber1.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
+		cellStyleNumber1.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
 		
 		cellStylePercent = workbook
 				.createCellStyle();
@@ -255,9 +256,9 @@ public class JyzbExcelTemplate {
 		return cellStyleHeader;
 	}
 	
-	public CellFormatter createCellFormatter(){
-		return new CellFormatter(this);
-	}
+//	public CellFormatter createCellFormatter(){
+//		return new CellFormatter(this);
+//	}
 	
 	public void write(OutputStream os) throws IOException{
 		HSSFSheet sheet = workbook.getSheetAt(0);
