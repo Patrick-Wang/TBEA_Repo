@@ -56,14 +56,14 @@
     </script>
     <meta charset="UTF-8">
     
-    <c:choose>
-    <c:when test="${zhAuth} ">
+    
+    <c:if test="${zhAuth}">
     <title>${year}年${month}月众和公司下属各项目公司预测指标填报情况</title>
-    </c:when>
-    <c:when test="${!zhAuth} ">
+    </c:if>
+    
+    <c:if test="${CorpAuth} ">
     <title>${year}年${month}月经营单位预测指标填报情况</title>
-    </c:when>
-    </c:choose>
+    </c:if>
 	    
     <style type="text/css">
         body {
@@ -179,14 +179,14 @@
 </head>
 <body>
     <div class=" header">
-	    <c:choose>
-	    <c:when test="${zhAuth} ">
+    
+	    <c:if test="${zhAuth}">
 	    <h1>${year}年${month}月众和公司下属各项目公司预测指标填报情况</h1>
-	    </c:when>
-	    <c:when test="${!zhAuth} ">
+	    </c:if>
+	    
+	    <c:if test="${CorpAuth}">
 	    	<h1>${year}年${month}月经营单位预测指标填报情况</h1>
-	    </c:when>
-	    </c:choose>
+	    </c:if>
     </div>
 
 	<Table align="center">
