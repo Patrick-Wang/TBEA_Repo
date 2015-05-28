@@ -9,11 +9,7 @@
 	<tr>
 	
 		<td style="padding-right:5px">
-		<select id="ranktype"	onchange="instance.onIndexSelected()" style="width: 200px;">
-				<option value="1" selected="selected">利润计划完成率排名</option>
-				<option value="2" >利润指标完成同比增长排名</option>
-				<option value="3" >经营性净现金流实际完成排名</option>
-
+		<select id="ranktype"	onchange="instance.onIndexSelected()" style="width: 220px;">				
 		</select>
 
 
