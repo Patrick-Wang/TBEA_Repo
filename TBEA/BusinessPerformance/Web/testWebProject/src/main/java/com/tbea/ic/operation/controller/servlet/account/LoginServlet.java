@@ -3,6 +3,7 @@ package com.tbea.ic.operation.controller.servlet.account;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
@@ -25,6 +28,9 @@ import com.tbea.ic.operation.service.login.LoginService;
 @RequestMapping(value = "Login")
 public class LoginServlet {
 
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	//private String view = "index";
 	//private static Logger logger = Logger.getLogger(LoginServlet.class);
 	@Autowired
@@ -112,7 +118,9 @@ public class LoginServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Account account = SessionManager.getAccount(currentSession);
 		
-		map.put("sbqgb", account.getName().equals("qgb"));
+		map.put("zhAuth", "众和公司".equals(account.getName()));
+		
+		map.put("sbqgb", "qgb".equals(account.getName()));
 		
 		map.put("entryPlan", currentSession.getAttribute("entryPlan"));
 
