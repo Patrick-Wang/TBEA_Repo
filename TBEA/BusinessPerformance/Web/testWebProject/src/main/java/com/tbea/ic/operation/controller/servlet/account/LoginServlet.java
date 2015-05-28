@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
@@ -34,11 +35,12 @@ public class LoginServlet {
 
 	@Autowired
 	private LoginService loginService;
-
+	
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request,
 			HttpServletResponse response) {
-		if (request.getSession(false) != null){
+		HttpSession session = request.getSession(false);
+		if (SessionManager.isOnline(session)){
 			return new ModelAndView("redirect:/Login/index.do");
 		}
 		return new ModelAndView("login");
@@ -47,9 +49,9 @@ public class LoginServlet {
 	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
 	public @ResponseBody String logout(HttpServletRequest request,
 			HttpServletResponse response) {
-		HttpSession newSession = request.getSession(false);
-		if (null != newSession){
-			newSession.invalidate();
+		HttpSession session = request.getSession(false);
+		if (SessionManager.isOnline(session)){
+			session.invalidate();
 		}
 
 		return "{\"error\" : \"invalidate session\", \"redirect\" : \"\"}";
@@ -66,14 +68,14 @@ public class LoginServlet {
 		Account account = loginService.Login(j_username, j_password);
 		if (null != account) {
 			HttpSession currentSession = request.getSession(false);
-			if (null != currentSession) {
+			if (SessionManager.isOnline(currentSession)){
 				currentSession.invalidate();
 			}
 
-
 			HttpSession newSession = request.getSession(true);
-			newSession.setAttribute("account", account);
-
+			
+			SessionManager.setAccount(newSession, account);
+			
 			newSession.setAttribute("entryPlan",
 					entryService.hasEntryPlanPermission(account));
 
@@ -108,7 +110,7 @@ public class LoginServlet {
 		HttpSession currentSession = request.getSession(false);
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		Account account = (Account) currentSession.getAttribute("account");
+		Account account = SessionManager.getAccount(currentSession);
 		
 		map.put("sbqgb", account.getName().equals("qgb"));
 		

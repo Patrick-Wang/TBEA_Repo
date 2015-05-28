@@ -7,7 +7,7 @@
 	<listener>
 		<listener-class>org.springframework.web.util.WebAppRootListener
 		</listener-class>
-        <listener-class>com.tbea.ic.operation.controller.servlet.dashboard.SessionListener</listener-class>
+        <listener-class>com.tbea.ic.operation.controller.servlet.dashboard.SessionManager</listener-class>
 	</listener>
 	
 	<context-param>

@@ -5,8 +5,10 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +30,6 @@ import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
@@ -100,7 +101,7 @@ public class DashboardController {
 	@RequestMapping(value = "user_status.do")
 	public ModelAndView getUser_status(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		List<HttpSession> sessions = SessionListener.getSessions();
+		
 		JSONObject jRet = new JSONObject();
 		
 		JSONArray arrUsers = new JSONArray();
@@ -112,27 +113,35 @@ public class DashboardController {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		int activeCount = 0;
-		for (HttpSession session : sessions) {
-			account = (Account) session.getAttribute("account");
-			if (null == account || "admin".equals(account.getName())) {
-				continue;
-			}
-			++activeCount;
-			if (null == latestActiveSession) {
-				latestActiveSession = session;
-			} else if (latestActiveSession.getLastAccessedTime() < session
-					.getLastAccessedTime()) {
-				latestActiveSession = session;
-			}
-			JSONObject jUser = new JSONObject();
-			jUser.element("name", account.getName());
-			jUser.element("sid", session.getId());
-			jUser.element("login_time",
-					sdf.format(new Date(session.getCreationTime())));
-			jUser.element("last_accessed_time", sdf.format(new java.util.Date(
-					session.getLastAccessedTime())));
-			arrUsers.add(jUser);
-		}
+
+		Map<String, HttpSession> sessions = SessionManager.getOnlineSessions();
+	    Set<String> keys = sessions.keySet();
+	    synchronized (keys) {
+	        Iterator<String> i = keys.iterator(); // Must be in the synchronized block
+	        while (i.hasNext()){
+	        	HttpSession session = sessions.get(i.next());
+	        	account = (Account) session.getAttribute("account");
+				if (null == account || "admin".equals(account.getName())) {
+					continue;
+				}
+				++activeCount;
+				if (null == latestActiveSession) {
+					latestActiveSession = session;
+				} else if (latestActiveSession.getLastAccessedTime() < session
+						.getLastAccessedTime()) {
+					latestActiveSession = session;
+				}
+				JSONObject jUser = new JSONObject();
+				jUser.element("name", account.getName());
+				jUser.element("sid", session.getId());
+				jUser.element("login_time",
+						sdf.format(new Date(session.getCreationTime())));
+				jUser.element("last_accessed_time", sdf.format(new java.util.Date(
+						session.getLastAccessedTime())));
+				arrUsers.add(jUser);
+	        }
+	    }
+
 		jRet.element("active_user_count", activeCount);
 		if (null != latestActiveSession) {
 			account = (Account) latestActiveSession.getAttribute("account");
@@ -144,6 +153,5 @@ public class DashboardController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", jRet.toString());
 		return new ModelAndView("UserStatusView", map);
-		//return jRet.toString().getBytes("utf-8");
 	}
 }
