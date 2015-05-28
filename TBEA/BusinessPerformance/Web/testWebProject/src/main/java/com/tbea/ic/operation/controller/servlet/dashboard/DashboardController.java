@@ -62,7 +62,7 @@ public class DashboardController {
 		if (account.getName().equals("fujianghua")) {
 			jydws = BMDepartmentDB.getMainlyJydw(companyManager);
 		} else if ("众和公司".equals(account.getName())) {
-			jydws = BMDepartmentDB.getMainlyJydw(companyManager);
+			jydws = companyManager.getBMDBOrganization().getCompany(CompanyType.ZHGS).getSubCompanies();
 		}
 		String result = "";
 		if (null != jydws) {

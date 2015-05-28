@@ -12,10 +12,11 @@ var Util;
         };
         MessageBox.tip = function (msg) {
             var container = MessageBox.getContainer();
-            if (container.children().length > 0) {
+            if (container.attr("finish") == "true") {
                 $("#self_tip").children().eq(0).text(msg);
             }
             else {
+                container.attr("finish", "true");
                 container.append('<div id="self_tip" class="block modal2" align="center" >' + '<span style="display:block;line-height:170px;height:100%;font-size:20px;color:blue;">' + msg + '</span></div>');
             }
             $("#self_tip").modal('view', {
@@ -39,10 +40,11 @@ var Util;
         MessageBox.confirm = function (msg, okOnly) {
             if (okOnly === void 0) { okOnly = false; }
             var container = MessageBox.getContainer();
-            if (container.children().length > 0) {
+            if (container.attr("finish") == "true") {
                 $("#self_confirm").children().eq(0).text(msg);
             }
             else {
+                container.attr("finish", "true");
                 var children;
                 if (okOnly) {
                     children = '<div style="margin: 20px"> </div>' + '<div id="self_fill" style="margin-left:-12px; overflow: hidden;padding: 5px;margin-bottom:5px">' + '<input type="submit" class="button green close medium saveQuestion right" value="    确 认    " onclick="Util.MessageBox.selfOk()"></input></div>';
