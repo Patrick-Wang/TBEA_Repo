@@ -92,6 +92,8 @@ public class DashboardController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection();
 		dateSel.select(map);
+		Account account = SessionManager.getAccount(request.getSession(false));
+		map.put("zhAuth", "众和公司".equals(account.getName()));
 		return new ModelAndView("gdw_indexInput_summary", map);
 	}
 	
