@@ -150,7 +150,7 @@ public class SecondSeasonPredictionConfigurator extends AbstractSbdPipeConfigura
 				.excludeZbs(getRatioZbs()))
 		
 		// 季度预计合计
-		.addFilter(new AccPipeFilter(sjAcc, 12, dh.getCur(), dh.getLastMonthinSeason())
+		.addFilter(new AccPipeFilter(sjAcc, 12, dh.getJdStart(), dh.getLastMonthinSeason())
 				.includeCompanies(allCompanies)
 				.includeZbs(pipe.getIndicators())
 				.excludeZbs(getInvisiableZbs())
