@@ -193,12 +193,13 @@
 						
 						
 						<td><%@include file="ranking_selection.jsp"%></div>
-						</td>
+						</td> 
 						<td><input id="update" type="button" value="更新" style="width : 80px; margin-left:10px;"
 							onclick="instance.updateUI()"></input>
 				</Table>
 			</td>
 		</tr>
+		<tr><td><div style="height:10px"></div></td></tr>
 		<tr>
 			<td>
 				<div id="table"></div>
@@ -213,33 +214,49 @@
 
 
 <script type="text/javascript">
-		$(function(){
-		 showCont();
-		 $("input[name=rank]").click(function(){
-		  showCont();
-		 });
+	$(function(){
+		showCont();
+		$("input[name=rank]").click(function(){
+		showCont();
 		});
-		function showCont(){
-		 switch($("input[name=rank]:checked").attr("id")){
-		  case "JYcompanys":
-		   //alert("one");
-		   $("#ranktype").empty();
-		   var option = $("<option>").text(1).val(1)
-		   $("#ranktype").append(option);
-		   $("#ranktype").multiselect({
-               multiple: false,
-               // noneSelectedText: "请选择月份",
-           });
-		   //$("#sellInfo1").show();
-		   break;
-		  case "Procompanys":
-		   $("#sellInfo1").hide();
-		   $("#sellInfo2").show();
-		   break;
-		  default:
-		   break;
- }
+	});
+	function showCont(){
+		switch($("input[name=rank]:checked").attr("id")){
+		case "JYcompanys":
+			$("#ranktype").empty();
+			var option = $("<option>").text("利润计划完成率排名").val(1);
+			var option2 = $("<option>").text("利润指标年度累计完成同比增长排名").val(2);
+			var option3 = $("<option>").text("人均利润实际完成排名").val(3);
+			var option4 = $("<option>").text("人均收入实际完成排名").val(4);
+			var option5 = $("<option>").text("应收账款占收入比排名").val(5);
+			var option6 = $("<option>").text("应收账款加保理占收入排名").val(6);
+			var option7 = $("<option>").text("存货占收入比排名").val(7);
+			var option8 = $("<option>").text("应收加存货占收入比排名").val(8);
+			var option9 = $("<option>").text("经营性净现金流实际完成排名").val(9);
+			var option10 = $("<option>").text("各单位净资产收益率完成排名").val(10);
+			$("#ranktype").append(option).append(option2).append(option3).append(option4)
+			.append(option5).append(option6).append(option7).append(option8).append(option9).append(option10);
+			$("#ranktype").multiselect({
+	         	multiple: false,
+	    	});
+
+		 break;
+		 case "Procompanys":
+			$("#ranktype").empty();
+			var option = $("<option>").text("利润指标年度累计完成同比增长排名").val(1);
+			var option2 = $("<option>").text("项目公司净资产收益率排名").val(2);
+			var option3 = $("<option>").text("人均收入完成排名").val(3);
+			var option4 = $("<option>").text("人均利润完成排名").val(4);
+			$("#ranktype").append(option).append(option2).append(option3).append(option4);
+			$("#ranktype").multiselect({
+	         	multiple: false,
+	    	});
+		 	
+		 break;
+		 default:
+		 break;
 		}
-		 </script>
-		 <script src="../jsp/style_select.js"></script>
+	}
+</script>
+<script src="../jsp/style_select.js"></script>
 </html>

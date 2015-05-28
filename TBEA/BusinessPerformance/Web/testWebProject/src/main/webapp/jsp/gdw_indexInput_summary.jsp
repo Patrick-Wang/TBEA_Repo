@@ -50,14 +50,21 @@
     	var instance = gdw_indexinput_summary.View.newInstance();
     	(function () {
             $(document).ready(function () {
-            	instance.init("table", "date", ${year}, ${month});
+            	instance.init("table", "date", ${year}, ${month}, ${zhAuth});
             });
         })();
     </script>
     <meta charset="UTF-8">
-
+    
+    <c:choose>
+    <c:when test="${zhAuth} ">
+    <title>${year}年${month}月众和公司下属各项目公司预测指标填报情况</title>
+    </c:when>
+    <c:when test="${!zhAuth} ">
     <title>${year}年${month}月经营单位预测指标填报情况</title>
-
+    </c:when>
+    </c:choose>
+	    
     <style type="text/css">
         body {
             background-color: rgb(247, 247, 247);
@@ -172,7 +179,14 @@
 </head>
 <body>
     <div class=" header">
-        <h1>${year}年${month}月经营单位预测指标填报情况</h1>
+	    <c:choose>
+	    <c:when test="${zhAuth} ">
+	    <h1>${year}年${month}月众和公司下属各项目公司预测指标填报情况</h1>
+	    </c:when>
+	    <c:when test="${!zhAuth} ">
+	    	<h1>${year}年${month}月经营单位预测指标填报情况</h1>
+	    </c:when>
+	    </c:choose>
     </div>
 
 	<Table align="center">

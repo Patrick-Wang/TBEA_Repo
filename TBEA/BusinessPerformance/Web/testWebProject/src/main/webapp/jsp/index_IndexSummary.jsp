@@ -100,6 +100,12 @@
 				<li><a href="../dashboard/status.do" target="_blank"><img
 						src="../images/charts/scatter1.png"> <span><strong>20号/28号/实际指标预测值填报情况</strong></span></a>
 				</li>
+				</c:if>
+				
+				<c:if test="${zhAuth}">
+				<li><a href="../dashboard/status.do" target="_blank"><img
+						src="../images/charts/scatter1.png"> <span><strong>20号/28号/实际指标预测值填报情况</strong></span></a>
+				</li>
 				</c:if> 
 <!-- 	
 				/li
@@ -119,7 +125,7 @@
 
 
 <c:if test="${CorpAuth}">
-<!-- <div>
+<div>
 	<h3>
 		经营指标排名情况<a name="zbRanking"> </a>
 	</h3>
@@ -130,20 +136,20 @@
 						src="../images/charts/scatter2.png"> <span><strong>各单位经营指标排名情况</strong></span></a>
 				</li>
 					
-				/li
-				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=29" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>经营性净现金流预测完成情况</strong></span></a>
-				</li>
-				/li
-				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=32" target="_blank"><img
-						src="../images/charts/scatter4.png"> <span><strong>应收账款预测完成情况</strong></span></a></li>
-				/li
-				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=35" target="_blank"><img
-						src="../images/charts/scatter5.png"> <span><strong>存货预测完成情况</strong></span></a></li>
+<!-- 				/li -->
+<!-- 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=29" target="_blank"><img -->
+<!-- 						src="../images/charts/scatter2.png"> <span><strong>经营性净现金流预测完成情况</strong></span></a> -->
+<!-- 				</li> -->
+<!-- 				/li -->
+<!-- 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=32" target="_blank"><img -->
+<!-- 						src="../images/charts/scatter4.png"> <span><strong>应收账款预测完成情况</strong></span></a></li> -->
+<!-- 				/li -->
+<!-- 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=35" target="_blank"><img -->
+<!-- 						src="../images/charts/scatter5.png"> <span><strong>存货预测完成情况</strong></span></a></li> -->
 			</ul>
 		</div>
 	</div>
-</div> -->
+</div>
 </c:if>
 
 <c:if test="${SbdAuth}">

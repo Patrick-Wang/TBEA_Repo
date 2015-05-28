@@ -35,10 +35,12 @@ module gdw_indexinput_summary {
         private mData: Array<string[]> = [];
         private mDataSet: Util.Ajax = new Util.Ajax("status_update.do");
         private mTableId: string;
-        public init(tableId: string, dateId: string, year: number, month: number): void {
+        private isZHCompany:boolean;
+        public init(tableId: string, dateId: string, year: number, month: number,isZHCompany: boolean): void {
             this.mYear = year;
             this.mTableId = tableId;
             this.mMonth = month;
+            this.isZHCompany = isZHCompany;
             this.mDs = new Util.DateSelector(
                 { year: year - 2, month: 1 },
                 { year: year, month: month },
@@ -58,8 +60,15 @@ module gdw_indexinput_summary {
             this.mDataSet.get({ month: date.month, year: date.year, entryType: this.mIndex })
                 .then((dataArray: any) => {
                 this.mData = dataArray;
-                $('h1').text(date.year + "年" + date.month + "月" + "经营单位预测指标填报情况");
-                document.title = date.year + "年" + date.month + "月" + "经营单位预测指标填报情况";
+                if (this.isZHCompany) {
+                    $('h1').text(date.year + "年" + date.month + "月" + "众和公司各项目单位预测指标填报情况");
+                    document.title = date.year + "年" + date.month + "月" + "众和公司各项目单位预测指标填报情况";
+                    
+                } else {
+                    $('h1').text(date.year + "年" + date.month + "月" + "经营单位预测指标填报情况");
+                    document.title = date.year + "年" + date.month + "月" + "经营单位预测指标填报情况";
+                }
+                
                 this.updateTable();
 
             });
