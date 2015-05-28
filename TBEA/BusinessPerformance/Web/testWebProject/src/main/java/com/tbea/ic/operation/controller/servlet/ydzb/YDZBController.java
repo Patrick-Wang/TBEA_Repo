@@ -47,6 +47,7 @@ import com.tbea.ic.operation.common.jyzbexcel.PercentSingleFormatterHandler;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.common.GSZB;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
 
 
@@ -468,7 +469,7 @@ public class YDZBController {
 				false,
 				org.getCompany(CompanyType.GFGS).getSubCompanies(), 
 				new CompanyTypeFilter(
-						gszbService.getCompanies((Account)request.getSession(false).getAttribute("account")), 
+						gszbService.getCompanies(SessionManager.getAccount(request.getSession(false))), 
 						org));
 
 		compSel.select(map, 3);
@@ -877,7 +878,7 @@ public class YDZBController {
 				false,
 				org.getCompany(CompanyType.GFGS).getSubCompanies(), 
 				new CompanyTypeFilter(
-						gszbService.getCompanies((Account)request.getSession(false).getAttribute("account")), 
+						gszbService.getCompanies(SessionManager.getAccount(request.getSession(false))), 
 						org));
 		compSel.select(map, 3);
 		return new ModelAndView("companys_zbhz_prediction", map);

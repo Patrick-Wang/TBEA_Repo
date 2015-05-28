@@ -29,6 +29,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
 
@@ -79,8 +80,7 @@ public class ApproveController {
 			dateSel.select(map);
 		}
 
-		List<Company> companies = getOwnedCompanies((Account) request
-				.getSession(false).getAttribute("account"), approveType);
+		List<Company> companies = getOwnedCompanies(SessionManager.getAccount(request.getSession(false)), approveType);
 		CompanySelection compSel = new CompanySelection(true, companies,
 				new Filter() {
 					private List<Integer> comps = service
@@ -116,8 +116,7 @@ public class ApproveController {
 		for (CompanyType type : types) {
 			comps.add(org.getCompany(type));
 		}
-		Account account = (Account) request.getSession(false).getAttribute(
-				"account");
+		Account account = SessionManager.getAccount(request.getSession(false));
 		List<List<String[]>> ret = service.getZb(account, comps, date,
 				entryType);
 
@@ -140,8 +139,7 @@ public class ApproveController {
 		for (CompanyType type : types){
 			comps.add(org.getCompany(type));			
 		}
-		Account account = (Account) request.getSession(false).getAttribute(
-				"account");
+		Account account = SessionManager.getAccount(request.getSession(false));
 		boolean ret = false;
 		switch (entryType){
 		case BY20YJ:
@@ -188,8 +186,7 @@ public class ApproveController {
 		}
 		
 		boolean ret = false;
-		Account account = (Account) request.getSession(false).getAttribute(
-				"account");
+		Account account = SessionManager.getAccount(request.getSession(false));
 		switch (entryType){
 		case BY20YJ:
 			 //[[compId...]]

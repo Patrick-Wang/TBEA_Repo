@@ -57,8 +57,7 @@ public class DashboardController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Date date = DateSelection.getDate(request);
-		Account account = (Account) request.getSession()
-				.getAttribute("account");
+		Account account = SessionManager.getAccount(request.getSession(false));
 		List<Company> jydws = null;
 		if (account.getName().equals("fujianghua")) {
 			jydws = BMDepartmentDB.getMainlyJydw(companyManager);
@@ -106,7 +105,7 @@ public class DashboardController {
 		
 		JSONArray arrUsers = new JSONArray();
 		HttpSession latestActiveSession = null;
-		Account account = (Account) request.getSession().getAttribute("account");
+		Account account = SessionManager.getAccount(request.getSession(false));
 		if (null == account || !"admin".equals(account.getName())) {
 			return new ModelAndView("");
 		}
@@ -120,7 +119,7 @@ public class DashboardController {
 	        Iterator<String> i = keys.iterator(); // Must be in the synchronized block
 	        while (i.hasNext()){
 	        	HttpSession session = sessions.get(i.next());
-	        	account = (Account) session.getAttribute("account");
+	        	account = SessionManager.getAccount(request.getSession(false));
 				if (null == account || "admin".equals(account.getName())) {
 					continue;
 				}
@@ -144,7 +143,7 @@ public class DashboardController {
 
 		jRet.element("active_user_count", activeCount);
 		if (null != latestActiveSession) {
-			account = (Account) latestActiveSession.getAttribute("account");
+			account = SessionManager.getAccount(request.getSession(false));
 			jRet.element("latest_active_user", account.getName());
 			jRet.element("last_accessed_time", sdf.format(new java.util.Date(
 					latestActiveSession.getLastAccessedTime())));

@@ -28,6 +28,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.entry.EntryService;
 
@@ -77,7 +78,7 @@ public class EntryController {
 			dateSel.select(map);
 		}
 		
-		Account account = (Account) request.getSession(false).getAttribute("account");
+		Account account = SessionManager.getAccount(request.getSession(false));
 		List<Company> comps = getOwnedCompanies(account, entryType);
 
 		CompanySelection compSel = new CompanySelection(true, comps);
@@ -94,7 +95,7 @@ public class EntryController {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Date date = DateSelection.getDate(request);
 		ZBType entryType = ZBType.valueOf(Integer.valueOf(request.getParameter("entryType")));
-		Account account = (Account) request.getSession(false).getAttribute("account");
+		Account account = SessionManager.getAccount(request.getSession(false));
 
 		List<String[]> ret =  entryService.getZb(date, account, comp, entryType);
 		String zb = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
@@ -116,7 +117,7 @@ public class EntryController {
 		Date date = DateSelection.getDate(request);
 		CompanyType comp = CompanySelection.getCompany(request);
 		String data = request.getParameter("data");
-		Account account = (Account) request.getSession(false).getAttribute("account");
+		Account account = SessionManager.getAccount(request.getSession(false));
 		String ret = "" + entryService.submitZb(date, account, comp, entryType, JSONArray.fromObject(data));
 		String result = "{\"result\":\"" + ret + "\"}";
 		return result.getBytes("utf-8");
@@ -129,7 +130,7 @@ public class EntryController {
 		Date date = DateSelection.getDate(request);
 		CompanyType comp = CompanySelection.getCompany(request);
 		String data = request.getParameter("data");
-		Account account = (Account) request.getSession(false).getAttribute("account");
+		Account account = SessionManager.getAccount(request.getSession(false));
 		String ret = "" + entryService.saveZb(date, account, comp, entryType, JSONArray.fromObject(data));
 		String result = "{\"result\":\"" + ret + "\"}";
 		return result.getBytes("utf-8");
@@ -142,7 +143,7 @@ public class EntryController {
 		Date date = DateSelection.getDate(request);
 		CompanyType comp = CompanySelection.getCompany(request);
 		String data = request.getParameter("data");
-		Account account = (Account) request.getSession(false).getAttribute("account");
+		Account account = SessionManager.getAccount(request.getSession(false));
 		String ret = "" + entryService.submitToDeputy(date, account, comp, entryType, JSONArray.fromObject(data));
 		String result = "{\"result\":\"" + ret + "\"}";
 		return result.getBytes("utf-8");
