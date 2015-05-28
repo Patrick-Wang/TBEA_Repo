@@ -61,9 +61,7 @@ public class DashboardController {
 		List<Company> jydws = null;
 		if (account.getName().equals("fujianghua")) {
 			jydws = BMDepartmentDB.getMainlyJydw(companyManager);
-		} else if (account.getName().equals(
-				companyManager.getBMDBOrganization()
-						.getCompany(CompanyType.ZHGS).getName())) {
+		} else if ("众和公司".equals(account.getName())) {
 			jydws = BMDepartmentDB.getMainlyJydw(companyManager);
 		}
 		String result = "";
