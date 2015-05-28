@@ -236,7 +236,7 @@ th.ui-th-ltr {
 							</form>
 						</td>
 						<td>
-							<form id="exportxmgs" method="post">
+							<form id="exportxmgs" method="post" style="dispaly:none">
 								<input class="exportButton" type="button" value="导出项目公司"
 									style="width: 120px;"
 									onclick="instance.exportExcelXmgs($('h1').text())"

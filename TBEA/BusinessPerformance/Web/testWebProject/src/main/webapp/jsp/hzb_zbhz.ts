@@ -77,7 +77,7 @@ module hzb_zbhz {
         private mType : number = 0;
         private mDs : Util.DateSelector;
         public init(tableId: string, dateId: string, month: number, year: number): void {
-              this.mTableId = tableId;
+             this.mTableId = tableId;
              this.mDs = new Util.DateSelector(
                 {year: year - 2, month : 1}, 
                 {year: year, month: month},
@@ -89,6 +89,8 @@ module hzb_zbhz {
         
         public onTypeSelected(ty : number){
             this.mType = ty;
+           
+                
         }
         
         public updateUI() {
@@ -99,8 +101,16 @@ module hzb_zbhz {
                     $('h1').text(date.year + "年" + date.month + "月公司整体指标完成情况");
                     document.title = date.year + "年" + date.month + "月公司整体指标完成情况";
                     this.updateTable();
-
+                    this.updateButton();
                 });
+        }
+        private updateButton() {
+            if (this.mType != 0) {
+                $("#exportxmgs").hide();
+            }
+            else {
+                $("#exportxmgs").show();
+            }
         }
         
         public exportExcelJydw(fName: string) {
