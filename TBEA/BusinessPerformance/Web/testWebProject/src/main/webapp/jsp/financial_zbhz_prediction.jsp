@@ -212,7 +212,7 @@ th.ui-th-ltr {
 				<div style="height:10px"></div>
 			<td>
 		</tr>
-	<!-- 	<tr>
+	<tr>
 			<td>
 				<form id="export" method="post" style="display:none">
 					<input id="exportButton" type="button" value="导出"
@@ -222,7 +222,7 @@ th.ui-th-ltr {
 				</form>
 			</td>
 			
-		</tr>  -->
+		</tr>
 	</Table>
 	<%@include file="loading.jsp"%>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
