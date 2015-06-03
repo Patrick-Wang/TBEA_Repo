@@ -66,7 +66,7 @@ public class Convertor {
 		List<String> fileNames = new ArrayList<String>();
 		for (File f : files){
 			String name = f.getName();
-			if(f.isFile() && name.length() > 4 && ".xls".equals(name.substring(name.length() - 4))){
+			if(f.isFile()){
 				fileNames.add(name);
 			}
 		}
