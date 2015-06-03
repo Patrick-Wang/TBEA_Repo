@@ -59,7 +59,7 @@ module entry_template {
 
                 case Util.ZBType.YDJDMJH:
                     this.mDateSelector = new Util.DateSelector(
-                            { year: this.mOpt.date.year - 1 }, 
+                            { year: this.mOpt.date.year - 3 }, 
                             this.mOpt.date,
                             this.mOpt.dateId, true);
                     break;
@@ -67,7 +67,7 @@ module entry_template {
                 case Util.ZBType.BY20YJ:
                 case Util.ZBType.BY28YJ:
                 case Util.ZBType.BYSJ:
-                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
                     break;
             }
 

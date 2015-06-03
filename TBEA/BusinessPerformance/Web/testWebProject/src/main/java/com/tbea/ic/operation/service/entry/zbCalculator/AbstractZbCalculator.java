@@ -42,9 +42,7 @@ abstract class AbstractZbCalculator implements ZbCalculator{
 			lrze = val;
 		}else if (GSZB.SXFY.getValue() == zbId){
 			sxfy = val;
-		}
-		
-		if (GSZB.RJSR.getValue() == zbId){
+		}else if (GSZB.RJSR.getValue() == zbId){
 			setRjsr(cal, comp, status);
 		}else if (GSZB.RJLR.getValue() == zbId){
 			setRjlr(cal, comp, status);

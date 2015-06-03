@@ -32,26 +32,17 @@ import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 @Transactional("transactionManager")
 public class ConvertorSeviceImpl implements ConvertorSevice{
 	private static String pathNdjh = null;
-	private static String pathNdjhRaw = null;
 	private static String pathYdjh = null;
-	private static String pathYdjhRaw = null;
 	private static String pathYdsj = null;
-	private static String pathYdsjRaw = null;
 	static 
 	{
 		try {
 			pathNdjh = new URI(Convertor.class
-					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/年度计划.xls";
-			pathNdjhRaw = new URI(Convertor.class
-					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/年度指标计划.xls";
+					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/convertor/template/年度计划.xls";
 			pathYdjh = new URI(Convertor.class
-					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/月度计划.xls";
-			pathYdjhRaw = new URI(Convertor.class
-					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/月度指标计划.xls";
+					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/convertor/template/月度计划.xls";
 			pathYdsj = new URI(Convertor.class
-					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/月度实际.xls";
-			pathYdsjRaw = new URI(Convertor.class
-					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/月度指标实际.xls";
+					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/convertor/template/月度实际.xls";
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,8 +114,9 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 						cell = rowDest.createCell(5);
 						cell.setCellValue("");
 						cell = rowDest.createCell(6);
-						cell.setCellValue(rowSrc.getCell(
-								rowSrc.getLastCellNum() - 1).getDateCellValue());
+//						cell.setCellValue(rowSrc.getCell(
+//								rowSrc.getLastCellNum() - 1).getDateCellValue());
+						cell.setCellValue("");
 						cell.setCellStyle(style);
 
 					} else {
@@ -209,42 +201,60 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 		}
 	}
 	
+	
+	
+	private String convertNdjh(HSSFWorkbook destWorkbook, HSSFWorkbook workbook){
+		StringBuilder resultBuilder = new StringBuilder();
+		for (int i = 0; i < workbook.getNumberOfSheets(); ++i) {
+
+			HSSFSheet sheet = workbook.getSheetAt(i);
+			if (sheet.getSheetName().contains("njh")) {
+				int rowNum = sheet.getLastRowNum();
+				HSSFRow titleId = sheet.getRow(0);
+				HSSFRow title = sheet.getRow(1);
+				List<ZBXX> zbxxs = new ArrayList<ZBXX>();
+				for (int j = 2; j < titleId.getLastCellNum() - 1; ++j) {
+					HSSFCell cell = titleId.getCell(j);
+					ZBXX zbTmp = zbxxDao.getById((int) cell
+							.getNumericCellValue());
+					if (null == zbTmp) {
+						cell = title.getCell(j);
+						resultBuilder.append("<tr><td>"
+								+ cell.getNumericCellValue() + "  "
+								+ cell.getStringCellValue()
+								+ "</td><td>指标不存在</td></tr>");
+					}
+					zbxxs.add(zbTmp);
+				}
+
+				HSSFSheet destSheet = destWorkbook.getSheetAt(0);
+
+				for (int j = 2; j <= rowNum; ++j) {
+					convertNdjh(destWorkbook, zbxxs, sheet.getRow(j), destSheet, resultBuilder);
+				}
+			}
+		}
+		return resultBuilder.toString();
+	}
+	
 	@Override
 	public String convertNdjh(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+			HttpServletResponse response, String pathData) throws IOException {
 		StringBuilder resultBuilder = new StringBuilder();
 		HSSFWorkbook destWorkbook = new HSSFWorkbook(new FileInputStream(new File(
-				pathNdjh)));
-		do {
-			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
-					pathNdjhRaw)));
-			HSSFSheet sheet = workbook.getSheetAt(0);
-			if (null == sheet){
-				resultBuilder.append("<tr><td>" + "没有sheet页</td></tr>");
-				break;
+				pathNdjh)));		
+		File dataDir = new File(pathData);
+		File[] files = dataDir.listFiles();
+		for (File f : files){
+			String name = f.getName();
+			if(f.isFile() && name.length() > 4 && ".xls".equals(name.substring(name.length() - 4))){
+				resultBuilder.append("<tr><td>" + "文件名"
+						+ "</td><td>" + name + "</td></tr>");
+				HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(f));
+				resultBuilder.append(convertNdjh(destWorkbook, workbook));
 			}
-			int rowNum = sheet.getLastRowNum();
-			HSSFRow titleId = sheet.getRow(0);
-			HSSFRow title = sheet.getRow(1);
-			List<ZBXX> zbxxs = new ArrayList<ZBXX>();
-			for(int i = 2; i < titleId.getLastCellNum() - 1; ++i){
-				 HSSFCell cell = titleId.getCell(i);
-				 ZBXX zbTmp  = zbxxDao.getById((int)cell.getNumericCellValue());
-				 if (null == zbTmp){
-					 cell = title.getCell(i);
-					 resultBuilder.append("<tr><td>" + cell.getNumericCellValue() + "  " + cell.getStringCellValue() +  "</td><td>指标不存在</td></tr>");
-				 }
-				 zbxxs.add(zbTmp);
-			}
-			
-			HSSFSheet destSheet = destWorkbook.getSheetAt(0);
-			
-			for(int i = 2; i <= rowNum; ++i){
-				convertNdjh(destWorkbook, zbxxs, sheet.getRow(i), destSheet, resultBuilder);
-			}
-			
-			
-		}while(false);
+		}
+		
 		response.setContentType("application/octet-stream"); 
 		response.setHeader("Content-disposition","attachment;filename=\"ndjh.xls\"");
 		
@@ -258,45 +268,36 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 	}
 
 	
-	private String convertYd(boolean jh, String path, String pathRaw, String fileName, HttpServletRequest request,
-			HttpServletResponse response) throws IOException{
+	private String convertYd(boolean jh, HSSFWorkbook destWorkbook, HSSFWorkbook workbook) throws IOException{
 		StringBuilder resultBuilder = new StringBuilder();
-		HSSFWorkbook destWorkbook = new HSSFWorkbook(new FileInputStream(new File(
-				path)));
-		do {
-			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
-					pathRaw)));
-			HSSFSheet sheet = workbook.getSheetAt(0);
-			if (null == sheet){
-				resultBuilder.append("<tr><td>" + "没有sheet页</td></tr>");
-				break;
+
+		String jhsjTag = jh ? "yjh" : "ysj";
+		for (int i = 0; i < workbook.getNumberOfSheets(); ++i){
+			HSSFSheet sheet = workbook.getSheetAt(i);
+			if (sheet.getSheetName().contains(jhsjTag)){
+				int rowNum = sheet.getLastRowNum();
+				HSSFRow titleId = sheet.getRow(0);
+				HSSFRow title = sheet.getRow(1);
+				List<ZBXX> zbxxs = new ArrayList<ZBXX>();
+				for(int j = 3; j < titleId.getLastCellNum(); ++j){
+					 HSSFCell cell = titleId.getCell(j);
+					 ZBXX zbTmp  = zbxxDao.getById((int)cell.getNumericCellValue());
+					 if (null == zbTmp){
+						 HSSFCell cellTmp = title.getCell(j);
+						 resultBuilder.append("<tr><td>" + cell.getNumericCellValue() + "  " + cellTmp.getStringCellValue() +  "</td><td>指标不存在</td></tr>");
+					 }
+					 zbxxs.add(zbTmp);
+				}
+				
+				HSSFSheet destSheet = destWorkbook.getSheetAt(0);
+				
+				for(int j = 2; j <= rowNum; ++j){
+					convertYd(jh, destWorkbook, zbxxs, sheet.getRow(j), destSheet, resultBuilder);
+				}
 			}
-			int rowNum = sheet.getLastRowNum();
-			HSSFRow titleId = sheet.getRow(0);
-			HSSFRow title = sheet.getRow(1);
-			List<ZBXX> zbxxs = new ArrayList<ZBXX>();
-			for(int i = 3; i < titleId.getLastCellNum(); ++i){
-				 HSSFCell cell = titleId.getCell(i);
-				 ZBXX zbTmp  = zbxxDao.getById((int)cell.getNumericCellValue());
-				 if (null == zbTmp){
-					 HSSFCell cellTmp = title.getCell(i);
-					 resultBuilder.append("<tr><td>" + cell.getNumericCellValue() + "  " + cellTmp.getStringCellValue() +  "</td><td>指标不存在</td></tr>");
-				 }
-				 zbxxs.add(zbTmp);
-			}
-			
-			HSSFSheet destSheet = destWorkbook.getSheetAt(0);
-			
-			for(int i = 2; i <= rowNum; ++i){
-				convertYd(jh, destWorkbook, zbxxs, sheet.getRow(i), destSheet, resultBuilder);
-			}
-			
-			
-		}while(false);
-		response.setContentType("application/octet-stream"); 
-		response.setHeader("Content-disposition","attachment;filename=\"" + fileName + "\"");
+		}
 		
-		destWorkbook.write(response.getOutputStream());
+	
 		String log = resultBuilder.toString();
 		if (log.isEmpty()){
 			return "All is well";
@@ -306,13 +307,52 @@ public class ConvertorSeviceImpl implements ConvertorSevice{
 	
 	@Override
 	public String convertYdjh(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		return convertYd(true, pathYdjh, pathYdjhRaw, "ydjh.xls", request, response);
+			HttpServletResponse response, String pathData) throws IOException {
+		File dataDir = new File(pathData);
+		File[] files = dataDir.listFiles();
+		StringBuilder resultBuilder = new StringBuilder();
+		HSSFWorkbook destWorkbook = new HSSFWorkbook(new FileInputStream(new File(
+				pathYdjh)));
+		for (File f : files){
+			String name = f.getName();
+			if(f.isFile() && name.length() > 4 && ".xls".equals(name.substring(name.length() - 4))){
+				resultBuilder.append("<tr><td>" + "文件名"
+						+ "</td><td>" + name + "</td></tr>");
+				HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(f));
+				resultBuilder.append(convertYd(true, destWorkbook, workbook));
+			}
+		}
+		
+		response.setContentType("application/octet-stream"); 
+		response.setHeader("Content-disposition","attachment;filename=\"" + "ydjh.xls" + "\"");
+		
+		destWorkbook.write(response.getOutputStream());
+		return resultBuilder.toString();
 	}
 
 	@Override
 	public String convertYdsj(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		return convertYd(false, pathYdsj, pathYdsjRaw, "ydsj.xls", request, response);
+			HttpServletResponse response, String pathData) throws IOException {		
+		File dataDir = new File(pathData);
+		File[] files = dataDir.listFiles();
+		StringBuilder resultBuilder = new StringBuilder();
+		HSSFWorkbook destWorkbook = new HSSFWorkbook(new FileInputStream(new File(
+				pathYdsj)));
+		for (File f : files){
+			String name = f.getName();
+			if(f.isFile() && name.length() > 4 && ".xls".equals(name.substring(name.length() - 4))){
+				resultBuilder.append("<tr><td>" + "文件名"
+						+ "</td><td>" + name + "</td></tr>");
+				HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(f));
+				resultBuilder.append(convertYd(false, destWorkbook, workbook));
+			}
+		}
+		
+		response.setContentType("application/octet-stream"); 
+		response.setHeader("Content-disposition","attachment;filename=\"" + "ydsj.xls" + "\"");
+		
+		destWorkbook.write(response.getOutputStream());
+		return resultBuilder.toString();
+		
 	}
 }

@@ -17,9 +17,10 @@
 	
 		<td style="padding-right:5px">
 		<select id="year"	onchange="instance.onYearSelected(this.value)" style="width: 125px;">
+				<option value="2012" >2012</option>
+				<option value="2013" >2013</option>
 				<option value="2014" >2014</option>
 				<option value="2015" selected="selected">2015</option>
-
 		</select>
 
 		<td style="padding-right:5px">

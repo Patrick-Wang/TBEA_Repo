@@ -79,7 +79,7 @@ module hzb_zbhz {
         public init(tableId: string, dateId: string, month: number, year: number): void {
              this.mTableId = tableId;
              this.mDs = new Util.DateSelector(
-                {year: year - 2, month : 1}, 
+                {year: year - 3, month : 1}, 
                 {year: year, month: month},
                 dateId);
             this.updateTable();

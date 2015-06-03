@@ -54,7 +54,7 @@ module gcy_zbhz {
         private mTableId : string;
         public init(tableId: string, dateId: string, month: number, year: number): void {
            this.mDs = new Util.DateSelector(
-                {year: year - 2, month : 1}, 
+                {year: year - 3, month : 1}, 
                 {year: year, month: month},
                 dateId);
             this.mTableId = tableId;

@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface ConvertorSevice {
 
-	String convertNdjh(HttpServletRequest request, HttpServletResponse response)
+	String convertNdjh(HttpServletRequest request, HttpServletResponse response, String pathData)
 			throws IOException;
 
-	String convertYdjh(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	String convertYdjh(HttpServletRequest request, HttpServletResponse response, String pathData) throws IOException;
 
-	String convertYdsj(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	String convertYdsj(HttpServletRequest request, HttpServletResponse response, String pathData) throws IOException;
 
 }

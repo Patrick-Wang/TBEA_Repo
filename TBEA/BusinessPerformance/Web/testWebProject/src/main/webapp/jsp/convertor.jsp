@@ -80,10 +80,20 @@
 <title>Excel 数据转换器</title>
 </head>
 <body>
-<!-- 	<form action="ndjh_convert.do" method="post" enctype="multipart/form-data">
-	请选择要上传的文件<input type="file" name="upfile" size="50">
-	<input type="submit" value="提交"> 
-	</form>-->
+	<table id="filelist">
+		
+	</table>
+	
+
+
+ 	<form id = "uploadform" action="upload.do" method="post" enctype="multipart/form-data">
+	 	<table>
+			<tr><td><span style="font-size:20px;">请上传 .xls 文件</span></td></tr>
+			<tr><td><input type="file" name="upfile" accept="application/msexcel" size="100" value="浏览"></td></tr>
+			<tr><td><input type="submit" value="上传"> </td></tr>
+		</table>
+
+	</form>
 	<table>
 		<tr>
 			<td><form action="ndjhconvert.do" method="post">
@@ -119,4 +129,52 @@
      }
     </script>
 </body>
+
+<script type="text/javascript">
+
+	function deletefile(fileName){
+		var url =  encodeURI("deletefile.do?filename=" + fileName);
+		$.ajax({
+		    type: "GET",
+		    url: url,
+		    success: function (data) {
+		    	updateFileList();
+		    },
+		    error: function (XMLHttpRequest, textStatus, errorThrown) {
+		       
+		    }
+		});
+	}
+
+	function updateFileList(){
+		$.ajax({
+		    type: "GET",
+		    url: "checkFiles.do",
+		    success: function (data) {
+		    	var flist = JSON.parse(data);
+		    	$("#filelist").empty();
+		    	
+		    	if (flist.length > 0){
+		    		$("#filelist").append("<tr><td>已提交的文件  :</td></tr>");
+		    		for (var f in flist){
+		    			$("#filelist").append("<tr><td>" + flist[f] + "</td><td><input type='button' value='-' onclick=\"deletefile('" + flist[f] + "')\"></td></tr>");
+		    		}
+		    	} else{
+		    		$("#filelist").append("<tr><td>没有可用文件</td></tr>");
+		    	}
+		    	$("#filelist").append("<tr><td></td></tr>");
+		    },
+		    error: function (XMLHttpRequest, textStatus, errorThrown) {
+		       
+		    }
+		});
+	}
+	updateFileList();
+	
+	function clickform(){
+		$("#uploadform")[0].submit();
+		//setInterval(updateFileList, 100);
+	}
+</script>
+
 </html>

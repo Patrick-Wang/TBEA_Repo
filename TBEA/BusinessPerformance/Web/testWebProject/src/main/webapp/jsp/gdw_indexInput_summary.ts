@@ -42,7 +42,7 @@ module gdw_indexinput_summary {
             this.mMonth = month;
             this.isZHCompany = isZHCompany;
             this.mDs = new Util.DateSelector(
-                { year: year - 2, month: 1 },
+                { year: year - 3, month: 1 },
                 { year: year, month: month },
                 dateId);
             this.onIndexSelected();
