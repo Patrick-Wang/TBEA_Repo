@@ -56,7 +56,7 @@ public class LoginServlet {
 	public @ResponseBody String logout(HttpServletRequest request,
 			HttpServletResponse response) {
 		HttpSession session = request.getSession(false);
-		if (SessionManager.isOnline(session)){
+		if (null != session){
 			session.invalidate();
 		}
 
@@ -74,7 +74,7 @@ public class LoginServlet {
 		Account account = loginService.Login(j_username, j_password);
 		if (null != account) {
 			HttpSession currentSession = request.getSession(false);
-			if (SessionManager.isOnline(currentSession)){
+			if (null != currentSession){
 				currentSession.invalidate();
 			}
 

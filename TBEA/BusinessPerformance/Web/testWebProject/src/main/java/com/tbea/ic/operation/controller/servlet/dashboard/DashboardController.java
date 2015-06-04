@@ -132,7 +132,7 @@ public class DashboardController {
 	        Iterator<String> i = keys.iterator(); // Must be in the synchronized block
 	        while (i.hasNext()){
 	        	HttpSession session = sessions.get(i.next());
-	        	account = SessionManager.getAccount(request.getSession(false));
+	        	account = SessionManager.getAccount(session);
 				if (null == account || Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())) {
 					continue;
 				}
