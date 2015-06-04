@@ -44,7 +44,6 @@ import com.tbea.ic.operation.common.jyzbexcel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.jyzbexcel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.common.jyzbexcel.PercentFormatterHandler;
 import com.tbea.ic.operation.common.jyzbexcel.PercentSingleFormatterHandler;
-import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
@@ -100,6 +99,7 @@ public class YDZBController {
 				CompanyType.NFSBDCYJT == compType;
 	}
 	
+
 	private List<Company> getJydw(CompanyType sybOrJydw){
 		List<Company> comps;
 		if (isSyb(sybOrJydw)){
@@ -108,6 +108,13 @@ public class YDZBController {
 		} else if (isSbdcy(sybOrJydw)){
 			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
 			comps = orgJyzb.getCompany(sybOrJydw).getSubCompanies();
+		} else if(CompanyType.GCCY == sybOrJydw){
+			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();	
+			Organization org = companyManager.getBMDBOrganization();
+			comps = new ArrayList<Company>();
+			for (Company comp : orgJyzb.getCompany(sybOrJydw).getSubCompanies()){
+				comps.add(org.getCompany(comp.getType()));
+			}
 		} else {
 			Organization org = companyManager.getBMDBOrganization();
 			comps = new ArrayList<Company>();

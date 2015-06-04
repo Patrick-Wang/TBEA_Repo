@@ -180,6 +180,7 @@ public class CompanyManager {
 		//非正式公司
 		DBSBDCYJT		("东北输变电产业集团"),
 		NFSBDCYJT		("南方输变电产业集团"),
+		GCCY			("工程产业"),
 		XBCZT			("新变厂整体"),
 		BYQCY			("变压器产业"),
 		XLCY			("线缆产业");

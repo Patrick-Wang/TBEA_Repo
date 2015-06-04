@@ -24,11 +24,10 @@ class VirtualJYZBOrganization extends AbstractOrganization {
 					.append(clone(BM, CompanyType.NDGS))
 					.append(clone(BM, CompanyType.TCNY))					
 			).append(
-					clone(BM, CompanyType.ZHGS)				
-			).append(
-					clone(BM, CompanyType.JCKGS_JYDW)	
-			).append(
-					clone(BM, CompanyType.GJGCGS_GFGS)	
+					clone(BM, CompanyType.ZHGS)					
+			).append(this.getCompany(CompanyType.GCCY, 58220)
+					.append(clone(BM, CompanyType.JCKGS_JYDW))
+					.append(clone(BM, CompanyType.GJGCGS_GFGS))
 			));
 	}
 

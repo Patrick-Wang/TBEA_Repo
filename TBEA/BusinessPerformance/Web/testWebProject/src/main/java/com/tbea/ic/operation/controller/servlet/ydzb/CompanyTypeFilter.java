@@ -14,13 +14,14 @@ class CompanyTypeFilter implements CompanySelection.Filter{
 	Organization org;
 	Company dbsbd;
 	Company nfsbd;
-	
+
 //	Company xjtc;
 	public CompanyTypeFilter(List<Company> companies, Organization org){
 		this.org = org;
 		this.companies = companies;
 		dbsbd = org.getCompany(CompanyType.DBSBDCYJT);
 		nfsbd = org.getCompany(CompanyType.NFSBDCYJT);
+
 		updateCompanies();
 	}
 		
@@ -44,6 +45,7 @@ class CompanyTypeFilter implements CompanySelection.Filter{
 		}
 		addCategory(ret, dbsbd);
 		addCategory(ret, nfsbd);
+
 		//addCategory(ret, xjtc);		
 		this.companies = ret;
 	}
@@ -59,9 +61,9 @@ class CompanyTypeFilter implements CompanySelection.Filter{
 	
 	@Override
 	public boolean keep(Company comp) {
-		return !dbsbd.contains(comp) && 
+		return 
+			!dbsbd.contains(comp) && 
 			!nfsbd.contains(comp) && 
-			//!xjtc.contains(comp) && 
 			(companies.contains(comp) || contains(comp));
 	}
 	
