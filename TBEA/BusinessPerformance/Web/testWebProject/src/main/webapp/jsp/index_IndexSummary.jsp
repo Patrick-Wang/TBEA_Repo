@@ -123,6 +123,26 @@
 	</div>
 </div>
 
+<div>
+	<h3>
+		财务指标情况<a name="NChz"> </a>
+	</h3>
+	<div class="section">
+		<div class="thumb3">
+			<ul class="slides">
+				<c:if test="${CorpAuth}">
+				<li><a href="../NCzb/AllCompanysNC_overview.do" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>公司整体财务指标完成情况</strong></span></a>
+				</li>
+				</c:if> 
+				<li><a href="../ydzb/hzb_companys_prediction.do" target="_blank"><img
+						src="../images/charts/scatter4.png"> <span><strong>经营单位财务指标完成情况</strong></span></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
 
 <%-- <c:if test="${CorpAuth}">
 <div>

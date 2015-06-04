@@ -73,13 +73,21 @@
 					<li style="background-color: transparent;"><i
 						class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 						style="color: rgb(62, 152, 197);">经营指标完成情况</a></li>
-
+						
+					
 					<!-- 只有公司权限显示-->
 					<%-- <c:if test="${CorpAuth}"> --%>
 						<li style="background-color: transparent;"><i
 							class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 							style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
 					<%-- </c:if> --%>
+					
+					<!-- 全部显示-->
+					<li style="background-color: transparent;"><i
+						class="ec-icon ec-icon-line"></i> <a href="#zbhz"
+						style="color: rgb(62, 152, 197);">财务指标完成情况</a></li>
+					
+					
 					<c:if test="${CorpAuth}">
 				<!-- 	<li style="background-color: transparent;"><i
 						class="ec-icon ec-icon-line"></i> <a href="#ranking"
