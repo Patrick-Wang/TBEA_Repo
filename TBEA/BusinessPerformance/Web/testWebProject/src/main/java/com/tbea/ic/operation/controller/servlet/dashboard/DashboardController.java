@@ -25,12 +25,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
@@ -58,21 +60,31 @@ public class DashboardController {
 
 		Date date = DateSelection.getDate(request);
 		Account account = SessionManager.getAccount(request.getSession(false));
-		List<Company> jydws = null;
-		if (account.getName().equals("fujianghua")) {
-			jydws = BMDepartmentDB.getMainlyJydw(companyManager);
-		} else if ("众和公司".equals(account.getName())) {
-			jydws = companyManager.getBMDBOrganization().getCompany(CompanyType.ZHGS).getSubCompanies();
+		List<Company> dws = null;
+		if (Account.KNOWN_ACCOUNT_FUJIANGHUA.equals(account.getName())) {
+			dws = BMDepartmentDB.getMainlyJydw(companyManager);
+		} else if (Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName())) {
+			dws = companyManager.getBMDBOrganization().getCompany(CompanyType.ZHGS).getSubCompanies();
+		} else if (Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())){
+			Organization org = companyManager.getBMDBOrganization();
+			List<CompanyType> compTypes = CompanySelection.getCompanys(request);
+			dws = new ArrayList<Company>();
+			for(int i = 0; i < compTypes.size(); ++i){
+				Company comp = org.getCompany(compTypes.get(i));
+				if (null != comp){
+					dws.add(comp);
+				}
+			}
 		}
-		String result = "";
-		if (null != jydws) {
 
+		String result = "[]";
+		if (null != dws && !dws.isEmpty()) {
 			ZBType entryType = ZBType.valueOf(Integer.valueOf(request
 					.getParameter("entryType")));
 			List<String[]> entryStatus = entryService.getEntryStatus(date,
-					entryType, jydws);
+					entryType, dws);
 			List<String[]> approveStatus = approveService.getApproveStatus(
-					date, entryType, jydws);
+					date, entryType, dws);
 			List<String[]> aggStatus = new ArrayList<String[]>();
 			for (int i = 0; i < entryStatus.size(); ++i) {
 				aggStatus.add(new String[] { entryStatus.get(i)[0],
@@ -81,7 +93,6 @@ public class DashboardController {
 			}
 			result = JSONArray.fromObject(aggStatus).toString()
 					.replace("null", "\"\"");
-
 		}
 		return result.getBytes("utf-8");
 	}
@@ -93,7 +104,7 @@ public class DashboardController {
 		DateSelection dateSel = new DateSelection();
 		dateSel.select(map);
 		Account account = SessionManager.getAccount(request.getSession(false));
-		map.put("zhAuth", "众和公司".equals(account.getName()));
+		map.put("zhAuth", Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName()));
 		return new ModelAndView("gdw_indexInput_summary", map);
 	}
 	
@@ -106,7 +117,7 @@ public class DashboardController {
 		JSONArray arrUsers = new JSONArray();
 		HttpSession latestActiveSession = null;
 		Account account = SessionManager.getAccount(request.getSession(false));
-		if (null == account || !"admin".equals(account.getName())) {
+		if (null == account || !Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())) {
 			return new ModelAndView("");
 		}
 		
@@ -120,7 +131,7 @@ public class DashboardController {
 	        while (i.hasNext()){
 	        	HttpSession session = sessions.get(i.next());
 	        	account = SessionManager.getAccount(request.getSession(false));
-				if (null == account || "admin".equals(account.getName())) {
+				if (null == account || Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())) {
 					continue;
 				}
 				++activeCount;

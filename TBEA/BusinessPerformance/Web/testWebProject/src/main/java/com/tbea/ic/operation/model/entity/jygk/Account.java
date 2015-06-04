@@ -21,6 +21,10 @@ import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 @Table(name = "jygk_account")
 public class Account extends AbstractReadWriteEntity implements Serializable {
 
+	public final static String KNOWN_ACCOUNT_FUJIANGHUA = "fujianghua";
+	public final static String KNOWN_ACCOUNT_ADMIN = "admin";
+	public final static String KNOWN_ACCOUNT_ZHGS = "众和公司";
+	
 	private static final long serialVersionUID = 1L;
 
 	private String name;
