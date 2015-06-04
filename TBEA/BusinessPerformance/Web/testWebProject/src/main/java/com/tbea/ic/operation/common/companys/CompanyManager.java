@@ -183,7 +183,8 @@ public class CompanyManager {
 		GCCY			("工程产业"),
 		XBCZT			("新变厂整体"),
 		BYQCY			("变压器产业"),
-		XLCY			("线缆产业");
+		XLCY			("线缆产业"),
+		UNKNOWN			("未知");
 		//TCNY_and_XJNY	("天池能源+新疆能源公司");
 		private String value;
 
@@ -222,6 +223,12 @@ public class CompanyManager {
 	Organization virtualYSZK;
 	Organization virtualJYZB;
  
+	private final static Company emptyCompany = new Company(-1, CompanyType.UNKNOWN);
+	public static Company getEmptyCompany(){
+		return emptyCompany;
+	}
+	
+	
 	@Resource(type=BMDepartmentDB.class)
 	public void setBMDBOrganization(Organization org) {
 		BMDB = org;

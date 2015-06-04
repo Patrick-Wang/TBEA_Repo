@@ -54,7 +54,7 @@ public class DashboardController {
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
-	@RequestMapping(value = "status_update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "status_update.do")
 	public @ResponseBody byte[] getEntryStatus(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
@@ -73,6 +73,8 @@ public class DashboardController {
 				Company comp = org.getCompany(compTypes.get(i));
 				if (null != comp){
 					dws.add(comp);
+				} else{
+					dws.add(CompanyManager.getEmptyCompany());
 				}
 			}
 		}
