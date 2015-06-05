@@ -47,9 +47,6 @@ public class DashboardController {
 
 	@Autowired
 	private ApproveService approveService;
-
-	
-	List<Company> mainCompanies = new ArrayList<Company>();
 	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -65,19 +62,20 @@ public class DashboardController {
 			dws = BMDepartmentDB.getMainlyJydw(companyManager);
 		} else if (Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName())) {
 			dws = companyManager.getBMDBOrganization().getCompany(CompanyType.ZHGS).getSubCompanies();
-		} else if (Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())){
-			Organization org = companyManager.getBMDBOrganization();
-			List<CompanyType> compTypes = CompanySelection.getCompanys(request);
-			dws = new ArrayList<Company>();
-			for(int i = 0; i < compTypes.size(); ++i){
-				Company comp = org.getCompany(compTypes.get(i));
-				if (null != comp){
-					dws.add(comp);
-				} else{
-					dws.add(CompanyManager.getEmptyCompany());
-				}
-			}
 		}
+//		else if (Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())){
+//			Organization org = companyManager.getBMDBOrganization();
+//			List<CompanyType> compTypes = CompanySelection.getCompanys(request);
+//			dws = new ArrayList<Company>();
+//			for(int i = 0; i < compTypes.size(); ++i){
+//				Company comp = org.getCompany(compTypes.get(i));
+//				if (null != comp){
+//					dws.add(comp);
+//				} else{
+//					dws.add(CompanyManager.getEmptyCompany());
+//				}
+//			}
+//		}
 
 		String result = "[]";
 		if (null != dws && !dws.isEmpty()) {

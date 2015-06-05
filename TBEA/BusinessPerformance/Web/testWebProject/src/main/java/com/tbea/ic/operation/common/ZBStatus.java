@@ -20,6 +20,20 @@ public enum ZBStatus{
 		}
 		return null;
 	}
+	
+	public static ZBStatus fromString(String value){
+		if (null == value){
+			return ZBStatus.NONE;
+		}
+		ZBStatus[] types = ZBStatus.values();
+		for (ZBStatus type : types){
+			if (value.equals(type.getValue())){
+				return type;
+			}
+		}
+		return null;
+	}
+	
 	private String value;
 	
 	ZBStatus(String value) {
