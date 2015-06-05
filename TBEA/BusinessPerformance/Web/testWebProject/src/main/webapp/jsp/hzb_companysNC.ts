@@ -61,7 +61,7 @@ module hzb_companysNC {
                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, { year: this.mOpt.date.year, month: month }, this.mOpt.dateId);
                this.mDateSelector.select(this.mOpt.date);
                this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
-               this.updateUI();
+               //this.updateUI();
            } 
         }
                

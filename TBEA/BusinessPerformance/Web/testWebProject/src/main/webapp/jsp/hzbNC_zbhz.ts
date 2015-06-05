@@ -3,7 +3,7 @@
 /// <reference path="messageBox.ts" />
 declare var echarts;
 
-module hzbNC_zbhz {
+module hzbNC_zbhz{
     
     enum ZtId{
         zb, dysj, dyqntq, dytbzf, ndlj, ndljjhwcl, ndqntq, ndtbzf   
