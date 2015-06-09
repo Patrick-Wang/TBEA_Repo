@@ -27,7 +27,7 @@ public class ServiceSession {
 	}
 	
 	public static ServiceSession getSession(ServiceUser usr){
-		return onlineSessions.get(usr.getUser());
+		return null;
 	}
 	
 	public void setAttribute(String name, Object obj){

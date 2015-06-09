@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
+import javax.xml.ws.WebServiceContext;
 
 import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.sun.net.httpserver.HttpExchange;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -27,6 +29,9 @@ public class IndicatorEntryImpl implements IndicatorEntry{
 	@Autowired
 	private EntryService entryService;
 
+	@Resource
+	private WebServiceContext wsc;
+	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 	
@@ -44,6 +49,8 @@ public class IndicatorEntryImpl implements IndicatorEntry{
 	@Override
 	public void save(ServiceUser usr, Integer compId, ZBType type, Date date,
 			List<Indicator> indicators) {
+		HttpExchange he = (HttpExchange) wsc.getMessageContext().get("com.sun.xml.internal.ws.http.exchange");
+		Account account = (Account) he.getAttribute("account");
 		Company company = companyManager.getBMDBOrganization().getCompany(compId);
 		entryService.saveZb(
 				new java.sql.Date(date.getTime()), 
