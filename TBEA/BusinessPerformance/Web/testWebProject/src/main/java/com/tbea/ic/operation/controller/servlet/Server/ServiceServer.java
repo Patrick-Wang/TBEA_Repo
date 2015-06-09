@@ -40,28 +40,28 @@ public class ServiceServer {
 	@Autowired
 	public void start() throws IOException{
 		
-		HttpServer hs = HttpServer.create(new InetSocketAddress(9000), 0);
-		com.sun.net.httpserver.HttpContext context = hs.createContext("/BusinessManagement/IndicatorStatusQuery");
-		//context.setAuthenticator(new ServiceAuthenticator());
-
-		endpoints.add(Endpoint.create(query));
-		endpoints.add(Endpoint.create(account));
-		endpoints.add(Endpoint.create(entry));
-		//endpoints.add(Endpoint.create(account));
-		
-		//endpoints.get(0).publish(context);
-		
-		//context = hs.createContext("/BusinessManagement/ServiceAccount");
-		//context.setAuthenticator(new ServiceAuthenticator());
-		hs.start();
-		
-		endpoints.get(0).publish(context);
-		
-		context = hs.createContext("/BusinessManagement/ServiceAccount");
-		endpoints.get(1).publish(context);
-		
-		context = hs.createContext("/BusinessManagement/IndicatorEntry");
-		endpoints.get(2).publish(context);
+//		HttpServer hs = HttpServer.create(new InetSocketAddress(9000), 0);
+//		com.sun.net.httpserver.HttpContext context = hs.createContext("/BusinessManagement/IndicatorStatusQuery");
+//		//context.setAuthenticator(new ServiceAuthenticator());
+//
+//		endpoints.add(Endpoint.create(query));
+//		endpoints.add(Endpoint.create(account));
+//		endpoints.add(Endpoint.create(entry));
+//		//endpoints.add(Endpoint.create(account));
+//		
+//		//endpoints.get(0).publish(context);
+//		
+//		//context = hs.createContext("/BusinessManagement/ServiceAccount");
+//		//context.setAuthenticator(new ServiceAuthenticator());
+//		hs.start();
+//		
+//		endpoints.get(0).publish(context);
+//		
+//		context = hs.createContext("/BusinessManagement/ServiceAccount");
+//		endpoints.get(1).publish(context);
+//		
+//		context = hs.createContext("/BusinessManagement/IndicatorEntry");
+//		endpoints.get(2).publish(context);
 		
 ///		endpoints.add(Endpoint.publish("http://localhost:9000/BusinessManagement/IndicatorStatusQuery", query));
 //		endpoints.add(Endpoint.publish("http://localhost:9000/BusinessManagement/ServiceAccount", account));

@@ -230,7 +230,7 @@ public class YDZBController {
 			HSSFWorkbook workbook = template.getWorkbook();
 			HSSFSheet sheet = workbook.getSheetAt(0);
 			for (int i = 0, ilen = data.size(); i < ilen; ++i) {
-				HSSFRow row = sheet.createRow(2 + i);
+				HSSFRow row = sheet.createRow(3 + i);
 				for (int j = 0, jlen = data.get(i).length; j < jlen; ++j) {
 					HSSFCell cell = row.createCell(j);
 					formatterChain.handle(data.get(i)[0], j, template, cell, data.get(i)[j]);
@@ -1319,7 +1319,7 @@ public class YDZBController {
 			if (0 == month % 3) {
 				data = gszbService.getGdwThirdSeasonPredictionZBs(gszb, d);
 				fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度末月"+ zbName + "预测完成情况";
-				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_SY);
+				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_MY);
 //				formatter = template.createCellFormatter()
 //						.addType(5, CellFormatter.CellType.PERCENT)
 //						.addType(7, CellFormatter.CellType.PERCENT)					
@@ -1337,7 +1337,7 @@ public class YDZBController {
 			if (1 == month % 3) {
 				data = gszbService.getGdwFirstSeasonPredictionZBs(gszb, d);
 				fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度首月"+ zbName + "预测完成情况";
-				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_CY);
+				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_SY);
 //				formatter = template.createCellFormatter()
 //						.addType(4, CellFormatter.CellType.PERCENT)
 //						.addType(6, CellFormatter.CellType.PERCENT)					
@@ -1352,7 +1352,7 @@ public class YDZBController {
 			if (2 == month % 3) {
 				data = gszbService.getGdwSecondSeasonPredictionZBs(gszb, d);
 				fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度次月"+ zbName + "预测完成情况";
-				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_MY);
+				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_CY);
 //				formatter = template.createCellFormatter()
 //						.addType(4, CellFormatter.CellType.PERCENT)
 //						.addType(6, CellFormatter.CellType.PERCENT)	
@@ -1374,8 +1374,9 @@ public class YDZBController {
 				HSSFRow row = sheet.getRow(2 + i);
 				for (int j = 0, jlen = data.get(i).length; j < jlen; ++j) {
 					HSSFCell cell = row.getCell(j + 1);
-//					formatter.format(j, cell, data.get(i)[j]);
-					formatterChain.handle(null, j, template, cell, data.get(i)[j]);
+					if (null != cell){
+						formatterChain.handle(null, j, template, cell, data.get(i)[j]);
+					}
 				}
 			}		
 				

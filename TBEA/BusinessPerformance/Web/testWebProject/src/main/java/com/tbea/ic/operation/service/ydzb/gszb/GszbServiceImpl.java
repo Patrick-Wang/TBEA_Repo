@@ -185,10 +185,10 @@ public class GszbServiceImpl implements GszbService {
 		srqyzbs.add(GSZB.GNQY.getValue());// 输变电国内签约
 		srqyzbs.add(GSZB.QZDJQY_1.getValue());// 单机签约（输变电国内单机签约）
 		srqyzbs.add(GSZB.QZCTQY_1.getValue());// 成套签约（输变电国内成套签约）
+		
 		// 新能源产业签约
-		// 能源产业签约
-		// 众和公司签约
 		srqyzbs.addAll(SrqyConfigurator.getSpecialZbs());
+		
 		srqyzbs.add(GSZB.CL.getValue());// 产量
 		srqyzbs.add(GSZB.BYQ.getValue());// 变压器(万KVA)
 		srqyzbs.add(GSZB.XLYTL.getValue());// 线缆用铜量(吨)
@@ -198,8 +198,6 @@ public class GszbServiceImpl implements GszbService {
 		srqyzbs.add(GSZB.FDLWD.getValue());// 发电量（万度）（众和公司、新特能源公司、能动公司）
 		srqyzbs.add(GSZB.NBQmw.getValue());// 逆变器（MW）
 		srqyzbs.add(GSZB.MT.getValue());// 煤炭(万吨)
-		srqyzbs.add(GSZB.QZDYLBCLD.getValue());// 电子铝箔（吨）
-		srqyzbs.add(GSZB.DJBHCLPM.getValue());// 电极箔化成量（平米）
 		srqyzbs.add(GSZB.LBD.getValue());// 铝箔（吨）
 		srqyzbs.add(GSZB.DJBPM.getValue());// 电极箔化成量（平米）
 	}
@@ -336,7 +334,32 @@ public class GszbServiceImpl implements GszbService {
 	public List<String[]> getSrqy(Date date) {	
 		BasicPipe pipe = new BasicPipe(srqyzbs, BMDepartmentDB.getMainlyJydw(companyManager), date,
 				getConfiguratorFactory().getSrqyConfigurator());
-		return makeZbResult(srqyzbs, pipe.getData());
+		List<String[]> allCompResult = makeZbResult(srqyzbs, pipe.getData());
+		
+		pipe = new BasicPipe(GSZB.HTQYE.getValue(), companyManager.getBMDBOrganization().getCompany(CompanyType.XNYSYB).getSubCompanies(), date,
+				getConfiguratorFactory().getSrqyConfigurator());
+		List<Integer> zbTmp = new ArrayList<Integer>();
+		zbTmp.addAll(SrqyConfigurator.getSpecialZbs());
+		List<String[]> xnysybResult = makeZbResult(zbTmp, pipe.getData());
+		
+		List<Company> comps = new ArrayList<Company>();
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DJGYFGS));
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DJGEGS));
+		pipe = new BasicPipe(GSZB.DJG.getValue(), comps, date, getConfiguratorFactory().getSrqyConfigurator());
+		
+		zbTmp.clear();
+		zbTmp.add(GSZB.DJG.getValue());
+		List<String[]> djggsResult = makeZbResult(zbTmp, pipe.getData());
+		
+		for (int i = 0; i < allCompResult.size(); ++i){
+			if (allCompResult.get(i)[0].equals(xnysybResult.get(0)[0])){
+				allCompResult.set(i, xnysybResult.get(0));
+			} else if(allCompResult.get(i)[0].equals(djggsResult.get(0)[0])){
+				allCompResult.set(i, djggsResult.get(0));
+			}
+		}
+		
+		return allCompResult;
 	}
 
 	

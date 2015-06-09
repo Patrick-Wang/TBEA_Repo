@@ -23,24 +23,16 @@ public class SrqyConfigurator implements IPipeConfigurator {
 	StandardConfigurator standardConfigurator;
 	
 	private final static int xnycyQyId = 100021;
-	private final static int nycyQyId = 100022;
-	private final static int zhgsQyId = 100023;
 	
 	private static List<Integer> specialZbs = new ArrayList<Integer>();
 	static{
 		specialZbs.add(xnycyQyId);//新能源产业签约
-		specialZbs.add(nycyQyId);//能源产业签约
-		specialZbs.add(zhgsQyId);//众和公司签约
 	}
 	
 	public static String getSpecialZbName(Integer zb){
 		switch(zb){
 		case xnycyQyId:
 			return "     新能源产业签约";
-		case nycyQyId:
-			return "     能源产业签约";
-		case zhgsQyId:
-			return "     众和公司签约";
 		}
 		return null;
 	}
@@ -81,12 +73,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 			.addFilter(new AccPipeFilter(njhAcc, 0)
 				.includeCompanies(org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 				.include(xnycyQyId))
-			.addFilter(new AccPipeFilter(njhAcc, 0)
-				.includeCompanies(org.getCompany(CompanyType.NYSYB).getSubCompanies())
-				.include(nycyQyId))
-			.addFilter(new AccPipeFilter(njhAcc, 0)
-				.includeCompanies(org.getCompany(CompanyType.ZHGS_SYB).getSubCompanies())
-				.include(zhgsQyId))
+
 
 			// 当月计划
 			.addFilter(new AccPipeFilter(yjhAcc, 1)
@@ -97,12 +84,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 			.addFilter(new AccPipeFilter(yjhAcc, 1)
 				.includeCompanies(org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 				.include(xnycyQyId))
-			.addFilter(new AccPipeFilter(yjhAcc, 1)
-				.includeCompanies(org.getCompany(CompanyType.NYSYB).getSubCompanies())
-				.include(nycyQyId))
-			.addFilter(new AccPipeFilter(yjhAcc, 1)
-				.includeCompanies(org.getCompany(CompanyType.ZHGS_SYB).getSubCompanies())
-				.include(zhgsQyId))
+
 				
 			// 当月实际
 			.addFilter(new AccPipeFilter(sjAcc, 2)
@@ -113,13 +95,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 			.addFilter(new AccPipeFilter(sjAcc, 2)
 				.includeCompanies(org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 				.include(xnycyQyId))
-			.addFilter(new AccPipeFilter(sjAcc, 2)
-				.includeCompanies(org.getCompany(CompanyType.NYSYB).getSubCompanies())
-				.include(nycyQyId))
-			.addFilter(new AccPipeFilter(sjAcc, 2)
-				.includeCompanies(org.getCompany(CompanyType.ZHGS_SYB).getSubCompanies())
-				.include(zhgsQyId))
-				
+
 			// 计划完成率
 			.addFilter(wclFilter.add(3, 2, 1))
 
@@ -133,12 +109,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 			.addFilter(new AccPipeFilter(sjAcc, 4, dh.getFirstMonth(), dh.getCur())
 				.includeCompanies(org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 				.include(xnycyQyId))
-			.addFilter(new AccPipeFilter(sjAcc, 4, dh.getFirstMonth(), dh.getCur())
-				.includeCompanies(org.getCompany(CompanyType.NYSYB).getSubCompanies())
-				.include(nycyQyId))
-			.addFilter(new AccPipeFilter(sjAcc, 4, dh.getFirstMonth(), dh.getCur())
-				.includeCompanies(org.getCompany(CompanyType.ZHGS_SYB).getSubCompanies())
-				.include(zhgsQyId))
+
 				
 			// 累计计划完成率
 			.addFilter(wclFilter.add(5, 4, 0))	
@@ -152,12 +123,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 			.addFilter(new AccPipeFilter(sjAcc, 6, dh.getQntq())
 				.includeCompanies(org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 				.include(xnycyQyId))
-			.addFilter(new AccPipeFilter(sjAcc, 6, dh.getQntq())
-				.includeCompanies(org.getCompany(CompanyType.NYSYB).getSubCompanies())
-				.include(nycyQyId))
-			.addFilter(new AccPipeFilter(sjAcc, 6, dh.getQntq())
-				.includeCompanies(org.getCompany(CompanyType.ZHGS_SYB).getSubCompanies())
-				.include(zhgsQyId))
+
 				
 			// 同比增幅
 			.addFilter(tbzzFilter.add(7, 2, 6))
@@ -171,12 +137,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 			.addFilter(new AccPipeFilter(sjAcc, 8, dh.getQnfirstMonth(), dh.getQntq())
 				.includeCompanies(org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 				.include(xnycyQyId))
-			.addFilter(new AccPipeFilter(sjAcc, 8, dh.getQnfirstMonth(), dh.getQntq())
-				.includeCompanies(org.getCompany(CompanyType.NYSYB).getSubCompanies())
-				.include(nycyQyId))
-			.addFilter(new AccPipeFilter(sjAcc, 8, dh.getQnfirstMonth(), dh.getQntq())
-				.includeCompanies(org.getCompany(CompanyType.ZHGS_SYB).getSubCompanies())
-				.include(zhgsQyId))
+
 				
 			// 同比增幅
 			.addFilter(tbzzFilter.add(9, 4, 8))

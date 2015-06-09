@@ -30,7 +30,10 @@ public class NumberFormatterHandler extends AbstractFormatterHandler {
 
 	@Override
 	protected void onHandle(JyzbExcelTemplate template, HSSFCell cell, String val) {
+		System.out.println(val);
 		BigDecimal   b   =   new   BigDecimal(Double.valueOf(val));
+		System.out.println(b);
+		System.out.println(cell);
 		switch(type){
 		case RESERVE_0:
 			cell.setCellValue(b.setScale(0, BigDecimal.ROUND_HALF_UP).toString());
