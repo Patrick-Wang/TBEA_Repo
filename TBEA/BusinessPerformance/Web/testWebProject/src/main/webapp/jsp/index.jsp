@@ -83,9 +83,9 @@
 					<%-- </c:if> --%>
 					
 					<!-- 全部显示-->
-					<li style="background-color: transparent;"><i
+<!-- 					<li style="background-color: transparent;"><i
 						class="ec-icon ec-icon-line"></i> <a href="#zbhz"
-						style="color: rgb(62, 152, 197);">财务指标完成情况</a></li>
+						style="color: rgb(62, 152, 197);">财务指标完成情况</a></li> -->
 					
 					
 					<c:if test="${CorpAuth}">
