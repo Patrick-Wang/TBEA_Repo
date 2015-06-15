@@ -58,10 +58,10 @@ public class DashboardController {
 		Date date = DateSelection.getDate(request);
 		Account account = SessionManager.getAccount(request.getSession(false));
 		List<Company> dws = null;
-		if (Account.KNOWN_ACCOUNT_FUJIANGHUA.equals(account.getName())) {
-			dws = BMDepartmentDB.getMainlyJydw(companyManager);
-		} else if (Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName())) {
+		if (Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName())) {
 			dws = companyManager.getBMDBOrganization().getCompany(CompanyType.ZHGS).getSubCompanies();
+		} else{
+			dws = BMDepartmentDB.getMainlyJydw(companyManager);
 		}
 //		else if (Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())){
 //			Organization org = companyManager.getBMDBOrganization();

@@ -294,6 +294,11 @@ public class EntryServiceImpl implements EntryService{
 		return true;
 	}
 
+	//[zbid, value]
+	//[zbid, value]
+	//[zbid, value]
+	//[zbid, value]
+	//[zbid, value]
 	private boolean updateBYSJ(Date date, Company company, JSONArray data, ZBStatus status) {
 		List<ZBStatus> approvedList = getZbStatus(date, company.getType(), ZBType.BYSJ);
 		if (ZBStatus.APPROVED != approvedList.get(0)){
