@@ -1,0 +1,28 @@
+select a.unit_code as 公司编码, a.unit_name as 公司名称 , b.ver as 单体合并,b.inputdate as 报表时间 ,C.M10083 as 本月存货期末数 ,C.M10147 as 本月应收帐款期末数,
+C.M10050 as 本月资产总额期末数,C.M10125 as 本月负债总额期末数,C.M10007 as 本月固定资产期末数,C.M10007 as 本月固定资产期末数,C.M10067 as 本月净资产期末数,C.M10066 as 本月净资产期初数
+from iufo_unit_info a , iufo_measure_pubdata b ,iufo_measure_data_aabf9rn7 c   
+where a.unit_id=b.code and b.alone_id=c.alone_id
+
+select a.unit_code as 公司编码, a.unit_name as 公司名称 , b.ver as 单体合并, b.inputdate as 报表时间,
+C.M10107 as 本月销售收入，C.M10105 as 年度累计销售收入,C.M10059 as 本月净利润，C.M10147 as 年度累计净利润，
+C.M10059 as 本月利润总额，C.M10002 as 年度累计利润总额，(C.M10091+C.M10099+C.M10028) as 月度三项费用，(C.M10109+C.M10102+C.M10072) as 年度累计三项费用
+from iufo_unit_info a , iufo_measure_pubdata b ,iufo_measure_data_w67a04wo c   
+where a.unit_id=b.code and b.alone_id=c.alone_id
+
+select a.unit_code as 公司编码, a.unit_name as 公司名称 , b.ver as 单体合并,b.inputdate as 报表时间 ,
+C.m10161 as 本月经营性净现金流，C.m10114 as 年度累计经营性净现金流
+from iufo_unit_info a , iufo_measure_pubdata b ,iufo_measure_data_9hzo24a7 c   
+where a.unit_id=b.code and b.alone_id=c.alone_id
+
+select a.unit_code as 公司编码, a.unit_name as 公司名称 , b.ver as 单体合并,b.inputdate as 报表时间,
+C.M10083 as 本月存货期末数 ,C.M10147 as 本月应收帐款期末数,C.M10050 as 本月资产总额期末数,,C.M10125 as 本月负债总额期末数,C.M10007 as 本月固定资产期末数,C.M10007 as 本月固定资产期末数,C.M10067 as 本月净资产期末数,C.M10066 as 本月净资产期初数,
+d.M10107 as 本月销售收入，d.M10105 as 年度累计销售收入,d.M10059 as 本月净利润，d.M10147 as 年度累计净利润，
+d.M10059 as 本月利润总额，d.M10002 as 年度累计利润总额，(d.M10091+d.M10099+d.M10028) as 月度三项费用，(d.M10109+d.M10102+d.M10072) as 年度累计三项费用
+e.m10161 as 本月经营性净现金流，e.m10114 as 年度累计经营性净现金流
+from iufo_unit_info a , iufo_measure_pubdata b ,iufo_measure_data_aabf9rn7 c, iufo_measure_data_w67a04wo d,iufo_measure_data_9hzo24a7 e 
+where a.unit_id=b.keyword1 and b.alone_id=c.alone_id
+and b.alone_id=d.alone_id and b.alone_id=e.alone_id 
+and b.inputdate='2015-05-31'and unit_code='0001' and b.ver in ('510','0' )
+
+
+说明：b.ver in ('510','0' )其中510是合并报表，0是单体报表
