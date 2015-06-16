@@ -16,6 +16,7 @@ import com.tbea.ic.operation.model.entity.jygk.SJZB;
 import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
+import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 
 public class SjzbAccumulator implements IAccumulator{
 	

@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.IPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.core.IPipe;
+import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
 
 public class RankPipeFilter implements IPipeFilter {
 	List<Integer[]> reference = new ArrayList<Integer[]>();

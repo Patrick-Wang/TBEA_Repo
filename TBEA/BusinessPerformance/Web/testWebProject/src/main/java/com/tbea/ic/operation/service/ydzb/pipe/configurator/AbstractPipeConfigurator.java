@@ -7,6 +7,7 @@ import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
+import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 
 public abstract class AbstractPipeConfigurator implements IPipeConfigurator {
 

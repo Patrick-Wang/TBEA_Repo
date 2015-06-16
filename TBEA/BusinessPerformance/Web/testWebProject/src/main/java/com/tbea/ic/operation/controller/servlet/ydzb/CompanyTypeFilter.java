@@ -8,7 +8,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 
-class CompanyTypeFilter implements CompanySelection.Filter{
+public class CompanyTypeFilter implements CompanySelection.Filter{
 	
 	private List<Company> companies;
 	Organization org;

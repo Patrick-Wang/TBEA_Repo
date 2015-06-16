@@ -1,7 +1,7 @@
 package com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.jxjl;
 
-import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.util.pipe.core.IPipe;
+import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.jhlr.JhlrRankConfigurator;
 
 public class JxjlRankConfigurator  implements IPipeConfigurator{

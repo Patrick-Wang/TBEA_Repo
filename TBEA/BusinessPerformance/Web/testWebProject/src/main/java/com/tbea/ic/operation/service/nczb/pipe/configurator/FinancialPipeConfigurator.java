@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.configurator.financial;
+package com.tbea.ic.operation.service.nczb.pipe.configurator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.List;
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.core.IPipe;
+import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.AbstractPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.AccPipeFilter;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.CopyPipeFilter;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.RatioPipeFilter;

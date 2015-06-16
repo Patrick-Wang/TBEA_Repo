@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.acc;
+package com.tbea.ic.operation.service.util.pipe.core.acc;
 
 import java.sql.Date;
 import java.util.List;

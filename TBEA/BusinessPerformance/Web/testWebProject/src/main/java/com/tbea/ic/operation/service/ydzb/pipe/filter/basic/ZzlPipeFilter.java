@@ -7,8 +7,8 @@ import java.util.Set;
 
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.IPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.core.IPipe;
+import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
 
 public class ZzlPipeFilter implements IPipeFilter {
 	List<Integer[]> zzls = new ArrayList<Integer[]>();

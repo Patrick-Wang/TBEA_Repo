@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.controller.servlet.ydzb;
+package com.tbea.ic.operation.controller.servlet.nczb;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -8,8 +8,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,9 +22,9 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.controller.servlet.ydzb.CompanyTypeFilter;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
-import com.tbea.ic.operation.service.ydzb.rank.RankService;
 
 
 @Controller

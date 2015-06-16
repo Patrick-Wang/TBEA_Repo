@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.BasicPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.IPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.core.BasicPipe;
+import com.tbea.ic.operation.service.util.pipe.core.IPipe;
+import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
 
 public class CopyPipeFilter implements IPipeFilter {
 	Map<Integer, List<Integer[]>> copyMap = new HashMap<Integer, List<Integer[]>>();

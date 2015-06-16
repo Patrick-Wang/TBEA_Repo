@@ -1,11 +1,11 @@
-package com.tbea.ic.operation.service.ydzb.pipe;
+package com.tbea.ic.operation.service.util.pipe.core;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 
 public class BasicPipe extends BasePipe{
 	

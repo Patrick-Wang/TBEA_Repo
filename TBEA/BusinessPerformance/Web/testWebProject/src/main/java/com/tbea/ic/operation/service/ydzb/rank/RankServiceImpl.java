@@ -23,10 +23,10 @@ import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
-import com.tbea.ic.operation.service.ydzb.pipe.AdvancedPipe;
+import com.tbea.ic.operation.service.util.pipe.core.AdvancedPipe;
+import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 
 
 @Service

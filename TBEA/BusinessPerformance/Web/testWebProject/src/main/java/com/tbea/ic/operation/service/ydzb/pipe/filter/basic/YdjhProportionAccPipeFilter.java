@@ -8,7 +8,7 @@ import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
-import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 
 //占比指标
 public class YdjhProportionAccPipeFilter extends NdjhProportionAccPipeFilter {

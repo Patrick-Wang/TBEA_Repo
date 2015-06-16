@@ -34,13 +34,13 @@ import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
+import com.tbea.ic.operation.service.util.pipe.core.AdvancedPipe;
+import com.tbea.ic.operation.service.util.pipe.core.BasicPipe;
+import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccDataSource;
-import com.tbea.ic.operation.service.ydzb.pipe.AdvancedPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.BasicPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
-import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.srqy.SrqyConfigurator;
 
 

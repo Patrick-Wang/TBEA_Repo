@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.service.util.pipe.core.IPipe;
+import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccDataSource;
-import com.tbea.ic.operation.service.ydzb.pipe.IPipe;
-import com.tbea.ic.operation.service.ydzb.pipe.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.AbstractCompositeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.advanced.AccPipeFilter;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.advanced.WclPipeFilter;
