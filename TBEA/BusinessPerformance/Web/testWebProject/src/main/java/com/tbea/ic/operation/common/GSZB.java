@@ -178,7 +178,13 @@ public enum GSZB {
 	JYYHXSWCL(175),//机组运行小时完成率（%）
 	MLR(176),//毛利润
 	YYDYRLmw(177),//运营电站容量（MW）
-	KFXMBASLmw(178);//开发项目备案数量（MW）
+	KFXMBASLmw(178),//开发项目备案数量（MW）
+	ZCZE(179),//资产总额
+	GDZC(180),//固定资产
+	JZCQMS(181),//净资产（期末数）
+	JZCQCS(182),//净资产（期初数）
+	JLR(183),//净利润
+	FZZEQMS(184);//负债总额期末数
 
 	
 	private Integer value;
