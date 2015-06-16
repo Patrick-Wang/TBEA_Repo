@@ -80,7 +80,7 @@ public class NCZBDaoImpl extends AbstractReadWriteDaoImpl<NCZB> implements
 		calStart.setTime(start);
 		Calendar calEnd = Calendar.getInstance();
 		calEnd.setTime(end);
-		Query q = this.getEntityManager().createQuery("select zbxx.id, sum(NCZB) from NCZB where " + 
+		Query q = this.getEntityManager().createQuery("select zbxx.id, sum(nczbz) from NCZB where " + 
 		"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dStart) <= 0 and " +
 		"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dEnd) >= 0 and " +
 		"dwxx.id in ("+ Util.toBMString(companies) +") and " + 

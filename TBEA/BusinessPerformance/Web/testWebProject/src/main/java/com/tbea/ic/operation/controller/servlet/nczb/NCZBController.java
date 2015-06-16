@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.nczb;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -81,15 +82,15 @@ public class NCZBController {
 	
 	
 	@RequestMapping(value = "AllCompanysNC_overview_update.do", method = RequestMethod.GET)
-	public @ResponseBody String getAllCompanysNC_overview_update(HttpServletRequest request,
-			HttpServletResponse response) {
+	public @ResponseBody byte[] getAllCompanysNC_overview_update(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Date d = DateSelection.getDate(request);
 		List<String[]> ncGszbData = nczbService.getGSZB(d);
 		List<String[]> gszbData = gszbService.getGsztzbNC(d, nczbService.getConfigFactory());
 		gszbData.addAll(4, ncGszbData);
 		JSONArray ja = JSONArray.fromObject(gszbData);
-		return ja.toString();
+		return ja.toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "CompanysNC_update.do", method = RequestMethod.GET)
