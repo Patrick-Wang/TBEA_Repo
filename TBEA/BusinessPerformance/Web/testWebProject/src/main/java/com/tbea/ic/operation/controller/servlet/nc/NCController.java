@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -37,12 +38,26 @@ public class NCController {
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
+	private static List<Integer> zbList = new ArrayList<Integer>();
+
+	static {
+		zbList.add(GSZB.LRZE.getValue());
+		zbList.add(GSZB.XSSR.getValue());
+		zbList.add(GSZB.JYXJXJL.getValue());
+		zbList.add(GSZB.YSZK.getValue());
+		zbList.add(GSZB.CH.getValue());
+		zbList.add(GSZB.SXFY.getValue());
+		zbList.add(GSZB.JZCSYL.getValue());
+	}
+
 	@RequestMapping(value = "importNC.do", method = RequestMethod.GET)
 	public void importNC(HttpServletRequest request,
 			HttpServletResponse response) {
 		Calendar cal = Calendar.getInstance();
 		cal.set(2015, 5 - 1, 31);
-		int month = cal.get(Calendar.MONTH) + 1;
+		// Calendar.MONTH获得月份正常情况下为自然月-1,
+		// 且当前需求中数据的月份为存储时间的前一个月，所以在下面公式调用中不必+1
+		int month = cal.get(Calendar.MONTH);
 		int year = cal.get(Calendar.YEAR);
 
 		// 存储NC对应指标
@@ -59,33 +74,42 @@ public class NCController {
 		codeList.add("CC10");
 		codeList.add("060100000000");
 		codeList.add("CC04");
-		ncService.connetToNCSystem("501", cal, codeList);
+		ncService.connetToNCSystem("510", cal, codeList);
 
 		ZBStatus zbStatus = null;
 		List<NCZB> NCZBList = ncService.getNCZBByDate(year, month);
+		// 需求中数据的月份为存储时间的前一个月
+		cal.add(Calendar.MONTH, -1);
 		Date date = new Date(cal.getTimeInMillis());
 		CompanyType comp = null;
 		JSONArray jsonArray = null;
+		int zbid = 0;
 		for (NCZB nczb : NCZBList) {
-			comp = companyManager.getBMDBOrganization()
-					.getCompany(nczb.getDwxx().getId()).getType();
-			zbStatus = entryService.getZbStatus(date, comp, ZBType.BYSJ).get(0);
-			jsonArray = new JSONArray();
-			jsonArray.add(0, nczb.getZbxx().getId());
-			jsonArray.add(1, nczb.getNczbz());
-			switch (zbStatus) {
-			case NONE:
-				entryService.saveZb(date, null, comp, ZBType.BYSJ, jsonArray);
-				break;
-			case SAVED:
-				entryService.saveZb(date, null, comp, ZBType.BYSJ, jsonArray);
-				break;
-			case SUBMITTED_2:
-				entryService.submitToDeputy(date, null, comp, ZBType.BYSJ,
-						jsonArray);
-				break;
-			default:
-				break;
+			zbid = nczb.getZbxx().getId();
+			if (zbList.contains(zbid)) {
+				comp = companyManager.getBMDBOrganization()
+						.getCompany(nczb.getDwxx().getId()).getType();
+				zbStatus = entryService.getZbStatus(date, comp, ZBType.BYSJ)
+						.get(0);
+				jsonArray = new JSONArray();
+				jsonArray.add(0, zbid);
+				jsonArray.add(1, nczb.getNczbz());
+				switch (zbStatus) {
+				case NONE:
+					entryService.saveZb(date, null, comp, ZBType.BYSJ,
+							jsonArray);
+					break;
+				case SAVED:
+					entryService.saveZb(date, null, comp, ZBType.BYSJ,
+							jsonArray);
+					break;
+				case SUBMITTED_2:
+					entryService.submitToDeputy(date, null, comp, ZBType.BYSJ,
+							jsonArray);
+					break;
+				default:
+					break;
+				}
 			}
 		}
 		return;

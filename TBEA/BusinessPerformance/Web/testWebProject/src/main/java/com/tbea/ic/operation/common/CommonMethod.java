@@ -70,4 +70,13 @@ public class CommonMethod {
 		}
 		return result;
 	}
+	
+	public static Double divideDouble(Double first, Double second) {
+		Double result = 0.0D;
+		Double zero = 0.0D;
+		if (null != second && !zero.equals(second) && null != first) {
+			result = first / second;
+		}
+		return result;
+	}
 }

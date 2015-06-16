@@ -76,6 +76,7 @@ public class NCServiceImpl implements NCService {
 		nczb.setYf(yf);
 		nczb.setNczbz(CommonMethod.objectToDouble(data));
 		nczb.setDrsj(new Date(System.currentTimeMillis()));
+		nczbDao.merge(nczb);
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class NCServiceImpl implements NCService {
 			int size = codeList.size();
 			StringBuffer code = new StringBuffer("");
 			for (int i = 0; i < size; ++i) {
-				if (0 == i) {
+				if (0 != i) {
 					code.append(", '");
 				} else {
 					code.append("'");
@@ -139,6 +140,10 @@ public class NCServiceImpl implements NCService {
 			CompanyType companyType = null;
 			int nf = 0;
 			int yf = 0;
+			Double jzcqms = 0.0D;
+			Double jzcqcs = 0.0D;
+			Double jlr = 0.0D;
+			Double jzcsyl = 0.0D;
 			while (rs.next()) {
 				unitCode = String.valueOf(rs.getObject(1));
 				companyType = companyMap.get(unitCode);
@@ -155,11 +160,16 @@ public class NCServiceImpl implements NCService {
 				mergeNCZB(companyType, GSZB.CH, nf, yf, rs.getObject(6));
 				mergeNCZB(companyType, GSZB.ZCZE, nf, yf, rs.getObject(7));
 				mergeNCZB(companyType, GSZB.GDZC, nf, yf, rs.getObject(8));
-				mergeNCZB(companyType, GSZB.JZCQMS, nf, yf, rs.getObject(9));
-				mergeNCZB(companyType, GSZB.JZCQCS, nf, yf, rs.getObject(10));
-				mergeNCZB(companyType, GSZB.JLR, nf, yf, rs.getObject(11));
+				jzcqms = CommonMethod.objectToDouble(rs.getObject(9));
+				mergeNCZB(companyType, GSZB.JZCQMS, nf, yf, jzcqms);
+				jzcqcs = CommonMethod.objectToDouble(rs.getObject(10));
+				mergeNCZB(companyType, GSZB.JZCQCS, nf, yf, jzcqcs);
+				jlr = CommonMethod.objectToDouble(rs.getObject(11));
+				mergeNCZB(companyType, GSZB.JLR, nf, yf, jlr);
 				mergeNCZB(companyType, GSZB.FZZEQMS, nf, yf, rs.getObject(12));
 				mergeNCZB(companyType, GSZB.SXFY, nf, yf, rs.getObject(13));
+				jzcsyl = CommonMethod.divideDouble(jlr, (jzcqcs + jzcqms) / 2.0D) * 100.0D;
+				mergeNCZB(companyType, GSZB.JZCSYL, nf, yf, jzcsyl);
 			}
 			if (null != rs) {
 				rs.close();
