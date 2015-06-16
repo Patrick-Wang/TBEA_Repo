@@ -1,7 +1,11 @@
 package com.tbea.ic.operation.model.dao.nc;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -13,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.jygk.NCZB;
 
@@ -59,6 +64,36 @@ public class NCZBDaoImpl extends AbstractReadWriteDaoImpl<NCZB> implements
 			resultList = new ArrayList<NCZB>();
 		}
 		return resultList;
+	}
+
+	@Override
+	public List<Double> getSjzbs(Date start, Date end, List<Integer> zbsTmp,
+			List<Company> companies) {
+		List<Double> listDyjhz = new ArrayList<Double>();
+		Map<Integer, Integer> hyMap = new HashMap<Integer, Integer>();
+		for(int iSize = 0; iSize < zbsTmp.size(); iSize++)
+		{
+			hyMap.put(zbsTmp.get(iSize), iSize);
+			listDyjhz.add(null);
+		}
+		Calendar calStart = Calendar.getInstance();
+		calStart.setTime(start);
+		Calendar calEnd = Calendar.getInstance();
+		calEnd.setTime(end);
+		Query q = this.getEntityManager().createQuery("select zbxx.id, sum(NCZB) from NCZB where " + 
+		"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dStart) <= 0 and " +
+		"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dEnd) >= 0 and " +
+		"dwxx.id in ("+ Util.toBMString(companies) +") and " + 
+		"zbxx.id in (" + Util.toInteger(zbsTmp) + ") " + "group by zbxx.id");
+		q.setParameter("dStart",start);
+		q.setParameter("dEnd", end);
+		
+		List<Object[]> listRet = q.getResultList();
+		for(int i = 0; i < listRet.size(); i++)
+		{
+			listDyjhz.set(hyMap.get(listRet.get(i)[0]), ((Double)(listRet.get(i)[1])));
+		}
+		return listDyjhz;
 	}
 
 }

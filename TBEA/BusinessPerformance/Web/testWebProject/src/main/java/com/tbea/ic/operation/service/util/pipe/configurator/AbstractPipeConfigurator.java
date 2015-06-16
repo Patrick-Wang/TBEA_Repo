@@ -1,12 +1,10 @@
-package com.tbea.ic.operation.service.ydzb.pipe.configurator;
+package com.tbea.ic.operation.service.util.pipe.configurator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 
 public abstract class AbstractPipeConfigurator implements IPipeConfigurator {
@@ -81,9 +79,6 @@ public abstract class AbstractPipeConfigurator implements IPipeConfigurator {
 		return zhHiddenZbs;
 	}
 
-	protected CompanyManager companyManager;
-
-	
 	protected List<Integer> getInvisiableZbs(){
 		return invisiableZbs;
 	}

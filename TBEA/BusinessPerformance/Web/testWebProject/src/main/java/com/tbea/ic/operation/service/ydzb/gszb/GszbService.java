@@ -6,6 +6,8 @@ import java.util.List;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
 
 public interface GszbService {
 	List<String[]> getGsztzb(Date date);
@@ -30,4 +32,6 @@ public interface GszbService {
 
 	List<String[]> getGdwzb(Date d, List<Company> comps);
 	List<Company> getCompanies(Account account);
+	
+	List<String[]> getGsztzbNC(Date d, com.tbea.ic.operation.service.nczb.pipe.configurator.ConfiguratorFactory config);
 }

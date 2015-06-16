@@ -3,11 +3,14 @@ package com.tbea.ic.operation.controller.servlet.nczb;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +26,7 @@ import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.controller.servlet.ydzb.CompanyTypeFilter;
+import com.tbea.ic.operation.service.nczb.NCZBService;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
 
@@ -36,6 +40,10 @@ public class NCZBController {
 	
 	@Autowired
 	private GszbService gszbService;
+	
+	
+	@Autowired
+	private NCZBService nczbService;
 	
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -77,9 +85,11 @@ public class NCZBController {
 			HttpServletResponse response) {
 
 		Date d = DateSelection.getDate(request);
-		String ranking_val = "[]";
-		
-		return ranking_val;
+		List<String[]> ncGszbData = nczbService.getGSZB(d);
+		List<String[]> gszbData = gszbService.getGsztzbNC(d, nczbService.getConfigFactory());
+		gszbData.addAll(4, ncGszbData);
+		JSONArray ja = JSONArray.fromObject(gszbData);
+		return ja.toString();
 	}
 	
 	@RequestMapping(value = "CompanysNC_update.do", method = RequestMethod.GET)
