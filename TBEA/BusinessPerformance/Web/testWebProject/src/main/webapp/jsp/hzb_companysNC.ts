@@ -5,7 +5,7 @@ declare var echarts;
 module hzb_companysNC {
 
     enum ZtId{
-        zb, dysj, dyqntq, dytbzf, ndlj, ndljjhwcl, ndqntq, ndtbzf   
+        zb, dysj, dyqntq, dytbzf, ndlj, ndqntq, ndtbzf   
     };
     
     
@@ -83,6 +83,14 @@ module hzb_companysNC {
             document.title = date.year + "年" + date.month + "月经营单位财务指标完成情况";
         }
         
+        private initPercentList(): std.vector<number>
+        {
+            var precentList: std.vector<number> = new std.vector<number>();
+            precentList.push(ZtId.dytbzf);
+            precentList.push(ZtId.ndtbzf);
+            return precentList;
+        }
+         
         private updateTable(): void {
         	var name = this.mOpt.tableId + "_jqgrid_1234";
             var parent = $("#" + this.mOpt.tableId);
@@ -97,6 +105,7 @@ module hzb_companysNC {
             var tableAssist: JQTable.JQGridAssistant = null;
             tableAssist = JQGridAssistantFactory.createTable(name)
             var outputData: string[][] = [];
+            Util.formatData(outputData, this.mData, this.initPercentList(), []);
             
             $("#" + name).jqGrid(
                 tableAssist.decorate({
