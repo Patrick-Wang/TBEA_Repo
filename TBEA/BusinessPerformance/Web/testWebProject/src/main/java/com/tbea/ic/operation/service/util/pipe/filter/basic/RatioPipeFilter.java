@@ -33,6 +33,10 @@ public class RatioPipeFilter implements IPipeFilter {
 			rsRow = row;
 		} else if (GSZB.SXFY.getValue() == zbId) {
 			sxfyRow = row;
+		} else if (GSZB.FZZEQMS.getValue() == zbId) {
+			fzzczeqms = row;
+		} else if (GSZB.ZCZE.getValue() == zbId) {
+			zcze = row;
 		} else if (GSZB.RJLR.getValue() == zbId 
 				|| GSZB.RJSR.getValue() == zbId
 				|| GSZB.SXFYL.getValue() == zbId
