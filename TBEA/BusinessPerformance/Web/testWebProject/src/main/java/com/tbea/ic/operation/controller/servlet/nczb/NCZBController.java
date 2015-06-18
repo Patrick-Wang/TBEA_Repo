@@ -82,15 +82,19 @@ public class NCZBController {
 		return new ModelAndView("hzb_companysNC", map);
 	}
 	
-	private List<String[]> removeJzcsyl(List<String[]> data){
+	private List<String[]> removeJydwzb(List<String[]> data){
 		for (int i = 0; i < data.size(); ++i){
 			if ("净资产收益率(%)".equals(data.get(i)[0])){
 				data.remove(i);
-				break;
+				--i;
+			} else if("负债率".equals(data.get(i)[0])){
+				data.remove(i);
+				--i;
 			}
 		}
 		return data;
 	}
+	
 	
 	@RequestMapping(value = "AllCompanysNC_overview_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getAllCompanysNC_overview_update(HttpServletRequest request,
@@ -98,7 +102,7 @@ public class NCZBController {
 
 		Date d = DateSelection.getDate(request);
 		List<String[]> ncGszbData = nczbService.getGSZB(d, BMDepartmentDB.getJydw(companyManager));
-		JSONArray ja = JSONArray.fromObject(removeJzcsyl(ncGszbData));
+		JSONArray ja = JSONArray.fromObject(removeJydwzb(ncGszbData));
 		return ja.toString().replace("null", "\"--\"").getBytes("utf-8");
 	}
 	
@@ -108,6 +112,9 @@ public class NCZBController {
 		Date d = DateSelection.getDate(request);
 		CompanyType cm = CompanyType.valueOf(Integer.valueOf(request.getParameter("companyId")));
 		List<String[]> ncGszbData = nczbService.getGSZB(d, VirtualJYZBOrganization.getJydw(companyManager, cm));
+		if (VirtualJYZBOrganization.isSbdcy(cm) || VirtualJYZBOrganization.isSyb(cm)){
+			ncGszbData = removeJydwzb(ncGszbData);
+		}
 		JSONArray ja = JSONArray.fromObject(ncGszbData);
 		return ja.toString().replace("null", "\"--\"").getBytes("utf-8");
 	}
