@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.companys.BMDepartmentDB;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
@@ -39,12 +39,19 @@ public class NCZBServiceImpl implements NCZBService{
 	static List<Integer> gsztZb = new ArrayList<Integer>();
 	
 	static{
+		gsztZb.add(GSZB.LRZE.getValue());
+		gsztZb.add(GSZB.XSSR.getValue());
+		gsztZb.add(GSZB.JYXJXJL.getValue());
+		gsztZb.add(GSZB.YSZK.getValue());
+		gsztZb.add(GSZB.CH.getValue());
 		gsztZb.add(GSZB.ZCZE.getValue());
 		gsztZb.add(GSZB.GDZC.getValue());
 		gsztZb.add(GSZB.JZCQMS.getValue());
 		gsztZb.add(GSZB.JZCQCS.getValue());
 		gsztZb.add(GSZB.JLR.getValue());
 		gsztZb.add(GSZB.FZZEQMS.getValue());
+		gsztZb.add(GSZB.SXFY.getValue());
+		gsztZb.add(GSZB.SXFYL.getValue());
 	}
 	
 	ConfiguratorFactory confFactory;
@@ -72,16 +79,11 @@ public class NCZBServiceImpl implements NCZBService{
 		return result;
 	}
 
-	
 	@Override
-	public List<String[]> getGSZB(Date d) {
-		IPipe pipe = new BasicPipe(gsztZb, BMDepartmentDB.getJydw(companyManager), d, confFactory.getFinancialPipeConfigurator());
+	public List<String[]> getGSZB(Date d, List<Company> companies) {
+		IPipe pipe = new BasicPipe(gsztZb, companies, d, confFactory.getFinancialPipeConfigurator());
 		List<Double[]> data = pipe.getData();
 		return makeZbResult(gsztZb, data);
 	}
 
-	@Override
-	public ConfiguratorFactory getConfigFactory() {
-		return confFactory;
-	}
 }
