@@ -81,6 +81,15 @@ public class NCZBController {
 		return new ModelAndView("hzb_companysNC", map);
 	}
 	
+	private List<String[]> removeJzcsyl(List<String[]> data){
+		for (int i = 0; i < data.size(); ++i){
+			if ("净资产收益率(%)".equals(data.get(i)[0])){
+				data.remove(i);
+				break;
+			}
+		}
+		return data;
+	}
 	
 	@RequestMapping(value = "AllCompanysNC_overview_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getAllCompanysNC_overview_update(HttpServletRequest request,
@@ -88,7 +97,7 @@ public class NCZBController {
 
 		Date d = DateSelection.getDate(request);
 		List<String[]> ncGszbData = nczbService.getGSZB(d, BMDepartmentDB.getJydw(companyManager));
-		JSONArray ja = JSONArray.fromObject(ncGszbData);
+		JSONArray ja = JSONArray.fromObject(removeJzcsyl(ncGszbData));
 		return ja.toString().replace("null", "\"--\"").getBytes("utf-8");
 	}
 	
