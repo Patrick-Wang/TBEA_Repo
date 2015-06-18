@@ -85,8 +85,9 @@ public class NCZBServiceImpl implements NCZBService{
 	public List<String[]> getGSZB(Date d, List<Company> companies) {
 		IPipe pipe = new BasicPipe(gsztZb, companies, d, confFactory.getFinancialPipeConfigurator());
 		List<Double[]> data = pipe.getData();
-		data.remove(gsztZb.indexOf(GSZB.FZZEQMS.getValue()));
-		return makeZbResult(gsztZb, data);
+		List<String[]> result = makeZbResult(gsztZb, data);
+		result.remove(gsztZb.indexOf(GSZB.FZZEQMS.getValue()));
+		return result;
 	}
 
 }
