@@ -26,6 +26,7 @@ import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.common.companys.VirtualJYZBOrganization;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.controller.servlet.ydzb.CompanyTypeFilter;
 import com.tbea.ic.operation.service.nczb.NCZBService;
@@ -93,13 +94,13 @@ public class NCZBController {
 	}
 	
 	@RequestMapping(value = "CompanysNC_update.do", method = RequestMethod.GET)
-	public @ResponseBody String getCompanysNC_update(HttpServletRequest request,
-			HttpServletResponse response) {
-
+	public @ResponseBody byte[] getCompanysNC_update(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
-		String ranking_val = null;
-		
-		return ranking_val;
+		CompanyType cm = CompanyType.valueOf(Integer.valueOf(request.getParameter("companyId")));
+		List<String[]> ncGszbData = nczbService.getGSZB(d, VirtualJYZBOrganization.getJydw(companyManager, cm));
+		JSONArray ja = JSONArray.fromObject(ncGszbData);
+		return ja.toString().replace("null", "\"--\"").getBytes("utf-8");
 	}
 
 }

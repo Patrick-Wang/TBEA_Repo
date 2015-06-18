@@ -46,7 +46,7 @@ module hzbNC_zbhz{
                 {year: year, month: month},
                 dateId);
             this.updateTable();
-            this.updateUI();
+            //this.updateUI();
 
         }
                 
@@ -95,7 +95,7 @@ module hzbNC_zbhz{
             }
             
             tableAssist = JQGridAssistantFactory.createTable(name);
-            data = this.formatZtData();
+            //data = this.formatZtData();
 
             
 			
@@ -103,7 +103,7 @@ module hzbNC_zbhz{
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
-                    data: tableAssist.getData(data),
+                    data: tableAssist.getData(this.mData),
                     datatype: "local",
                     multiselect: false,
                     drag: false,
@@ -111,7 +111,7 @@ module hzbNC_zbhz{
                     //autowidth : false,
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
-                    height: data.length > 23 ? 500 : '100%',
+                    height: this.mData.length > 23 ? 500 : '100%',
                     width: 1330,
                     shrinkToFit: true,
                     rowNum: 200,
