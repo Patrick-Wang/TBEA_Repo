@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
@@ -86,10 +87,8 @@ public class NCZBController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Date d = DateSelection.getDate(request);
-		List<String[]> ncGszbData = nczbService.getGSZB(d);
-		List<String[]> gszbData = gszbService.getGsztzbNC(d, nczbService.getConfigFactory());
-		gszbData.addAll(4, ncGszbData);
-		JSONArray ja = JSONArray.fromObject(gszbData);
+		List<String[]> ncGszbData = nczbService.getGSZB(d, BMDepartmentDB.getJydw(companyManager));
+		JSONArray ja = JSONArray.fromObject(ncGszbData);
 		return ja.toString().getBytes("utf-8");
 	}
 	

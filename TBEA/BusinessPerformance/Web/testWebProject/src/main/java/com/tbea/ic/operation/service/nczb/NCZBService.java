@@ -3,12 +3,10 @@ package com.tbea.ic.operation.service.nczb;
 import java.sql.Date;
 import java.util.List;
 
-import com.tbea.ic.operation.service.nczb.pipe.configurator.ConfiguratorFactory;
+import com.tbea.ic.operation.common.companys.Company;
 
 public interface NCZBService {
 
-	List<String[]> getGSZB(Date d);
-
-	ConfiguratorFactory getConfigFactory();
+	List<String[]> getGSZB(Date d, List<Company> companies);
 
 }
