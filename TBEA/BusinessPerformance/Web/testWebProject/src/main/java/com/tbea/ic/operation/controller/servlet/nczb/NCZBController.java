@@ -89,7 +89,7 @@ public class NCZBController {
 		Date d = DateSelection.getDate(request);
 		List<String[]> ncGszbData = nczbService.getGSZB(d, BMDepartmentDB.getJydw(companyManager));
 		JSONArray ja = JSONArray.fromObject(ncGszbData);
-		return ja.toString().getBytes("utf-8");
+		return ja.toString().replace("null", "\"--\"").getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "CompanysNC_update.do", method = RequestMethod.GET)
