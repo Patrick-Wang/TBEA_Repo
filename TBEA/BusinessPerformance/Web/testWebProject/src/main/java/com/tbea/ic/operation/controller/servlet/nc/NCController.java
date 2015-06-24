@@ -57,33 +57,39 @@ public class NCController {
 		cal.set(2015, 5 - 1, 31);
 		// Calendar.MONTH获得月份正常情况下为自然月-1,
 		// 且当前需求中数据的月份为存储时间的前一个月，所以在下面公式调用中不必+1
-		int month = cal.get(Calendar.MONTH);
+		int month = cal.get(Calendar.MONTH) + 1;
 		int year = cal.get(Calendar.YEAR);
 
 		// 存储NC对应指标
-		List<String> codeList = new ArrayList<String>();
-		codeList.add("0202AA000000");
-		codeList.add("0303AA000000");
-		codeList.add("0304AA000000");
-		codeList.add("0203AA000000");
-		codeList.add("CC02");
-		codeList.add("CC03");
-		codeList.add("040203AA0000");
-		codeList.add("040202AA0000");
-		codeList.add("CC11");
-		codeList.add("CC10");
-		codeList.add("060100000000");
-		codeList.add("CC04");
-		ncService.connetToNCSystem("510", cal, codeList);
+		// 合并
+		List<String> unitList = new ArrayList<String>();
+		unitList.add("0202AA000000");
+		unitList.add("0303AA000000");
+		unitList.add("0304AA000000");
+		unitList.add("0203AA000000");
+		unitList.add("CC02");
+		unitList.add("CC03");
+		unitList.add("040203AA0000");
+		unitList.add("040202AA0000");
+		unitList.add("CC11");
+		unitList.add("CC10");
+		unitList.add("CC04");
+		ncService.connetToNCSystem("510", cal, unitList);
+		// 单体
+		List<String> singleList = new ArrayList<String>();
+		singleList.add("060100000000");
+		ncService.connetToNCSystem("0", cal, singleList);
 
 		ZBStatus zbStatus = null;
 		List<NCZB> NCZBList = ncService.getNCZBByDate(year, month);
-		// 需求中数据的月份为存储时间的前一个月
-		cal.add(Calendar.MONTH, -1);
+		// // 需求中数据的月份为存储时间的前一个月
+		// cal.add(Calendar.MONTH, -1);
 		Date date = new Date(cal.getTimeInMillis());
 		CompanyType comp = null;
 		JSONArray jsonArray = null;
+		JSONArray zbArray = null;
 		int zbid = 0;
+		System.out.println("size" + NCZBList.size());
 		for (NCZB nczb : NCZBList) {
 			zbid = nczb.getZbxx().getId();
 			if (zbList.contains(zbid)) {
@@ -91,9 +97,15 @@ public class NCController {
 						.getCompany(nczb.getDwxx().getId()).getType();
 				zbStatus = entryService.getZbStatus(date, comp, ZBType.BYSJ)
 						.get(0);
+				zbArray = new JSONArray();
+				zbArray.add(0, String.valueOf(zbid));
+				zbArray.add(1, String.valueOf(nczb.getNczbz()));
 				jsonArray = new JSONArray();
-				jsonArray.add(0, zbid);
-				jsonArray.add(1, nczb.getNczbz());
+				jsonArray.add(zbArray);
+				System.out.println("comp: " + comp.getValue());
+				System.out.println("json: " + jsonArray);
+				System.out.println("date: " + date);
+				System.out.println("zbStatus: " + zbStatus);
 				switch (zbStatus) {
 				case NONE:
 					entryService.saveZb(date, null, comp, ZBType.BYSJ,
