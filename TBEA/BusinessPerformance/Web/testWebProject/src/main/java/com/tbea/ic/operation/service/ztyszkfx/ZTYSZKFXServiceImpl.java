@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.dao.ztyszkfx.ZTYSZKFXDao;
 import com.tbea.ic.operation.model.entity.ZTYSZKFX;
 

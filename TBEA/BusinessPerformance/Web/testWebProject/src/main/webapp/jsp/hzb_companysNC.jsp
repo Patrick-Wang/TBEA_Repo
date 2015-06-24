@@ -65,7 +65,7 @@
     </script>
     <meta charset="UTF-8">
 
-    <title>${year}年${month}月经营单位财务指标完成情况</title>
+    <title>${year}年${month}月经营单位财务指标完成情况(万元)</title>
 
     <style type="text/css">
         body {

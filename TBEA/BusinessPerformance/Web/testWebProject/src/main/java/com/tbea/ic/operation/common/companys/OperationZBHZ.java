@@ -4,8 +4,6 @@ package com.tbea.ic.operation.common.companys;
 
 import java.util.List;
 
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
-
 public class OperationZBHZ extends AbstractOrganization {
 
 	@Override

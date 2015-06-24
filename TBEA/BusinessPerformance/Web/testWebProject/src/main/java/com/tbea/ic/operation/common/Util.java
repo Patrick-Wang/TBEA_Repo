@@ -7,8 +7,7 @@ import java.util.List;
 import java.text.SimpleDateFormat;
 
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.common.companys.CompanyType;
 
 public class Util {
 	public static String format(Date d) {
@@ -339,8 +338,8 @@ public class Util {
 		}
 	}
 
-	private static boolean filter(CompanyManager.CompanyType filters[],
-			CompanyManager.CompanyType val) {
+	private static boolean filter(CompanyType filters[],
+			CompanyType val) {
 		for (int i = filters.length - 1; i >= 0; --i) {
 			if (val == filters[i]) {
 				return true;

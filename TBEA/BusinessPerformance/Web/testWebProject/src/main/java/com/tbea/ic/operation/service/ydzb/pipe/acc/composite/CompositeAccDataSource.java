@@ -3,8 +3,9 @@ package com.tbea.ic.operation.service.ydzb.pipe.acc.composite;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.common.companys.CompanyType;
 
 public class CompositeAccDataSource {
 	Map<Integer, Map<CompanyType, Double[]>> data = new HashMap<Integer, Map<CompanyType, Double[]>>();

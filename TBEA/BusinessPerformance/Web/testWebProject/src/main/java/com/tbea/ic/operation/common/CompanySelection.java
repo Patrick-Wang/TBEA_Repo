@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONArray;
 
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.common.companys.CompanyType;
 
 public class CompanySelection {
 	public interface Filter {

@@ -3,16 +3,14 @@ package com.tbea.ic.operation.common.companys;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
-
 public class Company {
-	private CompanyManager.CompanyType type;
+	private CompanyType type;
 	private Integer id;
 	private Company parentCompany;
 	private List<Company> subCompanies = new ArrayList<Company>();
 	
 	
-	public Company(Integer id, CompanyManager.CompanyType type) {
+	public Company(Integer id, CompanyType type) {
 		this.type = type;
 		this.id = id;
 	}
@@ -85,7 +83,7 @@ public class Company {
 		return this;
 	}
 
-	public CompanyManager.CompanyType getType(){
+	public CompanyType getType(){
 		return this.type;
 	}
 	

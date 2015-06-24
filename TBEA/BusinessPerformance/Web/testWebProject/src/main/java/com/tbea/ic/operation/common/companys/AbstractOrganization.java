@@ -5,15 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
-
 public abstract class AbstractOrganization implements Organization {
 
 	protected List<Company> topComps = new ArrayList<Company>();
-	protected Map<CompanyManager.CompanyType, Company> typeCompMap = new HashMap<CompanyManager.CompanyType, Company>();
+	protected Map<CompanyType, Company> typeCompMap = new HashMap<CompanyType, Company>();
 	protected Map<Integer, Company> idCompMap = new HashMap<Integer, Company>();
 	
-	protected Company clone(Organization org, CompanyManager.CompanyType ty){
+	protected Company clone(Organization org, CompanyType ty){
 		Company otherComp = org.getCompany(ty);
 		Company comp = null;
 		if (null != otherComp)
@@ -28,8 +26,8 @@ public abstract class AbstractOrganization implements Organization {
 		return comp;
 	}
 	
-	protected Company getCompany(CompanyManager.CompanyType ty, Integer id) {
-		Company comp = ty.getCompany(id);
+	protected Company getCompany(CompanyType ty, Integer id) {
+		Company comp = new Company(id, ty);
 		typeCompMap.put(ty, comp);
 		idCompMap.put(id, comp);
 		return comp;

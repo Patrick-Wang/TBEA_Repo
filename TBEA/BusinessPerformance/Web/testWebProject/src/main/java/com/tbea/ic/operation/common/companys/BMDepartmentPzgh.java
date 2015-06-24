@@ -1,6 +1,5 @@
 package com.tbea.ic.operation.common.companys;
 
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 
 class BMDepartmentPzgh extends AbstractOrganization {
 

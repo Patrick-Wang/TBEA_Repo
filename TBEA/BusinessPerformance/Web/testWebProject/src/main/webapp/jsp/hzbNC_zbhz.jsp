@@ -70,7 +70,7 @@
     </script>
 <meta charset="UTF-8">
 
-<title>${year}年${month}月公司整体指标完成情况</title>
+<title>${year}年${month}月公司整体指标完成情况(万元)</title>
 
 <style type="text/css">
 body {

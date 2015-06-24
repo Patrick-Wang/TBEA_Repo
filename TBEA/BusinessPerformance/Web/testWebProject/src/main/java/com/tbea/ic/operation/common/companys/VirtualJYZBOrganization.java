@@ -3,8 +3,6 @@ package com.tbea.ic.operation.common.companys;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
-
 public class VirtualJYZBOrganization extends AbstractOrganization {
 
 	public VirtualJYZBOrganization(VirtualYSZKOrganization yszk, Organization BM) {

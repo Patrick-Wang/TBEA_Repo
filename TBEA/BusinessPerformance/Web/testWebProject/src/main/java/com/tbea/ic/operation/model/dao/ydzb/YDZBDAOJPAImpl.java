@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.entity.XJL;
 import com.tbea.ic.operation.model.entity.XLNWFKFS;
 import com.tbea.ic.operation.model.entity.YDZBBean;

@@ -6,8 +6,8 @@ import java.util.Map;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 import com.tbea.ic.operation.model.entity.YDZBBean;
 
 public class GdwZBHZStrategy extends ZbfdwhzZBHZStrategy {

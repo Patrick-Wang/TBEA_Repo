@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 
 public class CompanyTypeFilter implements CompanySelection.Filter{
 	
