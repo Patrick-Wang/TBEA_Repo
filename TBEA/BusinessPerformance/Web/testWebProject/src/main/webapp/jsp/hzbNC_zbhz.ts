@@ -55,8 +55,8 @@ module hzbNC_zbhz{
             this.mDataSet.get({ month: date.month, year: date.year, type : this.mType })
                 .then((dataArray: any) => {
                     this.mData = dataArray;
-                    $('h1').text(date.year + "年" + date.month + "月公司整体财务指标完成情况");
-                    document.title = date.year + "年" + date.month + "月公司整体财务指标完成情况";
+                    $('h1').text(date.year + "年" + date.month + "月公司整体财务指标完成情况(万元)");
+                    document.title = date.year + "年" + date.month + "月公司整体财务指标完成情况(万元)";
                     this.updateTable();
                 });
         }

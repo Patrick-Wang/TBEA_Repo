@@ -79,8 +79,8 @@ module hzb_companysNC {
         }
         
         private updateTextandTitle(date: Util.Date) {
-            $('h1').text(date.year + "年" + date.month + "月经营单位财务指标完成情况");
-            document.title = date.year + "年" + date.month + "月经营单位财务指标完成情况";
+            $('h1').text(date.year + "年" + date.month + "月经营单位财务指标完成情况(万元)");
+            document.title = date.year + "年" + date.month + "月经营单位财务指标完成情况(万元)";
         }
         
         private initPercentList(): std.vector<number>

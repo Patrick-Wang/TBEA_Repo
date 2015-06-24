@@ -188,7 +188,7 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class=" header">
-		<h1>${year}年${month}月公司整体财务指标完成情况</h1>
+		<h1>${year}年${month}月公司整体财务指标完成情况(万元)</h1>
 	</div>
 
 	<Table align="center">
