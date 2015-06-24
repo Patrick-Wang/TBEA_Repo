@@ -6,7 +6,7 @@ declare var echarts;
 module hzbNC_zbhz{
     
     enum ZtId{
-        zb, dysj, dyqntq, dytbzf, ndlj, ndljjhwcl, ndqntq, ndtbzf   
+        zb, dysj, dyqntq, dytbzf, ndlj, ndqntq, ndtbzf   
     };
     
     class JQGridAssistantFactory {
@@ -46,7 +46,7 @@ module hzbNC_zbhz{
                 {year: year, month: month},
                 dateId);
             this.updateTable();
-            this.updateUI();
+            //this.updateUI();
 
         }
                 
@@ -60,42 +60,29 @@ module hzbNC_zbhz{
                     this.updateTable();
                 });
         }
-              
-        
-        
-        //整体指标数据
-        private formatZtData() {
-            var data = [];
-            var row = [];
-            var isRs = false;
-            var isSxfyl = false;
-            var isRjlr = false;
-            var isRjsr = false;
-            for (var j = 0; j < this.mData.length; ++j) {
-                row = [].concat(this.mData[j]);
-                isRs = row[ZtId.zb] == '人数';
-                isSxfyl = row[ZtId.zb] == '三项费用率(%)';
-                isRjlr = row[ZtId.zb] == '人均利润';
-                isRjsr = row[ZtId.zb] == '人均收入';
-                data.push(row);
-            }
-            return data;
-        }
+       
+        private initPercentList(): std.vector<number>
+        {
+            var precentList: std.vector<number> = new std.vector<number>();
+            precentList.push(ZtId.dytbzf);
+            precentList.push(ZtId.ndtbzf);
+            return precentList;
+        } 
         
         private updateTable(): void {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = null;
-            var data = [];
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='"+ name +"'></table>");
-            
+                        
+            tableAssist = JQGridAssistantFactory.createTable(name);
             if (this.mData.length == 0){
                 return;
             }
-            
-            tableAssist = JQGridAssistantFactory.createTable(name);
-            data = this.formatZtData();
+            var outputData: string[][] = [];
+            Util.formatData(outputData, this.mData, this.initPercentList(), []);
+            //data = this.formatZtData();
 
             
 			
@@ -103,7 +90,7 @@ module hzbNC_zbhz{
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
-                    data: tableAssist.getData(data),
+                    data: tableAssist.getData(outputData),
                     datatype: "local",
                     multiselect: false,
                     drag: false,
@@ -111,7 +98,7 @@ module hzbNC_zbhz{
                     //autowidth : false,
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
-                    height: data.length > 23 ? 500 : '100%',
+                    height: outputData.length > 23 ? 500 : '100%',
                     width: 1330,
                     shrinkToFit: true,
                     rowNum: 200,

@@ -9,12 +9,12 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.CopyPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.RatioPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.WclPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.basic.CopyPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.basic.RatioPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.basic.WclPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.basic.ZzlPipeFilter;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.YdjhProportionAccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.ZzlPipeFilter;
 
 public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 

@@ -1,8 +1,11 @@
 package com.tbea.ic.operation.common.companys;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
 
-class VirtualJYZBOrganization extends AbstractOrganization {
+public class VirtualJYZBOrganization extends AbstractOrganization {
 
 	public VirtualJYZBOrganization(VirtualYSZKOrganization yszk, Organization BM) {
 		append(this.getCompany(CompanyType.GFGS, 0)
@@ -37,4 +40,39 @@ class VirtualJYZBOrganization extends AbstractOrganization {
 		return 3;
 	}
 
+	public static boolean isSyb(CompanyType compType) {
+		return CompanyType.SBDCYJT == compType
+				|| CompanyType.XNYSYB == compType
+				|| CompanyType.NYSYB == compType;
+	}
+
+	public static boolean isSbdcy(CompanyType compType){
+		return CompanyType.BYQCY == compType ||
+				CompanyType.XLCY == compType ||
+				CompanyType.DBSBDCYJT == compType ||
+				CompanyType.NFSBDCYJT == compType;
+	}
+	
+	public static List<Company> getJydw(CompanyManager companyManager, CompanyType sybOrJydw){
+		List<Company> comps;
+		if (isSyb(sybOrJydw)){
+			Organization org = companyManager.getBMDBOrganization();
+			comps = org.getCompany(sybOrJydw).getSubCompanies();
+		} else if (isSbdcy(sybOrJydw)){
+			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
+			comps = orgJyzb.getCompany(sybOrJydw).getSubCompanies();
+		} else if(CompanyType.GCCY == sybOrJydw){
+			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();	
+			Organization org = companyManager.getBMDBOrganization();
+			comps = new ArrayList<Company>();
+			for (Company comp : orgJyzb.getCompany(sybOrJydw).getSubCompanies()){
+				comps.add(org.getCompany(comp.getType()));
+			}
+		} else {
+			Organization org = companyManager.getBMDBOrganization();
+			comps = new ArrayList<Company>();
+			comps.add(org.getCompany(sybOrJydw));
+		}
+		return comps;
+	}
 }

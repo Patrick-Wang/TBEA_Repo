@@ -12,10 +12,10 @@ import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.basic.WclPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.basic.ZzlPipeFilter;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.StandardConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.AccPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.WclPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.ZzlPipeFilter;
 
 //收入签约分结构
 public class SrqyConfigurator implements IPipeConfigurator {

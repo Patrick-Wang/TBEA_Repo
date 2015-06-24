@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.filter.basic;
+package com.tbea.ic.operation.service.util.pipe.filter.basic;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +14,8 @@ public class RatioPipeFilter implements IPipeFilter {
 	Integer xssrRow;
 	Integer rsRow;
 	Integer sxfyRow;
+	Integer fzzczeqms;
+	Integer zcze;
 	Set<Integer> excludeCols = new HashSet<Integer>();
 
 	public RatioPipeFilter exclude(Integer col) {
@@ -31,9 +33,15 @@ public class RatioPipeFilter implements IPipeFilter {
 			rsRow = row;
 		} else if (GSZB.SXFY.getValue() == zbId) {
 			sxfyRow = row;
-		} else if (GSZB.RJLR.getValue() == zbId || GSZB.RJSR.getValue() == zbId
+		} else if (GSZB.FZZEQMS.getValue() == zbId) {
+			fzzczeqms = row;
+		} else if (GSZB.ZCZE.getValue() == zbId) {
+			zcze = row;
+		} else if (GSZB.RJLR.getValue() == zbId 
+				|| GSZB.RJSR.getValue() == zbId
 				|| GSZB.SXFYL.getValue() == zbId
-				|| GSZB.XSLRL.getValue() == zbId) {
+				|| GSZB.XSLRL.getValue() == zbId
+				|| GSZB.FZL.getValue() == zbId) {
 			dret = pipe.getRow(row);
 		}
 
@@ -104,7 +112,20 @@ public class RatioPipeFilter implements IPipeFilter {
 					}
 				}
 			}
+		}else if (GSZB.FZL.getValue() == zbId) {
+			if (fzzczeqms != null && zcze != null) {
+				Double[] fzzczequses = pipe.getRow(fzzczeqms);
+				Double[] zczes = pipe.getRow(zcze);
+				for (int i = 0; i < zbRow.length; ++i) {
+					if (fzzczequses[i] != null && zczes[i] != null
+							&& !excludeCols.contains(i)
+							&& !Util.isZero(zczes[i])) {
+						zbRow[i] = fzzczequses[i] / zczes[i];
+					}
+				}
+			}
 		}
+		
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
+import com.tbea.ic.operation.service.util.pipe.configurator.AbstractPipeConfigurator;
 
 public abstract class AbstractSbdPipeConfigurator extends AbstractPipeConfigurator {
 

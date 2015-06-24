@@ -184,7 +184,8 @@ public enum GSZB {
 	JZCQMS(181),//净资产（期末数）
 	JZCQCS(182),//净资产（期初数）
 	JLR(183),//净利润
-	FZZEQMS(184);//负债总额期末数
+	FZZEQMS(184),//负债总额期末数
+	FZL(185);//负债率
 
 	
 	private Integer value;

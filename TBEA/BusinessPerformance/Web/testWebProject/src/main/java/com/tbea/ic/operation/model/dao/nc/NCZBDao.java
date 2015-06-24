@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.model.dao.nc;
 
+import java.sql.Date;
 import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
@@ -12,5 +13,8 @@ public interface NCZBDao extends AbstractReadWriteDao<NCZB> {
 	public NCZB getNCZB(Company company, int zbid, int nf, int yf);
 
 	public List<NCZB> getNCZBByDate(int nf, int yf);
+
+	public List<Double> getSjzbs(Date start, Date end, List<Integer> zbs,
+			List<Company> companies);
 
 }

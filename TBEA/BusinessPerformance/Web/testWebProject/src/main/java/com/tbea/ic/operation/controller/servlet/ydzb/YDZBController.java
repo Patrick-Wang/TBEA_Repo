@@ -36,6 +36,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.common.companys.VirtualJYZBOrganization;
 import com.tbea.ic.operation.common.jyzbexcel.FormatterHandler;
 import com.tbea.ic.operation.common.jyzbexcel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.jyzbexcel.JyzbExcelTemplate;
@@ -88,43 +89,43 @@ public class YDZBController {
 	private GszbService gszbService;
 
 	
-	private boolean isSyb(CompanyType compType){
-		return CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType;
-	}
-	
-	private boolean isSbdcy(CompanyType compType){
-		return CompanyType.BYQCY == compType ||
-				CompanyType.XLCY == compType ||
-				CompanyType.DBSBDCYJT == compType ||
-				CompanyType.NFSBDCYJT == compType;
-	}
-	
-
-	private List<Company> getJydw(CompanyType sybOrJydw){
-		List<Company> comps;
-		if (isSyb(sybOrJydw)){
-			Organization org = companyManager.getBMDBOrganization();
-			comps = org.getCompany(sybOrJydw).getSubCompanies();
-		} else if (isSbdcy(sybOrJydw)){
-			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
-			comps = orgJyzb.getCompany(sybOrJydw).getSubCompanies();
-		} else if(CompanyType.GCCY == sybOrJydw){
-			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();	
-			Organization org = companyManager.getBMDBOrganization();
-			comps = new ArrayList<Company>();
-			for (Company comp : orgJyzb.getCompany(sybOrJydw).getSubCompanies()){
-				comps.add(org.getCompany(comp.getType()));
-			}
-		} else {
-			Organization org = companyManager.getBMDBOrganization();
-			comps = new ArrayList<Company>();
-			comps.add(org.getCompany(sybOrJydw));
-		}
-		return comps;
-	}
+//	private boolean isSyb(CompanyType compType){
+//		return CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType;
+//	}
+//	
+//	private boolean isSbdcy(CompanyType compType){
+//		return CompanyType.BYQCY == compType ||
+//				CompanyType.XLCY == compType ||
+//				CompanyType.DBSBDCYJT == compType ||
+//				CompanyType.NFSBDCYJT == compType;
+//	}
+//	
+//
+//	private List<Company> getJydw(CompanyType sybOrJydw){
+//		List<Company> comps;
+//		if (isSyb(sybOrJydw)){
+//			Organization org = companyManager.getBMDBOrganization();
+//			comps = org.getCompany(sybOrJydw).getSubCompanies();
+//		} else if (isSbdcy(sybOrJydw)){
+//			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
+//			comps = orgJyzb.getCompany(sybOrJydw).getSubCompanies();
+//		} else if(CompanyType.GCCY == sybOrJydw){
+//			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();	
+//			Organization org = companyManager.getBMDBOrganization();
+//			comps = new ArrayList<Company>();
+//			for (Company comp : orgJyzb.getCompany(sybOrJydw).getSubCompanies()){
+//				comps.add(org.getCompany(comp.getType()));
+//			}
+//		} else {
+//			Organization org = companyManager.getBMDBOrganization();
+//			comps = new ArrayList<Company>();
+//			comps.add(org.getCompany(sybOrJydw));
+//		}
+//		return comps;
+//	}
 	
 	private List<String[]> getSybOrJydwData(Date d, CompanyType sybOrJydw){
-		List<Company> jydws = getJydw(sybOrJydw);
+		List<Company> jydws = VirtualJYZBOrganization.getJydw(companyManager, sybOrJydw);
 		List<String[]> ret = gszbService.getGdwzb(d, jydws);
 		removeJzcsyl(sybOrJydw, ret);
 		return ret;
@@ -362,7 +363,7 @@ public class YDZBController {
 	}
 
 	private void removeJzcsyl(CompanyType compType, List<String[]> zbData){
-		if (isSyb(compType) || isSbdcy(compType)){
+		if (VirtualJYZBOrganization.isSyb(compType) || VirtualJYZBOrganization.isSbdcy(compType)){
 			for (int i = 0; i < zbData.size(); ++i){
 				if ("净资产收益率(%)".equals(zbData.get(i)[0])){
 					for (int j = 1; j < zbData.get(i).length; ++j){
@@ -785,7 +786,7 @@ public class YDZBController {
 		
 		Date d = DateSelection.getDate(request);
 		CompanyType compType = CompanySelection.getCompany(request);	
-		List<Company> comps = getJydw(compType);
+		List<Company> comps = VirtualJYZBOrganization.getJydw(companyManager, compType);
 		String month = request.getParameter("month");
 		int iMonth = Integer.valueOf(month);
 		List<String[]> data = null;
@@ -898,7 +899,7 @@ public class YDZBController {
 		
 		Date d = DateSelection.getDate(request);
 		CompanyType compType = CompanySelection.getCompany(request);	
-		List<Company> comps = getJydw(compType);
+		List<Company> comps = VirtualJYZBOrganization.getJydw(companyManager, compType);
 		String month = request.getParameter("month");
 		int iMonth = Integer.valueOf(month);
 		String hzb_zbhz_prediction = null;
@@ -1142,11 +1143,11 @@ public class YDZBController {
 
 			lastRow += 3;
 			if (0 == iMonth % 3) {
-				data = gszbService.getThirdSeasonPredictionZBsOverview(d, getJydw(ct));
+				data = gszbService.getThirdSeasonPredictionZBsOverview(d, VirtualJYZBOrganization.getJydw(companyManager, ct));
 			}else if (1 == iMonth % 3) {
-				data = gszbService.getFirstSeasonPredictionZBsOverview(d, getJydw(ct));
+				data = gszbService.getFirstSeasonPredictionZBsOverview(d, VirtualJYZBOrganization.getJydw(companyManager, ct));
 			}else if (2 == iMonth % 3) {
-				data = gszbService.getSecondSeasonPredictionZBsOverview(d, getJydw(ct));
+				data = gszbService.getSecondSeasonPredictionZBsOverview(d, VirtualJYZBOrganization.getJydw(companyManager, ct));
 			}
 			removeJzcsyl(ct, data);  
 			for (int i = 0, ilen = data.size(); i < ilen; ++i) {

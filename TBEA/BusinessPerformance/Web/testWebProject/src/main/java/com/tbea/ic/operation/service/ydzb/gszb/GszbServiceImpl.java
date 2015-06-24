@@ -100,6 +100,18 @@ public class GszbServiceImpl implements GszbService {
 		gsztzbs.add(GSZB.SXFYL.getValue());
 		//gsztzbs.add(GSZB.JZCSYL.getValue());
 	}
+	
+	
+	private static List<Integer> gsztzbsNC = new ArrayList<Integer>();
+	static {
+		gsztzbsNC.add(GSZB.LRZE.getValue());
+		gsztzbsNC.add(GSZB.XSSR.getValue());
+		gsztzbsNC.add(GSZB.JYXJXJL.getValue());
+		gsztzbsNC.add(GSZB.YSZK.getValue());
+		gsztzbsNC.add(GSZB.CH.getValue());
+		gsztzbsNC.add(GSZB.SXFY.getValue());
+		gsztzbsNC.add(GSZB.SXFYL.getValue());
+	}
 
 	private static List<Integer> topfivezbs = new ArrayList<Integer>();
 	static {
@@ -614,4 +626,12 @@ public class GszbServiceImpl implements GszbService {
 	public List<String[]> getThirdSeasonPredictionZBsOverview(Date date, List<Company> comps) {
 		return getJDZBMY(date, getAllZbs(comps), comps);
 	}
+
+	@Override
+	public List<String[]> getGsztzbNC(Date d,  com.tbea.ic.operation.service.nczb.pipe.configurator.ConfiguratorFactory  fac) {
+		BasicPipe pipe = new BasicPipe(gsztzbsNC, BMDepartmentDB.getJydw(companyManager), d, fac.createFinancialPipeConfigurator(accFac.getSjAcc()));
+		return makeZbResult(gsztzbsNC, pipe.getData());
+	}
+	
+	
 }
