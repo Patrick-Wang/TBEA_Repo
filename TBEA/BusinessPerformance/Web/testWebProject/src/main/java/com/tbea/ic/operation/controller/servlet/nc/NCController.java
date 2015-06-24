@@ -16,11 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyManager.CompanyType;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.entity.jygk.NCZB;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.nc.NCService;
@@ -54,7 +55,7 @@ public class NCController {
 	public void importNC(HttpServletRequest request,
 			HttpServletResponse response) {
 		Calendar cal = Calendar.getInstance();
-		cal.set(2015, 5 - 1, 31);
+		cal.setTime(DateSelection.getDate(request));
 		// Calendar.MONTH获得月份正常情况下为自然月-1,
 		// 且当前需求中数据的月份为存储时间的前一个月，所以在下面公式调用中不必+1
 		int month = cal.get(Calendar.MONTH) + 1;
