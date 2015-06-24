@@ -110,18 +110,19 @@ public class NCServiceImpl implements NCService {
 				code.append("'");
 			}
 			String sql = "select a.unit_code as 公司编码"
-					+ ", d.M10059 as 本月利润总额" // id 1
-					+ ", d.M10107 as 本月销售收入" // id 6
-					+ ", e.m10161 as 本月经营性净现金流" // id 29
-					+ ", C.M10147 as 本月应收帐款期末数" // id 32
-					+ ", C.M10083 as 本月存货期末数 " // id 35
-					+ ", C.M10050 as 本月资产总额期末数" // id 179
-					+ ", C.M10007 as 本月固定资产期末数"// id 180
-					+ ", C.M10067 as 本月净资产期末数" // id 181
-					+ ", C.M10066 as 本月净资产期初数" // id 182
-					+ ", d.M10059 as 本月净利润" // id 183
-					+ ", C.M10125 as 本月负债总额期末数" // id 184
-					+ ", (d.M10091+d.M10099+d.M10028) as 月度三项费用" // id 64
+					+ ", d.M10059 / 10000 as 本月利润总额" // id 1
+					+ ", d.M10107 / 10000 as 本月销售收入" // id 6
+					+ ", e.m10161 / 10000 as 本月经营性净现金流" // id 29
+					+ ", C.M10147 / 10000 as 本月应收帐款期末数" // id 32
+					+ ", C.M10083 / 10000 as 本月存货期末数 " // id 35
+					+ ", C.M10050 / 10000 as 本月资产总额期末数" // id 179
+					+ ", C.M10007 / 10000 as 本月固定资产期末数"// id 180
+					+ ", C.M10067 / 10000 as 本月净资产期末数" // id 181
+					+ ", C.M10066 / 10000 as 本月净资产期初数" // id 182
+					+ ", d.M10059 / 10000 as 本月净利润" // id 183
+					+ ", C.M10125 / 10000 as 本月负债总额期末数" // id 184
+					+ ", (d.M10091+d.M10099+d.M10028) / 10000 as 月度三项费用" // id
+																			// 64
 					+ " from iufo_unit_info a" + ", iufo_measure_pubdata b"
 					+ ",iufo_measure_data_aabf9rn7 c"
 					+ ", iufo_measure_data_w67a04wo d"
@@ -133,7 +134,6 @@ public class NCServiceImpl implements NCService {
 					+ strDate + "'" + " and b.ver = '" + ver + "'"
 					+ " and a.unit_code in (" + code + ")"
 					+ " order by a.unit_code";
-			System.out.println(sql);
 			ResultSet rs = statement.executeQuery(sql);
 
 			String unitCode = null;
@@ -150,7 +150,7 @@ public class NCServiceImpl implements NCService {
 				nf = date.get(Calendar.YEAR);
 				// Calendar.MONTH获得月份正常情况下为自然月-1,
 				// 且当前需求中数据的月份为存储时间的前一个月，所以在下面公式调用中不必+1
-				yf = date.get(Calendar.MONTH);
+				yf = date.get(Calendar.MONTH) + 1;
 
 				// 存储NC对应指标
 				mergeNCZB(companyType, GSZB.LRZE, nf, yf, rs.getObject(2));
@@ -168,7 +168,8 @@ public class NCServiceImpl implements NCService {
 				mergeNCZB(companyType, GSZB.JLR, nf, yf, jlr);
 				mergeNCZB(companyType, GSZB.FZZEQMS, nf, yf, rs.getObject(12));
 				mergeNCZB(companyType, GSZB.SXFY, nf, yf, rs.getObject(13));
-				jzcsyl = CommonMethod.divideDouble(jlr, (jzcqcs + jzcqms) / 2.0D) * 100.0D;
+				jzcsyl = CommonMethod.divideDouble(jlr,
+						(jzcqcs + jzcqms) / 2.0D) * 100.0D;
 				mergeNCZB(companyType, GSZB.JZCSYL, nf, yf, jzcsyl);
 			}
 			if (null != rs) {
