@@ -78,7 +78,7 @@ public class NCZBController {
 						gszbService.getCompanies(SessionManager.getAccount(request.getSession(false))), 
 						org));
 
-		compSel.select(map, 3);
+		compSel.select(map, 2);
 		return new ModelAndView("hzb_companysNC", map);
 	}
 	
