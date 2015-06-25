@@ -55,7 +55,7 @@ public class NCServiceImpl implements NCService {
 		companyMap.put("040203AA0000", CompanyType.XNYGS);
 		companyMap.put("040202AA0000", CompanyType.XTNYGS);
 		companyMap.put("CC11", CompanyType.TCNY);
-		companyMap.put("CC10", CompanyType.XNYGS);
+		companyMap.put("CC10", CompanyType.NDGS);
 		companyMap.put("060100000000", CompanyType.JCKGS_JYDW);
 		companyMap.put("CC04", CompanyType.GJGCGS_GFGS);
 	}

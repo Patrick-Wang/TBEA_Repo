@@ -123,7 +123,7 @@
 	</div>
 </div>
 
-<div>
+<%-- <div>
 	<h3>
 		财务指标情况<a name="NChz"> </a>
 	</h3>
@@ -141,7 +141,7 @@
 			</ul>
 		</div>
 	</div>
-</div>
+</div> --%>
 
 
 <%-- <c:if test="${CorpAuth}">
