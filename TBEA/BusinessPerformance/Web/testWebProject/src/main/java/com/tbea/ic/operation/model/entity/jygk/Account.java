@@ -24,6 +24,14 @@ public class Account extends AbstractReadWriteEntity implements Serializable {
 	public final static String KNOWN_ACCOUNT_FUJIANGHUA = "fujianghua";
 	public final static String KNOWN_ACCOUNT_ADMIN = "admin";
 	public final static String KNOWN_ACCOUNT_ZHGS = "众和公司";
+	public final static Account KNOWN_ACCOUNT_JYFZ = new Account();
+	public final static Account KNOWN_ACCOUNT_GFGS = new Account();
+	static{
+		KNOWN_ACCOUNT_JYFZ.setName("KNOWN_ACCOUNT_JYFZ");
+		KNOWN_ACCOUNT_JYFZ.setRole(1);
+		KNOWN_ACCOUNT_GFGS.setName("KNOWN_ACCOUNT_GFGS");
+		KNOWN_ACCOUNT_GFGS.setRole(0);
+	}
 	
 	private static final long serialVersionUID = 1L;
 

@@ -96,8 +96,9 @@ public class NCServiceImpl implements NCService {
 					.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 							ResultSet.CONCUR_UPDATABLE);
 
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String strDate = sdf.format(date.getTime());
+			Calendar calNc = Calendar.getInstance();
+			calNc.setTime(date.getTime());
+			calNc.add(Calendar.MONTH, -1);
 			int size = codeList.size();
 			StringBuffer code = new StringBuffer("");
 			for (int i = 0; i < size; ++i) {
@@ -130,8 +131,10 @@ public class NCServiceImpl implements NCService {
 					+ " where a.unit_id=b.keyword1"
 					+ " and b.alone_id=c.alone_id"
 					+ " and b.alone_id=d.alone_id"
-					+ " and b.alone_id=e.alone_id" + " and b.inputdate='"
-					+ strDate + "'" + " and b.ver = '" + ver + "'"
+					+ " and b.alone_id=e.alone_id" 
+					+ " and extract(year from to_date(b.inputdate,'yyyy-mm-dd')) =" + calNc.get(Calendar.YEAR)
+					+ " and extract(month from to_date(b.inputdate,'yyyy-mm-dd')) =" + (calNc.get(Calendar.MONTH) + 1)
+					+ " and b.ver = '" + ver + "'"
 					+ " and a.unit_code in (" + code + ")"
 					+ " order by a.unit_code";
 			ResultSet rs = statement.executeQuery(sql);

@@ -12,17 +12,22 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.GSZB;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.NCZB;
+import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.nc.NCService;
 
@@ -32,6 +37,9 @@ public class NCController {
 
 	@Autowired
 	EntryService entryService;
+	
+	@Autowired
+	ApproveService approveService;
 
 	@Autowired
 	NCService ncService;
@@ -50,12 +58,17 @@ public class NCController {
 		zbList.add(GSZB.SXFY.getValue());
 		zbList.add(GSZB.JZCSYL.getValue());
 	}
+	
 
-	@RequestMapping(value = "importNC.do", method = RequestMethod.GET)
-	public void importNC(HttpServletRequest request,
-			HttpServletResponse response) {
+	@Scheduled(cron="0 0 0 7-9 * ?")
+	public void scheduleImportNC(){
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(DateSelection.getDate(request));
+		importNC(Util.toDate(cal));
+	}
+	
+	private void importNC(Date d){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
 		// Calendar.MONTH获得月份正常情况下为自然月-1,
 		// 且当前需求中数据的月份为存储时间的前一个月，所以在下面公式调用中不必+1
 		int month = cal.get(Calendar.MONTH) + 1;
@@ -86,46 +99,67 @@ public class NCController {
 		// // 需求中数据的月份为存储时间的前一个月
 		// cal.add(Calendar.MONTH, -1);
 		Date date = new Date(cal.getTimeInMillis());
-		CompanyType comp = null;
+		Company comp = null;
 		JSONArray jsonArray = null;
 		JSONArray zbArray = null;
 		int zbid = 0;
 		System.out.println("size" + NCZBList.size());
+		List<Company> compsTmp = new ArrayList<Company>();
 		for (NCZB nczb : NCZBList) {
 			zbid = nczb.getZbxx().getId();
 			if (zbList.contains(zbid)) {
 				comp = companyManager.getBMDBOrganization()
-						.getCompany(nczb.getDwxx().getId()).getType();
-				zbStatus = entryService.getZbStatus(date, comp, ZBType.BYSJ)
+						.getCompany(nczb.getDwxx().getId());
+				zbStatus = entryService.getZbStatus(date, comp.getType(), ZBType.BYSJ)
 						.get(0);
 				zbArray = new JSONArray();
 				zbArray.add(0, String.valueOf(zbid));
 				zbArray.add(1, String.valueOf(nczb.getNczbz()));
 				jsonArray = new JSONArray();
 				jsonArray.add(zbArray);
-				System.out.println("comp: " + comp.getValue());
+				System.out.println("comp: " + comp.getName());
 				System.out.println("json: " + jsonArray);
 				System.out.println("date: " + date);
 				System.out.println("zbStatus: " + zbStatus);
 				switch (zbStatus) {
+				case APPROVED:
+					compsTmp.clear();
+					compsTmp.add(comp);
+					approveService.unapproveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp, date);
+					entryService.submitZb(date, null, comp.getType(), ZBType.BYSJ,
+							jsonArray);
+					approveService.approveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp, date);
+					break;
+				case APPROVED_2:
+					entryService.saveZb(date, null, comp.getType(), ZBType.BYSJ,
+							jsonArray);
+					compsTmp.clear();
+					compsTmp.add(comp);
+					approveService.approveSjZb(Account.KNOWN_ACCOUNT_JYFZ, compsTmp, date);
+					break;
 				case NONE:
-					entryService.saveZb(date, null, comp, ZBType.BYSJ,
+				case SAVED:
+					entryService.saveZb(date, null, comp.getType(), ZBType.BYSJ,
 							jsonArray);
 					break;
-				case SAVED:
-					entryService.saveZb(date, null, comp, ZBType.BYSJ,
+				case SUBMITTED:
+					entryService.submitZb(date, null, comp.getType(), ZBType.BYSJ,
 							jsonArray);
 					break;
 				case SUBMITTED_2:
-					entryService.submitToDeputy(date, null, comp, ZBType.BYSJ,
-							jsonArray);
+					entryService.submitToDeputy(date, null, comp.getType(), ZBType.BYSJ, jsonArray);
 					break;
 				default:
 					break;
 				}
 			}
 		}
-		return;
+	}
+	
+	@RequestMapping(value = "importNC.do", method = RequestMethod.GET)
+	public void importNC(HttpServletRequest request,
+			HttpServletResponse response) {
+		importNC(DateSelection.getDate(request));
 	}
 
 }
