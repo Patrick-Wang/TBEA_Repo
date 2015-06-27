@@ -60,7 +60,7 @@ public class NCController {
 	}
 	
 
-	@Scheduled(cron="0 0 0 7-9 * ?")
+	@Scheduled(cron="0 0 0 8-9 * ?")
 	public void scheduleImportNC(){
 		Calendar cal = Calendar.getInstance();
 		importNC(Util.toDate(cal));
