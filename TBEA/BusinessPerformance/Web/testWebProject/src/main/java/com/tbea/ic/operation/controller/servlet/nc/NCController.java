@@ -130,7 +130,7 @@ public class NCController {
 							jsonArray);
 					approveService.approveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp, date);
 					break;
-				case APPROVED_2:
+				case APPROVED_2: 
 					entryService.saveZb(date, null, comp.getType(), ZBType.BYSJ,
 							jsonArray);
 					compsTmp.clear();

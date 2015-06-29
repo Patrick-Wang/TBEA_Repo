@@ -41,7 +41,8 @@ public class VirtualJYZBOrganization extends AbstractOrganization {
 	public static boolean isSyb(CompanyType compType) {
 		return CompanyType.SBDCYJT == compType
 				|| CompanyType.XNYSYB == compType
-				|| CompanyType.NYSYB == compType;
+				|| CompanyType.NYSYB == compType
+				|| CompanyType.GCCY == compType;
 	}
 
 	public static boolean isSbdcy(CompanyType compType){

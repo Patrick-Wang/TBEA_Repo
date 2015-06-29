@@ -123,8 +123,8 @@ public class EntryServiceImpl implements EntryService{
 		return new GeneralZbCalculator(ydjhzbInjector);
 	}
 
-	private ZbCalculator createNdjhzbCalc() {
-		return new NdjhZbCalculator(ndjhzbInjector, this.sbdNdjhzbDao);
+	private ZbCalculator createNdjhzbCalc(CompanyManager mgr) {
+		return new NdjhZbCalculator(mgr, ndjhzbInjector, this.sbdNdjhzbDao);
 	}
 
 	private ZbCalculator createYj28Calc() {
@@ -273,7 +273,7 @@ public class EntryServiceImpl implements EntryService{
 			cal.setTime(date);
 			JSONArray row;
 			
-			ZbCalculator calc = this.createNdjhzbCalc();
+			ZbCalculator calc = this.createNdjhzbCalc(companyManager);
 			for (int r = 0; r < data.size(); ++r) {
 				row = data.getJSONArray(r);
 				if (!row.getString(1).isEmpty()) {

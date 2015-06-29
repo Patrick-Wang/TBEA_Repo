@@ -8,6 +8,7 @@ import com.tbea.ic.operation.service.util.pipe.configurator.AbstractPipeConfigur
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.basic.CopyPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.RatioPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.ZzlPipeFilter;
 
@@ -28,7 +29,7 @@ public class FinancialPipeConfigurator extends AbstractPipeConfigurator {
 
 
 		ZzlPipeFilter tbzzFilter = new ZzlPipeFilter();
-
+		CopyPipeFilter copyFilter = new CopyPipeFilter();
 
 		
 		// 当月实际
@@ -46,18 +47,24 @@ public class FinancialPipeConfigurator extends AbstractPipeConfigurator {
 			// 同比增幅
 			.addFilter(tbzzFilter.add(2, 0, 1))
 
+			
+			
 			// 年度累计
 			.addFilter(new AccPipeFilter(sjAcc, 3, dh.getFirstMonth(), dh.getCur())
 						.includeCompanies(allCompanies)
 						.includeZbs(pipe.getIndicators())
-						.excludeZbs(getRatioZbs()))
+						.excludeZbs(getRatioZbs())
+			.excludeZbs(getTimePointNumberZbs()))
+			.addFilter(copyFilter.add(getTimePointNumberZbs(), 0, 3))
 			
 			// 去年同期
 			.addFilter(new AccPipeFilter(sjAcc, 4, dh.getQnfirstMonth(), dh.getQntq())
 						.includeCompanies(allCompanies)
 						.includeZbs(pipe.getIndicators())
-						.excludeZbs(getRatioZbs()))
-		
+						.excludeZbs(getRatioZbs())
+			.excludeZbs(getTimePointNumberZbs()))
+			.addFilter(copyFilter.add(getTimePointNumberZbs(), 1, 4))
+			
 			// 同比增幅
 			.addFilter(tbzzFilter.add(5, 3, 4))
 
@@ -66,6 +73,7 @@ public class FinancialPipeConfigurator extends AbstractPipeConfigurator {
 					.exclude(2)// 计划完成率
 					.exclude(5))// 同比增幅
 
+			.addFilter(copyFilter)
 			.addFilter(tbzzFilter);
 	}
 

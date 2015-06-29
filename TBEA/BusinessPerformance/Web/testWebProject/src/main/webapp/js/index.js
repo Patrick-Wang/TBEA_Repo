@@ -185,11 +185,10 @@ function clickli(obj)
 		$("#approveList").css("display", "none");
 		//for 财务指标
 		//$("#financeList").css("display", "none");
-		
-// obj
-// $("#nav li").eq(2).removeClass("active");
-// $("#nav li").eq(3).removeClass("active");
-// $("#nav li").eq(1).addClass("active");
+		// obj
+		// $("#nav li").eq(2).removeClass("active");
+		// $("#nav li").eq(3).removeClass("active");
+		// $("#nav li").eq(1).addClass("active");
 	break;
 	case 3:
 		$("#navlist").css("display", "none");
@@ -203,11 +202,10 @@ function clickli(obj)
 		$("#approveList").css("display", "");
 		// for 财务指标
 		//$("#financeList").css("display", "none");
-		
-// $("#nav li").eq(0).removeClass("active");
-// $("#nav li").eq(1).removeClass("active");
-// $("#nav li").eq(3).removeClass("active");
-// $("#nav li").eq(2).addClass("active");
+		// $("#nav li").eq(0).removeClass("active");
+		// $("#nav li").eq(1).removeClass("active");
+		// $("#nav li").eq(3).removeClass("active");
+		// $("#nav li").eq(2).addClass("active");
 	break;
 	case 4:
 		$("#navlist").css("display", "none");
@@ -222,10 +220,10 @@ function clickli(obj)
 		// for 财务指标
 		//$("#financeList").css("display", "");
 		
-// $("#nav li").eq(0).removeClass("active");
-// $("#nav li").eq(1).removeClass("active");
-// $("#nav li").eq(2).removeClass("active");
-// $("#nav li").eq(3).addClass("active");
+		// $("#nav li").eq(0).removeClass("active");
+		// $("#nav li").eq(1).removeClass("active");
+		// $("#nav li").eq(2).removeClass("active");
+		// $("#nav li").eq(3).addClass("active");
 	break;
 	default:
 	break;
