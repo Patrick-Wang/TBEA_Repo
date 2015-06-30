@@ -80,7 +80,7 @@ public class NCServiceImpl implements NCService {
 	}
 
 	@Override
-	public void connetToNCSystem(String ver, Calendar date,
+	public void connetToNCSystem(String ver, Calendar d,
 			List<String> codeList) {
 		String driverName = "oracle.jdbc.driver.OracleDriver";
 		String dbURL = "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=dm01-scan.tbea.com.cn)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=orcl)))";
@@ -95,10 +95,6 @@ public class NCServiceImpl implements NCService {
 			Statement statement = dbConn
 					.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 							ResultSet.CONCUR_UPDATABLE);
-
-			Calendar calNc = Calendar.getInstance();
-			calNc.setTime(date.getTime());
-			calNc.add(Calendar.MONTH, -1);
 			int size = codeList.size();
 			StringBuffer code = new StringBuffer("");
 			for (int i = 0; i < size; ++i) {
@@ -132,8 +128,8 @@ public class NCServiceImpl implements NCService {
 					+ " and b.alone_id=c.alone_id"
 					+ " and b.alone_id=d.alone_id"
 					+ " and b.alone_id=e.alone_id" 
-					+ " and extract(year from to_date(b.inputdate,'yyyy-mm-dd')) =" + calNc.get(Calendar.YEAR)
-					+ " and extract(month from to_date(b.inputdate,'yyyy-mm-dd')) =" + (calNc.get(Calendar.MONTH) + 1)
+					+ " and extract(year from to_date(b.inputdate,'yyyy-mm-dd')) =" + d.get(Calendar.YEAR)
+					+ " and extract(month from to_date(b.inputdate,'yyyy-mm-dd')) =" + (d.get(Calendar.MONTH) + 1)
 					+ " and b.ver = '" + ver + "'"
 					+ " and a.unit_code in (" + code + ")"
 					+ " order by a.unit_code";
@@ -150,10 +146,10 @@ public class NCServiceImpl implements NCService {
 			while (rs.next()) {
 				unitCode = String.valueOf(rs.getObject(1));
 				companyType = companyMap.get(unitCode);
-				nf = date.get(Calendar.YEAR);
+				nf = d.get(Calendar.YEAR);
 				// Calendar.MONTH获得月份正常情况下为自然月-1,
 				// 且当前需求中数据的月份为存储时间的前一个月，所以在下面公式调用中不必+1
-				yf = date.get(Calendar.MONTH) + 1;
+				yf = d.get(Calendar.MONTH) + 1;
 
 				// 存储NC对应指标
 				mergeNCZB(companyType, GSZB.LRZE, nf, yf, rs.getObject(2));
