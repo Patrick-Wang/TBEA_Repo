@@ -366,7 +366,7 @@ public class EntryServiceImpl implements EntryService{
 		
 		for (int c = 1; c < approvedList.size(); ++c) {
 			cal.add(Calendar.MONTH, 1);
-			if (ZBStatus.APPROVED != approvedList.get(0)) {
+			if (ZBStatus.APPROVED != approvedList.get(c)) {
 				ZbCalculator calc = this.createYj20Calc();
 				for (int r = 0; r < data.size(); ++r) {
 					row = data.getJSONArray(r);
