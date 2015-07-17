@@ -166,6 +166,22 @@ public class getData {
 					}		
 				return result;
 			}	
+			
+			public int getCompanyQx(String companyQx,int qybh,Statement stmt) throws Exception{			
+
+			   
+				ResultSet res = null;
+				int result=0;
+				// ��ѯ��ݿ�
+				//conn = new ConnDB().getConnection();
+				
+				res = stmt.executeQuery("select dbo.DataAuth("+companyQx+","+qybh+") as result;");
+				// ��ݽ���ж�
+				if (res.next()) {
+					result = res.getInt(1);
+					}		
+				return result;
+			}
 			//��ѯ��֤��ʱЧ��
 			public UserBean checkVerification(String dateNow,String verificationCode,Connection conn)throws Exception{
 				Statement stmt = null;

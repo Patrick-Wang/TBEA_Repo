@@ -3,6 +3,7 @@ package com.tbea.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Statement;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -50,9 +51,9 @@ public class loginServlet extends HttpServlet {
 //		password="123";
 		getData getData=new getData();
 		try{
-			//»ñÈ¡Ò»¸öÊµÀý
+			//ï¿½ï¿½È¡Ò»ï¿½ï¿½Êµï¿½ï¿½
 			DBConnectionManager manager =  DBConnectionManager.getInstance("mobileSys");  
-			//»ñÈ¡Ò»¸öÁ¬½Ó
+			//ï¿½ï¿½È¡Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			Connection conn = manager.getConnection("mobileSys"); 
 			UserBean userbean=new UserBean();
 			JSONObject USERjson=new JSONObject();
@@ -63,9 +64,9 @@ public class loginServlet extends HttpServlet {
 				password="";
 			}
 			userbean=getData.getUserInfo(username,password,conn);
-			//ÅÐ¶ÏÓÃ»§È¨ÏÞ
+			//ï¿½Ð¶ï¿½ï¿½Ã»ï¿½È¨ï¿½ï¿½
 			if(userbean!=null&&userbean.getUserid()!=null&&!userbean.getUserid().equals("")){
-				//¸ù¾Ý¹«Ë¾IDÈ¡µÃÓÃ»§µÄ¹«Ë¾È¨ÏÞ				
+				//ï¿½ï¿½ï¿½Ý¹ï¿½Ë¾IDÈ¡ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ä¹ï¿½Ë¾È¨ï¿½ï¿½				
 				String compID=userbean.getCompanyID();
 				int[] companies = new int[21];
 				int[] qxlist = new int[21];
@@ -90,8 +91,9 @@ public class loginServlet extends HttpServlet {
 				qxlist[18]= 74 ;
 				qxlist[19]= 120 ;
 				qxlist[20]= 122 ;
+				Statement stmt = conn.createStatement();
 				for(int i=0;i<qxlist.length;i++){
-					if(getData.getCompanyQx(compID,qxlist[i],conn)==1){
+					if(getData.getCompanyQx(compID,qxlist[i],stmt)==1){
 						companies[i]=qxlist[i];
 					}else{
 						companies[i]=-1;
@@ -115,10 +117,10 @@ public class loginServlet extends HttpServlet {
 			out.write(USERjson.toString());
 			out.flush();  
 			out.close();  
-			//ÊÍ·ÅÁ¬½Ó
+			//ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½
 			manager.freeConnection("mobileSys", conn); 
 			}catch(Exception e){
-				logger.error("_______________________"+new Date()+"ÓÃ»§µÇÂ¼´íÎó£º  "+e.getMessage());
+				logger.error("_______________________"+new Date()+"ï¿½Ã»ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½  "+e.getMessage());
 			}
 	}
 
