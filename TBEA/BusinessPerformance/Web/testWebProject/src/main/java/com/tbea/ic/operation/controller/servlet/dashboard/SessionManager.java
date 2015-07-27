@@ -9,6 +9,9 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import javax.xml.ws.Endpoint;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import com.tbea.ic.operation.model.entity.jygk.Account;
 
 public class SessionManager implements HttpSessionListener {
@@ -31,6 +34,16 @@ public class SessionManager implements HttpSessionListener {
 	
 	public static boolean isOnline(HttpSession session) {
 		Account account = getAccount(session);
+		try{
+			
+			System.out.println(JSONArray.fromObject(session.getValueNames()).toString());
+			System.out.println("account " + account);
+			System.out.println("account name" + account.getName());
+			System.out.println("account id" + account.getId());
+		}catch(Exception e){
+			
+		}
+	
 		if (null != account && account.getName() != null && account.getId() != 0) {
 			return true;
 		}

@@ -29,5 +29,18 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-ooxml-3.10.1-20140818.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-ooxml-schemas-3.10.1-20140818.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-scratchpad-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/cas-client-core-3.3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/cas-client-integration-atlassian-3.3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/cas-client-integration-jboss-3.3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/cas-client-integration-tomcat-common-3.3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/cas-client-integration-tomcat-v6-3.3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/cas-client-integration-tomcat-v7-3.3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/cas-client-support-distributed-ehcache-3.3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/cas-client-support-distributed-memcached-3.3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-collections-3.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/log4j-1.2.12.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/log4j.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/slf4j-api-1.6.5.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/slf4j-log4j12-1.6.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

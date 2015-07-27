@@ -1,5 +1,7 @@
 package com.tbea.ic.operation.controller.servlet.account;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
+
+import org.jasig.cas.client.validation.Assertion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +46,33 @@ public class LoginServlet {
 	@Autowired
 	private LoginService loginService;
 	
+	
+	@RequestMapping(value = "ssoLogin.do")
+	public ModelAndView ssoLogin(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		Assertion assertion = (Assertion) request.getSession().getAttribute("_const_csa_assertion_");
+		Account account = loginService.SSOLogin(assertion.getPrincipal().getName());
+
+		if (null != account){
+			setAuthority(request.getSession(), account);
+			request.getSession().setAttribute("sso", true);
+			return new ModelAndView("redirect:/Login/index.do");
+		}
+		
+		return new ModelAndView("login");
+	}
+	
+//	@RequestMapping(value = "ssoLogout.do")
+//	public void ssoLogout(HttpServletRequest request,
+//			HttpServletResponse response) throws IOException {
+//		HttpSession session = request.getSession(false);
+//		if (null != session){
+//			session.invalidate();
+//		}
+//		response.sendRedirect("http://192.168.10.68:10008/cas/logout");
+//	}
+	
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -52,14 +84,46 @@ public class LoginServlet {
 	}
 	
 	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
-	public @ResponseBody String logout(HttpServletRequest request,
-			HttpServletResponse response) {
+	public @ResponseBody byte[] logout(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
 		HttpSession session = request.getSession(false);
+		Boolean isSSOLogin = false;	
 		if (null != session){
+			isSSOLogin = null != request.getSession().getAttribute("sso");
 			session.invalidate();
 		}
+		
+		AjaxRedirect ajaxRedirect;
+		if (isSSOLogin){
+			ajaxRedirect = new AjaxRedirect("http://192.168.10.68:10008/cas/logout");
+		}else{
+			ajaxRedirect = new AjaxRedirect();
+		}
+		return ajaxRedirect.toUtf8Bytes();
+		//return "{\"error\" : \"invalidate session\", \"redirect\" : \"\"}";
+	}
+	
+	
+	private void setAuthority(HttpSession session, Account account){
+		SessionManager.setAccount(session, account);
+		
+		session.setAttribute("entryPlan",
+				entryService.hasEntryPlanPermission(account));
 
-		return "{\"error\" : \"invalidate session\", \"redirect\" : \"\"}";
+		session.setAttribute("entryPredict",
+				entryService.hasEntryPredictPermission(account));
+
+		session.setAttribute("approvePlan",
+				approveService.hasApprovePlanPermission(account));
+
+		session.setAttribute("approvePredict",
+				approveService.hasApprovePredictPermission(account));
+		
+		session.setAttribute("CorpAuth",
+				loginService.hasCorpAuth(account));
+		
+		session.setAttribute("SbdAuth",
+				loginService.hasSbdAuth(account));
 	}
 	
 	@RequestMapping(value = "validate.do", method = RequestMethod.POST)
@@ -68,40 +132,23 @@ public class LoginServlet {
 			@RequestParam(value = "j_username") String j_username,
 			@RequestParam(value = "j_password") String j_password) {
 
-		Map<String, Object> map = new HashMap<String, Object>();
 
 		Account account = loginService.Login(j_username, j_password);
 		if (null != account) {
+			
 			HttpSession currentSession = request.getSession(false);
 			if (null != currentSession){
 				currentSession.invalidate();
 			}
-
+			
 			HttpSession newSession = request.getSession(true);
 			
-			SessionManager.setAccount(newSession, account);
+			setAuthority(newSession, account);
 			
-			newSession.setAttribute("entryPlan",
-					entryService.hasEntryPlanPermission(account));
-
-			newSession.setAttribute("entryPredict",
-					entryService.hasEntryPredictPermission(account));
-
-			newSession.setAttribute("approvePlan",
-					approveService.hasApprovePlanPermission(account));
-
-			newSession.setAttribute("approvePredict",
-					approveService.hasApprovePredictPermission(account));
-			
-			newSession.setAttribute("CorpAuth",
-					loginService.hasCorpAuth(account));
-			
-			newSession.setAttribute("SbdAuth",
-					loginService.hasSbdAuth(account));
-			
-			return new ModelAndView("redirect:/Login/index.do", map);
+			return new ModelAndView("redirect:/Login/index.do");
 
 		} else {
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("error", true);
 			return new ModelAndView("login", map);
 		}

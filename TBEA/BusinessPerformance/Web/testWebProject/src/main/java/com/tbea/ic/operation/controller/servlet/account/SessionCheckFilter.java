@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
+
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 
 public class SessionCheckFilter implements Filter {
@@ -28,7 +30,10 @@ public class SessionCheckFilter implements Filter {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
 			HttpServletResponse httpResp = (HttpServletResponse) resp;
 			String url = httpRequest.getRequestURI();
-			if (url.indexOf("/Login/validate.do") < 0
+			
+			if (url.indexOf("/Login/ssoLogin.do")  < 0 
+					&& url.indexOf("/Login/ssoLogout.do")  < 0 
+					&& url.indexOf("/Login/validate.do") < 0
 					&& url.indexOf("/Login/login.do") < 0
 					&& url.indexOf("/Account/resetPassword.do") < 0) {
 				HttpSession session = httpRequest.getSession(false);
@@ -42,7 +47,7 @@ public class SessionCheckFilter implements Filter {
 					if (requestType != null
 							&& requestType.equals("XMLHttpRequest")) {
 						PrintWriter pw = httpResp.getWriter();
-						pw.print("{\"error\" : \"invalidate session\", \"redirect\" : \"" + redirUrl + "\"}");
+						pw.print(JSONObject.fromObject(new AjaxRedirect(redirUrl)));
 						pw.close();
 
 					} else {

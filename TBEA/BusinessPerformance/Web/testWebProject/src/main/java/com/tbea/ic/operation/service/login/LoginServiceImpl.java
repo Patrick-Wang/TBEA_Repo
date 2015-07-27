@@ -26,6 +26,16 @@ public class LoginServiceImpl implements LoginService {
 
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
+	
+	public String getPassword(String usrName) {
+		if (usrName != null && !usrName.isEmpty()) {
+			Account account = accountDao.getAccount(usrName);
+			if (null != account) {
+				return account.getPassword();
+			}
+		}
+		return null;
+	}
 
 	public Account Login(String usrName, String psw) {
 		if (usrName != null && !usrName.isEmpty() && psw != null
@@ -63,5 +73,13 @@ public class LoginServiceImpl implements LoginService {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public Account SSOLogin(String usrName) {
+		if (usrName != null && !usrName.isEmpty()) {
+			return accountDao.getAccount(usrName);
+		}
+		return null;
 	}
 }
