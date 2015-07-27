@@ -1,14 +1,17 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
 declare var echarts;
-
-enum RANKINKType1{GSMC,NDJH, NDLJWC,JHWCLORTB,YEARRANKING, YDJH, YDWC,YDWCLORTB,MONTHRANKING};
-
+//利润计划完成率排名,经营性净现金流实际完成排名
+enum RANKINGTYPE1{GSMC,NDJH, NDLJWC,JHWCL,YEARRANKING, YDJH, YDWC,YDWCL,MONTHRANKING};
+//利润指标年度累计完成同比增长情况排名
+enum RANKINGTYPE2{GSMC,NDLJ,QNTQLJ,NDTBZZ,YEARRANKING,DYWC,QNTQ,YDTBZZ,MONTHRANKING};
+//人均利润，人均收入
+enum RANKINGTYPE3{GSMC,NDLJ,YEARRANKING,DYWC,MONTHRANKING};
 module companys_ranking {
 
     class JQGridAssistantFactory {
         public static createTable(gridName: string, RankingType: number): JQTable.JQGridAssistant {
-            if (RankingType == 1 ||  RankingType == 9) {
+            if (RankingType == 1 ||  RankingType == 9 || RankingType == 11) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度完成率排名", "yearRanking", true, JQTable.TextAlign.Left)
@@ -36,7 +39,7 @@ module companys_ranking {
                         .append(new JQTable.Node("同比增长", "y3"))
                         .append(new JQTable.Node("月度排名", "y4")),
                 ], gridName);
-            } else if (RankingType == 3 || RankingType == 4) {
+            } else if (RankingType == 3 || RankingType == 4 || RankingType == 13 || RankingType == 14) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度累计完成排名", "yearRanking", true, JQTable.TextAlign.Left)
@@ -85,12 +88,14 @@ module companys_ranking {
 
         public updateUI() {
             var date: Util.Date = this.mDs.getDate();
-            //this.onIndexSelected();
+           
+            this.onIndexSelected();
             this.mDataSet.get({ month: date.month, year: date.year, rankingType: this.mIndex })
                 .then((dataArray: any) => {
                 this.mData = dataArray;
                 $('h1').text(date.year + "年" + date.month + "月" + "经营单位指标排名情况");
                 document.title = date.year + "年" + date.month + "月" + "经营单位指标排名情况";
+                
                 this.updateTable(this.mIndex);
 
             });
@@ -105,14 +110,33 @@ module companys_ranking {
                 mdata[i] = data[i].concat(row);
                 for(var j = 1; j < mdata[i].length; j++)
                 {
-                    if (RANKINKType1.YEARRANKING == j ||  RANKINKType1.MONTHRANKING == j){
-                       mdata[i][j] = Util.formatInt(mdata[i][j]); 
-                    }
-                    else if (RANKINKType1.JHWCLORTB == j || RANKINKType1.YDWCLORTB == j){
-                        mdata[i][j] = Util.formatPercent(mdata[i][j]); 
-                    }else{
-                        mdata[i][j] = Util.formatCurrency(mdata[i][j]);
-                    }   
+                    if(this.mIndex == 1 || this.mIndex == 9 || this.mIndex == 11)
+                    {
+                        if (RANKINGTYPE1.YEARRANKING == j ||  RANKINGTYPE1.MONTHRANKING == j){
+                           mdata[i][j] = Util.formatInt(mdata[i][j]); 
+                        }
+                        else if (RANKINGTYPE1.JHWCL == j || RANKINGTYPE1.YDWCL == j){
+                            mdata[i][j] = Util.formatPercent(mdata[i][j]); 
+                        }else{
+                            mdata[i][j] = Util.formatCurrency(mdata[i][j]);
+                        }
+                    }else if(this.mIndex == 3 || this.mIndex == 4 ||this.mIndex == 13 ||this.mIndex == 14)
+                    {
+                         if (RANKINGTYPE3.YEARRANKING == j ||  RANKINGTYPE3.MONTHRANKING == j){
+                            mdata[i][j] = Util.formatInt(mdata[i][j]); 
+                        }else{
+                             mdata[i][j] = Util.formatFordot(mdata[i][j],1); 
+                        }
+                    } else if (this.mIndex == 2) 
+                    {
+                        if (RANKINGTYPE2.YEARRANKING == j || RANKINGTYPE2.MONTHRANKING == j){
+                           mdata[i][j] = Util.formatInt(mdata[i][j]); 
+                        }else if (RANKINGTYPE2.NDTBZZ == j || RANKINGTYPE2.YDTBZZ == j){
+                             mdata[i][j] = Util.formatPercent(mdata[i][j]); 
+                        }else {
+                           mdata[i][j] =  Util.formatCurrency(mdata[i][j]);
+                        }
+                    } 
                 }                 
             }            
             return mdata;

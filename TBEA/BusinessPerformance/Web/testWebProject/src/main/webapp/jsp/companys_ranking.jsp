@@ -243,10 +243,10 @@
 		 break;
 		 case "Procompanys":
 			$("#ranktype").empty();
-			var option = $("<option>").text("利润指标年度累计完成同比增长排名").val(1);
-			var option2 = $("<option>").text("项目公司净资产收益率排名").val(2);
-			var option3 = $("<option>").text("人均收入完成排名").val(3);
-			var option4 = $("<option>").text("人均利润完成排名").val(4);
+			var option = $("<option>").text("利润指标年度累计完成同比增长排名").val(11);
+			var option2 = $("<option>").text("项目公司净资产收益率排名").val(12);
+			var option3 = $("<option>").text("人均收入完成排名").val(13);
+			var option4 = $("<option>").text("人均利润完成排名").val(14);
 			$("#ranktype").append(option).append(option2).append(option3).append(option4);
 			$("#ranktype").multiselect({
 	         	multiple: false,
