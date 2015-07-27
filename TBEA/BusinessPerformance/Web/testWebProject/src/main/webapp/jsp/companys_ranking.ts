@@ -141,28 +141,73 @@ module companys_ranking {
             }            
             return mdata;
         }
+        
+         private formatProData() {
+            var row = [];
+            var mdata = [];
+            for (var i = 0; i < this.mData.length; ++i) {
+                mdata[i] = [].concat(this.mData[i]);
+                for(var j = 1; j < mdata[i].length; j++)
+                {
+                    if(this.mIndex == 1 || this.mIndex == 9 || this.mIndex == 11)
+                    {
+                        if (RANKINGTYPE1.YEARRANKING == j ||  RANKINGTYPE1.MONTHRANKING == j){
+                           mdata[i][j] = Util.formatInt(mdata[i][j]); 
+                        }
+                        else if (RANKINGTYPE1.JHWCL == j || RANKINGTYPE1.YDWCL == j){
+                            mdata[i][j] = Util.formatPercent(mdata[i][j]); 
+                        }else{
+                            mdata[i][j] = Util.formatCurrency(mdata[i][j]);
+                        }
+                    }else if(this.mIndex == 3 || this.mIndex == 4 ||this.mIndex == 13 ||this.mIndex == 14)
+                    {
+                         if (RANKINGTYPE3.YEARRANKING == j ||  RANKINGTYPE3.MONTHRANKING == j){
+                            mdata[i][j] = Util.formatInt(mdata[i][j]); 
+                        }else{
+                             mdata[i][j] = Util.formatFordot(mdata[i][j],1); 
+                        }
+                    } else if (this.mIndex == 2) 
+                    {
+                        if (RANKINGTYPE2.YEARRANKING == j || RANKINGTYPE2.MONTHRANKING == j){
+                           mdata[i][j] = Util.formatInt(mdata[i][j]); 
+                        }else if (RANKINGTYPE2.NDTBZZ == j || RANKINGTYPE2.YDTBZZ == j){
+                             mdata[i][j] = Util.formatPercent(mdata[i][j]); 
+                        }else {
+                           mdata[i][j] =  Util.formatCurrency(mdata[i][j]);
+                        }
+                    } 
+                }                 
+            }            
+            return mdata;
+        }
+
 
         private updateTable(rankingType: number): void {
             var name = this.mTableId + "_jqgrid_1234";
-            
-             var data = [
-                ["沈变公司"],
-                ["衡变公司"],
-                ["新变厂",],
-                ["鲁缆公司"],
-                ["新缆厂"],
-                ["德缆公司"],
-                ["天池能源"],
-                ["能动公司"],
-                ["新能源公司"],
-                ["新特能源公司"],
-                ["进出口公司"],
-                ["国际工程公司"],
-                ["众和公司"]];
+            var data = null;
             var tableAssist: JQTable.JQGridAssistant = null;
 
             tableAssist = JQGridAssistantFactory.createTable(name, rankingType);
-            data = this.formatData(data);
+            if ($("input[name=rank]:checked").attr("id") == "JYcompanys")
+            {
+                var predata = [
+                    ["沈变公司"],
+                    ["衡变公司"],
+                    ["新变厂",],
+                    ["鲁缆公司"],
+                    ["新缆厂"],
+                    ["德缆公司"],
+                    ["天池能源"],
+                    ["能动公司"],
+                    ["新能源公司"],
+                    ["新特能源公司"],
+                    ["进出口公司"],
+                    ["国际工程公司"],
+                    ["众和公司"]];
+                data = this.formatData(predata);
+            }else {
+                data = this.formatProData();
+            }
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
