@@ -71,10 +71,10 @@ public class YDZBRankingController {
 			ranking_val = JSONArray.fromObject(rankService.getRjsrRank(d))
 					.toString().replace("null", "\"--\"");
 		} else if (rankingType == 13) {
-			ranking_val = JSONArray.fromObject(rankService.getXmgsRjlrRank(d))
+			ranking_val = JSONArray.fromObject(rankService.getXmgsRjsrRank(d))
 					.toString().replace("null", "\"--\"");
 		} else if (rankingType == 14) {
-			ranking_val = JSONArray.fromObject(rankService.getXmgsRjsrRank(d))
+			ranking_val = JSONArray.fromObject(rankService.getXmgsRjlrRank(d))
 					.toString().replace("null", "\"--\"");
 		}
 		return ranking_val.getBytes("utf-8");

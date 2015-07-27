@@ -157,7 +157,7 @@ public class RankServiceImpl implements RankService {
 		}
 		pipe.addDependentIndictor(GSZB.XSSR.getValue());
 		pipe.addDependentIndictor(GSZB.RS.getValue());
-		return makeResult(pipe.getData());
+		return makeResult(compsName, pipe.getData());
 	}
 	
 	@Override
