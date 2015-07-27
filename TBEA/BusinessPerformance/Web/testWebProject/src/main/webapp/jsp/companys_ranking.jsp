@@ -182,7 +182,7 @@
 				<Table>
 					<tr>
 						<td><div id="date"></div></td>
-						<td><div style = "width:60px"></div>	</td>
+						<td><div style = "width:20px"></div>	</td>
 						<td>
 							<div id="t1">
 							<input type="radio" name="rank" value="JY" id="JYcompanys" checked="checked"><label for="JYcompanys">经营单位排名</label>
