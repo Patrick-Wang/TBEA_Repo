@@ -183,9 +183,9 @@ public class RankServiceImpl implements RankService {
 		for (int i = 0; i < data.size(); ++i) {
 			result.add(new String[data.get(i).length + 1]);
 			result.get(i)[0] = compsName.get(i);
-			for (int j = 1; j < data.get(i).length; ++j) {
-				if (data.get(i)[j - 1] != null){
-					result.get(i)[j] = data.get(i)[j - 1] + "";
+			for (int j = 0; j < data.get(i).length; ++j) {
+				if (data.get(i)[j] != null){
+					result.get(i)[j + 1] = data.get(i)[j] + "";
 				}
 			}
 		}
