@@ -13,5 +13,11 @@ public interface RankService {
 	
 	List<String[]> getRjlrRank(Date date);
 
-	List<String[]> getRjsrRank(Date date);	
+	List<String[]> getRjsrRank(Date date);
+
+	List<String[]> getXmgsRjsrRank(Date date);
+
+	List<String[]> getXmgsRjlrRank(Date date);
+
+	List<String[]> getXmgsJhlrRank(Date date);	
 }

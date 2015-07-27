@@ -54,6 +54,9 @@ public class YDZBRankingController {
 		if (rankingType == 1) {
 			ranking_val = JSONArray.fromObject(rankService.getJhlrRank(d))
 					.toString().replace("null", "\"--\"");
+		} else if (rankingType == 11) {
+			ranking_val = JSONArray.fromObject(rankService.getXmgsJhlrRank(d))
+					.toString().replace("null", "\"--\"");
 		} else if (rankingType == 2) {
 			ranking_val = JSONArray.fromObject(rankService.getLjlrRank(d))
 					.toString().replace("null", "\"--\"");
@@ -65,6 +68,12 @@ public class YDZBRankingController {
 					.toString().replace("null", "\"--\"");
 		} else if (rankingType == 4) {
 			ranking_val = JSONArray.fromObject(rankService.getRjsrRank(d))
+					.toString().replace("null", "\"--\"");
+		} else if (rankingType == 13) {
+			ranking_val = JSONArray.fromObject(rankService.getXmgsRjlrRank(d))
+					.toString().replace("null", "\"--\"");
+		} else if (rankingType == 14) {
+			ranking_val = JSONArray.fromObject(rankService.getXmgsRjsrRank(d))
 					.toString().replace("null", "\"--\"");
 		}
 		return ranking_val;
