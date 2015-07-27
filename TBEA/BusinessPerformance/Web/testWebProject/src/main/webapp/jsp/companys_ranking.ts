@@ -157,7 +157,8 @@ module companys_ranking {
                 ["新能源公司"],
                 ["新特能源公司"],
                 ["进出口公司"],
-                ["国际工程公司"]];
+                ["国际工程公司"],
+                ["众和公司"]];
             var tableAssist: JQTable.JQGridAssistant = null;
 
             tableAssist = JQGridAssistantFactory.createTable(name, rankingType);
