@@ -8,7 +8,7 @@ module companys_ranking {
 
     class JQGridAssistantFactory {
         public static createTable(gridName: string, RankingType: number): JQTable.JQGridAssistant {
-            if (RankingType == 1 || RankingType == 3) {
+            if (RankingType == 1 ||  RankingType == 9) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度完成率排名", "yearRanking", true, JQTable.TextAlign.Left)
@@ -25,16 +25,26 @@ module companys_ranking {
             } else if (RankingType == 2) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
-                    new JQTable.Node("年度完成率排名", "yearRanking", true, JQTable.TextAlign.Left)
+                    new JQTable.Node("年度同比增长情况排名", "yearRanking", true, JQTable.TextAlign.Left)
                         .append(new JQTable.Node("年度累计", "n1"))
                         .append(new JQTable.Node("去年同期累计", "n2"))
                         .append(new JQTable.Node("同比增长", "n3"))
                         .append(new JQTable.Node("年度排名", "n4")),
-                    new JQTable.Node("月度完成率排名", "monthRanking", true, JQTable.TextAlign.Left)
+                    new JQTable.Node("月度同比增长情况排名", "monthRanking", true, JQTable.TextAlign.Left)
                         .append(new JQTable.Node("当月完成", "y1"))
                         .append(new JQTable.Node("去年同期", "y2"))
                         .append(new JQTable.Node("同比增长", "y3"))
                         .append(new JQTable.Node("月度排名", "y4")),
+                ], gridName);
+            } else if (RankingType == 3 || RankingType == 4) {
+                return new JQTable.JQGridAssistant([
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("年度累计完成排名", "yearRanking", true, JQTable.TextAlign.Left)
+                        .append(new JQTable.Node("年度累计完成", "n1"))
+                        .append(new JQTable.Node("年度排名", "n2")),
+                    new JQTable.Node("月度完成", "monthRanking", true, JQTable.TextAlign.Left)
+                        .append(new JQTable.Node("月度完成", "y1"))
+                        .append(new JQTable.Node("月度排名", "y2")),
                 ], gridName);
             }
         }
