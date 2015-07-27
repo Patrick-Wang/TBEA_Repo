@@ -38,12 +38,12 @@ public class BasicPipe extends BasePipe{
 	}
 	
 	public BasicPipe(Integer zb, Company comp, Date date, IPipeConfigurator pipeConfig) {
-		this(addzb(new ArrayList<Integer>(), zb), addComp(new ArrayList<Company>(), comp), date, pipeConfig);
+		this(addIndicator(new ArrayList<Integer>(), zb), addComp(new ArrayList<Company>(), comp), date, pipeConfig);
 	}
 	
 	public BasicPipe(Integer zb, List<Company> companies, Date date,
 			IPipeConfigurator pipeConfig) {
-		this(addzb(new ArrayList<Integer>(), zb), companies, date, pipeConfig);
+		this(addIndicator(new ArrayList<Integer>(), zb), companies, date, pipeConfig);
 	}
 
 

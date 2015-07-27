@@ -27,14 +27,14 @@ public abstract class BasePipe implements IPipe{
 	}
 	
 	public BasePipe(Integer indicator, Company comp, Date date) {
-		this(addzb(new ArrayList<Integer>(), indicator), addComp(new ArrayList<Company>(), comp), date);
+		this(addIndicator(new ArrayList<Integer>(), indicator), addComp(new ArrayList<Company>(), comp), date);
 	}
 	
 	public BasePipe(Integer indicator, List<Company> companies, Date date) {
-		this(addzb(new ArrayList<Integer>(), indicator), companies, date);
+		this(addIndicator(new ArrayList<Integer>(), indicator), companies, date);
 	}
 	
-	protected static List<Integer> addzb(List<Integer> indicators, Integer indicator){
+	protected static List<Integer> addIndicator(List<Integer> indicators, Integer indicator){
 		indicators.add(indicator);
 		return indicators;
 	}

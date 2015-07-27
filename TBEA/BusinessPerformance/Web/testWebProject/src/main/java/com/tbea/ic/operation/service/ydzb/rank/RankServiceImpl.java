@@ -199,7 +199,7 @@ public class RankServiceImpl implements RankService {
 		List<String> compsName = new ArrayList<String>();
 		for (Company comp : jydw){
 			for (Company xmgs : comp.getSubCompanies()){
-				pipe.addCompany(xmgs, getConfiguratorFactory().getRjlrDataConfigurator());
+				pipe.addCompany(xmgs, getConfiguratorFactory().getJhlrDataConfigurator());
 				compsName.add(xmgs.getName());
 			}
 		}

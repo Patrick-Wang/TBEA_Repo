@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.ydzb;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -45,8 +46,8 @@ public class YDZBRankingController {
 	
 	
 	@RequestMapping(value = "companys_ranking_update.do", method = RequestMethod.GET)
-	public @ResponseBody String getCompanys_Ranking_Update(HttpServletRequest request,
-			HttpServletResponse response) {
+	public @ResponseBody byte[] getCompanys_Ranking_Update(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Date d = DateSelection.getDate(request);
 		int rankingType = Integer.valueOf(request.getParameter("rankingType"));
@@ -76,7 +77,7 @@ public class YDZBRankingController {
 			ranking_val = JSONArray.fromObject(rankService.getXmgsRjsrRank(d))
 					.toString().replace("null", "\"--\"");
 		}
-		return ranking_val;
+		return ranking_val.getBytes("utf-8");
 	}
 
 }
