@@ -423,17 +423,17 @@ public class GszbServiceImpl implements GszbService {
 
 	@Override
 	public List<String[]> getGsFirstSeasonPredictionZBsOverview(Date date) {
-		return getFirstSeasonPredictionZBsOverview(date, gsztzbs, BMDepartmentDB.getJydw(companyManager));
+		return getFirstSeasonPredictionZBsOverview(date, gsztzbs, BMDepartmentDB.getMainlyJydw(companyManager));
 	}
 
 	@Override
 	public List<String[]> getGsSecondSeasonPredictionZBsOverview(Date date) {
-		return getSecondSeasonPredictionZBsOverview(date, gsztzbs, BMDepartmentDB.getJydw(companyManager));
+		return getSecondSeasonPredictionZBsOverview(date, gsztzbs, BMDepartmentDB.getMainlyJydw(companyManager));
 	}
 
 	@Override
 	public List<String[]> getGsThirdSeasonPredictionZBsOverview(Date date) {
-		return getJDZBMY(date, gsztzbs, BMDepartmentDB.getJydw(companyManager));
+		return getJDZBMY(date, gsztzbs, BMDepartmentDB.getMainlyJydw(companyManager));
 	}
 
 	@Override
