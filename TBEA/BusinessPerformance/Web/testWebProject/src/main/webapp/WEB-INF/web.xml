@@ -147,5 +147,5 @@
 	<session-config>
 		<session-timeout>45</session-timeout>
 	</session-config>
-	<distributable />
+<!-- 	<distributable /> -->
 </web-app>
