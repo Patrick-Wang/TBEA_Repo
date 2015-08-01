@@ -19,7 +19,7 @@ public class HeaderFormatterHandler extends AbstractFormatterHandler {
 
 	@Override
 	protected void onHandle(JyzbExcelTemplate template, HSSFCell cell, String val) {
-		cell.setCellValue(val);
+		cell.setCellValue(val.trim());
 		cell.setCellStyle(template.getCellStyleHeader());
 	}
 
