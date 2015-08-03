@@ -19,7 +19,11 @@ public class HeaderFormatterHandler extends AbstractFormatterHandler {
 
 	@Override
 	protected void onHandle(JyzbExcelTemplate template, HSSFCell cell, String val) {
-		cell.setCellValue(val.trim());
+		if (val.contains(" ")){
+			cell.setCellValue(" " + val.trim());
+		}else{
+			cell.setCellValue(val);
+		}
 		cell.setCellStyle(template.getCellStyleHeader());
 	}
 
