@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.geong.cas.support.SystemLinkClient;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
@@ -50,9 +51,10 @@ public class LoginServlet {
 	@RequestMapping(value = "ssoLogin.do")
 	public ModelAndView ssoLogin(HttpServletRequest request,
 			HttpServletResponse response) {
-		
-		Assertion assertion = (Assertion) request.getSession().getAttribute("_const_csa_assertion_");
-		Account account = loginService.SSOLogin(assertion.getPrincipal().getName());
+		Map<String, Object> map = SystemLinkClient.getLink(request, "43");
+		String userCode = (String) map.get("userCode");
+//		Assertion assertion = (Assertion) request.getSession().getAttribute("_const_csa_assertion_");
+		Account account = loginService.SSOLogin(userCode);
 
 		if (null != account){
 			setAuthority(request.getSession(), account);
