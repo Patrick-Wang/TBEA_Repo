@@ -42,11 +42,11 @@
 		</filter-class>
 		<init-param>
 			<param-name>casServerLoginUrl</param-name>
-			<param-value>http://124.207.242.228:7001/cas/login</param-value>
+			<param-value>http://172.28.8.74:7001/cas/login</param-value>
 		</init-param>
 		<init-param>
 			<param-name>serverName</param-name>
-			<param-value>http://124.207.242.228:7001</param-value>
+			<param-value>http://172.28.8.74:7001</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -60,11 +60,11 @@
 		</filter-class>
 		<init-param>
 			<param-name>casServerUrlPrefix</param-name>
-			<param-value>http://124.207.242.228:7001/cas</param-value>
+			<param-value>http://172.28.8.74:7001/cas</param-value>
 		</init-param>
 		<init-param>
 			<param-name>serverName</param-name>
-			<param-value>http://124.207.242.228:7001</param-value>
+			<param-value>http://172.28.8.74:7001</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
