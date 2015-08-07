@@ -57,7 +57,7 @@ public class LoginServlet {
 		Account account = loginService.SSOLogin(userCode);
 
 		if (null != account){
-			setAuthority(request.getSession(), account);
+			setAuthority(request.getSession(), account); 
 			request.getSession().setAttribute("sso", true);
 			return new ModelAndView("redirect:/Login/index.do");
 		}
