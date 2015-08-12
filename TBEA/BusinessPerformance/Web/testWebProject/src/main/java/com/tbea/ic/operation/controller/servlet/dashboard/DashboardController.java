@@ -59,8 +59,8 @@ public class DashboardController {
 		Account account = SessionManager.getAccount(request.getSession(false));
 		List<Company> dws = null;
 		Integer companyType = 0;
-		if (null != request.getAttribute("companyType")){
-			companyType = Integer.valueOf((String)request.getAttribute("companyType"));
+		if (null != request.getParameter("companyType")){
+			companyType = Integer.valueOf((String)request.getParameter("companyType"));
 		}
 		if (Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName())) {
 			dws = companyManager.getBMDBOrganization().getCompany(CompanyType.ZHGS).getSubCompanies();
@@ -69,9 +69,9 @@ public class DashboardController {
 		} else if (companyType == 2){
 			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompany(CompanyType.SBDCYJT));
 		} else if (companyType == 3){
-			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompany(CompanyType.NYCY));
+			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompany(CompanyType.NYSYB));
 		} else if (companyType == 4){
-			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYCY));
+			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYSYB));
 		}
 		// 1 all
 		// 2 sbd
