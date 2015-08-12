@@ -48,6 +48,7 @@ module gdw_indexinput_summary {
                 { year: year, month: month },
                 dateId);
             this.onIndexSelected();
+            this.onCompanysSelected();
 
         }
 
