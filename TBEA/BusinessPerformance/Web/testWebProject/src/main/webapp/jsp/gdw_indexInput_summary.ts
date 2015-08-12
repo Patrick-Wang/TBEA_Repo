@@ -31,6 +31,8 @@ module gdw_indexinput_summary {
         private mYear: number;
         private mMonth: number;
         private mIndex: number;
+        private mCompanyType:number;
+        private mCompanyName: string;
         private mDs: Util.DateSelector;
         private mData: Array<string[]> = [];
         private mDataSet: Util.Ajax = new Util.Ajax("status_update.do");
@@ -53,11 +55,17 @@ module gdw_indexinput_summary {
             this.mIndex = $("#indextype").val();
             //this.mIndex = $("#indextype  option:selected").text();
         }
+        
+        public onCompanysSelected() {
+            this.mCompanyType = $("#companytype").val();
+            this.mCompanyName = $("#companytype  option:selected").text();
+            //this.mIndex = $("#indextype  option:selected").text();
+        }
 
         public updateUI() {
             var date: Util.Date = this.mDs.getDate();
             //this.onIndexSelected();
-            this.mDataSet.get({ month: date.month, year: date.year, entryType: this.mIndex })
+            this.mDataSet.get({ month: date.month, year: date.year, entryType: this.mIndex, companyType: this.mCompanyType })
                 .then((dataArray: any) => {
                 this.mData = dataArray;
                 if (this.isZHCompany) {
@@ -65,8 +73,15 @@ module gdw_indexinput_summary {
                     document.title = date.year + "年" + date.month + "月" + "众和公司各项目单位预测指标填报情况";
                     
                 } else {
-                    $('h1').text(date.year + "年" + date.month + "月" + "经营单位预测指标填报情况");
-                    document.title = date.year + "年" + date.month + "月" + "经营单位预测指标填报情况";
+                    if(this.mCompanyType == 1)
+                    {
+                        $('h1').text(date.year + "年" + date.month + "月" + "各经营单位预测指标填报情况");
+                        document.title = date.year + "年" + date.month + "月" + "各经营单位预测指标填报情况";
+                    }else{
+                         $('h1').text(date.year + "年" + date.month + "月" + this.mCompanyName + "预测指标填报情况");
+                        document.title = date.year + "年" + date.month + "月" + this.mCompanyName + "预测指标填报情况";
+                    }
+                    
                 }
                 
                 this.updateTable();
