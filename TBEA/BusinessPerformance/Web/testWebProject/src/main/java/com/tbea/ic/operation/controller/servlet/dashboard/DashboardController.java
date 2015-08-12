@@ -58,11 +58,25 @@ public class DashboardController {
 		Date date = DateSelection.getDate(request);
 		Account account = SessionManager.getAccount(request.getSession(false));
 		List<Company> dws = null;
+		Integer companyType = 0;
+		if (null != request.getAttribute("companyType")){
+			companyType = Integer.valueOf((String)request.getAttribute("companyType"));
+		}
 		if (Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName())) {
 			dws = companyManager.getBMDBOrganization().getCompany(CompanyType.ZHGS).getSubCompanies();
-		} else{
+		} else if (companyType == 1){
 			dws = BMDepartmentDB.getMainlyJydw(companyManager);
+		} else if (companyType == 2){
+			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompany(CompanyType.SBDCYJT));
+		} else if (companyType == 3){
+			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompany(CompanyType.NYCY));
+		} else if (companyType == 4){
+			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYCY));
 		}
+		// 1 all
+		// 2 sbd
+		// 3 ny
+		// 4 xny
 //		else if (Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())){
 //			Organization org = companyManager.getBMDBOrganization();
 //			List<CompanyType> compTypes = CompanySelection.getCompanys(request);
