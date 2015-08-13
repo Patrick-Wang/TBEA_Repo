@@ -198,8 +198,10 @@
 						</td>
 						<td><%@include file="predictionTime_selection.jsp"%></div>
 						</td>
+						<c:if test="${CorpAuth}">
 						<td><%@include file="predictionCompanys_selection.jsp"%></div>
 						</td>
+						</c:if>
 						<td><input id="update" type="button" value="更新" style="width : 80px; margin-left:10px;"
 							onclick="instance.updateUI()"></input>
 				</Table>
