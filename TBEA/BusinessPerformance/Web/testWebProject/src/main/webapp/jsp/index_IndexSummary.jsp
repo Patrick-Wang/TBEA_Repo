@@ -144,7 +144,7 @@
 </div>
 
 
- <c:if test="${CorpAuth}">
+<%--  <c:if test="${CorpAuth}">
 <div>
 	<h3>
 		经营指标排名情况<a name="zbRanking"> </a>
@@ -170,7 +170,7 @@
 		</div>
 	</div>
 </div>
-</c:if>
+</c:if> --%>
 
 <c:if test="${SbdAuth}">
 <div>
