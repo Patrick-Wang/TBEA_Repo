@@ -91,7 +91,7 @@ public class MarketServlet {
 	@RequestMapping(value = "sign_contract_update.do")
 	public @ResponseBody byte[] getSignContractUpdate(HttpServletRequest request,
 			HttpServletResponse response) {
-		
+		 
 
 		return null;
 	}

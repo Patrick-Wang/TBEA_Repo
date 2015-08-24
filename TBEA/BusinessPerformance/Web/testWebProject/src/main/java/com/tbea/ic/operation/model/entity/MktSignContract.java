@@ -15,6 +15,8 @@ public class MktSignContract implements Serializable {
 
 	@Column(name = "company_name")
 	String companyName;
+	
+	@Id
 	@Column(name = "contract_no")
 	String contractNo;
 
