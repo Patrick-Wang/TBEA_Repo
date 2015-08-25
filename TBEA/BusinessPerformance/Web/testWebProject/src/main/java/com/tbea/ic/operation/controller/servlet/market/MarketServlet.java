@@ -25,27 +25,31 @@ public class MarketServlet {
 	@Autowired
 	private MarketService marketService;
 
+	
+	final static String FILETYPE_PROJECT = "2";
+	final static String FILETYPE_SIGN = "4";
+	final static String FILETYPE_BID = "3";
+	
 	@RequestMapping(value = "import.do")
-	public ModelAndView importExcel(HttpServletRequest request,
+	public @ResponseBody byte[] importExcel(HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam("upfile") CommonsMultipartFile file) throws IOException {
-		Map<String, Object> map = new HashMap<String, Object>();
+			@RequestParam("upfile") CommonsMultipartFile file,
+			@RequestParam("filetype") String mktType) throws IOException {
+		String result = "filetype error";
 		try{
 			HSSFWorkbook workbook = new HSSFWorkbook(file.getInputStream());
-			String mktType = request.getParameter("mktType");
-			if ("project".equals(mktType)){
-				
-			}else if ("sign".equals(mktType)) {
-				
-			}else if ("bid".equals(mktType)) {
-				
+			if (FILETYPE_PROJECT.equals(mktType)){
+				result = marketService.importProjectData(workbook);
+			}else if (FILETYPE_SIGN.equals(mktType)) {
+				result = marketService.importSignData(workbook);
+			}else if (FILETYPE_BID.equals(mktType)) {
+				result = marketService.importBidData(workbook);
 			}
 		}catch(Exception e){
-			
+			result = "exception occurrence";
 		}
-
 		
-		return new ModelAndView("", map);
+		return result.getBytes("utf-8");
 	}
 	
 	
