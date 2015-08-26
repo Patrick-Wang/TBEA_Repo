@@ -108,8 +108,12 @@
 		    $percent.css( 'width', percentage * 100 + '%' );
 	});
 		 
- 	uploader.on( 'uploadSuccess', function( file ) {
-	    $( '#'+file.id ).find('p.state').text('已上传');
+ 	uploader.on( 'uploadSuccess', function( file, ret ) {
+ 		if (ret._raw == "OK"){
+	    	$( '#'+file.id ).find('p.state').text('已上传');
+ 		} else{
+ 			$( '#'+file.id ).find('p.state').text(ret._raw);
+ 		}
 	});
 
 	uploader.on( 'uploadError', function( file ) {
