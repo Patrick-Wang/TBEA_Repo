@@ -1,13 +1,10 @@
 package com.tbea.ic.operation.controller.servlet.market;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +30,12 @@ public class MarketServlet {
 	@RequestMapping(value = "import.do")
 	public @ResponseBody byte[] importExcel(HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam("upfile") CommonsMultipartFile file,
-			@RequestParam("filetype") String mktType) throws IOException {
+			@RequestParam("upfile") CommonsMultipartFile file) throws IOException {
+
+		String mktType = request.getParameter("filetype");
 		String result = "filetype error";
 		try{
-			HSSFWorkbook workbook = new HSSFWorkbook(file.getInputStream());
+			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 			if (FILETYPE_PROJECT.equals(mktType)){
 				result = marketService.importProjectData(workbook);
 			}else if (FILETYPE_SIGN.equals(mktType)) {
@@ -47,11 +45,18 @@ public class MarketServlet {
 			}
 		}catch(Exception e){
 			result = "exception occurrence";
+			e.printStackTrace();
 		}
 		
 		return result.getBytes("utf-8");
 	}
 	
+	
+	@RequestMapping(value = "mkt_import_data.do")
+	public ModelAndView getMktImportData(HttpServletRequest request,
+			HttpServletResponse response) {
+		return new ModelAndView("mkt_import_data");
+	}
 	
 	
 	@RequestMapping(value = "project_info.do")

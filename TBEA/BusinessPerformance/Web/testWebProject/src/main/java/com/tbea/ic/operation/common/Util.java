@@ -377,4 +377,8 @@ public class Util {
 		ids.toArray(ret[1]);
 		return ret;
 	}
+	
+	public static String getSetMethodName(String property){
+		return "set" + property.substring(0, 1).toUpperCase() + property.substring(1);
+	}
 }

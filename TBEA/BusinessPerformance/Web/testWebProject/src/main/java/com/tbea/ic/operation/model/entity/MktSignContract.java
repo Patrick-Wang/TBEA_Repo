@@ -7,15 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+//field order cannot be changed
 @Entity
-@Table(name = "mkt_projectinfo")
+@Table(name = "mkt_sign_contract")
 public class MktSignContract implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "company_name")
 	String companyName;
-	
+
 	@Id
 	@Column(name = "contract_no")
 	String contractNo;

@@ -7,83 +7,84 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+//field order cannot be changed
 @Entity
-@Table(name = "mkt_projectinfo")
+@Table(name = "[mkt_bidinfo]")
 public class MktBidInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "company_name")
+	@Column(name = "[company_name]")
 	String companyName;
-	
+
 	@Id
-	@Column(name = "bid_no")
+	@Column(name = "[bid_no]")
 	String bidNo;
-	
-	@Column(name = "project_no")
+
+	@Column(name = "[project_no]")
 	String projectNo;
-	
-	@Column(name = "authorization_no")
+
+	@Column(name = "[authorization_no]")
 	String authorizationNo;
-	
-	@Column(name = "office_name")
+
+	@Column(name = "[office_name]")
 	String officeName;
-	
-	@Column(name = "bid_month")
+
+	@Column(name = "[bid_month]")
 	Integer bidMonth;
-	
-	@Column(name = "bid_date")
+
+	@Column(name = "[bid_date]")
 	String bidDate;
-	
-	@Column(name = "industry_category")
+
+	@Column(name = "[industry_category]")
 	String industryCategory;
-	
-	@Column(name = "system_classification")
+
+	@Column(name = "[system_classification]")
 	String systemClassification;
-	
-	@Column(name = "project_area")
+
+	@Column(name = "[project_area]")
 	String projectArea;
-	
-	@Column(name = "project_name")
+
+	@Column(name = "[project_name]")
 	String projectName;
 
-	@Column(name = "owner_name")
+	@Column(name = "[owner_name]")
 	String ownerName;
 
-	@Column(name = "product_model")
+	@Column(name = "[product_model]")
 	String productModel;
 
-	@Column(name = "product_amount")
+	@Column(name = "[product_amount]")
 	String productAmount;
 
-	@Column(name = "product_level")
+	@Column(name = "[product_level]")
 	String productLevel;
 
-	@Column(name = "product_volume")
+	@Column(name = "[product_volume]")
 	String productVolume;
 
-	@Column(name = "bid_price")
+	@Column(name = "[bid_price]")
 	Double bidPrice;
 
-	@Column(name = "successful_bidder_name")
+	@Column(name = "[successful_bidder_name]")
 	String successfulBidderName;
 
-	@Column(name = "sucessful_bidder_price")
+	@Column(name = "[sucessful_bidder_price]")
 	Double sucessfulBidderPrice;
 
-	@Column(name = "analysis_of_cause")
+	@Column(name = "[analysis_of_cause]")
 	String analysisOfCause;
 
-	@Column(name = "successful_bidder_month")
+	@Column(name = "[successful_bidder_month]")
 	Integer successfulBidderMonth;
 
-	@Column(name = "bid_status")
+	@Column(name = "[bid_status]")
 	String bidStatus;
 
-	@Column(name = "whether_feedback_bid_summary")
+	@Column(name = "[whether_feedback_bid_summary]")
 	String whetherFeedbackBidSummary;
 
-	@Column(name = "specific_bid_company_name")
+	@Column(name = "[specific_bid_company_name]")
 	String specificBidCompanyName;
 
 	/**
@@ -255,168 +256,192 @@ public class MktBidInfo implements Serializable {
 	}
 
 	/**
-	 * @param companyName the companyName to set
+	 * @param companyName
+	 *            the companyName to set
 	 */
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
 
 	/**
-	 * @param bidNo the bidNo to set
+	 * @param bidNo
+	 *            the bidNo to set
 	 */
 	public void setBidNo(String bidNo) {
 		this.bidNo = bidNo;
 	}
 
 	/**
-	 * @param projectNo the projectNo to set
+	 * @param projectNo
+	 *            the projectNo to set
 	 */
 	public void setProjectNo(String projectNo) {
 		this.projectNo = projectNo;
 	}
 
 	/**
-	 * @param authorizationNo the authorizationNo to set
+	 * @param authorizationNo
+	 *            the authorizationNo to set
 	 */
 	public void setAuthorizationNo(String authorizationNo) {
 		this.authorizationNo = authorizationNo;
 	}
 
 	/**
-	 * @param officeName the officeName to set
+	 * @param officeName
+	 *            the officeName to set
 	 */
 	public void setOfficeName(String officeName) {
 		this.officeName = officeName;
 	}
 
 	/**
-	 * @param bidMonth the bidMonth to set
+	 * @param bidMonth
+	 *            the bidMonth to set
 	 */
 	public void setBidMonth(Integer bidMonth) {
 		this.bidMonth = bidMonth;
 	}
 
 	/**
-	 * @param bidDate the bidDate to set
+	 * @param bidDate
+	 *            the bidDate to set
 	 */
 	public void setBidDate(String bidDate) {
 		this.bidDate = bidDate;
 	}
 
 	/**
-	 * @param industryCategory the industryCategory to set
+	 * @param industryCategory
+	 *            the industryCategory to set
 	 */
 	public void setIndustryCategory(String industryCategory) {
 		this.industryCategory = industryCategory;
 	}
 
 	/**
-	 * @param systemClassification the systemClassification to set
+	 * @param systemClassification
+	 *            the systemClassification to set
 	 */
 	public void setSystemClassification(String systemClassification) {
 		this.systemClassification = systemClassification;
 	}
 
 	/**
-	 * @param projectArea the projectArea to set
+	 * @param projectArea
+	 *            the projectArea to set
 	 */
 	public void setProjectArea(String projectArea) {
 		this.projectArea = projectArea;
 	}
 
 	/**
-	 * @param projectName the projectName to set
+	 * @param projectName
+	 *            the projectName to set
 	 */
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
 
 	/**
-	 * @param ownerName the ownerName to set
+	 * @param ownerName
+	 *            the ownerName to set
 	 */
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
 	}
 
 	/**
-	 * @param productModel the productModel to set
+	 * @param productModel
+	 *            the productModel to set
 	 */
 	public void setProductModel(String productModel) {
 		this.productModel = productModel;
 	}
 
 	/**
-	 * @param productAmount the productAmount to set
+	 * @param productAmount
+	 *            the productAmount to set
 	 */
 	public void setProductAmount(String productAmount) {
 		this.productAmount = productAmount;
 	}
 
 	/**
-	 * @param productLevel the productLevel to set
+	 * @param productLevel
+	 *            the productLevel to set
 	 */
 	public void setProductLevel(String productLevel) {
 		this.productLevel = productLevel;
 	}
 
 	/**
-	 * @param productVolume the productVolume to set
+	 * @param productVolume
+	 *            the productVolume to set
 	 */
 	public void setProductVolume(String productVolume) {
 		this.productVolume = productVolume;
 	}
 
 	/**
-	 * @param bidPrice the bidPrice to set
+	 * @param bidPrice
+	 *            the bidPrice to set
 	 */
 	public void setBidPrice(Double bidPrice) {
 		this.bidPrice = bidPrice;
 	}
 
 	/**
-	 * @param successfulBidderName the successfulBidderName to set
+	 * @param successfulBidderName
+	 *            the successfulBidderName to set
 	 */
 	public void setSuccessfulBidderName(String successfulBidderName) {
 		this.successfulBidderName = successfulBidderName;
 	}
 
 	/**
-	 * @param sucessfulBidderPrice the sucessfulBidderPrice to set
+	 * @param sucessfulBidderPrice
+	 *            the sucessfulBidderPrice to set
 	 */
 	public void setSucessfulBidderPrice(Double sucessfulBidderPrice) {
 		this.sucessfulBidderPrice = sucessfulBidderPrice;
 	}
 
 	/**
-	 * @param analysisOfCause the analysisOfCause to set
+	 * @param analysisOfCause
+	 *            the analysisOfCause to set
 	 */
 	public void setAnalysisOfCause(String analysisOfCause) {
 		this.analysisOfCause = analysisOfCause;
 	}
 
 	/**
-	 * @param successfulBidderMonth the successfulBidderMonth to set
+	 * @param successfulBidderMonth
+	 *            the successfulBidderMonth to set
 	 */
 	public void setSuccessfulBidderMonth(Integer successfulBidderMonth) {
 		this.successfulBidderMonth = successfulBidderMonth;
 	}
 
 	/**
-	 * @param bidStatus the bidStatus to set
+	 * @param bidStatus
+	 *            the bidStatus to set
 	 */
 	public void setBidStatus(String bidStatus) {
 		this.bidStatus = bidStatus;
 	}
 
 	/**
-	 * @param whetherFeedbackBidSummary the whetherFeedbackBidSummary to set
+	 * @param whetherFeedbackBidSummary
+	 *            the whetherFeedbackBidSummary to set
 	 */
 	public void setWhetherFeedbackBidSummary(String whetherFeedbackBidSummary) {
 		this.whetherFeedbackBidSummary = whetherFeedbackBidSummary;
 	}
 
 	/**
-	 * @param specificBidCompanyName the specificBidCompanyName to set
+	 * @param specificBidCompanyName
+	 *            the specificBidCompanyName to set
 	 */
 	public void setSpecificBidCompanyName(String specificBidCompanyName) {
 		this.specificBidCompanyName = specificBidCompanyName;

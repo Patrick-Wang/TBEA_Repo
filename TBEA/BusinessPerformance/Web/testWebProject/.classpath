@@ -44,5 +44,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/slf4j-log4j12-1.6.5.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/cashelper.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/gson-2.2.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xbean.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
