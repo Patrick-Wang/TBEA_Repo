@@ -62,7 +62,6 @@
 	    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
 	    pick: '#picker',
 		
-	    duplicate:'true',
 	    formData: {
 	    	filetype: selectVal
 	    },
@@ -148,7 +147,7 @@
 	        		}
 	        		else{
 		        		uploader.options.formData.filetype = selectVal;
-			            uploader.upload(files[0].id);
+			            uploader.upload();
 			            $('#docsStatus').css("display", "none");
 	        		}
 
