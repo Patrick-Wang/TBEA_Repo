@@ -16,6 +16,8 @@
 <link rel="stylesheet" type="text/css" href="../css/styleWebuploader.css">
 
 
+
+	
 <script type="text/javascript" src="../js/webuploader/webuploader.js"></script>
 
 <style type="text/css">
@@ -42,14 +44,13 @@
 
 <script type="text/javascript">
  var selectVal = 1;
+ var $list ;
+ var uploader;
  $(document).ready(function () {
-	 var $ = jQuery,
-     	 $list = $('#thelist'),
+	 var $ = jQuery,    	
          $btn = $('#ctlBtn'),
-         state = 'pending',
-         uploader,
-	 	 uploadPara = {};
-	 	
+         state = 'pending';
+	 $list = $('#thelist');	
 	 uploader = WebUploader.create({	
 	    // swf文件路径
 	    swf: '../js/webuploader/Uploader.swf',
@@ -61,13 +62,16 @@
 	    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
 	    pick: '#picker',
 		
+	    duplicate:'true',
 	    formData: {
 	    	filetype: selectVal
 	    },
+	  
 	   	fileVal:'upfile',
 	    // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
 	    resize: false
 	});
+	 
 	 uploader.on('beforeFileQueued', function(file){
 		 var files = uploader.getFiles();
 		 for(var i=0; i<files.length;++i)
@@ -132,25 +136,42 @@
 	       		{
 	        		$('#docsStatus').css("display", "");
 	        		//$('#docsStatus').text("请选择需要导入的文档");
-	        		$('#docsStatus')[0].innerHTML = "请从下拉列表中选择需要导入的文档类型";
+	        		$('#docsStatus')[0].innerHTML = "请从下拉列表中选择需要导入的文档类型！";
 	        		
 	        	}else {
-	        		uploader.options.formData.filetype = selectVal;
-	        		//uploadPara.filetype = selectVal;
-		            uploader.upload();
-		            $('#docsStatus').css("display", "none");
+	        		var files = uploader.getFiles();
+	        		
+	        		if(files.length == 0)
+	        		{
+	        			 $('#docsStatus').css("display", "block");
+	        			 $('#docsStatus')[0].innerHTML = "请选择要上传的文件！";
+	        		}
+	        		else{
+		        		uploader.options.formData.filetype = selectVal;
+			            uploader.upload(files[0].id);
+			            $('#docsStatus').css("display", "none");
+	        		}
+
 	        	}
 	        	
 	        }
 	 });
 	 
 	 //Initial the combox
-	 onIndexSelected();
+	 //onIndexSelected();
+	 selectVal = $('#documenttype').val();
 });
  
 function onIndexSelected()
 {
-	selectVal = $('#documenttype').val();
+	 selectVal = $('#documenttype').val();
+	 $list.empty();
+	 var files = uploader.getFiles();
+	 for(var i=0; i<files.length;++i)
+	 {
+		 uploader.removeFile(files[i],true);
+	 }
+	 uploader.reset();
 }
  
     
