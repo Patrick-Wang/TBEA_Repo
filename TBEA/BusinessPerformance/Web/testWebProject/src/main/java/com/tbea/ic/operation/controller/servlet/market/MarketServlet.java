@@ -44,7 +44,7 @@ public class MarketServlet {
 				result = marketService.importBidData(workbook);
 			}
 		}catch(Exception e){
-			result = "exception occurrence";
+			result = "位置导入错误";
 			e.printStackTrace();
 		}
 		
