@@ -39,4 +39,6 @@ public interface EntryService {
 			ZBType entryType, JSONArray data);
 
 	List<ZBStatus> getZbStatus(Date date, CompanyType comp, ZBType entryType);
+
+	boolean hasMarketPermission(Account account);
 }

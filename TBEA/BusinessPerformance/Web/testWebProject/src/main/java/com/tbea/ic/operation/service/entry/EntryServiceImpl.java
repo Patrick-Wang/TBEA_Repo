@@ -894,4 +894,10 @@ public class EntryServiceImpl implements EntryService{
 		}
 		return bRet;
 	}
+
+	@Override
+	public boolean hasMarketPermission(Account account) {
+		// TODO Auto-generated method stub
+		return account.getRole() == 2;
+	}
 }

@@ -126,6 +126,9 @@ public class LoginServlet {
 		
 		session.setAttribute("SbdAuth",
 				loginService.hasSbdAuth(account));
+		
+		session.setAttribute("MarketAuth",
+				entryService.hasMarketPermission(account));
 	}
 	
 	@RequestMapping(value = "validate.do", method = RequestMethod.POST)
@@ -181,6 +184,8 @@ public class LoginServlet {
 		map.put("CorpAuth", currentSession.getAttribute("CorpAuth"));
 
 		map.put("SbdAuth", currentSession.getAttribute("SbdAuth"));
+		
+		map.put("MarketAuth", currentSession.getAttribute("MarketAuth"));
 		
 		map.put("userName", account.getName());
 		
