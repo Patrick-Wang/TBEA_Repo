@@ -64,88 +64,89 @@
 				<div class="affix" style="margin-left: -20px; margin-top: auto;"
 					id="chartsTypeNav">
 					<c:choose>
-						<c:when test="MarketAuth">
+						<c:when test="${MarketAuth}">
+						<ul id="navlistMarket" style="padding: 10px 0; width: 180px;">
 						<li style="background-color: transparent;"><i
 							class="ec-icon ec-icon-line"></i> <a href="#market"
 							style="color: rgb(62, 152, 197);">市场部数据信息</a></li>
-
+						</ul>
 						</c:when>
-					<c:otherwise>
+						<c:otherwise>
 							
-					<ul id="navlist" style="padding: 10px 0; width: 180px;">
-					<c:if test="${admin}">
-					<li style="background-color: transparent;"><i
-						class="ec-icon ec-icon-line"></i> <a href="#dashboard"
-						style="color: rgb(62, 152, 197);">Dashboard</a></li>
-					</c:if>
+						<ul id="navlist" style="padding: 10px 0; width: 180px;">
+						<c:if test="${admin}">
+						<li style="background-color: transparent;"><i
+							class="ec-icon ec-icon-line"></i> <a href="#dashboard"
+							style="color: rgb(62, 152, 197);">Dashboard</a></li>
+						</c:if>
+						
+						<li style="background-color: transparent;"><i
+							class="ec-icon ec-icon-line"></i> <a href="#zbhz"
+							style="color: rgb(62, 152, 197);">经营指标完成情况</a></li>
+												
+						<li style="background-color: transparent;"><i
+							class="ec-icon ec-icon-line"></i> <a href="#zbhz"
+							style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
+	
+						<li style="background-color: transparent;"><i
+							class="ec-icon ec-icon-line"></i> <a href="#zbhz"
+							style="color: rgb(62, 152, 197);">财务指标完成情况</a></li>
 					
-					<li style="background-color: transparent;"><i
-						class="ec-icon ec-icon-line"></i> <a href="#zbhz"
-						style="color: rgb(62, 152, 197);">经营指标完成情况</a></li>
-											
-					<li style="background-color: transparent;"><i
-						class="ec-icon ec-icon-line"></i> <a href="#zbhz"
-						style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
-
-					<li style="background-color: transparent;"><i
-						class="ec-icon ec-icon-line"></i> <a href="#zbhz"
-						style="color: rgb(62, 152, 197);">财务指标完成情况</a></li>
-					
-					<!-- 只有sbd公司权限显示-->
-					<c:if test="${SbdAuth}">
-							<li style="background-color: transparent;"><i
-								class="ec-icon ec-icon-pie"></i> <a href="#yszk"
-								style="color: rgb(62, 152, 197);">应收账款</a></li>
-							<li style="background-color: transparent;"><i
-								class="ec-icon ec-icon-pie"></i> <a href="#bl"
-								style="color: rgb(62, 152, 197);">保理状态</a></li>
-							<li style="background-color: transparent;"><i
-								class="ec-icon ec-icon-pie"></i> <a href="#ht"
-								style="color: rgb(62, 152, 197);">合同付款</a></li>
-							<li style="background-color: transparent;"><i
-								class="ec-icon ec-icon-radar"></i> <a href="#hk"
-								style="color: rgb(62, 152, 197);">回款</a></li>
-							<li style="background-color: transparent;"><i
-								class="ec-icon ec-icon-chord"></i> <a href="#cb"
-								style="color: rgb(62, 152, 197);">成本管控</a></li>
-							<li style="background-color: transparent;"><i
-								class="ec-icon ec-icon-force"></i> <a href="#tbbzj"
-								style="color: rgb(62, 152, 197);">投标保证金</a></li>
-					</c:if>
-					</ul>
-					<ul id="navlist1" style="padding: 10px 0; display: none">
-						<c:if test="${entryPlan}">
-							<li style="background-color: transparent"><i
-								class="ec-icon ec-icon-force"></i> <a href="#inputPlan"
-								style="color: rgb(62, 152, 197);">计划指标录入</a></li>
-						</c:if>
-
-						<c:if test="${entryPredict}">
-							<li style="background-color: transparent"><i
-								class="ec-icon ec-icon-force"></i> <a href="#inputPrediction"
-								style="color: rgb(62, 152, 197);">预计指标录入</a></li>
-						</c:if>
-					</ul>
-
-					<ul id="navlist2" style="padding: 10px 0; display: none">
-						<c:if test="${approvePlan}">
-							<li style="background-color: transparent"><i
-								class="ec-icon ec-icon-force"></i> <a href="#approvePlan"
-								style="color: rgb(62, 152, 197);">计划指标审核</a></li>
-						</c:if>
-
-						<c:if test="${approvePredict}">
-							<li style="background-color: transparent"><i
-								class="ec-icon ec-icon-force"></i> <a href="#approvePrediction"
-								style="color: rgb(62, 152, 197);">预计指标审核</a></li>
-						</c:if>
-					</ul>
-
- 					<ul id="navlist3" style="padding: 10px 0; display: none">
-						<li style="background-color: transparent; diplay: none"><i
-							class="ec-icon ec-icon-force"></i> <a href="#finincial"
-							style="color: rgb(62, 152, 197);">财务指标汇总</a></li>
-					</ul>
+							<!-- 只有sbd公司权限显示-->
+							<c:if test="${SbdAuth}">
+								<li style="background-color: transparent;"><i
+									class="ec-icon ec-icon-pie"></i> <a href="#yszk"
+									style="color: rgb(62, 152, 197);">应收账款</a></li>
+								<li style="background-color: transparent;"><i
+									class="ec-icon ec-icon-pie"></i> <a href="#bl"
+									style="color: rgb(62, 152, 197);">保理状态</a></li>
+								<li style="background-color: transparent;"><i
+									class="ec-icon ec-icon-pie"></i> <a href="#ht"
+									style="color: rgb(62, 152, 197);">合同付款</a></li>
+								<li style="background-color: transparent;"><i
+									class="ec-icon ec-icon-radar"></i> <a href="#hk"
+									style="color: rgb(62, 152, 197);">回款</a></li>
+								<li style="background-color: transparent;"><i
+									class="ec-icon ec-icon-chord"></i> <a href="#cb"
+									style="color: rgb(62, 152, 197);">成本管控</a></li>
+								<li style="background-color: transparent;"><i
+									class="ec-icon ec-icon-force"></i> <a href="#tbbzj"
+									style="color: rgb(62, 152, 197);">投标保证金</a></li>
+							</c:if>
+							</ul>
+							<ul id="navlist1" style="padding: 10px 0; display: none">
+								<c:if test="${entryPlan}">
+									<li style="background-color: transparent"><i
+										class="ec-icon ec-icon-force"></i> <a href="#inputPlan"
+										style="color: rgb(62, 152, 197);">计划指标录入</a></li>
+								</c:if>
+		
+								<c:if test="${entryPredict}">
+									<li style="background-color: transparent"><i
+										class="ec-icon ec-icon-force"></i> <a href="#inputPrediction"
+										style="color: rgb(62, 152, 197);">预计指标录入</a></li>
+								</c:if>
+							</ul>
+		
+							<ul id="navlist2" style="padding: 10px 0; display: none">
+								<c:if test="${approvePlan}">
+									<li style="background-color: transparent"><i
+										class="ec-icon ec-icon-force"></i> <a href="#approvePlan"
+										style="color: rgb(62, 152, 197);">计划指标审核</a></li>
+								</c:if>
+		
+								<c:if test="${approvePredict}">
+									<li style="background-color: transparent"><i
+										class="ec-icon ec-icon-force"></i> <a href="#approvePrediction"
+										style="color: rgb(62, 152, 197);">预计指标审核</a></li>
+								</c:if>
+							</ul>
+		
+		 					<ul id="navlist3" style="padding: 10px 0; display: none">
+								<li style="background-color: transparent; diplay: none"><i
+									class="ec-icon ec-icon-force"></i> <a href="#finincial"
+									style="color: rgb(62, 152, 197);">财务指标汇总</a></li>
+							</ul>
 						</c:otherwise>
 					</c:choose>
 
@@ -154,23 +155,22 @@
 				</div>
 			</div>
 			<c:choose>
-			<c:when test="MarketAuth">
+			<c:when test="${MarketAuth}">
+				<div id="MarketList" class="col-md-10">
+					<%@include file="index_market.jsp"%>
+				</div> 
 			</c:when>
 			<c:otherwise>
-			<div id="IndexSummary" class="col-md-10">
-				<%@include file="index_IndexSummary.jsp"%>
-			</div>
-			<div id="InputList" class="col-md-10" style="display: none">
-				<%@include file="index_InputList.jsp"%>
-			</div>
-
-			<div id="approveList" class="col-md-10" style="display: none">
-				<%@include file="index_approveList.jsp"%>
-			</div>
-
-			<div id="MarketList" class="col-md-10" style="display: none">
-				<%@include file="index_market.jsp"%>
-			</div> 
+				<div id="IndexSummary" class="col-md-10">
+					<%@include file="index_IndexSummary.jsp"%>
+				</div>
+				<div id="InputList" class="col-md-10" style="display: none">
+					<%@include file="index_InputList.jsp"%>
+				</div>
+	
+				<div id="approveList" class="col-md-10" style="display: none">
+					<%@include file="index_approveList.jsp"%>
+				</div>
 			</c:otherwise>
 			</c:choose>
 			
