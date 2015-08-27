@@ -84,7 +84,7 @@
                 <p style="margin:10px 0 0px 0">
                 </p>
 				<div>
-				<h3>指标汇总明细<a name="zbhz"> </a></h3>
+				<h3>数据汇总明细<a name="zbhz"> </a></h3>
                     <div class="section">
                         <div class="thumb3">
                           <ul class="slides">

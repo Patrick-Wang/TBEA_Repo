@@ -4,22 +4,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <h3>
-	财务指标汇总<a name="finincial"> </a>
+	市场数据汇总<a name="Market"> </a>
 </h3>
 <div class="section">
 	<div class="thumb4">
 		<ul class="slides">
 			<li data-thumb="asset/img/example/bar1.png"><a
 				href="../byqcb/tb.do" target="_blank"><img
-					src="../images/charts/bar1.png"> <span><strong>财务指标1</strong></span></a>
+					src="../images/charts/bar1.png"> <span><strong>市场数据汇总</strong></span></a>
 			</li>
 			<li data-thumb="asset/img/example/cache.png"><a
 				href="../byqcb/zx.do" target="_blank"><img
-					src="../images/charts/bar10.png"> <span><strong>财务指标2</strong></span></a>
-			</li>
-			<li data-thumb="asset/img/example/cache.png"><a
-				href="../byqcb/wg.do" target="_blank"><img
-					src="../images/charts/bar10.png"> <span><strong>财务指标3</strong></span></a>
+					src="../images/charts/bar10.png"> <span><strong>市场数据导入</strong></span></a>
 			</li>
 		</ul>
 	</div>

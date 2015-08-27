@@ -63,36 +63,34 @@
 			<div class="col-md-2">
 				<div class="affix" style="margin-left: -20px; margin-top: auto;"
 					id="chartsTypeNav">
-					<!-- 所有公司都显示-->
+					<c:choose>
+						<c:when test="MarketAuth">
+						<li style="background-color: transparent;"><i
+							class="ec-icon ec-icon-line"></i> <a href="#market"
+							style="color: rgb(62, 152, 197);">市场部数据信息</a></li>
+
+						</c:when>
+					<c:otherwise>
+							
 					<ul id="navlist" style="padding: 10px 0; width: 180px;">
 					<c:if test="${admin}">
 					<li style="background-color: transparent;"><i
 						class="ec-icon ec-icon-line"></i> <a href="#dashboard"
 						style="color: rgb(62, 152, 197);">Dashboard</a></li>
 					</c:if>
+					
 					<li style="background-color: transparent;"><i
 						class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 						style="color: rgb(62, 152, 197);">经营指标完成情况</a></li>
-						
-					
-					<!-- 只有公司权限显示-->
-					<%-- <c:if test="${CorpAuth}"> --%>
-						<li style="background-color: transparent;"><i
-							class="ec-icon ec-icon-line"></i> <a href="#zbhz"
-							style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
-					<%-- </c:if> --%>
-					
-					<!-- 全部显示-->
+											
+					<li style="background-color: transparent;"><i
+						class="ec-icon ec-icon-line"></i> <a href="#zbhz"
+						style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
+
 					<li style="background-color: transparent;"><i
 						class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 						style="color: rgb(62, 152, 197);">财务指标完成情况</a></li>
 					
-					
-					<c:if test="${CorpAuth}">
-				<!-- 	<li style="background-color: transparent;"><i
-						class="ec-icon ec-icon-line"></i> <a href="#ranking"
-						style="color: rgb(62, 152, 197);">经营单位指标排名</a></li> -->
-					</c:if>
 					<!-- 只有sbd公司权限显示-->
 					<c:if test="${SbdAuth}">
 							<li style="background-color: transparent;"><i
@@ -115,7 +113,6 @@
 								style="color: rgb(62, 152, 197);">投标保证金</a></li>
 					</c:if>
 					</ul>
-
 					<ul id="navlist1" style="padding: 10px 0; display: none">
 						<c:if test="${entryPlan}">
 							<li style="background-color: transparent"><i
@@ -148,9 +145,18 @@
 						<li style="background-color: transparent; diplay: none"><i
 							class="ec-icon ec-icon-force"></i> <a href="#finincial"
 							style="color: rgb(62, 152, 197);">财务指标汇总</a></li>
-					</ul> 
+					</ul>
+						</c:otherwise>
+					</c:choose>
+
+
+					 
 				</div>
 			</div>
+			<c:choose>
+			<c:when test="MarketAuth">
+			</c:when>
+			<c:otherwise>
 			<div id="IndexSummary" class="col-md-10">
 				<%@include file="index_IndexSummary.jsp"%>
 			</div>
@@ -162,9 +168,12 @@
 				<%@include file="index_approveList.jsp"%>
 			</div>
 
-			<div id="financeList" class="col-md-10" style="display: none">
-				<%@include file="index_financeList.jsp"%>
+			<div id="MarketList" class="col-md-10" style="display: none">
+				<%@include file="index_market.jsp"%>
 			</div> 
+			</c:otherwise>
+			</c:choose>
+			
 
 		</div>
 	</div>
@@ -337,6 +346,7 @@
 		var iPredict = ${entryPredict};
 		var aplan = ${approvePlan};
 		var aPredict = ${approvePredict};
+
 
 		init(iPlan, iPredict, aPredict, aplan, "${userName}");
 

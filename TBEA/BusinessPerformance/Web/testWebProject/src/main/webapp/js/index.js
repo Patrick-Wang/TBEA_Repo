@@ -63,15 +63,15 @@ var stringDescription =  '<div class="container">'
         + '</div>'
         + '<div class="navbar-collapse collapse" id="nav-wrap">'
           + '<ul class="nav navbar-nav navbar-right" id="nav" style="max-width:100%;">'
-            + '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="1"><a style="cursor:pointer">指标汇总明细</a></li>';
+            + '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="1"><a style="cursor:pointer">数据汇总明细</a></li>';
 			if (!RELEASE){
 				if(entryPlan || entryPredict)
 				{
-					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="2"><a style="cursor:pointer">指标录入</a></li>';
+					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="2"><a style="cursor:pointer">数据录入</a></li>';
 				}
 				if(approveplan || approvePredict)
 				{
-					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="3"><a style="cursor:pointer">指标审核</a></li>';
+					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="3"><a style="cursor:pointer">数据审核</a></li>';
 				}
 				
 				stringDescription += '<li>' + 
