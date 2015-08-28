@@ -123,7 +123,7 @@ module gdw_indexinput_summary {
 
             var parent = $("#" + this.mTableId);
             parent.empty();
-            parent.append("<table id='" + name + "'></table>");
+            parent.append("<table id='" + name + "'></table>" + "<div id= 'pager'></div>");
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
@@ -139,8 +139,11 @@ module gdw_indexinput_summary {
                     height: '100%',
                     width: 500,
                     shrinkToFit: true,
-                    rowNum: 100,
-                    autoScroll: true
+                    autoScroll: true,
+                    pager:'#pager',
+                    rowNum: 20,
+                    viewrecords: true//是否显示行数 
+
                 }));
 
         }

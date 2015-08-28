@@ -1,11 +1,15 @@
 package com.tbea.ic.operation.model.dao.market.signContract;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.market.signContract.MktSignContractDao;
 import com.tbea.ic.operation.model.entity.MktSignContract;
 
@@ -21,5 +25,18 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 		manager.merge(mktObject);	
 	}
 	
-	
+	@Override
+	public List<MktSignContract> getData(String companyName) {
+		Query q;
+		if(companyName.equals("全部公司"))
+		{
+			q = manager.createQuery(
+					"from MktSignContract");
+		}else{
+			q = manager.createQuery(
+					"from MktSignContract where company_name like :comp order by contract_no desc");
+			q.setParameter("comp", "%"+companyName+"%");
+		}		
+		return q.getResultList();
+	}
 }

@@ -210,6 +210,7 @@
 		<tr>
 			<td>
 				<div id="table"></div>
+				<div id="pager"></div> 
 			<td>
 		</tr>
 	</Table>

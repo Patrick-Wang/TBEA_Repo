@@ -2,6 +2,7 @@ package com.tbea.ic.operation.service.market;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.market.bidInfo.MktBidInfoDao;
 import com.tbea.ic.operation.model.dao.market.projectInfo.MktProjectInfoDao;
 import com.tbea.ic.operation.model.dao.market.signContract.MktSignContractDao;
@@ -166,4 +168,105 @@ public class MarketServiceImpl implements MarketService {
 		});
 	}
 
+	@Override
+	public String[][] getBidData(String companyName) {
+		List<MktBidInfo> Bids = bidInfoDao.getData(companyName);
+		String[][] result = new String[Bids.size()][24];
+		Integer col=0;
+		for (MktBidInfo bid : Bids) {
+			if (null != bid) {
+					result[col][0] = bid.getCompanyName() + "";
+					result[col][1] = bid.getBidNo() + "";
+					result[col][2] = bid.getProjectNo() + "";
+					result[col][3] = bid.getAuthorizationNo()+ "";
+					result[col][4] = bid.getOfficeName() + "";
+					result[col][5] = bid.getBidMonth() + "";
+					result[col][6] = bid.getBidDate() + "";
+					result[col][7] = bid.getIndustryCategory() + "";
+					result[col][8] = bid.getSystemClassification() + "";
+					result[col][9] = bid.getProjectArea() + "";
+					result[col][10] = bid.getProjectName() + "";
+					result[col][11] = bid.getOwnerName() + "";
+					result[col][12] = bid.getProductModel() + "";
+					result[col][13] = bid.getProductAmount() + "";
+					result[col][14] = bid.getProductLevel() + "";
+					result[col][15] = bid.getProductVolume() + "";
+					result[col][16] = bid.getBidPrice() + "";
+					result[col][17] = bid.getSuccessfulBidderName() + "";
+					result[col][18] = bid.getSucessfulBidderPrice() + "";
+					result[col][19] = bid.getAnalysisOfCause() + "";
+					result[col][20] = bid.getSuccessfulBidderMonth() + "";
+					result[col][21] = bid.getBidStatus() + "";
+					result[col][22] = bid.getWhetherFeedbackBidSummary() + "";
+					result[col][23] = bid.getSpecificBidCompanyName() + "";
+					col++;
+			}
+		}
+		return result;
+	}
+	
+	@Override
+	public String[][] getPrjData(String companyName) {
+		List<MktProjectInfo> list = projectInfoDao.getData(companyName);
+		String[][] result = new String[list.size()][19];
+		Integer col=0;
+		for (MktProjectInfo obj : list) {
+			if (null != obj) {
+					result[col][0] = obj.getCompanyName() + "";
+					result[col][1] = obj.getOfficeName() + "";
+					result[col][2] = obj.getProjectNo() + "";
+					result[col][3] = obj.getIndustryCategory()+ "";
+					result[col][4] = obj.getSystemClassification() + "";
+					result[col][5] = obj.getProjectName() + "";
+					result[col][6] = obj.getOwnerName() + "";
+					result[col][7] = obj.getProductModel() + "";
+					result[col][8] = obj.getProductAmount() + "";
+					result[col][9] = obj.getExceptedBidCost() + "";
+					result[col][10] = obj.getExceptedBidTime() + "";
+					result[col][11] = obj.getProjectArea() + "";
+					result[col][12] = obj.getProjectSummary()+ "";
+					result[col][13] = obj.getProjectAdvancement() + "";
+					result[col][14] = obj.getChiefInfo() + "";
+					result[col][15] = obj.getLeaderInfo() + "";
+					result[col][16] = obj.getOtherCompanyName() + "";
+					result[col][17] = obj.getBidSituation() + "";
+					result[col][18] = obj.getRemark() + "";
+					
+					col++;
+			}
+		}
+		return result;
+	}
+	
+	@Override
+	public String[][] getContData(String companyName) {
+		List<MktSignContract> list = signContractDao.getData(companyName);
+		String[][] result = new String[list.size()][19];
+		Integer col=0;
+		for (MktSignContract obj : list) {
+			if (null != obj) {
+					result[col][0] = obj.getCompanyName() + "";
+					result[col][1] = obj.getContractNo() + "";
+					result[col][2] = obj.getOfficeName() + "";
+					result[col][3] = obj.getSignMonth()+ "";
+					result[col][4] = obj.getIndustryCategory() + "";
+					result[col][5] = obj.getSystemClassfication() + "";
+					result[col][6] = obj.getProjectArea() + "";
+					result[col][7] = obj.getProjectName() + "";
+					result[col][8] = obj.getOwnerName() + "";
+					result[col][9] = obj.getProductModel() + "";
+					result[col][10] = obj.getProductLevel() + "";
+					result[col][11] = obj.getProductAmount() + "";
+					result[col][12] = obj.getProductVolume() + "";
+					result[col][13] = obj.getProductPrice() + "";
+					result[col][14] = obj.getPaymentMethod() + "";
+					result[col][15] = obj.getSignPerson() + "";
+					result[col][16] = obj.getSpecificSignCompany() + "";
+					result[col][17] = obj.getWhetherInstantPayment()+ "";
+					result[col][18] = obj.getWhetherManufacturingIndustry() + "";
+					col++;
+			}
+		}
+		return result;
+	}
 }
