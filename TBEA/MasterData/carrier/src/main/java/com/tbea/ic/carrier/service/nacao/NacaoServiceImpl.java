@@ -102,7 +102,7 @@ public class NacaoServiceImpl implements NacaoService{
 			WebDriver driver = new ChromeDriver();
 			driver.get(NACAO_URL);
 			fetchCompany(driver, keywords);
-			driver.close();
+			driver.quit();
 		}
 	}
 
@@ -112,7 +112,7 @@ public class NacaoServiceImpl implements NacaoService{
 			WebDriver driver = new ChromeDriver();
 			driver.get(NACAO_URL);
 			fetchCompany(driver, keywords);
-			driver.close();
+			driver.quit();
 		}
 	}
 
