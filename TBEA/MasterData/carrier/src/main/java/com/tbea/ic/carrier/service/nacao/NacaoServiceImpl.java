@@ -38,19 +38,21 @@ public class NacaoServiceImpl implements NacaoService{
 		System.setProperty("webdriver.chrome.driver",  CHROME_DRIVER_PATH);
 	}
 	
+	
+	
 	@Autowired
 	OrganizationDao orgDao;
 	
 	@Autowired
 	KeyWordsDao keywordsDao;
 	
-	private final String NACAO_URL = "https://s.nacao.org.cn/specialResult.html?x=8XJ1/pI26t/R86rKz7VspQ==&k=uvGb…&s=4MIKGgKAicefN4zsiKPq6pMHFkYrvl5YLyz5/H5t4IdP&y=ORt7YhA+Tb9dFmARh/6Dqw==";
+	private final String NACAO_URL = "https://s.nacao.org.cn/specialResult.html?x=8XJ1/pI26t/R86rKz7VspQ==&k=uvGb鈥�&s=4MIKGgKAicefN4zsiKPq6pMHFkYrvl5YLyz5/H5t4IdP&y=ORt7YhA+Tb9dFmARh/6Dqw==";
 	
 
 	private JSONArray downloadCompanyInfo(WebDriver driver, String companyName){
 		WebElement element =driver.findElement(By.tagName("body"));
 		String js = "function searchCompany(companyName){" +
-			"var formMap = JSON.parse(\'{\"firststrfind\":\"jgmc=\\'\' + companyName + \'\\'  not ZYBZ=(\\'2\\') \",\"strfind\":\"jgmc=\\'\' + companyName + \'\\'  not ZYBZ=(\\'2\\') \",\"key\":\"\' + companyName + \'\",\"kind\":\"2\",\"tit1\":\"\' + companyName + \'\",\"selecttags\":\"全国\",\"xzqhName\":\"alll\",\"button\":\"\",\"jgdm\":false,\"jgmc\":true,\"jgdz\":false,\"zch\":false,\"strJgmc\":\"\",\"\":\"\",\"secondSelectFlag\":\"\"}\');"+
+			"var formMap = JSON.parse(\'{\"firststrfind\":\"jgmc=\\'\' + companyName + \'\\'  not ZYBZ=(\\'2\\') \",\"strfind\":\"jgmc=\\'\' + companyName + \'\\'  not ZYBZ=(\\'2\\') \",\"key\":\"\' + companyName + \'\",\"kind\":\"2\",\"tit1\":\"\' + companyName + \'\",\"selecttags\":\"鍏ㄥ浗\",\"xzqhName\":\"alll\",\"button\":\"\",\"jgdm\":false,\"jgmc\":true,\"jgdz\":false,\"zch\":false,\"strJgmc\":\"\",\"\":\"\",\"secondSelectFlag\":\"\"}\');"+
 					"DWREngine._execute(\'/dwr\', \'ServiceForNum\', \'getData\', formMap, function(data){"+
 						"$(\'body\').attr(\"result\", JSON.stringify(data));"+
 					"});"+
@@ -95,17 +97,23 @@ public class NacaoServiceImpl implements NacaoService{
 	}
 	
 	public void fetchCompanyWithUnfixedKeywords() {
-		WebDriver driver = new ChromeDriver();
-		driver.get(NACAO_URL);
-		fetchCompany(driver, keywordsDao.getUnfixedKeyWorks());
-		driver.close();
+		List<KeyWords> keywords = keywordsDao.getUnfixedKeyWorks();
+		if (!keywords.isEmpty()) {
+			WebDriver driver = new ChromeDriver();
+			driver.get(NACAO_URL);
+			fetchCompany(driver, keywords);
+			driver.close();
+		}
 	}
 
 	public void fetchCompanyWithAllKeywords() {
-		WebDriver driver = new ChromeDriver();
-		driver.get(NACAO_URL);
-		fetchCompany(driver, keywordsDao.getKeyWorks());
-		driver.close();
+		List<KeyWords> keywords = keywordsDao.getKeyWorks();
+		if (!keywords.isEmpty()) {
+			WebDriver driver = new ChromeDriver();
+			driver.get(NACAO_URL);
+			fetchCompany(driver, keywords);
+			driver.close();
+		}
 	}
 
 	public JSONArray findByName(String name) {
