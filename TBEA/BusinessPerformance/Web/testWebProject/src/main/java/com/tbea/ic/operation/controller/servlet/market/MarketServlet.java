@@ -1,8 +1,15 @@
 package com.tbea.ic.operation.controller.servlet.market;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +20,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.service.market.MarketService;
 
 @Controller
 @RequestMapping(value = "Market")
 public class MarketServlet {
 
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	@Autowired
 	private MarketService marketService;
 
@@ -59,50 +73,33 @@ public class MarketServlet {
 	}
 	
 	
-	@RequestMapping(value = "project_info.do")
-	public ModelAndView getProjectInfo(HttpServletRequest request,
+	@RequestMapping(value = "mkt_view.do")
+	public ModelAndView getMktView(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		return new ModelAndView("login");
+		return new ModelAndView("mkt_view_data");
 	}
 	
-	@RequestMapping(value = "project_info_update.do")
-	public @ResponseBody byte[] getProjectInfoUpdate(HttpServletRequest request,
-			HttpServletResponse response) {
-		
+	@RequestMapping(value = "mkt_view_update.do")
+	public @ResponseBody byte[] getMktViewUpdate(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		CompanyType compType = CompanySelection.getCompany(request);
+		//Company comp = companyManager.getBMOrganization().getCompany(compType);
+		String companyName = request.getParameter("companyName");
+		String rpttype = request.getParameter("docType");
+		//request。getParameter("rpttype");
+		List<String[][]> list = new ArrayList<String[][]>();
 
-		return null;
-	}
-
-	
-	@RequestMapping(value = "bid_info.do")
-	public ModelAndView getBidInfo(HttpServletRequest request,
-			HttpServletResponse response) {
-
-		return new ModelAndView("login");
-	}
-	
-	@RequestMapping(value = "bid_info_update.do")
-	public @ResponseBody byte[] getBidInfoUpdate(HttpServletRequest request,
-			HttpServletResponse response) {
-		
-
-		return null;
-	}
-	
-	@RequestMapping(value = "sign_contract.do")
-	public ModelAndView getSignContract(HttpServletRequest request,
-			HttpServletResponse response) {
-
-		return new ModelAndView("login");
-	}
-	
-	@RequestMapping(value = "sign_contract_update.do")
-	public @ResponseBody byte[] getSignContractUpdate(HttpServletRequest request,
-			HttpServletResponse response) {
-		 
-
-		return null;
+		if(rpttype.equals("bid_info")){
+			list.add(marketService.getBidData(companyName));
+		}else if(rpttype.equals("project_info")){
+			list.add(marketService.getPrjData(companyName));
+		}else if(rpttype.equals("sign_contract")){
+			list.add(marketService.getContData(companyName));
+		}
+		String listJson = JSONArray.fromObject(list).toString().replace("null", "\"\"");
+//		System.out.println(listJson);
+		return listJson.getBytes("utf-8");
 	}
 
 }
