@@ -38,7 +38,7 @@ public class MarketServiceImpl implements MarketService {
 	private MktSignContractDao signContractDao;
 	
 	private final String ERROR_OK = "OK";
-	private final String ERROR_COUNT_NOT_MATCH = "鏂囨。涓嶅尮閰�(鍒楁暟涓嶅尮閰�)";
+	private final String ERROR_COUNT_NOT_MATCH = "文档不匹配(列数不匹配)";
 	
 	
 	interface OnUpdateMktObjectListener{
