@@ -48,7 +48,7 @@
 	(function() {
 		$(document).ready(
 				function() {
-					instance.init("echartId", "table1", "", "");
+					instance.init("table1", "", "");
 				});
 	})();
 </script>
@@ -211,7 +211,6 @@ th.ui-th-ltr {
 		</tr>
 		<tr>
 			<td><div id="table1" style="margin-bottom: 15px"></div></td>
-			<div id="pager"></div>
 		</tr>
 
 	</table>
