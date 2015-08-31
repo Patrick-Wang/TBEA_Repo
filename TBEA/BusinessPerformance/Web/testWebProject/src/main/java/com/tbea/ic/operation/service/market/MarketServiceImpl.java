@@ -2,8 +2,11 @@ package com.tbea.ic.operation.service.market;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -35,7 +38,7 @@ public class MarketServiceImpl implements MarketService {
 	private MktSignContractDao signContractDao;
 	
 	private final String ERROR_OK = "OK";
-	private final String ERROR_COUNT_NOT_MATCH = "文档不匹配(列数不匹配)";
+	private final String ERROR_COUNT_NOT_MATCH = "鏂囨。涓嶅尮閰�(鍒楁暟涓嶅尮閰�)";
 	
 	
 	interface OnUpdateMktObjectListener{
@@ -90,7 +93,14 @@ public class MarketServiceImpl implements MarketService {
 			
 		});
 	}
-
+	
+	String subZeroAndDot(String s){  
+        if(s.indexOf(".") > 0){  
+            s = s.replaceAll("0+?$", "");//去掉多余的0  
+            s = s.replaceAll("[.]$", "");//如最后一位是.则去掉  
+        }  
+        return s;  
+    }  
 	
 	private Object createMktObject(XSSFRow row, Object obj){
 		
@@ -103,7 +113,13 @@ public class MarketServiceImpl implements MarketService {
 			XSSFCell cell = row.getCell(i);
 			String val = "";
 			if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC){
-				val = cell.getNumericCellValue() + "";
+				if (HSSFDateUtil.isCellDateFormatted(cell)){
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+					Date date = cell.getDateCellValue();  
+					val = sdf.format(date);  
+				} else{
+					val = subZeroAndDot(cell.getNumericCellValue() + "");
+				}
 			} else if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING){
 				val = cell.getStringCellValue() + "";
 			} 
