@@ -3,6 +3,7 @@ package com.tbea.ic.operation.service.market;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class MarketServiceImpl implements MarketService {
 		String result = ERROR_OK;
 		int lastCellNum = row.getLastCellNum();
 		Field[] fields = cls.getDeclaredFields();
-		if (lastCellNum != fields.length - 1){
+		if (lastCellNum != fields.length - 3){
 			result = ERROR_COUNT_NOT_MATCH;
 		}
 		return result;
@@ -69,7 +70,20 @@ public class MarketServiceImpl implements MarketService {
 
 			@Override
 			public void update(Object mktObject) {
-				projectInfoDao.update((MktProjectInfo)mktObject);
+				MktProjectInfo mpi = (MktProjectInfo)mktObject;
+				MktProjectInfo mpiOld = projectInfoDao.getById(mpi.getProjectNo());
+				if (mpiOld.getStartdate() == null){
+					mpi.setStartdate(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
+				} else{
+					mpi.setStartdate(mpiOld.getStartdate());
+				}
+				
+				if (mpiOld.getEnddate() == null){
+					mpi.setEnddate(mpi.getStartdate());
+				} else{
+					mpi.setEnddate(mpiOld.getEnddate());
+				}
+				projectInfoDao.update(mpi);
 			}
 		});
 	}
@@ -88,7 +102,20 @@ public class MarketServiceImpl implements MarketService {
 
 			@Override
 			public void update(Object mktObject) {
-				signContractDao.update((MktSignContract)mktObject);
+				MktSignContract msc = (MktSignContract)mktObject;
+				MktSignContract mscOld = signContractDao.getById(msc.getContractNo());
+				if (mscOld.getStartdate() == null){
+					msc.setStartdate(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
+				} else{
+					msc.setStartdate(mscOld.getStartdate());
+				}
+				
+				if (mscOld.getEnddate() == null){
+					msc.setEnddate(msc.getStartdate());
+				} else{
+					msc.setEnddate(mscOld.getEnddate());
+				}
+				signContractDao.update(msc);
 			}
 			
 		});
@@ -183,7 +210,21 @@ public class MarketServiceImpl implements MarketService {
 
 			@Override
 			public void update(Object mktObject) {
-				bidInfoDao.update((MktBidInfo)mktObject);
+				MktBidInfo mbi = (MktBidInfo)mktObject;
+				MktBidInfo mbiOld = bidInfoDao.getById(mbi.getBidNo());
+				if (mbiOld.getStartdate() == null){
+					mbi.setStartdate(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
+				} else{
+					mbi.setStartdate(mbiOld.getStartdate());
+				}
+				
+				if (mbiOld.getEnddate() == null){
+					mbi.setEnddate(mbi.getStartdate());
+				} else{
+					mbi.setEnddate(mbiOld.getEnddate());
+				}
+				
+				bidInfoDao.update(mbi);
 			}
 			
 		});

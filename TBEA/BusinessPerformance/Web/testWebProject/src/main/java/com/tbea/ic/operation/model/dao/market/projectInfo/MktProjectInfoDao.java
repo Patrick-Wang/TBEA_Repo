@@ -10,4 +10,6 @@ public interface MktProjectInfoDao {
 	void update(MktProjectInfo mktObject);
 
 	List<MktProjectInfo> getData(String companyName);
+
+	MktProjectInfo getById(String projectNo);
 }

@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.model.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -72,6 +73,12 @@ public class MktSignContract implements Serializable {
 	@Column(name = "whether_manufacturing_industry")
 	String whetherManufacturingIndustry;
 
+	@Column(name = "[startdate]")
+	Date startdate;
+	
+	@Column(name = "[enddate]")
+	Date enddate;
+	
 	/**
 	 * @return the companyName
 	 */
@@ -356,5 +363,21 @@ public class MktSignContract implements Serializable {
 	public void setWhetherManufacturingIndustry(
 			String whetherManufacturingIndustry) {
 		this.whetherManufacturingIndustry = whetherManufacturingIndustry;
+	}
+
+	public Date getStartdate() {
+		return startdate;
+	}
+
+	public void setStartdate(Date startdate) {
+		this.startdate = startdate;
+	}
+
+	public Date getEnddate() {
+		return enddate;
+	}
+
+	public void setEnddate(Date enddate) {
+		this.enddate = enddate;
 	}
 }

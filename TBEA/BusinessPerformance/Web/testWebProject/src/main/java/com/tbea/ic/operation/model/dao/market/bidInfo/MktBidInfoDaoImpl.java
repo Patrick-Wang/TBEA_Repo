@@ -40,4 +40,16 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 		return q.getResultList();
 	}
 
+	@Override
+	public MktBidInfo getById(String bidNo) {
+		Query q = manager.createQuery(
+				"from MktBidInfo where bidNo = :bidNo");
+		q.setParameter("bidNo", bidNo);
+		List<MktBidInfo> mbis = q.getResultList();
+		if (mbis.isEmpty()){
+			return null;
+		}
+		return mbis.get(0);
+	}
+
 }

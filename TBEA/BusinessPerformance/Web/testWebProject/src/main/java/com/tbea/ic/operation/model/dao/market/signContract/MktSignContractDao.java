@@ -11,4 +11,6 @@ public interface MktSignContractDao {
 	void update(MktSignContract mktObject);
 
 	List<MktSignContract> getData(String companyName);
+
+	MktSignContract getById(String contractNo);
 }

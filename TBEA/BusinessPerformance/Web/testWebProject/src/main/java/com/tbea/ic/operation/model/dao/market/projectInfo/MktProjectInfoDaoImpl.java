@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.entity.MktBidInfo;
 import com.tbea.ic.operation.model.entity.MktProjectInfo;
 
 @Repository
@@ -37,5 +38,17 @@ public class MktProjectInfoDaoImpl implements MktProjectInfoDao {
 			q.setParameter("comp", "%"+companyName+"%");
 		}		
 		return q.getResultList();
+	}
+
+	@Override
+	public MktProjectInfo getById(String projectNo) {
+		Query q = manager.createQuery(
+				"from MktProjectInfo where projectNo = :projectNo");
+		q.setParameter("projectNo", projectNo);
+		List<MktProjectInfo> mbis = q.getResultList();
+		if (mbis.isEmpty()){
+			return null;
+		}
+		return mbis.get(0);
 	}
 }

@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.model.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -87,6 +88,13 @@ public class MktBidInfo implements Serializable {
 	@Column(name = "[specific_bid_company_name]")
 	String specificBidCompanyName;
 
+	@Column(name = "[startdate]")
+	Date startdate;
+	
+	@Column(name = "[enddate]")
+	Date enddate;
+
+	
 	/**
 	 * @return the companyName
 	 */
@@ -445,6 +453,22 @@ public class MktBidInfo implements Serializable {
 	 */
 	public void setSpecificBidCompanyName(String specificBidCompanyName) {
 		this.specificBidCompanyName = specificBidCompanyName;
+	}
+
+	public Date getStartdate() {
+		return startdate;
+	}
+
+	public void setStartdate(Date startdate) {
+		this.startdate = startdate;
+	}
+
+	public Date getEnddate() {
+		return enddate;
+	}
+
+	public void setEnddate(Date enddate) {
+		this.enddate = enddate;
 	}
 
 }

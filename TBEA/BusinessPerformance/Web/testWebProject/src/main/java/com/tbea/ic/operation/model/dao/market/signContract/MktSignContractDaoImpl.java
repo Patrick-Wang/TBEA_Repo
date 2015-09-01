@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.market.signContract.MktSignContractDao;
+import com.tbea.ic.operation.model.entity.MktProjectInfo;
 import com.tbea.ic.operation.model.entity.MktSignContract;
 
 @Repository
@@ -38,5 +39,17 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 			q.setParameter("comp", "%"+companyName+"%");
 		}		
 		return q.getResultList();
+	}
+
+	@Override
+	public MktSignContract getById(String contractNo) {
+		Query q = manager.createQuery(
+				"from MktSignContract where contractNo = :contractNo");
+		q.setParameter("contractNo", contractNo);
+		List<MktSignContract> mbis = q.getResultList();
+		if (mbis.isEmpty()){
+			return null;
+		}
+		return mbis.get(0);
 	}
 }
