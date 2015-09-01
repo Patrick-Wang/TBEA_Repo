@@ -56,7 +56,7 @@ public class NacaoServiceImpl implements NacaoService{
 		String js = "function searchCompany(companyName){" +
 			"var formMap = JSON.parse(\'{\"firststrfind\":\"jgmc=\\'\' + companyName + \'\\'  not ZYBZ=(\\'2\\') \",\"strfind\":\"jgmc=\\'\' + companyName + \'\\'  not ZYBZ=(\\'2\\') \",\"key\":\"\' + companyName + \'\",\"kind\":\"2\",\"tit1\":\"\' + companyName + \'\",\"selecttags\":\"鍏ㄥ浗\",\"xzqhName\":\"alll\",\"button\":\"\",\"jgdm\":false,\"jgmc\":true,\"jgdz\":false,\"zch\":false,\"strJgmc\":\"\",\"\":\"\",\"secondSelectFlag\":\"\"}\');"+
 					"DWREngine._execute(\'/dwr\', \'ServiceForNum\', \'getData\', formMap, function(data){"+
-						"$(\'body\').append(<div id=\"jsResultParent\"><div id=\"jsResult\"></div></div>);" + 
+						"$(\'body\').append(\"<div id=\'jsResultParent\'><div id=\'jsResult\'></div></div>\");" + 
 						"$(\'#jsResult\').attr(\"result\", JSON.stringify(data));"+
 					"});"+
 				"}"+
