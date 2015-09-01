@@ -52,21 +52,24 @@ public class NacaoServiceImpl implements NacaoService{
 	
 
 	private JSONArray downloadCompanyInfo(WebDriver driver, String companyName){
-		WebElement element =driver.findElement(By.tagName("body"));
+		companyName = companyName.replace("\"", "\\\\\\\"").replace("\'", "\\\\\\\'");
 		String js = "function searchCompany(companyName){" +
 			"var formMap = JSON.parse(\'{\"firststrfind\":\"jgmc=\\'\' + companyName + \'\\'  not ZYBZ=(\\'2\\') \",\"strfind\":\"jgmc=\\'\' + companyName + \'\\'  not ZYBZ=(\\'2\\') \",\"key\":\"\' + companyName + \'\",\"kind\":\"2\",\"tit1\":\"\' + companyName + \'\",\"selecttags\":\"鍏ㄥ浗\",\"xzqhName\":\"alll\",\"button\":\"\",\"jgdm\":false,\"jgmc\":true,\"jgdz\":false,\"zch\":false,\"strJgmc\":\"\",\"\":\"\",\"secondSelectFlag\":\"\"}\');"+
 					"DWREngine._execute(\'/dwr\', \'ServiceForNum\', \'getData\', formMap, function(data){"+
-						"$(\'body\').append(\"<div id=\'jsResultParent\'><div id=\'jsResult\'></div></div>\");" + 
+						"$(\'#jsResultParent\').append(\"<div id=\'jsResult\'></div>\");" + 
 						"$(\'#jsResult\').attr(\"result\", JSON.stringify(data));"+
 					"});"+
 				"}"+
-				"$(\'#jsResultParent\').empty()"	+
+				"if (document.getElementById(\"jsResultParent\") == null){" +
+					"$(\'body\').append(\"<div id=\'jsResultParent\'></div>\");" +
+				"}" +
+				"$(\'#jsResultParent\').empty();"	+
 				"searchCompany(\"" + companyName + "\");";
 		JavascriptExecutor jse = (JavascriptExecutor)driver; 
 		jse.executeScript(js);
 		
 		
-		WebElement myResult = (new WebDriverWait(driver, 10)).until(
+		WebElement myResult = (new WebDriverWait(driver, 600)).until(
 				new ExpectedCondition<WebElement>(){
 
 					public WebElement apply(WebDriver d) {
@@ -81,11 +84,12 @@ public class NacaoServiceImpl implements NacaoService{
 	
 	private void fetchCompany(WebDriver driver, List<KeyWords> keys){
 		try{
-			for (KeyWords key : keys){
+			for (int i = 0; i < keys.size(); ++i ){
+				KeyWords key = keys.get(i);
 				JSONArray jsonOrg = downloadCompanyInfo(driver, key.getText());
-				System.out.println(key.getText());
-				for (int i = 0; i < jsonOrg.size(); ++i){
-					Organization org = (Organization) JSONObject.toBean(jsonOrg.getJSONObject(i), Organization.class);
+				System.out.println(i + " " + key.getText());
+				for (int j = 0; j < jsonOrg.size(); ++j){
+					Organization org = (Organization) JSONObject.toBean(jsonOrg.getJSONObject(j), Organization.class);
 					orgDao.update(org);
 				}
 				
