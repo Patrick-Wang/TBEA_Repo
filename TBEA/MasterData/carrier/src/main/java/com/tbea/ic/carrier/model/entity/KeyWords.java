@@ -16,6 +16,9 @@ public class KeyWords {
 	@Column(name = "fixed")
 	String fixed;
 	
+	@Column(name = "count")
+	Integer count;
+	
 	/**
 	 * @return the key
 	 */
@@ -42,6 +45,14 @@ public class KeyWords {
 	 */
 	public void setFixed(String fixed) {
 		this.fixed = fixed;
+	}
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer i) {
+		this.count = i;
 	}
 			
 	

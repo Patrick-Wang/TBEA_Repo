@@ -113,6 +113,7 @@ public class MarketServiceImpl implements MarketService {
 			XSSFCell cell = row.getCell(i);
 			String val = "";
 			if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC){
+				short df = cell.getCellStyle().getDataFormat();
 				if (HSSFDateUtil.isCellDateFormatted(cell)){
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
 					Date date = cell.getDateCellValue();  

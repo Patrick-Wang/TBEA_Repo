@@ -11,6 +11,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,26 +56,26 @@ public class NacaoServiceImpl implements NacaoService{
 		String js = "function searchCompany(companyName){" +
 			"var formMap = JSON.parse(\'{\"firststrfind\":\"jgmc=\\'\' + companyName + \'\\'  not ZYBZ=(\\'2\\') \",\"strfind\":\"jgmc=\\'\' + companyName + \'\\'  not ZYBZ=(\\'2\\') \",\"key\":\"\' + companyName + \'\",\"kind\":\"2\",\"tit1\":\"\' + companyName + \'\",\"selecttags\":\"鍏ㄥ浗\",\"xzqhName\":\"alll\",\"button\":\"\",\"jgdm\":false,\"jgmc\":true,\"jgdz\":false,\"zch\":false,\"strJgmc\":\"\",\"\":\"\",\"secondSelectFlag\":\"\"}\');"+
 					"DWREngine._execute(\'/dwr\', \'ServiceForNum\', \'getData\', formMap, function(data){"+
-						"$(\'body\').attr(\"result\", JSON.stringify(data));"+
+						"$(\'body\').append(<div id=\"jsResultParent\"><div id=\"jsResult\"></div></div>);" + 
+						"$(\'#jsResult\').attr(\"result\", JSON.stringify(data));"+
 					"});"+
 				"}"+
+				"$(\'#jsResultParent\').empty()"	+
 				"searchCompany(\"" + companyName + "\");";
 		JavascriptExecutor jse = (JavascriptExecutor)driver; 
 		jse.executeScript(js);
 		
-		String ret = element.getAttribute("result");
-		int count = 5;
-		while(count-- > 0 && ret == null){
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			ret = element.getAttribute("result");
-		}
 		
+		WebElement myResult = (new WebDriverWait(driver, 10)).until(
+				new ExpectedCondition<WebElement>(){
+
+					public WebElement apply(WebDriver d) {
+						return d.findElement(By.id("jsResult"));  
+					} 
+				} 
+		); 
 		
+		String ret = myResult.getAttribute("result");		
 		return JSONArray.fromObject(ret).getJSONArray(1);
 	}
 	
@@ -81,6 +83,7 @@ public class NacaoServiceImpl implements NacaoService{
 		try{
 			for (KeyWords key : keys){
 				JSONArray jsonOrg = downloadCompanyInfo(driver, key.getText());
+				System.out.println(key.getText());
 				for (int i = 0; i < jsonOrg.size(); ++i){
 					Organization org = (Organization) JSONObject.toBean(jsonOrg.getJSONObject(i), Organization.class);
 					orgDao.update(org);
@@ -88,8 +91,9 @@ public class NacaoServiceImpl implements NacaoService{
 				
 				if (!"Y".equals(key.getFixed())){
 					key.setFixed("Y");
-					keywordsDao.update(key);
 				}
+				key.setCount(jsonOrg.size());
+				keywordsDao.update(key);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
