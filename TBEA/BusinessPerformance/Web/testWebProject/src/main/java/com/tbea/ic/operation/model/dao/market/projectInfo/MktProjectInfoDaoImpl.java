@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.model.dao.market.projectInfo;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -50,5 +51,20 @@ public class MktProjectInfoDaoImpl implements MktProjectInfoDao {
 			return null;
 		}
 		return mbis.get(0);
+	}
+
+	@Override
+	public List<MktProjectInfo> getCarryDownProjectInfo(Date dStart, Date dEnd) {
+		Query q = manager.createQuery(
+				"from MktProjectInfo where enddate >= :start and enddate <= :end and (bidRestrict is null or bidRestrict not in ('已投标', '已报价', '放弃跟踪', '弃标', '项目重复'))");
+		q.setParameter("start", dStart);
+		q.setParameter("end", dEnd);
+		return q.getResultList();
+	}
+
+	@Override
+	public List<MktProjectInfo> getData(String companyName, Integer year) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

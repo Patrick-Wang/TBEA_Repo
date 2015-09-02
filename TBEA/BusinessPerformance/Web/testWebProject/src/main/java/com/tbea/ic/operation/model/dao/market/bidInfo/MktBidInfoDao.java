@@ -1,8 +1,8 @@
 package com.tbea.ic.operation.model.dao.market.bidInfo;
 
+import java.sql.Date;
 import java.util.List;
 
-import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.MktBidInfo;
 
 public interface MktBidInfoDao{
@@ -12,4 +12,9 @@ public interface MktBidInfoDao{
 	List<MktBidInfo> getData(String companyName);
 
 	MktBidInfo getById(String bidNo);
+
+	List<MktBidInfo> getUndecidedBidInfo(Date dStart,
+			Date dEnd);
+
+	List<MktBidInfo> getData(String companyName, Integer year);
 }

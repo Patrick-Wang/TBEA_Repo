@@ -2,9 +2,9 @@ package com.tbea.ic.operation.service.market;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -143,11 +143,11 @@ public class MarketServiceImpl implements MarketService {
 				short df = cell.getCellStyle().getDataFormat();
 				if (176 == df){
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月");  
-					Date date = cell.getDateCellValue();  
+					java.util.Date date = cell.getDateCellValue();  
 					val = sdf.format(date);  
 				} else if (58 == df){
 					SimpleDateFormat sdf = new SimpleDateFormat("M月d日");
-					Date date = cell.getDateCellValue();  
+					java.util.Date date = cell.getDateCellValue();  
 					val = sdf.format(date);  
 				} else{
 					val = subZeroAndDot(cell.getNumericCellValue() + "");
@@ -333,14 +333,21 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public void carryDownBidInfo() {
-
+	public void carryDownBidInfo(Date dStart, Date dEnd, Date target) {
+		List<MktBidInfo> undecidedInfos = bidInfoDao.getUndecidedBidInfo(dStart, dEnd);
+		for(MktBidInfo bidInfo : undecidedInfos){
+			bidInfo.setEnddate(target);
+			bidInfoDao.update(bidInfo);
+		}
 		
 	}
 
 	@Override
-	public void carryDownProjectInfo() {
-
-		
+	public void carryDownProjectInfo(Date dStart, Date dEnd, Date target) {
+		List<MktProjectInfo> carryDownInfos = projectInfoDao.getCarryDownProjectInfo(dStart, dEnd);
+		for(MktProjectInfo projectInfo : carryDownInfos){
+			projectInfo.setEnddate(target);
+			projectInfoDao.update(projectInfo);
+		}
 	}
 }

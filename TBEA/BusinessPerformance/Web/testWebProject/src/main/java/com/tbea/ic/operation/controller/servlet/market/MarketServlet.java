@@ -2,7 +2,9 @@ package com.tbea.ic.operation.controller.servlet.market;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -22,7 +24,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
-import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.service.market.MarketService;
@@ -66,10 +67,25 @@ public class MarketServlet {
 		return result.getBytes("utf-8");
 	}
 	
+	
+	@RequestMapping(value = "test_carry_down.do")
+	public @ResponseBody byte[] testCarryDown(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		carryDown();
+		return "finished".getBytes("utf-8");
+	}
+	
 	@Scheduled(cron="0 0 0 1 1 ?")
 	public void carryDown(){
-		marketService.carryDownBidInfo();
-		marketService.carryDownProjectInfo();
+		Calendar start = Calendar.getInstance();
+		start.set(start.get(Calendar.YEAR) - 1, 0, 1, 0, 0, 0);
+		Calendar end = Calendar.getInstance();
+		end.set(end.get(Calendar.YEAR) - 1, 11, 31, 23, 59, 59);
+
+		Calendar target = Calendar.getInstance();
+		
+		marketService.carryDownBidInfo(new Date(start.getTimeInMillis()), new Date(end.getTimeInMillis()), new Date(target.getTimeInMillis()));
+		marketService.carryDownProjectInfo(new Date(start.getTimeInMillis()), new Date(end.getTimeInMillis()), new Date(target.getTimeInMillis()));
 	}
 	
 	@RequestMapping(value = "mkt_import_data.do")
@@ -93,13 +109,17 @@ public class MarketServlet {
 		//Company comp = companyManager.getBMOrganization().getCompany(compType);
 		String companyName = request.getParameter("companyName");
 		String rpttype = request.getParameter("docType");
+		
 		//request。getParameter("rpttype");
 		List<String[][]> list = new ArrayList<String[][]>();
-
+		Integer year = Calendar.getInstance().get(Calendar.YEAR);
+		if (null != request.getParameter("year")){
+			year = Integer.valueOf(request.getParameter("year"));
+		}
 		if(rpttype.equals("bid_info")){
-			list.add(marketService.getBidData(companyName));
+			list.add(marketService.getBidData(companyName, year));
 		}else if(rpttype.equals("project_info")){
-			list.add(marketService.getPrjData(companyName));
+			list.add(marketService.getPrjData(companyName, year));
 		}else if(rpttype.equals("sign_contract")){
 			list.add(marketService.getContData(companyName));
 		}

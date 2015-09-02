@@ -1,5 +1,7 @@
 package com.tbea.ic.operation.service.market;
 
+import java.sql.Date;
+
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public interface MarketService {
@@ -10,14 +12,14 @@ public interface MarketService {
 
 	String importBidData(XSSFWorkbook workbook);
 	
-	String[][] getBidData(String companyName);
+	String[][] getBidData(String companyName, Integer year);
 	
-	String[][] getPrjData(String companyName);
+	String[][] getPrjData(String companyName, Integer year);
 	
 	String[][] getContData(String companyName);
 
-	void carryDownBidInfo();
+	void carryDownBidInfo(Date dStart, Date dEnd, Date target);
 
-	void carryDownProjectInfo();
+	void carryDownProjectInfo(Date dStart, Date dEnd, Date target);
 
 }

@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.model.dao.market.bidInfo;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -50,6 +51,21 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 			return null;
 		}
 		return mbis.get(0);
+	}
+
+	@Override
+	public List<MktBidInfo> getUndecidedBidInfo(Date dStart, Date dEnd) {
+		Query q = manager.createQuery(
+				"from MktBidInfo where enddate >= :start and enddate <= :end and bidStatus='未定标'");
+		q.setParameter("start", dStart);
+		q.setParameter("end", dEnd);
+		return q.getResultList();
+	}
+
+	@Override
+	public List<MktBidInfo> getData(String companyName, Integer year) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
