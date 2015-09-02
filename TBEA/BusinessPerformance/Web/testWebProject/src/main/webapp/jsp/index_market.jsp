@@ -10,7 +10,7 @@
 	<div class="thumb4">
 		<ul class="slides">
 			<li data-thumb="asset/img/example/bar1.png"><a
-				href="" target="_blank"><img
+				href="../Market/mkt_view_data.do" target="_blank"><img
 					src="../images/charts/bar1.png"> <span><strong>市场数据汇总</strong></span></a>
 			</li>
 			<li data-thumb="asset/img/example/cache.png"><a
