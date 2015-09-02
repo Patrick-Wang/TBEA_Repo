@@ -231,8 +231,8 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public String[][] getBidData(String companyName) {
-		List<MktBidInfo> Bids = bidInfoDao.getData(companyName);
+	public String[][] getBidData(String companyName, Integer year) {
+		List<MktBidInfo> Bids = bidInfoDao.getData(companyName, year);
 		String[][] result = new String[Bids.size()][24];
 		Integer col=0;
 		for (MktBidInfo bid : Bids) {
@@ -268,8 +268,8 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	@Override
-	public String[][] getPrjData(String companyName) {
-		List<MktProjectInfo> list = projectInfoDao.getData(companyName);
+	public String[][] getPrjData(String companyName, Integer year) {
+		List<MktProjectInfo> list = projectInfoDao.getData(companyName, year);
 		String[][] result = new String[list.size()][19];
 		Integer col=0;
 		for (MktProjectInfo obj : list) {
