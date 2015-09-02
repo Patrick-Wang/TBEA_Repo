@@ -64,8 +64,21 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 
 	@Override
 	public List<MktBidInfo> getData(String companyName, Integer year) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q;
+		if(companyName.equals("全部公司"))
+		{
+			q = manager.createQuery(
+					"from MktBidInfo where Year(startdate) <= :year and Year(enddate) >= :year "
+					+ "order by bid_no desc");
+		}else{
+			q = manager.createQuery(
+					"from MktBidInfo where Year(startdate) <= :year and Year(enddate) >= :year "
+					+ "and company_name like:comp order by bid_no desc");
+			q.setParameter("comp", "%"+companyName+"%");
+		}		
+		q.setParameter("year", year);
+		
+		return q.getResultList();
 	}
 
 }

@@ -64,7 +64,20 @@ public class MktProjectInfoDaoImpl implements MktProjectInfoDao {
 
 	@Override
 	public List<MktProjectInfo> getData(String companyName, Integer year) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q;
+		if(companyName.equals("全部公司"))
+		{
+			q = manager.createQuery(
+					"from MktProjectInfo where Year(startdate) <= :year and Year(enddate) >= :year "
+					+ "order by project_no desc");
+		}else{
+			q = manager.createQuery(
+					"from MktProjectInfo where Year(startdate) <= :year and Year(enddate) >= :year "
+					+ "and company_name like:comp order by project_no desc");
+			q.setParameter("comp", "%"+companyName+"%");
+		}		
+		q.setParameter("year", year);
+		
+		return q.getResultList();
 	}
 }
