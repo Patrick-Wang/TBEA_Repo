@@ -23,9 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.service.market.MarketService;
 
 @Controller
@@ -105,7 +103,6 @@ public class MarketServlet {
 	@RequestMapping(value = "mkt_view_update.do")
 	public @ResponseBody byte[] getMktViewUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		CompanyType compType = CompanySelection.getCompany(request);
 		//Company comp = companyManager.getBMOrganization().getCompany(compType);
 		String companyName = request.getParameter("companyName");
 		String rpttype = request.getParameter("docType");
