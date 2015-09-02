@@ -19,8 +19,10 @@ public class KeyWordsDaoImpl implements KeyWordsDao{
 	EntityManager manager;
 	
 
-	public List<KeyWords> getUnfixedKeyWorks() {
+	public List<KeyWords> getUnfixedKeyWorks(int start, int count) {
 		Query q = manager.createQuery("from KeyWords where fixed = 'N'");
+		q.setFirstResult(start);
+		q.setMaxResults(count);
 		return q.getResultList();
 	}
 
@@ -30,8 +32,10 @@ public class KeyWordsDaoImpl implements KeyWordsDao{
 	}
 
 
-	public List<KeyWords> getKeyWorks() {
+	public List<KeyWords> getKeyWorks(int start, int count) {
 		Query q = manager.createQuery("from KeyWords");
+		q.setFirstResult(start);
+		q.setMaxResults(count);
 		return q.getResultList();
 	}
 
@@ -44,6 +48,20 @@ public class KeyWordsDaoImpl implements KeyWordsDao{
 			return null;
 		}
 		return keys.get(0);
+	}
+
+
+	public int getUnfixedKeyWorksCount() {
+		Query q = manager.createQuery("select count(*) from KeyWords where fixed = 'N'");
+		List<Object> ret = q.getResultList();
+		return ((Long)ret.get(0)).intValue();
+	}
+
+
+	public int getKeyWorksCount() {
+		Query q = manager.createQuery("select count(*) from KeyWords");
+		List<Object> ret = q.getResultList();
+		return ((Long)ret.get(0)).intValue();
 	}
 
 

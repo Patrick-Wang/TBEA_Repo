@@ -13,6 +13,7 @@ import net.sf.json.JSONArray;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,6 +66,11 @@ public class MarketServlet {
 		return result.getBytes("utf-8");
 	}
 	
+	@Scheduled(cron="0 0 0 1 1 ?")
+	public void carryDown(){
+		marketService.carryDownBidInfo();
+		marketService.carryDownProjectInfo();
+	}
 	
 	@RequestMapping(value = "mkt_import_data.do")
 	public ModelAndView getMktImportData(HttpServletRequest request,

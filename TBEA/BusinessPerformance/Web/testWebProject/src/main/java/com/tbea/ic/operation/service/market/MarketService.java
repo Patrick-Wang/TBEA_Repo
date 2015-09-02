@@ -1,9 +1,6 @@
 package com.tbea.ic.operation.service.market;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import com.tbea.ic.operation.common.companys.Company;
 
 public interface MarketService {
 
@@ -18,5 +15,9 @@ public interface MarketService {
 	String[][] getPrjData(String companyName);
 	
 	String[][] getContData(String companyName);
+
+	void carryDownBidInfo();
+
+	void carryDownProjectInfo();
 
 }

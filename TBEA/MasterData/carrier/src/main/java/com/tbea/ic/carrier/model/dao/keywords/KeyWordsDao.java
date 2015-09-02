@@ -10,9 +10,13 @@ public interface KeyWordsDao {
 
 	void update(KeyWords keywords);
 	
-	List<KeyWords> getUnfixedKeyWorks();
+	List<KeyWords> getUnfixedKeyWorks(int start, int count);
 
-	List<KeyWords> getKeyWorks();
+	List<KeyWords> getKeyWorks(int start, int count);
 
 	KeyWords getKeyWordsByKey(String name);
+
+	int getUnfixedKeyWorksCount();
+
+	int getKeyWorksCount();
 }

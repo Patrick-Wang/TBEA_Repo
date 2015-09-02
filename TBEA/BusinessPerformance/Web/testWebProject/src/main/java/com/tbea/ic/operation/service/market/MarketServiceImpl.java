@@ -331,4 +331,16 @@ public class MarketServiceImpl implements MarketService {
 		}
 		return result;
 	}
+
+	@Override
+	public void carryDownBidInfo() {
+
+		
+	}
+
+	@Override
+	public void carryDownProjectInfo() {
+
+		
+	}
 }

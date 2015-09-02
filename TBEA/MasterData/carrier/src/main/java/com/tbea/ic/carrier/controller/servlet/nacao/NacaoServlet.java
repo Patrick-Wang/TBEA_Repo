@@ -1,10 +1,15 @@
 package com.tbea.ic.carrier.controller.servlet.nacao;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -18,19 +23,46 @@ import com.tbea.ic.carrier.service.nacao.NacaoService;
 @RequestMapping(value = "/nacao")
 public class NacaoServlet {
 
+	private static String CHROME_DRIVER_PATH = null;
+	static 
+	{
+		try {
+			String basePath = new URI(NacaoServlet.class
+					.getClassLoader().getResource("").getPath()).getPath();
+			CHROME_DRIVER_PATH = basePath.substring(1) + "exe/chromedriver.exe";
+			System.out.println(CHROME_DRIVER_PATH);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.setProperty("webdriver.chrome.driver",  CHROME_DRIVER_PATH);
+	}
+	
+	private final String NACAO_URL = "https://s.nacao.org.cn/specialResult.html?x=8XJ1/pI26t/R86rKz7VspQ==&k=uvGb鈥�&s=4MIKGgKAicefN4zsiKPq6pMHFkYrvl5YLyz5/H5t4IdP&y=ORt7YhA+Tb9dFmARh/6Dqw==";
 	
 	@Autowired
 	NacaoService nacaoService;
 	
 	
-	@Scheduled(cron="0 0 12 ? * 2-6")
+	@Scheduled(cron="0 30 8 ? * 2-6")
 	public void carrryUnfixed(){
-		nacaoService.fetchCompanyWithUnfixedKeywords();
+		WebDriver driver = new ChromeDriver();
+		driver.get(NACAO_URL);
+		int size = nacaoService.getUnfixedKeywordsCount();
+		for (int start = 0; start < size; ){
+			start += nacaoService.fetchCompanyWithUnfixedKeywords(driver, start, 100);
+		}
+		driver.quit();
 	}
 	
-	@Scheduled(cron="0 0 13 ? * 6")
+	@Scheduled(cron="0 0 9 ? * 6")
 	public void carrryAll(){
-		nacaoService.fetchCompanyWithAllKeywords();
+		WebDriver driver = new ChromeDriver();
+		driver.get(NACAO_URL);
+		int size = nacaoService.getKeywordsCount();
+		for (int start = 0; start < size; ){
+			start += nacaoService.fetchCompanyWithAllKeywords(driver, start, 100);
+		}
+		driver.quit();
 	}
 	
 	@RequestMapping(value = "/query_by_name.do")
@@ -42,12 +74,12 @@ public class NacaoServlet {
 	
 	@RequestMapping(value = "/carrry_unfixed.do")
 	public void carrryUnfixed(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
-		nacaoService.fetchCompanyWithUnfixedKeywords();
+		carrryUnfixed();
 	}
 	
 	@RequestMapping(value = "/carrry_all.do")
 	public  void carrryAll(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
-		nacaoService.fetchCompanyWithAllKeywords();
+		carrryAll();
 	}
 }
  

@@ -1,6 +1,5 @@
 package com.tbea.ic.carrier.service.nacao;
 
-import java.net.URI;
 import java.util.List;
 
 import net.sf.json.JSONArray;
@@ -10,7 +9,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,32 +22,14 @@ import com.tbea.ic.carrier.model.entity.Organization;
 
 @Service
 @Transactional("transactionManager")
-public class NacaoServiceImpl implements NacaoService{
-
-	private static String CHROME_DRIVER_PATH = null;
-	static 
-	{
-		try {
-			String basePath = new URI(NacaoServiceImpl.class
-					.getClassLoader().getResource("").getPath()).getPath();
-			CHROME_DRIVER_PATH = basePath.substring(1) + "exe/chromedriver.exe";
-			System.out.println(CHROME_DRIVER_PATH);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.setProperty("webdriver.chrome.driver",  CHROME_DRIVER_PATH);
-	}
-	
-	
+public class NacaoServiceImpl implements NacaoService{	
 	
 	@Autowired
 	OrganizationDao orgDao;
 	
 	@Autowired
 	KeyWordsDao keywordsDao;
-	
-	private final String NACAO_URL = "https://s.nacao.org.cn/specialResult.html?x=8XJ1/pI26t/R86rKz7VspQ==&k=uvGb鈥�&s=4MIKGgKAicefN4zsiKPq6pMHFkYrvl5YLyz5/H5t4IdP&y=ORt7YhA+Tb9dFmARh/6Dqw==";
-	
+		
 
 	private JSONArray downloadCompanyInfo(WebDriver driver, String companyName){
 		companyName = companyName.replace("\"", "\\\\\\\"").replace("\'", "\\\\\\\'");
@@ -86,8 +66,9 @@ public class NacaoServiceImpl implements NacaoService{
 		try{
 			for (int i = 0; i < keys.size(); ++i ){
 				KeyWords key = keys.get(i);
-				JSONArray jsonOrg = downloadCompanyInfo(driver, key.getText());
-				System.out.println(i + " " + key.getText());
+				String company = key.getText().trim();
+				JSONArray jsonOrg = downloadCompanyInfo(driver, company);
+				System.out.println(i + " " + company);
 				for (int j = 0; j < jsonOrg.size(); ++j){
 					Organization org = (Organization) JSONObject.toBean(jsonOrg.getJSONObject(j), Organization.class);
 					orgDao.update(org);
@@ -104,24 +85,21 @@ public class NacaoServiceImpl implements NacaoService{
 		}
 	}
 	
-	public void fetchCompanyWithUnfixedKeywords() {
-		List<KeyWords> keywords = keywordsDao.getUnfixedKeyWorks();
+	public int fetchCompanyWithUnfixedKeywords(WebDriver driver, int start, int count) {
+		List<KeyWords> keywords = keywordsDao.getUnfixedKeyWorks(start, count);
 		if (!keywords.isEmpty()) {
-			WebDriver driver = new ChromeDriver();
-			driver.get(NACAO_URL);
+
 			fetchCompany(driver, keywords);
-			driver.quit();
 		}
+		return keywords.size();
 	}
 
-	public void fetchCompanyWithAllKeywords() {
-		List<KeyWords> keywords = keywordsDao.getKeyWorks();
+	public int fetchCompanyWithAllKeywords(WebDriver driver, int start, int count) {
+		List<KeyWords> keywords = keywordsDao.getKeyWorks(start, count);
 		if (!keywords.isEmpty()) {
-			WebDriver driver = new ChromeDriver();
-			driver.get(NACAO_URL);
 			fetchCompany(driver, keywords);
-			driver.quit();
 		}
+		return keywords.size();
 	}
 
 	public JSONArray findByName(String name) {
@@ -135,6 +113,14 @@ public class NacaoServiceImpl implements NacaoService{
 		
 		List<Organization> orgs = orgDao.getByName(name);
 		return JSONArray.fromObject(orgs);
+	}
+
+	public int getUnfixedKeywordsCount() {
+		return keywordsDao.getUnfixedKeyWorksCount();
+	}
+
+	public int getKeywordsCount() {
+		return keywordsDao.getKeyWorksCount();
 	}
 
 }
