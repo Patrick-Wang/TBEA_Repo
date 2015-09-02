@@ -38,7 +38,7 @@ public class MarketServiceImpl implements MarketService {
 	
 	private final String ERROR_OK = "OK";
 	private final String ERROR_COUNT_NOT_MATCH = "文档不匹配(列数不匹配)";
-	
+	private final String ERROR_UNKNOWN = "未知错误";
 	
 	interface OnUpdateMktObjectListener{
 		Class<?> onGetClass();
@@ -70,13 +70,13 @@ public class MarketServiceImpl implements MarketService {
 			public void update(Object mktObject) {
 				MktProjectInfo mpi = (MktProjectInfo)mktObject;
 				MktProjectInfo mpiOld = projectInfoDao.getById(mpi.getProjectNo());
-				if (mpiOld.getStartdate() == null){
+				if (mpiOld == null || mpiOld.getStartdate() == null){
 					mpi.setStartdate(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
 				} else{
 					mpi.setStartdate(mpiOld.getStartdate());
 				}
 				
-				if (mpiOld.getEnddate() == null){
+				if (mpiOld == null || mpiOld.getEnddate() == null){
 					mpi.setEnddate(mpi.getStartdate());
 				} else{
 					mpi.setEnddate(mpiOld.getEnddate());
@@ -102,13 +102,13 @@ public class MarketServiceImpl implements MarketService {
 			public void update(Object mktObject) {
 				MktSignContract msc = (MktSignContract)mktObject;
 				MktSignContract mscOld = signContractDao.getById(msc.getContractNo());
-				if (mscOld.getStartdate() == null){
+				if (mscOld == null || mscOld.getStartdate() == null){
 					msc.setStartdate(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
 				} else{
 					msc.setStartdate(mscOld.getStartdate());
 				}
 				
-				if (mscOld.getEnddate() == null){
+				if (mscOld == null || mscOld.getEnddate() == null){
 					msc.setEnddate(msc.getStartdate());
 				} else{
 					msc.setEnddate(mscOld.getEnddate());
@@ -191,6 +191,7 @@ public class MarketServiceImpl implements MarketService {
 							.onGetClass().newInstance()));
 				} catch (Exception e) {
 					e.printStackTrace();
+					result = ERROR_UNKNOWN;
 				}
 			}
 		}
@@ -210,13 +211,13 @@ public class MarketServiceImpl implements MarketService {
 			public void update(Object mktObject) {
 				MktBidInfo mbi = (MktBidInfo)mktObject;
 				MktBidInfo mbiOld = bidInfoDao.getById(mbi.getBidNo());
-				if (mbiOld.getStartdate() == null){
+				if (mbiOld == null || mbiOld.getStartdate() == null){
 					mbi.setStartdate(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
 				} else{
 					mbi.setStartdate(mbiOld.getStartdate());
 				}
 				
-				if (mbiOld.getEnddate() == null){
+				if (mbiOld == null || mbiOld.getEnddate() == null){
 					mbi.setEnddate(mbi.getStartdate());
 				} else{
 					mbi.setEnddate(mbiOld.getEnddate());
