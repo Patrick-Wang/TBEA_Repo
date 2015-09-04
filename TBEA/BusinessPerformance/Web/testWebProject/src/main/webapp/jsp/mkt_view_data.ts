@@ -177,7 +177,7 @@ module mkt_view_data {
                     //cellsubmit: 'clientArray',
                     //cellEdit: true,
                     height: '100%',
-                    width: $(document).width()-40,
+                    width: $(document).width()-60,
                     shrinkToFit: true,
                     autoScroll: true,
                     pager:'#pager',
