@@ -112,10 +112,10 @@
 	});
 		 
  	uploader.on( 'uploadSuccess', function( file, ret ) {
- 		if (ret._raw == "OK"){
+ 		if (ret.result == "OK"){
 	    	$( '#'+file.id ).find('p.state').text('已上传');
  		} else{
- 			$( '#'+file.id ).find('p.state').text(ret._raw);
+ 			$( '#'+file.id ).find('p.state').text(ret.result);
  		}
 	});
 

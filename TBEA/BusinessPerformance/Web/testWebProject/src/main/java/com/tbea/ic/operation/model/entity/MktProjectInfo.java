@@ -44,7 +44,7 @@ public class MktProjectInfo implements Serializable {
 	String productAmount;
 
 	@Column(name = "excepted_bid_cost")
-	Double exceptedBidCost;
+	String exceptedBidCost;
 
 	@Column(name = "excepted_bid_time")
 	String exceptedBidTime;
@@ -148,7 +148,7 @@ public class MktProjectInfo implements Serializable {
 	/**
 	 * @return the exceptedBidCost
 	 */
-	public Double getExceptedBidCost() {
+	public String getExceptedBidCost() {
 		return exceptedBidCost;
 	}
 
@@ -291,7 +291,7 @@ public class MktProjectInfo implements Serializable {
 	 * @param exceptedBidCost
 	 *            the exceptedBidCost to set
 	 */
-	public void setExceptedBidCost(Double exceptedBidCost) {
+	public void setExceptedBidCost(String exceptedBidCost) {
 		this.exceptedBidCost = exceptedBidCost;
 	}
 

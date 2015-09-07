@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,11 +59,11 @@ public class MarketServlet {
 				result = marketService.importBidData(workbook);
 			}
 		}catch(Exception e){
-			result = "位置导入错误";
+			result = "导入错误, 请检查文档格式";
 			e.printStackTrace();
 		}
 		
-		return result.getBytes("utf-8");
+		return JSONObject.fromObject("{\"result\" :  \"" + result + "\"}").toString().getBytes("utf-8");
 	}
 	
 	

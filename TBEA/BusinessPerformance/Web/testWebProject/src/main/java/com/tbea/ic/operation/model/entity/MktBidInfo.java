@@ -32,7 +32,7 @@ public class MktBidInfo implements Serializable {
 	String officeName;
 
 	@Column(name = "[bid_month]")
-	Integer bidMonth;
+	String bidMonth;
 
 	@Column(name = "[bid_date]")
 	String bidDate;
@@ -65,19 +65,19 @@ public class MktBidInfo implements Serializable {
 	String productVolume;
 
 	@Column(name = "[bid_price]")
-	Double bidPrice;
+	String bidPrice;
 
 	@Column(name = "[successful_bidder_name]")
 	String successfulBidderName;
 
 	@Column(name = "[sucessful_bidder_price]")
-	Double sucessfulBidderPrice;
+	String sucessfulBidderPrice;
 
 	@Column(name = "[analysis_of_cause]")
 	String analysisOfCause;
 
 	@Column(name = "[successful_bidder_month]")
-	Integer successfulBidderMonth;
+	String successfulBidderMonth;
 
 	@Column(name = "[bid_status]")
 	String bidStatus;
@@ -133,7 +133,7 @@ public class MktBidInfo implements Serializable {
 	/**
 	 * @return the bidMonth
 	 */
-	public Integer getBidMonth() {
+	public String getBidMonth() {
 		return bidMonth;
 	}
 
@@ -210,7 +210,7 @@ public class MktBidInfo implements Serializable {
 	/**
 	 * @return the bidPrice
 	 */
-	public Double getBidPrice() {
+	public String getBidPrice() {
 		return bidPrice;
 	}
 
@@ -224,7 +224,7 @@ public class MktBidInfo implements Serializable {
 	/**
 	 * @return the sucessfulBidderPrice
 	 */
-	public Double getSucessfulBidderPrice() {
+	public String getSucessfulBidderPrice() {
 		return sucessfulBidderPrice;
 	}
 
@@ -238,7 +238,7 @@ public class MktBidInfo implements Serializable {
 	/**
 	 * @return the successfulBidderMonth
 	 */
-	public Integer getSuccessfulBidderMonth() {
+	public String getSuccessfulBidderMonth() {
 		return successfulBidderMonth;
 	}
 
@@ -307,7 +307,7 @@ public class MktBidInfo implements Serializable {
 	 * @param bidMonth
 	 *            the bidMonth to set
 	 */
-	public void setBidMonth(Integer bidMonth) {
+	public void setBidMonth(String bidMonth) {
 		this.bidMonth = bidMonth;
 	}
 
@@ -395,7 +395,7 @@ public class MktBidInfo implements Serializable {
 	 * @param bidPrice
 	 *            the bidPrice to set
 	 */
-	public void setBidPrice(Double bidPrice) {
+	public void setBidPrice(String bidPrice) {
 		this.bidPrice = bidPrice;
 	}
 
@@ -411,7 +411,7 @@ public class MktBidInfo implements Serializable {
 	 * @param sucessfulBidderPrice
 	 *            the sucessfulBidderPrice to set
 	 */
-	public void setSucessfulBidderPrice(Double sucessfulBidderPrice) {
+	public void setSucessfulBidderPrice(String sucessfulBidderPrice) {
 		this.sucessfulBidderPrice = sucessfulBidderPrice;
 	}
 
@@ -427,7 +427,7 @@ public class MktBidInfo implements Serializable {
 	 * @param successfulBidderMonth
 	 *            the successfulBidderMonth to set
 	 */
-	public void setSuccessfulBidderMonth(Integer successfulBidderMonth) {
+	public void setSuccessfulBidderMonth(String successfulBidderMonth) {
 		this.successfulBidderMonth = successfulBidderMonth;
 	}
 

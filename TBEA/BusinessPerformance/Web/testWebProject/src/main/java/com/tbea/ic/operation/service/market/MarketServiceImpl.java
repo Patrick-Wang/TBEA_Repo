@@ -138,18 +138,19 @@ public class MarketServiceImpl implements MarketService {
 			XSSFCell cell = row.getCell(i);
 			String val = "";
 			if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC){
-				short df = cell.getCellStyle().getDataFormat();
-				if (176 == df){
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月");  
-					java.util.Date date = cell.getDateCellValue();  
-					val = sdf.format(date);  
-				} else if (58 == df){
-					SimpleDateFormat sdf = new SimpleDateFormat("M月d日");
-					java.util.Date date = cell.getDateCellValue();  
-					val = sdf.format(date);  
-				} else{
-					val = subZeroAndDot(cell.getNumericCellValue() + "");
-				}
+//				short df = cell.getCellStyle().getDataFormat();
+//				if (176 == df){
+//					SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月");  
+//					java.util.Date date = cell.getDateCellValue();  
+//					val = sdf.format(date);  
+//				} else if (58 == df){
+//					SimpleDateFormat sdf = new SimpleDateFormat("M月d日");
+//					java.util.Date date = cell.getDateCellValue();  
+//					val = sdf.format(date);  
+//				} else{
+//					val = subZeroAndDot(cell.getNumericCellValue() + "");
+//				}
+				val = subZeroAndDot(cell.getNumericCellValue() + "");
 			} else if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING){
 				val = cell.getStringCellValue() + "";
 			} 
@@ -159,16 +160,19 @@ public class MarketServiceImpl implements MarketService {
 					Method method = cls.getMethod(Util.getSetMethodName(name),
 							field.getType());
 
-					if (field.getType().getName()
+					/*if (field.getType().getName()
 							.equals(Integer.class.getName())) {
 						method.invoke(obj, Double.valueOf(val).intValue());
-					} else if (field.getType().getName()
+					} else*/ if (field.getType().getName()
 							.equals(Double.class.getName())) {
 						method.invoke(obj, Double.valueOf(val));
 					} else if (field.getType().getName()
 							.equals(String.class.getName())) {
 						method.invoke(obj, val);
-					}
+					}/*else if (field.getType().getName()
+							.equals(Date.class.getName())) {
+						method.invoke(obj, val);
+					}*/
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
