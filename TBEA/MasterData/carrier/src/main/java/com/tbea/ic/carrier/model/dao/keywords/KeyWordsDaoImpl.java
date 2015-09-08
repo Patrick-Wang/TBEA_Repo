@@ -65,5 +65,20 @@ public class KeyWordsDaoImpl implements KeyWordsDao{
 	}
 
 
+	public int getUnfoundKeyWorksCount() {
+		Query q = manager.createQuery("select count(*) from KeyWords k where k.fixed = 'Y' and k.count = 0 ");
+		List<Object> ret = q.getResultList();
+		return ((Long)ret.get(0)).intValue();
+	}
+
+
+	public List<KeyWords> getUnfoundKeyWorks(int start, int count) {
+		Query q = manager.createQuery("from KeyWords k where k.fixed = 'Y' and  k.count = 0 ");
+		q.setFirstResult(start);
+		q.setMaxResults(count);
+		return q.getResultList();
+	}
+
+
 
 }

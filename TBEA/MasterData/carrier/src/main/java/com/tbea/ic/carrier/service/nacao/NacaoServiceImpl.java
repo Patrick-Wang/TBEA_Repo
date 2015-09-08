@@ -68,7 +68,7 @@ public class NacaoServiceImpl implements NacaoService{
 				KeyWords key = keys.get(i);
 				String company = key.getText().trim();
 				JSONArray jsonOrg = downloadCompanyInfo(driver, company);
-				System.out.println(i + " " + company);
+				System.out.println(i + " " + company + " " + jsonOrg.size());
 				for (int j = 0; j < jsonOrg.size(); ++j){
 					Organization org = (Organization) JSONObject.toBean(jsonOrg.getJSONObject(j), Organization.class);
 					orgDao.update(org);
@@ -121,6 +121,21 @@ public class NacaoServiceImpl implements NacaoService{
 
 	public int getKeywordsCount() {
 		return keywordsDao.getKeyWorksCount();
+	}
+
+	public int getUnfoundKeywordsCount() {
+		// TODO Auto-generated method stub
+		return keywordsDao.getUnfoundKeyWorksCount();
+	}
+
+	public int fetchCompanyWithUnfoundKeywords(WebDriver driver, int start,
+			int count) {
+		List<KeyWords> keywords = keywordsDao.getUnfoundKeyWorks(start, count);
+		if (!keywords.isEmpty()) {
+
+			fetchCompany(driver, keywords);
+		}
+		return keywords.size();
 	}
 
 }

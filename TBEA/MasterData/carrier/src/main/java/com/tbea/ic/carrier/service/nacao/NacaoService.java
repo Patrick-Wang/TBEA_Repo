@@ -16,4 +16,8 @@ public interface NacaoService {
 
 	int getKeywordsCount();
 
+	int getUnfoundKeywordsCount();
+
+	int fetchCompanyWithUnfoundKeywords(WebDriver driver, int start, int i);
+
 }

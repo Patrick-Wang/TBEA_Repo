@@ -19,4 +19,8 @@ public interface KeyWordsDao {
 	int getUnfixedKeyWorksCount();
 
 	int getKeyWorksCount();
+
+	int getUnfoundKeyWorksCount();
+
+	List<KeyWords> getUnfoundKeyWorks(int start, int count);
 }

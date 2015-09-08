@@ -67,6 +67,50 @@ public class NCController {
 		importNC(Util.toDate(cal));
 	}
 	
+	
+	private JSONArray createIndicator(String id, String value){
+		JSONArray ret = new JSONArray();
+		ret.add(0, id);
+		ret.add(1, value);
+		return ret;
+	}
+	
+	
+	private void importData(ZBStatus zbStatus, JSONArray jsonArray, Date date, Company comp){
+		
+		switch (zbStatus) {
+		case APPROVED:
+			List<Company> compsTmp = new ArrayList<Company>();
+			compsTmp.add(comp);
+			approveService.unapproveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp, date);
+			entryService.submitZb(date, null, comp.getType(), ZBType.BYSJ,
+					jsonArray);
+			approveService.approveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp, date);
+			break;
+		case APPROVED_2: 
+			entryService.saveZb(date, null, comp.getType(), ZBType.BYSJ,
+					jsonArray);
+			List<Company> compsTmp2 = new ArrayList<Company>();
+			compsTmp2.add(comp);
+			approveService.approveSjZb(Account.KNOWN_ACCOUNT_JYFZ, compsTmp2, date);
+			break;
+		case NONE:
+		case SAVED:
+			entryService.saveZb(date, null, comp.getType(), ZBType.BYSJ,
+					jsonArray);
+			break;
+		case SUBMITTED:
+			entryService.submitZb(date, null, comp.getType(), ZBType.BYSJ,
+					jsonArray);
+			break;
+		case SUBMITTED_2:
+			entryService.submitToDeputy(date, null, comp.getType(), ZBType.BYSJ, jsonArray);
+			break;
+		default:
+			break;
+		}
+	} 
+	
 	private void importNC(Date d){
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
@@ -105,58 +149,44 @@ public class NCController {
 		JSONArray zbArray = null;
 		int zbid = 0;
 		System.out.println("size" + NCZBList.size());
-		List<Company> compsTmp = new ArrayList<Company>();
+		List<Company> comps = new ArrayList<Company>();
 		for (NCZB nczb : NCZBList) {
 			zbid = nczb.getZbxx().getId();
 			if (zbList.contains(zbid)) {
 				comp = companyManager.getBMDBOrganization()
 						.getCompany(nczb.getDwxx().getId());
+				comps.add(comp);
 				zbStatus = entryService.getZbStatus(date, comp.getType(), ZBType.BYSJ)
 						.get(0);
-				zbArray = new JSONArray();
-				zbArray.add(0, String.valueOf(zbid));
-				zbArray.add(1, String.valueOf(nczb.getNczbz()));
+				zbArray = createIndicator(String.valueOf(zbid), String.valueOf(nczb.getNczbz()));
 				jsonArray = new JSONArray();
 				jsonArray.add(zbArray);
 				System.out.println("comp: " + comp.getName());
 				System.out.println("json: " + jsonArray);
 				System.out.println("date: " + date);
 				System.out.println("zbStatus: " + zbStatus);
-				switch (zbStatus) {
-				case APPROVED:
-					compsTmp.clear();
-					compsTmp.add(comp);
-					approveService.unapproveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp, date);
-					entryService.submitZb(date, null, comp.getType(), ZBType.BYSJ,
-							jsonArray);
-					approveService.approveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp, date);
-					break;
-				case APPROVED_2: 
-					entryService.saveZb(date, null, comp.getType(), ZBType.BYSJ,
-							jsonArray);
-					compsTmp.clear();
-					compsTmp.add(comp);
-					approveService.approveSjZb(Account.KNOWN_ACCOUNT_JYFZ, compsTmp, date);
-					break;
-				case NONE:
-				case SAVED:
-					entryService.saveZb(date, null, comp.getType(), ZBType.BYSJ,
-							jsonArray);
-					break;
-				case SUBMITTED:
-					entryService.submitZb(date, null, comp.getType(), ZBType.BYSJ,
-							jsonArray);
-					break;
-				case SUBMITTED_2:
-					entryService.submitToDeputy(date, null, comp.getType(), ZBType.BYSJ, jsonArray);
-					break;
-				default:
-					break;
-				}
+				importData(zbStatus, jsonArray, date, comp);
 			}
+		}
+		
+		for (Company comTmp : comps){
+			List<String[]> sjzbs = entryService.getZb(date, null, comTmp.getType(), ZBType.BYSJ);
+			JSONArray jsImportData = toImportData(sjzbs);
+			zbStatus = entryService.getZbStatus(date, comTmp.getType(), ZBType.BYSJ)
+					.get(0);
+			importData(zbStatus, jsImportData, date, comTmp);
 		}
 	}
 	
+	private JSONArray toImportData(List<String[]> sjzbs) {
+		JSONArray jsonArray = new JSONArray();
+		for(int i = 0; i < sjzbs.size(); ++i){
+			jsonArray.add(createIndicator(sjzbs.get(i)[0], sjzbs.get(i)[2]));
+		}
+		return jsonArray;
+	}
+
+
 	@RequestMapping(value = "importNC.do", method = RequestMethod.GET)
 	public void importNC(HttpServletRequest request,
 			HttpServletResponse response) {

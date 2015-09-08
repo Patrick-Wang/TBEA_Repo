@@ -48,8 +48,12 @@ public class NacaoServlet {
 		WebDriver driver = new ChromeDriver();
 		driver.get(NACAO_URL);
 		int size = nacaoService.getUnfixedKeywordsCount();
-		for (int start = 0; start < size; ){
-			start += nacaoService.fetchCompanyWithUnfixedKeywords(driver, start, 100);
+		int fetchedLength = 1;
+		for (int start = 0; start < size && fetchedLength > 0; ){
+			System.out.println("Unfixed fetchedLength " + fetchedLength);
+			System.out.println("Unfixed size " + size + " start : " + start);
+			fetchedLength = nacaoService.fetchCompanyWithUnfixedKeywords(driver, start, 100);
+			start += fetchedLength;
 		}
 		driver.quit();
 	}
@@ -59,8 +63,12 @@ public class NacaoServlet {
 		WebDriver driver = new ChromeDriver();
 		driver.get(NACAO_URL);
 		int size = nacaoService.getKeywordsCount();
-		for (int start = 0; start < size; ){
-			start += nacaoService.fetchCompanyWithAllKeywords(driver, start, 100);
+		int fetchedLength = 1;
+		for (int start = 0; start < size && fetchedLength > 0; ){
+			System.out.println("All fetchedLength " + fetchedLength);
+			System.out.println("All size " + size + " start : " + start);
+			fetchedLength = nacaoService.fetchCompanyWithAllKeywords(driver, start, 100);
+			start += fetchedLength;
 		}
 		driver.quit();
 	}
@@ -75,6 +83,21 @@ public class NacaoServlet {
 	@RequestMapping(value = "/carrry_unfixed.do")
 	public void carrryUnfixed(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
 		carrryUnfixed();
+	}
+	
+	@RequestMapping(value = "/carrry_unfound.do")
+	public void carrryUnfound(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
+		WebDriver driver = new ChromeDriver();
+		driver.get(NACAO_URL);
+		int size = nacaoService.getUnfoundKeywordsCount();
+		int fetchedLength = 1;
+		for (int start = 0; start < size && fetchedLength > 0; ){
+			System.out.println("Unfound fetchedLength " + fetchedLength);
+			System.out.println("Unfound size " + size + " start : " + start);
+			fetchedLength = nacaoService.fetchCompanyWithUnfoundKeywords(driver, start, 100);
+			start += fetchedLength;
+		}
+		driver.quit();
 	}
 	
 	@RequestMapping(value = "/carrry_all.do")

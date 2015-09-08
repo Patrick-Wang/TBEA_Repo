@@ -53,7 +53,7 @@
 					<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
 					/> -->
 				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
-				<property name="showSql" value="true" />
+				<property name="showSql" value="false" />
 			</bean>
 		</property>
 		<property name="persistenceUnitName" value="localDB" />
