@@ -93,6 +93,22 @@ public class MarketServlet {
 		return new ModelAndView("mkt_import_data");
 	}
 	
+	@RequestMapping(value = "mkt_entry_data.do")
+	public @ResponseBody byte[] getMktEntryData(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		String data = request.getParameter("data");
+		JSONArray arrData = JSONArray.fromObject(data);
+		String mktType = request.getParameter("mktType");
+		String result = "";
+		if (FILETYPE_PROJECT.equals(mktType)){
+			result = marketService.importProjectData(arrData);
+		}else if (FILETYPE_SIGN.equals(mktType)) {
+			result = marketService.importSignData(arrData);
+		}else if (FILETYPE_BID.equals(mktType)) {
+			result = marketService.importBidData(arrData);
+		}
+		return result.getBytes("utf-8");
+	}
 	
 	@RequestMapping(value = "mkt_view.do")
 	public ModelAndView getMktView(HttpServletRequest request,
