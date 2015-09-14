@@ -81,5 +81,5 @@
 
 	<context:component-scan base-package="com.tbea.ic.carrier.model" />
 	<context:component-scan base-package="com.tbea.ic.carrier.service" />
-
+	<context:component-scan base-package="com.tbea.ic.carrier.webservice" />
 </beans>
