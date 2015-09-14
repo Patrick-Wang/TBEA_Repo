@@ -65,7 +65,7 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 	@Override
 	public List<MktBidInfo> getData(String companyName, Integer year) {
 		Query q;
-		if(companyName.equals("全部公司"))
+		if(companyName.equals("输变电产业集团"))
 		{
 			q = manager.createQuery(
 					"from MktBidInfo where Year(startdate) <= :year and Year(enddate) >= :year "
