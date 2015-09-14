@@ -5,7 +5,9 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.market.MarketService;
 
 @Controller
@@ -41,6 +45,11 @@ public class MarketServlet {
 	final static String FILETYPE_PROJECT = "2";
 	final static String FILETYPE_SIGN = "4";
 	final static String FILETYPE_BID = "3";
+	
+	final static String[] COMPANIES = new String[] { "全部单位", "沈变", "衡变", "新变",
+			"天变", "鲁缆", "新缆", "德缆" };
+	final static String[] ACCOUNTS = new String[] { "输变电产业集团市场部", "沈变公司市场部", "衡变公司市场部", "新变公司市场部",
+		"天变公司市场部", "鲁缆公司市场部", "新缆公司市场部", "德缆公司市场部" };
 	
 	@RequestMapping(value = "import.do")
 	public @ResponseBody byte[] importExcel(HttpServletRequest request,
@@ -110,18 +119,42 @@ public class MarketServlet {
 		return result.getBytes("utf-8");
 	}
 	
+	private String getCompanyName(Account account){
+		if (ACCOUNTS[0].equals(account.getName())){
+			return COMPANIES[0];
+		} else if (ACCOUNTS[1].equals(account.getName())){
+			return COMPANIES[1];
+		} else if (ACCOUNTS[2].equals(account.getName())){
+			return COMPANIES[2];
+		} else if (ACCOUNTS[3].equals(account.getName())){
+			return COMPANIES[3];
+		} else if (ACCOUNTS[4].equals(account.getName())){
+			return COMPANIES[4];
+		} else if (ACCOUNTS[5].equals(account.getName())){
+			return COMPANIES[5];
+		} else if (ACCOUNTS[6].equals(account.getName())){
+			return COMPANIES[6];
+		} else if (ACCOUNTS[7].equals(account.getName())){
+			return COMPANIES[7];
+		}
+		return "";
+	}
+	
 	@RequestMapping(value = "mkt_view.do")
 	public ModelAndView getMktView(HttpServletRequest request,
 			HttpServletResponse response) {
-
-		return new ModelAndView("mkt_view_data");
+		Map<String, Object> map = new HashMap<String, Object>();
+		Account account = SessionManager.getAccount(request.getSession());
+		map.put("companyName", getCompanyName(account));
+		return new ModelAndView("mkt_view_data", map);
 	}
 	
 	@RequestMapping(value = "mkt_view_update.do")
 	public @ResponseBody byte[] getMktViewUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		//Company comp = companyManager.getBMOrganization().getCompany(compType);
-		String companyName = request.getParameter("companyName");
+		Account account = SessionManager.getAccount(request.getSession());
+		String companyName =  getCompanyName(account);
 		String rpttype = request.getParameter("docType");
 		
 		//request。getParameter("rpttype");

@@ -1,6 +1,10 @@
 package com.tbea.ic.carrier.service.nacao;
 
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
+
+import com.tbea.ic.carrier.model.entity.Organization;
 
 import net.sf.json.JSONArray;
 
@@ -10,7 +14,7 @@ public interface NacaoService {
 
 	int fetchCompanyWithAllKeywords(WebDriver driver, int start, int count);
 
-	JSONArray findByName(String name);
+	List<Organization> findByName(String name);
 
 	int getUnfixedKeywordsCount();
 

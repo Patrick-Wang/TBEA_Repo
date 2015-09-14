@@ -102,7 +102,7 @@ public class NacaoServiceImpl implements NacaoService{
 		return keywords.size();
 	}
 
-	public JSONArray findByName(String name) {
+	public List<Organization> findByName(String name) {
 		KeyWords key = keywordsDao.getKeyWordsByKey(name);
 		if (null == key){
 			key = new KeyWords();
@@ -112,7 +112,7 @@ public class NacaoServiceImpl implements NacaoService{
 		}
 		
 		List<Organization> orgs = orgDao.getByName(name);
-		return JSONArray.fromObject(orgs);
+		return orgs;
 	}
 
 	public int getUnfixedKeywordsCount() {

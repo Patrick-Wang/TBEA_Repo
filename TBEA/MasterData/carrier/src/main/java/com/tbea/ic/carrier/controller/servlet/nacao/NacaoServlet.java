@@ -76,7 +76,7 @@ public class NacaoServlet {
 	@RequestMapping(value = "/query_by_name.do")
 	public @ResponseBody byte[] queryByName(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
 		String name = request.getParameter("companyName");
-		JSONArray orgs = nacaoService.findByName(name);
+		JSONArray orgs = JSONArray.fromObject(nacaoService.findByName(name));
 		return orgs.toString().getBytes("utf-8");
 	}
 	

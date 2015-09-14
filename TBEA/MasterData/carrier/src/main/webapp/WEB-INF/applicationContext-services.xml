@@ -17,6 +17,9 @@
         http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
 
+
+
+
 	<!-- -->
 	<!-- PROPERTIES -->
 	<!-- -->
@@ -61,8 +64,6 @@
 
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
-
-
 	<!-- -->
 	<!-- TRANSACTIONS -->
 	<!-- -->
@@ -70,8 +71,6 @@
 
 
 	<aop:aspectj-autoproxy />
-
-
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
@@ -81,5 +80,4 @@
 
 	<context:component-scan base-package="com.tbea.ic.carrier.model" />
 	<context:component-scan base-package="com.tbea.ic.carrier.service" />
-	<context:component-scan base-package="com.tbea.ic.carrier.webservice" />
 </beans>
