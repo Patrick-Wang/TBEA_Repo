@@ -109,6 +109,7 @@ public class NacaoServiceImpl implements NacaoService{
 			key.setText(name);
 			key.setFixed("N");
 			keywordsDao.update(key);
+			return null;
 		}
 		
 		List<Organization> orgs = orgDao.getByName(name);
@@ -136,6 +137,20 @@ public class NacaoServiceImpl implements NacaoService{
 			fetchCompany(driver, keywords);
 		}
 		return keywords.size();
+	}
+
+	public List<Organization> findByNameExactly(String compName) {
+		KeyWords key = keywordsDao.getKeyWordsByKey(compName);
+		if (null == key){
+			key = new KeyWords();
+			key.setText(compName);
+			key.setFixed("N");
+			keywordsDao.update(key);
+			return null;
+		}
+		
+		List<Organization> orgs = orgDao.getByNameExactly(compName);
+		return orgs;
 	}
 
 }

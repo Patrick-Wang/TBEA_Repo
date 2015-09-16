@@ -28,4 +28,10 @@ public class OrganizationDaoImpl implements OrganizationDao{
 		return q.getResultList();
 	}
 
+	public List<Organization> getByNameExactly(String compName) {
+		Query q = manager.createQuery("from Organization where jgmc = :name");
+		q.setParameter("name", compName);
+		return q.getResultList();
+	}
+
 }

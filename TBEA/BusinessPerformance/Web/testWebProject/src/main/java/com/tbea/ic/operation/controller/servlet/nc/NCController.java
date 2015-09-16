@@ -24,7 +24,6 @@ import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.NCZB;
 import com.tbea.ic.operation.service.approve.ApproveService;
@@ -64,7 +63,9 @@ public class NCController {
 	public void scheduleImportNC(){
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		importNC(Util.toDate(cal));
+		Date d = Util.toDate(cal);
+		importNC2LocalNC(d);
+		importLocalNC2Local(d);
 	}
 	
 	
@@ -111,15 +112,12 @@ public class NCController {
 		}
 	} 
 	
-	private void importNC(Date d){
+	
+	private void importNC2LocalNC(Date d){
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		// Calendar.MONTH获得月份正常情况下为自然月-1,
-		// 且当前需求中数据的月份为存储时间的前一个月，所以在下面公式调用中不必+1
-		int month = cal.get(Calendar.MONTH) + 1;
-		int year = cal.get(Calendar.YEAR);
 
-		// 存储NC对应指标
+		// 存储NC对应指标    
 		// 合并
 		List<String> unitList = new ArrayList<String>();
 		unitList.add("0202AA000000");
@@ -134,10 +132,20 @@ public class NCController {
 		unitList.add("CC10");
 		unitList.add("CC04");
 		ncService.connetToNCSystem("510", cal, unitList);
+		
 		// 单体
 		List<String> singleList = new ArrayList<String>();
 		singleList.add("060100000000");
 		ncService.connetToNCSystem("0", cal, singleList);
+	}
+	
+	private void importLocalNC2Local(Date d){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		// Calendar.MONTH获得月份正常情况下为自然月-1,
+		// 且当前需求中数据的月份为存储时间的前一个月，所以在下面公式调用中不必+1
+		int month = cal.get(Calendar.MONTH) + 1;
+		int year = cal.get(Calendar.YEAR);
 
 		ZBStatus zbStatus = null;
 		List<NCZB> NCZBList = ncService.getNCZBByDate(year, month);
@@ -190,7 +198,16 @@ public class NCController {
 	@RequestMapping(value = "importNC.do", method = RequestMethod.GET)
 	public void importNC(HttpServletRequest request,
 			HttpServletResponse response) {
-		importNC(DateSelection.getDate(request));
+		Date d = DateSelection.getDate(request);
+		importNC2LocalNC(d);
+		importLocalNC2Local(d);
+	}
+	
+	@RequestMapping(value = "importNC2Local.do", method = RequestMethod.GET)
+	public void importNC2Local(HttpServletRequest request,
+			HttpServletResponse response) {
+		Date d = DateSelection.getDate(request);
+		importNC2LocalNC(d);
 	}
 
 }

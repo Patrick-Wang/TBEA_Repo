@@ -10,43 +10,53 @@ import javax.persistence.Table;
 @Table(name = "organization")
 public class Organization {
 	
+	//办证机构名称
 	@Column(name = "bzjgmcs")
 	String bzjgmcs;//	:	海南省澄迈县质量技术监督局
 	
+	//办证日期
 	@Column(name = "bzrq")
 	String bzrq;//	:	2012-07-06
 			
+	//录入机构代码
 	@Column(name = "entryJgdm")
 	String entryJgdm;//	:	
 			
+	//机构代码
 	@Id
 	@Column(name = "jgdm")
 	String jgdm;//	:	557373525
 			
+	//机构地址
 	@Column(name = "jgdz")
 	String jgdz;//	:	海南省澄迈县老城高新技术示范区(海南生态软件园)
-			
+		
+	//机构类型
 	@Column(name = "jglx")
 	String jglx;//	:	企业法人                                    
 			
+	//机构名称
 	@Column(name = "jgmc")
 	String jgmc;//	:	东软集团(海南)有限公司
-			
+
 	@Column(name = "ly")
 	String ly;//	:	ZK_Y
 			
 	@Column(name = "reservea")
 	String reservea;//	:	
-			
+
 	@Column(name = "rowNum")
 	String rowNum;//	:	
 			
+	//注册号
 	@Column(name = "zch")
 	String zch;//	:	469027000015743
 			
+	//注册日期
 	@Column(name = "zcrq")
 	String zcrq;//	:	2010-07-26
 			
+	//作废日期
 	@Column(name = "zfrq")
 	String zfrq;//	:	2015-07-26
 

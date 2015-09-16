@@ -17,7 +17,7 @@ public class NacaoWebServiceImpl implements NacaoWebService {
 	NacaoService nacaoService;
 
 	public List<Organization> queryByName(String compName) {
-		return nacaoService.findByName(compName);
+		return nacaoService.findByNameExactly(compName);
 	}
 
 }  

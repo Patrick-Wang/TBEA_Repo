@@ -2,6 +2,7 @@ package com.tbea.ic.carrier.controller.servlet.nacao;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.ic.carrier.model.entity.Organization;
 import com.tbea.ic.carrier.service.nacao.NacaoService;
 
 
@@ -73,11 +76,20 @@ public class NacaoServlet {
 		driver.quit();
 	}
 	
+	@RequestMapping(value = "/search.do")
+	public ModelAndView getSearchView(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
+		return new ModelAndView("searchView");
+	}
+	
 	@RequestMapping(value = "/query_by_name.do")
 	public @ResponseBody byte[] queryByName(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
 		String name = request.getParameter("companyName");
-		JSONArray orgs = JSONArray.fromObject(nacaoService.findByName(name));
-		return orgs.toString().getBytes("utf-8");
+		List<Organization> orgs = nacaoService.findByName(name);
+		if (orgs != null){
+			return JSONArray.fromObject(orgs).toString().getBytes("utf-8");
+		}else{
+			return "{\"result\":\"该关键字尚未被收录，请明日查询\"}".getBytes("utf-8");
+		}
 	}
 	
 	@RequestMapping(value = "/carrry_unfixed.do")

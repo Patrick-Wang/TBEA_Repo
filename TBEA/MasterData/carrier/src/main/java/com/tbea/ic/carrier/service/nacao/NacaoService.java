@@ -24,4 +24,6 @@ public interface NacaoService {
 
 	int fetchCompanyWithUnfoundKeywords(WebDriver driver, int start, int i);
 
+	List<Organization> findByNameExactly(String compName);
+
 }

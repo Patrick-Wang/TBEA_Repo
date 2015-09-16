@@ -10,4 +10,6 @@ public interface OrganizationDao {
 
 	List<Organization> getByName(String name);
 
+	List<Organization> getByNameExactly(String compName);
+
 }

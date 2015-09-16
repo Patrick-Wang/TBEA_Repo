@@ -10,5 +10,4 @@ import com.tbea.ic.carrier.model.entity.Organization;
 public interface NacaoWebService {  
 
    public List<Organization> queryByName(String compName);  
-     
 }  

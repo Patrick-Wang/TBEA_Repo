@@ -24,6 +24,8 @@
         http://cxf.apache.org/transports/http/configuration      
         http://cxf.apache.org/schemas/configuration/http-conf.xsd">
 
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
 	<bean id="nacaoWebService" class="com.tbea.ic.carrier.controller.webservice.nacao.NacaoWebServiceImpl" />
 	<jaxws:server id="webService"
