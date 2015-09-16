@@ -48,7 +48,8 @@
 	(function() {
 		$(document).ready(
 				function() {
-					instance.init("table1", "", "");
+					//instance.init("table1", ${companyName});
+					instance.init("table1", ${companyName});
 				});
 	})();
 </script>
@@ -168,7 +169,7 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class="header">
-		<h1>市场部数据信息汇总</h1>
+		<h1>${companyName}市场部数据信息汇总</h1>
 	</div>
 
 
@@ -176,20 +177,20 @@ th.ui-th-ltr {
 		<tr>
 			<td><Table>
 					<tr>
-						<td>
+<!-- 						<td> -->
 							
-							<select id="comp_category" onchange="instance.onCompanySelected()" style="width: 135px">
-								<option value="全部公司"selected="selected">全部单位</option>
-								<option value="沈变" >沈变公司</option>
-								<option value="衡变">衡变公司</option>
-								<option value="新变">新变厂</option>
-								<option value="天变">天变公司</option>
-								<option value="鲁缆">鲁缆公司</option>
-								<option value="新缆">新缆厂</option>
-								<option value="德缆">德缆公司</option>
-							</select>
-						</td>
-						<td width="10px"></td>
+<!-- 							<select id="comp_category" onchange="instance.onCompanySelected()" style="width: 135px"> -->
+<!-- 								<option value="全部公司"selected="selected">全部单位</option> -->
+<!-- 								<option value="沈变" >沈变公司</option> -->
+<!-- 								<option value="衡变">衡变公司</option> -->
+<!-- 								<option value="新变">新变厂</option> -->
+<!-- 								<option value="天变">天变公司</option> -->
+<!-- 								<option value="鲁缆">鲁缆公司</option> -->
+<!-- 								<option value="新缆">新缆厂</option> -->
+<!-- 								<option value="德缆">德缆公司</option> -->
+<!-- 							</select> -->
+<!-- 						</td> -->
+<!-- 						<td width="10px"></td> -->
 						<td>
 							<select id="rpttype" style="width: 115px" onchange="instance.onDoc_TypeSelected()">
 								<option value="bid_info">
