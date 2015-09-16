@@ -203,8 +203,8 @@ public class NCController {
 		importLocalNC2Local(d);
 	}
 	
-	@RequestMapping(value = "importNC2Local.do", method = RequestMethod.GET)
-	public void importNC2Local(HttpServletRequest request,
+	@RequestMapping(value = "importNC2LocalNC.do", method = RequestMethod.GET)
+	public void importNC2LocalNC(HttpServletRequest request,
 			HttpServletResponse response) {
 		Date d = DateSelection.getDate(request);
 		importNC2LocalNC(d);
