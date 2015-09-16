@@ -108,7 +108,7 @@ public class MarketServlet {
 		String data = request.getParameter("data");
 		JSONArray arrData = JSONArray.fromObject(data);
 		String mktType = request.getParameter("mktType");
-		String result = "";
+		String result = "false";
 		if (FILETYPE_PROJECT.equals(mktType)){
 			result = marketService.importProjectData(arrData);
 		}else if (FILETYPE_SIGN.equals(mktType)) {
@@ -116,7 +116,11 @@ public class MarketServlet {
 		}else if (FILETYPE_BID.equals(mktType)) {
 			result = marketService.importBidData(arrData);
 		}
-		return result.getBytes("utf-8");
+		
+		if ("OK".equals(result)){
+			result = "true";
+		}
+		return ("{\"result\":\"" + result + "\"}").getBytes("utf-8");
 	}
 	
 	private String getCompanyName(Account account){
