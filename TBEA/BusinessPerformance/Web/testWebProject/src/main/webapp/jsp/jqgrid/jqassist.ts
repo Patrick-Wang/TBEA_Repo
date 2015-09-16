@@ -217,11 +217,13 @@ module JQTable {
             align: TextAlign = TextAlign.Right,
             width: number = 0,
             editType: string = undefined,
-            options: any = undefined) {
+            options: any = undefined,
+            isNumber: boolean = true) {
             this.mOpts = {
                 name: name,
                 id: id,
                 isReadOnly: isReadOnly,
+                isNumber: isNumber,
                 align: align,
                 width: width,
                 editType: editType,
@@ -233,6 +235,7 @@ module JQTable {
             var node: Node = new Node(null, null);
             node.mOpts = $.extend({}, {
                 isReadOnly: false,
+                isNumber: true,
                 align: TextAlign.Right,
                 width: 0
             }, opts);
