@@ -203,13 +203,20 @@ module JQTable {
         private mReadOnly: boolean;
         private mWidth: number;
         private mAlign: TextAlign;
+        private mEditAble: boolean;
+        private mEditType: string;
+        private mOptions:string;
 
-        constructor(name: string, id: string, isReadOnly: boolean = true, align : TextAlign = TextAlign.Right, width: number = 0) {
+        constructor(name: string, id: string, isReadOnly: boolean = false, 
+            align : TextAlign = TextAlign.Right, width: number = 0, editType: string = undefined, options:any = undefined) {
             this.mWidth = width;
             this.mName = name;
             this.mId = id;
             this.mReadOnly = isReadOnly;
             this.mAlign = align;
+            //this.mEditAble = editAble;
+            this.mEditType = editType;
+            this.mOptions = options;           
         }
 
 		public align() : TextAlign{
@@ -225,6 +232,16 @@ module JQTable {
 
         public isReadOnly(): boolean {
             return true == this.mReadOnly;
+        }
+        
+        public editType():string
+        {
+          return this.mEditType;  
+        }
+        
+        public editOptions():string
+        {
+          return this.mOptions;  
         }
 
         public append(child: Node): Node {
@@ -425,7 +442,10 @@ module JQTable {
                         index: colId,
                         sortable: false,
                         editable: !nodes[j].isReadOnly(),
-                        editrules: !nodes[j].isReadOnly() ? {number:true} : undefined,
+                        edittype:nodes[j].editType(),
+                        editoptions:nodes[j].editOptions(),
+                        //editrules: !nodes[j].isReadOnly() ? {number:true} : undefined,
+                        //editrules:undefined,
                         cellattr: function(rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
