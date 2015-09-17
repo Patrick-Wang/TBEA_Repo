@@ -1,7 +1,7 @@
 /// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
 /// <reference path="dateSelector.ts" />
 /// <reference path="companySelector.ts" />
+/// <reference path="util.ts" />
 declare var echarts;
 declare var $;
 module approve_template {
@@ -561,28 +561,28 @@ module approve_template {
                 }
                 this.mDataSet.post({ year: date.year, month: date.month, approveType: this.mOpt.approveType, companies: JSON.stringify(comps) })
                     .then((data: any) => {
-                    this.updateTitle();
-                    if (data[0].length == 0) {
-                        $("#approve").css("display", "none");
-                    } else {
-                        $("#approve").css("display", "");
-                        $("#nothing").css("display", "none");
-                    }
+                        this.updateTitle();
+                        if (data[0].length == 0) {
+                            $("#approve").css("display", "none");
+                        } else {
+                            $("#approve").css("display", "");
+                            $("#nothing").css("display", "none");
+                        }
 
-                    if (data[1].length == 0) {
-                        $("#unapprove").css("display", "none");
-                    } else {
-                        $("#unapprove").css("display", "");
-                        $("#nothing").css("display", "none");
-                    }
+                        if (data[1].length == 0) {
+                            $("#unapprove").css("display", "none");
+                        } else {
+                            $("#unapprove").css("display", "");
+                            $("#nothing").css("display", "none");
+                        }
 
-                    if (data[0].length == 0 && data[1].length == 0) {
-                        $("#nothing").css("display", "");
-                    }
-                    else {
-                        this.mCurView.process(data, this.mDateSelector.getDate(), this.mCompanySelector.getRawCompanyData());
-                    }
-                });
+                        if (data[0].length == 0 && data[1].length == 0) {
+                            $("#nothing").css("display", "");
+                        }
+                        else {
+                            this.mCurView.process(data, this.mDateSelector.getDate(), this.mCompanySelector.getRawCompanyData());
+                        }
+                    });
             } else {
                 Util.MessageBox.tip("请选择公司");
             }

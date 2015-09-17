@@ -20,6 +20,8 @@ public interface KeyWordsDao {
 
 	int getKeyWorksCount();
 
+	void remove(KeyWords keywords);
+	
 	int getUnfoundKeyWorksCount();
 
 	List<KeyWords> getUnfoundKeyWorks(int start, int count);

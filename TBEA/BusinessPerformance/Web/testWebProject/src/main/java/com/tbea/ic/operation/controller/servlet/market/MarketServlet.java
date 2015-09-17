@@ -165,11 +165,11 @@ public class MarketServlet {
 		if (null != request.getParameter("year")){
 			year = Integer.valueOf(request.getParameter("year"));
 		}
-		if(rpttype.equals("bid_info")){
+		if(rpttype.equals(TYPE_BID)){
 			list.add(marketService.getBidData(companyName, year));
-		}else if(rpttype.equals("project_info")){
+		}else if(rpttype.equals(TYPE_PROJECT)){
 			list.add(marketService.getPrjData(companyName, year));
-		}else if(rpttype.equals("sign_contract")){
+		}else if(rpttype.equals(TYPE_SIGN)){
 			list.add(marketService.getContData(companyName));
 		}
 		String listJson = JSONArray.fromObject(list).toString().replace("null", "\"\"");

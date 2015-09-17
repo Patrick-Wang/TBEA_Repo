@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h2>Hello World!</h2>
+<h2>主数据</h2>
+<a href="nacao/search.do">机构名称查询</a>
 </body>
 </html>

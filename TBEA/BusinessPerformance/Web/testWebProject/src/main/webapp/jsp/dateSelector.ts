@@ -32,7 +32,7 @@ module Util {
             if (asSeason && isExist(this.mEndDate.month)) {
                 this.mAsSeasion = true;
                 this.mEndDate.month = 3 * (parseInt((this.mEndDate.month - 1) / 3 + '') + 1);
-               // this.mEndDate = addMonth(this.mEndDate, -((this.mEndDate.month % 3));
+                // this.mEndDate = addMonth(this.mEndDate, -((this.mEndDate.month % 3));
             } else {
                 this.mAsSeasion = false;
             }
@@ -42,7 +42,7 @@ module Util {
                 month: this.mEndDate.month,
                 day: this.mEndDate.day
             };
-            
+
             if (!isExist(this.mStartDate.month)) {
                 this.mStartDate.month = 1;
             }
@@ -232,7 +232,7 @@ module Util {
                     daySel.multiselect({
                         multiple: false,
                         header: "Select an option",
-                        height:'100%',//
+                        height: '100%',//
                         noneSelectedText: "Select an Option",
                         selectedList: 1
                     });

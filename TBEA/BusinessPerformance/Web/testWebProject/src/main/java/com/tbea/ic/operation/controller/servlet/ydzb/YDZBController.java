@@ -88,41 +88,10 @@ public class YDZBController {
 	@Autowired
 	private GszbService gszbService;
 
-	
-//	private boolean isSyb(CompanyType compType){
-//		return CompanyType.SBDCYJT == compType || CompanyType.XNYSYB == compType || CompanyType.NYSYB == compType;
-//	}
-//	
-//	private boolean isSbdcy(CompanyType compType){
-//		return CompanyType.BYQCY == compType ||
-//				CompanyType.XLCY == compType ||
-//				CompanyType.DBSBDCYJT == compType ||
-//				CompanyType.NFSBDCYJT == compType;
-//	}
-//	
-//
-//	private List<Company> getJydw(CompanyType sybOrJydw){
-//		List<Company> comps;
-//		if (isSyb(sybOrJydw)){
-//			Organization org = companyManager.getBMDBOrganization();
-//			comps = org.getCompany(sybOrJydw).getSubCompanies();
-//		} else if (isSbdcy(sybOrJydw)){
-//			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
-//			comps = orgJyzb.getCompany(sybOrJydw).getSubCompanies();
-//		} else if(CompanyType.GCCY == sybOrJydw){
-//			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();	
-//			Organization org = companyManager.getBMDBOrganization();
-//			comps = new ArrayList<Company>();
-//			for (Company comp : orgJyzb.getCompany(sybOrJydw).getSubCompanies()){
-//				comps.add(org.getCompany(comp.getType()));
-//			}
-//		} else {
-//			Organization org = companyManager.getBMDBOrganization();
-//			comps = new ArrayList<Company>();
-//			comps.add(org.getCompany(sybOrJydw));
-//		}
-//		return comps;
-//	}
+	private final static String INDICATOR_JZCSYL = "净资产收益率(%)";
+	private final static String INDICATOR_DJQY = "其中：单机签约";
+	private final static String INDICATOR_CTQY_WMY = "其中：成套签约(万美元)";
+	private final static String INDICATOR_CTQY_WY = "其中：成套签约(万元)";
 	
 	private List<String[]> getSybOrJydwData(Date d, CompanyType sybOrJydw){
 		List<Company> jydws = VirtualJYZBOrganization.getJydw(companyManager, sybOrJydw);
@@ -365,12 +334,29 @@ public class YDZBController {
 	private void removeJzcsyl(CompanyType compType, List<String[]> zbData){
 		if (VirtualJYZBOrganization.isSyb(compType) || VirtualJYZBOrganization.isSbdcy(compType)){
 			for (int i = 0; i < zbData.size(); ++i){
-				if ("净资产收益率(%)".equals(zbData.get(i)[0])){
+				if (INDICATOR_JZCSYL.equals(zbData.get(i)[0])){
 					for (int j = 1; j < zbData.get(i).length; ++j){
 						zbData.get(i)[j] = null;
 					}
 					break;
 				}
+			}
+		}
+	}
+	
+	private boolean contains(String[] zbs, String val){
+		for(int i = 0; i < zbs.length; ++i){
+			if(val.contains(zbs[i])){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private void removeZbs(List<String[]> zbData, String[] zbs){
+		for (int i = zbData.size() - 1; i >= 0; --i){
+			if (contains(zbs, zbData.get(i)[0])){
+				zbData.remove(i);
 			}
 		}
 	}
@@ -443,6 +429,11 @@ public class YDZBController {
 		String compName = compType.getValue();
 		String fileName = compName + "经营指标完成情况";
 		List<String[]> ret = this.getSybOrJydwData(d, compType);
+		this.removeZbs(ret, new String[]{
+				INDICATOR_DJQY,
+				INDICATOR_CTQY_WY,
+				INDICATOR_CTQY_WMY
+		});
 		template = JyzbExcelTemplate.createTemplate(SheetType.GS_SYB);
 	
 		FormatterHandler formatterChain = this.getFormatterChainWithHeader(
@@ -1379,7 +1370,7 @@ public class YDZBController {
 						formatterChain.handle(null, j, template, cell, data.get(i)[j]);
 					}
 				}
-			}		
+			}
 				
 			template.write(response, fileNameAndSheetName + ".xls");
 			return "".getBytes("utf-8");

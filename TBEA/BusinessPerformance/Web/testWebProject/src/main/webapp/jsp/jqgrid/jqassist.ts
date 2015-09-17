@@ -213,7 +213,7 @@ module JQTable {
         constructor(
             name: string,
             id: string,
-            isReadOnly: boolean = false,
+            isReadOnly: boolean = true,
             align: TextAlign = TextAlign.Right,
             width: number = 0,
             editType: string = undefined,
@@ -234,7 +234,7 @@ module JQTable {
         public static create(opts: NodeOption): Node {
             var node: Node = new Node(null, null);
             node.mOpts = $.extend({}, {
-                isReadOnly: false,
+                isReadOnly: true,
                 isNumber: true,
                 align: TextAlign.Right,
                 width: 0
