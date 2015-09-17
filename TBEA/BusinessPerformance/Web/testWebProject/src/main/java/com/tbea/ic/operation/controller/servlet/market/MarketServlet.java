@@ -292,8 +292,10 @@ public class MarketServlet {
 			row = sheet.createRow(i + 1);
 			for (int j = 0, jlen = title.length; j < jlen; ++j) {
 				HSSFCell cell = row.createCell(j);
-				if (list.get(0)[i][j] != null){
+				if (!"null".equals(list.get(0)[i][j])){
 					cell.setCellValue(list.get(0)[i][j]);
+				}else{
+					cell.setCellValue("");
 				}
 			}
 		}
