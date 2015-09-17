@@ -46,8 +46,8 @@ public class NacaoServlet {
 	NacaoService nacaoService;
 	
 	
-	@Scheduled(cron="0 30 8 ? * 2-6")
-	public void carrryUnfixed(){
+//	@Scheduled(cron="0 30 8 ? * 2-6")
+	public void carryUnfixed(){
 		WebDriver driver = new ChromeDriver();
 		driver.get(NACAO_URL);
 		int size = nacaoService.getUnfixedKeywordsCount();
@@ -92,27 +92,27 @@ public class NacaoServlet {
 //		}
 	}
 	
-	@RequestMapping(value = "/carrry_unfixed.do")
+	@RequestMapping(value = "/carry_unfixed.do")
 	public void carrryUnfixed(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
-		carrryUnfixed();
+		carryUnfixed();
 	}
 	
-	@RequestMapping(value = "/carrry_unfound.do")
-	public void carrryUnfound(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
-		WebDriver driver = new ChromeDriver();
-		driver.get(NACAO_URL);
-		int size = nacaoService.getUnfoundKeywordsCount();
-		int fetchedLength = 1;
-		for (int start = 0; start < size && fetchedLength > 0; ){
-			System.out.println("Unfound fetchedLength " + fetchedLength);
-			System.out.println("Unfound size " + size + " start : " + start);
-			fetchedLength = nacaoService.fetchCompanyWithUnfoundKeywords(driver, start, 100);
-			start += fetchedLength;
-		}
-		driver.quit();
-	}
+//	@RequestMapping(value = "/carry_unfound.do")
+//	public void carrryUnfound(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
+//		WebDriver driver = new ChromeDriver();
+//		driver.get(NACAO_URL);
+//		int size = nacaoService.getUnfoundKeywordsCount();
+//		int fetchedLength = 1;
+//		for (int start = 0; start < size && fetchedLength > 0; ){
+//			System.out.println("Unfound fetchedLength " + fetchedLength);
+//			System.out.println("Unfound size " + size + " start : " + start);
+//			fetchedLength = nacaoService.fetchCompanyWithUnfoundKeywords(driver, start, 100);
+//			start += fetchedLength;
+//		}
+//		driver.quit();
+//	}
 	
-	@RequestMapping(value = "/carrry_all.do")
+	@RequestMapping(value = "/carry_all.do")
 	public  void carrryAll(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
 		carrryAll();
 	}
