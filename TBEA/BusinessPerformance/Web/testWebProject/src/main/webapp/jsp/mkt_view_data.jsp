@@ -4,6 +4,9 @@
 <html>
 <head>
 
+<!-- message box -->
+<link href="../jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
+
 <!-- jquery -->
 <script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
 
@@ -44,8 +47,7 @@
 	type="text/javascript"></script>
 <script src="../jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
 <script src="../jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
-	
-	
+
 <!-- jqgrid assist -->
 <script src="../jsp/jqgrid/jqassist.js" type="text/javascript"></script>
 
@@ -55,8 +57,11 @@
 <script src="../jsp/dateSelector.js" type="text/javascript"></script>
 <script src="../jsp/unitedSelector.js" type="text/javascript"></script>
 <script src="../jsp/companySelector.js" type="text/javascript"></script>
+<!-- message box -->
+<script src="../jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
+<script src="../jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="../jsp/messageBox.js" type="text/javascript"></script>
-    <script src="../jsp/mkt_view_data.js" type="text/javascript"></script>
+<script src="../jsp/mkt_view_data.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 	var instance = mkt_view_data.View.newInstance();
