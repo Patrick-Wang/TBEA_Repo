@@ -1,6 +1,9 @@
 package com.tbea.ic.operation.controller.servlet.market;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -16,6 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -26,7 +33,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.common.jyzbexcel.FormatterHandler;
+import com.tbea.ic.operation.common.jyzbexcel.JyzbExcelTemplate;
+import com.tbea.ic.operation.common.jyzbexcel.JyzbExcelTemplate.SheetType;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.market.MarketService;
@@ -176,6 +189,117 @@ public class MarketServlet {
 		String listJson = JSONArray.fromObject(list).toString().replace("null", "\"\"");
 //		System.out.println(listJson);
 		return listJson.getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "mkt_view_export.do")
+	public @ResponseBody byte[] mktViewExport(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Account account = SessionManager.getAccount(request.getSession());
+		String companyName =  getCompanyName(account);
+		String rpttype = request.getParameter("mktType");
+		
+
+		List<String[][]> list = new ArrayList<String[][]>();
+		Integer year = Calendar.getInstance().get(Calendar.YEAR);
+		if (null != request.getParameter("year")){
+			year = Integer.valueOf(request.getParameter("year"));
+		}
+		String[] title = null;
+		if(rpttype.equals(TYPE_BID)){
+			list.add(marketService.getBidData(companyName, year));
+			title = new String[]{
+					"单位",
+					"投标编号",
+					"项目信息编号",
+					"授权编号",
+					"办事处或项目部",
+					"投标月份",
+					"投标日期",
+					"所属行业",
+					"所属系统",
+					"项目所在区域",
+					"项目名称",
+					"业主单位",
+					"产品型号",
+					"电压等级",
+					"投标数量",
+					"投标容量(kVA)",
+					"我厂投标价格",
+					"中标厂家",
+					"中标价格",
+					"中标或未中标原因分析",
+					"定标月份",
+					"状态",
+					"是否反馈投标总结",
+					"具体投标单位"
+			};
+		}else if(rpttype.equals(TYPE_PROJECT)){
+			list.add(marketService.getPrjData(companyName, year));
+			title = new String[]{
+					"单位",
+					"办事处名称",
+					"项目序号",
+					"所属行业",
+					"所属系统",
+					"项目名称",
+					"业主单位",
+					"产品型号",
+					"数量",
+					"预计投标金额",
+					"预计招标时间",
+					"项目所在区域",
+					"项目简介",
+					"目前推进跟踪情况及后期计划",
+					"本单位项目负责人及联系方式",
+					"本单位负责该项目的主管领导",
+					"跟踪该项目的其它内部企业名称",
+					"投标情况",
+					"备注"
+			};
+		}else if(rpttype.equals(TYPE_SIGN)){
+			list.add(marketService.getContData(companyName));
+			title = new String[]{
+					"单位",
+					"合同编号",
+					"办事处或项目部",
+					"签约月份",
+					"所属行业",
+					"所属系统",
+					"项目所在区域",
+					"项目名称",
+					"业主单位",
+					"产品型号/类型",
+					"电压等级",
+					"数量（台）",
+					"签约容量(kVA)",
+					"签约金额",
+					"付款方式",
+					"签订人",
+					"具体签约单位"
+			};
+		}
+		
+		HSSFWorkbook workbook = new HSSFWorkbook();	
+		HSSFSheet sheet = workbook.createSheet("市场部");
+		
+		HSSFRow row = sheet.createRow(0);
+		for (int j = 0, jlen = title.length; j < jlen; ++j) {
+			HSSFCell cell = row.createCell(j);
+			cell.setCellValue(title[j]);
+		}
+		
+		for (int i = 0, ilen = list.get(0).length; i < ilen; ++i) {
+			row = sheet.createRow(i + 1);
+			for (int j = 0, jlen = title.length; j < jlen; ++j) {
+				HSSFCell cell = row.createCell(j);
+				cell.setCellValue(list.get(0)[i][j]);
+			}
+		}
+		
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode("市场部信息", "UTF-8")  +".xls\"");
+		workbook.write(response.getOutputStream());
+		return "".getBytes("utf-8");
 	}
 
 }
