@@ -49,7 +49,7 @@
 		$(document).ready(
 				function() {
 					//instance.init("table1", ${companyName});
-					instance.init("table1", ${companyName});
+					instance.init("table1", "${companyName}");
 				});
 	})();
 </script>
@@ -192,14 +192,14 @@ th.ui-th-ltr {
 <!-- 						</td> -->
 <!-- 						<td width="10px"></td> -->
 						<td>
-							<select id="rpttype" style="width: 115px" onchange="instance.onDoc_TypeSelected()">
-								<option value="bid_info">
-									投标台账
-								</option>
-								<option value="project_info">
+							<select id="rpttype" style="width: 115px" onchange="instance.onDoc_TypeSelected()">								
+								<option value="2">
 									项目信息
 								</option>
-								<option value="sign_contract">
+								<option value="3">
+									投标台账
+								</option>
+								<option value="4">
 									签约台账
 								</option>
 							</select>
@@ -212,6 +212,35 @@ th.ui-th-ltr {
 		</tr>
 		<tr>
 			<td><div id="table1" style="margin-bottom: 15px"></div></td>
+		</tr>
+		
+		<tr>
+			<td>
+				<Table id="assist" style="display:none">
+					<tr>
+ 					  <c:if test="${(companyName != '输变电产业集团')}"> 
+						<td>
+							<input class="exportButton" type="button" value="提交"
+								style="width: 100px;"
+								onclick="instance.saveData()"
+								class="ui-button ui-widget ui-state-default ui-corner-all"
+								role="button" aria-disabled="false" ></input>
+						</td>
+				</c:if>
+						<td>
+							<form id="exportxmgs" method="post">
+								<input class="exportButton" type="button" value="导出数据"
+									style="width: 120px;"
+									onclick="instance.exportExcel()"
+									class="ui-button ui-widget ui-state-default ui-corner-all"
+									role="button" aria-disabled="false"></input>
+							</form>
+						</td>
+					</tr>
+				</Table>
+			</td>
+
+
 		</tr>
 
 	</table>
