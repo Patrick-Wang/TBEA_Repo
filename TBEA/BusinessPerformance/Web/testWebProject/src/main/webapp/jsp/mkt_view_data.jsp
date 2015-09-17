@@ -5,42 +5,57 @@
 <head>
 
 <!-- jquery -->
-	<script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
-	
-	<!-- jquery ui -->
-	<!-- jquery ui gray -->
-	<link rel="stylesheet" type="text/css" href="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
-	<script type="text/javascript" src="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
-	<!-- jquery ui blue -->
-	<link rel="stylesheet" type="text/css" media="screen" href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
-	<script src="../jsp/jqgrid/js/jquery-ui-custom.min.js" type="text/javascript"></script>
-	
-	<!-- 多选菜单 -->
-	<link rel="stylesheet" type="text/css" href="../jsp/multi-select/jquery.multiselect.css" />
-	<link rel="stylesheet" type="text/css" href="../jsp/multi-select/assets/style.css" />
-	<link rel="stylesheet" type="text/css" href="../jsp/multi-select/assets/prettify.css" />
-	<script type="text/javascript" src="../jsp/multi-select/assets/prettify.js"></script>
-	<script type="text/javascript" src="../jsp/multi-select/jquery.multiselect.js"></script>
-	
-	
-	<!-- jqgrid -->
-	<link rel="stylesheet" type="text/css" media="screen" href="../jsp/jqgrid/themes/ui.jqgrid.css">
-	<link rel="stylesheet" type="text/css" media="screen" href="../jsp/jqgrid/themes/ui.multiselect.css">
-	<script src="../jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
-	<script src="../jsp/jqgrid/js/jquery.contextmenu.js" type="text/javascript"></script>
-	<script src="../jsp/jqgrid/js/i18n/grid.locale-cn.js" type="text/javascript"></script>
-	<script src="../jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
-	<script src="../jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
-	
-	<!-- jqgrid assist -->
-	<script src="../jsp/jqgrid/jqassist.js" type="text/javascript"></script>
+<script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
 
-	<script src="../jsp/json2.js" type="text/javascript"></script>
-	<script src="../jsp/util.js" type="text/javascript"></script>
-	<script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
-	<script src="../jsp/unitedSelector.js" type="text/javascript"></script>
-	<script src="../jsp/companySelector.js" type="text/javascript"></script>
-	<script src="../jsp/dateSelector.js" type="text/javascript"></script>
+<!-- jquery ui -->
+<!-- jquery ui gray -->
+<link rel="stylesheet" type="text/css"
+	href="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
+<script type="text/javascript"
+	src="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
+<!-- jquery ui blue -->
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
+<script src="../jsp/jqgrid/js/jquery-ui-custom.min.js"
+	type="text/javascript"></script>
+
+<!-- 多选菜单 -->
+<link rel="stylesheet" type="text/css"
+	href="../jsp/multi-select/jquery.multiselect.css" />
+<link rel="stylesheet" type="text/css"
+	href="../jsp/multi-select/assets/style.css" />
+<link rel="stylesheet" type="text/css"
+	href="../jsp/multi-select/assets/prettify.css" />
+<script type="text/javascript"
+	src="../jsp/multi-select/assets/prettify.js"></script>
+<script type="text/javascript"
+	src="../jsp/multi-select/jquery.multiselect.js"></script>
+
+
+<!-- jqgrid -->
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../jsp/jqgrid/themes/ui.jqgrid.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../jsp/jqgrid/themes/ui.multiselect.css">
+<script src="../jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
+<script src="../jsp/jqgrid/js/jquery.contextmenu.js"
+	type="text/javascript"></script>
+<script src="../jsp/jqgrid/js/i18n/grid.locale-cn.js"
+	type="text/javascript"></script>
+<script src="../jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
+<script src="../jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
+	
+	
+<!-- jqgrid assist -->
+<script src="../jsp/jqgrid/jqassist.js" type="text/javascript"></script>
+
+<script src="../jsp/json2.js" type="text/javascript"></script>
+<script src="../jsp/util.js" type="text/javascript"></script>
+<script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
+<script src="../jsp/dateSelector.js" type="text/javascript"></script>
+<script src="../jsp/unitedSelector.js" type="text/javascript"></script>
+<script src="../jsp/companySelector.js" type="text/javascript"></script>
+<script src="../jsp/messageBox.js" type="text/javascript"></script>
     <script src="../jsp/mkt_view_data.js" type="text/javascript"></script>
 
 <script type="text/javascript">

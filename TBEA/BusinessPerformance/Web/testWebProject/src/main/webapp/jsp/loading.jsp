@@ -44,7 +44,7 @@
 			<td valign="middle" style="width: 60px; height: 60px;" align="center">
 				<div class="loading" style="width: 30px; height: 30px;"></div>
 			</td>
-			<td id="loadingText" style = "width:320px">数据加载中，请稍等...</td>
+			<td id="loadingText" style = "width:320px">数据处理中，请稍等...</td>
 		</tr>
 	</table>
 </div>
