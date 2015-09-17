@@ -80,16 +80,16 @@ public class NacaoServlet {
 	public ModelAndView getSearchView(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
 		return new ModelAndView("searchView");
 	}
-	
+		
 	@RequestMapping(value = "/query_by_name.do")
 	public @ResponseBody byte[] queryByName(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
 		String name = request.getParameter("companyName");
 		List<Organization> orgs = nacaoService.findByName(name);
-		if (orgs != null){
-			return JSONArray.fromObject(orgs).toString().getBytes("utf-8");
-		}else{
-			return "{\"result\":\"该关键字尚未被收录，请明日查询\"}".getBytes("utf-8");
-		}
+		return JSONArray.fromObject(orgs).toString().getBytes("utf-8");
+			
+//		else{
+//			return "{\"result\":\"该关键字尚未被收录，请明日查询\"}".getBytes("utf-8");
+//		}
 	}
 	
 	@RequestMapping(value = "/carrry_unfixed.do")

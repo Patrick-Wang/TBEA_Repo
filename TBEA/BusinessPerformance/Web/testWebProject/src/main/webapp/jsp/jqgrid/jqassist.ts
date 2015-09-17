@@ -16,11 +16,11 @@ declare var $: any;
                     // startColumnName,
                     numberOfColumns, titleText, cVisibleColumns, colModel = ts.p.colModel, cml = colModel.length, ths = ts.grid.headers, $htable = $(
                         "table.ui-jqgrid-htable", ts.grid.hDiv), $trLabels = $htable
-                        .children("thead").children(
-                        "tr.ui-jqgrid-labels:last").addClass(
-                        "jqg-second-row-header"), $thead = $htable
-                        .children("thead"), $theadInTable, $firstHeaderRow = $htable
-                        .find(".jqg-first-row-header");
+                            .children("thead").children(
+                                "tr.ui-jqgrid-labels:last").addClass(
+                                    "jqg-second-row-header"), $thead = $htable
+                                        .children("thead"), $theadInTable, $firstHeaderRow = $htable
+                                            .find(".jqg-first-row-header");
                 if ($firstHeaderRow[0] === undefined) {
                     $firstHeaderRow = $('<tr>', {
                         role: "row",
@@ -59,7 +59,7 @@ declare var $: any;
                         role: 'gridcell'
                     }).css(thStyle).addClass(
                         "ui-first-th-" + ts.p.direction).appendTo(
-                        $firstHeaderRow);
+                            $firstHeaderRow);
 
                     th.style.width = ""; // remove unneeded style
                     iCol = inColumnHeader(cmi.name, o.groupHeaders);
@@ -146,14 +146,14 @@ declare var $: any;
                     $htable
                         .find("span.ui-jqgrid-resize")
                         .each(
-                        function() {
-                            var $parent = $(this).parent();
-                            if ($parent.is(":visible")) {
-                                this.style.cssText = 'height: '
-                                + $parent.height()
-                                + 'px !important; cursor: col-resize;';
-                            }
-                        });
+                            function() {
+                                var $parent = $(this).parent();
+                                if ($parent.is(":visible")) {
+                                    this.style.cssText = 'height: '
+                                    + $parent.height()
+                                    + 'px !important; cursor: col-resize;';
+                                }
+                            });
 
                     // Set position of the sortable div (the main lable)
                     // with the column header text to the middle of the
@@ -162,18 +162,18 @@ declare var $: any;
                     $htable
                         .find("div.ui-jqgrid-sortable")
                         .each(
-                        function() {
-                            var $ts = $(this), $parent = $ts
-                                .parent();
-                            if ($parent.is(":visible")
-                                && $parent
-                                    .is(":has(span.ui-jqgrid-resize)")) {
-                                $ts.css('top', ($parent
-                                    .height() - $ts
-                                        .outerHeight())
-                                    / 2 + 'px');
-                            }
-                        });
+                            function() {
+                                var $ts = $(this), $parent = $ts
+                                    .parent();
+                                if ($parent.is(":visible")
+                                    && $parent
+                                        .is(":has(span.ui-jqgrid-resize)")) {
+                                    $ts.css('top', ($parent
+                                        .height() - $ts
+                                            .outerHeight())
+                                        / 2 + 'px');
+                                }
+                            });
                 }
 
                 $firstRow = $theadInTable.find("tr.jqg-first-row-header");
@@ -188,60 +188,85 @@ declare var $: any;
 module JQTable {
 
 
-    export enum TextAlign{
+    export enum TextAlign {
         Left,
         Right,
         Center
     }
 
+    export interface NodeOption {
+        name: string,
+        id: string,
+        isReadOnly?: boolean,
+        isNumber?: boolean,
+        align?: TextAlign,
+        width?: number,
+        editType?: string,
+        options?: any
+    }
 
     export class Node {
-        private mName: string;
-        private mId: string;
         private mChilds: Node[] = [];
         private mParent: Node = null;
-        private mReadOnly: boolean;
-        private mWidth: number;
-        private mAlign: TextAlign;
-        private mEditAble: boolean;
-        private mEditType: string;
-        private mOptions:string;
+        private mOpts: NodeOption;
 
-        constructor(name: string, id: string, isReadOnly: boolean = false, 
-            align : TextAlign = TextAlign.Right, width: number = 0, editType: string = undefined, options:any = undefined) {
-            this.mWidth = width;
-            this.mName = name;
-            this.mId = id;
-            this.mReadOnly = isReadOnly;
-            this.mAlign = align;
-            //this.mEditAble = editAble;
-            this.mEditType = editType;
-            this.mOptions = options;           
+        constructor(
+            name: string,
+            id: string,
+            isReadOnly: boolean = true,
+            align: TextAlign = TextAlign.Right,
+            width: number = 0,
+            editType: string = undefined,
+            options: any = undefined,
+            isNumber: boolean = true) {
+            this.mOpts = {
+                name: name,
+                id: id,
+                isReadOnly: isReadOnly,
+                isNumber: isNumber,
+                align: align,
+                width: width,
+                editType: editType,
+                options: options
+            }
         }
 
-		public align() : TextAlign{
-			return this.mAlign;
-		}
+        public static create(opts: NodeOption): Node {
+            var node: Node = new Node(null, null);
+            node.mOpts = $.extend({}, {
+                isReadOnly: true,
+                isNumber: true,
+                align: TextAlign.Right,
+                width: 0
+            }, opts);
+            return node;
+        }
+
+        public align(): TextAlign {
+            return this.mOpts.align;
+        }
 
         public width(): number {
-            if (this.mWidth == undefined) {
+            if (this.mOpts.width == undefined) {
                 return -1;
             }
-            return this.mWidth;
+            return this.mOpts.width;
         }
 
         public isReadOnly(): boolean {
-            return true == this.mReadOnly;
+            return true == this.mOpts.isReadOnly;
         }
-        
-        public editType():string
-        {
-          return this.mEditType;  
+
+        public isNumber(): boolean {
+            return true == this.mOpts.isNumber;
         }
-        
-        public editOptions():string
-        {
-          return this.mOptions;  
+
+        public editType(): string {
+            return this.mOpts.editType;
+        }
+
+        public editOptions(): string {
+            return this.mOpts.options;
         }
 
         public append(child: Node): Node {
@@ -264,13 +289,13 @@ module JQTable {
 
         public idChain(): string {
             if (this.mParent != null) {
-                return this.mParent.idChain() + "_" + this.mId;
+                return this.mParent.idChain() + "_" + this.mOpts.id;
             }
-            return this.mId;
+            return this.mOpts.id;
         }
 
         public id(): string {
-            return this.mId;
+            return this.mOpts.id;
         }
 
         public leavesCount(): number {
@@ -320,7 +345,7 @@ module JQTable {
             return childDepth + 1;
         }
         public name(): string {
-            return this.mName;
+            return this.mOpts.name;
         }
         public children(depth: number): Node[] {
             var children = new std.vector<Node>();
@@ -442,27 +467,27 @@ module JQTable {
                         index: colId,
                         sortable: false,
                         editable: !nodes[j].isReadOnly(),
-                        edittype:nodes[j].editType(),
-                        editoptions:nodes[j].editOptions(),
-                        //editrules: !nodes[j].isReadOnly() ? {number:true} : undefined,
+                        edittype: nodes[j].editType(),
+                        editoptions: nodes[j].editOptions(),
+                        editrules: !nodes[j].isReadOnly() ? { number: nodes[j].isNumber() } : undefined,
                         //editrules:undefined,
                         cellattr: function(rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
                     });
-                    
-                    switch (nodes[j].align()){
-                    	case TextAlign.Left:
-                    	this.mColModel[this.mColModel.length - 1].align = 'left';
-                    	break;
-                    case TextAlign.Center:
-                    	this.mColModel[this.mColModel.length - 1].align = 'center';
-                    	break;
-                    case TextAlign.Right:
-                    	this.mColModel[this.mColModel.length - 1].align = 'right';
-                    	break;
+
+                    switch (nodes[j].align()) {
+                        case TextAlign.Left:
+                            this.mColModel[this.mColModel.length - 1].align = 'left';
+                            break;
+                        case TextAlign.Center:
+                            this.mColModel[this.mColModel.length - 1].align = 'center';
+                            break;
+                        case TextAlign.Right:
+                            this.mColModel[this.mColModel.length - 1].align = 'right';
+                            break;
                     }
-                    
+
                     if (nodes[j].width() > 0) {
                         this.mColModel[this.mColModel.length - 1].width = nodes[j].width();
                     }
@@ -474,20 +499,20 @@ module JQTable {
                 this.group();
             }
         }
-      
-        public getCheckedRowIds() : string[]{
-            var ids = $("#" + this.mGridName + "").jqGrid('getGridParam','selarrrow');
+
+        public getCheckedRowIds(): string[] {
+            var ids = $("#" + this.mGridName + "").jqGrid('getGridParam', 'selarrrow');
             return ids;
         }
-        
-        public getAllData() : Array<string[]>{
+
+        public getAllData(): Array<string[]> {
             var grid = $("#" + this.mGridName + "");
             var ids = grid.jqGrid('getDataIDs');
-            var data : Array<string[]> = [];
-            for (var i in ids){
+            var data: Array<string[]> = [];
+            for (var i in ids) {
                 var row = [];
                 row.push(ids[i]);
-                for (var j in this.mColModel){
+                for (var j in this.mColModel) {
                     row.push(grid.jqGrid("getCell", ids[i], this.mColModel[j].index));
                 }
                 data.push(row);
@@ -523,7 +548,7 @@ module JQTable {
             return this.mColModel;
         }
 
-        
+
         public addRowData(rowId: string, rowData: string[]) {
             var grid = $("#" + this.mGridName + "");
             var row: any = {};
@@ -534,7 +559,7 @@ module JQTable {
             }
             grid.jqGrid("addRowData", rowId, row)
         }
-        
+
         public id(col: number): string {
             var colCount = 0;
             var leaves = [];
@@ -612,7 +637,7 @@ module JQTable {
             }
             return alldata;
         }
-        
+
         public getDataWithId(data: string[][]): any[] {
             var alldata: any[] = [];
             var colums: Node[] = [];
@@ -621,7 +646,7 @@ module JQTable {
             }
 
             for (var i in data) {
-                var rowdata : any = {};
+                var rowdata: any = {};
                 rowdata["id"] = data[i][0];
                 for (var j in colums) {
                     rowdata[colums[j].idChain()] = data[i][parseInt(j) + 1];
@@ -684,13 +709,13 @@ module JQTable {
         }
 
 
-        public setRowBgColor(row: number, r: number, g: number, b: number): void{
+        public setRowBgColor(row: number, r: number, g: number, b: number): void {
             this.completeList.push(() => {
                 $("#" + this.mGridName + " #" + (row + 1)).css("background", "rgb(" + r + "," + g + "," + b + ")");
             })
         }
 
-        public mergeColum(col: number, row?: number, align ?: TextAlign) {
+        public mergeColum(col: number, row?: number, align?: TextAlign) {
             if (row != undefined) {
                 this.completeList.push(() => {
                     if (align == undefined) {
@@ -701,7 +726,7 @@ module JQTable {
                     var rightCell = leftCell.next();
                     leftCell.css("text-align", "right");
                     rightCell.css("text-align", "left");
-                    
+
                     leftCell.css("border-right-width", "0px");
                     leftCell.css("padding-right", "0px");
                     leftCell.css("disabled", "disabled");
@@ -741,7 +766,7 @@ module JQTable {
                     for (var i = 0; i < mya.length; i++) {
                         var leftCell = $("#" + this.mGridName + " #" + mya[i] + " #" + this.id(col) + mya[i]);
                         var rightCell = leftCell.next();
-                        if (leftCell.css("display") != "none" && rightCell.css("display") != "none"){
+                        if (leftCell.css("display") != "none" && rightCell.css("display") != "none") {
                             if (grid.getCell(mya[i], col) == grid.getCell(mya[i], col + 1)) {
                                 var content = grid.getCell(mya[i], col);
                                 grid.setCell(mya[i], col, content.substring(0, content.length / 2));
@@ -785,7 +810,7 @@ module JQTable {
             }
         }
 
-        public mergeTitle(iColStart?: number, iCount: number = 0, hidden : boolean = false) {
+        public mergeTitle(iColStart?: number, iCount: number = 0, hidden: boolean = false) {
             if (iColStart != undefined) {
                 this.completeList.push(() => {
                     var headerStart = $("#" + this.mGridName + "_" + this.id(iColStart));
@@ -800,7 +825,7 @@ module JQTable {
                         widthList.push(parseInt(headerMerge.css("width").replace("px", "")) +
                             parseInt(headerMerge.css("padding-left").replace("px", "")) +
                             parseInt(headerMerge.css("padding-right").replace("px", "")))
-								iWidht += widthList[widthList.length - 1];
+                        iWidht += widthList[widthList.length - 1];
                         headerMerge.removeClass("ui-state-default");
                         headerMerge.children("span").css("display", "none");
                         headerMerge.children("div").css("display", "none");
@@ -808,12 +833,12 @@ module JQTable {
                         headerMerge.css("padding", "0px");
                         headerMerge.css("margin", "0px");
                         headerMerge.css("border", "0px");
-                       	if (hidden){
-                         	headerMerge.css("display", "none");
+                        if (hidden) {
+                            headerMerge.css("display", "none");
                         }
-                    
+
                         var e = $("#gbox_" + this.mGridName + " .jqg-first-row-header th:eq(" + (iColStart + i) + ")")
-                            e.css("width", "0px");
+                        e.css("width", "0px");
                         e.css("padding", "0px");
                         e.css("margin", "0px");
                         e.css("border", "0px");
@@ -990,12 +1015,12 @@ module JQTable {
                 option.colModel = this.getColModel();
             }
 
-//            if (option.datatype != "local") {
-//                option.jsonReader = {
-//                    cell: "",
-//                    id: "0"
-//                };
-//            }
+            //            if (option.datatype != "local") {
+            //                option.jsonReader = {
+            //                    cell: "",
+            //                    id: "0"
+            //                };
+            //            }
 
 
             if (option.loadError != undefined) {

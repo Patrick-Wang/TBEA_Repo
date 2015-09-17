@@ -1,3 +1,4 @@
+/// <reference path="util.ts" />
 var Util;
 (function (Util) {
     function addMonth(d, count) {
@@ -117,6 +118,7 @@ var Util;
                 header: false,
                 minWidth: 80,
                 height: '100%',
+                // noneSelectedText: "请选择月份",
                 selectedList: 1
             });
         };

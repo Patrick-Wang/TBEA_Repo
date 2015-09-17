@@ -3,7 +3,7 @@
 	version="2.3">
 	<display-name>Carrier</display-name>
 	<welcome-file-list>
-		<welcome-file>/nacao/search.do</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
 	<listener>

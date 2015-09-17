@@ -1,10 +1,9 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-/// <reference path="jqgrid/vector.ts" />
 var Util;
 (function (Util) {
     function indexOf(arr, val) {
@@ -405,10 +404,16 @@ var Util;
             '委托加工化成箔符单率（%）',
             '架空电缆（1KV、10KV）合格率（%）',
             '钢芯铝绞线合格率（%）',
-            '布电线合格率（%）'
-        ];
+            '布电线合格率（%）'];
         var formaterChain = new Util.FormatPercentHandler([], precentList.toArray());
-        formaterChain.next(new Util.FormatIntHandler(["人数"])).next(new Util.FormatPercentSignalHandler(['净资产收益率(%)'])).next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)', '负债率'])).next(new Util.FormatFordotHandler(1, ['人均利润', '人均收入', '精铝块13项元素和值（ppm）'])).next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], specialsjzhCols)).next(new Util.FormatFordotHandler(2, zhZb)).next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）'])).next(new Util.FormatCurrencyHandler());
+        formaterChain.next(new Util.FormatIntHandler(["人数"]))
+            .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
+            .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)', '负债率']))
+            .next(new Util.FormatFordotHandler(1, ['人均利润', '人均收入', '精铝块13项元素和值（ppm）']))
+            .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], specialsjzhCols))
+            .next(new Util.FormatFordotHandler(2, zhZb))
+            .next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）']))
+            .next(new Util.FormatCurrencyHandler());
         var row = [];
         for (var j = 0; j < inputData.length; ++j) {
             row = [].concat(inputData[j]);

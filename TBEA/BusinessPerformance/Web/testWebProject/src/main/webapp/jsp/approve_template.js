@@ -1,3 +1,7 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="dateSelector.ts" />
+/// <reference path="companySelector.ts" />
+/// <reference path="util.ts" />
 var approve_template;
 (function (approve_template) {
     var JQGridAssistantFactory = (function () {
@@ -7,10 +11,10 @@ var approve_template;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left, 85));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, true, 0 /* Left */, 85));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, false, JQTable.TextAlign.Right, 85));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, false, 1 /* Right */, 85));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -19,10 +23,10 @@ var approve_template;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i < 1) {
-                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 85));
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, 0 /* Left */, 85));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 85));
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, 1 /* Right */, 85));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -31,10 +35,10 @@ var approve_template;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i <= 1) {
-                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 85));
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, 0 /* Left */, 85));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 85));
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, 1 /* Right */, 85));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -83,6 +87,7 @@ var approve_template;
                 return [[]];
             }
         };
+        //[[compId ...]]
         QNJHSubView.prototype.getUnapprovedData = function () {
             if (this.mTableUnapproveAssist != null) {
                 var ids = this.mTableUnapproveAssist.getCheckedRowIds();
@@ -98,6 +103,8 @@ var approve_template;
         QNJHSubView.prototype.getDate = function () {
             return this.mData;
         };
+        //[[compId ,zbId, zbName, value] ...] approved 
+        //[[compId ,zbId, zbName, value] ...] unapproved
         QNJHSubView.prototype.process = function (data, date, companies) {
             this.mData = date;
             if (data[0].length > 0) {
@@ -107,6 +114,7 @@ var approve_template;
                 this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核数据");
             }
         };
+        //comps : selected companies
         QNJHSubView.prototype.updateTable = function (rawData, comps, tableId, caption) {
             var tmpData = [];
             var title = ["单位名称"];
@@ -114,6 +122,7 @@ var approve_template;
             var zbColMap = {};
             var compMap = {};
             var companies = [];
+            // remove unused company
             $(comps).each(function (i) {
                 $(rawData).each(function (j) {
                     if (rawData[j][0] == "" + comps[i].id) {
@@ -124,6 +133,7 @@ var approve_template;
             for (var i in compMap) {
                 companies.push(compMap[i]);
             }
+            //make title
             $(rawData).each(function (i) {
                 if (!Util.isExist(zbColMap["_" + rawData[i][1]])) {
                     colZbIds.push(rawData[i][1]);
@@ -131,6 +141,7 @@ var approve_template;
                     zbColMap["_" + rawData[i][1]] = title.length;
                 }
             });
+            //make data
             $(companies).each(function (i) {
                 tmpData.push([companies[i].id, companies[i].value]);
                 $(rawData).each(function (j) {
@@ -156,8 +167,28 @@ var approve_template;
                         if (title[j - 1] == '人数') {
                             tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
                         }
-                        else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
+                        else if (title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
                             tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
+                        }
+                        else if (title[j - 1] == '人均收入' || title[j - 1] == '人均利润' || title[j - 1] == '精铝块13项元素和值（ppm）') {
+                            tmpData[i][j] = Util.formatFordot(tmpData[i][j]) + "";
+                        }
+                        else if (title[j - 1] == '净资产收益率(%)') {
+                            tmpData[i][j] = Util.formatPercentSignal(tmpData[i][j]) + "";
+                        }
+                        else if (title[j - 1] == '单位供电成本（元/度）') {
+                            tmpData[i][j] = Util.formatFordot(tmpData[i][j], 4) + "";
+                        }
+                        else if (title[j - 1] == '标煤单耗（g/度）' || title[j - 1] == '厂用电率（%）') {
+                            if (this.mOpt.approveType == 2 /* BY20YJ */ || this.mOpt.approveType == 3 /* BY28YJ */ || this.mOpt.approveType == 4 /* BYSJ */) {
+                                tmpData[i][j] = Util.formatFordot(tmpData[i][j], 2) + "";
+                            }
+                            else {
+                                tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
+                            }
+                        }
+                        else if (title[j - 1] == '人均发电量（万度/人）' || title[j - 1] == '外购电单位成本（元/度）' || title[j - 1] == '铝杆棒一次综合成品率（%）' || title[j - 1] == '其中：5154合金杆一次成品率（%）' || title[j - 1] == '4043&8030&6201合金杆一次成品率（%）' || title[j - 1] == '高纯铝杆产品一次成品率（%）' || title[j - 1] == '铝棒产品一次成品率（%）' || title[j - 1] == '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）' || title[j - 1] == '失败成本率1（%）' || title[j - 1] == '外部客诉率（%）' || title[j - 1] == '4N6精铝块一次成品率（%）' || title[j - 1] == '精铝杆一次成品率（%）' || title[j - 1] == '综合成品率（%）' || title[j - 1] == '基材成品率（%）' || title[j - 1] == '粉末喷涂成品率（%）' || title[j - 1] == '隔热产品成品率（%）' || title[j - 1] == '失败成本率（%）' || title[j - 1] == '自产箔综合符单率（%）' || title[j - 1] == '委托加工化成箔符单率（%）' || title[j - 1] == '架空电缆（1KV、10KV）合格率（%）' || title[j - 1] == '钢芯铝绞线合格率（%）' || title[j - 1] == '布电线合格率（%）') {
+                            tmpData[i][j] = Util.formatFordot(tmpData[i][j], 2) + "";
                         }
                         else {
                             tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
@@ -173,11 +204,16 @@ var approve_template;
             parent.append("<table id='" + name + "'></table>");
             var width = (title.length) * 85;
             $("#" + name).jqGrid(jqAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: jqAssist.getDataWithId(tmpData),
                 datatype: "local",
                 multiselect: true,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //cellsubmit: 'clientArray',
+                //cellEdit: false,
                 rowNum: 1500,
                 height: '100%',
                 width: 1200,
@@ -228,6 +264,7 @@ var approve_template;
             }
             return ret;
         };
+        //[[compId...], [year...], [month...]]
         YDSubView.prototype.getUnapprovedData = function () {
             var ret = [[]];
             if (this.mTableUnapproveAssist != null) {
@@ -241,6 +278,8 @@ var approve_template;
         YDSubView.prototype.getDate = function () {
             return this.mData;
         };
+        //[[compId ,zbId, zbName, value, year?, month?] ...] approved 
+        //[[compId ,zbId, zbName, value, year?, month?] ...] unapproved
         YDSubView.prototype.process = function (data, date, companies) {
             this.mData = date;
             if (data[0].length > 0) {
@@ -253,6 +292,7 @@ var approve_template;
         YDSubView.prototype.updateTable = function (rawData, comps, tableId, caption) {
             var compMap = {};
             var companies = [];
+            // remove unused company
             $(comps).each(function (i) {
                 $(rawData).each(function (j) {
                     if (rawData[j][0] == "" + comps[i].id) {
@@ -271,6 +311,7 @@ var approve_template;
                 title.push("日期");
                 colZbIds.push("rq");
             }
+            //make title
             $(rawData).each(function (i) {
                 if (!Util.isExist(zbColMap["_" + rawData[i][1]])) {
                     colZbIds.push(rawData[i][1]);
@@ -280,6 +321,7 @@ var approve_template;
             });
             var tmpData = [];
             var compYearMap = {};
+            //make data
             $(companies).each(function (i) {
                 $(rawData).each(function (j) {
                     if (rawData[j][0] == "" + companies[i].id) {
@@ -318,8 +360,28 @@ var approve_template;
                         if (title[j - 1] == '人数') {
                             tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
                         }
-                        else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
+                        else if (title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
                             tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
+                        }
+                        else if (title[j - 1] == '人均收入' || title[j - 1] == '人均利润' || title[j - 1] == '精铝块13项元素和值（ppm）') {
+                            tmpData[i][j] = Util.formatFordot(tmpData[i][j]) + "";
+                        }
+                        else if (title[j - 1] == '净资产收益率(%)') {
+                            tmpData[i][j] = Util.formatPercentSignal(tmpData[i][j]) + "";
+                        }
+                        else if (title[j - 1] == '单位供电成本（元/度）') {
+                            tmpData[i][j] = Util.formatFordot(tmpData[i][j], 4) + "";
+                        }
+                        else if (title[j - 1] == '标煤单耗（g/度）' || title[j - 1] == '厂用电率（%）') {
+                            if (this.mOpt.approveType == 2 /* BY20YJ */ || this.mOpt.approveType == 3 /* BY28YJ */ || this.mOpt.approveType == 4 /* BYSJ */) {
+                                tmpData[i][j] = Util.formatFordot(tmpData[i][j], 2) + "";
+                            }
+                            else {
+                                tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
+                            }
+                        }
+                        else if (title[j - 1] == '人均发电量（万度/人）' || title[j - 1] == '外购电单位成本（元/度）' || title[j - 1] == '铝杆棒一次综合成品率（%）' || title[j - 1] == '其中：5154合金杆一次成品率（%）' || title[j - 1] == '4043&8030&6201合金杆一次成品率（%）' || title[j - 1] == '高纯铝杆产品一次成品率（%）' || title[j - 1] == '铝棒产品一次成品率（%）' || title[j - 1] == '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）' || title[j - 1] == '失败成本率1（%）' || title[j - 1] == '外部客诉率（%）' || title[j - 1] == '4N6精铝块一次成品率（%）' || title[j - 1] == '精铝杆一次成品率（%）' || title[j - 1] == '综合成品率（%）' || title[j - 1] == '基材成品率（%）' || title[j - 1] == '粉末喷涂成品率（%）' || title[j - 1] == '隔热产品成品率（%）' || title[j - 1] == '失败成本率（%）' || title[j - 1] == '自产箔综合符单率（%）' || title[j - 1] == '委托加工化成箔符单率（%）' || title[j - 1] == '架空电缆（1KV、10KV）合格率（%）' || title[j - 1] == '钢芯铝绞线合格率（%）' || title[j - 1] == '布电线合格率（%）') {
+                            tmpData[i][j] = Util.formatFordot(tmpData[i][j], 2) + "";
                         }
                         else {
                             tmpData[i][j] = Util.formatCurrency(tmpData[i][j]) + "";
@@ -329,27 +391,32 @@ var approve_template;
                         tmpData[i].push("--");
                     }
                 }
+                var name = tableId + "_jqgrid";
+                var jqAssist = JQGridAssistantFactory.createSjTable(name, title, colZbIds);
+                var parent = $("#" + tableId);
+                parent.empty();
+                parent.append("<table id='" + name + "'></table>");
+                var width = (title.length) * 85;
+                $("#" + name).jqGrid(jqAssist.decorate({
+                    // url: "TestTable/WGDD_load.do",
+                    // datatype: "json",
+                    data: jqAssist.getDataWithId(tmpData),
+                    datatype: "local",
+                    multiselect: true,
+                    drag: false,
+                    resize: false,
+                    rowNum: 1000,
+                    //autowidth : false,
+                    //cellsubmit: 'clientArray',
+                    //cellEdit: false,
+                    height: '100%',
+                    width: 1200,
+                    shrinkToFit: width > 1200 ? false : true,
+                    autoScroll: true,
+                    caption: caption
+                }));
+                return jqAssist;
             }
-            var name = tableId + "_jqgrid";
-            var jqAssist = JQGridAssistantFactory.createSjTable(name, title, colZbIds);
-            var parent = $("#" + tableId);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table>");
-            var width = (title.length) * 85;
-            $("#" + name).jqGrid(jqAssist.decorate({
-                data: jqAssist.getDataWithId(tmpData),
-                datatype: "local",
-                multiselect: true,
-                drag: false,
-                resize: false,
-                rowNum: 1000,
-                height: '100%',
-                width: 1200,
-                shrinkToFit: width > 1200 ? false : true,
-                autoScroll: true,
-                caption: caption
-            }));
-            return jqAssist;
         };
         return YDSubView;
     })();
@@ -364,26 +431,27 @@ var approve_template;
         };
         View.prototype.initInstance = function (opt) {
             this.mOpt = opt;
-            if (this.mOpt.approveType == Util.ZBType.YDJDMJH) {
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId, true);
+            if (this.mOpt.approveType == 1 /* YDJDMJH */) {
+                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId, true);
             }
             else {
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
             }
             this.mCompanySelector = new Util.CompanySelector(true, opt.companyId, opt.comps, opt.firstCompany);
             this.mCompanySelector.checkAll();
             switch (this.mOpt.approveType) {
-                case Util.ZBType.YDJDMJH:
+                case 1 /* YDJDMJH */:
                     this.mCurView = new YDSubView(opt);
                     break;
-                case Util.ZBType.QNJH:
-                case Util.ZBType.BY20YJ:
-                case Util.ZBType.BY28YJ:
-                case Util.ZBType.BYSJ:
+                case 0 /* QNJH */:
+                case 2 /* BY20YJ */:
+                case 3 /* BY28YJ */:
+                case 4 /* BYSJ */:
                     this.mCurView = new QNJHSubView(opt);
                     break;
             }
             this.updateTitle();
+            //this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
@@ -391,7 +459,7 @@ var approve_template;
             var comps = this.mCompanySelector.getCompanys();
             if (comps.length != 0) {
                 var date = this.mDateSelector.getDate();
-                if (this.mOpt.approveType == Util.ZBType.YDJDMJH) {
+                if (this.mOpt.approveType == 1 /* YDJDMJH */) {
                     date = Util.addMonth(date, -2);
                 }
                 this.mDataSet.post({ year: date.year, month: date.month, approveType: this.mOpt.approveType, companies: JSON.stringify(comps) }).then(function (data) {
@@ -476,19 +544,19 @@ var approve_template;
             var header = "";
             var date = this.mDateSelector.getDate();
             switch (this.mOpt.approveType) {
-                case Util.ZBType.QNJH:
+                case 0 /* QNJH */:
                     header = date.year + "年 全年计划数据审核";
                     break;
-                case Util.ZBType.YDJDMJH:
+                case 1 /* YDJDMJH */:
                     header = date.year + "年" + " 季度-月度末计划值审核";
                     break;
-                case Util.ZBType.BY20YJ:
+                case 2 /* BY20YJ */:
                     header = date.year + "年" + date.month + "月 20日预计值审核";
                     break;
-                case Util.ZBType.BY28YJ:
+                case 3 /* BY28YJ */:
                     header = date.year + "年" + date.month + "月 28日预计值审核";
                     break;
-                case Util.ZBType.BYSJ:
+                case 4 /* BYSJ */:
                     header = date.year + "年" + date.month + "月 实际数据审核";
                     break;
             }

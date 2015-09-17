@@ -41,10 +41,9 @@ public class MarketServlet {
 	@Autowired
 	private MarketService marketService;
 
-	
-	final static String FILETYPE_PROJECT = "2";
-	final static String FILETYPE_SIGN = "4";
-	final static String FILETYPE_BID = "3";
+	final static String TYPE_PROJECT = "2";
+	final static String TYPE_SIGN = "4";
+	final static String TYPE_BID = "3";
 	
 	final static String[] COMPANIES = new String[] { "输变电产业集团", "沈变", "衡变", "新变",
 			"天变", "鲁缆", "新缆", "德缆" };
@@ -60,11 +59,11 @@ public class MarketServlet {
 		String result = "filetype error";
 		try{
 			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
-			if (FILETYPE_PROJECT.equals(mktType)){
+			if (TYPE_PROJECT.equals(mktType)){
 				result = marketService.importProjectData(workbook);
-			}else if (FILETYPE_SIGN.equals(mktType)) {
+			}else if (TYPE_SIGN.equals(mktType)) {
 				result = marketService.importSignData(workbook);
-			}else if (FILETYPE_BID.equals(mktType)) {
+			}else if (TYPE_BID.equals(mktType)) {
 				result = marketService.importBidData(workbook);
 			}
 		}catch(Exception e){
@@ -108,15 +107,19 @@ public class MarketServlet {
 		String data = request.getParameter("data");
 		JSONArray arrData = JSONArray.fromObject(data);
 		String mktType = request.getParameter("mktType");
-		String result = "";
-		if (FILETYPE_PROJECT.equals(mktType)){
+		String result = "false";
+		if (TYPE_PROJECT.equals(mktType)){
 			result = marketService.importProjectData(arrData);
-		}else if (FILETYPE_SIGN.equals(mktType)) {
+		}else if (TYPE_SIGN.equals(mktType)) {
 			result = marketService.importSignData(arrData);
-		}else if (FILETYPE_BID.equals(mktType)) {
+		}else if (TYPE_BID.equals(mktType)) {
 			result = marketService.importBidData(arrData);
 		}
-		return result.getBytes("utf-8");
+		
+		if ("OK".equals(result)){
+			result = "true";
+		}
+		return ("{\"result\":\"" + result + "\"}").getBytes("utf-8");
 	}
 	
 	private String getCompanyName(Account account){
@@ -152,22 +155,22 @@ public class MarketServlet {
 	@RequestMapping(value = "mkt_view_update.do")
 	public @ResponseBody byte[] getMktViewUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		//Company comp = companyManager.getBMOrganization().getCompany(compType);
 		Account account = SessionManager.getAccount(request.getSession());
 		String companyName =  getCompanyName(account);
 		String rpttype = request.getParameter("docType");
 		
-		//request。getParameter("rpttype");
+
 		List<String[][]> list = new ArrayList<String[][]>();
 		Integer year = Calendar.getInstance().get(Calendar.YEAR);
 		if (null != request.getParameter("year")){
 			year = Integer.valueOf(request.getParameter("year"));
 		}
-		if(rpttype.equals(FILETYPE_BID)){
+
+		if(rpttype.equals(TYPE_BID)){
 			list.add(marketService.getBidData(companyName, year));
-		}else if(rpttype.equals(FILETYPE_PROJECT)){
+		}else if(rpttype.equals(TYPE_PROJECT)){
 			list.add(marketService.getPrjData(companyName, year));
-		}else if(rpttype.equals(FILETYPE_SIGN)){
+		}else if(rpttype.equals(TYPE_SIGN)){
 			list.add(marketService.getContData(companyName));
 		}
 		String listJson = JSONArray.fromObject(list).toString().replace("null", "\"\"");

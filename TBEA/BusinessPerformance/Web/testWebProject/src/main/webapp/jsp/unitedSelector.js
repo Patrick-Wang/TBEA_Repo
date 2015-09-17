@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/vector.ts" />
+/// <reference path="util.ts" />
 var Util;
 (function (Util) {
     var DataNode = (function () {

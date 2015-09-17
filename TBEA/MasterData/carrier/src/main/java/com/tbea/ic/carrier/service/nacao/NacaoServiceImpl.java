@@ -73,12 +73,7 @@ public class NacaoServiceImpl implements NacaoService{
 					Organization org = (Organization) JSONObject.toBean(jsonOrg.getJSONObject(j), Organization.class);
 					orgDao.update(org);
 				}
-				
-				if (!"Y".equals(key.getFixed())){
-					key.setFixed("Y");
-				}
-				key.setCount(jsonOrg.size());
-				keywordsDao.update(key);
+				keywordsDao.remove(key);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -103,15 +98,7 @@ public class NacaoServiceImpl implements NacaoService{
 	}
 
 	public List<Organization> findByName(String name) {
-		KeyWords key = keywordsDao.getKeyWordsByKey(name);
-		if (null == key){
-			key = new KeyWords();
-			key.setText(name);
-			key.setFixed("N");
-			keywordsDao.update(key);
-			return null;
-		}
-		
+		findByNameExactly(name);
 		List<Organization> orgs = orgDao.getByName(name);
 		return orgs;
 	}
@@ -139,17 +126,17 @@ public class NacaoServiceImpl implements NacaoService{
 		return keywords.size();
 	}
 
-	public List<Organization> findByNameExactly(String compName) {
-		KeyWords key = keywordsDao.getKeyWordsByKey(compName);
-		if (null == key){
-			key = new KeyWords();
-			key.setText(compName);
-			key.setFixed("N");
-			keywordsDao.update(key);
-			return null;
-		}
-		
+	public List<Organization> findByNameExactly(String compName) {		
 		List<Organization> orgs = orgDao.getByNameExactly(compName);
+		if (orgs.isEmpty()){
+			KeyWords key = keywordsDao.getKeyWordsByKey(compName);
+			if (null == key){
+				key = new KeyWords();
+				key.setText(compName);
+				key.setFixed("N");
+				keywordsDao.update(key);
+			}
+		}
 		return orgs;
 	}
 

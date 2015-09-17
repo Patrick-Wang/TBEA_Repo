@@ -1,8 +1,9 @@
+/// <reference path="jqgrid/vector.ts" />
 declare var $;
 
 module Util {
 
-    function indexOf(arr, val){
+    function indexOf(arr, val) {
         for (var i = 0; i < arr.length; i++) {
             if (arr[i] == val) {
                 return i;
@@ -112,8 +113,8 @@ module Util {
     }
 
     export class FormatFordotHandler extends AbstractFormatHandler {
-        
-        private mDotCount : number;
+
+        private mDotCount: number;
         handle(zb: string, col: number, val: string): string {
             if (this.match(zb, col)) {
                 return Util.formatFordot(val, this.mDotCount);
@@ -122,7 +123,7 @@ module Util {
             }
         }
 
-        constructor(dotCount : number = 1, zbs: string[] = [], cols: number[] = []) {
+        constructor(dotCount: number = 1, zbs: string[] = [], cols: number[] = []) {
             super(zbs, cols);
             this.mDotCount = dotCount;
         }
@@ -137,7 +138,7 @@ module Util {
         static SUBMITTED_2: string = "SUBMITTED_2"
 
     }
-    
+
     export enum ZBType {
         QNJH,
         YDJDMJH,
@@ -237,34 +238,34 @@ module Util {
 
     $.ajaxSetup({ cache: false });
 
-//    export function parse(jsstr: string): any {
-//        var jsonValue;
-//        eval('jsonValue = ' + jsstr); 
-//        return jsonValue;
-//    }
-//    
-//    export function stringify(json : any) : string{
-//        var s = '';
-//
-//        if (typeof (json) == "string") {
-//            s = '"' + json.replace(new RegExp('\\\\',"g"), '\\\\\\\\').replace(new RegExp('"', "g"), '\\"') + '"';
-//        } else if (typeof (json) == "object") {
-//            if (json instanceof Array) {
-//                for (var k in json) {
-//                    s += "," + stringify(json[k]);
-//                }
-//                s = '[' + s.substring(1) + ']';
-//            } else {
-//                for (var k in json) {
-//                    s += ',"' + k + '":' + stringify(json[k]);
-//                }
-//                s = '{' + s.substring(1) + '}';
-//            }
-//        } else {
-//            s += json;
-//        }
-//        return s;
-//    }
+    //    export function parse(jsstr: string): any {
+    //        var jsonValue;
+    //        eval('jsonValue = ' + jsstr); 
+    //        return jsonValue;
+    //    }
+    //    
+    //    export function stringify(json : any) : string{
+    //        var s = '';
+    //
+    //        if (typeof (json) == "string") {
+    //            s = '"' + json.replace(new RegExp('\\\\',"g"), '\\\\\\\\').replace(new RegExp('"', "g"), '\\"') + '"';
+    //        } else if (typeof (json) == "object") {
+    //            if (json instanceof Array) {
+    //                for (var k in json) {
+    //                    s += "," + stringify(json[k]);
+    //                }
+    //                s = '[' + s.substring(1) + ']';
+    //            } else {
+    //                for (var k in json) {
+    //                    s += ',"' + k + '":' + stringify(json[k]);
+    //                }
+    //                s = '{' + s.substring(1) + '}';
+    //            }
+    //        } else {
+    //            s += json;
+    //        }
+    //        return s;
+    //    }
 
     export class Promise {
 
@@ -335,7 +336,7 @@ module Util {
         }
 
         private getCache(option: IAjaxOption): string {
-            if (undefined == option){
+            if (undefined == option) {
                 return undefined;
             }
             return this.mCache[Ajax.toUrlParam(option)];
@@ -381,7 +382,7 @@ module Util {
                     success: (data: any) => {
                         var jsonData = JSON.parse(data);
                         if (this.validate(jsonData)) {
-                          
+
                             this.setCache(option, jsonData);
                             promise.succeed(jsonData);
                         }
@@ -398,8 +399,8 @@ module Util {
             return promise;
         }
     }
-    
-    export function formatData(outputData: string[][], inputData: string [][], precentList: std.vector<number>, specialsjzhCols: number[]) {
+
+    export function formatData(outputData: string[][], inputData: string[][], precentList: std.vector<number>, specialsjzhCols: number[]) {
         var zhZb = [
             '人均发电量（万度/人）',
             '外购电单位成本（元/度）',
@@ -427,7 +428,7 @@ module Util {
         var formaterChain: Util.FormatHandler = new Util.FormatPercentHandler([], precentList.toArray());
         formaterChain.next(new Util.FormatIntHandler(["人数"]))
             .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
-            .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)','负债率']))
+            .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)', '负债率']))
             .next(new Util.FormatFordotHandler(1, ['人均利润', '人均收入', '精铝块13项元素和值（ppm）']))
             .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], specialsjzhCols))
             .next(new Util.FormatFordotHandler(2, zhZb))
@@ -443,87 +444,87 @@ module Util {
         }
         return;
     }
-    
+
     export function formatInt(val: string): string {
         if (val === "--" || val === "") {
             return val;
         }
         return parseInt(val) + "";
     }
-    
-    
+
+
     export function formatCurrency(val: string): string {
 
         if (val === "--" || val === "") {
             return val;
         }
         return parseFloat(val).toFixed(0) + "";
-//        val = parseFloat(val).toFixed(0) + "";
-//        var dot: number = val.lastIndexOf('.');
-//        var intPart: string = "";
-//        var parts: string[] = [];
-//        var positive: boolean = (val.charAt(0) != '-');
-//        if (dot > 0) {
-//            if (positive) {
-//                intPart = val.substring(0, dot);
-//            } else {
-//                intPart = val.substring(1, dot);
-//            }
-//            parts.push(val.substring(dot));
-//        }
-//        else {
-//            if (positive) {
-//                intPart = val;
-//            } else {
-//                intPart = val.substring(1);
-//            }
-//        }
-//
-//        var leftLength: number = intPart.length;
-//
-//        while (leftLength > 3) {
-//            parts.push("," + intPart.substring(leftLength - 3, leftLength));
-//            leftLength -= 3;
-//        }
-//
-//        parts.push(intPart.substring(0, leftLength));
-//
-//        if (!positive) {
-//            parts.push("-");
-//        }
-//
-//        parts = parts.reverse();
-//
-//        return parts.join("");
+        //        val = parseFloat(val).toFixed(0) + "";
+        //        var dot: number = val.lastIndexOf('.');
+        //        var intPart: string = "";
+        //        var parts: string[] = [];
+        //        var positive: boolean = (val.charAt(0) != '-');
+        //        if (dot > 0) {
+        //            if (positive) {
+        //                intPart = val.substring(0, dot);
+        //            } else {
+        //                intPart = val.substring(1, dot);
+        //            }
+        //            parts.push(val.substring(dot));
+        //        }
+        //        else {
+        //            if (positive) {
+        //                intPart = val;
+        //            } else {
+        //                intPart = val.substring(1);
+        //            }
+        //        }
+        //
+        //        var leftLength: number = intPart.length;
+        //
+        //        while (leftLength > 3) {
+        //            parts.push("," + intPart.substring(leftLength - 3, leftLength));
+        //            leftLength -= 3;
+        //        }
+        //
+        //        parts.push(intPart.substring(0, leftLength));
+        //
+        //        if (!positive) {
+        //            parts.push("-");
+        //        }
+        //
+        //        parts = parts.reverse();
+        //
+        //        return parts.join("");
     }
 
-    
-    export function formatPercent(val: string): string{
+
+    export function formatPercent(val: string): string {
         if (val === "--" || val === "" || val === "-") {
             return val;
         }
-        return (parseFloat(val) * 100).toFixed(1) + "%"    
-    }
-    
-    export function formatFordot(val: string, dotCount : number = 1): string{
-        if (val === "--" || val === "" || val === "-") {
-            return val;
-        }
-        return (parseFloat(val)).toFixed(dotCount);   
+        return (parseFloat(val) * 100).toFixed(1) + "%"
     }
 
-    export function formatPercentSignal(val: string): string{
+    export function formatFordot(val: string, dotCount: number = 1): string {
         if (val === "--" || val === "" || val === "-") {
             return val;
         }
-        return (parseFloat(val)).toFixed(1) + "%"   
+        return (parseFloat(val)).toFixed(dotCount);
     }
-    
+
+    export function formatPercentSignal(val: string): string {
+        if (val === "--" || val === "" || val === "-") {
+            return val;
+        }
+        return (parseFloat(val)).toFixed(1) + "%"
+    }
+
     export function isExist(val: any): boolean {
         return val != undefined;
     }
-    
-    export function isMSIE(){
+
+    export function isMSIE() {
         return navigator.appName == "Microsoft Internet Explorer";
     }
 }

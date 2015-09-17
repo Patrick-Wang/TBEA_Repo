@@ -31,6 +31,9 @@ public class KeyWordsDaoImpl implements KeyWordsDao{
 		manager.merge(keywords);
 	}
 
+	public void remove(KeyWords keywords){
+		manager.merge(keywords);
+	}
 
 	public List<KeyWords> getKeyWorks(int start, int count) {
 		Query q = manager.createQuery("from KeyWords");
