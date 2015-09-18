@@ -318,7 +318,7 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public String[][] getPrjData(String companyName, Integer year) {
 		List<MktProjectInfo> list = projectInfoDao.getData(companyName, year);
-		String[][] result = new String[list.size()][19];
+		String[][] result = new String[list.size()][20];
 		Integer col = 0;
 		for (MktProjectInfo obj : list) {
 			if (null != obj) {

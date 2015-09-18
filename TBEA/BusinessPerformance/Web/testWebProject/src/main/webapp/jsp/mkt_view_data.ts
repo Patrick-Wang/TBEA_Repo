@@ -275,7 +275,7 @@ module mkt_view_data {
                 }
             });
             
-             if (this.mCompanyName == "股份公司市场部") {
+             if (this.mCompanyName == "股份公司") {
                 $("#" + childName).jqGrid('navGrid', '#pager', { del: false, add: false, edit: false }, {}, {}, {}, { multipleSearch: true });
             } else {
                 $("#" + childName).jqGrid('navGrid', '#pager', { del: false, add: true, edit: true }, {}, {}, {}, { multipleSearch: true });
