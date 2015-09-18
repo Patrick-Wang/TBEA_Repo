@@ -28,7 +28,7 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 	@Override
 	public List<MktBidInfo> getData(String companyName) {
 		Query q;
-		if(companyName.equals("全部公司"))
+		if(companyName.equals("股份公司"))
 		{
 			q = manager.createQuery(
 					"from MktBidInfo");

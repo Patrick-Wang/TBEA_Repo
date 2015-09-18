@@ -29,7 +29,7 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 	@Override
 	public List<MktSignContract> getData(String companyName) {
 		Query q;
-		if(companyName.equals("输变电产业集团"))
+		if(companyName.equals("股份公司"))
 		{
 			q = manager.createQuery(
 					"from MktSignContract");

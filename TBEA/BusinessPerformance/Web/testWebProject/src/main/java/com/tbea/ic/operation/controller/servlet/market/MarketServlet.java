@@ -58,9 +58,9 @@ public class MarketServlet {
 	final static String TYPE_SIGN = "4";
 	final static String TYPE_BID = "3";
 	
-	final static String[] COMPANIES = new String[] { "输变电产业集团", "沈变", "衡变", "新变",
+	final static String[] COMPANIES = new String[] { "股份公司", "沈变", "衡变", "新变",
 			"天变", "鲁缆", "新缆", "德缆" };
-	final static String[] ACCOUNTS = new String[] { "输变电产业集团市场部", "沈变市场部", "衡变市场部", "新变市场部",
+	final static String[] ACCOUNTS = new String[] { "股份公司市场部", "沈变市场部", "衡变市场部", "新变市场部",
 		"天变市场部", "鲁缆市场部", "新缆市场部", "德缆市场部" };
 	
 	@RequestMapping(value = "import.do")
