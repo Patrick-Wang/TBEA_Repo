@@ -182,9 +182,9 @@ module mkt_view_data {
                   data: JSON.stringify(submitData)
               }).then((data: ISubmitResult) => {
                    if ("true" == data.result) {
-                         Util.MessageBox.tip("保存 成功");
+                         Util.MessageBox.tip("提交 成功");
                     } else if ("false" == data.result) {
-                         Util.MessageBox.tip("保存 失败");
+                         Util.MessageBox.tip("提交 失败");
                     } else {
                         Util.MessageBox.tip(data.result);
                     }
@@ -254,7 +254,8 @@ module mkt_view_data {
                     pager: '#pager',
                     rowNum: 20,
                     viewrecords: true//是否显示行数 
-
+                    //eidt:{height:500},
+                    //add:{height:500}
                 })
             );
             if (rawData.length != 0){
@@ -269,6 +270,8 @@ module mkt_view_data {
                     var e = $.Event("keypress");
                     e.keyCode = 13;
                     $("#pager input.ui-pg-input").trigger(e);
+                    
+                    $("#assist").css("display","block");
                 } else if (d4 == "edit") {
                     var page = $("#" + childName).jqGrid('getGridParam', 'page');
                     var selectid = parseInt($("#" + childName).jqGrid('getGridParam', 'selrow'));
@@ -292,9 +295,9 @@ module mkt_view_data {
             });
             
              if (this.mCompanyName == "股份公司") {
-                $("#" + childName).jqGrid('navGrid', '#pager', { del: false, add: false, edit: false }, {}, {}, {}, { multipleSearch: true });
+                $("#" + childName).jqGrid('navGrid', '#pager', { del: false, add: false, edit: false }, {width:350}, {width:350}, {}, { multipleSearch: true });
             } else {
-                $("#" + childName).jqGrid('navGrid', '#pager', { del: false, add: true, edit: true }, {}, {}, {}, { multipleSearch: true });
+                $("#" + childName).jqGrid('navGrid', '#pager', { del: false, add: true, edit: true }, {width:350}, {width:350}, {}, { multipleSearch: true });
             }
 
         }
