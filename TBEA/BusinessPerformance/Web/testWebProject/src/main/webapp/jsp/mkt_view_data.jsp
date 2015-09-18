@@ -235,7 +235,7 @@ th.ui-th-ltr {
 			<td>
 				<Table id="assist" style="display:none">
 					<tr>
- 					  <c:if test="${(companyName != '输变电产业集团')}"> 
+ 					  <c:if test="${(companyName != '股份公司')}"> 
 						<td>
 							<input class="exportButton" type="button" value="提交"
 								style="width: 100px;"
