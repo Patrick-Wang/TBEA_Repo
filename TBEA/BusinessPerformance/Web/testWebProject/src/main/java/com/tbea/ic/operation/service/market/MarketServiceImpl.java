@@ -339,8 +339,9 @@ public class MarketServiceImpl implements MarketService {
 				result[col][14] = obj.getChiefInfo() + "";
 				result[col][15] = obj.getLeaderInfo() + "";
 				result[col][16] = obj.getOtherCompanyName() + "";
-				result[col][17] = obj.getBidSituation() + "";
-				result[col][18] = obj.getRemark() + "";
+				result[col][17] = obj.getBidRestrict() + "";
+				result[col][18] = obj.getBidSituation() + "";
+				result[col][19] = obj.getRemark() + "";
 
 				col++;
 			}

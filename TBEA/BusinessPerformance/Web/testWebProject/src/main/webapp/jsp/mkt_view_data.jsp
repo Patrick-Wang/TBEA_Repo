@@ -213,14 +213,11 @@ th.ui-th-ltr {
 <!-- 						<td width="10px"></td> -->
 						<td>
 							<select id="rpttype" style="width: 115px" onchange="instance.onDoc_TypeSelected()">								
-								<option value="2">
-									项目信息
+								<option value="2">项目信息
 								</option>
-								<option value="3">
-									投标台账
+								<option value="3">投标台账
 								</option>
-								<option value="4">
-									签约台账
+								<option value="4">签约台账
 								</option>
 							</select>
 						</td>
@@ -248,7 +245,7 @@ th.ui-th-ltr {
 						</td>
 				</c:if>
 						<td>
-							<form id="exportxmgs" method="post" style="overflow:visible">
+							<form id="exportMarketData" method="post" style="overflow:visible">
 								<input class="exportButton" type="button" value="导出数据"
 									style="width: 120px;"
 									onclick="instance.exportExcel()"

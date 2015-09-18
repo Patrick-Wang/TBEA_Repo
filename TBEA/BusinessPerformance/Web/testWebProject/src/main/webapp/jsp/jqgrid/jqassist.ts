@@ -195,13 +195,13 @@ module JQTable {
     }
 
     export interface NodeOption {
-        name: string,
-        id: string,
-        isReadOnly?: boolean,
-        isNumber?: boolean,
-        align?: TextAlign,
-        width?: number,
-        editType?: string,
+        name: string;
+        id: string;
+        isReadOnly?: boolean;
+        isNumber?: boolean;
+        align?: TextAlign;
+        width?: number;
+        editType?: string;
         options?: any
     }
 
