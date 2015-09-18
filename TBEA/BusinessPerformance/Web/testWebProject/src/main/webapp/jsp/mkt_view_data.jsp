@@ -248,7 +248,7 @@ th.ui-th-ltr {
 						</td>
 				</c:if>
 						<td>
-							<form id="exportxmgs" method="post">
+							<form id="exportxmgs" method="post" style="overflow:visible">
 								<input class="exportButton" type="button" value="导出数据"
 									style="width: 120px;"
 									onclick="instance.exportExcel()"
