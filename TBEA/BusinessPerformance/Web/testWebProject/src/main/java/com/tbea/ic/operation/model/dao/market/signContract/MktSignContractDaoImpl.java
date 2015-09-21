@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.market.signContract.MktSignContractDao;
+import com.tbea.ic.operation.model.entity.MktBidInfo;
 import com.tbea.ic.operation.model.entity.MktProjectInfo;
 import com.tbea.ic.operation.model.entity.MktSignContract;
 
@@ -51,5 +52,13 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 			return null;
 		}
 		return mbis.get(0);
+	}
+
+	@Override
+	public void remove(String key) {
+		MktSignContract info = this.getById(key);
+		if (null != info){
+			manager.remove(info);
+		}
 	}
 }

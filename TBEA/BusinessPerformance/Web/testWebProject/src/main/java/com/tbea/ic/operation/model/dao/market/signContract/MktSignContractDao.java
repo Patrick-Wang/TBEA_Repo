@@ -13,4 +13,6 @@ public interface MktSignContractDao {
 	List<MktSignContract> getData(String companyName);
 
 	MktSignContract getById(String contractNo);
+
+	void remove(String key);
 }

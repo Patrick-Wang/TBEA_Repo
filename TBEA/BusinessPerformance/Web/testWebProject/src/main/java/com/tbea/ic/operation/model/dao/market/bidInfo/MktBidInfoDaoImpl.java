@@ -81,4 +81,12 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 		return q.getResultList();
 	}
 
+	@Override
+	public void remove(String key) {
+		MktBidInfo info = this.getById(key);
+		if (null != info){
+			manager.remove(info);
+		}
+	}
+
 }

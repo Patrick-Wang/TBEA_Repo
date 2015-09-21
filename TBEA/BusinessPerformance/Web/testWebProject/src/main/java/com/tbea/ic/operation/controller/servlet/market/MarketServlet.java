@@ -35,6 +35,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.jyzbexcel.FormatterHandler;
@@ -125,19 +127,36 @@ public class MarketServlet {
 		String data = request.getParameter("data");
 		JSONArray arrData = JSONArray.fromObject(data);
 		String mktType = request.getParameter("mktType");
-		String result = "false";
-		if (TYPE_PROJECT.equals(mktType)) {
-			result = marketService.importProjectData(arrData);
-		} else if (TYPE_SIGN.equals(mktType)) {
-			result = marketService.importSignData(arrData);
-		} else if (TYPE_BID.equals(mktType)) {
-			result = marketService.importBidData(arrData);
+		String isEdit = request.getParameter("editOper");
+		ErrorCode result = ErrorCode.OK;
+		try {
+			if ("true".equals(isEdit)) {
+				String rawKey = request.getParameter("editOper");
+				if (TYPE_PROJECT.equals(mktType)) {
+					result = marketService.editProjectData(
+							arrData.getJSONArray(0), rawKey);
+				} else if (TYPE_SIGN.equals(mktType)) {
+					result = marketService.editSignData(
+							arrData.getJSONArray(0), rawKey);
+				} else if (TYPE_BID.equals(mktType)) {
+					result = marketService.editBidData(arrData.getJSONArray(0),
+							rawKey);
+				}
+			} else {
+				if (TYPE_PROJECT.equals(mktType)) {
+					result = marketService.addProjectData(arrData
+							.getJSONArray(0));
+				} else if (TYPE_SIGN.equals(mktType)) {
+					result = marketService.addSignData(arrData.getJSONArray(0));
+				} else if (TYPE_BID.equals(mktType)) {
+					result = marketService.addBidData(arrData.getJSONArray(0));
+				}
+			}
+		} catch (Exception e) {
+			result = ErrorCode.DATABASE_EXCEPTION;
 		}
 
-		if ("OK".equals(result)) {
-			result = "true";
-		}
-		return ("{\"result\":\"" + result + "\"}").getBytes("utf-8");
+		return Util.response(result);
 	}
 
 	private String getCompanyName(Account account) {

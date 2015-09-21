@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 
 import com.tbea.ic.operation.common.companys.Company;
@@ -380,5 +381,13 @@ public class Util {
 	
 	public static String getSetMethodName(String property){
 		return "set" + property.substring(0, 1).toUpperCase() + property.substring(1);
+	}
+	
+	public static byte[] response(ErrorCode val) throws UnsupportedEncodingException{
+		return new BMResponse(val).toJson().getBytes("utf-8");
+	}
+	
+	public static byte[] response(String val) throws UnsupportedEncodingException{
+		return new BMResponse(val).toJson().getBytes("utf-8");
 	}
 }

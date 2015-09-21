@@ -3,8 +3,6 @@ package com.tbea.ic.operation.service.market;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 import net.sf.json.JSONArray;
@@ -17,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.market.bidInfo.MktBidInfoDao;
 import com.tbea.ic.operation.model.dao.market.projectInfo.MktProjectInfoDao;
@@ -47,92 +46,25 @@ public class MarketServiceImpl implements MarketService {
 	private final String ERROR_OK = "OK";
 	private final String ERROR_COUNT_NOT_MATCH = "文档不匹配(列数不匹配)";
 	private final String ERROR_UNKNOWN = "未知错误";
+
+	private final OnUpdateMktObjectListener bidUpdateListener = ObjectUpdateListenerFactory
+			.createBidUpdateListener(bidInfoDao);
+
+	private final OnUpdateMktObjectListener signUpdateListener = ObjectUpdateListenerFactory
+			.createSignUpdateListener(signContractDao);
+
+	private final OnUpdateMktObjectListener projectUpdateListener = ObjectUpdateListenerFactory
+			.createProjectUpdateListener(projectInfoDao);
+
+	private final OnUpdateMktObjectListener bidAddListener = ObjectUpdateListenerFactory
+			.createBidAddListener(bidInfoDao);
+
+	private final OnUpdateMktObjectListener signAddListener = ObjectUpdateListenerFactory
+			.createSignAddListener(signContractDao);
+
+	private final OnUpdateMktObjectListener projectAddListener = ObjectUpdateListenerFactory
+			.createProjectAddListener(projectInfoDao);
 	
-	private final OnUpdateMktObjectListener bidUpdateListener = new OnUpdateMktObjectListener() {
-
-		@Override
-		public Class<?> onGetClass() {
-			return MktBidInfo.class;
-		}
-
-		@Override
-		public void update(Object mktObject) {
-			MktBidInfo mbi = (MktBidInfo) mktObject;
-			MktBidInfo mbiOld = bidInfoDao.getById(mbi.getBidNo());
-			if (mbiOld == null || mbiOld.getStartdate() == null) {
-				mbi.setStartdate(new java.sql.Date(Calendar.getInstance()
-						.getTimeInMillis()));
-			} else {
-				mbi.setStartdate(mbiOld.getStartdate());
-			}
-
-			if (mbiOld == null || mbiOld.getEnddate() == null) {
-				mbi.setEnddate(mbi.getStartdate());
-			} else {
-				mbi.setEnddate(mbiOld.getEnddate());
-			}
-
-			bidInfoDao.update(mbi);
-		}
-
-	};
-
-	private final OnUpdateMktObjectListener signUpdateListener = new OnUpdateMktObjectListener() {
-
-		@Override
-		public Class<?> onGetClass() {
-			return MktSignContract.class;
-		}
-
-		@Override
-		public void update(Object mktObject) {
-			MktSignContract msc = (MktSignContract) mktObject;
-			MktSignContract mscOld = signContractDao.getById(msc
-					.getContractNo());
-			if (mscOld == null || mscOld.getStartdate() == null) {
-				msc.setStartdate(new java.sql.Date(Calendar.getInstance()
-						.getTimeInMillis()));
-			} else {
-				msc.setStartdate(mscOld.getStartdate());
-			}
-
-			if (mscOld == null || mscOld.getEnddate() == null) {
-				msc.setEnddate(msc.getStartdate());
-			} else {
-				msc.setEnddate(mscOld.getEnddate());
-			}
-			signContractDao.update(msc);
-		}
-
-	};
-
-	private final OnUpdateMktObjectListener projectUpdateListener = new OnUpdateMktObjectListener() {
-
-		@Override
-		public Class<?> onGetClass() {
-			return MktProjectInfo.class;
-		}
-
-		@Override
-		public void update(Object mktObject) {
-			MktProjectInfo mpi = (MktProjectInfo) mktObject;
-			MktProjectInfo mpiOld = projectInfoDao.getById(mpi.getProjectNo());
-			if (mpiOld == null || mpiOld.getStartdate() == null) {
-				mpi.setStartdate(new java.sql.Date(Calendar.getInstance()
-						.getTimeInMillis()));
-			} else {
-				mpi.setStartdate(mpiOld.getStartdate());
-			}
-
-			if (mpiOld == null || mpiOld.getEnddate() == null) {
-				mpi.setEnddate(mpi.getStartdate());
-			} else {
-				mpi.setEnddate(mpiOld.getEnddate());
-			}
-			projectInfoDao.update(mpi);
-		}
-	};
-
 	private String validate(XSSFWorkbook workbook, Class<?> cls) {
 		XSSFSheet sheet = workbook.getSheetAt(0);
 		XSSFRow row = sheet.getRow(0);
@@ -264,18 +196,13 @@ public class MarketServiceImpl implements MarketService {
 		return result;
 	}
 
-	private String importMktData(JSONArray data,
-			OnUpdateMktObjectListener listener) {
-		for (int i = 0; i < data.size(); ++i) {
-			try {
-				listener.update(createMktObject(data.getJSONArray(i), listener
-						.onGetClass().newInstance()));
-			} catch (InstantiationException | IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	private void importMktData(JSONArray row,
+			OnUpdateMktObjectListener listener){
+		try {
+			listener.update(createMktObject(row, listener.onGetClass().newInstance()));
+		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
 		}
-		return ERROR_OK;
 	}
 
 	@Override
@@ -417,19 +344,79 @@ public class MarketServiceImpl implements MarketService {
 	public String importBidData(XSSFWorkbook workbook) {
 		return importMktData(workbook, bidUpdateListener);
 	}
-	
-	@Override
-	public String importProjectData(JSONArray arrData) {
-		return importMktData(arrData, projectUpdateListener);
-	}
+
 
 	@Override
-	public String importSignData(JSONArray arrData) {
-		return importMktData(arrData, signUpdateListener);
+	public ErrorCode editProjectData(JSONArray jsonArray, String rawKey) {
+		if (!jsonArray.getString(2).equals(rawKey)){
+			if (null != projectInfoDao.getById(jsonArray.getString(2))){
+				return ErrorCode.PREMARY_KEY_CONFILICT;
+			}
+			importMktData(jsonArray, ObjectUpdateListenerFactory.createProjectEditListener(projectInfoDao, this.projectInfoDao.getById(rawKey)));
+			this.projectInfoDao.remove(rawKey);
+		}
+		return ErrorCode.OK;
 	}
 
+
 	@Override
-	public String importBidData(JSONArray arrData) {
-		return importMktData(arrData, bidUpdateListener);
+	public ErrorCode editSignData(JSONArray jsonArray, String rawKey) {
+		if (!jsonArray.getString(1).equals(rawKey)){
+			if (null != this.signContractDao.getById(jsonArray.getString(1))){
+				return ErrorCode.PREMARY_KEY_CONFILICT;
+			}
+			importMktData(jsonArray, ObjectUpdateListenerFactory.createSignEditListener(signContractDao, this.signContractDao.getById(rawKey)));
+			this.signContractDao.remove(rawKey);
+		}
+		return ErrorCode.OK;
+	}
+
+
+	@Override
+	public ErrorCode editBidData(JSONArray jsonArray, String rawKey) {
+		if (!jsonArray.getString(1).equals(rawKey)){
+			if (null != this.bidInfoDao.getById(jsonArray.getString(1))){
+				return ErrorCode.PREMARY_KEY_CONFILICT;
+			}
+			importMktData(jsonArray, ObjectUpdateListenerFactory.createBidEditListener(bidInfoDao, this.bidInfoDao.getById(rawKey)));
+			this.bidInfoDao.remove(rawKey);
+		}
+		return ErrorCode.OK;
+	}
+
+
+	@Override
+	public ErrorCode addProjectData(JSONArray jsonArray) {
+		if (null == this.projectInfoDao.getById(jsonArray.getString(2))){
+			importMktData(jsonArray, ObjectUpdateListenerFactory.createBidAddListener(bidInfoDao));
+		}
+		else{
+			return ErrorCode.PREMARY_KEY_CONFILICT;
+		}
+		return ErrorCode.OK;
+	}
+
+
+	@Override
+	public ErrorCode addSignData(JSONArray jsonArray) {
+		if (null == this.signContractDao.getById(jsonArray.getString(1))){
+			importMktData(jsonArray, ObjectUpdateListenerFactory.createSignAddListener(signContractDao));
+		}
+		else{
+			return ErrorCode.PREMARY_KEY_CONFILICT;
+		}
+		return ErrorCode.OK;
+	}
+
+
+	@Override
+	public ErrorCode addBidData(JSONArray jsonArray) {
+		if (null == this.bidInfoDao.getById(jsonArray.getString(1))){
+			importMktData(jsonArray, ObjectUpdateListenerFactory.createBidAddListener(bidInfoDao));
+		}
+		else{
+			return ErrorCode.PREMARY_KEY_CONFILICT;
+		}
+		return ErrorCode.OK;
 	}
 }

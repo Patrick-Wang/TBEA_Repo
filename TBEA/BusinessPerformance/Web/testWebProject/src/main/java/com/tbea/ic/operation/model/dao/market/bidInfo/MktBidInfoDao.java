@@ -17,4 +17,6 @@ public interface MktBidInfoDao{
 			Date dEnd);
 
 	List<MktBidInfo> getData(String companyName, Integer year);
+
+	void remove(String key);
 }

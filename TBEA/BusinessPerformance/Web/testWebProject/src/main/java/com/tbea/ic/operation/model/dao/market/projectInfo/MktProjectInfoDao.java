@@ -17,4 +17,6 @@ public interface MktProjectInfoDao {
 	List<MktProjectInfo> getCarryDownProjectInfo(Date dStart, Date dEnd);
 
 	List<MktProjectInfo> getData(String companyName, Integer year);
+
+	void remove(String key);
 }

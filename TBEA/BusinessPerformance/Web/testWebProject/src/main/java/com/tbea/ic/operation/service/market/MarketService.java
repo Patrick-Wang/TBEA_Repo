@@ -6,6 +6,8 @@ import net.sf.json.JSONArray;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.tbea.ic.operation.common.ErrorCode;
+
 public interface MarketService {
 
 	String[][] getBidData(String companyName, Integer year);
@@ -24,10 +26,16 @@ public interface MarketService {
 
 	String importBidData(XSSFWorkbook workbook);
 	
-	String importProjectData(JSONArray arrData);
+	ErrorCode editProjectData(JSONArray jsonArray, String rawKey) throws InstantiationException, IllegalAccessException;
 
-	String importSignData(JSONArray arrData);
+	ErrorCode editSignData(JSONArray jsonArray, String rawKey);
 
-	String importBidData(JSONArray arrData);
+	ErrorCode editBidData(JSONArray jsonArray, String rawKey);
+
+	ErrorCode addProjectData(JSONArray jsonArray);
+
+	ErrorCode addSignData(JSONArray jsonArray);
+
+	ErrorCode addBidData(JSONArray jsonArray);
 
 }
