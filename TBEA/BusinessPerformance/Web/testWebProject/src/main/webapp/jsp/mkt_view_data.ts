@@ -75,10 +75,11 @@ module mkt_view_data {
                 new JQTable.Node("本单位项目负责人及联系方式", "t14", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
                 new JQTable.Node("本单位负责该项目的主管领导", "t15", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
                 new JQTable.Node("跟踪该项目的其它内部企业名称", "t16", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("投标限制", "t17", false, JQTable.TextAlign.Left, 0, "select", { value: "无限制:无限制;允许兄弟企业参与投标:允许兄弟企业参与投标;仅允许一家参与投标:仅允许一家参与投标" }
-                    , false),
-                new JQTable.Node("投标情况", "t18", false, JQTable.TextAlign.Left, 0,
+               
+                new JQTable.Node("投标情况", "t17", false, JQTable.TextAlign.Left, 0,
                     "select", { value: "已投标:已投标;已报价:已报价;放弃跟踪:放弃跟踪;弃标:弃标;项目重复:项目重复;正在跟踪:正在跟踪;未招标结束:未招标结束" }
+                    , false),
+                 new JQTable.Node("投标限制", "t18", false, JQTable.TextAlign.Left, 0, "select", { value: "无限制:无限制;允许兄弟企业参与投标:允许兄弟企业参与投标;仅允许一家参与投标:仅允许一家参与投标" }
                     , false),
                 new JQTable.Node("备注", "t19", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
             ], gridName);
@@ -139,6 +140,7 @@ module mkt_view_data {
         private mExportDataSet: Util.Ajax;
         private mCompanyName;
         private mDocType;
+        private mOriginalKey;
         TableId: string;
         childTableId: string;
 
@@ -176,7 +178,6 @@ module mkt_view_data {
         public saveData() {
             var submitData: string[][] = [];
             for (var row = 0; row < $("#" + this.childTableId)[0].p.data.length; row++) {
-                //var index = 0;
                 submitData.push([]);
                 for (var col in $("#" + this.childTableId)[0].p.data[row]) {
                     submitData[row].push($("#" + this.childTableId)[0].p.data[row][col]);
@@ -266,7 +267,8 @@ module mkt_view_data {
             if (rawData.length != 0) {
                 $("#assist").css("display", "block");
             }
-
+                        
+            
             $("#" + childName).bind("jqGridAddEditAfterSubmit", (o, resp, data, d4) => {
                 if (d4 == "add") {
                     data.t0 = this.mCompanyName;
@@ -294,6 +296,7 @@ module mkt_view_data {
                     swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
                     $("#" + childName).setRowData(selectid, data);
                     swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
+                    this.mOriginalKey = $("#" + childName)[0].p.data[1];
                     //$("#" + name).jqGrid("setRowData", acRowid-1, data);
                     //$("#" + name).setRowData
                 }
