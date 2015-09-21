@@ -75,11 +75,11 @@ module mkt_view_data {
                 new JQTable.Node("本单位项目负责人及联系方式", "t14", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
                 new JQTable.Node("本单位负责该项目的主管领导", "t15", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
                 new JQTable.Node("跟踪该项目的其它内部企业名称", "t16", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-               
+
                 new JQTable.Node("投标情况", "t17", false, JQTable.TextAlign.Left, 0,
                     "select", { value: "已投标:已投标;已报价:已报价;放弃跟踪:放弃跟踪;弃标:弃标;项目重复:项目重复;正在跟踪:正在跟踪;未招标结束:未招标结束" }
                     , false),
-                 new JQTable.Node("投标限制", "t18", false, JQTable.TextAlign.Left, 0, "select", { value: "无限制:无限制;允许兄弟企业参与投标:允许兄弟企业参与投标;仅允许一家参与投标:仅允许一家参与投标" }
+                new JQTable.Node("投标限制", "t18", false, JQTable.TextAlign.Left, 0, "select", { value: "无限制:无限制;允许兄弟企业参与投标:允许兄弟企业参与投标;仅允许一家参与投标:仅允许一家参与投标" }
                     , false),
                 new JQTable.Node("备注", "t19", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
             ], gridName);
@@ -125,10 +125,15 @@ module mkt_view_data {
     }
 
 
-
+    enum ErrorCode {
+        OK,
+        DATABASE_EXCEPTION,
+        PREMARY_KEY_CONFILICT
+   }
 
     interface ISubmitResult {
-        result: string;
+        errorCode: number;
+        message:string;
     }
 
     export class View {
@@ -141,6 +146,7 @@ module mkt_view_data {
         private mCompanyName;
         private mDocType;
         private mOriginalKey;
+        private mEditOper: string;
         TableId: string;
         childTableId: string;
 
@@ -185,7 +191,9 @@ module mkt_view_data {
             }
             this.mSaveDataSet.post({
                 mktType: this.mDocType,
-                data: JSON.stringify(submitData)
+                data: JSON.stringify(submitData),
+                editOper: this.mEditOper,
+                //editOriginalKey: this.mOriginalKey
             }).then((data: ISubmitResult) => {
                 if ("true" == data.result) {
                     Util.MessageBox.tip("提交 成功");
@@ -205,33 +213,33 @@ module mkt_view_data {
 
             this.mDataSet.get({ docType: this.mDocType })
                 .then((data: any) => {
-                    var fktjData = data;
+                var fktjData = data;
 
-                    $('#dataStatus').css("display", "none");
-                    if (this.mDocType == 3) {
-                        this.updateTable(
-                            this.TableId,
-                            this.childTableId,
-                            JQGridAssistantFactory.createBidTable(this.childTableId),
-                            fktjData[0]);
-                    } else if (this.mDocType == 2) {
-                        this.updateTable(
-                            this.TableId,
-                            this.childTableId,
-                            JQGridAssistantFactory.createPrjTable(this.childTableId),
-                            fktjData[0]);
-                    } else if (this.mDocType == 4) {
-                        this.updateTable(
-                            this.TableId,
-                            this.childTableId,
-                            JQGridAssistantFactory.createContTable(this.childTableId),
-                            fktjData[0]);
-                    }
+                $('#dataStatus').css("display", "none");
+                if (this.mDocType == 3) {
+                    this.updateTable(
+                        this.TableId,
+                        this.childTableId,
+                        JQGridAssistantFactory.createBidTable(this.childTableId),
+                        fktjData[0]);
+                } else if (this.mDocType == 2) {
+                    this.updateTable(
+                        this.TableId,
+                        this.childTableId,
+                        JQGridAssistantFactory.createPrjTable(this.childTableId),
+                        fktjData[0]);
+                } else if (this.mDocType == 4) {
+                    this.updateTable(
+                        this.TableId,
+                        this.childTableId,
+                        JQGridAssistantFactory.createContTable(this.childTableId),
+                        fktjData[0]);
+                }
 
-                    var title = this.mCompanyName + "市场部" + $("#rpttype option:selected").text();
-                    $('h1').text(title);
-                    document.title = title;
-                });
+                var title = this.mCompanyName + "市场部" + $("#rpttype option:selected").text();
+                $('h1').text(title);
+                document.title = title;
+            });
         }
 
         private updateTable(
@@ -260,54 +268,133 @@ module mkt_view_data {
                     pager: '#pager',
                     rowNum: 20,
                     viewrecords: true//是否显示行数 
-                    //eidt:{height:500},
-                    //add:{height:500}
                 })
                 );
             if (rawData.length != 0) {
                 $("#assist").css("display", "block");
             }
-                        
             
-            $("#" + childName).bind("jqGridAddEditAfterSubmit", (o, resp, data, d4) => {
-                if (d4 == "add") {
-                    data.t0 = this.mCompanyName;
-                    $("#" + childName).addRowData($("#" + childName)[0].p.data.length + 1, data, 'last');
-                    $("#pager input.ui-pg-input").val($('input.ui-pg-input').next().text());
-                    var e = $.Event("keypress");
-                    e.keyCode = 13;
-                    $("#pager input.ui-pg-input").trigger(e);
-
-                    $("#assist").css("display", "block");
-                } else if (d4 == "edit") {
+            $("#" + childName).bind("jqGridAddEditAfterShowForm",(o, element, oper) => {
+                if (oper == "edit") {
                     var page = $("#" + childName).jqGrid('getGridParam', 'page');
                     var selectid = parseInt($("#" + childName).jqGrid('getGridParam', 'selrow'));
                     var rownum = $("#" + childName).jqGrid('getGridParam', 'rowNum');
                     var acRowid = ((page - 1) * rownum) + selectid;
-                    //$("#" + name).jqGrid('saveRow', $("#" + name)[0].p.data.length);
-                    //$("#" + name)[0].p.data.id = acRowid;
-                    //data.id = acRowid + "";
-                    //data.id = undefined;
-                    function swap(arr, a, b) {
-                        var tmp = arr[a];
-                        arr[a] = arr[b];
-                        arr[b] = tmp;
+                    if (this.mDocType == 2) {
+                        this.mOriginalKey = $("#" + childName)[0].p.data[acRowid - 1].t2;
+                    } else if (this.mDocType == 3) {
+                        this.mOriginalKey = $("#" + childName)[0].p.data[acRowid - 1].t1;
+                    } else if (this.mDocType == 4) {
+                        this.mOriginalKey = $("#" + childName)[0].p.data[acRowid - 1].t1;
                     }
-                    swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
-                    $("#" + childName).setRowData(selectid, data);
-                    swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
-                    this.mOriginalKey = $("#" + childName)[0].p.data[1];
-                    //$("#" + name).jqGrid("setRowData", acRowid-1, data);
-                    //$("#" + name).setRowData
+                }
+            });
+
+            $("#" + childName).bind("jqGridAddEditAfterSubmit",(o, resp, data, d4) => {
+                if (d4 == "add") {
+                    data.t0 = this.mCompanyName;
+                    this.mEditOper = "add";
+
+                    var submitData: string[][] = [];
+                    for (var row = 0; row < 1; row++) {
+                        submitData.push([]);
+                        submitData[row].push(data["t0"]);
+                        for (var col in data) {
+                            if (col != "id" && col != "oper" && col != "t0") {
+                                submitData[row].push(data[col]);
+                            }
+                        }
+                    }
+
+                    this.mSaveDataSet.post({
+                        mktType: this.mDocType,
+                        data: JSON.stringify(submitData),
+                        editOper: this.mEditOper,
+                        editOriginalKey: this.mOriginalKey
+                    }).then((data: ISubmitResult) => {
+                        if (ErrorCode.OK == data.errorCode) {
+                            Util.MessageBox.tip("添加成功！");
+                            $.jgrid.hideModal("#" + $.jgrid.jqID("editmodtable1_jqgrid_1234"), { gb: "#gbox_" + $.jgrid.jqID("table1_jqgrid_1234"), jqm: true, onClose: null });
+                            $("#" + childName).addRowData($("#" + childName)[0].p.data.length + 1, data, 'last');
+                            $("#pager input.ui-pg-input").val($('input.ui-pg-input').next().text());
+                            var e = $.Event("keypress");
+                            e.keyCode = 13;
+                            $("#pager input.ui-pg-input").trigger(e);
+
+                            $("#assist").css("display", "block");
+                        } else if (ErrorCode.PREMARY_KEY_CONFILICT == data.errorCode) {
+                            if (this.mDocType == 2) {
+                                Util.MessageBox.tip("添加失败，项目编号重复！");
+                            } else if (this.mDocType == 3) {
+                               Util.MessageBox.tip("添加失败，投标编号重复！");
+                            } else if (this.mDocType == 4) {
+                               Util.MessageBox.tip("添加失败，合同编号重复!");
+                            } 
+                        } else if (ErrorCode.DATABASE_EXCEPTION == data.errorCode) {
+                            Util.MessageBox.tip("添加失败!");
+                        } else {
+                        }
+                    });
+
+                } else if (d4 == "edit") {
+                    this.mEditOper = "edit";
+                    data.t0 = this.mCompanyName;
+                    
+                    var submitData: string[][] = [];
+                    for (var row = 0; row < 1; row++) {
+                        submitData.push([]);
+                        submitData[row].push(data["t0"]);
+                        for (var col in data) {
+                            if (col != "id" && col != "oper" && col != "t0") {
+                                submitData[row].push(data[col]);
+                            }
+                        }
+                    }
+
+
+                    this.mSaveDataSet.post({
+                        mktType: this.mDocType,
+                        data: JSON.stringify(submitData),
+                        editOper: this.mEditOper,
+                        editOriginalKey: this.mOriginalKey
+                    }).then((data: ISubmitResult) => {
+                        if (ErrorCode.OK == data.errorCode) {
+                            Util.MessageBox.tip("编辑成功！");
+                            $.jgrid.hideModal("#" + $.jgrid.jqID("editmodtable1_jqgrid_1234"), { gb: "#gbox_" + $.jgrid.jqID("table1_jqgrid_1234"), jqm: true, onClose: null });
+                            var page = $("#" + childName).jqGrid('getGridParam', 'page');
+                            var selectid = parseInt($("#" + childName).jqGrid('getGridParam', 'selrow'));
+                            var rownum = $("#" + childName).jqGrid('getGridParam', 'rowNum');
+                            var acRowid = ((page - 1) * rownum) + selectid;
+
+                            function swap(arr, a, b) {
+                                var tmp = arr[a];
+                                arr[a] = arr[b];
+                                arr[b] = tmp;
+                            }
+                            swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
+                            $("#" + childName).setRowData(selectid, data);
+                            swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
+                        } else if (ErrorCode.PREMARY_KEY_CONFILICT == data.errorCode) {
+                            if (this.mDocType == 2) {
+                                Util.MessageBox.tip("编辑失败，项目编号重复！");
+                            } else if (this.mDocType == 3) {
+                               Util.MessageBox.tip("编辑失败，投标编号重复！");
+                            } else if (this.mDocType == 4) {
+                               Util.MessageBox.tip("编辑失败，合同编号重复!");
+                            } 
+                        } else if (ErrorCode.DATABASE_EXCEPTION == data.errorCode) {
+                            Util.MessageBox.tip("数据提交失败!");
+                        } else {
+                        }
+                    });
                 }
             });
 
             if (this.mCompanyName == "股份公司") {
-                $("#" + childName).jqGrid('navGrid', '#pager', { del: false, add: false, edit: false }, { width: 350 }, { width: 350 }, {}, { multipleSearch: true });
+                $("#" + childName).jqGrid('navGrid', '#pager', { del: false, add: false, edit: false }, {}, {}, {}, { multipleSearch: true });
             } else {
                 $("#" + childName).jqGrid('navGrid', '#pager', { del: false, add: true, edit: true }, { width: 350 }, { width: 350 }, {}, { multipleSearch: true });
             }
-
         }
     }
 }
