@@ -153,6 +153,7 @@ public class MarketServlet {
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			result = ErrorCode.DATABASE_EXCEPTION;
 		}
 

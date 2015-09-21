@@ -394,7 +394,7 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public ErrorCode addProjectData(JSONArray jsonArray) {
 		if (null == this.projectInfoDao.getById(jsonArray.getString(2))){
-			importMktData(jsonArray, ObjectUpdateListenerFactory.createBidAddListener(bidInfoDao));
+			importMktData(jsonArray, ObjectUpdateListenerFactory.createProjectAddListener(projectInfoDao));
 		}
 		else{
 			return ErrorCode.PREMARY_KEY_CONFILICT;
