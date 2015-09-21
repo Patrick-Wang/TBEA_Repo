@@ -49,7 +49,8 @@ public class JyzbExcelTemplate {
 		JDFDWZBYJ_CY,
 		JDYJZB_MY,
 		JDFCYZBYJ_MY,
-		JDFDWZBYJ_MY
+		JDFDWZBYJ_MY,
+		MARKET_PRO
 	}
 	
 
