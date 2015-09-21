@@ -127,11 +127,11 @@ public class MarketServlet {
 		String data = request.getParameter("data");
 		JSONArray arrData = JSONArray.fromObject(data);
 		String mktType = request.getParameter("mktType");
-		String isEdit = request.getParameter("editOper");
+		String oper = request.getParameter("editOper");
 		ErrorCode result = ErrorCode.OK;
 		try {
-			if ("true".equals(isEdit)) {
-				String rawKey = request.getParameter("editOper");
+			if ("edit".equals(oper)) {
+				String rawKey = request.getParameter("editOriginalKey");
 				if (TYPE_PROJECT.equals(mktType)) {
 					result = marketService.editProjectData(
 							arrData.getJSONArray(0), rawKey);
