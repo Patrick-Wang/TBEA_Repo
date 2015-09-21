@@ -354,6 +354,8 @@ public class MarketServiceImpl implements MarketService {
 			}
 			importMktData(jsonArray, ObjectUpdateListenerFactory.createProjectEditListener(projectInfoDao, this.projectInfoDao.getById(rawKey)));
 			this.projectInfoDao.remove(rawKey);
+		} else{
+			importMktData(jsonArray, ObjectUpdateListenerFactory.createProjectEditListener(projectInfoDao, this.projectInfoDao.getById(rawKey)));
 		}
 		return ErrorCode.OK;
 	}
@@ -367,6 +369,8 @@ public class MarketServiceImpl implements MarketService {
 			}
 			importMktData(jsonArray, ObjectUpdateListenerFactory.createSignEditListener(signContractDao, this.signContractDao.getById(rawKey)));
 			this.signContractDao.remove(rawKey);
+		} else{
+			importMktData(jsonArray, ObjectUpdateListenerFactory.createSignEditListener(signContractDao, this.signContractDao.getById(rawKey)));
 		}
 		return ErrorCode.OK;
 	}
@@ -380,6 +384,8 @@ public class MarketServiceImpl implements MarketService {
 			}
 			importMktData(jsonArray, ObjectUpdateListenerFactory.createBidEditListener(bidInfoDao, this.bidInfoDao.getById(rawKey)));
 			this.bidInfoDao.remove(rawKey);
+		} else{
+			importMktData(jsonArray, ObjectUpdateListenerFactory.createBidEditListener(bidInfoDao, this.bidInfoDao.getById(rawKey)));
 		}
 		return ErrorCode.OK;
 	}
