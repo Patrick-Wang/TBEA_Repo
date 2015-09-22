@@ -294,6 +294,9 @@ module mkt_view_data {
                 }
             });
 
+            var editModeWidth = 350;
+
+
             $("#" + childName).bind("jqGridAddEditAfterSubmit", (event, element, data, oper) => {
                 if (oper == "add") {
                     data.t0 = this.mCompanyName;
@@ -309,7 +312,6 @@ module mkt_view_data {
                             }
                         }
                     }
-
                     this.mSaveDataSet.post({
                         mktType: this.mDocType,
                         data: JSON.stringify(submitData),
@@ -327,7 +329,6 @@ module mkt_view_data {
                             var e = $.Event("keypress");
                             e.keyCode = 13;
                             $("#pager input.ui-pg-input").trigger(e);
-
                             $("#assist").css("display", "block");
                         } else if (ErrorCode.PREMARY_KEY_CONFILICT == sr.errorCode) {
                             if (this.mDocType == 2) {
@@ -367,7 +368,8 @@ module mkt_view_data {
                     }).then((sr: ISubmitResult) => {
                         if (ErrorCode.OK == sr.errorCode) {
                             Util.MessageBox.tip("编辑成功！");
-                            $.jgrid.hideModal("#" + $.jgrid.jqID("editmodtable1_jqgrid_1234"), { gb: "#gbox_" + $.jgrid.jqID("table1_jqgrid_1234"), jqm: true, onClose: null });
+
+                            $.jgrid.hideModal("#" + $.jgrid.jqID("editmod" + childName), { gb: "#gbox_" + $.jgrid.jqID("table1_jqgrid_1234"), jqm: true, onClose: null });
                             var page = $("#" + childName).jqGrid('getGridParam', 'page');
                             var rownum = $("#" + childName).jqGrid('getGridParam', 'rowNum');
                             var acRowid = ((page - 1) * rownum) + selectid;
@@ -380,6 +382,7 @@ module mkt_view_data {
                             swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
                             $("#" + childName).setRowData(selectid, data);
                             swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
+
                         } else if (ErrorCode.PREMARY_KEY_CONFILICT == sr.errorCode) {
                             if (this.mDocType == 2) {
                                 Util.MessageBox.tip("编辑失败，项目编号重复！");
@@ -397,9 +400,49 @@ module mkt_view_data {
             });
 
             if (this.mCompanyName == "股份公司") {
-                $("#" + childName).jqGrid('navGrid', '#pager', { del: false, add: false, edit: false }, {}, {}, {}, { multipleSearch: true });
+                $("#" + childName).jqGrid('navGrid', '#pager', {
+                    del: false, add: false, edit: false,
+                    addfunc: function() {
+                        var dataEdit = $("#" + childName).data("formProp");
+                        if (undefined != dataEdit) {
+                            dataEdit.width = editModeWidth;
+                            dataEdit.datawidth = "auto";
+                            $("#" + childName).data("formProp", dataEdit);
+                        }
+                        $("#" + childName).jqGrid("editGridRow", "new", { width: editModeWidth });
+                    },
+                    editfunc: function(sr) {
+                        var dataEdit = $("#" + childName).data("formProp");
+                        if (undefined != dataEdit) {
+                            dataEdit.width = editModeWidth;
+                            dataEdit.datawidth = "auto";
+                            $("#" + childName).data("formProp", dataEdit);
+                        }
+                        $("#" + childName).jqGrid("editGridRow", sr, { width: editModeWidth });
+                    }
+                }, {}, {}, {}, { multipleSearch: true });
             } else {
-                $("#" + childName).jqGrid('navGrid', '#pager', { del: false, add: true, edit: true }, { width: 350 }, { width: 350 }, {}, { multipleSearch: true });
+                $("#" + childName).jqGrid('navGrid', '#pager', {
+                    del: false, add: true, edit: true,
+                    addfunc: function() {
+                        var dataEdit = $("#" + childName).data("formProp");
+                        if (undefined != dataEdit) {
+                            dataEdit.width = editModeWidth;
+                            dataEdit.datawidth = "auto";
+                            $("#" + childName).data("formProp", dataEdit);
+                        }
+                        $("#" + childName).jqGrid("editGridRow", "new", { width: editModeWidth });
+                    },
+                    editfunc: function(sr) {
+                        var dataEdit = $("#" + childName).data("formProp");
+                        if (undefined != dataEdit) {
+                            dataEdit.width = editModeWidth;
+                            dataEdit.datawidth = "auto";
+                            $("#" + childName).data("formProp", dataEdit);
+                        }
+                        $("#" + childName).jqGrid("editGridRow", sr, { width: editModeWidth });
+                    }
+                }, { width: editModeWidth }, { width: editModeWidth }, {}, { multipleSearch: true });
             }
         }
     }
