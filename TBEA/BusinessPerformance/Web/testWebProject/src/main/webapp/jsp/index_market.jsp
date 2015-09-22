@@ -11,11 +11,11 @@
 		<ul class="slides">
 			<li data-thumb="asset/img/example/bar1.png"><a
 				href="../Market/mkt_view.do" target="_blank"><img
-					src="../images/charts/bar1.png"> <span><strong>市场数据汇总</strong></span></a>
+					src="../images/charts/bar1.png"> <span><strong>市场部数据信息</strong></span></a>
 			</li>
 			<li data-thumb="asset/img/example/cache.png"><a
 				href="../Market/mkt_import_data.do" target="_blank"><img
-					src="../images/charts/bar10.png"> <span><strong>市场数据导入</strong></span></a>
+					src="../images/charts/bar10.png"> <span><strong>市场部数据批量导入</strong></span></a>
 			</li>
 		</ul>
 	</div>
