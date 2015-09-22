@@ -31,10 +31,10 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 		if(companyName.equals("股份公司"))
 		{
 			q = manager.createQuery(
-					"from MktBidInfo");
+					"from MktBidInfo order by startdate desc");
 		}else{
 			q = manager.createQuery(
-					"from MktBidInfo where company_name like:comp order by bid_no desc");
+					"from MktBidInfo where company_name like:comp order by startdate desc");
 			q.setParameter("comp", "%"+companyName+"%");
 		}		
 		

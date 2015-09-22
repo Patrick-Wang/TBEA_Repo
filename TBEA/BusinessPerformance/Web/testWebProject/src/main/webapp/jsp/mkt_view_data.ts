@@ -129,11 +129,15 @@ module mkt_view_data {
         OK,
         DATABASE_EXCEPTION,
         PREMARY_KEY_CONFILICT
-   }
+    }
 
     interface ISubmitResult {
         errorCode: number;
-        message:string;
+        message: string;
+    }
+
+    interface ISubmitResultDeprecated {
+        result: string;
     }
 
     export class View {
@@ -194,7 +198,7 @@ module mkt_view_data {
                 data: JSON.stringify(submitData),
                 editOper: this.mEditOper,
                 //editOriginalKey: this.mOriginalKey
-            }).then((data: ISubmitResult) => {
+            }).then((data: ISubmitResultDeprecated) => {
                 if ("true" == data.result) {
                     Util.MessageBox.tip("提交 成功");
                 } else if ("false" == data.result) {
@@ -213,33 +217,33 @@ module mkt_view_data {
 
             this.mDataSet.get({ docType: this.mDocType })
                 .then((data: any) => {
-                var fktjData = data;
+                    var fktjData = data;
 
-                $('#dataStatus').css("display", "none");
-                if (this.mDocType == 3) {
-                    this.updateTable(
-                        this.TableId,
-                        this.childTableId,
-                        JQGridAssistantFactory.createBidTable(this.childTableId),
-                        fktjData[0]);
-                } else if (this.mDocType == 2) {
-                    this.updateTable(
-                        this.TableId,
-                        this.childTableId,
-                        JQGridAssistantFactory.createPrjTable(this.childTableId),
-                        fktjData[0]);
-                } else if (this.mDocType == 4) {
-                    this.updateTable(
-                        this.TableId,
-                        this.childTableId,
-                        JQGridAssistantFactory.createContTable(this.childTableId),
-                        fktjData[0]);
-                }
+                    $('#dataStatus').css("display", "none");
+                    if (this.mDocType == 3) {
+                        this.updateTable(
+                            this.TableId,
+                            this.childTableId,
+                            JQGridAssistantFactory.createBidTable(this.childTableId),
+                            fktjData[0]);
+                    } else if (this.mDocType == 2) {
+                        this.updateTable(
+                            this.TableId,
+                            this.childTableId,
+                            JQGridAssistantFactory.createPrjTable(this.childTableId),
+                            fktjData[0]);
+                    } else if (this.mDocType == 4) {
+                        this.updateTable(
+                            this.TableId,
+                            this.childTableId,
+                            JQGridAssistantFactory.createContTable(this.childTableId),
+                            fktjData[0]);
+                    }
 
-                var title = this.mCompanyName + "市场部" + $("#rpttype option:selected").text();
-                $('h1').text(title);
-                document.title = title;
-            });
+                    var title = this.mCompanyName + "市场部" + $("#rpttype option:selected").text();
+                    $('h1').text(title);
+                    document.title = title;
+                });
         }
 
         private updateTable(
@@ -273,8 +277,8 @@ module mkt_view_data {
             if (rawData.length != 0) {
                 $("#assist").css("display", "block");
             }
-            
-            $("#" + childName).bind("jqGridAddEditAfterShowForm",(o, element, oper) => {
+
+            $("#" + childName).bind("jqGridAddEditAfterShowForm", (event, element, oper) => {
                 if (oper == "edit") {
                     var page = $("#" + childName).jqGrid('getGridParam', 'page');
                     var selectid = parseInt($("#" + childName).jqGrid('getGridParam', 'selrow'));
@@ -290,8 +294,8 @@ module mkt_view_data {
                 }
             });
 
-            $("#" + childName).bind("jqGridAddEditAfterSubmit",(o, resp, data, d4) => {
-                if (d4 == "add") {
+            $("#" + childName).bind("jqGridAddEditAfterSubmit", (event, element, data, oper) => {
+                if (oper == "add") {
                     data.t0 = this.mCompanyName;
                     this.mEditOper = "add";
 
@@ -311,35 +315,38 @@ module mkt_view_data {
                         data: JSON.stringify(submitData),
                         editOper: this.mEditOper,
                         editOriginalKey: this.mOriginalKey
-                    }).then((data: ISubmitResult) => {
-                        if (ErrorCode.OK == data.errorCode) {
+                    }).then((sr: ISubmitResult) => {
+                        if (ErrorCode.OK == sr.errorCode) {
                             Util.MessageBox.tip("添加成功！");
                             $.jgrid.hideModal("#" + $.jgrid.jqID("editmodtable1_jqgrid_1234"), { gb: "#gbox_" + $.jgrid.jqID("table1_jqgrid_1234"), jqm: true, onClose: null });
-                            $("#" + childName).addRowData($("#" + childName)[0].p.data.length + 1, data, 'last');
-                            $("#pager input.ui-pg-input").val($('input.ui-pg-input').next().text());
+                            $("#" + childName).addRowData($("#" + childName)[0].p.data.length + 1, data, 'first');
+                            var tmpData: Array<any> = $("#" + childName)[0].p.data;
+                            tmpData.unshift(tmpData.pop());
+                            //$("#pager input.ui-pg-input").val($('input.ui-pg-input').next().text());
+                            $("#pager input.ui-pg-input").val(1);
                             var e = $.Event("keypress");
                             e.keyCode = 13;
                             $("#pager input.ui-pg-input").trigger(e);
 
                             $("#assist").css("display", "block");
-                        } else if (ErrorCode.PREMARY_KEY_CONFILICT == data.errorCode) {
+                        } else if (ErrorCode.PREMARY_KEY_CONFILICT == sr.errorCode) {
                             if (this.mDocType == 2) {
                                 Util.MessageBox.tip("添加失败，项目编号重复！");
                             } else if (this.mDocType == 3) {
-                               Util.MessageBox.tip("添加失败，投标编号重复！");
+                                Util.MessageBox.tip("添加失败，投标编号重复！");
                             } else if (this.mDocType == 4) {
-                               Util.MessageBox.tip("添加失败，合同编号重复!");
-                            } 
-                        } else if (ErrorCode.DATABASE_EXCEPTION == data.errorCode) {
+                                Util.MessageBox.tip("添加失败，合同编号重复!");
+                            }
+                        } else if (ErrorCode.DATABASE_EXCEPTION == sr.errorCode) {
                             Util.MessageBox.tip("添加失败!");
                         } else {
                         }
                     });
 
-                } else if (d4 == "edit") {
+                } else if (oper == "edit") {
                     this.mEditOper = "edit";
                     data.t0 = this.mCompanyName;
-                    
+
                     var submitData: string[][] = [];
                     for (var row = 0; row < 1; row++) {
                         submitData.push([]);
@@ -351,18 +358,17 @@ module mkt_view_data {
                         }
                     }
 
-
+                    var selectid = parseInt($("#" + childName).jqGrid('getGridParam', 'selrow'));
                     this.mSaveDataSet.post({
                         mktType: this.mDocType,
                         data: JSON.stringify(submitData),
                         editOper: this.mEditOper,
                         editOriginalKey: this.mOriginalKey
-                    }).then((data: ISubmitResult) => {
-                        if (ErrorCode.OK == data.errorCode) {
+                    }).then((sr: ISubmitResult) => {
+                        if (ErrorCode.OK == sr.errorCode) {
                             Util.MessageBox.tip("编辑成功！");
                             $.jgrid.hideModal("#" + $.jgrid.jqID("editmodtable1_jqgrid_1234"), { gb: "#gbox_" + $.jgrid.jqID("table1_jqgrid_1234"), jqm: true, onClose: null });
                             var page = $("#" + childName).jqGrid('getGridParam', 'page');
-                            var selectid = parseInt($("#" + childName).jqGrid('getGridParam', 'selrow'));
                             var rownum = $("#" + childName).jqGrid('getGridParam', 'rowNum');
                             var acRowid = ((page - 1) * rownum) + selectid;
 
@@ -374,15 +380,15 @@ module mkt_view_data {
                             swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
                             $("#" + childName).setRowData(selectid, data);
                             swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
-                        } else if (ErrorCode.PREMARY_KEY_CONFILICT == data.errorCode) {
+                        } else if (ErrorCode.PREMARY_KEY_CONFILICT == sr.errorCode) {
                             if (this.mDocType == 2) {
                                 Util.MessageBox.tip("编辑失败，项目编号重复！");
                             } else if (this.mDocType == 3) {
-                               Util.MessageBox.tip("编辑失败，投标编号重复！");
+                                Util.MessageBox.tip("编辑失败，投标编号重复！");
                             } else if (this.mDocType == 4) {
-                               Util.MessageBox.tip("编辑失败，合同编号重复!");
-                            } 
-                        } else if (ErrorCode.DATABASE_EXCEPTION == data.errorCode) {
+                                Util.MessageBox.tip("编辑失败，合同编号重复!");
+                            }
+                        } else if (ErrorCode.DATABASE_EXCEPTION == sr.errorCode) {
                             Util.MessageBox.tip("数据提交失败!");
                         } else {
                         }

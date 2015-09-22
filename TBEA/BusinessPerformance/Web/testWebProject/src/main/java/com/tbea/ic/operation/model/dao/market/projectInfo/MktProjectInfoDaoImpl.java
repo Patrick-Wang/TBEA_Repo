@@ -30,11 +30,11 @@ public class MktProjectInfoDaoImpl implements MktProjectInfoDao {
 	@Override
 	public List<MktProjectInfo> getData(String companyName) {
 		Query q;
-		if (companyName.equals("全部公司")) {
-			q = manager.createQuery("from MktProjectInfo");
+		if (companyName.equals("股份公司")) {
+			q = manager.createQuery("from MktProjectInfo order by startdate desc");
 		} else {
 			q = manager
-					.createQuery("from MktProjectInfo where company_name like:comp order by project_no desc");
+					.createQuery("from MktProjectInfo where company_name like:comp order by startdate desc");
 			q.setParameter("comp", "%" + companyName + "%");
 		}
 		return q.getResultList();

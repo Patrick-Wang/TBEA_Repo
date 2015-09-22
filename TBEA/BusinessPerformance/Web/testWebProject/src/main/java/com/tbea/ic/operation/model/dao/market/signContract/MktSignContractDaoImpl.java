@@ -33,10 +33,10 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 		if(companyName.equals("股份公司"))
 		{
 			q = manager.createQuery(
-					"from MktSignContract");
+					"from MktSignContract order by startdate desc");
 		}else{
 			q = manager.createQuery(
-					"from MktSignContract where company_name like :comp order by contract_no desc");
+					"from MktSignContract where company_name like :comp order by startdate desc");
 			q.setParameter("comp", "%"+companyName+"%");
 		}		
 		return q.getResultList();
