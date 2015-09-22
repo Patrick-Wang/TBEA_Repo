@@ -348,6 +348,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public ErrorCode editProjectData(JSONArray jsonArray, String rawKey) {
+		if (jsonArray.getString(2).isEmpty()){
+			return ErrorCode.PREMARY_KEY_NULL;
+		}
+		
 		if (!jsonArray.getString(2).equals(rawKey)){
 			if (null != projectInfoDao.getById(jsonArray.getString(2))){
 				return ErrorCode.PREMARY_KEY_CONFILICT;
@@ -363,6 +367,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public ErrorCode editSignData(JSONArray jsonArray, String rawKey) {
+		if (jsonArray.getString(1).isEmpty()){
+			return ErrorCode.PREMARY_KEY_NULL;
+		}
+		
 		if (!jsonArray.getString(1).equals(rawKey)){
 			if (null != this.signContractDao.getById(jsonArray.getString(1))){
 				return ErrorCode.PREMARY_KEY_CONFILICT;
@@ -378,6 +386,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public ErrorCode editBidData(JSONArray jsonArray, String rawKey) {
+		if (jsonArray.getString(1).isEmpty()){
+			return ErrorCode.PREMARY_KEY_NULL;
+		}
+		
 		if (!jsonArray.getString(1).equals(rawKey)){
 			if (null != this.bidInfoDao.getById(jsonArray.getString(1))){
 				return ErrorCode.PREMARY_KEY_CONFILICT;
@@ -393,6 +405,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public ErrorCode addProjectData(JSONArray jsonArray) {
+		if (jsonArray.getString(2).isEmpty()){
+			return ErrorCode.PREMARY_KEY_NULL;
+		}
+		
 		if (null == this.projectInfoDao.getById(jsonArray.getString(2))){
 			importMktData(jsonArray, ObjectUpdateListenerFactory.createProjectAddListener(projectInfoDao));
 		}
@@ -405,6 +421,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public ErrorCode addSignData(JSONArray jsonArray) {
+		if (jsonArray.getString(1).isEmpty()){
+			return ErrorCode.PREMARY_KEY_NULL;
+		}
+		
 		if (null == this.signContractDao.getById(jsonArray.getString(1))){
 			importMktData(jsonArray, ObjectUpdateListenerFactory.createSignAddListener(signContractDao));
 		}
@@ -417,6 +437,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public ErrorCode addBidData(JSONArray jsonArray) {
+		if (jsonArray.getString(1).isEmpty()){
+			return ErrorCode.PREMARY_KEY_NULL;
+		}
+		
 		if (null == this.bidInfoDao.getById(jsonArray.getString(1))){
 			importMktData(jsonArray, ObjectUpdateListenerFactory.createBidAddListener(bidInfoDao));
 		}
