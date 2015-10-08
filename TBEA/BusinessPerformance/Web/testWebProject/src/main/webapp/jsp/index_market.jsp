@@ -20,3 +20,28 @@
 		</ul>
 	</div>
 </div>
+
+<h3>
+	市场数据分析<a name="MarketAnalysis"> </a>
+</h3>
+<div class="section">
+	<div class="thumb4">
+		<ul class="slides">	
+			<li data-thumb="asset/img/example/line2.png"><a
+				href="../Market/mkt_bid_analysis.do" target="_blank"><img
+					src="../images/charts/line2.png"> <span><strong>投标情况分析</strong></span></a>
+			</li>
+			
+			<li data-thumb="asset/img/example/pie1.png"><a
+				href="../Market/mkt_contract_analysis.do" target="_blank"><img
+					src="../images/charts/pie1.png"> <span><strong>合同签约情况分析</strong></span></a>
+			</li>
+			
+			<li data-thumb="asset/img/example/scatter1.png"><a
+				href="../Market/mkt_region_analysis.do" target="_blank"><img
+					src="../images/charts/scatter1.png"> <span><strong>重点区域及属地市场工作开展情况</strong></span></a>
+			</li>
+			
+		</ul>
+	</div>
+</div>

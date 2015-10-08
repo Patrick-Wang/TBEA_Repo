@@ -31,11 +31,8 @@ public class MktBidInfo implements Serializable {
 	@Column(name = "[office_name]")
 	String officeName;
 
-	@Column(name = "[bid_month]")
-	String bidMonth;
-
 	@Column(name = "[bid_date]")
-	String bidDate;
+	Date bidDate;
 
 	@Column(name = "[industry_category]")
 	String industryCategory;
@@ -130,17 +127,11 @@ public class MktBidInfo implements Serializable {
 		return officeName;
 	}
 
-	/**
-	 * @return the bidMonth
-	 */
-	public String getBidMonth() {
-		return bidMonth;
-	}
 
 	/**
 	 * @return the bidDate
 	 */
-	public String getBidDate() {
+	public Date getBidDate() {
 		return bidDate;
 	}
 
@@ -304,18 +295,10 @@ public class MktBidInfo implements Serializable {
 	}
 
 	/**
-	 * @param bidMonth
-	 *            the bidMonth to set
-	 */
-	public void setBidMonth(String bidMonth) {
-		this.bidMonth = bidMonth;
-	}
-
-	/**
 	 * @param bidDate
 	 *            the bidDate to set
 	 */
-	public void setBidDate(String bidDate) {
+	public void setBidDate(Date bidDate) {
 		this.bidDate = bidDate;
 	}
 

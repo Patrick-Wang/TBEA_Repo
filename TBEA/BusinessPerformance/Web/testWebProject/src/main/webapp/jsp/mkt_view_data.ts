@@ -12,9 +12,8 @@ module mkt_view_data {
                 new JQTable.Node("项目信息编号", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
                 new JQTable.Node("授权编号", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
                 new JQTable.Node("办事处或项目部", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("投标月份", "t5", false, JQTable.TextAlign.Left, 0
-                    , "select", { value: "1:1;2:2;3:3;4:4;5:5;6:6;7:7;8:8;9:9;10:10;11:11;12:12" }, false),
-                new JQTable.Node("投标日期", "t6", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                
+                new JQTable.Node("投标日期", "t6", false, JQTable.TextAlign.Left, 0, "text", {dataInit: function(element) {$(element).datepicker({dateFormat:"yy-mm-dd"}).attr("readonly", "readonly");}}, false),
                 new JQTable.Node("所属行业", "t7", false, JQTable.TextAlign.Left, 0
                     , "select",
                     { value: "国网:国网;南网:南网;火电:火电;水电:水电;风电:风电;核电:核电;光伏:光伏;轨道交通:轨道交通;石油石化:石油石化;钢铁冶金:钢铁冶金;煤炭煤化工:煤炭煤化工;航天军工:航天军工;其他:其他" }, false),

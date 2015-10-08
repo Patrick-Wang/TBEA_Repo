@@ -164,6 +164,9 @@ public class MarketServiceImpl implements MarketService {
 					} else if (field.getType().getName()
 							.equals(String.class.getName())) {
 						method.invoke(obj, val);
+					}else if (field.getType().getName()
+							.equals(Date.class.getName())){
+						method.invoke(obj, Util.toDate(val));
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -217,25 +220,29 @@ public class MarketServiceImpl implements MarketService {
 				result[col][2] = bid.getProjectNo() + "";
 				result[col][3] = bid.getAuthorizationNo() + "";
 				result[col][4] = bid.getOfficeName() + "";
-				result[col][5] = bid.getBidMonth() + "";
-				result[col][6] = bid.getBidDate() + "";
-				result[col][7] = bid.getIndustryCategory() + "";
-				result[col][8] = bid.getSystemClassification() + "";
-				result[col][9] = bid.getProjectArea() + "";
-				result[col][10] = bid.getProjectName() + "";
-				result[col][11] = bid.getOwnerName() + "";
-				result[col][12] = bid.getProductModel() + "";
-				result[col][13] = bid.getProductAmount() + "";
-				result[col][14] = bid.getProductLevel() + "";
-				result[col][15] = bid.getProductVolume() + "";
-				result[col][16] = bid.getBidPrice() + "";
-				result[col][17] = bid.getSuccessfulBidderName() + "";
-				result[col][18] = bid.getSucessfulBidderPrice() + "";
-				result[col][19] = bid.getAnalysisOfCause() + "";
-				result[col][20] = bid.getSuccessfulBidderMonth() + "";
-				result[col][21] = bid.getBidStatus() + "";
-				result[col][22] = bid.getWhetherFeedbackBidSummary() + "";
-				result[col][23] = bid.getSpecificBidCompanyName() + "";
+				if(null != bid.getBidDate()){
+					result[col][5] = Util.formatToDay(bid.getBidDate());
+				}else{
+					result[col][5] = "";
+				}
+				
+				result[col][6] = bid.getIndustryCategory() + "";
+				result[col][7] = bid.getSystemClassification() + "";
+				result[col][8] = bid.getProjectArea() + "";
+				result[col][9] = bid.getProjectName() + "";
+				result[col][10] = bid.getOwnerName() + "";
+				result[col][11] = bid.getProductModel() + "";
+				result[col][12] = bid.getProductAmount() + "";
+				result[col][13] = bid.getProductLevel() + "";
+				result[col][14] = bid.getProductVolume() + "";
+				result[col][15] = bid.getBidPrice() + "";
+				result[col][16] = bid.getSuccessfulBidderName() + "";
+				result[col][17] = bid.getSucessfulBidderPrice() + "";
+				result[col][18] = bid.getAnalysisOfCause() + "";
+				result[col][19] = bid.getSuccessfulBidderMonth() + "";
+				result[col][20] = bid.getBidStatus() + "";
+				result[col][21] = bid.getWhetherFeedbackBidSummary() + "";
+				result[col][22] = bid.getSpecificBidCompanyName() + "";
 				col++;
 			}
 		}
