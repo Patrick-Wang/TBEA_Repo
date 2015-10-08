@@ -2,10 +2,15 @@ package com.tbea.ic.operation.service.market.pipe.configurator.bid;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.service.market.Indicator;
+import com.tbea.ic.operation.service.market.pipe.filter.composite.CompositeRatioPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.configurator.composite.AbstractCompositeConfigurator;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.filter.composite.AccPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.WclPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.ZzlPipeFilter;
 
@@ -24,15 +29,11 @@ import com.tbea.ic.operation.service.util.pipe.filter.composite.ZzlPipeFilter;
 
 public class IndustryBidAnalysisCompositeConfigurator extends AbstractCompositeConfigurator{
 
-//	public IndustryBidAnalysisCompositeConfigurator(
-//			Map<Company, List<Company>> computeMap) {
-//		super(computeMap);
-//	}
-
-	public IndustryBidAnalysisCompositeConfigurator() {
-		super(new HashMap<Company, List<Company>>());
+	public IndustryBidAnalysisCompositeConfigurator(
+			Map<Company, List<Company>> computeMap) {
+		super(computeMap);
 	}
-	
+
 	@Override
 	public int getColumnCount() {
 		return 4;
@@ -48,24 +49,24 @@ public class IndustryBidAnalysisCompositeConfigurator extends AbstractCompositeC
 			List<Company> subComps,
 			WclPipeFilter wclFilter,
 			ZzlPipeFilter tbzzFilter) {
-//		pipe.addFilter(new AccPipeFilter(acc, 0, startRow, step)
-//			.includeCompanies(subComps)
-//			.exclude(Indicator.ZBL.ordinal()))
-//		.addFilter(new AccPipeFilter(acc, 1, startRow, step)
-//			.includeCompanies(subComps)
-//			.exclude(Indicator.ZBL.ordinal()))
-//		.addFilter(new AccPipeFilter(acc, 2, startRow, step)
-//			.includeCompanies(subComps))
-//		.addFilter(new CompositeRatioPipeFilter(startRow, step)
-//			.exclude(0)
-//			.exclude(3))
-//		.addFilter(new ZzlPipeFilter()
-//			.add(3, 2, 1)
-//			.exclude(Indicator.TBSL.ordinal())
-//			.exclude(Indicator.TBJE.ordinal())
-//			.exclude(Indicator.ZBJE.ordinal())
-//			.exclude(Indicator.ZBL.ordinal())
-//			.includeRow(startRow, step));
+		pipe.addFilter(new AccPipeFilter(acc, 0, startRow, step)
+			.includeCompanies(subComps)
+			.exclude(Indicator.ZBL.ordinal()))
+		.addFilter(new AccPipeFilter(acc, 1, startRow, step)
+			.includeCompanies(subComps)
+			.exclude(Indicator.ZBL.ordinal()))
+		.addFilter(new AccPipeFilter(acc, 2, startRow, step)
+			.includeCompanies(subComps))
+		.addFilter(new CompositeRatioPipeFilter(startRow, step)
+			.exclude(0)
+			.exclude(3))
+		.addFilter(new ZzlPipeFilter()
+			.add(3, 2, 1)
+			.exclude(Indicator.TBSL.ordinal())
+			.exclude(Indicator.TBJE.ordinal())
+			.exclude(Indicator.ZBJE.ordinal())
+			.exclude(Indicator.ZBL.ordinal())
+			.includeRow(startRow, step));
 	}
 
 

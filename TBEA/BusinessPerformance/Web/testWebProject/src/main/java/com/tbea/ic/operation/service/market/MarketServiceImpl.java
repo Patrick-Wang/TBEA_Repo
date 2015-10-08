@@ -5,7 +5,9 @@ import java.lang.reflect.Method;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.json.JSONArray;
 
@@ -19,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.market.bidInfo.MktBidInfoDao;
 import com.tbea.ic.operation.model.dao.market.projectInfo.MktProjectInfoDao;
 import com.tbea.ic.operation.model.dao.market.signContract.MktSignContractDao;
@@ -26,6 +30,7 @@ import com.tbea.ic.operation.model.entity.MktBidInfo;
 import com.tbea.ic.operation.model.entity.MktProjectInfo;
 import com.tbea.ic.operation.model.entity.MktSignContract;
 import com.tbea.ic.operation.service.market.pipe.MarketUnit;
+import com.tbea.ic.operation.service.market.pipe.MarketUnit.Type;
 import com.tbea.ic.operation.service.market.pipe.configurator.ConfiguratorFactory;
 import com.tbea.ic.operation.service.util.pipe.core.CompositePipe;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
@@ -477,12 +482,19 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public List<String[]> getIndustryBidData() {
-		CompositePipe pipe = new CompositePipe(industryBidIndicators,new Date(Calendar.getInstance().getTimeInMillis()), this.configFactory.getIndustryBidAnalysisCompositeConfigurator());
 		IPipeConfigurator options = configFactory.getIndustryBidAnalysisConfigurator();
 		List<MarketUnit> mus = this.bidInfoDao.getIndustries();
+		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
+		MarketUnit muTotal = new MarketUnit("total", Type.INDUSTRY);
+		totalMap.put(muTotal, (List)mus);
+		CompositePipe pipe = new CompositePipe(
+				industryBidIndicators,
+				new Date(Calendar.getInstance().getTimeInMillis()), 
+				this.configFactory.getIndustryBidAnalysisCompositeConfigurator(totalMap));
 		for(MarketUnit mu : mus){
 			pipe.addCompany(mu, options);
 		}
+		pipe.addCompany(muTotal, null);
 		List<Double[]> ret = pipe.getData();
 		return null;
 	}

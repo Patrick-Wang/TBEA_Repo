@@ -32,7 +32,7 @@ public class ConfiguratorFactory {
 		return new IndustryBidAnalysisConfigurator(new BidAccumulator(bidDao));
 	}
 
-	public IPipeConfigurator getIndustryBidAnalysisCompositeConfigurator() {
-		return new IndustryBidAnalysisCompositeConfigurator();
+	public IPipeConfigurator getIndustryBidAnalysisCompositeConfigurator(Map<Company, List<Company>> computeMap) {
+		return new IndustryBidAnalysisCompositeConfigurator(computeMap);
 	}
 }
