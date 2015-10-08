@@ -5,10 +5,10 @@ import java.util.List;
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.market.Indicator;
-import com.tbea.ic.operation.service.market.pipe.configurator.AbstractMarketConfigurator;
 import com.tbea.ic.operation.service.market.pipe.filter.RatioPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.ZzlPipeFilter;
 
@@ -21,7 +21,7 @@ import com.tbea.ic.operation.service.util.pipe.filter.basic.ZzlPipeFilter;
 //中标率			--									--
 
 
-public class IndustryBidAnalysisConfigurator extends AbstractMarketConfigurator{
+public class IndustryBidAnalysisConfigurator implements IPipeConfigurator{
 
 	public IndustryBidAnalysisConfigurator(IAccumulator acc) {
 		super();

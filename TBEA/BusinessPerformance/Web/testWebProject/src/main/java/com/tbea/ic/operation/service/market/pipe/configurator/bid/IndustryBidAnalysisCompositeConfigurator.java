@@ -2,15 +2,10 @@ package com.tbea.ic.operation.service.market.pipe.configurator.bid;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.service.market.Indicator;
-import com.tbea.ic.operation.service.market.pipe.filter.composite.CompositeRatioPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.configurator.composite.AbstractCompositeConfigurator;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
-import com.tbea.ic.operation.service.util.pipe.filter.composite.AccPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.WclPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.ZzlPipeFilter;
 
