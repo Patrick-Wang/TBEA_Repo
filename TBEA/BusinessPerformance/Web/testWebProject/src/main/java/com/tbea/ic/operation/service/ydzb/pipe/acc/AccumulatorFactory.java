@@ -6,9 +6,10 @@ import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
+import com.tbea.ic.operation.service.util.pipe.acc.composite.CompositeAccDataSource;
+import com.tbea.ic.operation.service.util.pipe.acc.composite.CompositeAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
-import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccDataSource;
-import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccumulator;
+
 
 public class AccumulatorFactory {
 	private IAccumulator sjAcc;

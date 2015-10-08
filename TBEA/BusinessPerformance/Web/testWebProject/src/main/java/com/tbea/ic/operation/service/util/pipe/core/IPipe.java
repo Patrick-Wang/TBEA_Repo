@@ -24,7 +24,5 @@ public interface IPipe {
 	
 	public int getRowCount();
 	
-	public Double[] getRow(int indicator, Company comp);
-	
 	public Double[] getRow(int row);
 }

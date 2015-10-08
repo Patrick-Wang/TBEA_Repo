@@ -6,9 +6,9 @@ import java.util.Map;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
+import com.tbea.ic.operation.service.util.pipe.acc.composite.CompositeAccDataSource;
 import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccDataSource;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.jhlr.JhlrDataConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.jhlr.JhlrRankConfigurator;
@@ -132,29 +132,25 @@ public class ConfiguratorFactory {
 		return ydhbConfigurator;
 	}
 
-	public IPipeConfigurator getZtzbCompositeConfigurator(IAccumulator acc,
-			CompositeAccDataSource cads,
+	public IPipeConfigurator getZtzbCompositeConfigurator(
 			Map<Company, List<Company>> computeMap) {
-		return new ZtzbCompositeConfigurator(acc, cads, computeMap);
+		return new ZtzbCompositeConfigurator(computeMap);
 	}
 
-	public IPipeConfigurator getThirdSeasonPredictionCompositeConfigurator(IAccumulator acc,
-			CompositeAccDataSource cads,
+	public IPipeConfigurator getThirdSeasonPredictionCompositeConfigurator(
 			Map<Company, List<Company>> computeMap) {
-		return new ThirdSeasonPredictionCompositeConfigurator(acc, cads, computeMap);
+		return new ThirdSeasonPredictionCompositeConfigurator(computeMap);
 	}
 
 	public IPipeConfigurator getSecondSeasonPredictionCompositeConfigurator(
-			IAccumulator acc, CompositeAccDataSource cads,
 			Map<Company, List<Company>> computeMap) {
-		return new SecondSeasonPredictionCompositeConfigurator(acc, cads,
+		return new SecondSeasonPredictionCompositeConfigurator(
 				computeMap);
 	}
 
 	public IPipeConfigurator getFirstSeasonPredictionCompositeConfigurator(
-			IAccumulator acc, CompositeAccDataSource cads,
 			Map<Company, List<Company>> computeMap) {
-		return new FirstSeasonPredictionCompositeConfigurator(acc, cads,
+		return new FirstSeasonPredictionCompositeConfigurator(
 				computeMap);
 	}
 

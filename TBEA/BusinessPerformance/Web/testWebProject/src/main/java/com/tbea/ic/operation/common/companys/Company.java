@@ -8,7 +8,7 @@ public class Company {
 	private Integer id;
 	private Company parentCompany;
 	private List<Company> subCompanies = new ArrayList<Company>();
-	
+	private String uniqueId;
 	
 	public Company(Integer id, CompanyType type) {
 		this.type = type;
@@ -29,7 +29,13 @@ public class Company {
 		return id;
 	}
 
-
+	public String getUniqueId(){
+		if (null == uniqueId){
+			this.uniqueId = this.getId() + this.getName() + this.getType().ordinal();
+		}
+		return uniqueId; 
+	}
+	
 	public Company getParentCompany() {
 		return parentCompany;
 	}

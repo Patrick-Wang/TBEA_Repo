@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.ydzb.pipe.filter.advanced;
+package com.tbea.ic.operation.service.util.pipe.filter.composite;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -10,63 +10,49 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
-import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
 
-public class AccPipeFilter implements IPipeFilter {
+public class AccPipeFilter extends AbstractPipeFilter {
 	protected List<Double> cacheValues;
 	protected int col;
 	protected Date dateStart;
 	protected Date dateEnd;
 	protected List<Integer> zbs;
-	protected Company comp;
-	protected Set<Company> includeComps;
+	protected Set<String> includeComps = new HashSet<String>();
+	protected int rowStart;
 	protected IAccumulator accumulator;
-	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, Company comp, Date dateStart, Date dateEnd) {
-		this(accumulator, col, zbs, comp);
+	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, int rowStart, int offset, Date dateStart, Date dateEnd) {
+		this(accumulator, col, zbs, rowStart, offset);
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
 	}
 	
-	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, Company comp, Date date) {
-		this(accumulator, col, zbs, comp, date, date);
+	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, int rowStart, int step, Date date) {
+		this(accumulator, col, zbs, rowStart, step, date, date);
 	}
 	
-	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, Company comp) {
-		this.col = col;
-		this.zbs = zbs;
-		this.comp = comp;
-		this.accumulator = accumulator;
-
-		includeComps = new HashSet<Company>();
-	}	
-	
-
-	public AccPipeFilter exclude(Company comp){
-		includeComps.remove(comp);
-		return this;
-	}
-	
-	public AccPipeFilter excludeCompanies(List<Company> comps){
-		for (Company comp : comps){
-			includeComps.remove(comp);
-		}
-		return this;
-	}
 	
 	public AccPipeFilter include(Company comp){
-		includeComps.add(comp);
+		includeComps.add(comp.getUniqueId());
 		return this;
 	}
 	
 	public AccPipeFilter includeCompanies(List<Company> comps){
-		includeComps.addAll(comps);
+		for(Company tmpComp : comps){
+			include(tmpComp);
+		}
 		return this;
 	}
 	
-	public AccPipeFilter cleanCompany(){
-		includeComps.clear();
-		return this;
+	
+	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, int rowStart, int step) {
+		this.col = col;
+		this.zbs = zbs;
+		this.rowStart = rowStart;
+		this.accumulator = accumulator;
+		this.includeRow(rowStart, step);
 	}
+	
+
 	
 	private List<Company> filterCompanies(List<Company> comps){
 		List<Company> compTmps = new ArrayList<Company>();
@@ -74,7 +60,7 @@ public class AccPipeFilter implements IPipeFilter {
 			return compTmps;
 		} else{
 			for (Company comp : comps){
-				if (includeComps.contains(comp)){
+				if (includeComps.contains(comp.getUniqueId())){
 					compTmps.add(comp);
 				}
 			}
@@ -98,10 +84,11 @@ public class AccPipeFilter implements IPipeFilter {
 
 	@Override
 	public void filter(int row, IPipe pipe) {
-		if (null == cacheValues && this.comp.getType().ordinal() == pipe.getRowId(row)){
+		if (cacheValues == null && contains(row)){
 			updateCacheValues(pipe);
-			for (int i = 0; i < this.zbs.size(); ++i){
-				updateZb(pipe, i, pipe.getRow(this.zbs.get(i), this.comp));
+			//在第一次计算时计算出所有指标行值，以免后续与之关联的指标计算时无法取到值
+			for (int i = 0; i < zbs.size(); ++i){
+				updateZb(pipe, i, pipe.getRow(rowInner2Outer(i, 0)));
 			}
 		}
 	}
