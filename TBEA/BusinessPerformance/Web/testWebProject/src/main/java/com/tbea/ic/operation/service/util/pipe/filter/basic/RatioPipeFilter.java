@@ -50,7 +50,7 @@ public class RatioPipeFilter implements IPipeFilter {
 
 	@Override
 	public void filter(int row, IPipe pipe) {
-		int zbId = pipe.getRowId(row);
+		int zbId = pipe.getIndicator(row);
 		Double[] zbRow = getRow(pipe, row, zbId);
 		if (null != zbRow) {
 			updateZb(pipe, zbId, zbRow);

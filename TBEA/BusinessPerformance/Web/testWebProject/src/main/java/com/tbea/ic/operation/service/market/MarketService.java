@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.service.market;
 
 import java.sql.Date;
+import java.util.List;
 
 import net.sf.json.JSONArray;
 
@@ -37,5 +38,7 @@ public interface MarketService {
 	ErrorCode addSignData(JSONArray jsonArray);
 
 	ErrorCode addBidData(JSONArray jsonArray);
+
+	List<String[]> getIndustryBidData();
 
 }

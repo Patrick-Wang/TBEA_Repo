@@ -16,18 +16,18 @@ public class AccPipeFilter extends AbstractPipeFilter {
 	protected int col;
 	protected Date dateStart;
 	protected Date dateEnd;
-	protected List<Integer> zbs;
 	protected Set<String> includeComps = new HashSet<String>();
 	protected int rowStart;
 	protected IAccumulator accumulator;
-	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, int rowStart, int offset, Date dateStart, Date dateEnd) {
-		this(accumulator, col, zbs, rowStart, offset);
+	
+	public AccPipeFilter(IAccumulator accumulator, int col, int rowStart, int offset, Date dateStart, Date dateEnd) {
+		this(accumulator, col, rowStart, offset);
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
 	}
 	
-	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, int rowStart, int step, Date date) {
-		this(accumulator, col, zbs, rowStart, step, date, date);
+	public AccPipeFilter(IAccumulator accumulator, int col, int rowStart, int step, Date date) {
+		this(accumulator, col, rowStart, step, date, date);
 	}
 	
 	
@@ -44,15 +44,19 @@ public class AccPipeFilter extends AbstractPipeFilter {
 	}
 	
 	
-	public AccPipeFilter(IAccumulator accumulator, int col, List<Integer> zbs, int rowStart, int step) {
+	public AccPipeFilter(IAccumulator accumulator, int col, int rowStart, int step) {
 		this.col = col;
-		this.zbs = zbs;
 		this.rowStart = rowStart;
 		this.accumulator = accumulator;
 		this.includeRow(rowStart, step);
 	}
 	
-
+Set<Integer> excludeZbs = new HashSet<Integer>();
+	
+	public AccPipeFilter exclude(Integer zb){
+		excludeZbs.add(zb);
+		return this;
+	}
 	
 	private List<Company> filterCompanies(List<Company> comps){
 		List<Company> compTmps = new ArrayList<Company>();
@@ -78,7 +82,7 @@ public class AccPipeFilter extends AbstractPipeFilter {
 			if (dateStart == null){
 				dateStart = dateEnd = pipe.getDate();
 			}
-			cacheValues = computeCacheValue(zbs, filterCompanies(pipe.getCompanies()));
+			cacheValues = computeCacheValue(pipe.getIndicators(), filterCompanies(pipe.getCompanies()));
 		}
 	}
 
@@ -87,8 +91,10 @@ public class AccPipeFilter extends AbstractPipeFilter {
 		if (cacheValues == null && contains(row)){
 			updateCacheValues(pipe);
 			//在第一次计算时计算出所有指标行值，以免后续与之关联的指标计算时无法取到值
-			for (int i = 0; i < zbs.size(); ++i){
-				updateZb(pipe, i, pipe.getRow(rowInner2Outer(i, 0)));
+			for (int i = 0; i < pipe.getIndicators().size(); ++i){
+				if (!excludeZbs.contains(pipe.getIndicators().get(i))){
+					updateZb(pipe, i, pipe.getRow(rowInner2Outer(i, 0)));
+				}
 			}
 		}
 	}

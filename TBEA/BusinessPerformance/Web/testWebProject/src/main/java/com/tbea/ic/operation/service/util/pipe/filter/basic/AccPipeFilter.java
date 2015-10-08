@@ -153,7 +153,7 @@ public class AccPipeFilter implements IPipeFilter {
 
 	@Override
 	public void filter(int row, IPipe pipe) {
-		int zbId = pipe.getRowId(row);
+		int zbId = pipe.getIndicator(row);
 		if (includeZbs.contains(zbId)){
 			updateCacheValues(pipe);
 			updateZb(row, zbId, pipe.getRow(row));

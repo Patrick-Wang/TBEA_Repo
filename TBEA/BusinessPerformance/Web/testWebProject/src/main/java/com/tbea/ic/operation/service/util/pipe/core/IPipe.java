@@ -10,7 +10,7 @@ public interface IPipe {
 
 	public Date getDate();
 
-	public Integer getRowId(int row);
+	public Integer getIndicator(int row);
 	
 	public List<Integer> getIndicators();
 

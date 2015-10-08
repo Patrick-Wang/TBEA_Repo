@@ -48,7 +48,7 @@ public class BasicPipe extends BasePipe{
 
 
 	@Override
-	public Integer getRowId(int row){
+	public Integer getIndicator(int row){
 		return indicators.get(row);
 	}
 

@@ -71,8 +71,8 @@ public class CompositePipe extends BasePipe{
 	}
 	
 	@Override
-	public Integer getRowId(int row){
-		return row;
+	public Integer getIndicator(int row){
+		return this.indicators.get(row / this.companies.size());
 	}
 	
 	private List<Double[]> create(int size){

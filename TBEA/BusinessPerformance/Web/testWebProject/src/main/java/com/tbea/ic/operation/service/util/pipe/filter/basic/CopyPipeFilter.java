@@ -43,7 +43,7 @@ public class CopyPipeFilter implements IPipeFilter {
 	
 	@Override
 	public void filter(int row, IPipe pipe) {
-		Integer zbId = pipe.getRowId(row);
+		Integer zbId = pipe.getIndicator(row);
 		if (copyMap.containsKey(zbId)){
 			updateZb(zbId, pipe.getRow(row));
 		}

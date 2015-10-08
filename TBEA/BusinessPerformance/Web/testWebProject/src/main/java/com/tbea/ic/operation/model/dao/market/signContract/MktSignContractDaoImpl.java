@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.model.dao.market.signContract;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,11 +10,13 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.market.signContract.MktSignContractDao;
 import com.tbea.ic.operation.model.entity.MktBidInfo;
 import com.tbea.ic.operation.model.entity.MktProjectInfo;
 import com.tbea.ic.operation.model.entity.MktSignContract;
+import com.tbea.ic.operation.service.market.pipe.MarketUnit;
 
 @Repository
 @Transactional("transactionManager")
@@ -60,5 +63,15 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 		if (null != info){
 			manager.remove(info);
 		}
+	}
+
+	@Override
+	public List<MktSignContract> getData(Date start, Date end,
+			List<MarketUnit> companies) {
+		Query q = manager.createQuery(
+				"from MktSignContract where enddate >= :start and enddate <= :end and companyName in (" + Util.toNameString((List)companies) + ") ");
+		q.setParameter("start", start);
+		q.setParameter("end", end);
+		return q.getResultList();
 	}
 }
