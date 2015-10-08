@@ -3,7 +3,11 @@ package com.tbea.ic.operation.service.market;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.json.JSONArray;
 
@@ -17,12 +21,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.market.bidInfo.MktBidInfoDao;
 import com.tbea.ic.operation.model.dao.market.projectInfo.MktProjectInfoDao;
 import com.tbea.ic.operation.model.dao.market.signContract.MktSignContractDao;
 import com.tbea.ic.operation.model.entity.MktBidInfo;
 import com.tbea.ic.operation.model.entity.MktProjectInfo;
 import com.tbea.ic.operation.model.entity.MktSignContract;
+import com.tbea.ic.operation.service.market.pipe.MarketUnit;
+import com.tbea.ic.operation.service.market.pipe.MarketUnit.Type;
+import com.tbea.ic.operation.service.market.pipe.configurator.ConfiguratorFactory;
+import com.tbea.ic.operation.service.util.pipe.core.CompositePipe;
+import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 
 @Service
 @Transactional("transactionManager")
@@ -43,6 +55,14 @@ public class MarketServiceImpl implements MarketService {
 	@Autowired
 	private MktSignContractDao signContractDao;
 
+	private ConfiguratorFactory configFactory;
+	
+	@Autowired
+	public void init() {
+		configFactory = new ConfiguratorFactory(bidInfoDao, signContractDao);
+	}
+
+	
 	private final String ERROR_OK = "OK";
 	private final String ERROR_COUNT_NOT_MATCH = "文档不匹配(列数不匹配)";
 	private final String ERROR_UNKNOWN = "未知错误";
@@ -64,6 +84,15 @@ public class MarketServiceImpl implements MarketService {
 
 	private final OnUpdateMktObjectListener projectAddListener = ObjectUpdateListenerFactory
 			.createProjectAddListener(projectInfoDao);
+	
+	private final static List<Integer> industryBidIndicators = new ArrayList<Integer>();
+	static{
+		industryBidIndicators.add(Indicator.TBSL.ordinal());
+		industryBidIndicators.add(Indicator.TBJE.ordinal());
+		industryBidIndicators.add(Indicator.ZBJE.ordinal());
+		industryBidIndicators.add(Indicator.ZBL.ordinal());
+		industryBidIndicators.add(Indicator.QYJE.ordinal());
+	}
 	
 	private String validate(XSSFWorkbook workbook, Class<?> cls) {
 		XSSFSheet sheet = workbook.getSheetAt(0);
@@ -355,6 +384,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public ErrorCode editProjectData(JSONArray jsonArray, String rawKey) {
+		if (jsonArray.getString(2).isEmpty()){
+			return ErrorCode.PREMARY_KEY_NULL;
+		}
+		
 		if (!jsonArray.getString(2).equals(rawKey)){
 			if (null != projectInfoDao.getById(jsonArray.getString(2))){
 				return ErrorCode.PREMARY_KEY_CONFILICT;
@@ -370,6 +403,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public ErrorCode editSignData(JSONArray jsonArray, String rawKey) {
+		if (jsonArray.getString(1).isEmpty()){
+			return ErrorCode.PREMARY_KEY_NULL;
+		}
+		
 		if (!jsonArray.getString(1).equals(rawKey)){
 			if (null != this.signContractDao.getById(jsonArray.getString(1))){
 				return ErrorCode.PREMARY_KEY_CONFILICT;
@@ -385,6 +422,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public ErrorCode editBidData(JSONArray jsonArray, String rawKey) {
+		if (jsonArray.getString(1).isEmpty()){
+			return ErrorCode.PREMARY_KEY_NULL;
+		}
+		
 		if (!jsonArray.getString(1).equals(rawKey)){
 			if (null != this.bidInfoDao.getById(jsonArray.getString(1))){
 				return ErrorCode.PREMARY_KEY_CONFILICT;
@@ -400,6 +441,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public ErrorCode addProjectData(JSONArray jsonArray) {
+		if (jsonArray.getString(2).isEmpty()){
+			return ErrorCode.PREMARY_KEY_NULL;
+		}
+		
 		if (null == this.projectInfoDao.getById(jsonArray.getString(2))){
 			importMktData(jsonArray, ObjectUpdateListenerFactory.createProjectAddListener(projectInfoDao));
 		}
@@ -412,6 +457,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public ErrorCode addSignData(JSONArray jsonArray) {
+		if (jsonArray.getString(1).isEmpty()){
+			return ErrorCode.PREMARY_KEY_NULL;
+		}
+		
 		if (null == this.signContractDao.getById(jsonArray.getString(1))){
 			importMktData(jsonArray, ObjectUpdateListenerFactory.createSignAddListener(signContractDao));
 		}
@@ -424,6 +473,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public ErrorCode addBidData(JSONArray jsonArray) {
+		if (jsonArray.getString(1).isEmpty()){
+			return ErrorCode.PREMARY_KEY_NULL;
+		}
+		
 		if (null == this.bidInfoDao.getById(jsonArray.getString(1))){
 			importMktData(jsonArray, ObjectUpdateListenerFactory.createBidAddListener(bidInfoDao));
 		}
@@ -431,5 +484,25 @@ public class MarketServiceImpl implements MarketService {
 			return ErrorCode.PREMARY_KEY_CONFILICT;
 		}
 		return ErrorCode.OK;
+	}
+
+
+	@Override
+	public List<String[]> getIndustryBidData() {
+		IPipeConfigurator options = configFactory.getIndustryBidAnalysisConfigurator();
+		List<MarketUnit> mus = this.bidInfoDao.getIndustries();
+		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
+		MarketUnit muTotal = new MarketUnit("total", Type.INDUSTRY);
+		totalMap.put(muTotal, (List)mus);
+		CompositePipe pipe = new CompositePipe(
+				industryBidIndicators,
+				new Date(Calendar.getInstance().getTimeInMillis()), 
+				this.configFactory.getIndustryBidAnalysisCompositeConfigurator(totalMap));
+		for(MarketUnit mu : mus){
+			pipe.addCompany(mu, options);
+		}
+		pipe.addCompany(muTotal, null);
+		List<Double[]> ret = pipe.getData();
+		return null;
 	}
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 
-public class AdvancedPipe extends BasePipe{
+public class CompositePipe extends BasePipe{
 
 	
 	//*****table data format (for multiple company)****
@@ -33,24 +33,24 @@ public class AdvancedPipe extends BasePipe{
 	private List<List<Company>> basicCompanies = new ArrayList<List<Company>>();
 	private List<Integer> dependIndicators = new ArrayList<Integer>();
 	
-	public AdvancedPipe(Integer indicator, Date date, IPipeConfigurator advancedPipeConfig) {
+	public CompositePipe(Integer indicator, Date date, IPipeConfigurator advancedPipeConfig) {
 		super(indicator, new ArrayList<Company>(), date);
 		this.advancedPipeConfig = advancedPipeConfig;
 	}
 	
-	public AdvancedPipe(List<Integer> indicators, Date date, IPipeConfigurator advancedPipeConfig) {
+	public CompositePipe(List<Integer> indicators, Date date, IPipeConfigurator advancedPipeConfig) {
 		super(indicators, new ArrayList<Company>(), date);
 		this.advancedPipeConfig = advancedPipeConfig;
 	}
 
-	public AdvancedPipe addDependentIndictor(Integer dependIndicator) {
+	public CompositePipe addDependentIndictor(Integer dependIndicator) {
 		if (!dependIndicators.contains(dependIndicator)) {
 			dependIndicators.add(dependIndicator);
 		}
 		return this;
 	}
 	
-	public AdvancedPipe addCompany(Company comp, IPipeConfigurator dwPipeConfig) {
+	public CompositePipe addCompany(Company comp, IPipeConfigurator dwPipeConfig) {
 		if (!this.companies.contains(comp)) {
 			this.companies.add(comp);
 			this.companyPipeConfigs.add(dwPipeConfig);
@@ -61,7 +61,7 @@ public class AdvancedPipe extends BasePipe{
 		return this;
 	}
 
-	public AdvancedPipe addCompany(Company comp, IPipeConfigurator dwPipeConfig, List<Company> realComps) {
+	public CompositePipe addCompany(Company comp, IPipeConfigurator dwPipeConfig, List<Company> realComps) {
 		if (!this.companies.contains(comp)) {
 			this.companies.add(comp);
 			this.companyPipeConfigs.add(dwPipeConfig);
@@ -71,10 +71,9 @@ public class AdvancedPipe extends BasePipe{
 	}
 	
 	@Override
-	public Integer getRowId(int row){
-		return this.companies.get(row % this.companies.size()).getType().ordinal();
+	public Integer getIndicator(int row){
+		return this.indicators.get(row / this.companies.size());
 	}
-
 	
 	private List<Double[]> create(int size){
 		List<Double[]> ret = new ArrayList<Double[]>();
@@ -128,10 +127,5 @@ public class AdvancedPipe extends BasePipe{
 			}
 		}
 		return data;
-	}
-
-	@Override
-	public Double[] getRow(int indicator, Company comp) {
-		return getRow(this.companies.indexOf(comp) + this.indicators.indexOf(indicator) * this.companies.size());
 	}
 }

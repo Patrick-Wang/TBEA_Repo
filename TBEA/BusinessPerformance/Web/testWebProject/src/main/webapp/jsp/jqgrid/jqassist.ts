@@ -581,7 +581,11 @@ module JQTable {
         }
 
         public group(): void {
+            var finished = false;
             this.completeList.push(() => {
+                if (finished) {
+                    return;
+                }
                 var nodes = [];
                 var headers = [];
                 var grid = $("#" + this.mGridName + "");
@@ -605,6 +609,7 @@ module JQTable {
                         groupHeaders: headers
                     });
                 }
+                finished = true;
             });
         }
 

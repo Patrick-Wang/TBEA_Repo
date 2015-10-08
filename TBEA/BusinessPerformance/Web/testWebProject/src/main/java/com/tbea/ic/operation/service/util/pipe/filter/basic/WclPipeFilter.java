@@ -32,7 +32,7 @@ public class WclPipeFilter implements IPipeFilter {
 
 	@Override
 	public void filter(int row, IPipe pipe) {
-		if (!excludeZbs.contains(pipe.getRowId(row))){
+		if (!excludeZbs.contains(pipe.getIndicator(row))){
 			updateZb(row, pipe.getRow(row));
 		}
 	}

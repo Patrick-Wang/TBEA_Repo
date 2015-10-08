@@ -403,4 +403,15 @@ public class MarketServlet {
 		return "".getBytes("utf-8");
 
 	}
+	
+
+	@RequestMapping(value = "industry_data.do")
+	public @ResponseBody byte[] getIndustryData(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		
+		List<String[]> result = marketService.getIndustryBidData();
+		
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+
+	}
 }

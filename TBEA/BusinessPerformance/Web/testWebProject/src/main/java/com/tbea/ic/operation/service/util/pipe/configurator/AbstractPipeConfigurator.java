@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 
 public abstract class AbstractPipeConfigurator implements IPipeConfigurator {

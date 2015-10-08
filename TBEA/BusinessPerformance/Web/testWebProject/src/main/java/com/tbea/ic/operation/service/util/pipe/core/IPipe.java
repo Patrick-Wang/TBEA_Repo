@@ -10,7 +10,7 @@ public interface IPipe {
 
 	public Date getDate();
 
-	public Integer getRowId(int row);
+	public Integer getIndicator(int row);
 	
 	public List<Integer> getIndicators();
 
@@ -23,8 +23,6 @@ public interface IPipe {
 	public int getColumnCount();
 	
 	public int getRowCount();
-	
-	public Double[] getRow(int indicator, Company comp);
 	
 	public Double[] getRow(int row);
 }

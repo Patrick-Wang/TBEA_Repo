@@ -1,24 +1,13 @@
-package com.tbea.ic.operation.service.ydzb.pipe.filter.advanced;
+package com.tbea.ic.operation.service.util.pipe.filter.composite;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
-import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
 
 
-public class WclPipeFilter implements IPipeFilter {
+public class WclPipeFilter extends AbstractPipeFilter {
 	List<Integer[]> wcls = new ArrayList<Integer[]>();
-	Set<Integer> includeComps = new HashSet<Integer>();
-	
-	public WclPipeFilter include(Company comp){
-		includeComps.add(comp.getType().ordinal());
-		return this;
-	}
 	
 	public WclPipeFilter add(int dest, int sj, int jh) {
 		wcls.add(new Integer[] { dest, sj, jh });
@@ -27,12 +16,12 @@ public class WclPipeFilter implements IPipeFilter {
 
 	@Override
 	public void filter(int row, IPipe pipe) {
-		if (includeComps.contains(pipe.getRowId(row))){
-			updateZb(row, pipe.getRow(row));
+		if (contains(row)){
+			updateZb(pipe.getRow(row));
 		}
 	}
 
-	private void updateZb(int row, Double[] zbRow) {
+	private void updateZb(Double[] zbRow) {
 		Integer[] wcl = null;
 		for (int i = 0, len = wcls.size(); i < len; ++i) {
 			wcl = wcls.get(i);

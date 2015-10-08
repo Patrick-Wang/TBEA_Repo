@@ -34,11 +34,9 @@ import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
-import com.tbea.ic.operation.service.util.pipe.core.AdvancedPipe;
+import com.tbea.ic.operation.service.util.pipe.core.CompositePipe;
 import com.tbea.ic.operation.service.util.pipe.core.BasicPipe;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.acc.composite.CompositeAccDataSource;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.srqy.SrqyConfigurator;
@@ -216,9 +214,6 @@ public class GszbServiceImpl implements GszbService {
 
 	private static Map<Integer, ZBXX> zbxxMap = new Hashtable<Integer, ZBXX>();
 	
-	private AccumulatorFactory getAccFactory() {
-		return accFac;
-	}
 
 	private ConfiguratorFactory getConfiguratorFactory() {
 		return configFac;
@@ -312,9 +307,8 @@ public class GszbServiceImpl implements GszbService {
 		IPipeConfigurator option = getConfiguratorFactory()
 				.getStandardConfigurator();
 
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		AdvancedPipe pipe = new AdvancedPipe(topfivezbs, date, getConfiguratorFactory()
-				.getZtzbCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource), dataSource, gcyTop5ComputeMap));
+		CompositePipe pipe = new CompositePipe(topfivezbs, date, getConfiguratorFactory()
+				.getZtzbCompositeConfigurator( gcyTop5ComputeMap));
 		pipe.addCompany(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanies())
 			.addCompany(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 			.addCompany(org.getCompany(CompanyType.NYSYB), option, org.getCompany(CompanyType.NYSYB).getSubCompanies())
@@ -379,11 +373,10 @@ public class GszbServiceImpl implements GszbService {
 			GSZB gsTop5zb, 
 			Date date, 
 			IPipeConfigurator standardConfig, 
-			IPipeConfigurator compositeConfig,
-			CompositeAccDataSource dataSource){
+			IPipeConfigurator compositeConfig){
 		
 		Organization org = companyManager.getBMDBOrganization();
-		AdvancedPipe pipe = new AdvancedPipe(gsTop5zb.getValue(), date, compositeConfig);
+		CompositePipe pipe = new CompositePipe(gsTop5zb.getValue(), date, compositeConfig);
 		pipe.addCompany(org.getCompany(CompanyType.SBGS), standardConfig)
 			.addCompany(org.getCompany(CompanyType.HBGS), standardConfig)
 			.addCompany(org.getCompany(CompanyType.XBC), standardConfig)
@@ -411,14 +404,11 @@ public class GszbServiceImpl implements GszbService {
 	// Get Top 5 indexes including "利润，存货、现金流、应收、收入"
 	@Override
 	public List<String[]> getCompanyTop5zb(GSZB gsTop5zb, Date date) {
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		IAccumulator acc = this.getAccFactory().getCompositeAcc(dataSource);
 		return getCompanyTop5zb(
 				gsTop5zb, 
 				date, 
 				this.getConfiguratorFactory().getStandardConfigurator(),
-				this.getConfiguratorFactory().getZtzbCompositeConfigurator(acc, dataSource, gdwTop5ComputeMap), 
-				dataSource);
+				this.getConfiguratorFactory().getZtzbCompositeConfigurator(gdwTop5ComputeMap));
 	}
 
 	@Override
@@ -444,9 +434,8 @@ public class GszbServiceImpl implements GszbService {
 				.getThirdSeasonPredictionConfigurator();
 		List<Double[]> values = new ArrayList<Double[]>();
 
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		AdvancedPipe pipe = new AdvancedPipe(topfivezbs, date, getConfiguratorFactory()
-				.getThirdSeasonPredictionCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource), dataSource, gcyTop5ComputeMap));
+		CompositePipe pipe = new CompositePipe(topfivezbs, date, getConfiguratorFactory()
+				.getThirdSeasonPredictionCompositeConfigurator(gcyTop5ComputeMap));
 		pipe.addCompany(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanies())
 			.addCompany(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 			.addCompany(org.getCompany(CompanyType.NYSYB), option, org.getCompany(CompanyType.NYSYB).getSubCompanies())
@@ -495,9 +484,8 @@ public class GszbServiceImpl implements GszbService {
 		IPipeConfigurator option = getConfiguratorFactory()
 				.getSecondSeasonPredictionConfigurator();
 
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		AdvancedPipe pipe = new AdvancedPipe(topfivezbs, date, getConfiguratorFactory()
-				.getSecondSeasonPredictionCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource), dataSource, gcyTop5ComputeMap));
+		CompositePipe pipe = new CompositePipe(topfivezbs, date, getConfiguratorFactory()
+				.getSecondSeasonPredictionCompositeConfigurator(gcyTop5ComputeMap));
 		pipe.addCompany(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanies())
 			.addCompany(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 			.addCompany(org.getCompany(CompanyType.NYSYB), option, org.getCompany(CompanyType.NYSYB).getSubCompanies())
@@ -516,9 +504,8 @@ public class GszbServiceImpl implements GszbService {
 		IPipeConfigurator option = getConfiguratorFactory()
 				.getFirstSeasonPredictionConfigurator();
 
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		AdvancedPipe pipe = new AdvancedPipe(topfivezbs, date, getConfiguratorFactory()
-				.getFirstSeasonPredictionCompositeConfigurator(getAccFactory().getCompositeAcc(dataSource), dataSource, gcyTop5ComputeMap));
+		CompositePipe pipe = new CompositePipe(topfivezbs, date, getConfiguratorFactory()
+				.getFirstSeasonPredictionCompositeConfigurator(gcyTop5ComputeMap));
 		pipe.addCompany(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanies())
 			.addCompany(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 			.addCompany(org.getCompany(CompanyType.NYSYB), option, org.getCompany(CompanyType.NYSYB).getSubCompanies())
@@ -533,38 +520,29 @@ public class GszbServiceImpl implements GszbService {
 
 	@Override
 	public List<String[]> getGdwFirstSeasonPredictionZBs(GSZB gszb, Date date) {
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		IAccumulator acc = this.getAccFactory().getCompositeAcc(dataSource);
 		return getCompanyTop5zb(
 				gszb, 
 				date, 
 				this.getConfiguratorFactory().getFirstSeasonPredictionConfigurator(),
-				this.getConfiguratorFactory().getFirstSeasonPredictionCompositeConfigurator(acc, dataSource, gdwTop5ComputeMap), 
-				dataSource);
+				this.getConfiguratorFactory().getFirstSeasonPredictionCompositeConfigurator(gdwTop5ComputeMap));
 	}
 
 	@Override
 	public List<String[]> getGdwSecondSeasonPredictionZBs(GSZB gszb, Date date) {
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		IAccumulator acc = this.getAccFactory().getCompositeAcc(dataSource);
 		return getCompanyTop5zb(
 				gszb, 
 				date, 
 				this.getConfiguratorFactory().getSecondSeasonPredictionConfigurator(),
-				this.getConfiguratorFactory().getSecondSeasonPredictionCompositeConfigurator(acc, dataSource, gdwTop5ComputeMap), 
-				dataSource);
+				this.getConfiguratorFactory().getSecondSeasonPredictionCompositeConfigurator(gdwTop5ComputeMap));
 	}
 
 	@Override
 	public List<String[]> getGdwThirdSeasonPredictionZBs(GSZB gszb, Date date) {
-		CompositeAccDataSource dataSource = new CompositeAccDataSource();
-		IAccumulator acc = this.getAccFactory().getCompositeAcc(dataSource);
 		return getCompanyTop5zb(
 				gszb, 
 				date, 
 				this.getConfiguratorFactory().getThirdSeasonPredictionConfigurator(),
-				this.getConfiguratorFactory().getThirdSeasonPredictionCompositeConfigurator(acc, dataSource, gdwTop5ComputeMap), 
-				dataSource);
+				this.getConfiguratorFactory().getThirdSeasonPredictionCompositeConfigurator(gdwTop5ComputeMap));
 	}
 
 	@Override

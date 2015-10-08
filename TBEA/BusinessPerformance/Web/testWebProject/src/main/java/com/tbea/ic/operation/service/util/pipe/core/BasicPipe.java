@@ -48,13 +48,8 @@ public class BasicPipe extends BasePipe{
 
 
 	@Override
-	public Integer getRowId(int row){
+	public Integer getIndicator(int row){
 		return indicators.get(row);
-	}
-	
-	@Override
-	public Double[] getRow(int indicator, Company comp) {
-		return getRow(this.indicators.indexOf(indicator));
 	}
 
 	@Override
@@ -70,4 +65,5 @@ public class BasicPipe extends BasePipe{
 		}
 		return data;
 	}
+
 }

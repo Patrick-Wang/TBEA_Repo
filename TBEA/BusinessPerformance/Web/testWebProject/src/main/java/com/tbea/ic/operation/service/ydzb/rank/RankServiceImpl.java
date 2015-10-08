@@ -23,7 +23,7 @@ import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
-import com.tbea.ic.operation.service.util.pipe.core.AdvancedPipe;
+import com.tbea.ic.operation.service.util.pipe.core.CompositePipe;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
@@ -93,7 +93,7 @@ public class RankServiceImpl implements RankService {
 
 	
 	private List<Double[]> getRank(GSZB zb, Date date, IPipeConfigurator dwPipeConfig, IPipeConfigurator dataConfig){
-		AdvancedPipe pipe = new AdvancedPipe(zb.getValue(), date, dwPipeConfig);
+		CompositePipe pipe = new CompositePipe(zb.getValue(), date, dwPipeConfig);
 		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		for (Company comp : jydw){
 			pipe.addCompany(comp, dataConfig);
@@ -122,7 +122,7 @@ public class RankServiceImpl implements RankService {
 
 	@Override
 	public List<String[]> getRjlrRank(Date date) {
-		AdvancedPipe pipe = new AdvancedPipe(GSZB.RJLR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJLR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
 		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		for (Company comp : jydw){
 			pipe.addCompany(comp, getConfiguratorFactory().getRjlrDataConfigurator());
@@ -134,7 +134,7 @@ public class RankServiceImpl implements RankService {
 
 	@Override
 	public List<String[]> getRjsrRank(Date date) {
-		AdvancedPipe pipe = new AdvancedPipe(GSZB.RJSR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJSR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
 		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		for (Company comp : jydw){
 			pipe.addCompany(comp, getConfiguratorFactory().getRjlrDataConfigurator());
@@ -146,7 +146,7 @@ public class RankServiceImpl implements RankService {
 	
 	@Override
 	public List<String[]> getXmgsRjsrRank(Date date) {
-		AdvancedPipe pipe = new AdvancedPipe(GSZB.RJSR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJSR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
 		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		List<String> compsName = new ArrayList<String>();
 		for (Company comp : jydw){
@@ -162,7 +162,7 @@ public class RankServiceImpl implements RankService {
 	
 	@Override
 	public List<String[]> getXmgsRjlrRank(Date date) {
-		AdvancedPipe pipe = new AdvancedPipe(GSZB.RJLR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJLR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
 		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		List<String> compsName = new ArrayList<String>();
 		for (Company comp : jydw){
@@ -194,7 +194,7 @@ public class RankServiceImpl implements RankService {
 
 	@Override
 	public List<String[]> getXmgsJhlrRank(Date date) {
-		AdvancedPipe pipe = new AdvancedPipe(GSZB.LRZE.getValue(), date, getConfiguratorFactory().getJhlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.LRZE.getValue(), date, getConfiguratorFactory().getJhlrRankConfigurator());
 		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		List<String> compsName = new ArrayList<String>();
 		for (Company comp : jydw){

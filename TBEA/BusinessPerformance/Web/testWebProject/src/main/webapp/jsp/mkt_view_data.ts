@@ -127,7 +127,8 @@ module mkt_view_data {
     enum ErrorCode {
         OK,
         DATABASE_EXCEPTION,
-        PREMARY_KEY_CONFILICT
+        PREMARY_KEY_CONFILICT,
+        PREMARY_KEY_NULL
     }
 
     interface ISubmitResult {
@@ -331,7 +332,7 @@ module mkt_view_data {
                             $("#assist").css("display", "block");
                         } else if (ErrorCode.PREMARY_KEY_CONFILICT == sr.errorCode) {
                             if (this.mDocType == 2) {
-                                Util.MessageBox.tip("添加失败，项目编号重复！");
+                                Util.MessageBox.tip("添加失败，项目序号重复！");
                             } else if (this.mDocType == 3) {
                                 Util.MessageBox.tip("添加失败，投标编号重复！");
                             } else if (this.mDocType == 4) {
@@ -339,6 +340,14 @@ module mkt_view_data {
                             }
                         } else if (ErrorCode.DATABASE_EXCEPTION == sr.errorCode) {
                             Util.MessageBox.tip("添加失败!");
+                        } else if (ErrorCode.PREMARY_KEY_NULL == sr.errorCode) {
+                            if (this.mDocType == 2) {
+                                Util.MessageBox.tip("添加失败，项目序号不能为空！");
+                            } else if (this.mDocType == 3) {
+                                Util.MessageBox.tip("添加失败，投标编号不能为空！");
+                            } else if (this.mDocType == 4) {
+                                Util.MessageBox.tip("添加失败，合同编号不能为空!");
+                            }
                         } else {
                         }
                     });
@@ -384,7 +393,7 @@ module mkt_view_data {
 
                         } else if (ErrorCode.PREMARY_KEY_CONFILICT == sr.errorCode) {
                             if (this.mDocType == 2) {
-                                Util.MessageBox.tip("编辑失败，项目编号重复！");
+                                Util.MessageBox.tip("编辑失败，项目序号重复！");
                             } else if (this.mDocType == 3) {
                                 Util.MessageBox.tip("编辑失败，投标编号重复！");
                             } else if (this.mDocType == 4) {
@@ -392,6 +401,14 @@ module mkt_view_data {
                             }
                         } else if (ErrorCode.DATABASE_EXCEPTION == sr.errorCode) {
                             Util.MessageBox.tip("数据提交失败!");
+                        } else if (ErrorCode.PREMARY_KEY_NULL == sr.errorCode) {
+                            if (this.mDocType == 2) {
+                                Util.MessageBox.tip("编辑失败，项目序号不能为空！");
+                            } else if (this.mDocType == 3) {
+                                Util.MessageBox.tip("编辑失败，投标编号不能为空！");
+                            } else if (this.mDocType == 4) {
+                                Util.MessageBox.tip("编辑失败，合同编号不能为空!");
+                            }
                         } else {
                         }
                     });
