@@ -51,7 +51,7 @@ public class AccPipeFilter extends AbstractPipeFilter {
 		this.includeRow(rowStart, step);
 	}
 	
-Set<Integer> excludeZbs = new HashSet<Integer>();
+	Set<Integer> excludeZbs = new HashSet<Integer>();
 	
 	public AccPipeFilter exclude(Integer zb){
 		excludeZbs.add(zb);

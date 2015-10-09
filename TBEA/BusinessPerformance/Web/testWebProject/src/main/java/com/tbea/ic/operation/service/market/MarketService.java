@@ -39,6 +39,6 @@ public interface MarketService {
 
 	ErrorCode addBidData(JSONArray jsonArray);
 
-	List<String[]> getIndustryBidData(String companyName, Date dStart, Date dEnd);
+	List<List<String>> getIndustryBidData(String companyName, Date date);
 
 }

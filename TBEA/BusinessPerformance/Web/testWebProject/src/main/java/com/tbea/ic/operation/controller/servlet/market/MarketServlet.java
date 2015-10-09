@@ -405,14 +405,19 @@ public class MarketServlet {
 	}
 	
 
-	@RequestMapping(value = "industry_data.do")
-	public @ResponseBody byte[] getIndustryData(HttpServletRequest request,
+	@RequestMapping(value = "industry_bid_analysis.do")
+	public ModelAndView getIndustryBidAnalysis(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		return new ModelAndView("mkt_bid_analysis", map);
+	}
+	
+	@RequestMapping(value = "industry_bid_analysis_update.do")
+	public @ResponseBody byte[] getIndustryBidAnalysisUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		Date dStart = Date.valueOf(request.getParameter("year") + "-" + request.getParameter("startMonth")+"-1");
-		Date dEnd = Date.valueOf(request.getParameter("year") + "-" + request.getParameter("endMonth")+"-1");
+		Date date = DateSelection.getDate(request);
 		String companyName = request.getParameter("companyName");
-		List<String[]> result = marketService.getIndustryBidData(companyName, dStart, dEnd);
-		
+		List<List<String>> result = marketService.getIndustryBidData(companyName, date);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 
 	}

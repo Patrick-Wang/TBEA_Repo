@@ -11,6 +11,7 @@ import com.tbea.ic.operation.service.util.pipe.configurator.composite.AbstractCo
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.AccPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.composite.RatioIndicatorPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.WclPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.ZzlPipeFilter;
 
@@ -60,12 +61,16 @@ public class IndustryBidAnalysisCompositeConfigurator extends AbstractCompositeC
 		.addFilter(new CompositeRatioPipeFilter(startRow, step)
 			.exclude(0)
 			.exclude(3))
+		.addFilter(new RatioIndicatorPipeFilter(startRow, step)
+			.exclude(3)
+			.add(Indicator.TBZB.ordinal(), Indicator.TBJE.ordinal()))
 		.addFilter(new ZzlPipeFilter()
 			.add(3, 2, 1)
 			.exclude(Indicator.TBSL.ordinal())
 			.exclude(Indicator.TBJE.ordinal())
 			.exclude(Indicator.ZBJE.ordinal())
 			.exclude(Indicator.ZBL.ordinal())
+			.exclude(Indicator.TBZB.ordinal())
 			.includeRow(startRow, step));
 	}
 

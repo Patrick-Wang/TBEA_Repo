@@ -91,9 +91,9 @@ public class MarketServiceImpl implements MarketService {
 		industryBidIndicators.add(Indicator.TBJE.ordinal());
 		industryBidIndicators.add(Indicator.ZBJE.ordinal());
 		industryBidIndicators.add(Indicator.ZBL.ordinal());
-		industryBidIndicators.add(Indicator.QYJE.ordinal());
+		industryBidIndicators.add(Indicator.TBZB.ordinal());
 	}
-	
+	 
 	private String validate(XSSFWorkbook workbook, Class<?> cls) {
 		XSSFSheet sheet = workbook.getSheetAt(0);
 		XSSFRow row = sheet.getRow(0);
@@ -488,7 +488,7 @@ public class MarketServiceImpl implements MarketService {
 
 
 	@Override
-	public List<String[]> getIndustryBidData(String companyName, Date dStart, Date dEnd) {
+	public List<List<String>> getIndustryBidData(String companyName, Date date) {
 		MarketUnit muSb = new MarketUnit(companyName, Type.INDUSTRY);
 		IPipeConfigurator options = configFactory.getIndustryBidAnalysisConfigurator(muSb);
 		List<MarketUnit> mus = this.bidInfoDao.getIndustries(muSb);
@@ -496,16 +496,48 @@ public class MarketServiceImpl implements MarketService {
 		MarketUnit muTotal = new MarketUnit("total", Type.INDUSTRY);
 		totalMap.put(muTotal, (List)mus);
 		CompositePipe pipe = new CompositePipe(
-				industryBidIndicators, dEnd,
+				industryBidIndicators, date,
 				this.configFactory.getIndustryBidAnalysisCompositeConfigurator(totalMap));
 		for(MarketUnit mu : mus){
 			pipe.addCompany(mu, options);
 		}
 		pipe.addCompany(muTotal, null);
 		List<Double[]> ret = pipe.getData();
-		return makeResult(ret);
+		mus.add(muTotal);
+		return transformIndustryBid(ret, mus);
 	}
 	
+	private List<List<String>> transformIndustryBid(List<Double[]> data, List<MarketUnit> mus) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		for (int i = 0, len = mus.size(); i < len; ++i){
+			List<String> row = new ArrayList<String>();
+			MarketUnit mu = mus.get(i);
+			result.add(row);
+			row.add(mu.getName());
+			row.add(data.get(i)[0] == null ? null : "" + data.get(i)[0]);
+			row.add(data.get(i + mus.size() * 1)[0] == null ? null : "" + data.get(i + mus.size())[0]);
+			row.add(data.get(i + mus.size() * 2)[0] == null ? null : "" + data.get(i + mus.size()*2)[0]);
+			row.add(data.get(i + mus.size() * 4)[0] == null ? null : "" + data.get(i + mus.size()*4)[0]);
+	
+			row.add(data.get(i)[1] == null ? null : "" + data.get(i)[1]);
+			row.add(data.get(i + mus.size() * 1)[1] == null ? null : "" + data.get(i + mus.size())[1]);
+			row.add(data.get(i + mus.size() * 2)[1] == null ? null : "" + data.get(i + mus.size()*2)[1]);
+			row.add(data.get(i + mus.size() * 3)[1] == null ? null : "" + data.get(i + mus.size()*3)[1]);
+			row.add(data.get(i + mus.size() * 4)[1] == null ? null : "" + data.get(i + mus.size()*4)[1]);
+
+			row.add(data.get(i)[2] == null ? null : "" + data.get(i)[2]);
+			row.add(data.get(i + mus.size() * 1)[2] == null ? null : "" + data.get(i + mus.size())[2]);
+			row.add(data.get(i + mus.size() * 2)[2] == null ? null : "" + data.get(i + mus.size()*2)[2]);
+			row.add(data.get(i + mus.size() * 3)[2] == null ? null : "" + data.get(i + mus.size()*3)[2]);
+			row.add(data.get(i + mus.size() * 4)[2] == null ? null : "" + data.get(i + mus.size()*4)[2]);
+			row.add(data.get(i + mus.size() * 1)[3] == null ? null : "" + data.get(i + mus.size()*1)[3]);
+		}
+		
+		
+		return result;
+	}
+
+
 	private List<String[]> makeResult(List<Double[]> values) {
 		List<String[]> result = new ArrayList<String[]>();
 

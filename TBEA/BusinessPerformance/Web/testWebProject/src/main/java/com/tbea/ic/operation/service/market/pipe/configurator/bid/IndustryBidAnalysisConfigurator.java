@@ -59,6 +59,7 @@ public class IndustryBidAnalysisConfigurator implements IPipeConfigurator{
 			.add(3, 2, 1)
 			.exclude(Indicator.TBSL.ordinal())
 			.exclude(Indicator.ZBJE.ordinal())
+			.exclude(Indicator.TBZB.ordinal())
 			.exclude(Indicator.ZBL.ordinal()));
 	}
 
