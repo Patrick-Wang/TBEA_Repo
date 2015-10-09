@@ -231,27 +231,10 @@ public class MarketServlet {
 	@RequestMapping(value = "mkt_bid_analysis_update.do")
 	public @ResponseBody byte[] getMktBidAnalysisUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		Account account = SessionManager.getAccount(request.getSession());
-		String companyName = getCompanyName(account);
-		String rpttype = request.getParameter("docType");
-
-		List<String[][]> list = new ArrayList<String[][]>();
-		Integer year = Calendar.getInstance().get(Calendar.YEAR);
-		if (null != request.getParameter("year")) {
-			year = Integer.valueOf(request.getParameter("year"));
-		}
-
-		if (rpttype.equals(TYPE_BID)) {
-			list.add(marketService.getBidData(companyName, year));
-		} else if (rpttype.equals(TYPE_PROJECT)) {
-			list.add(marketService.getPrjData(companyName, year));
-		} else if (rpttype.equals(TYPE_SIGN)) {
-			list.add(marketService.getContData(companyName));
-		}
-		String listJson = JSONArray.fromObject(list).toString()
-				.replace("null", "\"\"");
-		// System.out.println(listJson);
-		return listJson.getBytes("utf-8");
+		Date date = DateSelection.getDate(request);
+		String companyName = request.getParameter("companyName");
+		List<List<String>> result = marketService.getIndustryBidData(companyName, date);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "mkt_contract_analysis.do")
@@ -404,13 +387,6 @@ public class MarketServlet {
 
 	}
 	
-
-	@RequestMapping(value = "industry_bid_analysis.do")
-	public ModelAndView getIndustryBidAnalysis(HttpServletRequest request,
-			HttpServletResponse response) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		return new ModelAndView("mkt_bid_analysis", map);
-	}
 	
 	@RequestMapping(value = "industry_bid_analysis_update.do")
 	public @ResponseBody byte[] getIndustryBidAnalysisUpdate(HttpServletRequest request,
