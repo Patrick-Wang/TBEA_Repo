@@ -493,7 +493,7 @@ public class MarketServiceImpl implements MarketService {
 		IPipeConfigurator options = configFactory.getIndustryBidAnalysisConfigurator(muSb);
 		List<MarketUnit> mus = this.bidInfoDao.getIndustries(muSb);
 		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
-		MarketUnit muTotal = new MarketUnit("total", Type.INDUSTRY);
+		MarketUnit muTotal = new MarketUnit("合计", Type.INDUSTRY);
 		totalMap.put(muTotal, (List)mus);
 		CompositePipe pipe = new CompositePipe(
 				industryBidIndicators, date,
