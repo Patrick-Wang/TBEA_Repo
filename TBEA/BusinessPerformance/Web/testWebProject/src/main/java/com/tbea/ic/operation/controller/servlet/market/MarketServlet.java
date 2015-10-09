@@ -408,8 +408,10 @@ public class MarketServlet {
 	@RequestMapping(value = "industry_data.do")
 	public @ResponseBody byte[] getIndustryData(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		
-		List<String[]> result = marketService.getIndustryBidData();
+		Date dStart = Date.valueOf(request.getParameter("year") + "-" + request.getParameter("startMonth")+"-1");
+		Date dEnd = Date.valueOf(request.getParameter("year") + "-" + request.getParameter("endMonth")+"-1");
+		String companyName = request.getParameter("companyName");
+		List<String[]> result = marketService.getIndustryBidData(companyName, dStart, dEnd);
 		
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 

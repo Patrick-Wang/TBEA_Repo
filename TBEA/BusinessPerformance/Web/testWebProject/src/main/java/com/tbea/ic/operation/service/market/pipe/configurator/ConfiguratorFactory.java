@@ -6,6 +6,7 @@ import java.util.Map;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.market.bidInfo.MktBidInfoDao;
 import com.tbea.ic.operation.model.dao.market.signContract.MktSignContractDao;
+import com.tbea.ic.operation.service.market.pipe.MarketUnit;
 import com.tbea.ic.operation.service.market.pipe.acc.BidAccumulator;
 import com.tbea.ic.operation.service.market.pipe.acc.SignAccumulator;
 import com.tbea.ic.operation.service.market.pipe.configurator.bid.IndustryBidAnalysisCompositeConfigurator;
@@ -26,10 +27,10 @@ public class ConfiguratorFactory {
 	}
 
 
-	public IPipeConfigurator getIndustryBidAnalysisConfigurator() {
+	public IPipeConfigurator getIndustryBidAnalysisConfigurator(MarketUnit mu) {
 //		AccCombiner combiner = new AccCombiner();
 //		combiner.join(new BidAccumulator(bidDao)).join(new SignAccumulator(signDao));
-		return new IndustryBidAnalysisConfigurator(new BidAccumulator(bidDao));
+		return new IndustryBidAnalysisConfigurator(new BidAccumulator(bidDao, mu));
 	}
 
 	public IPipeConfigurator getIndustryBidAnalysisCompositeConfigurator(Map<Company, List<Company>> computeMap) {

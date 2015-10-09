@@ -22,7 +22,8 @@ public interface MktBidInfoDao{
 
 	void remove(String key);
 
-	List<MktBidInfo> getData(Date start, Date end, List<MarketUnit> list);
+	List<MktBidInfo> getIndustryData(Date start, Date end, MarketUnit company,
+			List<MarketUnit> companies);
 
-	List<MarketUnit> getIndustries();
+	List<MarketUnit> getIndustries(MarketUnit mu);
 }

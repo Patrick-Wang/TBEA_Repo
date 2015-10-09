@@ -94,20 +94,21 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 	}
 
 	@Override
-	public List<MktBidInfo> getData(Date start, Date end,
+	public List<MktBidInfo> getIndustryData(Date start, Date end, MarketUnit company,
 			List<MarketUnit> companies) {
 		Query q = manager.createQuery(
-				"from MktBidInfo where enddate >= :start and enddate <= :end and companyName in (" + Util.toNameString((List)companies) + ") ");
+				"from MktBidInfo where companyName=:compName and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and industryCategory in (" + Util.toNameString((List)companies) + ") ");
+		q.setParameter("compName", company.getName());
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();
 	}
 
 	@Override
-	public List<MarketUnit> getIndustries() {
+	public List<MarketUnit> getIndustries(MarketUnit mu) {
 		Query q = manager.createQuery(
-				"select m.industryCategory from MktBidInfo m group by m.industryCategory");
-
+				"select m.industryCategory from MktBidInfo m where m.companyName = :compName group by m.industryCategory");
+		q.setParameter("compName", mu.getName());
 		List<String> industries = q.getResultList();
 		List<MarketUnit> mus = new ArrayList<MarketUnit>();
 		for (String industry : industries){

@@ -488,21 +488,35 @@ public class MarketServiceImpl implements MarketService {
 
 
 	@Override
-	public List<String[]> getIndustryBidData() {
-		IPipeConfigurator options = configFactory.getIndustryBidAnalysisConfigurator();
-		List<MarketUnit> mus = this.bidInfoDao.getIndustries();
+	public List<String[]> getIndustryBidData(String companyName, Date dStart, Date dEnd) {
+		MarketUnit muSb = new MarketUnit(companyName, Type.INDUSTRY);
+		IPipeConfigurator options = configFactory.getIndustryBidAnalysisConfigurator(muSb);
+		List<MarketUnit> mus = this.bidInfoDao.getIndustries(muSb);
 		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
 		MarketUnit muTotal = new MarketUnit("total", Type.INDUSTRY);
 		totalMap.put(muTotal, (List)mus);
 		CompositePipe pipe = new CompositePipe(
-				industryBidIndicators,
-				new Date(Calendar.getInstance().getTimeInMillis()), 
+				industryBidIndicators, dEnd,
 				this.configFactory.getIndustryBidAnalysisCompositeConfigurator(totalMap));
 		for(MarketUnit mu : mus){
 			pipe.addCompany(mu, options);
 		}
 		pipe.addCompany(muTotal, null);
 		List<Double[]> ret = pipe.getData();
-		return null;
+		return makeResult(ret);
+	}
+	
+	private List<String[]> makeResult(List<Double[]> values) {
+		List<String[]> result = new ArrayList<String[]>();
+
+		for (int i = 0; i < values.size(); ++i) {
+			result.add(new String[values.get(i).length]);
+			for (int j = 0; j < values.get(i).length; ++j) {
+				if (values.get(i)[j] != null){
+					result.get(i)[j] = values.get(i)[j] + "";
+				}
+			}
+		}
+		return result;
 	}
 }
