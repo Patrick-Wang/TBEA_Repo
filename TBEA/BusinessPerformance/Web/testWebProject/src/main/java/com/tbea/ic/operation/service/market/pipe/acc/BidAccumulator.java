@@ -33,7 +33,9 @@ public class BidAccumulator implements IAccumulator {
 			int index = zbs.indexOf(Indicator.TBJE.ordinal());
 			Double val = vals.get(index);
 			vals.set(index, Util.valueOf(val) + Util.toDouble(bidInfo.getBidPrice()));
-		}else if(zbs.contains(Indicator.ZBJE.ordinal())){
+		}
+		
+		if(zbs.contains(Indicator.ZBJE.ordinal())){
 			int index = zbs.indexOf(Indicator.ZBJE.ordinal());
 			Double val = vals.get(index);
 			vals.set(index, Util.valueOf(val) + Util.toDouble(bidInfo.getSucessfulBidderPrice()));
@@ -54,7 +56,7 @@ public class BidAccumulator implements IAccumulator {
 			result.set(index, (double) bidInfos.size());
 		}
 		
-		for (int i = 0; i < bidInfos.size(); ++i){
+		for (int i = 0; i < bidInfos.size(); ++i){ 
 			computeValue(result, bidInfos.get(i), zbs);
 		}
 		return result;
