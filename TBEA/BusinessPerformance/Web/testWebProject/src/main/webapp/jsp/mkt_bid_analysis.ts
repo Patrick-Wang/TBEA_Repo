@@ -4,7 +4,7 @@ declare var echarts;
 module mkt_bid_analysis {
 
      enum Bid4IndustryZb{
-        dytbsl, dytbje, dyzbje, dyzydbl, ndsl, ndtbje, ndzbje,
+        hy, dytbsl, dytbje, dyzbje, dyzydbl, ndsl, ndtbje, ndzbje,
         ndzbl, ndtbbl, qntbsl, qntbje, qnzbl, qnzndbl, 
         tbzz    
     }
@@ -128,9 +128,8 @@ module mkt_bid_analysis {
         private formatData(rowData: string[][], integerList: std.vector<number>, percentList: std.vector<number>) {
             var outputData: string[][] = [];
 
-
-            var formaterChain: Util.FormatHandler = new Util.FormatPercentHandler([], integerList.toArray());
-            formaterChain.next(new Util.FormatIntHandler([], percentList.toArray()))
+            var formaterChain: Util.FormatHandler = new Util.FormatPercentHandler([], percentList.toArray());
+            formaterChain.next(new Util.FormatIntHandler([], integerList.toArray()))
                 .next(new Util.FormatCurrencyHandler());
             var row = [];
             for (var j = 0; j < rowData.length; ++j) {
@@ -151,7 +150,7 @@ module mkt_bid_analysis {
             tableAssist: JQTable.JQGridAssistant,
             rawData: Array<string[]>): void {
             var data:string[][] = [];
-            if(this.mAnalysisType == "bid_analysis"){
+            if(this.mAnalysisType == "bid_industry"){
                 var integerList: std.vector<number> = new std.vector<number>();
                  var percentList: std.vector<number> = new std.vector<number>();
                 integerList.push(Bid4IndustryZb.dytbsl);
@@ -173,7 +172,7 @@ module mkt_bid_analysis {
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
-                    data: tableAssist.getData(rawData),
+                    data: tableAssist.getData(data),
                     datatype: "local",
                     multiselect: false,
                     drag: false,

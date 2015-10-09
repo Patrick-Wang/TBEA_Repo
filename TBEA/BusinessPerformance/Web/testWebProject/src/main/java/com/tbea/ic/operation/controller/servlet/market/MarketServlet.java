@@ -234,7 +234,7 @@ public class MarketServlet {
 		Date date = DateSelection.getDate(request);
 		String companyName = request.getParameter("companyName");
 		List<List<String>> result = marketService.getIndustryBidData(companyName, date);
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "mkt_contract_analysis.do")
