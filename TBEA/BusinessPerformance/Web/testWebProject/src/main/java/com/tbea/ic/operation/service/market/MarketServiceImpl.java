@@ -76,15 +76,6 @@ public class MarketServiceImpl implements MarketService {
 	private final OnUpdateMktObjectListener projectUpdateListener = ObjectUpdateListenerFactory
 			.createProjectUpdateListener(projectInfoDao);
 
-	private final OnUpdateMktObjectListener bidAddListener = ObjectUpdateListenerFactory
-			.createBidAddListener(bidInfoDao);
-
-	private final OnUpdateMktObjectListener signAddListener = ObjectUpdateListenerFactory
-			.createSignAddListener(signContractDao);
-
-	private final OnUpdateMktObjectListener projectAddListener = ObjectUpdateListenerFactory
-			.createProjectAddListener(projectInfoDao);
-	
 	private final static List<Integer> industryBidIndicators = new ArrayList<Integer>();
 	static{
 		industryBidIndicators.add(Indicator.TBSL.ordinal());
@@ -487,6 +478,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<List<String>> getIndustryBidData(String companyName, Date date) {
 		MarketUnit muSb = new MarketUnit(companyName, Type.INDUSTRY);
@@ -532,8 +524,6 @@ public class MarketServiceImpl implements MarketService {
 			row.add(data.get(i + mus.size() * 4)[2] == null ? null : "" + data.get(i + mus.size()*4)[2]);
 			row.add(data.get(i + mus.size() * 1)[3] == null ? null : "" + data.get(i + mus.size()*1)[3]);
 		}
-		
-		
 		return result;
 	}
 

@@ -60,11 +60,18 @@ public class MarketServlet {
 	final static String TYPE_SIGN = "4";
 	final static String TYPE_BID = "3";
 
-	final static String[] COMPANIES = new String[] { "股份公司", "沈变", "衡变", "新变",
-			"天变", "鲁缆", "新缆", "德缆" };
-	final static String[] ACCOUNTS = new String[] { "股份公司市场部", "沈变市场部",
-			"衡变市场部", "新变市场部", "天变市场部", "鲁缆市场部", "新缆市场部", "德缆市场部" };
-
+	final static Map<String, String> accountCompMap = new HashMap<String, String>();
+	static {
+		accountCompMap.put("股份公司市场部", "股份公司");
+		accountCompMap.put("沈变市场部", "沈变");
+		accountCompMap.put("衡变市场部", "衡变");
+		accountCompMap.put("新变市场部", "新变");
+		accountCompMap.put("天变市场部", "天变");
+		accountCompMap.put("鲁缆市场部", "鲁缆");
+		accountCompMap.put("新缆市场部", "新缆");
+		accountCompMap.put("德缆市场部", "德缆");
+	}
+	
 	@RequestMapping(value = "import.do")
 	public @ResponseBody byte[] importExcel(HttpServletRequest request,
 			HttpServletResponse response,
@@ -161,24 +168,11 @@ public class MarketServlet {
 	}
 
 	private String getCompanyName(Account account) {
-		if (ACCOUNTS[0].equals(account.getName())) {
-			return COMPANIES[0];
-		} else if (ACCOUNTS[1].equals(account.getName())) {
-			return COMPANIES[1];
-		} else if (ACCOUNTS[2].equals(account.getName())) {
-			return COMPANIES[2];
-		} else if (ACCOUNTS[3].equals(account.getName())) {
-			return COMPANIES[3];
-		} else if (ACCOUNTS[4].equals(account.getName())) {
-			return COMPANIES[4];
-		} else if (ACCOUNTS[5].equals(account.getName())) {
-			return COMPANIES[5];
-		} else if (ACCOUNTS[6].equals(account.getName())) {
-			return COMPANIES[6];
-		} else if (ACCOUNTS[7].equals(account.getName())) {
-			return COMPANIES[7];
+		String comp = accountCompMap.get(account.getName());
+		if (comp == null){
+			return "";
 		}
-		return "";
+		return comp;
 	}
 
 	@RequestMapping(value = "mkt_view.do")
