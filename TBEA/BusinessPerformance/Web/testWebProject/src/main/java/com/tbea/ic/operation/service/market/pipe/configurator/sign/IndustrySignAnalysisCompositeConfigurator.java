@@ -1,5 +1,6 @@
-package com.tbea.ic.operation.service.market.pipe.configurator.bid;
+package com.tbea.ic.operation.service.market.pipe.configurator.sign;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,18 +19,17 @@ import com.tbea.ic.operation.service.util.pipe.filter.composite.ZzlPipeFilter;
 
 //配置表结构, 横线部分为不需要计算值
 //当月情况		年度累计		去年同期累计		同比增幅
-//投标数量	cp1											--
-//投标数量	cp2											--
-//投标数量	cp3											--
-//投标数量												--
-//投标金额												
-//中标金额												--
+//合同数量	cp1											--
+//合同数量	cp2											--
+//合同数量	cp3											--
+//合同数量												--
+//合同金额												
+//签约占比												--
 
 
+public class IndustrySignAnalysisCompositeConfigurator extends AbstractCompositeConfigurator{
 
-public class IndustryBidAnalysisCompositeConfigurator extends AbstractCompositeConfigurator{
-
-	public IndustryBidAnalysisCompositeConfigurator(
+	public IndustrySignAnalysisCompositeConfigurator(
 			Map<Company, List<Company>> computeMap) {
 		super(computeMap);
 	}

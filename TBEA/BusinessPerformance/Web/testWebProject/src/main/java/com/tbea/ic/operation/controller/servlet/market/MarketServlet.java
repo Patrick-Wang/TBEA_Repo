@@ -227,7 +227,14 @@ public class MarketServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date date = DateSelection.getDate(request);
 		String companyName = request.getParameter("companyName");
-		List<List<String>> result = marketService.getIndustryBidData(companyName, date);
+		List<List<String>> result = null;
+		String type = request.getParameter("type");
+		if ("bid_industry".equals(type)){
+			result = marketService.getIndustryBidData(companyName, date);
+		} else if ("bid_company".equals(type)){
+			result = marketService.getCompanyBidData(companyName, date);
+		}
+		
 		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");
 	}
 	
@@ -382,13 +389,22 @@ public class MarketServlet {
 	}
 	
 	
-	@RequestMapping(value = "industry_bid_analysis_update.do")
-	public @ResponseBody byte[] getIndustryBidAnalysisUpdate(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		Date date = DateSelection.getDate(request);
-		String companyName = request.getParameter("companyName");
-		List<List<String>> result = marketService.getIndustryBidData(companyName, date);
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
-
-	}
+//	@RequestMapping(value = "industry_bid_analysis_update.do")
+//	public @ResponseBody byte[] getIndustryBidAnalysisUpdate(HttpServletRequest request,
+//			HttpServletResponse response) throws IOException {
+//		Date date = DateSelection.getDate(request);
+//		String companyName = request.getParameter("companyName");
+//		List<List<String>> result = marketService.getIndustryBidData(companyName, date);
+//		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+//
+//	}
+//	
+//	@RequestMapping(value = "company_bid_analysis_update.do")
+//	public @ResponseBody byte[] getCompanyBidAnalysisUpdate(HttpServletRequest request,
+//			HttpServletResponse response) throws IOException {
+//		Date date = DateSelection.getDate(request);
+//		String companyName = request.getParameter("companyName");
+//		List<List<String>> result = marketService.getCompanyBidData(companyName, date);
+//		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+//	}
 }

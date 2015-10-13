@@ -14,7 +14,7 @@ import com.tbea.ic.operation.service.util.pipe.filter.basic.ZzlPipeFilter;
 
 
 //配置表结构, 横线部分为不需要计算值
-//				当月情况		年度累计		去年同期累计		同比增幅
+//当月情况		年度累计		去年同期累计		同比增幅
 //投标数量												--
 //投标金额												
 //中标金额												--
@@ -44,9 +44,9 @@ public class IndustryBidAnalysisConfigurator implements IPipeConfigurator{
 			.include(Indicator.TBJE.ordinal())
 			.include(Indicator.ZBJE.ordinal())
 			.includeCompanies(comps))
-		.addFilter(new AccPipeFilter(acc, 1, dh.getFirstMonth(), dh.getCur())
-			.include(Indicator.ZBL.ordinal())
-			.includeCompanies(comps))
+//		.addFilter(new AccPipeFilter(acc, 1, dh.getFirstMonth(), dh.getCur())
+//			.include(Indicator.ZBL.ordinal())
+//			.includeCompanies(comps))
 		.addFilter(new AccPipeFilter(acc, 2, dh.getQnfirstMonth(), dh.getQntq())
 			.include(Indicator.TBSL.ordinal())
 			.include(Indicator.TBJE.ordinal())

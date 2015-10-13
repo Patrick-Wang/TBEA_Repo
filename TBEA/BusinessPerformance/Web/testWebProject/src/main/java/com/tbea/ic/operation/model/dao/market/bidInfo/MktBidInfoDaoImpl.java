@@ -117,4 +117,15 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 		return mus;
 	}
 
+	@Override
+	public List<MktBidInfo> getCompanyData(Date start, Date end,
+			MarketUnit pMku, List companies) {
+		Query q = manager.createQuery(
+				"from MktBidInfo where companyName=:compName and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and office_name in (" + Util.toNameString((List)companies) + ") ");
+		q.setParameter("compName", pMku.getName());
+		q.setParameter("start", start);
+		q.setParameter("end", end);
+		return q.getResultList();
+	}
+
 }
