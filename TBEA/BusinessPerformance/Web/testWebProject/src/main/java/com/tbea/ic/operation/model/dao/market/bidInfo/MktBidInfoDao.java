@@ -28,4 +28,6 @@ public interface MktBidInfoDao{
 
 	List<MktBidInfo> getCompanyData(Date start, Date end, MarketUnit pMku,
 			List companies);
+
+	List<MarketUnit> getCompanies(MarketUnit muSb);
 }

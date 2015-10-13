@@ -83,36 +83,36 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	
-	private final static List<MarketUnit> projectCompanies = new ArrayList<MarketUnit>();
-	static{
-		projectCompanies.add(new MarketUnit("电源国电、大唐办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("电源华能、华电、京能办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("电源中电投、神华、国投办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("电源粤电、华润办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("电源水电办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("辽宁办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("吉林办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("黑龙江办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("北京办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("山东办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("内蒙办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("蒙东办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("山西办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("西北办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("江苏安徽办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("河南办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("浙江上海办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("川渝藏办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("湖北办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("福建江西办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("重大项目处",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("核电项目处",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("南网广州办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("南网云贵办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("轨道交通办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("军工办",Type.COMPANY));
-		projectCompanies.add(new MarketUnit("新疆办",Type.COMPANY));
-	}
+//	private final static List<MarketUnit> projectCompanies = new ArrayList<MarketUnit>();
+//	static{
+//		projectCompanies.add(new MarketUnit("电源国电、大唐办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("电源华能、华电、京能办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("电源中电投、神华、国投办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("电源粤电、华润办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("电源水电办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("辽宁办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("吉林办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("黑龙江办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("北京办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("山东办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("内蒙办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("蒙东办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("山西办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("西北办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("江苏安徽办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("河南办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("浙江上海办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("川渝藏办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("湖北办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("福建江西办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("重大项目处",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("核电项目处",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("南网广州办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("南网云贵办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("轨道交通办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("军工办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("新疆办",Type.COMPANY));
+//	}
 	 
 	private String validate(XSSFWorkbook workbook, Class<?> cls) {
 		XSSFSheet sheet = workbook.getSheetAt(0);
@@ -561,22 +561,22 @@ public class MarketServiceImpl implements MarketService {
 	public List<List<String>> getCompanyBidData(String companyName, Date date) {
 		MarketUnit muSb = new MarketUnit(companyName, Type.COMPANY);
 		IPipeConfigurator options = configFactory.getCompanyBidAnalysisConfigurator(muSb);
-		
 		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
-		MarketUnit muTotal = new MarketUnit("销售公司合计", Type.COMPANY);
-		totalMap.put(muTotal, (List)projectCompanies);
+		List<MarketUnit> companies = bidInfoDao.getCompanies(muSb);
+		MarketUnit muTotal = new MarketUnit("合计", Type.COMPANY);
+		totalMap.put(muTotal, (List)companies);
 		CompositePipe pipe = new CompositePipe(
 				bidIndicators, date,
 				this.configFactory.getCompanyBidAnalysisCompositeConfigurator(totalMap));
-		for(MarketUnit mu : projectCompanies){
+		for(MarketUnit mu : companies){
 			pipe.addCompany(mu, options);
 		}
 		pipe.addCompany(muTotal, null);
 		List<Double[]> ret = pipe.getData();
 		List<List<String>> result = new ArrayList<List<String>>();
-		int len = projectCompanies.size() + 1;
+		int len = companies.size() + 1;
 		for (int i = 0; i < len - 1; ++i){
-			result.add(transformCompanyBid(ret, i, len, projectCompanies.get(i)));
+			result.add(transformCompanyBid(ret, i, len, companies.get(i)));
 		}
 		result.add(transformCompanyBid(ret, len - 1, len, muTotal));
 		return result;

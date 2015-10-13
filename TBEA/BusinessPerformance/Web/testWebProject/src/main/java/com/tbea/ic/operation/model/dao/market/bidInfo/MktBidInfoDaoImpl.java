@@ -128,4 +128,17 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 		return q.getResultList();
 	}
 
+	@Override
+	public List<MarketUnit> getCompanies(MarketUnit mu) {
+		Query q = manager.createQuery(
+				"select m.officeName from MktBidInfo m where m.companyName = :compName group by m.officeName");
+		q.setParameter("compName", mu.getName());
+		List<String> industries = q.getResultList();
+		List<MarketUnit> mus = new ArrayList<MarketUnit>();
+		for (String industry : industries){
+			mus.add(new MarketUnit(industry, Type.COMPANY));
+		}
+		return mus;
+	}
+
 }
