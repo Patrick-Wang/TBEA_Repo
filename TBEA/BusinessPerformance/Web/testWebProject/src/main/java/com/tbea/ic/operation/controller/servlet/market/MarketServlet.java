@@ -252,27 +252,17 @@ public class MarketServlet {
 	@RequestMapping(value = "mkt_contract_analysis_update.do")
 	public @ResponseBody byte[] getMktContractAnalysisUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		Account account = SessionManager.getAccount(request.getSession());
-		String companyName = getCompanyName(account);
-		String rpttype = request.getParameter("docType");
-
-		List<String[][]> list = new ArrayList<String[][]>();
-		Integer year = Calendar.getInstance().get(Calendar.YEAR);
-		if (null != request.getParameter("year")) {
-			year = Integer.valueOf(request.getParameter("year"));
+		Date date = DateSelection.getDate(request);
+		String companyName = request.getParameter("companyName");
+		List<List<String>> result = null;
+		String type = request.getParameter("type");
+		if ("contract_industry".equals(type)){
+			result = marketService.getIndustryBidData(companyName, date);
+		} else if ("contract_company".equals(type)){
+			result = marketService.getCompanyBidData(companyName, date);
 		}
-
-		if (rpttype.equals(TYPE_BID)) {
-			list.add(marketService.getBidData(companyName, year));
-		} else if (rpttype.equals(TYPE_PROJECT)) {
-			list.add(marketService.getPrjData(companyName, year));
-		} else if (rpttype.equals(TYPE_SIGN)) {
-			list.add(marketService.getContData(companyName));
-		}
-		String listJson = JSONArray.fromObject(list).toString()
-				.replace("null", "\"\"");
-		// System.out.println(listJson);
-		return listJson.getBytes("utf-8");
+		
+		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");
 	}
 	
 	

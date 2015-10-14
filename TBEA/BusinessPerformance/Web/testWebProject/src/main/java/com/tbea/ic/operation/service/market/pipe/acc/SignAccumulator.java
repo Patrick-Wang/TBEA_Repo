@@ -26,7 +26,7 @@ public class SignAccumulator implements IAccumulator {
 
 	private void computeValue(List<Double> vals, MktSignContract info, List<Integer> zbs){
 		if (zbs.contains(Indicator.QYJE.ordinal())){
-			int index = zbs.indexOf(Indicator.TBJE.ordinal());
+			int index = zbs.indexOf(Indicator.QYJE.ordinal());
 			Double val = vals.get(index);
 			vals.set(index, Util.valueOf(val) + info.getProductPrice());
 		}

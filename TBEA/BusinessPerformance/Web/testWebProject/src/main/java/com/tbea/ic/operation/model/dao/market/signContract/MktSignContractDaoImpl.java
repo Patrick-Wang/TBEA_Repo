@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.model.dao.market.signContract;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -17,6 +18,7 @@ import com.tbea.ic.operation.model.entity.MktBidInfo;
 import com.tbea.ic.operation.model.entity.MktProjectInfo;
 import com.tbea.ic.operation.model.entity.MktSignContract;
 import com.tbea.ic.operation.service.market.pipe.MarketUnit;
+import com.tbea.ic.operation.service.market.pipe.MarketUnit.Type;
 
 @Repository
 @Transactional("transactionManager")
@@ -73,5 +75,53 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();
+	}
+
+	@Override
+	public List<MktSignContract> getIndustryData(Date start, Date end,
+			MarketUnit mu, List<MarketUnit> mus) {
+		Query q = manager.createQuery(
+				"from MktSignContract where companyName=:compName and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and industryCategory in (" + Util.toNameString((List)mus) + ") ");
+		q.setParameter("compName", mu.getName());
+		q.setParameter("start", start);
+		q.setParameter("end", end);
+		return q.getResultList();
+	}
+
+	@Override
+	public List<MktSignContract> getCompanyData(Date start, Date end,
+			MarketUnit mu, List<MarketUnit> mus) {
+		Query q = manager.createQuery(
+				"from MktSignContract where companyName=:compName and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and officeName in (" + Util.toNameString((List)mus) + ") ");
+		q.setParameter("compName", mu.getName());
+		q.setParameter("start", start);
+		q.setParameter("end", end);
+		return q.getResultList();
+	}
+	
+	@Override
+	public List<MarketUnit> getCompanies(MarketUnit mu) {
+		Query q = manager.createQuery(
+				"select m.officeName from MktSignContract m where m.companyName = :compName group by m.officeName");
+		q.setParameter("compName", mu.getName());
+		List<String> industries = q.getResultList();
+		List<MarketUnit> mus = new ArrayList<MarketUnit>();
+		for (String industry : industries){
+			mus.add(new MarketUnit(industry, Type.COMPANY));
+		}
+		return mus;
+	}
+	
+	@Override
+	public List<MarketUnit> getIndustries(MarketUnit mu) {
+		Query q = manager.createQuery(
+				"select m.industryCategory from MktSignContract m where m.companyName = :compName group by m.industryCategory");
+		q.setParameter("compName", mu.getName());
+		List<String> industries = q.getResultList();
+		List<MarketUnit> mus = new ArrayList<MarketUnit>();
+		for (String industry : industries){
+			mus.add(new MarketUnit(industry, Type.INDUSTRY));
+		}
+		return mus;
 	}
 }

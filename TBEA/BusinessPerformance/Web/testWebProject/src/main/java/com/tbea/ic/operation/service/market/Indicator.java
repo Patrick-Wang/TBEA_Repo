@@ -8,5 +8,5 @@ public enum Indicator {
 	HTSL,//合同数量 MktSignContract
 	TBZB,//投标占总额比例
 	QYJE,//签约金额  MktSignContract product_price
-	QYZB//签约金额  MktSignContract product_price
+	QYZB
 }

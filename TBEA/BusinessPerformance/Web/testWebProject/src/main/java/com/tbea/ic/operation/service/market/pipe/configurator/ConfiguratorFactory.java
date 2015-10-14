@@ -8,12 +8,15 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.market.bidInfo.MktBidInfoDao;
 import com.tbea.ic.operation.model.dao.market.signContract.MktSignContractDao;
 import com.tbea.ic.operation.model.entity.MktBidInfo;
+import com.tbea.ic.operation.model.entity.MktSignContract;
 import com.tbea.ic.operation.service.market.pipe.MarketUnit;
 import com.tbea.ic.operation.service.market.pipe.acc.BidAccumulator;
+import com.tbea.ic.operation.service.market.pipe.acc.SignAccumulator;
 import com.tbea.ic.operation.service.market.pipe.configurator.bid.CompanyBidAnalysisCompositeConfigurator;
 import com.tbea.ic.operation.service.market.pipe.configurator.bid.CompanyBidAnalysisConfigurator;
 import com.tbea.ic.operation.service.market.pipe.configurator.bid.IndustryBidAnalysisCompositeConfigurator;
 import com.tbea.ic.operation.service.market.pipe.configurator.bid.IndustryBidAnalysisConfigurator;
+import com.tbea.ic.operation.service.market.pipe.configurator.sign.IndustrySignAnalysisCompositeConfigurator;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 
 public class ConfiguratorFactory {
@@ -29,6 +32,36 @@ public class ConfiguratorFactory {
 	}
 
 
+	
+	
+	public IPipeConfigurator getIndustrySignAnalysisConfigurator(MarketUnit mu) {
+		return new IndustryBidAnalysisConfigurator(new SignAccumulator(new SignAccumulator.DataPicker() {
+			
+			@Override
+			public List<MktSignContract> getData(Date start, Date end, List<MarketUnit> mus) {
+				return signDao.getIndustryData(start, end, mu, mus);
+			}
+		}));
+	}
+	
+	public IPipeConfigurator getIndustrySignAnalysisCompositeConfigurator(Map<Company, List<Company>> computeMap) {
+		return new IndustrySignAnalysisCompositeConfigurator(computeMap);
+	}
+	
+	public IPipeConfigurator getCompanySignAnalysisConfigurator(MarketUnit mu) {
+		return new IndustryBidAnalysisConfigurator(new SignAccumulator(new SignAccumulator.DataPicker() {
+			
+			@Override
+			public List<MktSignContract> getData(Date start, Date end, List<MarketUnit> mus) {
+				return signDao.getCompanyData(start, end, mu, mus);
+			}
+		}));
+	}
+	
+	public IPipeConfigurator getCompanySignAnalysisCompositeConfigurator(Map<Company, List<Company>> computeMap) {
+		return new IndustrySignAnalysisCompositeConfigurator(computeMap);
+	}
+	
 	public IPipeConfigurator getIndustryBidAnalysisConfigurator(MarketUnit mu) {
 //		AccCombiner combiner = new AccCombiner();
 //		combiner.join(new BidAccumulator(bidDao)).join(new SignAccumulator(signDao));

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.market.Indicator;
+import com.tbea.ic.operation.service.market.pipe.filter.RatioPipeFilter;
 import com.tbea.ic.operation.service.market.pipe.filter.composite.CompositeRatioPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.configurator.composite.AbstractCompositeConfigurator;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
@@ -17,14 +18,14 @@ import com.tbea.ic.operation.service.util.pipe.filter.composite.ZzlPipeFilter;
 
 
 //配置表结构, 横线部分为不需要计算值
-//当月情况		年度累计		去年同期累计		同比增幅
+//当月情况		当月	年度累计		去年同期累计		同比增幅
 //投标数量	cp1											--
 //投标数量	cp2											--
 //投标数量	cp3											--
 //投标数量												--
 //投标金额												
 //中标金额												--
-
+//中标率		--							--
 
 
 public class IndustryBidAnalysisCompositeConfigurator extends AbstractCompositeConfigurator{
@@ -64,7 +65,7 @@ public class IndustryBidAnalysisCompositeConfigurator extends AbstractCompositeC
 			.exclude(3)
 			.add(Indicator.TBZB.ordinal(), Indicator.TBJE.ordinal()))
 		.addFilter(new ZzlPipeFilter()
-			.add(3, 2, 1)
+			.add(3, 1, 2)
 			.exclude(Indicator.TBSL.ordinal())
 			.exclude(Indicator.TBJE.ordinal())
 			.exclude(Indicator.ZBJE.ordinal())
