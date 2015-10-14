@@ -11,7 +11,7 @@ import com.tbea.ic.operation.service.util.pipe.filter.composite.AbstractPipeFilt
 public class CompositeRatioPipeFilter extends AbstractPipeFilter {
 
 	Integer tbjeRow;
-	Integer qyjeRow;
+	Integer zbjeRow;
 	Set<Integer> excludeCols = new HashSet<Integer>();
 
 	public CompositeRatioPipeFilter(int rowStart, int step) {
@@ -29,8 +29,8 @@ public class CompositeRatioPipeFilter extends AbstractPipeFilter {
 		Double[] dret = null;
 		if (Indicator.TBJE.ordinal() == zbId) {
 			tbjeRow = row;
-		} else if (Indicator.QYJE.ordinal() == zbId) {
-			qyjeRow = row;
+		} else if (Indicator.ZBJE.ordinal() == zbId) {
+			zbjeRow = row;
 		} else if (Indicator.ZBL.ordinal() == zbId) {
 			dret = pipe.getRow(row);
 		}
@@ -51,9 +51,9 @@ public class CompositeRatioPipeFilter extends AbstractPipeFilter {
 
 	private void updateZb(IPipe pipe, int zbId, Double[] zbRow) {
 		if (Indicator.ZBL.ordinal() == zbId) {
-			if (tbjeRow != null && qyjeRow != null) {
+			if (tbjeRow != null && zbjeRow != null) {
 				Double[] tb = pipe.getRow(tbjeRow);
-				Double[] qy = pipe.getRow(qyjeRow);
+				Double[] qy = pipe.getRow(zbjeRow);
 				for (int i = 0; i < zbRow.length; ++i) {
 					if (null != tb[i] && null != qy[i]
 							&& !excludeCols.contains(i)

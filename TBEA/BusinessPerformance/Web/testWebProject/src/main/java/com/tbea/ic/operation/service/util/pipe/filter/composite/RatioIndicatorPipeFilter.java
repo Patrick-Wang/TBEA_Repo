@@ -8,7 +8,7 @@ import java.util.Set;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 
-
+//计算的比例为引用指标的 当前公司 除以 合计公司，合计公司必须位于引用指标的所有公司最后一个
 public class RatioIndicatorPipeFilter extends AbstractPipeFilter {
 
 	Map<Integer, Integer> ratioParam = new HashMap<Integer, Integer>();
@@ -36,8 +36,13 @@ public class RatioIndicatorPipeFilter extends AbstractPipeFilter {
 		if (ratioParam.containsKey(indicator)){
 			int refIndicatorIndex = pipe.getIndicators().indexOf(ratioParam.get(indicator));
 			int indicatorIndex = pipe.getIndicators().indexOf(indicator);
-			int refRow = row - (indicatorIndex - refIndicatorIndex) * pipe.getCompanies().size();
+			
+			//当前公司
+			int refRow = row - (indicatorIndex - refIndicatorIndex) * getStep(0);
+			
+			//指标对应最后一个公司为合计公司
 			int baseRow = this.rowInner2Outer(refIndicatorIndex, 0);
+			
 			updateZb(pipe.getRow(row), pipe.getRow(refRow), pipe.getRow(baseRow));
 		}
 	}

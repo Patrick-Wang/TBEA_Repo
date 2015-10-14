@@ -83,6 +83,10 @@ public class Util {
 		return  ret;
 	}
 	
+	public static String toString(Double val){
+		return val == null ? null : "" + val;
+	}
+	
 	public static String toString(List<Company> comps){
 		String ret = "";
 		for (Company comp : comps){

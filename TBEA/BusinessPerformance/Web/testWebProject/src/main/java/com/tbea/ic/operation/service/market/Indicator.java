@@ -7,5 +7,6 @@ public enum Indicator {
 	ZBL, //中标率
 	HTSL,//合同数量 MktSignContract
 	TBZB,//投标占总额比例
-	QYJE//签约金额  MktSignContract product_price
+	QYJE,//签约金额  MktSignContract product_price
+	QYZB
 }

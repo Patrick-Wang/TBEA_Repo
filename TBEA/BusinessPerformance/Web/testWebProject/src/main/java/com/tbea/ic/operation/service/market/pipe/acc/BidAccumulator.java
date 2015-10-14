@@ -4,11 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.model.dao.market.bidInfo.MktBidInfoDao;
 import com.tbea.ic.operation.model.entity.MktBidInfo;
 import com.tbea.ic.operation.service.market.Indicator;
 import com.tbea.ic.operation.service.market.pipe.MarketUnit;
@@ -16,16 +13,17 @@ import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 
 public class BidAccumulator implements IAccumulator {
 
-	@Autowired
-	private MktBidInfoDao bidInfoDao;
 	
-	private MarketUnit mku;
+	public static interface DataPicker{
+		List<MktBidInfo> getData(Date start,
+			Date end, List<MarketUnit> mus);
+	}
+
+	private DataPicker dataPicker;
 
 
-	public BidAccumulator(MktBidInfoDao bidInfoDao, MarketUnit mku) {
-		super();
-		this.bidInfoDao = bidInfoDao;
-		this.mku = mku;
+	public BidAccumulator(DataPicker dataPicker) {
+		this.dataPicker = dataPicker;
 	}
 
 	private void computeValue(List<Double> vals, MktBidInfo bidInfo, List<Integer> zbs){
@@ -42,10 +40,11 @@ public class BidAccumulator implements IAccumulator {
 		}
 	}
 
+	
 	@Override
 	public List<Double> compute(int col, Date start, Date end,
 			List<Integer> zbs, List<Company> companies) {
-		List<MktBidInfo> bidInfos = bidInfoDao.getIndustryData(start, end, mku, (List)companies);
+		List<MktBidInfo> bidInfos = dataPicker.getData(start, end, (List)companies);
 		List<Double> result = new ArrayList<Double>();
 		for (int i = 0; i < zbs.size(); ++i){
 			result.add(null);
@@ -61,5 +60,4 @@ public class BidAccumulator implements IAccumulator {
 		}
 		return result;
 	}
-
 }

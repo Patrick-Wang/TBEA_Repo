@@ -41,4 +41,10 @@ public interface MarketService {
 
 	List<List<String>> getIndustryBidData(String companyName, Date date);
 
+	List<List<String>> getCompanyBidData(String companyName, Date date);
+
+	List<List<String>> getCompanySignData(String companyName, Date date);
+
+	List<List<String>> getIndustrySignData(String companyName, Date date);
+
 }

@@ -60,11 +60,18 @@ public class MarketServlet {
 	final static String TYPE_SIGN = "4";
 	final static String TYPE_BID = "3";
 
-	final static String[] COMPANIES = new String[] { "股份公司", "沈变", "衡变", "新变",
-			"天变", "鲁缆", "新缆", "德缆" };
-	final static String[] ACCOUNTS = new String[] { "股份公司市场部", "沈变市场部",
-			"衡变市场部", "新变市场部", "天变市场部", "鲁缆市场部", "新缆市场部", "德缆市场部" };
-
+	final static Map<String, String> accountCompMap = new HashMap<String, String>();
+	static {
+		accountCompMap.put("股份公司市场部", "股份公司");
+		accountCompMap.put("沈变市场部", "沈变");
+		accountCompMap.put("衡变市场部", "衡变");
+		accountCompMap.put("新变市场部", "新变");
+		accountCompMap.put("天变市场部", "天变");
+		accountCompMap.put("鲁缆市场部", "鲁缆");
+		accountCompMap.put("新缆市场部", "新缆");
+		accountCompMap.put("德缆市场部", "德缆");
+	}
+	
 	@RequestMapping(value = "import.do")
 	public @ResponseBody byte[] importExcel(HttpServletRequest request,
 			HttpServletResponse response,
@@ -161,24 +168,11 @@ public class MarketServlet {
 	}
 
 	private String getCompanyName(Account account) {
-		if (ACCOUNTS[0].equals(account.getName())) {
-			return COMPANIES[0];
-		} else if (ACCOUNTS[1].equals(account.getName())) {
-			return COMPANIES[1];
-		} else if (ACCOUNTS[2].equals(account.getName())) {
-			return COMPANIES[2];
-		} else if (ACCOUNTS[3].equals(account.getName())) {
-			return COMPANIES[3];
-		} else if (ACCOUNTS[4].equals(account.getName())) {
-			return COMPANIES[4];
-		} else if (ACCOUNTS[5].equals(account.getName())) {
-			return COMPANIES[5];
-		} else if (ACCOUNTS[6].equals(account.getName())) {
-			return COMPANIES[6];
-		} else if (ACCOUNTS[7].equals(account.getName())) {
-			return COMPANIES[7];
+		String comp = accountCompMap.get(account.getName());
+		if (comp == null){
+			return "";
 		}
-		return "";
+		return comp;
 	}
 
 	@RequestMapping(value = "mkt_view.do")
@@ -233,7 +227,14 @@ public class MarketServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date date = DateSelection.getDate(request);
 		String companyName = request.getParameter("companyName");
-		List<List<String>> result = marketService.getIndustryBidData(companyName, date);
+		List<List<String>> result = null;
+		String type = request.getParameter("type");
+		if ("bid_industry".equals(type)){
+			result = marketService.getIndustryBidData(companyName, date);
+		} else if ("bid_company".equals(type)){
+			result = marketService.getCompanyBidData(companyName, date);
+		}
+		
 		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");
 	}
 	
@@ -251,27 +252,17 @@ public class MarketServlet {
 	@RequestMapping(value = "mkt_contract_analysis_update.do")
 	public @ResponseBody byte[] getMktContractAnalysisUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		Account account = SessionManager.getAccount(request.getSession());
-		String companyName = getCompanyName(account);
-		String rpttype = request.getParameter("docType");
-
-		List<String[][]> list = new ArrayList<String[][]>();
-		Integer year = Calendar.getInstance().get(Calendar.YEAR);
-		if (null != request.getParameter("year")) {
-			year = Integer.valueOf(request.getParameter("year"));
+		Date date = DateSelection.getDate(request);
+		String companyName = request.getParameter("companyName");
+		List<List<String>> result = null;
+		String type = request.getParameter("type");
+		if ("contract_industry".equals(type)){
+			result = marketService.getIndustryBidData(companyName, date);
+		} else if ("contract_company".equals(type)){
+			result = marketService.getCompanyBidData(companyName, date);
 		}
-
-		if (rpttype.equals(TYPE_BID)) {
-			list.add(marketService.getBidData(companyName, year));
-		} else if (rpttype.equals(TYPE_PROJECT)) {
-			list.add(marketService.getPrjData(companyName, year));
-		} else if (rpttype.equals(TYPE_SIGN)) {
-			list.add(marketService.getContData(companyName));
-		}
-		String listJson = JSONArray.fromObject(list).toString()
-				.replace("null", "\"\"");
-		// System.out.println(listJson);
-		return listJson.getBytes("utf-8");
+		
+		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");
 	}
 	
 	
@@ -388,13 +379,22 @@ public class MarketServlet {
 	}
 	
 	
-	@RequestMapping(value = "industry_bid_analysis_update.do")
-	public @ResponseBody byte[] getIndustryBidAnalysisUpdate(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		Date date = DateSelection.getDate(request);
-		String companyName = request.getParameter("companyName");
-		List<List<String>> result = marketService.getIndustryBidData(companyName, date);
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
-
-	}
+//	@RequestMapping(value = "industry_bid_analysis_update.do")
+//	public @ResponseBody byte[] getIndustryBidAnalysisUpdate(HttpServletRequest request,
+//			HttpServletResponse response) throws IOException {
+//		Date date = DateSelection.getDate(request);
+//		String companyName = request.getParameter("companyName");
+//		List<List<String>> result = marketService.getIndustryBidData(companyName, date);
+//		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+//
+//	}
+//	
+//	@RequestMapping(value = "company_bid_analysis_update.do")
+//	public @ResponseBody byte[] getCompanyBidAnalysisUpdate(HttpServletRequest request,
+//			HttpServletResponse response) throws IOException {
+//		Date date = DateSelection.getDate(request);
+//		String companyName = request.getParameter("companyName");
+//		List<List<String>> result = marketService.getCompanyBidData(companyName, date);
+//		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+//	}
 }

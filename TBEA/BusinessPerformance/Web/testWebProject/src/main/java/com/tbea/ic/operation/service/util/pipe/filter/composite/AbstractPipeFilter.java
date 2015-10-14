@@ -39,6 +39,14 @@ public abstract class AbstractPipeFilter implements IPipeFilter {
 		return false;
 	}
 	
+	protected int getBase(int prtRef){
+		return rowPtrs.get(prtRef).base;
+	}
+	
+	protected int getStep(int prtRef){
+		return rowPtrs.get(prtRef).offset;
+	}
+	
 	protected int rowInner2Outer(int innerRow, int ptrRef){
 		RowPointer ptr = rowPtrs.get(ptrRef);
 		return innerRow * ptr.offset + ptr.base;

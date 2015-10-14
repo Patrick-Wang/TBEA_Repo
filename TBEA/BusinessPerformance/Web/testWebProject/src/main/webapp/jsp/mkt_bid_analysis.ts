@@ -3,12 +3,12 @@
 declare var echarts;
 module mkt_bid_analysis {
 
-     enum Bid4IndustryZb{
+    enum Bid4IndustryZb {
         hy, dytbsl, dytbje, dyzbje, dyzydbl, ndsl, ndtbje, ndzbje,
-        ndzbl, ndtbbl, qntbsl, qntbje, qnzbl, qnzndbl, 
-        tbzz    
+        ndzbl, ndtbbl, qntbsl, qntbje, qnzbl, qnzndbl,
+        tbzz
     }
-    
+
     class JQGridAssistantFactory {
 
         public static createBidTable4Industry(gridName: string): JQTable.JQGridAssistant {
@@ -25,18 +25,18 @@ module mkt_bid_analysis {
                     .append(new JQTable.Node("中标金额(万元)", "t23"))
                     .append(new JQTable.Node("中标率", "t24"))
                     .append(new JQTable.Node("占年度投标总额比例", "t25")),
-                 new JQTable.Node("去年同期累计", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node("去年同期累计", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
                     .append(new JQTable.Node("投标数量", "t31"))
                     .append(new JQTable.Node("投标金额(万元)", "t32"))
                     .append(new JQTable.Node("中标金额(万元)", "t33"))
                     .append(new JQTable.Node("中标率", "t34"))
                     .append(new JQTable.Node("占年度投标总额比例", "t35")),
-                 new JQTable.Node("投标额同比增长幅度", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node("投标额同比增长幅度", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
             ], gridName);
         }
-        
-        
-         public static createBidTable4Companys(gridName: string): JQTable.JQGridAssistant {
+
+
+        public static createBidTable4Companys(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("项目公司", "t0", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
                 new JQTable.Node("当月情况", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
@@ -62,12 +62,12 @@ module mkt_bid_analysis {
         //private mExportDataSet: Util.Ajax;
         private mCompanyName;
         private mDs: Util.DateSelector;
-        private mAnalysisType:string;
+        private mAnalysisType: string;
 
         TableId: string;
         childTableId: string;
 
-        public init(TableId: string, dateId: string, year:number, month:number, companyName: string): void {
+        public init(TableId: string, dateId: string, year: number, month: number, companyName: string): void {
             this.mCompanyName = companyName;
 
             this.TableId = TableId;
@@ -79,8 +79,8 @@ module mkt_bid_analysis {
             //请求数据
             this.mDataSet = new Util.Ajax("mkt_bid_analysis_update.do", false);
             this.onType_TypeSelected();
-            if (this.mCompanyName == "股份公司"){
-                 this.onCompanySelected();
+            if (this.mCompanyName == "股份公司") {
+                this.onCompanySelected();
             }
            
             //this.updateUI();
@@ -98,33 +98,33 @@ module mkt_bid_analysis {
 
         }
 
-       
+
 
         public updateUI() {
             var parent = $("#" + this.TableId);
             parent.empty();
             parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
             var dt: Util.Date = this.mDs.getDate();
-            this.mDataSet.get({ companyName: this.mCompanyName, year: dt.year, month: dt.month })
+            this.mDataSet.get({ companyName: this.mCompanyName, year: dt.year, month: dt.month, type: this.mAnalysisType })
                 .then((data: any) => {
-                var rowBidData = data;
-                if (this.mAnalysisType == "bid_industry") {
-                    this.updateTable(
-                        this.TableId,
-                        this.childTableId,
-                        JQGridAssistantFactory.createBidTable4Industry(this.childTableId),
-                        rowBidData);
-                } else if (this.mAnalysisType == "bid_company") {
-                    this.updateTable(
-                        this.TableId,
-                        this.childTableId,
-                        JQGridAssistantFactory.createBidTable4Companys(this.childTableId),
-                        rowBidData);
-                }
+                    var rowBidData = data;
+                    if (this.mAnalysisType == "bid_industry") {
+                        this.updateTable(
+                            this.TableId,
+                            this.childTableId,
+                            JQGridAssistantFactory.createBidTable4Industry(this.childTableId),
+                            rowBidData);
+                    } else if (this.mAnalysisType == "bid_company") {
+                        this.updateTable(
+                            this.TableId,
+                            this.childTableId,
+                            JQGridAssistantFactory.createBidTable4Companys(this.childTableId),
+                            rowBidData);
+                    }
 
-            });
+                });
         }
-        
+
         private formatData(rowData: string[][], integerList: std.vector<number>, percentList: std.vector<number>) {
             var outputData: string[][] = [];
 
@@ -141,7 +141,7 @@ module mkt_bid_analysis {
             }
             return outputData;
         }
-        
+
 
 
         private updateTable(
@@ -149,10 +149,10 @@ module mkt_bid_analysis {
             childName: string,
             tableAssist: JQTable.JQGridAssistant,
             rawData: Array<string[]>): void {
-            var data:string[][] = [];
-            if(this.mAnalysisType == "bid_industry"){
+            var data: string[][] = [];
+            if (this.mAnalysisType == "bid_industry") {
                 var integerList: std.vector<number> = new std.vector<number>();
-                 var percentList: std.vector<number> = new std.vector<number>();
+                var percentList: std.vector<number> = new std.vector<number>();
                 integerList.push(Bid4IndustryZb.dytbsl);
                 integerList.push(Bid4IndustryZb.ndsl);
                 integerList.push(Bid4IndustryZb.qntbsl);
@@ -163,11 +163,19 @@ module mkt_bid_analysis {
                 percentList.push(Bid4IndustryZb.qnzndbl);
                 percentList.push(Bid4IndustryZb.tbzz);
                 data = this.formatData(rawData, integerList, percentList);
-               
-            }else if(this.mAnalysisType == "bid_company"){
-                
+
+            } else if (this.mAnalysisType == "bid_company") {
+                var integerList: std.vector<number> = new std.vector<number>();
+                var percentList: std.vector<number> = new std.vector<number>();
+                integerList.push(Bid4IndustryZb.dytbsl);
+                integerList.push(Bid4IndustryZb.ndsl);
+                integerList.push(Bid4IndustryZb.qntbsl);
+                percentList.push(Bid4IndustryZb.dyzydbl);
+                percentList.push(Bid4IndustryZb.ndzbl);
+                percentList.push(Bid4IndustryZb.ndtbbl);
+                data = this.formatData(rawData, integerList, percentList);
             }
-            
+
             $("#" + childName).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",

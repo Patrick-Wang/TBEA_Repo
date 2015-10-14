@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.market.bidInfo.MktBidInfoDao;
 import com.tbea.ic.operation.model.dao.market.projectInfo.MktProjectInfoDao;
 import com.tbea.ic.operation.model.dao.market.signContract.MktSignContractDao;
@@ -34,7 +32,6 @@ import com.tbea.ic.operation.service.market.pipe.MarketUnit.Type;
 import com.tbea.ic.operation.service.market.pipe.configurator.ConfiguratorFactory;
 import com.tbea.ic.operation.service.util.pipe.core.CompositePipe;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 
 @Service
 @Transactional("transactionManager")
@@ -76,23 +73,53 @@ public class MarketServiceImpl implements MarketService {
 	private final OnUpdateMktObjectListener projectUpdateListener = ObjectUpdateListenerFactory
 			.createProjectUpdateListener(projectInfoDao);
 
-	private final OnUpdateMktObjectListener bidAddListener = ObjectUpdateListenerFactory
-			.createBidAddListener(bidInfoDao);
-
-	private final OnUpdateMktObjectListener signAddListener = ObjectUpdateListenerFactory
-			.createSignAddListener(signContractDao);
-
-	private final OnUpdateMktObjectListener projectAddListener = ObjectUpdateListenerFactory
-			.createProjectAddListener(projectInfoDao);
-	
-	private final static List<Integer> industryBidIndicators = new ArrayList<Integer>();
+	private final static List<Integer> bidIndicators = new ArrayList<Integer>();
 	static{
-		industryBidIndicators.add(Indicator.TBSL.ordinal());
-		industryBidIndicators.add(Indicator.TBJE.ordinal());
-		industryBidIndicators.add(Indicator.ZBJE.ordinal());
-		industryBidIndicators.add(Indicator.ZBL.ordinal());
-		industryBidIndicators.add(Indicator.TBZB.ordinal());
+		bidIndicators.add(Indicator.TBSL.ordinal());
+		bidIndicators.add(Indicator.TBJE.ordinal());
+		bidIndicators.add(Indicator.ZBJE.ordinal());
+		bidIndicators.add(Indicator.ZBL.ordinal());
+		bidIndicators.add(Indicator.TBZB.ordinal());
 	}
+	
+	private final static List<Integer> signIndicators = new ArrayList<Integer>();
+	static{
+		signIndicators.add(Indicator.HTSL.ordinal());
+		signIndicators.add(Indicator.QYJE.ordinal());
+		signIndicators.add(Indicator.QYZB.ordinal());
+	}
+	
+	
+//	private final static List<MarketUnit> projectCompanies = new ArrayList<MarketUnit>();
+//	static{
+//		projectCompanies.add(new MarketUnit("电源国电、大唐办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("电源华能、华电、京能办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("电源中电投、神华、国投办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("电源粤电、华润办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("电源水电办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("辽宁办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("吉林办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("黑龙江办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("北京办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("山东办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("内蒙办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("蒙东办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("山西办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("西北办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("江苏安徽办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("河南办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("浙江上海办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("川渝藏办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("湖北办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("福建江西办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("重大项目处",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("核电项目处",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("南网广州办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("南网云贵办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("轨道交通办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("军工办",Type.COMPANY));
+//		projectCompanies.add(new MarketUnit("新疆办",Type.COMPANY));
+//	}
 	 
 	private String validate(XSSFWorkbook workbook, Class<?> cls) {
 		XSSFSheet sheet = workbook.getSheetAt(0);
@@ -486,7 +513,7 @@ public class MarketServiceImpl implements MarketService {
 		return ErrorCode.OK;
 	}
 
-
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<List<String>> getIndustryBidData(String companyName, Date date) {
 		MarketUnit muSb = new MarketUnit(companyName, Type.INDUSTRY);
@@ -496,59 +523,158 @@ public class MarketServiceImpl implements MarketService {
 		MarketUnit muTotal = new MarketUnit("合计", Type.INDUSTRY);
 		totalMap.put(muTotal, (List)mus);
 		CompositePipe pipe = new CompositePipe(
-				industryBidIndicators, date,
+				bidIndicators, date,
 				this.configFactory.getIndustryBidAnalysisCompositeConfigurator(totalMap));
 		for(MarketUnit mu : mus){
 			pipe.addCompany(mu, options);
 		}
 		pipe.addCompany(muTotal, null);
 		List<Double[]> ret = pipe.getData();
-		mus.add(muTotal);
-		return transformIndustryBid(ret, mus);
-	}
-	
-	private List<List<String>> transformIndustryBid(List<Double[]> data, List<MarketUnit> mus) {
 		List<List<String>> result = new ArrayList<List<String>>();
-		for (int i = 0, len = mus.size(); i < len; ++i){
-			List<String> row = new ArrayList<String>();
-			MarketUnit mu = mus.get(i);
-			result.add(row);
-			row.add(mu.getName());
-			row.add(data.get(i)[0] == null ? null : "" + data.get(i)[0]);
-			row.add(data.get(i + mus.size() * 1)[0] == null ? null : "" + data.get(i + mus.size())[0]);
-			row.add(data.get(i + mus.size() * 2)[0] == null ? null : "" + data.get(i + mus.size()*2)[0]);
-			row.add(data.get(i + mus.size() * 4)[0] == null ? null : "" + data.get(i + mus.size()*4)[0]);
+		int len = mus.size() + 1;
+		for (int i = 0; i < len - 1; ++i){
+			result.add(transformIndustryBid(ret, i,len, mus.get(i)));
+		}
+		result.add(transformIndustryBid(ret, len - 1, len, muTotal));
+		
+		return result;
+	}
 	
-			row.add(data.get(i)[1] == null ? null : "" + data.get(i)[1]);
-			row.add(data.get(i + mus.size() * 1)[1] == null ? null : "" + data.get(i + mus.size())[1]);
-			row.add(data.get(i + mus.size() * 2)[1] == null ? null : "" + data.get(i + mus.size()*2)[1]);
-			row.add(data.get(i + mus.size() * 3)[1] == null ? null : "" + data.get(i + mus.size()*3)[1]);
-			row.add(data.get(i + mus.size() * 4)[1] == null ? null : "" + data.get(i + mus.size()*4)[1]);
+	private List<String> transformIndustryBid(List<Double[]> data, int i, int step, MarketUnit mu) {
+		List<String> row = new ArrayList<String>();
+		row.add(mu.getName());
+		row.add(Util.toString(data.get(i)[0]));
+		row.add(Util.toString(data.get(i + step * 1)[0]));
+		row.add(Util.toString(data.get(i + step * 2)[0]));
+		row.add(Util.toString(data.get(i + step * 4)[0]));
 
-			row.add(data.get(i)[2] == null ? null : "" + data.get(i)[2]);
-			row.add(data.get(i + mus.size() * 1)[2] == null ? null : "" + data.get(i + mus.size())[2]);
-			row.add(data.get(i + mus.size() * 2)[2] == null ? null : "" + data.get(i + mus.size()*2)[2]);
-			row.add(data.get(i + mus.size() * 3)[2] == null ? null : "" + data.get(i + mus.size()*3)[2]);
-			row.add(data.get(i + mus.size() * 4)[2] == null ? null : "" + data.get(i + mus.size()*4)[2]);
-			row.add(data.get(i + mus.size() * 1)[3] == null ? null : "" + data.get(i + mus.size()*1)[3]);
+		row.add(Util.toString(data.get(i)[1]));
+		row.add(Util.toString(data.get(i + step * 1)[1]));
+		row.add(Util.toString(data.get(i + step * 2)[1]));
+		row.add(Util.toString(data.get(i + step * 3)[1]));
+		row.add(Util.toString(data.get(i + step * 4)[1]));
+		
+		row.add(Util.toString(data.get(i)[2]));
+		row.add(Util.toString(data.get(i + step * 1)[2]));
+		row.add(Util.toString(data.get(i + step * 2)[2]));
+		row.add(Util.toString(data.get(i + step * 3)[2]));
+		row.add(Util.toString(data.get(i + step * 4)[2]));
+		row.add(Util.toString(data.get(i + step * 1)[3]));
+		return row;
+	}
+
+	@Override
+	public List<List<String>> getCompanyBidData(String companyName, Date date) {
+		MarketUnit muSb = new MarketUnit(companyName, Type.COMPANY);
+		IPipeConfigurator options = configFactory.getCompanyBidAnalysisConfigurator(muSb);
+		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
+		List<MarketUnit> companies = bidInfoDao.getCompanies(muSb);
+		MarketUnit muTotal = new MarketUnit("合计", Type.COMPANY);
+		totalMap.put(muTotal, (List)companies);
+		CompositePipe pipe = new CompositePipe(
+				bidIndicators, date,
+				this.configFactory.getCompanyBidAnalysisCompositeConfigurator(totalMap));
+		for(MarketUnit mu : companies){
+			pipe.addCompany(mu, options);
 		}
-		
-		
+		pipe.addCompany(muTotal, null);
+		List<Double[]> ret = pipe.getData();
+		List<List<String>> result = new ArrayList<List<String>>();
+		int len = companies.size() + 1;
+		for (int i = 0; i < len - 1; ++i){
+			result.add(transformCompanyBid(ret, i, len, companies.get(i)));
+		}
+		result.add(transformCompanyBid(ret, len - 1, len, muTotal));
 		return result;
 	}
 
 
-	private List<String[]> makeResult(List<Double[]> values) {
-		List<String[]> result = new ArrayList<String[]>();
+	private List<String> transformCompanyBid(List<Double[]> data, int i,
+			int step, MarketUnit mu) {
+		List<String> row = new ArrayList<String>();
+		row.add(mu.getName());
+		row.add(Util.toString(data.get(i)[0]));
+		row.add(Util.toString(data.get(i + step * 1)[0]));
+		row.add(Util.toString(data.get(i + step * 2)[0]));
+		row.add(Util.toString(data.get(i + step * 4)[0]));
 
-		for (int i = 0; i < values.size(); ++i) {
-			result.add(new String[values.get(i).length]);
-			for (int j = 0; j < values.get(i).length; ++j) {
-				if (values.get(i)[j] != null){
-					result.get(i)[j] = values.get(i)[j] + "";
-				}
-			}
+		row.add(Util.toString(data.get(i)[1]));
+		row.add(Util.toString(data.get(i + step * 1)[1]));
+		row.add(Util.toString(data.get(i + step * 2)[1]));
+		row.add(Util.toString(data.get(i + step * 3)[1]));
+		row.add(Util.toString(data.get(i + step * 4)[1]));
+		return row;
+	}
+	
+	@Override
+	public List<List<String>> getCompanySignData(String companyName, Date date) {
+		MarketUnit muSb = new MarketUnit(companyName, Type.COMPANY);
+		IPipeConfigurator options = configFactory.getCompanySignAnalysisConfigurator(muSb);
+		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
+		List<MarketUnit> companies = signContractDao.getCompanies(muSb);
+		MarketUnit muTotal = new MarketUnit("合计", Type.COMPANY);
+		totalMap.put(muTotal, (List)companies);
+		CompositePipe pipe = new CompositePipe(
+				signIndicators, date,
+				this.configFactory.getCompanySignAnalysisCompositeConfigurator(totalMap));
+		for(MarketUnit mu : companies){
+			pipe.addCompany(mu, options);
 		}
+		pipe.addCompany(muTotal, null);
+		List<Double[]> ret = pipe.getData();
+		List<List<String>> result = new ArrayList<List<String>>();
+		int len = companies.size() + 1;
+		for (int i = 0; i < len - 1; ++i){
+			result.add(transform2Sign(ret, i, len, companies.get(i)));
+		}
+		result.add(transform2Sign(ret, len - 1, len, muTotal));
 		return result;
 	}
+
+	
+	@Override
+	public List<List<String>> getIndustrySignData(String companyName, Date date) {
+		MarketUnit muSb = new MarketUnit(companyName, Type.COMPANY);
+		IPipeConfigurator options = configFactory.getIndustrySignAnalysisConfigurator(muSb);
+		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
+		List<MarketUnit> companies = signContractDao.getCompanies(muSb);
+		MarketUnit muTotal = new MarketUnit("合计", Type.COMPANY);
+		totalMap.put(muTotal, (List)companies);
+		CompositePipe pipe = new CompositePipe(
+				signIndicators, date,
+				this.configFactory.getIndustrySignAnalysisCompositeConfigurator(totalMap));
+		for(MarketUnit mu : companies){
+			pipe.addCompany(mu, options);
+		}
+		pipe.addCompany(muTotal, null);
+		List<Double[]> ret = pipe.getData();
+		List<List<String>> result = new ArrayList<List<String>>();
+		int len = companies.size() + 1;
+		for (int i = 0; i < len - 1; ++i){
+			result.add(transform2Sign(ret, i, len, companies.get(i)));
+		}
+		result.add(transform2Sign(ret, len - 1, len, muTotal));
+		return result;
+	}
+
+	private List<String> transform2Sign(List<Double[]> data, int i, int step,
+			MarketUnit mu) {
+		List<String> row = new ArrayList<String>();
+		row.add(mu.getName());
+		row.add(Util.toString(data.get(i)[0]));
+		row.add(Util.toString(data.get(i + step * 1)[0]));
+		row.add(Util.toString(data.get(i + step * 2)[0]));
+
+		row.add(Util.toString(data.get(i)[1]));
+		row.add(Util.toString(data.get(i + step * 1)[1]));
+		row.add(Util.toString(data.get(i + step * 2)[1]));
+
+		row.add(Util.toString(data.get(i)[2]));
+		row.add(Util.toString(data.get(i + step * 1)[2]));
+		row.add(Util.toString(data.get(i + step * 2)[2]));
+		row.add(Util.toString(data.get(i + step * 1)[3]));
+		return row;
+	}
+
+
 }
