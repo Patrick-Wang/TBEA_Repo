@@ -2,6 +2,11 @@
 /// <reference path="jqgrid/jqassist.ts" />
 declare var echarts;
 module mkt_contract_analysis {
+    
+    enum Bid4IndustryZb{
+        hy, htsl, htje, dyzydbl, ndsl, ndhtje, 
+        ndzbl, qnhtsl, qnhtje, qnzndbl, htzz    
+    }
 
     class JQGridAssistantFactory {
 
@@ -66,7 +71,9 @@ module mkt_contract_analysis {
             //请求数据
             this.mDataSet = new Util.Ajax("mkt_contract_analysis_update.do", false);
             this.onType_TypeSelected();
-            this.onCompanySelected();
+            if (this.mCompanyName == "股份公司"){
+                this.onCompanySelected();
+            }
             //this.updateUI();
         }
 
@@ -88,38 +95,25 @@ module mkt_contract_analysis {
             var parent = $("#" + this.TableId);
             parent.empty();
             parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
+            var dt: Util.Date = this.mDs.getDate();
+            this.mDataSet.get({ companyName: this.mCompanyName, year: dt.year, month: dt.month })
+                .then((data: any) => {
+                var rowBidData = data;
+                if (this.mAnalysisType == "contract_industry") {
+                    this.updateTable(
+                        this.TableId,
+                        this.childTableId,
+                        JQGridAssistantFactory.createContractTable4Industry(this.childTableId),
+                        rowBidData);
+                } else if (this.mAnalysisType == "contract_company") {
+                    this.updateTable(
+                        this.TableId,
+                        this.childTableId,
+                        JQGridAssistantFactory.createContractTable4Companys(this.childTableId),
+                        rowBidData);
+                }
 
-            if (this.mAnalysisType == "contract_industry") {
-               this.updateTable(
-                  this.TableId,
-                   this.childTableId,
-                   JQGridAssistantFactory.createContractTable4Industry(this.childTableId),
-                   []); 
-
-            }else if (this.mAnalysisType == "contract_company"){
-                this.updateTable(
-                  this.TableId,
-                   this.childTableId,
-                   JQGridAssistantFactory.createContractTable4Companys(this.childTableId),
-                   []); 
-            } 
-            
-//            this.mDataSet.get({ AnalysisType: this.mAnalysisType })
-//                .then((data: any) => {
-//                    var fktjData = data;
-//
-//                    $('#dataStatus').css("display", "none");
-//                    if (this.mAnalysisType == "bid_industry") {
-//                        this.updateTable(
-//                            this.TableId,
-//                            this.childTableId,
-//                            JQGridAssistantFactory.createBidTable4Industry(this.childTableId),
-//                            fktjData[0]);
-//                    }else if (this.mAnalysisType == "bid_company"){
-//                        
-//                    } 
-//
-//                });
+            });
         }
 
         private updateTable(
@@ -150,9 +144,9 @@ module mkt_contract_analysis {
                     viewrecords: true//是否显示行数 
                 })
                 );
-            if (rawData.length != 0) {
-                $("#assist").css("display", "block");
-            }  
+//            if (rawData.length != 0) {
+//                $("#assist").css("display", "block");
+//            }  
         }
     }
 }
