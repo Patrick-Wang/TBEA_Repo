@@ -25,8 +25,8 @@ public class MktSignContract implements Serializable {
 	@Column(name = "office_name")
 	String officeName;
 
-	@Column(name = "sign_month")
-	Integer signMonth;
+	@Column(name = "sign_date")
+	Date signDate;
 
 	@Column(name = "industry_category")
 	String industryCategory;
@@ -100,11 +100,8 @@ public class MktSignContract implements Serializable {
 		return officeName;
 	}
 
-	/**
-	 * @return the signMonth
-	 */
-	public Integer getSignMonth() {
-		return signMonth;
+	public Date getSignDate() {
+		return signDate;
 	}
 
 	/**
@@ -236,12 +233,8 @@ public class MktSignContract implements Serializable {
 		this.officeName = officeName;
 	}
 
-	/**
-	 * @param signMonth
-	 *            the signMonth to set
-	 */
-	public void setSignMonth(Integer signMonth) {
-		this.signMonth = signMonth;
+	public void setSignDate(Date signDate) {
+		this.signDate = signDate;
 	}
 
 	/**

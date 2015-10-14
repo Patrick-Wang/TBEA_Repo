@@ -81,7 +81,7 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 	public List<MktSignContract> getIndustryData(Date start, Date end,
 			MarketUnit mu, List<MarketUnit> mus) {
 		Query q = manager.createQuery(
-				"from MktSignContract where companyName=:compName and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and industryCategory in (" + Util.toNameString((List)mus) + ") ");
+				"from MktSignContract where companyName=:compName and datediff(mm, :start, signDate) >= 0 and datediff(mm, signDate, :end) >= 0 and industryCategory in (" + Util.toNameString((List)mus) + ") ");
 		q.setParameter("compName", mu.getName());
 		q.setParameter("start", start);
 		q.setParameter("end", end);
@@ -92,7 +92,7 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 	public List<MktSignContract> getCompanyData(Date start, Date end,
 			MarketUnit mu, List<MarketUnit> mus) {
 		Query q = manager.createQuery(
-				"from MktSignContract where companyName=:compName and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and officeName in (" + Util.toNameString((List)mus) + ") ");
+				"from MktSignContract where companyName=:compName and datediff(mm, :start, signDate) >= 0 and datediff(mm, signDate, :end) >= 0 and officeName in (" + Util.toNameString((List)mus) + ") ");
 		q.setParameter("compName", mu.getName());
 		q.setParameter("start", start);
 		q.setParameter("end", end);

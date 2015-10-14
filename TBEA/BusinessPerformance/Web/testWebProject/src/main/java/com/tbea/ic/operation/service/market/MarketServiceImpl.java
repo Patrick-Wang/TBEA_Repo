@@ -350,7 +350,12 @@ public class MarketServiceImpl implements MarketService {
 				result[col][0] = obj.getCompanyName() + "";
 				result[col][1] = obj.getContractNo() + "";
 				result[col][2] = obj.getOfficeName() + "";
-				result[col][3] = obj.getSignMonth() + "";
+				if(null != obj.getSignDate()){
+					result[col][3] = Util.formatToDay(obj.getSignDate());
+				}else{
+					result[col][3] = "";
+				}
+
 				result[col][4] = obj.getIndustryCategory() + "";
 				result[col][5] = obj.getSystemClassfication() + "";
 				result[col][6] = obj.getProjectArea() + "";
