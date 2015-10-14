@@ -3,7 +3,7 @@
 declare var echarts;
 module mkt_contract_analysis {
     
-    enum Bid4IndustryZb{
+    enum ContractZb{
         hy, htsl, htje, dyzydbl, ndsl, ndhtje, 
         ndzbl, qnhtsl, qnhtje, qnzndbl, htzz    
     }
@@ -88,7 +88,23 @@ module mkt_contract_analysis {
         public exportExcel() {
 
         }
+        
+        private formatData(rowData: string[][], integerList: std.vector<number>, percentList: std.vector<number>) {
+            var outputData: string[][] = [];
 
+            var formaterChain: Util.FormatHandler = new Util.FormatPercentHandler([], percentList.toArray());
+            formaterChain.next(new Util.FormatIntHandler([], integerList.toArray()))
+                .next(new Util.FormatCurrencyHandler());
+            var row = [];
+            for (var j = 0; j < rowData.length; ++j) {
+                row = [].concat(rowData[j]);
+                for (var i = 1; i < row.length; ++i) {
+                    row[i] = formaterChain.handle(row[0], i, row[i]);
+                }
+                outputData.push(row);
+            }
+            return outputData;
+        }
        
 
         public updateUI() {
@@ -96,7 +112,7 @@ module mkt_contract_analysis {
             parent.empty();
             parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
             var dt: Util.Date = this.mDs.getDate();
-            this.mDataSet.get({ companyName: this.mCompanyName, year: dt.year, month: dt.month })
+            this.mDataSet.get({ companyName: this.mCompanyName, year: dt.year, month: dt.month,type: this.mAnalysisType  })
                 .then((data: any) => {
                 var rowBidData = data;
                 if (this.mAnalysisType == "contract_industry") {
@@ -121,6 +137,21 @@ module mkt_contract_analysis {
             childName: string,
             tableAssist: JQTable.JQGridAssistant,
             rawData: Array<string[]>): void {
+
+            var data: string[][] = [];
+
+            var integerList: std.vector<number> = new std.vector<number>();
+            var percentList: std.vector<number> = new std.vector<number>();
+            integerList.push(ContractZb.htsl);
+            integerList.push(ContractZb.ndsl);
+            integerList.push(ContractZb.qnhtsl);
+            percentList.push(ContractZb.dyzydbl);
+            percentList.push(ContractZb.ndhtje);
+            percentList.push(ContractZb.ndzbl);
+            percentList.push(ContractZb.qnhtje);
+            percentList.push(ContractZb.qnzndbl);
+            percentList.push(ContractZb.htzz);
+            data = this.formatData(rawData, integerList, percentList);
 
             $("#" + childName).jqGrid(
                 tableAssist.decorate({

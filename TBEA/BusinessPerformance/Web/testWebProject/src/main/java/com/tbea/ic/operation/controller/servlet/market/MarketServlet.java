@@ -257,9 +257,9 @@ public class MarketServlet {
 		List<List<String>> result = null;
 		String type = request.getParameter("type");
 		if ("contract_industry".equals(type)){
-			result = marketService.getIndustryBidData(companyName, date);
+			result = marketService.getIndustrySignData(companyName, date);
 		} else if ("contract_company".equals(type)){
-			result = marketService.getCompanyBidData(companyName, date);
+			result = marketService.getCompanySignData(companyName, date);
 		}
 		
 		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");
