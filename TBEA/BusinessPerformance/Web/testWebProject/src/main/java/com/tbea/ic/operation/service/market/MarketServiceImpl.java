@@ -609,11 +609,11 @@ public class MarketServiceImpl implements MarketService {
 	
 	@Override
 	public List<List<String>> getIndustrySignData(String companyName, Date date) {
-		MarketUnit muSb = new MarketUnit(companyName, Type.COMPANY);
+		MarketUnit muSb = new MarketUnit(companyName, Type.INDUSTRY);
 		IPipeConfigurator options = configFactory.getIndustrySignAnalysisConfigurator(muSb);
 		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
-		List<MarketUnit> companies = signContractDao.getCompanies(muSb);
-		MarketUnit muTotal = new MarketUnit("合计", Type.COMPANY);
+		List<MarketUnit> companies = signContractDao.getIndustries(muSb);
+		MarketUnit muTotal = new MarketUnit("合计", Type.INDUSTRY);
 		totalMap.put(muTotal, (List)companies);
 		CompositePipe pipe = new CompositePipe(
 				signIndicators, date,

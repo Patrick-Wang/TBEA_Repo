@@ -2,10 +2,10 @@
 /// <reference path="jqgrid/jqassist.ts" />
 declare var echarts;
 module mkt_contract_analysis {
-    
-    enum ContractZb{
-        hy, htsl, htje, dyzydbl, ndsl, ndhtje, 
-        ndzbl, qnhtsl, qnhtje, qnzndbl, htzz    
+
+    enum ContractZb {
+        hy, htsl, htje, dyzydbl, ndsl, ndhtje,
+        ndzbl, qnhtsl, qnhtje, qnzndbl, htzz
     }
 
     class JQGridAssistantFactory {
@@ -21,16 +21,16 @@ module mkt_contract_analysis {
                     .append(new JQTable.Node("合同数量", "t21"))
                     .append(new JQTable.Node("合同金额(万元)", "t22"))
                     .append(new JQTable.Node("占年度签约总额比例", "t23")),
-                 new JQTable.Node("去年同期累计", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node("去年同期累计", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
                     .append(new JQTable.Node("合同数量", "t31"))
                     .append(new JQTable.Node("合同金额(万元)", "t32"))
                     .append(new JQTable.Node("占年度签约总额比例", "t33")),
-                 new JQTable.Node("同比", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node("同比", "t4", false, JQTable.TextAlign.Right, 0, undefined, undefined, false)
             ], gridName);
         }
-        
-        
-         public static createContractTable4Companys(gridName: string): JQTable.JQGridAssistant {
+
+
+        public static createContractTable4Companys(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("项目公司", "t0", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
                 new JQTable.Node("当月情况", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
@@ -41,7 +41,11 @@ module mkt_contract_analysis {
                     .append(new JQTable.Node("合同数量", "t21"))
                     .append(new JQTable.Node("合同金额(万元)", "t22"))
                     .append(new JQTable.Node("占年度签约总额比例", "t23")),
-                 new JQTable.Node("同比", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node("去年同期累计", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("合同数量", "t31"))
+                    .append(new JQTable.Node("合同金额(万元)", "t32"))
+                    .append(new JQTable.Node("占年度签约总额比例", "t33")),
+                new JQTable.Node("同比", "t4", false, JQTable.TextAlign.Right, 0, undefined, undefined, false)
             ], gridName);
         }
     }
@@ -54,12 +58,12 @@ module mkt_contract_analysis {
         //private mExportDataSet: Util.Ajax;
         private mCompanyName;
         private mDs: Util.DateSelector;
-        private mAnalysisType:string;
+        private mAnalysisType: string;
 
         TableId: string;
         childTableId: string;
 
-        public init(TableId: string, dateId: string, year:number, month:number, companyName: string): void {
+        public init(TableId: string, dateId: string, year: number, month: number, companyName: string): void {
             this.mCompanyName = companyName;
 
             this.TableId = TableId;
@@ -71,7 +75,7 @@ module mkt_contract_analysis {
             //请求数据
             this.mDataSet = new Util.Ajax("mkt_contract_analysis_update.do", false);
             this.onType_TypeSelected();
-            if (this.mCompanyName == "股份公司"){
+            if (this.mCompanyName == "股份公司") {
                 this.onCompanySelected();
             }
             //this.updateUI();
@@ -88,7 +92,7 @@ module mkt_contract_analysis {
         public exportExcel() {
 
         }
-        
+
         private formatData(rowData: string[][], integerList: std.vector<number>, percentList: std.vector<number>) {
             var outputData: string[][] = [];
 
@@ -105,31 +109,31 @@ module mkt_contract_analysis {
             }
             return outputData;
         }
-       
+
 
         public updateUI() {
             var parent = $("#" + this.TableId);
             parent.empty();
             parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
             var dt: Util.Date = this.mDs.getDate();
-            this.mDataSet.get({ companyName: this.mCompanyName, year: dt.year, month: dt.month,type: this.mAnalysisType  })
+            this.mDataSet.get({ companyName: this.mCompanyName, year: dt.year, month: dt.month, type: this.mAnalysisType })
                 .then((data: any) => {
-                var rowBidData = data;
-                if (this.mAnalysisType == "contract_industry") {
-                    this.updateTable(
-                        this.TableId,
-                        this.childTableId,
-                        JQGridAssistantFactory.createContractTable4Industry(this.childTableId),
-                        rowBidData);
-                } else if (this.mAnalysisType == "contract_company") {
-                    this.updateTable(
-                        this.TableId,
-                        this.childTableId,
-                        JQGridAssistantFactory.createContractTable4Companys(this.childTableId),
-                        rowBidData);
-                }
+                    var rowBidData = data;
+                    if (this.mAnalysisType == "contract_industry") {
+                        this.updateTable(
+                            this.TableId,
+                            this.childTableId,
+                            JQGridAssistantFactory.createContractTable4Industry(this.childTableId),
+                            rowBidData);
+                    } else if (this.mAnalysisType == "contract_company") {
+                        this.updateTable(
+                            this.TableId,
+                            this.childTableId,
+                            JQGridAssistantFactory.createContractTable4Companys(this.childTableId),
+                            rowBidData);
+                    }
 
-            });
+                });
         }
 
         private updateTable(
@@ -145,10 +149,9 @@ module mkt_contract_analysis {
             integerList.push(ContractZb.htsl);
             integerList.push(ContractZb.ndsl);
             integerList.push(ContractZb.qnhtsl);
+
             percentList.push(ContractZb.dyzydbl);
-            percentList.push(ContractZb.ndhtje);
             percentList.push(ContractZb.ndzbl);
-            percentList.push(ContractZb.qnhtje);
             percentList.push(ContractZb.qnzndbl);
             percentList.push(ContractZb.htzz);
             data = this.formatData(rawData, integerList, percentList);
@@ -157,7 +160,7 @@ module mkt_contract_analysis {
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
-                    data: tableAssist.getData(rawData),
+                    data: tableAssist.getData(data),
                     datatype: "local",
                     multiselect: false,
                     drag: false,
@@ -175,9 +178,9 @@ module mkt_contract_analysis {
                     viewrecords: true//是否显示行数 
                 })
                 );
-//            if (rawData.length != 0) {
-//                $("#assist").css("display", "block");
-//            }  
+            //            if (rawData.length != 0) {
+            //                $("#assist").css("display", "block");
+            //            }  
         }
     }
 }

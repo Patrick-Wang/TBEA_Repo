@@ -17,6 +17,7 @@ import com.tbea.ic.operation.service.market.pipe.configurator.bid.CompanyBidAnal
 import com.tbea.ic.operation.service.market.pipe.configurator.bid.IndustryBidAnalysisCompositeConfigurator;
 import com.tbea.ic.operation.service.market.pipe.configurator.bid.IndustryBidAnalysisConfigurator;
 import com.tbea.ic.operation.service.market.pipe.configurator.sign.IndustrySignAnalysisCompositeConfigurator;
+import com.tbea.ic.operation.service.market.pipe.configurator.sign.IndustrySignAnalysisConfigurator;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 
 public class ConfiguratorFactory {
@@ -35,7 +36,7 @@ public class ConfiguratorFactory {
 	
 	
 	public IPipeConfigurator getIndustrySignAnalysisConfigurator(MarketUnit mu) {
-		return new IndustryBidAnalysisConfigurator(new SignAccumulator(new SignAccumulator.DataPicker() {
+		return new IndustrySignAnalysisConfigurator(new SignAccumulator(new SignAccumulator.DataPicker() {
 			
 			@Override
 			public List<MktSignContract> getData(Date start, Date end, List<MarketUnit> mus) {
@@ -49,7 +50,7 @@ public class ConfiguratorFactory {
 	}
 	
 	public IPipeConfigurator getCompanySignAnalysisConfigurator(MarketUnit mu) {
-		return new IndustryBidAnalysisConfigurator(new SignAccumulator(new SignAccumulator.DataPicker() {
+		return new IndustrySignAnalysisConfigurator(new SignAccumulator(new SignAccumulator.DataPicker() {
 			
 			@Override
 			public List<MktSignContract> getData(Date start, Date end, List<MarketUnit> mus) {
