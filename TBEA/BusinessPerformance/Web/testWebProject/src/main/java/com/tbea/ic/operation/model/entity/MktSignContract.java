@@ -56,7 +56,7 @@ public class MktSignContract implements Serializable {
 	String productVolume;
 
 	@Column(name = "product_price")
-	Double productPrice;
+	String productPrice;
 
 	@Column(name = "payment_method")
 	String paymentMethod;
@@ -170,7 +170,7 @@ public class MktSignContract implements Serializable {
 	/**
 	 * @return the productPrice
 	 */
-	public Double getProductPrice() {
+	public String getProductPrice() {
 		return productPrice;
 	}
 
@@ -313,7 +313,7 @@ public class MktSignContract implements Serializable {
 	 * @param productPrice
 	 *            the productPrice to set
 	 */
-	public void setProductPrice(Double productPrice) {
+	public void setProductPrice(String productPrice) {
 		this.productPrice = productPrice;
 	}
 
