@@ -47,4 +47,10 @@ public interface MarketService {
 
 	List<List<String>> getIndustrySignData(String companyName, Date date);
 
+	List<List<String>> getAreaMixedAnalysisData(String companyName, Date dateStart,
+			Date dateEnd);
+
+	List<List<String>> getIndustryMixedAnalysisData(String companyName, Date startDate,
+			Date endDate);
+
 }

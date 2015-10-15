@@ -94,6 +94,14 @@ public class MarketServiceImpl implements MarketService {
 		signIndicators.add(Indicator.QYJE.ordinal());
 		signIndicators.add(Indicator.QYZB.ordinal());
 	}
+	
+	private final static List<Integer> mixedIndicators = new ArrayList<Integer>();
+	static{
+		mixedIndicators.add(Indicator.TBJE.ordinal());
+		mixedIndicators.add(Indicator.ZBJE.ordinal());
+		mixedIndicators.add(Indicator.ZBL.ordinal());
+		mixedIndicators.add(Indicator.QYJE.ordinal());
+	}
 		 
 	private String validate(XSSFWorkbook workbook, Class<?> cls) {
 		XSSFSheet sheet = workbook.getSheetAt(0);
@@ -237,8 +245,10 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public String[][] getBidData(String companyName, Integer year) {
 		List<MktBidInfo> Bids = bidInfoDao.getData(companyName, year);
+		
 		String[][] result = new String[Bids.size()][24];
 		Integer col = 0;
+		
 		for (MktBidInfo bid : Bids) {
 			if (null != bid) {
 				result[col][0] = bid.getCompanyName() + "";
@@ -272,14 +282,19 @@ public class MarketServiceImpl implements MarketService {
 				col++;
 			}
 		}
+		
 		return result;
 	}
 
 	@Override
 	public String[][] getPrjData(String companyName, Integer year) {
+		Util.Elapse escape = new Util.Elapse();
+		escape.start();
 		List<MktProjectInfo> list = projectInfoDao.getData(companyName, year);
+		escape.end("bidInfoDao.getData");
 		String[][] result = new String[list.size()][20];
 		Integer col = 0;
+		escape.start();
 		for (MktProjectInfo obj : list) {
 			if (null != obj) {
 				result[col][0] = obj.getCompanyName() + "";
@@ -307,6 +322,7 @@ public class MarketServiceImpl implements MarketService {
 				col++;
 			}
 		}
+		escape.end("mapList");
 		return result;
 	}
 
@@ -651,5 +667,113 @@ public class MarketServiceImpl implements MarketService {
 		return row;
 	}
 
+	
+	private List<MarketUnit> merge(List<MarketUnit> companiesBid, List<MarketUnit> companiesSign){
+		List<MarketUnit> result = new ArrayList<MarketUnit>();
+		result.addAll(companiesBid);
+		for (MarketUnit  mubs: companiesSign){
+			boolean contains = false;
+			for (MarketUnit mub : companiesBid){
+				if (mubs.getUniqueId().equals(mub.getUniqueId())){
+					contains = true;
+					break;
+				}
+			}
+			if (!contains){
+				result.add(mubs);
+			}
+		}
+		return result;
+	}
+	
+	@Override
+	public List<List<String>> getAreaMixedAnalysisData(String companyName, Date dateStart, Date dateEnd) {
+		MarketUnit muSb = new MarketUnit(companyName, Type.AREA);
+		IPipeConfigurator options = configFactory.getAreaAnalysisConfigurator(muSb, dateStart);
+		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
+		List<MarketUnit> companiesSign = signContractDao.getAreas(muSb);
+		List<MarketUnit> companiesBid = bidInfoDao.getAreas(muSb);
+		List<MarketUnit> companies = merge(companiesBid, companiesSign);
+		MarketUnit muTotal = new MarketUnit("合计", Type.AREA);
+		totalMap.put(muTotal, (List)companies);
+		CompositePipe pipe = new CompositePipe(
+				mixedIndicators, dateEnd,
+				this.configFactory.getAreaAnalysisCompositeConfigurator(totalMap));
+		for(MarketUnit mu : companies){
+			pipe.addCompany(mu, options);
+		}
+		pipe.addCompany(muTotal, null);
+		List<Double[]> ret = pipe.getData();
+		List<List<String>> result = new ArrayList<List<String>>();
+		int len = companies.size() + 1;
+		for (int i = 0; i < len - 1; ++i){
+			result.add(transform2Area(ret, i, len, companies.get(i)));
+		}
+		result.add(transform2Area(ret, len - 1, len, muTotal));
+		return result;
+	}
+
+
+	private List<String> transform2Area(List<Double[]> data, int i, int step,
+			MarketUnit mu) {
+		List<String> row = new ArrayList<String>();
+		row.add(mu.getName());
+		row.add(Util.toString(data.get(i)[0]));
+		row.add(Util.toString(data.get(i + step * 1)[0]));
+		row.add(Util.toString(data.get(i + step * 2)[0]));
+		row.add(Util.toString(data.get(i + step * 3)[0]));
+		return row;
+	}
+
+
+	@Override
+	public List<List<String>> getIndustryMixedAnalysisData(String companyName,
+			Date startDate, Date endDate) {
+		MarketUnit muSb = new MarketUnit(companyName, Type.INDUSTRY);
+		IPipeConfigurator options = configFactory.getIndustryMixedAnalysisConfigurator(muSb, startDate);
+		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
+		List<MarketUnit> companiesSign = signContractDao.getIndustries(muSb);
+		List<MarketUnit> companiesBid = bidInfoDao.getIndustries(muSb);
+		List<MarketUnit> companies = merge(companiesBid, companiesSign);
+		MarketUnit muTotal = new MarketUnit("合计", Type.INDUSTRY);
+		totalMap.put(muTotal, (List)companies);
+		CompositePipe pipe = new CompositePipe(
+				mixedIndicators, endDate,
+				this.configFactory.getIndustryMixedAnalysisCompositeConfigurator(totalMap));
+		for(MarketUnit mu : companies){
+			pipe.addCompany(mu, options);
+		}
+		pipe.addCompany(muTotal, null);
+		List<Double[]> ret = pipe.getData();
+		List<List<String>> result = new ArrayList<List<String>>();
+		int len = companies.size() + 1;
+		for (int i = 0; i < len - 1; ++i){
+			result.add(transform2MixedIndustry(ret, i, len, companies.get(i)));
+		}
+		result.add(transform2MixedIndustry(ret, len - 1, len, muTotal));
+		return result;
+	}
+
+
+	private List<String> transform2MixedIndustry(List<Double[]> data, int i,
+			int step, MarketUnit mu) {
+		List<String> row = new ArrayList<String>();
+		row.add(mu.getName());
+		row.add(Util.toString(data.get(i)[0]));
+		row.add(Util.toString(data.get(i + step * 1)[0]));
+		row.add(Util.toString(data.get(i + step * 2)[0]));
+		row.add(Util.toString(data.get(i + step * 3)[0]));
+		
+		row.add(Util.toString(data.get(i)[1]));
+		row.add(Util.toString(data.get(i + step * 1)[1]));
+		row.add(Util.toString(data.get(i + step * 2)[1]));
+		row.add(Util.toString(data.get(i + step * 3)[1]));
+		
+		row.add(Util.toString(data.get(i)[2]));
+		row.add(Util.toString(data.get(i + step * 1)[2]));
+		row.add(Util.toString(data.get(i + step * 2)[2]));
+		row.add(Util.toString(data.get(i + step * 3)[2]));
+		return row;
+	}
 
 }

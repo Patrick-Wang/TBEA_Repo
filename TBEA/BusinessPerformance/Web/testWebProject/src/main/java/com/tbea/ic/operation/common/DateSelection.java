@@ -20,6 +20,24 @@ public class DateSelection {
 		}
 	}
 	
+	
+	public static Date getStartDate(HttpServletRequest request){
+		String year = request.getParameter("startUear");
+		String month = request.getParameter("startMonth");
+		String day = request.getParameter("startDay");
+		StringBuilder date = new StringBuilder();
+		if (year != null){
+			date.append(year);
+			date.append("-");
+			date.append(month != null ? month : "1");
+			date.append("-");
+			date.append(day != null ? day : "1");
+			return Date.valueOf(date.toString());
+		}
+		
+		return null;
+	}
+	
 	public static Date getDate(HttpServletRequest request){
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");

@@ -5,32 +5,32 @@ module mkt_region_analysis {
 
     class JQGridAssistantFactory {
 
-        public static createRegionIndexTable(gridName: string, year:number,startMonth:number, endMonth:number): JQTable.JQGridAssistant {
+        public static createRegionIndexTable(gridName: string, year: number, startMonth: number, endMonth: number): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("区域", "t0", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node(year +"年" + startMonth + "-" + endMonth +　"月市场关键累计指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node(year + "年" + startMonth + "-" + endMonth + 　"月市场关键累计指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
                     .append(new JQTable.Node("投标金额(万元)", "t11"))
                     .append(new JQTable.Node("中标金额(万元)", "t12"))
                     .append(new JQTable.Node("中标率", "t13"))
                     .append(new JQTable.Node("签约金额", "t14"))
             ], gridName);
         }
-        
-        
-         public static createIndustryIndexTable(gridName: string, year:number,startMonth:number, endMonth:number): JQTable.JQGridAssistant {
+
+
+        public static createIndustryIndexTable(gridName: string, year: number, startMonth: number, endMonth: number): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("行业", "t0", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node(year +"年" + startMonth + "-" + endMonth +　"月市场关键累计指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node(year + "年" + startMonth + "-" + endMonth + 　"月市场关键累计指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
                     .append(new JQTable.Node("投标金额(万元)", "t11"))
                     .append(new JQTable.Node("中标金额(万元)", "t12"))
                     .append(new JQTable.Node("中标率", "t13"))
                     .append(new JQTable.Node("签约金额", "t14")),
-                new JQTable.Node((year-1) +"年" + startMonth + "-" + endMonth +　"月市场关键累计指标", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node((year - 1) + "年" + startMonth + "-" + endMonth + 　"月市场关键累计指标", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
                     .append(new JQTable.Node("投标金额(万元)", "t21"))
                     .append(new JQTable.Node("中标金额(万元)", "t22"))
                     .append(new JQTable.Node("中标率", "t23"))
                     .append(new JQTable.Node("签约金额", "t24")),
-                 new JQTable.Node("累计同期对比情况", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node("累计同期对比情况", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
                     .append(new JQTable.Node("投标金额同比增长", "t31"))
                     .append(new JQTable.Node("中标金额同比增长", "t32"))
                     .append(new JQTable.Node("中标率同比提高", "t33"))
@@ -47,15 +47,15 @@ module mkt_region_analysis {
         //private mExportDataSet: Util.Ajax;
         private mCompanyName;
         private mDs: Util.DateSelector;
-        private mAnalysisType:string;
-        private mYear:number;
-        private mStartMonth:number;
-        private mEndMonth:number;
+        private mAnalysisType: string;
+        private mYear: number;
+        private mStartMonth: number;
+        private mEndMonth: number;
 
         TableId: string;
         childTableId: string;
 
-        public init(TableId: string, dateId: string, year:number, month:number, companyName: string): void {
+        public init(TableId: string, dateId: string, year: number, month: number, companyName: string): void {
             this.mCompanyName = companyName;
 
             this.TableId = TableId;
@@ -65,7 +65,7 @@ module mkt_region_analysis {
                 { year: year, month: month },
                 dateId);
             //请求数据
-            this.mDataSet = new Util.Ajax("mkt_contract_analysis_update.do", false);
+            this.mDataSet = new Util.Ajax("mkt_region_analysis_update.do", false);
             this.onType_TypeSelected();
             this.onCompanySelected();
             this.onYearSelected();
@@ -86,26 +86,29 @@ module mkt_region_analysis {
 
         }
 
-       public onYearSelected(){
-           this.mYear = parseInt($("#year").val());
-       }
-        
-       public onStartMonthSelected(){
-           this.mStartMonth = parseInt($("#start_month").val());
-       }
-        
-       public onEndMonthSelected(){
-           this.mEndMonth = parseInt($("#end_month").val());
-       }
+        public onYearSelected() {
+            this.mYear = parseInt($("#year").val());
+        }
+
+        public onStartMonthSelected() {
+            this.mStartMonth = parseInt($("#start_month").val());
+        }
+
+        public onEndMonthSelected() {
+            this.mEndMonth = parseInt($("#end_month").val());
+        }
 
         public updateUI() {
-            
+
             if (this.mStartMonth > this.mEndMonth) {
                 Util.MessageBox.tip("起始月份大于终止月份，请重新选择月份！");
-            }else if(this.mStartMonth == 0 || this.mEndMonth == 0){
-                 Util.MessageBox.tip("请选择起始月份和终止月份！");
-            } 
+            } else if (this.mStartMonth == 0 || this.mEndMonth == 0) {
+                Util.MessageBox.tip("请选择起始月份和终止月份！");
+            }
             else {
+
+                this.mDataSet.get({}).then()
+
                 var parent = $("#" + this.TableId);
                 parent.empty();
                 parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
@@ -128,22 +131,22 @@ module mkt_region_analysis {
             }
                 
           
-//            this.mDataSet.get({ AnalysisType: this.mAnalysisType })
-//                .then((data: any) => {
-//                    var fktjData = data;
-//
-//                    $('#dataStatus').css("display", "none");
-//                    if (this.mAnalysisType == "bid_industry") {
-//                        this.updateTable(
-//                            this.TableId,
-//                            this.childTableId,
-//                            JQGridAssistantFactory.createBidTable4Industry(this.childTableId),
-//                            fktjData[0]);
-//                    }else if (this.mAnalysisType == "bid_company"){
-//                        
-//                    } 
-//
-//                });
+            //            this.mDataSet.get({ AnalysisType: this.mAnalysisType })
+            //                .then((data: any) => {
+            //                    var fktjData = data;
+            //
+            //                    $('#dataStatus').css("display", "none");
+            //                    if (this.mAnalysisType == "bid_industry") {
+            //                        this.updateTable(
+            //                            this.TableId,
+            //                            this.childTableId,
+            //                            JQGridAssistantFactory.createBidTable4Industry(this.childTableId),
+            //                            fktjData[0]);
+            //                    }else if (this.mAnalysisType == "bid_company"){
+            //                        
+            //                    } 
+            //
+            //                });
         }
 
         private updateTable(
@@ -176,7 +179,7 @@ module mkt_region_analysis {
                 );
             if (rawData.length != 0) {
                 $("#assist").css("display", "block");
-            }  
+            }
         }
     }
 }

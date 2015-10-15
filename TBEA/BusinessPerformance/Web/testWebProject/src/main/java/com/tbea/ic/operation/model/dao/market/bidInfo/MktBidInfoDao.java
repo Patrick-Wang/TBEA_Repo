@@ -30,4 +30,6 @@ public interface MktBidInfoDao{
 			List companies);
 
 	List<MarketUnit> getCompanies(MarketUnit muSb);
+
+	List<MarketUnit> getAreas(MarketUnit muSb);
 }

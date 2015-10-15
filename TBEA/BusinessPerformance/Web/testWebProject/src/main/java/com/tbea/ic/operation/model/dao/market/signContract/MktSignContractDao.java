@@ -28,4 +28,6 @@ public interface MktSignContractDao {
 	List<MarketUnit> getIndustries(MarketUnit mu);
 
 	List<MarketUnit> getCompanies(MarketUnit mu);
+
+	List<MarketUnit> getAreas(MarketUnit muSb);
 }

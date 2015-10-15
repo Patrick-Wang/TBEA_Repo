@@ -18,7 +18,7 @@ import com.tbea.ic.operation.service.util.pipe.filter.composite.ZzlPipeFilter;
 
 
 //配置表结构, 横线部分为不需要计算值
-//当月情况		当月	年度累计		去年同期累计		同比增幅
+//			当月情况	年度累计		去年同期累计		同比增幅
 //投标数量	cp1											--
 //投标数量	cp2											--
 //投标数量	cp3											--

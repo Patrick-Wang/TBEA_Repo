@@ -142,4 +142,17 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 		return mus;
 	}
 
+	@Override
+	public List<MarketUnit> getAreas(MarketUnit mu) {
+		Query q = manager.createQuery(
+				"select m.projectArea from MktBidInfo m where m.companyName = :compName group by m.projectArea");
+		q.setParameter("compName", mu.getName());
+		List<String> industries = q.getResultList();
+		List<MarketUnit> mus = new ArrayList<MarketUnit>();
+		for (String industry : industries){
+			mus.add(new MarketUnit(industry, Type.AREA));
+		}
+		return mus;
+	}
+
 }

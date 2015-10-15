@@ -92,18 +92,17 @@ public class XLFKFSTJController {
 					
 					@Override
 					public boolean keep(Company comp) {
-						if (null != companyManager.getVirtualYSZKOrganization().getCompany(comp.getType())){
+						if (contains(comp)){
+							return true;
+						}else if (null != companyManager.getVirtualYSZKOrganization().getCompany(comp.getType())){
 							List<Company> subComps = comp.getSubCompanies();
 							for (Company com : subComps){
 								if (contains(com)){
 									return true;
 								}
 							}
-							return false;
 						}
-						else{
-							return contains(comp);
-						}
+						return false;
 					}
 					
 					@Override

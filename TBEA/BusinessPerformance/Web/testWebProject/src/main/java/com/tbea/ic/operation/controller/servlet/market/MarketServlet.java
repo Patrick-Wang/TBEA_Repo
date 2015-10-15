@@ -196,7 +196,8 @@ public class MarketServlet {
 		if (null != request.getParameter("year")) {
 			year = Integer.valueOf(request.getParameter("year"));
 		}
-
+		Util.Elapse escape = new Util.Elapse();
+		escape.start();
 		if (rpttype.equals(TYPE_BID)) {
 			list.add(marketService.getBidData(companyName, year));
 		} else if (rpttype.equals(TYPE_PROJECT)) {
@@ -204,8 +205,12 @@ public class MarketServlet {
 		} else if (rpttype.equals(TYPE_SIGN)) {
 			list.add(marketService.getContData(companyName));
 		}
+		escape.end("getPrjData");
+		
+		escape.start();
 		String listJson = JSONArray.fromObject(list).toString()
 				.replace("null", "\"\"");
+		escape.end("toJson");
 		// System.out.println(listJson);
 		return listJson.getBytes("utf-8");
 	}
@@ -277,7 +282,22 @@ public class MarketServlet {
 		return new ModelAndView("mkt_region_analysis", map);
 	}
 	
-	
+	@RequestMapping(value = "mkt_region_analysis_update.do")
+	public @ResponseBody byte[] getMktRegionAnalysisUpdate(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Date endDate = DateSelection.getDate(request);
+		Date startDate = DateSelection.getStartDate(request);
+		String companyName = request.getParameter("companyName");
+		List<List<String>> result = null;
+		String type = request.getParameter("type");
+		if ("region_index".equals(type)){
+			result = marketService.getAreaMixedAnalysisData(companyName, startDate, endDate);
+		} else if ("industry_index".equals(type)){
+			result = marketService.getIndustryMixedAnalysisData(companyName, startDate, endDate);
+		}
+		
+		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");
+	}
 	
 	@RequestMapping(value = "mkt_view_export.do")
 	public @ResponseBody byte[] mktViewExport(HttpServletRequest request,
