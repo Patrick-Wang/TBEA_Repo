@@ -12,12 +12,12 @@ import cn.com.tbea.template.model.dao.AbstractReadOnlyDaoImpl;
 
 import com.tbea.datatransfer.model.entity.zjxl.ZTYSZKFXBXL;
 
-@Transactional("transactionManagerll")
+@Transactional("transactionManagerxl")
 public class ZTYSZKFXBXLDaoImpl extends AbstractReadOnlyDaoImpl<ZTYSZKFXBXL> implements
 		ZTYSZKFXBXLDao {
 
 	@Override
-	@PersistenceContext(unitName = "llDB")
+	@PersistenceContext(unitName = "xlDB")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
 	}
