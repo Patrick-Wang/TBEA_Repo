@@ -5,7 +5,7 @@ module mkt_bid_analysis {
 
     enum Bid4IndustryZb {
         hy, dytbsl, dytbje, dyzbje, dyzydbl, ndsl, ndtbje, ndzbje,
-        ndzbl, ndtbbl, qntbsl, qntbje, qnzbl, qnzndbl,
+        ndzbl, ndtbbl, qntbsl, qntbje, qnzbje, qnzbl, qnzndbl,
         tbzz
     }
 
@@ -31,7 +31,7 @@ module mkt_bid_analysis {
                     .append(new JQTable.Node("中标金额(万元)", "t33"))
                     .append(new JQTable.Node("中标率", "t34"))
                     .append(new JQTable.Node("占年度投标总额比例", "t35")),
-                new JQTable.Node("投标额同比增长幅度", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node("投标额同比增长幅度", "t4", false, JQTable.TextAlign.Right, 0, undefined, undefined, false)
             ], gridName);
         }
 

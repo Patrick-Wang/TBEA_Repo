@@ -3,6 +3,7 @@ package com.tbea.ic.operation.service.market;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,25 +55,30 @@ public class MarketServiceImpl implements MarketService {
 
 	private ConfiguratorFactory configFactory;
 	
-	@Autowired
-	public void init() {
-		configFactory = new ConfiguratorFactory(bidInfoDao, signContractDao);
-	}
-
-	
 	private final String ERROR_OK = "OK";
 	private final String ERROR_COUNT_NOT_MATCH = "文档不匹配(列数不匹配)";
 	private final String ERROR_UNKNOWN = "未知错误";
 
-	private final OnUpdateMktObjectListener bidUpdateListener = ObjectUpdateListenerFactory
-			.createBidUpdateListener(bidInfoDao);
+	private OnUpdateMktObjectListener bidUpdateListener;
 
-	private final OnUpdateMktObjectListener signUpdateListener = ObjectUpdateListenerFactory
-			.createSignUpdateListener(signContractDao);
+	private OnUpdateMktObjectListener signUpdateListener;
 
-	private final OnUpdateMktObjectListener projectUpdateListener = ObjectUpdateListenerFactory
-			.createProjectUpdateListener(projectInfoDao);
+	private OnUpdateMktObjectListener projectUpdateListener;
 
+	
+	@Autowired
+	public void init() {
+		configFactory = new ConfiguratorFactory(bidInfoDao, signContractDao);
+		bidUpdateListener = ObjectUpdateListenerFactory
+				.createBidUpdateListener(bidInfoDao);
+
+		signUpdateListener = ObjectUpdateListenerFactory
+				.createSignUpdateListener(signContractDao);
+
+		projectUpdateListener = ObjectUpdateListenerFactory
+				.createProjectUpdateListener(projectInfoDao);
+	}
+	
 	private final static List<Integer> bidIndicators = new ArrayList<Integer>();
 	static{
 		bidIndicators.add(Indicator.TBSL.ordinal());
@@ -88,39 +94,7 @@ public class MarketServiceImpl implements MarketService {
 		signIndicators.add(Indicator.QYJE.ordinal());
 		signIndicators.add(Indicator.QYZB.ordinal());
 	}
-	
-	
-//	private final static List<MarketUnit> projectCompanies = new ArrayList<MarketUnit>();
-//	static{
-//		projectCompanies.add(new MarketUnit("电源国电、大唐办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("电源华能、华电、京能办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("电源中电投、神华、国投办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("电源粤电、华润办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("电源水电办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("辽宁办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("吉林办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("黑龙江办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("北京办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("山东办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("内蒙办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("蒙东办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("山西办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("西北办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("江苏安徽办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("河南办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("浙江上海办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("川渝藏办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("湖北办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("福建江西办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("重大项目处",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("核电项目处",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("南网广州办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("南网云贵办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("轨道交通办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("军工办",Type.COMPANY));
-//		projectCompanies.add(new MarketUnit("新疆办",Type.COMPANY));
-//	}
-	 
+		 
 	private String validate(XSSFWorkbook workbook, Class<?> cls) {
 		XSSFSheet sheet = workbook.getSheetAt(0);
 		XSSFRow row = sheet.getRow(0);
@@ -153,19 +127,15 @@ public class MarketServiceImpl implements MarketService {
 			XSSFCell cell = row.getCell(i);
 			String val = "";
 			if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
-				// short df = cell.getCellStyle().getDataFormat();
-				// if (176 == df){
-				// SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月");
-				// java.util.Date date = cell.getDateCellValue();
-				// val = sdf.format(date);
-				// } else if (58 == df){
-				// SimpleDateFormat sdf = new SimpleDateFormat("M月d日");
-				// java.util.Date date = cell.getDateCellValue();
-				// val = sdf.format(date);
-				// } else{
-				// val = subZeroAndDot(cell.getNumericCellValue() + "");
-				// }
-				val = subZeroAndDot(cell.getNumericCellValue() + "");
+				short df = cell.getCellStyle().getDataFormat();
+				if (14 == df) {
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
+					java.util.Date date = cell.getDateCellValue();
+					val = sdf.format(date);
+				} else {
+					val = subZeroAndDot(cell.getNumericCellValue() + "");
+				}
+
 			} else if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
 				val = cell.getStringCellValue() + "";
 			}
@@ -185,11 +155,11 @@ public class MarketServiceImpl implements MarketService {
 					} else if (field.getType().getName()
 							.equals(String.class.getName())) {
 						method.invoke(obj, val);
-					}/*
-					 * else if (field.getType().getName()
-					 * .equals(Date.class.getName())) { method.invoke(obj, val);
-					 * }
-					 */
+					} else if (field.getType().getName()
+							.equals(Date.class.getName())) {
+						method.invoke(obj, Util.toDate(val));
+					}
+
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
