@@ -3,6 +3,13 @@
 declare var echarts;
 module mkt_region_analysis {
 
+    enum RegionZb {
+        hy, tbje, zbje, zbl, qyje,
+        qntbje, qnzbje, qnzbl, qnqyje,
+        tbjetbzf, zbjetbzf, zbltbzf, qyjetbzf
+    }
+
+
     class JQGridAssistantFactory {
 
         public static createRegionIndexTable(gridName: string, year: number, startMonth: number, endMonth: number): JQTable.JQGridAssistant {
@@ -98,6 +105,23 @@ module mkt_region_analysis {
             this.mEndMonth = parseInt($("#end_month").val());
         }
 
+        private formatData(rowData: string[][], integerList: std.vector<number>, percentList: std.vector<number>) {
+            var outputData: string[][] = [];
+
+            var formaterChain: Util.FormatHandler = new Util.FormatPercentHandler([], percentList.toArray());
+            formaterChain.next(new Util.FormatIntHandler([], integerList.toArray()))
+                .next(new Util.FormatCurrencyHandler());
+            var row = [];
+            for (var j = 0; j < rowData.length; ++j) {
+                row = [].concat(rowData[j]);
+                for (var i = 1; i < row.length; ++i) {
+                    row[i] = formaterChain.handle(row[0], i, row[i]);
+                }
+                outputData.push(row);
+            }
+            return outputData;
+        }
+
         public updateUI() {
 
             if (this.mStartMonth > this.mEndMonth) {
@@ -114,6 +138,10 @@ module mkt_region_analysis {
                         parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
 
                         if (this.mAnalysisType == "region_index") {
+                            var integerList: std.vector<number> = new std.vector<number>();
+                            var percentList: std.vector<number> = new std.vector<number>();
+                            percentList.push(RegionZb.zbl);
+                            data = this.formatData(data, integerList, percentList);
                             this.updateTable(
                                 this.TableId,
                                 this.childTableId,
@@ -121,6 +149,17 @@ module mkt_region_analysis {
                                 data);
 
                         } else if (this.mAnalysisType == "industry_index") {
+
+                            var integerList: std.vector<number> = new std.vector<number>();
+                            var percentList: std.vector<number> = new std.vector<number>();
+
+                            percentList.push(RegionZb.zbl);
+                            percentList.push(RegionZb.qnzbl);
+                            percentList.push(RegionZb.tbjetbzf);
+                            percentList.push(RegionZb.zbjetbzf);
+                            percentList.push(RegionZb.zbltbzf);
+                            percentList.push(RegionZb.qyjetbzf);
+                            data = this.formatData(data, integerList, percentList);
                             this.updateTable(
                                 this.TableId,
                                 this.childTableId,

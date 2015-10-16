@@ -6,6 +6,7 @@ import java.util.List;
 import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.market.Indicator;
+import com.tbea.ic.operation.service.market.pipe.filter.RatioPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
@@ -50,6 +51,7 @@ public class IndustryMixedAnalysisConfigurator implements IPipeConfigurator{
 				.include(Indicator.ZBL.ordinal())
 				.include(Indicator.QYJE.ordinal())
 				.includeCompanies(comps))
+			.addFilter(new RatioPipeFilter())
 			.addFilter(new ZzlPipeFilter()
 				.add(2, 0, 1));
 	}

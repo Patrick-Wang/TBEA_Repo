@@ -43,7 +43,8 @@ public class AreaAnalysisConfigurator implements IPipeConfigurator{
 			.include(Indicator.ZBJE.ordinal())
 			.include(Indicator.ZBL.ordinal())
 			.include(Indicator.QYJE.ordinal())
-			.includeCompanies(comps));
+			.includeCompanies(comps))
+		.addFilter(new RatioPipeFilter());
 	}
 
 	@Override
