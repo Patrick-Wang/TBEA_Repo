@@ -124,81 +124,82 @@ module mkt_bid_analysis {
 
                 });
         }
-    }
 
-        private formatData(rowData: string[][], integerList: std.vector < number >, percentList: std.vector<number>) {
-        var outputData: string[][] = [];
 
-        var formaterChain: Util.FormatHandler = new Util.FormatPercentHandler([], percentList.toArray());
-        formaterChain.next(new Util.FormatIntHandler([], integerList.toArray()))
-            .next(new Util.FormatCurrencyHandler());
-        var row = [];
-        for(var j = 0; j<rowData.length; ++j) {
-        row = [].concat(rowData[j]);
-        for (var i = 1; i < row.length; ++i) {
-            row[i] = formaterChain.handle(row[0], i, row[i]);
+        private formatData(rowData: string[][], integerList: std.vector<number>, percentList: std.vector<number>) {
+            var outputData: string[][] = [];
+
+            var formaterChain: Util.FormatHandler = new Util.FormatPercentHandler([], percentList.toArray());
+            formaterChain.next(new Util.FormatIntHandler([], integerList.toArray()))
+                .next(new Util.FormatCurrencyHandler());
+            var row = [];
+            for (var j = 0; j < rowData.length; ++j) {
+                row = [].concat(rowData[j]);
+                for (var i = 1; i < row.length; ++i) {
+                    row[i] = formaterChain.handle(row[0], i, row[i]);
+                }
+                outputData.push(row);
+            }
+            return outputData;
         }
-        outputData.push(row);
-    }
-    return outputData;
-}
+
 
 
 
         private updateTable(
-    parentName: string,
-    childName: string,
-    tableAssist: JQTable.JQGridAssistant,
-    rawData: Array<string[]>): void {
-        var data: string[][] = [];
-        if(this.mAnalysisType == "bid_industry") {
-    var integerList: std.vector<number> = new std.vector<number>();
-    var percentList: std.vector<number> = new std.vector<number>();
-    integerList.push(Bid4IndustryZb.dytbsl);
-    integerList.push(Bid4IndustryZb.ndsl);
-    integerList.push(Bid4IndustryZb.qntbsl);
-    percentList.push(Bid4IndustryZb.dyzydbl);
-    percentList.push(Bid4IndustryZb.ndzbl);
-    percentList.push(Bid4IndustryZb.ndtbbl);
-    percentList.push(Bid4IndustryZb.qnzbl);
-    percentList.push(Bid4IndustryZb.qnzndbl);
-    percentList.push(Bid4IndustryZb.tbzz);
-    data = this.formatData(rawData, integerList, percentList);
+            parentName: string,
+            childName: string,
+            tableAssist: JQTable.JQGridAssistant,
+            rawData: Array<string[]>): void {
+            var data: string[][] = [];
+            if (this.mAnalysisType == "bid_industry") {
+                var integerList: std.vector<number> = new std.vector<number>();
+                var percentList: std.vector<number> = new std.vector<number>();
+                integerList.push(Bid4IndustryZb.dytbsl);
+                integerList.push(Bid4IndustryZb.ndsl);
+                integerList.push(Bid4IndustryZb.qntbsl);
+                percentList.push(Bid4IndustryZb.dyzydbl);
+                percentList.push(Bid4IndustryZb.ndzbl);
+                percentList.push(Bid4IndustryZb.ndtbbl);
+                percentList.push(Bid4IndustryZb.qnzbl);
+                percentList.push(Bid4IndustryZb.qnzndbl);
+                percentList.push(Bid4IndustryZb.tbzz);
+                data = this.formatData(rawData, integerList, percentList);
 
-} else if (this.mAnalysisType == "bid_company") {
-    var integerList: std.vector<number> = new std.vector<number>();
-    var percentList: std.vector<number> = new std.vector<number>();
-    integerList.push(Bid4IndustryZb.dytbsl);
-    integerList.push(Bid4IndustryZb.ndsl);
-    integerList.push(Bid4IndustryZb.qntbsl);
-    percentList.push(Bid4IndustryZb.dyzydbl);
-    percentList.push(Bid4IndustryZb.ndzbl);
-    percentList.push(Bid4IndustryZb.ndtbbl);
-    data = this.formatData(rawData, integerList, percentList);
-}
+            } else if (this.mAnalysisType == "bid_company") {
+                var integerList: std.vector<number> = new std.vector<number>();
+                var percentList: std.vector<number> = new std.vector<number>();
+                integerList.push(Bid4IndustryZb.dytbsl);
+                integerList.push(Bid4IndustryZb.ndsl);
+                integerList.push(Bid4IndustryZb.qntbsl);
+                percentList.push(Bid4IndustryZb.dyzydbl);
+                percentList.push(Bid4IndustryZb.ndzbl);
+                percentList.push(Bid4IndustryZb.ndtbbl);
+                data = this.formatData(rawData, integerList, percentList);
+            }
 
-$("#" + childName).jqGrid(
-    tableAssist.decorate({
-        // url: "TestTable/WGDD_load.do",
-        // datatype: "json",
-        data: tableAssist.getData(data),
-        datatype: "local",
-        multiselect: false,
-        drag: false,
-        resize: false,
-        // autowidth : false,
-        //cellsubmit: 'clientArray',
-        //cellEdit: true,
-        editurl: 'clientArray',
-        height: '100%',
-        width: $(document).width() - 60,
-        shrinkToFit: true,
-        autoScroll: true,
-        pager: '#pager',
-        rowNum: 20,
-        viewrecords: true//是否显示行数 
-    })
-    );
+            $("#" + childName).jqGrid(
+                tableAssist.decorate({
+                    // url: "TestTable/WGDD_load.do",
+                    // datatype: "json",
+                    data: tableAssist.getData(data),
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    // autowidth : false,
+                    //cellsubmit: 'clientArray',
+                    //cellEdit: true,
+                    editurl: 'clientArray',
+                    height: '100%',
+                    width: $(document).width() - 60,
+                    shrinkToFit: true,
+                    autoScroll: true,
+                    pager: '#pager',
+                    rowNum: 20,
+                    viewrecords: true//是否显示行数 
+                })
+                );
             //if (rawData.length != 0) {
             //    $("#assist").css("display", "block");
             //}  
