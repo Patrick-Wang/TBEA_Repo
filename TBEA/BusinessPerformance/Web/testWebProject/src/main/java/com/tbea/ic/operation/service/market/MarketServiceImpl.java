@@ -288,13 +288,13 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public String[][] getPrjData(String companyName, Integer year) {
-		Util.Elapse escape = new Util.Elapse();
-		escape.start();
+//		Util.Elapse escape = new Util.Elapse();
+//		escape.start();
 		List<MktProjectInfo> list = projectInfoDao.getData(companyName, year);
-		escape.end("bidInfoDao.getData");
+//		escape.end("bidInfoDao.getData");
 		String[][] result = new String[list.size()][20];
 		Integer col = 0;
-		escape.start();
+//		escape.start();
 		for (MktProjectInfo obj : list) {
 			if (null != obj) {
 				result[col][0] = obj.getCompanyName() + "";
@@ -322,7 +322,7 @@ public class MarketServiceImpl implements MarketService {
 				col++;
 			}
 		}
-		escape.end("mapList");
+//		escape.end("mapList");
 		return result;
 	}
 
@@ -764,7 +764,7 @@ public class MarketServiceImpl implements MarketService {
 		row.add(Util.toString(data.get(i + step * 2)[0]));
 		row.add(Util.toString(data.get(i + step * 3)[0]));
 		
-		row.add(Util.toString(data.get(i)[1]));
+		row.add(Util.toString(data.get(i)[1])); 
 		row.add(Util.toString(data.get(i + step * 1)[1]));
 		row.add(Util.toString(data.get(i + step * 2)[1]));
 		row.add(Util.toString(data.get(i + step * 3)[1]));

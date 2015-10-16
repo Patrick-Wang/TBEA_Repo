@@ -155,4 +155,15 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 		return mus;
 	}
 
+	@Override
+	public List<MktBidInfo> getAreaData(Date start, Date end, MarketUnit mu,
+			List<MarketUnit> mus) {
+		Query q = manager.createQuery(
+				"from MktBidInfo where companyName=:compName and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and projectArea in (" + Util.toNameString((List)mus) + ") ");
+		q.setParameter("compName", mu.getName());
+		q.setParameter("start", start);
+		q.setParameter("end", end);
+		return q.getResultList();
+	}
+
 }

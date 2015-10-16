@@ -34,7 +34,7 @@ public class IndustryMixedAnalysisCompositeConfigurator extends AbstractComposit
 
 	@Override
 	public int getColumnCount() {
-		return 1;
+		return 3;
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class IndustryMixedAnalysisCompositeConfigurator extends AbstractComposit
 			.addFilter(new CompositeRatioPipeFilter(startRow, step)
 				.exclude(2))
 			.addFilter(new ZzlPipeFilter()
-				.add(3, 1, 2)
+				.add(2, 0, 1)
 				.includeRow(startRow, step));
 	}
 

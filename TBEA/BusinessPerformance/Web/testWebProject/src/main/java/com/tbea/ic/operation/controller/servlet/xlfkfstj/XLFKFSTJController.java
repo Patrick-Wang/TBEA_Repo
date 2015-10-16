@@ -49,13 +49,13 @@ public class XLFKFSTJController {
 		Company comp = companyManager.getBMOrganization().getCompany(compType);
 		List<String[][]> result = new ArrayList<String[][]>();
 		if (null == comp) {
-			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
-			if (null != comp) {
-				List<Company> comps = comp.getSubCompanies();
-				result.add(service.getFdwData(d, comps));
-				result.add(service.getGwData(d, comps));
-				result.add(service.getNwData(d, comps));
-			}
+//			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
+//			if (null != comp) {
+//				List<Company> comps = comp.getSubCompanies();
+//				result.add(service.getFdwData(d, comps));
+//				result.add(service.getGwData(d, comps));
+//				result.add(service.getNwData(d, comps));
+//			}
 		}
 		else {
 			result.add(service.getFdwData(d, comp));
@@ -74,7 +74,7 @@ public class XLFKFSTJController {
 
 		List<Company> comps = new ArrayList<Company>();
 		comps.addAll(companyManager.getBMOrganization().getTopCompany());
-		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
+		//comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
 
 		CompanySelection compSelection = new CompanySelection(true,
 				comps, new CompanySelection.Filter() {
@@ -94,14 +94,15 @@ public class XLFKFSTJController {
 					public boolean keep(Company comp) {
 						if (contains(comp)){
 							return true;
-						}else if (null != companyManager.getVirtualYSZKOrganization().getCompany(comp.getType())){
-							List<Company> subComps = comp.getSubCompanies();
-							for (Company com : subComps){
-								if (contains(com)){
-									return true;
-								}
-							}
 						}
+//						else if (null != companyManager.getVirtualYSZKOrganization().getCompany(comp.getType())){
+//							List<Company> subComps = comp.getSubCompanies();
+//							for (Company com : subComps){
+//								if (contains(com)){
+//									return true;
+//								}
+//							}
+//						}
 						return false;
 					}
 					

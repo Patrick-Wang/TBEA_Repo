@@ -8,7 +8,7 @@ module mkt_region_analysis {
         public static createRegionIndexTable(gridName: string, year: number, startMonth: number, endMonth: number): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("区域", "t0", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node(year + "年" + startMonth + "-" + endMonth + 　"月市场关键累计指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node(year + "年" + startMonth + "-" + endMonth + "月市场关键累计指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
                     .append(new JQTable.Node("投标金额(万元)", "t11"))
                     .append(new JQTable.Node("中标金额(万元)", "t12"))
                     .append(new JQTable.Node("中标率", "t13"))
@@ -20,12 +20,12 @@ module mkt_region_analysis {
         public static createIndustryIndexTable(gridName: string, year: number, startMonth: number, endMonth: number): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("行业", "t0", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node(year + "年" + startMonth + "-" + endMonth + 　"月市场关键累计指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node(year + "年" + startMonth + "-" + endMonth + "月市场关键累计指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
                     .append(new JQTable.Node("投标金额(万元)", "t11"))
                     .append(new JQTable.Node("中标金额(万元)", "t12"))
                     .append(new JQTable.Node("中标率", "t13"))
                     .append(new JQTable.Node("签约金额", "t14")),
-                new JQTable.Node((year - 1) + "年" + startMonth + "-" + endMonth + 　"月市场关键累计指标", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node((year - 1) + "年" + startMonth + "-" + endMonth + "月市场关键累计指标", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
                     .append(new JQTable.Node("投标金额(万元)", "t21"))
                     .append(new JQTable.Node("中标金额(万元)", "t22"))
                     .append(new JQTable.Node("中标率", "t23"))
@@ -107,27 +107,27 @@ module mkt_region_analysis {
             }
             else {
 
-                this.mDataSet.get({}).then()
+                this.mDataSet.get({ companyName: this.mCompanyName, year: this.mYear, month: this.mEndMonth, startYear: this.mYear, startMonth: this.mStartMonth, type: this.mAnalysisType })
+                    .then((data: any) => {
+                        var parent = $("#" + this.TableId);
+                        parent.empty();
+                        parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
 
-                var parent = $("#" + this.TableId);
-                parent.empty();
-                parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
+                        if (this.mAnalysisType == "region_index") {
+                            this.updateTable(
+                                this.TableId,
+                                this.childTableId,
+                                JQGridAssistantFactory.createRegionIndexTable(this.childTableId, this.mYear, this.mStartMonth, this.mEndMonth),
+                                data);
 
-                if (this.mAnalysisType == "region_index") {
-                    this.updateTable(
-                        this.TableId,
-                        this.childTableId,
-                        JQGridAssistantFactory.createRegionIndexTable(this.childTableId, this.mYear, this.mStartMonth, this.mEndMonth),
-                        []);
-
-                } else if (this.mAnalysisType == "industry_index") {
-                    this.updateTable(
-                        this.TableId,
-                        this.childTableId,
-                        JQGridAssistantFactory.createIndustryIndexTable(this.childTableId, this.mYear, this.mStartMonth, this.mEndMonth),
-                        []);
-                }
-
+                        } else if (this.mAnalysisType == "industry_index") {
+                            this.updateTable(
+                                this.TableId,
+                                this.childTableId,
+                                JQGridAssistantFactory.createIndustryIndexTable(this.childTableId, this.mYear, this.mStartMonth, this.mEndMonth),
+                                data);
+                        }
+                    });
             }
                 
           

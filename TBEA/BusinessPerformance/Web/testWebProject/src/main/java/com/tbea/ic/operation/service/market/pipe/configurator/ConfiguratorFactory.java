@@ -104,13 +104,13 @@ public class ConfiguratorFactory {
 			
 			@Override
 			public List<MktBidInfo> getData(Date start, Date end, List<MarketUnit> mus) {
-				return bidDao.getIndustryData(start, end, mu, mus);
+				return bidDao.getAreaData(start, end, mu, mus);
 			}
 		})).join(new SignAccumulator(new SignAccumulator.DataPicker() {
 			
 			@Override
 			public List<MktSignContract> getData(Date start, Date end, List<MarketUnit> mus) {
-				return signDao.getCompanyData(start, end, mu, mus);
+				return signDao.getAreaData(start, end, mu, mus);
 			}
 		}));
 		return new AreaAnalysisConfigurator(combiner, startDate);
@@ -132,7 +132,7 @@ public class ConfiguratorFactory {
 			
 			@Override
 			public List<MktSignContract> getData(Date start, Date end, List<MarketUnit> mus) {
-				return signDao.getCompanyData(start, end, mu, mus);
+				return signDao.getIndustryData(start, end, mu, mus);
 			}
 		}));
 		return new IndustryMixedAnalysisConfigurator(combiner, startDate);

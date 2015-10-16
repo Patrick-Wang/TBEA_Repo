@@ -22,7 +22,7 @@ public class DateSelection {
 	
 	
 	public static Date getStartDate(HttpServletRequest request){
-		String year = request.getParameter("startUear");
+		String year = request.getParameter("startYear");
 		String month = request.getParameter("startMonth");
 		String day = request.getParameter("startDay");
 		StringBuilder date = new StringBuilder();

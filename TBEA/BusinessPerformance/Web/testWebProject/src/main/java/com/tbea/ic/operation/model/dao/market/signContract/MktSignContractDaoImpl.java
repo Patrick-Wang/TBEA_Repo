@@ -137,4 +137,15 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 		}
 		return mus;
 	}
+
+	@Override
+	public List<MktSignContract> getAreaData(Date start, Date end,
+			MarketUnit mu, List<MarketUnit> mus) {
+		Query q = manager.createQuery(
+				"from MktSignContract where companyName=:compName and datediff(mm, :start, signDate) >= 0 and datediff(mm, signDate, :end) >= 0 and projectArea in (" + Util.toNameString((List)mus) + ") ");
+		q.setParameter("compName", mu.getName());
+		q.setParameter("start", start);
+		q.setParameter("end", end);
+		return q.getResultList();
+	}
 }

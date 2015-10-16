@@ -1,8 +1,11 @@
 package com.tbea.ic.operation.controller.servlet.market;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
@@ -11,6 +14,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.GZIPOutputStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -184,9 +188,43 @@ public class MarketServlet {
 		return new ModelAndView("mkt_view_data", map);
 	}
 
+	public static void compress(InputStream is, OutputStream os)  
+            throws Exception {  
+  
+        GZIPOutputStream gos = new GZIPOutputStream(os);  
+  
+        int count;  
+        byte data[] = new byte[1024];  
+        while ((count = is.read(data, 0, 1024)) != -1) {  
+            gos.write(data, 0, count);  
+        }
+  
+        gos.finish();  
+  
+        gos.flush();  
+        gos.close();  
+    }  
+	
+	private static byte[] compress(byte[] data) throws Exception {  
+        ByteArrayInputStream bais = new ByteArrayInputStream(data);  
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+  
+        // 压缩  
+        compress(bais, baos);  
+  
+        byte[] output = baos.toByteArray();  
+  
+        baos.flush();  
+        baos.close();  
+  
+        bais.close();  
+  
+        return output;  
+    }  
+	
 	@RequestMapping(value = "mkt_view_update.do")
 	public @ResponseBody byte[] getMktViewUpdate(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
+			HttpServletResponse response) throws Exception {
 		Account account = SessionManager.getAccount(request.getSession());
 		String companyName = getCompanyName(account);
 		String rpttype = request.getParameter("docType");
@@ -196,8 +234,8 @@ public class MarketServlet {
 		if (null != request.getParameter("year")) {
 			year = Integer.valueOf(request.getParameter("year"));
 		}
-		Util.Elapse escape = new Util.Elapse();
-		escape.start();
+//		Util.Elapse escape = new Util.Elapse();
+//		escape.start();
 		if (rpttype.equals(TYPE_BID)) {
 			list.add(marketService.getBidData(companyName, year));
 		} else if (rpttype.equals(TYPE_PROJECT)) {
@@ -205,14 +243,25 @@ public class MarketServlet {
 		} else if (rpttype.equals(TYPE_SIGN)) {
 			list.add(marketService.getContData(companyName));
 		}
-		escape.end("getPrjData");
+//		escape.end("getPrjData");
 		
-		escape.start();
+//		escape.start();
 		String listJson = JSONArray.fromObject(list).toString()
 				.replace("null", "\"\"");
-		escape.end("toJson");
+//		escape.end("toJson");
 		// System.out.println(listJson);
-		return listJson.getBytes("utf-8");
+		
+//		escape.start();
+		byte[] result = listJson.getBytes("utf-8");
+//		escape.end("tobytes " + result.length + " ");
+		
+//		escape.start();
+		result = compress(result);
+//		escape.end("tobytes " + result.length + " ");
+		
+		response.addHeader("Content-Encoding", "gzip"); 
+		
+		return result;
 	}
 	
 	

@@ -30,4 +30,7 @@ public interface MktSignContractDao {
 	List<MarketUnit> getCompanies(MarketUnit mu);
 
 	List<MarketUnit> getAreas(MarketUnit muSb);
+
+	List<MktSignContract> getAreaData(Date start, Date end, MarketUnit mu,
+			List<MarketUnit> mus);
 }

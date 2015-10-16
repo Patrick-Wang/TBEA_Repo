@@ -33,7 +33,7 @@ public class AccCombiner implements IAccumulator {
 	public List<Double> compute(int col, Date start, Date end,
 			List<Integer> zbs, List<Company> companies) {
 		List<List<Double>> result = new ArrayList<List<Double>>();
-		for (int i = 0; null == result && i < accList.size(); ++i) {
+		for (int i = 0; i < accList.size(); ++i) {
 			result.add(accList.get(i).compute(col, start, end, zbs, companies));
 		}
 		
