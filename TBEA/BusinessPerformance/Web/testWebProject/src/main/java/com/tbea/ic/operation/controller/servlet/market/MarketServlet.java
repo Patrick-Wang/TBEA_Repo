@@ -280,13 +280,13 @@ public class MarketServlet {
 	public @ResponseBody byte[] getMktBidAnalysisUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date date = DateSelection.getDate(request);
-		String companyName = request.getParameter("companyName");
+		JSONArray companyNames = JSONArray.fromObject(request.getParameter("companyName"));
 		List<List<String>> result = null;
 		String type = request.getParameter("type");
 		if ("bid_industry".equals(type)){
-			result = marketService.getIndustryBidData(companyName, date);
+			result = marketService.getIndustryBidData(companyNames, date);
 		} else if ("bid_company".equals(type)){
-			result = marketService.getCompanyBidData(companyName, date);
+			result = marketService.getCompanyBidData(companyNames, date);
 		}
 		
 		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");
@@ -307,13 +307,13 @@ public class MarketServlet {
 	public @ResponseBody byte[] getMktContractAnalysisUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date date = DateSelection.getDate(request);
-		String companyName = request.getParameter("companyName");
+		JSONArray companyNames = JSONArray.fromObject(request.getParameter("companyName"));
 		List<List<String>> result = null;
 		String type = request.getParameter("type");
 		if ("contract_industry".equals(type)){
-			result = marketService.getIndustrySignData(companyName, date);
+			result = marketService.getIndustrySignData(companyNames, date);
 		} else if ("contract_company".equals(type)){
-			result = marketService.getCompanySignData(companyName, date);
+			result = marketService.getCompanySignData(companyNames, date);
 		}
 		
 		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");
@@ -336,13 +336,13 @@ public class MarketServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date endDate = DateSelection.getDate(request);
 		Date startDate = DateSelection.getStartDate(request);
-		String companyName = request.getParameter("companyName");
+		JSONArray companyNames = JSONArray.fromObject(request.getParameter("companyName"));
 		List<List<String>> result = null;
 		String type = request.getParameter("type");
 		if ("region_index".equals(type)){
-			result = marketService.getAreaMixedAnalysisData(companyName, startDate, endDate);
+			result = marketService.getAreaMixedAnalysisData(companyNames, startDate, endDate);
 		} else if ("industry_index".equals(type)){
-			result = marketService.getIndustryMixedAnalysisData(companyName, startDate, endDate);
+			result = marketService.getIndustryMixedAnalysisData(companyNames, startDate, endDate);
 		}
 		
 		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");

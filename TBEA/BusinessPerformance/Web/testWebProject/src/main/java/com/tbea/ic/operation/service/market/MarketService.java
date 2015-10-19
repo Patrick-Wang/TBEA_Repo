@@ -39,18 +39,18 @@ public interface MarketService {
 
 	ErrorCode addBidData(JSONArray jsonArray);
 
-	List<List<String>> getIndustryBidData(String companyName, Date date);
+	List<List<String>> getIndustryBidData(JSONArray companyNames, Date date);
 
-	List<List<String>> getCompanyBidData(String companyName, Date date);
+	List<List<String>> getCompanyBidData(JSONArray companyNames, Date date);
 
-	List<List<String>> getCompanySignData(String companyName, Date date);
+	List<List<String>> getCompanySignData(JSONArray companyNames, Date date);
 
-	List<List<String>> getIndustrySignData(String companyName, Date date);
+	List<List<String>> getIndustrySignData(JSONArray companyNames, Date date);
 
-	List<List<String>> getAreaMixedAnalysisData(String companyName, Date dateStart,
+	List<List<String>> getAreaMixedAnalysisData(JSONArray companyNames, Date dateStart,
 			Date dateEnd);
 
-	List<List<String>> getIndustryMixedAnalysisData(String companyName, Date startDate,
+	List<List<String>> getIndustryMixedAnalysisData(JSONArray companyNames, Date startDate,
 			Date endDate);
 
 }

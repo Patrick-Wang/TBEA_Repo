@@ -21,18 +21,18 @@ public interface MktBidInfoDao{
 
 	void remove(String key);
 
-	List<MktBidInfo> getIndustryData(Date start, Date end, MarketUnit company,
+	List<MktBidInfo> getIndustryData(Date start, Date end, List<MarketUnit> mu,
 			List<MarketUnit> companies);
 
-	List<MarketUnit> getIndustries(MarketUnit mu);
+	List<MarketUnit> getIndustries(List<MarketUnit> muSb);
 
-	List<MktBidInfo> getCompanyData(Date start, Date end, MarketUnit pMku,
+	List<MktBidInfo> getCompanyData(Date start, Date end, List<MarketUnit> muSb,
 			List companies);
 
-	List<MarketUnit> getCompanies(MarketUnit muSb);
+	List<MarketUnit> getCompanies(List<MarketUnit> muSb);
 
-	List<MarketUnit> getAreas(MarketUnit muSb);
+	List<MarketUnit> getAreas(List<MarketUnit> muSb);
 
-	List<MktBidInfo> getAreaData(Date start, Date end, MarketUnit mu,
+	List<MktBidInfo> getAreaData(Date start, Date end, List<MarketUnit> muSb,
 			List<MarketUnit> mus);
 }

@@ -37,7 +37,7 @@
 				 {
 					 if(data[i].ssologinsysCode!=28 &&data[i].ssologinsysCode!=29)
 					 {
-						 bound="<span class=\"login_list_bd\" onclick=\"showBondPage('"+data[i].ssologinsysCode+"','anfengling');\">绑定用户</span>";
+						 bound="<span class=\"login_list_bd\" onclick=\"showBondPage('"+data[i].ssologinsysCode+"','${usrName}');\">绑定用户</span>";
 					 }
 					 
 				 }
@@ -55,9 +55,18 @@
 			var paramsList = data.infoList;
 			var html = "";
 			$.each(paramsList,function(i,item){
-				html += "<div class=\"dform_div\"><span style=\"min-width:80px;\">"+paramsList[i].paramsName+":</span><input style=\"width:352px;\" flg=\"wr\" onblur=\"testInput('"+paramsList[i].paramsKey+"')\" maxlength=\"30\" type=\"text\"  id="+paramsList[i].paramsKey+" name="+paramsList[i].paramsKey+" class=\"alert_text\" /><lable style=\"color:#E61212\" id='"+paramsList[i].paramsKey+"lable'></lable></div>";
+				html += "<div class=\"dform_div\"><span style=\"min-width:80px;\">"
+				+ paramsList[i].paramsName+
+				 ":</span><input style=\"width:352px;\" flg=\"wr\" onblur=\"testInput('"+paramsList[i].paramsKey+
+				"')\" maxlength=\"30\" type=\"text\"  id="+
+				paramsList[i].paramsKey+
+				" name="+paramsList[i].paramsKey+
+				" class=\"alert_text\" /><lable style=\"color:#E61212\" id='"+
+				paramsList[i].paramsKey+
+				"lable'></lable></div>";
 			});
-			html +="<div class=\"dform_div\"><input type=\"button\" id=\"updateUserInfo\" value=\"绑 定\" class=\"alert_button\" onclick=\"goToBond('"+systemCode+"','"+sysTemName+"')\"/></div>";
+			html +="<div class=\"dform_div\"><input type=\"button\" id=\"updateUserInfo\" value=\"绑 定\" class=\"alert_button\" onclick=\"goToBond('"+
+					systemCode+"','"+sysTemName+"')\"/></div>";
 
 			$("div.theme-popover3 .dform3").append(html);
 			html = "";
@@ -83,8 +92,7 @@
 			str = str.substring(0,str.length-1).replace(/[ ]/g,"");
 			str = "["+str+"]";
 
-			//var params = "params.paramsValuesStr="+str+"&params.systemCode="+systemCode+"&params.userCode=anfengling";
-			var params={"params.paramsValuesStr":str,"params.systemCode":systemCode,"params.userCode":"anfengling"};
+			var params={"params.paramsValuesStr":str,"params.systemCode":systemCode,"params.userCode":"${usrName}"};
 			
 			$.getJSON("/fe/sso/insertSystemParamsValues.gsp",params,function(data){
 				if(data.error == "0000"){
@@ -120,8 +128,7 @@
 		<div class="login_list_top">
 			<div class="left">${usrName}，欢迎您的登录！</div>
 			<div class="right">
-				<a href="logout.do">退出</a> <a
-					href="index.do">返回首页</a>
+				<a href="logout.do">退出</a> <a href="index.do">返回首页</a>
 			</div>
 		</div>
 		<div class="login_list_bottom">
@@ -134,8 +141,9 @@
 				<li class="login_list_item login_list_item_1"><a
 					target="_blank"
 					href="http://172.28.8.74/fe/sso/gotoPage.gsp?ssologinsysCode=84"><span>绩效管理平台</span><img
-						src="../images/login_icons_1.png"></a><span class="login_list_bd"
-					onclick="showBondPage(&#39;84&#39;,&#39;anfengling&#39;);">绑定用户</span></li>
+						src="../images/login_icons_1.png"></a><span
+					class="login_list_bd"
+					onclick="showBondPage(&#39;84&#39;,&#39;${usrName}&#39;);">绑定用户</span></li>
 				<li class="login_list_item login_list_item_2"><a
 					target="_blank"
 					href="http://172.28.8.74/fe/sso/gotoPage.gsp?ssologinsysCode=67"><span>用户管理系统</span><img
@@ -143,8 +151,9 @@
 				<li class="login_list_item login_list_item_3"><a
 					target="_blank"
 					href="http://172.28.8.74/fe/sso/gotoPage.gsp?ssologinsysCode=65"><span>OA系统</span><img
-						src="../images/login_icons_1.png"></a><span class="login_list_bd"
-					onclick="showBondPage(&#39;65&#39;,&#39;anfengling&#39;);">绑定用户</span></li>
+						src="../images/login_icons_1.png"></a><span
+					class="login_list_bd"
+					onclick="showBondPage(&#39;65&#39;,&#39;${usrName}&#39;);">绑定用户</span></li>
 				<li class="login_list_item login_list_item_4"><a
 					target="_blank"
 					href="http://172.28.8.74/fe/sso/gotoPage.gsp?ssologinsysCode=64"><span>智慧银行</span><img

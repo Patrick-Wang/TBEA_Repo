@@ -506,8 +506,8 @@ public class MarketServiceImpl implements MarketService {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<List<String>> getIndustryBidData(String companyName, Date date) {
-		MarketUnit muSb = new MarketUnit(companyName, Type.INDUSTRY);
+	public List<List<String>> getIndustryBidData(JSONArray companyNames, Date date) {
+		List<MarketUnit> muSb = toMu(companyNames, Type.INDUSTRY);//new MarketUnit(companyName, Type.INDUSTRY);
 		IPipeConfigurator options = configFactory.getIndustryBidAnalysisConfigurator(muSb);
 		List<MarketUnit> mus = this.bidInfoDao.getIndustries(muSb);
 		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
@@ -555,8 +555,8 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public List<List<String>> getCompanyBidData(String companyName, Date date) {
-		MarketUnit muSb = new MarketUnit(companyName, Type.COMPANY);
+	public List<List<String>> getCompanyBidData(JSONArray companyNames, Date date) {
+		List<MarketUnit> muSb = toMu(companyNames, Type.COMPANY);//new MarketUnit(companyName, Type.COMPANY);
 		IPipeConfigurator options = configFactory.getCompanyBidAnalysisConfigurator(muSb);
 		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
 		List<MarketUnit> companies = bidInfoDao.getCompanies(muSb);
@@ -598,8 +598,8 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	@Override
-	public List<List<String>> getCompanySignData(String companyName, Date date) {
-		MarketUnit muSb = new MarketUnit(companyName, Type.COMPANY);
+	public List<List<String>> getCompanySignData(JSONArray companyNames, Date date) {
+		List<MarketUnit> muSb = toMu(companyNames, Type.COMPANY);//new MarketUnit(companyName, Type.COMPANY);
 		IPipeConfigurator options = configFactory.getCompanySignAnalysisConfigurator(muSb);
 		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
 		List<MarketUnit> companies = signContractDao.getCompanies(muSb);
@@ -624,8 +624,8 @@ public class MarketServiceImpl implements MarketService {
 
 	
 	@Override
-	public List<List<String>> getIndustrySignData(String companyName, Date date) {
-		MarketUnit muSb = new MarketUnit(companyName, Type.INDUSTRY);
+	public List<List<String>> getIndustrySignData(JSONArray companyNames, Date date) {
+		List<MarketUnit> muSb = toMu(companyNames, Type.INDUSTRY);//new MarketUnit(companyName, Type.INDUSTRY);
 		IPipeConfigurator options = configFactory.getIndustrySignAnalysisConfigurator(muSb);
 		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
 		List<MarketUnit> companies = signContractDao.getIndustries(muSb);
@@ -687,8 +687,8 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	@Override
-	public List<List<String>> getAreaMixedAnalysisData(String companyName, Date dateStart, Date dateEnd) {
-		MarketUnit muSb = new MarketUnit(companyName, Type.AREA);
+	public List<List<String>> getAreaMixedAnalysisData(JSONArray companyNames, Date dateStart, Date dateEnd) {
+		List<MarketUnit> muSb = toMu(companyNames, Type.AREA);// new MarketUnit(companyName, Type.AREA);
 		IPipeConfigurator options = configFactory.getAreaAnalysisConfigurator(muSb, dateStart);
 		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
 		List<MarketUnit> companiesSign = signContractDao.getAreas(muSb);
@@ -726,10 +726,18 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 
+	private List<MarketUnit> toMu(JSONArray arr, Type type){
+		List<MarketUnit> ret = new ArrayList<MarketUnit>();
+		for (int i = 0; i < arr.size(); ++i){
+			ret.add(new MarketUnit(arr.getString(i), type));
+		}
+		return ret;
+	}
+	
 	@Override
-	public List<List<String>> getIndustryMixedAnalysisData(String companyName,
+	public List<List<String>> getIndustryMixedAnalysisData(JSONArray companyNames,
 			Date startDate, Date endDate) {
-		MarketUnit muSb = new MarketUnit(companyName, Type.INDUSTRY);
+		List<MarketUnit> muSb = toMu(companyNames, Type.INDUSTRY);//new MarketUnit(companyName, Type.INDUSTRY);
 		IPipeConfigurator options = configFactory.getIndustryMixedAnalysisConfigurator(muSb, startDate);
 		Map<Company, List<Company>> totalMap = new HashMap<Company, List<Company>>();
 		List<MarketUnit> companiesSign = signContractDao.getIndustries(muSb);

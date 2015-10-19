@@ -12,10 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.market.signContract.MktSignContractDao;
-import com.tbea.ic.operation.model.entity.MktBidInfo;
-import com.tbea.ic.operation.model.entity.MktProjectInfo;
 import com.tbea.ic.operation.model.entity.MktSignContract;
 import com.tbea.ic.operation.service.market.pipe.MarketUnit;
 import com.tbea.ic.operation.service.market.pipe.MarketUnit.Type;
@@ -79,10 +76,9 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 
 	@Override
 	public List<MktSignContract> getIndustryData(Date start, Date end,
-			MarketUnit mu, List<MarketUnit> mus) {
+			List<MarketUnit> mu, List<MarketUnit> mus) {
 		Query q = manager.createQuery(
-				"from MktSignContract where companyName=:compName and datediff(mm, :start, signDate) >= 0 and datediff(mm, signDate, :end) >= 0 and industryCategory in (" + Util.toNameString((List)mus) + ") ");
-		q.setParameter("compName", mu.getName());
+				"from MktSignContract where companyName in (" + Util.toNameString((List)mu) + ")  and datediff(mm, :start, signDate) >= 0 and datediff(mm, signDate, :end) >= 0 and industryCategory in (" + Util.toNameString((List)mus) + ") ");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();
@@ -90,20 +86,18 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 
 	@Override
 	public List<MktSignContract> getCompanyData(Date start, Date end,
-			MarketUnit mu, List<MarketUnit> mus) {
+			List<MarketUnit> mu, List<MarketUnit> mus) {
 		Query q = manager.createQuery(
-				"from MktSignContract where companyName=:compName and datediff(mm, :start, signDate) >= 0 and datediff(mm, signDate, :end) >= 0 and officeName in (" + Util.toNameString((List)mus) + ") ");
-		q.setParameter("compName", mu.getName());
+				"from MktSignContract where companyName in (" + Util.toNameString((List)mu) + ") and datediff(mm, :start, signDate) >= 0 and datediff(mm, signDate, :end) >= 0 and officeName in (" + Util.toNameString((List)mus) + ") ");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();
 	}
 	
 	@Override
-	public List<MarketUnit> getCompanies(MarketUnit mu) {
+	public List<MarketUnit> getCompanies(List<MarketUnit> mu) {
 		Query q = manager.createQuery(
-				"select m.officeName from MktSignContract m where m.companyName = :compName group by m.officeName");
-		q.setParameter("compName", mu.getName());
+				"select m.officeName from MktSignContract m where m.companyName  in (" + Util.toNameString((List)mu) + ")  group by m.officeName");
 		List<String> industries = q.getResultList();
 		List<MarketUnit> mus = new ArrayList<MarketUnit>();
 		for (String industry : industries){
@@ -113,10 +107,9 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 	}
 	
 	@Override
-	public List<MarketUnit> getIndustries(MarketUnit mu) {
+	public List<MarketUnit> getIndustries(List<MarketUnit> mu) {
 		Query q = manager.createQuery(
-				"select m.industryCategory from MktSignContract m where m.companyName = :compName group by m.industryCategory");
-		q.setParameter("compName", mu.getName());
+				"select m.industryCategory from MktSignContract m where m.companyName in (" + Util.toNameString((List)mu) + ")  group by m.industryCategory");
 		List<String> industries = q.getResultList();
 		List<MarketUnit> mus = new ArrayList<MarketUnit>();
 		for (String industry : industries){
@@ -126,10 +119,9 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 	}
 
 	@Override
-	public List<MarketUnit> getAreas(MarketUnit mu) {
+	public List<MarketUnit> getAreas(List<MarketUnit> mu) {
 		Query q = manager.createQuery(
-				"select m.projectArea from MktSignContract m where m.companyName = :compName group by m.projectArea");
-		q.setParameter("compName", mu.getName());
+				"select m.projectArea from MktSignContract m where m.companyName in (" + Util.toNameString((List)mu) + ") group by m.projectArea");
 		List<String> industries = q.getResultList();
 		List<MarketUnit> mus = new ArrayList<MarketUnit>();
 		for (String industry : industries){
@@ -140,10 +132,9 @@ public class MktSignContractDaoImpl implements MktSignContractDao {
 
 	@Override
 	public List<MktSignContract> getAreaData(Date start, Date end,
-			MarketUnit mu, List<MarketUnit> mus) {
+			List<MarketUnit> mu, List<MarketUnit> mus) {
 		Query q = manager.createQuery(
-				"from MktSignContract where companyName=:compName and datediff(mm, :start, signDate) >= 0 and datediff(mm, signDate, :end) >= 0 and projectArea in (" + Util.toNameString((List)mus) + ") ");
-		q.setParameter("compName", mu.getName());
+				"from MktSignContract where companyName in (" + Util.toNameString((List)mu) + ")  and datediff(mm, :start, signDate) >= 0 and datediff(mm, signDate, :end) >= 0 and projectArea in (" + Util.toNameString((List)mus) + ") ");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();

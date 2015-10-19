@@ -19,18 +19,18 @@ public interface MktSignContractDao {
 	List<MktSignContract> getData(
 			Date start, Date end, List<MarketUnit> list);
 
-	List<MktSignContract> getIndustryData(Date start, Date end, MarketUnit mu,
+	List<MktSignContract> getIndustryData(Date start, Date end, List<MarketUnit> mu,
 			List<MarketUnit> mus);
 
-	List<MktSignContract> getCompanyData(Date start, Date end, MarketUnit mu,
+	List<MktSignContract> getCompanyData(Date start, Date end, List<MarketUnit> muSb,
 			List<MarketUnit> mus);
 
-	List<MarketUnit> getIndustries(MarketUnit mu);
+	List<MarketUnit> getIndustries(List<MarketUnit> muSb);
 
-	List<MarketUnit> getCompanies(MarketUnit mu);
+	List<MarketUnit> getCompanies(List<MarketUnit> muSb);
 
-	List<MarketUnit> getAreas(MarketUnit muSb);
+	List<MarketUnit> getAreas(List<MarketUnit> muSb);
 
-	List<MktSignContract> getAreaData(Date start, Date end, MarketUnit mu,
+	List<MktSignContract> getAreaData(Date start, Date end, List<MarketUnit> muSb,
 			List<MarketUnit> mus);
 }

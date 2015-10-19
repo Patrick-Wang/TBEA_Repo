@@ -40,7 +40,7 @@ public class ConfiguratorFactory {
 
 	
 	
-	public IPipeConfigurator getIndustrySignAnalysisConfigurator(MarketUnit mu) {
+	public IPipeConfigurator getIndustrySignAnalysisConfigurator(List<MarketUnit> mu) {
 		return new IndustrySignAnalysisConfigurator(new SignAccumulator(new SignAccumulator.DataPicker() {
 			
 			@Override
@@ -54,12 +54,12 @@ public class ConfiguratorFactory {
 		return new IndustrySignAnalysisCompositeConfigurator(computeMap);
 	}
 	
-	public IPipeConfigurator getCompanySignAnalysisConfigurator(MarketUnit mu) {
+	public IPipeConfigurator getCompanySignAnalysisConfigurator(List<MarketUnit> muSb) {
 		return new IndustrySignAnalysisConfigurator(new SignAccumulator(new SignAccumulator.DataPicker() {
 			
 			@Override
 			public List<MktSignContract> getData(Date start, Date end, List<MarketUnit> mus) {
-				return signDao.getCompanyData(start, end, mu, mus);
+				return signDao.getCompanyData(start, end, muSb, mus);
 			}
 		}));
 	}
@@ -68,7 +68,7 @@ public class ConfiguratorFactory {
 		return new IndustrySignAnalysisCompositeConfigurator(computeMap);
 	}
 	
-	public IPipeConfigurator getIndustryBidAnalysisConfigurator(MarketUnit mu) {
+	public IPipeConfigurator getIndustryBidAnalysisConfigurator(List<MarketUnit> mu) {
 //		AccCombiner combiner = new AccCombiner();
 //		combiner.join(new BidAccumulator(bidDao)).join(new SignAccumulator(signDao));
 		return new IndustryBidAnalysisConfigurator(new BidAccumulator(new BidAccumulator.DataPicker() {
@@ -84,12 +84,12 @@ public class ConfiguratorFactory {
 		return new IndustryBidAnalysisCompositeConfigurator(computeMap);
 	}
 	
-	public IPipeConfigurator getCompanyBidAnalysisConfigurator(MarketUnit mu) {
+	public IPipeConfigurator getCompanyBidAnalysisConfigurator(List<MarketUnit> muSb) {
 		return new CompanyBidAnalysisConfigurator(new BidAccumulator(new BidAccumulator.DataPicker() {
 			
 			@Override
 			public List<MktBidInfo> getData(Date start, Date end, List<MarketUnit> mus) {
-				return bidDao.getCompanyData(start, end, mu, mus);
+				return bidDao.getCompanyData(start, end, muSb, mus);
 			}
 		}));
 	}
@@ -98,19 +98,19 @@ public class ConfiguratorFactory {
 		return new CompanyBidAnalysisCompositeConfigurator(computeMap);
 	}
 	
-	public IPipeConfigurator getAreaAnalysisConfigurator(MarketUnit mu, Date startDate) {
+	public IPipeConfigurator getAreaAnalysisConfigurator(List<MarketUnit> muSb, Date startDate) {
 		AccCombiner combiner = new AccCombiner();
 		combiner.join(new BidAccumulator(new BidAccumulator.DataPicker() {
 			
 			@Override
 			public List<MktBidInfo> getData(Date start, Date end, List<MarketUnit> mus) {
-				return bidDao.getAreaData(start, end, mu, mus);
+				return bidDao.getAreaData(start, end, muSb, mus);
 			}
 		})).join(new SignAccumulator(new SignAccumulator.DataPicker() {
 			
 			@Override
 			public List<MktSignContract> getData(Date start, Date end, List<MarketUnit> mus) {
-				return signDao.getAreaData(start, end, mu, mus);
+				return signDao.getAreaData(start, end, muSb, mus);
 			}
 		}));
 		return new AreaAnalysisConfigurator(combiner, startDate);
@@ -120,7 +120,7 @@ public class ConfiguratorFactory {
 		return new AreaAnalysisCompositeConfigurator(computeMap);
 	}
 	
-	public IPipeConfigurator getIndustryMixedAnalysisConfigurator(MarketUnit mu, Date startDate) {
+	public IPipeConfigurator getIndustryMixedAnalysisConfigurator(List<MarketUnit> mu, Date startDate) {
 		AccCombiner combiner = new AccCombiner();
 		combiner.join(new BidAccumulator(new BidAccumulator.DataPicker() {
 			

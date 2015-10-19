@@ -94,11 +94,10 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 	}
 
 	@Override
-	public List<MktBidInfo> getIndustryData(Date start, Date end, MarketUnit company,
+	public List<MktBidInfo> getIndustryData(Date start, Date end, List<MarketUnit> mu,
 			List<MarketUnit> companies) {
 		Query q = manager.createQuery(
-				"from MktBidInfo where companyName=:compName and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and industryCategory in (" + Util.toNameString((List)companies) + ") ");
-		q.setParameter("compName", company.getName());
+				"from MktBidInfo where companyName in (" + Util.toNameString((List)mu) + ")  and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and industryCategory in (" + Util.toNameString((List)companies) + ") ");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();
@@ -107,20 +106,18 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 
 	@Override
 	public List<MktBidInfo> getCompanyData(Date start, Date end,
-			MarketUnit pMku, List companies) {
+			List<MarketUnit> mu, List companies) {
 		Query q = manager.createQuery(
-				"from MktBidInfo where companyName=:compName and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and officeName in (" + Util.toNameString((List)companies) + ") ");
-		q.setParameter("compName", pMku.getName());
+				"from MktBidInfo where companyName in (" + Util.toNameString((List)mu) + ")  and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and officeName in (" + Util.toNameString((List)companies) + ") ");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();
 	}
 
 	@Override
-	public List<MarketUnit> getCompanies(MarketUnit mu) {
+	public List<MarketUnit> getCompanies(List<MarketUnit> mu) {
 		Query q = manager.createQuery(
-				"select m.officeName from MktBidInfo m where m.companyName = :compName group by m.officeName");
-		q.setParameter("compName", mu.getName());
+				"select m.officeName from MktBidInfo m where m.companyName in (" + Util.toNameString((List)mu) + ") group by m.officeName");
 		List<String> industries = q.getResultList();
 		List<MarketUnit> mus = new ArrayList<MarketUnit>();
 		for (String industry : industries){
@@ -130,10 +127,9 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 	}
 	
 	@Override
-	public List<MarketUnit> getIndustries(MarketUnit mu) {
+	public List<MarketUnit> getIndustries(List<MarketUnit> mu) {
 		Query q = manager.createQuery(
-				"select m.industryCategory from MktBidInfo m where m.companyName = :compName group by m.industryCategory");
-		q.setParameter("compName", mu.getName());
+				"select m.industryCategory from MktBidInfo m where m.companyName in (" + Util.toNameString((List)mu) + ") group by m.industryCategory");
 		List<String> industries = q.getResultList();
 		List<MarketUnit> mus = new ArrayList<MarketUnit>();
 		for (String industry : industries){
@@ -143,10 +139,9 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 	}
 
 	@Override
-	public List<MarketUnit> getAreas(MarketUnit mu) {
+	public List<MarketUnit> getAreas(List<MarketUnit> mu) {
 		Query q = manager.createQuery(
-				"select m.projectArea from MktBidInfo m where m.companyName = :compName group by m.projectArea");
-		q.setParameter("compName", mu.getName());
+				"select m.projectArea from MktBidInfo m where m.companyName in (" + Util.toNameString((List)mu) + ") group by m.projectArea");
 		List<String> industries = q.getResultList();
 		List<MarketUnit> mus = new ArrayList<MarketUnit>();
 		for (String industry : industries){
@@ -156,11 +151,10 @@ public class MktBidInfoDaoImpl implements MktBidInfoDao {
 	}
 
 	@Override
-	public List<MktBidInfo> getAreaData(Date start, Date end, MarketUnit mu,
+	public List<MktBidInfo> getAreaData(Date start, Date end, List<MarketUnit> mu,
 			List<MarketUnit> mus) {
 		Query q = manager.createQuery(
-				"from MktBidInfo where companyName=:compName and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and projectArea in (" + Util.toNameString((List)mus) + ") ");
-		q.setParameter("compName", mu.getName());
+				"from MktBidInfo where companyName in (" + Util.toNameString((List)mu) + ") and datediff(mm, :start, bidDate) >= 0 and datediff(mm, bidDate, :end) >= 0 and projectArea in (" + Util.toNameString((List)mus) + ") ");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();
