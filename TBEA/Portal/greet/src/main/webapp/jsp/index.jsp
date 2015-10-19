@@ -51,28 +51,31 @@
 	function showBondPage(systemCode,sysTemName){
 		$("div.theme-popover3 .dform3").empty();
 		var params = "params.ssoSysCode="+systemCode;
-		$.getJSON("/fe/sso/querySystemParams.gsp",params,function(data){
-			var paramsList = data.infoList;
-			var html = "";
-			$.each(paramsList,function(i,item){
-				html += "<div class=\"dform_div\"><span style=\"min-width:80px;\">"
-				+ paramsList[i].paramsName+
-				 ":</span><input style=\"width:352px;\" flg=\"wr\" onblur=\"testInput('"+paramsList[i].paramsKey+
-				"')\" maxlength=\"30\" type=\"text\"  id="+
-				paramsList[i].paramsKey+
-				" name="+paramsList[i].paramsKey+
-				" class=\"alert_text\" /><lable style=\"color:#E61212\" id='"+
-				paramsList[i].paramsKey+
-				"lable'></lable></div>";
-			});
-			html +="<div class=\"dform_div\"><input type=\"button\" id=\"updateUserInfo\" value=\"绑 定\" class=\"alert_button\" onclick=\"goToBond('"+
-					systemCode+"','"+sysTemName+"')\"/></div>";
+	//	$.getJSON("/fe/sso/querySystemParams.gsp",params,function(data){
 
-			$("div.theme-popover3 .dform3").append(html);
-			html = "";
-		});
+	//	});
 		$('.theme-popover-mask').fadeIn(100);
 		$('.theme-popover3').slideDown(200);
+		
+		data = JSON.parse('{"infoList":[{"paramsName":"用户名","paramsKey":"ssousername","ssosysCode":65,"encrypt":0,"encryptTramsfer":0},{"paramsName":"用户密码","paramsKey":"ssopassword","ssosysCode":65,"encrypt":0,"encryptTramsfer":0}]}');
+		var paramsList = data.infoList;
+		var html = "";
+		$.each(paramsList,function(i,item){
+			html += "<div class=\"dform_div\"><span style=\"min-width:80px;\">"
+			+ paramsList[i].paramsName+
+			 ":</span><input style=\"width:352px;\" flg=\"wr\" onblur=\"testInput('"+paramsList[i].paramsKey+
+			"')\" maxlength=\"30\" type=\"text\"  id="+
+			paramsList[i].paramsKey+
+			" name="+paramsList[i].paramsKey+
+			" class=\"alert_text\" /><lable style=\"color:#E61212\" id='"+
+			paramsList[i].paramsKey+
+			"lable'></lable></div>";
+		});
+		html +="<div class=\"dform_div\"><input type=\"button\" id=\"updateUserInfo\" value=\"绑 定\" class=\"alert_button\" onclick=\"goToBond('"+
+				systemCode+"','"+sysTemName+"')\"/></div>";
+
+		$("div.theme-popover3 .dform3").append(html);
+		html = "";
 	}
 
 
@@ -94,8 +97,8 @@
 
 			var params={"params.paramsValuesStr":str,"params.systemCode":systemCode,"params.userCode":"${usrName}"};
 			
-			$.getJSON("/fe/sso/insertSystemParamsValues.gsp",params,function(data){
-				if(data.error == "0000"){
+			//$.getJSON("/fe/sso/insertSystemParamsValues.gsp",params,function(data){
+				if(true){
 					$("div.theme-popover3 .dform3").empty();
 					var html = "<div style=\"text-align: center; width: 300px;  margin: 60px auto;\"><h3>绑定 “"+sysTemName+"” 成功!</h3></div>";
 					$("div.theme-popover3 .dform3").append(html);
@@ -104,7 +107,7 @@
 					var html = "<div style=\"text-align: center; width: 300px;  margin: 60px auto;\"><h3>绑定 “"+sysTemName+"” 失败!</h3></div>";
 					$("div.theme-popover3 .dform3").append(html);
 				}
-			});
+			//});
 		}
 	}
 
@@ -160,7 +163,7 @@
 						src="../images/login_icons_1.png"></a></li>
 				<li class="login_list_item login_list_item_5"><a
 					target="_blank"
-					href="http://172.28.8.74/fe/sso/gotoPage.gsp?ssologinsysCode=43"><span>经营管控系统</span><img
+					href="http://192.168.7.22/BusinessManagement"><span>经营管控系统</span><img
 						src="../images/login_icons_1.png"></a></li>
 				<li class="login_list_item login_list_item_6"><a
 					target="_blank"
