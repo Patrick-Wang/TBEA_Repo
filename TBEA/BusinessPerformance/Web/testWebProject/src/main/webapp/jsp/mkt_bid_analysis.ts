@@ -75,7 +75,7 @@ module mkt_bid_analysis {
         private mCompanyName;
         private mDs: Util.DateSelector;
         private mAnalysisType;
-        private mSelCompanys :string[];
+        private mSelCompanys: string[] = [];
 
         TableId: string;
         childTableId: string;
@@ -92,18 +92,19 @@ module mkt_bid_analysis {
             //请求数据
             this.mDataSet = new Util.Ajax("mkt_bid_analysis_update.do", false);
             this.onType_TypeSelected();
-            if (this.mCompanyName == "股份公司") {
-                this.onCompanySelected();
-            } else {
-                for (var i in company) {
-                    if (company[i].length == 1) {
-                        if (this.mCompanyName == company[i][0]) {
-                            this.mSelCompanys = company[i];
-                        }
-                    }
-
-                }
-            }
+            //if (this.mCompanyName == "股份公司") {
+            //    this.onCompanySelected();
+            //} 
+//                else {
+//                for (var i in company) {
+//                    if (company[i].length == 1) {
+//                        if (this.mCompanyName == company[i][0]) {
+//                            this.mSelCompanys = company[i];
+//                        }
+//                    }
+//
+//                }
+//            }
            
             //this.updateUI();
         }
@@ -114,8 +115,8 @@ module mkt_bid_analysis {
         }
 
         public onCompanySelected() {
-            this.mCompanyName = $("#comp_category").val();
-            this.mSelCompanys = company[$("#comp_category").val()];
+            //this.mCompanyName = $("#comp_category").val();
+            //this.mSelCompanys = company[$("#comp_category").val()];
         }
 
         public exportExcel() {
@@ -125,6 +126,19 @@ module mkt_bid_analysis {
 
 
         public updateUI() {
+            
+            this.mSelCompanys = [];
+            if(this.mCompanyName == "股份公司"){
+                
+                 $('#comp_category').multiselect("getChecked").each((i, item)=>{
+                    this.mSelCompanys.push($(item).val());
+                 });
+                
+            }else{
+                this.mSelCompanys.push(this.mCompanyName);
+                
+            }
+          
             var parent = $("#" + this.TableId);
             parent.empty();
             parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
