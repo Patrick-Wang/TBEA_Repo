@@ -203,13 +203,16 @@ th.ui-th-ltr {
 						<c:if test="${(companyName == '股份公司')}">
 							<td><select id="comp_category"
 								onchange="instance.onCompanySelected()" style="width: 135px">
-									<option value="沈变">沈变公司</option>
-									<option value="衡变">衡变公司</option>
-									<option value="新变">新变厂</option>
-									<option value="天变">天变公司</option>
-									<option value="鲁缆">鲁缆公司</option>
-									<option value="新缆">新缆厂</option>
-									<option value="德缆">德缆公司</option>
+									<option value="sb">沈变公司</option>
+									<option value="hb">衡变公司</option>
+									<option value="xb">新变厂</option>
+									<option value="tb">天变公司</option>
+									<option value="ll">鲁缆公司</option>
+									<option value="xl">新缆厂</option>
+									<option value="dl">德缆公司</option>
+									<option value="byqcy">变压器产业</option>
+									<option value="xlcy">线缆产业</option>
+									<option value="all">全部公司</option>
 							</select></td>
 							<td width="10px"></td>
 						</c:if>

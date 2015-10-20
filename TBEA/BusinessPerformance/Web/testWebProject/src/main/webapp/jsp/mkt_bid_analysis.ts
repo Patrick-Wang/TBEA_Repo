@@ -53,7 +53,19 @@ module mkt_bid_analysis {
             ], gridName);
         }
     }
-
+    
+    var company:any = {};
+    company.sb = ["沈变"];
+    company.hb = ["衡变"];
+    company.xb = ["新变"];
+    company.tb = ["天变"];
+    company.ll = ["鲁缆"];
+    company.xl = ["新缆"];
+    company.dl = ["德缆"];
+    company.byqcy = ["沈变","衡变","新变","天变"];
+    company.xlcy = ["鲁缆","新缆","德缆"];
+    company.all = ["沈变","衡变","新变","天变","鲁缆","新缆","德缆"];
+    
     export class View {
         public static newInstance(): View {
             return new View();
@@ -62,7 +74,8 @@ module mkt_bid_analysis {
         //private mExportDataSet: Util.Ajax;
         private mCompanyName;
         private mDs: Util.DateSelector;
-        private mAnalysisType: string;
+        private mAnalysisType;
+        private mSelCompanys :string[];
 
         TableId: string;
         childTableId: string;
@@ -81,17 +94,28 @@ module mkt_bid_analysis {
             this.onType_TypeSelected();
             if (this.mCompanyName == "股份公司") {
                 this.onCompanySelected();
+            } else {
+                for (var i in company) {
+                    if (company[i].length == 1) {
+                        if (this.mCompanyName == company[i][0]) {
+                            this.mSelCompanys = company[i];
+                        }
+                    }
+
+                }
             }
            
             //this.updateUI();
         }
 
         public onType_TypeSelected() {
+            //this.mAnalysisType = company[$("#analysisType").val()];
             this.mAnalysisType = $("#analysisType").val();
         }
 
         public onCompanySelected() {
             this.mCompanyName = $("#comp_category").val();
+            this.mSelCompanys = company[$("#comp_category").val()];
         }
 
         public exportExcel() {
@@ -105,7 +129,7 @@ module mkt_bid_analysis {
             parent.empty();
             parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
             var dt: Util.Date = this.mDs.getDate();
-            this.mDataSet.get({ companyName: this.mCompanyName, year: dt.year, month: dt.month, type: this.mAnalysisType })
+            this.mDataSet.get({ companyName: JSON.stringify(this.mSelCompanys), year: dt.year, month: dt.month, type: this.mAnalysisType })
                 .then((data: any) => {
                     var rowBidData = data;
                     if (this.mAnalysisType == "bid_industry") {
