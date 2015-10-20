@@ -58,6 +58,7 @@ module mkt_region_analysis {
         private mYear: number;
         private mStartMonth: number;
         private mEndMonth: number;
+        private mSelCompanys: string[] = [];
 
         TableId: string;
         childTableId: string;
@@ -74,7 +75,7 @@ module mkt_region_analysis {
             //请求数据
             this.mDataSet = new Util.Ajax("mkt_region_analysis_update.do", false);
             this.onType_TypeSelected();
-            this.onCompanySelected();
+            //this.onCompanySelected();
             this.onYearSelected();
             this.onStartMonthSelected();
             this.onEndMonthSelected();
@@ -123,6 +124,7 @@ module mkt_region_analysis {
         }
 
         public updateUI() {
+            
 
             if (this.mStartMonth > this.mEndMonth) {
                 Util.MessageBox.tip("起始月份大于终止月份，请重新选择月份！");
@@ -130,8 +132,20 @@ module mkt_region_analysis {
                 Util.MessageBox.tip("请选择起始月份和终止月份！");
             }
             else {
+                
+                this.mSelCompanys = [];
+            if(this.mCompanyName == "股份公司"){
+                
+                 $('#comp_category').multiselect("getChecked").each((i, item)=>{
+                    this.mSelCompanys.push($(item).val());
+                 });
+                
+            }else{
+                this.mSelCompanys.push(this.mCompanyName);
+                
+            }
 
-                this.mDataSet.get({ companyName: this.mCompanyName, year: this.mYear, month: this.mEndMonth, startYear: this.mYear, startMonth: this.mStartMonth, type: this.mAnalysisType })
+                this.mDataSet.get({ companyName: JSON.stringify(this.mSelCompanys), year: this.mYear, month: this.mEndMonth, startYear: this.mYear, startMonth: this.mStartMonth, type: this.mAnalysisType })
                     .then((data: any) => {
                         var parent = $("#" + this.TableId);
                         parent.empty();
