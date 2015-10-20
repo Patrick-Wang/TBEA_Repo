@@ -215,20 +215,20 @@ th.ui-th-ltr {
 							'<option value="新缆">新缆厂</option>' +
 							'<option value="德缆">德缆公司</option>' +
 					'</select>';
+					
+							$("#comp_category").multiselect({
+			                    multiple: true,
+			                    header: true,
+			                    minWidth: 50,
+			                    minHeight: 50,
+			                    noneSelectedText : "请选择单位",
+			                    selectedText: '# 个单位被选中',
+			                    height: '100%',
+			                    // noneSelectedText: "请选择月份",
+			                    selectedList: 1
+			                });
 								});
-						
-						
-						setTimeout(function(){$("#comp_category").multiselect({
-		                    multiple: true,
-		                    header: true,
-		                    minWidth: 50,
-		                    minHeight: 50,
-		                    noneSelectedText : "请选择单位",
-		                    selectedText: '# 个单位被选中',
-		                    height: '100%',
-		                    // noneSelectedText: "请选择月份",
-		                    selectedList: 1
-		                });}, 10);	
+
 						</script>
 						</c:if></td>
 						<td width="10px"></td>
