@@ -229,7 +229,7 @@ th.ui-th-ltr {
 		                    height: '100%',
 		                    // noneSelectedText: "请选择月份",
 		                    selectedList: 1
-		                });}, 0);
+		                });}, 10);
 						
 							
 						</script>

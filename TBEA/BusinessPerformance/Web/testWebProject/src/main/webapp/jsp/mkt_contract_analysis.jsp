@@ -200,19 +200,38 @@ th.ui-th-ltr {
 		<tr>
 			<td><Table>
 					<tr>
-						<c:if test="${(companyName == '股份公司')}">
-							<td><select id="comp_category"
-								onchange="instance.onCompanySelected()" style="width: 135px">
-									<option value="沈变">沈变公司</option>
-									<option value="衡变">衡变公司</option>
-									<option value="新变">新变厂</option>
-									<option value="天变">天变公司</option>
-									<option value="鲁缆">鲁缆公司</option>
-									<option value="新缆">新缆厂</option>
-									<option value="德缆">德缆公司</option>
-							</select></td>
-							<td width="10px"></td>
-						</c:if>
+						<td id="companyNameTD"><c:if
+								test="${(companyName == '股份公司')}">
+								<script>
+						$(document).ready(
+							function() {
+							$('#companyNameTD')[0].innerHTML = '<select id="comp_category"'+
+							'onchange="instance.onCompanySelected()" style="width: 165px">' + 
+							'<option value="沈变">沈变公司</option>' +
+							'<option value="衡变">衡变公司</option>' +
+							'<option value="新变">新变厂</option> ' +
+							'<option value="天变">天变公司</option>' +
+							'<option value="鲁缆">鲁缆公司</option>' +
+							'<option value="新缆">新缆厂</option>' +
+							'<option value="德缆">德缆公司</option>' +
+					'</select>';
+								});
+						
+						
+						setTimeout(function(){$("#comp_category").multiselect({
+		                    multiple: true,
+		                    header: true,
+		                    minWidth: 50,
+		                    minHeight: 50,
+		                    noneSelectedText : "请选择单位",
+		                    selectedText: '# 个单位被选中',
+		                    height: '100%',
+		                    // noneSelectedText: "请选择月份",
+		                    selectedList: 1
+		                });}, 10);	
+						</script>
+						</c:if></td>
+						<td width="10px"></td>
 						<td><select id="analysisType" style="width: 190px"
 							onchange="instance.onType_TypeSelected()">
 								<option value="contract_industry">合同签约分析表(行业)</option>

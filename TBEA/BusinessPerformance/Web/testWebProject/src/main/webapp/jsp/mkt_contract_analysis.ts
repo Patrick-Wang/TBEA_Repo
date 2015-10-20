@@ -59,6 +59,7 @@ module mkt_contract_analysis {
         private mCompanyName;
         private mDs: Util.DateSelector;
         private mAnalysisType: string;
+        private mSelCompanys: string[] = [];
 
         TableId: string;
         childTableId: string;
@@ -75,9 +76,9 @@ module mkt_contract_analysis {
             //请求数据
             this.mDataSet = new Util.Ajax("mkt_contract_analysis_update.do", false);
             this.onType_TypeSelected();
-            if (this.mCompanyName == "股份公司") {
-                this.onCompanySelected();
-            }
+            //if (this.mCompanyName == "股份公司") {
+            //    this.onCompanySelected();
+            //}
             //this.updateUI();
         }
 
@@ -86,7 +87,7 @@ module mkt_contract_analysis {
         }
 
         public onCompanySelected() {
-            this.mCompanyName = $("#comp_category").val();
+            //this.mCompanyName = $("#comp_category").val();
         }
 
         public exportExcel() {
@@ -112,11 +113,23 @@ module mkt_contract_analysis {
 
 
         public updateUI() {
+            
+             this.mSelCompanys = [];
+            if(this.mCompanyName == "股份公司"){
+                
+                 $('#comp_category').multiselect("getChecked").each((i, item)=>{
+                    this.mSelCompanys.push($(item).val());
+                 });
+                
+            }else{
+                this.mSelCompanys.push(this.mCompanyName);
+                
+            }
             var parent = $("#" + this.TableId);
             parent.empty();
             parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
             var dt: Util.Date = this.mDs.getDate();
-            this.mDataSet.get({ companyName: this.mCompanyName, year: dt.year, month: dt.month, type: this.mAnalysisType })
+            this.mDataSet.get({ companyName: JSON.stringify(this.mSelCompanys), year: dt.year, month: dt.month, type: this.mAnalysisType })
                 .then((data: any) => {
                     var rowBidData = data;
                     if (this.mAnalysisType == "contract_industry") {
