@@ -53,8 +53,8 @@ module mkt_bid_analysis {
             ], gridName);
         }
     }
-    
-    var company:any = {};
+
+    var company: any = {};
     company.sb = ["沈变"];
     company.hb = ["衡变"];
     company.xb = ["新变"];
@@ -62,10 +62,10 @@ module mkt_bid_analysis {
     company.ll = ["鲁缆"];
     company.xl = ["新缆"];
     company.dl = ["德缆"];
-    company.byqcy = ["沈变","衡变","新变","天变"];
-    company.xlcy = ["鲁缆","新缆","德缆"];
-    company.all = ["沈变","衡变","新变","天变","鲁缆","新缆","德缆"];
-    
+    company.byqcy = ["沈变", "衡变", "新变", "天变"];
+    company.xlcy = ["鲁缆", "新缆", "德缆"];
+    company.all = ["沈变", "衡变", "新变", "天变", "鲁缆", "新缆", "德缆"];
+
     export class View {
         public static newInstance(): View {
             return new View();
@@ -95,16 +95,16 @@ module mkt_bid_analysis {
             //if (this.mCompanyName == "股份公司") {
             //    this.onCompanySelected();
             //} 
-//                else {
-//                for (var i in company) {
-//                    if (company[i].length == 1) {
-//                        if (this.mCompanyName == company[i][0]) {
-//                            this.mSelCompanys = company[i];
-//                        }
-//                    }
-//
-//                }
-//            }
+            //                else {
+            //                for (var i in company) {
+            //                    if (company[i].length == 1) {
+            //                        if (this.mCompanyName == company[i][0]) {
+            //                            this.mSelCompanys = company[i];
+            //                        }
+            //                    }
+            //
+            //                }
+            //            }
            
             //this.updateUI();
         }
@@ -120,25 +120,27 @@ module mkt_bid_analysis {
         }
 
         public exportExcel() {
-
+            var dt: Util.Date = this.mDs.getDate();
+            $("#exportBidAnalysisData")[0].action = "mkt_bid_analysis_export.do?" + Util.Ajax.toUrlParam({ companyName: JSON.stringify(this.mSelCompanys), year: dt.year, month: dt.month, type: this.mAnalysisType });
+            $("#exportBidAnalysisData")[0].submit();
         }
 
 
 
         public updateUI() {
-            
+
             this.mSelCompanys = [];
-            if(this.mCompanyName == "股份公司"){
-                
-                 $('#comp_category').multiselect("getChecked").each((i, item)=>{
+            if (this.mCompanyName == "股份公司") {
+
+                $('#comp_category').multiselect("getChecked").each((i, item) => {
                     this.mSelCompanys.push($(item).val());
-                 });
-                
-            }else{
+                });
+
+            } else {
                 this.mSelCompanys.push(this.mCompanyName);
-                
+
             }
-          
+
             var parent = $("#" + this.TableId);
             parent.empty();
             parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
@@ -238,9 +240,9 @@ module mkt_bid_analysis {
                     viewrecords: true//是否显示行数 
                 })
                 );
-            //if (rawData.length != 0) {
-            //    $("#assist").css("display", "block");
-            //}  
+            if (rawData.length != 0) {
+                $("#assist").css("display", "block");
+            }
         }
     }
 }

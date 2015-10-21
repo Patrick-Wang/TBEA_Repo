@@ -91,7 +91,9 @@ module mkt_contract_analysis {
         }
 
         public exportExcel() {
-
+            var dt: Util.Date = this.mDs.getDate();
+            $("#exportBidAnalysisData")[0].action = "mkt_contract_analysis_export.do?" + Util.Ajax.toUrlParam({ companyName: JSON.stringify(this.mSelCompanys), year: dt.year, month: dt.month, type: this.mAnalysisType });
+            $("#exportBidAnalysisData")[0].submit();
         }
 
         private formatData(rowData: string[][], integerList: std.vector<number>, percentList: std.vector<number>) {
@@ -113,17 +115,17 @@ module mkt_contract_analysis {
 
 
         public updateUI() {
-            
-             this.mSelCompanys = [];
-            if(this.mCompanyName == "股份公司"){
-                
-                 $('#comp_category').multiselect("getChecked").each((i, item)=>{
+
+            this.mSelCompanys = [];
+            if (this.mCompanyName == "股份公司") {
+
+                $('#comp_category').multiselect("getChecked").each((i, item) => {
                     this.mSelCompanys.push($(item).val());
-                 });
-                
-            }else{
+                });
+
+            } else {
                 this.mSelCompanys.push(this.mCompanyName);
-                
+
             }
             var parent = $("#" + this.TableId);
             parent.empty();
@@ -191,9 +193,9 @@ module mkt_contract_analysis {
                     viewrecords: true//是否显示行数 
                 })
                 );
-            //            if (rawData.length != 0) {
-            //                $("#assist").css("display", "block");
-            //            }  
+            if (rawData.length != 0) {
+                $("#assist").css("display", "block");
+            }
         }
     }
 }

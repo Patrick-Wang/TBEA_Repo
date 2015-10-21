@@ -37,14 +37,14 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.VirtualJYZBOrganization;
-import com.tbea.ic.operation.common.jyzbexcel.FormatterHandler;
-import com.tbea.ic.operation.common.jyzbexcel.HeaderFormatterHandler;
-import com.tbea.ic.operation.common.jyzbexcel.JyzbExcelTemplate;
-import com.tbea.ic.operation.common.jyzbexcel.JyzbExcelTemplate.SheetType;
-import com.tbea.ic.operation.common.jyzbexcel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.jyzbexcel.NumberFormatterHandler.NumberType;
-import com.tbea.ic.operation.common.jyzbexcel.PercentFormatterHandler;
-import com.tbea.ic.operation.common.jyzbexcel.PercentSingleFormatterHandler;
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
+import com.tbea.ic.operation.common.excel.FormatterHandler;
+import com.tbea.ic.operation.common.excel.HeaderFormatterHandler;
+import com.tbea.ic.operation.common.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.excel.PercentFormatterHandler;
+import com.tbea.ic.operation.common.excel.PercentSingleFormatterHandler;
+import com.tbea.ic.operation.common.excel.ExcelTemplate.JygkSheetType;
+import com.tbea.ic.operation.common.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
@@ -112,11 +112,11 @@ public class YDZBController {
 			throws IOException {
 		Date d = DateSelection.getDate(request);
 		String type = request.getParameter("type");
-		JyzbExcelTemplate template = null;
+		ExcelTemplate template = null;
 		List<String[]> data = null;
 		if ("0".equals(type)) {	
 			data = gszbService.getGsztzb(d);
-			template = JyzbExcelTemplate.createTemplate(SheetType.GSZTZB);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.GSZTZB);
 //			CellFormatter formatter = template.createCellFormatter()
 //					.addType(0, CellFormatter.CellType.HEADER)
 //					.addType(4, CellFormatter.CellType.PERCENT)
@@ -185,7 +185,7 @@ public class YDZBController {
 			}
 		} else {
 			data = gszbService.getSrqy(d);
-			template = JyzbExcelTemplate.createTemplate(SheetType.SRQYFJG);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.SRQYFJG);
 			FormatterHandler formatterChain = this.getFormatterChainWithHeader(
 					new Integer[]{4, 6, 8, 10}, 
 					new Integer[]{1, 2});
@@ -220,11 +220,11 @@ public class YDZBController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		Date d = DateSelection.getDate(request);
-		JyzbExcelTemplate template = null;
+		ExcelTemplate template = null;
 		List<String[]> data = null;
 
 		//data = gszbService.getGsztzb(d);
-		template = JyzbExcelTemplate.createTemplate(SheetType.GSZTZB);
+		template = ExcelTemplate.createJygkTemplate(JygkSheetType.GSZTZB);
 //		CellFormatter formatter = template.createCellFormatter()
 //				.addType(0, CellFormatter.CellType.HEADER)
 //				.addType(4, CellFormatter.CellType.PERCENT)
@@ -424,7 +424,7 @@ public class YDZBController {
 			HttpServletResponse response) throws IOException {
 		
 		Date d = DateSelection.getDate(request);
-		JyzbExcelTemplate template = null;
+		ExcelTemplate template = null;
 		CompanyType compType = CompanySelection.getCompany(request);
 		String compName = compType.getValue();
 		String fileName = compName + "经营指标完成情况";
@@ -434,7 +434,7 @@ public class YDZBController {
 				INDICATOR_CTQY_WY,
 				INDICATOR_CTQY_WMY
 		});
-		template = JyzbExcelTemplate.createTemplate(SheetType.GS_SYB);
+		template = ExcelTemplate.createJygkTemplate(JygkSheetType.GS_SYB);
 	
 		FormatterHandler formatterChain = this.getFormatterChainWithHeader(
 				new Integer[]{4, 6, 9, 11, 13, 15}, new Integer[]{1, 2});
@@ -479,10 +479,10 @@ public class YDZBController {
 	public @ResponseBody byte[] getgcy_zbhz_export(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Date d = DateSelection.getDate(request);
-		JyzbExcelTemplate template = null;
+		ExcelTemplate template = null;
 		List<String[]> data = null;
 		data = gszbService.getGcyzb(d);
-		template = JyzbExcelTemplate.createTemplate(SheetType.GCY_ZBWC);
+		template = ExcelTemplate.createJygkTemplate(JygkSheetType.GCY_ZBWC);
 //		CellFormatter formatter = template.createCellFormatter()
 //				.addType(3, CellFormatter.CellType.PERCENT)
 //				.addType(5, CellFormatter.CellType.PERCENT)
@@ -520,14 +520,14 @@ public class YDZBController {
 		Date d = DateSelection.getDate(request);
 		int month = Integer.parseInt(request.getParameter("month"));
 		String year = request.getParameter("year");
-		JyzbExcelTemplate template = null;
+		ExcelTemplate template = null;
 		List<String[]> data = null;
 		String fileNameAndSheetName = null; 
 		FormatterHandler formatterChain = null;
 		if (0 == month % 3) {
 			data = gszbService.getGcyThirdSeasonPredictionZBs(d);
 			fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度末月五大经营指标预测完成情况";
-			template = JyzbExcelTemplate.createTemplate(SheetType.JDFCYZBYJ_MY);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDFCYZBYJ_MY);
 //			formatter = template.createCellFormatter()
 //					.addType(5, CellFormatter.CellType.PERCENT)
 //					.addType(7, CellFormatter.CellType.PERCENT)					
@@ -546,7 +546,7 @@ public class YDZBController {
 		if (1 == month % 3) {
 			data = gszbService.getGcyFirstSeasonPredictionZBs(d);
 			fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度首月五大经营指标预测完成情况";
-			template = JyzbExcelTemplate.createTemplate(SheetType.JDFCYZBYJ_SY);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDFCYZBYJ_SY);
 //			formatter = template.createCellFormatter()
 //					.addType(4, CellFormatter.CellType.PERCENT)
 //					.addType(6, CellFormatter.CellType.PERCENT)					
@@ -561,7 +561,7 @@ public class YDZBController {
 		if (2 == month % 3) {
 			data = gszbService.getGcySecondSeasonPredictionZBs(d);
 			fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度次月五大经营指标预测完成情况";
-			template = JyzbExcelTemplate.createTemplate(SheetType.JDFCYZBYJ_CY);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDFCYZBYJ_CY);
 //			formatter = template.createCellFormatter()
 //					.addType(4, CellFormatter.CellType.PERCENT)
 //					.addType(6, CellFormatter.CellType.PERCENT)	
@@ -619,10 +619,10 @@ public class YDZBController {
 			HttpServletResponse response) throws IOException {
 		Date d = DateSelection.getDate(request);
 		String gszb = request.getParameter("top5index");
-		JyzbExcelTemplate template = null;
+		ExcelTemplate template = null;
 		List<String[]> data = null;
 		data = gszbService.getCompanyTop5zb(GSZB.valueOf(Integer.valueOf(gszb)), d);
-		template = JyzbExcelTemplate.createTemplate(SheetType.GDWZBWCQK);
+		template = ExcelTemplate.createJygkTemplate(JygkSheetType.GDWZBWCQK);
 //		CellFormatter formatter = template.createCellFormatter()
 //				.addType(3, CellFormatter.CellType.PERCENT)
 //				.addType(5, CellFormatter.CellType.PERCENT)
@@ -781,7 +781,7 @@ public class YDZBController {
 		String month = request.getParameter("month");
 		int iMonth = Integer.valueOf(month);
 		List<String[]> data = null;
-		JyzbExcelTemplate template = null;
+		ExcelTemplate template = null;
 //		CellFormatter formatter = null;
 //		;
 		String fileNameAndSheetName = compType.getValue() + request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
@@ -790,7 +790,7 @@ public class YDZBController {
 			formatterChain = this.getFormatterChainWithHeader(
 					new Integer[]{6, 8, 10, 12, 14, 16, 21, 23, 25}, 
 					new Integer[]{1, 2, 3, 4});
-			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_MY);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDYJZB_MY);
 //			formatter = template.createCellFormatter()
 //					.addType(0, CellFormatter.CellType.HEADER)
 //					.addType(6, CellFormatter.CellType.PERCENT)
@@ -810,7 +810,7 @@ public class YDZBController {
 			formatterChain = this.getFormatterChainWithHeader(
 					new Integer[]{5, 7, 11, 13, 15, 17}, 
 					new Integer[]{1, 2, 3});
-			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_SY);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDYJZB_SY);
 //			formatter = template.createCellFormatter()
 //					.addType(0, CellFormatter.CellType.HEADER)
 //					.addType(5, CellFormatter.CellType.PERCENT)
@@ -825,7 +825,7 @@ public class YDZBController {
 
 		if (2 == iMonth % 3) {
 			data = gszbService.getSecondSeasonPredictionZBsOverview(d, comps);
-			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_CY);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDYJZB_CY);
 			formatterChain = this.getFormatterChainWithHeader(
 					new Integer[]{5, 7, 9, 11, 14, 16, 18, 20}, 
 					new Integer[]{1, 2, 3});
@@ -941,25 +941,25 @@ public class YDZBController {
 		Date d = DateSelection.getDate(request);
 		String month = request.getParameter("month");
 		int iMonth = Integer.valueOf(month);
-		JyzbExcelTemplate template = null;
+		ExcelTemplate template = null;
 		String fileNameAndSheetName = request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
 		FormatterHandler formatterChain = null;
 		if (0 == iMonth % 3) {
-			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_MY);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDYJZB_MY);
 			formatterChain = this.getFormatterChainWithHeader(
 					new Integer[]{6, 8, 10, 12, 14, 16, 21, 23, 25}, new Integer[]{1, 2, 3, 4});
 			fileNameAndSheetName += "末月";
 		}
 
 		if (1 == iMonth % 3) {
-			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_SY);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDYJZB_SY);
 			formatterChain = this.getFormatterChainWithHeader(
 					new Integer[]{5, 7, 11, 13, 15, 17}, new Integer[]{1, 2, 3});
 			fileNameAndSheetName += "首月";
 		}
 
 		if (2 == iMonth % 3) {
-			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_CY);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDYJZB_CY);
 			formatterChain = this.getFormatterChainWithHeader(
 					new Integer[]{5, 7, 9, 11, 14, 16, 18, 20}, new Integer[]{1, 2, 3});
 			fileNameAndSheetName += "次月";
@@ -1049,7 +1049,7 @@ public class YDZBController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String timeStamp = request.getParameter("timeStamp");
-		JyzbExcelTemplate template = (JyzbExcelTemplate) request.getSession(false).getAttribute(timeStamp + "template");
+		ExcelTemplate template = (ExcelTemplate) request.getSession(false).getAttribute(timeStamp + "template");
 		template.write(response, (String) request.getSession(false).getAttribute(timeStamp + "fileName"));
 		request.getSession(false).removeAttribute(timeStamp + "template");
 		request.getSession(false).removeAttribute(timeStamp + "fileName");
@@ -1065,12 +1065,12 @@ public class YDZBController {
 		String month = request.getParameter("month");
 		int iMonth = Integer.valueOf(month);
 		List<String[]> data = null;
-		JyzbExcelTemplate template = null;
+		ExcelTemplate template = null;
 		String fileNameAndSheetName = request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
 		FormatterHandler formatterChain = null;
 		if (0 == iMonth % 3) {
 			data = gszbService.getGsThirdSeasonPredictionZBsOverview(d);
-			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_MY);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDYJZB_MY);
 			formatterChain = this.getFormatterChainWithHeader(
 					new Integer[]{6, 8, 10, 12, 14, 16, 21, 23, 25}, new Integer[]{1, 2, 3, 4});
 			fileNameAndSheetName += "末月";
@@ -1078,7 +1078,7 @@ public class YDZBController {
 
 		if (1 == iMonth % 3) {
 			data = gszbService.getGsFirstSeasonPredictionZBsOverview(d);
-			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_SY);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDYJZB_SY);
 			formatterChain = this.getFormatterChainWithHeader(
 					new Integer[]{5, 7, 11, 13, 15, 17}, new Integer[]{1, 2, 3});
 			fileNameAndSheetName += "首月";
@@ -1086,7 +1086,7 @@ public class YDZBController {
 
 		if (2 == iMonth % 3) {
 			data = gszbService.getGsSecondSeasonPredictionZBsOverview(d);
-			template = JyzbExcelTemplate.createTemplate(SheetType.JDYJZB_CY);
+			template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDYJZB_CY);
 			formatterChain = this.getFormatterChainWithHeader(
 					new Integer[]{5, 7, 9, 11, 14, 16, 18, 20}, new Integer[]{1, 2, 3});
 			fileNameAndSheetName += "次月";
@@ -1303,7 +1303,7 @@ public class YDZBController {
 			GSZB gszb = GSZB.valueOf(Integer.valueOf(zb));
 			String zbName = request.getParameter("zbName");
 			String year = request.getParameter("year");
-			JyzbExcelTemplate template = null;
+			ExcelTemplate template = null;
 			List<String[]> data = null;
 			String fileNameAndSheetName = null; 
 //			CellFormatter formatter = null;
@@ -1311,7 +1311,7 @@ public class YDZBController {
 			if (0 == month % 3) {
 				data = gszbService.getGdwThirdSeasonPredictionZBs(gszb, d);
 				fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度末月"+ zbName + "预测完成情况";
-				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_MY);
+				template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDFDWZBYJ_MY);
 //				formatter = template.createCellFormatter()
 //						.addType(5, CellFormatter.CellType.PERCENT)
 //						.addType(7, CellFormatter.CellType.PERCENT)					
@@ -1329,7 +1329,7 @@ public class YDZBController {
 			if (1 == month % 3) {
 				data = gszbService.getGdwFirstSeasonPredictionZBs(gszb, d);
 				fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度首月"+ zbName + "预测完成情况";
-				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_SY);
+				template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDFDWZBYJ_SY);
 //				formatter = template.createCellFormatter()
 //						.addType(4, CellFormatter.CellType.PERCENT)
 //						.addType(6, CellFormatter.CellType.PERCENT)					
@@ -1344,7 +1344,7 @@ public class YDZBController {
 			if (2 == month % 3) {
 				data = gszbService.getGdwSecondSeasonPredictionZBs(gszb, d);
 				fileNameAndSheetName = year + "年第" + DateHelper.getJdCount(month) + "季度次月"+ zbName + "预测完成情况";
-				template = JyzbExcelTemplate.createTemplate(SheetType.JDFDWZBYJ_CY);
+				template = ExcelTemplate.createJygkTemplate(JygkSheetType.JDFDWZBYJ_CY);
 //				formatter = template.createCellFormatter()
 //						.addType(4, CellFormatter.CellType.PERCENT)
 //						.addType(6, CellFormatter.CellType.PERCENT)	

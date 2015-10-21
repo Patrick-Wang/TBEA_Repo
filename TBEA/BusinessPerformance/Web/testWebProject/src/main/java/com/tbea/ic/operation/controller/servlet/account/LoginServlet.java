@@ -127,7 +127,7 @@ public class LoginServlet {
 				entryService.hasMarketPermission(account));
 	}
 	
-	@RequestMapping(value = "validate.do", method = RequestMethod.POST)
+	@RequestMapping(value = "validate.do")
 	public ModelAndView validate(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = "j_username") String j_username,

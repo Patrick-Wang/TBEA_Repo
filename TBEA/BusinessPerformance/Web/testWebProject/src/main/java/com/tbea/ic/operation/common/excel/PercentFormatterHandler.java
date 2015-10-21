@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.common.jyzbexcel;
+package com.tbea.ic.operation.common.excel;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 
@@ -18,7 +18,7 @@ public class PercentFormatterHandler extends AbstractFormatterHandler {
 
 
 	@Override
-	protected void onHandle(JyzbExcelTemplate template, HSSFCell cell, String val) {
+	protected void onHandle(ExcelTemplate template, HSSFCell cell, String val) {
 		cell.setCellValue(String.format("%.1f", Double.valueOf(val) * 100) + "%");
 		cell.setCellStyle(template.getCellStylePercent());
 	}

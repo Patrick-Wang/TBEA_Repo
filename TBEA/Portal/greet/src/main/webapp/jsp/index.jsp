@@ -9,7 +9,8 @@
 	media="all" />
 <script src="../js/jquery/jquery-1.7.2.min.js" type="text/javascript"></script>
 <script src="../js/main.js" type="text/javascript"></script>
-
+<script src="../js/util.js" type="text/javascript"></script>
+<script src="../js/index.js" type="text/javascript"></script>
 <title>特变电工-首页</title>
 </head>
 
@@ -48,81 +49,14 @@
 		});
 
 
-	function showBondPage(systemCode,sysTemName){
-		$("div.theme-popover3 .dform3").empty();
-		var params = "params.ssoSysCode="+systemCode;
-	//	$.getJSON("/fe/sso/querySystemParams.gsp",params,function(data){
 
-	//	});
-		$('.theme-popover-mask').fadeIn(100);
-		$('.theme-popover3').slideDown(200);
-		
-		data = JSON.parse('{"infoList":[{"paramsName":"用户名","paramsKey":"ssousername","ssosysCode":65,"encrypt":0,"encryptTramsfer":0},{"paramsName":"用户密码","paramsKey":"ssopassword","ssosysCode":65,"encrypt":0,"encryptTramsfer":0}]}');
-		var paramsList = data.infoList;
-		var html = "";
-		$.each(paramsList,function(i,item){
-			html += "<div class=\"dform_div\"><span style=\"min-width:80px;\">"
-			+ paramsList[i].paramsName+
-			 ":</span><input style=\"width:352px;\" flg=\"wr\" onblur=\"testInput('"+paramsList[i].paramsKey+
-			"')\" maxlength=\"30\" type=\"text\"  id="+
-			paramsList[i].paramsKey+
-			" name="+paramsList[i].paramsKey+
-			" class=\"alert_text\" /><lable style=\"color:#E61212\" id='"+
-			paramsList[i].paramsKey+
-			"lable'></lable></div>";
-		});
-		html +="<div class=\"dform_div\"><input type=\"button\" id=\"updateUserInfo\" value=\"绑 定\" class=\"alert_button\" onclick=\"goToBond('"+
-				systemCode+"','"+sysTemName+"')\"/></div>";
-
-		$("div.theme-popover3 .dform3").append(html);
-		html = "";
+	
+	function loginJxpt(usrName, psw){
+		$.post("http://192.168.7.12:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=" +usrName+ "&pass=000000" + psw);
+		xmlhttp.open("POST","http://192.168.7.12:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=anfengling&pass=000000&image.x=35&image.y=13",false);
+		xmlhttp.send(null);document.body.innerHTML=xmlhttp.responseText;
 	}
-
-
-	function goToBond(systemCode,sysTemName){
-		var flag = false;
-		var str = "";
-		var inputs= $("input[flg='wr']");
-		inputs.each(function(){
-			if(testInput($(this).attr("id"))){
-				str +="{\"key\":\""+$(this).attr("name")+"\",\"value\":\""+$(this).val()+"\"},";
-				flag = true;
-			}else{
-				flag = false;
-			}
-		});
-		if(flag){
-			str = str.substring(0,str.length-1).replace(/[ ]/g,"");
-			str = "["+str+"]";
-
-			var params={"params.paramsValuesStr":str,"params.systemCode":systemCode,"params.userCode":"${usrName}"};
-			
-			//$.getJSON("/fe/sso/insertSystemParamsValues.gsp",params,function(data){
-				if(true){
-					$("div.theme-popover3 .dform3").empty();
-					var html = "<div style=\"text-align: center; width: 300px;  margin: 60px auto;\"><h3>绑定 “"+sysTemName+"” 成功!</h3></div>";
-					$("div.theme-popover3 .dform3").append(html);
-				}else{
-					$("div.theme-popover3 .dform3").empty();
-					var html = "<div style=\"text-align: center; width: 300px;  margin: 60px auto;\"><h3>绑定 “"+sysTemName+"” 失败!</h3></div>";
-					$("div.theme-popover3 .dform3").append(html);
-				}
-			//});
-		}
-	}
-
-	function testInput(id){
-		
-		var idstr = "#"+id;
-		var text = $(idstr).val().replace(/[ ]/g,"");
-		if(text == null || text == ""){
-			$(idstr+"lable").text("请按照提示填入信息");
-			return false;
-		}else{
-			$(idstr+"lable").text("");
-		}
-		return true;
-	}
+	
 		</script>
 
 
@@ -141,29 +75,23 @@
 		<div class="login_list">
 			<ul id="login_list_sys">
 
-				<li class="login_list_item login_list_item_1"><a
-					target="_blank"
-					href="http://192.168.7.12:8080/welcome.do"><span>绩效管理平台</span><img
-						src="../images/login_icons_1.png"></a><span
+				<li class="login_list_item login_list_item_1"><div onclick="login(1)">
+					<span>绩效管理平台</span><img
+						src="../images/login_icons_1.png"></div><span
 					class="login_list_bd"
 					onclick="showBondPage(&#39;84&#39;,&#39;${usrName}&#39;);">绑定用户</span></li>
-				<li class="login_list_item login_list_item_2"><a
-					target="_blank"
-					href="http://172.28.8.74/apps/page/admin/index.vm"><span>用户管理系统</span><img
-						src="../images/login_icons_1.png"></a></li>
-				<li class="login_list_item login_list_item_3"><a
-					target="_blank"
-					href="http://172.28.8.119/HQ/myportal/__ac0x3login/__tpaction?requestSource=HQ_login"><span>OA系统</span><img
-						src="../images/login_icons_1.png"></a><span
+<!-- 				<li class="login_list_item login_list_item_2"><div onclick="login( 2)"> -->
+<!-- 					<span>用户管理系统</span><img -->
+<!-- 						src="../images/login_icons_1.png"></div></li> -->
+				<li class="login_list_item login_list_item_3"><div onclick="login(3)">
+					<span>OA系统</span><img
+						src="../images/login_icons_1.png"></div><span
 					class="login_list_bd"
 					onclick="showBondPage(&#39;65&#39;,&#39;${usrName}&#39;);">绑定用户</span></li>
-				<li class="login_list_item login_list_item_4"><a
-					target="_blank"
-					href="http://km.tbea.com:8080/login.jsp"><span>智慧银行</span><img
-						src="../images/login_icons_1.png"></a></li>
-				<li class="login_list_item login_list_item_5"><a
-					target="_blank"
-					href="http://192.168.7.22/BusinessManagement"><span>经营管控系统</span><img
+				<li class="login_list_item login_list_item_4"><div onclick="login(4)">
+					<span>智慧银行</span><img
+						src="../images/login_icons_1.png"></div></li>
+				<li class="login_list_item login_list_item_5"><div onclick="login(5)"><span>经营管控系统</span><img
 						src="../images/login_icons_1.png"></a></li>
 				<li class="login_list_item login_list_item_6"><a
 					target="_blank"

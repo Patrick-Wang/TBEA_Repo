@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.common.jyzbexcel;
+package com.tbea.ic.operation.common.excel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public abstract class AbstractFormatterHandler implements FormatterHandler {
 		return mNextHandler;
 	}
 
-	protected void callNext(String zbName, Integer col, JyzbExcelTemplate template, HSSFCell cell, String val){
+	protected void callNext(String zbName, Integer col, ExcelTemplate template, HSSFCell cell, String val){
 		if (null != mNextHandler){
 			this.mNextHandler.handle(zbName, col, template, cell, val);
 		}
@@ -60,10 +60,10 @@ public abstract class AbstractFormatterHandler implements FormatterHandler {
 		return false;
 	}
 	
-	abstract protected void onHandle(JyzbExcelTemplate template, HSSFCell cell, String val);
+	abstract protected void onHandle(ExcelTemplate template, HSSFCell cell, String val);
 	
 	@Override
-	public void handle(String zbName, Integer col, JyzbExcelTemplate template,
+	public void handle(String zbName, Integer col, ExcelTemplate template,
 			HSSFCell cell, String val) {
 		if (val != null) {
 			if (match(zbName, col)) {

@@ -50,6 +50,13 @@ public class CompositePipe extends BasePipe{
 		return this;
 	}
 	
+	public CompositePipe addCompany(List<Company> comps, IPipeConfigurator dwPipeConfig) {
+		for (Company comp: comps){
+			this.addCompany(comp, dwPipeConfig);
+		}
+		return this;
+	}
+	
 	public CompositePipe addCompany(Company comp, IPipeConfigurator dwPipeConfig) {
 		if (!this.companies.contains(comp)) {
 			this.companies.add(comp);

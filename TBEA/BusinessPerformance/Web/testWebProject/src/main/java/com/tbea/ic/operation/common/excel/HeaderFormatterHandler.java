@@ -1,5 +1,4 @@
-package com.tbea.ic.operation.common.jyzbexcel;
-import java.util.List;
+package com.tbea.ic.operation.common.excel;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 
 public class HeaderFormatterHandler extends AbstractFormatterHandler {
@@ -18,7 +17,7 @@ public class HeaderFormatterHandler extends AbstractFormatterHandler {
 
 
 	@Override
-	protected void onHandle(JyzbExcelTemplate template, HSSFCell cell, String val) {
+	protected void onHandle(ExcelTemplate template, HSSFCell cell, String val) {
 		if (val.contains(" ")){
 			cell.setCellValue(" " + val.trim());
 		}else{

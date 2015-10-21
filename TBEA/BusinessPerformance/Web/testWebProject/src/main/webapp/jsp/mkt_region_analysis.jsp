@@ -8,7 +8,8 @@
 <head>
 
 <!-- message box -->
-<link href="../jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
+<link href="../jsp/message-box/css/style.css" rel="stylesheet"
+	type="text/css">
 
 <!-- jquery -->
 <script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
@@ -177,12 +178,12 @@ th.ui-th-ltr {
 	font-size: 14px;
 }
 
-#update{
+#update {
 	height: 23px;
 	padding: .1em 1em;
 	margin-top: -1px;
 }
-		
+
 .ui-multiselect {
 	padding: 2px 0 2px 4px;
 	text-align: left;
@@ -230,7 +231,7 @@ th.ui-th-ltr {
 								});
 
 						</script>
-						</c:if></td>
+							</c:if></td>
 						<td width="10px"></td>
 						<td><select id="analysisType" style="width: 190px"
 							onchange="instance.onType_TypeSelected()">
@@ -238,53 +239,49 @@ th.ui-th-ltr {
 								<option value="industry_index">行业关键累计指标</option>
 						</select></td>
 						<td>
-							<div style="width:8px"></div>
+							<div style="width: 8px"></div>
 						</td>
-						<td> <select id="year"
-								onchange="instance.onYearSelected()" style="width: 80px">
-									<option value="2014">2014年</option>
-									<option value="2015">2015年</option>
-							</select></td>
+						<td><select id="year" onchange="instance.onYearSelected()"
+							style="width: 80px">
+								<option value="2014">2014年</option>
+								<option value="2015">2015年</option>
+						</select></td>
+						<td><select id="start_month"
+							onchange="instance.onStartMonthSelected()" style="width: 110px">
+								<option value="0">起始月份</option>
+								<option value="1">1月</option>
+								<option value="2">2月</option>
+								<option value="3">3月</option>
+								<option value="4">4月</option>
+								<option value="5">5月</option>
+								<option value="6">6月</option>
+								<option value="7">7月</option>
+								<option value="8">8月</option>
+								<option value="9">9月</option>
+								<option value="10">10月</option>
+								<option value="11">11月</option>
+								<option value="12">12月</option>
+						</select></td>
+
+						<td><select id="end_month"
+							onchange="instance.onEndMonthSelected()" style="width: 110px">
+								<option value="0">终止月份</option>
+								<option value="1">1月</option>
+								<option value="2">2月</option>
+								<option value="3">3月</option>
+								<option value="4">4月</option>
+								<option value="5">5月</option>
+								<option value="6">6月</option>
+								<option value="7">7月</option>
+								<option value="8">8月</option>
+								<option value="9">9月</option>
+								<option value="10">10月</option>
+								<option value="11">11月</option>
+								<option value="12">12月</option>
+						</select></td>
+
 						<td>
-							<select id="start_month"
-								onchange="instance.onStartMonthSelected()" style="width: 110px">
-									<option value="0">起始月份</option>
-									<option value="1">1月</option>
-									<option value="2">2月</option>
-									<option value="3">3月</option>
-									<option value="4">4月</option>
-									<option value="5">5月</option>
-									<option value="6">6月</option>
-									<option value="7">7月</option>
-									<option value="8">8月</option>
-									<option value="9">9月</option>
-									<option value="10">10月</option>
-									<option value="11">11月</option>
-									<option value="12">12月</option>
-							</select>
-						</td>
-						
-						<td>
-							<select id="end_month"
-								onchange="instance.onEndMonthSelected()" style="width: 110px">
-									<option value="0">终止月份</option>
-									<option value="1">1月</option>
-									<option value="2">2月</option>
-									<option value="3">3月</option>
-									<option value="4">4月</option>
-									<option value="5">5月</option>
-									<option value="6">6月</option>
-									<option value="7">7月</option>
-									<option value="8">8月</option>
-									<option value="9">9月</option>
-									<option value="10">10月</option>
-									<option value="11">11月</option>
-									<option value="12">12月</option>
-							</select>
-						</td>
-						
-						<td>
-							<div style="width:8px"></div>
+							<div style="width: 8px"></div>
 						</td>
 						<td><input id="update" type="button" value="更新"
 							style="width: 80px; margin-left: 10px;"
@@ -296,16 +293,16 @@ th.ui-th-ltr {
 		<tr>
 			<td><div id="table1" style="margin-bottom: 15px"></div></td>
 		</tr>
-		
+
 		<tr>
 			<td>
-				<Table id="assist" style="display:none">
+				<Table id="assist" style="display: none">
 					<tr>
 						<td>
-							<form id="exportBidAnalysisData" method="post" style="overflow:visible">
+							<form id="exportBidAnalysisData" method="post"
+								style="overflow: visible">
 								<input class="exportButton" type="button" value="导出数据"
-									style="width: 120px;"
-									onclick="instance.exportExcel()"
+									style="width: 120px;" onclick="instance.exportExcel()"
 									class="ui-button ui-widget ui-state-default ui-corner-all"
 									role="button" aria-disabled="false"></input>
 							</form>
@@ -318,7 +315,7 @@ th.ui-th-ltr {
 		</tr>
 
 	</table>
-	
+
 	<%@include file="loading.jsp"%>
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>

@@ -2,8 +2,6 @@ package com.tbea.ic.operation.controller.servlet.market;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,15 +34,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.common.jyzbexcel.FormatterHandler;
-import com.tbea.ic.operation.common.jyzbexcel.JyzbExcelTemplate;
-import com.tbea.ic.operation.common.jyzbexcel.JyzbExcelTemplate.SheetType;
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
+import com.tbea.ic.operation.common.excel.FormatterHandler;
+import com.tbea.ic.operation.common.excel.HeaderFormatterHandler;
+import com.tbea.ic.operation.common.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.excel.PercentFormatterHandler;
+import com.tbea.ic.operation.common.excel.ExcelTemplate.MarketSheetType;
+import com.tbea.ic.operation.common.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.market.MarketService;
@@ -53,9 +51,6 @@ import com.tbea.ic.operation.service.market.MarketService;
 @Controller
 @RequestMapping(value = "Market")
 public class MarketServlet {
-
-	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
-	CompanyManager companyManager;
 
 	@Autowired
 	private MarketService marketService;
@@ -75,7 +70,7 @@ public class MarketServlet {
 		accountCompMap.put("新缆市场部", "新缆");
 		accountCompMap.put("德缆市场部", "德缆");
 	}
-	
+
 	@RequestMapping(value = "import.do")
 	public @ResponseBody byte[] importExcel(HttpServletRequest request,
 			HttpServletResponse response,
@@ -173,7 +168,7 @@ public class MarketServlet {
 
 	private String getCompanyName(Account account) {
 		String comp = accountCompMap.get(account.getName());
-		if (comp == null){
+		if (comp == null) {
 			return "";
 		}
 		return comp;
@@ -188,40 +183,40 @@ public class MarketServlet {
 		return new ModelAndView("mkt_view_data", map);
 	}
 
-	public static void compress(InputStream is, OutputStream os)  
-            throws Exception {  
-  
-        GZIPOutputStream gos = new GZIPOutputStream(os);  
-  
-        int count;  
-        byte data[] = new byte[1024];  
-        while ((count = is.read(data, 0, 1024)) != -1) {  
-            gos.write(data, 0, count);  
-        }
-  
-        gos.finish();  
-  
-        gos.flush();  
-        gos.close();  
-    }  
-	
-	private static byte[] compress(byte[] data) throws Exception {  
-        ByteArrayInputStream bais = new ByteArrayInputStream(data);  
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-  
-        // 压缩  
-        compress(bais, baos);  
-  
-        byte[] output = baos.toByteArray();  
-  
-        baos.flush();  
-        baos.close();  
-  
-        bais.close();  
-  
-        return output;  
-    }  
-	
+	public static void compress(InputStream is, OutputStream os)
+			throws Exception {
+
+		GZIPOutputStream gos = new GZIPOutputStream(os);
+
+		int count;
+		byte data[] = new byte[1024];
+		while ((count = is.read(data, 0, 1024)) != -1) {
+			gos.write(data, 0, count);
+		}
+
+		gos.finish();
+
+		gos.flush();
+		gos.close();
+	}
+
+	private static byte[] compress(byte[] data) throws Exception {
+		ByteArrayInputStream bais = new ByteArrayInputStream(data);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+		// 压缩
+		compress(bais, baos);
+
+		byte[] output = baos.toByteArray();
+
+		baos.flush();
+		baos.close();
+
+		bais.close();
+
+		return output;
+	}
+
 	@RequestMapping(value = "mkt_view_update.do")
 	public @ResponseBody byte[] getMktViewUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -234,8 +229,8 @@ public class MarketServlet {
 		if (null != request.getParameter("year")) {
 			year = Integer.valueOf(request.getParameter("year"));
 		}
-//		Util.Elapse escape = new Util.Elapse();
-//		escape.start();
+		// Util.Elapse escape = new Util.Elapse();
+		// escape.start();
 		if (rpttype.equals(TYPE_BID)) {
 			list.add(marketService.getBidData(companyName, year));
 		} else if (rpttype.equals(TYPE_PROJECT)) {
@@ -243,28 +238,27 @@ public class MarketServlet {
 		} else if (rpttype.equals(TYPE_SIGN)) {
 			list.add(marketService.getContData(companyName));
 		}
-//		escape.end("getPrjData");
-		
-//		escape.start();
+		// escape.end("getPrjData");
+
+		// escape.start();
 		String listJson = JSONArray.fromObject(list).toString()
 				.replace("null", "\"\"");
-//		escape.end("toJson");
+		// escape.end("toJson");
 		// System.out.println(listJson);
-		
-//		escape.start();
+
+		// escape.start();
 		byte[] result = listJson.getBytes("utf-8");
-//		escape.end("tobytes " + result.length + " ");
-		
-//		escape.start();
+		// escape.end("tobytes " + result.length + " ");
+
+		// escape.start();
 		result = compress(result);
-//		escape.end("tobytes " + result.length + " ");
-		
-		response.addHeader("Content-Encoding", "gzip"); 
-		
+		// escape.end("tobytes " + result.length + " ");
+
+		response.addHeader("Content-Encoding", "gzip");
+
 		return result;
 	}
-	
-	
+
 	@RequestMapping(value = "mkt_bid_analysis.do")
 	public ModelAndView getMktBidAnalysis(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -277,21 +271,64 @@ public class MarketServlet {
 	}
 
 	@RequestMapping(value = "mkt_bid_analysis_update.do")
-	public @ResponseBody byte[] getMktBidAnalysisUpdate(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
+	public @ResponseBody byte[] getMktBidAnalysisUpdate(
+			HttpServletRequest request, HttpServletResponse response)
+			throws UnsupportedEncodingException {
 		Date date = DateSelection.getDate(request);
-		JSONArray companyNames = JSONArray.fromObject(request.getParameter("companyName"));
+		JSONArray companyNames = JSONArray.fromObject(request
+				.getParameter("companyName"));
 		List<List<String>> result = null;
 		String type = request.getParameter("type");
-		if ("bid_industry".equals(type)){
+		if ("bid_industry".equals(type)) {
 			result = marketService.getIndustryBidData(companyNames, date);
-		} else if ("bid_company".equals(type)){
+		} else if ("bid_company".equals(type)) {
 			result = marketService.getCompanyBidData(companyNames, date);
 		}
-		
-		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");
+
+		return JSONArray.fromObject(result).toString()
+				.replace("null", "\"--\"").getBytes("utf-8");
 	}
-	
+
+	@RequestMapping(value = "mkt_bid_analysis_export.do")
+	public @ResponseBody byte[] exportMktBidAnalysis(
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		Date date = DateSelection.getDate(request);
+		JSONArray companyNames = JSONArray.fromObject(request
+				.getParameter("companyName"));
+		List<List<String>> result = null;
+		String type = request.getParameter("type");
+
+		ExcelTemplate marketTemplate = null;
+		FormatterHandler formatterChain = new HeaderFormatterHandler(null,
+				new Integer[] { 0 });
+		formatterChain.next(
+				new PercentFormatterHandler(null, new Integer[] { 4, 8, 9, 13,
+						14, 15 })).next(
+				new NumberFormatterHandler(NumberType.RESERVE_0));
+
+		if ("bid_industry".equals(type)) {
+			result = marketService.getIndustryBidData(companyNames, date);
+			marketTemplate = ExcelTemplate
+					.createMarketTemplate(ExcelTemplate.MarketSheetType.BID_INDUSTRY);
+		} else if ("bid_company".equals(type)) {
+			result = marketService.getCompanyBidData(companyNames, date);
+			marketTemplate = ExcelTemplate
+					.createMarketTemplate(ExcelTemplate.MarketSheetType.BID_COMPANY);
+		}
+		this.exportExcel(response, marketTemplate, 3, null, result,
+				formatterChain);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		marketTemplate.write(
+				response,
+				marketTemplate.getWorkbook().getSheetAt(0).getSheetName() + "_"
+						+ cal.get(Calendar.YEAR) + "-"
+						+ cal.get(Calendar.MONTH) + ".xls");
+
+		return "".getBytes("utf-8");
+	}
+
 	@RequestMapping(value = "mkt_contract_analysis.do")
 	public ModelAndView getMktContractAnalysis(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -304,22 +341,63 @@ public class MarketServlet {
 	}
 
 	@RequestMapping(value = "mkt_contract_analysis_update.do")
-	public @ResponseBody byte[] getMktContractAnalysisUpdate(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
+	public @ResponseBody byte[] getMktContractAnalysisUpdate(
+			HttpServletRequest request, HttpServletResponse response)
+			throws UnsupportedEncodingException {
 		Date date = DateSelection.getDate(request);
-		JSONArray companyNames = JSONArray.fromObject(request.getParameter("companyName"));
+		JSONArray companyNames = JSONArray.fromObject(request
+				.getParameter("companyName"));
 		List<List<String>> result = null;
 		String type = request.getParameter("type");
-		if ("contract_industry".equals(type)){
+		if ("contract_industry".equals(type)) {
 			result = marketService.getIndustrySignData(companyNames, date);
-		} else if ("contract_company".equals(type)){
+		} else if ("contract_company".equals(type)) {
 			result = marketService.getCompanySignData(companyNames, date);
 		}
-		
-		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");
+
+		return JSONArray.fromObject(result).toString()
+				.replace("null", "\"--\"").getBytes("utf-8");
 	}
-	
-	
+
+	@RequestMapping(value = "mkt_contract_analysis_export.do")
+	public @ResponseBody byte[] exportMktContractAnalysis(
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		Date date = DateSelection.getDate(request);
+		JSONArray companyNames = JSONArray.fromObject(request
+				.getParameter("companyName"));
+		List<List<String>> result = null;
+		String type = request.getParameter("type");
+
+		ExcelTemplate marketTemplate = null;
+		FormatterHandler formatterChain = new HeaderFormatterHandler(null,
+				new Integer[] { 0 });
+		formatterChain
+				.next(new PercentFormatterHandler(null, new Integer[] { 3, 6,
+						9, 10 })).next(
+						new NumberFormatterHandler(NumberType.RESERVE_0));
+
+		if ("contract_industry".equals(type)) {
+			result = marketService.getIndustrySignData(companyNames, date);
+			marketTemplate = ExcelTemplate
+					.createMarketTemplate(MarketSheetType.SIGN_INDUSTRY);
+		} else if ("contract_company".equals(type)) {
+			result = marketService.getCompanySignData(companyNames, date);
+			marketTemplate = ExcelTemplate
+					.createMarketTemplate(MarketSheetType.SIGN_COMPANY);
+		}
+		this.exportExcel(response, marketTemplate, 3, null, result,
+				formatterChain);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		marketTemplate.write(
+				response,
+				marketTemplate.getWorkbook().getSheetAt(0).getSheetName() + "_"
+						+ cal.get(Calendar.YEAR) + "-"
+						+ cal.get(Calendar.MONTH) + ".xls");
+		return "".getBytes("utf-8");
+	}
+
 	@RequestMapping(value = "mkt_region_analysis.do")
 	public ModelAndView getMktRegionAnalysis(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -330,24 +408,131 @@ public class MarketServlet {
 		map.put("companyName", getCompanyName(account));
 		return new ModelAndView("mkt_region_analysis", map);
 	}
-	
+
 	@RequestMapping(value = "mkt_region_analysis_update.do")
-	public @ResponseBody byte[] getMktRegionAnalysisUpdate(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
+	public @ResponseBody byte[] getMktRegionAnalysisUpdate(
+			HttpServletRequest request, HttpServletResponse response)
+			throws UnsupportedEncodingException {
 		Date endDate = DateSelection.getDate(request);
 		Date startDate = DateSelection.getStartDate(request);
-		JSONArray companyNames = JSONArray.fromObject(request.getParameter("companyName"));
+		JSONArray companyNames = JSONArray.fromObject(request
+				.getParameter("companyName"));
 		List<List<String>> result = null;
 		String type = request.getParameter("type");
-		if ("region_index".equals(type)){
-			result = marketService.getAreaMixedAnalysisData(companyNames, startDate, endDate);
-		} else if ("industry_index".equals(type)){
-			result = marketService.getIndustryMixedAnalysisData(companyNames, startDate, endDate);
+		if ("region_index".equals(type)) {
+			result = marketService.getAreaMixedAnalysisData(companyNames,
+					startDate, endDate);
+		} else if ("industry_index".equals(type)) {
+			result = marketService.getIndustryMixedAnalysisData(companyNames,
+					startDate, endDate);
 		}
-		
-		return JSONArray.fromObject(result).toString().replace("null", "\"--\"").getBytes("utf-8");
+		return JSONArray.fromObject(result).toString()
+				.replace("null", "\"--\"").getBytes("utf-8");
 	}
-	
+
+	private HSSFSheet reserveSheet(HSSFWorkbook workbook, int sheetIndex) {
+		for (int i = workbook.getNumberOfSheets() - 1; i >= 0; --i) {
+			if (sheetIndex != i) {
+				workbook.removeSheetAt(i);
+			}
+		}
+		return workbook.getSheetAt(0);
+	}
+
+	@RequestMapping(value = "mkt_region_analysis_export.do")
+	public @ResponseBody byte[] exportMktRegionAnalysis(
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		Date endDate = DateSelection.getDate(request);
+		Date startDate = DateSelection.getStartDate(request);
+		Calendar calStart = Calendar.getInstance();
+		calStart.setTime(startDate);
+		Calendar calEnd = Calendar.getInstance();
+		calEnd.setTime(endDate);
+		JSONArray companyNames = JSONArray.fromObject(request
+				.getParameter("companyName"));
+		List<List<String>> result = null;
+		String type = request.getParameter("type");
+		ExcelTemplate marketTemplate = null;
+		FormatterHandler formatterChain = new HeaderFormatterHandler(null,
+				new Integer[] { 0 });
+		formatterChain.next(
+				new PercentFormatterHandler(null, new Integer[] { 3, 7, 9, 10,
+						11, 12 })).next(
+				new NumberFormatterHandler(NumberType.RESERVE_0));
+
+		if ("region_index".equals(type)) {
+			result = marketService.getAreaMixedAnalysisData(companyNames,
+					startDate, endDate);
+			marketTemplate = ExcelTemplate
+					.createMarketTemplate(MarketSheetType.MIXED_AREA);
+			HSSFSheet sheet = marketTemplate.getWorkbook().getSheetAt(0);
+			HSSFCell cell = sheet.getRow(1).getCell(1);
+			String val = cell.getStringCellValue();
+			val = val.replace("YY", calStart.get(Calendar.YEAR) + "")
+					.replace("MM", (calStart.get(Calendar.MONTH) + 1) + "")
+					.replace("mm", (calEnd.get(Calendar.MONTH) + 1) + "");
+			cell.setCellValue(val);
+		} else if ("industry_index".equals(type)) {
+			result = marketService.getIndustryMixedAnalysisData(companyNames,
+					startDate, endDate);
+			marketTemplate = ExcelTemplate
+					.createMarketTemplate(MarketSheetType.MIXED_INDUSTRY);
+			HSSFSheet sheet = marketTemplate.getWorkbook().getSheetAt(0);
+			HSSFCell cell = sheet.getRow(1).getCell(1);
+			String val = cell.getStringCellValue();
+			val = val.replace("YY", calStart.get(Calendar.YEAR) + "")
+					.replace("MM", (calStart.get(Calendar.MONTH) + 1) + "")
+					.replace("mm", (calEnd.get(Calendar.MONTH) + 1) + "");
+			cell.setCellValue(val);
+
+			cell = sheet.getRow(1).getCell(5);
+			val = cell.getStringCellValue();
+			val = val.replace("YY", calStart.get(Calendar.YEAR) + "")
+					.replace("MM", (calStart.get(Calendar.MONTH) + 1) + "")
+					.replace("mm", (calEnd.get(Calendar.MONTH) + 1) + "");
+			cell.setCellValue(val);
+		}
+
+		this.exportExcel(response, marketTemplate, 3, null, result,
+				formatterChain);
+		marketTemplate.write(
+				response,
+				marketTemplate.getWorkbook().getSheetAt(0).getSheetName() + "_"
+						+ calStart.get(Calendar.YEAR) + "-"
+						+ calStart.get(Calendar.MONTH) + "~"
+						+ calEnd.get(Calendar.MONTH) + ".xls");
+		return "".getBytes("utf-8");
+	}
+
+	private void exportExcel(HttpServletResponse response,
+			ExcelTemplate marketTemplate, int base, String[][] list1,
+			List<List<String>> list2, FormatterHandler handler)
+			throws IOException {
+
+		if (list1 != null) {
+			for (int i = 0, ilen = list1.length; i < ilen; ++i) {
+				HSSFRow row = marketTemplate.getWorkbook().getSheetAt(0)
+						.createRow(i + base);
+				for (int j = 0, jlen = list1[i].length; j < jlen; ++j) {
+					HSSFCell cell = row.createCell(j);
+					handler.handle(list1[i][0], j, marketTemplate, cell,
+							list1[i][j]);
+				}
+			}
+		} else {
+			for (int i = 0, ilen = list2.size(); i < ilen; ++i) {
+				HSSFRow row = marketTemplate.getWorkbook().getSheetAt(0)
+						.createRow(i + base);
+				for (int j = 0, jlen = list2.get(i).size(); j < jlen; ++j) {
+					HSSFCell cell = row.createCell(j);
+					handler.handle(list2.get(i).get(0), j, marketTemplate,
+							cell, list2.get(i).get(j));
+				}
+			}
+		}
+	}
+
 	@RequestMapping(value = "mkt_view_export.do")
 	public @ResponseBody byte[] mktViewExport(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
@@ -380,7 +565,6 @@ public class MarketServlet {
 					"数量（台）", "签约容量(kVA)", "签约金额", "付款方式", "签订人", "具体签约单位",
 					"是否现款现货", "是否制造服务业" };
 		}
-
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet("市场部信息");
 
@@ -392,9 +576,10 @@ public class MarketServlet {
 
 		for (int i = 0, ilen = list.get(0).length; i < ilen; ++i) {
 			row = sheet.createRow(i + 1);
-			for (int j = 0, jlen = title.length; j < jlen; ++j) {
+			for (int j = 0, jlen = list.get(0)[i].length; j < jlen; ++j) {
 				HSSFCell cell = row.createCell(j);
-				if (!"null".equals(list.get(0)[i][j])) {
+				String val = cell.getStringCellValue();
+				if (list.get(0)[i][j] == null) {
 					cell.setCellValue(list.get(0)[i][j]);
 				} else {
 					cell.setCellValue("");
@@ -402,10 +587,6 @@ public class MarketServlet {
 			}
 		}
 
-		response.setContentType("application/octet-stream");
-		response.setHeader("Content-disposition", "attachment;filename=\""
-				+ java.net.URLEncoder.encode("市场部信息", "UTF-8") + ".xls\"");
-		workbook.write(response.getOutputStream());
 		return "".getBytes("utf-8");
 	}
 
@@ -423,8 +604,9 @@ public class MarketServlet {
 
 		list.add(marketService.getPrjData(companyName, year));
 
-		JyzbExcelTemplate template = null;
-		template = JyzbExcelTemplate.createTemplate(SheetType.MARKET_PRO);
+		ExcelTemplate template = null;
+		template = ExcelTemplate
+				.createJygkTemplate(ExcelTemplate.JygkSheetType.MARKET_PRO);
 		HSSFWorkbook workbook = template.getWorkbook();
 		workbook.setSheetName(0, "市场部信息");
 		HSSFSheet sheet = workbook.getSheetAt(0);
@@ -446,24 +628,27 @@ public class MarketServlet {
 		return "".getBytes("utf-8");
 
 	}
-	
-	
-//	@RequestMapping(value = "industry_bid_analysis_update.do")
-//	public @ResponseBody byte[] getIndustryBidAnalysisUpdate(HttpServletRequest request,
-//			HttpServletResponse response) throws IOException {
-//		Date date = DateSelection.getDate(request);
-//		String companyName = request.getParameter("companyName");
-//		List<List<String>> result = marketService.getIndustryBidData(companyName, date);
-//		return JSONArray.fromObject(result).toString().getBytes("utf-8");
-//
-//	}
-//	
-//	@RequestMapping(value = "company_bid_analysis_update.do")
-//	public @ResponseBody byte[] getCompanyBidAnalysisUpdate(HttpServletRequest request,
-//			HttpServletResponse response) throws IOException {
-//		Date date = DateSelection.getDate(request);
-//		String companyName = request.getParameter("companyName");
-//		List<List<String>> result = marketService.getCompanyBidData(companyName, date);
-//		return JSONArray.fromObject(result).toString().getBytes("utf-8");
-//	}
+
+	// @RequestMapping(value = "industry_bid_analysis_update.do")
+	// public @ResponseBody byte[]
+	// getIndustryBidAnalysisUpdate(HttpServletRequest request,
+	// HttpServletResponse response) throws IOException {
+	// Date date = DateSelection.getDate(request);
+	// String companyName = request.getParameter("companyName");
+	// List<List<String>> result = marketService.getIndustryBidData(companyName,
+	// date);
+	// return JSONArray.fromObject(result).toString().getBytes("utf-8");
+	//
+	// }
+	//
+	// @RequestMapping(value = "company_bid_analysis_update.do")
+	// public @ResponseBody byte[]
+	// getCompanyBidAnalysisUpdate(HttpServletRequest request,
+	// HttpServletResponse response) throws IOException {
+	// Date date = DateSelection.getDate(request);
+	// String companyName = request.getParameter("companyName");
+	// List<List<String>> result = marketService.getCompanyBidData(companyName,
+	// date);
+	// return JSONArray.fromObject(result).toString().getBytes("utf-8");
+	// }
 }

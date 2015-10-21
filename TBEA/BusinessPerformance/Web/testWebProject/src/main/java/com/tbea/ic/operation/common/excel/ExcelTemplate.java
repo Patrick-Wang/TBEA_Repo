@@ -1,29 +1,34 @@
-package com.tbea.ic.operation.common.jyzbexcel;
+package com.tbea.ic.operation.common.excel;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.tbea.ic.operation.controller.servlet.convertor.Convertor;
 
-public class JyzbExcelTemplate {
+public class ExcelTemplate {
 	
 	private static String pathJdzbTemplate = null;
+	private static String pathMarketTemplate = null;
+	
+	static 
+	{
+		try {
+			pathMarketTemplate = new URI(Convertor.class
+					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/market_template.xls";
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	static 
 	{
@@ -35,7 +40,7 @@ public class JyzbExcelTemplate {
 		}
 	}
 	
-	public enum SheetType{
+	public enum JygkSheetType{
 		GSZTZB,
 		SRQYFJG,
 		GS_SYB,
@@ -53,86 +58,42 @@ public class JyzbExcelTemplate {
 		MARKET_PRO
 	}
 	
+	public enum MarketSheetType{
+		BID_INDUSTRY,
+		BID_COMPANY,
+		SIGN_INDUSTRY,
+		SIGN_COMPANY,
+		MIXED_AREA,
+		MIXED_INDUSTRY
+	}
 
-
-//	public static class CellFormatter{
-//		public enum CellType{
-//			HEADER,
-//			TEXT,
-//			DOUBLE,
-//			PERCENT
-//		}
-//		JyzbExcelTemplate template;
-//		Map<Integer, CellType> colTypeMap = new HashMap<Integer, CellType>();
-//		private CellFormatter(JyzbExcelTemplate template){
-//			this.template = template;
-//		} 
-//		
-//		public CellFormatter addType(int col, CellType type){
-//			colTypeMap.put(col, type);
-//			return this;
-//		}
-//		
-//		public CellFormatter format(int col, HSSFCell cell, String val) {
-//			if (null != val) {
-//				if (colTypeMap.containsKey(col)) {
-//					switch (colTypeMap.get(col)) {
-//					case DOUBLE:
-//						BigDecimal b = new BigDecimal(Double.valueOf(val));
-//						cell.setCellValue(b.setScale(1,
-//								BigDecimal.ROUND_HALF_UP).doubleValue());
-//						cell.setCellStyle(template.getCellStyleNumber1());
-//						break;
-//					case HEADER:
-//						cell.setCellValue(val);
-//						cell.setCellStyle(template.getCellStyleHeader());
-//						break;
-//					case PERCENT:
-//						cell.setCellValue(String.format("%.1f",
-//								Double.valueOf(val) * 100)
-//								+ "%");
-//						cell.setCellStyle(template.getCellStylePercent());
-//						break;
-//					case TEXT:
-//						break;
-//					default:
-//						break;
-//					}
-//				} else {
-//					BigDecimal b = new BigDecimal(Double.valueOf(val));
-//					cell.setCellValue(b.setScale(0, BigDecimal.ROUND_HALF_UP)
-//							.doubleValue());
-//					cell.setCellStyle(template.getCellStyleNumber1());
-//				}
-//			} else {
-//				cell.setCellValue("--");
-//				cell.setCellStyle(template.getCellStyleNull());
-//			}
-//			return this;
-//		}
-//	}
-	
-	public static JyzbExcelTemplate createTemplate(SheetType type) throws IOException{
+	public static ExcelTemplate createJygkTemplate(JygkSheetType type) throws IOException{
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
 				pathJdzbTemplate)));	
-//		workbook.cloneSheet(type.ordinal());
-//		String name = workbook.getSheetName(type.ordinal());
-//		for (int i = 0; i <= SheetType.JDFDWZBYJ_MY.ordinal(); ++i){
-//			workbook.removeSheetAt(0);
-//		}
-//		workbook.setSheetName(0, name);
-		
 		for (int i = 0; i < type.ordinal(); ++i){
 			workbook.removeSheetAt(0);
 		}
 		
-		for (int i = type.ordinal() + 1; i <= SheetType.JDFDWZBYJ_MY.ordinal(); ++i){
+		for (int i = type.ordinal() + 1; i <= JygkSheetType.JDFDWZBYJ_MY.ordinal(); ++i){
 			workbook.removeSheetAt(1);
 		}
-		return new JyzbExcelTemplate(workbook);
+		return new ExcelTemplate(workbook);
 	}
 	
+	public static ExcelTemplate createMarketTemplate(MarketSheetType type) throws IOException{
+		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
+				pathMarketTemplate)));	
+		for (int i = 0; i < type.ordinal(); ++i){
+			workbook.removeSheetAt(0);
+		}
+		
+		for (int i = type.ordinal() + 1; i <= MarketSheetType.MIXED_INDUSTRY.ordinal(); ++i){
+			workbook.removeSheetAt(1);
+		}
+		return new ExcelTemplate(workbook);
+	}
 	
+
 	HSSFWorkbook workbook;
 	HSSFCellStyle cellStyleNull;
 	HSSFCellStyle cellStyleNumber2;
@@ -142,7 +103,7 @@ public class JyzbExcelTemplate {
 	HSSFCellStyle cellStylePercent;
 	HSSFCellStyle cellStyleHeader;
 	
-	JyzbExcelTemplate(HSSFWorkbook workbook){
+	ExcelTemplate(HSSFWorkbook workbook){
 		this.workbook = workbook;
 		
 		cellStyleNull = workbook
@@ -153,8 +114,7 @@ public class JyzbExcelTemplate {
 		cellStyleNull.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
 		cellStyleNull.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
 		
-		cellStyleNumber0 = workbook
-				.createCellStyle();
+		cellStyleNumber0 = workbook.createCellStyle();
 //		cellStyleNumber0.setDataFormat(HSSFDataFormat
 //				.getBuiltinFormat("0"));
 		cellStyleNumber0.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
@@ -211,7 +171,6 @@ public class JyzbExcelTemplate {
 		cellStyleHeader.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
 		cellStyleHeader.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
 		cellStyleHeader.setFont(font);
-		
 			
 	}
 	/**

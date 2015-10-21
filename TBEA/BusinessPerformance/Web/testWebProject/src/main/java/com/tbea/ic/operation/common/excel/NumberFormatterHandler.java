@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.common.jyzbexcel;
+package com.tbea.ic.operation.common.excel;
 
 import java.math.BigDecimal;
 
@@ -29,7 +29,7 @@ public class NumberFormatterHandler extends AbstractFormatterHandler {
 	}
 
 	@Override
-	protected void onHandle(JyzbExcelTemplate template, HSSFCell cell, String val) {
+	protected void onHandle(ExcelTemplate template, HSSFCell cell, String val) {
 //		System.out.println(val);
 		BigDecimal   b   =   new   BigDecimal(Double.valueOf(val));
 //		System.out.println(b);

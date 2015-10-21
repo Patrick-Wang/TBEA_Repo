@@ -91,7 +91,8 @@ module mkt_region_analysis {
         }
 
         public exportExcel() {
-
+            $("#exportBidAnalysisData")[0].action = "mkt_region_analysis_export.do?" + Util.Ajax.toUrlParam({ companyName: JSON.stringify(this.mSelCompanys), year: this.mYear, month: this.mEndMonth, startYear: this.mYear, startMonth: this.mStartMonth, type: this.mAnalysisType });
+            $("#exportBidAnalysisData")[0].submit();
         }
 
         public onYearSelected() {
@@ -124,7 +125,7 @@ module mkt_region_analysis {
         }
 
         public updateUI() {
-            
+
 
             if (this.mStartMonth > this.mEndMonth) {
                 Util.MessageBox.tip("起始月份大于终止月份，请重新选择月份！");
@@ -132,18 +133,18 @@ module mkt_region_analysis {
                 Util.MessageBox.tip("请选择起始月份和终止月份！");
             }
             else {
-                
+
                 this.mSelCompanys = [];
-            if(this.mCompanyName == "股份公司"){
-                
-                 $('#comp_category').multiselect("getChecked").each((i, item)=>{
-                    this.mSelCompanys.push($(item).val());
-                 });
-                
-            }else{
-                this.mSelCompanys.push(this.mCompanyName);
-                
-            }
+                if (this.mCompanyName == "股份公司") {
+
+                    $('#comp_category').multiselect("getChecked").each((i, item) => {
+                        this.mSelCompanys.push($(item).val());
+                    });
+
+                } else {
+                    this.mSelCompanys.push(this.mCompanyName);
+
+                }
 
                 this.mDataSet.get({ companyName: JSON.stringify(this.mSelCompanys), year: this.mYear, month: this.mEndMonth, startYear: this.mYear, startMonth: this.mStartMonth, type: this.mAnalysisType })
                     .then((data: any) => {
