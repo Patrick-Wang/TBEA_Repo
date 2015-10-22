@@ -18,7 +18,7 @@ function showBondPage(systemCode, sysTemName) {
     //	});
     $('.theme-popover-mask').fadeIn(100);
     $('.theme-popover3').slideDown(200);
-    var data: any = JSON.parse('{"infoList":[{"paramsName":"用户名","paramsKey":"ssousername","ssosysCode":65,"encrypt":0,"encryptTramsfer":0},{"paramsName":"用户密码","paramsKey":"ssopassword","ssosysCode":65,"encrypt":0,"encryptTramsfer":0}]}');
+    var data: any = JSON.parse('{"infoList":[{"paramsName":"用户名","paramsKey":"bindName","sysCode":' + systemCode + ',"encrypt":0,"encryptTramsfer":0},{"paramsName":"用户密码","paramsKey":"bindPsw","sysCode":' + systemCode + ',"encrypt":0,"encryptTramsfer":0}]}');
     var paramsList = data.infoList;
     var html = "";
     $.each(paramsList, function(i, item) {
@@ -42,33 +42,30 @@ function showBondPage(systemCode, sysTemName) {
 
 function goToBond(systemCode, sysTemName) {
     var flag = false;
-    var str = "";
+    var param: any = {};
     var inputs = $("input[flg='wr']");
     inputs.each(function() {
         if (testInput($(this).attr("id"))) {
-            str += "{\"key\":\"" + $(this).attr("name") + "\",\"value\":\"" + $(this).val() + "\"},";
+            param[$(this).attr("name")] = $(this).val();
             flag = true;
         } else {
             flag = false;
         }
     });
     if (flag) {
-        str = str.substring(0, str.length - 1).replace(/[ ]/g, "");
-        str = "[" + str + "]";
-
-        var params = { "params.paramsValuesStr": str, "params.systemCode": systemCode, "params.userCode": "${usrName}" };
-			
-        //$.getJSON("/fe/sso/insertSystemParamsValues.gsp",params,function(data){
-        if (true) {
-            $("div.theme-popover3 .dform3").empty();
-            var html = "<div style=\"text-align: center; width: 300px;  margin: 60px auto;\"><h3>绑定 “" + sysTemName + "” 成功!</h3></div>";
-            $("div.theme-popover3 .dform3").append(html);
-        } else {
-            $("div.theme-popover3 .dform3").empty();
-            var html = "<div style=\"text-align: center; width: 300px;  margin: 60px auto;\"><h3>绑定 “" + sysTemName + "” 失败!</h3></div>";
-            $("div.theme-popover3 .dform3").append(html);
-        }
-        //});
+        param.bindSystem = systemCode;
+        var ajax: Util.Ajax = new Util.Ajax("bind.do");
+        ajax.get(param).then((data) => {
+            if (data.result) {
+                $("div.theme-popover3 .dform3").empty();
+                var html = "<div style=\"text-align: center; width: 300px;  margin: 60px auto;\"><h3>绑定 “" + sysTemName + "” 成功!</h3></div>";
+                $("div.theme-popover3 .dform3").append(html);
+            } else {
+                $("div.theme-popover3 .dform3").empty();
+                var html = "<div style=\"text-align: center; width: 300px;  margin: 60px auto;\"><h3>绑定 “" + sysTemName + "” 失败!</h3></div>";
+                $("div.theme-popover3 .dform3").append(html);
+            }
+        });
     }
 }
 

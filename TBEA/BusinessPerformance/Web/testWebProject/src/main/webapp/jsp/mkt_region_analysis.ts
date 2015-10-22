@@ -209,6 +209,16 @@ module mkt_region_analysis {
             tableAssist: JQTable.JQGridAssistant,
             rawData: Array<string[]>): void {
 
+
+
+            $(rawData).each((i, item: string[]) => {
+                if (item[0].indexOf("计") >= 0) {
+                    tableAssist.setRowBgColor(i, 183, 222, 232);
+                }
+            })
+
+
+
             $("#" + childName).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",

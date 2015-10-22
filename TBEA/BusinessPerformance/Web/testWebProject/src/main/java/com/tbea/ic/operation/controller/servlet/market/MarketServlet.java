@@ -324,7 +324,7 @@ public class MarketServlet {
 				response,
 				marketTemplate.getWorkbook().getSheetAt(0).getSheetName() + "_"
 						+ cal.get(Calendar.YEAR) + "-"
-						+ cal.get(Calendar.MONTH) + ".xls");
+						+ (cal.get(Calendar.MONTH) + 1) + ".xls");
 
 		return "".getBytes("utf-8");
 	}
@@ -394,7 +394,7 @@ public class MarketServlet {
 				response,
 				marketTemplate.getWorkbook().getSheetAt(0).getSheetName() + "_"
 						+ cal.get(Calendar.YEAR) + "-"
-						+ cal.get(Calendar.MONTH) + ".xls");
+						+ (cal.get(Calendar.MONTH) + 1) + ".xls");
 		return "".getBytes("utf-8");
 	}
 
@@ -500,8 +500,8 @@ public class MarketServlet {
 				response,
 				marketTemplate.getWorkbook().getSheetAt(0).getSheetName() + "_"
 						+ calStart.get(Calendar.YEAR) + "-"
-						+ calStart.get(Calendar.MONTH) + "~"
-						+ calEnd.get(Calendar.MONTH) + ".xls");
+						+ (calStart.get(Calendar.MONTH) + 1) + "~"
+						+ (calEnd.get(Calendar.MONTH) + 1) + ".xls");
 		return "".getBytes("utf-8");
 	}
 

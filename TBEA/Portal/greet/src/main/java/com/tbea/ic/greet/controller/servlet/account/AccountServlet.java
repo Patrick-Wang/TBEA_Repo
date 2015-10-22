@@ -22,21 +22,6 @@ import com.tbea.ic.greet.service.account.AccountService;
 public class AccountServlet {
 
 
-	//绩效管理信息平台 
-	//http://172.28.8.119/HQ/myportal/__ac0x3login/__tpaction?requestSource=HQ_login&ssousername=sunfuda&ssopassword=123456
-	//绩效管理信息平台 
-	final static String JXUrl = "http://172.28.8.119/HQ/myportal/__ac0x3login/__tpaction?requestSource=HQ_login&ssousername=#UN#&ssopassword=#PW#";
-	//OA
-	final static String OAUrl = "http://192.168.7.12:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=#UN#&pass=#PW#";
-	//jingyingguankong
-	final static String JYGKUrl = "http://192.168.7.22/BusinessManagement/Login/validate.do?j_username=#UN#&j_password=#PW#";
-	//zhihuiyinhang
-	final static String ZHYHUrl = "http://km.tbea.com:8080/j_acegi_security_check?j_username=#UN#&j_password=#PW#";
-	//人力
-	final static String HRUrl = "http://192.168.7.76/login.jsp";
-	//NC
-	final static String NCUrl = "http://192.168.7.24:9083/login.jsp";
-
 	@Autowired
 	AccountService accountService;
 	
@@ -82,24 +67,22 @@ public class AccountServlet {
 		return new ModelAndView("login");
 	}
 	
+	@RequestMapping(value = "/bind.do")
+	public @ResponseBody byte[] bind(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
+		String name = request.getParameter("bindName");
+		String psw = request.getParameter("bindPsw");
+		String sysId = request.getParameter("bindSystem");
+		Account account = (Account) request.getSession().getAttribute("account");
+		boolean ret = this.accountService.bindSystem(account, sysId, name, psw);
+		return ("{\"result\":" + ret +"}").getBytes("utf-8");
+	}
+	
 	@RequestMapping(value = "/get_login_url.do")
 	public @ResponseBody byte[] getLoginUrl(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
 		Account account = (Account) request.getSession().getAttribute("account");
 		String sysId = request.getParameter("sysId");
-		String url="";
-		if ("1".equals(sysId)){
-			url = JXUrl.replace("#UN#", account.getJxglName()).replace("#PW#", account.getJxglPassword());
-		}else if ("3".equals(sysId)){
-			url = OAUrl.replace("#UN#", account.getOAName()).replace("#PW#", account.getOAPassword());
-		}else if ("4".equals(sysId)){
-			url = ZHYHUrl.replace("#UN#", account.getZhyhName()).replace("#PW#", account.getZhyhPassword());
-		}else if ("5".equals(sysId)){
-			url = JYGKUrl.replace("#UN#", account.getJygkName()).replace("#PW#", account.getJygkPassword());
-		}else if ("6".equals(sysId)){
-			url = HRUrl;
-		}else if ("7".equals(sysId)){
-			url = NCUrl;
-		}
+		String url = this.accountService.getLoginUrl(account, sysId);
+
 		return ("{\"url\":\"" + url +"\"}").getBytes("utf-8");
 	}
 		
