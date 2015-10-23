@@ -69,46 +69,46 @@
 			</div>
 		</div>
 		<div class="login_list_bottom">
-			<a href=""><img src="../images/logo_png.png" alt=""></a>
+			<img src="../images/logo_png.png" alt="">
 		</div>
 
 		<div class="login_list">
 			<ul id="login_list_sys">
 
-				<li class="login_list_item login_list_item_1"><div onclick="login(1,'${usrName}')">
+				<li class="login_list_item login_list_item_1"><a href="../account/get_login_url.do?sysId=1" target="_blank">
 					<span>绩效管理平台</span><img
-						src="../images/login_icons_1.png"></div><span
+						src="../images/login_icons_1.png"></a><span
 					class="login_list_bd"
 					onclick="showBondPage(1,'${usrName}');">绑定用户</span></li>
 					
-				<li class="login_list_item login_list_item_2"><div onclick="login(3,'${usrName}')">
+				<li class="login_list_item login_list_item_2"><a href="../account/get_login_url.do?sysId=3" target="_blank">
 					<span>OA系统</span><img
-						src="../images/login_icons_1.png"></div><span
+						src="../images/login_icons_1.png"></a><br/><span
 					class="login_list_bd"
 					onclick="showBondPage(3,'${usrName}');">绑定用户</span></li>
 					
-				<li class="login_list_item login_list_item_3"><div onclick="login(4,'${usrName}')">
+				<li class="login_list_item login_list_item_3"><a href="../account/get_login_url.do?sysId=4" target="_blank">
 					<span>智慧银行</span><img
-						src="../images/login_icons_1.png"></div>
+						src="../images/login_icons_1.png"></a>
 					<span
 					class="login_list_bd"
 					onclick="showBondPage(4,'${usrName}');">绑定用户</span></li>
 						
-				<li class="login_list_item login_list_item_4">
-					<div onclick="login(5,'${usrName}')"><span>经营管控系统</span><img
-						src="../images/login_icons_1.png"></div>
+				<li class="login_list_item login_list_item_4"><a href="../account/get_login_url.do?sysId=5" target="_blank">
+					<span>经营管控系统</span><img
+						src="../images/login_icons_1.png"></a>
 						<span
 					class="login_list_bd"
 					onclick="showBondPage(5,'${usrName}');">绑定用户</span></li>
 					
 				<li class="login_list_item login_list_item_5"><a
 					target="_blank"
-					href="http://192.168.7.75:9081/login.jsp?key=13d8240a-62f7-40a6-9140-84ddbda58655"><span>人力资源系统</span><img
+					href="http://192.168.7.75:9081/login.jsp"><span>人力资源系统</span><img
 						src="../images/login_icons_1.png"></a></li>
 						
 				<li class="login_list_item login_list_item_6"><a
 					target="_blank"
-					href="http://192.168.7.24:9083/login.jsp?key=e273def1-4222-4f45-b934-902617c36206"><span>财务系统</span><img
+					href="http://192.168.7.24:9083/login.jsp"><span>财务系统</span><img
 						src="../images/login_icons_1.png"></a></li>
 			</ul>
 		</div>

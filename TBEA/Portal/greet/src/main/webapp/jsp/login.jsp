@@ -154,7 +154,7 @@
 		</div>
 		<div class="login_footer">
 			<div>
-				<span>特变电工版权：Webmaster@TBEA.com.cn</span><span>新IPC12001046号</span>
+				<span>特变电工版权：信息资源管理中心</span><span>新IPC12001046号</span>
 			</div>
 		</div>
 	</div>

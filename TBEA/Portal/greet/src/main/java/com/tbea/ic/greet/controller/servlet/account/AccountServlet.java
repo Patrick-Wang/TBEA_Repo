@@ -94,12 +94,13 @@ public class AccountServlet {
 	}
 	
 	@RequestMapping(value = "/get_login_url.do")
-	public @ResponseBody byte[] getLoginUrl(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
+	public ModelAndView getLoginUrl(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
 		Account account = (Account) request.getSession().getAttribute("account");
 		String sysId = request.getParameter("sysId");
 		String url = this.accountService.getLoginUrl(account, sysId);
-
-		return ("{\"url\":\"" + url +"\"}").getBytes("utf-8");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("url", url);
+		return new ModelAndView("host", map);
 	}
 		
 	
