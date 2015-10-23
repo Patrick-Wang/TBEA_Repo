@@ -9,23 +9,22 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-public class OnlineDetector implements HttpSessionListener{
+public class OnlineService implements HttpSessionListener{
 	
 	private static Map<String, HttpSession> onlineSessions = Collections.synchronizedMap(new HashMap<String, HttpSession>());
 	private final static String ONLINE_TAG = "dector.online";
-	public static boolean goOnline(HttpSession session){
-		if(session != null){
-			if (!isOnline(session)){
-				session.setAttribute(ONLINE_TAG, true);
-				return true;
-			}
+
+	public static boolean goOnline(HttpServletRequest httpRequest) {
+		if (!isOnline(httpRequest.getSession())) {
+			httpRequest.getSession().setAttribute(ONLINE_TAG, true);
+			return true;
 		}
 		return false;
 	}
 	
-	public static boolean goOffline(HttpSession session){
-		if (isOnline(session)){
-			session.invalidate();
+	public static boolean goOffline(HttpServletRequest httpRequest){
+		if (isOnline(httpRequest.getSession(false))){
+			httpRequest.getSession(false).invalidate();
 			return true;
 		}
 		return false;

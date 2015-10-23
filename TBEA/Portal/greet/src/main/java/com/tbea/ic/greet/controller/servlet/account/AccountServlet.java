@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.ic.greet.common.OnlineDetector;
+import com.tbea.ic.greet.common.OnlineService;
 import com.tbea.ic.greet.model.entity.Account;
 import com.tbea.ic.greet.service.account.AccountService;
 
@@ -37,7 +37,7 @@ public class AccountServlet {
 	
 	@RequestMapping(value = "/welcome.do")
 	public ModelAndView welcome(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
-		if (!OnlineDetector.isOnline(request.getSession())){
+		if (!OnlineService.isOnline(request.getSession())){
 			return new ModelAndView("redirect:/account/login.do");
 		}else{
 			return new ModelAndView("redirect:/account/index.do");
@@ -46,12 +46,12 @@ public class AccountServlet {
 
 	@RequestMapping(value = "/validate.do")
 	public ModelAndView validate(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{	
-		if (!OnlineDetector.isOnline(request.getSession())){
+		if (!OnlineService.isOnline(request.getSession())){
 			String name = request.getParameter("username");
 			String psw = request.getParameter("password");
 			Account account = accountService.validate(name, psw);
 			if (null != account){
-				OnlineDetector.goOnline(request.getSession());
+				OnlineService.goOnline(request);
 				request.getSession().setAttribute("account", account);
 				return new ModelAndView("redirect:/account/index.do");
 			}else{
@@ -69,9 +69,9 @@ public class AccountServlet {
 	
 	@RequestMapping(value = "/logout.do")
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
-		if (OnlineDetector.isOnline(request)){
+		if (OnlineService.isOnline(request)){
 			request.getSession().setAttribute("account", null);
-			OnlineDetector.goOffline(request.getSession());
+			OnlineService.goOffline(request);
 		}
 		return new ModelAndView("redirect:/account/login.do");
 	}
