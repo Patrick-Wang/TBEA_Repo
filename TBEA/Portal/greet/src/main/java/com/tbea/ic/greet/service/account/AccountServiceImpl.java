@@ -82,13 +82,13 @@ public class AccountServiceImpl implements  AccountService{
 
 	public String getLoginUrl(Account account, String sysId) {
 		String url="";
-		if ("1".equals(sysId)){
+		if ("1".equals(sysId) && account.getJxglName() != null && account.getJxglPassword() != null){
 			url = JXUrl.replace("#UN#", account.getJxglName()).replace("#PW#", account.getJxglPassword());
-		}else if ("3".equals(sysId)){
+		}else if ("3".equals(sysId) && account.getOAName() != null && account.getOAPassword() != null){
 			url = OAUrl.replace("#UN#", account.getOAName()).replace("#PW#", account.getOAPassword());
-		}else if ("4".equals(sysId)){
+		}else if ("4".equals(sysId)&& account.getZhyhName() != null && account.getZhyhPassword() != null){
 			url = ZHYHUrl.replace("#UN#", account.getZhyhName()).replace("#PW#", account.getZhyhPassword());
-		}else if ("5".equals(sysId)){
+		}else if ("5".equals(sysId) && account.getJygkName() != null && account.getJygkPassword() != null){
 			url = JYGKUrl.replace("#UN#", account.getJygkName()).replace("#PW#", account.getJygkPassword());
 		}else if ("6".equals(sysId)){
 			url = HRUrl;

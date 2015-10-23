@@ -83,9 +83,13 @@ function testInput(id) {
 }
 
 
-function login(system: number): void {
+function login(system: number, systemCode): void {
     var ajax: Util.Ajax = new Util.Ajax("get_login_url.do");
     ajax.get({ sysId: system }).then((result: any) => {
-        window.location.href = result.url;
+        if (result.url == "") {
+            showBondPage(system, systemCode);
+        } else {
+            window.location.href = result.url;
+        }
     });
 }

@@ -75,19 +75,19 @@
 		<div class="login_list">
 			<ul id="login_list_sys">
 
-				<li class="login_list_item login_list_item_1"><div onclick="login(1)">
+				<li class="login_list_item login_list_item_1"><div onclick="login(1,'${usrName}')">
 					<span>绩效管理平台</span><img
 						src="../images/login_icons_1.png"></div><span
 					class="login_list_bd"
 					onclick="showBondPage(1,'${usrName}');">绑定用户</span></li>
 					
-				<li class="login_list_item login_list_item_2"><div onclick="login(3)">
+				<li class="login_list_item login_list_item_2"><div onclick="login(3,'${usrName}')">
 					<span>OA系统</span><img
 						src="../images/login_icons_1.png"></div><span
 					class="login_list_bd"
 					onclick="showBondPage(3,'${usrName}');">绑定用户</span></li>
 					
-				<li class="login_list_item login_list_item_3"><div onclick="login(4)">
+				<li class="login_list_item login_list_item_3"><div onclick="login(4,'${usrName}')">
 					<span>智慧银行</span><img
 						src="../images/login_icons_1.png"></div>
 					<span
@@ -95,7 +95,7 @@
 					onclick="showBondPage(4,'${usrName}');">绑定用户</span></li>
 						
 				<li class="login_list_item login_list_item_4">
-					<div onclick="login(5)"><span>经营管控系统</span><img
+					<div onclick="login(5,'${usrName}')"><span>经营管控系统</span><img
 						src="../images/login_icons_1.png"></div>
 						<span
 					class="login_list_bd"
