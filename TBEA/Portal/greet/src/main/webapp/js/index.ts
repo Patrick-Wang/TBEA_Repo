@@ -74,7 +74,7 @@ function testInput(id) {
     var idstr = "#" + id;
     var text = $(idstr).val().replace(/[ ]/g, "");
     if (text == null || text == "") {
-        $(idstr + "lable").text("请按照提示填入信息");
+        $(idstr + "lable").text("信息填写不允许为空");
         return false;
     } else {
         $(idstr + "lable").text("");

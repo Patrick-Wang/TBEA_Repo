@@ -67,7 +67,7 @@
 			<div class="right">
 				<a href="logout.do">退出</a> <a href="index.do">返回首页</a>
 			</div>
-		</div>
+		</div> 
 		<div class="login_list_bottom">
 			<img src="../images/logo_png.png" alt="">
 		</div>
