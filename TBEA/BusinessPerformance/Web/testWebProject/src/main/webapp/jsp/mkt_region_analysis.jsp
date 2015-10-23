@@ -243,8 +243,8 @@ th.ui-th-ltr {
 						</td>
 						<td><select id="year" onchange="instance.onYearSelected()"
 							style="width: 80px">
-								<option value="2014">2014年</option>
-								<option value="2015">2015年</option>
+								<option value="2014" <c:if test="${ (year == 2014)}">selected="selected"</c:if>>2014年</option>
+								<option value="2015" <c:if test="${ (year == 2015)}">selected="selected"</c:if>>2015年</option>
 						</select></td>
 						<td><select id="start_month"
 							onchange="instance.onStartMonthSelected()" style="width: 110px">

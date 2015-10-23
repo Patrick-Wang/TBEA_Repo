@@ -125,8 +125,6 @@ module mkt_region_analysis {
         }
 
         public updateUI() {
-
-
             if (this.mStartMonth > this.mEndMonth) {
                 Util.MessageBox.tip("起始月份大于终止月份，请重新选择月份！");
             } else if (this.mStartMonth == 0 || this.mEndMonth == 0) {
