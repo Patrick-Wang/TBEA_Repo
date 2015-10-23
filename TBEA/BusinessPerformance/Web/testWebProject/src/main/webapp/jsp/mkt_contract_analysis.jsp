@@ -256,25 +256,25 @@ th.ui-th-ltr {
 			<td><div id="table1" style="margin-bottom: 15px"></div></td>
 		</tr>
 		
-		<tr>
-			<td>
-				<Table id="assist" style="display:none">
-					<tr>
-						<td>
-							<form id="exportBidAnalysisData" method="post" style="overflow:visible">
-								<input class="exportButton" type="button" value="导出数据"
-									style="width: 120px;"
-									onclick="instance.exportExcel()"
-									class="ui-button ui-widget ui-state-default ui-corner-all"
-									role="button" aria-disabled="false"></input>
-							</form>
-						</td>
-					</tr>
-				</Table>
-			</td>
+<!-- 		<tr> -->
+<!-- 			<td> -->
+<!-- 				<Table id="assist" style="display:none"> -->
+<!-- 					<tr> -->
+<!-- 						<td> -->
+<!-- 							<form id="exportBidAnalysisData" method="post" style="overflow:visible"> -->
+<!-- 								<input class="exportButton" type="button" value="导出数据" -->
+<!-- 									style="width: 120px;" -->
+<!-- 									onclick="instance.exportExcel()" -->
+<!-- 									class="ui-button ui-widget ui-state-default ui-corner-all" -->
+<!-- 									role="button" aria-disabled="false"></input> -->
+<!-- 							</form> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
+<!-- 				</Table> -->
+<!-- 			</td> -->
 
 
-		</tr>
+<!-- 		</tr> -->
 
 	</table>
 	

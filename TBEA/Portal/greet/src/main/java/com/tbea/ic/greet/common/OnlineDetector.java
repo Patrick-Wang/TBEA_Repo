@@ -31,6 +31,10 @@ public class OnlineDetector implements HttpSessionListener{
 		return false;
 	}
 	
+	public static Map<String, HttpSession> getOnlineSessions(){
+		return onlineSessions;
+	}
+	
 	public static boolean isOnline(HttpServletRequest httpRequest){
 		return isOnline(httpRequest.getSession(false));
 	}
