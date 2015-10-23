@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.greet.model.dao.account.AccountDao;
+import com.tbea.ic.greet.model.dao.hruser.HrUserDao;
 import com.tbea.ic.greet.model.entity.Account;
+import com.tbea.ic.greet.model.entity.HrUser;
 
 @Service
 @Transactional("transactionManager")
@@ -30,12 +32,25 @@ public class AccountServiceImpl implements  AccountService{
 	@Autowired
 	AccountDao accountDao;
 	
-	public Account login(String name, String psw) {
-		Account account = null;
-		if (name != null){
-			account = accountDao.getByName(name);
-			if (account != null && psw != null && psw.equals(account.getPassword())){
-				return account;
+	@Autowired
+	HrUserDao hrUserDao;
+	
+	public Account validate(String name, String psw) {
+		if (name != null) {
+			HrUser user = hrUserDao.getByName(name);
+			if (user != null) {
+				Account account = accountDao.getByName(name);
+				if (account == null) {
+					account = new Account();
+					account.setName(user.getName());
+					account.setPassword(user.getPassword());
+					accountDao.merge(account);
+				}
+
+				if (account != null && psw != null
+						&& psw.equals(account.getPassword())) {
+					return account;
+				}
 			}
 		}
 		return null;

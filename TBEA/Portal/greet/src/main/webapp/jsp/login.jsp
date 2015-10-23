@@ -94,7 +94,7 @@
 		<div class="login_bg_main">
 			<div class="login_box">
 				<div class="login_box_main">
-					<form id="fm1" action="login.do" method="post">
+					<form id="fm1" action="validate.do" method="post">
 
 						<img src="../images/login_title.gif">
 						<div class="login_name login_name1">
