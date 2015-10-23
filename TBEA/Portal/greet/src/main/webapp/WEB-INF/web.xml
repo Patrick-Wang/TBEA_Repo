@@ -71,7 +71,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>RequestValidator</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 	<session-config>
 		<session-timeout>45</session-timeout>

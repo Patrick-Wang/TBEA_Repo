@@ -23,41 +23,41 @@
 		<div class="theme-popbod dform dform3"></div>
 	</div>
 
-	<script type="text/javascript">
+ 	<script type="text/javascript"> 
 
 
-	$(document).ready(function(){
-		$.getJSON("/fe/sso/queryallsystem.gsp",{tt:new Date()},function(data){
-			//赋值
-			var html = "";
-			for(var i=0;i<data.length;i++)
-			{
-				var bound = "";
-				 var type = data[i].systemType ;
-				 if(type!="CAS")
-				 {
-					 if(data[i].ssologinsysCode!=28 &&data[i].ssologinsysCode!=29)
-					 {
-						 bound="<span class=\"login_list_bd\" onclick=\"showBondPage('"+data[i].ssologinsysCode+"','${usrName}');\">绑定用户</span>";
-					 }
+// 	$(document).ready(function(){
+// 	 	$.getJSON("/fe/sso/queryallsystem.gsp",{tt:new Date()},function(data){
+// 			//赋值
+// 			var html = "";
+// 			for(var i=0;i<data.length;i++)
+// 			{
+// 				var bound = "";
+// 				 var type = data[i].systemType ;
+// 				 if(type!="CAS")
+// 				 {
+// 					 if(data[i].ssologinsysCode!=28 &&data[i].ssologinsysCode!=29)
+// 					 {
+// 						 bound="<span class=\"login_list_bd\" onclick=\"showBondPage('"+data[i].ssologinsysCode+"','${usrName}');\">绑定用户</span>";
+// 					 }
 					 
-				 }
-				 html +=" <li class=\"login_list_item login_list_item_"+(i+1)+"\"><a target=\"_blank\"  href=\"/fe/sso/gotoPage.gsp?ssologinsysCode="+data[i].ssologinsysCode+"\"><span>"+data[i].systemCode+"</span><img src=\"/fe/static/images/login_icons_1.png\"  /></a>"+bound+"</li>";
-			}
-            $("#login_list_sys").append(html);
-		});
-		});
+// 				 }
+// 				 html +=" <li class=\"login_list_item login_list_item_"+(i+1)+"\"><a target=\"_blank\"  href=\"/fe/sso/gotoPage.gsp?ssologinsysCode="+data[i].ssologinsysCode+"\"><span>"+data[i].systemCode+"</span><img src=\"/fe/static/images/login_icons_1.png\"  /></a>"+bound+"</li>";
+// 			}
+//             $("#login_list_sys").append(html);
+// 		});
+// 		}); 
 
 
 
 	
-	function loginJxpt(usrName, psw){
-		$.post("http://192.168.7.12:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=" +usrName+ "&pass=000000" + psw);
-		xmlhttp.open("POST","http://192.168.7.12:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=anfengling&pass=000000&image.x=35&image.y=13",false);
-		xmlhttp.send(null);document.body.innerHTML=xmlhttp.responseText;
-	}
+// 	function loginJxpt(usrName, psw){
+// 		$.post("http://192.168.7.12:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=" +usrName+ "&pass=000000" + psw);
+// 		xmlhttp.open("POST","http://192.168.7.12:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=anfengling&pass=000000&image.x=35&image.y=13",false);
+// 		xmlhttp.send(null);document.body.innerHTML=xmlhttp.responseText;
+// 	}
 	
-		</script>
+ 		</script> 
 
 
 	<div class="theme-popover-mask"></div>
