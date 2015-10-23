@@ -15,10 +15,10 @@ import com.tbea.ic.greet.model.entity.HrUser;
 public class AccountServiceImpl implements  AccountService{
 
 
-	//绩效管理信息平台 
-	final static String JXUrl = "http://172.28.8.119/HQ/myportal/__ac0x3login/__tpaction?requestSource=HQ_login&ssousername=#UN#&ssopassword=#PW#";
 	//OA
-	final static String OAUrl = "http://192.168.7.12:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=#UN#&pass=#PW#";
+	final static String OAUrl = "http://172.28.8.119/HQ/myportal/__ac0x3login/__tpaction?requestSource=HQ_login&ssousername=#UN#&ssopassword=#PW#";
+	//绩效管理信息平台 
+	final static String JXUrl = "http://192.168.7.12:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=#UN#&pass=#PW#";
 	//jingyingguankong
 	final static String JYGKUrl = "http://192.168.7.22/BusinessManagement/Login/validate.do?j_username=#UN#&j_password=#PW#";
 	//zhihuiyinhang

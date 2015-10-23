@@ -81,32 +81,32 @@
 					class="login_list_bd"
 					onclick="showBondPage(1,'${usrName}');">绑定用户</span></li>
 					
-				<li class="login_list_item login_list_item_3"><div onclick="login(3)">
+				<li class="login_list_item login_list_item_2"><div onclick="login(3)">
 					<span>OA系统</span><img
 						src="../images/login_icons_1.png"></div><span
 					class="login_list_bd"
 					onclick="showBondPage(3,'${usrName}');">绑定用户</span></li>
 					
-				<li class="login_list_item login_list_item_4"><div onclick="login(4)">
+				<li class="login_list_item login_list_item_3"><div onclick="login(4)">
 					<span>智慧银行</span><img
 						src="../images/login_icons_1.png"></div>
 					<span
 					class="login_list_bd"
 					onclick="showBondPage(4,'${usrName}');">绑定用户</span></li>
 						
-				<li class="login_list_item login_list_item_5">
+				<li class="login_list_item login_list_item_4">
 					<div onclick="login(5)"><span>经营管控系统</span><img
 						src="../images/login_icons_1.png"></div>
 						<span
 					class="login_list_bd"
 					onclick="showBondPage(5,'${usrName}');">绑定用户</span></li>
 					
-				<li class="login_list_item login_list_item_6"><a
+				<li class="login_list_item login_list_item_5"><a
 					target="_blank"
 					href="http://192.168.7.75:9081/login.jsp?key=13d8240a-62f7-40a6-9140-84ddbda58655"><span>人力资源系统</span><img
 						src="../images/login_icons_1.png"></a></li>
 						
-				<li class="login_list_item login_list_item_7"><a
+				<li class="login_list_item login_list_item_6"><a
 					target="_blank"
 					href="http://192.168.7.24:9083/login.jsp?key=e273def1-4222-4f45-b934-902617c36206"><span>财务系统</span><img
 						src="../images/login_icons_1.png"></a></li>

@@ -55,7 +55,7 @@ public class AccountServlet {
 				request.getSession().setAttribute("account", account);
 				return new ModelAndView("redirect:/account/index.do");
 			}else{
-				return new ModelAndView("redirect:/account/login.do");
+				return new ModelAndView("redirect:/account/login.do?error=failed");
 			}
 		}else{
 			return new ModelAndView("redirect:/account/index.do");
@@ -63,8 +63,15 @@ public class AccountServlet {
 	}
 	
 	@RequestMapping(value = "/login.do")
-	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{	
-		return new ModelAndView("login");
+	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
+		String error = request.getParameter("error");
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (null != error){
+			map.put("showError", "visiable");
+		}else{
+			map.put("showError", "hidden");
+		}
+		return new ModelAndView("login", map);
 	}
 	
 	@RequestMapping(value = "/logout.do")

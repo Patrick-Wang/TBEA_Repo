@@ -112,17 +112,18 @@
 									value="" size="25" autocomplete="off">
 							</section>
 						</div>
-
-
-						<div class="login_botton_top">
-							<section class="row check">
-								<label for="warn"> <input id="warn" name="warn"
-									value="true" tabindex="3" accesskey="w" type="checkbox">
-									记住用户名
-								</label>
-								<!-- <div class="padding_10"><a href="javascript:;">忘记登录名？</a></div> -->
-							</section>
-						</div>
+						
+						<div style="color: #CC0000; height:35px; visibility:${showError}" >用户名或密码错误，请重新输入。</div>
+<!-- 						<div class="login_botton_top"> -->
+						
+<!-- 							<section class="row check"> -->
+<!-- 								<label for="warn"> <input id="warn" name="warn" -->
+<!-- 									value="true" tabindex="3" accesskey="w" type="checkbox"> -->
+<!-- 									记住用户名 -->
+<!-- 								</label> -->
+<!-- 								<div class="padding_10"><a href="javascript:;">忘记登录名？</a></div> -->
+<!-- 							</section> -->
+<!-- 						</div> -->
 
 						<div class="login_button">
 							<section class="row btn-row">
