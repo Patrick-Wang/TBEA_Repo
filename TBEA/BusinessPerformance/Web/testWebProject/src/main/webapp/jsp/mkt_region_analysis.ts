@@ -87,7 +87,7 @@ module mkt_region_analysis {
         }
 
         public onCompanySelected() {
-            this.mCompanyName = $("#comp_category").val();
+            //this.mCompanyName = $("#comp_category").val();
         }
 
         public exportExcel() {
