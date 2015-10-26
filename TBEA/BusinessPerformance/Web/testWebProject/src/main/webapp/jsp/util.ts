@@ -445,57 +445,59 @@ module Util {
         return;
     }
 
+	export function toNumber(val: string): number{
+		return new Number(val).valueOf();
+	}
+
     export function formatInt(val: string): string {
-        if (val === "--" || val === "") {
-            return val;
-        }
-        return parseInt(val) + "";
+        return formatFordot(val, 0);
     }
 
-
-    export function formatCurrency(val: string): string {
-
-        if (val === "--" || val === "") {
+	export function formatCommaCurrency(val: string, dotCount : number = 0){
+		  if (val === "--" || val === "" || val === "-") {
             return val;
         }
-        return parseFloat(val).toFixed(0) + "";
-        //        val = parseFloat(val).toFixed(0) + "";
-        //        var dot: number = val.lastIndexOf('.');
-        //        var intPart: string = "";
-        //        var parts: string[] = [];
-        //        var positive: boolean = (val.charAt(0) != '-');
-        //        if (dot > 0) {
-        //            if (positive) {
-        //                intPart = val.substring(0, dot);
-        //            } else {
-        //                intPart = val.substring(1, dot);
-        //            }
-        //            parts.push(val.substring(dot));
-        //        }
-        //        else {
-        //            if (positive) {
-        //                intPart = val;
-        //            } else {
-        //                intPart = val.substring(1);
-        //            }
-        //        }
-        //
-        //        var leftLength: number = intPart.length;
-        //
-        //        while (leftLength > 3) {
-        //            parts.push("," + intPart.substring(leftLength - 3, leftLength));
-        //            leftLength -= 3;
-        //        }
-        //
-        //        parts.push(intPart.substring(0, leftLength));
-        //
-        //        if (!positive) {
-        //            parts.push("-");
-        //        }
-        //
-        //        parts = parts.reverse();
-        //
-        //        return parts.join("");
+		        val = toNumber(val).toFixed(dotCount);
+                var dot: number = val.lastIndexOf('.');
+                var intPart: string = "";
+                var parts: string[] = [];
+                var positive: boolean = (val.charAt(0) != '-');
+                if (dot > 0) {
+                    if (positive) {
+                        intPart = val.substring(0, dot);
+                    } else {
+                        intPart = val.substring(1, dot);
+                    }
+                    parts.push(val.substring(dot));
+                }
+                else {
+                    if (positive) {
+                        intPart = val;
+                    } else {
+                        intPart = val.substring(1);
+                    }
+                }
+        
+                var leftLength: number = intPart.length;
+        
+                while (leftLength > 3) {
+                    parts.push("," + intPart.substring(leftLength - 3, leftLength));
+                    leftLength -= 3;
+                }
+        
+                parts.push(intPart.substring(0, leftLength));
+        
+                if (!positive) {
+                    parts.push("-");
+                }
+        
+                parts = parts.reverse();
+        
+                return parts.join("");
+	}
+
+    export function formatCurrency(val: string): string {
+        return formatFordot(val, 0);      
     }
 
 
@@ -503,21 +505,21 @@ module Util {
         if (val === "--" || val === "" || val === "-") {
             return val;
         }
-        return (parseFloat(val) * 100).toFixed(1) + "%"
+        return (toNumber(val) * 100).toFixed(1) + "%"
     }
 
     export function formatFordot(val: string, dotCount: number = 1): string {
         if (val === "--" || val === "" || val === "-") {
             return val;
         }
-        return (parseFloat(val)).toFixed(dotCount);
+        return toNumber(val).toFixed(dotCount);
     }
 
     export function formatPercentSignal(val: string): string {
         if (val === "--" || val === "" || val === "-") {
             return val;
         }
-        return (parseFloat(val)).toFixed(1) + "%"
+        return toNumber(val).toFixed(1) + "%"
     }
 
     export function isExist(val: any): boolean {
