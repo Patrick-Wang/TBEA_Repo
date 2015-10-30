@@ -8,6 +8,6 @@ public interface AccountService {
 
 	boolean bindSystem(Account account, String sysId, String name, String psw);
 
-	String getLoginUrl(Account account, String sysId);
+	String getLoginUrl(Account account, String sysId, String ip);
 
 }

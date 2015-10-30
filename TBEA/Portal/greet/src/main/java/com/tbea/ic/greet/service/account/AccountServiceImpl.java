@@ -16,13 +16,14 @@ public class AccountServiceImpl implements  AccountService{
 
 
 	//OA
-	final static String OAUrl = "http://172.28.8.119/HQ/myportal/__ac0x3login/__tpaction?requestSource=HQ_login&ssousername=#UN#&ssopassword=#PW#";
+	final static String OAUrl = "http://oagroup.tbea.com.cn/HQ/myportal/__ac0x3login/__tpaction?requestSource=HQ_login&ssousername=#UN#&ssopassword=#PW#";
 	//绩效管理信息平台 
 	final static String JXUrl = "http://192.168.7.12:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=#UN#&pass=#PW#";
 	//jingyingguankong
 	final static String JYGKUrl = "http://192.168.7.22/BusinessManagement/Login/validate.do?j_username=#UN#&j_password=#PW#";
 	//zhihuiyinhang
-	final static String ZHYHUrl = "http://km.tbea.com:8080/j_acegi_security_check?j_username=#UN#&j_password=#PW#";
+	final static String ZHYHUrlInner = "http://km.tbea.com/j_acegi_security_check?j_username=#UN#&j_password=#PW#";
+	final static String ZHYHUrlOuter = "http://km.tbea.com:8080/j_acegi_security_check?j_username=#UN#&j_password=#PW#";
 	//人力
 	final static String HRUrl = "http://192.168.7.76/login.jsp";
 	//NC
@@ -80,7 +81,8 @@ public class AccountServiceImpl implements  AccountService{
 		return true;
 	}
 
-	public String getLoginUrl(Account account, String sysId) {
+	
+	public String getLoginUrl(Account account, String sysId, String ip) {
 		String url="";
 		switch(Integer.valueOf(sysId)){
 		case 1:
@@ -95,7 +97,28 @@ public class AccountServiceImpl implements  AccountService{
 			break;
 		case 4:
 			if (account.getZhyhName() != null && account.getZhyhPassword() != null){
-				url = ZHYHUrl.replace("#UN#", account.getZhyhName()).replace("#PW#", account.getZhyhPassword());
+	
+				    String str172From = ("172.016.000.000") ;  
+				    String str172To = ("172.031.000.000") ;  
+				  
+				    String str192From = ("192.168.000.000") ;  
+				    String str192To = ("192.168.255.255") ;  
+				  
+				  
+				    if (str172From.compareTo(ip) <= 0 && str172To.compareTo(ip) >= 0)  
+				    {  
+				    	url = ZHYHUrlInner ;  
+				    }  
+				    else if (str192From.compareTo(ip) <= 0 && str192To.compareTo(ip) >= 0)  
+				    {  
+				    	url = ZHYHUrlInner ;  
+				    }  
+				    else 
+				    {  
+				    	url = ZHYHUrlOuter ;  
+				    }  
+							
+				url = url.replace("#UN#", account.getZhyhName()).replace("#PW#", account.getZhyhPassword());
 			}
 			break;
 		case 5:

@@ -85,9 +85,8 @@
 
 	<div class="login_header">
 		<div class="login_header_main">
-			<a
-				href="http://172.28.8.74/cas/login?service=http%3A%2F%2F172.28.8.74%3A7001%2Ffe%2Findex.jsp#"><img
-				src="../images/logo_login.gif"></a> <span>装备中国 装备世界</span>
+			<img
+				src="../images/logo_login.gif"> <span>装备中国 装备世界</span>
 		</div>
 	</div>
 	<div class="login_bg">

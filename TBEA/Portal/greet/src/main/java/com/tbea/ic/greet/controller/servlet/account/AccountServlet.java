@@ -97,7 +97,7 @@ public class AccountServlet {
 	public ModelAndView getLoginUrl(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
 		Account account = (Account) request.getSession().getAttribute("account");
 		String sysId = request.getParameter("sysId");
-		String url = this.accountService.getLoginUrl(account, sysId);
+		String url = this.accountService.getLoginUrl(account, sysId, request.getRemoteAddr());
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("url", url);
 		return new ModelAndView("host", map);

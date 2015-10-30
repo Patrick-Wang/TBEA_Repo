@@ -65,7 +65,7 @@
 		<div class="login_list_top">
 			<div class="left">${usrName}，欢迎您的登录！</div>
 			<div class="right">
-				<a href="logout.do">退出</a> <a href="index.do">返回首页</a>
+				<a href="logout.do">退出</a>
 			</div>
 		</div> 
 		<div class="login_list_bottom">
