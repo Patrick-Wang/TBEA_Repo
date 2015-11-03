@@ -129,6 +129,13 @@
 										class="ec-icon ec-icon-force"></i> <a href="#inputPrediction"
 										style="color: rgb(62, 152, 197);">预计指标录入</a></li>
 								</c:if>
+								
+								<c:if test="${isJydw}">
+									<li style="background-color: transparent"><i
+										class="ec-icon ec-icon-force"></i> <a href="#inputPrediction"
+										style="color: rgb(62, 152, 197);">日报录入</a></li>
+								</c:if>
+								
 							</ul>
 
 							<ul id="navlist2" style="padding: 10px 0; display: none">

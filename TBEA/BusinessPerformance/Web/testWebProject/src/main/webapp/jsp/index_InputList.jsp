@@ -45,3 +45,24 @@
 		</div>
 	</div>
 </c:if>
+
+<c:if test="${isJydw}">
+	<h3>
+		日报录入<a name="inputDaily"> </a>
+	</h3>
+	<div class="section">
+		<div class="thumb4">
+			<ul class="slides">
+				<li data-thumb="asset/img/example/bar1.png"><a
+					href="../entry/zb.do?entryType=2" target="_blank"><img
+						src="../images/charts/bar1.png"> <span><strong>应收账款录入</strong></span></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</c:if>
+
+
+
+
+

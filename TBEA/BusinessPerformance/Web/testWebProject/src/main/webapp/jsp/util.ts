@@ -446,7 +446,8 @@ module Util {
     }
 
 	export function toNumber(val: string): number{
-		return new Number(val).valueOf();
+        var numberTpe: any = new Number(val).valueOf();
+		return numberTpe;
 	}
 
     export function formatInt(val: string): string {
