@@ -82,6 +82,17 @@ public class AccountServiceImpl implements  AccountService{
 	}
 
 	
+	private long toLongIP(String ip) {
+		String[] addrArray = ip.split("\\.");
+		long num = 0;
+		for (int i = 0; i < addrArray.length; i++) {
+			int power = 3 - i;
+			num += ((Integer.parseInt(addrArray[i]) % 256 * Math
+					.pow(256, power)));
+		}
+		return num;
+	}
+	
 	public String getLoginUrl(Account account, String sysId, String ip) {
 		String url="";
 		switch(Integer.valueOf(sysId)){
@@ -96,29 +107,25 @@ public class AccountServiceImpl implements  AccountService{
 			}
 			break;
 		case 4:
-			if (account.getZhyhName() != null && account.getZhyhPassword() != null){
-	
-				    String str172From = ("172.016.000.000") ;  
-				    String str172To = ("172.031.000.000") ;  
-				  
-				    String str192From = ("192.168.000.000") ;  
-				    String str192To = ("192.168.255.255") ;  
-				  
-				  
-				    if (str172From.compareTo(ip) <= 0 && str172To.compareTo(ip) >= 0)  
-				    {  
-				    	url = ZHYHUrlInner ;  
-				    }  
-				    else if (str192From.compareTo(ip) <= 0 && str192To.compareTo(ip) >= 0)  
-				    {  
-				    	url = ZHYHUrlInner ;  
-				    }  
-				    else 
-				    {  
-				    	url = ZHYHUrlOuter ;  
-				    }  
-							
-				url = url.replace("#UN#", account.getZhyhName()).replace("#PW#", account.getZhyhPassword());
+			if (account.getZhyhName() != null
+					&& account.getZhyhPassword() != null) {
+
+				long l172From = toLongIP("172.016.000.000");
+				long l172To = toLongIP("172.031.000.000");
+
+				long l192From = toLongIP("192.168.000.000");
+				long l192To = toLongIP("192.168.255.255");
+				long lIp = toLongIP(ip);
+
+				if ((lIp >= l172From && lIp <= l172To)
+						|| (lIp >= l192From && lIp <= l192To)) {
+					url = ZHYHUrlInner;
+				} else {
+					url = ZHYHUrlOuter;
+				}
+
+				url = url.replace("#UN#", account.getZhyhName()).replace(
+						"#PW#", account.getZhyhPassword());
 			}
 			break;
 		case 5:

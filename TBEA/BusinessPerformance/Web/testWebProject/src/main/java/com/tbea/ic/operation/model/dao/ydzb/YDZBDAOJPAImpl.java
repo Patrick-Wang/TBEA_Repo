@@ -129,11 +129,11 @@ public class YDZBDAOJPAImpl implements YDZBDao {
 	@Override
 	public List<XJL> getXJL(Calendar cal) {
 		Query q = entityManager
-				.createQuery("select x from XJLRB x where x.rq = ?1 and x.jgmc != '中疆物流'");
+				.createQuery("select x from XJLRB x where DATEDIFF(dd,x.rq,:date) = 0 and x.jgmc != '中疆物流'");
 		Date d = Date.valueOf(cal.get(Calendar.YEAR) + "-"
 				+ (cal.get(Calendar.MONTH) + 1) + "-"
 				+ cal.get(Calendar.DAY_OF_MONTH));
-		q.setParameter(1, d);
+		q.setParameter("date", d);
 		List<XJLRB> xjlrbs = q.getResultList();
 		List<XJL> xjls = new ArrayList<XJL>();
 
