@@ -22,6 +22,7 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
+import com.tbea.ic.operation.service.entry.DailyReportService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.login.LoginService;
 
@@ -43,6 +44,9 @@ public class LoginServlet {
 	@Autowired
 	private LoginService loginService;
 	
+	@Autowired
+	private DailyReportService dailyReportService;
+
 	
 	@RequestMapping(value = "ssoLogin.do")
 	public ModelAndView ssoLogin(HttpServletRequest request,
@@ -125,6 +129,13 @@ public class LoginServlet {
 		
 		session.setAttribute("MarketAuth",
 				entryService.hasMarketPermission(account));
+		
+		session.setAttribute("MarketAuth",
+				entryService.hasMarketPermission(account));
+		
+		session.setAttribute("isJydw",
+				dailyReportService.hasYszkAuthority(account));
+		
 	}
 	
 	@RequestMapping(value = "validate.do")

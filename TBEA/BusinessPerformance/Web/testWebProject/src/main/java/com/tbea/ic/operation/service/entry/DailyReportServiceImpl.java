@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.model.dao.authority.ExtendAuthorityDao;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 
 
 
@@ -14,6 +15,12 @@ public class DailyReportServiceImpl implements DailyReportService{
 
 	@Autowired
 	ExtendAuthorityDao extendAuthDao;
+
+	@Override
+	public boolean hasYszkAuthority(Account account) {
+		int count = extendAuthDao.getAuthorityCount(account, 1);
+		return count > 0;
+	}
 	
 	
 }
