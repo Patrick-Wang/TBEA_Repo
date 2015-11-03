@@ -17,9 +17,8 @@ public class YSDAILYPK implements Serializable {
 	@Column(name = "[dialy_date]")
 	Date date;
 
-	@Column(name = "[companyId]")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "dwid")
+	@JoinColumn(name = "companyId")
 	DWXX dwxx;
 
 	public DWXX getDwxx() {
