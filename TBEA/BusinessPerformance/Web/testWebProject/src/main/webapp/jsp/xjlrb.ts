@@ -36,31 +36,57 @@ module xjlrb {
         private mMonth: number;
         private mYear: number;
         private mData: Array<string[]> = [];
-        private mDataSet : Util.Ajax = new Util.Ajax("xjlrb_update.do");
-        private mTableId : string;
+        private mDataSet: Util.Ajax = new Util.Ajax("xjlrb_update.do");
+        private mTableId: string;
         private mDay: number;
         public init(tableId: string, month: number, year: number, day: number): void {
             this.mYear = year;
             this.mMonth = month;
             this.mTableId = tableId;
             this.mDay = day;
+
+            $("#date").val(year + "-" + month + "-" + day);
+            $("#date").datepicker({
+                //            numberOfMonths:1,//显示几个月  
+                //            showButtonPanel:true,//是否显示按钮面板  
+                dateFormat: 'yy-mm-dd',//日期格式  
+                //            clearText:"清除",//清除日期的按钮名称  
+                //            closeText:"关闭",//关闭选择框的按钮名称  
+                yearSuffix: '年', //年的后缀  
+                showMonthAfterYear: true,//是否把月放在年的后面  
+                defaultDate: year + "-" + month + "-" + day,//默认日期  
+                //            minDate:'2011-03-05',//最小日期  
+                maxDate: year + "-" + month + "-" + day,//最大日期  
+                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+                dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+                onSelect: (selectedDate) => {//选择日期后执行的操作  
+                    var d: Date = new Date(selectedDate);
+                    this.mYear = d.getFullYear();
+                    this.mMonth = d.getMonth() + 1;
+                    this.mDay = d.getDate();
+                }
+            });
+            $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
+            
             this.updateTable();
             this.updateUI();
 
         }
-        
-        public onDaySelected(day : number){
-        	this.mDay = day;
+
+        public onDaySelected(day: number) {
+            this.mDay = day;
         }
-        
- 		public onYearSelected(year : number){
-        	this.mYear = year;
+
+        public onYearSelected(year: number) {
+            this.mYear = year;
         }
-        
-        public onMonthSelected(month : number){
-        	this.mMonth = month;
+
+        public onMonthSelected(month: number) {
+            this.mMonth = month;
         }
-        
+
         public updateUI() {
             this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay })
                 .then((dataArray: any) => {
@@ -74,7 +100,7 @@ module xjlrb {
         }
 
         private updateTable(): void {
-        	var name = this.mTableId + "_jqgrid_1234";
+            var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
 
             var data = [["沈变公司"],
@@ -117,10 +143,10 @@ module xjlrb {
                     data[i] = data[i].concat(row);
                 }
             }
-			var parent = $("#" + this.mTableId);
-			parent.empty();
-			parent.append("<table id='"+ name +"'></table>");
-			
+            var parent = $("#" + this.mTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
+
             $("#" + name).jqGrid(
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
@@ -131,8 +157,8 @@ module xjlrb {
                     drag: false,
                     resize: false,
                     //autowidth : false,
-//                    cellsubmit: 'clientArray',
-//                    cellEdit: true,
+                    //                    cellsubmit: 'clientArray',
+                    //                    cellEdit: true,
                     height: '100%',
                     width: 1200,
                     shrinkToFit: true,

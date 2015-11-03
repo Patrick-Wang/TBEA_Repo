@@ -4,6 +4,32 @@
 <html>
 <head>
 
+<!-- 多选菜单 -->
+<link rel="stylesheet" type="text/css"
+	href="../jsp/multi-select/jquery.multiselect.css" />
+<link rel="stylesheet" type="text/css"
+	href="../jsp/multi-select/assets/style.css" />
+<link rel="stylesheet" type="text/css"
+	href="../jsp/multi-select/assets/prettify.css" />
+<script type="text/javascript"
+	src="../jsp/multi-select/assets/prettify.js"></script>
+<script type="text/javascript"
+	src="../jsp/multi-select/jquery.multiselect.js"></script>
+
+
+<!-- jqgrid -->
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../jsp/jqgrid/themes/ui.jqgrid.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../jsp/jqgrid/themes/ui.multiselect.css">
+<script src="../jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
+<script src="../jsp/jqgrid/js/jquery.contextmenu.js"
+	type="text/javascript"></script>
+<script src="../jsp/jqgrid/js/i18n/grid.locale-cn.js"
+	type="text/javascript"></script>
+<script src="../jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
+<script src="../jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
+
     <link rel="stylesheet" type="text/css" media="screen"
           href="../jsp/jqgrid/themes/ui.jqgrid.css">
     <link rel="stylesheet" type="text/css" media="screen"
@@ -139,6 +165,13 @@
             /* jqGrid columns name wrap  */
             font-size: 14px;
         }
+        
+        #updateButton {
+	height: 23px;
+	width:100px;
+	padding: .1em 1em;
+	margin-top: -1px;
+}
     </style>
 </head>
 <body>
@@ -150,14 +183,16 @@
 			<td>
 				<Table>
 					<tr>
-						<td><%@include file="date_selection.jsp"%>
+						<td><span style="font-size:1.3em;font-weight: bold;margin-right:5px">日期选择: </span><input id="date" readonly="readonly"></input>
 						</td>
-						<td><input type="button" value="更新" style="width : 80px; margin-left:10px;"
+						<td><input id = "updateButton"  type="button" value="更新" style="width : 80px; margin-left:10px;"
 							onclick="instance.updateUI()"></input>
+					</td>
+					</tr>
 				</Table>
 			</td>
 		</tr>
-		<td>
+		<tr style="height:3px">
 		</tr>
 		<tr>
 			<td>
@@ -168,4 +203,6 @@
 	<%@include file="loading.jsp"%>
     </body>
  <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
+ 	<script src="../jsp/style_button.js"></script>
+	<script src="../jsp/style_select.js"></script>
 </html>
