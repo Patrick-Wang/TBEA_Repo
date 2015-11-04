@@ -33,10 +33,10 @@ public class ExtendAuthorityDaoImpl extends AbstractReadWriteDaoImpl<ExtendAutho
 	}
 
 	@Override
-	public int getAuthorityCount(Account account, int authType) {
-		Query q = this.getEntityManager().createQuery("select count(*) from ExtendAuthority where account.id = :id and authType=:type");
+	public int getAuthorityCount(Account account, int auth) {
+		Query q = this.getEntityManager().createQuery("select count(*) from ExtendAuthority where account.id = :id and authType = :auth");
 		q.setParameter("id", account.getId());
-		q.setParameter("type", authType);
+		q.setParameter("auth", auth);
 		return ((Long)q.getResultList().get(0)).intValue();
 	}
 	

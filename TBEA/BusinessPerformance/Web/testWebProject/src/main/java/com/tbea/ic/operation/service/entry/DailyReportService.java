@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.service.entry;
 
 import java.sql.Date;
+import java.util.List;
 
 import net.sf.json.JSONArray;
 
@@ -13,5 +14,6 @@ public interface DailyReportService {
 
 	ErrorCode submitYszk(Account account, Date date, JSONArray jData);
 
+	List<String[]> getYszkData(Account account, Date date);
 
 }

@@ -19,40 +19,13 @@ import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 @Table(name = "system_extend_auth")
 public class ExtendAuthority extends AbstractReadWriteEntity{
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "account_id")
+	Integer authType;
+	
+
 	Account account;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "company_id")
-	DWXX dwxx;
 	
-	public Account getAccount() {
-		return account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
-	}
-
-	public DWXX getDwxx() {
-		return dwxx;
-	}
-
-	public void setDwxx(DWXX dwxx) {
-		this.dwxx = dwxx;
-	}
-
-	public Integer getAuthType() {
-		return authType;
-	}
-
-	public void setAuthType(Integer authType) {
-		this.authType = authType;
-	}
-
-	@Column(name = "auth_type")
-	Integer authType;
+	DWXX dwxx;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -63,5 +36,34 @@ public class ExtendAuthority extends AbstractReadWriteEntity{
 
 	public void setId(int id) {
 		super.setId(id);
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "account_id")
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "company_id")
+	public DWXX getDwxx() {
+		return dwxx;
+	}
+
+	public void setDwxx(DWXX dwxx) {
+		this.dwxx = dwxx;
+	}
+
+	@Column(name = "auth_type")
+	public Integer getAuthType() {
+		return authType;
+	}
+
+	public void setAuthType(Integer authType) {
+		this.authType = authType;
 	}
 }

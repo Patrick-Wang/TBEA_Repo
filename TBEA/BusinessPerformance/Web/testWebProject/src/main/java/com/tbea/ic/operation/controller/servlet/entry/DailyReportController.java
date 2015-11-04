@@ -2,11 +2,13 @@ package com.tbea.ic.operation.controller.servlet.entry;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,5 +50,14 @@ public class DailyReportController {
 		JSONArray jData = JSONArray.fromObject(data);
 		ErrorCode code = dailyReportService.submitYszk(account, date, jData);
 		return Util.response(code);
+	}
+	
+	@RequestMapping(value = "yszk_update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getYszkUpdate(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Account account = SessionManager.getAccount(request.getSession());
+		Date date = DateSelection.getDate(request);
+		List<String[]> data = dailyReportService.getYszkData(account, date);
+		return JSONArray.fromObject(data).toString().replace("null", "\"\"").getBytes("utf-8");
 	}
 }
