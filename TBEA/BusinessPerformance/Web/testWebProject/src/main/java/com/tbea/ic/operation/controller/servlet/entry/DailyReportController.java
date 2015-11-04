@@ -32,13 +32,13 @@ public class DailyReportController {
 	@Autowired
 	private DailyReportService dailyReportService;
 
-	
-	
-
 	@RequestMapping(value = "yszk.do", method = RequestMethod.GET)
 	public ModelAndView getYszk(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		return new ModelAndView("yszkDaily");
+		DateSelection dateSel = new DateSelection();
+		Map<String, Object> map = new HashMap<String, Object>();
+		dateSel.select(map);
+		return new ModelAndView("yszkDaily", map);
 	}
 
 	@RequestMapping(value = "yszk_submit.do", method = RequestMethod.GET)
