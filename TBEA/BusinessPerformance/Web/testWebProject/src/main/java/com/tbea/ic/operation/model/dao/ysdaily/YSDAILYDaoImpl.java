@@ -29,7 +29,7 @@ public class YSDAILYDaoImpl implements YSDAILYDao{
 		Query q = entityManager.createQuery("from YSDAILY where key = :key");
 		q.setParameter("key", ysdaily);
 		List<YSDAILYPK> yspks = q.getResultList();
-		if (yspks.isEmpty()){
+		if (!yspks.isEmpty()){
 			yspks.get(0);
 		}
 		return null;

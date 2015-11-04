@@ -24,13 +24,13 @@ function showBondPage(systemCode, sysTemName) {
     $.each(paramsList, function(i, item) {
         html += "<div class=\"dform_div\"><span style=\"min-width:80px;\">"
         + paramsList[i].paramsName +
-        ":</span><input style=\"width:352px;\" flg=\"wr\" onblur=\"testInput('" + paramsList[i].paramsKey +
+        ":</span><input style=\"width:100px;\" flg=\"wr\" onblur=\"testInput('" + paramsList[i].paramsKey +
         "')\" maxlength=\"30\" type=\"text\"  id=" +
         paramsList[i].paramsKey +
         " name=" + paramsList[i].paramsKey +
-        " class=\"alert_text\" /><lable style=\"color:#E61212\" id='" +
+        " class=\"alert_text\" /><span style=\"color:#E61212\" id='" +
         paramsList[i].paramsKey +
-        "lable'></lable></div>";
+        "span'></span></div>";
     });
     html += "<div class=\"dform_div\"><input type=\"button\" id=\"updateUserInfo\" value=\"绑 定\" class=\"alert_button\" onclick=\"goToBond('" +
 				systemCode + "','" + sysTemName + "')\"/></div>";
@@ -74,10 +74,10 @@ function testInput(id) {
     var idstr = "#" + id;
     var text = $(idstr).val().replace(/[ ]/g, "");
     if (text == null || text == "") {
-        $(idstr + "lable").text("信息填写不允许为空");
+        $(idstr + "span").text("信息填写不允许为空");
         return false;
     } else {
-        $(idstr + "lable").text("");
+        $(idstr + "span").text("");
     }
     return true;
 }
