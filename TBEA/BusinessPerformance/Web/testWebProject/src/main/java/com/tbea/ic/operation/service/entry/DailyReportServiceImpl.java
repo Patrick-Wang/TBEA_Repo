@@ -72,7 +72,7 @@ public class DailyReportServiceImpl implements DailyReportService{
 		List<String[]> result = new ArrayList<String[]>();
 		result.add(new String[7]);
 		List<ExtendAuthority> eas = extendAuthDao.getAuthority(account, 1);
-		if (eas.isEmpty()){
+		if (!eas.isEmpty()){
 			ExtendAuthority ea = eas.get(0);
 			DWXX dwxx = ea.getDwxx();
 			YSDAILY daily = ysdailyDao.getYsdaily(date, dwxx);
