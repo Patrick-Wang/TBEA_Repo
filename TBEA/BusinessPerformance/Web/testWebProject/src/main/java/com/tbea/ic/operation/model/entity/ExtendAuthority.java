@@ -1,5 +1,7 @@
 package com.tbea.ic.operation.model.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,7 +19,9 @@ import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 
 @Entity
 @Table(name = "system_extend_auth")
-public class ExtendAuthority extends AbstractReadWriteEntity{
+public class ExtendAuthority extends AbstractReadWriteEntity implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	Integer authType;
 	
@@ -38,8 +42,8 @@ public class ExtendAuthority extends AbstractReadWriteEntity{
 		super.setId(id);
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "account_id")
+	@ManyToOne
+	@JoinColumn(name = "[account_id]")
 	public Account getAccount() {
 		return account;
 	}
@@ -48,8 +52,8 @@ public class ExtendAuthority extends AbstractReadWriteEntity{
 		this.account = account;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "company_id")
+	@ManyToOne
+	@JoinColumn(name = "[company_id]")
 	public DWXX getDwxx() {
 		return dwxx;
 	}

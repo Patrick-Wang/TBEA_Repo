@@ -28,9 +28,9 @@ public class YSDAILYDaoImpl implements YSDAILYDao{
 		ysdaily.setDate(date);
 		Query q = entityManager.createQuery("from YSDAILY where key = :key");
 		q.setParameter("key", ysdaily);
-		List<YSDAILYPK> yspks = q.getResultList();
-		if (yspks.isEmpty()){
-			yspks.get(0);
+		List<YSDAILY> yspks = q.getResultList();
+		if (!yspks.isEmpty()){
+			return (YSDAILY)yspks.get(0);
 		}
 		return null;
 	}
