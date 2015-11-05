@@ -2,7 +2,9 @@ package com.tbea.ic.operation.controller.servlet.entry;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,7 +40,7 @@ public class DailyReportController {
 		DateSelection dateSel = new DateSelection();
 		Map<String, Object> map = new HashMap<String, Object>();
 		dateSel.select(map);
-		return new ModelAndView("yszkDaily", map);
+		return new ModelAndView("yszkrb", map);
 	}
 
 	@RequestMapping(value = "yszk_submit.do", method = RequestMethod.GET)

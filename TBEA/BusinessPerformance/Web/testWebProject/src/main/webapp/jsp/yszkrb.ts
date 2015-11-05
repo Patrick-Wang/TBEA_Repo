@@ -37,11 +37,11 @@ module yszkrb {
         private mYear: number;
         private mDay: number;
         private mData: Array<string[]> = [];
-        private mDataSet: Util.Ajax = new Util.Ajax("yszkDialy_update.do");
+        private mDataSet: Util.Ajax = new Util.Ajax("yszk_update.do");
         private mTableId: string;
 
         private mTableAssist: JQTable.JQGridAssistant;
-        private mSave: Util.Ajax = new Util.Ajax("yszkDaily_save.do");
+        private mSave: Util.Ajax = new Util.Ajax("yszk_submit.do");
         
         public init(tableId: string, month: number, year: number, day: number): void {
             this.mYear = year;
@@ -74,7 +74,7 @@ module yszkrb {
             });
             $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
             
-            this.updateTable();
+            //this.updateTable();
             this.updateUI();
 
         }
@@ -112,7 +112,7 @@ module yszkrb {
             this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay })
                 .then((dataArray: any) => {
                     this.mData = dataArray;
-                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 应收账款日报");
+                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日应收账款日报");
                     document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日应收账款日报";
                     this.updateTable();
                 });
@@ -121,39 +121,11 @@ module yszkrb {
         private updateTable(): void {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
-
-            var data = [["沈变公司"],
-                ["衡变公司"],
-                ["新变厂"],
-                ["天变公司"],
-                ["鲁缆公司"],
-                ["新缆厂"],
-                ["德缆公司"],
-                ["输变电小计"],
-                ["新能源公司"],
-                ["新特能源公司"],
-                ["新能源小计"],
-                ["天池能源公司"],
-                ["能动公司"],
-                ["能源小计"],
-                ["进出口"],
-                ["国际工程公司"],
-                ["工程小计"],
-                ["机关本部"],
-                ["采购中心"],
-                ["资金中心"],
-                ["公司机关小计"],
-                ["香港公司"],
-                ["股份公司合计"],
-                ["众和公司"],
-                ["合计"]];
-
+            
+            var data = [];
+            
             var row = [];
-            for (var i = 0; i < data.length; ++i) {
-                if (data[i][0].lastIndexOf("计") >= 0) {
-                    tableAssist.setRowBgColor(i, 183, 222, 232);
-                }
-
+            for (var i = 0; i < this.mData.length; ++i) {
                 if (this.mData[i] instanceof Array) {
                     row = [].concat(this.mData[i]);
                     for (var col in row) {
@@ -179,7 +151,7 @@ module yszkrb {
                     //                    cellsubmit: 'clientArray',
                     //                    cellEdit: true,
                     height: '100%',
-                    width: 1200,
+                    width: 1300,
                     shrinkToFit: true,
                     rowNum: 100,
                     autoScroll: true
