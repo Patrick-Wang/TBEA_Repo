@@ -40,7 +40,7 @@ public class DailyReportController {
 		DateSelection dateSel = new DateSelection();
 		Map<String, Object> map = new HashMap<String, Object>();
 		dateSel.select(map);
-		return new ModelAndView("yszkDaily", map);
+		return new ModelAndView("yszkrb", map);
 	}
 
 	@RequestMapping(value = "yszk_submit.do", method = RequestMethod.GET)
