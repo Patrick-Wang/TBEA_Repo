@@ -32,6 +32,9 @@ public class AccountServlet {
 		Account account = (Account) request.getSession().getAttribute("account");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("usrName", account.getName());
+		if (null != request.getParameter("isCamel")){
+			return new ModelAndView("index_camel", map);
+		}
 		return new ModelAndView("index", map);
 	}
 	
