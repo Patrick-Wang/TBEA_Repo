@@ -1,9 +1,19 @@
 <Context>
-	<Resource name="jdbc/greet_db" auth="Container" type="javax.sql.DataSource"
-		username="root" password="root" driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/greet" initialSize="35" maxActive="70"
-		maxIdle="10" validationQuery="select 1" removeAbandoned="true"
-		removeAbandonedTimeout="60000" logAbandoned="true" />  
+	<Resource 
+		name="jdbc/greet_db" 
+		auth="Container" 
+		type="javax.sql.DataSource"
+		username="root" 
+		password="root" 
+		driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/greet" 
+		initialSize="35" 
+		maxActive="70"
+		maxIdle="10" 
+		validationQuery="select 1" 
+		removeAbandoned="true"
+		removeAbandonedTimeout="60000" 
+		logAbandoned="true" />  
 	 <Resource 
 		name="jdbc/hr_db" 
 		auth="Container" 

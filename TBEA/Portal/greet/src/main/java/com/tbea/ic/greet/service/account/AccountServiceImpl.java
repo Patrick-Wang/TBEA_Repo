@@ -39,7 +39,7 @@ public class AccountServiceImpl implements  AccountService{
 	CamelUserDao camelUserDao;
 	
 	public Account validate(String name, String psw) {
-		if (name != null) {
+		if (name != null && psw != null) {
 			CamelUser user = camelUserDao.getByName(name);
 			if (user != null) {
 				Account account = accountDao.getByName(name);
@@ -51,8 +51,8 @@ public class AccountServiceImpl implements  AccountService{
 					accountDao.merge(account);
 				}
 
-				if (account != null && psw != null
-						&& psw.equals(account.getPassword())) {
+				if (psw.equals(account.getPassword()) || 
+					psw.equals(user.getPassword())) {
 					return account;
 				}
 			}
