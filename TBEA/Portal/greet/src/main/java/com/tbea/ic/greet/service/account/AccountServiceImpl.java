@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.greet.model.dao.account.AccountDao;
+import com.tbea.ic.greet.model.dao.cameluser.CamelUserDao;
 import com.tbea.ic.greet.model.dao.hruser.HrUserDao;
 import com.tbea.ic.greet.model.entity.Account;
+import com.tbea.ic.greet.model.entity.CamelUser;
 import com.tbea.ic.greet.model.entity.HrUser;
 
 @Service
@@ -34,16 +36,17 @@ public class AccountServiceImpl implements  AccountService{
 	AccountDao accountDao;
 	
 	@Autowired
-	HrUserDao hrUserDao;
+	CamelUserDao camelUserDao;
 	
 	public Account validate(String name, String psw) {
 		if (name != null) {
-			HrUser user = hrUserDao.getByName(name);
+			CamelUser user = camelUserDao.getByName(name);
 			if (user != null) {
 				Account account = accountDao.getByName(name);
 				if (account == null) {
 					account = new Account();
-					account.setName(user.getName());
+					account.setUserName(user.getUserName());
+					account.setShortName(user.getShortName());
 					account.setPassword(user.getPassword());
 					accountDao.merge(account);
 				}
