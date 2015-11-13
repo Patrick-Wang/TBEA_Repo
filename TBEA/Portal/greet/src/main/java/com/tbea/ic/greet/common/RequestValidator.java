@@ -83,6 +83,7 @@ public class RequestValidator implements Filter {
 		redirSubUrl = "/account/login.do";
 		uncheckedUrl.add("/account/login.do");
 		uncheckedUrl.add("/account/validate.do");
+		uncheckedUrl.add("/Account/resetPassword.do");
 	}
 
 }

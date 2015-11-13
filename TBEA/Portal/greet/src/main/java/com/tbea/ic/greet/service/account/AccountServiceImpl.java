@@ -146,4 +146,20 @@ public class AccountServiceImpl implements  AccountService{
 		return url;
 	}
 
+	public boolean resetpassword(String userName, String oldPassword,
+			String newPassword) {
+		boolean result = false;
+		if (userName != null) {
+			Account account = accountDao.getByName(userName);
+			if (account != null) {
+				if (oldPassword.equals(account.getPassword())) {
+					account.setPassword(newPassword);
+					accountDao.merge(account);
+					result = true;
+				}
+			}
+		}
+		return result;
+	}
+	
 }
