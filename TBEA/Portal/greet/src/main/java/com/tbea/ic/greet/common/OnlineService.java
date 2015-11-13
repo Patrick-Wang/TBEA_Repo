@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSessionListener;
 public class OnlineService implements HttpSessionListener{
 	
 	private static Map<String, HttpSession> onlineSessions = Collections.synchronizedMap(new HashMap<String, HttpSession>());
-	private final static String ONLINE_TAG = "dector.online";
+	private final static String ONLINE_TAG = "detector.online";
 
 	public static boolean goOnline(HttpServletRequest httpRequest) {
 		if (!isOnline(httpRequest.getSession())) {

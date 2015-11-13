@@ -60,8 +60,8 @@ public class RequestValidator implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
-			if (!isUncheckedUrl(httpRequest.getRequestURI())) {
-				if (!OnlineService.isOnline(httpRequest)) {
+			if (!OnlineService.isOnline(httpRequest)) {
+				if (!isUncheckedUrl(httpRequest.getRequestURI())) {
 					String redirUrl = getRedictUrl(httpRequest, redirSubUrl);
 					HttpServletResponse httpResp = (HttpServletResponse) resp;
 					if (isAjaxRequest(httpRequest)) {
