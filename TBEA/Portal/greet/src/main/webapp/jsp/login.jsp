@@ -10,7 +10,9 @@
 <script src="../js/jquery/jquery-1.7.2.min.js" type="text/javascript"></script>
 <script src="../js/main.js" type="text/javascript"></script>
 <script>
-
+		function resetPassword() {
+		    window.location.href = '${pageContext.request.contextPath}/jsp/resetPassword.jsp';
+		};
 	    function reloadCode(){
 	  	  var img =document.getElementById("imgCode");
 	  	  img.src="/cas/verifyCode.go?"+ Math.random();
@@ -130,8 +132,8 @@
 									value="LT-93-DCzbjcq7AmGvifo91CDOodawTascP9-cas01.example.org">
 								<input type="hidden" name="execution" value="e1s1"> <input
 									type="hidden" name="_eventId" value="submit"> <input
-									class="login_but_1 left" name="reset" accesskey="c" value="重置"
-									tabindex="5" type="reset"> <input
+									class="login_but_1 left" name="reset" accesskey="c" value="修改密码"
+									tabindex="5" type="button" onclick="resetPassword();"> <input
 									class="login_but_2 right" name="submit" accesskey="l"
 									value="登录" tabindex="4" type="submit">
 							</section>

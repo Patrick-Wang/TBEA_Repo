@@ -10,4 +10,7 @@ public interface AccountService {
 
 	String getLoginUrl(Account account, String sysId, String ip);
 
+	public boolean resetpassword(String userName, String oldPassword,
+			String newPassword);
+
 }
