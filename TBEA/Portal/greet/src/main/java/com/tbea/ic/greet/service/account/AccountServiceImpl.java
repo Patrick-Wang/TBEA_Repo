@@ -48,7 +48,7 @@ public class AccountServiceImpl implements  AccountService{
 					account.setUserName(user.getUserName());
 					account.setShortName(user.getShortName());
 					account.setPassword(user.getPassword());
-					accountDao.merge(account);
+					account = accountDao.merge(account);
 				}
 
 				if (psw.equals(account.getPassword()) || 

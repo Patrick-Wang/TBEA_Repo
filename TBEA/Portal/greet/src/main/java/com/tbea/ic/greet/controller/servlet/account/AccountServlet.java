@@ -31,7 +31,12 @@ public class AccountServlet {
 	public ModelAndView goIndex(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
 		Account account = (Account) request.getSession().getAttribute("account");
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("usrName", account.getShortName());
+		if(account.getShortName() == null || account.getShortName().equals("null")){
+			map.put("usrName", account.getUserName());
+		}else{
+			map.put("usrName", account.getShortName());
+		}
+		
 		if (null != request.getParameter("isCamel")){
 			return new ModelAndView("index_camel", map);
 		}

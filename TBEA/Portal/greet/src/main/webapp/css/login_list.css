@@ -62,8 +62,8 @@ body {
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	width: 660px;
-	height: 360px;
+	width: 500px;
+	height: 280px;
 	margin: -180px 0 0 -330px;
 	border-radius: 5px;
 	border: solid 2px #666;
@@ -80,7 +80,7 @@ body {
 
 .theme-popbod {
 	color: #444;
-	height: 287px;
+	height: 205px;
 	overflow-y: scroll;
 	padding-left: 50px;
 	padding-top: 20px

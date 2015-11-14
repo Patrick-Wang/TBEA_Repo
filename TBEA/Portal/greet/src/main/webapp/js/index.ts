@@ -24,7 +24,7 @@ function showBondPage(systemCode, sysTemName) {
     $.each(paramsList, function(i, item) {
         html += "<div class=\"dform_div\"><span style=\"min-width:80px;\">"
         + paramsList[i].paramsName +
-        ":</span><input style=\"width:100px;\" flg=\"wr\" onblur=\"testInput('" + paramsList[i].paramsKey +
+        ":</span><input style=\"width:251px;\" flg=\"wr\" onblur=\"testInput('" + paramsList[i].paramsKey +
         "')\" maxlength=\"30\" type=\"text\"  id=" +
         paramsList[i].paramsKey +
         " name=" + paramsList[i].paramsKey +

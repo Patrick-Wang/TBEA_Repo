@@ -1,10 +1,9 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-/// <reference path="jqgrid/vector.ts" />
 var Util;
 (function (Util) {
     function indexOf(arr, val) {
@@ -159,7 +158,6 @@ var Util;
         CompanyType[CompanyType["SB"] = 0] = "SB";
         CompanyType[CompanyType["HB"] = 1] = "HB";
         CompanyType[CompanyType["XB"] = 2] = "XB";
-        // TB      ,// ("天变公司"),   
         CompanyType[CompanyType["LL"] = 3] = "LL";
         CompanyType[CompanyType["XL"] = 4] = "XL";
         CompanyType[CompanyType["DL"] = 5] = "DL";
@@ -241,34 +239,6 @@ var Util;
     })(Util.CompanyType || (Util.CompanyType = {}));
     var CompanyType = Util.CompanyType;
     $.ajaxSetup({ cache: false });
-    //    export function parse(jsstr: string): any {
-    //        var jsonValue;
-    //        eval('jsonValue = ' + jsstr); 
-    //        return jsonValue;
-    //    }
-    //    
-    //    export function stringify(json : any) : string{
-    //        var s = '';
-    //
-    //        if (typeof (json) == "string") {
-    //            s = '"' + json.replace(new RegExp('\\\\',"g"), '\\\\\\\\').replace(new RegExp('"', "g"), '\\"') + '"';
-    //        } else if (typeof (json) == "object") {
-    //            if (json instanceof Array) {
-    //                for (var k in json) {
-    //                    s += "," + stringify(json[k]);
-    //                }
-    //                s = '[' + s.substring(1) + ']';
-    //            } else {
-    //                for (var k in json) {
-    //                    s += ',"' + k + '":' + stringify(json[k]);
-    //                }
-    //                s = '{' + s.substring(1) + '}';
-    //            }
-    //        } else {
-    //            s += json;
-    //        }
-    //        return s;
-    //    }
     var Promise = (function () {
         function Promise() {
             this.mSuccessList = [];
@@ -382,44 +352,6 @@ var Util;
         return Ajax;
     })();
     Util.Ajax = Ajax;
-    function formatData(outputData, inputData, precentList, specialsjzhCols) {
-        var zhZb = [
-            '人均发电量（万度/人）',
-            '外购电单位成本（元/度）',
-            '铝杆棒一次综合成品率（%）',
-            '其中：5154合金杆一次成品率（%）',
-            '4043&8030&6201合金杆一次成品率（%）',
-            '高纯铝杆产品一次成品率（%）',
-            '铝棒产品一次成品率（%）',
-            '铝电解高品质槽99.90%以上等级13项元素符合率（二级以上）（%）',
-            '失败成本率1（%）',
-            '外部客诉率（%）',
-            '4N6精铝块一次成品率（%）',
-            '精铝杆一次成品率（%）',
-            '综合成品率（%）',
-            '基材成品率（%）',
-            '粉末喷涂成品率（%）',
-            '隔热产品成品率（%）',
-            '失败成本率（%）',
-            '自产箔综合符单率（%）',
-            '委托加工化成箔符单率（%）',
-            '架空电缆（1KV、10KV）合格率（%）',
-            '钢芯铝绞线合格率（%）',
-            '布电线合格率（%）'
-        ];
-        var formaterChain = new Util.FormatPercentHandler([], precentList.toArray());
-        formaterChain.next(new Util.FormatIntHandler(["人数"])).next(new Util.FormatPercentSignalHandler(['净资产收益率(%)'])).next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)', '负债率'])).next(new Util.FormatFordotHandler(1, ['人均利润', '人均收入', '精铝块13项元素和值（ppm）'])).next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], specialsjzhCols)).next(new Util.FormatFordotHandler(2, zhZb)).next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）'])).next(new Util.FormatCurrencyHandler());
-        var row = [];
-        for (var j = 0; j < inputData.length; ++j) {
-            row = [].concat(inputData[j]);
-            for (var i = 1; i < row.length; ++i) {
-                row[i] = formaterChain.handle(row[0], i, row[i]);
-            }
-            outputData.push(row);
-        }
-        return;
-    }
-    Util.formatData = formatData;
     function formatInt(val) {
         if (val === "--" || val === "") {
             return val;
@@ -432,43 +364,6 @@ var Util;
             return val;
         }
         return parseFloat(val).toFixed(0) + "";
-        //        val = parseFloat(val).toFixed(0) + "";
-        //        var dot: number = val.lastIndexOf('.');
-        //        var intPart: string = "";
-        //        var parts: string[] = [];
-        //        var positive: boolean = (val.charAt(0) != '-');
-        //        if (dot > 0) {
-        //            if (positive) {
-        //                intPart = val.substring(0, dot);
-        //            } else {
-        //                intPart = val.substring(1, dot);
-        //            }
-        //            parts.push(val.substring(dot));
-        //        }
-        //        else {
-        //            if (positive) {
-        //                intPart = val;
-        //            } else {
-        //                intPart = val.substring(1);
-        //            }
-        //        }
-        //
-        //        var leftLength: number = intPart.length;
-        //
-        //        while (leftLength > 3) {
-        //            parts.push("," + intPart.substring(leftLength - 3, leftLength));
-        //            leftLength -= 3;
-        //        }
-        //
-        //        parts.push(intPart.substring(0, leftLength));
-        //
-        //        if (!positive) {
-        //            parts.push("-");
-        //        }
-        //
-        //        parts = parts.reverse();
-        //
-        //        return parts.join("");
     }
     Util.formatCurrency = formatCurrency;
     function formatPercent(val) {

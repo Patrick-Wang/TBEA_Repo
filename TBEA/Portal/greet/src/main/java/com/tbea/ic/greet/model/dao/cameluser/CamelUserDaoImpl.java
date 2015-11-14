@@ -25,7 +25,9 @@ public class CamelUserDaoImpl implements CamelUserDao {
 		if (accounts.isEmpty()){
 			return null;
 		}else{
-			return new CamelUser(accounts.get(0)[0].toString(), accounts.get(0)[1].toString(), accounts.get(0)[2].toString());
+			//String shortName = accounts.get(0)[0] == null ? null : accounts.get(0)[0].toString();
+			//String userName = accounts.get(0)[1] == null ? null : accounts.get(0)[0].toString();
+			return new CamelUser(String.valueOf(accounts.get(0)[0]), String.valueOf(accounts.get(0)[1]), accounts.get(0)[2].toString());
 		}
 	}
 
