@@ -1,7 +1,9 @@
 package com.tbea.ic.operation.model.entity.jygk.zzy;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -19,9 +21,11 @@ public class JygkZzyFxJkcbZbwcqk extends cn.com.tbea.template.model.entity.Abstr
 	private int dwid;
 	private int nf;
 	private Timestamp xgsj;
-	private int yd;
-	private BigDecimal zbz;
-	private String zzyzbflCode;
+	private int yf;
+	private BigDecimal ndjh;
+	private BigDecimal ydjh;
+	private BigDecimal ydwc;
+	private int zzyflId;
 
 	public JygkZzyFxJkcbZbwcqk() {
 	}
@@ -66,31 +70,46 @@ public class JygkZzyFxJkcbZbwcqk extends cn.com.tbea.template.model.entity.Abstr
 	}
 
 
-	public int getYd() {
-		return this.yd;
+	public int getYf() {
+		return this.yf;
 	}
 
-	public void setYd(int yd) {
-		this.yd = yd;
-	}
-
-
-	public BigDecimal getZbz() {
-		return this.zbz;
-	}
-
-	public void setZbz(BigDecimal zbz) {
-		this.zbz = zbz;
+	public void setYf(int yf) {
+		this.yf = yf;
 	}
 
 
-	@Column(name="zzyzbfl_code")
-	public String getZzyzbflCode() {
-		return this.zzyzbflCode;
+	public BigDecimal getNdjh() {
+		return this.ndjh;
 	}
 
-	public void setZzyzbflCode(String zzyzbflCode) {
-		this.zzyzbflCode = zzyzbflCode;
+	public void setNdjh(BigDecimal ndjh) {
+		this.ndjh = ndjh;
+	}
+	
+	public BigDecimal getYdjh() {
+		return this.ydjh;
+	}
+	
+	public void setYdjh(BigDecimal ydjh) {
+		this.ydjh = ydjh;
+	}
+
+	public void setYdwc(BigDecimal ydwc) {
+		this.ydwc = ydwc;
+	}
+	
+	public BigDecimal getYdwc() {
+		return this.ydwc;
+	}
+
+	@Column(name="zzyfl_id")
+	public int getZzyflId() {
+		return this.zzyflId;
+	}
+
+	public void setZzyflId(int zzyflId) {
+		this.zzyflId = zzyflId;
 	}
 
 }

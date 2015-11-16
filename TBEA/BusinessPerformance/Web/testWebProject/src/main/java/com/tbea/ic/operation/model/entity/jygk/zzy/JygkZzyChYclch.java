@@ -1,7 +1,9 @@
 package com.tbea.ic.operation.model.entity.jygk.zzy;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -22,7 +24,7 @@ public class JygkZzyChYclch extends cn.com.tbea.template.model.entity.AbstractRe
 	private int nf;
 	private Timestamp xgsj;
 	private int yf;
-	private String zzyzbflCode;
+	private int zzyflId;
 
 	public JygkZzyChYclch() {
 	}
@@ -94,13 +96,13 @@ public class JygkZzyChYclch extends cn.com.tbea.template.model.entity.AbstractRe
 	}
 
 
-	@Column(name="zzyzbfl_code")
-	public String getZzyzbflCode() {
-		return this.zzyzbflCode;
+	@Column(name="zzyfl_id")
+	public int getZzyflId() {
+		return this.zzyflId;
 	}
 
-	public void setZzyzbflCode(String zzyzbflCode) {
-		this.zzyzbflCode = zzyzbflCode;
+	public void setZzyflId(int zzyflId) {
+		this.zzyflId = zzyflId;
 	}
 
 }

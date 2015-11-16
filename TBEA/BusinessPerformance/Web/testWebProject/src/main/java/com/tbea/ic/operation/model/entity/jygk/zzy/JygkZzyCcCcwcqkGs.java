@@ -1,7 +1,9 @@
 package com.tbea.ic.operation.model.entity.jygk.zzy;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -12,8 +14,8 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="jygk_zzy_cc_ccwcqk_gs")
-@NamedQuery(name="JygkZzyCcCcwcqkG.findAll", query="SELECT j FROM JygkZzyCcCcwcqkG j")
-public class JygkZzyCcCcwcqkG extends cn.com.tbea.template.model.entity.AbstractReadWriteEntity implements Serializable {
+@NamedQuery(name="JygkZzyCcCcwcqkGs.findAll", query="SELECT j FROM JygkZzyCcCcwcqkGs j")
+public class JygkZzyCcCcwcqkGs extends cn.com.tbea.template.model.entity.AbstractReadWriteEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private int dwid;
@@ -21,9 +23,9 @@ public class JygkZzyCcCcwcqkG extends cn.com.tbea.template.model.entity.Abstract
 	private int nf;
 	private Timestamp xgsj;
 	private int yf;
-	private String zzyzbflCode;
+	private int zzyflId;
 
-	public JygkZzyCcCcwcqkG() {
+	public JygkZzyCcCcwcqkGs() {
 	}
 
 
@@ -84,13 +86,13 @@ public class JygkZzyCcCcwcqkG extends cn.com.tbea.template.model.entity.Abstract
 	}
 
 
-	@Column(name="zzyzbfl_code")
-	public String getZzyzbflCode() {
-		return this.zzyzbflCode;
+	@Column(name="zzyfl_id")
+	public int getZzyflId() {
+		return this.zzyflId;
 	}
 
-	public void setZzyzbflCode(String zzyzbflCode) {
-		this.zzyzbflCode = zzyzbflCode;
+	public void setZzyflId(int zzyflId) {
+		this.zzyflId = zzyflId;
 	}
 
 }

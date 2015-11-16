@@ -22,7 +22,7 @@ public class JygkZzyCcCcwcqk extends cn.com.tbea.template.model.entity.AbstractR
 	private int nf;
 	private Timestamp xgsj;
 	private int yf;
-	private String zzyzbflCode;
+	private int zzyflId;
 
 	public JygkZzyCcCcwcqk() {
 	}
@@ -94,13 +94,13 @@ public class JygkZzyCcCcwcqk extends cn.com.tbea.template.model.entity.AbstractR
 	}
 
 
-	@Column(name="zzyzbfl_code")
-	public String getZzyzbflCode() {
-		return this.zzyzbflCode;
+	@Column(name="zzyfl_id")
+	public int getZzyflId() {
+		return this.zzyflId;
 	}
 
-	public void setZzyzbflCode(String zzyzbflCode) {
-		this.zzyzbflCode = zzyzbflCode;
+	public void setZzyflId(int zzyflId) {
+		this.zzyflId = zzyflId;
 	}
 
 }
