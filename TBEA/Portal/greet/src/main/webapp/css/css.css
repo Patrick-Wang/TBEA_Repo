@@ -285,7 +285,8 @@ background: url(../images/banner_text_bg.png)\9;
 .errors{  color:red;}
 .login_botton_top section{   overflow: hidden;}
 
-
+.reset_name{ padding-top:1px;}
+.reset_name span{ font-size:14px; color:#22adfe; font-family:"Microsoft YaHei"}
 
 /*拖动样式*/
 .my_work_left_div div.my_work_img_list a.active img{  height:35px }

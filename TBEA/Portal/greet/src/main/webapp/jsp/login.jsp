@@ -10,7 +10,9 @@
 <script src="../js/jquery/jquery-1.7.2.min.js" type="text/javascript"></script>
 <script src="../js/main.js" type="text/javascript"></script>
 <script>
-
+		function resetPassword() {
+		    window.location.href = '${pageContext.request.contextPath}/jsp/resetPassword.jsp';
+		};
 	    function reloadCode(){
 	  	  var img =document.getElementById("imgCode");
 	  	  img.src="/cas/verifyCode.go?"+ Math.random();
@@ -85,9 +87,8 @@
 
 	<div class="login_header">
 		<div class="login_header_main">
-			<a
-				href="http://172.28.8.74/cas/login?service=http%3A%2F%2F172.28.8.74%3A7001%2Ffe%2Findex.jsp#"><img
-				src="../images/logo_login.gif"></a> <span>装备中国 装备世界</span>
+			<img
+				src="../images/logo_login.gif"> <span>装备中国 装备世界</span>
 		</div>
 	</div>
 	<div class="login_bg">
@@ -131,8 +132,8 @@
 									value="LT-93-DCzbjcq7AmGvifo91CDOodawTascP9-cas01.example.org">
 								<input type="hidden" name="execution" value="e1s1"> <input
 									type="hidden" name="_eventId" value="submit"> <input
-									class="login_but_1 left" name="reset" accesskey="c" value="重置"
-									tabindex="5" type="reset"> <input
+									class="login_but_1 left" name="reset" accesskey="c" value="修改密码"
+									tabindex="5" type="button" onclick="resetPassword();"> <input
 									class="login_but_2 right" name="submit" accesskey="l"
 									value="登录" tabindex="4" type="submit">
 							</section>

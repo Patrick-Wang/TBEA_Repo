@@ -53,10 +53,10 @@
     <script src="../jsp/json2.js" type="text/javascript"></script>
    	<script src="../jsp/util.js" type="text/javascript"></script>
 
-    <script src="../jsp/xjlrb.js" type="text/javascript"></script>
+    <script src="../jsp/yszkrb.js" type="text/javascript"></script>
 
     <script type="text/javascript">
-    	var instance = xjlrb.View.newInstance();
+    	var instance = yszkrb.View.newInstance();
         (function () {
             $(document).ready(function () {
             	instance.init("table", ${month}, ${year}, ${day});
@@ -144,7 +144,7 @@
             background: #5cb85c;
             float: left;
         }
-
+	
         .hrclass hr {
             width: 1100px;
             height: 1px;
@@ -167,25 +167,25 @@
         }
         
         #updateButton {
-	height: 23px;
-	width:100px;
-	padding: .1em 1em;
-	margin-top: -1px;
-}
-    </style>
+			height: 23px;
+			width:100px;
+			padding: .1em 1em;
+			margin-top: -1px;
+		}
+</style>
 </head>
 <body>
     <div class=" header">
-        <h1>${year}年${month}月${day}日 现金流日报</h1>
+        <h1>${year}年${month}月${day}日 应收账款日报</h1>
     </div>
 	<Table align="center">
 		<tr>
 			<td>
 				<Table>
 					<tr>
-						<td><span style="font-size:1.3em;font-weight: bold;margin-right:5px">日期选择: </span><input id="date" readonly="readonly"></input>
+						<td><span style="font-size:1.3em;font-weight: bold;margin-right:5px">日期: </span><input id="date" readonly="readonly"></input>
 						</td>
-						<td><input id = "updateButton"  type="button" value="更新" style="width : 80px; margin-left:10px;"
+						<td><input id = "updateButton"  type="button" value="选择" style="width : 80px; margin-left:10px;"
 							onclick="instance.updateUI()"></input>
 					</td>
 					</tr>

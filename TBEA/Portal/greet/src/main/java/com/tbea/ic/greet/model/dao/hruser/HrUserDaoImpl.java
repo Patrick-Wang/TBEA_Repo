@@ -19,7 +19,7 @@ public class HrUserDaoImpl implements HrUserDao {
 	EntityManager entityManager;
 	
 	public HrUser getByName(String name) {
-		Query q =entityManager.createNativeQuery("SELECT right(id,8) as psw ,BASGROUPDEF16 FROM V_compsn where BASGROUPDEF16=:name and psnclcod != 10301");
+		Query q =entityManager.createNativeQuery("SELECT right(id,8) as psw ,BASGROUPDEF18 FROM V_compsn where BASGROUPDEF18=:name and psnclcod != 10301");
 		q.setParameter("name", name);
 		List<Object[]> accounts = q.getResultList();
 		if (accounts.isEmpty()){

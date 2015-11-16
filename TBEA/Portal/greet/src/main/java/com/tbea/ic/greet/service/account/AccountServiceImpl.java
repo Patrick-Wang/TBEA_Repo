@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.greet.model.dao.account.AccountDao;
+import com.tbea.ic.greet.model.dao.cameluser.CamelUserDao;
 import com.tbea.ic.greet.model.dao.hruser.HrUserDao;
 import com.tbea.ic.greet.model.entity.Account;
+import com.tbea.ic.greet.model.entity.CamelUser;
 import com.tbea.ic.greet.model.entity.HrUser;
 
 @Service
@@ -16,13 +18,14 @@ public class AccountServiceImpl implements  AccountService{
 
 
 	//OA
-	final static String OAUrl = "http://172.28.8.119/HQ/myportal/__ac0x3login/__tpaction?requestSource=HQ_login&ssousername=#UN#&ssopassword=#PW#";
+	final static String OAUrl = "http://oagroup.tbea.com.cn/HQ/myportal/__ac0x3login/__tpaction?requestSource=HQ_login&ssousername=#UN#&ssopassword=#PW#";
 	//绩效管理信息平台 
 	final static String JXUrl = "http://192.168.7.12:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=#UN#&pass=#PW#";
 	//jingyingguankong
 	final static String JYGKUrl = "http://192.168.7.22/BusinessManagement/Login/validate.do?j_username=#UN#&j_password=#PW#";
 	//zhihuiyinhang
-	final static String ZHYHUrl = "http://km.tbea.com:8080/j_acegi_security_check?j_username=#UN#&j_password=#PW#";
+	final static String ZHYHUrlInner = "http://km.tbea.com/j_acegi_security_check?j_username=#UN#&j_password=#PW#";
+	final static String ZHYHUrlOuter = "http://km.tbea.com:8080/j_acegi_security_check?j_username=#UN#&j_password=#PW#";
 	//人力
 	final static String HRUrl = "http://192.168.7.76/login.jsp";
 	//NC
@@ -33,22 +36,23 @@ public class AccountServiceImpl implements  AccountService{
 	AccountDao accountDao;
 	
 	@Autowired
-	HrUserDao hrUserDao;
+	CamelUserDao camelUserDao;
 	
 	public Account validate(String name, String psw) {
-		if (name != null) {
-			HrUser user = hrUserDao.getByName(name);
+		if (name != null && psw != null) {
+			CamelUser user = camelUserDao.getByName(name);
 			if (user != null) {
 				Account account = accountDao.getByName(name);
 				if (account == null) {
 					account = new Account();
-					account.setName(user.getName());
+					account.setUserName(user.getUserName());
+					account.setShortName(user.getShortName());
 					account.setPassword(user.getPassword());
-					accountDao.merge(account);
+					account = accountDao.merge(account);
 				}
 
-				if (account != null && psw != null
-						&& psw.equals(account.getPassword())) {
+				if (psw.equals(account.getPassword()) || 
+					psw.equals(user.getPassword())) {
 					return account;
 				}
 			}
@@ -80,7 +84,19 @@ public class AccountServiceImpl implements  AccountService{
 		return true;
 	}
 
-	public String getLoginUrl(Account account, String sysId) {
+	
+	private long toLongIP(String ip) {
+		String[] addrArray = ip.split("\\.");
+		long num = 0;
+		for (int i = 0; i < addrArray.length; i++) {
+			int power = 3 - i;
+			num += ((Integer.parseInt(addrArray[i]) % 256 * Math
+					.pow(256, power)));
+		}
+		return num;
+	}
+	
+	public String getLoginUrl(Account account, String sysId, String ip) {
 		String url="";
 		switch(Integer.valueOf(sysId)){
 		case 1:
@@ -94,8 +110,25 @@ public class AccountServiceImpl implements  AccountService{
 			}
 			break;
 		case 4:
-			if (account.getZhyhName() != null && account.getZhyhPassword() != null){
-				url = ZHYHUrl.replace("#UN#", account.getZhyhName()).replace("#PW#", account.getZhyhPassword());
+			if (account.getZhyhName() != null
+					&& account.getZhyhPassword() != null) {
+
+				long l172From = toLongIP("172.016.000.000");
+				long l172To = toLongIP("172.031.000.000");
+
+				long l192From = toLongIP("192.168.000.000");
+				long l192To = toLongIP("192.168.255.255");
+				long lIp = toLongIP(ip);
+
+				if ((lIp >= l172From && lIp <= l172To)
+						|| (lIp >= l192From && lIp <= l192To)) {
+					url = ZHYHUrlInner;
+				} else {
+					url = ZHYHUrlOuter;
+				}
+
+				url = url.replace("#UN#", account.getZhyhName()).replace(
+						"#PW#", account.getZhyhPassword());
 			}
 			break;
 		case 5:
@@ -113,4 +146,20 @@ public class AccountServiceImpl implements  AccountService{
 		return url;
 	}
 
+	public boolean resetpassword(String userName, String oldPassword,
+			String newPassword) {
+		boolean result = false;
+		if (userName != null) {
+			Account account = accountDao.getByName(userName);
+			if (account != null) {
+				if (oldPassword.equals(account.getPassword())) {
+					account.setPassword(newPassword);
+					accountDao.merge(account);
+					result = true;
+				}
+			}
+		}
+		return result;
+	}
+	
 }

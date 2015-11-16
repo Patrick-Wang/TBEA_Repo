@@ -2,27 +2,27 @@
 /// <reference path="util.ts" />
 declare var echarts;
 
-module xjlrb {
+module yszkrb {
 
     class JQGridAssistantFactory {
 
         public static createTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位名称", "dwnc", true, JQTable.TextAlign.Left),
-                new JQTable.Node("本日流入", "brlr"),
-                new JQTable.Node("本月累计流入", "byljlr"),
-                new JQTable.Node("本年累计流入", "bnljlr"),
-                new JQTable.Node("本日流出", "brlc"),
-                new JQTable.Node("本月累计流出", "byljlc"),
-                new JQTable.Node("本年累计流出", "bnljlc"),
-                new JQTable.Node("本日净流量", "brjll"),
-                new JQTable.Node("本月累计净流量", "byljjll"),
-                new JQTable.Node("报表本月调整数", "bbbytzs"),
-                new JQTable.Node("本年累计净流量", "bnljjll")
+                new JQTable.Node("集团下达月度资金回笼指标", "t1", true, JQTable.TextAlign.Left),
+                new JQTable.Node("各单位自行制定的回款计划", "t2"),
+                new JQTable.Node("今日回款", "t3"),
+                new JQTable.Node("已回款中可降应收的回款金额", "t4"),
+                new JQTable.Node("确保办出", "t5"),
+                new JQTable.Node("争取办出", "t6"),
+                new JQTable.Node("截止月底应收账款账面余额", "t7")
             ], gridName);
         }
     }
-
+    
+    interface ISubmitResult {
+        result: string;
+    }
+    
     export class View {
         private static ins: View;
 
@@ -35,16 +35,20 @@ module xjlrb {
 
         private mMonth: number;
         private mYear: number;
-        private mData: Array<string[]> = [];
-        private mDataSet: Util.Ajax = new Util.Ajax("xjlrb_update.do");
-        private mTableId: string;
         private mDay: number;
+        private mData: Array<string[]> = [];
+        private mDataSet: Util.Ajax = new Util.Ajax("yszk_update.do");
+        private mTableId: string;
+
+        private mTableAssist: JQTable.JQGridAssistant;
+        private mSave: Util.Ajax = new Util.Ajax("yszk_submit.do");
+        
         public init(tableId: string, month: number, year: number, day: number): void {
             this.mYear = year;
             this.mMonth = month;
-            this.mTableId = tableId;
             this.mDay = day;
-
+            this.mTableId = tableId;
+  
             $("#date").val(year + "-" + month + "-" + day);
             $("#date").datepicker({
                 //            numberOfMonths:1,//显示几个月  
@@ -70,71 +74,58 @@ module xjlrb {
             });
             $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
             
-            this.updateTable();
+            //this.updateTable();
             this.updateUI();
 
         }
-
-        public onDaySelected(day: number) {
-            this.mDay = day;
+     
+         public save() {
+            var allData = this.mTableAssist.getAllData();
+            var submitData = [];
+            var colNames = this.mTableAssist.getColNames();
+            for (var i = 0; i < allData.length; ++i){
+                submitData.push([]);
+                for (var j = 0; j < allData[i].length; ++j){
+                    if (j != 1){
+                        submitData[i].push(allData[i][j])
+                        allData[i][j] = allData[i][j].replace(new RegExp(' ', 'g'), '')
+                    }
+                }
+            }
+            
+            this.mSave.post({
+                year: this.mYear,
+                month: this.mMonth,
+                day: this.mDay,
+                data: JSON.stringify(submitData)
+            }).then((data: ISubmitResult) => {
+                    if ("true" == data.result) {
+                         Util.MessageBox.tip("保存 成功");
+                    } else if ("false" == data.result) {
+                         Util.MessageBox.tip("保存 失败");
+                    } else {
+                        Util.MessageBox.tip(data.result);
+                    }
+            });
         }
-
-        public onYearSelected(year: number) {
-            this.mYear = year;
-        }
-
-        public onMonthSelected(month: number) {
-            this.mMonth = month;
-        }
-
         public updateUI() {
             this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay })
                 .then((dataArray: any) => {
-
                     this.mData = dataArray;
-                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报");
-                    document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报";
+                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日应收账款日报");
+                    document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日应收账款日报";
                     this.updateTable();
-
                 });
         }
 
         private updateTable(): void {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
-
-            var data = [["沈变公司"],
-                ["衡变公司"],
-                ["新变厂"],
-                ["天变公司"],
-                ["鲁缆公司"],
-                ["新缆厂"],
-                ["德缆公司"],
-                ["输变电小计"],
-                ["新能源公司"],
-                ["新特能源公司"],
-                ["新能源小计"],
-                ["天池能源公司"],
-                ["能动公司"],
-                ["能源小计"],
-                ["进出口"],
-                ["国际工程公司"],
-                ["工程小计"],
-                ["机关本部"],
-                ["采购中心"],
-                ["资金中心"],
-                ["公司机关小计"],
-                ["香港公司"],
-                ["股份公司合计"],
-                ["众和公司"],
-                ["合计"]];
-
+            
+            var data = [];
+            
             var row = [];
-            for (var i = 0; i < data.length; ++i) {
-                if (data[i][0].lastIndexOf("计") >= 0) {
-                    tableAssist.setRowBgColor(i, 183, 222, 232);
-                }
-
+            for (var i = 0; i < this.mData.length; ++i) {
                 if (this.mData[i] instanceof Array) {
                     row = [].concat(this.mData[i]);
                     for (var col in row) {
@@ -160,7 +151,7 @@ module xjlrb {
                     //                    cellsubmit: 'clientArray',
                     //                    cellEdit: true,
                     height: '100%',
-                    width: 1200,
+                    width: 1300,
                     shrinkToFit: true,
                     rowNum: 100,
                     autoScroll: true

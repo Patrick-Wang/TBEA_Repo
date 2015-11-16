@@ -13,7 +13,8 @@ import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 @Table(name = "account")
 public class Account  extends AbstractReadWriteEntity{
 	
-	String name;
+	String userName;
+	String shortName;
 	String password;
 	String jxglName;
 	String jxglPassword;
@@ -33,14 +34,6 @@ public class Account  extends AbstractReadWriteEntity{
 
 	public void setId(int id) {
 		super.setId(id);
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getPassword() {
@@ -113,5 +106,21 @@ public class Account  extends AbstractReadWriteEntity{
 
 	public void setZhyhPassword(String zhyhPassword) {
 		this.zhyhPassword = zhyhPassword;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
 	}
 }

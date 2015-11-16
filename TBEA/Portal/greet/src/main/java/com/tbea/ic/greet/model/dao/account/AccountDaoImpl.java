@@ -24,7 +24,7 @@ public class AccountDaoImpl extends AbstractReadWriteDaoImpl<Account> implements
 	}
 	
 	public Account getByName(String name) {
-		Query q = getEntityManager().createQuery("from Account where name = :name");
+		Query q = getEntityManager().createQuery("from Account where userName = :name or shortName = :name");
 		q.setParameter("name", name);
 		List<Account> accounts = q.getResultList();
 		if (accounts.isEmpty()){
