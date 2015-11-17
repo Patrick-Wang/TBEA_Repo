@@ -28,7 +28,7 @@ public class CamelUserDaoImpl implements CamelUserDao {
 			//String shortName = accounts.get(0)[0] == null ? null : accounts.get(0)[0].toString();
 			//String userName = accounts.get(0)[1] == null ? null : accounts.get(0)[0].toString();
 			return new CamelUser(String.valueOf(accounts.get(0)[0]), String.valueOf(accounts.get(0)[1]), accounts.get(0)[2].toString());
-		}
+		} 
 	}
 
 }
