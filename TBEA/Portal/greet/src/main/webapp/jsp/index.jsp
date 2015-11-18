@@ -103,12 +103,12 @@
 					
 				<li class="login_list_item login_list_item_5"><a
 					target="_blank"
-					href="http://192.168.7.75:9081/login.jsp"><span>人力资源系统</span><img
+					href="http://192.168.7.76/"><span>人力资源系统</span><img
 						src="../images/login_icons_1.png"></a></li>
 						
 				<li class="login_list_item login_list_item_6"><a
 					target="_blank"
-					href="http://192.168.7.24:9083/login.jsp"><span>财务系统</span><img
+					href="http://192.168.7.20/"><span>财务系统</span><img
 						src="../images/login_icons_1.png"></a></li>
 						
 				<li class="login_list_item login_list_item_7"><a
