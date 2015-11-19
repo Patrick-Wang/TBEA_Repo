@@ -65,7 +65,7 @@ module cc_ccwcqk_xl_template {
             
             this.updateTitle();
             
-            //this.updateUI();
+            this.updateUI();
         }
         
         initBglxViewSelect(opt: IViewOption) {

@@ -143,7 +143,7 @@ var Util;
                 window.location.href = '../yclch/openview.do';
             }
             else if (bglx == '20020') {
-                window.location.href = '';
+                window.location.href = '../fxsxfykz/openview.do';
             }
             else if (bglx == '20021') {
                 window.location.href = '../fxnhqk/openview.do';

@@ -42,7 +42,7 @@ public class FxJkcbJsjbDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxJkcbJsj
 
 
 	@Override
-	public List<JygkZzyFxJkcbJsjb> getDataListByDwDate(int dwxxId,int nf,int yf) {		
+	public List<JygkZzyFxJkcbJsjb> getDataListByDwData(int dwxxId,int nf,int yf) {		
 		Query q = this.getEntityManager().createQuery("from JygkZzyFxJkcbJsjb where dwid = :dwid and nf = :nf and yf = :yf");
 		q.setParameter("dwid", dwxxId);
 		q.setParameter("nf", nf);

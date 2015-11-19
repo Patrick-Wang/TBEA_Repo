@@ -62,12 +62,10 @@ module zzy_lrsj_template {
             } else {
                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
             }
-
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.companyId, opt.comps);
             if (opt.comps.length == 1){
                 this.mCompanySelector.hide();
             }
-            
             this.updateTitle();
             
             //this.updateUI();
@@ -101,12 +99,12 @@ module zzy_lrsj_template {
                         tableId : "table",
                         dateId: "date",
                         companyId: "company",
-                        comps : data.comps,
+                        comps : JSON.parse(data.nodeData),
                         date : {
                             month :data.month == null ? undefined : data.month, 
                             year : data.year
                         }
-                    });
+                    });                    
             });
             
         }
