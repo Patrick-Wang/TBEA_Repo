@@ -134,68 +134,90 @@ module hzb_zbhz {
         }
         
         //收入签约
-        private formatSrqyData() {
-            var data = [];
-            var row = [];
-            var isRs = false;
-            for (var j = 0; j < this.mData.length; ++j) {
-                row = [].concat(this.mData[j]);
-                isRs = row[SrqyId.zb] == '人数';
-                for (var i = 0; i < row.length; ++i) {
-                    if (i == SrqyId.jhwcl || i == SrqyId.ljwcl || i == SrqyId.tbzzl || i == SrqyId.ljtbzzl) {
-                        row[i] = Util.formatPercent(row[i]);
-                    } else if (i != SrqyId.zb) 
-                    { 
-                        if (isRs) {
-                            row[i] = Util.formatInt(row[i]);
-                        } else {
-                            row[i] = Util.formatCurrency(row[i]);
-                        }
-                    }
-                }
-                data.push(row);
-            }
-            return data;
+//        private formatSrqyData() {
+//            var data = [];
+//            var row = [];
+//            var isRs = false;
+//            for (var j = 0; j < this.mData.length; ++j) {
+//                row = [].concat(this.mData[j]);
+//                isRs = row[SrqyId.zb] == '人数';
+//                for (var i = 0; i < row.length; ++i) {
+//                    if (i == SrqyId.jhwcl || i == SrqyId.ljwcl || i == SrqyId.tbzzl || i == SrqyId.ljtbzzl) {
+//                        row[i] = Util.formatPercent(row[i]);
+//                    } else if (i != SrqyId.zb) 
+//                    { 
+//                        if (isRs) {
+//                            row[i] = Util.formatInt(row[i]);
+//                        } else {
+//                            row[i] = Util.formatCurrency(row[i]);
+//                        }
+//                    }
+//                }
+//                data.push(row);
+//            }
+//            return data;
+//        }
+//        //整体指标数据
+//        private formatZtData() {
+//            var data = [];
+//            var row = [];
+//            var isRs = false;
+//            var isSxfyl = false;
+//            var isRjlr = false;
+//            var isRjsr = false;
+//            for (var j = 0; j < this.mData.length; ++j) {
+//                row = [].concat(this.mData[j]);
+//                isRs = row[ZtId.zb] == '人数';
+//                isSxfyl = row[ZtId.zb] == '三项费用率(%)';
+//                isRjlr = row[ZtId.zb] == '人均利润';
+//                isRjsr = row[ZtId.zb] == '人均收入';
+//                for (var i = 0; i < row.length; ++i) {
+//                    if (i == ZtId.dyjhwcl || i == ZtId.jdjhwcl || i == ZtId.dytbzf || i == ZtId.jdtbzf || i == ZtId.ndljjhwcl || i == ZtId.ndtbzf) {
+//                        row[i] = Util.formatPercent(row[i]);
+//                    } else if (i != ZtId.zb) {
+//                        if (isRs) {
+//                            row[i] = Util.formatInt(row[i]);
+//                        } 
+//                        else if (isRjlr)
+//                        {
+//                            row[i] = Util.formatFordot(row[i], 1);
+//                        }
+//                        else if (isRjsr)
+//                        {
+//                            row[i] = Util.formatFordot(row[i], 1);
+//                        }  
+//                        else if (isSxfyl){
+//                             row[i] = Util.formatPercent(row[i]);
+//                        }else {
+//                            row[i] = Util.formatCurrency(row[i]);
+//                        }
+//                    }
+//                }
+//                data.push(row);
+//            }
+//            return data;
+//        }
+        
+        private initZTPercentList(): std.vector<number>
+        {
+            var precentList: std.vector<number> = new std.vector<number>();
+            precentList.push(ZtId.dyjhwcl);
+            precentList.push(ZtId.dytbzf);
+            precentList.push(ZtId.jdjhwcl);
+            precentList.push(ZtId.jdtbzf);
+            precentList.push(ZtId.ndljjhwcl);
+            precentList.push(ZtId.ndtbzf);
+            return precentList;
         }
-        //整体指标数据
-        private formatZtData() {
-            var data = [];
-            var row = [];
-            var isRs = false;
-            var isSxfyl = false;
-            var isRjlr = false;
-            var isRjsr = false;
-            for (var j = 0; j < this.mData.length; ++j) {
-                row = [].concat(this.mData[j]);
-                isRs = row[ZtId.zb] == '人数';
-                isSxfyl = row[ZtId.zb] == '三项费用率(%)';
-                isRjlr = row[ZtId.zb] == '人均利润';
-                isRjsr = row[ZtId.zb] == '人均收入';
-                for (var i = 0; i < row.length; ++i) {
-                    if (i == ZtId.dyjhwcl || i == ZtId.jdjhwcl || i == ZtId.dytbzf || i == ZtId.jdtbzf || i == ZtId.ndljjhwcl || i == ZtId.ndtbzf) {
-                        row[i] = Util.formatPercent(row[i]);
-                    } else if (i != ZtId.zb) {
-                        if (isRs) {
-                            row[i] = Util.formatInt(row[i]);
-                        } 
-                        else if (isRjlr)
-                        {
-                            row[i] = Util.formatFordot(row[i], 1);
-                        }
-                        else if (isRjsr)
-                        {
-                            row[i] = Util.formatFordot(row[i], 1);
-                        }  
-                        else if (isSxfyl){
-                             row[i] = Util.formatPercent(row[i]);
-                        }else {
-                            row[i] = Util.formatCurrency(row[i]);
-                        }
-                    }
-                }
-                data.push(row);
-            }
-            return data;
+        
+         private initSrqyPercentList(): std.vector<number>
+        {
+            var precentList: std.vector<number> = new std.vector<number>();
+            precentList.push(SrqyId.jhwcl);
+            precentList.push(SrqyId.ljwcl);
+            precentList.push(SrqyId.tbzzl);
+            precentList.push(SrqyId.ljtbzzl);
+            return precentList;
         }
         
         private updateTable(): void {
@@ -205,17 +227,17 @@ module hzb_zbhz {
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='"+ name +"'></table>");
-            
             if (this.mData.length == 0){
                 return;
             }
             
+            var outputData: string[][] = [];
             if (0 == this.mType) {
                 tableAssist = JQGridAssistantFactory.createTable(name);
-                data = this.formatZtData();
+                Util.formatData(outputData, this.mData, this.initZTPercentList(), []);
             } else {
                 tableAssist = JQGridAssistantFactory.createSrqyTable(name);
-                data = this.formatSrqyData();
+                Util.formatData(outputData, this.mData, this.initSrqyPercentList(), []);
             }
             
 			
@@ -223,7 +245,7 @@ module hzb_zbhz {
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
-                    data: tableAssist.getData(data),
+                    data: tableAssist.getData(outputData),
                     datatype: "local",
                     multiselect: false,
                     drag: false,

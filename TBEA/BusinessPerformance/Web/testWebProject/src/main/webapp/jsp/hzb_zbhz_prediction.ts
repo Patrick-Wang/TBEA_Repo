@@ -195,48 +195,8 @@ module hzb_zbhz_prediciton {
 
                 });
         }
-        
-        private formatData(data : string[][], precentList : std.vector<number>){
-            var row = [];
-            var isRs = false;
-            var isSxfyl = false;
-            var isRjlr = false;
-            var isRjsr = false;
-            for (var j = 0; j < this.mData.length; ++j) {
-                row = [].concat(this.mData[j]);
-                isRs = row[0] == "人数";
-                isSxfyl = row[0] == '三项费用率(%)';
-                isRjlr = row[0] == '人均利润';
-                isRjsr = row[0] == '人均收入';
-                for (var i = 1; i < row.length; ++i) {
-                    if (precentList.contains(i)) {
-                        row[i] = Util.formatPercent(row[i]);
-                    } else {
-                        if(isRs){
-                            row[i] = Util.formatInt(row[i]);
-                        }else if (isSxfyl)
-                        {
-                             row[i] = Util.formatPercent(row[i]);
-                        }
-                        else if (isRjlr)
-                        {
-                            row[i] = Util.formatFordot(row[i], 1);
-                        }
-                        else if (isRjsr)
-                        {
-                            row[i] = Util.formatFordot(row[i], 1);
-                        }  
-                        else {
-                            row[i] = Util.formatCurrency(row[i]);
-                        }
-                    }
-                }
-                data.push(row);
-            }
-            return data;
-        }
-        
-        private formatFirstMonthData(data: string[][]) {
+                
+        private formatFirstMonthData(outputData: string[][]) {
             var precentList: std.vector<number> = new std.vector<number>();
             precentList.push(FirstMonthZb.dyjhwcl);
             precentList.push(FirstMonthZb.dytbzf);
@@ -244,10 +204,10 @@ module hzb_zbhz_prediciton {
             precentList.push(FirstMonthZb.jdtbzf);
             precentList.push(FirstMonthZb.ndzbwcl);
             precentList.push(FirstMonthZb.ndtbzf);
-            return this.formatData(data, precentList);
+            return Util.formatData(outputData,this.mData, precentList,[]);
         }
         
-        private formatSecondMonthData(data: string[][]) {
+        private formatSecondMonthData(outputData: string[][]) {
             var precentList: std.vector<number> = new std.vector<number>();
             precentList.push(SecondMonthZb.dyjhwcl);
             precentList.push(SecondMonthZb.dytbzf);
@@ -257,10 +217,10 @@ module hzb_zbhz_prediciton {
             precentList.push(SecondMonthZb.jdtbzf);
             precentList.push(SecondMonthZb.ndzbwcl);
             precentList.push(SecondMonthZb.ndtbzf);
-            return this.formatData(data, precentList);
+            return Util.formatData(outputData,this.mData, precentList,[]);
         }
         
-        private formatThirdMonthData(data : string[][]) {
+        private formatThirdMonthData(outputData : string[][]) {
             var precentList: std.vector<number> = new std.vector<number>();
             precentList.push(ThirdMonthZb.dyjhwcl);
             precentList.push(ThirdMonthZb.dytbzf);
@@ -271,24 +231,24 @@ module hzb_zbhz_prediciton {
             precentList.push(ThirdMonthZb.xjdyjwcl);
             precentList.push(ThirdMonthZb.xjdndljwcl);
             precentList.push(ThirdMonthZb.xjdtbzf);
-            return this.formatData(data, precentList);
+            return Util.formatData(outputData,this.mData, precentList,[]);
         }
         
         private updateTable(): void {
         	var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mDelegateMonth);
-            var data = [];
+            var outputData = [];
 
  			if (1 == this.mDelegateMonth){
-                data = this.formatFirstMonthData(data);
+                this.formatFirstMonthData(outputData);
             } else if (2 == this.mDelegateMonth){
-                data = this.formatSecondMonthData(data);
+                this.formatSecondMonthData(outputData);
             } else if (3 == this.mDelegateMonth){
-                data = this.formatThirdMonthData(data);
+                this.formatThirdMonthData(outputData);
             } 
 
-            for (var i = 0; i < data.length; ++i) {
-                if (data[i][0].lastIndexOf("计") >= 0) {
+            for (var i = 0; i < outputData.length; ++i) {
+                if (outputData[i][0].lastIndexOf("计") >= 0) {
                     tableAssist.setRowBgColor(i, 183, 222, 232);
                 }
             }
@@ -301,7 +261,7 @@ module hzb_zbhz_prediciton {
                 tableAssist.decorate({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
-                    data: tableAssist.getData(data),
+                    data: tableAssist.getData(outputData),
                     datatype: "local",
                     multiselect: false,
                     drag: false,

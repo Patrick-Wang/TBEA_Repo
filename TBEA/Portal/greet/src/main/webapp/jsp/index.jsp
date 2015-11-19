@@ -103,17 +103,36 @@
 					
 				<li class="login_list_item login_list_item_5"><a
 					target="_blank"
-					href="http://192.168.7.75:9081/login.jsp"><span>人力资源系统</span><img
+					href="http://192.168.7.76/"><span>人力资源系统</span><img
 						src="../images/login_icons_1.png"></a></li>
 						
 				<li class="login_list_item login_list_item_6"><a
 					target="_blank"
-					href="http://192.168.7.24:9083/login.jsp"><span>财务系统</span><img
+					href="http://192.168.7.20/"><span>财务系统</span><img
+						src="../images/login_icons_1.png"></a></li>
+						
+				<li class="login_list_item login_list_item_7"><a
+					target="_blank"
+					href="ftp://ftp.tbea.com/"><span>常用工具下载</span><img
 						src="../images/login_icons_1.png"></a></li>
 			</ul>
 		</div>
+		<div style="margin-top: 80px">
+			<table>
+				<tr>
+					<td><img
+						src="${pageContext.request.contextPath}/images/point.png"></td>
+					<td style="margin-left:10px"><span style="margin-left:10px">首次使用系统，点击绑定按钮，输入需要绑定系统相应的用户名和密码；下次点击此系统图标，可以直接进入</span></td>
+				</tr>
+				<tr>
+					<td><img
+						src="${pageContext.request.contextPath}/images/point.png"></td>
+					<td><span style="margin-left:10px">使用中有任何问题和建议，请联系信息资源管理中心0994-6508898</span></td>
+				</tr>
+			</table>
+		</div>
 	</div>
-
+	
 
 </body>
 </html>
