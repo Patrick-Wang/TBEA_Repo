@@ -74,19 +74,19 @@ public class ThirdSeasonPredictionConfigurator extends AbstractSbdPipeConfigurat
 					.includeZbs(gsztzbs)
 					.excludeZbs(getInvisiableZbs())
 					.excludeZbs(getRatioZbs())
-					.exclude(GSZB.YSZK)
-					.exclude(GSZB.CH))
+					.exclude(GSZB.YSZK32)
+					.exclude(GSZB.CH35))
 							
 				.addFilter(new YdjhProportionAccPipeFilter(sbdzbDao, sjAcc, 3, dh.getFirstMonth(), dh.getCur())
 					.includeCompanies(sbdCompanies)
-					.include(GSZB.YSZK)
-					.include(GSZB.CH));
+					.include(GSZB.YSZK32)
+					.include(GSZB.CH35));
 
 			if (!nonSbdCompanies.isEmpty()) {
 				pipe.addFilter(new AccPipeFilter(yjhAcc, 3)
 						.includeCompanies(nonSbdCompanies)
-						.include(GSZB.YSZK)
-						.include(GSZB.CH));
+						.include(GSZB.YSZK32)
+						.include(GSZB.CH35));
 			}
 		}
 

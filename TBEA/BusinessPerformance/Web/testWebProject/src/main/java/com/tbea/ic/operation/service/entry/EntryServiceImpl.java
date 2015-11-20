@@ -95,10 +95,10 @@ public class EntryServiceImpl implements EntryService{
 	final static Set<Integer> calculatedZbs = new HashSet<Integer>();
 
 	static {
-		calculatedZbs.add(GSZB.RJSR.getValue());
-		calculatedZbs.add(GSZB.RJLR.getValue());
-		calculatedZbs.add(GSZB.SXFYL.getValue());
-		calculatedZbs.add(GSZB.XSLRL.getValue());
+		calculatedZbs.add(GSZB.RJSR63.getValue());
+		calculatedZbs.add(GSZB.RJLR62.getValue());
+		calculatedZbs.add(GSZB.SXFYL_65.getValue());
+		calculatedZbs.add(GSZB.XSLRL_28.getValue());
 	};
 	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
@@ -529,7 +529,7 @@ public class EntryServiceImpl implements EntryService{
 
 	private void updateYJJDMap(Map<Integer, String[]> map, List<YDJHZB> zbs, int col) {
 		for(YDJHZB zb : zbs){
-			String[] row = map.get(zb.getZbxx().getId());
+			String[] row = map.get(zb.getZbxx().getSequence());
 			if (null != row){
 				row[col + 2] = zb.getYdjhz() + "";
 			}
@@ -549,7 +549,7 @@ public class EntryServiceImpl implements EntryService{
 		
 
 		for(NDJHZB zb : zbs){
-			String[] row = map.get(zb.getZbxx().getId());
+			String[] row = map.get(zb.getZbxx().getSequence());
 			if (null != row){
 				row[2] = zb.getNdjhz() + "";
 			}
@@ -586,7 +586,7 @@ public class EntryServiceImpl implements EntryService{
 		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 3);
 
 		for(SJZB zb : sjzbs){
-			String[] row = map.get(zb.getZbxx().getId());
+			String[] row = map.get(zb.getZbxx().getSequence());
 			if (null != row){
 				row[2] = zb.getSjz() + "";
 			}
@@ -670,7 +670,7 @@ public class EntryServiceImpl implements EntryService{
 	private void updateYJ28Map(Map<Integer, String[]> map, List<YJ28ZB> zbs, int col) {
 		String[] tmp = null;
 		for (int i = 0; i < zbs.size(); ++i){
-			tmp =  map.get(zbs.get(i).getZbxx().getId());
+			tmp =  map.get(zbs.get(i).getZbxx().getSequence());
 			if (null != tmp){
 				tmp[col + 2] = zbs.get(i).getYj28z() + "";
 			}			
@@ -678,7 +678,7 @@ public class EntryServiceImpl implements EntryService{
 	}
 
 	
-	private List<String[]> toArray(Map<Integer, String[]> map){
+	private List<String[]> toArray(Map<Integer, String[]> map){	
 		Object[] key_arr = map.keySet().toArray();   
 		Arrays.sort(key_arr);   
 		List<String[]> ret = new ArrayList<String[]>();
@@ -693,7 +693,7 @@ public class EntryServiceImpl implements EntryService{
 		for (ZBXX zbxx : zbxxs){
 			if (!calculatedZbs.contains(zbxx.getId())){
 				String[] row = new String[size];
-				map.put(zbxx.getId(), row);
+				map.put(zbxx.getSequence(), row);
 				row[0] = zbxx.getId() + "";
 				row[1] = zbxx.getName();
 			}
@@ -731,7 +731,7 @@ public class EntryServiceImpl implements EntryService{
 	private void updateYJ20Map(Map<Integer, String[]> map, List<YJ20ZB> zbs, int col) {
 		String[] tmp = null;
 		for (int i = 0; i < zbs.size(); ++i){
-			tmp =  map.get(zbs.get(i).getZbxx().getId());
+			tmp =  map.get(zbs.get(i).getZbxx().getSequence());
 			if (null != tmp){
 				tmp[col + 2] = zbs.get(i).getYj20z() + "";
 			}		

@@ -39,21 +39,21 @@ public class NCZBServiceImpl implements NCZBService{
 	static List<Integer> gsztZb = new ArrayList<Integer>();
 	
 	static{
-		gsztZb.add(GSZB.LRZE.getValue());
-		gsztZb.add(GSZB.XSSR.getValue());
-		gsztZb.add(GSZB.JYXJXJL.getValue());
-		gsztZb.add(GSZB.YSZK.getValue());
-		gsztZb.add(GSZB.CH.getValue());
-		gsztZb.add(GSZB.ZCZE.getValue());
-		gsztZb.add(GSZB.GDZC.getValue());
-		gsztZb.add(GSZB.JZCQMS.getValue());
-		gsztZb.add(GSZB.JZCQCS.getValue());
-		gsztZb.add(GSZB.JLR.getValue());
-		gsztZb.add(GSZB.FZZEQMS.getValue());
-		gsztZb.add(GSZB.FZL.getValue());
-		gsztZb.add(GSZB.SXFY.getValue());
-		gsztZb.add(GSZB.SXFYL.getValue());
-		gsztZb.add(GSZB.JZCSYL.getValue());
+		gsztZb.add(GSZB.LRZE1.getValue());
+		gsztZb.add(GSZB.XSSR6.getValue());
+		gsztZb.add(GSZB.JYXJXJL29.getValue());
+		gsztZb.add(GSZB.YSZK32.getValue());
+		gsztZb.add(GSZB.CH35.getValue());
+		gsztZb.add(GSZB.ZCZE179.getValue());
+		gsztZb.add(GSZB.GDZC180.getValue());
+		gsztZb.add(GSZB.JZC_QMS_181.getValue());
+		gsztZb.add(GSZB.JZC_QCS_182.getValue());
+		gsztZb.add(GSZB.JLR183.getValue());
+		gsztZb.add(GSZB.FZZEQMS184.getValue());
+		gsztZb.add(GSZB.FZL185.getValue());
+		gsztZb.add(GSZB.SXFY64.getValue());
+		gsztZb.add(GSZB.SXFYL_65.getValue());
+		gsztZb.add(GSZB.JZCSYL_66.getValue());
 	}
 	
 	ConfiguratorFactory confFactory;
@@ -86,7 +86,7 @@ public class NCZBServiceImpl implements NCZBService{
 		IPipe pipe = new BasicPipe(gsztZb, companies, d, confFactory.getFinancialPipeConfigurator());
 		List<Double[]> data = pipe.getData();
 		List<String[]> result = makeZbResult(gsztZb, data);
-		result.remove(gsztZb.indexOf(GSZB.FZZEQMS.getValue()));
+		result.remove(gsztZb.indexOf(GSZB.FZZEQMS184.getValue()));
 		return result;
 	}
 

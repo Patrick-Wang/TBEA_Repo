@@ -152,24 +152,24 @@ public class NCServiceImpl implements NCService {
 				yf = d.get(Calendar.MONTH) + 1;
 
 				// 存储NC对应指标
-				mergeNCZB(companyType, GSZB.LRZE, nf, yf, rs.getObject(2));
-				mergeNCZB(companyType, GSZB.XSSR, nf, yf, rs.getObject(3));
-				mergeNCZB(companyType, GSZB.JYXJXJL, nf, yf, rs.getObject(4));
-				mergeNCZB(companyType, GSZB.YSZK, nf, yf, rs.getObject(5));
-				mergeNCZB(companyType, GSZB.CH, nf, yf, rs.getObject(6));
-				mergeNCZB(companyType, GSZB.ZCZE, nf, yf, rs.getObject(7));
-				mergeNCZB(companyType, GSZB.GDZC, nf, yf, rs.getObject(8));
+				mergeNCZB(companyType, GSZB.LRZE1, nf, yf, rs.getObject(2));
+				mergeNCZB(companyType, GSZB.XSSR6, nf, yf, rs.getObject(3));
+				mergeNCZB(companyType, GSZB.JYXJXJL29, nf, yf, rs.getObject(4));
+				mergeNCZB(companyType, GSZB.YSZK32, nf, yf, rs.getObject(5));
+				mergeNCZB(companyType, GSZB.CH35, nf, yf, rs.getObject(6));
+				mergeNCZB(companyType, GSZB.ZCZE179, nf, yf, rs.getObject(7));
+				mergeNCZB(companyType, GSZB.GDZC180, nf, yf, rs.getObject(8));
 				jzcqms = CommonMethod.objectToDouble(rs.getObject(9));
-				mergeNCZB(companyType, GSZB.JZCQMS, nf, yf, jzcqms);
+				mergeNCZB(companyType, GSZB.JZC_QMS_181, nf, yf, jzcqms);
 				jzcqcs = CommonMethod.objectToDouble(rs.getObject(10));
-				mergeNCZB(companyType, GSZB.JZCQCS, nf, yf, jzcqcs);
+				mergeNCZB(companyType, GSZB.JZC_QCS_182, nf, yf, jzcqcs);
 				jlr = CommonMethod.objectToDouble(rs.getObject(11));
-				mergeNCZB(companyType, GSZB.JLR, nf, yf, jlr);
-				mergeNCZB(companyType, GSZB.FZZEQMS, nf, yf, rs.getObject(12));
-				mergeNCZB(companyType, GSZB.SXFY, nf, yf, rs.getObject(13));
+				mergeNCZB(companyType, GSZB.JLR183, nf, yf, jlr);
+				mergeNCZB(companyType, GSZB.FZZEQMS184, nf, yf, rs.getObject(12));
+				mergeNCZB(companyType, GSZB.SXFY64, nf, yf, rs.getObject(13));
 				jzcsyl = CommonMethod.divideDouble(jlr,
 						(jzcqcs + jzcqms) / 2.0D) * 100.0D;
-				mergeNCZB(companyType, GSZB.JZCSYL, nf, yf, jzcsyl);
+				mergeNCZB(companyType, GSZB.JZCSYL_66, nf, yf, jzcsyl);
 			}
 			if (null != rs) {
 				rs.close();

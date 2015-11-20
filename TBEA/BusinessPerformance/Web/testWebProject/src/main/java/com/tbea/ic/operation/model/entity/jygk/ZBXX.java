@@ -17,6 +17,7 @@ public class ZBXX  extends AbstractReadWriteEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String name;
+	private Integer sequence;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,5 +35,13 @@ public class ZBXX  extends AbstractReadWriteEntity implements Serializable {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
 	}
 }

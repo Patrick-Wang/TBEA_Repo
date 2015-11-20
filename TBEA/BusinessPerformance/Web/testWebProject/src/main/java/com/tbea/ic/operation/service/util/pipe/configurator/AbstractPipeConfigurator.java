@@ -14,25 +14,25 @@ public abstract class AbstractPipeConfigurator implements IPipeConfigurator {
 	static List<Integer> zhHiddenZbs = new ArrayList<Integer>();
 
 	static {
-		timePointNumberZbs.add(GSZB.YSZK.getValue());
-		timePointNumberZbs.add(GSZB.CH.getValue());
-		timePointNumberZbs.add(GSZB.RS.getValue());
-		timePointNumberZbs.add(GSZB.QZZJXMCH.getValue());
-		timePointNumberZbs.add(GSZB.QZYQK.getValue());
-		timePointNumberZbs.add(GSZB.QZKCSP.getValue());
-		timePointNumberZbs.add(GSZB.BL.getValue());
-		timePointNumberZbs.add(GSZB.QZJYWY.getValue());
+		timePointNumberZbs.add(GSZB.YSZK32.getValue());
+		timePointNumberZbs.add(GSZB.CH35.getValue());
+		timePointNumberZbs.add(GSZB.RS61.getValue());
+		timePointNumberZbs.add(GSZB.QZ_ZJXMCH38.getValue());
+		timePointNumberZbs.add(GSZB.YQK33.getValue());
+		timePointNumberZbs.add(GSZB.QZ_KCSP37.getValue());
+		timePointNumberZbs.add(GSZB.BL34.getValue());
+		timePointNumberZbs.add(GSZB.QZ_JYWZ36.getValue());
 	}
 
 	static {
-		ratioZbs.add(GSZB.RJLR.getValue());
-		ratioZbs.add(GSZB.RJSR.getValue());
-		ratioZbs.add(GSZB.SXFYL.getValue());
-		ratioZbs.add(GSZB.XSLRL.getValue());
+		ratioZbs.add(GSZB.RJLR62.getValue());
+		ratioZbs.add(GSZB.RJSR63.getValue());
+		ratioZbs.add(GSZB.SXFYL_65.getValue());
+		ratioZbs.add(GSZB.XSLRL_28.getValue());
 	}
 
 	static {
-		invisiableZbs.add(GSZB.CL.getValue());		
+		invisiableZbs.add(GSZB.CL67.getValue());		
 	}
 	
 	static {

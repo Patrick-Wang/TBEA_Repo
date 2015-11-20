@@ -65,19 +65,19 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 					.includeZbs(pipe.getIndicators())
 					.excludeZbs(getInvisiableZbs())
 					.excludeZbs(getRatioZbs())
-					.exclude(GSZB.YSZK)
-					.exclude(GSZB.CH))
+					.exclude(GSZB.YSZK32)
+					.exclude(GSZB.CH35))
 					
 				.addFilter(new YdjhProportionAccPipeFilter(sbdzbDao, sjAcc, 1, dh.getFirstMonth(), dh.getCur())
 					.includeCompanies(sbdCompanies)
-					.include(GSZB.YSZK)
-					.include(GSZB.CH));
+					.include(GSZB.YSZK32)
+					.include(GSZB.CH35));
 
 			if (!nonSbdCompanies.isEmpty()) {
 				pipe.addFilter(new AccPipeFilter(yjhAcc, 1)
 						.includeCompanies(nonSbdCompanies)
-						.include(GSZB.YSZK)
-						.include(GSZB.CH));
+						.include(GSZB.YSZK32)
+						.include(GSZB.CH35));
 			}
 		}
 

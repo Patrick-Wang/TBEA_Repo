@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -80,44 +79,44 @@ public class GszbServiceImpl implements GszbService {
 
 	private static List<Integer> gsztzbs = new ArrayList<Integer>();
 	static {
-		gsztzbs.add(GSZB.LRZE.getValue());
-		gsztzbs.add(GSZB.XSSR.getValue());
-		gsztzbs.add(GSZB.JYXJXJL.getValue());
-		gsztzbs.add(GSZB.YSZK.getValue());
-		gsztzbs.add(GSZB.QZYQK.getValue());
-		gsztzbs.add(GSZB.BL.getValue());
-		gsztzbs.add(GSZB.CH.getValue());
-		gsztzbs.add(GSZB.QZJYWY.getValue());
-		gsztzbs.add(GSZB.HTQYE.getValue());
-		gsztzbs.add(GSZB.ZJHL.getValue());
-		gsztzbs.add(GSZB.BHSCZ.getValue());
-		gsztzbs.add(GSZB.RS.getValue());
-		gsztzbs.add(GSZB.RJLR.getValue());
-		gsztzbs.add(GSZB.RJSR.getValue());
-		gsztzbs.add(GSZB.SXFY.getValue());
-		gsztzbs.add(GSZB.SXFYL.getValue());
+		gsztzbs.add(GSZB.LRZE1.getValue());
+		gsztzbs.add(GSZB.XSSR6.getValue());
+		gsztzbs.add(GSZB.JYXJXJL29.getValue());
+		gsztzbs.add(GSZB.YSZK32.getValue());
+		gsztzbs.add(GSZB.YQK33.getValue());
+		gsztzbs.add(GSZB.BL34.getValue());
+		gsztzbs.add(GSZB.CH35.getValue());
+		gsztzbs.add(GSZB.QZ_JYWZ36.getValue());
+		gsztzbs.add(GSZB.HTQYE48.getValue());
+		gsztzbs.add(GSZB.ZJHL57.getValue());
+		gsztzbs.add(GSZB.BHSCZ60.getValue());
+		gsztzbs.add(GSZB.RS61.getValue());
+		gsztzbs.add(GSZB.RJLR62.getValue());
+		gsztzbs.add(GSZB.RJSR63.getValue());
+		gsztzbs.add(GSZB.SXFY64.getValue());
+		gsztzbs.add(GSZB.SXFYL_65.getValue());
 		//gsztzbs.add(GSZB.JZCSYL.getValue());
 	}
 	
 	
 	private static List<Integer> gsztzbsNC = new ArrayList<Integer>();
 	static {
-		gsztzbsNC.add(GSZB.LRZE.getValue());
-		gsztzbsNC.add(GSZB.XSSR.getValue());
-		gsztzbsNC.add(GSZB.JYXJXJL.getValue());
-		gsztzbsNC.add(GSZB.YSZK.getValue());
-		gsztzbsNC.add(GSZB.CH.getValue());
-		gsztzbsNC.add(GSZB.SXFY.getValue());
-		gsztzbsNC.add(GSZB.SXFYL.getValue());
+		gsztzbsNC.add(GSZB.LRZE1.getValue());
+		gsztzbsNC.add(GSZB.XSSR6.getValue());
+		gsztzbsNC.add(GSZB.JYXJXJL29.getValue());
+		gsztzbsNC.add(GSZB.YSZK32.getValue());
+		gsztzbsNC.add(GSZB.CH35.getValue());
+		gsztzbsNC.add(GSZB.SXFY64.getValue());
+		gsztzbsNC.add(GSZB.SXFYL_65.getValue());
 	}
 
 	private static List<Integer> topfivezbs = new ArrayList<Integer>();
 	static {
-		topfivezbs.add(GSZB.LRZE.getValue());
-		topfivezbs.add(GSZB.XSSR.getValue());
-		topfivezbs.add(GSZB.JYXJXJL.getValue());
-		topfivezbs.add(GSZB.YSZK.getValue());
-		topfivezbs.add(GSZB.CH.getValue());
+		topfivezbs.add(GSZB.LRZE1.getValue());
+		topfivezbs.add(GSZB.XSSR6.getValue());
+		topfivezbs.add(GSZB.JYXJXJL29.getValue());
+		topfivezbs.add(GSZB.YSZK32.getValue());
+		topfivezbs.add(GSZB.CH35.getValue());
 	}
 
 	
@@ -179,37 +178,37 @@ public class GszbServiceImpl implements GszbService {
 	private static List<Integer> srqyzbs = new ArrayList<Integer>();
 	static {
 		// 销售收入
-		srqyzbs.add(GSZB.XSSR.getValue());// 营业收入
-		srqyzbs.add(GSZB.ZZYSR.getValue());// 制造业收入（输变电收入、新能源收入、能源煤炭收入、众和制造业收入）
-		srqyzbs.add(GSZB.GCXMSR.getValue());// 工程项目收入（输变电收入、新能源产业成套工程收入、能源产业工程收入、进出口公司收入、国际工程公司收入、众和公司收入）
-		srqyzbs.add(GSZB.YYSSR.getValue());// 运营商收入（新能源产业运营商收入）
-		srqyzbs.add(GSZB.MTXSSR.getValue());// 煤炭销售收入（能源产业收入）
-		srqyzbs.add(GSZB.WLMYSR.getValue());// 物流贸易收入（输变电物流收入、能源产业贸易收入、众和公司物流业收入）
-		srqyzbs.add(GSZB.FWLSR.getValue());// 服务类收入（新能源产业服务业收入、能源产业服务业收入、众和公司服务业收入）
+		srqyzbs.add(GSZB.XSSR6.getValue());// 营业收入
+		srqyzbs.add(GSZB.XSSR_ZZYSR7.getValue());// 制造业收入（输变电收入、新能源收入、能源煤炭收入、众和制造业收入）
+		srqyzbs.add(GSZB.XSSR_GCXMSR12.getValue());// 工程项目收入（输变电收入、新能源产业成套工程收入、能源产业工程收入、进出口公司收入、国际工程公司收入、众和公司收入）
+		srqyzbs.add(GSZB.YYSSR15.getValue());// 运营商收入（新能源产业运营商收入）
+		srqyzbs.add(GSZB.MTXSSR19.getValue());// 煤炭销售收入（能源产业收入）
+		srqyzbs.add(GSZB.XSSR_WLMYSR16.getValue());// 物流贸易收入（输变电物流收入、能源产业贸易收入、众和公司物流业收入）
+		srqyzbs.add(GSZB.FWLSR20.getValue());// 服务类收入（新能源产业服务业收入、能源产业服务业收入、众和公司服务业收入）
 
 		// 合同签约额
-		srqyzbs.add(GSZB.HTQYE.getValue());// 合同签约额
-		srqyzbs.add(GSZB.GJQY.getValue());// 输变电、进出口国际签约
-		srqyzbs.add(GSZB.QZDJQY.getValue());// 单机签约（输变电国际单机签约）
-		srqyzbs.add(GSZB.QZCTQY.getValue());// 成套签约（输变电国际成套签约、新能源产业国际成套签约、进出口公司国际成套签约、国际工程公司国际成套签约）
-		srqyzbs.add(GSZB.GNQY.getValue());// 输变电国内签约
-		srqyzbs.add(GSZB.QZDJQY_1.getValue());// 单机签约（输变电国内单机签约）
-		srqyzbs.add(GSZB.QZCTQY_1.getValue());// 成套签约（输变电国内成套签约）
+		srqyzbs.add(GSZB.HTQYE48.getValue());// 合同签约额
+		srqyzbs.add(GSZB.GJQY_WMY_49.getValue());// 输变电、进出口国际签约
+		srqyzbs.add(GSZB.QZ_DJQY50.getValue());// 单机签约（输变电国际单机签约）
+		srqyzbs.add(GSZB.QZ_CTQY_WMY_51.getValue());// 成套签约（输变电国际成套签约、新能源产业国际成套签约、进出口公司国际成套签约、国际工程公司国际成套签约）
+		srqyzbs.add(GSZB.GNQY52.getValue());// 输变电国内签约
+		srqyzbs.add(GSZB.QZ_DJQY53.getValue());// 单机签约（输变电国内单机签约）
+		srqyzbs.add(GSZB.QZ_CTQY_WY_54.getValue());// 成套签约（输变电国内成套签约）
 		
 		// 新能源产业签约
 		srqyzbs.addAll(SrqyConfigurator.getSpecialZbs());
 		
-		srqyzbs.add(GSZB.CL.getValue());// 产量
-		srqyzbs.add(GSZB.BYQ.getValue());// 变压器(万KVA)
-		srqyzbs.add(GSZB.XLYTL.getValue());// 线缆用铜量(吨)
-		srqyzbs.add(GSZB.XLYLL.getValue());// 线缆用铝量(吨)
-		srqyzbs.add(GSZB.DJG.getValue());// 多晶硅(吨)
-		srqyzbs.add(GSZB.GP.getValue());// 硅片(片)
-		srqyzbs.add(GSZB.FDLWD.getValue());// 发电量（万度）（众和公司、新特能源公司、能动公司）
-		srqyzbs.add(GSZB.NBQmw.getValue());// 逆变器（MW）
-		srqyzbs.add(GSZB.MT.getValue());// 煤炭(万吨)
-		srqyzbs.add(GSZB.LBD.getValue());// 铝箔（吨）
-		srqyzbs.add(GSZB.DJBPM.getValue());// 电极箔化成量（平米）
+		srqyzbs.add(GSZB.CL67.getValue());// 产量
+		srqyzbs.add(GSZB.BYQ_WKVA_68.getValue());// 变压器(万KVA)
+		srqyzbs.add(GSZB.XLYTL_D_69.getValue());// 线缆用铜量(吨)
+		srqyzbs.add(GSZB.XLYLL_D_70.getValue());// 线缆用铝量(吨)
+		srqyzbs.add(GSZB.CL_DJG_D_71.getValue());// 多晶硅(吨)
+		srqyzbs.add(GSZB.CL_GP_WP_72.getValue());// 硅片(片)
+		srqyzbs.add(GSZB.FDL_WD_73.getValue());// 发电量（万度）（众和公司、新特能源公司、能动公司）
+		srqyzbs.add(GSZB.CL_NBQ_MW_74.getValue());// 逆变器（MW）
+		srqyzbs.add(GSZB.MTCL_WD_75.getValue());// 煤炭(万吨)
+		srqyzbs.add(GSZB.LB_D_78.getValue());// 铝箔（吨）
+		srqyzbs.add(GSZB.DJB_PM_81.getValue());// 电极箔化成量（平米）
 	}
 
 	private static Map<Integer, ZBXX> zbxxMap = new Hashtable<Integer, ZBXX>();
@@ -225,24 +224,24 @@ public class GszbServiceImpl implements GszbService {
 		configFac = new ConfiguratorFactory(sbdNdjhzbDao, accFac, companyManager);
 	}
 
-	private Set<Integer> addAll(Set<Integer> src, Set<ZBXX> dest) {
+	private Map<Integer, ZBXX> addAll(Map<Integer, ZBXX> src, Set<ZBXX> dest) {
 		for (ZBXX zbxx : dest) {
-			src.add(zbxx.getId());
+			src.put(zbxx.getSequence(), zbxx);
 		}
 		return src;
 	}
 
 	private List<Integer> getAllZbs(List<Company> comps) {
-		Set<Integer> zbSet = new HashSet<Integer>();
+		Map<Integer, ZBXX> zbSet = new HashMap<Integer, ZBXX>();
 		List<DWXX> dwxxs = dwxxDao.getDwxxs(comps);
 		for (DWXX dwxx : dwxxs) {
 			addAll(zbSet, dwxx.getSjzbxxs());
 		}
-		Object[] key_arr = zbSet.toArray();
+		Object[] key_arr = zbSet.keySet().toArray();
 		Arrays.sort(key_arr);
 		List<Integer> ret = new ArrayList<Integer>();
 		for (Object id : key_arr) {
-			ret.add((Integer) id);
+			ret.add(zbSet.get(id).getId());
 		}
 		return ret;
 	}
@@ -342,7 +341,7 @@ public class GszbServiceImpl implements GszbService {
 				getConfiguratorFactory().getSrqyConfigurator());
 		List<String[]> allCompResult = makeZbResult(srqyzbs, pipe.getData());
 		
-		pipe = new BasicPipe(GSZB.HTQYE.getValue(), companyManager.getBMDBOrganization().getCompany(CompanyType.XNYSYB).getSubCompanies(), date,
+		pipe = new BasicPipe(GSZB.HTQYE48.getValue(), companyManager.getBMDBOrganization().getCompany(CompanyType.XNYSYB).getSubCompanies(), date,
 				getConfiguratorFactory().getSrqyConfigurator());
 		List<Integer> zbTmp = new ArrayList<Integer>();
 		zbTmp.addAll(SrqyConfigurator.getSpecialZbs());
@@ -351,10 +350,10 @@ public class GszbServiceImpl implements GszbService {
 		List<Company> comps = new ArrayList<Company>();
 		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DJGYFGS));
 		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DJGEGS));
-		pipe = new BasicPipe(GSZB.DJG.getValue(), comps, date, getConfiguratorFactory().getSrqyConfigurator());
+		pipe = new BasicPipe(GSZB.CL_DJG_D_71.getValue(), comps, date, getConfiguratorFactory().getSrqyConfigurator());
 		
 		zbTmp.clear();
-		zbTmp.add(GSZB.DJG.getValue());
+		zbTmp.add(GSZB.CL_DJG_D_71.getValue());
 		List<String[]> djggsResult = makeZbResult(zbTmp, pipe.getData());
 		
 		for (int i = 0; i < allCompResult.size(); ++i){

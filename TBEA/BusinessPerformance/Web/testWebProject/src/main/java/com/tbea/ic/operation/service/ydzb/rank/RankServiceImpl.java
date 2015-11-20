@@ -104,49 +104,49 @@ public class RankServiceImpl implements RankService {
 	
 	@Override
 	public List<String[]> getJhlrRank(Date date) {
-		List<Double[]> ret = getRank(GSZB.LRZE, date, getConfiguratorFactory().getJhlrRankConfigurator(), getConfiguratorFactory().getJhlrDataConfigurator());
+		List<Double[]> ret = getRank(GSZB.LRZE1, date, getConfiguratorFactory().getJhlrRankConfigurator(), getConfiguratorFactory().getJhlrDataConfigurator());
 		return makeResult(ret);
 	}
 	
 	@Override
 	public List<String[]> getLjlrRank(Date date) {
-		List<Double[]> ret = getRank(GSZB.LRZE, date, getConfiguratorFactory().getLjlrRankConfigurator(), getConfiguratorFactory().getLjlrDataConfigurator());
+		List<Double[]> ret = getRank(GSZB.LRZE1, date, getConfiguratorFactory().getLjlrRankConfigurator(), getConfiguratorFactory().getLjlrDataConfigurator());
 		return makeResult(ret);
 	}
 	
 	@Override
 	public List<String[]> getJxjlRank(Date date) {
-		List<Double[]> ret = getRank(GSZB.JYXJXJL, date, getConfiguratorFactory().getJxjlRankConfigurator(), getConfiguratorFactory().getJxjlDataConfigurator());
+		List<Double[]> ret = getRank(GSZB.JYXJXJL29, date, getConfiguratorFactory().getJxjlRankConfigurator(), getConfiguratorFactory().getJxjlDataConfigurator());
 		return makeResult(ret);
 	}
 
 	@Override
 	public List<String[]> getRjlrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.RJLR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJLR62.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
 		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		for (Company comp : jydw){
 			pipe.addCompany(comp, getConfiguratorFactory().getRjlrDataConfigurator());
 		}
-		pipe.addDependentIndictor(GSZB.LRZE.getValue());
-		pipe.addDependentIndictor(GSZB.RS.getValue());
+		pipe.addDependentIndictor(GSZB.LRZE1.getValue());
+		pipe.addDependentIndictor(GSZB.RS61.getValue());
 		return makeResult(pipe.getData());
 	}
 
 	@Override
 	public List<String[]> getRjsrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.RJSR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJSR63.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
 		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		for (Company comp : jydw){
 			pipe.addCompany(comp, getConfiguratorFactory().getRjlrDataConfigurator());
 		}
-		pipe.addDependentIndictor(GSZB.XSSR.getValue());
-		pipe.addDependentIndictor(GSZB.RS.getValue());
+		pipe.addDependentIndictor(GSZB.XSSR6.getValue());
+		pipe.addDependentIndictor(GSZB.RS61.getValue());
 		return makeResult(pipe.getData());
 	}
 	
 	@Override
 	public List<String[]> getXmgsRjsrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.RJSR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJSR63.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
 		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		List<String> compsName = new ArrayList<String>();
 		for (Company comp : jydw){
@@ -155,14 +155,14 @@ public class RankServiceImpl implements RankService {
 				compsName.add(xmgs.getName());
 			}
 		}
-		pipe.addDependentIndictor(GSZB.XSSR.getValue());
-		pipe.addDependentIndictor(GSZB.RS.getValue());
+		pipe.addDependentIndictor(GSZB.XSSR6.getValue());
+		pipe.addDependentIndictor(GSZB.RS61.getValue());
 		return makeResult(compsName, pipe.getData());
 	}
 	
 	@Override
 	public List<String[]> getXmgsRjlrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.RJLR.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJLR62.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
 		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		List<String> compsName = new ArrayList<String>();
 		for (Company comp : jydw){
@@ -171,8 +171,8 @@ public class RankServiceImpl implements RankService {
 				compsName.add(xmgs.getName());
 			}
 		}
-		pipe.addDependentIndictor(GSZB.LRZE.getValue());
-		pipe.addDependentIndictor(GSZB.RS.getValue());
+		pipe.addDependentIndictor(GSZB.LRZE1.getValue());
+		pipe.addDependentIndictor(GSZB.RS61.getValue());
 		return makeResult(compsName, pipe.getData());
 	}
 
@@ -194,7 +194,7 @@ public class RankServiceImpl implements RankService {
 
 	@Override
 	public List<String[]> getXmgsJhlrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.LRZE.getValue(), date, getConfiguratorFactory().getJhlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.LRZE1.getValue(), date, getConfiguratorFactory().getJhlrRankConfigurator());
 		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		List<String> compsName = new ArrayList<String>();
 		for (Company comp : jydw){

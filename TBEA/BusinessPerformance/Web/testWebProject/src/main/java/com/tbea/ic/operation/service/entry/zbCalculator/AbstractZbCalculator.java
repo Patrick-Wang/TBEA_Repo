@@ -34,23 +34,23 @@ abstract class AbstractZbCalculator implements ZbCalculator{
 	abstract protected void onHandling(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status);
 	
 	public void compute(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status){
-		if (GSZB.XSSR.getValue() == zbId){
+		if (GSZB.XSSR6.getValue() == zbId){
 			xssr = val;
-		}else if (GSZB.RS.getValue() == zbId){
+		}else if (GSZB.RS61.getValue() == zbId){
 			rs = val;
-		}else if (GSZB.LRZE.getValue() == zbId){
+		}else if (GSZB.LRZE1.getValue() == zbId){
 			lrze = val;
-		}else if (GSZB.SXFY.getValue() == zbId){
+		}else if (GSZB.SXFY64.getValue() == zbId){
 			sxfy = val;
 		}
 		
-		if (GSZB.RJSR.getValue() == zbId){
+		if (GSZB.RJSR63.getValue() == zbId){
 			setRjsr(cal, comp, status);
-		}else if (GSZB.RJLR.getValue() == zbId){
+		}else if (GSZB.RJLR62.getValue() == zbId){
 			setRjlr(cal, comp, status);
-		}else if (GSZB.SXFYL.getValue() == zbId){
+		}else if (GSZB.SXFYL_65.getValue() == zbId){
 			setSxfyl(cal, comp, status);
-		}else if (GSZB.XSLRL.getValue() == zbId){
+		}else if (GSZB.XSLRL_28.getValue() == zbId){
 			setXslrl(cal, comp, status);
 		}else{
 			onHandling(zbId, val, cal, comp, status);
@@ -59,33 +59,33 @@ abstract class AbstractZbCalculator implements ZbCalculator{
 	
 	protected void setRjsr(Calendar cal, Company comp, ZBStatus status){
 		if (null != xssr  && null != rs && Util.isPositive(rs) && Util.isPositive(xssr)){
-			injector.inject(GSZB.RJSR.getValue(), xssr / rs, cal, comp, status);
+			injector.inject(GSZB.RJSR63.getValue(), xssr / rs, cal, comp, status);
 		} else{
-			injector.remove(GSZB.RJSR.getValue(), cal, comp);
+			injector.remove(GSZB.RJSR63.getValue(), cal, comp);
 		}
 	}
 	
 	protected void setRjlr(Calendar cal, Company comp, ZBStatus status){
 		if (null != lrze  && null != rs && Util.isPositive(rs) && Util.isPositive(lrze)){
-			injector.inject(GSZB.RJLR.getValue(), lrze / rs, cal, comp, status);
+			injector.inject(GSZB.RJLR62.getValue(), lrze / rs, cal, comp, status);
 		} else{
-			injector.remove(GSZB.RJLR.getValue(), cal, comp);
+			injector.remove(GSZB.RJLR62.getValue(), cal, comp);
 		}
 	}
 	
 	protected void setSxfyl(Calendar cal, Company comp, ZBStatus status){
 		if (null != sxfy  && null != xssr && Util.isPositive(xssr) && Util.isPositive(sxfy)){
-			injector.inject(GSZB.SXFYL.getValue(), sxfy / xssr, cal, comp, status);
+			injector.inject(GSZB.SXFYL_65.getValue(), sxfy / xssr, cal, comp, status);
 		} else{
-			injector.remove(GSZB.SXFYL.getValue(), cal, comp);
+			injector.remove(GSZB.SXFYL_65.getValue(), cal, comp);
 		}
 	}
 	
 	protected void setXslrl(Calendar cal, Company comp, ZBStatus status){
 		if (null != lrze  && null != xssr && Util.isPositive(xssr) && Util.isPositive(lrze)){
-			injector.inject(GSZB.XSLRL.getValue(), lrze / xssr, cal, comp, status);
+			injector.inject(GSZB.XSLRL_28.getValue(), lrze / xssr, cal, comp, status);
 		}else{
-			injector.remove(GSZB.XSLRL.getValue(), cal, comp);
+			injector.remove(GSZB.XSLRL_28.getValue(), cal, comp);
 		}
 	}
 }

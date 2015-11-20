@@ -25,13 +25,13 @@ public class YdjhProportionAccPipeFilter extends NdjhProportionAccPipeFilter {
 			Company comp) {
 
 		if (xssrRow != null && null != depValues.get(xssrRow)) {
-			if (curZb == GSZB.YSZK.getValue()) {
+			if (curZb == GSZB.YSZK32.getValue()) {
 				Double value = sbdzbDao.getYszb(year, comp);
 				if (null != value) {
 					return Util.valueOf(depValues.get(xssrRow)) / month * 12
 							* value;
 				}
-			} else if (curZb == GSZB.CH.getValue()) {
+			} else if (curZb == GSZB.CH35.getValue()) {
 				Double value = sbdzbDao.getChzb(year, comp);
 				if (null != value) {
 					return Util.valueOf(depValues.get(xssrRow)) / month * 12

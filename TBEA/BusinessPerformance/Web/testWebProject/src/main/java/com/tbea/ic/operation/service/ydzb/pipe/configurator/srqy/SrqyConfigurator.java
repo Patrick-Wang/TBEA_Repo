@@ -69,7 +69,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 				.includeCompanies(allCompanies)
 				.includeZbs(zbs)
 				.excludeZbs(specialZbs)
-				.exclude(GSZB.CL))
+				.exclude(GSZB.CL67))
 			.addFilter(new AccPipeFilter(njhAcc, 0)
 				.includeCompanies(org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 				.include(xnycyQyId))
@@ -80,7 +80,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 				.includeCompanies(allCompanies)
 				.includeZbs(zbs)
 				.excludeZbs(specialZbs)
-				.exclude(GSZB.CL))
+				.exclude(GSZB.CL67))
 			.addFilter(new AccPipeFilter(yjhAcc, 1)
 				.includeCompanies(org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 				.include(xnycyQyId))
@@ -91,7 +91,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 				.includeCompanies(allCompanies)
 				.includeZbs(zbs)
 				.excludeZbs(specialZbs)
-				.exclude(GSZB.CL))
+				.exclude(GSZB.CL67))
 			.addFilter(new AccPipeFilter(sjAcc, 2)
 				.includeCompanies(org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 				.include(xnycyQyId))
@@ -105,7 +105,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 				.includeCompanies(allCompanies)
 				.includeZbs(zbs)
 				.excludeZbs(specialZbs)
-				.exclude(GSZB.CL))
+				.exclude(GSZB.CL67))
 			.addFilter(new AccPipeFilter(sjAcc, 4, dh.getFirstMonth(), dh.getCur())
 				.includeCompanies(org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 				.include(xnycyQyId))
@@ -119,7 +119,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 				.includeCompanies(allCompanies)
 				.includeZbs(zbs)
 				.excludeZbs(specialZbs)
-				.exclude(GSZB.CL))
+				.exclude(GSZB.CL67))
 			.addFilter(new AccPipeFilter(sjAcc, 6, dh.getQntq())
 				.includeCompanies(org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 				.include(xnycyQyId))
@@ -133,7 +133,7 @@ public class SrqyConfigurator implements IPipeConfigurator {
 				.includeCompanies(allCompanies)
 				.includeZbs(zbs)
 				.excludeZbs(specialZbs)
-				.exclude(GSZB.CL))				
+				.exclude(GSZB.CL67))				
 			.addFilter(new AccPipeFilter(sjAcc, 8, dh.getQnfirstMonth(), dh.getQntq())
 				.includeCompanies(org.getCompany(CompanyType.XNYSYB).getSubCompanies())
 				.include(xnycyQyId))
@@ -141,8 +141,8 @@ public class SrqyConfigurator implements IPipeConfigurator {
 				
 			// 同比增幅
 			.addFilter(tbzzFilter.add(9, 4, 8))
-			.addFilter(tbzzFilter.exclude(GSZB.CL))
-			.addFilter(wclFilter.exclude(GSZB.CL));
+			.addFilter(tbzzFilter.exclude(GSZB.CL67))
+			.addFilter(wclFilter.exclude(GSZB.CL67));
 	}
 
 	@Override

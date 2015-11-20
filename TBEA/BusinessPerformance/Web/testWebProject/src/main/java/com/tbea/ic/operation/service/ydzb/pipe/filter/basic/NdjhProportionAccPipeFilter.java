@@ -23,12 +23,12 @@ public class NdjhProportionAccPipeFilter extends AbstractDividedCompanyAccPipeFi
 	public NdjhProportionAccPipeFilter(SbdNdjhZbDao sbdzbDao, IAccumulator ndjhAcc, int col, Date dateS, Date dateE) {
 		super(ndjhAcc, col, dateS, dateE);
 		this.sbdzbDao = sbdzbDao;
-		addDependentZbs(GSZB.XSSR.getValue());
+		addDependentZbs(GSZB.XSSR6.getValue());
 	}
 
 	public AbstractDividedCompanyAccPipeFilter addDependentZbs(Integer zb){
 		super.addDependentZbs(zb);
-		if (zb == GSZB.XSSR.getValue()){
+		if (zb == GSZB.XSSR6.getValue()){
 			xssrRow = dependentZbs.indexOf(zb);
 		}
 		return this;
@@ -37,9 +37,9 @@ public class NdjhProportionAccPipeFilter extends AbstractDividedCompanyAccPipeFi
 	@Override
 	protected Double onCompute(Integer curZb, List<Double> depValues, Company comp) {
 		if (xssrRow != null && null != depValues.get(xssrRow)){
-			if (curZb == GSZB.YSZK.getValue()){
+			if (curZb == GSZB.YSZK32.getValue()){
 				return Util.valueOf(depValues.get(xssrRow)) * sbdzbDao.getYszb(year, comp);
-			} else if (curZb == GSZB.CH.getValue()){
+			} else if (curZb == GSZB.CH35.getValue()){
 				return Util.valueOf(depValues.get(xssrRow)) * sbdzbDao.getChzb(year, comp);
 			}
 		}
