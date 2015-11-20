@@ -34,7 +34,7 @@ public class DailyReportServiceImpl implements DailyReportService{
 
 	@Override
 	public boolean hasYszkAuthority(Account account) {
-		int count = extendAuthDao.getAuthorityCount(account, 1);
+		int count = extendAuthDao.getAuthorityCount(account, ExtendAuthority.AuthType.YSZKDailyReportEntry.ordinal());
 		return count > 0;
 	}
 
@@ -88,6 +88,18 @@ public class DailyReportServiceImpl implements DailyReportService{
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public boolean hasJYAnalysisEntryAuthority(Account account) {
+		int count = extendAuthDao.getAuthorityCount(account, ExtendAuthority.AuthType.JYAnalysisEntry.ordinal());
+		return count > 0;
+	}
+
+	@Override
+	public boolean hasJYAnalysisLookupAuthority(Account account) {
+		int count = extendAuthDao.getAuthorityCount(account, ExtendAuthority.AuthType.JYAnalysisLookup.ordinal());
+		return count > 0;
 	}
 	
 	

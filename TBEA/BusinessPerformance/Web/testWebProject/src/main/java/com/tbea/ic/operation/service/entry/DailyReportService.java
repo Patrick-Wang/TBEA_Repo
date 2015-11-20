@@ -16,4 +16,8 @@ public interface DailyReportService {
 
 	List<String[]> getYszkData(Account account, Date date);
 
+	boolean hasJYAnalysisEntryAuthority(Account account);
+
+	boolean hasJYAnalysisLookupAuthority(Account account);
+
 }

@@ -21,6 +21,14 @@ import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 @Table(name = "system_extend_auth")
 public class ExtendAuthority extends AbstractReadWriteEntity implements Serializable {
 	
+	
+	public enum AuthType{
+		MEPTY,
+		YSZKDailyReportEntry,
+		JYAnalysisEntry,
+		JYAnalysisLookup
+	}
+	
 	private static final long serialVersionUID = 1L;
 	
 	Integer authType;
