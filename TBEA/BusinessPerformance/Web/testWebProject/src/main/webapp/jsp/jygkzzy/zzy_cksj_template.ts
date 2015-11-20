@@ -78,7 +78,8 @@ module zzy_cksj_template {
 
         initBglxSelect(opt: IViewOption) {
             this.mBglxViewSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx);
-        };
+        }
+
         public updateUI() {
             $("#nodatatips").css("display", "none");
             $("#entryarea").css("display", "");
