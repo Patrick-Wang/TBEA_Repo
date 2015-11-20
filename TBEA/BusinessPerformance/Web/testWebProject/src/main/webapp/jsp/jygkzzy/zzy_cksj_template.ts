@@ -2,6 +2,7 @@
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
 /// <reference path="../companySelector.ts" />
+/// <reference path="../messagebox.ts" />
 /// <reference path="bglx_selector.ts" />
 declare var echarts;
 declare var $;
