@@ -94,6 +94,11 @@
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">财务指标完成情况</a></li>
+								<c:if test="${JYAnalysisLookup}">
+									<li style="background-color: transparent;"><i
+										class="ec-icon ec-icon-line"></i> <a href="#zbhz"
+										style="color: rgb(62, 152, 197);">经营分析汇总</a></li>
+								</c:if>
 
 								<!-- 只有sbd公司权限显示-->
 								<c:if test="${SbdAuth}">
@@ -130,12 +135,17 @@
 										style="color: rgb(62, 152, 197);">预计指标录入</a></li>
 								</c:if>
 								
-								<c:if test="${isJydw}">
+								<%-- <c:if test="${isJydw}">
 									<li style="background-color: transparent"><i
 										class="ec-icon ec-icon-force"></i> <a href="#inputPrediction"
 										style="color: rgb(62, 152, 197);">日报录入</a></li>
+								</c:if> --%>
+								<c:if test="${JYAnalysisEntry}">
+									<li style="background-color: transparent"><i
+										class="ec-icon ec-icon-force"></i> <a href="#inputPrediction"
+										style="color: rgb(62, 152, 197);">经营分析录入</a></li>
 								</c:if>
-								
+
 							</ul>
 
 							<ul id="navlist2" style="padding: 10px 0; display: none">

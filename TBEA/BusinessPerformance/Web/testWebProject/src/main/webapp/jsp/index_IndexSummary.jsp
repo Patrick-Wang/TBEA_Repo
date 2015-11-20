@@ -143,6 +143,22 @@
 	</div>
 </div>
 
+<c:if test="${JYAnalysisLookup}">
+<div>
+	<h3>
+		经营指标分析<a name="dashboard"> </a>
+	</h3>
+	<div class="section">
+		<div class="thumb3">
+			<ul class="slides">
+				<li><a href="../fxcpylspdqddmlqk/openview.do" target="_blank"><img
+						src="../images/charts/bar1.png"> <span><strong>经营指标分析</strong></span></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+</c:if>
 
 <%--  <c:if test="${CorpAuth}">
 <div>
