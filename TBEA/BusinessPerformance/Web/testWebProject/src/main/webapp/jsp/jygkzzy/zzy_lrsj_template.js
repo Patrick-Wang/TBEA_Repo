@@ -76,7 +76,7 @@ var zzy_lrsj_template;
                     tableId: "table",
                     dateId: "date",
                     companyId: "company",
-                    comps: data.comps,
+                    comps: JSON.parse(data.nodeData),
                     date: {
                         month: data.month == null ? undefined : data.month,
                         year: data.year

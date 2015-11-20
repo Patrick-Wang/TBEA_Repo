@@ -40,7 +40,7 @@ var fx_jkcb_ztnhqk_xl_template;
                 this.mCompanySelector.hide();
             }
             this.updateTitle();
-            //this.updateUI();
+            this.updateUI();
         };
         View.prototype.initBglxViewSelect = function (opt) {
             this.mBglxViewSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx);

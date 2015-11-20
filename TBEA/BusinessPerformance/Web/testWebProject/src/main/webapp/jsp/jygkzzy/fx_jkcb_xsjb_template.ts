@@ -65,7 +65,7 @@ module fx_jkcb_xsjb_template {
             
             this.updateTitle();
             
-            //this.updateUI();
+            this.updateUI();
         }
         
         initBglxViewSelect(opt: IViewOption) {

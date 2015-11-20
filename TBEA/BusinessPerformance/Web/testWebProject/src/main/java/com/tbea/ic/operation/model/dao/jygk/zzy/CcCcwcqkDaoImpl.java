@@ -24,10 +24,10 @@ public class CcCcwcqkDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyCcCcwcqk> i
 
 	@Override
 	public List<JygkZzyCcCcwcqk> getDataListByDwData(int dwxxId,int nf,int yf) {	
-	Query q = this.getEntityManager().createQuery("from JygkZzyCcCcwcqk where dwid = :dwid and nf = :nf and jd = :jd");
+	Query q = this.getEntityManager().createQuery("from JygkZzyCcCcwcqk where dwid = :dwid and nf = :nf and yf = :yf");
 	q.setParameter("dwid", dwxxId);
 	q.setParameter("nf", nf);
-	q.setParameter("jd", yf);	
+	q.setParameter("yf", yf);	
 	return q.getResultList();
 	}
 	@Override
