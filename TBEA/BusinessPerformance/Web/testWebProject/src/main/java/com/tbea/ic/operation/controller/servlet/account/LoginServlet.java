@@ -136,6 +136,12 @@ public class LoginServlet {
 		session.setAttribute("isJydw",
 				dailyReportService.hasYszkAuthority(account));
 		
+		session.setAttribute("JYAnalysisEntry",
+				dailyReportService.hasJYAnalysisEntryAuthority(account));
+		
+		session.setAttribute("JYAnalysisLookup",
+				dailyReportService.hasJYAnalysisLookupAuthority(account));
+	
 	}
 	
 	@RequestMapping(value = "validate.do")
