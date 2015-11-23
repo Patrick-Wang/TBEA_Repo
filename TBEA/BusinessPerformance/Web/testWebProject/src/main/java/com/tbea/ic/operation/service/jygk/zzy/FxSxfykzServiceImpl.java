@@ -38,16 +38,16 @@ public class FxSxfykzServiceImpl implements FxSxfykzService{
 			
 	@Override
 	public List<String[]> getViewDataList(String dwxxid,String nf,String yf) {
-		//管理费用(财务口径)	100
-		//	其中：固定费用	101
-	    // 	其中：变动费用	102
-	    //销售费用(财务口径)	103
-	    // 	其中：固定费用	104
-	    // 	其中：变动费用	105
-		//财务费用(财务口径)	106
-		int xssrzbid=11;//销售收入指标id
-		int[] zbxxid={100,101,102,103,104,105,106};//三项费用指标数组
-		String zbidstrs="100,101,102,103,104,105,106";	//三项费用指标字符串
+		//管理费用(财务口径)	221
+		//	其中：固定费用	222
+	    // 	其中：变动费用	223
+	    //销售费用(财务口径)	224
+	    // 	其中：固定费用	225
+	    // 	其中：变动费用	226
+		//财务费用(财务口径)	227
+		int xssrzbid=6;//销售收入指标id
+		int[] zbxxid={221,222,223,224,225,226,227};//三项费用指标数组
+		String zbidstrs="221,222,223,224,225,226,227";	//三项费用指标字符串
 		List<ZBXX> ZBXXList=zzyZBXXDao.getZbs(zbidstrs);
 		List<NDJHZB> NDJHZBList=zzyNdjhzbDao.getDataListByDwDate(Integer.parseInt(dwxxid),zbidstrs,Integer.parseInt(nf));	//各指标年度计划
 		Map<Integer,BigDecimal> NDJHZBmap=new HashMap<Integer,BigDecimal>();//各指标年度计划map
