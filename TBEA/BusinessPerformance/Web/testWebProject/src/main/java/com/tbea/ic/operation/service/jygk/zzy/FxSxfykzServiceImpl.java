@@ -38,6 +38,14 @@ public class FxSxfykzServiceImpl implements FxSxfykzService{
 			
 	@Override
 	public List<String[]> getViewDataList(String dwxxid,String nf,String yf) {
+		String dwxxs="";
+		if(dwxxid.equals("900000")){//变压器产业
+			dwxxs="1,2,3";
+		}else if(dwxxid.equals("800000")){//线缆产业
+			dwxxs="4,5,6";
+		}else{
+			dwxxs=dwxxid;
+		}
 		//管理费用(财务口径)	221
 		//	其中：固定费用	222
 	    // 	其中：变动费用	223
@@ -49,19 +57,19 @@ public class FxSxfykzServiceImpl implements FxSxfykzService{
 		int[] zbxxid={221,222,223,224,225,226,227};//三项费用指标数组
 		String zbidstrs="221,222,223,224,225,226,227";	//三项费用指标字符串
 		List<ZBXX> ZBXXList=zzyZBXXDao.getZbs(zbidstrs);
-		List<NDJHZB> NDJHZBList=zzyNdjhzbDao.getDataListByDwDate(Integer.parseInt(dwxxid),zbidstrs,Integer.parseInt(nf));	//各指标年度计划
+		List<NDJHZB> NDJHZBList=zzyNdjhzbDao.getDataListByDwDate(dwxxs,zbidstrs,Integer.parseInt(nf));	//各指标年度计划
 		Map<Integer,BigDecimal> NDJHZBmap=new HashMap<Integer,BigDecimal>();//各指标年度计划map
-		List<SJZB> SJZBList=zzySjzbDao.getDataListByDwDate(Integer.parseInt(dwxxid),zbidstrs,Integer.parseInt(nf), Integer.parseInt(yf));	//各指标月实际
+		List<SJZB> SJZBList=zzySjzbDao.getDataListByDwDate(dwxxs,zbidstrs,Integer.parseInt(nf), Integer.parseInt(yf));	//各指标月实际
 		Map<Integer,BigDecimal> SJZBmap=new HashMap<Integer,BigDecimal>();//各指标月实际map
-		List<YDJHZB> YDJHZBList=ZzyYdjhzbDao.getDataListByDwDate(Integer.parseInt(dwxxid),zbidstrs,Integer.parseInt(nf), Integer.parseInt(yf));	//各指标月计划
+		List<YDJHZB> YDJHZBList=ZzyYdjhzbDao.getDataListByDwDate(dwxxs,zbidstrs,Integer.parseInt(nf), Integer.parseInt(yf));	//各指标月计划
 		Map<Integer,BigDecimal> YDJHZBmap=new HashMap<Integer,BigDecimal>();//各指标月计划map
-		List<NDJHZB> NDJHZBListqn=zzyNdjhzbDao.getDataListByDwDate(Integer.parseInt(dwxxid),zbidstrs,Integer.parseInt(nf)-1);	//各指标去年年度计划
+		List<NDJHZB> NDJHZBListqn=zzyNdjhzbDao.getDataListByDwDate(dwxxs,zbidstrs,Integer.parseInt(nf)-1);	//各指标去年年度计划
 		Map<Integer,BigDecimal> NDJHZBmapqn=new HashMap<Integer,BigDecimal>();//各指标去年月计划map
-		List<SJZB> SJZBListqn=zzySjzbDao.getDataListByDwDate(Integer.parseInt(dwxxid),zbidstrs,Integer.parseInt(nf)-1, Integer.parseInt(yf));	//各指标去年月实际
+		List<SJZB> SJZBListqn=zzySjzbDao.getDataListByDwDate(dwxxs,zbidstrs,Integer.parseInt(nf)-1, Integer.parseInt(yf));	//各指标去年月实际
 		Map<Integer,BigDecimal> SJZBmapqn=new HashMap<Integer,BigDecimal>();//各指标年月月实际map
-		List<YDJHZB> YDJHZBListqn=ZzyYdjhzbDao.getDataListByDwDate(Integer.parseInt(dwxxid),zbidstrs,Integer.parseInt(nf)-1, Integer.parseInt(yf));	//各指标去年月计划
+		List<YDJHZB> YDJHZBListqn=ZzyYdjhzbDao.getDataListByDwDate(dwxxs,zbidstrs,Integer.parseInt(nf)-1, Integer.parseInt(yf));	//各指标去年月计划
 		Map<Integer,BigDecimal> YDJHZBmapqn=new HashMap<Integer,BigDecimal>();//各指标去年月计划map
-		List<JygkZzyFxSxfykz> fxSxfykzList=fxSxfykzDao.getDataListByDwDate(Integer.parseInt(dwxxid), Integer.parseInt(nf), Integer.parseInt(yf));
+		List<JygkZzyFxSxfykz> fxSxfykzList=fxSxfykzDao.getDataListByDwDate(dwxxs, Integer.parseInt(nf), Integer.parseInt(yf));
 		Map<Integer,BigDecimal> fxSxfykzmap=new HashMap<Integer,BigDecimal>();
 		
 		BigDecimal ndjhzsum=toBigDecimal("0");//各指标年度计划值合计
@@ -100,7 +108,7 @@ public class FxSxfykzServiceImpl implements FxSxfykzService{
 		
 		Map<Integer,BigDecimal> sjljmap=new HashMap<Integer,BigDecimal>();//累计实际map
 		for(int i=0;i<zbxxid.length;i++){
-			List<SJZB> SJZBListlj=zzySjzbDao.readDataLjByDwFlData(Integer.parseInt(dwxxid),zbxxid[i],Integer.parseInt(nf), Integer.parseInt(yf));
+			List<SJZB> SJZBListlj=zzySjzbDao.readDataLjByDwFlDate(dwxxs,zbxxid[i],Integer.parseInt(nf), Integer.parseInt(yf));
 			BigDecimal sjzbsumlj=toBigDecimal("0");
 			for (SJZB d : SJZBListlj){
 				sjzbsumlj=d.getSjz()==null?sjzbsumlj:sjzbsumlj.add(toBigDecimal(d.getSjz()));
@@ -109,7 +117,7 @@ public class FxSxfykzServiceImpl implements FxSxfykzService{
 		}
 		Map<Integer,BigDecimal> sjljqnmap=new HashMap<Integer,BigDecimal>();//去年同期累计实际map
 		for(int i=0;i<zbxxid.length;i++){
-			List<SJZB> SJZBListqnlj=zzySjzbDao.readDataLjByDwFlData(Integer.parseInt(dwxxid),zbxxid[i],Integer.parseInt(nf)-1, Integer.parseInt(yf));
+			List<SJZB> SJZBListqnlj=zzySjzbDao.readDataLjByDwFlDate(dwxxs,zbxxid[i],Integer.parseInt(nf)-1, Integer.parseInt(yf));
 			BigDecimal sjzbsumqnlj=toBigDecimal("0");
 			for (SJZB d : SJZBListqnlj){
 				sjzbsumqnlj=d.getSjz()==null?sjzbsumqnlj:sjzbsumqnlj.add(toBigDecimal(d.getSjz()));
@@ -118,7 +126,7 @@ public class FxSxfykzServiceImpl implements FxSxfykzService{
 		}
 		Map<Integer,BigDecimal> sjqbqnmap=new HashMap<Integer,BigDecimal>();//去年全年实际map
 		for(int i=0;i<zbxxid.length;i++){
-			List<SJZB> SJZBListqnqb=zzySjzbDao.readDataQnByDwFlData(Integer.parseInt(dwxxid),zbxxid[i],Integer.parseInt(nf)-1);
+			List<SJZB> SJZBListqnqb=zzySjzbDao.readDataQnByDwFlDate(dwxxs,zbxxid[i],Integer.parseInt(nf)-1);
 			BigDecimal sjzbsumqnqb=toBigDecimal("0");
 			for (SJZB d : SJZBListqnqb){
 				sjzbsumqnqb=d.getSjz()==null?sjzbsumqnqb:sjzbsumqnqb.add(toBigDecimal(d.getSjz()));
@@ -145,32 +153,32 @@ public class FxSxfykzServiceImpl implements FxSxfykzService{
 		}
 		
 		BigDecimal xssrsj=toBigDecimal("0");//月实际销售收入
-		SJZB xssrSJZB=zzySjzbDao.readDataByDwFlData(Integer.parseInt(dwxxid),xssrzbid,Integer.parseInt(nf), Integer.parseInt(yf));	//销售收入月实际	
+		SJZB xssrSJZB=zzySjzbDao.readDataByDwFlDate(dwxxs,xssrzbid,Integer.parseInt(nf), Integer.parseInt(yf));	//销售收入月实际	
 		if(xssrSJZB!=null){
 			xssrsj=xssrSJZB.getSjz()==null?xssrsj:toBigDecimal(xssrSJZB.getSjz());//
 		}		
 		
 		BigDecimal xssrsjqn=toBigDecimal("0");//去年月实际销售收入
-		SJZB xssrSJZBqn=zzySjzbDao.readDataByDwFlData(Integer.parseInt(dwxxid),xssrzbid,Integer.parseInt(nf)-1, Integer.parseInt(yf));	//去年销售收入月实际		
+		SJZB xssrSJZBqn=zzySjzbDao.readDataByDwFlDate(dwxxs,xssrzbid,Integer.parseInt(nf)-1, Integer.parseInt(yf));	//去年销售收入月实际		
 		if(xssrSJZBqn!=null){
 			xssrsjqn=xssrSJZBqn.getSjz()==null?xssrsjqn:toBigDecimal(xssrSJZBqn.getSjz());//
 		}		
 		
 		BigDecimal xssrsjlj=toBigDecimal("0");//实际累计销售收入
-		List<SJZB> xssrSJZBListlj=zzySjzbDao.readDataLjByDwFlData(Integer.parseInt(dwxxid),xssrzbid,Integer.parseInt(nf), Integer.parseInt(yf));
+		List<SJZB> xssrSJZBListlj=zzySjzbDao.readDataLjByDwFlDate(dwxxs,xssrzbid,Integer.parseInt(nf), Integer.parseInt(yf));
 		for (SJZB d : xssrSJZBListlj){
 			xssrsjlj=d.getSjz()==null?xssrsjlj:xssrsjlj.add(toBigDecimal(d.getSjz()));//如果是null那么不相加
 		}
 		
 		BigDecimal xssrsjljqn=toBigDecimal("0");//去年同期实际累计销售收入
-		List<SJZB> xssrSJZBListljqn=zzySjzbDao.readDataLjByDwFlData(Integer.parseInt(dwxxid),xssrzbid,Integer.parseInt(nf)-1, Integer.parseInt(yf));
+		List<SJZB> xssrSJZBListljqn=zzySjzbDao.readDataLjByDwFlDate(dwxxs,xssrzbid,Integer.parseInt(nf)-1, Integer.parseInt(yf));
 		for (SJZB d : xssrSJZBListljqn){
 			xssrsjljqn=d.getSjz()==null?xssrsjljqn:xssrsjljqn.add(toBigDecimal(d.getSjz()));//如果是null那么不相加
 		}
 		
 		
 		BigDecimal xssrsjqbqn=toBigDecimal("0");//去年全年实际销售收入
-		List<SJZB> xssrSJZBListqbqn=zzySjzbDao.readDataQnByDwFlData(Integer.parseInt(dwxxid),xssrzbid,Integer.parseInt(nf)-1);
+		List<SJZB> xssrSJZBListqbqn=zzySjzbDao.readDataQnByDwFlDate(dwxxs,xssrzbid,Integer.parseInt(nf)-1);
 		for (SJZB d : xssrSJZBListqbqn){
 			xssrsjqbqn=d.getSjz()==null?xssrsjqbqn:xssrsjqbqn.add(toBigDecimal(d.getSjz()));//如果是null那么不相加
 		}

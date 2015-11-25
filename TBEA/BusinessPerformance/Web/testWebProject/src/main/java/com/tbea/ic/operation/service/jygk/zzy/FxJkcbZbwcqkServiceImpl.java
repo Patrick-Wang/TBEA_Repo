@@ -30,8 +30,16 @@ public class FxJkcbZbwcqkServiceImpl implements FxJkcbZbwcqkService{
 			
 	@Override
 	public List<String[]> getViewDataList(String dwxxid,String nf,String yf) {
+		String dwxxs="";
+		if(dwxxid.equals("900000")){//变压器产业
+			dwxxs="1,2,3";
+		}else if(dwxxid.equals("800000")){//线缆产业
+			dwxxs="4,5,6";
+		}else{
+			dwxxs=dwxxid;
+		}
 		List<JygkZzyDwReferBglxfl> bglxflList=referBglxflDao.getDataList(Integer.parseInt(dwxxid), 20004);
-		List<JygkZzyFxJkcbZbwcqk> zbwcqkList=zbwcqkDao.getDataListByDwDate(Integer.parseInt(dwxxid),Integer.parseInt(nf), Integer.parseInt(yf));	
+		List<JygkZzyFxJkcbZbwcqk> zbwcqkList=zbwcqkDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));	
 		BigDecimal njhsum=toBigDecimal("0");//年计划入合计
 		BigDecimal yjhsum=toBigDecimal("0");//月计划合计
 		BigDecimal ywcsum=toBigDecimal("0");//月完成合计

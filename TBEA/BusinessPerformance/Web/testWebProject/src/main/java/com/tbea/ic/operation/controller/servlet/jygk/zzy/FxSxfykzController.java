@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
@@ -36,8 +37,13 @@ import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyHeaderFormatterHandler
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyNumberFormatterHandler;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyNumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyPercentFormatterHandler;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.service.jygk.zzy.DwxxDto;
 import com.tbea.ic.operation.service.jygk.zzy.FxSxfykzService;
 import com.tbea.ic.operation.service.jygk.zzy.ReferBglxService;
+import com.tbea.ic.operation.service.jygk.zzy.SystemExtendAuthService;
+import com.tbea.ic.operation.service.jygk.zzy.ZzyDWXXService;
 
 
 @Controller
@@ -48,8 +54,11 @@ public class FxSxfykzController {
 	private FxSxfykzService fxSxfykzService;
 	@Autowired
 	private ReferBglxService referBglxService;
-	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-	CompanyManager companyManager;
+	@Autowired
+	ZzyDWXXService zzyDWXXService;
+	@Autowired
+	private SystemExtendAuthService systemExtendAuthService;
+	
 	@RequestMapping(value = "openview.do", method = RequestMethod.GET)//打开页面
 	public ModelAndView openView(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -62,9 +71,11 @@ public class FxSxfykzController {
 		DateSelection dateSel = new DateSelection(year, month);
 		dateSel.select(map);
 		
-		Organization org = companyManager.getPzghOrganization();
-		CompanySelection compSel = new CompanySelection(true,org.getTopCompany());
-		compSel.select(map);
+		//设置可选公司		
+		HttpSession session=request.getSession(false);
+		Account account=SessionManager.getAccount(session);
+		List<DwxxDto> dwxxList=systemExtendAuthService.getJygkZzyDwxxListView(account);
+		map.put("comps", JSONArray.fromObject(dwxxList).toString());
 		
 		//设置可选表格类型到map
 		return new ModelAndView("jygkzzy/fx_sxfykz_template", map);
@@ -73,14 +84,7 @@ public class FxSxfykzController {
 	@RequestMapping(value = "readview.do", method = RequestMethod.GET)//选择
 	public @ResponseBody byte[] readView(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		String dwxxId="";
-		String companyId = request.getParameter("companyId");
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-		}
+		String dwxxId = request.getParameter("companyId");		
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
 		List<String[]> ret =  fxSxfykzService.getViewDataList(dwxxId,year,month);
@@ -95,13 +99,13 @@ public class FxSxfykzController {
 			throws IOException {
 		String dwxxId="";
 		String dwxxname="";
-		String companyId = request.getParameter("companyId");
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-			dwxxname=company.getName();
+		dwxxId = request.getParameter("companyId");
+		if(dwxxId.equals("900000")){
+			dwxxname="变压器产业";
+		}else if(dwxxId.equals("800000")){
+			dwxxname="线缆产业";
+		}else{
+			dwxxname=zzyDWXXService.getDwxx(Integer.parseInt(dwxxId)).getName();
 		}
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");

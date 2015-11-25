@@ -38,8 +38,8 @@ var fx_jkcb_zbwcqk;
             else {
                 this.mOpt = opt;
                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
-                this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
-                this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx);
+                this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy);
+                this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx, opt.isByq, opt.isXl, opt.isSbdcy);
                 //this.updateTextandTitle(this.mDateSelector.getDate());
                 this.updateUI();
             }
@@ -80,10 +80,10 @@ var fx_jkcb_zbwcqk;
                 for (var j = 1; j < this.mTableData[i].length; ++j) {
                     if ("" != this.mTableData[i][j] && "--" != this.mTableData[i][j]) {
                         if (j == 4) {
-                            this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) * 100 + "%";
+                            this.mTableData[i][j] = (parseFloat(this.mTableData[i][j]) * 100).toFixed(2) + "%";
                         }
                         else {
-                            this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) + "";
+                            this.mTableData[i][j] = (parseFloat(this.mTableData[i][j])).toFixed(2) + "";
                         }
                     }
                     else {

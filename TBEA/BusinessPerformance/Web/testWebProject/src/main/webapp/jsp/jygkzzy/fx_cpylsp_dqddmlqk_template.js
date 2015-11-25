@@ -1,7 +1,7 @@
 /// <reference path="../jqgrid/jqassist.ts" />
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
-/// <reference path="../companySelector.ts" />
+/// <reference path="company_selector.ts" />
 /// <reference path="bglx_selector.ts" />
 var fx_cpylsp_dqddmlqk;
 (function (fx_cpylsp_dqddmlqk) {
@@ -49,8 +49,8 @@ var fx_cpylsp_dqddmlqk;
             else {
                 this.mOpt = opt;
                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
-                this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
-                this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx);
+                this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy);
+                this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx, opt.isByq, opt.isXl, opt.isSbdcy);
                 //this.updateTextandTitle(this.mDateSelector.getDate());
                 this.updateUI();
             }
@@ -91,10 +91,10 @@ var fx_cpylsp_dqddmlqk;
                 for (var j = 1; j < this.mTableData[i].length; ++j) {
                     if ("" != this.mTableData[i][j] && "--" != this.mTableData[i][j]) {
                         if (j == 2 || j == 4 || j == 5 || j == 6 || j == 9 || j == 10 || j == 11 || j == 12) {
-                            this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) * 100 + "%";
+                            this.mTableData[i][j] = (parseFloat(this.mTableData[i][j]) * 100).toFixed(2) + "%";
                         }
                         else {
-                            this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) + "";
+                            this.mTableData[i][j] = (parseFloat(this.mTableData[i][j])).toFixed(2) + "";
                         }
                     }
                     else {

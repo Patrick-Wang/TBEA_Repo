@@ -8,8 +8,8 @@ import com.tbea.ic.operation.model.entity.jygk.SJZB;
 
 public interface ZzySjzbDao  extends AbstractReadWriteDao<SJZB>{
 	
-	public List<SJZB> getDataListByDwDate(int dwxxId,String zbidstrs,int nf,int yf);
-	public SJZB readDataByDwFlData(int dwxxId,int zbid,int nf,int yf);
-	public List<SJZB> readDataLjByDwFlData(int dwxxId,int zbid,int nf,int yf);
-	public List<SJZB> readDataQnByDwFlData(int dwxxId,int zbid,int nf);
+	public List<SJZB> getDataListByDwDate(String dwxxs,String zbidstrs,int nf,int yf);
+	public List<SJZB> readDataLjByDwFlDate(String dwxxs,int zbid,int nf,int yf);
+	public List<SJZB> readDataQnByDwFlDate(String dwxxs,int zbid,int nf);
+	public SJZB readDataByDwFlDate(String dwxxs,int zbid,int nf,int yf);
 }

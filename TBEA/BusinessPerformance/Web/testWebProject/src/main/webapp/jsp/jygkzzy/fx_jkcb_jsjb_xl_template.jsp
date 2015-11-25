@@ -44,7 +44,7 @@
 	<script src="../jsp/unitedSelector.js" type="text/javascript"></script>
 	
 	<script src="../jsp/dateSelector.js" type="text/javascript"></script>
-	<script src="../jsp/companySelector.js" type="text/javascript"></script>
+	<script src="../jsp/jygkzzy/company_selector.js" type="text/javascript"></script>
 	<script src="../jsp/jygkzzy/bglx_selector.js" type="text/javascript"></script>
 	<script src="../jsp/jygkzzy/fx_jkcb_jsjb_xl_template.js" type="text/javascript"></script>	
 
@@ -59,10 +59,13 @@
 	      					month : ${!empty month} ? '${month}' : undefined, 
 	      					year : ${year}
 	      				},
-	    	  			companyId: "company",
-          				comps : JSON.parse('${nodeData}'),
+	      				companyId: "company",
+          				comps : JSON.parse('${comps}'),
             			bglxId:"bglx",  		        		
-  		        		curbglx:"20006"
+  		        		curbglx:"20006", 
+  		        		isByq:${isByq}, 
+  		        		isXl:${isXl},  
+  		        		isSbdcy:${isSbdcy}
           			});
             });
         })();

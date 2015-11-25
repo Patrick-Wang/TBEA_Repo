@@ -1,7 +1,7 @@
 /// <reference path="../jqgrid/jqassist.ts" />
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
-/// <reference path="../companySelector.ts" />
+/// <reference path="company_selector.ts" />
 /// <reference path="bglx_selector.ts" />
 declare var echarts;
 declare var $;
@@ -29,9 +29,12 @@ module fx_jkcb_jsjb_byq {
         dateId: string;
         date?: Util.Date;
         companyId: string;
-        comps: Util.IDataNode[];
+        comps: Util.Dwxx[];
         bglxId:string;
         curbglx:string;
+        isByq:boolean, 
+        isXl:boolean, 
+        isSbdcy:boolean
     }
     
     export class View {
@@ -44,7 +47,7 @@ module fx_jkcb_jsjb_byq {
         }        
         private mTableData: Array<string[]>;
         private mDateSelector: Util.DateSelector;
-        private mCompanySelector: Util.CompanySelector;
+        private mCompanySelector: Util.CompanySelectorZzy;
         private mBglxSelector:Util.BglxViewSelector;
         private mOpt: IViewOption;
         private mDataSet: Util.Ajax = new Util.Ajax("readviewbyq.do", false);       
@@ -58,8 +61,8 @@ module fx_jkcb_jsjb_byq {
            }else{
                this.mOpt = opt;            
                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
-               this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
-               this.mBglxSelector=new Util.BglxViewSelector(opt.bglxId,opt.curbglx);               
+               this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps,opt.isSbdcy);
+               this.mBglxSelector=new Util.BglxViewSelector(opt.bglxId,opt.curbglx,opt.isByq,opt.isXl,opt.isSbdcy);               
                //this.updateTextandTitle(this.mDateSelector.getDate());
                this.updateUI();
            }
@@ -105,9 +108,9 @@ module fx_jkcb_jsjb_byq {
                 for (var j = 1; j < this.mTableData[i].length; ++j) {
                     if ("" != this.mTableData[i][j] && "--" != this.mTableData[i][j]) {
                         if(j == 3){
-                            this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) * 100 + "%";
+                            this.mTableData[i][j] = (parseFloat(this.mTableData[i][j]) * 100).toFixed(2) + "%";
                         } else {
-                            this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) + "";
+                            this.mTableData[i][j] = (parseFloat(this.mTableData[i][j])).toFixed(2) + "";
                         }
                     }
                     else {
@@ -127,7 +130,7 @@ module fx_jkcb_jsjb_byq {
                     //autowidth : false,
 //                    cellsubmit: 'clientArray',
 //                    cellEdit: true,
-                    height: this.mTableAssist.length > 23 ? 500 : '100%',
+                    height: this.mTableData.length > 23 ? 500 : '100%',
                     width: this.mTableData[0].length*100,
                     shrinkToFit: true,
                     rowNum: 1000,

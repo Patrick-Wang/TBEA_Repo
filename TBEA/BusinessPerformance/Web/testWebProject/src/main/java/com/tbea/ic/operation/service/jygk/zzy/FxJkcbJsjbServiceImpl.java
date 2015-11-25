@@ -35,9 +35,17 @@ public class FxJkcbJsjbServiceImpl implements FxJkcbJsjbService{
 			
 	@Override
 	public List<String[]> getViewDataListByq(String dwxxid,String nf,String yf) {
+		String dwxxs="";
+		if(dwxxid.equals("900000")){//变压器产业
+			dwxxs="1,2,3";
+		}else if(dwxxid.equals("800000")){//线缆产业
+			dwxxs="4,5,6";
+		}else{
+			dwxxs=dwxxid;
+		}
 		List<JygkZzyDwReferBglxfl> bglxflList=referBglxflDao.getDataList(Integer.parseInt(dwxxid), 20005);
-		List<JygkZzyFxJkcbJsjb> fxJkcbJsjbList=fxJkcbJsjbDao.getDataListByDwData(Integer.parseInt(dwxxid),Integer.parseInt(nf), Integer.parseInt(yf));	
-		List<JygkZzyCcCcwcqk> ccCcwcqkList=ccCcwcqkDao.getDataListByDwData(Integer.parseInt(dwxxid),Integer.parseInt(nf), Integer.parseInt(yf));
+		List<JygkZzyFxJkcbJsjb> fxJkcbJsjbList=fxJkcbJsjbDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));	
+		List<JygkZzyCcCcwcqk> ccCcwcqkList=ccCcwcqkDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));
 		BigDecimal sctssum=toBigDecimal("0");//生产台数合计
 		BigDecimal yhtssum=toBigDecimal("0");//优化台数合计
 		BigDecimal czsum=toBigDecimal("0");//产值合计
@@ -108,9 +116,17 @@ public class FxJkcbJsjbServiceImpl implements FxJkcbJsjbService{
 	
 	@Override
 	public List<String[]> getViewDataListXl(String dwxxid,String nf,String yf) {
+		String dwxxs="";
+		if(dwxxid.equals("900000")){//变压器产业
+			dwxxs="1,2,3";
+		}else if(dwxxid.equals("800000")){//线缆产业
+			dwxxs="4,5,6";
+		}else{
+			dwxxs=dwxxid;
+		}
 		List<JygkZzyDwReferBglxfl> bglxflList=referBglxflDao.getDataList(Integer.parseInt(dwxxid), 20006);
-		List<JygkZzyFxJkcbJsjb> fxJkcbJsjbList=fxJkcbJsjbDao.getDataListByDwData(Integer.parseInt(dwxxid),Integer.parseInt(nf), Integer.parseInt(yf));	
-		List<JygkZzyCcCcwcqk> ccCcwcqkList=ccCcwcqkDao.getDataListByDwData(Integer.parseInt(dwxxid),Integer.parseInt(nf), Integer.parseInt(yf));
+		List<JygkZzyFxJkcbJsjb> fxJkcbJsjbList=fxJkcbJsjbDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));	
+		List<JygkZzyCcCcwcqk> ccCcwcqkList=ccCcwcqkDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));
 		BigDecimal czsum=toBigDecimal("0");//产值合计
 		BigDecimal jbsum=toBigDecimal("0");//降本合计
 		BigDecimal jgcsyhjbsum=toBigDecimal("0");//结构参数优化降本合计

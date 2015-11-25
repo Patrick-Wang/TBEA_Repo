@@ -30,9 +30,17 @@ public class FxJkcbCgjbServiceImpl implements FxJkcbCgjbService{
 			
 	@Override
 	public List<String[]> getViewDataList(String dwxxid,String nf,String yf) {
+		String dwxxs="";
+		if(dwxxid.equals("900000")){//变压器产业
+			dwxxs="1,2,3";
+		}else if(dwxxid.equals("800000")){//线缆产业
+			dwxxs="4,5,6";
+		}else{
+			dwxxs=dwxxid;
+		}
 		List<JygkZzyDwReferBglxfl> bglxflList=referBglxflDao.getDataList(Integer.parseInt(dwxxid), 20007);
-		List<JygkZzyFxJkcbCgjb> fxJkCgJsjbList=fxJkcbCgjbDao.getDataListByDwDate(Integer.parseInt(dwxxid),Integer.parseInt(nf), Integer.parseInt(yf));	
-		List<JygkZzyFxJkcbCgjb> fxJkCgJsjbListqn=fxJkcbCgjbDao.getDataListByDwDate(Integer.parseInt(dwxxid),Integer.parseInt(nf)-1, Integer.parseInt(yf));	
+		List<JygkZzyFxJkcbCgjb> fxJkCgJsjbList=fxJkcbCgjbDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));	
+		List<JygkZzyFxJkcbCgjb> fxJkCgJsjbListqn=fxJkcbCgjbDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf)-1, Integer.parseInt(yf));	
 		
 		BigDecimal ndjhsum=toBigDecimal("0");//年度计划合计
 		BigDecimal ydjhsum=toBigDecimal("0");//当月计划合计

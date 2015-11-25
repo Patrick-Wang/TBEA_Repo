@@ -30,9 +30,17 @@ public class FxCpylspDqddmlqkServiceImpl implements FxCpylspDqddmlqkService{
 			
 	@Override
 	public List<String[]> getViewDataList(String dwxxid,String nf,String yf) {
+		String dwxxs="";
+		if(dwxxid.equals("900000")){//变压器产业
+			dwxxs="1,2,3";
+		}else if(dwxxid.equals("800000")){//线缆产业
+			dwxxs="4,5,6";
+		}else{
+			dwxxs=dwxxid;
+		}
 		List<JygkZzyDwReferBglxfl> bglxflList=referBglxflDao.getDataList(Integer.parseInt(dwxxid), 20001);
-		List<JygkZzyFxCpylspDqddmlqk> dqddmlqkList=fxCpylspDqddmlqkDao.getDataListByDwDate(Integer.parseInt(dwxxid),Integer.parseInt(nf), Integer.parseInt(yf));	
-		List<JygkZzyFxCpylspDqddmlqk> dqddmlqkListQn=fxCpylspDqddmlqkDao.getDataListByDwDate(Integer.parseInt(dwxxid),Integer.parseInt(nf)-1, Integer.parseInt(yf));	
+		List<JygkZzyFxCpylspDqddmlqk> dqddmlqkList=fxCpylspDqddmlqkDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));	
+		List<JygkZzyFxCpylspDqddmlqk> dqddmlqkListQn=fxCpylspDqddmlqkDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf)-1, Integer.parseInt(yf));	
 		BigDecimal srsum=toBigDecimal("0");//当月收入合计
 		BigDecimal mlesum=toBigDecimal("0");//当月毛利额合计
 		BigDecimal srqnsum=toBigDecimal("0");//去年收入同期合计

@@ -39,7 +39,7 @@ public class FxCpylspHqlyddzlServiceImpl implements FxCpylspHqlyddzlService{
 			row = data.getJSONArray(i);			
 			boolean newEntity = false;
 			fl=row.getString(0);
-			JygkZzyFxCpylspHqlyddzl  hqlyddzl  = fxCpylspHqlyddzlDao.readDataByDwFlData(Integer.parseInt(dwxxid), Integer.parseInt(fl), Integer.parseInt(nf), Integer.parseInt(yf));
+			JygkZzyFxCpylspHqlyddzl  hqlyddzl  = fxCpylspHqlyddzlDao.readDataByDwFlDate(Integer.parseInt(dwxxid), Integer.parseInt(fl), Integer.parseInt(nf), Integer.parseInt(yf));
 			if (null == hqlyddzl){
 				newEntity = true;
 				hqlyddzl = new JygkZzyFxCpylspHqlyddzl();				
@@ -66,7 +66,7 @@ public class FxCpylspHqlyddzlServiceImpl implements FxCpylspHqlyddzlService{
 	@Override
 	public List<String[]> getWriteDataList(String dwxxid,String nf,String yf) {
 		List<JygkZzyDwReferBglxfl> bglxflList=referBglxflDao.getDataList(Integer.parseInt(dwxxid), 10002);
-		List<JygkZzyFxCpylspHqlyddzl> hqlyddzlList=fxCpylspHqlyddzlDao.getDataListByDwDate(Integer.parseInt(dwxxid),Integer.parseInt(nf), Integer.parseInt(yf));	
+		List<JygkZzyFxCpylspHqlyddzl> hqlyddzlList=fxCpylspHqlyddzlDao.getDataListByDwDate(dwxxid,Integer.parseInt(nf), Integer.parseInt(yf));	
 		List<String[]> ret = new ArrayList<String[]>();
 		for (JygkZzyDwReferBglxfl bglxfl : bglxflList){	
 			String[] row = new String[7];
@@ -88,8 +88,16 @@ public class FxCpylspHqlyddzlServiceImpl implements FxCpylspHqlyddzlService{
 	
 	@Override
 	public List<String[]> getViewDataListByq(String dwxxid,String nf,String yf) {
+		String dwxxs="";
+		if(dwxxid.equals("900000")){//变压器产业
+			dwxxs="1,2,3";
+		}else if(dwxxid.equals("800000")){//线缆产业
+			dwxxs="4,5,6";
+		}else{
+			dwxxs=dwxxid;
+		}
 		List<JygkZzyDwReferBglxfl> bglxflList=referBglxflDao.getDataList(Integer.parseInt(dwxxid), 20002);
-		List<JygkZzyFxCpylspHqlyddzl> hqlyddzlList=fxCpylspHqlyddzlDao.getDataListByDwDate(Integer.parseInt(dwxxid),Integer.parseInt(nf), Integer.parseInt(yf));
+		List<JygkZzyFxCpylspHqlyddzl> hqlyddzlList=fxCpylspHqlyddzlDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));
 		BigDecimal czsum=toBigDecimal("0");//产值合计
 		BigDecimal clsum=toBigDecimal("0");//产量合计
 		BigDecimal yjyhhmlesum=toBigDecimal("0");//预计优化后毛利额
@@ -131,8 +139,16 @@ public class FxCpylspHqlyddzlServiceImpl implements FxCpylspHqlyddzlService{
 	
 	@Override
 	public List<String[]> getViewDataListXl(String dwxxid,String nf,String yf) {
+		String dwxxs="";
+		if(dwxxid.equals("900000")){//变压器产业
+			dwxxs="1,2,3";
+		}else if(dwxxid.equals("800000")){//线缆产业
+			dwxxs="4,5,6";
+		}else{
+			dwxxs=dwxxid;
+		}
 		List<JygkZzyDwReferBglxfl> bglxflList=referBglxflDao.getDataList(Integer.parseInt(dwxxid), 20003);
-		List<JygkZzyFxCpylspHqlyddzl> hqlyddzlList=fxCpylspHqlyddzlDao.getDataListByDwDate(Integer.parseInt(dwxxid),Integer.parseInt(nf), Integer.parseInt(yf));	
+		List<JygkZzyFxCpylspHqlyddzl> hqlyddzlList=fxCpylspHqlyddzlDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));	
 		BigDecimal czsum=toBigDecimal("0");//产值合计
 		BigDecimal yjyhhmlesum=toBigDecimal("0");//预计优化后毛利额
 		for (JygkZzyFxCpylspHqlyddzl d : hqlyddzlList){

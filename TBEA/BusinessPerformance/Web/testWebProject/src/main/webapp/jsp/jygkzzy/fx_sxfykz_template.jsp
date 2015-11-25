@@ -44,7 +44,7 @@
 	<script src="../jsp/unitedSelector.js" type="text/javascript"></script>
 	
 	<script src="../jsp/dateSelector.js" type="text/javascript"></script>
-	<script src="../jsp/companySelector.js" type="text/javascript"></script>
+	<script src="../jsp/jygkzzy/company_selector.js" type="text/javascript"></script>
 	<script src="../jsp/jygkzzy/bglx_selector.js" type="text/javascript"></script>
 	<script src="../jsp/jygkzzy/fx_sxfykz_template.js" type="text/javascript"></script>	
 
@@ -59,17 +59,20 @@
 	      					month : ${!empty month} ? '${month}' : undefined, 
 	      					year : ${year}
 	      				},
-	    	  			companyId: "company",
-          				comps : JSON.parse('${nodeData}'),
+	      				companyId: "company",
+          				comps : JSON.parse('${comps}'),
             			bglxId:"bglx",  		        		
-  		        		curbglx:"20020"
+  		        		curbglx:"20020", 
+  		        		isByq:${isByq}, 
+  		        		isXl:${isXl},  
+  		        		isSbdcy:${isSbdcy}
           			});
             });
         })(); 
     </script>
     <meta charset="UTF-8">
 
-    <title>${year}年${month}月订单毛利情况</title>
+    <title>${year}年${month}三项费用管控</title>
 
     <style type="text/css">
         body {

@@ -44,7 +44,7 @@
 	<script src="../jsp/unitedSelector.js" type="text/javascript"></script>
 	
 	<script src="../jsp/dateSelector.js" type="text/javascript"></script>
-	<script src="../jsp/companySelector.js" type="text/javascript"></script>
+	<script src="../jsp/jygkzzy/company_selector.js" type="text/javascript"></script>
 	<script src="../jsp/jygkzzy/bglx_selector.js" type="text/javascript"></script>
 	<script src="../jsp/jygkzzy/fx_cpylsp_dqddmlqk_template.js" type="text/javascript"></script>	
 
@@ -60,9 +60,12 @@
 	      					year : ${year}
 	      				},
 	    	  			companyId: "company",
-          				comps : JSON.parse('${nodeData}'),
+          				comps : JSON.parse('${comps}'),
             			bglxId:"bglx",  		        		
-  		        		curbglx:"20001"
+  		        		curbglx:"20001", 
+  		        		isByq:${isByq}, 
+  		        		isXl:${isXl},  
+  		        		isSbdcy:${isSbdcy}
           			});
             });
         })(); 

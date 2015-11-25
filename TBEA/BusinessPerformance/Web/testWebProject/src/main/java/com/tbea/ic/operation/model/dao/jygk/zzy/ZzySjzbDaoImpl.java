@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.model.dao.jygk.zzy;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
+import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 @Repository
@@ -23,40 +25,75 @@ public class ZzySjzbDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements Zz
 		super.setEntityManager(entityManager);
 	}
 	@Override
-	public List<SJZB> getDataListByDwDate(int dwxxId,String zbidstrs,int nf,int yf) {		
-		Query q = this.getEntityManager().createQuery("from SJZB where dwxx.id = :dwid and nf = :nf and yf = :yf and zbxx.id in (" + zbidstrs + ")");
-		q.setParameter("dwid", dwxxId);
+	public List<SJZB> getDataListByDwDate(String dwxxs,String zbidstrs,int nf,int yf) {		
+		Query q = this.getEntityManager().createQuery("select zbxx.id,sum(sjz) as sjz from SJZB where dwxx.id in (" + dwxxs + ") and nf = :nf and yf = :yf and zbxx.id in (" + zbidstrs + ") group by zbxx.id");
 		q.setParameter("nf", nf);
 		q.setParameter("yf", yf);
-		return q.getResultList();
-	}
+		List<Object[]> objectList=q.getResultList();
+		List<SJZB> retList=new ArrayList<SJZB>();
+		for(Object[] oa:objectList){
+			SJZB j=new SJZB();
+			ZBXX zbxx=new ZBXX();
+			zbxx.setId((int)oa[0]);
+			j.setZbxx(zbxx);			
+			j.setSjz((Double)oa[1]);			
+			retList.add(j);
+		}
+		return retList;
+	}	
+	
 	@Override
-	public SJZB readDataByDwFlData(int dwxxId,int zbid,int nf,int yf){		
-		Query q = this.getEntityManager().createQuery("from SJZB where dwxx.id = :dwid and nf = :nf and yf = :yf and zbxx.id=:zbid");
-		q.setParameter("dwid", dwxxId);
+	public List<SJZB> readDataLjByDwFlDate(String dwxxs,int zbid,int nf,int yf){		
+		Query q = this.getEntityManager().createQuery("select zbxx.id,sum(sjz) as sjz from SJZB where dwxx.id in (" + dwxxs + ") and nf = :nf and yf>=1 and yf<="+yf + " and zbxx.id=:zbid  group by zbxx.id");
 		q.setParameter("zbid", zbid);
-		q.setParameter("nf", nf);
+		q.setParameter("nf", nf);		
+		List<Object[]> objectList=q.getResultList();
+		List<SJZB> retList=new ArrayList<SJZB>();
+		for(Object[] oa:objectList){
+			SJZB j=new SJZB();
+			ZBXX zbxx=new ZBXX();
+			zbxx.setId((int)oa[0]);
+			j.setZbxx(zbxx);			
+			j.setSjz((Double)oa[1]);			
+			retList.add(j);
+		}
+		return retList;
+	}
+	
+	@Override
+	public SJZB readDataByDwFlDate(String dwxxs,int zbid,int nf,int yf){		
+		Query q = this.getEntityManager().createQuery("select zbxx.id,sum(sjz) as sjz from SJZB where dwxx.id in (" + dwxxs + ") and nf = :nf and yf=:yf and zbxx.id=:zbid group by zbxx.id");
+		q.setParameter("zbid", zbid);
+		q.setParameter("nf", nf);	
 		q.setParameter("yf", yf);
-		List<SJZB> SJZBList = q.getResultList();
-		if (!SJZBList.isEmpty()){
-			return SJZBList.get(0);
+		List<Object[]> objectList = q.getResultList();
+		if (!objectList.isEmpty()){
+			Object[] oa=objectList.get(0);
+			SJZB j=new SJZB();
+			ZBXX zbxx=new ZBXX();
+			zbxx.setId((int)oa[0]);
+			j.setZbxx(zbxx);			
+			j.setSjz((Double)oa[1]);
+			return j;
 		}
 		return null;
 	}
+	
 	@Override
-	public List<SJZB> readDataLjByDwFlData(int dwxxId,int zbid,int nf,int yf){		
-		Query q = this.getEntityManager().createQuery("from SJZB where dwxx.id = :dwid and nf = :nf and zbxx.id=:zbid and yf>=1 and yf<="+yf);
-		q.setParameter("dwid", dwxxId);
-		q.setParameter("zbid", zbid);
-		q.setParameter("nf", nf);		
-		return q.getResultList();
-	}
-	@Override
-	public List<SJZB> readDataQnByDwFlData(int dwxxId,int zbid,int nf){		
-		Query q = this.getEntityManager().createQuery("from SJZB where dwxx.id = :dwid and nf = :nf and zbxx.id=:zbid");
-		q.setParameter("dwid", dwxxId);
+	public List<SJZB> readDataQnByDwFlDate(String dwxxs,int zbid,int nf){		
+		Query q = this.getEntityManager().createQuery("select zbxx.id,sum(sjz) as sjz from SJZB where dwxx.id in (" + dwxxs + ") and nf = :nf and zbxx.id=:zbid group by zbxx.id");
 		q.setParameter("zbid", zbid);
 		q.setParameter("nf", nf);
-		return q.getResultList();
+		List<Object[]> objectList=q.getResultList();
+		List<SJZB> retList=new ArrayList<SJZB>();
+		for(Object[] oa:objectList){
+			SJZB j=new SJZB();
+			ZBXX zbxx=new ZBXX();
+			zbxx.setId((int)oa[0]);
+			j.setZbxx(zbxx);			
+			j.setSjz((Double)oa[1]);			
+			retList.add(j);
+		}
+		return retList;
 	}
 }

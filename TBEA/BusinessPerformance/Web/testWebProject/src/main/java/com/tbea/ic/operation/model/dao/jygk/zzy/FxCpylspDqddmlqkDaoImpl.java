@@ -1,6 +1,8 @@
 package com.tbea.ic.operation.model.dao.jygk.zzy;
 
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -23,24 +25,19 @@ public class FxCpylspDqddmlqkDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxC
 	}
 
 	@Override
-	public List<JygkZzyFxCpylspDqddmlqk> getDataListByDwDate(int dwxxId,int nf,int yf) {		
-		Query q = this.getEntityManager().createQuery("from JygkZzyFxCpylspDqddmlqk where dwid = :dwid and nf = :nf and yf = :yf");
-		q.setParameter("dwid", dwxxId);
-		q.setParameter("nf", nf);
-		q.setParameter("yf", yf);		
-		return q.getResultList();
-	}
-	@Override
-	public JygkZzyFxCpylspDqddmlqk readDataByDwFlData(int dwxxId,int fl,int nf,int yf) {
-		Query q = this.getEntityManager().createQuery("from JygkZzyFxCpylspDqddmlqk where dwid = :dwid and zzyflId = :fl and nf = :nf and yf = :yf");
-		q.setParameter("dwid", dwxxId);
-		q.setParameter("fl", fl);
+	public List<JygkZzyFxCpylspDqddmlqk> getDataListByDwDate(String dwxxs,int nf,int yf) {		
+		Query q = this.getEntityManager().createQuery("select zzyflId,sum(sr) as sr, sum(mle) as mle from JygkZzyFxCpylspDqddmlqk where dwid in (" + dwxxs + ") and nf = :nf and yf = :yf group by zzyflId");
 		q.setParameter("nf", nf);
 		q.setParameter("yf", yf);
-		List<JygkZzyFxCpylspDqddmlqk> jygkZzyFxCpylspDqddmlqkList = q.getResultList();
-		if (!jygkZzyFxCpylspDqddmlqkList.isEmpty()){
-			return jygkZzyFxCpylspDqddmlqkList.get(0);
+		List<Object[]> objectList=q.getResultList();
+		List<JygkZzyFxCpylspDqddmlqk> retList=new ArrayList<JygkZzyFxCpylspDqddmlqk>();
+		for(Object[] oa:objectList){
+			JygkZzyFxCpylspDqddmlqk j=new JygkZzyFxCpylspDqddmlqk();
+			j.setZzyflId((int)oa[0]);
+			j.setSr((BigDecimal)oa[1]);
+			j.setMle((BigDecimal)oa[2]);
+			retList.add(j);
 		}
-		return null;
-	}
+		return retList;
+	}	
 }

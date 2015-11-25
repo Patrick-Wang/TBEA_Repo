@@ -1,6 +1,8 @@
 package com.tbea.ic.operation.model.dao.jygk.zzy;
 
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -23,24 +25,20 @@ public class FxJkcbCgjbDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxJkcbCgj
 	}
 
 	@Override
-	public List<JygkZzyFxJkcbCgjb> getDataListByDwDate(int dwxxId,int nf,int yf) {		
-		Query q = this.getEntityManager().createQuery("from JygkZzyFxJkcbCgjb where dwid = :dwid and nf = :nf and yf = :yf");
-		q.setParameter("dwid", dwxxId);
+	public List<JygkZzyFxJkcbCgjb> getDataListByDwDate(String dwxxs,int nf,int yf) {		
+		Query q = this.getEntityManager().createQuery("select zzyflId,sum(ndjh) as ndjh, sum(ydjh) as ydjh, sum(ydwc) as ydwc from JygkZzyFxJkcbCgjb where dwid in (" + dwxxs + ") and nf = :nf and yf = :yf group by zzyflId");
 		q.setParameter("nf", nf);
 		q.setParameter("yf", yf);		
-		return q.getResultList();
-	}
-	@Override
-	public JygkZzyFxJkcbCgjb readDataByDwFlData(int dwxxId,int fl,int nf,int yf) {
-		Query q = this.getEntityManager().createQuery("from JygkZzyFxJkcbCgjb where dwid = :dwid and zzyflId = :fl and nf = :nf and yf = :yf");
-		q.setParameter("dwid", dwxxId);
-		q.setParameter("fl", fl);
-		q.setParameter("nf", nf);
-		q.setParameter("yf", yf);
-		List<JygkZzyFxJkcbCgjb> jygkZzyFxJkcbCgjbList = q.getResultList();
-		if (!jygkZzyFxJkcbCgjbList.isEmpty()){
-			return jygkZzyFxJkcbCgjbList.get(0);
+		List<Object[]> objectList=q.getResultList();
+		List<JygkZzyFxJkcbCgjb> retList=new ArrayList<JygkZzyFxJkcbCgjb>();
+		for(Object[] oa:objectList){
+			JygkZzyFxJkcbCgjb j=new JygkZzyFxJkcbCgjb();
+			j.setZzyflId((int)oa[0]);
+			j.setNdjh((BigDecimal)oa[1]);
+			j.setYdjh((BigDecimal)oa[2]);
+			j.setYdwc((BigDecimal)oa[3]);
+			retList.add(j);
 		}
-		return null;
-	}
+		return retList;
+	}	
 }

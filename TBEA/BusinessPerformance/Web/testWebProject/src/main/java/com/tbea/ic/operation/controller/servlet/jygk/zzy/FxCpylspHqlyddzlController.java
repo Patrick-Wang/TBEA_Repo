@@ -2,17 +2,13 @@ package com.tbea.ic.operation.controller.servlet.jygk.zzy;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
@@ -27,12 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyExcelTemplate;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyFormatterHandler;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyHeaderFormatterHandler;
@@ -41,10 +32,11 @@ import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyNumberFormatterHandler
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyPercentFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
-import com.tbea.ic.operation.model.entity.jygk.DWXX;
-import com.tbea.ic.operation.model.entity.jygk.zzy.JygkZzyDwReferBglx;
+import com.tbea.ic.operation.service.jygk.zzy.DwxxDto;
 import com.tbea.ic.operation.service.jygk.zzy.FxCpylspHqlyddzlService;
 import com.tbea.ic.operation.service.jygk.zzy.ReferBglxService;
+import com.tbea.ic.operation.service.jygk.zzy.SystemExtendAuthService;
+import com.tbea.ic.operation.service.jygk.zzy.ZzyDWXXService;
 
 
 @Controller
@@ -55,21 +47,11 @@ public class FxCpylspHqlyddzlController {
 	private FxCpylspHqlyddzlService fxCpylspHqlyddzlService;
 	@Autowired
 	private ReferBglxService referBglxService;
-	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-	CompanyManager companyManager;
+	@Autowired
+	ZzyDWXXService zzyDWXXService;
+	@Autowired
+	private SystemExtendAuthService systemExtendAuthService;
 	
-	private List<Company> getOwnedCompanies(Account account){
-		Organization org = companyManager.getBMDBOrganization();
-		List<Company> comps = new ArrayList<Company>();	
-		Set<DWXX> dwxxset=account.getDwxxs();
-		Iterator<DWXX> dwxxiterator=dwxxset.iterator();
-		 while(dwxxiterator.hasNext()){
-			 DWXX dwxx = dwxxiterator.next();
-			 Company comp=org.getCompany(dwxx.getId());
-			 comps.add(comp);
-		 }
-		return comps;
-	}
 
 	@RequestMapping(value = "open.do", method = RequestMethod.GET)//打开页面
 	public ModelAndView open(HttpServletRequest request,
@@ -83,29 +65,18 @@ public class FxCpylspHqlyddzlController {
 		DateSelection dateSel = new DateSelection(year, month);
 		dateSel.select(map);
 		
-		//设置可选公司到map
-		Account account = SessionManager.getAccount(request.getSession(false));		
-		List<Company> comps = getOwnedCompanies(account);
-		CompanySelection compSel = new CompanySelection(true, comps);		
-		compSel.select(map);
-		
-		//设置可选表格类型到map
-		List<JygkZzyDwReferBglx> referBglxList= referBglxService.getDataList(comps);
-		map.put("bglxs", JSONArray.fromObject(referBglxList).toString());
+		//设置可选公司		
+		HttpSession session=request.getSession(false);
+		Account account=SessionManager.getAccount(session);
+		List<DwxxDto> dwxxList=systemExtendAuthService.getJygkZzyDwxxListView(account);
+		map.put("comps", JSONArray.fromObject(dwxxList).toString());
 		return new ModelAndView("jygkzzy/fx_cpylsp_hqlyddzl_template", map);
 	}
 
 	@RequestMapping(value = "read.do", method = RequestMethod.GET)//选择
 	public @ResponseBody byte[] read(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		String dwxxId="";
-		String companyId = request.getParameter("companyId");
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-		}
+		String dwxxId = request.getParameter("companyId");		
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
 		List<String[]> ret =  fxCpylspHqlyddzlService.getWriteDataList(dwxxId,year,month);
@@ -117,14 +88,7 @@ public class FxCpylspHqlyddzlController {
 	@RequestMapping(value = "save.do", method = RequestMethod.POST)//保存
 	public @ResponseBody byte[] save(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		String dwxxId="";
-		String companyId = request.getParameter("companyId");
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-		}
+		String dwxxId = request.getParameter("companyId");		
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
 		String data = request.getParameter("data");
@@ -145,10 +109,11 @@ public class FxCpylspHqlyddzlController {
 		DateSelection dateSel = new DateSelection(year, month);
 		dateSel.select(map);
 		
-		Organization org = companyManager.getPzghOrganization();
-		CompanySelection compSel = new CompanySelection(true,org.getTopCompany());
-		compSel.select(map);
-		
+		//设置可选公司		
+		HttpSession session=request.getSession(false);
+		Account account=SessionManager.getAccount(session);
+		List<DwxxDto> dwxxList=systemExtendAuthService.getJygkZzyDwxxListView(account);
+		map.put("comps", JSONArray.fromObject(dwxxList).toString());
 		//设置可选表格类型到map
 		return new ModelAndView("jygkzzy/fx_cpylsp_hqlyddzl_byq_template", map);
 	}
@@ -163,12 +128,13 @@ public class FxCpylspHqlyddzlController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		//设置可选年、月到map
 		DateSelection dateSel = new DateSelection(year, month);
-		dateSel.select(map);
-		
-		Organization org = companyManager.getPzghOrganization();
-		CompanySelection compSel = new CompanySelection(true,org.getTopCompany());
-		compSel.select(map);
-		
+		dateSel.select(map);		
+
+		//设置可选公司		
+		HttpSession session=request.getSession(false);
+		Account account=SessionManager.getAccount(session);
+		List<DwxxDto> dwxxList=systemExtendAuthService.getJygkZzyDwxxListView(account);
+		map.put("comps", JSONArray.fromObject(dwxxList).toString());
 		//设置可选表格类型到map
 		return new ModelAndView("jygkzzy/fx_cpylsp_hqlyddzl_xl_template", map);
 	}
@@ -176,14 +142,7 @@ public class FxCpylspHqlyddzlController {
 	@RequestMapping(value = "readviewbyq.do", method = RequestMethod.GET)//选择
 	public @ResponseBody byte[] readViewByq(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		String dwxxId="";
-		String companyId = request.getParameter("companyId");
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-		}
+		String dwxxId = request.getParameter("companyId");		
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
 		List<String[]> ret =  fxCpylspHqlyddzlService.getViewDataListByq(dwxxId,year,month);
@@ -194,14 +153,7 @@ public class FxCpylspHqlyddzlController {
 	@RequestMapping(value = "readviewxl.do", method = RequestMethod.GET)//选择
 	public @ResponseBody byte[] readViewXl(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		String dwxxId="";
-		String companyId = request.getParameter("companyId");
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-		}
+		String dwxxId = request.getParameter("companyId");
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
 		List<String[]> ret =  fxCpylspHqlyddzlService.getViewDataListXl(dwxxId,year,month);
@@ -216,14 +168,15 @@ public class FxCpylspHqlyddzlController {
 			throws IOException {
 		String dwxxId="";
 		String dwxxname="";
-		String companyId = request.getParameter("companyId");
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-			dwxxname=company.getName();
+		dwxxId = request.getParameter("companyId");
+		if(dwxxId.equals("900000")){
+			dwxxname="变压器产业";
+		}else if(dwxxId.equals("800000")){
+			dwxxname="线缆产业";
+		}else{
+			dwxxname=zzyDWXXService.getDwxx(Integer.parseInt(dwxxId)).getName();
 		}
+		
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
 		List<String[]> data =  fxCpylspHqlyddzlService.getViewDataListByq(dwxxId,year,month);
@@ -257,13 +210,13 @@ public class FxCpylspHqlyddzlController {
 			throws IOException {
 		String dwxxId="";
 		String dwxxname="";
-		String companyId = request.getParameter("companyId");
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-			dwxxname=company.getName();
+		dwxxId = request.getParameter("companyId");
+		if(dwxxId.equals("900000")){
+			dwxxname="变压器产业";
+		}else if(dwxxId.equals("800000")){
+			dwxxname="线缆产业";
+		}else{
+			dwxxname=zzyDWXXService.getDwxx(Integer.parseInt(dwxxId)).getName();
 		}
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");

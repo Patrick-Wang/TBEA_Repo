@@ -23,24 +23,10 @@ public class FxJkcbZbwcqkDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxJkcbZ
 	}
 
 	@Override
-	public List<JygkZzyFxJkcbZbwcqk> getDataListByDwDate(int dwxxId,int nf,int yf) {		
-		Query q = this.getEntityManager().createQuery("from JygkZzyFxJkcbZbwcqk where dwid = :dwid and nf = :nf and yf = :yf");
-		q.setParameter("dwid", dwxxId);
+	public List<JygkZzyFxJkcbZbwcqk> getDataListByDwDate(String dwxxs,int nf,int yf) {		
+		Query q = this.getEntityManager().createQuery("select zzyflId,sum(ndjh) as ndjh, sum(ydjh) as ydjh, sum(ydwc) as ydwc from JygkZzyFxJkcbZbwcqk where dwid in (" + dwxxs + ") and nf = :nf and yf = :yf  group by zzyflId");
 		q.setParameter("nf", nf);
 		q.setParameter("yf", yf);		
 		return q.getResultList();
-	}
-	@Override
-	public JygkZzyFxJkcbZbwcqk readDataByDwFlData(int dwxxId,int fl,int nf,int yf) {
-		Query q = this.getEntityManager().createQuery("from JygkZzyFxJkcbZbwcqk where dwid = :dwid and zzyflId = :fl and nf = :nf and yf = :yf");
-		q.setParameter("dwid", dwxxId);
-		q.setParameter("fl", fl);
-		q.setParameter("nf", nf);
-		q.setParameter("yf", yf);
-		List<JygkZzyFxJkcbZbwcqk> jygkZzyFxJkcbZbwcqkList = q.getResultList();
-		if (!jygkZzyFxJkcbZbwcqkList.isEmpty()){
-			return jygkZzyFxJkcbZbwcqkList.get(0);
-		}
-		return null;
-	}
+	}	
 }

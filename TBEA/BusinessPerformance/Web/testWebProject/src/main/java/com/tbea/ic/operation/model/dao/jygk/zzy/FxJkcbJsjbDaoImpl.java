@@ -1,7 +1,7 @@
 package com.tbea.ic.operation.model.dao.jygk.zzy;
 
-import java.sql.Date;
-import java.util.Calendar;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -22,44 +22,23 @@ public class FxJkcbJsjbDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxJkcbJsj
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
 	}
-	
 	@Override
-	//单个指标数据
-	public JygkZzyFxJkcbJsjb getZb(Integer zb, Date date, int company) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		Query q = this.getEntityManager().createQuery("JygkZzyFxJkcbScjb where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
-		q.setParameter("id", zb);
-		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
-		q.setParameter("comp", company);
-		List<JygkZzyFxJkcbJsjb> zbs = q.getResultList();
-		if (!zbs.isEmpty()){
-			return zbs.get(0);
-		}
-		return null;
-	}
-
-
-	@Override
-	public List<JygkZzyFxJkcbJsjb> getDataListByDwData(int dwxxId,int nf,int yf) {		
-		Query q = this.getEntityManager().createQuery("from JygkZzyFxJkcbJsjb where dwid = :dwid and nf = :nf and yf = :yf");
-		q.setParameter("dwid", dwxxId);
+	public List<JygkZzyFxJkcbJsjb> getDataListByDwDate(String dwxxs,int nf,int yf) {		
+		Query q = this.getEntityManager().createQuery("select zzyflId,sum(cltdjb) as cltdjb, sum(jgcsyhjb) as jgcsyhjb, sum(qtjb) as qtjb, sum(scts) as scts, sum(yhts) as yhts from JygkZzyFxJkcbJsjb where dwid in (" + dwxxs + ") and nf = :nf and yf = :yf  group by zzyflId");
 		q.setParameter("nf", nf);
 		q.setParameter("yf", yf);		
-		return q.getResultList();
-	}
-	@Override
-	public JygkZzyFxJkcbJsjb readDataByDwFlData(int dwxxId,int fl,int nf,int yf) {
-		Query q = this.getEntityManager().createQuery("from JygkZzyFxJkcbJsjb where dwid = :dwid and zzyflId = :fl and nf = :nf and yf = :yf");
-		q.setParameter("dwid", dwxxId);
-		q.setParameter("fl", fl);
-		q.setParameter("nf", nf);
-		q.setParameter("yf", yf);
-		List<JygkZzyFxJkcbJsjb> jygkZzyFxJkcbJsjbList = q.getResultList();
-		if (!jygkZzyFxJkcbJsjbList.isEmpty()){
-			return jygkZzyFxJkcbJsjbList.get(0);
+		List<Object[]> objectList=q.getResultList();
+		List<JygkZzyFxJkcbJsjb> retList=new ArrayList<JygkZzyFxJkcbJsjb>();
+		for(Object[] oa:objectList){
+			JygkZzyFxJkcbJsjb j=new JygkZzyFxJkcbJsjb();
+			j.setZzyflId((int)oa[0]);
+			j.setCltdjb((BigDecimal)oa[1]);
+			j.setJgcsyhjb((BigDecimal)oa[2]);
+			j.setQtjb((BigDecimal)oa[3]);
+			j.setScts((BigDecimal)oa[4]);
+			j.setYhts((BigDecimal)oa[5]);
+			retList.add(j);
 		}
-		return null;
-	}
+		return retList;
+	}	
 }

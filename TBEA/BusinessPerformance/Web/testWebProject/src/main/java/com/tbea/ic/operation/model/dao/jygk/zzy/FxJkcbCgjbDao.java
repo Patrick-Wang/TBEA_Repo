@@ -8,7 +8,5 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
 
 public interface FxJkcbCgjbDao extends AbstractReadWriteDao<JygkZzyFxJkcbCgjb> {
-	public List<JygkZzyFxJkcbCgjb> getDataListByDwDate(int dwxxId,int nf,int yn);
-	public JygkZzyFxJkcbCgjb readDataByDwFlData(int dwxxId,int fl,int nf,int yf);
-		
+	public List<JygkZzyFxJkcbCgjb> getDataListByDwDate(String dwxxs,int nf,int yn);
 }
