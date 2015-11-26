@@ -299,14 +299,6 @@ module Util {
         }
     }
 
-    export interface IAjaxOption {
-        year?: number;
-        month?: number;
-        day?: number;
-        companyId?: number;
-        entryType?: ZBType;
-    }
-
     export class Ajax {
         private mBaseUrl: string;
         private mCache: any = {};
@@ -316,7 +308,7 @@ module Util {
             this.mUseCache = useCache;
         }
 
-        public static toUrlParam(option: IAjaxOption) {
+        public static toUrlParam(option: any) {
             var keys = [];
             for (var key in option) {
                 keys.push(key + "=" + option[key]);
@@ -325,7 +317,7 @@ module Util {
             return keys.join("&");
         }
 
-        private setCache(option: IAjaxOption, data: string): void {
+        private setCache(option: any, data: string): void {
             if (this.mUseCache && undefined != option) {
                 this.mCache[Ajax.toUrlParam(option)] = data;
             }
@@ -335,7 +327,7 @@ module Util {
             this.mCache = {};
         }
 
-        private getCache(option: IAjaxOption): string {
+        private getCache(option: any): string {
             if (undefined == option) {
                 return undefined;
             }
@@ -350,7 +342,7 @@ module Util {
             return true;
         }
 
-        public post(option: IAjaxOption): Promise {
+        public post(option: any): Promise {
             var promise: Promise = new Promise();
 
             $.ajax({
@@ -370,7 +362,7 @@ module Util {
             return promise;
         }
 
-        public get(option: IAjaxOption): Promise {
+        public get(option: any): Promise {
             var promise: Promise = new Promise();
             var cacheData: string = this.getCache(option);
             if (undefined == cacheData) {
