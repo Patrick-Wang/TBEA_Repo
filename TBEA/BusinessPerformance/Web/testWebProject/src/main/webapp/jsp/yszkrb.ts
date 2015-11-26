@@ -1,5 +1,6 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
 declare var echarts;
 
 module yszkrb {
@@ -18,11 +19,11 @@ module yszkrb {
             ], gridName);
         }
     }
-    
+
     interface ISubmitResult {
         result: string;
     }
-    
+
     export class View {
         private static ins: View;
 
@@ -42,13 +43,13 @@ module yszkrb {
 
         private mTableAssist: JQTable.JQGridAssistant;
         private mSave: Util.Ajax = new Util.Ajax("yszk_submit.do");
-        
+
         public init(tableId: string, month: number, year: number, day: number): void {
             this.mYear = year;
             this.mMonth = month;
             this.mDay = day;
             this.mTableId = tableId;
-  
+
             $("#date").val(year + "-" + month + "-" + day);
             $("#date").datepicker({
                 //            numberOfMonths:1,//显示几个月  
@@ -78,34 +79,34 @@ module yszkrb {
             this.updateUI();
 
         }
-     
-         public save() {
+
+        public save() {
             var allData = this.mTableAssist.getAllData();
             var submitData = [];
             var colNames = this.mTableAssist.getColNames();
-            for (var i = 0; i < allData.length; ++i){
+            for (var i = 0; i < allData.length; ++i) {
                 submitData.push([]);
-                for (var j = 0; j < allData[i].length; ++j){
-                    if (j != 1){
+                for (var j = 0; j < allData[i].length; ++j) {
+                    if (j != 1) {
                         submitData[i].push(allData[i][j])
                         allData[i][j] = allData[i][j].replace(new RegExp(' ', 'g'), '')
                     }
                 }
             }
-            
+
             this.mSave.post({
                 year: this.mYear,
                 month: this.mMonth,
                 day: this.mDay,
                 data: JSON.stringify(submitData)
             }).then((data: ISubmitResult) => {
-                    if ("true" == data.result) {
-                         Util.MessageBox.tip("保存 成功");
-                    } else if ("false" == data.result) {
-                         Util.MessageBox.tip("保存 失败");
-                    } else {
-                        Util.MessageBox.tip(data.result);
-                    }
+                if ("true" == data.result) {
+                    Util.MessageBox.tip("保存 成功");
+                } else if ("false" == data.result) {
+                    Util.MessageBox.tip("保存 失败");
+                } else {
+                    Util.MessageBox.tip(data.result);
+                }
             });
         }
         public updateUI() {
@@ -121,11 +122,11 @@ module yszkrb {
         private updateTable(): void {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
-            
+
             var data = [];
-            
             var row = [];
             for (var i = 0; i < this.mData.length; ++i) {
+                data.push([]);
                 if (this.mData[i] instanceof Array) {
                     row = [].concat(this.mData[i]);
                     for (var col in row) {
