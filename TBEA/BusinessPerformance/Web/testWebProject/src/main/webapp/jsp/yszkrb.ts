@@ -21,9 +21,9 @@ module yszkrb {
     }
 
     interface ISubmitResult {
-    	errorCode: number;
-    	message: string ;
-	
+        errorCode: number;
+        message: string;
+
     }
 
     export class View {
@@ -89,7 +89,7 @@ module yszkrb {
             for (var i = 0; i < allData.length; ++i) {
                 submitData.push([]);
                 for (var j = 0; j < allData[i].length; ++j) {
-                    if (j != 1) {
+                    if (j != 0) {
                         submitData[i].push(allData[i][j])
                         allData[i][j] = allData[i][j].replace(new RegExp(' ', 'g'), '')
                     }
@@ -106,7 +106,7 @@ module yszkrb {
                     Util.MessageBox.tip("保存 成功");
                 } else {
                     Util.MessageBox.tip("保存 失败");
-                } 
+                }
             });
         }
         public updateUI() {
@@ -138,7 +138,7 @@ module yszkrb {
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
-            
+
             var lastsel = "";
             var lastcell = "";
             $("#" + name).jqGrid(
@@ -151,71 +151,72 @@ module yszkrb {
                     drag: false,
                     resize: false,
                     //autowidth : false,
-                                        cellsubmit: 'clientArray',
-                                        cellEdit: true,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
                     height: '100%',
                     width: 850,
                     shrinkToFit: true,
                     rowNum: 100,
                     autoScroll: true,
-                    beforeSaveCell :(rowid,cellname,v,iRow,iCol) =>{
-                        var ret = parseFloat( v.replace(new RegExp(',', 'g'), ''));
-                        if (isNaN (ret)){
-                           $.jgrid.jqModal = {
-                              width: 290,
-                              left : $("#table").offset().left + $("#table").width() / 2 - 290 / 2, 
-                              top : $("#table").offset().top + $("#table").height() / 2 - 90};
-                           return v;
-                        }else{
-                           return ret;
+                    beforeSaveCell: (rowid, cellname, v, iRow, iCol) => {
+                        var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
+                        if (isNaN(ret)) {
+                            $.jgrid.jqModal = {
+                                width: 290,
+                                left: $("#table").offset().left + $("#table").width() / 2 - 290 / 2,
+                                top: $("#table").offset().top + $("#table").height() / 2 - 90
+                            };
+                            return v;
+                        } else {
+                            return ret;
                         }
                     },
-                    beforeEditCell:(rowid,cellname,v,iRow,iCol)=>{
-                        lastsel = iRow; 
+                    beforeEditCell: (rowid, cellname, v, iRow, iCol) => {
+                        lastsel = iRow;
                         lastcell = iCol; 
-//                        console.log(iRow +', ' + iCol);
-                        $("input").attr("disabled",true); 
+                        //                        console.log(iRow +', ' + iCol);
+                        $("input").attr("disabled", true);
                     },
-                    
-                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
-                        $("input[type=text]").bind("keydown", function(e){
-                            if (e.keyCode === 13){
-                                setTimeout(function(){
-                                    $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);    
+
+                    afterEditCell: (rowid, cellname, v, iRow, iCol) => {
+                        $("input[type=text]").bind("keydown", function(e) {
+                            if (e.keyCode === 13) {
+                                setTimeout(function() {
+                                    $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
                                 }, 10);
                             }
                         });
                     },
-                    
-                    afterSaveCell : ()=>{
-                        $("input").attr("disabled",false); 
-                        lastsel=""; 
+
+                    afterSaveCell: () => {
+                        $("input").attr("disabled", false);
+                        lastsel = "";
                     },
-                    
-                    afterRestoreCell : ()=>{
-                        $("input").attr("disabled",false); 
-                        
-                        lastsel=""; 
+
+                    afterRestoreCell: () => {
+                        $("input").attr("disabled", false);
+
+                        lastsel = "";
                     }
-//                    ,
-//                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
-//                        lastsel = ""; 
-//                        lastcell = ""; 
-//                    } 
+                    //                    ,
+                    //                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
+                    //                        lastsel = ""; 
+                    //                        lastcell = ""; 
+                    //                    } 
                 }));
-            
-          
-          $('html').bind('click', function(e) { //用于点击其他地方保存正在编辑状态下的行
-              if ( lastsel != "" ) { //if a row is selected for edit 
-                  if($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row  
-                      //  $("#" + name).jqGrid('saveRow', lastsel); 
-                      $("#" + name).jqGrid("saveCell",lastsel,lastcell);
-                      //$("#" + name).resetSelection(); 
-                      lastsel=""; 
-                  } 
-              } 
-          });
-            
+
+
+            $('html').bind('click', function(e) { //用于点击其他地方保存正在编辑状态下的行
+                if (lastsel != "") { //if a row is selected for edit 
+                    if ($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row  
+                        //  $("#" + name).jqGrid('saveRow', lastsel); 
+                        $("#" + name).jqGrid("saveCell", lastsel, lastcell);
+                        //$("#" + name).resetSelection(); 
+                        lastsel = "";
+                    }
+                }
+            });
+
 
         }
     }
