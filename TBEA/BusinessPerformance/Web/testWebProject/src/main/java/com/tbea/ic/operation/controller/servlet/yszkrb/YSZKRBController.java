@@ -34,7 +34,7 @@ public class YSZKRBController {
 		DateSelection dateSel = new DateSelection();
 		Map<String, Object> map = new HashMap<String, Object>();
 		dateSel.select(map);
-		return new ModelAndView("yszkrb", map);
+		return new ModelAndView("yszkrb_view", map);
 	}
 
 	@RequestMapping(value = "yszk_update.do")
