@@ -21,12 +21,15 @@ public class DateHelper {
 	private Date qntqXjdLastMonth;
 	private Date xjdDnFirstMonth;
 	private Date qntqXjdDnFirstMonth;
-
+	
+	
 	public DateHelper(Date date) {
 		this.cur = date;
 		Calendar cal = Calendar.getInstance();
 		jdStart = getJdStart(date);
 
+		
+		
 		cal.setTime(jdStart);
 		cal.add(Calendar.YEAR, -1);
 		qntqJdStart = Util.toDate(cal);
@@ -207,5 +210,12 @@ public class DateHelper {
 		cal.setTime(this.cur);
 		cal.add(Calendar.MONTH, -1);
 		return Util.toDate(cal);
+	}
+	
+	public static Date getFirstDayOfMonth(Date date){
+		Calendar calTmp = Calendar.getInstance();
+		calTmp.setTime(date);
+		calTmp.set(Calendar.DAY_OF_MONTH, 1);
+		return Util.toDate(calTmp);
 	}
 }
