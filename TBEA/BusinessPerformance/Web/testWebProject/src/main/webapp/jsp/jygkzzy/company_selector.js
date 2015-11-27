@@ -38,6 +38,9 @@ var Util;
         CompanySelectorZzy.prototype.getCompanyName = function () {
             return $("#" + this.companyId).text();
         };
+        CompanySelectorZzy.prototype.hide = function () {
+            $("#" + this.mCtrlId).hide();
+        };
         return CompanySelectorZzy;
     })();
     Util.CompanySelectorZzy = CompanySelectorZzy;

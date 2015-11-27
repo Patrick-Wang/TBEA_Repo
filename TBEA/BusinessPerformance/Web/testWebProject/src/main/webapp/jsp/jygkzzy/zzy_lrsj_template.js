@@ -35,16 +35,16 @@ var zzy_lrsj_template;
             $("#" + opt.dateId).html("");
             $("#" + opt.companyId).html("");
             this.mOpt = opt;
-            if (this.mBglxSelector.getBglx() == 10002 || this.mBglxSelector.getBglx() == 10003) {
+            if (this.mBglxSelector.getBglx() + "" == "10002" || this.mBglxSelector.getBglx() + "" == "10003") {
                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId, true);
             }
             else {
                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
             }
             this.mCompanySelector = new Util.CompanySelectorZzy(this.mOpt.companyId, opt.comps, false);
-            //            if (opt.comps.length == 1){
-            //                this.mCompanySelector.hide();
-            //            }
+            if (opt.comps.length == 1) {
+                this.mCompanySelector.hide();
+            }
             this.updateTitle();
         };
         View.prototype.initBglxSelect = function (divId, curbglx, view, isByq, isXl) {
@@ -91,7 +91,7 @@ var zzy_lrsj_template;
             for (var i = 0; i < allData.length; ++i) {
                 submitData.push([]);
                 for (var j = 0; j < allData[i].length; ++j) {
-                    if (this.mBglxSelector.getBglx() != 10018) {
+                    if (this.mBglxSelector.getBglx() + "" != "10018") {
                         if (j != 1) {
                             submitData[i].push(allData[i][j]);
                             allData[i][j] = allData[i][j].replace(new RegExp(' ', 'g'), '');
@@ -146,41 +146,41 @@ var zzy_lrsj_template;
             parent.append("<table id='" + name + "'></table>");
             this.enableEntry();
             var titles = null;
-            switch (this.mBglxSelector.getBglx()) {
-                case 10001:
+            switch (this.mBglxSelector.getBglx() + "") {
+                case "10001":
                     titles = ["产品类型", "收入", "毛利额"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
-                case 10002:
+                case "10002":
                     titles = ["产品类型", "产值", "产量", "中标毛利率", "预计优化后毛利额", "预计优化后毛利率"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
-                case 10003:
+                case "10003":
                     titles = ["产品类型", "产值", "中标毛利率", "预计优化后毛利额", "预计优化后毛利率"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
-                case 10004:
+                case "10004":
                     titles = ["类别", "年度计划", "当月计划", "当月完成"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
-                case 10005:
+                case "10005":
                     titles = ["产品类型", "生产台数", "优化台数", "结构参数优化降本", "材料替代降本", "其他降本"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
-                case 10006:
+                case "10006":
                     titles = ["产品类型", "结构参数优化降本", "材料替代降本", "其他降本"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
-                case 10007:
+                case "10007":
                     titles = ["材料", "年度计划", "月度计划", "月度完成"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
-                case 10008:
+                case "10008":
                     titles = ["材料名称", "实际领用量", "废料"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
-                case 10009:
-                case 10010:
+                case "10009":
+                case "10010":
                     titles = ["", "水用量", "水金额", "电用量", "电金额", "蒸汽用量", "蒸汽金额", "燃气用量", "燃气金额"];
                     this.mTableAssist = new JQTable.JQGridAssistant([
                         new JQTable.Node("", "empty", true, JQTable.TextAlign.Left),
@@ -200,11 +200,11 @@ var zzy_lrsj_template;
                         new JQTable.Node("产量", "cl", false)
                     ], name);
                     break;
-                case 10011:
+                case "10011":
                     titles = ["年度", "调差", "调配置/标准", "优化付款方式", "取消客户指定", "其他"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
-                case 10012:
+                case "10012":
                     this.mTableAssist = new JQTable.JQGridAssistant([
                         new JQTable.Node("产品类别", "cplb", true, JQTable.TextAlign.Left),
                         new JQTable.Node("产量(万KVA)", "cl", false)
@@ -214,7 +214,7 @@ var zzy_lrsj_template;
                     ], name);
                     titles = ["产品类别", "铜铝当量（吨）", "产值"];
                     break;
-                case 10013:
+                case "10013":
                     this.mTableAssist = new JQTable.JQGridAssistant([
                         new JQTable.Node("产品类别", "cplb", true, JQTable.TextAlign.Left),
                         new JQTable.Node("铜铝当量（吨）", "cl", false)
@@ -224,11 +224,11 @@ var zzy_lrsj_template;
                     ], name);
                     titles = ["产品类别", "铜铝当量（吨）", "产值"];
                     break;
-                case 10014:
+                case "10014":
                     titles = ["产品类别", "工时"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
-                case 10015:
+                case "10015":
                     titles = ["单位", "月产出能力产值", "月产出能力产量", "可供履约订单总产值", "可供履约订单总产量",
                         "年度可供履约订单总产值", "年度可供履约订单总产量", "n+1月产值(已排产)", "n+1月产值(未排产)", "n+1月产量",
                         "n+2月产值(已排产)", "n+2月产值(未排产)", "n+2月产量", "n+3月产值(已排产)", "n+3月产值(未排产)",
@@ -273,7 +273,7 @@ var zzy_lrsj_template;
                             .append(new JQTable.Node("产量", "ddcz", false))
                     ], name);
                     break;
-                case 10016:
+                case "10016":
                     titles = ["单位", "月产出能力产值", "月产出能力产量", "可供履约订单总产值", "可供履约订单总产量",
                         "年度可供履约订单总产值", "年度可供履约订单总产量", "n+1月产值(已排产)", "n+1月产值(未排产)", "n+1月产量",
                         "n+2月产值(已排产)", "n+2月产值(未排产)", "n+2月产量", "n+3月产值(已排产)", "n+3月产值(未排产)",
@@ -300,11 +300,11 @@ var zzy_lrsj_template;
                         new JQTable.Node("外协", "wxcz", false)
                     ], name);
                     break;
-                case 10017:
+                case "10017":
                     titles = ["时点", "原材料", "半成品", "实际库存商品", "已发货未开票", "期货浮动盈亏(盈+，亏-)", "期货平仓盈亏(盈-，亏+)", "未发货已开票", "其他", "合计"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
-                case 10018:
+                case "10018":
                     titles = ["原材料", "", "5年以上", "5年以上", "5年以上", "原材料", "4-5年半成品", "4-5年产成品", "4-5年其他", "3-4年原材料", "3-4年半成品", "3-4年产成品", "3-4年其他", "2-3年原材料", "2-3年半成品",
                         "2-3年产成品", "2-3年其他", "1-2年原材料", "1-2年半成品", "1-2年产成品", "1-2年其他", "1年原材料", "1年半成品", "1年产成品", "1年其他", "合计"];
                     this.mTableAssist = new JQTable.JQGridAssistant([
@@ -340,18 +340,18 @@ var zzy_lrsj_template;
                             .append(new JQTable.Node("其他", "n1qt", false))
                     ], name);
                     break;
-                case 10019:
+                case "10019":
                     titles = ["单位名称", "截止月底库存金额", "年初库存金额"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
-                case 10020:
+                case "10020":
                     titles = ["细项", "年度计划费用率"];
                     this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                     break;
             }
             for (var i = 0; i < this.mTableData.length; ++i) {
                 var j = 2;
-                if (!this.mBglxSelector.getBglx()) {
+                if (this.mBglxSelector.getBglx() + "" == "") {
                     j = 1;
                 }
                 for (; j < this.mTableData[i].length; ++j) {

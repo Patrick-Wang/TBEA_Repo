@@ -45,6 +45,9 @@ module Util {
         }      
         public getCompanyName(): String{
            return $("#" + this.companyId).text();
-        }  
+        }
+        public hide(){
+           $("#" + this.mCtrlId).hide();
+        }
     }
 }
