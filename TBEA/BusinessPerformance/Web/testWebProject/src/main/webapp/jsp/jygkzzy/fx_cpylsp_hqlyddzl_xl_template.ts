@@ -9,7 +9,7 @@ module fx_cpylsp_hqlyddzl_xl{
     class JQGridAssistantFactory {
         public static createTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("产品类型", "cpdl"),
+                new JQTable.Node("产品类型", "cpdl", true, JQTable.TextAlign.Left),
                 new JQTable.Node("产值", "cz"),
                 new JQTable.Node("中标毛利率", "zbmll"),
                 new JQTable.Node("预计优化后毛利率", "yjyhhmll"),
@@ -67,7 +67,7 @@ module fx_cpylsp_hqlyddzl_xl{
         public exportExcel() {
             var date : Util.Date = this.mDateSelector.getDate();
             var compType = this.mCompanySelector.getCompany();
-            $("#export")[0].action = "fxcpylspdqddmlqk_exportxl.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, companyId: compType});
+            $("#export")[0].action = "exportxl.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, companyId: compType});
             $("#export")[0].submit();
         }
         

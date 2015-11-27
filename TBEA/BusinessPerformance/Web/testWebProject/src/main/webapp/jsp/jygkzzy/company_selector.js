@@ -35,6 +35,9 @@ var Util;
         CompanySelectorZzy.prototype.getCompany = function () {
             return $("#" + this.companyId).val();
         };
+        CompanySelectorZzy.prototype.getCompanyName = function () {
+            return $("#" + this.companyId).text();
+        };
         return CompanySelectorZzy;
     })();
     Util.CompanySelectorZzy = CompanySelectorZzy;

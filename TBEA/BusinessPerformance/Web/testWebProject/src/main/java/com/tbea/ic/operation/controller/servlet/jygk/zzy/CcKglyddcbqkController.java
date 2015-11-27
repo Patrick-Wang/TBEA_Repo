@@ -2,15 +2,14 @@ package com.tbea.ic.operation.controller.servlet.jygk.zzy;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
@@ -25,19 +24,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyExcelTemplate;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyFormatterHandler;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyHeaderFormatterHandler;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyNumberFormatterHandler;
-import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyPercentFormatterHandler;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyNumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyPercentFormatterHandler;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.jygk.zzy.CcKglyddcbqkService;
+import com.tbea.ic.operation.service.jygk.zzy.DwxxDto;
+import com.tbea.ic.operation.service.jygk.zzy.SystemExtendAuthService;
+import com.tbea.ic.operation.service.jygk.zzy.ZzyDWXXService;
 
 
 @Controller
@@ -46,10 +45,13 @@ public class CcKglyddcbqkController {
 	
 	@Autowired
 	private CcKglyddcbqkService zzyKglyddcbqkService;
-	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-	CompanyManager companyManager;
-	@RequestMapping(value = "openview.do", method = RequestMethod.GET)//打开页面
-	public ModelAndView openView(HttpServletRequest request,
+	@Autowired
+	ZzyDWXXService zzyDWXXService;
+	@Autowired
+	private SystemExtendAuthService systemExtendAuthService;
+	
+	@RequestMapping(value = "openviewbyq.do", method = RequestMethod.GET)//打开页面
+	public ModelAndView openViewByq(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Calendar date = Calendar.getInstance();
 		int month = date.get(Calendar.MONTH) + 1;
@@ -60,27 +62,23 @@ public class CcKglyddcbqkController {
 		DateSelection dateSel = new DateSelection(year, month);
 		dateSel.select(map);
 		
-		Organization org = companyManager.getPzghOrganization();
-		CompanySelection compSel = new CompanySelection(true,org.getTopCompany());
-		compSel.select(map);
+		//设置可选公司		
+		HttpSession session=request.getSession(false);
+		Account account=SessionManager.getAccount(session);
+		List<DwxxDto> dwxxList=systemExtendAuthService.getJygkZzyDwxxListView(account);
+		map.put("comps", JSONArray.fromObject(dwxxList).toString());
 		
 		//设置可选表格类型到map
 		return new ModelAndView("jygkzzy/cc_kglyddcbqk_byq_template", map);
 	}	
 	
-	@RequestMapping(value = "readview.do", method = RequestMethod.GET)//选择
-	public @ResponseBody byte[] readView(HttpServletRequest request,
+	@RequestMapping(value = "readviewbyq.do", method = RequestMethod.GET)//选择
+	public @ResponseBody byte[] readViewByq(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		String dwxxId="";
-		String companyId = request.getParameter("companyId");
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-		}
-		Date date = DateSelection.getDate(request);
-		List<String[]> ret =  zzyKglyddcbqkService.getViewDataList(date,dwxxId,"20015");
+		String dwxxId = request.getParameter("companyId");
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		List<String[]> ret =  zzyKglyddcbqkService.getViewDataList(year, month, dwxxId,"20015");
 		String retstr = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
 		String result = "{\"values\":" + retstr + "}"; 	
 		return result.getBytes("utf-8");
@@ -98,9 +96,11 @@ public class CcKglyddcbqkController {
 		DateSelection dateSel = new DateSelection(year, month);
 		dateSel.select(map);
 		
-		Organization org = companyManager.getPzghOrganization();
-		CompanySelection compSel = new CompanySelection(true,org.getTopCompany());
-		compSel.select(map);
+		//设置可选公司		
+		HttpSession session=request.getSession(false);
+		Account account=SessionManager.getAccount(session);
+		List<DwxxDto> dwxxList=systemExtendAuthService.getJygkZzyDwxxListView(account);
+		map.put("comps", JSONArray.fromObject(dwxxList).toString());
 		
 		//设置可选表格类型到map
 		return new ModelAndView("jygkzzy/cc_kglyddcbqk_xl_template", map);
@@ -109,53 +109,58 @@ public class CcKglyddcbqkController {
 	@RequestMapping(value = "readviewxl.do", method = RequestMethod.GET)//选择
 	public @ResponseBody byte[] readViewXl(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		String dwxxId="";
-		String companyId = request.getParameter("companyId");
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-		}
-		Date date = DateSelection.getDate(request);
-		List<String[]> ret =  zzyKglyddcbqkService.getViewDataList(date,dwxxId, "20016");
+		String dwxxId = request.getParameter("companyId");
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		List<String[]> ret =  zzyKglyddcbqkService.getViewDataList(year, month ,dwxxId, "20016");
 		String retstr = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
 		String result = "{\"values\":" + retstr + "}"; 	
 		return result.getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "export.do")
-	public @ResponseBody byte[] export(
+	@RequestMapping(value = "exportbyq.do")
+	public @ResponseBody byte[] exportbyq(
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String dwxxId="";
-		String companyId = request.getParameter("companyId");
-		String companyName= "";
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-			companyName = company.getName();
+		String dwxxname="";
+		dwxxId = request.getParameter("companyId");
+		if(dwxxId.equals("900000")){
+			dwxxname="变压器产业";
+		}else if(dwxxId.equals("800000")){
+			dwxxname="线缆产业";
+		}else{
+			dwxxname=zzyDWXXService.getDwxx(Integer.parseInt(dwxxId)).getName();
 		}
-		Date date = DateSelection.getDate(request);
-		List<String[]> ret =  zzyKglyddcbqkService.getViewDataList(date,dwxxId, "20015");		
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		List<String[]> ret =  zzyKglyddcbqkService.getViewDataList(year,month,dwxxId, "20015");		
 		
 		JygkZzyExcelTemplate template = JygkZzyExcelTemplate.createJygkTemplate("20015");
-		String fileNameAndSheetName = (String)companyName;
-		fileNameAndSheetName += request.getParameter("year") + "年" + request.getParameter("month") + "月可供履约订单储备情况（变压器）";		
+		String fileNameAndSheetName = dwxxname;
+		fileNameAndSheetName += year + "年" + month + "月可供履约订单储备情况（变压器）";		
 		
 		HSSFWorkbook workbook = template.getWorkbook();
 		HSSFSheet sheet = workbook.getSheetAt(0);
 
-//		JygkZzyFormatterHandler formatterChain = this.getFormatterChainWithHeader(
-//				new Integer[]{3, 6}, new Integer[]{1, 2, 4, 5});
+		JygkZzyFormatterHandler formatterChain = this.getFormatterChainDataOnly(
+				new Integer[]{9,12,15,18,21,24}, new Integer[]{1,2,3,4,5,6,7,8,10,11,13,14,16,17,19,20,22,23,25,26,27,28});
 		
 		HSSFRow row = sheet.getRow(3);
 		for (int i = 0; i < ret.size(); ++i) {
+			if(i > 0) {
+				row = sheet.createRow(i+3);
+			}
+			
 			for(int j=0; ret.get(i) != null && j<ret.get(i).length;j++) {
 				HSSFCell cell = row.getCell(j);
-				cell.setCellValue(ret.get(i)[j]);
+				if(j==0) {
+					cell.setCellValue(ret.get(i)[j]);
+				} else {
+					formatterChain.handle(
+						ret.get(i)[0], 
+						j, template, cell, ret.get(i)[j]);
+				}
 			}
 		}
 			
@@ -169,33 +174,43 @@ public class CcKglyddcbqkController {
 			HttpServletRequest request, HttpServletResponse response)
 					throws IOException {
 		String dwxxId="";
-		String companyId = request.getParameter("companyId");
-		String companyName= "";
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-			companyName = company.getName();
+		String dwxxname="";
+		dwxxId = request.getParameter("companyId");
+		if(dwxxId.equals("900000")){
+			dwxxname="变压器产业";
+		}else if(dwxxId.equals("800000")){
+			dwxxname="线缆产业";
+		}else{
+			dwxxname=zzyDWXXService.getDwxx(Integer.parseInt(dwxxId)).getName();
 		}
-		Date date = DateSelection.getDate(request);
-		List<String[]> ret =  zzyKglyddcbqkService.getViewDataList(date,dwxxId, "20016");		
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		List<String[]> ret =  zzyKglyddcbqkService.getViewDataList(year, month, dwxxId, "20016");		
 		
 		JygkZzyExcelTemplate template = JygkZzyExcelTemplate.createJygkTemplate("20016");
-		String fileNameAndSheetName = (String)companyName;
-		fileNameAndSheetName += request.getParameter("year") + "年" + request.getParameter("month") + "月可供履约订单储备情况（线缆）";		
+		String fileNameAndSheetName = dwxxname;
+		fileNameAndSheetName += year + "年" + month + "月可供履约订单储备情况（线缆）";		
 		
 		HSSFWorkbook workbook = template.getWorkbook();
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		
-//		JygkZzyFormatterHandler formatterChain = this.getFormatterChainWithHeader(
-//				new Integer[]{3, 6}, new Integer[]{1, 2, 4, 5});
+		JygkZzyFormatterHandler formatterChain = this.getFormatterChainWithHeader(
+				new Integer[]{6,9,12}, new Integer[]{1,2,3,4,5,7,8,10,11,13,14,15});
 		
 		HSSFRow row = sheet.getRow(3);
 		for (int i = 0; i < ret.size(); ++i) {
+			if(i > 0) {
+				row = sheet.createRow(i+3);
+			}
 			for(int j=0; ret.get(i) != null && j<ret.get(i).length;j++) {
 				HSSFCell cell = row.getCell(j);
-				cell.setCellValue(ret.get(i)[j]);
+				if(j==0) {
+					cell.setCellValue(ret.get(i)[j]);
+				} else {
+					formatterChain.handle(
+						ret.get(i)[0], 
+						j, template, cell, ret.get(i)[j]);
+				}
 			}
 		}
 		
@@ -213,7 +228,7 @@ public class CcKglyddcbqkController {
 	private JygkZzyFormatterHandler getFormatterChainDataOnly(Integer[] percentCols, Integer[] jhCols){
 		JygkZzyFormatterHandler formatterChain = new JygkZzyPercentFormatterHandler(null, percentCols);
 		formatterChain
-			.next(new JygkZzyNumberFormatterHandler(NumberType.RESERVE_0, null, jhCols));
+			.next(new JygkZzyNumberFormatterHandler(NumberType.RESERVE_2, null, jhCols));
 		return formatterChain;
 	}
 }

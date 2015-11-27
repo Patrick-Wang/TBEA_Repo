@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
@@ -37,7 +38,12 @@ import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyHeaderFormatterHandler
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyNumberFormatterHandler;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyPercentFormatterHandler;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyNumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.jygk.zzy.ChZljjService;
+import com.tbea.ic.operation.service.jygk.zzy.DwxxDto;
+import com.tbea.ic.operation.service.jygk.zzy.SystemExtendAuthService;
+import com.tbea.ic.operation.service.jygk.zzy.ZzyDWXXService;
 
 
 @Controller
@@ -46,8 +52,10 @@ public class ChZljjController {
 	
 	@Autowired
 	private ChZljjService zzyZljjService;
-	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-	CompanyManager companyManager;
+	@Autowired
+	ZzyDWXXService zzyDWXXService;
+	@Autowired
+	private SystemExtendAuthService systemExtendAuthService;
 	@RequestMapping(value = "openview.do", method = RequestMethod.GET)//打开页面
 	public ModelAndView openView(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -60,10 +68,11 @@ public class ChZljjController {
 		DateSelection dateSel = new DateSelection(year, month);
 		dateSel.select(map);
 		
-		Organization org = companyManager.getPzghOrganization();
-		CompanySelection compSel = new CompanySelection(true,org.getTopCompany());
-		compSel.select(map);
-		
+		//设置可选公司		
+		HttpSession session=request.getSession(false);
+		Account account=SessionManager.getAccount(session);
+		List<DwxxDto> dwxxList=systemExtendAuthService.getJygkZzyDwxxListView(account);
+		map.put("comps", JSONArray.fromObject(dwxxList).toString());
 		//设置可选表格类型到map
 		return new ModelAndView("jygkzzy/ch_zljj_template", map);
 	}	
@@ -71,16 +80,10 @@ public class ChZljjController {
 	@RequestMapping(value = "readview.do", method = RequestMethod.GET)//选择
 	public @ResponseBody byte[] readView(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		String dwxxId="";
-		String companyId = request.getParameter("companyId");
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-		}
-		Date date = DateSelection.getDate(request);
-		List<String[]> ret =  zzyZljjService.getViewDataList(date,dwxxId,"20018");
+		String dwxxId = request.getParameter("companyId");
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		List<String[]> ret =  zzyZljjService.getViewDataList(year,month,dwxxId);
 		String retstr = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
 		String result = "{\"values\":" + retstr + "}"; 	
 		return result.getBytes("utf-8");
@@ -91,33 +94,40 @@ public class ChZljjController {
 			HttpServletRequest request, HttpServletResponse response)
 					throws IOException {
 		String dwxxId="";
-		String companyId = request.getParameter("companyId");
-		String companyName = "";
-		if (null != companyId){
-			int cid = Integer.parseInt(companyId);
-			CompanyType companyType=CompanyType.valueOf(cid);
-			Company company=companyManager.getBMDBOrganization().getCompany(companyType);
-			dwxxId=company.getId().toString();
-			companyName = company.getName();
+		String dwxxname="";
+		dwxxId = request.getParameter("companyId");
+		if(dwxxId.equals("900000")){
+			dwxxname="变压器产业";
+		}else if(dwxxId.equals("800000")){
+			dwxxname="线缆产业";
+		}else{
+			dwxxname=zzyDWXXService.getDwxx(Integer.parseInt(dwxxId)).getName();
 		}
-		Date date = DateSelection.getDate(request);
-		List<String[]> ret =  zzyZljjService.getViewDataList(date,dwxxId,"20018");
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		List<String[]> ret =  zzyZljjService.getViewDataList(year,month,dwxxId);
 		
 		JygkZzyExcelTemplate template = JygkZzyExcelTemplate.createJygkTemplate("20018");
-		String fileNameAndSheetName = (String)companyName;
-		fileNameAndSheetName += request.getParameter("year") + "年" + request.getParameter("month") + "月账龄结构";		
+		String fileNameAndSheetName =dwxxname;
+		fileNameAndSheetName += year + "年" + month + "月账龄结构";		
 		
 		HSSFWorkbook workbook = template.getWorkbook();
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		
-//		JygkZzyFormatterHandler formatterChain = this.getFormatterChainWithHeader(
-//				new Integer[]{3, 6}, new Integer[]{1, 2, 4, 5});
+		JygkZzyFormatterHandler formatterChain = this.getFormatterChainDataOnly(
+				new Integer[]{}, new Integer[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24});
 		
 		HSSFRow row = sheet.getRow(2);
 		for (int i = 0; i < ret.size(); ++i) {
+			if(i > 0) {
+				row = sheet.createRow(i+2);
+			}
 			for(int j=0; ret.get(i) != null && j<ret.get(i).length;j++) {
 				HSSFCell cell = row.getCell(j);
-				cell.setCellValue(ret.get(i)[j]);
+				formatterChain.handle(
+						ret.get(i)[0], 
+						j, template, cell, ret.get(i)[j]);
+//				cell.setCellValue(ret.get(i)[j]);
 			}
 		}
 		
@@ -135,7 +145,7 @@ public class ChZljjController {
 	private JygkZzyFormatterHandler getFormatterChainDataOnly(Integer[] percentCols, Integer[] jhCols){
 		JygkZzyFormatterHandler formatterChain = new JygkZzyPercentFormatterHandler(null, percentCols);
 		formatterChain
-			.next(new JygkZzyNumberFormatterHandler(NumberType.RESERVE_0, null, jhCols));
+			.next(new JygkZzyNumberFormatterHandler(NumberType.RESERVE_2, null, jhCols));
 		return formatterChain;
 	}
 	

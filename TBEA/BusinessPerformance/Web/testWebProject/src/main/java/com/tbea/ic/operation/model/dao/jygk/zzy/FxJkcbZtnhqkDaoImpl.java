@@ -24,20 +24,36 @@ public class FxJkcbZtnhqkDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxJkcbZ
 		super.setEntityManager(entityManager);
 	}
 	@Override
-	public List<JygkZzyFxJkcbZtnhqk> getDataListByDwData(int dwxxId,int nf,int yf) {	
-		Query q = this.getEntityManager().createQuery("from JygkZzyFxJkcbZtnhqk where dwid = :dwid and nf = :nf and jd = :jd order by zzyfl_id");
-		q.setParameter("dwid", dwxxId);
-		q.setParameter("nf", nf);
-		q.setParameter("jd", yf);	
+	public List<Object[]> getSumDataListByDwData(String dwxxId,int nf) {	
+		String sql = "select nf,sum(syl) as syl,sum(sje) as sje,sum(dyl) as dyl,sum(dje) as dje,sum(zqyl) as zqyl,sum(zqje) as zqje,"
+				+ "sum(rqyl) as rqyl,sum(rqje) as rqje,sum(cz) as cz,sum(cl) as cl from JygkZzyFxJkcbZtnhqk where dwid in (" + dwxxId + ") and nf = " + nf + " group by nf";
+		Query q = this.getEntityManager().createQuery(sql);
 		return q.getResultList();
 	}
 	@Override
-	public List<Object[]> getSumDataListByDwData(int dwxxId,int nf) {	
-		String sql = "select dwid,sum(syl) as syl,sum(sje) as sje,sum(dyl) as dyl,sum(dje) as dje,sum(zqyl) as zqyl,sum(zqje) as zqje,"
-				+ "sum(rqyl) as rqyl,sum(rqje) as rqje from JygkZzyFxJkcbZtnhqk where dwid = :dwid and nf = :nf group by dwid";
+	public List<Object[]> getViewDataListByq(String year, String month, String dwxxid) {
+		String sql = "select syl,sje,dyl,dje,zqyl,zqje,rqyl,rqje,cz,cl from JygkZzyFxJkcbZtnhqk where nf = ";
+		sql += year;
+		sql += " and yf = ";
+		sql += month;
+		sql += " and dwid in(";
+		sql += dwxxid;
+		sql += ")";
 		Query q = this.getEntityManager().createQuery(sql);
-		q.setParameter("dwid", dwxxId);
-		q.setParameter("nf", nf);
-		return q.getResultList();
+		List<Object[]> list = q.getResultList();
+		return list;
+	}
+	@Override
+	public List<Object[]> getViewDataListXl(String year, String month, String dwxxid) {
+		String sql = "select syl,sje,dyl,dje,zqyl,zqje,rqyl,rqje,cz,cl from JygkZzyFxJkcbZtnhqk where nf = ";
+		sql += year;
+		sql += " and yf = ";
+		sql += month;
+		sql += " and dwid in(";
+		sql += dwxxid;
+		sql += ")";
+		Query q = this.getEntityManager().createQuery(sql);
+		List<Object[]> list = q.getResultList();
+		return list;
 	}
 }

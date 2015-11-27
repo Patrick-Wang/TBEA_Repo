@@ -3,13 +3,12 @@
 /// <reference path="../dateSelector.ts" />
 /// <reference path="company_selector.ts" />
 /// <reference path="bglx_selector.ts" />
-declare var echarts;
 declare var $;
 module fx_cpylsp_dqddmlqk {
     class JQGridAssistantFactory {
         public static createTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("产品类型", "cpdl"),
+                new JQTable.Node("产品类型", "cpdl", true, JQTable.TextAlign.Left),
                 new JQTable.Node("收入", "sr")
                     .append(new JQTable.Node("当月", "srdy"))
                     .append(new JQTable.Node("占比", "srzb"))
@@ -78,7 +77,7 @@ module fx_cpylsp_dqddmlqk {
         public exportExcel() {
             var date : Util.Date = this.mDateSelector.getDate();
             var compType = this.mCompanySelector.getCompany();
-            $("#export")[0].action = "fxcpylspdqddmlqk_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, companyId: compType});
+            $("#export")[0].action = "export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, companyId: compType});
             $("#export")[0].submit();
         }
         

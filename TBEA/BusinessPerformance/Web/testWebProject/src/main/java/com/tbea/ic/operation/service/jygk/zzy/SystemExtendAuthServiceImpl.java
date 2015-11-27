@@ -22,7 +22,7 @@ public class SystemExtendAuthServiceImpl implements SystemExtendAuthService{
 	@Override
 	public List<DwxxDto> getJygkZzyDwxxListView(Account account) {
 		List<DwxxDto> dwxxList=new ArrayList<DwxxDto>();
-		List<ExtendAuthority> extendAuthorityList=systemExtendAuthDao.getDataListByAccAuthType(account.getId(), 2);
+		List<ExtendAuthority> extendAuthorityList=systemExtendAuthDao.getDataListByAccAuthType(account.getId(), 3);
 		for(ExtendAuthority e: extendAuthorityList){
 			DwxxDto d=new DwxxDto();
 			d.setId(e.getDwxx().getId());
@@ -34,7 +34,7 @@ public class SystemExtendAuthServiceImpl implements SystemExtendAuthService{
 	@Override
 	public List<DwxxDto> getJygkZzyDwxxListLr(Account account) {		
 		List<DwxxDto> dwxxList=new ArrayList<DwxxDto>();
-		List<ExtendAuthority> extendAuthorityList=systemExtendAuthDao.getDataListByAccAuthType(account.getId(), 3);
+		List<ExtendAuthority> extendAuthorityList=systemExtendAuthDao.getDataListByAccAuthType(account.getId(), 2);
 		for(ExtendAuthority e: extendAuthorityList){
 			DwxxDto d=new DwxxDto();
 			d.setId(e.getDwxx().getId());

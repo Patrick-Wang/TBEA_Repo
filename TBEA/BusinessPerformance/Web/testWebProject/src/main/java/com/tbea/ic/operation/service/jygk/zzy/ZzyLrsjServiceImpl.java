@@ -36,8 +36,11 @@ import com.tbea.ic.operation.model.dao.jygk.zzy.FxJkcbScjbDao;
 import com.tbea.ic.operation.model.dao.jygk.zzy.FxJkcbXsjbDao;
 import com.tbea.ic.operation.model.dao.jygk.zzy.FxJkcbZbwcqkDao;
 import com.tbea.ic.operation.model.dao.jygk.zzy.FxJkcbZtnhqkDao;
+import com.tbea.ic.operation.model.dao.jygk.zzy.FxSxfykzDao;
 import com.tbea.ic.operation.model.dao.jygk.zzy.ZzyLrsjDao;
+import com.tbea.ic.operation.model.dao.jygk.zzy.ZzyZBXXDao;
 import com.tbea.ic.operation.model.dao.qxgl.QXGLDao;
+import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.model.entity.jygk.zzy.*;
 
 
@@ -77,9 +80,13 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 	@Autowired
 	ChYclchDao jygkZzyChYclchDao;					//10019
 	@Autowired
+	FxSxfykzDao jygkZzyFxSxfykzDao;
+	@Autowired
 	DWXXDao dwxxDao;
 	@Autowired
 	QXGLDao qxglDao;
+	@Autowired
+	ZzyZBXXDao zzyZBXXDao;
 	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -89,15 +96,15 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 	static{
 		entrysize = new HashMap<String, Integer>();
 		entrysize.put("10001", 4);
-		entrysize.put("10002", 6);
-		entrysize.put("10003", 7);
-		entrysize.put("10004", 3);
+		entrysize.put("10002", 7);
+		entrysize.put("10003", 6);
+		entrysize.put("10004", 5);
 		entrysize.put("10005", 7);
-		entrysize.put("10006", 7);
+		entrysize.put("10006", 5);
 		entrysize.put("10007", 5);
 		entrysize.put("10008", 4);
-		entrysize.put("10009", 10);
-		entrysize.put("10010", 10);
+		entrysize.put("10009", 12);
+		entrysize.put("10010", 12);
 		entrysize.put("10011", 7);
 		entrysize.put("10012", 4);
 		entrysize.put("10013", 4);
@@ -105,8 +112,9 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 		entrysize.put("10015", 24);
 		entrysize.put("10016", 14);
 		entrysize.put("10017", 11);
-		entrysize.put("10018", 27);
+		entrysize.put("10018", 25);
 		entrysize.put("10019", 4);
+		entrysize.put("10020", 3);
 	}
 	
 	@Autowired
@@ -179,19 +187,33 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 		} else if("10018".equals(entryType)){
 			String[] val = new String[entrysize.get(entryType)];
 			val[0] = "0";
-			val[1] = "";
 			Object[] data = zzyLrsjDao.getZb(0, date, Integer.parseInt(comp), Integer.parseInt(entryType));
 			if(data != null){
-				for(int j = 0; j < val.length - 2; j++){
-					val[j + 2] = data[j] + "";
+				for(int j = 0; j < val.length - 1; j++){
+					val[j + 1] = data[j] + "";
 				}
 			}
 			list.add(val);
+		} else if("10020".equals(entryType)){
+			int[] zbxxid={221,222,223,224,225,226,227};//三项费用指标数组
+			String zbidstrs="221,222,223,224,225,226,227";	//三项费用指标字符串
+			List<ZBXX> ZBXXList=zzyZBXXDao.getZbs(zbidstrs);
+			for(int i = 0; i < ZBXXList.size(); i++){
+				String[] val = new String[entrysize.get(entryType)];
+				val[0] = ZBXXList.get(i).getId() + "";
+				val[1] = ZBXXList.get(i).getName();
+				Object[] data = zzyLrsjDao.getZb(Integer.parseInt(val[0]), date, Integer.parseInt(comp), Integer.parseInt(entryType));
+				if(data != null){
+					for(int j = 0; j < val.length - 2; j++){
+						val[j + 2] = data[j] + "";
+					}
+				}
+				list.add(val);
+			}
 		} else {
 			List<JygkZzyDwReferBglxfl> zblist = zzyLrsjDao.getDwReferBglxfl(Integer.parseInt(comp), Integer.parseInt(entryType));
 			for(int i = 0; i < zblist.size(); i++){
 				String[] val = new String[entrysize.get(entryType)];
-				JygkZzyFl fl = zzyLrsjDao.getZbfl(zblist.get(i).getJygkZzyFl().getId());
 				val[0] = zblist.get(i).getJygkZzyFl().getId() + "";
 				val[1] = zblist.get(i).getJygkZzyFl().getName();
 				Object[] data = zzyLrsjDao.getZb(Integer.parseInt(val[0]), date, Integer.parseInt(comp), Integer.parseInt(entryType));
@@ -217,12 +239,6 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 	}
 
 	@Override
-	public List<JygkZzyBglx> getLrsjBgList() {
-		// TODO Auto-generated method stub
-		return zzyLrsjDao.getLrsjBgList();
-	}
-
-	@Override
 	public boolean saveZb(Date date, String comp, String entryType, JSONArray data) {
 		boolean bRet = false;
 		switch(Integer.parseInt(entryType)){
@@ -230,15 +246,19 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 			bRet = updateJygkZzyFxCpylspDqddmlqk(date, comp, data, entryType);
 			break;
 		case 10002:
+			bRet = updateJygkZzyFxCpylspHqlyddzl_Byq(date, comp, data, entryType);
+			break;
 		case 10003:
-			bRet = updateJygkZzyFxCpylspHqlyddzl(date, comp, data, entryType);
+			bRet = updateJygkZzyFxCpylspHqlyddzl_Xl(date, comp, data, entryType);
 			break;
 		case 10004:
 			bRet = updateJygkZzyFxJkcbZbwcqk(date, comp, data, entryType);
 			break;
 		case 10005:
+			bRet = updateJygkZzyFxJkcbJsjb_Byq(date, comp, data, entryType);
+			break;
 		case 10006:
-			bRet = updateJygkZzyFxJkcbJsjb(date, comp, data, entryType);
+			bRet = updateJygkZzyFxJkcbJsjb_Xl(date, comp, data, entryType);
 			break;
 		case 10007:
 			bRet = updateJygkZzyFxJkcbCgjb(date, comp, data, entryType);
@@ -274,6 +294,9 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 			break;
 		case 10019:
 			bRet = updateJygkZzyChYclch(date, comp, data, entryType);
+			break;
+		case 10020:
+			bRet = updateJygkZzyFxSxfykz(date, comp, data, entryType);
 			break;
 		}
 		return bRet;
@@ -316,8 +339,8 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 		return true;
 	}
 
-	//10002 10003
-	private boolean updateJygkZzyFxCpylspHqlyddzl(Date date, String company, JSONArray data, String entryType) {
+	//10002
+	private boolean updateJygkZzyFxCpylspHqlyddzl_Byq(Date date, String company, JSONArray data, String entryType) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		JSONArray row;
@@ -345,6 +368,45 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 			object.setZbmll(getBigDecimal(row.get(3)));
 			object.setYjyhhmle(getBigDecimal(row.get(4)));
 			object.setYjyhhmll(getBigDecimal(row.get(5)));
+			object.setXgsj(ts);
+			if(isNew){
+				jygkZzyFxCpylspHqlyddzlDao.create(object);
+			} else {
+				jygkZzyFxCpylspHqlyddzlDao.merge(object);
+			}
+		}
+
+		return true;
+	}
+
+	//10002 10003
+	private boolean updateJygkZzyFxCpylspHqlyddzl_Xl(Date date, String company, JSONArray data, String entryType) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		JSONArray row;
+		Integer zbId;
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time = df.format(Calendar.getInstance().getTime());
+		Timestamp ts = Timestamp.valueOf(time);
+		for (int r = 0; r < data.size(); ++r) {
+			row = data.getJSONArray(r);
+			zbId = Integer.valueOf(row.getString(0));
+			JygkZzyFxCpylspHqlyddzl object = new JygkZzyFxCpylspHqlyddzl();
+			object = (JygkZzyFxCpylspHqlyddzl)zzyLrsjDao.getZbObject(Integer.parseInt(row.get(0).toString()), date, Integer.parseInt(company), "JygkZzyFxCpylspHqlyddzl", entryType);
+			boolean isNew = false;
+			if(object == null){
+				isNew = true;
+				object = new JygkZzyFxCpylspHqlyddzl();
+//				object.setId(zbId);
+			}
+			object.setDwid(Integer.parseInt(company));
+			object.setZzyflId(Integer.parseInt(row.get(0).toString()));
+			object.setNf(cal.get(Calendar.YEAR));
+			object.setJd(cal.get(Calendar.MONTH) + 1);
+			object.setCz(getBigDecimal(row.get(1)));
+			object.setZbmll(getBigDecimal(row.get(2)));
+			object.setYjyhhmle(getBigDecimal(row.get(3)));
+			object.setYjyhhmll(getBigDecimal(row.get(4)));
 			object.setXgsj(ts);
 			if(isNew){
 				jygkZzyFxCpylspHqlyddzlDao.create(object);
@@ -394,8 +456,8 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 		return true;
 	}
 
-	//10005、10006
-	private boolean updateJygkZzyFxJkcbJsjb(Date date, String company, JSONArray data, String entryType) {
+	//10005
+	private boolean updateJygkZzyFxJkcbJsjb_Byq(Date date, String company, JSONArray data, String entryType) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		JSONArray row;
@@ -423,6 +485,44 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 			object.setJgcsyhjb(getBigDecimal(row.get(3)));
 			object.setCltdjb(getBigDecimal(row.get(4)));
 			object.setQtjb(getBigDecimal(row.get(5)));
+			object.setXgsj(ts);
+			if(isNew){
+				jygkZzyFxJkcbJsjbDao.create(object);
+			} else {
+				jygkZzyFxJkcbJsjbDao.merge(object);
+			}
+		}
+
+		return true;
+	}
+
+	//10006
+	private boolean updateJygkZzyFxJkcbJsjb_Xl(Date date, String company, JSONArray data, String entryType) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		JSONArray row;
+		Integer zbId;
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time = df.format(Calendar.getInstance().getTime());
+		Timestamp ts = Timestamp.valueOf(time);
+		for (int r = 0; r < data.size(); ++r) {
+			row = data.getJSONArray(r);
+			zbId = Integer.valueOf(row.getString(0));
+			JygkZzyFxJkcbJsjb object = new JygkZzyFxJkcbJsjb();
+			object = (JygkZzyFxJkcbJsjb)zzyLrsjDao.getZbObject(Integer.parseInt(row.get(0).toString()), date, Integer.parseInt(company), "JygkZzyFxJkcbJsjb", entryType);
+			boolean isNew = false;
+			if(object == null){
+				isNew = true;
+				object = new JygkZzyFxJkcbJsjb();
+//				object.setId(zbId);
+			}
+			object.setDwid(Integer.parseInt(company));
+			object.setZzyflId(Integer.parseInt(row.get(0).toString()));
+			object.setNf(cal.get(Calendar.YEAR));
+			object.setYf(cal.get(Calendar.MONTH) + 1);
+			object.setJgcsyhjb(getBigDecimal(row.get(1)));
+			object.setCltdjb(getBigDecimal(row.get(2)));
+			object.setQtjb(getBigDecimal(row.get(3)));
 			object.setXgsj(ts);
 			if(isNew){
 				jygkZzyFxJkcbJsjbDao.create(object);
@@ -540,6 +640,8 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 			object.setZqje(getBigDecimal(row.get(6)));
 			object.setRqyl(getBigDecimal(row.get(7)));
 			object.setRqje(getBigDecimal(row.get(8)));
+			object.setCz(getBigDecimal(row.get(9)));
+			object.setCl(getBigDecimal(row.get(10)));
 			object.setXgsj(ts);
 			if(isNew){
 				jygkZzyFxJkcbZtnhqkDao.create(object);
@@ -855,7 +957,6 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 			object.setN1bcp(getBigDecimal(row.get(22)));
 			object.setN1ccp(getBigDecimal(row.get(23)));
 			object.setN1qt(getBigDecimal(row.get(24)));
-			object.setHj(getBigDecimal(row.get(25)));
 			object.setXgsj(ts);
 			if(isNew){
 				jygkZzyChZljjDao.create(object);
@@ -872,13 +973,11 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		JSONArray row;
-		Integer zbId;
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String time = df.format(Calendar.getInstance().getTime());
 		Timestamp ts = Timestamp.valueOf(time);
 		for (int r = 0; r < data.size(); ++r) {
 			row = data.getJSONArray(r);
-			zbId = Integer.valueOf(row.getString(0));
 			JygkZzyChYclch object = new JygkZzyChYclch();
 			object = (JygkZzyChYclch)zzyLrsjDao.getZbObject(Integer.parseInt(row.get(0).toString()), date, Integer.parseInt(company), "JygkZzyChYclch", entryType);
 			boolean isNew = false;
@@ -898,6 +997,40 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 				jygkZzyChYclchDao.create(object);
 			} else {
 				jygkZzyChYclchDao.merge(object);
+			}
+		}
+
+		return true;
+	}
+
+	//10020
+	private boolean updateJygkZzyFxSxfykz(Date date, String company, JSONArray data, String entryType) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		JSONArray row;
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time = df.format(Calendar.getInstance().getTime());
+		Timestamp ts = Timestamp.valueOf(time);
+		for (int r = 0; r < data.size(); ++r) {
+			row = data.getJSONArray(r);
+			JygkZzyFxSxfykz object = new JygkZzyFxSxfykz();
+			object = (JygkZzyFxSxfykz)zzyLrsjDao.getZbObject(Integer.parseInt(row.get(0).toString()), date, Integer.parseInt(company), "JygkZzyFxSxfykz", entryType);
+			boolean isNew = false;
+			if(object == null){
+				isNew = true;
+				object = new JygkZzyFxSxfykz();
+//				object.setId(zbId);
+			}
+			object.setDwid(Integer.parseInt(company));
+			object.setZbxxid(Integer.parseInt(row.get(0).toString()));
+			object.setNf(cal.get(Calendar.YEAR));
+			object.setYf(cal.get(Calendar.MONTH) + 1);
+			object.setNdjhfyl(getBigDecimal(row.get(1)));
+			object.setXgsj(ts);
+			if(isNew){
+				jygkZzyFxSxfykzDao.create(object);
+			} else {
+				jygkZzyFxSxfykzDao.merge(object);
 			}
 		}
 

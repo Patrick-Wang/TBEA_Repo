@@ -44,7 +44,7 @@
 	<script src="../jsp/unitedSelector.js" type="text/javascript"></script>
 	
 	<script src="../jsp/dateSelector.js" type="text/javascript"></script>
-	<script src="../jsp/companySelector.js" type="text/javascript"></script>
+	<script src="../jsp/jygkzzy/company_selector.js" type="text/javascript"></script>
 	<script src="../jsp/jygkzzy/bglx_selector.js" type="text/javascript"></script>
 	<script src="../jsp/jygkzzy/fx_cpylsp_hqlyddzl_xl_template.js" type="text/javascript"></script>	
 
@@ -53,16 +53,19 @@
         (function () {
         	$(document).ready(function () {
           	  view.initInstance({
-	            		tableId : "table",
-	      				dateId:	"date",          				       				
-	      				date : {
-	      					month : ${!empty month} ? '${month}' : undefined, 
-	      					year : ${year}
-	      				},
-	    	  			companyId: "company",
-          				comps : JSON.parse('${nodeData}'),
-            			bglxId:"bglx",  		        		
-  		        		curbglx:"20003"
+		          		tableId : "table",
+		  				dateId:	"date",          				       				
+		  				date : {
+		  					month : ${!empty month} ? '${month}' : undefined, 
+		  					year : ${year}
+		  				},
+		  				companyId: "company",
+		  				comps : JSON.parse('${comps}'),
+		    			bglxId:"bglx",  		        		
+		        		curbglx:"20003", 
+		        		isByq:${isByq}, 
+		        		isXl:${isXl},  
+		        		isSbdcy:${isSbdcy}
           			});
             });
         })();

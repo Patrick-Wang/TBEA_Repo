@@ -1,219 +1,144 @@
 /// <reference path="../jqgrid/jqassist.ts" />
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
-/// <reference path="../companySelector.ts" />
+/// <reference path="company_selector.ts" />
 /// <reference path="bglx_selector.ts" />
-declare var echarts;
 declare var $;
 module fx_jkcb_ztnhqk_byq_template {
 
     class JQGridAssistantFactory {
 
-        public static createFlatTable(gridName: string, title: string[], statusList : string[]): JQTable.JQGridAssistant {
-            var nodes = [];
-            for (var i = 0; i < title.length; ++i) {
-                if (i == 0) {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left));
-                } else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, true));
-                }
-            }
-            return new JQTable.JQGridAssistant(nodes, gridName);
+        public static createTable(gridName: string): JQTable.JQGridAssistant {
+            return new JQTable.JQGridAssistant([
+                        new JQTable.Node("", "empty", true, JQTable.TextAlign.Left),
+                        new JQTable.Node("水（吨）", "sd")
+                            .append(new JQTable.Node("用量", "syl"))
+                            .append(new JQTable.Node("金额（元）", "sje")),
+                        new JQTable.Node("电（度）", "dd")
+                            .append(new JQTable.Node("用量", "dyl"))
+                            .append(new JQTable.Node("金额（元）", "dje")),
+                        new JQTable.Node("蒸汽（立方米）", "zqlfm")
+                            .append(new JQTable.Node("用量", "zqyl"))
+                            .append(new JQTable.Node("金额（元）", "zqje")),
+                        new JQTable.Node("燃气（线缆）（立方米）", "rqxllfm")
+                            .append(new JQTable.Node("用量", "rqxlyl"))
+                            .append(new JQTable.Node("金额（元）", "rqxlje")),
+                        new JQTable.Node("产值", "cz"),
+                        new JQTable.Node("产量", "cl")
+                    ], name);
         }
     }
 
-    interface IViewOption {
+     interface IViewOption {
         tableId: string;
         dateId: string;
         date?: Util.Date;
         companyId: string;
-        comps: Util.IDataNode[];
-        entryType?: Util.ZBType;
+        comps: Util.Dwxx[];
+        bglxId:string;
+        curbglx:string;
+        isByq:boolean, 
+        isXl:boolean, 
+        isSbdcy:boolean
     }
-
-    interface ISubmitResult {
-        result: string;
-    }
-
-
-    export class View {
-        public static instance: View = new View();
+    
+    
+    export class View { 
+        private static instance: View;
         public static getInstance(): View {
+            if (View.instance == undefined){
+                View.instance = new View();
+            }
             return View.instance;
-        }
-
-        private mStatusList: Array<string>;
+        }        
         private mTableData: Array<string[]>;
         private mDateSelector: Util.DateSelector;
-        private mCompanySelector: Util.CompanySelector;
+        private mCompanySelector: Util.CompanySelectorZzy;
+        private mBglxSelector:Util.BglxViewSelector;
         private mOpt: IViewOption;
-        private mDataSet: Util.Ajax = new Util.Ajax("zb_update.do", false);
-        private mCondition: Util.Ajax = new Util.Ajax("zb_entry.do");
-        private mBglxViewSelector:Util.BglxViewSelector;
+        private mDataSet: Util.Ajax = new Util.Ajax("readviewbyq.do", false);       
         private mTableAssist: JQTable.JQGridAssistant;
-        private mTitleCompanyName : string;
-        initInstance(opt: IViewOption) {
-            $("#date").html("");
-            $("#company").html("");
-            this.mOpt = opt;
-            this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
-
-            this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.companyId, opt.comps);
-            if (opt.comps.length == 1){
-                this.mCompanySelector.hide();
-            }
-            
-            this.updateTitle();
-            
-            this.updateUI();
+        private mTitleCompanyName : string;        
+        public initInstance(opt : IViewOption): void {
+           this.mOpt = opt;           
+           if(opt.comps.length == 0){
+               $('h1').text("没有任何可以查看的公司");
+               $('input').css("display", "none");
+           }else{
+               this.mOpt = opt;            
+               this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
+               this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps,opt.isSbdcy);
+               this.mBglxSelector=new Util.BglxViewSelector(opt.bglxId,opt.curbglx,opt.isByq,opt.isXl,opt.isSbdcy);               
+               //this.updateTextandTitle(this.mDateSelector.getDate());
+               this.updateUI();
+           }
         }
         
-        initBglxViewSelect(opt: IViewOption) {
-            this.mBglxViewSelector=new Util.BglxViewSelector(opt.bglxId,opt.curbglx);
-        }
-
-        public updateUI() {
-            $("#nodatatips").css("display", "none");
-            $("#entryarea").css("display", "");
-            var date = this.mDateSelector.getDate();
-            this.mDataSet.get({ year: date.year, month: date.month, entryType: $("#bglx").find("option:selected").val(), companyId: this.mCompanySelector.getCompany() })
-                .then((data: any) => {
-                this.mStatusList = data.status;
-                this.mTableData = data.values;
-                this.updateTitle();
-                this.updateTable(this.mOpt.tableId);
-                $('#export').css("display", "block");
-            });
-            
-        }
-
-        public updateEntry() {
-            $("#nodatatips").css("display", "block");
-            $("#entryarea").css("display", "none");
-            $('#export').css("display", "none");
-            this.mCondition.get({ entryType: "20009" })
-                .then((data: any) => {
-                this.initInstance({
-                        tableId : "table",
-                        dateId: "date",
-                        companyId: "company",
-                        comps : data.comps,
-                        date : {
-                            month :data.month == null ? undefined : data.month, 
-                            year : data.year
-                        }
-                    });
-            });
-            
-        }
-        
-        private initMatchArray(entryType: Util.ZBType, month: number, year: number): Array<number> {
-            var retArray: Array<number> = [];
-            switch (entryType) {
-                case Util.ZBType.YDJDMJH:
-                    retArray.push(month);
-                    retArray.push(month + 1);
-                    retArray.push(month + 2);
-                    break;
-                case Util.ZBType.BY20YJ:
-                case Util.ZBType.BY28YJ:
-                    if (12 == month) {
-                        retArray.push(12)
-                        retArray.push(1)
-                        retArray.push(2)
-                        retArray.push(3)
-                    } else {
-                        for (var i = 0; i < this.mStatusList.length; i++) {
-                            retArray.push(month + 　i);
-                        }
-                    }
-                    break;
-                default:
-                    break;
-
-            }
-            return retArray;
-        }
-
-        public exportExcel(fName: string) {
-            //var date : Util.Date = this.mDateSelector.getDate();
+        public exportExcel() {
+            var date : Util.Date = this.mDateSelector.getDate();
             var compType = this.mCompanySelector.getCompany();
-            $("#export")[0].action = "fx_jkcb_ztnhqk_export.do?" + Util.Ajax.toUrlParam({ 
-                month: this.mDateSelector.getDate().month, 
-                year: this.mDateSelector.getDate().year, 
-                companyId: this.mCompanySelector.getCompany(),
-                entryType: $("#bglx").find("option:selected").val()
-            });
+            $("#export")[0].action = "exportbyq.do?" + Util.Ajax.toUrlParam({ year: date.year, month: date.month, companyId: compType});
             $("#export")[0].submit();
         }
-        private updateTitle() {
-            var header = "";
+        
+        public updateUI() {
             var date = this.mDateSelector.getDate();
-            var compName = this.mCompanySelector.getCompanyName();
-            header = date.year + "年 " + compName + " " + $("#bglx").find("option:selected").text() + "查看";
-            
-            $('h1').text(header);
-            document.title = header;
-        }
+            var compType = this.mCompanySelector.getCompany();
+            this.mDataSet.get({ year: date.year, month: date.month, companyId: compType})
+                .then((dataArray: any) => {
+                    this.mTableData = dataArray.values;
+                    this.updateTextandTitle(date);
+                    this.updateTable();
 
-        private disableEntry(tableId: string) {
-            var parent = $("#" + tableId);
+                });
+        }
+        
+        private updateTextandTitle(date: Util.Date) {
+            $('h1').text(date.year + "年" + date.month + "月整体能耗情况");
+            document.title = date.year + "年" + date.month + "月整体能耗情况";
+        }
+        
+        private updateTable(): void {
+            var name = this.mOpt.tableId + "_jqgrid_1234";
+            var parent = $("#" + this.mOpt.tableId);
             parent.empty();
-            parent.append("<div style='font-size:18px'>没有可修改的记录</div>");
-            $("#submit").css("display", "none");
-        }
+            parent.append("<table id='"+ name +"'></table>");
+            if (this.mTableData.length == 0){
+                $("#tips").css("display", "");
+                return;
+            } 
+            $("#tips").css("display", "none");
 
-        private enableEntry() {
-            $("#submit").css("display", "");
-        }
-
-        private updateTable(tableId: string): void {
-            var name = tableId + "_jqgrid";
-            var parent = $("#" + tableId);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table>");
-            this.enableEntry();
-            this.mTableAssist = new JQTable.JQGridAssistant([
-            new JQTable.Node("", "empty", true, JQTable.TextAlign.Left),
-            new JQTable.Node("水（吨）", "sd")
-                .append(new JQTable.Node("用量", "syl"))
-                .append(new JQTable.Node("金额（元）", "sje")),
-            new JQTable.Node("电（度）", "dd")
-                .append(new JQTable.Node("用量", "dyl"))
-                .append(new JQTable.Node("金额（元）", "dje")),
-            new JQTable.Node("蒸汽（立方米）", "zqlfm")
-                .append(new JQTable.Node("用量", "zqyl"))
-                .append(new JQTable.Node("金额（元）", "zqje")),
-            new JQTable.Node("燃气（线缆）（立方米）", "rqxllfm")
-                .append(new JQTable.Node("用量", "rqxlyl"))
-                .append(new JQTable.Node("金额（元）", "rqxlje")),
-            new JQTable.Node("产值", "cz"),
-            new JQTable.Node("产量", "cl")
-            ], name);
-            for (var i = 0; i < this.mTableData.length; ++i) {
+           this.mTableAssist = JQGridAssistantFactory.createTable(name)            
+           for (var i = 0; i < this.mTableData.length; ++i) {
                 for (var j = 2; j < this.mTableData[i].length; ++j) {
                     if ("" != this.mTableData[i][j] && "--" != this.mTableData[i][j]) {
-                        this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) + "";
+                        this.mTableData[i][j] = (parseFloat(this.mTableData[i][j])).toFixed(2) + "";
                     }
                     else {
                         this.mTableData[i][j] = "--";
                     }
                 }
             }
-            var data = this.mTableData;
-            
-            $("#" + name).jqGrid(this.mTableAssist.decorate({
-                data: this.mTableAssist.getDataWithId(data),
-                datatype: "local",
-                multiselect: false,
-                drag: false,
-                resize: false,
-                height: data.length > 25 ? 550 : '100%',
-                width: 1000,
-                shrinkToFit: true,
-                autoScroll: true,
-                rowNum: 150
-            }));
+
+            $("#" + name).jqGrid(
+                this.mTableAssist.decorate({
+                    // url: "TestTable/WGDD_load.do",
+                    // datatype: "json",
+                    data: this.mTableAssist.getDataWithId(this.mTableData),
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    //autowidth : false,
+//                    cellsubmit: 'clientArray',
+//                    cellEdit: true,
+                    height: this.mTableData.length > 23 ? 500 : '100%',
+                    width: this.mTableData[0].length*100,
+                    shrinkToFit: true,
+                    rowNum: 1000,
+                    autoScroll: true
+                }));
         }
     }
 }

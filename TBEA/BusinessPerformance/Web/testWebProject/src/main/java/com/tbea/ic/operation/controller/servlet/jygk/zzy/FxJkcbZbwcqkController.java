@@ -86,7 +86,7 @@ public class FxJkcbZbwcqkController {
 		return result.getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "fxjkcbzbwcqk_export.do")
+	@RequestMapping(value = "export.do")
 	public @ResponseBody byte[] export(
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -136,7 +136,7 @@ public class FxJkcbZbwcqkController {
 	
 	private JygkZzyFormatterHandler getFormatterChainDataOnly(Integer[] percentCols, Integer[] jhCols){
 		JygkZzyFormatterHandler formatterChain = new JygkZzyPercentFormatterHandler(null, percentCols);
-		formatterChain.next(new JygkZzyNumberFormatterHandler(NumberType.RESERVE_0, null, jhCols));
+		formatterChain.next(new JygkZzyNumberFormatterHandler(NumberType.RESERVE_2, null, jhCols));
 		return formatterChain;
 	}
 }

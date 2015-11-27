@@ -19,8 +19,6 @@ public interface ZzyLrsjDao  extends AbstractReadWriteDao<JygkZzyFxJkcbJsjb>{
 	List<JygkZzyFl> getZbfl(Company company, int bglx);
 	List<JygkZzyDwReferBglxfl> getDwReferBglxfl(int company, int bglx);
 
-	List<JygkZzyBglx> getLrsjBgList();
-
 	List<Object[]> getBgCompanies(String bglx);
 	 Object[] getBgCompanie(String id);
 }

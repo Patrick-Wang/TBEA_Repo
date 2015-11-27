@@ -42,7 +42,7 @@
 <script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
 <script src="../jsp/dateSelector.js" type="text/javascript"></script>
 <script src="../jsp/unitedSelector.js" type="text/javascript"></script>
-<script src="../jsp/companySelector.js" type="text/javascript"></script>
+<script src="../jsp/jygkzzy/company_selector.js" type="text/javascript"></script>
 <script src="../jsp/jygkzzy/zzy_lrsj_template.js" type="text/javascript"></script>
 <script src="../jsp/jygkzzy/bglx_selector.js" type="text/javascript"></script>
 
@@ -55,17 +55,7 @@
 	var view = zzy_lrsj_template.View.getInstance();
     (function () {
           $(document).ready(function () {
-        	  /*view.initInstance({
-          				tableId : "table",
-          				dateId:	"date",
-          				companyId: "company",
-          				comps : JSON.parse('${nodeData}'),
-          				date : {
-          					month : ${!empty month} ? '${month}' : undefined, 
-          					year : ${year}
-          				}
-          			});*/
-          	view.initBglxSelect({bglxId : "div_bglx",bglxs : bglxs, curbglx : "10001", writeorview : "01"});
+          	view.initBglxSelect("div_bglx", "10001",  view, ${isByq}, ${isXl});
           });
       })();
       function cellkeydown(event) { 
@@ -203,34 +193,6 @@ th.ui-th-ltr {
 </head>
 
 <body onkeydown="return cellkeydown(event)">
-<script type="text/javascript">
-	var bglxs = new Array();
-	<%
-	List<JygkZzyBglx> bglxs = (List<JygkZzyBglx>)request.getAttribute("bg");
-	for(int i = 0; i < bglxs.size(); i++){
-	%>
-	{
-		var bglx = {
-			bglxid : "<%=bglxs.get(i).getId()%>",
-			wvtype : "<%=bglxs.get(i).getName()%>"
-		};
-		bglxs.push(bglx);
-	}
-	<%
-	}
-	%>	
-</script>
-
-<select name="bglx" id="bglx" style="display:none">
-	<option></option>
-	<%
-	for(int i = 0; i < bglxs.size(); i++){
-	%>
-	<option value="<%=bglxs.get(i).getId()%>"><%=bglxs.get(i).getName()%></option>
-	<%
-	}
-	%>
-</select>
 	<div class="header">
 		<h1></h1>
 	</div>
@@ -284,7 +246,7 @@ th.ui-th-ltr {
 						<td>
 							<Table width = "100%" cellspacing="0" cellpadding="0">
 								<tr>
-									<td width="30%"><input id="save" type="submit" value="保存"
+									<td width="30%"><input id="save" type="submit" value="提交"
 										style="width: 80px;dispaly:none" onclick="view.save()"></input> 
 									</td>
 							    </tr>										

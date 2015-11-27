@@ -14,7 +14,5 @@ public interface ZzyLrsjService {
 
 	boolean saveZb(Date date, String comp, String entryType, JSONArray data);
 
-	List<JygkZzyBglx> getLrsjBgList();
-
 	List<Map> getBgCompanies(String bglx);
 }

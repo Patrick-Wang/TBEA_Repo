@@ -1,7 +1,9 @@
 package com.tbea.ic.operation.model.dao.jygk.zzy;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -46,5 +48,24 @@ public class CcCcwcqkDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyCcCcwcqk> i
 		q.setParameter("dwid", dwxxId);
 		q.setParameter("nf", nf);
 		return q.getResultList();
+	}
+	
+	@Override
+	//单个指标数据
+	public Object[] getViewData(Integer zb, Date date, String dwxxs) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		String sql = "select sum(cl),sum(cz) from JygkZzyCcCcwcqk where zzyfl_id = :id and nf = :nf and yf = :yf and dwid in (";
+		sql += dwxxs;
+		sql += ") group by zzyfl_id ";
+		Query q = this.getEntityManager().createQuery(sql);
+		q.setParameter("id", zb);
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		List<Object[]> zbs = q.getResultList();
+		if (!zbs.isEmpty()){
+			return zbs.get(0);
+		}
+		return null;
 	}
 }

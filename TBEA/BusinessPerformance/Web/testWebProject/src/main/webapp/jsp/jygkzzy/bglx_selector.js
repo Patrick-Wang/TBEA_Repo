@@ -2,16 +2,18 @@
 var Util;
 (function (Util) {
     var BglxSelector = (function () {
-        function BglxSelector(divId, curbglx, view, isByq, isXl) {
+        function BglxSelector(mCtrlId, curbglx, view, isByq, isXl) {
             var _this = this;
-            this.mCtrlId = divId + "_bglx";
+            this.mCtrlId = mCtrlId;
             this.mView = view;
-            $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
-            $("#" + this.mCtrlId + " tr").append('<td>' +
-                '<select id="' + this.mCtrlId + 'sel"' +
+            this.bglxId = mCtrlId + "Id";
+            this.tableId = mCtrlId + "Table";
+            $("#" + this.mCtrlId).append('<table id="' + this.tableId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
+            $("#" + this.tableId + " tr").append('<td>' +
+                '<select id="' + this.bglxId + '"' +
                 'style="width: 200px;"></select>' +
                 '</td><td><div style="width:5px;"></div></td>');
-            var bglxSel = $("#" + this.mCtrlId + "sel");
+            var bglxSel = $("#" + this.bglxId);
             bglxSel.append('<option value= "10001" ' + (curbglx == '10001' ? 'selected="selected"' : '') + '>当期订单毛利情况</option>');
             if (isByq) {
                 bglxSel.append('<option value= "10002" ' + (curbglx == '10002' ? 'selected="selected"' : '') + '>后期履约订单质量（变压器）</option>');
@@ -54,8 +56,7 @@ var Util;
             bglxSel.append('<option value= "10020" ' + (curbglx == '10020' ? 'selected="selected"' : '') + '>三项费用管控</option>');
             bglxSel.change(function () {
                 var changebglx = bglxSel.children('option:selected').val();
-                $("#bglx").val(changebglx);
-                _this.mView.updateEntry();
+                _this.mView.updateEntry(changebglx);
             });
             bglxSel.multiselect({
                 multiple: false,
@@ -66,22 +67,26 @@ var Util;
                 selectedList: 1
             });
             var changebglx = bglxSel.children('option:selected').val();
-            $("#bglx").val(changebglx);
-            this.mView.updateEntry();
+            this.mView.updateEntry(changebglx);
         }
+        BglxSelector.prototype.getBglx = function () {
+            return $("#" + this.bglxId).val();
+        };
         return BglxSelector;
     })();
     Util.BglxSelector = BglxSelector;
     var BglxViewSelector = (function () {
-        function BglxViewSelector(divId, curbglx, isByq, isXl, isSbdcy) {
+        function BglxViewSelector(mCtrlId, curbglx, isByq, isXl, isSbdcy) {
             var _this = this;
-            this.mCtrlId = divId + "_bglx";
-            $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
-            $("#" + this.mCtrlId + " tr").append('<td>' +
-                '<select id="' + this.mCtrlId + 'sel"' +
+            this.mCtrlId = mCtrlId;
+            this.bglxId = mCtrlId + "Id";
+            this.tableId = mCtrlId + "Table";
+            $("#" + this.mCtrlId).append('<table id="' + this.tableId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
+            $("#" + this.tableId + " tr").append('<td>' +
+                '<select id="' + this.bglxId + '"' +
                 'style="width: 220px;"></select>' +
                 '</td><td><div style="width:5px;"></div></td>');
-            var bglxSel = $("#" + this.mCtrlId + "sel");
+            var bglxSel = $("#" + this.bglxId);
             bglxSel.append('<option value= "20001" ' + (curbglx == '20001' ? 'selected="selected"' : '') + '>当期订单毛利情况</option>');
             if (isByq || isSbdcy) {
                 bglxSel.append('<option value= "20002" ' + (curbglx == '20002' ? 'selected="selected"' : '') + '>后期履约订单质量（变压器）</option>');
@@ -180,7 +185,7 @@ var Util;
                 window.location.href = '../ccccwcqkgs/openview.do';
             }
             else if (bglx == '20015') {
-                window.location.href = '../kglyddcbqk/openview.do';
+                window.location.href = '../kglyddcbqk/openviewbyq.do';
             }
             else if (bglx == '20016') {
                 window.location.href = '../kglyddcbqk/openviewxl.do';
@@ -200,6 +205,9 @@ var Util;
             else if (bglx == '20021') {
                 window.location.href = '../fxnhqk/openview.do';
             }
+        };
+        BglxViewSelector.prototype.getBglx = function () {
+            return $("#" + this.bglxId).val();
         };
         return BglxViewSelector;
     })();

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,25 +68,15 @@ public class FxNhqkServiceImpl implements FxNhqkService{
     }
 
 	@Override
-	public List<Map> getBgCompanies(String bglx) {
-		List<Object[]> dwxxs = jygkZzyFxNhqkDao.getBgCompanies(bglx);
-		List<Map> list = new ArrayList<Map>();
-		for(int i = 0; i < dwxxs.size(); i++){
-			Object[] dwxx = dwxxs.get(i);
-			Map map = new HashMap();
-			Map submap = new HashMap();
-			submap.put("id", dwxx[0]);
-			submap.put("value", dwxx[1]);
-			map.put("data", submap);
-			map.put("parent", null);
-			map.put("subNodes", new ArrayList());
-			list.add(map);
-		}
-		return list;
-	}
-
-	@Override
 	public List<String[]> getZb(Date date, String comp, String entryType) {
+		String dwxxs = "";
+		if(comp.equals("900000")){//变压器产业
+			dwxxs="1,2,3";
+		}else if(comp.equals("800000")){//线缆产业
+			dwxxs="4,5,6";
+		}else{
+			dwxxs=comp;
+		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		List<String[]> list = new ArrayList<String[]>();
@@ -96,29 +87,23 @@ public class FxNhqkServiceImpl implements FxNhqkService{
 		currentyear_cl[1] = cal.get(Calendar.YEAR) + "年";
 		currentyear_cz[0] = "currentyear_cz";
 		currentyear_cz[1] = cal.get(Calendar.YEAR) + "年";
-		List<Object[]> val = jygkZzyFxJkcbZtnhqkDao.getSumDataListByDwData(Integer.parseInt(comp), cal.get(Calendar.YEAR));
+		List<Object[]> val = jygkZzyFxJkcbZtnhqkDao.getSumDataListByDwData(dwxxs, cal.get(Calendar.YEAR));
 		if(val != null && val.size() > 0){
+			currentyear_cl[2] = val.get(0)[8] == null ? null : val.get(0)[8].toString();
+			currentyear_cz[2] = val.get(0)[7] == null ? null : val.get(0)[7].toString();
 			currentyear_cl[3] = val.get(0)[1] == null ? null : val.get(0)[1].toString();
 			currentyear_cl[5] = val.get(0)[3] == null ? null : val.get(0)[3].toString();
 			currentyear_cl[7] = val.get(0)[5] == null ? null : val.get(0)[5].toString();
 			currentyear_cz[3] = val.get(0)[2] == null ? null : val.get(0)[2].toString();
 			currentyear_cz[5] = val.get(0)[4] == null ? null : val.get(0)[4].toString();
 			currentyear_cz[7] = val.get(0)[6] == null ? null : val.get(0)[6].toString();
+			currentyear_cl[4] = calZb((BigDecimal)val.get(0)[1], (BigDecimal)val.get(0)[8]).toString();
+			currentyear_cl[6] = calZb((BigDecimal)val.get(0)[3], (BigDecimal)val.get(0)[8]).toString();
+			currentyear_cl[8] = calZb((BigDecimal)val.get(0)[5], (BigDecimal)val.get(0)[8]).toString();
+			currentyear_cz[4] = calZb((BigDecimal)val.get(0)[2], (BigDecimal)val.get(0)[7]).toString();
+			currentyear_cz[6] = calZb((BigDecimal)val.get(0)[3], (BigDecimal)val.get(0)[7]).toString();
+			currentyear_cz[8] = calZb((BigDecimal)val.get(0)[4], (BigDecimal)val.get(0)[7]).toString();
 		}
-		List<Object[]> cc = jygkZzyCcCcwcqkDao.getSumDataListByDwData(Integer.parseInt(comp), cal.get(Calendar.YEAR));
-		if(cc!= null && cc.size() > 0){
-			currentyear_cl[2] = cc.get(0)[1] == null ? null : cc.get(0)[1].toString();
-			currentyear_cz[2] = cc.get(0)[2] == null ? null : cc.get(0)[2].toString();
-			if(val != null && val.size() > 0){
-				currentyear_cl[4] = calZb((BigDecimal)val.get(0)[1], (BigDecimal)cc.get(0)[1]).toString();
-				currentyear_cl[6] = calZb((BigDecimal)val.get(0)[3], (BigDecimal)cc.get(0)[1]).toString();
-				currentyear_cl[8] = calZb((BigDecimal)val.get(0)[5], (BigDecimal)cc.get(0)[1]).toString();
-				currentyear_cz[4] = calZb((BigDecimal)val.get(0)[2], (BigDecimal)cc.get(0)[2]).toString();
-				currentyear_cz[6] = calZb((BigDecimal)val.get(0)[3], (BigDecimal)cc.get(0)[2]).toString();
-				currentyear_cz[8] = calZb((BigDecimal)val.get(0)[4], (BigDecimal)cc.get(0)[2]).toString();
-			}
-		}
-		
 		//前一年
 		cal.add(Calendar.YEAR, -1);
 		String[] lastyear_cl = new String[9];
@@ -127,27 +112,22 @@ public class FxNhqkServiceImpl implements FxNhqkService{
 		lastyear_cl[1] = cal.get(Calendar.YEAR) + "年";
 		lastyear_cz[0] = "lastyear_cl";
 		lastyear_cz[1] = cal.get(Calendar.YEAR) + "年";
-		val = jygkZzyFxJkcbZtnhqkDao.getSumDataListByDwData(Integer.parseInt(comp), cal.get(Calendar.YEAR));
+		val = jygkZzyFxJkcbZtnhqkDao.getSumDataListByDwData(dwxxs, cal.get(Calendar.YEAR));
 		if(val != null && val.size() > 0){
+			lastyear_cl[2] = val.get(0)[8] == null ? null : val.get(0)[8].toString();
+			lastyear_cz[2] = val.get(0)[7] == null ? null : val.get(0)[7].toString();
 			lastyear_cl[3] = val.get(0)[1] == null ? null : val.get(0)[1].toString();
 			lastyear_cl[5] = val.get(0)[3] == null ? null : val.get(0)[3].toString();
 			lastyear_cl[7] = val.get(0)[5] == null ? null : val.get(0)[5].toString();
 			lastyear_cz[3] = val.get(0)[2] == null ? null : val.get(0)[2].toString();
 			lastyear_cz[5] = val.get(0)[4] == null ? null : val.get(0)[4].toString();
 			lastyear_cz[7] = val.get(0)[6] == null ? null : val.get(0)[6].toString();
-		}
-		cc = jygkZzyCcCcwcqkDao.getSumDataListByDwData(Integer.parseInt(comp), cal.get(Calendar.YEAR));
-		if(cc!= null && cc.size() > 0){
-			lastyear_cl[2] = cc.get(0)[1] == null ? null : cc.get(0)[1].toString();
-			lastyear_cz[2] = cc.get(0)[2] == null ? null : cc.get(0)[2].toString();
-			if(val != null && val.size() > 0){
-				lastyear_cl[4] = calZb((BigDecimal)val.get(0)[1], (BigDecimal)cc.get(0)[1]).toString();
-				lastyear_cl[6] = calZb((BigDecimal)val.get(0)[3], (BigDecimal)cc.get(0)[1]).toString();
-				lastyear_cl[8] = calZb((BigDecimal)val.get(0)[5], (BigDecimal)cc.get(0)[1]).toString();
-				lastyear_cz[4] = calZb((BigDecimal)val.get(0)[2], (BigDecimal)cc.get(0)[2]).toString();
-				lastyear_cz[6] = calZb((BigDecimal)val.get(0)[3], (BigDecimal)cc.get(0)[2]).toString();
-				lastyear_cz[8] = calZb((BigDecimal)val.get(0)[4], (BigDecimal)cc.get(0)[2]).toString();
-			}
+			lastyear_cl[4] = calZb((BigDecimal)val.get(0)[1], (BigDecimal)val.get(0)[8]).toString();
+			lastyear_cl[6] = calZb((BigDecimal)val.get(0)[3], (BigDecimal)val.get(0)[8]).toString();
+			lastyear_cl[8] = calZb((BigDecimal)val.get(0)[5], (BigDecimal)val.get(0)[8]).toString();
+			lastyear_cz[4] = calZb((BigDecimal)val.get(0)[2], (BigDecimal)val.get(0)[7]).toString();
+			lastyear_cz[6] = calZb((BigDecimal)val.get(0)[3], (BigDecimal)val.get(0)[7]).toString();
+			lastyear_cz[8] = calZb((BigDecimal)val.get(0)[4], (BigDecimal)val.get(0)[7]).toString();
 		}
 		
 		list.add(lastyear_cl);
@@ -164,21 +144,5 @@ public class FxNhqkServiceImpl implements FxNhqkService{
 			}
 		}
 		return null;
-	}
-	
-	private List<String[]> toArray(Map<Integer, String[]> map){
-		Object[] key_arr = map.keySet().toArray();   
-		Arrays.sort(key_arr);   
-		List<String[]> ret = new ArrayList<String[]>();
-		for(Object id : key_arr){
-			ret.add(map.get(id));
-		}
-		return ret;
-	}
-
-	@Override
-	public List<JygkZzyBglx> getCksjBgList() {
-		// TODO Auto-generated method stub
-		return zzyCksjDao.getCksjBgList();
 	}
 }

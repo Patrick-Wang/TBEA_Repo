@@ -42,6 +42,9 @@ module Util {
         }
         public getCompany(): number{
            return $("#" + this.companyId).val();
-        }        
+        }      
+        public getCompanyName(): String{
+           return $("#" + this.companyId).text();
+        }  
     }
 }

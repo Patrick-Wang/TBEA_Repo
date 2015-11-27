@@ -1,12 +1,11 @@
-﻿<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+﻿<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="java.util.List,com.tbea.ic.operation.model.entity.jygk.zzy.JygkZzyBglx"%>
+<!DOCTYPE html>
 <html>
 <head>
 
+	<!-- message box -->
+	<link href="../jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
+	
 	<!-- jquery -->
 	<script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
 	
@@ -37,22 +36,26 @@
 	
 	<!-- jqgrid assist -->
 	<script src="../jsp/jqgrid/jqassist.js" type="text/javascript"></script>
-
+	
 	<script src="../jsp/json2.js" type="text/javascript"></script>
 	<script src="../jsp/util.js" type="text/javascript"></script>
 	<script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
-	<script src="../jsp/unitedSelector.js" type="text/javascript"></script>
-	
 	<script src="../jsp/dateSelector.js" type="text/javascript"></script>
-	<script src="../jsp/companySelector.js" type="text/javascript"></script>
+	<script src="../jsp/unitedSelector.js" type="text/javascript"></script>
+	<script src="../jsp/jygkzzy/company_selector.js" type="text/javascript"></script>
+	<script src="../jsp/jygkzzy/cc_kglyddcbqk_xl_template.js" type="text/javascript"></script>
 	<script src="../jsp/jygkzzy/bglx_selector.js" type="text/javascript"></script>
-	<script src="../jsp/jygkzzy/cc_kglyddcbqk_xl_template.js" type="text/javascript"></script>	
+	
+	<!-- message box -->
+	<script src="../jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
+	<script src="../jsp/message-box/js/moaModal.js" type="text/javascript"></script>
+	<script src="../jsp/messageBox.js" type="text/javascript"></script>
 
-    <script type="text/javascript">
-       	var view = jygk_zzy_cc_kglyddcbqk_xl.View.getInstance();
-        (function () {
-        	$(document).ready(function () {
-          	  view.initInstance({
+	<script type="text/javascript">
+		var view = jygk_zzy_cc_kglyddcbqk_xl.View.getInstance();    
+	    (function () {
+	    	$(document).ready(function () {
+	      	  view.initInstance({
 	            		tableId : "table",
 	      				dateId:	"date",          				       				
 	      				date : {
@@ -60,18 +63,21 @@
 	      					year : ${year}
 	      				},
 	    	  			companyId: "company",
-          				comps : JSON.parse('${nodeData}'),
-            			bglxId:"bglx",  		        		
-  		        		curbglx:"20016"
-          			});
-            });
-        })();
-    </script>
-    <meta charset="UTF-8">
+	      				comps : JSON.parse('${comps}'),
+	        			bglxId:"bglx",  		        		
+			        		curbglx:"20016", 
+			        		isByq:${isByq}, 
+			        		isXl:${isXl},  
+			        		isSbdcy:${isSbdcy}
+	      			});
+	        });
+	    })(); 
+	</script>
+	<meta charset="UTF-8">
+	
+	<title>${year}年${month}月可供履约订单储备情况</title>
 
-    <title>${year}年${month}月可供履约订单储备情况（线缆）</title>
-
-    <style type="text/css">
+	<style type="text/css">
         body {
             background-color: rgb(247, 247, 247);
         }
@@ -190,12 +196,12 @@
 
     </style>
 </head>
-<body>
-    <div class=" header">
-        <h1>${year}年${month}月可供履约订单储备情况（线缆）</h1>
-    </div>
 
-	<Table align="center">
+<body>
+	<div class="header">
+		<h1>${year}年${month}月可供履约订单储备情况</h1>
+	</div>
+	<Table align="center" cellspacing="0" cellpadding="0">
 		<tr>
 			<td>
 				<Table>
@@ -218,23 +224,22 @@
 				<div align="center" id="tips" style="margin-top:20px;display:none;font-size:25px">当前项目公司无数据</div>
 			<td>
 		</tr>
-		
-		<tr>
+		<tr >
 			<td>
-				<div style="height:6px"></div>
-			<td>
+			<div style="height:6px"></div>
+			</td>
 		</tr>
 		<tr>
 			<td>
 				<form id="export" method="post">
 					<input id="exportButton" type="button" value="导出"
-						onclick="view.exportExcel($('h1').text())"
+						onclick="view.exportExcel()"
 						class="ui-button ui-widget ui-state-default ui-corner-all"
 						role="button" aria-disabled="false"></input>
 				</form>
 			</td>
 			
-		</tr>
+		</tr>		
 	</Table>
 	<%@include file="../loading.jsp"%>
 	<script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>

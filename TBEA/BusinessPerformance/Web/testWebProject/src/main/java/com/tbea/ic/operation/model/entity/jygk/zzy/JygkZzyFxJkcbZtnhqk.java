@@ -28,6 +28,8 @@ public class JygkZzyFxJkcbZtnhqk extends cn.com.tbea.template.model.entity.Abstr
 	private int yf;
 	private BigDecimal zqje;
 	private BigDecimal zqyl;
+	private BigDecimal cz;
+	private BigDecimal cl;
 
 	public JygkZzyFxJkcbZtnhqk() {
 	}
@@ -150,6 +152,26 @@ public class JygkZzyFxJkcbZtnhqk extends cn.com.tbea.template.model.entity.Abstr
 
 	public void setZqyl(BigDecimal zqyl) {
 		this.zqyl = zqyl;
+	}
+
+
+	public BigDecimal getCz() {
+		return cz;
+	}
+
+
+	public void setCz(BigDecimal cz) {
+		this.cz = cz;
+	}
+
+
+	public BigDecimal getCl() {
+		return cl;
+	}
+
+
+	public void setCl(BigDecimal cl) {
+		this.cl = cl;
 	}
 
 }

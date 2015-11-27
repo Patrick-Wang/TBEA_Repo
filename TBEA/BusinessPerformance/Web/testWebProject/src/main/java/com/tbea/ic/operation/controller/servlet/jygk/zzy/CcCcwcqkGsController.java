@@ -8,12 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -27,15 +26,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyExcelTemplate;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyFormatterHandler;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyHeaderFormatterHandler;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyNumberFormatterHandler;
-import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyPercentFormatterHandler;
 import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyNumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.common.jygk.zzy.excel.JygkZzyPercentFormatterHandler;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.jygk.zzy.CcCcwcqkGsService;
-import com.tbea.ic.operation.service.jygk.zzy.CcCcwcqkService;
+import com.tbea.ic.operation.service.jygk.zzy.DwxxDto;
+import com.tbea.ic.operation.service.jygk.zzy.SystemExtendAuthService;
+import com.tbea.ic.operation.service.jygk.zzy.ZzyDWXXService;
 
 
 @Controller
@@ -44,75 +46,79 @@ public class CcCcwcqkGsController {
 	
 	@Autowired
 	private CcCcwcqkGsService fcCcwcqkGsService;
-	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-	CompanyManager companyManager;
-
+	@Autowired
+	ZzyDWXXService zzyDWXXService;
+	@Autowired
+	private SystemExtendAuthService systemExtendAuthService;
+	
 	//录入入口
 	@RequestMapping(value = "openview.do", method = RequestMethod.GET)
-	public ModelAndView getZBBYQ(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-		//给页面返回报表ID和名称
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("bg", fcCcwcqkGsService.getCksjBgList());
-		return new ModelAndView("jygkzzy/cc_ccwcqk_gs_template", map);
-	}
-
-	@RequestMapping(value = "zb_entry.do", method = RequestMethod.GET)
-	public @ResponseBody byte[] getZBEntry(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
+	public ModelAndView openView(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		Calendar date = Calendar.getInstance();
 		int month = date.get(Calendar.MONTH) + 1;
-		int year = date.get(Calendar.YEAR);
+		int year = date.get(Calendar.YEAR);		
+		
 		Map<String, Object> map = new HashMap<String, Object>();
+		//设置可选年、月到map
 		DateSelection dateSel = new DateSelection(year, month);
 		dateSel.select(map);
 		
-		List<Map> comps = fcCcwcqkGsService.getBgCompanies(request.getParameter("entryType"));
-		map.put("comps", comps);
-		String result = JSONObject.fromObject(map).toString(); 
-		return result.getBytes("utf-8");
+		//设置可选公司		
+		HttpSession session=request.getSession(false);
+		Account account=SessionManager.getAccount(session);
+		List<DwxxDto> dwxxList=systemExtendAuthService.getJygkZzyDwxxListView(account);
+		map.put("comps", JSONArray.fromObject(dwxxList).toString());
+		return new ModelAndView("jygkzzy/cc_ccwcqk_gs_template", map);
 	}
 
-	@RequestMapping(value = "zb_update.do", method = RequestMethod.GET)
-	public @ResponseBody byte[] getZBEntryUpdate(HttpServletRequest request,
+	@RequestMapping(value = "readview.do", method = RequestMethod.GET)//选择
+	public @ResponseBody byte[] readView(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
+		String dwxxId = request.getParameter("companyId");		
 		Date date = DateSelection.getDate(request);
-		List<String[]> ret =  fcCcwcqkGsService.getZb(date, request.getParameter("companyId"), request.getParameter("entryType"));
-		String zb = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
-		String result = "{\"values\":" + zb + "}"; 
-		
+		List<String[]> ret =  fcCcwcqkGsService.getViewDataList(date, dwxxId, "20014");
+		String retstr = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
+		String result = "{\"values\":" + retstr + "}"; 	
 		return result.getBytes("utf-8");
 	}
 
-	@RequestMapping(value = "cc_ccwcqk_gs_export.do")
-	public @ResponseBody byte[] gethzb_companys_prediction_export(
+	@RequestMapping(value = "export.do")
+	public @ResponseBody byte[] export(
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		Date date = DateSelection.getDate(request);
-		String entryType = request.getParameter("entryType");
-		Object compname = "";
-		List<Map> comps = fcCcwcqkGsService.getBgCompanies(entryType);
-		for(int i = 0; i < comps.size(); i++){
-			if(request.getParameter("companyId").equals(comps.get(i).get("id"))){
-				compname = comps.get(i).get("value");
-			}
+		String dwxxId="";
+		String dwxxname="";
+		dwxxId = request.getParameter("companyId");
+		if(dwxxId.equals("900000")){
+			dwxxname="变压器产业";
+		}else if(dwxxId.equals("800000")){
+			dwxxname="线缆产业";
+		}else{
+			dwxxname=zzyDWXXService.getDwxx(Integer.parseInt(dwxxId)).getName();
 		}
-		List<String[]> data = fcCcwcqkGsService.getZb(date, request.getParameter("companyId"), request.getParameter("entryType"));
-		JygkZzyExcelTemplate template = JygkZzyExcelTemplate.createJygkTemplate(entryType);
-		String fileNameAndSheetName = (String)compname;
-		fileNameAndSheetName += request.getParameter("year") + "年" + request.getParameter("month") + "月产出完成情况（线缆）工时";
+		
+		Date date = DateSelection.getDate(request);
+		List<String[]> data =  fcCcwcqkGsService.getViewDataList(date, request.getParameter("companyId"), "20014");
+		String fileNameAndSheetName = dwxxname;
+		fileNameAndSheetName += request.getParameter("year") + "年" + request.getParameter("month") + "月产出完成情况工时";		
+		JygkZzyExcelTemplate template = JygkZzyExcelTemplate.createJygkTemplate("20014");		
 		HSSFWorkbook workbook = template.getWorkbook();
 		HSSFSheet sheet = workbook.getSheetAt(0);
 
 		JygkZzyFormatterHandler formatterChain = this.getFormatterChainWithHeader(
-				new Integer[]{3}, new Integer[]{1, 2});
+				new Integer[]{4}, new Integer[]{2, 3});
 		
 		for (int i = 0, ilen = data.size(); i < ilen; ++i) {
 			HSSFRow row = sheet.createRow(2 + i);
 			for (int j = 1, jlen = data.get(i).length; j < jlen; ++j) {
-				HSSFCell cell = row.createCell(j - 1);
-				formatterChain.handle(
+				HSSFCell cell = row.createCell(j-1);
+				if(j==1) {
+					cell.setCellValue(data.get(i)[j]);
+				} else {
+					formatterChain.handle(
 						data.get(i)[0], 
-						j - 1, template, cell, data.get(i)[j]);
+						j, template, cell, data.get(i)[j]);
+				}
 			}
 		}
 			
@@ -129,7 +135,7 @@ public class CcCcwcqkGsController {
 	private JygkZzyFormatterHandler getFormatterChainDataOnly(Integer[] percentCols, Integer[] jhCols){
 		JygkZzyFormatterHandler formatterChain = new JygkZzyPercentFormatterHandler(null, percentCols);
 		formatterChain
-			.next(new JygkZzyNumberFormatterHandler(NumberType.RESERVE_0, null, jhCols));
+			.next(new JygkZzyNumberFormatterHandler(NumberType.RESERVE_2, null, jhCols));
 		return formatterChain;
 	}
 }

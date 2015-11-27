@@ -9,7 +9,7 @@ module fx_jkcb_jsjb{
     class JQGridAssistantFactory {
         public static createTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("产品类型", "cpdl"),                
+                new JQTable.Node("产品类型", "cpdl", true, JQTable.TextAlign.Left),                
                 new JQTable.Node("产值", "cz"),
                 new JQTable.Node("降本", "jb"),
                 new JQTable.Node("其中：结构参数优化降本", "jgcsyhjb"),
@@ -68,7 +68,7 @@ module fx_jkcb_jsjb{
         public exportExcel() {
             var date : Util.Date = this.mDateSelector.getDate();
             var compType = this.mCompanySelector.getCompany();
-            $("#export")[0].action = "fxjkcbjsjb_exportxl.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, companyId: compType});
+            $("#export")[0].action = "exportxl.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, companyId: compType});
             $("#export")[0].submit();
         }
         

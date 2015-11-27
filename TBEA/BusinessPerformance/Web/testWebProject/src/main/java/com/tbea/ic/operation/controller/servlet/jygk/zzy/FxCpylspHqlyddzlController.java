@@ -162,7 +162,7 @@ public class FxCpylspHqlyddzlController {
 		return result.getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "fxcpylspdqddmlqk_exportbyq.do")
+	@RequestMapping(value = "exportbyq.do")
 	public @ResponseBody byte[] exportbyq(
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -204,7 +204,7 @@ public class FxCpylspHqlyddzlController {
 		return "".getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "fxcpylspdqddmlqk_exportxl.do")
+	@RequestMapping(value = "exportxl.do")
 	public @ResponseBody byte[] exportxl(
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -254,7 +254,7 @@ public class FxCpylspHqlyddzlController {
 	
 	private JygkZzyFormatterHandler getFormatterChainDataOnly(Integer[] percentCols, Integer[] jhCols){
 		JygkZzyFormatterHandler formatterChain = new JygkZzyPercentFormatterHandler(null, percentCols);
-		formatterChain.next(new JygkZzyNumberFormatterHandler(NumberType.RESERVE_0, null, jhCols));
+		formatterChain.next(new JygkZzyNumberFormatterHandler(NumberType.RESERVE_2, null, jhCols));
 		return formatterChain;
 	}
 }

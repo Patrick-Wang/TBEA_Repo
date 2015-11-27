@@ -29,14 +29,14 @@ public class ZzyLrsjDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxJkcbJsjb> 
 		querySql = new HashMap<String, String>();
 		querySql.put("10001", "select sr,mle from JygkZzyFxCpylspDqddmlqk where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10002", "select cz,cl,zbmll,yjyhhmle,yjyhhmll from JygkZzyFxCpylspHqlyddzl where zzyfl_id = :id and nf = :nf and jd = :yf and dwid = :comp");
-		querySql.put("10003", "select cz,cl,zbmll,yjyhhmle,yjyhhmll from JygkZzyFxCpylspHqlyddzl where zzyfl_id = :id and nf = :nf and jd = :yf and dwid = :comp");
+		querySql.put("10003", "select cz,zbmll,yjyhhmle,yjyhhmll from JygkZzyFxCpylspHqlyddzl where zzyfl_id = :id and nf = :nf and jd = :yf and dwid = :comp");
 		querySql.put("10004", "select ndjh,ydjh,ydwc as e from JygkZzyFxJkcbZbwcqk where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10005", "select scts,yhts,jgcsyhjb,cltdjb,qtjb from JygkZzyFxJkcbJsjb where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
-		querySql.put("10006", "select scts,yhts,jgcsyhjb,cltdjb,qtjb from JygkZzyFxJkcbJsjb where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
+		querySql.put("10006", "select jgcsyhjb,cltdjb,qtjb from JygkZzyFxJkcbJsjb where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10007", "select ndjh,ydjh,ydwc from JygkZzyFxJkcbCgjb where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10008", "select sjlyl,fl from JygkZzyFxJkcbScjb where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
-		querySql.put("10009", "select syl,sje,dyl,dje,zqyl,zqje,rqyl,rqje from JygkZzyFxJkcbZtnhqk where nf = :nf and yf = :yf and dwid = :comp");
-		querySql.put("10010", "select syl,sje,dyl,dje,zqyl,zqje,rqyl,rqje from JygkZzyFxJkcbZtnhqk where nf = :nf and yf = :yf and dwid = :comp");
+		querySql.put("10009", "select syl,sje,dyl,dje,zqyl,zqje,rqyl,rqje,cz,cl from JygkZzyFxJkcbZtnhqk where nf = :nf and yf = :yf and dwid = :comp");
+		querySql.put("10010", "select syl,sje,dyl,dje,zqyl,zqje,rqyl,rqje,cz,cl from JygkZzyFxJkcbZtnhqk where nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10011", "select tc,tpzbz,yhfkfs,qxkhzd,qt from JygkZzyFxJkcbXsjb where nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10012", "select cl,cz from JygkZzyCcCcwcqk where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10013", "select cl,cz from JygkZzyCcCcwcqk where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
@@ -46,22 +46,16 @@ public class ZzyLrsjDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxJkcbJsjb> 
 		querySql.put("10016", "select yccnlcz,kglyddzcz,ndkglyddzcz,n1cz,n1czn,n2cz,n2czn,n3cz,n3czn,n3hcz,ddcz,wxcz "
 				+ "from JygkZzyCcKglyddcbqk where nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10017", "select ycl,bcp,sjkc,yfhwkfp,qhfdy,qhfdk,wkhykp,qt,hj from JygkZzyChChjgjnh where nf = :nf and yf = :yf and dwid = :comp");
-		querySql.put("10018", "select n5sycl,n5sbcp,n5sccp,n5sqt,n4z5ycl,n4z5bcp,n4z5ccp,n4z5qt,n3z4ycl,n3z4bcp,n3z4ccp,n3z4qt,n2z3ycl,n2z3bcp,n2z3ccp,n2z3qt,n1z2ycl,n1z2bcp,n1z2ccp,n1z2qt,n1ycl,n1bcp,n1ccp,n1qt,hj "
+		querySql.put("10018", "select n5sycl,n5sbcp,n5sccp,n5sqt,n4z5ycl,n4z5bcp,n4z5ccp,n4z5qt,n3z4ycl,n3z4bcp,n3z4ccp,n3z4qt,n2z3ycl,n2z3bcp,n2z3ccp,n2z3qt,n1z2ycl,n1z2bcp,n1z2ccp,n1z2qt,n1ycl,n1bcp,n1ccp,n1qt "
 				+ "from JygkZzyChZljj where nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10019", "select jzydkcje,nckcje from JygkZzyChYclch where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
+		querySql.put("10020", "select ndjhfyl,ndjhfyl from JygkZzyFxSxfykz where zbxxid = :id and nf = :nf and yf = :yf and dwid = :comp");
 	}
 	
 	@Override
 	@PersistenceContext(unitName = "localDB")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
-	}
-	
-	@Override
-	//录入的表格列表
-	public List<JygkZzyBglx> getLrsjBgList() {
-		Query q = this.getEntityManager().createQuery("from JygkZzyBglx where id<20000 order by id");
-		return q.getResultList();
 	}
 	
 	@Override
@@ -97,8 +91,12 @@ public class ZzyLrsjDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxJkcbJsjb> 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		String sql = "from " + classname + " where ";
-		if(!("10009".equals(bglx) || "10010".equals(bglx) || "10011".equals(bglx) || "10015".equals(bglx) || "10016".equals(bglx) || "10017".equals(bglx) || "10018".equals(bglx))){
+		if(!("10009".equals(bglx) || "10010".equals(bglx) || "10011".equals(bglx) || "10015".equals(bglx) || "10016".equals(bglx) || "10017".equals(bglx) 
+				|| "10018".equals(bglx) || "10020".equals(bglx))){
 			sql += "zzyfl_id = :id and ";
+		}
+		if("10020".equals(bglx)){
+			sql += "zbxxid = :id and ";
 		}
 		sql += "nf = :nf and ";
 		if("10002".equals(bglx) || "10003".equals(bglx)){

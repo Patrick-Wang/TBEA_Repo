@@ -10,7 +10,7 @@ var fx_jkcb_cgjb;
         }
         JQGridAssistantFactory.createTable = function (gridName, year) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("产品类型", "cpdl"),
+                new JQTable.Node("产品类型", "cpdl", true, JQTable.TextAlign.Left),
                 new JQTable.Node(year + "年当年", "dn")
                     .append(new JQTable.Node("年度计划", "dnndjh"))
                     .append(new JQTable.Node("当月计划", "dnydjh"))
@@ -50,7 +50,7 @@ var fx_jkcb_cgjb;
         View.prototype.exportExcel = function () {
             var date = this.mDateSelector.getDate();
             var compType = this.mCompanySelector.getCompany();
-            $("#export")[0].action = "fxcpylspdqddmlqk_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, companyId: compType });
+            $("#export")[0].action = "export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, companyId: compType });
             $("#export")[0].submit();
         };
         View.prototype.updateUI = function () {

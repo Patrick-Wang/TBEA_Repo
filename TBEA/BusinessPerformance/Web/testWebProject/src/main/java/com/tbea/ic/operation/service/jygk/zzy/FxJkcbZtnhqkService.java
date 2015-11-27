@@ -11,8 +11,4 @@ import com.tbea.ic.operation.model.entity.jygk.zzy.JygkZzyBglx;
 public interface FxJkcbZtnhqkService {
 
 	List<String[]> getZb(Date date, String comp, String entryType);
-
-	List<JygkZzyBglx> getCksjBgList();
-
-	List<Map> getBgCompanies(String bglx);
 }

@@ -8,6 +8,8 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 import com.tbea.ic.operation.model.entity.jygk.zzy.JygkZzyFxJkcbZtnhqk;
 
 public interface FxJkcbZtnhqkDao  extends AbstractReadWriteDao<JygkZzyFxJkcbZtnhqk>{
-	List<JygkZzyFxJkcbZtnhqk> getDataListByDwData(int dwxxId,int nf,int yf);
-	List<Object[]> getSumDataListByDwData(int dwxxId,int nf);
+	List<Object[]> getSumDataListByDwData(String dwxxId,int nf);
+	
+	List<Object[]> getViewDataListByq(String year, String month, String dwxxid);
+	List<Object[]> getViewDataListXl(String year, String month, String dwxxid);
 }

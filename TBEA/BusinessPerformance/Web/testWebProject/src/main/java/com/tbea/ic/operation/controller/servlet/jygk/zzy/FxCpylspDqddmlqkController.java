@@ -45,9 +45,7 @@ import com.tbea.ic.operation.service.jygk.zzy.ZzyDWXXService;
 public class FxCpylspDqddmlqkController {
 	
 	@Autowired
-	private FxCpylspDqddmlqkService fxCpylspDqddmlqkService;
-	@Autowired
-	private ReferBglxService referBglxService;
+	private FxCpylspDqddmlqkService fxCpylspDqddmlqkService;	
 	@Autowired
 	ZzyDWXXService zzyDWXXService;
 	@Autowired
@@ -87,7 +85,7 @@ public class FxCpylspDqddmlqkController {
 		return result.getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "fxcpylspdqddmlqk_export.do")
+	@RequestMapping(value = "export.do")
 	public @ResponseBody byte[] export(
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -138,7 +136,7 @@ public class FxCpylspDqddmlqkController {
 	
 	private JygkZzyFormatterHandler getFormatterChainDataOnly(Integer[] percentCols, Integer[] jhCols){
 		JygkZzyFormatterHandler formatterChain = new JygkZzyPercentFormatterHandler(null, percentCols);
-		formatterChain.next(new JygkZzyNumberFormatterHandler(NumberType.RESERVE_0, null, jhCols));
+		formatterChain.next(new JygkZzyNumberFormatterHandler(NumberType.RESERVE_2, null, jhCols));
 		return formatterChain;
 	}
 }
