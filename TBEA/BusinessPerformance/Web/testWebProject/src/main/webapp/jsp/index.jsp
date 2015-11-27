@@ -328,7 +328,7 @@
 								} else if (2 == navDom.length) {
 									$("#footer").css("marginTop", "220px");
 								} else {
-									$("#footer").css("marginTop", "180px");
+									$("#footer").css("marginTop", "240px");
 								}
 
 								offsetList

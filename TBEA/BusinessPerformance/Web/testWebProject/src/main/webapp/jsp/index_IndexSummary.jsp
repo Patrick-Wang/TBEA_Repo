@@ -151,9 +151,16 @@
 	<div class="section">
 		<div class="thumb3">
 			<ul class="slides">
+				<c:if test="${JYAnalysisSummary}">
 				<li><a href="../fxcpylspdqddmlqk/openview.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>经营指标分析</strong></span></a>
 				</li>
+				</c:if>
+				<c:if test="${YSZKDialyLookup}">
+				<li><a href="../yszkrb/yszk.do" target="_blank"><img
+						src="../images/charts/scatter4.png"> <span><strong>应收账款日报</strong></span></a>
+				</li>
+				</c:if>
 			</ul>
 		</div>
 	</div>

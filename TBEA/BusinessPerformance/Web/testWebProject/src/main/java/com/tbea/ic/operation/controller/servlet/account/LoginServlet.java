@@ -137,8 +137,14 @@ public class LoginServlet {
 		session.setAttribute("JYAnalysisEntry",
 				dailyReportService.hasJYAnalysisEntryAuthority(account));
 
-		session.setAttribute("JYAnalysisLookup",
+		session.setAttribute("JYAnalysisSummary",
 				dailyReportService.hasJYAnalysisLookupAuthority(account));
+		
+		session.setAttribute("YSZKDialyLookup",
+				dailyReportService.hasYSZKDialyLookupAuthority(account));
+		
+		session.setAttribute("JYAnalysisLookup",
+				dailyReportService.hasJYAnalysisLookupAuthority(account) || dailyReportService.hasYSZKDialyLookupAuthority(account));
 
 		session.setAttribute("isByq", account.getId() == 9
 				|| account.getId() == 25 || account.getId() == 33);
