@@ -4,6 +4,17 @@
 <html>
 <head>
 
+<!-- jquery -->
+<script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
+<!-- jquery ui -->
+<!-- jquery ui gray -->
+<link rel="stylesheet" type="text/css" href="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
+<script type="text/javascript" src="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
+<!-- jquery ui blue -->
+<link rel="stylesheet" type="text/css" media="screen" href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
+<script src="../jsp/jqgrid/js/jquery-ui-custom.min.js" type="text/javascript"></script>
+
+
 <!-- 多选菜单 -->
 <link rel="stylesheet" type="text/css"
 	href="../jsp/multi-select/jquery.multiselect.css" />
@@ -54,6 +65,12 @@
    	<script src="../jsp/util.js" type="text/javascript"></script>
 
     <script src="../jsp/yszkrb.js" type="text/javascript"></script>
+   
+   <!-- message box -->
+<link href="../jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
+<script src="../jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
+<script src="../jsp/message-box/js/moaModal.js" type="text/javascript"></script>
+<script src="../jsp/messageBox.js" type="text/javascript"></script>
 
     <script type="text/javascript">
     	var instance = yszkrb.View.newInstance();
@@ -186,9 +203,9 @@
 						<td><span style="font-size:1.3em;font-weight: bold;margin-right:5px">日期: </span><input id="date" readonly="readonly"></input>
 						</td>
 						<td><input id = "updateButton"  type="button" value="选择" style="width : 80px; margin-left:10px;"
-							onclick="instance.updateUI()"></input>
-					</td>
+							onclick="instance.updateUI()"></input></td>
 					</tr>
+					
 				</Table>
 			</td>
 		</tr>
@@ -199,10 +216,17 @@
 				<div id="table"></div>
 			<td>
 		</tr>
+		
+		<tr style="height:5px"></tr>
+		<tr>
+			<td><input id="submit" type="submit" value="提交"
+				style="width: 80px; dispaly: none" onclick="instance.save()"></input>
+			</td>
+
+		</tr>
 	</Table>
 	<%@include file="loading.jsp"%>
     </body>
- <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
  	<script src="../jsp/style_button.js"></script>
 	<script src="../jsp/style_select.js"></script>
 </html>
