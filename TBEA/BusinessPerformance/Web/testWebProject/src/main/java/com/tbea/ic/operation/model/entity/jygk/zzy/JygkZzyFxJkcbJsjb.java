@@ -24,6 +24,7 @@ public class JygkZzyFxJkcbJsjb extends cn.com.tbea.template.model.entity.Abstrac
 	private int nf;
 	private BigDecimal qtjb;
 	private BigDecimal scts;
+	private BigDecimal cz;
 	private Timestamp xgsj;
 	private int yf;
 	private BigDecimal yhts;
@@ -133,5 +134,15 @@ public class JygkZzyFxJkcbJsjb extends cn.com.tbea.template.model.entity.Abstrac
 
 	public void setZzyflId(int zzyflId) {
 		this.zzyflId = zzyflId;
+	}
+
+
+	public BigDecimal getCz() {
+		return cz;
+	}
+
+
+	public void setCz(BigDecimal cz) {
+		this.cz = cz;
 	}
 }

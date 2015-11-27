@@ -24,7 +24,7 @@ public class FxJkcbJsjbDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxJkcbJsj
 	}
 	@Override
 	public List<JygkZzyFxJkcbJsjb> getDataListByDwDate(String dwxxs,int nf,int yf) {		
-		Query q = this.getEntityManager().createQuery("select zzyflId,sum(cltdjb) as cltdjb, sum(jgcsyhjb) as jgcsyhjb, sum(qtjb) as qtjb, sum(scts) as scts, sum(yhts) as yhts from JygkZzyFxJkcbJsjb where dwid in (" + dwxxs + ") and nf = :nf and yf = :yf  group by zzyflId");
+		Query q = this.getEntityManager().createQuery("select zzyflId, sum(cz) as cz, sum(cltdjb) as cltdjb, sum(jgcsyhjb) as jgcsyhjb, sum(qtjb) as qtjb, sum(scts) as scts, sum(yhts) as yhts from JygkZzyFxJkcbJsjb where dwid in (" + dwxxs + ") and nf = :nf and yf = :yf  group by zzyflId");
 		q.setParameter("nf", nf);
 		q.setParameter("yf", yf);		
 		List<Object[]> objectList=q.getResultList();

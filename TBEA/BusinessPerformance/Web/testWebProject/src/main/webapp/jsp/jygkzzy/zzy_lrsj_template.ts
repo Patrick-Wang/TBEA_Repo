@@ -55,16 +55,16 @@ module zzy_lrsj_template {
             $("#" + opt.dateId).html("");
             $("#" + opt.companyId).html("");
             this.mOpt = opt;
-            if(this.mBglxSelector.getBglx() + "" == "10002" || this.mBglxSelector.getBglx() + "" == "10003"){
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId, true);
-            } else {
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
-            }
-            this.mCompanySelector = new Util.CompanySelectorZzy(this.mOpt.companyId, opt.comps, false);
-            if (opt.comps.length == 1){
-                this.mCompanySelector.hide();
-            }
-            this.updateTitle();
+                if(this.mBglxSelector.getBglx() + "" == "10002" || this.mBglxSelector.getBglx() + "" == "10003"){
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId, true);
+                } else {
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
+                }
+                this.mCompanySelector = new Util.CompanySelectorZzy(this.mOpt.companyId, opt.comps, false);
+                if (opt.comps.length == 1){
+                    $('#company').css("display", "none");
+                }
+                this.updateTitle();
         }
         
         initBglxSelect(divId : string, curbglx : string, view : any, isByq : boolean, isXl : boolean) {
@@ -91,6 +91,13 @@ module zzy_lrsj_template {
             $('#save').css("display", "none");
             this.mCondition.get({ entryType: entryType })
                 .then((data: any) => {
+                if (JSON.parse(data.comps).length == 0) {
+                    $('h1').text("没有任何可以录入数据的公司");
+                    $('input').css("display", "none");
+                    $('#nodatatips').css("display", "none");
+                    $('#div_bglx').css("display", "none");
+                    return;
+                }
                 this.initInstance({
                         tableId : "table",
                         dateId: "date",
@@ -147,7 +154,11 @@ module zzy_lrsj_template {
             var header = "";
             var date = this.mDateSelector.getDate();
             var compName = this.mCompanySelector.getCompanyName();
-            header = date.year + "年" + date.month + "月 " + compName + " " + $("#bglx").find("option:selected").text() + "录入";
+            if(this.mBglxSelector.getBglx() + "" == "10002" || this.mBglxSelector.getBglx() + "" == "10003"){
+                header = date.year + "年" + (date.month / 3) + "季度 " + compName + " " + $("#bglx").find("option:selected").text() + "录入";
+            } else {
+                header = date.year + "年" + date.month + "月 " + compName + " " + $("#bglx").find("option:selected").text() + "录入";
+            }
             
             $('h1').text(header);
             document.title = header;
@@ -194,11 +205,11 @@ module zzy_lrsj_template {
                 this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                 break;
             case "10005":
-                titles = ["产品类型", "生产台数", "优化台数", "结构参数优化降本", "材料替代降本", "其他降本"];
+                titles = ["产品类型", "生产台数", "优化台数", "产值", "结构参数优化降本", "材料替代降本", "其他降本"];
                 this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                 break;
             case "10006":
-                titles = ["产品类型", "结构参数优化降本", "材料替代降本", "其他降本"];
+                titles = ["产品类型", "产值", "结构参数优化降本", "材料替代降本", "其他降本"];
                 this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles);
                 break;
             case "10007":
@@ -371,7 +382,8 @@ module zzy_lrsj_template {
                         .append(new JQTable.Node("原材料", "n1ycl", false))
                         .append(new JQTable.Node("半成品", "n1bcp", false))
                         .append(new JQTable.Node("产成品", "n1ccp", false))
-                        .append(new JQTable.Node("其他", "n1qt", false))
+                        .append(new JQTable.Node("其他", "n1qt", false)),
+                    new JQTable.Node("合计", "wxcz", false)
                 ], name);
                 break;
             case "10019":
@@ -386,7 +398,7 @@ module zzy_lrsj_template {
             
           for (var i = 0; i < this.mTableData.length; ++i){
               var j = 2;
-              if(this.mBglxSelector.getBglx() + "" == ""){
+              if(this.mBglxSelector.getBglx() + "" == "10018"){
                 j = 1;
               }
               for (; j < this.mTableData[i].length; ++j){

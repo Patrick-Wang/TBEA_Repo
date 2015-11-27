@@ -214,7 +214,7 @@
 						</td>
 						<td><div id="company"></div>
 						</td>
-						<td><input id="update" type="button" value="更新" style="width : 80px; margin-left:10px;"
+						<td><input id="update" type="button" value="更新" style="width : 80px; margin-left:10px;" class="ui-button ui-widget ui-state-default ui-corner-all"
 							onclick="view.updateUI()"></input>
 				</Table>
 			</td>

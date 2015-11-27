@@ -137,14 +137,21 @@ public class FxJkcbZtnhqkController {
 
 		JygkZzyFormatterHandler formatterChain = this.getFormatterChainWithHeader(
 				new Integer[]{}, new Integer[]{2, 3, 4, 5, 6, 7, 8, 9, 10,11});
-		
+
+		HSSFRow row = sheet.getRow(1);
+		HSSFCellStyle style =  row.getCell(0).getCellStyle();
 		for (int i = 0, ilen = data.size(); i < ilen; ++i) {
-			HSSFRow row = sheet.createRow(1 + i);
+			row = sheet.createRow(1 + i);
 			for (int j = 1, jlen = data.get(i).length; j < jlen; ++j) {
-				HSSFCell cell = row.createCell(j);
-				formatterChain.handle(
-						data.get(i)[0], 
-						j, template, cell, data.get(i)[j]);
+				HSSFCell cell = row.createCell(j - 1);
+				if(j == 1){
+					cell.setCellStyle(style);
+					cell.setCellValue(data.get(i)[j]);
+				} else {
+					formatterChain.handle(
+							data.get(i)[0], 
+							j, template, cell, data.get(i)[j]);
+				}
 			}
 		}
 			

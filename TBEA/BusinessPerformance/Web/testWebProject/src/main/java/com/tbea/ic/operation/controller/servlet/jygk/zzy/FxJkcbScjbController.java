@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONArray;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -107,12 +108,15 @@ public class FxJkcbScjbController {
 
 		JygkZzyFormatterHandler formatterChain = this.getFormatterChainWithHeader(
 				new Integer[]{3, 6}, new Integer[]{1, 2, 4, 5});
-		
+
+		HSSFRow row = sheet.getRow(1);
+		HSSFCellStyle style =  row.getCell(0).getCellStyle();
 		for (int i = 0, ilen = data.size(); i < ilen; ++i) {
-			HSSFRow row = sheet.createRow(2 + i);
+			row = sheet.createRow(2 + i);
 			for (int j = 1, jlen = data.get(i).length; j < jlen; ++j) {
 				HSSFCell cell = row.createCell(j - 1);
 				if(j==1) {
+					cell.setCellStyle(style);
 					cell.setCellValue(data.get(i)[j]);
 				} else {
 					formatterChain.handle(

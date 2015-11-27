@@ -110,17 +110,13 @@ public class FxCpylspHqlyddzlServiceImpl implements FxCpylspHqlyddzlService{
 		for (JygkZzyDwReferBglxfl bglxfl : bglxflList){	
 			String[] row = new String[6];
 			row[0] = bglxfl.getJygkZzyFl().getViewname();
-			JygkZzyFxCpylspHqlyddzl hqlyddzl=null;
 			for (JygkZzyFxCpylspHqlyddzl d : hqlyddzlList){
-				hqlyddzl=d;					
-			}
-			if(hqlyddzl!=null){
-				if(bglxfl.getJygkZzyFl().getId()==hqlyddzl.getZzyflId()){
-					row[1]= this.bigDecimalToString(hqlyddzl.getCz());
-					row[2]= this.bigDecimalToString(hqlyddzl.getCl());
-					row[3]= this.bigDecimalToString(hqlyddzl.getZbmll());
-					row[4]= this.bigDecimalToString(hqlyddzl.getYjyhhmle());
-					row[5]= this.bigDecimalToString(hqlyddzl.getYjyhhmll());
+				if(bglxfl.getJygkZzyFl().getId()==d.getZzyflId()){
+					row[1]= this.bigDecimalToString(d.getCz());
+					row[2]= this.bigDecimalToString(d.getCl());
+					row[3]= this.bigDecimalToString(d.getZbmll());
+					row[4]= this.bigDecimalToString(d.getYjyhhmle());
+					row[5]= this.bigDecimalToString(d.getYjyhhmll());	
 				}
 			}
 			ret.add(row);
@@ -157,7 +153,7 @@ public class FxCpylspHqlyddzlServiceImpl implements FxCpylspHqlyddzlService{
 		}
 		List<String[]> ret = new ArrayList<String[]>();
 		for (JygkZzyDwReferBglxfl bglxfl : bglxflList){	
-			String[] row = new String[6];
+			String[] row = new String[5];
 			row[0] = bglxfl.getJygkZzyFl().getViewname();		
 			for (JygkZzyFxCpylspHqlyddzl hqlyddzl : hqlyddzlList){
 				if(bglxfl.getJygkZzyFl().getId()==hqlyddzl.getZzyflId()){
@@ -170,7 +166,7 @@ public class FxCpylspHqlyddzlServiceImpl implements FxCpylspHqlyddzlService{
 			ret.add(row);
 		}
 		
-		String[] sumrow = new String[6];//合计
+		String[] sumrow = new String[5];//合计
 		sumrow[0] = "合计";
 		sumrow[1]= this.bigDecimalToString(czsum);
 		sumrow[2]= null;

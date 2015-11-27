@@ -99,8 +99,8 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 		entrysize.put("10002", 7);
 		entrysize.put("10003", 6);
 		entrysize.put("10004", 5);
-		entrysize.put("10005", 7);
-		entrysize.put("10006", 5);
+		entrysize.put("10005", 8);
+		entrysize.put("10006", 6);
 		entrysize.put("10007", 5);
 		entrysize.put("10008", 4);
 		entrysize.put("10009", 12);
@@ -112,7 +112,7 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 		entrysize.put("10015", 24);
 		entrysize.put("10016", 14);
 		entrysize.put("10017", 11);
-		entrysize.put("10018", 25);
+		entrysize.put("10018", 26);
 		entrysize.put("10019", 4);
 		entrysize.put("10020", 3);
 	}
@@ -482,9 +482,10 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 			object.setYf(cal.get(Calendar.MONTH) + 1);
 			object.setScts(getBigDecimal(row.get(1)));
 			object.setYhts(getBigDecimal(row.get(2)));
-			object.setJgcsyhjb(getBigDecimal(row.get(3)));
-			object.setCltdjb(getBigDecimal(row.get(4)));
-			object.setQtjb(getBigDecimal(row.get(5)));
+			object.setCz(getBigDecimal(row.get(3)));
+			object.setJgcsyhjb(getBigDecimal(row.get(4)));
+			object.setCltdjb(getBigDecimal(row.get(5)));
+			object.setQtjb(getBigDecimal(row.get(6)));
 			object.setXgsj(ts);
 			if(isNew){
 				jygkZzyFxJkcbJsjbDao.create(object);
@@ -520,9 +521,10 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 			object.setZzyflId(Integer.parseInt(row.get(0).toString()));
 			object.setNf(cal.get(Calendar.YEAR));
 			object.setYf(cal.get(Calendar.MONTH) + 1);
-			object.setJgcsyhjb(getBigDecimal(row.get(1)));
-			object.setCltdjb(getBigDecimal(row.get(2)));
-			object.setQtjb(getBigDecimal(row.get(3)));
+			object.setCz(getBigDecimal(row.get(1)));
+			object.setJgcsyhjb(getBigDecimal(row.get(2)));
+			object.setCltdjb(getBigDecimal(row.get(3)));
+			object.setQtjb(getBigDecimal(row.get(4)));
 			object.setXgsj(ts);
 			if(isNew){
 				jygkZzyFxJkcbJsjbDao.create(object);
@@ -957,6 +959,7 @@ public class ZzyLrsjServiceImpl implements ZzyLrsjService{
 			object.setN1bcp(getBigDecimal(row.get(22)));
 			object.setN1ccp(getBigDecimal(row.get(23)));
 			object.setN1qt(getBigDecimal(row.get(24)));
+			object.setHj(getBigDecimal(row.get(25)));
 			object.setXgsj(ts);
 			if(isNew){
 				jygkZzyChZljjDao.create(object);

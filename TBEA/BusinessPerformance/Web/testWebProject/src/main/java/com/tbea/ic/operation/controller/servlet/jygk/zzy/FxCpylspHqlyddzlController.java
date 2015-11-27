@@ -187,7 +187,7 @@ public class FxCpylspHqlyddzlController {
 		HSSFSheet sheet = workbook.getSheetAt(0);
 
 		JygkZzyFormatterHandler formatterChain = this.getFormatterChainWithHeader(
-				null, new Integer[]{1, 2, 3, 4,5});
+				new Integer[]{}, new Integer[]{1, 2, 3, 4,5});
 		
 		for (int i = 0, ilen = data.size(); i < ilen; ++i) {
 			HSSFRow row = sheet.createRow(1 + i);
@@ -228,7 +228,7 @@ public class FxCpylspHqlyddzlController {
 		HSSFSheet sheet = workbook.getSheetAt(0);
 
 		JygkZzyFormatterHandler formatterChain = this.getFormatterChainWithHeader(
-				null, new Integer[]{1, 2, 3, 4});
+				new Integer[]{}, new Integer[]{1, 2, 3, 4});
 		
 		for (int i = 0, ilen = data.size(); i < ilen; ++i) {
 			HSSFRow row = sheet.createRow(1 + i);

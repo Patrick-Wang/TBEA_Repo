@@ -31,8 +31,8 @@ public class ZzyLrsjDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxJkcbJsjb> 
 		querySql.put("10002", "select cz,cl,zbmll,yjyhhmle,yjyhhmll from JygkZzyFxCpylspHqlyddzl where zzyfl_id = :id and nf = :nf and jd = :yf and dwid = :comp");
 		querySql.put("10003", "select cz,zbmll,yjyhhmle,yjyhhmll from JygkZzyFxCpylspHqlyddzl where zzyfl_id = :id and nf = :nf and jd = :yf and dwid = :comp");
 		querySql.put("10004", "select ndjh,ydjh,ydwc as e from JygkZzyFxJkcbZbwcqk where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
-		querySql.put("10005", "select scts,yhts,jgcsyhjb,cltdjb,qtjb from JygkZzyFxJkcbJsjb where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
-		querySql.put("10006", "select jgcsyhjb,cltdjb,qtjb from JygkZzyFxJkcbJsjb where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
+		querySql.put("10005", "select scts,yhts,cz,jgcsyhjb,cltdjb,qtjb from JygkZzyFxJkcbJsjb where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
+		querySql.put("10006", "select cz,jgcsyhjb,cltdjb,qtjb from JygkZzyFxJkcbJsjb where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10007", "select ndjh,ydjh,ydwc from JygkZzyFxJkcbCgjb where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10008", "select sjlyl,fl from JygkZzyFxJkcbScjb where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10009", "select syl,sje,dyl,dje,zqyl,zqje,rqyl,rqje,cz,cl from JygkZzyFxJkcbZtnhqk where nf = :nf and yf = :yf and dwid = :comp");
@@ -46,7 +46,7 @@ public class ZzyLrsjDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxJkcbJsjb> 
 		querySql.put("10016", "select yccnlcz,kglyddzcz,ndkglyddzcz,n1cz,n1czn,n2cz,n2czn,n3cz,n3czn,n3hcz,ddcz,wxcz "
 				+ "from JygkZzyCcKglyddcbqk where nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10017", "select ycl,bcp,sjkc,yfhwkfp,qhfdy,qhfdk,wkhykp,qt,hj from JygkZzyChChjgjnh where nf = :nf and yf = :yf and dwid = :comp");
-		querySql.put("10018", "select n5sycl,n5sbcp,n5sccp,n5sqt,n4z5ycl,n4z5bcp,n4z5ccp,n4z5qt,n3z4ycl,n3z4bcp,n3z4ccp,n3z4qt,n2z3ycl,n2z3bcp,n2z3ccp,n2z3qt,n1z2ycl,n1z2bcp,n1z2ccp,n1z2qt,n1ycl,n1bcp,n1ccp,n1qt "
+		querySql.put("10018", "select n5sycl,n5sbcp,n5sccp,n5sqt,n4z5ycl,n4z5bcp,n4z5ccp,n4z5qt,n3z4ycl,n3z4bcp,n3z4ccp,n3z4qt,n2z3ycl,n2z3bcp,n2z3ccp,n2z3qt,n1z2ycl,n1z2bcp,n1z2ccp,n1z2qt,n1ycl,n1bcp,n1ccp,n1qt,hj "
 				+ "from JygkZzyChZljj where nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10019", "select jzydkcje,nckcje from JygkZzyChYclch where zzyfl_id = :id and nf = :nf and yf = :yf and dwid = :comp");
 		querySql.put("10020", "select ndjhfyl,ndjhfyl from JygkZzyFxSxfykz where zbxxid = :id and nf = :nf and yf = :yf and dwid = :comp");

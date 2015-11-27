@@ -29,9 +29,6 @@ public class FxJkcbJsjbServiceImpl implements FxJkcbJsjbService{
 	
 	@Autowired
 	FxJkcbJsjbDao fxJkcbJsjbDao;
-	
-	@Autowired
-	CcCcwcqkDao ccCcwcqkDao;
 			
 	@Override
 	public List<String[]> getViewDataListByq(String dwxxid,String nf,String yf) {
@@ -45,7 +42,6 @@ public class FxJkcbJsjbServiceImpl implements FxJkcbJsjbService{
 		}
 		List<JygkZzyDwReferBglxfl> bglxflList=referBglxflDao.getDataList(Integer.parseInt(dwxxid), 20005);
 		List<JygkZzyFxJkcbJsjb> fxJkcbJsjbList=fxJkcbJsjbDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));	
-		List<JygkZzyCcCcwcqk> ccCcwcqkList=ccCcwcqkDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));
 		BigDecimal sctssum=toBigDecimal("0");//生产台数合计
 		BigDecimal yhtssum=toBigDecimal("0");//优化台数合计
 		BigDecimal czsum=toBigDecimal("0");//产值合计
@@ -59,42 +55,29 @@ public class FxJkcbJsjbServiceImpl implements FxJkcbJsjbService{
 			jgcsyhjbsum=d.getJgcsyhjb()==null?jgcsyhjbsum:jgcsyhjbsum.add(d.getJgcsyhjb());//如果毛利额是null那么不相加
 			cltdjbsum=d.getCltdjb()==null?cltdjbsum:cltdjbsum.add(d.getCltdjb());//如果毛利额是null那么不相加
 			qtjbsum=d.getQtjb()==null?qtjbsum:qtjbsum.add(d.getQtjb());//如果毛利额是null那么不相加
+			czsum=d.getCz()==null?czsum:czsum.add(d.getCz());//如果产值是null那么不相加
 		}
 		jbsum=this.calJbHj(jgcsyhjbsum,cltdjbsum,qtjbsum);
-		
-		for (JygkZzyCcCcwcqk d : ccCcwcqkList){
-			czsum=d.getCz()==null?czsum:czsum.add(d.getCz());//如果收入是null那么不相加
-		}
 		
 		List<String[]> ret = new ArrayList<String[]>();
 		for (JygkZzyDwReferBglxfl bglxfl : bglxflList){
 			String[] row = new String[9];			
 			row[0] = bglxfl.getJygkZzyFl().getViewname();
 			JygkZzyFxJkcbJsjb jygkZzyFxJkcbJsjb=null;
-			JygkZzyCcCcwcqk jygkZzyCcCcwcqk=null;
 			for (JygkZzyFxJkcbJsjb d : fxJkcbJsjbList){
 				if(bglxfl.getJygkZzyFl().getId()==d.getZzyflId()){
 					jygkZzyFxJkcbJsjb=d;				
 				}					
 			}
-			for (JygkZzyCcCcwcqk d : ccCcwcqkList){
-				if(bglxfl.getJygkZzyFl().getId()==d.getZzyflId()){
-					jygkZzyCcCcwcqk=d;				
-				}
-			}
 			if(jygkZzyFxJkcbJsjb!=null){
 				row[1]=this.bigDecimalToString(jygkZzyFxJkcbJsjb.getScts());//生产台数
 				row[2]=this.bigDecimalToString(jygkZzyFxJkcbJsjb.getYhts());//优化台数
 				row[3]=this.bigDecimalToString(this.calZb(jygkZzyFxJkcbJsjb.getYhts(),jygkZzyFxJkcbJsjb.getScts()));//占比
-				row[4]=null;//产值
+				row[4]=this.bigDecimalToString(jygkZzyFxJkcbJsjb.getCz());//产值
 				row[5]=this.bigDecimalToString(this.calJbHj(jygkZzyFxJkcbJsjb.getJgcsyhjb(), jygkZzyFxJkcbJsjb.getCltdjb(), jygkZzyFxJkcbJsjb.getQtjb()));//降本
 				row[6]=this.bigDecimalToString(jygkZzyFxJkcbJsjb.getJgcsyhjb());//结构参数优化降本
 				row[7]=this.bigDecimalToString(jygkZzyFxJkcbJsjb.getCltdjb());//材料替代降本计
 				row[8]=this.bigDecimalToString(jygkZzyFxJkcbJsjb.getQtjb());//其他降本
-			}
-			
-			if(jygkZzyCcCcwcqk!=null){
-				row[4]=this.bigDecimalToString(jygkZzyCcCcwcqk.getCz());
 			}
 			ret.add(row);
 		}
@@ -126,7 +109,6 @@ public class FxJkcbJsjbServiceImpl implements FxJkcbJsjbService{
 		}
 		List<JygkZzyDwReferBglxfl> bglxflList=referBglxflDao.getDataList(Integer.parseInt(dwxxid), 20006);
 		List<JygkZzyFxJkcbJsjb> fxJkcbJsjbList=fxJkcbJsjbDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));	
-		List<JygkZzyCcCcwcqk> ccCcwcqkList=ccCcwcqkDao.getDataListByDwDate(dwxxs,Integer.parseInt(nf), Integer.parseInt(yf));
 		BigDecimal czsum=toBigDecimal("0");//产值合计
 		BigDecimal jbsum=toBigDecimal("0");//降本合计
 		BigDecimal jgcsyhjbsum=toBigDecimal("0");//结构参数优化降本合计
@@ -136,12 +118,10 @@ public class FxJkcbJsjbServiceImpl implements FxJkcbJsjbService{
 			jgcsyhjbsum=d.getJgcsyhjb()==null?jgcsyhjbsum:jgcsyhjbsum.add(d.getJgcsyhjb());//如果毛利额是null那么不相加
 			cltdjbsum=d.getCltdjb()==null?cltdjbsum:cltdjbsum.add(d.getCltdjb());//如果毛利额是null那么不相加
 			qtjbsum=d.getQtjb()==null?qtjbsum:qtjbsum.add(d.getQtjb());//如果毛利额是null那么不相加
+			czsum=d.getCz()==null?czsum:czsum.add(d.getCz());//如果毛利额是null那么不相加
 		}
 		jbsum=this.calJbHj(jgcsyhjbsum,cltdjbsum,qtjbsum);
 		
-		for (JygkZzyCcCcwcqk d : ccCcwcqkList){
-			czsum=d.getCz()==null?czsum:czsum.add(d.getCz());//如果收入是null那么不相加
-		}
 		
 		List<String[]> ret = new ArrayList<String[]>();
 		for (JygkZzyDwReferBglxfl bglxfl : bglxflList){
@@ -155,21 +135,12 @@ public class FxJkcbJsjbServiceImpl implements FxJkcbJsjbService{
 				}					
 			}
 			
-			for (JygkZzyCcCcwcqk d : ccCcwcqkList){
-				if(bglxfl.getJygkZzyFl().getId()==d.getZzyflId()){
-					jygkZzyCcCcwcqk=d;				
-				}
-			}
-			
 			if(jygkZzyFxJkcbJsjb!=null){
-				row[1]=null;//产值
+				row[1]=this.bigDecimalToString(jygkZzyFxJkcbJsjb.getCz());//产值
 				row[2]=this.bigDecimalToString(this.calJbHj(jygkZzyFxJkcbJsjb.getJgcsyhjb(), jygkZzyFxJkcbJsjb.getCltdjb(), jygkZzyFxJkcbJsjb.getQtjb()));//降本
 				row[3]=this.bigDecimalToString(jygkZzyFxJkcbJsjb.getJgcsyhjb());//结构参数优化降本
 				row[4]=this.bigDecimalToString(jygkZzyFxJkcbJsjb.getCltdjb());//材料替代降本计
 				row[5]=this.bigDecimalToString(jygkZzyFxJkcbJsjb.getQtjb());//其他降本
-			}
-			if(jygkZzyCcCcwcqk!=null){
-				row[1]=this.bigDecimalToString(jygkZzyCcCcwcqk.getCz());
 			}
 			ret.add(row);
 		}

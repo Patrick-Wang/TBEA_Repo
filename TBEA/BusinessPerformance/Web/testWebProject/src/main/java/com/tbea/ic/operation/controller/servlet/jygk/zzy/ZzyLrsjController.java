@@ -75,7 +75,7 @@ public class ZzyLrsjController {
 		//设置可选公司		
 		HttpSession session=request.getSession(false);
 		Account account=SessionManager.getAccount(session);
-		List<DwxxDto> dwxxList=systemExtendAuthService.getJygkZzyDwxxListView(account);
+		List<DwxxDto> dwxxList=systemExtendAuthService.getJygkZzyDwxxListLr(account);
 		map.put("comps", JSONArray.fromObject(dwxxList).toString());
 		String result = JSONObject.fromObject(map).toString(); 
 		return result.getBytes("utf-8");
