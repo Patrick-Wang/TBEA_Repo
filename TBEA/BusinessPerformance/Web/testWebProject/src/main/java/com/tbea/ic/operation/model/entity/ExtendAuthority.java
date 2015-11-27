@@ -22,7 +22,7 @@ public class ExtendAuthority extends AbstractReadWriteEntity implements Serializ
 	
 	
 	public enum AuthType{
-		MEPTY,
+		EMPTY,
 		YSZKDailyReportEntry,
 		JYAnalysisEntry,
 		JYAnalysisLookup,

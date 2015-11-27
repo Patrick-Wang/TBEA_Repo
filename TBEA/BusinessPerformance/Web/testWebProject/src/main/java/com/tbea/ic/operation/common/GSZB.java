@@ -451,8 +451,8 @@ public enum GSZB {
 	WLMY230(230),//物流贸易
 	ZZYSXFYL231(231),//     制造业三项费用率
 	GC_XSYWSXFYL232(232),//     工程、修试业务三项费用率
-	WLMYSXFYL233(233);//     物流贸易三项费用率
-
+	WLMYSXFYL233(233),//     物流贸易三项费用率
+	YSZK_DAILY_REPORT(-1);//     应收账款日报
 	
 	private Integer value;
 
