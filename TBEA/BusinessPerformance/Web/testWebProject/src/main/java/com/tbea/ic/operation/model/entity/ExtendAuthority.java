@@ -25,7 +25,8 @@ public class ExtendAuthority extends AbstractReadWriteEntity implements Serializ
 		MEPTY,
 		YSZKDailyReportEntry,
 		JYAnalysisEntry,
-		JYAnalysisLookup
+		JYAnalysisLookup,
+		YSZKDialyLookup
 	}
 	
 	private static final long serialVersionUID = 1L;

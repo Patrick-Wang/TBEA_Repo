@@ -124,5 +124,11 @@ public class DailyReportServiceImpl implements DailyReportService{
 		return count > 0;
 	}
 	
+	@Override
+	public boolean hasYSZKDialyLookupAuthority(Account account) {
+		int count = extendAuthDao.getAuthorityCount(account, ExtendAuthority.AuthType.YSZKDialyLookup.ordinal());
+		return count > 0;
+	}
+	
 	
 }
