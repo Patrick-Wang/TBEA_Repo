@@ -2,6 +2,7 @@ package com.tbea.ic.operation.service.entry;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import net.sf.json.JSONArray;
@@ -40,9 +41,9 @@ public class DailyReportServiceImpl implements DailyReportService{
 
 	@Override
 	public ErrorCode submitYszk(Account account, Date date, JSONArray jData) {
-		List<ExtendAuthority> eas = extendAuthDao.getAuthority(account, 1);
+		List<ExtendAuthority> eas = extendAuthDao.getAuthority(account, ExtendAuthority.AuthType.YSZKDailyReportEntry.ordinal());
 		ErrorCode code = ErrorCode.OK;
-		if (eas.isEmpty()){
+		if (!eas.isEmpty()){
 			ExtendAuthority ea = eas.get(0);
 			DWXX dwxx = ea.getDwxx();
 			YSDAILY daily = ysdailyDao.getYsdaily(date, dwxx);
@@ -61,6 +62,27 @@ public class DailyReportServiceImpl implements DailyReportService{
 			daily.setZqbcMoney(Util.toDouble(jData.getString(5)));
 			daily.setBalanceAccount(Util.toDouble(jData.getString(6)));
 			ysdailyDao.update(daily);
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+			int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+			while (maxDay > 0){
+				Date tmpDate = Util.toDate(cal);
+				daily = ysdailyDao.getYsdaily(tmpDate, dwxx);
+				if (daily == null){
+					daily = new YSDAILY();
+					YSDAILYPK key = new YSDAILYPK();
+					key.setDate(tmpDate);
+					key.setDwxx(dwxx);
+					daily.setKey(key);
+				}
+				daily.setWithdrawalFundsTargetMonth(Util.toDouble(jData.getString(0)));
+				daily.setWithdrawalPlan(Util.toDouble(jData.getString(1)));
+				ysdailyDao.update(daily);
+				cal.add(Calendar.DAY_OF_MONTH, 1);
+				--maxDay;
+			}
 		}else{
 			code = ErrorCode.HAVE_NO_RIGHT;
 		}
