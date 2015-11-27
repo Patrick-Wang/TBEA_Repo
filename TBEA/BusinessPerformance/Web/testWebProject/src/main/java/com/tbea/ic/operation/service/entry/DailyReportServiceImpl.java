@@ -42,7 +42,7 @@ public class DailyReportServiceImpl implements DailyReportService{
 	public ErrorCode submitYszk(Account account, Date date, JSONArray jData) {
 		List<ExtendAuthority> eas = extendAuthDao.getAuthority(account, 1);
 		ErrorCode code = ErrorCode.OK;
-		if (eas.isEmpty()){
+		if (!eas.isEmpty()){
 			ExtendAuthority ea = eas.get(0);
 			DWXX dwxx = ea.getDwxx();
 			YSDAILY daily = ysdailyDao.getYsdaily(date, dwxx);
