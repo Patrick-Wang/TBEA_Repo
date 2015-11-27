@@ -14,7 +14,7 @@ module entry_template {
                 if (i == 0) {
                     nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, statusList[i - 1] == Util.ZBStatus.APPROVED));
+                    nodes.push(new JQTable.Node(title[i], "_" + i,  statusList[i - 1] == Util.ZBStatus.APPROVED));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);

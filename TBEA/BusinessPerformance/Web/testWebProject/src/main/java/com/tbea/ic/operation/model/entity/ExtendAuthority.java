@@ -22,10 +22,12 @@ public class ExtendAuthority extends AbstractReadWriteEntity implements Serializ
 	
 	
 	public enum AuthType{
-		MEPTY,
+		EMPTY,
 		YSZKDailyReportEntry,
 		JYAnalysisEntry,
-		JYAnalysisLookup
+		JYAnalysisLookup,
+		YSZKDialyLookup,
+		XJLDialyLookup
 	}
 	
 	private static final long serialVersionUID = 1L;

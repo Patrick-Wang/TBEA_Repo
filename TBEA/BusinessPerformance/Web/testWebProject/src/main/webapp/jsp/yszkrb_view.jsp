@@ -64,7 +64,7 @@
     <script src="../jsp/json2.js" type="text/javascript"></script>
    	<script src="../jsp/util.js" type="text/javascript"></script>
 
-    <script src="../jsp/yszkrb.js" type="text/javascript"></script>
+    <script src="../jsp/yszkrb_view.js" type="text/javascript"></script>
    
    <!-- message box -->
 <link href="../jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
@@ -73,7 +73,7 @@
 <script src="../jsp/messageBox.js" type="text/javascript"></script>
 
     <script type="text/javascript">
-    	var instance = yszkrb.View.newInstance();
+    	var instance = yszkrb_view.View.newInstance();
         (function () {
             $(document).ready(function () {
             	instance.init("table", ${month}, ${year}, ${day});
@@ -217,13 +217,13 @@
 			<td>
 		</tr>
 		
-		<tr style="height:5px"></tr>
+		<!-- <tr style="height:5px"></tr>
 		<tr>
 			<td><input id="submit" type="submit" value="提交"
 				style="width: 80px; dispaly: none" onclick="instance.save()"></input>
 			</td>
 
-		</tr>
+		</tr> -->
 	</Table>
 	<%@include file="loading.jsp"%>
     </body>

@@ -43,7 +43,7 @@ public class DailyReportController {
 		return new ModelAndView("yszkrb", map);
 	}
 
-	@RequestMapping(value = "yszk_submit.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yszk_submit.do")
 	public @ResponseBody byte[] submitYszk(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Account account = SessionManager.getAccount(request.getSession());
@@ -54,7 +54,7 @@ public class DailyReportController {
 		return Util.response(code);
 	}
 	
-	@RequestMapping(value = "yszk_update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yszk_update.do")
 	public @ResponseBody byte[] getYszkUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Account account = SessionManager.getAccount(request.getSession());
