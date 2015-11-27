@@ -28,19 +28,19 @@ public class CompositePipe extends BasePipe{
 	// ************************************************
 	
 	
-	private List<IPipeConfigurator> companyPipeConfigs = new ArrayList<IPipeConfigurator>();
-	private IPipeConfigurator advancedPipeConfig;
-	private List<List<Company>> basicCompanies = new ArrayList<List<Company>>();
+	private List<IPipeConfigurator> basicPipeConfigs = new ArrayList<IPipeConfigurator>();
+	private IPipeConfigurator compositePipeConfig;
+	private List<List<Company>> dataCompaniesList = new ArrayList<List<Company>>();
 	private List<Integer> dependIndicators = new ArrayList<Integer>();
 	
 	public CompositePipe(Integer indicator, Date date, IPipeConfigurator advancedPipeConfig) {
 		super(indicator, new ArrayList<Company>(), date);
-		this.advancedPipeConfig = advancedPipeConfig;
+		this.compositePipeConfig = advancedPipeConfig;
 	}
 	
 	public CompositePipe(List<Integer> indicators, Date date, IPipeConfigurator advancedPipeConfig) {
 		super(indicators, new ArrayList<Company>(), date);
-		this.advancedPipeConfig = advancedPipeConfig;
+		this.compositePipeConfig = advancedPipeConfig;
 	}
 
 	public CompositePipe addDependentIndictor(Integer dependIndicator) {
@@ -57,22 +57,26 @@ public class CompositePipe extends BasePipe{
 		return this;
 	}
 	
+	public CompositePipe addCompany(Company comp) {
+		return addCompany(comp, null);
+	}
+	
 	public CompositePipe addCompany(Company comp, IPipeConfigurator dwPipeConfig) {
 		if (!this.companies.contains(comp)) {
 			this.companies.add(comp);
-			this.companyPipeConfigs.add(dwPipeConfig);
-			List<Company> realComps = new ArrayList<Company>();
-			realComps.add(comp);
-			this.basicCompanies.add(realComps);
+			this.basicPipeConfigs.add(dwPipeConfig);
+			List<Company> dataProvidingComps = new ArrayList<Company>();
+			dataProvidingComps.add(comp);
+			this.dataCompaniesList.add(dataProvidingComps);
 		}
 		return this;
 	}
 
-	public CompositePipe addCompany(Company comp, IPipeConfigurator dwPipeConfig, List<Company> realComps) {
+	public CompositePipe addCompany(Company comp, IPipeConfigurator dwPipeConfig, List<Company> dataProvidingComps) {
 		if (!this.companies.contains(comp)) {
 			this.companies.add(comp);
-			this.companyPipeConfigs.add(dwPipeConfig);
-			this.basicCompanies.add(realComps);
+			this.basicPipeConfigs.add(dwPipeConfig);
+			this.dataCompaniesList.add(dataProvidingComps);
 		}
 		return this;
 	}
@@ -113,17 +117,17 @@ public class CompositePipe extends BasePipe{
 		int dependIndicatorsSize = dependIndicators.size();
 		int tmpIndicatorSize = tmpIndicators.size();
 		for (int i = 0, len = this.companies.size(); i < len; ++i) {
-			if (this.companyPipeConfigs.get(i) != null) {
+			if (this.basicPipeConfigs.get(i) != null) {
 				BasicPipe pipe = new BasicPipe(tmpIndicators,
-						this.basicCompanies.get(i), date,
-						this.companyPipeConfigs.get(i));
+						this.dataCompaniesList.get(i), date,
+						this.basicPipeConfigs.get(i));
 				addList(i, len, pipe.getData().subList(dependIndicatorsSize, tmpIndicatorSize));
 			} else {
-				addList(i, len, create(indicators.size(), this.advancedPipeConfig.getColumnCount()));
+				addList(i, len, create(indicators.size(), this.compositePipeConfig.getColumnCount()));
 			}
 		}
 
-		this.advancedPipeConfig.onConfiguring(this);
+		this.compositePipeConfig.onConfiguring(this);
 		for (int i = 0, len = data.size(); i < len; ++i) {
 			for (int j = 0, size = filters.size(); j < size; ++j) {
 				try {

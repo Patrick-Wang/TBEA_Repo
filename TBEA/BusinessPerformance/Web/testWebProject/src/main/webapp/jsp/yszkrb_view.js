@@ -1,15 +1,27 @@
 /// <reference path="util.ts" />
 /// <reference path="jqgrid/jqassist.ts" />
-declare var echarts;
-module yszkrb_view {
-
-    enum YSZKColumnId {
-        JTZJHLZB, DWHKJH, JRHK, YLJ, HLZBWC, HLJHWCL, KJYSZKHK, QBBC, ZQBC, QYQB, JHWCL, JZZMYE
-    };
-
-    class JQGridAssistantFactory {
-
-        public static createTable(gridName: string): JQTable.JQGridAssistant {
+var yszkrb_view;
+(function (yszkrb_view) {
+    var YSZKColumnId;
+    (function (YSZKColumnId) {
+        YSZKColumnId[YSZKColumnId["JTZJHLZB"] = 0] = "JTZJHLZB";
+        YSZKColumnId[YSZKColumnId["DWHKJH"] = 1] = "DWHKJH";
+        YSZKColumnId[YSZKColumnId["JRHK"] = 2] = "JRHK";
+        YSZKColumnId[YSZKColumnId["YLJ"] = 3] = "YLJ";
+        YSZKColumnId[YSZKColumnId["HLZBWC"] = 4] = "HLZBWC";
+        YSZKColumnId[YSZKColumnId["HLJHWCL"] = 5] = "HLJHWCL";
+        YSZKColumnId[YSZKColumnId["KJYSZKHK"] = 6] = "KJYSZKHK";
+        YSZKColumnId[YSZKColumnId["QBBC"] = 7] = "QBBC";
+        YSZKColumnId[YSZKColumnId["ZQBC"] = 8] = "ZQBC";
+        YSZKColumnId[YSZKColumnId["QYQB"] = 9] = "QYQB";
+        YSZKColumnId[YSZKColumnId["JHWCL"] = 10] = "JHWCL";
+        YSZKColumnId[YSZKColumnId["JZZMYE"] = 11] = "JZZMYE";
+    })(YSZKColumnId || (YSZKColumnId = {}));
+    ;
+    var JQGridAssistantFactory = (function () {
+        function JQGridAssistantFactory() {
+        }
+        JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("单位", "t0", true, JQTable.TextAlign.Left),
                 new JQTable.Node("集团下达月度资金回笼指标", "t1"),
@@ -26,87 +38,70 @@ module yszkrb_view {
                 new JQTable.Node("全月确保", "t9"),
                 new JQTable.Node("预计全月计划完成率", "t10"),
                 new JQTable.Node("截止月底应收账款账面余额", "t11")
-
             ], gridName);
+        };
+        return JQGridAssistantFactory;
+    })();
+    var View = (function () {
+        function View() {
+            this.mDataSet = new Util.Ajax("yszk_view_update.do");
+            this.mData = [];
         }
-    }
-
-    export class View {
-        public static newInstance(): View {
+        View.newInstance = function () {
             return new View();
-        }
-        private mDay: number;
-        private mMonth: number;
-        private mYear: number;
-        private mTableId: string;
-        private mDataSet: Util.Ajax = new Util.Ajax("yszk_view_update.do");;
-        private mExportDataSet: Util.Ajax;
-        private mData: Array<string[]> = [];
-        TableId: string;
-        childTableId: string;
-
-        public init(tableId: string, month: number, year: number, day: number): void {
+        };
+        ;
+        View.prototype.init = function (tableId, month, year, day) {
+            var _this = this;
             this.mYear = year;
             this.mMonth = month;
             this.mTableId = tableId;
             this.mDay = day;
-
             $("#date").val(year + "-" + month + "-" + day);
             $("#date").datepicker({
-                //            numberOfMonths:1,//显示几个月  
-                //            showButtonPanel:true,//是否显示按钮面板  
-                dateFormat: 'yy-mm-dd',//日期格式  
-                //            clearText:"清除",//清除日期的按钮名称  
-                //            closeText:"关闭",//关闭选择框的按钮名称  
-                yearSuffix: '年', //年的后缀  
-                showMonthAfterYear: true,//是否把月放在年的后面  
-                defaultDate: year + "-" + month + "-" + day,//默认日期  
-                //            minDate:'2011-03-05',//最小日期  
-                maxDate: year + "-" + month + "-" + day,//最大日期  
+                dateFormat: 'yy-mm-dd',
+                yearSuffix: '年',
+                showMonthAfterYear: true,
+                defaultDate: year + "-" + month + "-" + day,
+                maxDate: year + "-" + month + "-" + day,
                 monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                 dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
                 dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
                 dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
-                onSelect: (selectedDate) => {//选择日期后执行的操作  
-                    var d: Date = new Date(selectedDate);
-                    this.mYear = d.getFullYear();
-                    this.mMonth = d.getMonth() + 1;
-                    this.mDay = d.getDate();
+                onSelect: function (selectedDate) {
+                    var d = new Date(selectedDate);
+                    _this.mYear = d.getFullYear();
+                    _this.mMonth = d.getMonth() + 1;
+                    _this.mDay = d.getDate();
                 }
             });
-            $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
-             
+            $("#ui-datepicker-div").css('font-size', '0.8em');
             this.updateUI();
-
-        }
-
-
-        public exportExcel() {
+        };
+        View.prototype.exportExcel = function () {
             $("#exportMarketData")[0].action = "yszk_view_export.do?" + Util.Ajax.toUrlParam({});
             $("#exportMarketData")[0].submit();
-        }
-
-        public updateUI() {
+        };
+        View.prototype.updateUI = function () {
+            var _this = this;
             this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay })
-                .then((dataArray: any) => {
-                    this.mData = dataArray;
-                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日应收账款日报");
-                    document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日应收账款日报";
-                    this.updateTable(); //update data for table
-                });
-        }
-        private initPercentList(): std.vector<number> {
-            var precentList: std.vector<number> = new std.vector<number>();
+                .then(function (dataArray) {
+                _this.mData = dataArray;
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报");
+                document.title = _this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报";
+                _this.updateTable();
+            });
+        };
+        View.prototype.initPercentList = function () {
+            var precentList = new std.vector();
             precentList.push(YSZKColumnId.HLJHWCL);
             precentList.push(YSZKColumnId.JHWCL);
             return precentList;
-        }
-
-
-        private updateTable(): void {
+        };
+        View.prototype.updateTable = function () {
             var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
-            var outputData: string[][] = [];
+            var tableAssist = JQGridAssistantFactory.createTable(name);
+            var outputData = [];
             Util.formatData(outputData, this.mData, this.initPercentList(), []);
             var data = [
                 ["沈变公司"],
@@ -128,7 +123,6 @@ module yszkrb_view {
                 ["众和公司"],
                 ["集团合计"]
             ];
-
             var row = [];
             for (var i = 0; i < outputData.length; ++i) {
                 row = [].concat(outputData[i]);
@@ -137,26 +131,24 @@ module yszkrb_view {
                     tableAssist.setRowBgColor(i, 183, 222, 232);
                 }
             }
-
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
-            $("#" + name).jqGrid(
-                tableAssist.decorate({
-                    data: tableAssist.getData(data),
-                    datatype: "local",
-                    multiselect: false,
-                    drag: false,
-                    resize: false,
-                    height: "100%",
-                    width: 1330,
-                    shrinkToFit: true,
-                    rowNum: 200,
-                    autoScroll: true
-                }));
-
+            $("#" + name).jqGrid(tableAssist.decorate({
+                data: tableAssist.getData(data),
+                datatype: "local",
+                multiselect: false,
+                drag: false,
+                resize: false,
+                height: "100%",
+                width: 1330,
+                shrinkToFit: true,
+                rowNum: 200,
+                autoScroll: true
+            }));
             $("#export").css('display', 'block');
-
-        }
-    }
-}
+        };
+        return View;
+    })();
+    yszkrb_view.View = View;
+})(yszkrb_view || (yszkrb_view = {}));
