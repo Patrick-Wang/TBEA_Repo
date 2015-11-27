@@ -143,6 +143,9 @@ public class LoginServlet {
 		session.setAttribute("YSZKDialyLookup",
 				dailyReportService.hasYSZKDialyLookupAuthority(account));
 		
+		session.setAttribute("XJLDialyLookup",
+				dailyReportService.hasXJLDialyLookupAuthority(account));
+		
 		session.setAttribute("JYAnalysisLookup",
 				dailyReportService.hasJYAnalysisLookupAuthority(account) || dailyReportService.hasYSZKDialyLookupAuthority(account));
 

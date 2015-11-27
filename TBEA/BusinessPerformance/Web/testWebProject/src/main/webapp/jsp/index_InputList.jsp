@@ -75,7 +75,7 @@
 				</li>
 				<li data-thumb="asset/img/example/bar1.png"><a
 					href="../dailyReport/yszk.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>应收账款日报录入</strong></span></a>
+						src="../images/charts/force.png"> <span><strong>应收账款日报录入</strong></span></a>
 				</li>
 			</ul>
 		</div>

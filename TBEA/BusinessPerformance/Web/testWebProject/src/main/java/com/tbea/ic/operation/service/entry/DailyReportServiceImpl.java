@@ -130,5 +130,11 @@ public class DailyReportServiceImpl implements DailyReportService{
 		return count > 0;
 	}
 	
+	@Override
+	public boolean hasXJLDialyLookupAuthority(Account account) {
+		int count = extendAuthDao.getAuthorityCount(account, ExtendAuthority.AuthType.XJLDialyLookup.ordinal());
+		return count > 0;
+	}
+	
 	
 }
