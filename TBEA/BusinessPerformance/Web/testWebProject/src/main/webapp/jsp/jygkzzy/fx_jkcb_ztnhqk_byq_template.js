@@ -51,6 +51,9 @@ var fx_jkcb_ztnhqk_byq_template;
                 this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy);
                 this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx, opt.isByq, opt.isXl, opt.isSbdcy);
                 //this.updateTextandTitle(this.mDateSelector.getDate());
+                if (opt.comps.length == 1) {
+                    this.mCompanySelector.hide();
+                }
                 this.updateUI();
             }
         };
@@ -72,8 +75,9 @@ var fx_jkcb_ztnhqk_byq_template;
             });
         };
         View.prototype.updateTextandTitle = function (date) {
-            $('h1').text(date.year + "年" + date.month + "月整体能耗情况");
-            document.title = date.year + "年" + date.month + "月整体能耗情况";
+            var compName = this.mCompanySelector.getCompanyName();
+            $('h1').text(date.year + "年" + date.month + "月" + compName + "整体能耗情况");
+            document.title = date.year + "年" + date.month + "月" + compName + "整体能耗情况";
         };
         View.prototype.updateTable = function () {
             var name = this.mOpt.tableId + "_jqgrid_1234";

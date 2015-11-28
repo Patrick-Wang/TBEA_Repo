@@ -128,7 +128,6 @@ public class FxJkcbJsjbServiceImpl implements FxJkcbJsjbService{
 			String[] row = new String[6];			
 			row[0] = bglxfl.getJygkZzyFl().getViewname();
 			JygkZzyFxJkcbJsjb jygkZzyFxJkcbJsjb=null;
-			JygkZzyCcCcwcqk jygkZzyCcCcwcqk=null;
 			for (JygkZzyFxJkcbJsjb d : fxJkcbJsjbList){
 				if(bglxfl.getJygkZzyFl().getId()==d.getZzyflId()){
 					jygkZzyFxJkcbJsjb=d;				
@@ -189,7 +188,7 @@ public class FxJkcbJsjbServiceImpl implements FxJkcbJsjbService{
 	}
 	
 	private String bigDecimalToString(BigDecimal va){
-		if(va==null||(va.compareTo(BigDecimal.valueOf(0))==0)){
+		if(va==null){
 			return null;
 		}else{
 			return va.toString();

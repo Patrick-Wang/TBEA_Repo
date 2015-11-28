@@ -64,6 +64,9 @@ module jygk_zzy_ch_chjgjnh {
                 this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy);
                 this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx, opt.isByq, opt.isXl, opt.isSbdcy);               
                 //this.updateTextandTitle(this.mDateSelector.getDate());
+                if (opt.comps.length == 1){
+                    this.mCompanySelector.hide();
+                }
                 this.updateUI();
             }
         }
@@ -88,8 +91,9 @@ module jygk_zzy_ch_chjgjnh {
         }
 
         private updateTextandTitle(date: Util.Date) {
-            $('h1').text(date.year + "年" + date.month + "月存货结构及内涵");
-            document.title = date.year + "年" + date.month + "月存货结构及内涵";
+            var compName = this.mCompanySelector.getCompanyName()
+            $('h1').text(date.year + "年" + date.month + "月"+compName+"存货结构及内涵");
+            document.title = date.year + "年" + date.month + "月"+compName+"存货结构及内涵";
         }
 
         private updateTable(): void {

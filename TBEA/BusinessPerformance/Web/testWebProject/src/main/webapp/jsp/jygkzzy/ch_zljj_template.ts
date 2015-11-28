@@ -85,6 +85,9 @@ module jygk_zzy_ch_zljj {
                 this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy);
                 this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx, opt.isByq, opt.isXl, opt.isSbdcy);               
                 //this.updateTextandTitle(this.mDateSelector.getDate());
+                if (opt.comps.length == 1){
+                    this.mCompanySelector.hide();
+                }
                 this.updateUI();
             }
         }
@@ -109,8 +112,9 @@ module jygk_zzy_ch_zljj {
         }
 
         private updateTextandTitle(date: Util.Date) {
-            $('h1').text(date.year + "年" + date.month + "月账龄结构");
-            document.title = date.year + "年" + date.month + "月账龄结构";
+            var compName = this.mCompanySelector.getCompanyName()
+            $('h1').text(date.year + "年" + date.month + "月"+compName+"账龄结构");
+            document.title = date.year + "年" + date.month + "月"+compName+"账龄结构";
         }
 
         private updateTable(): void {

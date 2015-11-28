@@ -70,6 +70,9 @@ module fx_cpylsp_dqddmlqk {
                this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps,opt.isSbdcy);
                this.mBglxSelector=new Util.BglxViewSelector(opt.bglxId,opt.curbglx,opt.isByq,opt.isXl,opt.isSbdcy);               
                //this.updateTextandTitle(this.mDateSelector.getDate());
+               if (opt.comps.length == 1){
+                    this.mCompanySelector.hide();
+               }
                this.updateUI();
            }
         }
@@ -94,8 +97,9 @@ module fx_cpylsp_dqddmlqk {
         }
         
         private updateTextandTitle(date: Util.Date) {
-            $('h1').text(date.year + "年" + date.month + "月订单毛利情况");
-            document.title = date.year + "年" + date.month + "月订单毛利情况";
+            var compName = this.mCompanySelector.getCompanyName()
+            $('h1').text(date.year + "年" + date.month + "月"+compName+"订单毛利情况");
+            document.title = date.year + "年" + date.month + "月"+compName+"订单毛利情况";
         }
         
         private updateTable(): void {

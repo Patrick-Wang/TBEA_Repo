@@ -62,7 +62,7 @@ module zzy_lrsj_template {
                 }
                 this.mCompanySelector = new Util.CompanySelectorZzy(this.mOpt.companyId, opt.comps, false);
                 if (opt.comps.length == 1){
-                    $('#company').css("display", "none");
+                    this.mCompanySelector.hide();
                 }
                 this.updateTitle();
         }

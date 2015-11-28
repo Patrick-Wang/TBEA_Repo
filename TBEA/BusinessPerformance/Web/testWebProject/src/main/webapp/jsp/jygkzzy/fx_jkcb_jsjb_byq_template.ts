@@ -64,6 +64,9 @@ module fx_jkcb_jsjb_byq {
                this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps,opt.isSbdcy);
                this.mBglxSelector=new Util.BglxViewSelector(opt.bglxId,opt.curbglx,opt.isByq,opt.isXl,opt.isSbdcy);               
                //this.updateTextandTitle(this.mDateSelector.getDate());
+               if (opt.comps.length == 1){
+                    this.mCompanySelector.hide();
+               }
                this.updateUI();
            }
         }
@@ -88,8 +91,9 @@ module fx_jkcb_jsjb_byq {
         }
         
         private updateTextandTitle(date: Util.Date) {
-            $('h1').text(date.year + "年" + date.month + "月技术降本");
-            document.title = date.year + "年" + date.month + "月技术降本";
+            var compName = this.mCompanySelector.getCompanyName()
+            $('h1').text(date.year + "年" + date.month + "月"+compName+"技术降本");
+            document.title = date.year + "年" + date.month + "月"+compName+"技术降本";
         }
         
         private updateTable(): void {

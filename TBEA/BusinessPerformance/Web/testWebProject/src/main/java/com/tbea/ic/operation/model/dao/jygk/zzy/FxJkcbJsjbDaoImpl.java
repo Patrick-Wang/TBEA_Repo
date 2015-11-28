@@ -32,11 +32,12 @@ public class FxJkcbJsjbDaoImpl extends AbstractReadWriteDaoImpl<JygkZzyFxJkcbJsj
 		for(Object[] oa:objectList){
 			JygkZzyFxJkcbJsjb j=new JygkZzyFxJkcbJsjb();
 			j.setZzyflId((int)oa[0]);
-			j.setCltdjb((BigDecimal)oa[1]);
-			j.setJgcsyhjb((BigDecimal)oa[2]);
-			j.setQtjb((BigDecimal)oa[3]);
-			j.setScts((BigDecimal)oa[4]);
-			j.setYhts((BigDecimal)oa[5]);
+			j.setCz((BigDecimal)oa[1]);
+			j.setCltdjb((BigDecimal)oa[2]);
+			j.setJgcsyhjb((BigDecimal)oa[3]);
+			j.setQtjb((BigDecimal)oa[4]);
+			j.setScts((BigDecimal)oa[5]);
+			j.setYhts((BigDecimal)oa[6]);
 			retList.add(j);
 		}
 		return retList;

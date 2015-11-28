@@ -24,39 +24,39 @@ module Util {
             var bglxSel = $("#" + this.bglxId );            
             bglxSel.append('<option value= "10001" '+(curbglx=='10001'?'selected="selected"':'')+'>当期订单毛利情况</option>');
             if(isByq){
-                bglxSel.append('<option value= "10002" '+(curbglx=='10002'?'selected="selected"':'')+'>后期履约订单质量（变压器）</option>');
+                bglxSel.append('<option value= "10002" '+(curbglx=='10002'?'selected="selected"':'')+'>后期履约订单质量</option>');//（变压器）
             }
             if(isXl){
-                bglxSel.append('<option value= "10003" '+(curbglx=='10003'?'selected="selected"':'')+'>后期履约订单质量（线缆）</option>');
+                bglxSel.append('<option value= "10003" '+(curbglx=='10003'?'selected="selected"':'')+'>后期履约订单质量</option>');//（线缆）
             }
             bglxSel.append('<option value= "10004" '+(curbglx=='10004'?'selected="selected"':'')+'>降控指标完成情况 </option>');
             if(isByq){
-                bglxSel.append('<option value= "10005" '+(curbglx=='10005'?'selected="selected"':'')+'>技术降本（变压器）</option>');
+                bglxSel.append('<option value= "10005" '+(curbglx=='10005'?'selected="selected"':'')+'>技术降本</option>');//（变压器）
             }
             if(isXl){
-                bglxSel.append('<option value= "10006" '+(curbglx=='10006'?'selected="selected"':'')+'>技术降本（线缆）</option>');
+                bglxSel.append('<option value= "10006" '+(curbglx=='10006'?'selected="selected"':'')+'>技术降本</option>');//（线缆）
             }
             bglxSel.append('<option value= "10007" '+(curbglx=='10007'?'selected="selected"':'')+'>采购降本</option>');
             bglxSel.append('<option value= "10008" '+(curbglx=='10008'?'selected="selected"':'')+'>生产降本</option>');
             if(isByq){
-                bglxSel.append('<option value= "10009" '+(curbglx=='10009'?'selected="selected"':'')+'>整体能耗情况（变压器）</option>');
+                bglxSel.append('<option value= "10009" '+(curbglx=='10009'?'selected="selected"':'')+'>整体能耗情况</option>');//（变压器）
             }
             if(isXl){
-                bglxSel.append('<option value= "10010" '+(curbglx=='10010'?'selected="selected"':'')+'>整体能耗情况（线缆）</option>');
+                bglxSel.append('<option value= "10010" '+(curbglx=='10010'?'selected="selected"':'')+'>整体能耗情况</option>');//（线缆）
             }
             bglxSel.append('<option value= "10011" '+(curbglx=='10011'?'selected="selected"':'')+'>销售降本</option>');
             if(isByq){
-                bglxSel.append('<option value= "10012" '+(curbglx=='10012'?'selected="selected"':'')+'>产出完成情况（变压器）</option>');
+                bglxSel.append('<option value= "10012" '+(curbglx=='10012'?'selected="selected"':'')+'>产出完成情况</option>');//（变压器）
             }
             if(isXl){
-                bglxSel.append('<option value= "10013" '+(curbglx=='10013'?'selected="selected"':'')+'>产出完成情况（线缆）</option>');
-                bglxSel.append('<option value= "10014" '+(curbglx=='10014'?'selected="selected"':'')+'>产出完成情况（线缆）工时</option>');
+                bglxSel.append('<option value= "10013" '+(curbglx=='10013'?'selected="selected"':'')+'>产出完成情况</option>');//（线缆）
+                bglxSel.append('<option value= "10014" '+(curbglx=='10014'?'selected="selected"':'')+'>产出完成情况</option>');//（线缆）
             }
             if(isByq){
-                bglxSel.append('<option value= "10015" '+(curbglx=='10015'?'selected="selected"':'')+'>可供履约订单储备情况（变压器）</option>');
+                bglxSel.append('<option value= "10015" '+(curbglx=='10015'?'selected="selected"':'')+'>可供履约订单储备情况</option>');//（变压器）
             }
             if(isXl){
-                bglxSel.append('<option value= "10016" '+(curbglx=='10016'?'selected="selected"':'')+'>可供履约订单储备情况（线缆）</option>');
+                bglxSel.append('<option value= "10016" '+(curbglx=='10016'?'selected="selected"':'')+'>可供履约订单储备情况</option>');//（线缆）
             }
             bglxSel.append('<option value= "10017" '+(curbglx=='10017'?'selected="selected"':'')+'>存货结构及内涵 </option>');
             bglxSel.append('<option value= "10018" '+(curbglx=='10018'?'selected="selected"':'')+'>账龄结构 </option>');
@@ -100,39 +100,82 @@ module Util {
             var bglxSel = $("#" + this.bglxId);            
             bglxSel.append('<option value= "20001" '+(curbglx=='20001'?'selected="selected"':'')+'>当期订单毛利情况</option>');
             if(isByq||isSbdcy){
-                bglxSel.append('<option value= "20002" '+(curbglx=='20002'?'selected="selected"':'')+'>后期履约订单质量（变压器）</option>');            
+                if(isSbdcy){
+                    bglxSel.append('<option value= "20002" '+(curbglx=='20002'?'selected="selected"':'')+'>后期履约订单质量（变压器）</option>'); 
+                }else{
+                    bglxSel.append('<option value= "20002" '+(curbglx=='20002'?'selected="selected"':'')+'>后期履约订单质量</option>'); 
+                }
+                           
             }
             if(isXl||isSbdcy){
-                bglxSel.append('<option value= "20003" '+(curbglx=='20003'?'selected="selected"':'')+'>后期履约订单质量（线缆）</option>');            
+                if(isSbdcy){
+                    bglxSel.append('<option value= "20003" '+(curbglx=='20003'?'selected="selected"':'')+'>后期履约订单质量（线缆）</option>');  
+                }else{
+                    bglxSel.append('<option value= "20003" '+(curbglx=='20003'?'selected="selected"':'')+'>后期履约订单质量</option>');                
+                }
+                          
             }
             bglxSel.append('<option value= "20004" '+(curbglx=='20004'?'selected="selected"':'')+'>降控指标完成情况 </option>');
             if(isByq||isSbdcy){
-                bglxSel.append('<option value= "20005" '+(curbglx=='20005'?'selected="selected"':'')+'>技术降本（变压器）</option>');
+                if(isSbdcy){
+                    bglxSel.append('<option value= "20005" '+(curbglx=='20005'?'selected="selected"':'')+'>技术降本（变压器）</option>');                
+                }else{
+                    bglxSel.append('<option value= "20005" '+(curbglx=='20005'?'selected="selected"':'')+'>技术降本</option>');                        
+                }
             }
             if(isXl||isSbdcy){
-                bglxSel.append('<option value= "20006" '+(curbglx=='20006'?'selected="selected"':'')+'>技术降本（线缆）</option>');
+                if(isSbdcy){
+                    bglxSel.append('<option value= "20006" '+(curbglx=='20006'?'selected="selected"':'')+'>技术降本（线缆）</option>');                           
+                }else{
+                    bglxSel.append('<option value= "20006" '+(curbglx=='20006'?'selected="selected"':'')+'>技术降本</option>');                                  
+                }
             }
             bglxSel.append('<option value= "20007" '+(curbglx=='20007'?'selected="selected"':'')+'>采购降本</option>');
             bglxSel.append('<option value= "20008" '+(curbglx=='20008'?'selected="selected"':'')+'>生产降本</option>');
             if(isByq||isSbdcy){
-                bglxSel.append('<option value= "20009" '+(curbglx=='20009'?'selected="selected"':'')+'>整体能耗情况（变压器）</option>');
+                if(isSbdcy){
+                    bglxSel.append('<option value= "20009" '+(curbglx=='20009'?'selected="selected"':'')+'>整体能耗情况（变压器）</option>');                                       
+                }else{
+                    bglxSel.append('<option value= "20009" '+(curbglx=='20009'?'selected="selected"':'')+'>整体能耗情况</option>');                
+                }
             }
             if(isXl||isSbdcy){
-                bglxSel.append('<option value= "20010" '+(curbglx=='20010'?'selected="selected"':'')+'>整体能耗情况（线缆）</option>');
+                if(isSbdcy){
+                    bglxSel.append('<option value= "20010" '+(curbglx=='20010'?'selected="selected"':'')+'>整体能耗情况（线缆）</option>');                                               
+                }else{
+                    bglxSel.append('<option value= "20010" '+(curbglx=='20010'?'selected="selected"':'')+'>整体能耗情况</option>');     
+                }
             }
             bglxSel.append('<option value= "20011" '+(curbglx=='20011'?'selected="selected"':'')+'>销售降本</option>');
             if(isByq||isSbdcy){
-                bglxSel.append('<option value= "20012" '+(curbglx=='20012'?'selected="selected"':'')+'>产出完成情况（变压器）</option>');
+                if(isSbdcy){
+                    bglxSel.append('<option value= "20012" '+(curbglx=='20012'?'selected="selected"':'')+'>产出完成情况（变压器）</option>');                                                           
+                }else{
+                    bglxSel.append('<option value= "20012" '+(curbglx=='20012'?'selected="selected"':'')+'>产出完成情况</option>');                
+                }
             }
             if(isXl||isSbdcy){
-                bglxSel.append('<option value= "20013" '+(curbglx=='20013'?'selected="selected"':'')+'>产出完成情况（线缆）</option>');
-                bglxSel.append('<option value= "20014" '+(curbglx=='20014'?'selected="selected"':'')+'>产出完成情况（线缆）工时</option>');
+                if(isSbdcy){
+                    bglxSel.append('<option value= "20013" '+(curbglx=='20013'?'selected="selected"':'')+'>产出完成情况（线缆）</option>');
+                    bglxSel.append('<option value= "20014" '+(curbglx=='20014'?'selected="selected"':'')+'>产出完成情况（线缆）工时</option>');                                                         
+                }else{
+                    bglxSel.append('<option value= "20013" '+(curbglx=='20013'?'selected="selected"':'')+'>产出完成情况</option>');
+                    bglxSel.append('<option value= "20014" '+(curbglx=='20014'?'selected="selected"':'')+'>产出完成情况工时</option>');
+                }
             }
             if(isByq||isSbdcy){
-                bglxSel.append('<option value= "20015" '+(curbglx=='20015'?'selected="selected"':'')+'>可供履约订单储备情况（变压器）</option>');
+                if(isSbdcy){
+                    bglxSel.append('<option value= "20015" '+(curbglx=='20015'?'selected="selected"':'')+'>可供履约订单储备情况（变压器）</option>');                                                         
+                }else{
+                    bglxSel.append('<option value= "20015" '+(curbglx=='20015'?'selected="selected"':'')+'>可供履约订单储备情况</option>');                         
+                }
             }
             if(isXl||isSbdcy){
-                bglxSel.append('<option value= "20016" '+(curbglx=='20016'?'selected="selected"':'')+'>可供履约订单储备情况（线缆）</option>');
+                if(isSbdcy){
+                    bglxSel.append('<option value= "20016" '+(curbglx=='20016'?'selected="selected"':'')+'>可供履约订单储备情况（线缆）</option>');                                                                     
+                }else{
+                    bglxSel.append('<option value= "20016" '+(curbglx=='20016'?'selected="selected"':'')+'>可供履约订单储备情况</option>');                                 
+                }
             }
             bglxSel.append('<option value= "20017" '+(curbglx=='20017'?'selected="selected"':'')+'>存货结构及内涵 </option>');
             bglxSel.append('<option value= "20018" '+(curbglx=='20018'?'selected="selected"':'')+'>账龄结构 </option>');

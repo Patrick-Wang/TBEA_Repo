@@ -77,6 +77,9 @@ var jygk_zzy_cc_kglyddcbqk;
                 this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy);
                 this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx, opt.isByq, opt.isXl, opt.isSbdcy);
                 //this.updateTextandTitle(this.mDateSelector.getDate());
+                if (opt.comps.length == 1) {
+                    this.mCompanySelector.hide();
+                }
                 this.updateUI();
             }
         };
@@ -98,8 +101,9 @@ var jygk_zzy_cc_kglyddcbqk;
             });
         };
         View.prototype.updateTextandTitle = function (date) {
-            $('h1').text(date.year + "年" + date.month + "可供履约订单储备情况");
-            document.title = date.year + "年" + date.month + "可供履约订单储备情况";
+            var compName = this.mCompanySelector.getCompanyName();
+            $('h1').text(date.year + "年" + date.month + "月" + compName + "可供履约订单储备情况");
+            document.title = date.year + "年" + date.month + "月" + compName + "可供履约订单储备情况";
         };
         View.prototype.updateTable = function () {
             var name = this.mOpt.tableId + "_jqgrid_1234";

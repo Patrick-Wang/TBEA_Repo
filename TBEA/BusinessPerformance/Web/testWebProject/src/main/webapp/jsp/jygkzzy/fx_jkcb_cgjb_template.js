@@ -44,6 +44,9 @@ var fx_jkcb_cgjb;
                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
                 this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy);
                 this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx, opt.isByq, opt.isXl, opt.isSbdcy);
+                if (opt.comps.length == 1) {
+                    this.mCompanySelector.hide();
+                }
                 this.updateUI();
             }
         };
@@ -65,8 +68,9 @@ var fx_jkcb_cgjb;
             });
         };
         View.prototype.updateTextandTitle = function (date) {
-            $('h1').text(date.year + "年" + date.month + "月采购降本");
-            document.title = date.year + "年" + date.month + "月采购降本";
+            var compName = this.mCompanySelector.getCompanyName();
+            $('h1').text(date.year + "年" + date.month + "月" + compName + "采购降本");
+            document.title = date.year + "年" + date.month + "月" + compName + "采购降本";
         };
         View.prototype.updateTable = function () {
             var name = this.mOpt.tableId + "_jqgrid_1234";

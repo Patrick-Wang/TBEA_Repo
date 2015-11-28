@@ -273,7 +273,7 @@ public class FxSxfykzServiceImpl implements FxSxfykzService{
 	}
 	
 	private String bigDecimalToString(BigDecimal va){
-		if(va==null||(va.compareTo(BigDecimal.valueOf(0))==0)){
+		if(va==null){
 			return null;
 		}else{
 			return va.toString();

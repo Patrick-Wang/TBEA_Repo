@@ -41,6 +41,9 @@ var fx_cpylsp_hqlyddzl_xl;
                 this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy);
                 this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx, opt.isByq, opt.isXl, opt.isSbdcy);
                 //this.updateTextandTitle(this.mDateSelector.getDate());
+                if (opt.comps.length == 1) {
+                    this.mCompanySelector.hide();
+                }
                 this.updateUI();
             }
         };
@@ -62,8 +65,9 @@ var fx_cpylsp_hqlyddzl_xl;
             });
         };
         View.prototype.updateTextandTitle = function (date) {
-            $('h1').text(date.year + "年" + date.month / 3 + "季度后期履约订单质量");
-            document.title = date.year + "年" + date.month / 3 + "季度后期履约订单质量";
+            var compName = this.mCompanySelector.getCompanyName();
+            $('h1').text(date.year + "年" + date.month / 3 + "季度" + compName + "后期履约订单质量");
+            document.title = date.year + "年" + date.month / 3 + "季度" + compName + "后期履约订单质量";
         };
         View.prototype.updateTable = function () {
             var name = this.mOpt.tableId + "_jqgrid_1234";
