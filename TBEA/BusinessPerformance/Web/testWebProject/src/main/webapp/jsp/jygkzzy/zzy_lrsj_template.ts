@@ -60,7 +60,7 @@ module zzy_lrsj_template {
                 } else {
                     this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
                 }
-                this.mCompanySelector = new Util.CompanySelectorZzy(this.mOpt.companyId, opt.comps, false);
+                this.mCompanySelector = new Util.CompanySelectorZzy(this.mOpt.companyId, opt.comps, false,'01');
                 if (opt.comps.length == 1){
                     this.mCompanySelector.hide();
                 }

@@ -2,7 +2,7 @@
 var Util;
 (function (Util) {
     var CompanySelectorZzy = (function () {
-        function CompanySelectorZzy(mCtrlId, dwxxs, isSbdcy) {
+        function CompanySelectorZzy(mCtrlId, dwxxs, isSbdcy, viewType) {
             this.mCtrlId = mCtrlId;
             this.companyId = mCtrlId + "Id";
             this.tableId = mCtrlId + "Table";
@@ -14,13 +14,24 @@ var Util;
             var Sel = $("#" + this.companyId);
             if (dwxxs.length >= 1) {
                 for (var i = 0; i < dwxxs.length; i++) {
-                    Sel.append('<option value= "' + dwxxs[i].id + '">' + dwxxs[i].name + '</option>');
+                    if (viewType == '01' || viewType == '02') {
+                        if (dwxxs[i].id == '1' || dwxxs[i].id == '2' || dwxxs[i].id == '3') {
+                            Sel.append('<option value= "' + dwxxs[i].id + '">' + dwxxs[i].name + '</option>');
+                        }
+                    }
+                    if (viewType == '01' || viewType == '03') {
+                        if (dwxxs[i].id == '4' || dwxxs[i].id == '5' || dwxxs[i].id == '6') {
+                            Sel.append('<option value= "' + dwxxs[i].id + '">' + dwxxs[i].name + '</option>');
+                        }
+                    }
                 }
                 if (isSbdcy) {
-                    Sel.append('<option value= 900000>变压器产业</option>');
-                }
-                if (isSbdcy) {
-                    Sel.append('<option value= 800000>线缆产业</option>');
+                    if (viewType == '01' || viewType == '02') {
+                        Sel.append('<option value= 900000>变压器产业</option>');
+                    }
+                    else if (viewType == '01' || viewType == '03') {
+                        Sel.append('<option value= 800000>线缆产业</option>');
+                    }
                 }
             }
             Sel.multiselect({
@@ -36,7 +47,7 @@ var Util;
             return $("#" + this.companyId).val();
         };
         CompanySelectorZzy.prototype.getCompanyName = function () {
-            return $("#" + this.companyId).text();
+            return $("#" + this.companyId).find("option:selected").text();
         };
         CompanySelectorZzy.prototype.hide = function () {
             $("#" + this.mCtrlId).hide();

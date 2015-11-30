@@ -97,7 +97,7 @@ module jygk_zzy_cc_kglyddcbqk {
             } else {
                 this.mOpt = opt;
                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
-                this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy);
+                this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy,'02');
                 this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx, opt.isByq, opt.isXl, opt.isSbdcy);               
                 //this.updateTextandTitle(this.mDateSelector.getDate());
                 if (opt.comps.length == 1){
