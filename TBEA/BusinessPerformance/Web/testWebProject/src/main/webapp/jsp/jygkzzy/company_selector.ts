@@ -44,7 +44,7 @@ module Util {
            return $("#" + this.companyId).val();
         }      
         public getCompanyName(): String{
-           return $("#" + this.companyId).text();
+           return $("#" + this.companyId).find("option:selected").text();            
         }
         public hide(){
            $("#" + this.mCtrlId).hide();
