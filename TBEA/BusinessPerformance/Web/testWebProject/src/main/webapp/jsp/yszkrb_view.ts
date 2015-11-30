@@ -39,7 +39,7 @@ module yszkrb_view {
         private mMonth: number;
         private mYear: number;
         private mTableId: string;
-        private mDataSet: Util.Ajax = new Util.Ajax("yszk_view_update.do");;
+        private mDataSet: Util.Ajax = new Util.Ajax("yszk_update.do");;
         private mExportDataSet: Util.Ajax;
         private mData: Array<string[]> = [];
         TableId: string;
@@ -51,7 +51,7 @@ module yszkrb_view {
             this.mTableId = tableId;
             this.mDay = day;
 
-            $("#date").val(year + "-" + month + "-" + day);
+            $("#date").val(year + "/" + month + "/" + day);
             $("#date").datepicker({
                 //            numberOfMonths:1,//显示几个月  
                 //            showButtonPanel:true,//是否显示按钮面板  
@@ -60,9 +60,9 @@ module yszkrb_view {
                 //            closeText:"关闭",//关闭选择框的按钮名称  
                 yearSuffix: '年', //年的后缀  
                 showMonthAfterYear: true,//是否把月放在年的后面  
-                defaultDate: year + "-" + month + "-" + day,//默认日期  
+                defaultDate: year + "/" + month + "/" + day,//默认日期  
                 //            minDate:'2011-03-05',//最小日期  
-                maxDate: year + "-" + month + "-" + day,//最大日期  
+                maxDate: year + "/" + month + "/" + day,//最大日期  
                 monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                 dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
                 dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
