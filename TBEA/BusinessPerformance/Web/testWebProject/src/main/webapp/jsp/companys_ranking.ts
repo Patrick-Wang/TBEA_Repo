@@ -49,8 +49,42 @@ module companys_ranking {
                         .append(new JQTable.Node("月度完成", "y1"))
                         .append(new JQTable.Node("月度排名", "y2")),
                 ], gridName);
+            }else if(RankingType == 5){
+            	return new JQTable.JQGridAssistant([
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月收入（还原至全年）", "income", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月应收账款", "accountReceive", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("应收账款占收入比重", "accountReceiveRate", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left),
+                ], gridName);
+            }else if(RankingType == 6){
+            	return new JQTable.JQGridAssistant([
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月收入（还原至全年）", "income", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月应收账款", "accountReceive", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月保理余额", "factoring", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("应收账款占收入比重", "accountReceiveRate", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left),
+                ], gridName);
+            }else if(RankingType == 7){
+            	return new JQTable.JQGridAssistant([
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月收入（还原至全年）", "income", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月存货", "stock", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("存货占收入比重", "stockRate", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left),
+                ], gridName);
+            }else if(RankingType == 8){
+            	return new JQTable.JQGridAssistant([
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月收入（还原至全年）", "income", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月应收账款", "accountReceive", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月存货", "stock", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("（应收账款+存货）占收入比重", "accountReceiveandStockRate", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left),
+                ], gridName);
             }
-        }
+}
     }
 
     export class View {

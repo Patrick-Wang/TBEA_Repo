@@ -233,9 +233,9 @@
 			var option7 = $("<option>").text("存货占收入比排名").val(7);
 			var option8 = $("<option>").text("应收加存货占收入比排名").val(8);
 			var option9 = $("<option>").text("经营性净现金流实际完成排名").val(9);
-			var option10 = $("<option>").text("各单位净资产收益率完成排名").val(10);
+			//var option10 = $("<option>").text("各单位净资产收益率完成排名").val(10);
 			$("#ranktype").append(option).append(option2).append(option3).append(option4)
-			.append(option5).append(option6).append(option7).append(option8).append(option9).append(option10);
+			.append(option5).append(option6).append(option7).append(option8).append(option9);
 			$("#ranktype").multiselect({
 	         	multiple: false,
 	    	});
@@ -244,10 +244,10 @@
 		 case "Procompanys":
 			$("#ranktype").empty();
 			var option = $("<option>").text("利润指标年度累计完成同比增长排名").val(11);
-			var option2 = $("<option>").text("项目公司净资产收益率排名").val(12);
+			//var option2 = $("<option>").text("项目公司净资产收益率排名").val(12);
 			var option3 = $("<option>").text("人均收入完成排名").val(13);
 			var option4 = $("<option>").text("人均利润完成排名").val(14);
-			$("#ranktype").append(option).append(option2).append(option3).append(option4);
+			$("#ranktype").append(option).append(option3).append(option4);
 			$("#ranktype").multiselect({
 	         	multiple: false,
 	    	});
