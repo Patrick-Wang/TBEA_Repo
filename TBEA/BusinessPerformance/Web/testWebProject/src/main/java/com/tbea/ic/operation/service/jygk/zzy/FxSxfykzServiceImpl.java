@@ -263,7 +263,7 @@ public class FxSxfykzServiceImpl implements FxSxfykzService{
 		return bd;
 	}
 	
-	//同比计算，参数1类别值，参数2类别去年值
+	//
 	private BigDecimal calXj(BigDecimal va1,BigDecimal va2){
 		BigDecimal bd=null;
 		if(va1!=null&&va2!=null){

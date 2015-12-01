@@ -129,8 +129,11 @@ public class FxCpylspDqddmlqkServiceImpl implements FxCpylspDqddmlqkService{
 		String[] sumrow = new String[13];//合计		
 		sumrow[0]="合计";
 		sumrow[1]=this.bigDecimalToString(srsum);//收入
+		sumrow[2]=this.bigDecimalToString(this.calZb(srsum,srsum));//占比
 		sumrow[3]=this.bigDecimalToString(srqnsum);//收入去年同期
+		sumrow[4]=this.bigDecimalToString(this.calZb(srqnsum,srqnsum));//占比去年同期
 		sumrow[5]=this.bigDecimalToString(this.calTb(srsum,srqnsum));//收入同比
+		sumrow[6]=this.bigDecimalToString(this.calXj(this.calZb(srsum,srsum),this.calZb(srqnsum,srqnsum)));//占比变化
 		sumrow[7]=this.bigDecimalToString(mlesum);//毛利额
 		sumrow[8]=this.bigDecimalToString(mleqnsum);//毛利额去年同期
 		sumrow[9]=this.bigDecimalToString(this.calTb(mlesum,mleqnsum));//毛利额同比--当月毛利额/去年同期毛利额-1
@@ -189,5 +192,13 @@ public class FxCpylspDqddmlqkServiceImpl implements FxCpylspDqddmlqkService{
 		}else{
 			return va.toString();
 		}
+	}
+	//
+	private BigDecimal calXj(BigDecimal va1,BigDecimal va2){
+		BigDecimal bd=null;
+		if(va1!=null&&va2!=null){
+			bd=va1.subtract(va2);;
+		}
+		return bd;
 	}
 }

@@ -87,11 +87,19 @@
 
 	<div class="login_header">
 		<div class="login_header_main">
-			<img
-				src="../images/logo_login.gif"> <span>装备中国 装备世界</span>
+		<table style="width:1100px">
+			<tr>
+		
+			<td><img src="../images/logo_login.gif"/> </td>
+			<td><span style="font-size: 400%; float:none"><b>应用系统集成平台</b></span> </td>
+			<td><span>装备中国 装备世界</span></td>
+		
+			</tr>
+		</table>
+
 		</div>
 	</div>
-	<div class="login_bg">
+	<div class="login_bg" style="height:710px">
 		<div class="login_bg_main">
 			<div class="login_box">
 				<div class="login_box_main">

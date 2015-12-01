@@ -79,7 +79,10 @@
 			</div>
 		</div> 
 		<div class="login_list_bottom">
-			<img src="../images/logo_png.png" alt="">
+			<!-- <img src="../images/logo_png.png" alt=""> -->
+			<span style="color: #170A69; font-size: 350%">
+				<b>应用系统集成平台</b>
+			</span>
 		</div>
 
 		<div class="login_list">
