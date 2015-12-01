@@ -76,6 +76,18 @@ public class YDZBRankingController {
 		} else if (rankingType == 14) {
 			ranking_val = JSONArray.fromObject(rankService.getXmgsRjlrRank(d))
 					.toString().replace("null", "\"--\"");
+		} else if (rankingType == 15) {
+			ranking_val = JSONArray.fromObject(rankService.getYszkzsrbRank(d))
+					.toString().replace("null", "\"--\"");
+		}else if (rankingType == 16) {
+			ranking_val = JSONArray.fromObject(rankService.getChzbRank(d))
+					.toString().replace("null", "\"--\"");
+		}else if (rankingType == 17) {
+			ranking_val = JSONArray.fromObject(rankService.getYsAndChzbRank(d))
+					.toString().replace("null", "\"--\"");
+		}else if (rankingType == 18) {
+			ranking_val = JSONArray.fromObject(rankService.getYszkAndBlzbRank(d))
+					.toString().replace("null", "\"--\"");
 		}
 		return ranking_val.getBytes("utf-8");
 	}
