@@ -35,7 +35,8 @@ module Util {
                 if(isSbdcy){
                     if(viewType=='01'||viewType=='02'){
                         Sel.append('<option value= 900000>变压器产业</option>');         
-                    }else if(viewType=='01'||viewType=='03'){
+                    }
+                    if(viewType=='01'||viewType=='03'){
                         Sel.append('<option value= 800000>线缆产业</option>');
                     }                    
                 }
