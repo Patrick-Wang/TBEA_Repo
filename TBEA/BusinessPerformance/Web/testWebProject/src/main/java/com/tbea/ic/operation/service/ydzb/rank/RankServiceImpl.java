@@ -2,7 +2,10 @@ package com.tbea.ic.operation.service.ydzb.rank;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.GSZB;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -23,10 +28,17 @@ import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
+import com.tbea.ic.operation.model.entity.jygk.SJZB;
+import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
+import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
+import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 import com.tbea.ic.operation.service.util.pipe.core.CompositePipe;
+import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.composite.DoubleArrayComparator;
+import com.tbea.ic.operation.service.ydzb.pipe.filter.composite.RankPipeFilter;
 
 
 @Service
@@ -67,19 +79,23 @@ public class RankServiceImpl implements RankService {
 	
 	ConfiguratorFactory configFac;
 
+	List<String> jydwNames;
+	List<Company> jydws;
+	
 	@Autowired
 	public void init() {
 		accFac = new AccumulatorFactory(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao, ydjhzbDao, ndjhzbDao);
 		configFac = new ConfiguratorFactory(sbdNdjhzbDao, accFac, companyManager);
+		jydws = BMDepartmentDB.getMainlyJydw(companyManager);
+		jydwNames = getCompanyNames(jydws);
 	}
 	
-	private ConfiguratorFactory getConfiguratorFactory() {
-		return configFac;
-	}
+//	private ConfiguratorFactory configFac {
+//		return configFac;
+//	}
 	
 	private List<String[]> makeResult(List<Double[]> values) {
 		List<String[]> result = new ArrayList<String[]>();
-
 		for (int i = 0; i < values.size(); ++i) {
 			result.add(new String[values.get(i).length]);
 			for (int j = 0; j < values.get(i).length; ++j) {
@@ -92,40 +108,38 @@ public class RankServiceImpl implements RankService {
 	}
 
 	
-	private List<Double[]> getRank(GSZB zb, Date date, IPipeConfigurator dwPipeConfig, IPipeConfigurator dataConfig){
-		CompositePipe pipe = new CompositePipe(zb.getValue(), date, dwPipeConfig);
-		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
-		for (Company comp : jydw){
+	private List<Double[]> getRank(GSZB zb, Date date, IPipeConfigurator rankPipeConfig, IPipeConfigurator dataConfig){
+		CompositePipe pipe = new CompositePipe(zb.getValue(), date, rankPipeConfig);
+		for (Company comp : jydws){
 			pipe.addCompany(comp, dataConfig);
 		}
 		return pipe.getData();
-		
 	}
 	
 	@Override
 	public List<String[]> getJhlrRank(Date date) {
-		List<Double[]> ret = getRank(GSZB.LRZE1, date, getConfiguratorFactory().getJhlrRankConfigurator(), getConfiguratorFactory().getJhlrDataConfigurator());
+		List<Double[]> ret = getRank(GSZB.LRZE1, date, configFac.getJhlrRankConfigurator(), configFac.getJhlrDataConfigurator());
 		return makeResult(ret);
 	}
 	
 	@Override
 	public List<String[]> getLjlrRank(Date date) {
-		List<Double[]> ret = getRank(GSZB.LRZE1, date, getConfiguratorFactory().getLjlrRankConfigurator(), getConfiguratorFactory().getLjlrDataConfigurator());
+		List<Double[]> ret = getRank(GSZB.LRZE1, date, configFac.getLjlrRankConfigurator(), configFac.getLjlrDataConfigurator());
 		return makeResult(ret);
 	}
 	
 	@Override
 	public List<String[]> getJxjlRank(Date date) {
-		List<Double[]> ret = getRank(GSZB.JYXJXJL29, date, getConfiguratorFactory().getJxjlRankConfigurator(), getConfiguratorFactory().getJxjlDataConfigurator());
+		List<Double[]> ret = getRank(GSZB.JYXJXJL29, date, configFac.getJxjlRankConfigurator(), configFac.getJxjlDataConfigurator());
 		return makeResult(ret);
 	}
 
 	@Override
 	public List<String[]> getRjlrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.RJLR62.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
-		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
-		for (Company comp : jydw){
-			pipe.addCompany(comp, getConfiguratorFactory().getRjlrDataConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJLR62.getValue(), date, configFac.getRjlrRankConfigurator());
+		//List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
+		for (Company comp : jydws){
+			pipe.addCompany(comp, configFac.getRjlrDataConfigurator());
 		}
 		pipe.addDependentIndictor(GSZB.LRZE1.getValue());
 		pipe.addDependentIndictor(GSZB.RS61.getValue());
@@ -134,10 +148,10 @@ public class RankServiceImpl implements RankService {
 
 	@Override
 	public List<String[]> getRjsrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.RJSR63.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
-		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
-		for (Company comp : jydw){
-			pipe.addCompany(comp, getConfiguratorFactory().getRjlrDataConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJSR63.getValue(), date, configFac.getRjlrRankConfigurator());
+		//List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
+		for (Company comp : jydws){
+			pipe.addCompany(comp, configFac.getRjlrDataConfigurator());
 		}
 		pipe.addDependentIndictor(GSZB.XSSR6.getValue());
 		pipe.addDependentIndictor(GSZB.RS61.getValue());
@@ -146,12 +160,12 @@ public class RankServiceImpl implements RankService {
 	
 	@Override
 	public List<String[]> getXmgsRjsrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.RJSR63.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
-		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
+		CompositePipe pipe = new CompositePipe(GSZB.RJSR63.getValue(), date, configFac.getRjlrRankConfigurator());
+		//List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		List<String> compsName = new ArrayList<String>();
-		for (Company comp : jydw){
+		for (Company comp : jydws){
 			for (Company xmgs : comp.getSubCompanies()){
-				pipe.addCompany(xmgs, getConfiguratorFactory().getRjlrDataConfigurator());
+				pipe.addCompany(xmgs, configFac.getRjlrDataConfigurator());
 				compsName.add(xmgs.getName());
 			}
 		}
@@ -162,12 +176,12 @@ public class RankServiceImpl implements RankService {
 	
 	@Override
 	public List<String[]> getXmgsRjlrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.RJLR62.getValue(), date, getConfiguratorFactory().getRjlrRankConfigurator());
-		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
+		CompositePipe pipe = new CompositePipe(GSZB.RJLR62.getValue(), date, configFac.getRjlrRankConfigurator());
+		//List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		List<String> compsName = new ArrayList<String>();
-		for (Company comp : jydw){
+		for (Company comp : jydws){
 			for (Company xmgs : comp.getSubCompanies()){
-				pipe.addCompany(xmgs, getConfiguratorFactory().getRjlrDataConfigurator());
+				pipe.addCompany(xmgs, configFac.getRjlrDataConfigurator());
 				compsName.add(xmgs.getName());
 			}
 		}
@@ -178,12 +192,20 @@ public class RankServiceImpl implements RankService {
 
 	private List<String[]> makeResult(List<String> compsName,
 			List<Double[]> data) {
+		if (!data.isEmpty()){
+			return makeResult(compsName, data, data.get(0).length);
+		}
+		return null;
+	}
+	
+	private List<String[]> makeResult(List<String> compsName,
+			List<Double[]> data, int columnSize) {
 		List<String[]> result = new ArrayList<String[]>();
 
 		for (int i = 0; i < data.size(); ++i) {
 			result.add(new String[data.get(i).length + 1]);
 			result.get(i)[0] = compsName.get(i);
-			for (int j = 0; j < data.get(i).length; ++j) {
+			for (int j = 0; j < columnSize; ++j) {
 				if (data.get(i)[j] != null){
 					result.get(i)[j + 1] = data.get(i)[j] + "";
 				}
@@ -194,15 +216,153 @@ public class RankServiceImpl implements RankService {
 
 	@Override
 	public List<String[]> getXmgsJhlrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.LRZE1.getValue(), date, getConfiguratorFactory().getJhlrRankConfigurator());
-		List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
+		CompositePipe pipe = new CompositePipe(GSZB.LRZE1.getValue(), date, configFac.getJhlrRankConfigurator());
+		//List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		List<String> compsName = new ArrayList<String>();
-		for (Company comp : jydw){
+		for (Company comp : jydws){
 			for (Company xmgs : comp.getSubCompanies()){
-				pipe.addCompany(xmgs, getConfiguratorFactory().getJhlrDataConfigurator());
+				pipe.addCompany(xmgs, configFac.getJhlrDataConfigurator());
 				compsName.add(xmgs.getName());
 			}
 		}
 		return makeResult(compsName, pipe.getData());
+	}
+
+	
+	private List<String> getCompanyNames(List<Company> companies){
+		List<String> compNames = new ArrayList<String>();
+		for (Company comp : companies){
+			compNames.add(comp.getName());
+		}
+		return compNames;
+	}
+	
+	private Double getZbValues(Company comp, Integer zb, Date start, Date end){
+		List<Integer> zbs = new ArrayList<Integer>();
+		zbs.add(zb);
+		List<Company> companies = new ArrayList<Company>();
+		companies.add(comp);
+		return accFac.getSjAcc().compute(0, start, end, zbs, companies).get(0);
+	}
+	
+	@Override
+	public List<String[]> getYszkzsrbRank(Date date) {		
+		DateHelper dh = new DateHelper(date);
+		Date end = date;
+		Date start = dh.getFirstMonth();
+		
+		List<Double[]> results = new ArrayList<Double[]>();
+		List<Double[]> resultTemp = new ArrayList<Double[]>();
+
+		for (int i = 0; i < jydws.size(); ++i){
+			results.add(new Double[4]);
+			resultTemp.add(results.get(i));
+			results.get(i)[0] = getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end);
+			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.getValue(), end, end);
+			if (results.get(i)[0] != null && Util.isPositive(results.get(i)[0]) &&
+				results.get(i)[1] != null && Util.isPositive(results.get(i)[1])){
+				results.get(i)[2] = results.get(i)[1] / results.get(i)[0];
+			}
+		}
+		
+		resultTemp.sort(new DoubleArrayComparator().setIndex(2));
+		
+		for (int i = 0, size = resultTemp.size(); i < size; ++i){
+			resultTemp.get(i)[3] = (double) (size - i);
+		}
+		
+		return makeResult(jydwNames, results);
+	}
+
+	@Override
+	public List<String[]> getYszkAndBlzbRank(Date date) {
+		DateHelper dh = new DateHelper(date);
+		Date end = date;
+		Date start = dh.getFirstMonth();
+		List<Double[]> results = new ArrayList<Double[]>();
+		List<Double[]> resultTemp = new ArrayList<Double[]>();
+		for (int i = 0; i < jydws.size(); ++i){
+			results.add(new Double[5]);
+			results.get(i)[0] = getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end);
+			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.getValue(), end, end);
+			results.get(i)[2] = getZbValues(jydws.get(i), GSZB.BL34.getValue(), end, end);
+			if (!(results.get(i)[1] == null && results.get(i)[2] == null)){
+				Double tmpVal = Util.valueOf(results.get(i)[1]) + Util.valueOf(results.get(i)[2]);
+				if (Util.isPositive(tmpVal) && results.get(i)[0] != null && Util.isPositive(results.get(i)[0])){
+					results.get(i)[3] = tmpVal / results.get(i)[0];
+				}
+			}
+			
+			resultTemp.add(results.get(i));
+		}
+		
+		resultTemp.sort(new DoubleArrayComparator().setIndex(3));
+		
+		for (int i = 0, size = resultTemp.size(); i < size; ++i){
+			resultTemp.get(i)[4] = (double) (size - i);
+		}
+		
+		return makeResult(jydwNames, results);
+	}
+
+	@Override
+	public List<String[]> getChzbRank(Date date) {
+		DateHelper dh = new DateHelper(date);
+		Date end = date;
+		Date start = dh.getFirstMonth();
+		
+		List<Double[]> results = new ArrayList<Double[]>();
+		List<Double[]> resultTemp = new ArrayList<Double[]>();
+		for (int i = 0; i < jydws.size(); ++i){
+			results.add(new Double[4]);
+			results.get(i)[0] = getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end);
+			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.CH35.getValue(), end, end);
+			if (results.get(i)[0] != null && Util.isPositive(results.get(i)[0]) &&
+					results.get(i)[1] != null && Util.isPositive(results.get(i)[1])){
+					results.get(i)[2] = results.get(i)[1] / results.get(i)[0];
+				}
+			resultTemp.add(results.get(i));
+		}
+		
+		resultTemp.sort(new DoubleArrayComparator().setIndex(2));
+		
+		for (int i = 0, size = resultTemp.size(); i < size; ++i){
+			resultTemp.get(i)[3] = (double) (size - i);
+		}
+		
+		return makeResult(jydwNames, results);
+	}
+
+	@Override
+	public List<String[]> getYsAndChzbRank(Date date) {
+
+		DateHelper dh = new DateHelper(date);
+		Date end = date;
+		Date start = dh.getFirstMonth();
+		
+		List<Double[]> results = new ArrayList<Double[]>();
+		List<Double[]> resultTemp = new ArrayList<Double[]>();
+		for (int i = 0; i < jydws.size(); ++i){
+			results.add(new Double[5]);
+			results.get(i)[0] = getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end);
+			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.getValue(), end, end);
+			results.get(i)[2] = getZbValues(jydws.get(i), GSZB.CH35.getValue(), end, end);
+			if (!(results.get(i)[1] == null && results.get(i)[2] == null)){
+				Double tmpVal = Util.valueOf(results.get(i)[1]) + Util.valueOf(results.get(i)[2]);
+				if (Util.isPositive(tmpVal) && results.get(i)[0] != null && Util.isPositive(results.get(i)[0])){
+					results.get(i)[3] = tmpVal / results.get(i)[0];
+				}
+			}
+			resultTemp.add(results.get(i));
+			
+		}
+		
+		resultTemp.sort(new DoubleArrayComparator().setIndex(3));
+		
+		for (int i = 0, size = resultTemp.size(); i < size; ++i){
+			resultTemp.get(i)[4] = (double) (size - i);
+		}
+		
+		return makeResult(jydwNames, results);
 	}
 }

@@ -11,6 +11,16 @@
 <script src="../js/main.js" type="text/javascript"></script>
 <script src="../js/util.js" type="text/javascript"></script>
 <script src="../js/index.js" type="text/javascript"></script>
+
+<style>
+
+.highlight:hover {
+	color: red;
+	text-decoration:underline;
+} 
+</style>
+
+
 <title>特变电工-首页</title>
 </head>
 
@@ -69,51 +79,54 @@
 			</div>
 		</div> 
 		<div class="login_list_bottom">
-			<img src="../images/logo_png.png" alt="">
+			<!-- <img src="../images/logo_png.png" alt=""> -->
+			<span style="color: #170A69; font-size: 350%">
+				<b>应用系统集成平台</b>
+			</span>
 		</div>
 
 		<div class="login_list">
 			<ul id="login_list_sys">
 
 				<li class="login_list_item login_list_item_1"><a href="../account/get_login_url.do?sysId=1" target="_blank">
-					<span>绩效管理平台</span><img
+					<span class="highlight">绩效管理平台</span><img
 						src="../images/login_icons_1.png"></a><span
-					class="login_list_bd"
+					class="login_list_bd highlight"
 					onclick="showBondPage(1,'${usrName}');">绑定用户</span></li>
 					
 				<li class="login_list_item login_list_item_2"><a href="../account/get_login_url.do?sysId=3" target="_blank">
-					<span>OA系统</span><img
+					<span class="highlight">OA系统</span><img
 						src="../images/login_icons_1.png"></a><br/><span
-					class="login_list_bd"
+					class="login_list_bd highlight"
 					onclick="showBondPage(3,'${usrName}');">绑定用户</span></li>
 					
 				<li class="login_list_item login_list_item_3"><a href="../account/get_login_url.do?sysId=4" target="_blank">
-					<span>智慧银行</span><img
+					<span class="highlight">智慧银行</span><img
 						src="../images/login_icons_1.png"></a>
 					<span
-					class="login_list_bd"
+					class="login_list_bd highlight"
 					onclick="showBondPage(4,'${usrName}');">绑定用户</span></li>
 						
 				<li class="login_list_item login_list_item_4"><a href="../account/get_login_url.do?sysId=5" target="_blank">
-					<span>经营管控系统</span><img
+					<span class="highlight">经营管控系统</span><img
 						src="../images/login_icons_1.png"></a>
 						<span
-					class="login_list_bd"
+					class="login_list_bd highlight"
 					onclick="showBondPage(5,'${usrName}');">绑定用户</span></li>
 					
 				<li class="login_list_item login_list_item_5"><a
 					target="_blank"
-					href="http://192.168.7.76/"><span>人力资源系统</span><img
+					href="http://192.168.7.76/"><span class="highlight">人力资源系统</span><img
 						src="../images/login_icons_1.png"></a></li>
 						
 				<li class="login_list_item login_list_item_6"><a
 					target="_blank"
-					href="http://192.168.7.20/"><span>财务系统</span><img
+					href="http://192.168.7.20/"><span class="highlight">财务系统</span><img
 						src="../images/login_icons_1.png"></a></li>
 						
 				<li class="login_list_item login_list_item_7"><a
 					target="_blank"
-					href="ftp://ftp.tbea.com/"><span>常用工具下载</span><img
+					href="ftp://ftp.tbea.com/"><span class="highlight">常用工具下载</span><img
 						src="../images/login_icons_1.png"></a></li>
 			</ul>
 		</div>

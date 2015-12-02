@@ -6,8 +6,6 @@ import java.util.Map;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
-import com.tbea.ic.operation.service.util.pipe.acc.composite.CompositeAccDataSource;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.jhlr.JhlrDataConfigurator;
@@ -43,29 +41,46 @@ public class ConfiguratorFactory {
 	IPipeConfigurator ljlrRankConfigurator = new LjlrRankConfigurator((JhlrRankConfigurator) jhlrRankConfigurator);
 	IPipeConfigurator rjlrDataConfigurator;
 	IPipeConfigurator rjlrRankConfigurator = new RjlrRankConfigurator();
+	IPipeConfigurator ysAndBlzbRankConfigurator;
+	IPipeConfigurator ysAndBlzbDataConfigurator;
+	IPipeConfigurator ysAndChzbDataConfigurator;
+	IPipeConfigurator ysAndChzbRankConfigurator;
+	IPipeConfigurator yszbDataConfigurator;
+	IPipeConfigurator yszbRankConfigurator;
+	IPipeConfigurator chzbDataConfigurator;
+	IPipeConfigurator chzbRankConfigurator;
 
 	
 	public ConfiguratorFactory(SbdNdjhZbDao sbdzbDao,
 			AccumulatorFactory accFac, CompanyManager companyManager) {
 		standardConfigurator = new StandardConfigurator(sbdzbDao,
 				accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
+		
 		firstSeasonPredictionConfigurator = new FirstSeasonPredictionConfigurator(
 				sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(),
 				accFac.getNjhAcc());
+		
 		secondSeasonPredictionConfigurator = new SecondSeasonPredictionConfigurator(
 				sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(),
 				accFac.getNjhAcc());
+		
 		thirdSeasonPredictionConfigurator = new ThirdSeasonPredictionConfigurator(sbdzbDao,
 				accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
+		
 		ydhbConfigurator = new YdhbConfigurator(sbdzbDao, accFac.getSjAcc(),
 				accFac.getYjhAcc(), accFac.getNjhAcc());
+		
 		srqyConfigurator = new SrqyConfigurator(accFac.getSjAcc(),
 				accFac.getYjhAcc(), accFac.getNjhAcc(), companyManager);
+		
 		jhlrDataConfigurator = new JhlrDataConfigurator(accFac.getSjAcc(),
 				accFac.getYjhAcc(), accFac.getNjhAcc());
+		
 		jxjlDataConfigurator = new JxjlDataConfigurator((JhlrDataConfigurator) jhlrDataConfigurator);
+		
 		ljlrDataConfigurator = new LjlrDataConfigurator(accFac.getSjAcc(),
 				accFac.getYjhAcc(), accFac.getNjhAcc());
+		
 		rjlrDataConfigurator = new RjlrDataConfigurator(sbdzbDao, accFac.getSjAcc(),
 				accFac.getYjhAcc(), accFac.getNjhAcc());
 	}
@@ -152,6 +167,38 @@ public class ConfiguratorFactory {
 			Map<Company, List<Company>> computeMap) {
 		return new FirstSeasonPredictionCompositeConfigurator(
 				computeMap);
+	}
+
+	public IPipeConfigurator getYsAndBlzbRankConfigurator() {
+		return ysAndBlzbRankConfigurator;
+	}
+
+	public IPipeConfigurator getYsAndBlzbDataConfigurator() {
+		return ysAndBlzbDataConfigurator;
+	}
+
+	public IPipeConfigurator getYsAndChzbDataConfigurator() {
+		return ysAndChzbDataConfigurator;
+	}
+
+	public IPipeConfigurator getYsAndChzbRankConfigurator() {
+		return ysAndChzbRankConfigurator;
+	}
+
+	public IPipeConfigurator getYszbDataConfigurator() {
+		return yszbDataConfigurator;
+	}
+
+	public IPipeConfigurator getYszbRankConfigurator() {
+		return yszbRankConfigurator;
+	}
+
+	public IPipeConfigurator getChzbDataConfigurator() {
+		return chzbDataConfigurator;
+	}
+
+	public IPipeConfigurator getChzbRankConfigurator() {
+		return chzbRankConfigurator;
 	}
 
 }
