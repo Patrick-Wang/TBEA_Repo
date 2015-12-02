@@ -155,7 +155,7 @@ public class LoginServlet {
 		session.setAttribute("isXl", account.getId() == 43
 				|| account.getId() == 50 || account.getId() == 61);
 		
-		session.setAttribute("isSbdcy", account.getId() == 8);
+		session.setAttribute("isSbdcy", account.getId() == 8 || account.getId() == 6);
 
 	}
 
