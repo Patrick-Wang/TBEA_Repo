@@ -116,18 +116,27 @@
 					
 				<li class="login_list_item login_list_item_5"><a
 					target="_blank"
-					href="http://192.168.7.76/"><span class="highlight">人力资源系统</span><img
-						src="../images/login_icons_1.png"></a></li>
-						
+					href="../account/get_login_url.do?sysId=6"><span class="highlight">档案管理系统</span><img
+						src="../images/login_icons_1.png"></a>
+						<span
+					class="login_list_bd highlight"
+					onclick="showBondPage(6,'${usrName}');">绑定用户</span></li>
+				
+				<li class="login_list_item login_list_item_7"><a href="http://192.168.7.76/" target="_blank">
+					<span class="highlight">人力资源系统</span><img
+						src="../images/login_icons_1.png"></a>
+				</li>	
 				<li class="login_list_item login_list_item_6"><a
 					target="_blank"
 					href="http://192.168.7.20/"><span class="highlight">财务系统</span><img
 						src="../images/login_icons_1.png"></a></li>
 						
-				<li class="login_list_item login_list_item_7"><a
+				<li class="login_list_item login_list_item_8"><a
 					target="_blank"
 					href="ftp://ftp.tbea.com/"><span class="highlight">常用工具下载</span><img
 						src="../images/login_icons_1.png"></a></li>
+									
+					
 			</ul>
 		</div>
 		<div style="margin-top: 80px">

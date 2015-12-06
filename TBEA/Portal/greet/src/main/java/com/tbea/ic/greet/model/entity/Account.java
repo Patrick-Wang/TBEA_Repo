@@ -24,6 +24,8 @@ public class Account  extends AbstractReadWriteEntity{
 	String jygkPassword;
 	String zhyhName;
 	String zhyhPassword;
+	String DocMName;
+	String DocMPassword;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -122,5 +124,21 @@ public class Account  extends AbstractReadWriteEntity{
 
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
+	}
+	
+	public String getDocMName() {
+		return DocMName;
+	}
+
+	public void setDocMName(String docMName) {
+		DocMName = docMName;
+	}
+
+	public String getDocMPassword() {
+		return DocMPassword;
+	}
+
+	public void setDocMPassword(String docMPassword) {
+		DocMPassword = docMPassword;
 	}
 }

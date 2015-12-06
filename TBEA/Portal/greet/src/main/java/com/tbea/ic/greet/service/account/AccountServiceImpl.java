@@ -11,6 +11,7 @@ import com.tbea.ic.greet.model.dao.hruser.HrUserDao;
 import com.tbea.ic.greet.model.entity.Account;
 import com.tbea.ic.greet.model.entity.CamelUser;
 import com.tbea.ic.greet.model.entity.HrUser;
+import com.tbea.ic.greet.common.AccountAlgorithm;;
 
 @Service
 @Transactional("transactionManager")
@@ -30,6 +31,8 @@ public class AccountServiceImpl implements  AccountService{
 	final static String HRUrl = "http://192.168.7.76/login.jsp";
 	//NC
 	final static String NCUrl = "http://192.168.7.24:9083/login.jsp";
+	//档案管理
+	final static String DocumentUrl = "http://172.28.8.141/ams/index/loginHandle.jsp?usercode=#UN#&pwd=#PW#";
 
 	
 	@Autowired
@@ -77,6 +80,10 @@ public class AccountServiceImpl implements  AccountService{
 		}else if ("5".equals(sysId)){
 			account.setJygkName(name);
 			account.setJygkPassword(psw);
+			accountDao.merge(account);
+		}else if ("6".equals(sysId)){
+			account.setDocMName(name);
+			account.setDocMPassword(psw);
 			accountDao.merge(account);
 		}else{
 			return false;
@@ -137,7 +144,11 @@ public class AccountServiceImpl implements  AccountService{
 			}
 			break;
 		case 6:
-			url = HRUrl;
+			//url = HRUrl;
+			if (account.getDocMName() != null && account.getDocMPassword() != null){
+				AccountAlgorithm aa = new AccountAlgorithm();
+				url = DocumentUrl.replace("#UN#", account.getDocMName()).replace("#PW#", aa.MD5(account.getDocMPassword()));
+			}
 			break;
 		case 7:
 			url = NCUrl;
