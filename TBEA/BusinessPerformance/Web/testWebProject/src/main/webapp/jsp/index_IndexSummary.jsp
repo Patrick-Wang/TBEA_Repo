@@ -162,8 +162,8 @@
 						src="../images/charts/force.png"> <span><strong>应收账款日报</strong></span></a>
 				</li>
 				</c:if>
-				<c:if test="${false}">
-<%-- 				<c:if test="${XJLDialyLookup}"> --%>
+				<%-- <c:if test="${false}"> --%>
+			    <c:if test="${XJLDialyLookup}">
 				<li><a href="../ydzb/xjlrb.do" target="_blank"><img
 						src="../images/charts/force1.png"> <span><strong>现金流日报</strong></span></a>
 				</li>

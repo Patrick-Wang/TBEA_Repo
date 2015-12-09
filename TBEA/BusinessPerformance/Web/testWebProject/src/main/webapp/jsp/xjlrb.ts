@@ -17,7 +17,7 @@ module xjlrb {
                 new JQTable.Node("本年累计流出", "bnljlc"),
                 new JQTable.Node("本日净流量", "brjll"),
                 new JQTable.Node("本月累计净流量", "byljjll"),
-                new JQTable.Node("报表本月调整数", "bbbytzs"),
+                //new JQTable.Node("截止上月末报表累计调整数", "bbbytzs"),
                 new JQTable.Node("本年累计净流量", "bnljjll")
             ], gridName);
         }
@@ -125,6 +125,7 @@ module xjlrb {
                 ["资金中心"],
                 ["公司机关小计"],
                 ["香港公司"],
+                ["工业旅游"],
                 ["股份公司合计"],
                 ["众和公司"],
                 ["合计"]];

@@ -161,7 +161,7 @@ public class YDZBServiceImpl implements YDZBService {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		List<XJL> xjls = ydzbDao.getXJL(cal);
-		String[][] result = new String[xjls.size()][10];
+		String[][] result = new String[xjls.size()][9];
 		int i = 0;
 		for (XJL xjl : xjls){
 			result[i][0] = xjl.getDrlr();
@@ -172,8 +172,8 @@ public class YDZBServiceImpl implements YDZBService {
 			result[i][5] = xjl.getDnlc();
 			result[i][6] = xjl.getDrjll();
 			result[i][7] = xjl.getDyjll();
-			result[i][9] = xjl.getBytzs();
 			result[i][8] = xjl.getDnjll();
+			//result[i][9] = xjl.getBytzs();
 			++i;
 		}
 		return result;
