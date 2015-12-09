@@ -49,7 +49,7 @@ public class YSDAILYDaoImpl implements YSDAILYDao{
 		calStart.setTime(start);
 		Calendar calEnd = Calendar.getInstance();
 		calEnd.setTime(end);
-		Query q = entityManager.createQuery("select sum(withdrawalFundsTargetMonth) from YSDAILY where " + 
+		Query q = entityManager.createQuery("select sum(balanceAccount) from YSDAILY where " + 
 		"key.date >= :dStart and key.date <= :dEnd and " +
 		"key.dwxx.id in ("+ Util.toBMString(companies) +")");
 		q.setParameter("dStart",start);
@@ -63,7 +63,7 @@ public class YSDAILYDaoImpl implements YSDAILYDao{
 		calStart.setTime(start);
 		Calendar calEnd = Calendar.getInstance();
 		calEnd.setTime(end);
-		Query q = entityManager.createQuery("select sum(withdrawalPlan) from YSDAILY where " + 
+		Query q = entityManager.createQuery("select sum(zqbcMoney) from YSDAILY where " + 
 		"key.date >= :dStart and key.date <= :dEnd and " +
 		"key.dwxx.id in ("+ Util.toBMString(companies) +")");
 		q.setParameter("dStart",start);
@@ -77,7 +77,7 @@ public class YSDAILYDaoImpl implements YSDAILYDao{
 		calStart.setTime(start);
 		Calendar calEnd = Calendar.getInstance();
 		calEnd.setTime(end);
-		Query q = entityManager.createQuery("select sum(withdrawalToday) from YSDAILY where " + 
+		Query q = entityManager.createQuery("select sum(qbbcMoney) from YSDAILY where " + 
 		"key.date >= :dStart and key.date <= :dEnd and " +
 		"key.dwxx.id in ("+ Util.toBMString(companies) +")");
 		q.setParameter("dStart",start);
@@ -105,7 +105,7 @@ public class YSDAILYDaoImpl implements YSDAILYDao{
 		calStart.setTime(start);
 		Calendar calEnd = Calendar.getInstance();
 		calEnd.setTime(end);
-		Query q = entityManager.createQuery("select sum(qbbcMoney) from YSDAILY where " + 
+		Query q = entityManager.createQuery("select sum(withdrawalToday) from YSDAILY where " + 
 		"key.date >= :dStart and key.date <= :dEnd and " +
 		"key.dwxx.id in ("+ Util.toBMString(companies) +")");
 		q.setParameter("dStart",start);
@@ -119,7 +119,7 @@ public class YSDAILYDaoImpl implements YSDAILYDao{
 		calStart.setTime(start);
 		Calendar calEnd = Calendar.getInstance();
 		calEnd.setTime(end);
-		Query q = entityManager.createQuery("select sum(zqbcMoney) from YSDAILY where " + 
+		Query q = entityManager.createQuery("select sum(withdrawalPlan) from YSDAILY where " + 
 		"key.date >= :dStart and key.date <= :dEnd and " +
 		"key.dwxx.id in ("+ Util.toBMString(companies) +")");
 		q.setParameter("dStart",start);
@@ -133,7 +133,7 @@ public class YSDAILYDaoImpl implements YSDAILYDao{
 		calStart.setTime(start);
 		Calendar calEnd = Calendar.getInstance();
 		calEnd.setTime(end);
-		Query q = entityManager.createQuery("select sum(balanceAccount) from YSDAILY where " + 
+		Query q = entityManager.createQuery("select sum(withdrawalFundsTargetMonth) from YSDAILY where " + 
 		"key.date >= :dStart and key.date <= :dEnd and " +
 		"key.dwxx.id in ("+ Util.toBMString(companies) +")");
 		q.setParameter("dStart",start);

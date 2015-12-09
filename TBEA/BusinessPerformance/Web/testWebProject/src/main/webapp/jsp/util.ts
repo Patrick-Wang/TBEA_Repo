@@ -392,7 +392,7 @@ module Util {
         }
     }
 
-    export function formatData(outputData: string[][], inputData: string[][], precentList: std.vector<number>, specialsjzhCols: number[]) {
+    export function formatData(outputData: string[][], inputData: string[][], precentList: std.vector<number>, specialsjzhCols: number[], formatStartColumn: number = 1) {
         var zhZb = [
             '人均发电量（万度/人）',
             '外购电单位成本（元/度）',
@@ -429,7 +429,7 @@ module Util {
         var row = [];
         for (var j = 0; j < inputData.length; ++j) {
             row = [].concat(inputData[j]);
-            for (var i = 1; i < row.length; ++i) {
+            for (var i = formatStartColumn; i < row.length; ++i) {
                 row[i] = formaterChain.handle(row[0], i, row[i]);
             }
             outputData.push(row);

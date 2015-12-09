@@ -156,8 +156,8 @@
 						src="../images/charts/bar1.png"> <span><strong>经营指标分析</strong></span></a>
 				</li>
 				</c:if>
-				<%-- <c:if test="${YSZKDialyLookup}"> --%>
-				<c:if test="${false}">
+				<c:if test="${YSZKDialyLookup}">
+				<%-- <c:if test="${false}"> --%>
 				<li><a href="../yszkrb/yszk.do" target="_blank"><img
 						src="../images/charts/force.png"> <span><strong>应收账款日报</strong></span></a>
 				</li>
