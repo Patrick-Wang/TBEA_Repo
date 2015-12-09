@@ -259,6 +259,7 @@ background: url(../images/banner_text_bg.png)\9;
 .login_header_main a{ display:inline-block; width:248px; height:89px; float:left; padding-left:55px;}
 .login_header_main span{ display:inline-block; padding-right:16px; float:right; font-size:18px; font-family:"Microsoft YaHei"; color:#fff; line-height:89px;}
 .login_bg{ width:100%; height:auto; background:url(../images/banner.jpg) top center}
+.index_bg{ width:100%; height:auto; background:url(../images/BG.jpg) top center}
 .login_bg_main{ width:1114px; margin:0 auto; height:527px;}
 .login_box{ height:527px; width:354px; background:#fff;margin-left:830px}
 .login_footer{ width:100%; height:84px; line-height:84px; background:url(../images/banner_text_bg.png);}
