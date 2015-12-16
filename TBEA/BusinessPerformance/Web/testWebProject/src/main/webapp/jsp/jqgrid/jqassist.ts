@@ -311,7 +311,7 @@ module JQTable {
         }
 
         public mostLeftLeaf(): Node {
-            var node = this;
+            var node : Node = this;
             if (this.hasChilds()) {
                 node = this.mChilds[0].mostLeftLeaf();
             }
