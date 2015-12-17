@@ -183,12 +183,7 @@
             font-size: 14px;
         }
         
-        #updateButton {
-			height: 23px;
-			width:100px;
-			padding: .1em 1em;
-			margin-top: -1px;
-		}
+       
 </style>
 </head>
 <body>
@@ -217,13 +212,17 @@
 			<td>
 		</tr>
 		
-		<!-- <tr style="height:5px"></tr>
+		<tr style="height:5px"></tr>
 		<tr>
-			<td><input id="submit" type="submit" value="提交"
-				style="width: 80px; dispaly: none" onclick="instance.save()"></input>
+			<td>
+				<form id="exportYSDialy" method="post">
+				<input id="exportButton" type="button" value="导出"
+					style="width: 100px" onclick="instance.exportExcelYSDialy()"
+					class="ui-button ui-widget ui-state-default ui-corner-all"
+					role="button" aria-disabled="false"></input>
+				</form>
 			</td>
-
-		</tr> -->
+		</tr>
 	</Table>
 	<%@include file="loading.jsp"%>
     </body>

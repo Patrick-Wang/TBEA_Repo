@@ -19,6 +19,7 @@ public class ExcelTemplate {
 	
 	private static String pathJdzbTemplate = null;
 	private static String pathMarketTemplate = null;
+	private static String pathJYGKPhase2Template = null;
 	
 	static 
 	{
@@ -35,6 +36,16 @@ public class ExcelTemplate {
 		try {
 			pathJdzbTemplate = new URI(Convertor.class
 					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/jyzb_template.xls";
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	static
+	{
+		try {
+			pathJYGKPhase2Template = new URI(Convertor.class
+					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/jygk_Phase2_template.xls";
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
@@ -66,6 +77,11 @@ public class ExcelTemplate {
 		MIXED_AREA,
 		MIXED_INDUSTRY
 	}
+	
+	public enum JYGKPhase2SheetType{
+		YSDialy,
+		JYDWLRRANK
+	}
 
 	public static ExcelTemplate createJygkTemplate(JygkSheetType type) throws IOException{
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
@@ -88,6 +104,20 @@ public class ExcelTemplate {
 		}
 		
 		for (int i = type.ordinal() + 1; i <= MarketSheetType.MIXED_INDUSTRY.ordinal(); ++i){
+			workbook.removeSheetAt(1);
+		}
+		return new ExcelTemplate(workbook);
+	}
+	
+	public static ExcelTemplate createJYGKPhase2Template(JYGKPhase2SheetType type) throws IOException{
+		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
+				pathJYGKPhase2Template)));	
+		for (int i = 0; i < type.ordinal(); ++i){
+			workbook.removeSheetAt(0);
+		}
+		
+		int j = JYGKPhase2SheetType.JYDWLRRANK.ordinal();
+		for (int i = type.ordinal() + 1; i <= JYGKPhase2SheetType.JYDWLRRANK.ordinal(); ++i){
 			workbook.removeSheetAt(1);
 		}
 		return new ExcelTemplate(workbook);

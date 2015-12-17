@@ -79,11 +79,10 @@ module yszkrb_view {
             this.updateUI();
 
         }
-
-
-        public exportExcel() {
-            $("#exportMarketData")[0].action = "yszk_view_export.do?" + Util.Ajax.toUrlParam({});
-            $("#exportMarketData")[0].submit();
+        
+        public exportExcelYSDialy() {
+            $("#exportYSDialy")[0].action = "yszk_view_export.do?" + Util.Ajax.toUrlParam({year:this.mYear,month:this.mMonth,day:this.mDay});
+            $("#exportYSDialy")[0].submit();
         }
 
         public updateUI() {
