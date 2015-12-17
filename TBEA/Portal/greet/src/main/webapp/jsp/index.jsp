@@ -69,7 +69,7 @@
 	
  		</script> 
 
-	<div class="index_bg" style="height:768px">
+	<div class="index_bg" style="height:800px">
 	<div class="theme-popover-mask"></div>
 	<div class="login_list_main">
 		<div class="login_list_top">
@@ -137,7 +137,10 @@
 					target="_blank"
 					href="ftp://ftp.tbea.com/"><span class="highlight">常用工具下载</span><img
 						src="../images/login_icons_1.png"></a></li>
-						
+				<li class="login_list_item login_list_item_9"><a
+					target="_blank"
+					href="http://172.28.8.98/Office/Login"><span class="highlight">招标管理系统</span><img
+						src="../images/login_icons_1.png"></a></li>				
 									
 					
 			</ul>
