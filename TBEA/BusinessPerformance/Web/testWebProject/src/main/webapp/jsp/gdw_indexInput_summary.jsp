@@ -61,7 +61,7 @@
     <title>${year}年${month}月众和公司下属各项目公司预测指标填报情况</title>
     </c:if>
     
-    <c:if test="${CorpAuth} ">
+    <c:if test="${JYEntryLookup} ">
     <title>${year}年${month}月经营单位预测指标填报情况</title>
     </c:if>
 	    
@@ -184,7 +184,7 @@
 	    <h1>${year}年${month}月众和公司下属各项目公司预测指标填报情况</h1>
 	    </c:if>
 	    
-	    <c:if test="${CorpAuth}">
+	    <c:if test="${JYEntryLookup}">
 	    	<h1>${year}年${month}月经营单位预测指标填报情况</h1>
 	    </c:if>
     </div>
@@ -198,7 +198,7 @@
 						</td>
 						<td><%@include file="predictionTime_selection.jsp"%></div>
 						</td>
-						<c:if test="${CorpAuth}">
+						<c:if test="${JYEntryLookup}">
 						<td><%@include file="predictionCompanys_selection.jsp"%></div>
 						</td>
 						</c:if>

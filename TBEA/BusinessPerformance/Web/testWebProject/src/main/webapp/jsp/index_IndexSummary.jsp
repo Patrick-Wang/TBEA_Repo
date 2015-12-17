@@ -97,11 +97,12 @@
 				<li><a href="../ydzb/gdw_zbhz_prediction.do" target="_blank"><img
 						src="../images/charts/pie1.png"> <span><strong>各单位五大经营指标预测完成情况</strong></span></a>
 				</li>
+				</c:if>
+				<c:if test="${JYEntryLookup}">
 				<li><a href="../dashboard/status.do" target="_blank"><img
 						src="../images/charts/scatter1.png"> <span><strong>20号/28号/实际指标预测值填报情况</strong></span></a>
 				</li>
 				</c:if>
-				
 				<c:if test="${zhAuth}">
 				<li><a href="../dashboard/status.do" target="_blank"><img
 						src="../images/charts/scatter1.png"> <span><strong>20号/28号/实际指标预测值填报情况</strong></span></a>
