@@ -39,7 +39,7 @@ module yszkrb_view {
         private mMonth: number;
         private mYear: number;
         private mTableId: string;
-        private mDataSet: Util.Ajax = new Util.Ajax("yszk_update.do");;
+        private mDataSet: Util.Ajax = new Util.Ajax("yszk_update.do");
         private mExportDataSet: Util.Ajax;
         private mData: Array<string[]> = [];
         TableId: string;
