@@ -169,6 +169,12 @@
 			text-align: left;
 			font-size: 12px;
 		}
+		
+		.pmtype {
+			margin-left:5px;
+			font-weight:bold;
+			color:#2e6e9e;
+		}
     </style>
 </head>
 <body>
@@ -185,8 +191,8 @@
 						<td><div style = "width:20px"></div>	</td>
 						<td>
 							<div id="t1">
-							<input type="radio" name="rank" value="JY" id="JYcompanys" checked="checked"><label for="JYcompanys">经营单位排名</label>
-							<input type="radio" name="rank" value="PRO" id="Procompanys" ><label for ="Procompanys">项目公司排名</label>
+							<input type="radio" name="rank" class="ui-button" value="JY" id="JYcompanys" checked="checked"><label for="JYcompanys" class="pmtype">经营单位排名</label>
+							<input type="radio" name="rank" class="ui-button" value="PRO" id="Procompanys" ><label for ="Procompanys" class="pmtype">项目公司排名</label>
 							</div>						
 						</td>
 						<td><div style = "width:10px"/></td>
