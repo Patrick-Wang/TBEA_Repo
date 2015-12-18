@@ -202,7 +202,10 @@ module JQTable {
         align?: TextAlign;
         width?: number;
         editType?: string;
-        options?: any
+        options?: any;
+        //add by hzdqzy
+        isSortable?: boolean;
+        sorttype: string
     }
 
     export class Node {
@@ -218,7 +221,10 @@ module JQTable {
             width: number = 0,
             editType: string = undefined,
             options: any = undefined,
-            isNumber: boolean = true) {
+            isNumber: boolean = true,
+            //add by hzdqzy
+            isSortable: boolean = false,
+            sorttype: string = undefined) {
             this.mOpts = {
                 name: name,
                 id: id,
@@ -227,7 +233,10 @@ module JQTable {
                 align: align,
                 width: width,
                 editType: editType,
-                options: options
+                options: options,
+                //add by hzdqzy
+                isSortable: isSortable,
+                sorttype: sorttype
             }
         }
 
@@ -362,6 +371,16 @@ module JQTable {
             }
             return children.toArray();
         }
+        
+        //add by hzdqzy-------------------------------------------------------
+        public isSortable(): boolean {
+            return this.mOpts.isSortable;
+        }
+        
+        public sorttype(): string {
+            return this.mOpts.sorttype;
+        }
+        //---------------------------------------------------------------------
     }
 
     export class Cell {
@@ -464,8 +483,9 @@ module JQTable {
                     var colId = nodes[j].idChain();
                     this.mColModel.push({
                         name: colId,
-                        index: colId,
-                        sortable: false,
+                        index: colId, 
+                        sortable: nodes[j].isSortable(),//update by hzdqzy
+                        sorttype: nodes[j].sorttype(),//add by hzdqzy
                         editable: !nodes[j].isReadOnly(),
                         edittype: nodes[j].editType(),
                         editoptions: nodes[j].editOptions(),
