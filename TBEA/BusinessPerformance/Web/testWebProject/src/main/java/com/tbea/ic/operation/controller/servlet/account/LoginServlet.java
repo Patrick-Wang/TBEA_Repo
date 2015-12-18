@@ -148,9 +148,6 @@ public class LoginServlet {
 		
 		session.setAttribute("JYAnalysisLookup",
 				dailyReportService.hasJYAnalysisLookupAuthority(account) || dailyReportService.hasYSZKDialyLookupAuthority(account));
-		
-		session.setAttribute("JYEntryLookup",
-				dailyReportService.hasJYEntryLookupAuthority(account));
 
 		session.setAttribute("isByq", account.getId() == 9
 				|| account.getId() == 25 || account.getId() == 33);
@@ -158,8 +155,7 @@ public class LoginServlet {
 		session.setAttribute("isXl", account.getId() == 43
 				|| account.getId() == 50 || account.getId() == 61);
 		
-		session.setAttribute("isSbdcy", account.getId() == 8 || account.getId() == 6 || account.getId() == 147
-				|| account.getId() == 119 || account.getId() == 146);
+		session.setAttribute("isSbdcy", account.getId() == 8 || account.getId() == 6);
 
 	}
 

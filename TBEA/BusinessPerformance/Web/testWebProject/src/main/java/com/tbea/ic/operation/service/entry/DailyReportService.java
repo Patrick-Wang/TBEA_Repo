@@ -23,6 +23,4 @@ public interface DailyReportService {
 	boolean hasYSZKDialyLookupAuthority(Account account);
 	
 	boolean hasXJLDialyLookupAuthority(Account account);
-	
-	boolean hasJYEntryLookupAuthority(Account account);
 }

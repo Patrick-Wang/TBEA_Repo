@@ -228,7 +228,4 @@
     </body>
  	<script src="../jsp/style_button.js"></script>
 	<script src="../jsp/style_select.js"></script>
-	<script>
-    $("input").css("margin-top", "0px");
-	</script> 
 </html>
