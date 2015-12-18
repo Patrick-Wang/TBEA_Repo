@@ -80,7 +80,11 @@ public class ExcelTemplate {
 	
 	public enum JYGKPhase2SheetType{
 		YSDialy,
-		JYDWLRRANK
+		JYDWLRRANK,
+		LRTBRANK,
+		XMGSLRTBRANK,
+		RJRANK,
+		XMGSRJRANK
 	}
 
 	public static ExcelTemplate createJygkTemplate(JygkSheetType type) throws IOException{
@@ -116,8 +120,8 @@ public class ExcelTemplate {
 			workbook.removeSheetAt(0);
 		}
 		
-		int j = JYGKPhase2SheetType.JYDWLRRANK.ordinal();
-		for (int i = type.ordinal() + 1; i <= JYGKPhase2SheetType.JYDWLRRANK.ordinal(); ++i){
+		int j = JYGKPhase2SheetType.XMGSRJRANK.ordinal();
+		for (int i = type.ordinal() + 1; i <= JYGKPhase2SheetType.XMGSRJRANK.ordinal(); ++i){
 			workbook.removeSheetAt(1);
 		}
 		return new ExcelTemplate(workbook);

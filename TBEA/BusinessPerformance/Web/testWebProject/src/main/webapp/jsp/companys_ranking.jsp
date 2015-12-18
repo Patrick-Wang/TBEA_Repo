@@ -211,6 +211,21 @@
 				<div id="table"></div>
 			<td>
 		</tr>
+		<tr>
+			<td>
+				<div style="height:6px"></div>
+			<td>
+		</tr>
+		<tr>
+			<td>
+				<form id="export" method="post" style="display:none">
+					<input id="exportButton" type="button" value="导出"
+						onclick="instance.exportExcel()"
+						class="ui-button ui-widget ui-state-default ui-corner-all" 
+						role="button" aria-disabled="false"></input>
+				</form>
+			</td>
+		</tr>
 	</Table>
 	<%@include file="loading.jsp"%>
 

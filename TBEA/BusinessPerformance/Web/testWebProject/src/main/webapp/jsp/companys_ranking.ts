@@ -118,6 +118,13 @@ module companys_ranking {
             this.mIndex = $("#ranktype").val();
             //this.mIndex = $("#indextype  option:selected").text();
         }
+        
+        //导出excel
+        public exportExcel(fName: string) {
+            var date: Util.Date = this.mDs.getDate();
+            $("#export")[0].action = "companys_ranking_export.do?" + Util.Ajax.toUrlParam({ year: date.year , month: date.month , rankingType: this.mIndex});
+            $("#export")[0].submit();
+        }
 
         public updateUI() {
             var date: Util.Date = this.mDs.getDate();
@@ -262,7 +269,7 @@ module companys_ranking {
                     rowNum: 100,
                     autoScroll: true
                 }));
-
+            $("#export").css('display','block'); 
         }
     }
 }
