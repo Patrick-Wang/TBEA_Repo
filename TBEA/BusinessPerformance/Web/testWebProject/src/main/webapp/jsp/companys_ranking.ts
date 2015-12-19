@@ -16,7 +16,6 @@ enum RANKINGTYPE6{GSMC,BYSR,BYCH,CHZSRBZ,MONTHRANKING};
 //应收账款加存货占比
 enum RANKINGTYPE7{GSMC,BYSR,BYYSZK,BYCH,YSZKCHZSRBZ,MONTHRANKING};
 module companys_ranking {
-
     class JQGridAssistantFactory {
         public static createTable(gridName: string, RankingType: number): JQTable.JQGridAssistant {
             if (RankingType == 1 ||  RankingType == 9 || RankingType == 11) {
@@ -26,12 +25,12 @@ module companys_ranking {
                         .append(new JQTable.Node("年度计划", "n1"))
                         .append(new JQTable.Node("年度累计完成", "n2"))
                         .append(new JQTable.Node("计划完成率", "n3"))
-                        .append(new JQTable.Node("年度排名", "n4")),
+                        .append(new JQTable.Node("年度排名", "n4", true, JQTable.TextAlign.Right, 0, undefined, undefined, true, true, "int")),
                     new JQTable.Node("月度完成率排名", "monthRanking", true, JQTable.TextAlign.Left)
                         .append(new JQTable.Node("月度计划", "y1"))
                         .append(new JQTable.Node("月度完成", "y2"))
                         .append(new JQTable.Node("月度完成率", "y3"))
-                        .append(new JQTable.Node("月度排名", "y4")),
+                        .append(new JQTable.Node("月度排名", "y4", true, JQTable.TextAlign.Right, 0, undefined, undefined, true, true, "int")),
                 ], gridName);
             } else if (RankingType == 2) {
                 return new JQTable.JQGridAssistant([
@@ -40,22 +39,22 @@ module companys_ranking {
                         .append(new JQTable.Node("年度累计", "n1"))
                         .append(new JQTable.Node("去年同期累计", "n2"))
                         .append(new JQTable.Node("同比增长", "n3"))
-                        .append(new JQTable.Node("年度排名", "n4")),
+                        .append(new JQTable.Node("年度排名", "n4", true, JQTable.TextAlign.Right, 0, undefined, undefined, true, true, undefined)),
                     new JQTable.Node("月度同比增长情况排名", "monthRanking", true, JQTable.TextAlign.Left)
                         .append(new JQTable.Node("当月完成", "y1"))
                         .append(new JQTable.Node("去年同期", "y2"))
                         .append(new JQTable.Node("同比增长", "y3"))
-                        .append(new JQTable.Node("月度排名", "y4")),
+                        .append(new JQTable.Node("月度排名", "y4", true, JQTable.TextAlign.Right, 0, undefined, undefined, true, true, undefined)),
                 ], gridName);
             } else if (RankingType == 3 || RankingType == 4 || RankingType == 13 || RankingType == 14) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度累计完成排名", "yearRanking", true, JQTable.TextAlign.Left)
                         .append(new JQTable.Node("年度累计完成", "n1"))
-                        .append(new JQTable.Node("年度排名", "n2")),
+                        .append(new JQTable.Node("年度排名", "n2", true, JQTable.TextAlign.Right, 0, undefined, undefined, true, true, "int")),
                     new JQTable.Node("月度完成", "monthRanking", true, JQTable.TextAlign.Left)
                         .append(new JQTable.Node("月度完成", "y1"))
-                        .append(new JQTable.Node("月度排名", "y2")),
+                        .append(new JQTable.Node("月度排名", "y2", true, JQTable.TextAlign.Right, 0, undefined, undefined, true, true, "int")),
                 ], gridName);
             }else if(RankingType == 5){
             	return new JQTable.JQGridAssistant([
@@ -63,7 +62,7 @@ module companys_ranking {
                     new JQTable.Node("本月收入（还原至全年）", "income", true, JQTable.TextAlign.Left),
                     new JQTable.Node("本月应收账款", "accountReceive", true, JQTable.TextAlign.Left),
                     new JQTable.Node("应收账款占收入比重", "accountReceiveRate", true, JQTable.TextAlign.Left),
-                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left, 0, undefined, undefined, true, true, "int"),
                 ], gridName);
             }else if(RankingType == 6){
             	return new JQTable.JQGridAssistant([
@@ -72,7 +71,7 @@ module companys_ranking {
                     new JQTable.Node("本月应收账款", "accountReceive", true, JQTable.TextAlign.Left),
                     new JQTable.Node("本月保理余额", "factoring", true, JQTable.TextAlign.Left),
                     new JQTable.Node("应收账款占收入比重", "accountReceiveRate", true, JQTable.TextAlign.Left),
-                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left, 0, undefined, undefined, true, true, "int"),
                 ], gridName);
             }else if(RankingType == 7){
             	return new JQTable.JQGridAssistant([
@@ -80,7 +79,7 @@ module companys_ranking {
                     new JQTable.Node("本月收入（还原至全年）", "income", true, JQTable.TextAlign.Left),
                     new JQTable.Node("本月存货", "stock", true, JQTable.TextAlign.Left),
                     new JQTable.Node("存货占收入比重", "stockRate", true, JQTable.TextAlign.Left),
-                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left, 0, undefined, undefined, true, true, "int"),
                 ], gridName);
             }else if(RankingType == 8){
             	return new JQTable.JQGridAssistant([
@@ -89,7 +88,7 @@ module companys_ranking {
                     new JQTable.Node("本月应收账款", "accountReceive", true, JQTable.TextAlign.Left),
                     new JQTable.Node("本月存货", "stock", true, JQTable.TextAlign.Left),
                     new JQTable.Node("（应收账款+存货）占收入比重", "accountReceiveandStockRate", true, JQTable.TextAlign.Left),
-                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left, 0, undefined, undefined, true, true, "int"),
                 ], gridName);
             }
 }
@@ -126,6 +125,13 @@ module companys_ranking {
         public onIndexSelected() {
             this.mIndex = $("#ranktype").val();
             //this.mIndex = $("#indextype  option:selected").text();
+        }
+        
+        //导出excel
+        public exportExcel(fName: string) {
+            var date: Util.Date = this.mDs.getDate();
+            $("#export")[0].action = "companys_ranking_export.do?" + Util.Ajax.toUrlParam({ year: date.year , month: date.month , rankingType: this.mIndex});
+            $("#export")[0].submit();
         }
 
         public updateUI() {
@@ -270,7 +276,7 @@ module companys_ranking {
                     rowNum: 100,
                     autoScroll: true
                 }));
-
+            $("#export").css('display','block'); 
         }
     }
 }
