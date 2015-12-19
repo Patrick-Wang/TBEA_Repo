@@ -9,7 +9,7 @@
 	<tr>
 	
 		<td style="padding-right:5px">
-		<select id="ranktype"onchange="instance.onIndexSelected()" style="width: 230px;">				
+		<select id="ranktype"onchange="instance.onIndexSelected()" style="width: 238px;">				
 		</select>
 
 
