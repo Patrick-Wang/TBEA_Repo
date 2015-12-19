@@ -7,6 +7,14 @@ enum RANKINGTYPE1{GSMC,NDJH, NDLJWC,JHWCL,YEARRANKING, YDJH, YDWC,YDWCL,MONTHRAN
 enum RANKINGTYPE2{GSMC,NDLJ,QNTQLJ,NDTBZZ,YEARRANKING,DYWC,QNTQ,YDTBZZ,MONTHRANKING};
 //人均利润，人均收入
 enum RANKINGTYPE3{GSMC,NDLJ,YEARRANKING,DYWC,MONTHRANKING};
+//应收账款占收入排名
+enum RANKINGTYPE4{GSMC,BYSR,BYYSZK,YSZKZSRBZ,MONTHRANKING};
+//应收账款加保理
+enum RANKINGTYPE5{GSMC,BYSR,BYYSZK,BYBLYE,YSZKZSRBZ,MONTHRANKING};
+//存货占比
+enum RANKINGTYPE6{GSMC,BYSR,BYCH,CHZSRBZ,MONTHRANKING};
+//应收账款加存货占比
+enum RANKINGTYPE7{GSMC,BYSR,BYYSZK,BYCH,YSZKCHZSRBZ,MONTHRANKING};
 module companys_ranking {
 
     class JQGridAssistantFactory {
@@ -140,8 +148,12 @@ module companys_ranking {
             var row = [];
             var mdata = [];
             for (var i = 0; i < this.mData.length; ++i) {
-                row = [].concat(this.mData[i]);
-                mdata[i] = data[i].concat(row);
+            	if(data[i] == null){
+            		mdata[i] = [].concat(this.mData[i]);
+            	}else{
+                    row = [].concat(this.mData[i]);
+                    mdata[i] = data[i].concat(row);
+            	}
                 for(var j = 1; j < mdata[i].length; j++)
                 {
                     if(this.mIndex == 1 || this.mIndex == 9 || this.mIndex == 11)
@@ -161,8 +173,7 @@ module companys_ranking {
                         }else{
                              mdata[i][j] = Util.formatFordot(mdata[i][j],1); 
                         }
-                    } else if (this.mIndex == 2) 
-                    {
+                    } else if (this.mIndex == 2) {
                         if (RANKINGTYPE2.YEARRANKING == j || RANKINGTYPE2.MONTHRANKING == j){
                            mdata[i][j] = Util.formatInt(mdata[i][j]); 
                         }else if (RANKINGTYPE2.NDTBZZ == j || RANKINGTYPE2.YDTBZZ == j){
@@ -170,51 +181,43 @@ module companys_ranking {
                         }else {
                            mdata[i][j] =  Util.formatCurrency(mdata[i][j]);
                         }
-                    } 
+                    }else if(this.mIndex ==5){
+	                	if (RANKINGTYPE4.MONTHRANKING == j){
+	                		mdata[i][j] = Util.formatInt(mdata[i][j]); 
+	                    }else if (RANKINGTYPE4.YSZKZSRBZ == j){
+	                    	mdata[i][j] = Util.formatPercent(mdata[i][j]); 
+	                    }else {
+	                    	mdata[i][j] =  Util.formatCurrency(mdata[i][j]);
+	                    }
+                    }else if(this.mIndex == 6){
+                    	if (RANKINGTYPE5.MONTHRANKING == j){
+	                		mdata[i][j] = Util.formatInt(mdata[i][j]); 
+	                    }else if (RANKINGTYPE5.YSZKZSRBZ == j){
+	                    	mdata[i][j] = Util.formatPercent(mdata[i][j]); 
+	                    }else {
+	                    	mdata[i][j] =  Util.formatCurrency(mdata[i][j]);
+	                    }
+                    }else if(this.mIndex == 7){
+                    	if (RANKINGTYPE6.MONTHRANKING == j){
+	                		mdata[i][j] = Util.formatInt(mdata[i][j]); 
+	                    }else if (RANKINGTYPE6.CHZSRBZ == j){
+	                    	mdata[i][j] = Util.formatPercent(mdata[i][j]); 
+	                    }else {
+	                    	mdata[i][j] =  Util.formatCurrency(mdata[i][j]);
+	                    }
+                    }else if(this.mIndex == 8){
+                    	if (RANKINGTYPE7.MONTHRANKING == j){
+	                		mdata[i][j] = Util.formatInt(mdata[i][j]); 
+	                    }else if (RANKINGTYPE7.YSZKCHZSRBZ == j){
+	                    	mdata[i][j] = Util.formatPercent(mdata[i][j]); 
+	                    }else {
+	                    	mdata[i][j] =  Util.formatCurrency(mdata[i][j]);
+	                    }
+                    }
                 }                 
             }            
             return mdata;
         }
-        
-         private formatProData() {
-            var row = [];
-            var mdata = [];
-            for (var i = 0; i < this.mData.length; ++i) {
-                mdata[i] = [].concat(this.mData[i]);
-                for(var j = 1; j < mdata[i].length; j++)
-                {
-                    if(this.mIndex == 1 || this.mIndex == 9 || this.mIndex == 11)
-                    {
-                        if (RANKINGTYPE1.YEARRANKING == j ||  RANKINGTYPE1.MONTHRANKING == j){
-                           mdata[i][j] = Util.formatInt(mdata[i][j]); 
-                        }
-                        else if (RANKINGTYPE1.JHWCL == j || RANKINGTYPE1.YDWCL == j){
-                            mdata[i][j] = Util.formatPercent(mdata[i][j]); 
-                        }else{
-                            mdata[i][j] = Util.formatCurrency(mdata[i][j]);
-                        }
-                    }else if(this.mIndex == 3 || this.mIndex == 4 ||this.mIndex == 13 ||this.mIndex == 14)
-                    {
-                         if (RANKINGTYPE3.YEARRANKING == j ||  RANKINGTYPE3.MONTHRANKING == j){
-                            mdata[i][j] = Util.formatInt(mdata[i][j]); 
-                        }else{
-                             mdata[i][j] = Util.formatFordot(mdata[i][j],1); 
-                        }
-                    } else if (this.mIndex == 2) 
-                    {
-                        if (RANKINGTYPE2.YEARRANKING == j || RANKINGTYPE2.MONTHRANKING == j){
-                           mdata[i][j] = Util.formatInt(mdata[i][j]); 
-                        }else if (RANKINGTYPE2.NDTBZZ == j || RANKINGTYPE2.YDTBZZ == j){
-                             mdata[i][j] = Util.formatPercent(mdata[i][j]); 
-                        }else {
-                           mdata[i][j] =  Util.formatCurrency(mdata[i][j]);
-                        }
-                    } 
-                }                 
-            }            
-            return mdata;
-        }
-
 
         private updateTable(rankingType: number): void {
             var name = this.mTableId + "_jqgrid_1234";
@@ -224,23 +227,27 @@ module companys_ranking {
             tableAssist = JQGridAssistantFactory.createTable(name, rankingType);
             if ($("input[name=rank]:checked").attr("id") == "JYcompanys")
             {
-                var predata = [
-                    ["沈变公司"],
-                    ["衡变公司"],
-                    ["新变厂",],
-                    ["鲁缆公司"],
-                    ["新缆厂"],
-                    ["德缆公司"],
-                    ["天池能源"],
-                    ["能动公司"],
-                    ["新能源公司"],
-                    ["新特能源公司"],
-                    ["进出口公司"],
-                    ["国际工程公司"],
-                    ["众和公司"]];
-                data = this.formatData(predata);
+               if(this.mIndex == 1 || this.mIndex == 2 ||this.mIndex == 3 || this.mIndex == 4 || this.mIndex == 9){
+            	   var predata = [
+            	                    ["沈变公司"],
+            	                    ["衡变公司"],
+            	                    ["新变厂",],
+            	                    ["鲁缆公司"],
+            	                    ["新缆厂"],
+            	                    ["德缆公司"],
+            	                    ["天池能源"],
+            	                    ["能动公司"],
+            	                    ["新能源公司"],
+            	                    ["新特能源公司"],
+            	                    ["进出口公司"],
+            	                    ["国际工程公司"],
+            	                    ["众和公司"]];
+            	 data = this.formatData(predata);
+               }else{
+            	   data = this.formatData([]);
+               } 
             }else {
-                data = this.formatProData();
+                data = this.formatData([]);
             }
             var parent = $("#" + this.mTableId);
             parent.empty();

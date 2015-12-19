@@ -76,16 +76,16 @@ public class YDZBRankingController {
 		} else if (rankingType == 14) {
 			ranking_val = JSONArray.fromObject(rankService.getXmgsRjlrRank(d))
 					.toString().replace("null", "\"--\"");
-		} else if (rankingType == 15) {
+		} else if (rankingType == 5) { //应收账款占收入比排名
 			ranking_val = JSONArray.fromObject(rankService.getYszkzsrbRank(d))
 					.toString().replace("null", "\"--\"");
-		}else if (rankingType == 16) {
+		}else if (rankingType == 7) { //存货占比排名
 			ranking_val = JSONArray.fromObject(rankService.getChzbRank(d))
 					.toString().replace("null", "\"--\"");
-		}else if (rankingType == 17) {
+		}else if (rankingType == 8) {//应收加存货排名
 			ranking_val = JSONArray.fromObject(rankService.getYsAndChzbRank(d))
 					.toString().replace("null", "\"--\"");
-		}else if (rankingType == 18) {
+		}else if (rankingType == 6) { //应收加保理占比排名
 			ranking_val = JSONArray.fromObject(rankService.getYszkAndBlzbRank(d))
 					.toString().replace("null", "\"--\"");
 		}
