@@ -60,122 +60,129 @@
     <title>${year}年${month}月经营单位指标排名情况</title>
 
     <style type="text/css">
-        body {
-            background-color: rgb(247, 247, 247);
-        }
+body {
+	background-color: rgb(247, 247, 247);
+}
 
-        .panel-content-border {
-            height: 350px;
-            width: 1000px;
-            border: 2px solid #e3e3e3;
-            margin: 0;
-            padding: 0;
-            align: center;
-            valign: center;
-            text-align: center;
-        }
+.panel-content-border {
+	height: 350px;
+	width: 1000px;
+	border: 2px solid #e3e3e3;
+	margin: 0;
+	padding: 0;
+	align: center;
+	valign: center;
+	text-align: center;
+}
 
-        .panel-content {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
+.panel-content {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
 
-        .right {
-            width: 45%;
-            height: 180px;
-            float: left;
-            padding-top: 20px;
-            margin-left: 225px;
-        }
+.right {
+	width: 45%;
+	height: 180px;
+	float: left;
+	padding-top: 20px;
+	margin-left: 225px;
+}
 
-        .contract {
-            text-align: center;
-        }
+.contract {
+	text-align: center;
+}
 
-            .contract h1 {
-                display: none;
-                color: #003B8F;
-            }
+.contract h1 {
+	display: none;
+	color: #003B8F;
+}
 
-        .btn_loading, .btn_detail {
-            width: 100px;
-            height: 30px;
-            padding: 5px, 10px;
-            font-size: 12px;
-            line-height: 1.5;
-            boder-radius: 3px;
-            background-color: #5cb85c;
-            boder-color: #4cae4c;
-            color: #fff;
-        }
+.btn_loading, .btn_detail {
+	width: 100px;
+	height: 30px;
+	padding: 5px, 10px;
+	font-size: 12px;
+	line-height: 1.5;
+	boder-radius: 3px;
+	background-color: #5cb85c;
+	boder-color: #4cae4c;
+	color: #fff;
+}
 
-        .header {
-            width: 100%;
-            height: 60px;
-        }
+.header {
+	width: 100%;
+	height: 60px;
+}
 
-            .header h1 {
-                text-align: center;
-            }
+.header h1 {
+	text-align: center;
+}
 
-        .companyname h1 {
-            width: 30px;
-            font-size: 30px;
-            word-wrap: break-word;
-            letter-spacing: 20px;
-            color: #5cb85c;
-            float: left;
-        }
+.companyname h1 {
+	width: 30px;
+	font-size: 30px;
+	word-wrap: break-word;
+	letter-spacing: 20px;
+	color: #5cb85c;
+	float: left;
+}
 
-        .lxian {
-            margin-left: 30px;
-            width: 1px;
-            height: 175px;
-            background: #5cb85c;
-            float: left;
-        }
+.lxian {
+	margin-left: 30px;
+	width: 1px;
+	height: 175px;
+	background: #5cb85c;
+	float: left;
+}
 
-        .hrclass hr {
-            width: 1100px;
-            height: 1px;
-            margin-top: 10px;
-            margin-left: 90px;
-            border: 0;
-            background-color: #5cb85c;
-        }
+.hrclass hr {
+	width: 1100px;
+	height: 1px;
+	margin-top: 10px;
+	margin-left: 90px;
+	border: 0;
+	background-color: #5cb85c;
+}
 
-        th.ui-th-column div {
-            /* jqGrid columns name wrap  */
-            white-space: normal !important;
-            height: auto !important;
-            padding: 0px;
-        }
+th.ui-th-column div {
+	/* jqGrid columns name wrap  */
+	white-space: normal !important;
+	height: auto !important;
+	padding: 0px;
+}
 
-        th.ui-th-ltr {
-            /* jqGrid columns name wrap  */
-            font-size: 14px;
-        }
-        
-        #update {
-			height: 23px;
-			padding: .1em 1em;
-			margin-top: -1px;
-		}
-		
-		.ui-multiselect {
-			padding: 2px 0 2px 4px;
-			text-align: left;
-			font-size: 12px;
-		}
-		
-		.pmtype {
-			margin-left:5px;
-			font-weight:bold;
-			color:#2e6e9e;
-		}
-    </style>
+th.ui-th-ltr {
+	/* jqGrid columns name wrap  */
+	font-size: 14px;
+}
+
+#update {
+	height: 23px;
+	padding: .1em 1em;
+	margin-top: -1px;
+}
+
+.ui-multiselect {
+	padding: 2px 0 2px 4px;
+	text-align: left;
+	font-size: 12px;
+}
+
+.pmtype {
+	margin-left: 2px;
+	font-weight: bold;
+	color: #2e6e9e;
+}
+
+#exportButton {
+	height: 23px;
+	width: 100px;
+	padding: .1em 1em;
+	margin-top: -1px;
+}
+</style>
 </head>
 <body>
     <div class=" header">
@@ -201,7 +208,9 @@
 						<td><%@include file="ranking_selection.jsp"%></div>
 						</td> 
 						<td><input id="update" type="button" value="更新" style="width : 80px; margin-left:10px;"
-							onclick="instance.updateUI()"></input>
+							onclick="instance.updateUI()"
+							class="ui-button ui-widget ui-state-default ui-corner-all" 
+						role="button" aria-disabled="false"></input>
 				</Table>
 			</td>
 		</tr>
@@ -231,7 +240,7 @@
 
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
-<script src="../jsp/style_button.js"></script>
+
 
 
 <script type="text/javascript">
@@ -280,4 +289,5 @@
 	}
 </script>
 <script src="../jsp/style_select.js"></script>
+
 </html>
