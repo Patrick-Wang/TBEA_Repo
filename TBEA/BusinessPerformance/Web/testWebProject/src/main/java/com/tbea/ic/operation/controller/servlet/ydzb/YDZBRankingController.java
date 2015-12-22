@@ -165,12 +165,36 @@ public class YDZBRankingController {
 					new Integer[]{}, new Integer[]{0,2});
 			data = rankService.getRjlrRank(d);
 			template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.RJRANK);
-		}
-		else if(rankingType == 4){
+		}else if(rankingType == 4){
 			formatterChain = this.getFormatterChainDataOnly_1(
 					new Integer[]{}, new Integer[]{0,2});
 			data = rankService.getRjsrRank(d);
 			template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.RJRANK);
+		}else if(rankingType == 5){
+			formatterChain = this.getFormatterChainWithHeader(
+					new Integer[]{3}, new Integer[]{});
+			data = rankService.getYszkzsrbRank(d);
+			template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.YSZKZSRBRANK);
+		}else if(rankingType == 6){
+			formatterChain = this.getFormatterChainWithHeader(
+					new Integer[]{4}, new Integer[]{});
+			data = rankService.getYszkAndBlzbRank(d);
+			template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.YSZKJBLZSRRANK);
+		}else if(rankingType == 7){
+			formatterChain = this.getFormatterChainWithHeader(
+					new Integer[]{3}, new Integer[]{});
+			data = rankService.getChzbRank(d);
+			template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.CHZSRBRANK);
+		}else if(rankingType == 8){
+			formatterChain = this.getFormatterChainWithHeader(
+					new Integer[]{4}, new Integer[]{});
+			data = rankService.getYsAndChzbRank(d);
+			template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.YSJCHZSRBRANK);
+		}else if(rankingType == 9){
+			formatterChain = this.getFormatterChainDataOnly(
+					new Integer[]{2, 6}, new Integer[]{});
+			data = rankService.getJxjlRank(d);
+			template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.JYDWLRRANK);
 		}else if(rankingType == 11){
 			formatterChain = this.getFormatterChainWithHeader(
 					new Integer[]{3, 7}, new Integer[]{});
@@ -198,13 +222,16 @@ public class YDZBRankingController {
 			HSSFRow row = null;
 			if(rankingType == 11 || rankingType == 13 || rankingType == 14){
 				 row = sheet.createRow(2 + i);
-			}else{
-				row = sheet.getRow(2 + i);
+			}else if(rankingType == 5 || rankingType == 6 || rankingType == 7 || rankingType == 8){
+				 row = sheet.getRow(1 + i);
+			}
+			else{
+				 row = sheet.getRow(2 + i);
 			}
 			for (int j = 0, jlen = data.get(i).length; j < jlen; ++j) {
 				//在已创建的行中创建单元格
 				HSSFCell cell = null;
-				if(rankingType == 11 || rankingType == 13 || rankingType == 14){
+				if(rankingType == 11 || rankingType == 13 || rankingType == 14 || rankingType == 5 || rankingType == 6 || rankingType == 7 || rankingType == 8){
 					cell = row.createCell(j);//.getCell(j + 1);
 				}else{
 					cell = row.createCell(j+1);//.getCell(j + 1);
