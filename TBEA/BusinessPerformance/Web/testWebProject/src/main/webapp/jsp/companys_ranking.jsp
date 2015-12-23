@@ -170,12 +170,6 @@ th.ui-th-ltr {
 	font-size: 12px;
 }
 
-.pmtype {
-	margin-left: 2px;
-	font-weight: bold;
-	color: #2e6e9e;
-}
-
 #exportButton {
 	height: 23px;
 	width: 100px;
@@ -198,8 +192,8 @@ th.ui-th-ltr {
 						<td><div style = "width:20px"></div>	</td>
 						<td>
 							<div id="t1">
-							<input type="radio" name="rank" class="ui-button" value="JY" id="JYcompanys" checked="checked"><label for="JYcompanys" class="pmtype">经营单位排名</label>
-							<input type="radio" name="rank" class="ui-button" value="PRO" id="Procompanys" ><label for ="Procompanys" class="pmtype">项目公司排名</label>
+							<input type="radio" name="rank" value="JY" id="JYcompanys" checked="checked"><label for="JYcompanys">经营单位排名</label>
+							<input type="radio" name="rank" value="PRO" id="Procompanys" ><label for ="Procompanys">项目公司排名</label>
 							</div>						
 						</td>
 						<td><div style = "width:10px"/></td>
@@ -240,8 +234,9 @@ th.ui-th-ltr {
 
 </body>
 <script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
-
-
+<script>
+	$( "#t1" ).buttonset();
+</script>
 
 <script type="text/javascript">
 	$(function(){
