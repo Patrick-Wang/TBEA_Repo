@@ -219,8 +219,8 @@ body {
 
 .login_list li {
 	display: block;
-	width: 186px;
-	height: 186px;
+	width: 146px;
+	height: 146px;
 	float: left;
 	margin-right: 7px;
 	margin-bottom: 9px
@@ -272,7 +272,7 @@ body {
 }
 
 
-.login_list li.login_list_item_5, .login_list li.login_list_item_10 {
+.login_list li.login_list_item_7, .login_list li.login_list_item_12 {
 	margin-right: 0px
 }
 
@@ -294,12 +294,12 @@ body {
 	-moz-transition: all 0.5s;
 	-o-transition: all 0.5s;
 	transition: all 0.5s;
-	font-size: 24px;
+	font-size: 18px;
 	font-family: "microsoft yahei";
 	color: #FFFFFF;
 	padding-top: 25px;
-	padding-left: 23px;
-	line-height: 24px
+	padding-left: 18px;
+	line-height: 18px
 }
 
 .login_list_item span.login_list_bd {
@@ -315,7 +315,8 @@ body {
 	transition: all 1s;
 	position: absolute;
 	bottom: 0;
-	right: 0
+	right: 0;
+	width:50px;
 }
 
 .login_list_item:hover {
@@ -325,13 +326,13 @@ body {
 	-webkit-opacity: 0.7;
 	-ms-opacity: 0.7;
 	opacity: 0.7;
-	width: 184px;
-	height: 184px;
+	width: 144px;
+	height: 144px;
 	border: 1px dashed #003b8f
 }
 
 .login_list_item:hover span {
-	font-size: 30px;
+	font-size: 25px;
 	line-height: 30px;
 	cursor: pointer
 }
