@@ -33,8 +33,7 @@
 	</div>
 
 	<script type="text/javascript">
-		 //	$(document).ready(function(){
-		// 		document.body.clientHeight = window.screen.availHeight;
+		// 	$(document).ready(function(){
 		// 	 	$.getJSON("/fe/sso/queryallsystem.gsp",{tt:new Date()},function(data){
 		// 			//赋值
 		// 			var html = "";
@@ -118,7 +117,7 @@
 						class="login_list_bd highlight"
 						onclick="showBondPage(6,'${usrName}');">绑定用户</span></li>
 
-					<li class="login_list_item login_list_item_11"><a
+					<li class="login_list_item login_list_item_7"><a
 						href="http://192.168.7.76/" target="_blank"> <span
 							class="highlight">人力资源系统</span><img
 							src="../images/login_icons_1.png"></a></li>
@@ -141,6 +140,38 @@
 						target="_blank" href="http://172.28.8.98/Office/Login"><span
 							class="highlight">招标管理系统</span><img
 							src="../images/login_icons_1.png"></a></li>
+					<li class="login_list_item login_list_item_10"><a
+						target="_blank" href="http://mail.tbea.com/owa/auth/logon600089.aspx?url=http://mail.tbea.com/owa/&reason=0"><span
+							class="highlight">邮件系统</span><img
+							src="../images/login_icons_1.png"></a></li>
+					<li class="login_list_item login_list_item_11"><a
+						target="_blank" href="http://172.28.8.71:7083"><span
+							class="highlight">教学教务系统</span><img
+							src="../images/login_icons_1.png"></a></li>
+					<li class="login_list_item login_list_item_12"><a
+						target="_blank" href="https://vd.tbea.com"><span
+							class="highlight">桌面虚拟化</span><img
+							src="../images/login_icons_1.png"></a></li>
+				</ul>
+
+			</div>
+			<div class="login_list">
+				<ul id="login_list_sys">
+					<li class="login_list_item login_list_item_13"><a
+						target="_blank" href="http://192.168.7.11/read_paper/node_853.htm"><span
+							class="highlight">特变电子报</span><img
+							src="../images/login_icons_1.png"></a></li>
+
+					<li class="login_list_item login_list_item_14"><a
+						target="_blank" href="http://www.tbea.com。cn/"><span
+							class="highlight">公司外网</span><img
+							src="../images/login_icons_1.png"></a></li>
+
+					<li class="login_list_item login_list_item_15"><a
+						target="_blank" href="ftp://peixun.tbea.com/"><span
+							class="highlight">特变大讲堂</span><img
+							src="../images/login_icons_1.png"></a></li>
+					
 				</ul>
 
 			</div>
