@@ -263,15 +263,26 @@ body {
 }
 
 .login_list_item_10 {
-	background: #fdd934
+	background: #c4c400
 }
 
 .login_list_item_11 {
+	background: #afafd8
+}
+.login_list_item_12 {
 	background: #0080ff
 }
 
-.login_list_item_12 {
-	background: #8000ff
+.login_list_item_13 {
+	background: #ff6fff
+}
+
+.login_list_item_14 {
+	background: #9c91dd
+}
+
+.login_list_item_15 {
+	background: #8ebbdf
 }
 
 .login_list_bottom {
