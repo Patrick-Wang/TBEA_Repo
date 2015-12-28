@@ -33,7 +33,8 @@
 	</div>
 
 	<script type="text/javascript">
-		// 	$(document).ready(function(){
+		 //	$(document).ready(function(){
+		// 		document.body.clientHeight = window.screen.availHeight;
 		// 	 	$.getJSON("/fe/sso/queryallsystem.gsp",{tt:new Date()},function(data){
 		// 			//赋值
 		// 			var html = "";
@@ -62,7 +63,7 @@
 		// 	}
 	</script>
 
-	<div class="index_bg" style="height: 800px">
+	<div >
 		<div class="theme-popover-mask"></div>
 		<div class="login_list_main">
 			<div class="login_list_top">
@@ -117,7 +118,7 @@
 						class="login_list_bd highlight"
 						onclick="showBondPage(6,'${usrName}');">绑定用户</span></li>
 
-					<li class="login_list_item login_list_item_7"><a
+					<li class="login_list_item login_list_item_11"><a
 						href="http://192.168.7.76/" target="_blank"> <span
 							class="highlight">人力资源系统</span><img
 							src="../images/login_icons_1.png"></a></li>

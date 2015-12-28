@@ -26,7 +26,7 @@ a {
 body {
 	font-size: 12px;
 	font-family: SimSun;
-	background: url(../images/login_list_bg.jpg) repeat-x #d4edfc top center;
+	background: url(../images/BG.jpg) repeat-x #d4edfc top center;
 	color: #555555;
 	line-height: 2.0
 }
@@ -264,6 +264,14 @@ body {
 
 .login_list_item_10 {
 	background: #fdd934
+}
+
+.login_list_item_11 {
+	background: #0080ff
+}
+
+.login_list_item_12 {
+	background: #8000ff
 }
 
 .login_list_bottom {
