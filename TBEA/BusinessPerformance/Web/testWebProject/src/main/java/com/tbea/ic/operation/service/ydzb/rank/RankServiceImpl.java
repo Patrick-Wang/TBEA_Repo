@@ -2,6 +2,7 @@ package com.tbea.ic.operation.service.ydzb.rank;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -253,11 +254,12 @@ public class RankServiceImpl implements RankService {
 		
 		List<Double[]> results = new ArrayList<Double[]>();
 		List<Double[]> resultTemp = new ArrayList<Double[]>();
-
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
 		for (int i = 0; i < jydws.size(); ++i){
 			results.add(new Double[4]);
 			resultTemp.add(results.get(i));
-			results.get(i)[0] = getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end);
+			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end) / cal.get(Calendar.MONTH + 1)) * 12;
 			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.getValue(), end, end);
 			if (results.get(i)[0] != null && Util.isPositive(results.get(i)[0]) &&
 				results.get(i)[1] != null && Util.isPositive(results.get(i)[1])){
@@ -281,9 +283,11 @@ public class RankServiceImpl implements RankService {
 		Date start = dh.getFirstMonth();
 		List<Double[]> results = new ArrayList<Double[]>();
 		List<Double[]> resultTemp = new ArrayList<Double[]>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
 		for (int i = 0; i < jydws.size(); ++i){
 			results.add(new Double[5]);
-			results.get(i)[0] = getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end);
+			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end)/ cal.get(Calendar.MONTH + 1)) * 12;
 			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.getValue(), end, end);
 			results.get(i)[2] = getZbValues(jydws.get(i), GSZB.BL34.getValue(), end, end);
 			if (!(results.get(i)[1] == null && results.get(i)[2] == null)){
@@ -313,9 +317,11 @@ public class RankServiceImpl implements RankService {
 		
 		List<Double[]> results = new ArrayList<Double[]>();
 		List<Double[]> resultTemp = new ArrayList<Double[]>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
 		for (int i = 0; i < jydws.size(); ++i){
 			results.add(new Double[4]);
-			results.get(i)[0] = getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end);
+			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end) / cal.get(Calendar.MONTH + 1)) * 12;
 			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.CH35.getValue(), end, end);
 			if (results.get(i)[0] != null && Util.isPositive(results.get(i)[0]) &&
 					results.get(i)[1] != null && Util.isPositive(results.get(i)[1])){
@@ -342,9 +348,11 @@ public class RankServiceImpl implements RankService {
 		
 		List<Double[]> results = new ArrayList<Double[]>();
 		List<Double[]> resultTemp = new ArrayList<Double[]>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
 		for (int i = 0; i < jydws.size(); ++i){
 			results.add(new Double[5]);
-			results.get(i)[0] = getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end);
+			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end)/ cal.get(Calendar.MONTH + 1)) * 12;
 			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.getValue(), end, end);
 			results.get(i)[2] = getZbValues(jydws.get(i), GSZB.CH35.getValue(), end, end);
 			if (!(results.get(i)[1] == null && results.get(i)[2] == null)){
