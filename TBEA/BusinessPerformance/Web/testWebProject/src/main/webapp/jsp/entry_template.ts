@@ -8,13 +8,13 @@ module entry_template {
 
     class JQGridAssistantFactory {
 
-        public static createFlatTable(gridName: string, title: string[], statusList : string[]): JQTable.JQGridAssistant {
+        public static createFlatTable(gridName: string, title: string[], statusList: string[]): JQTable.JQGridAssistant {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
                     nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i,  statusList[i - 1] == Util.ZBStatus.APPROVED));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, statusList[i - 1] == Util.ZBStatus.APPROVED));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
@@ -51,62 +51,68 @@ module entry_template {
         private mSave: Util.Ajax = new Util.Ajax("zb_save.do");
         private mSubmitToDeputy: Util.Ajax = new Util.Ajax("zb_submitToDeputy.do");
         private mTableAssist: JQTable.JQGridAssistant;
-        private mTitleCompanyName : string;
+        private mTitleCompanyName: string;
         initInstance(opt: IViewOption) {
-           
+
             this.mOpt = opt;
             switch (this.mOpt.entryType) {
 
                 case Util.ZBType.YDJDMJH:
                     this.mDateSelector = new Util.DateSelector(
-                            { year: this.mOpt.date.year - 3 }, 
-                            this.mOpt.date,
-                            this.mOpt.dateId, true);
+                        { year: this.mOpt.date.year - 2 },
+                        Util.addMonth({ year: this.mOpt.date.year, month: this.mOpt.date.month }, 3),
+                        this.mOpt.dateId, true);
                     break;
                 case Util.ZBType.QNJH:
+                    this.mDateSelector = new Util.DateSelector(
+                        { year: this.mOpt.date.year - 2 },
+                        { year: this.mOpt.date.year + 1 },
+                        this.mOpt.dateId, true);
+                    break;
                 case Util.ZBType.BY20YJ:
                 case Util.ZBType.BY28YJ:
                 case Util.ZBType.BYSJ:
-                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, this.mOpt.date, this.mOpt.dateId);
                     break;
             }
 
+            // this.mDateSelector.select(this.mOpt.date);
+
             this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
-            if (opt.comps.length == 1){
+            if (opt.comps.length == 1) {
                 this.mCompanySelector.hide();
             }
-            
+
             this.updateTitle();
             
             //this.updateUI();
         }
-        
+
 
 
         public updateUI() {
             $("#nodatatips").css("display", "none");
             $("#entryarea").css("display", "");
             var date = this.mDateSelector.getDate();
-            if (this.mOpt.entryType == Util.ZBType.YDJDMJH){
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
                 date = Util.addMonth(date, -2);
             }
             this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId: this.mCompanySelector.getCompany() })
                 .then((data: any) => {
-                this.mStatusList = data.status;
-                this.mTableData = data.values;
-                this.updateTitle();
-                this.updateTable(this.mOpt.tableId);
-                this.updateApproveStatusFromDeputy(date.year, date.month, this.mOpt.entryType);
-                $('#save').css("display", "block");
-                $('#submit').css("display", "block");
-                if(data.isJydw)
-                {
-                    $('#submitToDeputy').css("display", "block");
-                }   
-            });
-            
+                    this.mStatusList = data.status;
+                    this.mTableData = data.values;
+                    this.updateTitle();
+                    this.updateTable(this.mOpt.tableId);
+                    this.updateApproveStatusFromDeputy(date.year, date.month, this.mOpt.entryType);
+                    $('#save').css("display", "block");
+                    $('#submit').css("display", "block");
+                    if (data.isJydw) {
+                        $('#submitToDeputy').css("display", "block");
+                    }
+                });
+
         }
-        
+
         public updateApproveStatusFromDeputy(year: number, month: number, entryType: Util.ZBType) {
             //年度计划数经营副总审核状态
             var isShowSubmit_2: boolean = false;
@@ -137,7 +143,7 @@ module entry_template {
             if (Util.ZBType.YDJDMJH == entryType && this.mStatusList.length == 3) {
                 //Init MatchArray for Month
                 var MatchArray: Array<number> = this.initMatchArray(entryType, month, year);
-                
+
                 for (var i = 0; i < this.mStatusList.length; i++) {
                     if (this.mStatusList[i] == Util.ZBStatus.SUBMITTED_2) {
                         isShowSubmit_2 = true;
@@ -145,26 +151,24 @@ module entry_template {
                     } else if (this.mStatusList[i] == Util.ZBStatus.APPROVED_2) {
                         isShowapprove_2 = true;
                         approve_2Content += MatchArray[i] + "月,";
-                    } 
+                    }
                 }
-                if ("" != approve_2Content && isShowapprove_2)
-                {
+                if ("" != approve_2Content && isShowapprove_2) {
                     approve_2Content = approve_2Content.substring(0, approve_2Content.length - 1);
                     approve_2Content += "计划数据";
-                }    
-                if ("" != submit_2Content && isShowSubmit_2)
-                {
-                    submit_2Content = submit_2Content.substring(0, submit_2Content.length - 1);               
+                }
+                if ("" != submit_2Content && isShowSubmit_2) {
+                    submit_2Content = submit_2Content.substring(0, submit_2Content.length - 1);
                     submit_2Content += "计划数据";
                 }
-                
+
                 this.addContent(isShowapprove_2, isShowSubmit_2, approve_2Content, submit_2Content);
             }
             //20号实际数据和28号实际数据
-            if ((Util.ZBType.BY20YJ == entryType || Util.ZBType.BY28YJ == entryType ) && this.mStatusList.length > 1) {
-                
+            if ((Util.ZBType.BY20YJ == entryType || Util.ZBType.BY28YJ == entryType) && this.mStatusList.length > 1) {
+
                 var MatchArray: Array<number> = this.initMatchArray(entryType, month, year);
-                
+
                 if (month == 12) {
                     for (var i = 0; i < this.mStatusList.length; i++) {
                         if (i == 0) {
@@ -194,7 +198,7 @@ module entry_template {
                         } else if (this.mStatusList[i] == Util.ZBStatus.APPROVED_2) {
                             isShowapprove_2 = true;
                             approve_2Content += MatchArray[i] + "月,";
-                        } 
+                        }
                     }
                 }
                 if (Util.ZBType.BY20YJ == entryType) {
@@ -216,11 +220,11 @@ module entry_template {
                         submit_2Content += "预计数据";
                     }
                 }
-                   
+
                 this.addContent(isShowapprove_2, isShowSubmit_2, approve_2Content, submit_2Content);
             }
         }
-        
+
         private initMatchArray(entryType: Util.ZBType, month: number, year: number): Array<number> {
             var retArray: Array<number> = [];
             switch (entryType) {
@@ -238,7 +242,7 @@ module entry_template {
                         retArray.push(3)
                     } else {
                         for (var i = 0; i < this.mStatusList.length; i++) {
-                            retArray.push(month + 　i);
+                            retArray.push(month + i);
                         }
                     }
                     break;
@@ -248,9 +252,8 @@ module entry_template {
             }
             return retArray;
         }
-        
-        private addContent(approve_2Mark: boolean, submit_2Mark: boolean, approve_2Content: string, submit_2Content: string)
-        {
+
+        private addContent(approve_2Mark: boolean, submit_2Mark: boolean, approve_2Content: string, submit_2Content: string) {
             var mergecontent: string = "";
             if (approve_2Mark) {
                 $('#DeputyApprovementStatus').css("display", "block");
@@ -261,15 +264,14 @@ module entry_template {
                 $('#DeputyApprovementStatus').css("display", "block");
                 mergecontent += submit_2Content + "尚未被经营副总审核!";
             }
-            if ("" != mergecontent)
-            {
-              
+            if ("" != mergecontent) {
+
                 $('#DeputyApprovementStatus')[0].innerHTML = mergecontent;
             }
-            
-        }    
-        
-         public save() {
+
+        }
+
+        public save() {
             var date = this.mDateSelector.getDate();
             if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
                 date = Util.addMonth(date, -2);
@@ -277,33 +279,33 @@ module entry_template {
             var allData = this.mTableAssist.getAllData();
             var submitData = [];
             var colNames = this.mTableAssist.getColNames();
-            for (var i = 0; i < allData.length; ++i){
+            for (var i = 0; i < allData.length; ++i) {
                 submitData.push([]);
-                for (var j = 0; j < allData[i].length; ++j){
-                    if (j != 1){
+                for (var j = 0; j < allData[i].length; ++j) {
+                    if (j != 1) {
                         submitData[i].push(allData[i][j])
                         allData[i][j] = allData[i][j].replace(new RegExp(' ', 'g'), '')
                     }
                 }
             }
-            
+
             this.mSave.post({
                 year: date.year,
                 month: date.month,
                 entryType: this.mOpt.entryType,
-                companyId: this.mCompanySelector.getCompany(), 
+                companyId: this.mCompanySelector.getCompany(),
                 data: JSON.stringify(submitData)
             }).then((data: ISubmitResult) => {
-                    if ("true" == data.result) {
-                         Util.MessageBox.tip("保存 成功");
-                    } else if ("false" == data.result) {
-                         Util.MessageBox.tip("保存 失败");
-                    } else {
-                        Util.MessageBox.tip(data.result);
-                    }
+                if ("true" == data.result) {
+                    Util.MessageBox.tip("保存 成功");
+                } else if ("false" == data.result) {
+                    Util.MessageBox.tip("保存 失败");
+                } else {
+                    Util.MessageBox.tip(data.result);
+                }
             });
         }
-        
+
         public submit() {
             var date = this.mDateSelector.getDate();
             if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
@@ -312,38 +314,38 @@ module entry_template {
             var allData = this.mTableAssist.getAllData();
             var submitData = [];
             var colNames = this.mTableAssist.getColNames();
-            for (var i = 0; i < allData.length; ++i){
+            for (var i = 0; i < allData.length; ++i) {
                 submitData.push([]);
-                for (var j = 0; j < allData[i].length; ++j){
-                    if (j != 1){
+                for (var j = 0; j < allData[i].length; ++j) {
+                    if (j != 1) {
                         submitData[i].push(allData[i][j])
-                        if (allData[i][j].replace(new RegExp(' ', 'g'), '') == ""){
+                        if (allData[i][j].replace(new RegExp(' ', 'g'), '') == "") {
                             Util.MessageBox.tip("有空内容 无法提交")
                             return;
                         }
                     }
                 }
             }
-            
+
             this.mSubmit.post({
                 year: date.year,
                 month: date.month,
                 entryType: this.mOpt.entryType,
-                companyId: this.mCompanySelector.getCompany(), 
+                companyId: this.mCompanySelector.getCompany(),
                 data: JSON.stringify(submitData)
             }).then((data: ISubmitResult) => {
 
-                    if ("true" == data.result) {
-                         Util.MessageBox.tip("提交 成功");
-                    } else if ("false" == data.result) {
-                         Util.MessageBox.tip("提交 失败");
-                    } else {
-                        Util.MessageBox.tip(data.result);
-                    }
+                if ("true" == data.result) {
+                    Util.MessageBox.tip("提交 成功");
+                } else if ("false" == data.result) {
+                    Util.MessageBox.tip("提交 失败");
+                } else {
+                    Util.MessageBox.tip(data.result);
+                }
             });
         }
-        
-         public submitToDeputy() {
+
+        public submitToDeputy() {
             var date = this.mDateSelector.getDate();
             if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
                 date = Util.addMonth(date, -2);
@@ -351,33 +353,33 @@ module entry_template {
             var allData = this.mTableAssist.getAllData();
             var submitData = [];
             var colNames = this.mTableAssist.getColNames();
-            for (var i = 0; i < allData.length; ++i){
+            for (var i = 0; i < allData.length; ++i) {
                 submitData.push([]);
-                for (var j = 0; j < allData[i].length; ++j){
-                    if (j != 1){
+                for (var j = 0; j < allData[i].length; ++j) {
+                    if (j != 1) {
                         submitData[i].push(allData[i][j])
-                        if (allData[i][j].replace(new RegExp(' ', 'g'), '') == ""){
+                        if (allData[i][j].replace(new RegExp(' ', 'g'), '') == "") {
                             Util.MessageBox.tip("有空内容 无法提交")
                             return;
                         }
                     }
                 }
             }
-            
+
             this.mSubmitToDeputy.post({
                 year: date.year,
                 month: date.month,
                 entryType: this.mOpt.entryType,
-                companyId: this.mCompanySelector.getCompany(), 
+                companyId: this.mCompanySelector.getCompany(),
                 data: JSON.stringify(submitData)
             }).then((data: ISubmitResult) => {
-                    if ("true" == data.result) {
-                         Util.MessageBox.tip("提交内部审核 成功");
-                    } else if ("false" == data.result) {
-                         Util.MessageBox.tip("提交内部审核  失败");
-                    } else {
-                        Util.MessageBox.tip(data.result);
-                    }
+                if ("true" == data.result) {
+                    Util.MessageBox.tip("提交内部审核 成功");
+                } else if ("false" == data.result) {
+                    Util.MessageBox.tip("提交内部审核  失败");
+                } else {
+                    Util.MessageBox.tip(data.result);
+                }
             });
         }
 
@@ -402,7 +404,7 @@ module entry_template {
                     header = date.year + "年" + date.month + "月 " + compName + " 实际数据录入";
                     break;
             }
-            
+
             $('h1').text(header);
             document.title = header;
         }
@@ -411,7 +413,7 @@ module entry_template {
 
             var ret: Array<string> = [title[0]];
             var date = this.mDateSelector.getDate();
-            if (this.mOpt.entryType == Util.ZBType.YDJDMJH){
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
                 date = Util.addMonth(date, -3);
             }
             var left = date.month % 3;
@@ -492,15 +494,15 @@ module entry_template {
                     break;
             }
             this.mTableAssist = JQGridAssistantFactory.createFlatTable(name, titles, this.mStatusList);
-            
-          for (var i = 0; i < this.mTableData.length; ++i){
-              for (var j = 2; j < this.mTableData[i].length; ++j){
-                  if ("" != this.mTableData[i][j]){
-                    this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) + "";
-                  }
-              }
-          }
-            
+
+            for (var i = 0; i < this.mTableData.length; ++i) {
+                for (var j = 2; j < this.mTableData[i].length; ++j) {
+                    if ("" != this.mTableData[i][j]) {
+                        this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) + "";
+                    }
+                }
+            }
+
             var data = this.mTableData;
             var lastsel = "";
             var lastcell = "";
@@ -521,71 +523,72 @@ module entry_template {
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 150,
-                    
-                    onSelectCell : (id,nm,tmp,iRow,iCol) =>{
-//                       console.log(iRow +', ' + iCol);
+
+                    onSelectCell: (id, nm, tmp, iRow, iCol) => {
+                        //                       console.log(iRow +', ' + iCol);
                     },
                     
-//                    onCellSelect: (ri,ci,tdHtml,e) =>{
-//                       console.log(ri +', ' + ci);
-//                    },
-                    beforeSaveCell :(rowid,cellname,v,iRow,iCol) =>{
-                        var ret = parseFloat( v.replace(new RegExp(',', 'g'), ''));
-                        if (isNaN (ret)){
-                           $.jgrid.jqModal = {
-                              width: 290,
-                              left : $("#table").offset().left + $("#table").width() / 2 - 290 / 2, 
-                              top : $("#table").offset().top + $("#table").height() / 2 - 90};
-                           return v;
-                        }else{
-                           return ret;
+                    //                    onCellSelect: (ri,ci,tdHtml,e) =>{
+                    //                       console.log(ri +', ' + ci);
+                    //                    },
+                    beforeSaveCell: (rowid, cellname, v, iRow, iCol) => {
+                        var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
+                        if (isNaN(ret)) {
+                            $.jgrid.jqModal = {
+                                width: 290,
+                                left: $("#table").offset().left + $("#table").width() / 2 - 290 / 2,
+                                top: $("#table").offset().top + $("#table").height() / 2 - 90
+                            };
+                            return v;
+                        } else {
+                            return ret;
                         }
                     },
-                    beforeEditCell:(rowid,cellname,v,iRow,iCol)=>{
-                        lastsel = iRow; 
+                    beforeEditCell: (rowid, cellname, v, iRow, iCol) => {
+                        lastsel = iRow;
                         lastcell = iCol; 
-//                        console.log(iRow +', ' + iCol);
-                        $("input").attr("disabled",true); 
+                        //                        console.log(iRow +', ' + iCol);
+                        $("input").attr("disabled", true);
                     },
-                    
-                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
-                        $("input[type=text]").bind("keydown", function(e){
-                            if (e.keyCode === 13){
-                                setTimeout(function(){
-                                    $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);    
+
+                    afterEditCell: (rowid, cellname, v, iRow, iCol) => {
+                        $("input[type=text]").bind("keydown", function(e) {
+                            if (e.keyCode === 13) {
+                                setTimeout(function() {
+                                    $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
                                 }, 10);
                             }
                         });
                     },
-                    
-                    afterSaveCell : ()=>{
-                        $("input").attr("disabled",false); 
-                        lastsel=""; 
+
+                    afterSaveCell: () => {
+                        $("input").attr("disabled", false);
+                        lastsel = "";
                     },
-                    
-                    afterRestoreCell : ()=>{
-                        $("input").attr("disabled",false); 
-                        
-                        lastsel=""; 
+
+                    afterRestoreCell: () => {
+                        $("input").attr("disabled", false);
+
+                        lastsel = "";
                     }
-//                    ,
-//                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
-//                        lastsel = ""; 
-//                        lastcell = ""; 
-//                    } 
+                    //                    ,
+                    //                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
+                    //                        lastsel = ""; 
+                    //                        lastcell = ""; 
+                    //                    } 
                 }));
-            
-          
-          $('html').bind('click', function(e) { //用于点击其他地方保存正在编辑状态下的行
-              if ( lastsel != "" ) { //if a row is selected for edit 
-                  if($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row  
-                      //  $("#" + name).jqGrid('saveRow', lastsel); 
-                      $("#" + name).jqGrid("saveCell",lastsel,lastcell);
-                      //$("#" + name).resetSelection(); 
-                      lastsel=""; 
-                  } 
-              } 
-          });
+
+
+            $('html').bind('click', function(e) { //用于点击其他地方保存正在编辑状态下的行
+                if (lastsel != "") { //if a row is selected for edit 
+                    if ($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row  
+                        //  $("#" + name).jqGrid('saveRow', lastsel); 
+                        $("#" + name).jqGrid("saveCell", lastsel, lastcell);
+                        //$("#" + name).resetSelection(); 
+                        lastsel = "";
+                    }
+                }
+            });
         }
     }
 }

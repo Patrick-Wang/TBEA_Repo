@@ -52,7 +52,8 @@ module Util {
             }
 
             if (this.mAsSeasion) {
-                this.mStartDate = addMonth(this.mStartDate, -(this.mStartDate.month % 3));
+                this.mStartDate.month = 3 * (parseInt((this.mStartDate.month - 1) / 3 + '') + 1);
+                //addMonth(this.mStartDate, -(this.mStartDate.month % 3));
             }
 
             $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');

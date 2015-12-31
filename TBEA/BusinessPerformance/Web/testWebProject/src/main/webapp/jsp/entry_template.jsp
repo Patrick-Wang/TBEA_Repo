@@ -61,7 +61,7 @@
           				companyId: "company",
           				comps : JSON.parse('${nodeData}'),
           				date : {
-          					month : ${!empty month} ? '${month}' : undefined, 
+          					month : ${!empty month} ? parseInt('${month}') : undefined, 
           					year : ${year}
           				},
           				entryType : ${entryType}
