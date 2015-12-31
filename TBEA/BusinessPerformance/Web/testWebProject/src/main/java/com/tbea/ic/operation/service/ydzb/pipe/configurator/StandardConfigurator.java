@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.service.ydzb.pipe.configurator;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.tbea.ic.operation.common.DateHelper;
@@ -51,8 +52,10 @@ public class StandardConfigurator extends AbstractSbdPipeConfigurator {
 					.excludeZbs(getInvisiableZbs())
 					.excludeZbs(getRatioZbs()));
 
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dh.getCur());
 		// 当月计划
-		if (sbdCompanies.isEmpty()) {
+		if (sbdCompanies.isEmpty() || cal.get(Calendar.YEAR) >= 2016) {
 			pipe.addFilter(new AccPipeFilter(yjhAcc, 1)
 					.includeCompanies(allCompanies)
 					.includeZbs(pipe.getIndicators())

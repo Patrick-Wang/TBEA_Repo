@@ -21,14 +21,12 @@ public class SbdNdjhZbDaoImpl implements SbdNdjhZbDao{
 		yearsZb.add(0.21);
 		yearsZb.add(0.19);
 		yearsZb.add(0.25);
-		yearsZb.add(0.25);
 		ysZbs.put(CompanyType.SBGS, yearsZb);
 		
 		yearsZb = new ArrayList<Double>();
 		yearsZb.add(0.21);
 		yearsZb.add(0.21);
 		yearsZb.add(0.18);
-		yearsZb.add(0.22);
 		yearsZb.add(0.22);
 		ysZbs.put(CompanyType.HBGS, yearsZb);
 		
@@ -37,14 +35,12 @@ public class SbdNdjhZbDaoImpl implements SbdNdjhZbDao{
 		yearsZb.add(0.18);
 		yearsZb.add(0.17);
 		yearsZb.add(0.20);
-		yearsZb.add(0.20);
 		ysZbs.put(CompanyType.XBC, yearsZb);
 		
 		yearsZb = new ArrayList<Double>();
 		yearsZb.add(0.18);
 		yearsZb.add(0.18);
 		yearsZb.add(0.18);
-		yearsZb.add(0.21);
 		yearsZb.add(0.21);
 		ysZbs.put(CompanyType.LLGS, yearsZb);
 		
@@ -53,14 +49,12 @@ public class SbdNdjhZbDaoImpl implements SbdNdjhZbDao{
 		yearsZb.add(0.16);
 		yearsZb.add(0.15);
 		yearsZb.add(0.18);
-		yearsZb.add(0.18);
 		ysZbs.put(CompanyType.XLC, yearsZb);
 		
 		yearsZb = new ArrayList<Double>();
 		yearsZb.add(0.16);
 		yearsZb.add(0.16);
 		yearsZb.add(0.16);
-		yearsZb.add(0.19);
 		yearsZb.add(0.19);
 		ysZbs.put(CompanyType.DLGS, yearsZb);
 	}
@@ -71,7 +65,6 @@ public class SbdNdjhZbDaoImpl implements SbdNdjhZbDao{
 		yearsZb.add(0.17);
 		yearsZb.add(0.12);
 		yearsZb.add(0.12);
-		yearsZb.add(0.12);
 		chZbs.put(CompanyType.SBGS, yearsZb);
 		
 		yearsZb = new ArrayList<Double>();
@@ -79,13 +72,11 @@ public class SbdNdjhZbDaoImpl implements SbdNdjhZbDao{
 		yearsZb.add(0.16);
 		yearsZb.add(0.135);
 		yearsZb.add(0.125);
-		yearsZb.add(0.125);
 		chZbs.put(CompanyType.HBGS, yearsZb);
 		
 		yearsZb = new ArrayList<Double>();
 		yearsZb.add(0.16);
 		yearsZb.add(0.16);
-		yearsZb.add(0.13);
 		yearsZb.add(0.13);
 		yearsZb.add(0.13);
 		chZbs.put(CompanyType.XBC, yearsZb);
@@ -95,14 +86,12 @@ public class SbdNdjhZbDaoImpl implements SbdNdjhZbDao{
 		yearsZb.add(0.15);
 		yearsZb.add(0.12);
 		yearsZb.add(0.105);
-		yearsZb.add(0.105);
 		chZbs.put(CompanyType.LLGS, yearsZb);
 		
 		yearsZb = new ArrayList<Double>();
 		yearsZb.add(0.14);
 		yearsZb.add(0.14);
 		yearsZb.add(0.11);
-		yearsZb.add(0.1);
 		yearsZb.add(0.1);
 		chZbs.put(CompanyType.XLC, yearsZb);
 		
@@ -111,20 +100,23 @@ public class SbdNdjhZbDaoImpl implements SbdNdjhZbDao{
 		yearsZb.add(0.14);
 		yearsZb.add(0.13);
 		yearsZb.add(0.1);
-		yearsZb.add(0.1);
 		chZbs.put(CompanyType.DLGS, yearsZb);
 	}
 	
 	public Double getYszb(int year, Company comp){
 		if (ysZbs.containsKey(comp.getType())){
-			return ysZbs.get(comp.getType()).get(year - baseYear);
+			if ((year - baseYear) < ysZbs.get(comp.getType()).size()){
+				return ysZbs.get(comp.getType()).get(year - baseYear);
+			}
 		}
 		return null;
 	}
 	
 	public Double getChzb(int year, Company comp){
 		if (chZbs.containsKey(comp.getType())){
-			return chZbs.get(comp.getType()).get(year - baseYear);
+			if ((year - baseYear) < chZbs.get(comp.getType()).size()){
+				return chZbs.get(comp.getType()).get(year - baseYear);
+			}
 		}
 		return null;
 	}

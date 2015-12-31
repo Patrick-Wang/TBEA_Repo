@@ -518,9 +518,11 @@ module approve_template {
         initInstance(opt: IViewOption) {
             this.mOpt = opt;
             if (this.mOpt.approveType == Util.ZBType.YDJDMJH) {
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId, true);
+                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, Util.addMonth(this.mOpt.date, 1), this.mOpt.dateId, true);
+            } else if (this.mOpt.approveType == Util.ZBType.QNJH) {
+                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, { year: this.mOpt.date.year + 1 }, this.mOpt.dateId, true);
             } else {
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
+                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, Util.addMonth(this.mOpt.date, 1), this.mOpt.dateId);
             }
 
             this.mCompanySelector = new Util.CompanySelector(

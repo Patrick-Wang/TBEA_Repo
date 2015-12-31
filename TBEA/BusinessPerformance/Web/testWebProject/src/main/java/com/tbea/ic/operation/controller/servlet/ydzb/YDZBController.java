@@ -325,7 +325,7 @@ public class YDZBController {
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		DateSelection dateSel = new DateSelection(service.getLatestHzbDate(),
+		DateSelection dateSel = new DateSelection(Calendar.getInstance(),
 				true, false);
 		dateSel.select(map);
 		return new ModelAndView("hzb_zbhz", map);
