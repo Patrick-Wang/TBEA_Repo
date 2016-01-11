@@ -1,4 +1,4 @@
-package com.tbea.ic.contacts;
+package com.tbea.ic.contacts.entity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -75,6 +75,13 @@ public class Employee {
 	public void setDepartment(List<Integer> department) {
 		this.department = department;
 	}
+	
+	public void addDepartment(int department) {
+		if (this.department == null){
+			this.department = new ArrayList<Integer>();
+		}
+		this.department.add(department);
+	}
 
 	public String getPosition() {
 		return position;
@@ -132,12 +139,6 @@ public class Employee {
 		this.extattr = extattr;
 	}
 
-	public List<Node<Department>> getDeparts(DepartmentManager querier) {
-		List<Node<Department>> deps = new ArrayList<Node<Department>>();
-		for (int i = 0; i < department.size(); ++i) {
-			deps.add(querier.get(department.get(i)));
-		}
-		return deps;
-	}
+
 
 }

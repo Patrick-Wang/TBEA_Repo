@@ -1,4 +1,4 @@
-package com.tbea.ic.contacts;
+package com.tbea.ic.contacts.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,10 +7,20 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import com.tbea.ic.auth.Connection;
+import com.tbea.ic.contacts.entity.Department;
+import com.tbea.ic.contacts.entity.Employee;
+import com.tbea.ic.structure.Node;
 import com.tbea.ic.util.JSON;
 
 public class EmployeeManager {
 
+	
+	private static EmployeeManager ins = new EmployeeManager();
+	
+	public static EmployeeManager getInstance(){
+		return ins;
+	}
+	
 	public List<Employee> queryByDepartId(int departId){
 		String resp = Connection.getInstance().httpsGet("https://qyapi.weixin.qq.com/cgi-bin/user/list?department_id=" + departId + "&fetch_child=0&status=0&");
 		JSONObject jResp = JSONObject.fromObject(resp);
@@ -95,5 +105,13 @@ public class EmployeeManager {
 		}
 
 		return false;
+	}
+	
+	public List<Node<Department>> getDeparts(Employee employee, DepartmentQueryCache querier) {
+		List<Node<Department>> deps = new ArrayList<Node<Department>>();
+		for (int i = 0; i < employee.getDepartment().size(); ++i) {
+			deps.add(querier.get(employee.getDepartment().get(i)));
+		}
+		return deps;
 	}
 }

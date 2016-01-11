@@ -1,4 +1,4 @@
-package com.tbea.ic.message;
+package com.tbea.ic.message.entity;
 
 import java.util.ArrayList;
 import java.util.List;

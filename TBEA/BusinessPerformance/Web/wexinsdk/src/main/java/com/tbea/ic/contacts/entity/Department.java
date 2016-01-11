@@ -1,4 +1,4 @@
-package com.tbea.ic.contacts;
+package com.tbea.ic.contacts.entity;
 
 import java.util.Iterator;
 

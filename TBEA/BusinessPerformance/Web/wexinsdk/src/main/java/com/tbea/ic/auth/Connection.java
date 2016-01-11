@@ -44,11 +44,12 @@ public class Connection {
 		}, delay);
 	}
 	
-	public void open(String corpid, String corpsecret) throws AuthException, IOException{
+	public Connection open(String corpid, String corpsecret) throws AuthException, IOException{
 		tokenURL = "https://qyapi.weixin.qq.com/cgi-bin/gettoken"
 	            + "?corpid=" + corpid
 	            + "&corpsecret=" + corpsecret;
 		active();
+		return this;
 	}
 
 	private void active() throws AuthException, IOException{

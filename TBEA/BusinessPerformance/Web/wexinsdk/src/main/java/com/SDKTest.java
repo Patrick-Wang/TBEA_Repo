@@ -8,11 +8,11 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import com.tbea.ic.auth.Connection;
-import com.tbea.ic.contacts.Department;
-import com.tbea.ic.contacts.DepartmentManager;
-import com.tbea.ic.contacts.Employee;
-import com.tbea.ic.contacts.EmployeeManager;
-import com.tbea.ic.message.Text;
+import com.tbea.ic.contacts.dao.DepartmentManager;
+import com.tbea.ic.contacts.dao.DepartmentQueryCache;
+import com.tbea.ic.contacts.dao.EmployeeManager;
+import com.tbea.ic.contacts.entity.Department;
+import com.tbea.ic.contacts.entity.Employee;
 import com.tbea.ic.message.sender.Messager;
 import com.tbea.ic.structure.Node;
 import com.tbea.ic.structure.Node.Visitor;
@@ -23,8 +23,8 @@ public class SDKTest {
 			
 		try {
 			Connection.getInstance().open("wx40b71464a42adcf3", "BW-Tuxi3fYjgjOOQv2d9iR_7Cz0mRSDVfVaHtjE-2Z1GaHQQIwV0awLsO17zPnPy");
-			final DepartmentManager depMgr = DepartmentManager.query(1);
-			depMgr.getDepartment().reverseAccept(new Visitor<Department>(){
+			final DepartmentManager depMgr = DepartmentManager.getInstance();
+			DepartmentQueryCache.getInstance().getDepartment().reverseAccept(new Visitor<Department>(){
 
 				public boolean visit(Node<Department> node) {
 					for (int i = 0, depth = node.depth(); i < depth; ++i){
@@ -35,7 +35,7 @@ public class SDKTest {
 				}
 			});
 			
-			depMgr.getDepartment().accept(new Visitor<Department>(){
+			DepartmentQueryCache.getInstance().getDepartment().accept(new Visitor<Department>(){
 
 				public boolean visit(Node<Department> node) {
 					for (int i = 0, depth = node.depth(); i < depth; ++i){
@@ -51,13 +51,13 @@ public class SDKTest {
 			System.out.println(JSONArray.fromObject(emp));
 			
 			for (int i = 0; i < emp.size(); ++i){
-				for (Node<Department> node : emp.get(i).getDeparts(depMgr)){
+				for (Node<Department> node : emplMgr.getDeparts(emp.get(i), DepartmentQueryCache.getInstance())){
 					System.out.println(JSONObject.fromObject(node.getData()));
 				}
 			}
 			
 			Messager msger = new Messager(25);
-			msger.text(new Text("Hello!")).toUser("sunfuda").send();
+			msger.text("Hello!").toUser("sunfuda").send();
 
 			Department depa = new Department();
 			depa.setName("test");

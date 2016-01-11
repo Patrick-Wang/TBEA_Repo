@@ -3,10 +3,10 @@ package com.tbea.ic.message.sender;
 import net.sf.json.JSONObject;
 
 import com.tbea.ic.auth.Connection;
-import com.tbea.ic.contacts.Department;
-import com.tbea.ic.contacts.Employee;
-import com.tbea.ic.message.News;
-import com.tbea.ic.message.Text;
+import com.tbea.ic.contacts.entity.Department;
+import com.tbea.ic.contacts.entity.Employee;
+import com.tbea.ic.message.entity.News;
+import com.tbea.ic.message.entity.Text;
 import com.tbea.ic.util.JSON;
 
 public class Messager {
@@ -130,11 +130,11 @@ public class Messager {
 		msgtype = null;
 	}
 	
-	public Messager text(Text text){
+	public Messager text(String text){
 		if (null != text){
 			clear();
 			msgtype = "text";
-			this.text = text;
+			this.text = new Text(text);
 		}
 		return this;
 	}

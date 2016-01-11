@@ -58,7 +58,7 @@ public class RequestValidator implements Filter {
 	
 	public void doFilter(ServletRequest request, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
-		if (request instanceof HttpServletRequest) {
+		if (null != redirSubUrl && request instanceof HttpServletRequest) {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
 			if (!OnlineService.isOnline(httpRequest)) {
 				if (!isUncheckedUrl(httpRequest.getRequestURI())) {
@@ -80,10 +80,10 @@ public class RequestValidator implements Filter {
 
 	public void init(FilterConfig arg0) throws ServletException {
 		uncheckedUrl = new ArrayList<String>();
-		redirSubUrl = "/account/login.do";
-		uncheckedUrl.add("/account/login.do");
-		uncheckedUrl.add("/account/validate.do");
-		uncheckedUrl.add("/Account/resetPassword.do");
+//		redirSubUrl = "/account/login.do";
+//		uncheckedUrl.add("/account/login.do");
+//		uncheckedUrl.add("/account/validate.do");
+//		uncheckedUrl.add("/Account/resetPassword.do");
 	}
 
 }

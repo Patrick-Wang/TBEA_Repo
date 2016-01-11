@@ -1,4 +1,4 @@
-package com.tbea.ic.message;
+package com.tbea.ic.message.entity;
 
 public class Text {
 	String content;

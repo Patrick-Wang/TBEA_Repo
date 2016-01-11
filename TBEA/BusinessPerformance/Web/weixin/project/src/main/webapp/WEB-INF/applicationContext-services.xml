@@ -18,32 +18,9 @@
 
 
 	<!-- -->
-	<!-- PROPERTIES -->
-	<!-- -->
-
-	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
-		<property name="locations"> <list> <value>classpath:../applicationContext.properties</value> 
-		</list> </property> </bean> -->
-
-	<!-- -->
-	<!-- INCLUDES -->
-	<!-- -->
-	<!-- -->
-	<!-- PERFORMANCE -->
-	<!-- -->
-
-	<!-- -->
-	<!-- CACHING -->
-	<!-- -->
-
-	<!-- -->
 	<!-- DATABASE -->
 	<!-- -->
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="java:comp/env/jdbc/greet_db" />
-	</bean>
-
-	<bean id="hrDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/hr_db" />
 	</bean>
 
@@ -52,66 +29,45 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> 
+				<!-- 
+					<property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> 
 					<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/> 
-					<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
+					<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/> 
 					<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
-					/> -->
-				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/> 
-				<property name="showSql" value="false" />
+				-->
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect"/> 
+				<property name="showSql" value="true" />
 			</bean>
 		</property>
-		<property name="persistenceUnitName" value="localDB" />
-	</bean>
-	
-	<bean id="hrEntityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="hrDataSource" />
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> 
-					<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/> 
-					<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
-					<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
-					/> -->
-				<property name="databasePlatform" value="org.hibernate.dialect.OracleDialect"/>
-				<property name="showSql" value="false" />
-			</bean>
-		</property>
-		<property name="persistenceUnitName" value="hrDB" />
+		<property name="persistenceUnitName" value="HRDB" />
 	</bean>
 	
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
 
-	<!-- -->
+
 	<!-- TRANSACTIONS -->
-	<!-- -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<aop:aspectj-autoproxy />
-
-
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
-	<bean id="hrTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="hrEntityManagerFactory" />
-		<property name="dataSource" ref="hrDataSource" />
-	</bean>
-
-	<context:component-scan base-package="com.tbea.ic.greet.model" />
-	<context:component-scan base-package="com.tbea.ic.greet.service" />
 
 
-	<!-- <task:scheduled-tasks scheduler="myScheduler">
+	<context:component-scan base-package="com.tbea.ic.weixin.model" />
+	<context:component-scan base-package="com.tbea.ic.weixin.service" />
+
+
+	<!-- 
+		<task:scheduled-tasks scheduler="myScheduler">
 		<task:scheduled ref="reminderMailService" method="sendReminderMail"
-			cron="0 10 16 * * ?" fixed-delay="1000" />
-	</task:scheduled-tasks>
-
-    <task:scheduler id="myScheduler" pool-size="10" /> -->
+				cron="0 10 16 * * ?" fixed-delay="1000" />
+		</task:scheduled-tasks>
+	
+	    <task:scheduler id="myScheduler" pool-size="10" /> 
+    -->
 
 </beans>

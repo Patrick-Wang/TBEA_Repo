@@ -6,6 +6,8 @@
 	   xmlns:context="http://www.springframework.org/schema/context"
 	   xmlns:aop="http://www.springframework.org/schema/aop"
 	   xmlns:task="http://www.springframework.org/schema/task" 
+	   xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	   xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
 	   xsi:schemaLocation="
     	http://www.springframework.org/schema/beans 
     	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
@@ -16,24 +18,16 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-4.0.xsd
         http://www.springframework.org/schema/task 
-        http://www.springframework.org/schema/task/spring-task-3.0.xsd">
-        
-	<task:annotation-driven/> 
+        http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        http://cxf.apache.org/jaxws   
+        http://cxf.apache.org/schemas/jaxws.xsd  
+        http://cxf.apache.org/transports/http/configuration      
+        http://cxf.apache.org/schemas/configuration/http-conf.xsd">
 
-	<!--	SERVLET   -->
-	<context:component-scan base-package="com.tbea.ic.weixin.controller.servlet" />
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	    <property name="prefix" value="/jsp/"/>
-	    <property name="suffix" value=".jsp"/>
-	</bean>
-
-	 
-	<bean id="multipartResolver"
-	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	    <!-- one of the properties available; the maximum file size in bytes -->
-	    <property name="maxUploadSize" value="10485760"/>
-	</bean>
-	
+	<bean id="WeiXin" class="com.tbea.ic.weixin.controller.webservice.weixin.WeiXinWebService" />
+	<jaxws:server id="WeiXinSERVER" serviceBean="#WeiXin" address="/weixinService"></jaxws:server>
+	<context:component-scan base-package="com.tbea.ic.weixin.controller.webservice" />
 </beans>

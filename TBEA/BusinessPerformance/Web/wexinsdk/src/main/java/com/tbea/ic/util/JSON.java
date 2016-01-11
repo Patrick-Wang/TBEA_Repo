@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONNull;
 import net.sf.json.JSONObject;
 
 public class JSON {
@@ -21,7 +20,6 @@ public class JSON {
 			Iterator<String> it = jo.keys();
 			while (it.hasNext()) {
 				String key = it.next();
-				Object ob = jo.get(key);
 				try {
 					Method method = obj.getClass().getMethod("get" + key.substring(0, 1).toUpperCase() + key.substring(1));
 					
