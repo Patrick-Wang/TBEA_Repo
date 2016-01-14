@@ -16,17 +16,17 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
-@Repository(PersionDaoImpl.NAME)
-@Transactional("transactionManager")
-public class PersionDaoImpl implements PersionDao {
-	public final static String NAME = "PersionDaoImpl";
+@Repository(JTPersionDaoImpl.NAME)
+@Transactional("jtTransactionManager")
+public class JTPersionDaoImpl implements PersionDao {
+	public final static String NAME = "JTPersionDaoImpl";
 
-	@PersistenceContext(unitName = "HRDB")
+	@PersistenceContext(unitName = "JTDB")
 	EntityManager entityManager;
 
 	@Override
 	public List<PersionEntity> getAllPersion() {
-		Query q = entityManager.createNativeQuery("select v.psncode, v.pk_corp, v.psnname, v.psnclcod, v.mobile, v.sex from V_compsn v");
+		Query q = entityManager.createNativeQuery("select v.psncode, v.unitcode, v.psnname, v.psnclcod, v.mobile, v.sex from V_compsn v");
 		SQLQuery sql = q.unwrap(SQLQuery.class);
 		sql.setResultTransformer(Transformers.aliasToBean(PersionEntity.class));
 		return q.getResultList();

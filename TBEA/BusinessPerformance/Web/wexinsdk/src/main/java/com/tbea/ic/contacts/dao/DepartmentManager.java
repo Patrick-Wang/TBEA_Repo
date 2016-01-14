@@ -15,8 +15,9 @@ public class DepartmentManager {
 	}
 
 	public boolean update(Department dep) {
+		String result = null;
 		if (dep.getId() != null) {
-			String result = Connection.getInstance().httpsPost(
+			result = Connection.getInstance().httpsPost(
 					"https://qyapi.weixin.qq.com/cgi-bin/department/update?",
 					JSON.stringify(dep));
 			JSONObject jo = JSONObject.fromObject(result);
@@ -24,12 +25,14 @@ public class DepartmentManager {
 				return true;
 			}
 		}
+		System.err.println("update(Department employee) " + result);
 		return false;
 	}
 
 	public boolean create(Department dep) {
+		String result = null;
 		if (dep.getName() != null && dep.getParentid() != null) {
-			String result = Connection.getInstance().httpsPost(
+			result = Connection.getInstance().httpsPost(
 					"https://qyapi.weixin.qq.com/cgi-bin/department/create?",
 					JSON.stringify(dep));
 			JSONObject jo = JSONObject.fromObject(result);
@@ -38,12 +41,14 @@ public class DepartmentManager {
 				return true;
 			}
 		}
+		System.err.println("create(Department employee) " + result);
 		return false;
 	}
 
 	public boolean delete(Department dep) {
+		String result = null;
 		if (dep.getId() != null) {
-			String result = Connection.getInstance().httpsGet(
+			result = Connection.getInstance().httpsGet(
 					"https://qyapi.weixin.qq.com/cgi-bin/department/create?id="
 							+ dep.getId() + "&");
 			JSONObject jo = JSONObject.fromObject(result);
@@ -51,6 +56,7 @@ public class DepartmentManager {
 				return true;
 			}
 		}
+		System.err.println("create(Department employee) " + result);
 		return false;
 	}
 

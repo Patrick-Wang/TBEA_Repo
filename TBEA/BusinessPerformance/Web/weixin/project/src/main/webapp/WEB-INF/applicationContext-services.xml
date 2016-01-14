@@ -42,18 +42,46 @@
 		<property name="persistenceUnitName" value="HRDB" />
 	</bean>
 	
+	<bean id="jtDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/jt_db" />
+	</bean>
+
+	<bean id="jtEntityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="jtDataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- 
+					<property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				-->
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect"/> 
+				<property name="showSql" value="true" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="JTDB" />
+	</bean>
+	
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
 
 
 	<!-- TRANSACTIONS -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	
 
 	<aop:aspectj-autoproxy />
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="jtTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="jtEntityManagerFactory" />
+		<property name="dataSource" ref="jtDataSource" />
 	</bean>
 
 

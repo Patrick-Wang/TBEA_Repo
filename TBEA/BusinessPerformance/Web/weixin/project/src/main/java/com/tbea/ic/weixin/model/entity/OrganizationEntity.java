@@ -2,9 +2,6 @@ package com.tbea.ic.weixin.model.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 
 public class OrganizationEntity implements Serializable {
 
@@ -14,24 +11,26 @@ public class OrganizationEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	String oname;
-	String pk;
-	String fatherpk;
+	String ocode;
+	String fatherocod;
 	public String getOname() {
 		return oname;
 	}
 	public void setOname(String oname) {
 		this.oname = oname;
 	}
-	public String getPk() {
-		return pk;
+
+	public String getOcode() {
+		return ocode;
 	}
-	public void setPk(String pk) {
-		this.pk = pk;
+	public void setOcode(String ocode) {
+		this.ocode = ocode;
 	}
-	public String getFatherpk() {
-		return fatherpk;
+	public String getFatherocod() {
+		return fatherocod;
 	}
-	public void setFatherpk(String fatherpk) {
-		this.fatherpk = fatherpk;
+	public void setFatherocod(String fatherocod) {
+		this.fatherocod = fatherocod;
 	}
+
 }

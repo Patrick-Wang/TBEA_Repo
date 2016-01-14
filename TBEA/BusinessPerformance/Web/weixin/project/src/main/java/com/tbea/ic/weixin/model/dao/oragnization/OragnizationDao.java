@@ -7,8 +7,10 @@ import com.tbea.ic.weixin.model.entity.OrganizationEntity;
 
 public interface OragnizationDao {
 
-	OrganizationEntity getByPk(String pk);
+	OrganizationEntity getByOcode(String ocode);
 
-	List<OrganizationEntity> getByFatherPK(String fatherPk);
+	List<OrganizationEntity> getByFatherocod(String fatherocod);
+	
+	List<OrganizationEntity> getAll();
 
 }

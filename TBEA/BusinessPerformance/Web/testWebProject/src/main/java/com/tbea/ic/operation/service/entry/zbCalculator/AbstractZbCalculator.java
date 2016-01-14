@@ -50,9 +50,9 @@ abstract class AbstractZbCalculator implements ZbCalculator{
 			setRjlr(cal, comp, status);
 		}else if (GSZB.SXFYL_65.getValue() == zbId){
 			setSxfyl(cal, comp, status);
-		}else if (GSZB.XSLRL_28.getValue() == zbId){
+		}/*else if (GSZB.XSLRL_28.getValue() == zbId){
 			setXslrl(cal, comp, status);
-		}else{
+		}*/else{
 			onHandling(zbId, val, cal, comp, status);
 		}
 	}

@@ -49,8 +49,9 @@ public class EmployeeManager {
 	
 
 	public boolean update(Employee emplyee) {
+		String result = null;
 		if (emplyee.getUserid() != null){
-			String result = Connection.getInstance().httpsPost(
+			result = Connection.getInstance().httpsPost(
 					"https://qyapi.weixin.qq.com/cgi-bin/user/update?",
 					JSON.stringify(emplyee));
 			JSONObject jo = JSONObject.fromObject(result);
@@ -58,13 +59,15 @@ public class EmployeeManager {
 				return true;
 			}
 		}
+		System.err.println("update(Employee employee) " + result);
 		return false;
 	}
 
 	//{"errcode":60113,"errmsg":"mobile\/email\/weixin must not be all empty"}
 	public boolean create(Employee employee) {
+		String result = null;
 		if (employee.getUserid() != null && employee.getName() != null){
-			String result = Connection.getInstance().httpsPost(
+			 result = Connection.getInstance().httpsPost(
 					"https://qyapi.weixin.qq.com/cgi-bin/user/create?",
 					JSON.stringify(employee));
 			JSONObject jo = JSONObject.fromObject(result);
@@ -72,12 +75,14 @@ public class EmployeeManager {
 				return true;
 			}
 		}
+		System.err.println("create(Employee employee) " + result);
 		return false;
 	}
 
 	public boolean delete(Employee employee) {
+		String result;
 		if (employee.getUserid() != null) {
-			String result = Connection.getInstance().httpsGet(
+			result = Connection.getInstance().httpsGet(
 					"https://qyapi.weixin.qq.com/cgi-bin/user/delete?userid="
 							+ employee.getUserid() + "&");
 			JSONObject jo = JSONObject.fromObject(result);
@@ -85,6 +90,7 @@ public class EmployeeManager {
 				return true;
 			}
 		}
+		System.err.println("delete(Employee employee)");
 		return false;
 	}
 	
@@ -103,7 +109,7 @@ public class EmployeeManager {
 		if (jo.getInt("errcode") == 0) {
 			return true;
 		}
-
+		System.err.println("delete: " +result);
 		return false;
 	}
 	

@@ -27,6 +27,11 @@ public class PersionEntity implements Serializable {
 	public String getPk_corp() {
 		return pk_corp;
 	}
+	
+	public void setUnitcode(String unicode) {
+		this.pk_corp = unicode;
+	}
+	
 	public void setPk_corp(String pk_corp) {
 		this.pk_corp = pk_corp;
 	}

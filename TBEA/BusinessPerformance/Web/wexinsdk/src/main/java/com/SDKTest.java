@@ -20,7 +20,7 @@ import com.tbea.ic.structure.Node.Visitor;
 public class SDKTest {
 
 	public static void main(String[] args) {
-			
+	
 		try {
 			Connection.getInstance().open("wx40b71464a42adcf3", "BW-Tuxi3fYjgjOOQv2d9iR_7Cz0mRSDVfVaHtjE-2Z1GaHQQIwV0awLsO17zPnPy");
 			final DepartmentManager depMgr = DepartmentManager.getInstance();

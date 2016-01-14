@@ -10,9 +10,9 @@ import org.springframework.stereotype.Controller;
 @Controller
 @WebService
 public class WeiXinWebService {
+	
 	@Autowired
 	WeiXinService weiXinService;
-
 	
 	public String getResult(){
 		return "";

@@ -16,18 +16,18 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
-@Repository(OragnizationDaoImpl.NAME)
-@Transactional("transactionManager")
-public class OragnizationDaoImpl implements OragnizationDao {
-	public final static String NAME = "OragnizationDaoImpl";
+@Repository(JTOragnizationDaoImpl.NAME)
+@Transactional("jtTransactionManager")
+public class JTOragnizationDaoImpl implements OragnizationDao {
+	public final static String NAME = "JTOragnizationDaoImpl";
 
-	@PersistenceContext(unitName = "HRDB")
+	@PersistenceContext(unitName = "JTDB")
 	EntityManager entityManager;
 
 	@Override
-	public OrganizationEntity getByOcode(String oname) {
-		Query q = entityManager.createNativeQuery("select v.oname, v.ocode,v.fatherocod from V_comorg v where v.oname = :oname where isseal='N'");
-		q.setParameter("oname", oname);
+	public OrganizationEntity getByOcode(String pk) {
+		Query q = entityManager.createNativeQuery("select v.oname, v.ocode, v.fatherocod from V_comorg v where v.ocode = :pk  and isseal='N'");
+		q.setParameter("pk", pk);
 		SQLQuery sql = q.unwrap(SQLQuery.class);
 		sql.setResultTransformer(Transformers.aliasToBean(OrganizationEntity.class));
 		List<OrganizationEntity> rets = q.getResultList();
@@ -38,9 +38,9 @@ public class OragnizationDaoImpl implements OragnizationDao {
 	}
 
 	@Override
-	public List<OrganizationEntity> getByFatherocod(String fatherocod) {
-		Query q = entityManager.createNativeQuery("select v.oname, v.ocode,v.fatherocod from V_comorg v where v.fatherocod = :fatherocod and isseal='N'");
-		q.setParameter("fatherocod", fatherocod);
+	public List<OrganizationEntity> getByFatherocod(String fatherPk) {
+		Query q = entityManager.createNativeQuery("select v.oname, v.ocode, v.fatherocod from V_comorg v where v.fatherocod = :pk and  isseal='N'");
+		q.setParameter("pk", fatherPk);
 		SQLQuery sql = q.unwrap(SQLQuery.class);
 		sql.setResultTransformer(Transformers.aliasToBean(OrganizationEntity.class));
 		return q.getResultList();
@@ -48,7 +48,7 @@ public class OragnizationDaoImpl implements OragnizationDao {
 
 	@Override
 	public List<OrganizationEntity> getAll() {
-		Query q = entityManager.createNativeQuery("select v.oname, v.ocode,v.fatherocod from V_comorg v where isseal='N'");
+		Query q = entityManager.createNativeQuery("select v.oname, v.ocode, v.fatherocod from V_comorg v where  isseal='N'");
 		SQLQuery sql = q.unwrap(SQLQuery.class);
 		sql.setResultTransformer(Transformers.aliasToBean(OrganizationEntity.class));
 		return q.getResultList();

@@ -1,27 +1,35 @@
 package com.tbea.ic.weixin.service.weixin;
 
-import com.tbea.ic.weixin.service.weixin.WeiXinService;
-import com.tbea.ic.weixin.service.weixin.WeiXinService;
+import com.tbea.ic.util.JSON;
 import com.tbea.ic.weixin.service.weixin.WeiXinService;
 import com.tbea.ic.structure.Node;
 import com.tbea.ic.structure.Node.Visitor;
+import com.tbea.ic.weixin.model.dao.persion.JTPersionDaoImpl;
 import com.tbea.ic.weixin.model.dao.persion.PersionDao;
+import com.tbea.ic.weixin.model.dao.persion.PersionDaoImpl;
+import com.tbea.ic.weixin.model.dao.oragnization.JTOragnizationDaoImpl;
 import com.tbea.ic.weixin.model.dao.oragnization.OragnizationDao;
+import com.tbea.ic.weixin.model.dao.oragnization.OragnizationDaoImpl;
 import com.tbea.ic.weixin.model.entity.OrganizationEntity;
 import com.tbea.ic.weixin.model.entity.PersionEntity;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+
+import javax.annotation.Resource;
 
 import com.tbea.ic.auth.AuthException;
 import com.tbea.ic.auth.Connection;
 import com.tbea.ic.contacts.dao.DepartmentManager;
 import com.tbea.ic.contacts.dao.DepartmentQueryCache;
-import com.tbea.ic.contacts.dao.EmployeeManager;
 import com.tbea.ic.contacts.entity.Department;
 import com.tbea.ic.contacts.entity.Employee;
-import com.tbea.ic.weixin.service.weixin.WeiXinService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,11 +39,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional("transactionManager")
 public class WeiXinServiceImpl implements WeiXinService {
 	
-	@Autowired
-	PersionDao persionDao;
-
-	@Autowired
+	@Resource(name = OragnizationDaoImpl.NAME)
 	OragnizationDao oragnizationDao;
+
+	@Resource(name = JTOragnizationDaoImpl.NAME)
+	OragnizationDao jtOragnizationDao;
+	
+	@Resource(name = JTPersionDaoImpl.NAME)
+	PersionDao jtPersionDao;
+	
+	@Resource(name = PersionDaoImpl.NAME)
+	PersionDao persionDao;
 
 	
 	@Autowired
@@ -43,26 +57,108 @@ public class WeiXinServiceImpl implements WeiXinService {
 		Connection.getInstance().open("wx40b71464a42adcf3", "BW-Tuxi3fYjgjOOQv2d9iR_7Cz0mRSDVfVaHtjE-2Z1GaHQQIwV0awLsO17zPnPy");
 	}
 	
-	@Override
-	public void transferOrg() {
-		List<OrganizationEntity> orgs = oragnizationDao.getByFatherPK("1001");
-		List<Department> deps = new ArrayList<Department>();
+	
+	private List<OrganizationEntity> getChildren(OragnizationDao dao, OrganizationEntity root){
+		List<OrganizationEntity> result = new ArrayList<OrganizationEntity>();
+		Queue<OrganizationEntity> queue = new LinkedList<OrganizationEntity>();
+		queue.offer(root);
+		while (!queue.isEmpty()){
+			OrganizationEntity entity = queue.poll();
+			result.add(entity);
+			queue.addAll(dao.getByFatherocod(entity.getOcode()));
+		}
+		return result;
+	}
+	
+	
+	private Integer getOcode(String ocode, Map<String, Integer> ocodeMap){
+		Integer ret = 0;
+		try{
+			ret = Integer.valueOf(ocode);
+		}catch (Exception e){
+			if (ocodeMap.containsKey(ocode)){
+				ret = ocodeMap.get(ocode);
+			}else{
+				if (ocodeMap.containsKey("base")){
+					ocodeMap.get("base");
+				}else{
+					ocodeMap.put("base", 30000);
+				}
+				Integer base = ocodeMap.get("base");
+				ret = base;
+				ocodeMap.put("base", base + 1);
+				ocodeMap.put(ocode, ret);
+			}
+			System.out.println("from " + ocode + " to " + ret);
+		}
+		return ret;
+	}
+	
+	private Department toDepart(OrganizationEntity entity, Map<String, Integer> ocodeMap){
+		Department dep = new Department();
+		dep.setId(getOcode(entity.getOcode().replace(" ", ""), ocodeMap));
+		String pid = "";
+		if (entity.getFatherocod() != null){
+			pid = entity.getFatherocod().replace(" ", "");
+		}
+		
+		if (pid.isEmpty()){
+			dep.setParentid(1);
+		}else{
+			dep.setParentid(getOcode(pid, ocodeMap));
+		}
+		dep.setName(entity.getOname());
+		return dep;
+	}
+	
 
+	private Department createRootDepart(){
 		Department rootDep = new Department();
 		rootDep.setId(1);
 		rootDep.setName("");
-		deps.add(rootDep);
-			
-		for (OrganizationEntity entity : orgs){
-			rootDep = new Department();
-			rootDep.setId(Integer.valueOf(entity.getPk().replace(" ", "")));
-			rootDep.setParentid(1);
-			rootDep.setName(entity.getOname());
-			deps.add(rootDep);
+		return rootDep;
+	}
+	
+	public static class Elapse {
+
+		private Calendar start;
+		private Calendar end;
+
+		public Elapse() {
 		}
+
+		public void start() {
+			start = Calendar.getInstance();
+
+		}
+
+		public long end(String log) {
+			end = Calendar.getInstance();
+			System.out.println(log
+					+ (end.getTimeInMillis() - start.getTimeInMillis()));
+			return end.getTimeInMillis() - start.getTimeInMillis();
+		}
+	}
+	
+	@Override
+	public void transferOrg() {
+		Elapse elapse = new Elapse();
+		elapse.start();
+		Map<String, Integer> ocodeMap = new HashMap<String, Integer>();
 		
+		
+		List<Department> deps = new ArrayList<Department>();
+		deps.add(createRootDepart());
+		
+		List<OrganizationEntity> orgs = oragnizationDao.getAll();//getChildren(oragnizationDao, oragnizationDao.getByOcode("10000"));
+		orgs.addAll(jtOragnizationDao.getAll());
+		
+		for (OrganizationEntity entity : orgs){
+			deps.add(toDepart(entity, ocodeMap));
+		}
 
 		Node<Department> node = DepartmentQueryCache.build(1, deps);
+		final int[] arr = new int[]{0};
 		node.accept(new Visitor<Department>(){
 
 			@Override
@@ -70,11 +166,19 @@ public class WeiXinServiceImpl implements WeiXinService {
 				DepartmentManager depMgr = DepartmentManager.getInstance();
 				Department dep = node.getData();
 				if (dep.getId() != 1){
-					depMgr.create(dep);
+					//depMgr.create(dep);
+					arr[0]++;
+					System.out.print("" + node.depth());
+					for (int i = 0, depth = node.depth(); i < depth; ++i){
+						System.out.print("-");
+					}
+					System.out.println(JSON.stringify(dep));
 				}
-				return false;
+				return true;
 			}
 		});
+		System.out.println("total : " + arr[0]);
+		elapse.end("transferOrg finshed ");
 	}
 
 	@Override
@@ -86,7 +190,8 @@ public class WeiXinServiceImpl implements WeiXinService {
 			employ.setMobile(per.getMobile());
 			employ.addDepartment(Integer.valueOf(per.getPk_corp().replace(" ", "")));
 			employ.setUserid(per.getPsncode());
-			EmployeeManager.getInstance().create(employ);
+			System.out.println(JSON.stringify(employ));
+			//EmployeeManager.getInstance().create(employ);
 		}
 		System.out.println(person.size() + "");
 	}

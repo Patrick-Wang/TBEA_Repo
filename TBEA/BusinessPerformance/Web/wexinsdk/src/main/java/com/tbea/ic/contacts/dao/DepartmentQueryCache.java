@@ -34,7 +34,7 @@ public class DepartmentQueryCache {
 	public static Node<Department> build(int rootId, List<Department> departs) {
 		Node<Department> root = null;
 		for (int i = 0; i < departs.size(); ++i) {
-			if (departs.get(i).getId() == rootId) {
+			if (departs.get(i).getId().intValue() == rootId) {
 				root = new Node<Department>();
 				root.setData(departs.get(i));
 				break;
@@ -48,7 +48,7 @@ public class DepartmentQueryCache {
 			List<Department> departs) {
 		if (null != root) {
 			for (int i = 0; i < departs.size(); ++i) {
-				if (departs.get(i).getParentid() == root.getData().getId()) {
+				if (departs.get(i).getParentid() != null && departs.get(i).getParentid().intValue() == root.getData().getId().intValue()) {
 					Node<Department> child = new Node<Department>();
 					child.setData(departs.get(i));
 					root.append(child);
@@ -77,7 +77,7 @@ public class DepartmentQueryCache {
 				public boolean visit(Node<Department> node) {
 					idMap.put(node.getData().getId(), node);
 
-					if (node.getData().getId() == departId) {
+					if (node.getData().getId().intValue() == departId) {
 						return false;
 					}
 					return true;

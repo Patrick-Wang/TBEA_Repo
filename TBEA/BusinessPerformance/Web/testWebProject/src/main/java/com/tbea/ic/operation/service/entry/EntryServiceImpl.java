@@ -98,7 +98,7 @@ public class EntryServiceImpl implements EntryService{
 		calculatedZbs.add(GSZB.RJSR63.getValue());
 		calculatedZbs.add(GSZB.RJLR62.getValue());
 		calculatedZbs.add(GSZB.SXFYL_65.getValue());
-		calculatedZbs.add(GSZB.XSLRL_28.getValue());
+		//calculatedZbs.add(GSZB.XSLRL_28.getValue());
 		calculatedZbs.add(GSZB.ZZYSXFYL231.getValue());
 		calculatedZbs.add(GSZB.GC_XSYWSXFYL232.getValue());
 		calculatedZbs.add(GSZB.WLMYSXFYL233.getValue());

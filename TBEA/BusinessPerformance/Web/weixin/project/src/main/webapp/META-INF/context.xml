@@ -59,4 +59,18 @@
 		removeAbandoned="true" 
 		removeAbandonedTimeout="60000" 
 		logAbandoned="true" />
+	<Resource name="jdbc/jt_db" 
+		auth="Container" 
+		type="javax.sql.DataSource"
+		username="sa" 
+		password="Tbea_hrmas2011"
+		driverClassName="net.sourceforge.jtds.jdbc.Driver"
+		url="jdbc:jtds:sqlserver://192.168.7.78;DatabaseName=hrconJT"
+		initialSize="35" 
+		maxActive="70"
+		maxIdle="10" 
+		validationQuery="select 1"
+		removeAbandoned="true" 
+		removeAbandonedTimeout="60000" 
+		logAbandoned="true" />
 </Context>
