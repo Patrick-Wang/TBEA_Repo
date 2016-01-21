@@ -18,6 +18,8 @@ public interface IPipe {
 	
 	public IPipe addFilter(IPipeFilter filter) ;
 
+	public IPipe addFilter(List<IPipeFilter> filters) ;
+	
 	public List<Double[]> getData();
 	
 	public int getColumnCount();

@@ -17,12 +17,13 @@ import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.ljlr.LjlrRankCo
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.rjlr.RjlrDataConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.rank.rjlr.RjlrRankConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.first.FirstSeasonPredictionCompositeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.first.FirstSeasonPredictionConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.first.FirstSeasonPredictionConfiguratorProxy;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.second.SecondSeasonPredictionCompositeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.second.SecondSeasonPredictionConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.second.SecondSeasonPredictionConfiguratorProxy;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.third.ThirdSeasonPredictionCompositeConfigurator;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.third.ThirdSeasonPredictionConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.seasons.third.ThirdSeasonPredictionConfiguratorProxy;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.srqy.SrqyConfigurator;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.standard.StandardConfiguratorProxy;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ydhb.YdhbConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ztzb.ZtzbCompositeConfigurator;
 
@@ -53,18 +54,18 @@ public class ConfiguratorFactory {
 	
 	public ConfiguratorFactory(SbdNdjhZbDao sbdzbDao,
 			AccumulatorFactory accFac, CompanyManager companyManager) {
-		standardConfigurator = new StandardConfigurator(sbdzbDao,
+		standardConfigurator = new StandardConfiguratorProxy(sbdzbDao,
 				accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
 		
-		firstSeasonPredictionConfigurator = new FirstSeasonPredictionConfigurator(
+		firstSeasonPredictionConfigurator = new FirstSeasonPredictionConfiguratorProxy(
 				sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(),
 				accFac.getNjhAcc());
 		
-		secondSeasonPredictionConfigurator = new SecondSeasonPredictionConfigurator(
+		secondSeasonPredictionConfigurator = new SecondSeasonPredictionConfiguratorProxy(
 				sbdzbDao, accFac.getSjAcc(), accFac.getYjhAcc(),
 				accFac.getNjhAcc());
 		
-		thirdSeasonPredictionConfigurator = new ThirdSeasonPredictionConfigurator(sbdzbDao,
+		thirdSeasonPredictionConfigurator = new ThirdSeasonPredictionConfiguratorProxy(sbdzbDao,
 				accFac.getSjAcc(), accFac.getYjhAcc(), accFac.getNjhAcc());
 		
 		ydhbConfigurator = new YdhbConfigurator(sbdzbDao, accFac.getSjAcc(),

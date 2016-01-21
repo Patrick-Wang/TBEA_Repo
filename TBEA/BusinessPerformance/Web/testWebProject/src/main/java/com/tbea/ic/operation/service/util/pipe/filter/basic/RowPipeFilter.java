@@ -12,7 +12,7 @@ import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
 public class RowPipeFilter implements IPipeFilter {
 
 	public interface operator{
-		void invoke(IPipe pipe, Double[] zbRow, Integer[] src, Set<Integer> excludeCols, Map<Integer, Integer> indicatorMap);
+		void invoke(IPipe pipe, Integer destZb, Double[] zbRow, Integer[] src, Set<Integer> excludeCols, Map<Integer, Integer> indicatorMap);
 	}
 	
 	class Formula{
@@ -24,8 +24,8 @@ public class RowPipeFilter implements IPipeFilter {
 			this.oper = oper;
 		}
 		
-		public void calculate(IPipe pipe, Double[] zbRow, Set<Integer> excludeCols, Map<Integer, Integer> indicatorMap){
-			oper.invoke(pipe, zbRow, params, excludeCols, indicatorMap);
+		public void calculate(IPipe pipe, Integer destZb, Double[] zbRow, Set<Integer> excludeCols, Map<Integer, Integer> indicatorMap){
+			oper.invoke(pipe, destZb, zbRow, params, excludeCols, indicatorMap);
 		}
 	}
 	
@@ -42,7 +42,7 @@ public class RowPipeFilter implements IPipeFilter {
 		computeMap.put(dest.getValue(), new Formula(intZbs, oper));
 	}
 
-	public RowPipeFilter exclude(Integer col) {
+	public RowPipeFilter excludeCol(Integer col) {
 		excludeCols.add(col);
 		return this;
 	}
@@ -71,7 +71,7 @@ public class RowPipeFilter implements IPipeFilter {
 
 	private void updateZb(IPipe pipe, int zbId, Double[] zbRow) {
 		if (this.computeMap.containsKey(zbId)){
-			computeMap.get(zbId).calculate(pipe, zbRow, excludeCols, indicatorMap);
+			computeMap.get(zbId).calculate(pipe, zbId, zbRow, excludeCols, indicatorMap);
 		}
 	}
 

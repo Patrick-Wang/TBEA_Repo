@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.service.util.pipe.core.BasicPipe;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
 

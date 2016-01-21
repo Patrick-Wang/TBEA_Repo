@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 
-public abstract class AbstractPipeConfigurator implements IPipeConfigurator {
+public class ConfiguratorUtil {
 
 	static List<Integer> invisiableZbs = new ArrayList<Integer>();
 	static List<Integer> timePointNumberZbs = new ArrayList<Integer>();
@@ -22,6 +23,17 @@ public abstract class AbstractPipeConfigurator implements IPipeConfigurator {
 		timePointNumberZbs.add(GSZB.QZ_KCSP37.getValue());
 		timePointNumberZbs.add(GSZB.BL34.getValue());
 		timePointNumberZbs.add(GSZB.QZ_JYWZ36.getValue());
+		timePointNumberZbs.add(GSZB.GNYSZK200.getValue());
+		timePointNumberZbs.add(GSZB.QZ_ZZY201.getValue());
+		timePointNumberZbs.add(GSZB.QZ_GC_XSYW202.getValue());
+		timePointNumberZbs.add(GSZB.QZ_WLMY203.getValue());
+		timePointNumberZbs.add(GSZB.GJYSZK204.getValue());
+		timePointNumberZbs.add(GSZB.QZ_ZZY205.getValue());
+		timePointNumberZbs.add(GSZB.QZ_GC_XSYW206.getValue());
+		timePointNumberZbs.add(GSZB.QZ_WLMY207.getValue());
+		timePointNumberZbs.add(GSZB.QZ_ZZY208.getValue());
+		timePointNumberZbs.add(GSZB.QZ_GC_XSYW209.getValue());
+		timePointNumberZbs.add(GSZB.QZ_WLMY210.getValue());
 	}
 
 	static {
@@ -74,19 +86,31 @@ public abstract class AbstractPipeConfigurator implements IPipeConfigurator {
 	/**
 	 * @return the zhHiddenZbs
 	 */
-	protected static List<Integer> getZhHiddenZbs() {
+	public static List<Integer> getZhHiddenZbs() {
 		return zhHiddenZbs;
 	}
 
-	protected List<Integer> getInvisiableZbs(){
+	public static List<Integer> getInvisiableZbs(){
 		return invisiableZbs;
 	}
 	
-	protected List<Integer> getTimePointNumberZbs(){
+	public static List<Integer> getTimePointNumberZbs(){
 		return timePointNumberZbs;
 	}
 	
-	protected List<Integer> getRatioZbs(){
+	public static List<Integer> getRatioZbs(){
 		return ratioZbs;
+	}
+	
+
+	
+	public static void seperate(SbdNdjhZbDao sbdzbDao, List<Company> companies, List<Company> sbdComps, List<Company> nonSbdComps){
+		for (Company comp : companies) {
+			if (sbdzbDao.contains(comp)) {
+				sbdComps.add(comp);
+			} else{
+				nonSbdComps.add(comp);
+			}
+		}
 	}
 }

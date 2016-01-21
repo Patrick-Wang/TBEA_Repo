@@ -64,6 +64,30 @@
 		<property name="persistenceUnitName" value="JTDB" />
 	</bean>
 	
+	<bean id="elinkDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/elink_db" />
+	</bean>
+
+	<bean id="elinkEntityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="elinkDataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- 
+					<property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				-->
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect"/> 
+				<property name="showSql" value="true" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="elink" />
+	</bean>
+	
+	
+	
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
 
@@ -84,7 +108,11 @@
 		<property name="dataSource" ref="jtDataSource" />
 	</bean>
 
-
+	
+	<bean id="elinkTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="elinkEntityManagerFactory" />
+		<property name="dataSource" ref="elinkDataSource" />
+	</bean>
 	<context:component-scan base-package="com.tbea.ic.weixin.model" />
 	<context:component-scan base-package="com.tbea.ic.weixin.service" />
 

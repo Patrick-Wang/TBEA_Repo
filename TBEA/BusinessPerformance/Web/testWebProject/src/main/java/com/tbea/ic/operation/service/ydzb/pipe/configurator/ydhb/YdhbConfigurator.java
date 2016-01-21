@@ -8,27 +8,27 @@ import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
-import com.tbea.ic.operation.service.util.pipe.core.BasicPipe;
+import com.tbea.ic.operation.service.util.pipe.configurator.ConfiguratorUtil;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.CopyPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.RatioPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.WclPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.ZzlPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.AbstractSbdPipeConfigurator;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.basic.YdjhProportionAccPipeFilter;
 
 //月度环比
-public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
+public class YdhbConfigurator implements IPipeConfigurator {
 
 	IAccumulator sjAcc;
 	IAccumulator yjhAcc;
 	IAccumulator njhAcc;
-	
+	SbdNdjhZbDao sbdzbDao;
 	
 	public YdhbConfigurator(SbdNdjhZbDao sbdzbDao, IAccumulator sjAcc, IAccumulator yjhAcc, IAccumulator njhAcc) {
-		super(sbdzbDao);
+		this.sbdzbDao = sbdzbDao;
 		this.sjAcc = sjAcc;
 		this.yjhAcc = yjhAcc;
 		this.njhAcc = njhAcc;
@@ -39,7 +39,7 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 		List<Company> allCompanies = pipe.getCompanies();
 		List<Company> nonSbdCompanies = new ArrayList<Company>();
 		List<Company> sbdCompanies = new ArrayList<Company>();
-		seperate(allCompanies, sbdCompanies, nonSbdCompanies);
+		ConfiguratorUtil.seperate(sbdzbDao, allCompanies, sbdCompanies, nonSbdCompanies);
 
 		DateHelper dh = new DateHelper(pipe.getDate());
 
@@ -52,8 +52,8 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 		pipe.addFilter(new AccPipeFilter(njhAcc, 0)
 				.includeCompanies(allCompanies)
 				.includeZbs(gsztzbs)
-				.excludeZbs(getInvisiableZbs())
-				.excludeZbs(getRatioZbs()));
+				.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
+				.excludeZbs(ConfiguratorUtil.getRatioZbs()));
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(dh.getCur());
@@ -62,13 +62,13 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 			pipe.addFilter(new AccPipeFilter(yjhAcc, 1)
 						.includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs()));
+						.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
+						.excludeZbs(ConfiguratorUtil.getRatioZbs()));
 		} else {
 			pipe.addFilter(new AccPipeFilter(yjhAcc, 1).includeCompanies(allCompanies)
 						.includeZbs(gsztzbs)
-						.excludeZbs(getInvisiableZbs())
-						.excludeZbs(getRatioZbs())
+						.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
+						.excludeZbs(ConfiguratorUtil.getRatioZbs())
 						.exclude(GSZB.YSZK32)
 						.exclude(GSZB.CH35))
 				.addFilter(new YdjhProportionAccPipeFilter(sbdzbDao, sjAcc, 1, dh.getFirstMonth(), dh.getCur())
@@ -88,8 +88,8 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 		pipe.addFilter(new AccPipeFilter(sjAcc, 2)
 				.includeCompanies(allCompanies)
 				.includeZbs(gsztzbs)
-				.excludeZbs(getInvisiableZbs())
-				.excludeZbs(getRatioZbs()))
+				.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
+				.excludeZbs(ConfiguratorUtil.getRatioZbs()))
 
 			// 计划完成率
 			.addFilter(wclFilter.add(3, 2, 1))
@@ -98,15 +98,15 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 			.addFilter(new AccPipeFilter(sjAcc, 16, dh.getQntq())
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
-					.excludeZbs(getInvisiableZbs())
-					.excludeZbs(getRatioZbs()))
+					.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
+					.excludeZbs(ConfiguratorUtil.getRatioZbs()))
 
 			// 上月实际
 			.addFilter(new AccPipeFilter(sjAcc, 4, dh.getPreMonth())
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
-					.excludeZbs(getInvisiableZbs())
-					.excludeZbs(getRatioZbs()))
+					.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
+					.excludeZbs(ConfiguratorUtil.getRatioZbs()))
 			
 			//环比增幅
 			.addFilter(zzlFilter.add(5, 2, 4))
@@ -118,21 +118,21 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 			.addFilter(new AccPipeFilter(yjhAcc, 7, dh.getJdStart(), DateHelper.getJdEnd(dh.getCur()))
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
-					.excludeZbs(getInvisiableZbs())
-					.excludeZbs(getRatioZbs())
-					.excludeZbs(getTimePointNumberZbs()))
+					.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
+					.excludeZbs(ConfiguratorUtil.getRatioZbs())
+					.excludeZbs(ConfiguratorUtil.getTimePointNumberZbs()))
 			.addFilter(copyFilter
-					.add(getTimePointNumberZbs(), 1, 7))
+					.add(ConfiguratorUtil.getTimePointNumberZbs(), 1, 7))
 
 			// 季度累计
 			.addFilter(new AccPipeFilter(sjAcc, 8, dh.getJdStart(), dh.getCur())
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
-					.excludeZbs(getInvisiableZbs())
-					.excludeZbs(getRatioZbs())
-					.excludeZbs(getTimePointNumberZbs()))
+					.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
+					.excludeZbs(ConfiguratorUtil.getRatioZbs())
+					.excludeZbs(ConfiguratorUtil.getTimePointNumberZbs()))
 			.addFilter(copyFilter
-					.add(getTimePointNumberZbs(), 2, 8))
+					.add(ConfiguratorUtil.getTimePointNumberZbs(), 2, 8))
 
 
 			// 季度计划完成率
@@ -142,12 +142,12 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 			.addFilter(new AccPipeFilter(sjAcc, 10, dh.getQntqJdStart(), dh.getQntq())
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
-					.excludeZbs(getInvisiableZbs())
-					.excludeZbs(getRatioZbs())
-					.excludeZbs(getTimePointNumberZbs()))
+					.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
+					.excludeZbs(ConfiguratorUtil.getRatioZbs())
+					.excludeZbs(ConfiguratorUtil.getTimePointNumberZbs()))
 			.addFilter(new AccPipeFilter(sjAcc, 10, dh.getQntq())
 					.includeCompanies(allCompanies)
-					.includeZbs(getTimePointNumberZbs()))
+					.includeZbs(ConfiguratorUtil.getTimePointNumberZbs()))
 					
 			// 同比增幅
 			.addFilter(zzlFilter.add(11, 8, 10))
@@ -156,11 +156,11 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 			.addFilter(new AccPipeFilter(sjAcc, 12, dh.getFirstMonth(), dh.getCur())
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
-					.excludeZbs(getInvisiableZbs())
-					.excludeZbs(getRatioZbs())
-					.excludeZbs(getTimePointNumberZbs()))
+					.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
+					.excludeZbs(ConfiguratorUtil.getRatioZbs())
+					.excludeZbs(ConfiguratorUtil.getTimePointNumberZbs()))
 			.addFilter(copyFilter
-					.add(getTimePointNumberZbs(), 2, 12))
+					.add(ConfiguratorUtil.getTimePointNumberZbs(), 2, 12))
 
 			// 累计计划完成率
 			.addFilter(wclFilter.add(13, 12, 0))
@@ -170,24 +170,24 @@ public class YdhbConfigurator extends AbstractSbdPipeConfigurator {
 					.getQntq())
 					.includeCompanies(allCompanies)
 					.includeZbs(gsztzbs)
-					.excludeZbs(getInvisiableZbs())
-					.excludeZbs(getRatioZbs())
-					.excludeZbs(getTimePointNumberZbs()))
+					.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
+					.excludeZbs(ConfiguratorUtil.getRatioZbs())
+					.excludeZbs(ConfiguratorUtil.getTimePointNumberZbs()))
 			.addFilter(copyFilter
-					.add(getTimePointNumberZbs(), 10, 14))
+					.add(ConfiguratorUtil.getTimePointNumberZbs(), 10, 14))
 
 			// 同比增幅
 			.addFilter(zzlFilter.add(15, 12, 14))
 
 			// 添加特殊指标过滤器
 			.addFilter(new RatioPipeFilter()
-					.exclude(3)// 计划完成率
-					.exclude(5)// 环比增幅
-					.exclude(6)// 同比增幅
-					.exclude(9)// 季度计划完成率
-					.exclude(11)// 同比增幅
-					.exclude(13)// 累计计划完成率
-					.exclude(15))// 同比增幅
+					.excludeCol(3)// 计划完成率
+					.excludeCol(5)// 环比增幅
+					.excludeCol(6)// 同比增幅
+					.excludeCol(9)// 季度计划完成率
+					.excludeCol(11)// 同比增幅
+					.excludeCol(13)// 累计计划完成率
+					.excludeCol(15))// 同比增幅
 			.addFilter(zzlFilter)
 			.addFilter(wclFilter);
 	}

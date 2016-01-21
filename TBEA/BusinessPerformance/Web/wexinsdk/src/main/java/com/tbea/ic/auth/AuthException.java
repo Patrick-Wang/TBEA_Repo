@@ -1,6 +1,8 @@
 package com.tbea.ic.auth;
 
-public class AuthException extends Exception {
+import com.tbea.ic.WeixinSdkException;
+
+public class AuthException extends WeixinSdkException {
 
 	public AuthException() {
 		super();

@@ -1,7 +1,12 @@
 package com.tbea.ic.weixin.service.weixin;
 
+import com.tbea.ic.WeixinSdkException;
+import com.tbea.ic.weixin.model.dao.elinkmsg.ElinkMsgDaoImpl;
+import com.tbea.ic.weixin.model.dao.elinkmsg.ElinkMsgDao;
 import com.tbea.ic.util.JSON;
 import com.tbea.ic.weixin.service.weixin.WeiXinService;
+import com.tbea.ic.message.entity.News;
+import com.tbea.ic.message.sender.Messager;
 import com.tbea.ic.structure.Node;
 import com.tbea.ic.structure.Node.Visitor;
 import com.tbea.ic.weixin.model.dao.persion.JTPersionDaoImpl;
@@ -10,6 +15,7 @@ import com.tbea.ic.weixin.model.dao.persion.PersionDaoImpl;
 import com.tbea.ic.weixin.model.dao.oragnization.JTOragnizationDaoImpl;
 import com.tbea.ic.weixin.model.dao.oragnization.OragnizationDao;
 import com.tbea.ic.weixin.model.dao.oragnization.OragnizationDaoImpl;
+import com.tbea.ic.weixin.model.entity.ElinkMsgEntity;
 import com.tbea.ic.weixin.model.entity.OrganizationEntity;
 import com.tbea.ic.weixin.model.entity.PersionEntity;
 
@@ -39,6 +45,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional("transactionManager")
 public class WeiXinServiceImpl implements WeiXinService {
 	
+	@Resource(name=ElinkMsgDaoImpl.NAME)
+	ElinkMsgDao elinkMsgDao;
+
 	@Resource(name = OragnizationDaoImpl.NAME)
 	OragnizationDao oragnizationDao;
 
@@ -194,6 +203,43 @@ public class WeiXinServiceImpl implements WeiXinService {
 			//EmployeeManager.getInstance().create(employ);
 		}
 		System.out.println(person.size() + "");
+	}
+
+
+	@Override
+	public void sendNews(List<Integer> allIds, String[] usrs) throws WeixinSdkException {
+		ElinkMsgEntity ent;
+		Messager msger = new Messager(25);
+		News<News.Article> news = new News<News.Article>();
+		List<News.Article> arts = new ArrayList<News.Article>();
+		news.setArticles(arts);
+		msger.news(news);
+		for(int i = 0; i < allIds.size(); ++i){
+			ent = elinkMsgDao.getById(allIds.get(i));
+			if (ent != null){
+				News.Article art = new News.Article();
+				arts.add(art);
+				art.setTitle(ent.getTitle());
+				art.setUrl("http://10.1.4.107:8080/weixin/weixin/testGetMsg.do?id=" + ent.getId());
+				//msger.toUser(ent.getToUsername());
+			}
+		}
+		
+		
+		for(int i = 0; i < usrs.length; ++i){
+			msger.toUser(usrs[i]);
+		}
+
+		
+		
+		msger.send();
+	}
+
+
+	@Override
+	public String getMsg(Integer id) {
+		ElinkMsgEntity ent = elinkMsgDao.getById(id);
+		return ent.getMessage();
 	}
 
 

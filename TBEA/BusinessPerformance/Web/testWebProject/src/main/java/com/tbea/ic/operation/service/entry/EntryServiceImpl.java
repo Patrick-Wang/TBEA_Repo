@@ -18,8 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.GSZB;
+import com.tbea.ic.operation.common.RequestHandler;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -48,10 +49,10 @@ import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.entry.zbCalculator.GeneralZbCalculator;
 import com.tbea.ic.operation.service.entry.zbCalculator.NdjhZbCalculator;
+import com.tbea.ic.operation.service.entry.zbCalculator.Request;
 import com.tbea.ic.operation.service.entry.zbCalculator.ZbCalculator;
 import com.tbea.ic.operation.service.entry.zbInjector.SimpleZbInjectorFactory;
 import com.tbea.ic.operation.service.entry.zbInjector.ZbInjector;
-import com.tbea.ic.operation.common.ZBStatus;
 
 
 
@@ -92,18 +93,7 @@ public class EntryServiceImpl implements EntryService{
 	@Autowired
 	YDZBZTDao ydzbztDao;
 	
-	final static Set<Integer> calculatedZbs = new HashSet<Integer>();
 
-	static {
-		calculatedZbs.add(GSZB.RJSR63.getValue());
-		calculatedZbs.add(GSZB.RJLR62.getValue());
-		calculatedZbs.add(GSZB.SXFYL_65.getValue());
-		//calculatedZbs.add(GSZB.XSLRL_28.getValue());
-		calculatedZbs.add(GSZB.ZZYSXFYL231.getValue());
-		calculatedZbs.add(GSZB.GC_XSYWSXFYL232.getValue());
-		calculatedZbs.add(GSZB.WLMYSXFYL233.getValue());
-	};
-	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 	
@@ -122,24 +112,27 @@ public class EntryServiceImpl implements EntryService{
 		sjzbInjector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, sjzbDao);
 	}
 	
-	private ZbCalculator createYdjhzbCalc() {
-		return new GeneralZbCalculator(ydjhzbInjector);
+
+	
+	private ZbCalculator createYdjhzbCalc(RequestHandler<Request> handler) {
+		return new GeneralZbCalculator(ydjhzbInjector, handler);
+		
 	}
 
-	private ZbCalculator createNdjhzbCalc(CompanyManager mgr) {
-		return new NdjhZbCalculator(mgr, ndjhzbInjector, this.sbdNdjhzbDao);
+	private ZbCalculator createNdjhzbCalc(CompanyManager mgr, RequestHandler<Request> handler) {
+		return new NdjhZbCalculator(mgr, ndjhzbInjector, this.sbdNdjhzbDao, handler);
 	}
 
 	private ZbCalculator createYj28Calc() {
-		return new GeneralZbCalculator(yd28Injector);
+		return new GeneralZbCalculator(yd28Injector, CalculatedZbManager.getSJHandler());
 	}
 
 	private ZbCalculator createYj20Calc() {
-		return new GeneralZbCalculator(yj20Injector);
+		return new GeneralZbCalculator(yj20Injector, CalculatedZbManager.getSJHandler());
 	}
 
 	private ZbCalculator createSjzbCalc() {
-		return new GeneralZbCalculator(sjzbInjector);
+		return new GeneralZbCalculator(sjzbInjector, CalculatedZbManager.getSJHandler());
 	}
 
 	public static void setYdzbzt(YDZBZTDao ydzbztDao, DWXXDao dwxxDao, Company comp, int nf, int yf, ZBType entryType){
@@ -221,7 +214,7 @@ public class EntryServiceImpl implements EntryService{
 		
 		for (int c = 0; c < approvedList.size(); ++c) {
 			if (ZBStatus.APPROVED != approvedList.get(c)) {
-				ZbCalculator calc = this.createYdjhzbCalc();
+				ZbCalculator calc = this.createYdjhzbCalc(CalculatedZbManager.getJHHandler(cal));
 				for (int r = 0; r < data.size(); ++r) {
 					row = data.getJSONArray(r);
 					zbId = Integer.valueOf(row.getString(0));
@@ -276,7 +269,7 @@ public class EntryServiceImpl implements EntryService{
 			cal.setTime(date);
 			JSONArray row;
 			
-			ZbCalculator calc = this.createNdjhzbCalc(companyManager);
+			ZbCalculator calc = this.createNdjhzbCalc(companyManager, CalculatedZbManager.getJHHandler(cal));
 			for (int r = 0; r < data.size(); ++r) {
 				row = data.getJSONArray(r);
 				if (!row.getString(1).isEmpty()) {
@@ -500,7 +493,7 @@ public class EntryServiceImpl implements EntryService{
 		Set<ZBXX> zbxxs = dwxx.getJhzbxxs();
 		
 		
-		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 5);
+		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 5, CalculatedZbManager.getJHCalculatedZbs(cal));
 		for (int i = 0; i < 3; ++i){
 			List<YDJHZB> zbs = ydjhzbDao.getZbs(Util.toDate(cal), company);
 			unifyYdjhZbs(zbxxs, zbs);
@@ -548,7 +541,7 @@ public class EntryServiceImpl implements EntryService{
 		List<NDJHZB> zbs =  ndjhzbDao.getZbs(Util.toDate(cal), company);
 		unifyNdjhZbs(zbxxs, zbs);
 
-		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 3);
+		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 3, CalculatedZbManager.getJHCalculatedZbs(cal));
 		
 
 		for(NDJHZB zb : zbs){
@@ -586,7 +579,7 @@ public class EntryServiceImpl implements EntryService{
 		List<SJZB> sjzbs =  sjzbDao.getZbs(Util.toDate(cal), company);
 		unifySjZbs(zbxxs, sjzbs);
 		
-		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 3);
+		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 3, CalculatedZbManager.getSJCalculatedZbs());
 
 		for(SJZB zb : sjzbs){
 			String[] row = map.get(zb.getZbxx().getSequence());
@@ -624,7 +617,7 @@ public class EntryServiceImpl implements EntryService{
 		List<YJ28ZB> yj28zbs =  yj28zbDao.getZbs(Util.toDate(cal), company);
 		unify28Zbs(zbxxs, yj28zbs);
 		
-		Map<Integer, String[]> map = creatZBXXMap(zbxxs, leftMonth + 3);
+		Map<Integer, String[]> map = creatZBXXMap(zbxxs, leftMonth + 3, CalculatedZbManager.getSJCalculatedZbs());
 		updateYJ28Map(map, yj28zbs, 0);
 		cal.add(Calendar.MONTH, 1);
 		
@@ -691,10 +684,10 @@ public class EntryServiceImpl implements EntryService{
 		return ret;
 	}
 	
-	private Map<Integer, String[]> creatZBXXMap(Set<ZBXX> zbxxs, int size){
+	private Map<Integer, String[]> creatZBXXMap(Set<ZBXX> zbxxs, int size, Set<Integer> calculateZbs){
 		Map<Integer, String[]> map = new HashMap<Integer, String[]>();
 		for (ZBXX zbxx : zbxxs){
-			if (!calculatedZbs.contains(zbxx.getId())){
+			if (!calculateZbs.contains(zbxx.getId())){
 				String[] row = new String[size];
 				map.put(zbxx.getSequence(), row);
 				row[0] = zbxx.getId() + "";
@@ -720,7 +713,7 @@ public class EntryServiceImpl implements EntryService{
 		
 		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 		
-		Map<Integer, String[]> map = creatZBXXMap(zbxxs, leftMonth + 3);
+		Map<Integer, String[]> map = creatZBXXMap(zbxxs, leftMonth + 3, CalculatedZbManager.getSJCalculatedZbs());
 		for (int i = 0; i <= leftMonth; ++i){
 			List<YJ20ZB> zbs = yj20zbDao.getZbs(Util.toDate(cal), company);
 			unify20Zbs(zbxxs, zbs);

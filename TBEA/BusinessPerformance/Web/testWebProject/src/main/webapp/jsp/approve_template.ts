@@ -465,40 +465,41 @@ module approve_template {
                         tmpData[i].push("--");
                     }
                 }
-
-                var name = tableId + "_jqgrid";
-                var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createSjTable(name, title, colZbIds);
-
-                var parent = $("#" + tableId);
-                parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-
-                var width = (title.length) * 85;
-
-
-                $("#" + name).jqGrid(
-                    jqAssist.decorate({
-                        // url: "TestTable/WGDD_load.do",
-                        // datatype: "json",
-                        data: jqAssist.getDataWithId(tmpData),
-                        datatype: "local",
-                        multiselect: true,
-                        drag: false,
-                        resize: false,
-                        rowNum: 1000,
-                        //autowidth : false,
-                        //cellsubmit: 'clientArray',
-                        //cellEdit: false,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: width > 1200 ? false : true,
-                        autoScroll: true,
-                        caption: caption
-                    }));
-                return jqAssist;
             }
+
+            var name = tableId + "_jqgrid";
+            var jqAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createSjTable(name, title, colZbIds);
+
+            var parent = $("#" + tableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
+
+            var width = (title.length) * 85;
+
+
+            $("#" + name).jqGrid(
+                jqAssist.decorate({
+                    // url: "TestTable/WGDD_load.do",
+                    // datatype: "json",
+                    data: jqAssist.getDataWithId(tmpData),
+                    datatype: "local",
+                    multiselect: true,
+                    drag: false,
+                    resize: false,
+                    rowNum: 1000,
+                    //autowidth : false,
+                    //cellsubmit: 'clientArray',
+                    //cellEdit: false,
+                    height: '100%',
+                    width: 1200,
+                    shrinkToFit: width > 1200 ? false : true,
+                    autoScroll: true,
+                    caption: caption
+                }));
+            return jqAssist;
         }
     }
+
 
     export class View {
         public static instance: View = new View();

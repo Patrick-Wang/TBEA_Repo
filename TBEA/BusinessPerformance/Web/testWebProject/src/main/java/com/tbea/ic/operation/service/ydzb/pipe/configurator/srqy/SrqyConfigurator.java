@@ -15,13 +15,11 @@ import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurat
 import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.WclPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.ZzlPipeFilter;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.StandardConfigurator;
 
 //收入签约分结构
 public class SrqyConfigurator implements IPipeConfigurator {
 
-	StandardConfigurator standardConfigurator;
-	
+
 	private final static int xnycyQyId = 100021;
 	
 	private static List<Integer> specialZbs = new ArrayList<Integer>();

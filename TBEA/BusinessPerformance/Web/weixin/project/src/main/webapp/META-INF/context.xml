@@ -73,4 +73,18 @@
 		removeAbandoned="true" 
 		removeAbandonedTimeout="60000" 
 		logAbandoned="true" />
+	<Resource name="jdbc/elink_db" 
+		auth="Container" 
+		type="javax.sql.DataSource"
+		username="sa" 
+		password="6553275" 
+		driverClassName="net.sourceforge.jtds.jdbc.Driver"
+		url="jdbc:jtds:sqlserver://192.168.7.15:1443;DatabaseName=ElinkMes"
+		initialSize="35" 
+		maxActive="70"
+		maxIdle="10" 
+		validationQuery="select 1"
+		removeAbandoned="true" 
+		removeAbandonedTimeout="60000" 
+		logAbandoned="true" />
 </Context>

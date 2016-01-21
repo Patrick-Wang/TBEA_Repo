@@ -2,6 +2,7 @@ package com.tbea.ic.message.sender;
 
 import net.sf.json.JSONObject;
 
+import com.tbea.ic.WeixinSdkException;
 import com.tbea.ic.auth.Connection;
 import com.tbea.ic.contacts.entity.Department;
 import com.tbea.ic.contacts.entity.Employee;
@@ -102,13 +103,14 @@ public class Messager {
 		return this;
 	}
 	
-	public boolean send(){
+	public void send() throws WeixinSdkException{
 		String resp = Connection.getInstance().httpsPost("https://qyapi.weixin.qq.com/cgi-bin/message/send?", JSON.stringify(this));
 		JSONObject jResp = JSONObject.fromObject(resp);
-		if (jResp.getInt("errcode") == 0){
-			return true;
+		if (jResp.getInt("errcode") != 0){
+			//return true;
+			throw new WeixinSdkException(resp);
 		}
-		return false;
+		//return false;
 	}
 	
 	public Text getText() {

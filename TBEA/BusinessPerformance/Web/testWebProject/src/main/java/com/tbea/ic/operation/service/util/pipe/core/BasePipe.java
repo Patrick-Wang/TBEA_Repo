@@ -69,6 +69,14 @@ public abstract class BasePipe implements IPipe{
 	}
 
 	@Override
+	public IPipe addFilter(List<IPipeFilter> filters) {
+		for (IPipeFilter filter : filters){
+			addFilter(filter);
+		}
+		return this;
+	}
+	
+	@Override
 	public Double[] getRow(int row) {
 		return data.get(row);
 	}

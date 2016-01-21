@@ -10,6 +10,30 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class JSON {
+	
+	private static boolean fieldIsNull(Object obj, String key){
+		try {
+			Method method = obj.getClass().getMethod("get" + key.substring(0, 1).toUpperCase() + key.substring(1));
+			return null == method.invoke(obj);
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
 	public static String stringify(Object obj){
 		if (obj instanceof List || obj instanceof Object[]){
 			JSONArray jo = JSONArray.fromObject(obj);
@@ -20,29 +44,9 @@ public class JSON {
 			Iterator<String> it = jo.keys();
 			while (it.hasNext()) {
 				String key = it.next();
-				try {
-					Method method = obj.getClass().getMethod("get" + key.substring(0, 1).toUpperCase() + key.substring(1));
-					
-					if (null == method.invoke(obj)) {
-						depKeys.add(key);
-					}
-				} catch (NoSuchMethodException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SecurityException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+				if (fieldIsNull(obj, key)){
+					depKeys.add(key);
+				}				
 			}
 			for (String key : depKeys){
 				jo.remove(key);
