@@ -114,12 +114,14 @@
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-radar"></i> <a href="#hk"
 										style="color: rgb(62, 152, 197);">回款</a></li>
+<%--
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-chord"></i> <a href="#cb"
 										style="color: rgb(62, 152, 197);">成本管控</a></li>
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-force"></i> <a href="#tbbzj"
 										style="color: rgb(62, 152, 197);">投标保证金</a></li>
+--%>
 								</c:if>
 							</ul>
 							<ul id="navlist1" style="padding: 10px 0; display: none">

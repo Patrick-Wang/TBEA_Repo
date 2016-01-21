@@ -279,14 +279,17 @@
 					href="../syhkjhzxqk/syhkjhzxqk.do" target="_blank"><img
 						src="../images/charts/scatter5.png"> <span><strong>上月回款计划执行情况</strong></span></a>
 				</li>
+<%--
 				<li data-thumb="asset/img/example/cache.png"><a
 					href="../rhkqk/rhkqk.do" target="_blank"><img
 						src="../images/charts/scatter5.png"> <span><strong>当日回款明细</strong></span></a>
 				</li>
+--%>
 			</ul>
 		</div>
 	</div>
 </div>
+<%-- 
 <div>
 	<h3>
 		成本管控<a name="cb"> </a>
@@ -334,4 +337,5 @@
 		</div>
 	</div>
 </div>
+--%>
 </c:if> 
