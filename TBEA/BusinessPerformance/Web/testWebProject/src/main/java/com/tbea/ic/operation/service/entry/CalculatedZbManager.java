@@ -10,38 +10,38 @@ import com.tbea.ic.operation.service.entry.zbCalculator.Request;
 import com.tbea.ic.operation.service.entry.zbCalculator.requesthandler.RatioRequestHandler;
 
 public class CalculatedZbManager {
-	final static Set<Integer> calculatedZbs2016Before = new HashSet<Integer>();
-	final static Set<Integer> calculatedZbs2016After = new HashSet<Integer>();//include 2016
+	final static Set<Integer> defaultZbs = new HashSet<Integer>();
+	final static Set<Integer> jh2016Zbs = new HashSet<Integer>();//include 2016
 
 	static {
-		calculatedZbs2016Before.add(GSZB.RJSR63.getValue());
-		calculatedZbs2016Before.add(GSZB.RJLR62.getValue());
-		calculatedZbs2016Before.add(GSZB.SXFYL_65.getValue());
-		calculatedZbs2016Before.add(GSZB.XSLRL_28.getValue());
-		calculatedZbs2016Before.add(GSZB.ZZYSXFYL231.getValue());
-		calculatedZbs2016Before.add(GSZB.GC_XSYWSXFYL232.getValue());
-		calculatedZbs2016Before.add(GSZB.WLMYSXFYL233.getValue());
+		defaultZbs.add(GSZB.RJSR63.getValue());
+		defaultZbs.add(GSZB.RJLR62.getValue());
+		defaultZbs.add(GSZB.SXFYL_65.getValue());
+		defaultZbs.add(GSZB.XSLRL_28.getValue());
+		defaultZbs.add(GSZB.ZZYSXFYL231.getValue());
+		defaultZbs.add(GSZB.GC_XSYWSXFYL232.getValue());
+		defaultZbs.add(GSZB.WLMYSXFYL233.getValue());
 	};
 
 	static {
-		calculatedZbs2016After.add(GSZB.RJSR63.getValue());
-		calculatedZbs2016After.add(GSZB.RJLR62.getValue());
-		calculatedZbs2016After.add(GSZB.SXFYL_65.getValue());
-		calculatedZbs2016After.add(GSZB.ZZYSXFYL231.getValue());
-		calculatedZbs2016After.add(GSZB.GC_XSYWSXFYL232.getValue());
-		calculatedZbs2016After.add(GSZB.WLMYSXFYL233.getValue());
+		jh2016Zbs.add(GSZB.RJSR63.getValue());
+		jh2016Zbs.add(GSZB.RJLR62.getValue());
+		jh2016Zbs.add(GSZB.SXFYL_65.getValue());
+		jh2016Zbs.add(GSZB.ZZYSXFYL231.getValue());
+		jh2016Zbs.add(GSZB.GC_XSYWSXFYL232.getValue());
+		jh2016Zbs.add(GSZB.WLMYSXFYL233.getValue());
 	};
 	
 	
 	public static Set<Integer> getJHCalculatedZbs(Calendar cal){
 		if (cal.get(Calendar.YEAR) >= 2016){
-			return calculatedZbs2016After;
+			return jh2016Zbs;
 		}
-		return calculatedZbs2016Before;
+		return defaultZbs;
 	}
 	
 	public static Set<Integer> getSJCalculatedZbs(){
-		return calculatedZbs2016Before;
+		return defaultZbs;
 	}
 	
 	public static RequestHandler<Request> getJHHandler(Calendar cal){
