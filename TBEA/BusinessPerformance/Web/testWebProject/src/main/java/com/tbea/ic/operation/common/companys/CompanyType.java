@@ -178,7 +178,9 @@ public enum CompanyType {
 	XBCZT			("新变厂整体"),
 	BYQCY			("变压器产业"),
 	XLCY			("线缆产业"),
-	UNKNOWN			("未知");
+	UNKNOWN			("未知"),
+	
+	RSGS			("柔输公司");
 	//TCNY_and_XJNY	("天池能源+新疆能源公司");
 	private String value;
 
