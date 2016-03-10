@@ -21,7 +21,9 @@ public class AccountServiceImpl implements  AccountService{
 	//OA
 	final static String OAUrl = "http://oagroup.tbea.com.cn/HQ/myportal/__ac0x3login/__tpaction?requestSource=HQ_login&ssousername=#UN#&ssopassword=#PW#";
 	//绩效管理信息平台 
-	final static String JXUrl = "http://192.168.7.12:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=#UN#&pass=#PW#";
+	final static String JXUrl = "http://172.28.8.147:8080/login.do?validate=login&ABS_SchemeName=jxkh&userId=#UN#&pass=#PW#";
+	//综合管理平台
+	final static String ZHGKUrl = "http://172.28.8.147:8080/login.do?validate=login&ABS_SchemeName=JGYY&userId=#UN#&pass=#PW#";
 	//jingyingguankong
 	final static String JYGKUrl = "http://192.168.7.22/BusinessManagement/Login/validate.do?j_username=#UN#&j_password=#PW#";
 	//zhihuiyinhang
@@ -84,6 +86,10 @@ public class AccountServiceImpl implements  AccountService{
 		}else if ("6".equals(sysId)){
 			account.setDocMName(name);
 			account.setDocMPassword(psw);
+			accountDao.merge(account);
+		}else if("8".equals(sysId)){
+			account.setZhglName(name);
+			account.setZhglPassword(psw);
 			accountDao.merge(account);
 		}else{
 			return false;
@@ -152,6 +158,11 @@ public class AccountServiceImpl implements  AccountService{
 			break;
 		case 7:
 			url = NCUrl;
+			break;
+		case 8:
+			if (account.getZhglName() != null && account.getZhglPassword() != null){
+				url = ZHGKUrl.replace("#UN#", account.getZhglName()).replace("#PW#", account.getZhglPassword());
+			}
 			break;
 		}
 		return url;

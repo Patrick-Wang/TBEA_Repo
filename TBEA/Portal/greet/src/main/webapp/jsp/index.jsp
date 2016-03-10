@@ -89,6 +89,13 @@
 							src="../images/login_icons_1.png"></a><span
 						class="login_list_bd highlight"
 						onclick="showBondPage(1,'${usrName}');">绑定用户</span></li>
+						
+					<li class="login_list_item login_list_item_1"><a
+						href="../account/get_login_url.do?sysId=8" target="_blank"> <span
+							class="highlight">综合管理平台</span><img
+							src="../images/login_icons_1.png"></a><span
+						class="login_list_bd highlight"
+						onclick="showBondPage(8,'${usrName}');">绑定用户</span></li>
 
 					<li class="login_list_item login_list_item_2"><a
 						href="../account/get_login_url.do?sysId=3" target="_blank"> <span
@@ -117,10 +124,6 @@
 						class="login_list_bd highlight"
 						onclick="showBondPage(6,'${usrName}');">绑定用户</span></li>
 
-					<li class="login_list_item login_list_item_7"><a
-						href="http://192.168.7.76/" target="_blank"> <span
-							class="highlight">人力资源系统</span><img
-							src="../images/login_icons_1.png"></a></li>
 				</ul>
 			</div>
 
@@ -129,6 +132,11 @@
 					<li class="login_list_item login_list_item_6"><a
 						target="_blank" href="http://192.168.7.20/"><span
 							class="highlight">财务系统</span><img
+							src="../images/login_icons_1.png"></a></li>
+					
+					<li class="login_list_item login_list_item_7"><a
+						href="http://192.168.7.76/" target="_blank"> <span
+							class="highlight">人力资源系统</span><img
 							src="../images/login_icons_1.png"></a></li>
 
 					<li class="login_list_item login_list_item_8"><a
@@ -148,15 +156,16 @@
 						target="_blank" href="http://172.28.8.71:7083"><span
 							class="highlight">教学教务系统</span><img
 							src="../images/login_icons_1.png"></a></li>
-					<li class="login_list_item login_list_item_12"><a
-						target="_blank" href="https://vd.tbea.com"><span
-							class="highlight">桌面虚拟化</span><img
-							src="../images/login_icons_1.png"></a></li>
+					
 				</ul>
 
 			</div>
 			<div class="login_list">
 				<ul id="login_list_sys">
+				<li class="login_list_item login_list_item_12"><a
+						target="_blank" href="https://vd.tbea.com"><span
+							class="highlight">桌面虚拟化</span><img
+							src="../images/login_icons_1.png"></a></li>
 					<li class="login_list_item login_list_item_13"><a
 						target="_blank" href="http://192.168.7.11/read_paper/node_853.htm"><span
 							class="highlight">特变电子报</span><img
@@ -181,9 +190,10 @@
 			<div style="margin-top: 30px">
 				<table>
 					<tr>
-						<td><img
-							src="${pageContext.request.contextPath}/images/point.png"></td>
-						<td style="margin-left: 10px"><span style="margin-left: 10px"><b>首次使用系统，点击绑定按钮，输入需要绑定系统相应的用户名和密码；下次点击此系统图标，可以直接进入</b></span></td>
+						<td><img src="${pageContext.request.contextPath}/images/point.png"></td>
+						<td style="margin-left: 10px">
+						<span style="margin-left: 10px"><b>首次使用系统，点击绑定按钮，输入需要绑定系统相应的用户名和密码；下次点击此系统图标，可以直接进入</b></span>
+						</td>
 					</tr>
 					<tr>
 						<td><img
