@@ -31,6 +31,7 @@ public class Connection {
 	}
 	
 	private void schedule(int delay) {
+		timer.cancel();
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
