@@ -1,4 +1,3 @@
-/// <reference path="util.ts" />
 var Util;
 (function (Util) {
     var MessageBox = (function () {
@@ -26,16 +25,12 @@ var Util;
                 easing: 'easeOutBack',
                 animation: 'top',
                 position: '10% auto',
-                //overlayColor : '#ccc',
                 overlayClose: true,
-                //overlayOpacity : .9,
                 on: 'click'
             });
-            //if (MessageBox.isMSIE) {
             $(window).resize(function () {
                 $("#self_tip").trigger('close');
             });
-            // }
         };
         MessageBox.selfOk = function () {
             MessageBox.promise.succeed();
@@ -73,8 +68,6 @@ var Util;
                 animation: 'top',
                 position: '10% auto',
                 overlayClose: false,
-                //overlayColor : '#ccc',
-                // overlayOpacity : .9,
                 close: '.close'
             });
             $(window).resize(function () {
@@ -84,6 +77,6 @@ var Util;
         };
         MessageBox.isMSIE = navigator.appName == "Microsoft Internet Explorer";
         return MessageBox;
-    })();
+    }());
     Util.MessageBox = MessageBox;
 })(Util || (Util = {}));

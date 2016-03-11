@@ -46,5 +46,20 @@ public class PersonServlet {
 		i = personService.queryPersonInfoPagesCount();
 		return String.valueOf(i).getBytes("utf-8");
 	}
+	
+	
+	@RequestMapping(value = "/queryByID.do")
+	public @ResponseBody byte[] queryPersonInfoByID(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		String id = request.getParameter("id");
+		List<Psn> psns;
+		String err = "error";
+		try {
+			psns = personService.queryPersonInfoById(id);
+		} catch (NumberFormatException e) {
+			return err.getBytes("utf-8");
+		}
+		return JSONArray.fromObject(psns).toString().getBytes("utf-8");
+	}
 }
  

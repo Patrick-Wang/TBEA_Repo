@@ -25,6 +25,9 @@ public class Psn {
 	@Column(name = "basgroupdef20")
 	String basgroupdef20;
 	
+	@Column(name = "basgroupdef18")
+	String basgroupdef18;
+	
 	@Column(name = "birthdate")
 	String birthdate;
 	
@@ -75,6 +78,14 @@ public class Psn {
 		this.basgroupdef20 = basgroupdef20;
 	}
 
+	public String getBasgroupdef18() {
+		return basgroupdef18;
+	}
+	
+	public void setBasgroupdef18(String basgroupdef18) {
+		this.basgroupdef18 = basgroupdef18;
+	}
+	
 	public String getBirthdate() {
 		return birthdate;
 	}

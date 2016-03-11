@@ -20,7 +20,7 @@ public class PsnDaoImpl implements PsnDao{
 	
 
 	public String getPsnNoByID(String id) {
-		Query q = manager.createQuery("from Psn where text = :id");
+		Query q = manager.createQuery("from Psn where ID = :id");
 		q.setParameter("id", id);
 		List<Psn> keys = q.getResultList();
 
@@ -53,7 +53,7 @@ public class PsnDaoImpl implements PsnDao{
 	
 
 	public List<Psn> getPsnsById(String id){
-		Query q = manager.createQuery("from Psn where text = :id");
+		Query q = manager.createQuery("from Psn where ID = :id");
 		q.setParameter("id", id);
 		List<Psn> keys = q.getResultList();
 

@@ -1,4 +1,3 @@
-/// <reference path="jqgrid/vector.ts" />
 var Util;
 (function (Util) {
     var DataNode = (function () {
@@ -10,7 +9,7 @@ var Util;
             this.parent = parent;
         };
         DataNode.prototype.append = function (node) {
-            if (isExist(node)) {
+            if (Util.isExist(node)) {
                 this.subNodes.push(node);
                 node.setParent(this);
             }
@@ -127,7 +126,7 @@ var Util;
             return retNodes;
         };
         return DataNode;
-    })();
+    }());
     Util.DataNode = DataNode;
     var UnitedSelector = (function () {
         function UnitedSelector(data, ctrlId, path) {
@@ -136,7 +135,7 @@ var Util;
             this.mRoot.appendAll(DataNode.valueOfAll(data));
             this.mCtrlId = ctrlId + "_unitedSelector";
             $("#" + ctrlId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
-            if (isExist(data) && this.mRoot.childCount() > 0) {
+            if (Util.isExist(data) && this.mRoot.childCount() > 0) {
                 this.update(path);
             }
         }
@@ -173,7 +172,7 @@ var Util;
             }
         };
         UnitedSelector.prototype.getDataNode = function (path, depth) {
-            if (!isExist(depth)) {
+            if (!Util.isExist(depth)) {
                 depth = path.length;
             }
             var node = this.mRoot;
@@ -212,14 +211,14 @@ var Util;
                     }
                     _this.update(path);
                 }
-                if (isExist(_this.mFnChange)) {
+                if (Util.isExist(_this.mFnChange)) {
                     _this.mFnChange(select, depth);
                 }
             });
         };
         UnitedSelector.prototype.updatePath = function (path) {
             var pos = 0;
-            if (isExist(path)) {
+            if (Util.isExist(path)) {
                 pos = path.length > this.mPath.length ? this.mPath.length : path.length;
                 for (var i = 0; i < pos; ++i) {
                     if (path[i] != this.mPath[i]) {
@@ -247,7 +246,7 @@ var Util;
             if (this.mRoot.childCount() > 0) {
                 var ctrlTr = $("#" + this.mCtrlId + " tr");
                 var start = 0;
-                if (isExist(path)) {
+                if (Util.isExist(path)) {
                     start = this.updatePath(path);
                 }
                 else {
@@ -258,6 +257,6 @@ var Util;
             }
         };
         return UnitedSelector;
-    })();
+    }());
     Util.UnitedSelector = UnitedSelector;
 })(Util || (Util = {}));
