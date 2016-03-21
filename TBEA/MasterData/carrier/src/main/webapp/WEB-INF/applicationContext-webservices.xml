@@ -35,5 +35,13 @@
 		</jaxws:serviceBean>
 	</jaxws:server>
 	
+	<bean id="personWebService" class="com.tbea.ic.carrier.controller.webservice.person.PersonWebServiceImpl" />
+	<jaxws:server id="webServicePsn"
+		serviceClass="com.tbea.ic.carrier.controller.webservice.person.PersonWebService" address="/PersonWebService">
+		<jaxws:serviceBean>
+			<ref bean="personWebService" />
+		</jaxws:serviceBean>
+	</jaxws:server>
+	
 	<context:component-scan base-package="com.tbea.ic.carrier.controller.webservice" />
 </beans>
