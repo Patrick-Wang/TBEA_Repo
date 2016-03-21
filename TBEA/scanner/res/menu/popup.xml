@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/special_topic"
+        android:title="专题"
+         android:layout_width="wrap_content"/>
+    <item
+        android:id="@+id/elite"
+        android:title="鼓励和帮助中国旅行者以"
+        android:layout_width="wrap_content"/>
+
+</menu>

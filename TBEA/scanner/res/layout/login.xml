@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/logintitle_left" >
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/logintitle_right" >
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/logintitle" >
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@pct/y3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@pct/y16"
+            android:layout_marginLeft="@pct/x3"
+            android:layout_marginRight="@pct/x3"
+            android:background="@drawable/loginarea"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingLeft="@pct/x4"
+            android:paddingRight="@pct/x4" >
+
+            <EditText
+                android:id="@+id/usrn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/usrname"
+                android:textColor="#000000"
+                android:textCursorDrawable="@null" />
+ 
+            <EditText
+                android:id="@+id/psw"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/psw"
+                android:inputType="textPassword"
+                android:textColor="#000000"
+                android:textCursorDrawable="@null" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="@pct/y8"
+            android:layout_marginLeft="@pct/x3"
+            android:layout_marginRight="@pct/x3"
+            android:layout_marginTop="@pct/y2"
+            android:background="@drawable/loginbutton"
+            android:gravity="center"
+            android:text="@string/login"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <include layout="@layout/bottombar" >
+    </include>
+
+</LinearLayout>
