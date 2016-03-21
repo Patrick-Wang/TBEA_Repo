@@ -1,22 +1,50 @@
 package com.tbea.ic.carrier.model.entity;
 
-public class Psn {
-	
-	String psnname = "";
-	
-	String sex = "";
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	String mobile = "";
+@Entity
+@Table(name = "BD_PSNBASDOC")
+public class PsnGF extends Psn {
 	
-	String psnNo = "";
+	@Id
+	@Column(name = "id")
+	String id;
+
+	@Column(name = "psnname")
+	String psnname;
 	
-	String psnSSO = "";
+	@Column(name = "sex")
+	String sex;
+
+	@Column(name = "mobile")
+	String mobile;
 	
-	String birthdate = "";
+	@Column(name = "basgroupdef20")
+	String psnNo;
 	
-	String addr = "";
+	@Column(name = "basgroupdef18")
+	String psnSSO;
 	
-	String pk_corp = "";
+	@Column(name = "birthdate")
+	String birthdate;
+	
+	@Column(name = "addr")
+	String addr;
+	
+	@Column(name = "pk_corp")
+	String pk_corp;
+
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getPsnname() {
 		return psnname;
@@ -81,6 +109,4 @@ public class Psn {
 	public void setPk_corp(String pk_corp) {
 		this.pk_corp = pk_corp;
 	}
-
-	
 }

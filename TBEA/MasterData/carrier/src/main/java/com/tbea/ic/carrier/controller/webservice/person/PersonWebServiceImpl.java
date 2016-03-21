@@ -31,5 +31,8 @@ public class PersonWebServiceImpl implements PersonWebService {
 	public String queryPersonNoById(String id) {
 		return personService.queryPersonNoById(id);
 	}
-	   
+	
+	public String queryPersonSSOById(String id) {
+		return personService.queryPersonSSOById(id);
+	}
 } 

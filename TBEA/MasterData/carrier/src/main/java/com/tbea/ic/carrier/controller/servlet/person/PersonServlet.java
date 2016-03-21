@@ -48,7 +48,7 @@ public class PersonServlet {
 	}
 	
 	
-	@RequestMapping(value = "/queryByID.do")
+	@RequestMapping(value = "/queryPsnInfoByID.do")
 	public @ResponseBody byte[] queryPersonInfoByID(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		String id = request.getParameter("id");
@@ -60,6 +60,42 @@ public class PersonServlet {
 			return err.getBytes("utf-8");
 		}
 		return JSONArray.fromObject(psns).toString().getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "/queryPsnNoByID.do")
+	public @ResponseBody byte[] queryPsnNoByID(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		String id = request.getParameter("id");
+		String psnNo = "";
+		String err = "error";
+		try {
+			psnNo = personService.queryPersonNoById(id);
+		} catch (NumberFormatException e) {
+			return err.getBytes("utf-8");
+		}
+		
+		if (psnNo == null || psnNo.isEmpty()) {
+			psnNo = "no result";
+		}
+		return psnNo.getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "/queryPsnSSOByID.do")
+	public @ResponseBody byte[] queryPsnSSOByID(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		String id = request.getParameter("id");
+		String psnSSO = "";
+		String err = "error";
+		try {
+			psnSSO = personService.queryPersonSSOById(id);
+		} catch (NumberFormatException e) {
+			return err.getBytes("utf-8");
+		}
+		
+		if (psnSSO == null || psnSSO.isEmpty()) {
+			psnSSO = "no result";
+		}
+		return psnSSO.getBytes("utf-8");
 	}
 }
  

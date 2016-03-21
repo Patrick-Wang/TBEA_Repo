@@ -16,4 +16,6 @@ public interface PersonWebService {
 	public List<Psn> queryPersonInfoById(String id);
 
 	public String queryPersonNoById(String id);
+	
+	public String queryPersonSSOById(String id);
 }  

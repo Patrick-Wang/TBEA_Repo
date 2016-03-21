@@ -6,8 +6,14 @@
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 		
 	<Resource name="jdbc/master_data_psn_db" auth="Container" type="javax.sql.DataSource"
-		username="nc0120" password="1" driverClassName="oracle.jdbc.driver.OracleDriver"
-		url="jdbc:oracle:thin:@192.168.7.75:1521:orcl"
+		username="TBEAHR" password="TBEAHR" driverClassName="oracle.jdbc.driver.OracleDriver"
+		url="jdbc:oracle:thin:@dm01-scan.tbea.com.cn:1521:tbea1"
+		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1 from dual"
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
+
+	<Resource name="jdbc/master_data_psn_jt_db" auth="Container"
+		type="javax.sql.DataSource" username="TBEAHRJT" password="TBEAHRJT"
+		driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@dm01-scan.tbea.com.cn:1521:tbea1"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1 from dual"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 </Context>

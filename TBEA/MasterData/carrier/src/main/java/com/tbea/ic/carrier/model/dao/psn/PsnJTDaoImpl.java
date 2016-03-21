@@ -12,17 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.carrier.model.entity.Psn;
 
 @Repository
-@Transactional("transactionManager_psn")
-public class PsnDaoImpl implements PsnDao{
+@Transactional("transactionManager_psn_jt")
+public class PsnJTDaoImpl implements PsnJTDao{
 
-	@PersistenceContext(unitName = "localDB_psn")
+	@PersistenceContext(unitName = "localDB_psn_jt")
 	EntityManager manager;
 	
 
 	public String getPsnNoByID(String id) {
 		String result = "";
-
-		Query q = manager.createQuery("from PsnGF where ID = :id");
+		
+		Query q = manager.createQuery("from PsnJT where ID = :id");
 		q.setParameter("id", id);
 		List<Psn> keys = q.getResultList();
 
@@ -31,35 +31,35 @@ public class PsnDaoImpl implements PsnDao{
 		} else {
 			result = keys.get(0).getPsnNo();
 		}
-
+		
 		return result;
 	}
-	
+
 	public String getPsnSSOByID(String id) {
 		String result = "";
 		
-		Query q = manager.createQuery("from PsnGF where ID = :id");
+		Query q = manager.createQuery("from PsnJT where ID = :id");
 		q.setParameter("id", id);
 		List<Psn> keys = q.getResultList();
-		
+
 		if (keys.isEmpty()) {
 			result = "";
 		} else {
 			result = keys.get(0).getPsnSSO();
 		}
-
+		
 		return result;
 	}
-
+	
 	public List<Psn> getPsns(int pageIndex) {
-		Query q = manager.createQuery("from PsnGF");
+		Query q = manager.createQuery("from PsnJT");
 		q.setFirstResult(pageIndex);
 		q.setMaxResults(200);
 		return q.getResultList();
 	}
 	
 	public int getPsnPagesCount(){
-		Query q = manager.createQuery("select count(*) from PsnGF");
+		Query q = manager.createQuery("select count(*) from PsnJT");
 		
 		int count = Integer.parseInt(q.getResultList().get(0).toString());
 		
@@ -77,7 +77,7 @@ public class PsnDaoImpl implements PsnDao{
 	
 
 	public List<Psn> getPsnsById(String id){
-		Query q = manager.createQuery("from PsnGF where ID = :id");
+		Query q = manager.createQuery("from PsnJT where ID = :id");
 		q.setParameter("id", id);
 		List<Psn> keys = q.getResultList();
 
