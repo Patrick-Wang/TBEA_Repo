@@ -1,0 +1,923 @@
+
+footer {
+	display: block;
+}
+article {
+	DISPLAY: block
+}
+aside {
+	DISPLAY: block
+}
+dialog {
+	DISPLAY: block
+}
+figcaption {
+	DISPLAY: block
+}
+figure {
+	DISPLAY: block
+}
+footer {
+	DISPLAY: block
+}
+header {
+	DISPLAY: block
+}
+hgroup {
+	DISPLAY: block
+}
+main {
+	DISPLAY: block
+}
+nav {
+	DISPLAY: block
+}
+section {
+	DISPLAY: block
+}
+mark {
+	BACKGROUND: #ff0; COLOR: #000
+}
+template {
+	DISPLAY: none
+}
+
+.jumbotron {
+	PADDING-BOTTOM: 48px; PADDING-TOP: 48px
+}
+.container .jumbotron {
+	PADDING-LEFT: 60px; PADDING-RIGHT: 60px
+}
+.jumbotron H1 {
+	FONT-SIZE: 63px
+}
+.jumbotron .h1 {
+	FONT-SIZE: 63px
+}
+.carousel-control .glyphicon-chevron-left {
+	MARGIN-TOP: -15px; WIDTH: 30px; HEIGHT: 30px; MARGIN-LEFT: -15px; FONT-SIZE: 30px
+}
+.carousel-control .glyphicon-chevron-right {
+	MARGIN-TOP: -15px; WIDTH: 30px; HEIGHT: 30px; MARGIN-LEFT: -15px; FONT-SIZE: 30px
+}
+.carousel-control .icon-prev {
+	MARGIN-TOP: -15px; WIDTH: 30px; HEIGHT: 30px; MARGIN-LEFT: -15px; FONT-SIZE: 30px
+}
+.carousel-control .icon-next {
+	MARGIN-TOP: -15px; WIDTH: 30px; HEIGHT: 30px; MARGIN-LEFT: -15px; FONT-SIZE: 30px
+}
+.carousel-caption {
+	PADDING-BOTTOM: 30px; RIGHT: 20%; LEFT: 20%
+}
+.carousel-indicators {
+	BOTTOM: 20px
+}
+
+
+.lead {
+	FONT-SIZE: 21px
+}
+.dl-horizontal DT {
+	TEXT-ALIGN: right; WIDTH: 160px; TEXT-OVERFLOW: ellipsis; WHITE-SPACE: nowrap; FLOAT: left; CLEAR: left; OVERFLOW: hidden
+}
+.dl-horizontal DD {
+	MARGIN-LEFT: 180px
+}
+.container {
+	WIDTH: 750px
+}
+.container {
+	WIDTH: 970px
+}
+.container {
+	WIDTH: 1170px
+}
+.col-sm-1 {
+	FLOAT: left
+}
+.col-sm-2 {
+	FLOAT: left
+}
+.col-sm-3 {
+	FLOAT: left
+}
+.col-sm-4 {
+	FLOAT: left
+}
+.col-sm-5 {
+	FLOAT: left
+}
+.col-sm-6 {
+	FLOAT: left
+}
+.col-sm-7 {
+	FLOAT: left
+}
+.col-sm-8 {
+	FLOAT: left
+}
+.col-sm-9 {
+	FLOAT: left
+}
+.col-sm-10 {
+	FLOAT: left
+}
+.col-sm-11 {
+	FLOAT: left
+}
+.col-sm-12 {
+	FLOAT: left
+}
+.col-sm-12 {
+	WIDTH: 100%
+}
+.col-sm-11 {
+	WIDTH: 91.66%
+}
+.col-sm-10 {
+	WIDTH: 83.33%
+}
+.col-sm-9 {
+	WIDTH: 75%
+}
+.col-sm-8 {
+	WIDTH: 66.66%
+}
+.col-sm-7 {
+	WIDTH: 58.33%
+}
+.col-sm-6 {
+	WIDTH: 50%
+}
+.col-sm-5 {
+	WIDTH: 41.66%
+}
+.col-sm-4 {
+	WIDTH: 33.33%
+}
+.col-sm-3 {
+	WIDTH: 25%
+}
+.col-sm-2 {
+	WIDTH: 16.66%
+}
+.col-sm-1 {
+	WIDTH: 8.33%
+}
+.col-sm-pull-12 {
+	RIGHT: 100%
+}
+.col-sm-pull-11 {
+	RIGHT: 91.66%
+}
+.col-sm-pull-10 {
+	RIGHT: 83.33%
+}
+.col-sm-pull-9 {
+	RIGHT: 75%
+}
+.col-sm-pull-8 {
+	RIGHT: 66.66%
+}
+.col-sm-pull-7 {
+	RIGHT: 58.33%
+}
+.col-sm-pull-6 {
+	RIGHT: 50%
+}
+.col-sm-pull-5 {
+	RIGHT: 41.66%
+}
+.col-sm-pull-4 {
+	RIGHT: 33.33%
+}
+.col-sm-pull-3 {
+	RIGHT: 25%
+}
+.col-sm-pull-2 {
+	RIGHT: 16.66%
+}
+.col-sm-pull-1 {
+	RIGHT: 8.33%
+}
+.col-sm-pull-0 {
+	RIGHT: 0px
+}
+.col-sm-push-12 {
+	LEFT: 100%
+}
+.col-sm-push-11 {
+	LEFT: 91.66%
+}
+.col-sm-push-10 {
+	LEFT: 83.33%
+}
+.col-sm-push-9 {
+	LEFT: 75%
+}
+.col-sm-push-8 {
+	LEFT: 66.66%
+}
+.col-sm-push-7 {
+	LEFT: 58.33%
+}
+.col-sm-push-6 {
+	LEFT: 50%
+}
+.col-sm-push-5 {
+	LEFT: 41.66%
+}
+.col-sm-push-4 {
+	LEFT: 33.33%
+}
+.col-sm-push-3 {
+	LEFT: 25%
+}
+.col-sm-push-2 {
+	LEFT: 16.66%
+}
+.col-sm-push-1 {
+	LEFT: 8.33%
+}
+.col-sm-push-0 {
+	LEFT: 0px
+}
+.col-sm-offset-12 {
+	MARGIN-LEFT: 100%
+}
+.col-sm-offset-11 {
+	MARGIN-LEFT: 91.66%
+}
+.col-sm-offset-10 {
+	MARGIN-LEFT: 83.33%
+}
+.col-sm-offset-9 {
+	MARGIN-LEFT: 75%
+}
+.col-sm-offset-8 {
+	MARGIN-LEFT: 66.66%
+}
+.col-sm-offset-7 {
+	MARGIN-LEFT: 58.33%
+}
+.col-sm-offset-6 {
+	MARGIN-LEFT: 50%
+}
+.col-sm-offset-5 {
+	MARGIN-LEFT: 41.66%
+}
+.col-sm-offset-4 {
+	MARGIN-LEFT: 33.33%
+}
+.col-sm-offset-3 {
+	MARGIN-LEFT: 25%
+}
+.col-sm-offset-2 {
+	MARGIN-LEFT: 16.66%
+}
+.col-sm-offset-1 {
+	MARGIN-LEFT: 8.33%
+}
+.col-sm-offset-0 {
+	MARGIN-LEFT: 0px
+}
+.col-md-1 {
+	FLOAT: left
+}
+.col-md-2 {
+	FLOAT: left
+}
+.col-md-3 {
+	FLOAT: left
+}
+.col-md-4 {
+	FLOAT: left
+}
+.col-md-5 {
+	FLOAT: left
+}
+.col-md-6 {
+	FLOAT: left
+}
+.col-md-7 {
+	FLOAT: left
+}
+.col-md-8 {
+	FLOAT: left
+}
+.col-md-9 {
+	FLOAT: left
+}
+.col-md-10 {
+	FLOAT: left
+}
+.col-md-11 {
+	FLOAT: left
+}
+.col-md-12 {
+	FLOAT: left
+}
+.col-md-12 {
+	WIDTH: 100%
+}
+.col-md-11 {
+	WIDTH: 91.66%
+}
+.col-md-10 {
+	WIDTH: 83.33%
+}
+.col-md-9 {
+	WIDTH: 75%
+}
+.col-md-8 {
+	WIDTH: 66.66%
+}
+.col-md-7 {
+	WIDTH: 58.33%
+}
+.col-md-6 {
+	WIDTH: 50%
+}
+.col-md-5 {
+	WIDTH: 41.66%
+}
+.col-md-4 {
+	WIDTH: 33.33%
+}
+.col-md-3 {
+	WIDTH: 25%
+}
+.col-md-2 {
+	WIDTH: 16.66%
+}
+.col-md-1 {
+	WIDTH: 8.33%
+}
+.col-md-pull-12 {
+	RIGHT: 100%
+}
+.col-md-pull-11 {
+	RIGHT: 91.66%
+}
+.col-md-pull-10 {
+	RIGHT: 83.33%
+}
+.col-md-pull-9 {
+	RIGHT: 75%
+}
+.col-md-pull-8 {
+	RIGHT: 66.66%
+}
+.col-md-pull-7 {
+	RIGHT: 58.33%
+}
+.col-md-pull-6 {
+	RIGHT: 50%
+}
+.col-md-pull-5 {
+	RIGHT: 41.66%
+}
+.col-md-pull-4 {
+	RIGHT: 33.33%
+}
+.col-md-pull-3 {
+	RIGHT: 25%
+}
+.col-md-pull-2 {
+	RIGHT: 16.66%
+}
+.col-md-pull-1 {
+	RIGHT: 8.33%
+}
+.col-md-pull-0 {
+	RIGHT: 0px
+}
+.col-md-push-12 {
+	LEFT: 100%
+}
+.col-md-push-11 {
+	LEFT: 91.66%
+}
+.col-md-push-10 {
+	LEFT: 83.33%
+}
+.col-md-push-9 {
+	LEFT: 75%
+}
+.col-md-push-8 {
+	LEFT: 66.66%
+}
+.col-md-push-7 {
+	LEFT: 58.33%
+}
+.col-md-push-6 {
+	LEFT: 50%
+}
+.col-md-push-5 {
+	LEFT: 41.66%
+}
+.col-md-push-4 {
+	LEFT: 33.33%
+}
+.col-md-push-3 {
+	LEFT: 25%
+}
+.col-md-push-2 {
+	LEFT: 16.66%
+}
+.col-md-push-1 {
+	LEFT: 8.33%
+}
+.col-md-push-0 {
+	LEFT: 0px
+}
+.col-md-offset-12 {
+	MARGIN-LEFT: 100%
+}
+.col-md-offset-11 {
+	MARGIN-LEFT: 91.66%
+}
+.col-md-offset-10 {
+	MARGIN-LEFT: 83.33%
+}
+.col-md-offset-9 {
+	MARGIN-LEFT: 75%
+}
+.col-md-offset-8 {
+	MARGIN-LEFT: 66.66%
+}
+.col-md-offset-7 {
+	MARGIN-LEFT: 58.33%
+}
+.col-md-offset-6 {
+	MARGIN-LEFT: 50%
+}
+.col-md-offset-5 {
+	MARGIN-LEFT: 41.66%
+}
+.col-md-offset-4 {
+	MARGIN-LEFT: 33.33%
+}
+.col-md-offset-3 {
+	MARGIN-LEFT: 25%
+}
+.col-md-offset-2 {
+	MARGIN-LEFT: 16.66%
+}
+.col-md-offset-1 {
+	MARGIN-LEFT: 8.33%
+}
+.col-md-offset-0 {
+	MARGIN-LEFT: 0px
+}
+.col-lg-1 {
+	FLOAT: left
+}
+.col-lg-2 {
+	FLOAT: left
+}
+.col-lg-3 {
+	FLOAT: left
+}
+.col-lg-4 {
+	FLOAT: left
+}
+.col-lg-5 {
+	FLOAT: left
+}
+.col-lg-6 {
+	FLOAT: left
+}
+.col-lg-7 {
+	FLOAT: left
+}
+.col-lg-8 {
+	FLOAT: left
+}
+.col-lg-9 {
+	FLOAT: left
+}
+.col-lg-10 {
+	FLOAT: left
+}
+.col-lg-11 {
+	FLOAT: left
+}
+.col-lg-12 {
+	FLOAT: left
+}
+.col-lg-12 {
+	WIDTH: 100%
+}
+.col-lg-11 {
+	WIDTH: 91.66%
+}
+.col-lg-10 {
+	WIDTH: 83.33%
+}
+.col-lg-9 {
+	WIDTH: 75%
+}
+.col-lg-8 {
+	WIDTH: 66.66%
+}
+.col-lg-7 {
+	WIDTH: 58.33%
+}
+.col-lg-6 {
+	WIDTH: 50%
+}
+.col-lg-5 {
+	WIDTH: 41.66%
+}
+.col-lg-4 {
+	WIDTH: 33.33%
+}
+.col-lg-3 {
+	WIDTH: 25%
+}
+.col-lg-2 {
+	WIDTH: 16.66%
+}
+.col-lg-1 {
+	WIDTH: 8.33%
+}
+.col-lg-pull-12 {
+	RIGHT: 100%
+}
+.col-lg-pull-11 {
+	RIGHT: 91.66%
+}
+.col-lg-pull-10 {
+	RIGHT: 83.33%
+}
+.col-lg-pull-9 {
+	RIGHT: 75%
+}
+.col-lg-pull-8 {
+	RIGHT: 66.66%
+}
+.col-lg-pull-7 {
+	RIGHT: 58.33%
+}
+.col-lg-pull-6 {
+	RIGHT: 50%
+}
+.col-lg-pull-5 {
+	RIGHT: 41.66%
+}
+.col-lg-pull-4 {
+	RIGHT: 33.33%
+}
+.col-lg-pull-3 {
+	RIGHT: 25%
+}
+.col-lg-pull-2 {
+	RIGHT: 16.66%
+}
+.col-lg-pull-1 {
+	RIGHT: 8.33%
+}
+.col-lg-pull-0 {
+	RIGHT: 0px
+}
+.col-lg-push-12 {
+	LEFT: 100%
+}
+.col-lg-push-11 {
+	LEFT: 91.66%
+}
+.col-lg-push-10 {
+	LEFT: 83.33%
+}
+.col-lg-push-9 {
+	LEFT: 75%
+}
+.col-lg-push-8 {
+	LEFT: 66.66%
+}
+.col-lg-push-7 {
+	LEFT: 58.33%
+}
+.col-lg-push-6 {
+	LEFT: 50%
+}
+.col-lg-push-5 {
+	LEFT: 41.66%
+}
+.col-lg-push-4 {
+	LEFT: 33.33%
+}
+.col-lg-push-3 {
+	LEFT: 25%
+}
+.col-lg-push-2 {
+	LEFT: 16.66%
+}
+.col-lg-push-1 {
+	LEFT: 8.33%
+}
+.col-lg-push-0 {
+	LEFT: 0px
+}
+.col-lg-offset-12 {
+	MARGIN-LEFT: 100%
+}
+.col-lg-offset-11 {
+	MARGIN-LEFT: 91.66%
+}
+.col-lg-offset-10 {
+	MARGIN-LEFT: 83.33%
+}
+.col-lg-offset-9 {
+	MARGIN-LEFT: 75%
+}
+.col-lg-offset-8 {
+	MARGIN-LEFT: 66.66%
+}
+.col-lg-offset-7 {
+	MARGIN-LEFT: 58.33%
+}
+.col-lg-offset-6 {
+	MARGIN-LEFT: 50%
+}
+.col-lg-offset-5 {
+	MARGIN-LEFT: 41.66%
+}
+.col-lg-offset-4 {
+	MARGIN-LEFT: 33.33%
+}
+.col-lg-offset-3 {
+	MARGIN-LEFT: 25%
+}
+.col-lg-offset-2 {
+	MARGIN-LEFT: 16.66%
+}
+.col-lg-offset-1 {
+	MARGIN-LEFT: 8.33%
+}
+.col-lg-offset-0 {
+	MARGIN-LEFT: 0px
+}
+.form-inline .form-group {
+	DISPLAY: inline-block; MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.form-inline .form-control {
+	WIDTH: auto; DISPLAY: inline-block; VERTICAL-ALIGN: middle
+}
+.form-inline .input-group > .form-control {
+	WIDTH: 100%
+}
+.form-inline .control-label {
+	MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.form-inline .radio {
+	MARGIN-TOP: 0px; PADDING-LEFT: 0px; DISPLAY: inline-block; MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.form-inline .checkbox {
+	MARGIN-TOP: 0px; PADDING-LEFT: 0px; DISPLAY: inline-block; MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.form-inline .radio INPUT[type='radio'] {
+	FLOAT: none; MARGIN-LEFT: 0px
+}
+.form-inline .checkbox INPUT[type='checkbox'] {
+	FLOAT: none; MARGIN-LEFT: 0px
+}
+.form-inline .has-feedback .form-control-feedback {
+	TOP: 0px
+}
+.form-horizontal .control-label {
+	TEXT-ALIGN: right
+}
+.navbar-right .dropdown-menu {
+	RIGHT: 0px; LEFT: auto
+}
+.navbar-right .dropdown-menu-left {
+	RIGHT: auto; LEFT: 0px
+}
+.nav-justified.nav-tabs > LI {
+	WIDTH: 1%; DISPLAY: table-cell
+}
+.nav-justified.nav-tabs > LI > A {
+	MARGIN-BOTTOM: 0px
+}
+.nav-justified.nav-tabs > LI > A {
+	BORDER-BOTTOM: #ddd 1px solid; border-radius: 4px 4px 0 0
+}
+.nav-justified.nav-tabs > .active > A {
+	BORDER-BOTTOM-COLOR: #fff
+}
+.nav-justified.nav-tabs > .active > A:hover {
+	BORDER-BOTTOM-COLOR: #fff
+}
+.nav-justified.nav-tabs > .active > A:focus {
+	BORDER-BOTTOM-COLOR: #fff
+}
+.nav-justified > LI {
+	WIDTH: 1%; DISPLAY: table-cell
+}
+.nav-justified > LI > A {
+	MARGIN-BOTTOM: 0px
+}
+.nav-tabs-justified > LI > A {
+	BORDER-BOTTOM: #ddd 1px solid; border-radius: 4px 4px 0 0
+}
+.nav-tabs-justified > .active > A {
+	BORDER-BOTTOM-COLOR: #fff
+}
+.nav-tabs-justified > .active > A:hover {
+	BORDER-BOTTOM-COLOR: #fff
+}
+.nav-tabs-justified > .active > A:focus {
+	BORDER-BOTTOM-COLOR: #fff
+}
+.navbar {
+	border-radius: 4px
+}
+.navbar-header {
+	FLOAT: left
+}
+.navbar-collapse {
+	WIDTH: auto; BORDER-TOP: 0px; box-shadow: none
+}
+.collapse.navbar-collapse {
+	PADDING-BOTTOM: 0px; DISPLAY: block !important; HEIGHT: auto !important; OVERFLOW: visible !important
+}
+.in.navbar-collapse {
+	OVERFLOW-Y: visible
+}
+.navbar-fixed-top .navbar-collapse {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.navbar-static-top .navbar-collapse {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.navbar-fixed-bottom .navbar-collapse {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.container > .navbar-header {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px
+}
+.container-fluid > .navbar-header {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px
+}
+.container > .navbar-collapse {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px
+}
+.container-fluid > .navbar-collapse {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px
+}
+.navbar-static-top {
+	border-radius: 0
+}
+.navbar-fixed-top {
+	border-radius: 0
+}
+.navbar-fixed-bottom {
+	border-radius: 0
+}
+.navbar > .container .navbar-brand {
+	MARGIN-LEFT: -15px
+}
+.navbar > .container-fluid .navbar-brand {
+	MARGIN-LEFT: -15px
+}
+.navbar-toggle {
+	DISPLAY: none
+}
+.navbar-nav {
+	MARGIN: 0px; FLOAT: left
+}
+.navbar-nav > LI {
+	FLOAT: left
+}
+.navbar-nav > LI > A {
+	PADDING-BOTTOM: 15px; PADDING-TOP: 15px
+}
+.navbar-left {
+	FLOAT: left !important
+}
+.navbar-right {
+	FLOAT: right !important
+}
+.navbar-form .form-group {
+	DISPLAY: inline-block; MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.navbar-form .form-control {
+	WIDTH: auto; DISPLAY: inline-block; VERTICAL-ALIGN: middle
+}
+.navbar-form .input-group > .form-control {
+	WIDTH: 100%
+}
+.navbar-form .control-label {
+	MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.navbar-form .radio {
+	MARGIN-TOP: 0px; PADDING-LEFT: 0px; DISPLAY: inline-block; MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.navbar-form .checkbox {
+	MARGIN-TOP: 0px; PADDING-LEFT: 0px; DISPLAY: inline-block; MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle
+}
+.navbar-form .radio INPUT[type='radio'] {
+	FLOAT: none; MARGIN-LEFT: 0px
+}
+.navbar-form .checkbox INPUT[type='checkbox'] {
+	FLOAT: none; MARGIN-LEFT: 0px
+}
+.navbar-form .has-feedback .form-control-feedback {
+	TOP: 0px
+}
+.navbar-form {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: auto; MARGIN-LEFT: 0px; BORDER-TOP: 0px; MARGIN-RIGHT: 0px; BORDER-RIGHT: 0px; PADDING-TOP: 0px; box-shadow: none; -webkit-box-shadow: none
+}
+.navbar-text {
+	FLOAT: left; MARGIN-LEFT: 15px; MARGIN-RIGHT: 15px
+}
+.modal-dialog {
+	MARGIN: 30px auto; WIDTH: 600px
+}
+.modal-content {
+	box-shadow: 0 5px 15px rgba(0, 0, 0, .5); -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5)
+}
+.modal-sm {
+	WIDTH: 300px
+}
+.modal-lg {
+	WIDTH: 900px
+}
+.visible-lg {
+	DISPLAY: block !important
+}
+TABLE.visible-lg {
+	DISPLAY: table
+}
+TR.visible-lg {
+	DISPLAY: table-row !important
+}
+TH.visible-lg {
+	DISPLAY: table-cell !important
+}
+TD.visible-lg {
+	DISPLAY: table-cell !important
+}
+.hidden-lg {
+	DISPLAY: none !important
+}
+.marketing {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.navbar-wrapper {
+	MARGIN-TOP: 20px
+}
+.navbar-wrapper .container {
+	PADDING-LEFT: 15px; PADDING-RIGHT: 15px
+}
+.navbar-wrapper .navbar {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.navbar-wrapper .navbar {
+	border-radius: 4px
+}
+.carousel-caption P {
+	LINE-HEIGHT: 1.4; MARGIN-BOTTOM: 20px; FONT-SIZE: 21px
+}
+.featurette-heading {
+	FONT-SIZE: 50px
+}
+.featurette-heading {
+	MARGIN-TOP: 120px
+}
+
+.affix {
+	WIDTH: 160px
+}
+.affix LI {
+	LINE-HEIGHT: 35px; LIST-STYLE-TYPE: none; HEIGHT: 35px; VERTICAL-ALIGN: middle
+}
+UL.slides LI {
+	BORDER-BOTTOM: #ccc 0px solid; POSITION: relative; BORDER-LEFT: #ccc 0px solid; LIST-STYLE-TYPE: none; MARGIN: 15px 0px; WIDTH: 25%; FLOAT: left; OVERFLOW: hidden; BORDER-TOP: #ccc 0px solid; BORDER-RIGHT: #ccc 0px solid
+}
+UL.slides LI A {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: block; PADDING-TOP: 5px
+}
+UL.slides LI A STRONG {
+	COLOR: #1e90ff; FONT-SIZE: 15px
+}
+UL.slides LI A:hover {
+	BACKGROUND-COLOR: #eee; TEXT-DECORATION: none
+}
+UL.slides LI IMG {
+	WIDTH: 13%
+}
+UL.slides LI SPAN {
+	WIDTH: 75%; DISPLAY: inline-block; COLOR: #666; VERTICAL-ALIGN: middle
+}
+.col-md-10 H3 {
+	BORDER-BOTTOM: #ccc 1px solid; PADDING-BOTTOM: 10px; MARGIN: 10px 0px; CLEAR: both
+}
+.col-md-10 H3 A {
+	DISPLAY: inline-block; PADDING-TOP: 63px
+}
+#chartsTypeNav UL LI {
+	PADDING-LEFT: 10px; -webkit-transition: background-color 0.3s; transition: background-color 0.3s; -moz-transition: background-color 0.3s; -o-transition: background-color 0.3s
+}

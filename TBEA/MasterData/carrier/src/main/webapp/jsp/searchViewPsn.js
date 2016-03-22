@@ -28,7 +28,7 @@ var searchView;
     
     var View = (function () {
         function View() {
-            this.mDataSet = new Util.Ajax("../psn/queryByID.do");
+            this.mDataSet = new Util.Ajax("../psn/queryPsnInfoByID.do");
         }
         View.getInstance = function () {
             return View.instance;

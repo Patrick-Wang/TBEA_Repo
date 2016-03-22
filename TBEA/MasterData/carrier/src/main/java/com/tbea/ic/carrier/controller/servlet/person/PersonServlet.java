@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.carrier.model.entity.Psn;
 import com.tbea.ic.carrier.service.person.PersonService;
@@ -24,6 +25,12 @@ public class PersonServlet {
 	@Autowired
 	PersonService personService;
 		
+	
+	@RequestMapping(value = "/search.do")
+	public ModelAndView getSearchView(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
+		return new ModelAndView("searchViewPsn");
+	}
+	
 	@RequestMapping(value = "/queryAll.do")
 	public @ResponseBody byte[] queryAll(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=8">
-<title>特变电工经营管控信息平台</title>
+<title>特变电工主数据管理平台</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
 
 <link rel="stylesheet" type="text/css"
@@ -57,7 +57,7 @@
 		<div style="height: 80px;"></div>
 		<div class="title" style="text-align: center;">
 			<h1 style="color: #170A69; font-size: 300%">
-				<b>特变电工经营管控信息平台</b>
+				<b>特变电工主数据管理平台</b>
 			</h1>
 		</div>
 
@@ -110,7 +110,7 @@
 				</table>
 			</div>
 			<br /> <br /> <br />
-			<div>&copy;2015 信息资源管理中心版权所有</div>
+			<div>&copy;2016 信息资源管理中心版权所有</div>
 		</div>
 	</div>
 
