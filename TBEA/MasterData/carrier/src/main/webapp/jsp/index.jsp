@@ -21,7 +21,7 @@
 	document.createElement("footer");
 </script>
 
-<link rel="shortcut icon" href="../images/logo.png">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/logo.png">
 
 <!--
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -29,11 +29,11 @@
     <link href="http://echarts.baidu.com/doc/asset/css/carousel.css" rel="stylesheet">
     <link href="http://echarts.baidu.com/doc/asset/css/echartsHome.css" rel="stylesheet">
 -->
-<link href="../css/font-awesome.min.css" rel="stylesheet">
-<link href="../css/bootstrap.css" rel="stylesheet">
-<link href="../css/carousel.css" rel="stylesheet">
-<link href="../css/echartsHome.css" rel="stylesheet">
-<link href="../css/index.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/carousel.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/echartsHome.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/index.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -46,10 +46,10 @@
 <META name=viewport content="width=device-width, initial-scale=1.0">
 <META name=description content=ECharts>
 <META name=author content="">
-<LINK rel=stylesheet href="../css/font-awesome.min.css">
-<LINK rel=stylesheet href="../css/bootstrap.css">
-<LINK rel=stylesheet href="../css/carousel.css">
-<LINK rel=stylesheet href="../css/echartsHome.css">
+<LINK rel=stylesheet href="${pageContext.request.contextPath}/css/font-awesome.min.css">
+<LINK rel=stylesheet href="${pageContext.request.contextPath}/css/bootstrap.css">
+<LINK rel=stylesheet href="${pageContext.request.contextPath}/css/carousel.css">
+<LINK rel=stylesheet href="${pageContext.request.contextPath}/css/echartsHome.css">
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 </head>
 
@@ -99,12 +99,12 @@
 	<!-- Le javascript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script type="text/javascript" src="../js/jquery.min.js"></script>
-	<script type="text/javascript" src="../js/index.js"></script>
-	<script type="text/javascript" src="../js/h.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
-	<script src="../jsp/json2.js" type="text/javascript"></script>
-	<script src="../jsp/util.js" type="text/javascript"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/index.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/h.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/jsp/json2.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	
 	function logout(){

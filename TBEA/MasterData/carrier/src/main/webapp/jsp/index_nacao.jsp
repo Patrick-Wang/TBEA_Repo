@@ -9,13 +9,13 @@
 <div class="section">
 	<div class="thumb4">
 		<ul class="slides">
-			<li data-thumb="../images/nacao/nacao_client.png"><a
-				href="../nacao/search.do" target="_blank"><img
-					src="../images/nacao/nacao_client.png"> <span><strong>客户主数据查询</strong></span></a>
+			<li data-thumb="${pageContext.request.contextPath}/images/nacao/nacao_client.png"><a
+				href="${pageContext.request.contextPath}/nacao/search.do" target="_blank"><img
+					src="${pageContext.request.contextPath}/images/nacao/nacao_client.png"> <span><strong>客户主数据查询</strong></span></a>
 			</li>
-			<li data-thumb="../images/nacao/nacao_supplier.png"><a
-				href="../nacao/search.do" target="_blank"><img
-					src="../images/nacao/nacao_supplier.png"> <span><strong>供应商主数据查询</strong></span></a>
+			<li data-thumb="${pageContext.request.contextPath}/images/nacao/nacao_supplier.png"><a
+				href="${pageContext.request.contextPath}/nacao/search.do" target="_blank"><img
+					src="${pageContext.request.contextPath}/images/nacao/nacao_supplier.png"> <span><strong>供应商主数据查询</strong></span></a>
 			</li>
 		</ul>
 	</div>

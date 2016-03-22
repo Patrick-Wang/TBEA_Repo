@@ -9,17 +9,17 @@
 <div class="section">
 	<div class="thumb4">
 		<ul class="slides">
-			<li data-thumb="../images/person/person.png"><a
-				href="../psn/search.do" target="_blank"><img
-					src="../images/person/person.png"> <span><strong>人员信息查询</strong></span></a>
+			<li data-thumb="${pageContext.request.contextPath}/images/person/person.png"><a
+				href="${pageContext.request.contextPath}/psn/search.do" target="_blank"><img
+					src="${pageContext.request.contextPath}/images/person/person.png"> <span><strong>人员信息查询</strong></span></a>
 			</li>
-			<li data-thumb="../images/person/person.png"><a
-				href="../psn/search.do" target="_blank"><img
-					src="../images/person/person.png"> <span><strong>人员员工卡号查询</strong></span></a>
+			<li data-thumb="${pageContext.request.contextPath}/images/person/person.png"><a
+				href="${pageContext.request.contextPath}/psn/search.do" target="_blank"><img
+					src="${pageContext.request.contextPath}/images/person/person.png"> <span><strong>人员员工卡号查询</strong></span></a>
 			</li>
-			<li data-thumb="../images/person/person.png"><a
-				href="../psn/search.do" target="_blank"><img
-					src="../images/person/person.png"> <span><strong>人员单点登录账号查询</strong></span></a>
+			<li data-thumb="${pageContext.request.contextPath}/images/person/person.png"><a
+				href="${pageContext.request.contextPath}/psn/search.do" target="_blank"><img
+					src="${pageContext.request.contextPath}/images/person/person.png"> <span><strong>人员单点登录账号查询</strong></span></a>
 			</li>
 		</ul>
 	</div>
