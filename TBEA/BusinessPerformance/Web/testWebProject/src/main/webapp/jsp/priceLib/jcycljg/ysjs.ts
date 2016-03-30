@@ -29,6 +29,7 @@ module jcycljg {
             al:string;
             zn:string;
             tb:string;
+            host:string;
         }
 
         class YsjsView implements PluginView{
@@ -43,16 +44,10 @@ module jcycljg {
             }
 
             public hide(): void{
-                $("#" + this.mOpt.al).hide();
-                $("#" + this.mOpt.cu).hide();
-                $("#" + this.mOpt.zn).hide();
-                $("#" + this.mOpt.tb).hide();
+                $("#" + this.mOpt.host).hide();
             }
             public show(): void{
-                $("#" + this.mOpt.al).show();
-                $("#" + this.mOpt.cu).show();
-                $("#" + this.mOpt.zn).show();
-                $("#" + this.mOpt.tb).show();
+                $("#" + this.mOpt.host).show();
             }
 
             public update(st:Util.Date, ed:Util.Date) {
@@ -177,17 +172,17 @@ module jcycljg {
                     ]
                 };
 
-                echarts.init($('#' + echart)[0]).setOption(option);
+                echarts.init($("#" + this.mOpt.host + " #" + echart)[0]).setOption(option);
 
             }
 
             private updateTable():void {
                 var name = this.mOpt.tb + "_jqgrid_1234";
                 var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
-                var parent = $("#" + this.mOpt.tb);
+                var parent = $("#" + this.mOpt.host + " #" + this.mOpt.tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                $("#" + name).jqGrid(
+                $("#" + this.mOpt.host + " #" + name).jqGrid(
                     tableAssist.decorate({
                         multiselect: false,
                         drag: false,

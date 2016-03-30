@@ -1,4 +1,4 @@
-<Table align="center">
+<Table id = "ysjs" align="center" style="display: none;">
     <tr>
         <td>
             <div align="center">
@@ -41,6 +41,7 @@
         cu: "chartCu",
         al: "chartAl",
         zn: "chartZn",
-        tb: "table"
+        tb: "table",
+        host: "ysjs"
     });
 </script>

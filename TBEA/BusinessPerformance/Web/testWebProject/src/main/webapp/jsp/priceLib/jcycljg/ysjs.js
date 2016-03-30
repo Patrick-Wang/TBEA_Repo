@@ -31,16 +31,10 @@ var jcycljg;
                 return new YsjsView();
             };
             YsjsView.prototype.hide = function () {
-                $("#" + this.mOpt.al).hide();
-                $("#" + this.mOpt.cu).hide();
-                $("#" + this.mOpt.zn).hide();
-                $("#" + this.mOpt.tb).hide();
+                $("#" + this.mOpt.host).hide();
             };
             YsjsView.prototype.show = function () {
-                $("#" + this.mOpt.al).show();
-                $("#" + this.mOpt.cu).show();
-                $("#" + this.mOpt.zn).show();
-                $("#" + this.mOpt.tb).show();
+                $("#" + this.mOpt.host).show();
             };
             YsjsView.prototype.update = function (st, ed) {
                 var _this = this;
@@ -160,15 +154,15 @@ var jcycljg;
                         }
                     ]
                 };
-                echarts.init($('#' + echart)[0]).setOption(option);
+                echarts.init($("#" + this.mOpt.host + " #" + echart)[0]).setOption(option);
             };
             YsjsView.prototype.updateTable = function () {
                 var name = this.mOpt.tb + "_jqgrid_1234";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
-                var parent = $("#" + this.mOpt.tb);
+                var parent = $("#" + this.mOpt.host + " #" + this.mOpt.tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                $("#" + name).jqGrid(tableAssist.decorate({
+                $("#" + this.mOpt.host + " #" + name).jqGrid(tableAssist.decorate({
                     multiselect: false,
                     drag: false,
                     resize: false,
