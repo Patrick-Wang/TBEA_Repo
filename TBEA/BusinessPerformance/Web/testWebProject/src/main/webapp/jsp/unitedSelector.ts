@@ -161,6 +161,17 @@ module Util {
             });
             return retNodes;
         }
+
+        public remove(i:number) : DataNode{
+            this.subNodes[i].setParent(null);
+            return this.subNodes.splice(i, 1)[0];
+        }
+        public removeAll(){
+            $(this.subNodes).each((i) => {
+                this.subNodes[i].setParent(null);
+            });
+            this.subNodes = [];
+        }
     }
 
 
@@ -174,6 +185,14 @@ module Util {
             this.mRoot.appendAll(DataNode.valueOfAll(data));
             this.mCtrlId = ctrlId + "_unitedSelector";
             $("#" + ctrlId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
+            if (Util.isExist(data) && this.mRoot.childCount() > 0) {
+                this.update(path);
+            }
+        }
+
+        public refresh(){
+            $("#" + this.mCtrlId).empty().append("<tr></tr>");
+            this.mPath = []
             if (Util.isExist(data) && this.mRoot.childCount() > 0) {
                 this.update(path);
             }
@@ -218,7 +237,7 @@ module Util {
             }
         }
 
-        public getDataNode(path: number[], depth?: number) {
+        public getDataNode(path: number[], depth?: number):DataNode {
             if (!Util.isExist(depth)) {
                 depth = path.length;
             }

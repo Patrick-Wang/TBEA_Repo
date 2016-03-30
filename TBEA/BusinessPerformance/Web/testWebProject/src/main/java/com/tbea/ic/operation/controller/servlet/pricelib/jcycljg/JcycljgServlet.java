@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.controller.servlet.pricelib.jcycljg.ysjs;
+package com.tbea.ic.operation.controller.servlet.pricelib.jcycljg;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.service.pricelib.jcycljg.ysjs.YsjsServiceImpl;
-import com.tbea.ic.operation.service.pricelib.jcycljg.ysjs.YsjsService;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgServiceImpl;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value = "ysjs")
-public class YsjsServlet {
-	@Resource(name=YsjsServiceImpl.NAME)
-	YsjsService ysjsService;
+@RequestMapping(value = "jcycljg")
+public class JcycljgServlet {
+	@Resource(name=JcycljgServiceImpl.NAME)
+	JcycljgService jcycljgService;
 
 	@RequestMapping(value = "show.do", method = RequestMethod.GET)
 	public ModelAndView show(HttpServletRequest request,
@@ -37,15 +37,15 @@ public class YsjsServlet {
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(),
 				true, true);
 		dateSel.select(map);
-		return new ModelAndView("priceLib/jcycljg/ysjs", map);
+		return new ModelAndView("priceLib/jcycljg/jcycljg", map);
 	}
 	
-	@RequestMapping(value = "update.do")
-	public @ResponseBody byte[] update(HttpServletRequest request,
+	@RequestMapping(value = "ysjs/update.do")
+	public @ResponseBody byte[] ysjsUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		String start = request.getParameter("start");
 		String end = request.getParameter("end");
-		List<List<String>> result = ysjsService.getYsjs(Date.valueOf(start), Date.valueOf(end));
+		List<List<String>> result = jcycljgService.getYsjs(Date.valueOf(start), Date.valueOf(end));
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	

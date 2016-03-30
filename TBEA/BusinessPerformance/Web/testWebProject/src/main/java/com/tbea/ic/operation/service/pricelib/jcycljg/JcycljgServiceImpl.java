@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.pricelib.jcycljg.ysjs;
+package com.tbea.ic.operation.service.pricelib.jcycljg;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -10,14 +10,14 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDaoImpl;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDao;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
-import com.tbea.ic.operation.service.pricelib.jcycljg.ysjs.YsjsService;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service(YsjsServiceImpl.NAME)
+@Service(JcycljgServiceImpl.NAME)
 @Transactional("transactionManager")
-public class YsjsServiceImpl implements YsjsService {
+public class JcycljgServiceImpl implements JcycljgService {
 	@Resource(name=YsjsDaoImpl.NAME)
 	YsjsDao ysjsDao;
 

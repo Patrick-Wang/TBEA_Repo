@@ -292,7 +292,7 @@ var Util;
             this.mCurDate.year = this.toInt(this.mCurDate.year);
             this.mCurDate.month = this.toInt(this.mCurDate.month);
             this.mCurDate.day = this.toInt(this.mCurDate.day);
-            return this.mCurDate;
+            return { year: this.mCurDate.year, month: this.mCurDate.month, day: this.mCurDate.day };
         };
         return DateSelector;
     })();
