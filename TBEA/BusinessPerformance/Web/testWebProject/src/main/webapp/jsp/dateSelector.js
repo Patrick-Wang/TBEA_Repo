@@ -34,7 +34,7 @@ var Util;
                 this.mStartDate.day = 1;
             }
             if (this.mAsSeasion) {
-                this.mStartDate = addMonth(this.mStartDate, -(this.mStartDate.month % 3));
+                this.mStartDate.month = 3 * (parseInt((this.mStartDate.month - 1) / 3 + '') + 1);
             }
             $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
             this.updateYear(this.mCurDate.year);
@@ -75,6 +75,20 @@ var Util;
             }
             return startMon;
         };
+        DateSelector.prototype.monthDays = function () {
+            return this.getDaysInMonth(this.mCurDate.year, this.mCurDate.month);
+        };
+        DateSelector.prototype.toString = function () {
+            var date = this.getDate();
+            var ds = date.year;
+            if (date.month != undefined) {
+                ds += "-" + date.month;
+            }
+            if (date.day != undefined) {
+                ds += "-" + date.day;
+            }
+            return ds;
+        };
         DateSelector.prototype.getLatestDay = function () {
             var latestDay = this.getDaysInMonth(this.mCurDate.year, this.mCurDate.month);
             if (this.mCurDate.year == this.mEndDate.year && this.mCurDate.month == this.mEndDate.month) {
@@ -93,7 +107,10 @@ var Util;
             var _this = this;
             var yearSel = $("#" + this.mCtrlId + "year");
             if (yearSel.length == 0) {
-                $("#" + this.mCtrlId + " tr").append('<td>' + '<select id="' + this.mCtrlId + 'year"' + 'style="width: 100px;"></select>' + '</td><td><div style="width:5px;"></div></td>');
+                $("#" + this.mCtrlId + " tr").append('<td>' +
+                    '<select id="' + this.mCtrlId + 'year"' +
+                    'style="width: 100px;"></select>' +
+                    '</td><td><div style="width:5px;"></div></td>');
                 yearSel = $("#" + this.mCtrlId + "year");
             }
             else {
@@ -127,7 +144,10 @@ var Util;
             if (Util.isExist(this.mEndDate.month)) {
                 var monthSel = $("#" + this.mCtrlId + "month");
                 if (0 == monthSel.length) {
-                    $("#" + this.mCtrlId + " tr").append('<td>' + '<select id="' + this.mCtrlId + 'month"' + 'style="width: 100px;"></select>' + '</td><td><div style="width:5px;"></div></td>');
+                    $("#" + this.mCtrlId + " tr").append('<td>' +
+                        '<select id="' + this.mCtrlId + 'month"' +
+                        'style="width: 100px;"></select>' +
+                        '</td><td><div style="width:5px;"></div></td>');
                     monthSel = $("#" + this.mCtrlId + "month");
                 }
                 else {
@@ -186,7 +206,10 @@ var Util;
             if (Util.isExist(this.mEndDate.day)) {
                 var daySel = $("#" + this.mCtrlId + "day");
                 if (0 == daySel.length) {
-                    $("#" + this.mCtrlId + " tr").append('<td>' + '<select id="' + this.mCtrlId + 'day"' + 'style="width: 100px;"></select>' + '</td><td><div style="width:5px;"></div></td>');
+                    $("#" + this.mCtrlId + " tr").append('<td>' +
+                        '<select id="' + this.mCtrlId + 'day"' +
+                        'style="width: 100px;"></select>' +
+                        '</td><td><div style="width:5px;"></div></td>');
                     daySel = $("#" + this.mCtrlId + "day");
                     daySel.multiselect({
                         multiple: false,

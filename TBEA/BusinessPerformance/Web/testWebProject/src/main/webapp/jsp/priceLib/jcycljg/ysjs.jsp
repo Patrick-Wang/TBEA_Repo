@@ -3,58 +3,59 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<base href="${pageContext.request.contextPath}/" /> 
 
 <!-- jquery -->
-<script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
+<script type="text/javascript" src="jsp/jqgrid/js/jquery.js"></script>
 
 <!-- jquery ui -->
 <!-- jquery ui gray -->
 <link rel="stylesheet" type="text/css"
-	href="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
+	href="jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
 <script type="text/javascript"
-	src="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
+	src="jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
 <!-- jquery ui blue -->
 <link rel="stylesheet" type="text/css" media="screen"
-	href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
-<script src="../jsp/jqgrid/js/jquery-ui-custom.min.js"
+	href="jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
+<script src="jsp/jqgrid/js/jquery-ui-custom.min.js"
 	type="text/javascript"></script>
 
-<!-- 多选菜单 -->
+<!-- 多选菜单 -->  
 <link rel="stylesheet" type="text/css"
-	href="../jsp/multi-select/jquery.multiselect.css" />
+	href="jsp/multi-select/jquery.multiselect.css" />
 <link rel="stylesheet" type="text/css"
-	href="../jsp/multi-select/assets/style.css" />
+	href="jsp/multi-select/assets/style.css" />
 <link rel="stylesheet" type="text/css"
-	href="../jsp/multi-select/assets/prettify.css" />
+	href="jsp/multi-select/assets/prettify.css" />
 <script type="text/javascript"
-	src="../jsp/multi-select/assets/prettify.js"></script>
+	src="jsp/multi-select/assets/prettify.js"></script>
 <script type="text/javascript"
-	src="../jsp/multi-select/jquery.multiselect.js"></script>
+	src="jsp/multi-select/jquery.multiselect.js"></script>
 
 
 <!-- jqgrid -->
 <link rel="stylesheet" type="text/css" media="screen"
-	href="../jsp/jqgrid/themes/ui.jqgrid.css">
+	href="jsp/jqgrid/themes/ui.jqgrid.css">
 <link rel="stylesheet" type="text/css" media="screen"
-	href="../jsp/jqgrid/themes/ui.multiselect.css">
-<script src="../jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
-<script src="../jsp/jqgrid/js/jquery.contextmenu.js"
+	href="jsp/jqgrid/themes/ui.multiselect.css">
+<script src="jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
+<script src="jsp/jqgrid/js/jquery.contextmenu.js"
 	type="text/javascript"></script>
-<script src="../jsp/jqgrid/js/i18n/grid.locale-cn.js"
+<script src="jsp/jqgrid/js/i18n/grid.locale-cn.js"
 	type="text/javascript"></script>
-<script src="../jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
-<script src="../jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
+<script src="jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
+<script src="jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
 
 <!-- jqgrid assist -->
-<script src="../jsp/jqgrid/jqassist.js" type="text/javascript"></script>
+<script src="jsp/jqgrid/jqassist.js" type="text/javascript"></script>
 
-<script src="../jsp/json2.js" type="text/javascript"></script>
-<script src="../jsp/util.js" type="text/javascript"></script>
-<script src="../jsp/jqgrid/vector.js" type="text/javascript"></script>
-<script src="../jsp/unitedSelector.js" type="text/javascript"></script>
-<script src="../jsp/dateSelector.js" type="text/javascript"></script>
-<script src="../jsp/ysjs.js" type="text/javascript"></script>
-
+<script src="jsp/json2.js" type="text/javascript"></script>
+<script src="jsp/util.js" type="text/javascript"></script>
+<script src="jsp/jqgrid/vector.js" type="text/javascript"></script>
+<script src="jsp/unitedSelector.js" type="text/javascript"></script>
+<script src="jsp/dateSelector.js" type="text/javascript"></script>
+<script src="jsp/priceLib/jcycljg/ysjs.js" type="text/javascript"></script>
+ 
 <script type="text/javascript">
      (function () {
          $(document).ready(function () {
@@ -63,7 +64,7 @@
             	 al: "chartAl",
             	 zn: "chartZn",
             	 tb: "table",
-            	 dt:"dt",
+            	 dt:"dt", 
             	 date : {
    					month : ${month}, 
    					year : ${year},
@@ -181,17 +182,17 @@ th.ui-th-ltr {
 	<div class="header">
 		<h1>${year}年${month}月有色金属价格</h1>
 	</div>
-
+ 
 	<Table align="center">
-		<tr>
-			<td>
+		<tr> 
+			<td> 
 				<Table>
 					<tr>
 						<td><div id="dt"></div></td>
 						<td><input type="button" value="更新"
 							style="width: 80px; margin-left: 10px;" onclick="view.updateUI()"></input>
 				</Table>
-			</td>
+			</td> 
 		</tr>
 		<tr>
 			<td>
@@ -230,10 +231,10 @@ th.ui-th-ltr {
 		</tr>
 	</Table>
 
-	<%@include file="loading.jsp"%>
+	<%@include file="../../components/loading.jsp"%>
 
 
 </body>
-<script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>
-<script src="../jsp/style_button.js"></script>
+<script src="jsp/www2/js/echarts-plain-2-0-0.js"></script>
+<script src="jsp/style_button.js"></script>
 </html>

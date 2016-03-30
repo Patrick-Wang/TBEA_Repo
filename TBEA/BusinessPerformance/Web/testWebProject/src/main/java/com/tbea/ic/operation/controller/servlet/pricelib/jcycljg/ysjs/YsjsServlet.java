@@ -37,10 +37,10 @@ public class YsjsServlet {
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(),
 				true, true);
 		dateSel.select(map);
-		return new ModelAndView("ysjs", map);
+		return new ModelAndView("priceLib/jcycljg/ysjs", map);
 	}
 	
-	@RequestMapping(value = "update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "update.do")
 	public @ResponseBody byte[] update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		String start = request.getParameter("start");

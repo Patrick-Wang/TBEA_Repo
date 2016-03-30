@@ -19,7 +19,7 @@
 					src="../images/charts/bar10.png"> <span><strong>硅钢片</strong></span></a>
 			</li>
 		</ul>
-	</div>
+	</div> 
 </div>
 <h3>
 	变压器合同（110KV 及以上）<a name="contractTrans110"> </a>

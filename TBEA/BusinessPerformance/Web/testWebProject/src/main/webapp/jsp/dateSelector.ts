@@ -102,6 +102,23 @@ module Util {
             return startMon;
         }
 
+        public monthDays(){
+            return this.getDaysInMonth(this.mCurDate.year, this.mCurDate.month);
+        }
+
+        public toString(): string{
+            var date : Date = this.getDate();
+            var ds : any = date.year;
+            if (date.month != undefined){
+                ds += "-" + date.month;
+            }
+
+            if (date.day != undefined){
+                ds += "-" + date.day;
+            }
+            return ds;
+        }
+
         private getLatestDay(): number {
             var latestDay: number = this.getDaysInMonth(this.mCurDate.year, this.mCurDate.month);
             if (this.mCurDate.year == this.mEndDate.year && this.mCurDate.month == this.mEndDate.month) {
