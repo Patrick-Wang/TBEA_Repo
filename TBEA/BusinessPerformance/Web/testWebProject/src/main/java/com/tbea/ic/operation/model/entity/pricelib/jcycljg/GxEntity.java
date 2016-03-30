@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -29,5 +30,54 @@ public class GxEntity extends AbstractReadWriteEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-
+	Date date;
+	Double shsg;
+	Double njjy;
+	Double zzjy;
+	Double tjtg;
+	Double cdjg;
+	Double pjj;
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public Double getShsg() {
+		return shsg;
+	}
+	public void setShsg(Double shsg) {
+		this.shsg = shsg;
+	}
+	public Double getNjjy() {
+		return njjy;
+	}
+	public void setNjjy(Double njjy) {
+		this.njjy = njjy;
+	}
+	public Double getZzjy() {
+		return zzjy;
+	}
+	public void setZzjy(Double zzjy) {
+		this.zzjy = zzjy;
+	}
+	public Double getTjtg() {
+		return tjtg;
+	}
+	public void setTjtg(Double tjtg) {
+		this.tjtg = tjtg;
+	}
+	public Double getCdjg() {
+		return cdjg;
+	}
+	public void setCdjg(Double cdjg) {
+		this.cdjg = cdjg;
+	}
+	public Double getPjj() {
+		return pjj;
+	}
+	public void setPjj(Double pjj) {
+		this.pjj = pjj;
+	}
+	
 }

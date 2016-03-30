@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -28,6 +29,26 @@ public class DmdjyxEntity extends AbstractReadWriteEntity implements Serializabl
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	Date date;
+	Double shsh;
+	Double yssh;
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public Double getShsh() {
+		return shsh;
+	}
+	public void setShsh(Double shsh) {
+		this.shsh = shsh;
+	}
+	public Double getYssh() {
+		return yssh;
+	}
+	public void setYssh(Double yssh) {
+		this.yssh = yssh;
+	}
 
 }

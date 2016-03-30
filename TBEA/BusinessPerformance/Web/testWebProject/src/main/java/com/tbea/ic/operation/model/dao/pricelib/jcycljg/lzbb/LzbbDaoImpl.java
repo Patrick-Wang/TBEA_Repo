@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.model.dao.pricelib.jcycljg.lzgb;
+package com.tbea.ic.operation.model.dao.pricelib.jcycljg.lzbb;
 
 
 import javax.persistence.EntityManager;
@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
-import com.tbea.ic.operation.model.entity.pricelib.jcycljg.LzgbEntity;
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.LzbbEntity;
 
 
 
-@Repository(LzgbDaoImpl.NAME)
+@Repository(LzbbDaoImpl.NAME)
 @Transactional("transactionManager")
-public class LzgbDaoImpl extends AbstractReadWriteDaoImpl<LzgbEntity> implements LzgbDao {
+public class LzbbDaoImpl extends AbstractReadWriteDaoImpl<LzbbEntity> implements LzbbDao {
 	public final static String NAME = "LzgbDaoImpl";
 
 	@PersistenceContext(unitName = "localDB")

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -29,5 +30,41 @@ public class FgcEntity extends AbstractReadWriteEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	Date date;
+	Double bj;
+	Double tj;
+	Double dl;
+	Double ts;
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public Double getBj() {
+		return bj;
+	}
+	public void setBj(Double bj) {
+		this.bj = bj;
+	}
+	public Double getTj() {
+		return tj;
+	}
+	public void setTj(Double tj) {
+		this.tj = tj;
+	}
+	public Double getDl() {
+		return dl;
+	}
+	public void setDl(Double dl) {
+		this.dl = dl;
+	}
+	public Double getTs() {
+		return ts;
+	}
+	public void setTs(Double ts) {
+		this.ts = ts;
+	}
+	
 
 }

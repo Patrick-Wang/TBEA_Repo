@@ -20,8 +20,8 @@ import com.tbea.ic.operation.model.dao.pricelib.jcycljg.gx.GxDaoImpl;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.gx.GxDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.zhb.ZhbDaoImpl;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.zhb.ZhbDao;
-import com.tbea.ic.operation.model.dao.pricelib.jcycljg.lzgb.LzgbDaoImpl;
-import com.tbea.ic.operation.model.dao.pricelib.jcycljg.lzgb.LzgbDao;
+import com.tbea.ic.operation.model.dao.pricelib.jcycljg.lzbb.LzbbDao;
+import com.tbea.ic.operation.model.dao.pricelib.jcycljg.lzbb.LzbbDaoImpl;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.fgc.FgcDaoImpl;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.fgc.FgcDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.jt.JtDaoImpl;
@@ -32,6 +32,7 @@ import com.tbea.ic.operation.model.dao.pricelib.jcycljg.gjyy.GjyyDaoImpl;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.gjyy.GjyyDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ggp.GgpDaoImpl;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ggp.GgpDao;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +81,8 @@ public class JcycljgServiceImpl implements JcycljgService {
 	@Resource(name=ZhbDaoImpl.NAME)
 	ZhbDao zhbDao;
 
-	@Resource(name=LzgbDaoImpl.NAME)
-	LzgbDao lzgbDao;
+	@Resource(name=LzbbDaoImpl.NAME)
+	LzbbDao lzgbDao;
 
 	@Resource(name=FgcDaoImpl.NAME)
 	FgcDao fgcDao;

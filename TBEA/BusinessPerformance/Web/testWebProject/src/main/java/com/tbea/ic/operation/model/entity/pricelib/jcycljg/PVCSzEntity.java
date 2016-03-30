@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.model.entity.pricelib.jcycljg;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,5 +29,69 @@ public class PVCSzEntity extends AbstractReadWriteEntity implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 
+	Date date;
+	Double tzyh;
+	Double hnzh;
+	Double sxys;
+	Double hljhhhg;
+	Double hnyh;
+	Double sxbyhg;
+	Double ybty;
+	Double tjdhh;
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public Double getTzyh() {
+		return tzyh;
+	}
+	public void setTzyh(Double tzyh) {
+		this.tzyh = tzyh;
+	}
+	public Double getHnzh() {
+		return hnzh;
+	}
+	public void setHnzh(Double hnzh) {
+		this.hnzh = hnzh;
+	}
+	public Double getSxys() {
+		return sxys;
+	}
+	public void setSxys(Double sxys) {
+		this.sxys = sxys;
+	}
+	public Double getHljhhhg() {
+		return hljhhhg;
+	}
+	public void setHljhhhg(Double hljhhhg) {
+		this.hljhhhg = hljhhhg;
+	}
+	public Double getHnyh() {
+		return hnyh;
+	}
+	public void setHnyh(Double hnyh) {
+		this.hnyh = hnyh;
+	}
+	public Double getSxbyhg() {
+		return sxbyhg;
+	}
+	public void setSxbyhg(Double sxbyhg) {
+		this.sxbyhg = sxbyhg;
+	}
+	public Double getYbty() {
+		return ybty;
+	}
+	public void setYbty(Double ybty) {
+		this.ybty = ybty;
+	}
+	public Double getTjdhh() {
+		return tjdhh;
+	}
+	public void setTjdhh(Double tjdhh) {
+		this.tjdhh = tjdhh;
+	}
+	
 
 }

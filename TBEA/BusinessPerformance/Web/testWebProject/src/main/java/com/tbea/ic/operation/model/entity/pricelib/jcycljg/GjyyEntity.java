@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -29,5 +30,26 @@ public class GjyyEntity extends AbstractReadWriteEntity implements Serializable 
 	 */
 	private static final long serialVersionUID = 1L;
 
-
+	Date date;
+	Double WTI;
+	Double blt;
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public Double getWTI() {
+		return WTI;
+	}
+	public void setWTI(Double wTI) {
+		WTI = wTI;
+	}
+	public Double getBlt() {
+		return blt;
+	}
+	public void setBlt(Double blt) {
+		this.blt = blt;
+	}
+	
 }
