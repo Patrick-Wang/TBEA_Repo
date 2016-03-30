@@ -2,7 +2,7 @@
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
 /// <reference path="jcycljgdef.ts" />
-///<reference path="../../unitedSelector.ts"/>
+/// <reference path="../../unitedSelector.ts"/>
 var jcycljg;
 (function (jcycljg) {
     var View = (function () {

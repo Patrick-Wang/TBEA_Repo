@@ -2,10 +2,7 @@
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
 /// <reference path="jcycljgdef.ts" />
-///<reference path="../../unitedSelector.ts"/>
-
-declare var echarts;
-
+/// <reference path="../../unitedSelector.ts"/>
 
 module jcycljg {
 
@@ -19,7 +16,7 @@ module jcycljg {
         plugin : PluginView;
     }
 
-    export class View implements FrameView{
+    export class View implements FrameView {
         private mOpt:Option;
         private mDateSelector:Util.DateSelector;
         private mUnitedSelector:Util.UnitedSelector;
@@ -68,13 +65,13 @@ module jcycljg {
         public updateUI() {
             var node:Util.DataNode = this.mUnitedSelector.getDataNode(this.mUnitedSelector.getPath());
             for (var i = 0; i < this.mNodes.length; ++i) {
-                if (node != this.mNodes[i]){
+                if (node != this.mNodes[i]) {
                     (<PluginData>this.mNodes[i].getData()).plugin.hide();
                 }
             }
             (<PluginData>node.getData()).plugin.show();
-            var dts : Util.Date = this.mDateSelector.getDate();
-            var dte : Util.Date = this.mDateSelector.getDate();
+            var dts:Util.Date = this.mDateSelector.getDate();
+            var dte:Util.Date = this.mDateSelector.getDate();
             dts.day = 1;
             dte.day = this.mDateSelector.monthDays();
             (<PluginData>node.getData()).plugin.update(dts, dte);
