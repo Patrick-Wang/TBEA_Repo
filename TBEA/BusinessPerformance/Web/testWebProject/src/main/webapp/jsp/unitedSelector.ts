@@ -210,6 +210,7 @@ module Util {
             this.mFnChange = fnChange;
         }
 
+        //selected nodes
         public getNodes(): DataNode[] {
             var ret: DataNode[] = [];
             var node: DataNode = this.mRoot;
@@ -218,6 +219,10 @@ module Util {
                 ret.push(node);
             }
             return ret;
+        }
+
+        public getTopNodes(): DataNode[] {
+            return this.mRoot.subNodes;
         }
 
         public getPath(): number[] {

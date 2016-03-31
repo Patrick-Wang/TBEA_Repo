@@ -163,7 +163,7 @@ pageEncoding="utf-8"%>
     <h1>基础原材料价格</h1>
 </div>
 
-<Table align="center">
+<Table align="center" border="0px">
     <tr>
         <td>
             <Table>
@@ -186,13 +186,9 @@ pageEncoding="utf-8"%>
     <tr>
         <td>
             <%@include file="ysjs.jsp"%>
+            <%@include file="ggp.jsp"%>
         </td>
     </tr>
-     <tr>
-        <td>
-            <%@include file="ggp.jsp"%>
-        </td> 
-    </tr> 
 </Table> 
 <script type="text/javascript">
     view.init({

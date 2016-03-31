@@ -22,7 +22,7 @@
 
 <style type="text/css">
 
-.wu-example {
+.wu-example {  
 	width: 600px;
     position: relative;
     padding: 45px 15px 15px;

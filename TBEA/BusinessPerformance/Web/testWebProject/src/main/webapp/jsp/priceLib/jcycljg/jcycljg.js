@@ -46,7 +46,7 @@ var jcycljg;
             this.mDSStart.select(this.mOpt.date);
             this.mDSEnd.select(this.mOpt.date);
             this.mUnitedSelector = new Util.UnitedSelector(this.mNodes, this.mOpt.type);
-            this.mNodes = this.mUnitedSelector.getNodes();
+            this.mNodes = this.mUnitedSelector.getTopNodes();
             if (this.plugin(this.getActiveNode()).getDateType() == jcycljg.DateType.DAY) {
                 $("#" + this.mOpt.dte).hide();
             }
