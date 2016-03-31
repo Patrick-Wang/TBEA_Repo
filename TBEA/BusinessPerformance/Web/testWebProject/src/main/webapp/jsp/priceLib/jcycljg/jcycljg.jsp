@@ -55,6 +55,7 @@ pageEncoding="utf-8"%>
     <script src="jsp/unitedSelector.js" type="text/javascript"></script>
     <script src="jsp/dateSelector.js" type="text/javascript"></script>
     <script src="jsp/priceLib/jcycljg/jcycljgdef.js" type="text/javascript"></script>
+    <script src="jsp/priceLib/jcycljg/jcycljgtype.js" type="text/javascript"></script>
     <script src="jsp/priceLib/jcycljg/jcycljg.js" type="text/javascript"></script>
     <title>基础原材料价格</title>
 

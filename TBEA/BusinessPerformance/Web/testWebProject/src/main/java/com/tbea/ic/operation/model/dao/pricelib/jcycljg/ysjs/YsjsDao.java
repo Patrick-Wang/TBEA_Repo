@@ -5,12 +5,14 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
+import com.tbea.ic.operation.model.dao.pricelib.jcycljg.GetEntitiesDao;
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GjyyEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
 
 
-public interface YsjsDao  extends AbstractReadWriteDao<YsjsEntity>{
+public interface YsjsDao extends GetEntitiesDao, AbstractReadWriteDao<YsjsEntity>{
 
-	List<YsjsEntity> getYsjs(Date start, Date end);
+	List<YsjsEntity> getEntities(Date start, Date end);
 
 	YsjsEntity getByDate(Date date);
 

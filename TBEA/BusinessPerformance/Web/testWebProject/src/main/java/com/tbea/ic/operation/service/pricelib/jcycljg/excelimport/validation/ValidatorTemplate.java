@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.pricelib.jcycljg.validation;
+package com.tbea.ic.operation.service.pricelib.jcycljg.excelimport.validation;
 
 import java.sql.Date;
 import java.util.ArrayList;

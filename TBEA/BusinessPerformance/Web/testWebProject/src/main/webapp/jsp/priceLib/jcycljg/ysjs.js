@@ -33,7 +33,7 @@ var jcycljg;
             __extends(YsjsView, _super);
             function YsjsView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/ysjs/update.do", false);
+                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.YSJS, false);
             }
             YsjsView.newInstance = function () {
                 return new YsjsView();

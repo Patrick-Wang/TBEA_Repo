@@ -55,4 +55,22 @@ module jcycljg {
 
         abstract  pluginUpdate(start:string, end:string):void;
     }
+
+    export enum JcycljgType {
+        YSJS,
+        GGP,
+        GJYY,
+        TKS,
+        JT,
+        FGC,
+        LZBB,
+        ZHB,
+        GX,
+        PVCSZ,
+        DMDJYX,
+        EVA,
+        JKZJ,
+        MYZS,
+        LWG
+    }
 }

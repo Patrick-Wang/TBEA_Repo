@@ -1,6 +1,9 @@
 package com.tbea.ic.operation.model.dao.pricelib.jcycljg.gx;
 
 
+import java.sql.Date;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -21,5 +24,11 @@ public class GxDaoImpl extends AbstractReadWriteDaoImpl<GxEntity> implements GxD
 	@PersistenceContext(unitName = "localDB")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
+	}
+
+	@Override
+	public List<?> getEntities(Date start, Date end) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

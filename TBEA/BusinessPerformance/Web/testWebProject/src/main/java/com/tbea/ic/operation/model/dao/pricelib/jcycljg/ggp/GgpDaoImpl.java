@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GgpEntity;
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
 
 
 
@@ -28,10 +29,22 @@ public class GgpDaoImpl extends AbstractReadWriteDaoImpl<GgpEntity> implements G
 	}
 
 	@Override
-	public List<GgpEntity> getGgp(Date start, Date end) {
+	public List<GgpEntity> getEntities(Date start, Date end) {
 		Query q = this.getEntityManager().createQuery("from GgpEntity where date >= :start and date <= :end");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();
 	}
+
+	@Override
+	public GgpEntity getByDate(Date date) {
+		Query q = this.getEntityManager().createQuery("from GgpEntity where date = :date");
+		q.setParameter("date", date);
+		List<GgpEntity> ret = q.getResultList();
+		if (ret.isEmpty()){
+			return null;
+		}
+		return ret.get(0);
+	}
+
 }

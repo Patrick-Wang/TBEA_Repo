@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var blhtdqqkhzb;
 (function (blhtdqqkhzb) {
     var JQGridAssistantFactory = (function () {
@@ -11,7 +13,8 @@ var blhtdqqkhzb;
             else {
                 node = new JQTable.Node(12 + "月末保理余额", "ymblye" + 12);
             }
-            return node.append(new JQTable.Node("非客户付息式保理余额", "fkhfxsblye")).append(new JQTable.Node("客户付息式保理余额", "khfxsblye"));
+            return node.append(new JQTable.Node("非客户付息式保理余额", "fkhfxsblye"))
+                .append(new JQTable.Node("客户付息式保理余额", "khfxsblye"));
         };
         JQGridAssistantFactory.createNextNode = function (month, andlater) {
             if (andlater === void 0) { andlater = false; }
@@ -23,7 +26,8 @@ var blhtdqqkhzb;
             else {
                 node = new JQTable.Node(month + title, "y" + month);
             }
-            return node.append(new JQTable.Node("到期保理金额", "dqblje")).append(new JQTable.Node("到期保理中已回款金额", "dqblzyhkje"));
+            return node.append(new JQTable.Node("到期保理金额", "dqblje"))
+                .append(new JQTable.Node("到期保理中已回款金额", "dqblzyhkje"));
         };
         JQGridAssistantFactory.createTable = function (gridName, month) {
             return new JQTable.JQGridAssistant([
@@ -70,7 +74,8 @@ var blhtdqqkhzb;
                 year: this.mYear,
                 month: this.mMonth,
                 companyId: this.mComp
-            }).then(function (jsonData) {
+            })
+                .then(function (jsonData) {
                 _this.mChartData = jsonData[0];
                 _this.mTableData = jsonData[1];
                 $('h1').text(_this.mYear + "年" + _this.mMonth + "月  保理合同到期情况汇总表");
@@ -107,7 +112,7 @@ var blhtdqqkhzb;
                     data: [this.mYear - 1 + "年", this.mYear + "年"]
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -150,6 +155,9 @@ var blhtdqqkhzb;
                 ["保理合同\r\n到期情况", "金额"],
                 ["保理合同\r\n到期情况", "份数"]
             ];
+            //            for (var i = 0; i < data.length; ++i){
+            //                data[i] = data[i].concat(this.mTableData[i]);
+            //            }
             if (undefined != this.mTableData) {
                 var row = [];
                 for (var i = 0; i < data.length; ++i) {

@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.pricelib.jcycljg.validation;
+package com.tbea.ic.operation.service.pricelib.jcycljg.excelimport.validation;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 

@@ -29,7 +29,7 @@ public class YsjsDaoImpl extends AbstractReadWriteDaoImpl<YsjsEntity> implements
 	}
 
 	@Override
-	public List<YsjsEntity> getYsjs(Date start, Date end) {
+	public List<YsjsEntity> getEntities(Date start, Date end) {
 		Query q = this.getEntityManager().createQuery("from YsjsEntity where date >= :start and date <= :end");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
@@ -46,4 +46,5 @@ public class YsjsDaoImpl extends AbstractReadWriteDaoImpl<YsjsEntity> implements
 		}
 		return ret.get(0);
 	}
+
 }

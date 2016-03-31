@@ -33,7 +33,7 @@ module jcycljg {
 
         class YsjsView extends BasePluginView{
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/ysjs/update.do", false);
+            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.YSJS, false);
             private mDateSelector:Util.DateSelector;
 
             public static newInstance():YsjsView {

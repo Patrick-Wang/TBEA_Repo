@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var yszkjgqkb;
 (function (yszkjgqkb) {
     var JQGridAssistantFactory = (function () {
@@ -7,8 +9,19 @@ var yszkjgqkb;
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("客户所属行业", "khsshy", true, JQTable.TextAlign.Left),
                 new JQTable.Node("客户所属行业", "khsshy_1", true, JQTable.TextAlign.Left),
-                new JQTable.Node("应收账款情况", "zqkh").append(new JQTable.Node("金额", "je")).append(new JQTable.Node("占全部比例", "zqbbl")),
-                new JQTable.Node("欠款构成", "qkgc").append(new JQTable.Node("应收未收(包括到期质保金）", "ysws").append(new JQTable.Node("逾期1个月以内", "yq1yn")).append(new JQTable.Node("逾期1-3月", "yq13y")).append(new JQTable.Node("逾期3-6月", "yq36y")).append(new JQTable.Node("逾期6-12月", "yq612y")).append(new JQTable.Node("逾期1年以上", "yqynys"))).append(new JQTable.Node("未到期款", "wdqk")).append(new JQTable.Node("未到期质保金", "wdqzbj")).append(new JQTable.Node("应收账款合计", "yszkhj"))
+                new JQTable.Node("应收账款情况", "zqkh")
+                    .append(new JQTable.Node("金额", "je"))
+                    .append(new JQTable.Node("占全部比例", "zqbbl")),
+                new JQTable.Node("欠款构成", "qkgc")
+                    .append(new JQTable.Node("应收未收(包括到期质保金）", "ysws")
+                    .append(new JQTable.Node("逾期1个月以内", "yq1yn"))
+                    .append(new JQTable.Node("逾期1-3月", "yq13y"))
+                    .append(new JQTable.Node("逾期3-6月", "yq36y"))
+                    .append(new JQTable.Node("逾期6-12月", "yq612y"))
+                    .append(new JQTable.Node("逾期1年以上", "yqynys")))
+                    .append(new JQTable.Node("未到期款", "wdqk"))
+                    .append(new JQTable.Node("未到期质保金", "wdqzbj"))
+                    .append(new JQTable.Node("应收账款合计", "yszkhj"))
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -47,7 +60,8 @@ var yszkjgqkb;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (data) {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then(function (data) {
                 _this.mTableData = data[0];
                 _this.mBarData = data[1];
                 _this.mLineData = data[2];
@@ -83,10 +97,7 @@ var yszkjgqkb;
             }
             var ser = [];
             var rgba = [
-                [193, 35, 43, 1],
-                [181, 195, 52, 1],
-                [252, 206, 16, 1]
-            ];
+                [193, 35, 43, 1], [181, 195, 52, 1], [252, 206, 16, 1]];
             var temp;
             for (var j = 0; j < legend.length; ++j) {
                 var k = j;
@@ -117,22 +128,22 @@ var yszkjgqkb;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [{
-                    type: 'category',
-                    boundaryGap: true,
-                    data: month
-                }, {
-                    type: 'category',
-                    axisLine: { show: false },
-                    axisTick: { show: false },
-                    axisLabel: { show: false },
-                    splitArea: { show: false },
-                    splitLine: { show: false },
-                    data: month
-                }],
+                        type: 'category',
+                        boundaryGap: true,
+                        data: month
+                    }, {
+                        type: 'category',
+                        axisLine: { show: false },
+                        axisTick: { show: false },
+                        axisLabel: { show: false },
+                        splitArea: { show: false },
+                        splitLine: { show: false },
+                        data: month
+                    }],
                 yAxis: [
                     {
                         type: 'value'
@@ -178,7 +189,7 @@ var yszkjgqkb;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -227,7 +238,7 @@ var yszkjgqkb;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -288,8 +299,7 @@ var yszkjgqkb;
                         type: 'pie',
                         radius: [100, 130],
                         data: dataOut
-                    },
-                    {
+                    }, {
                         name: "行业占比",
                         type: 'pie',
                         radius: [0, 60],
@@ -325,8 +335,7 @@ var yszkjgqkb;
                 ["电力及配套", "其他电源"],
                 ["出口", "合同"],
                 ["其", "它"],
-                ["合", "计"]
-            ];
+                ["合", "计"]];
             if (undefined != this.mTableData) {
                 var row = [];
                 for (var i = 0; i < data.length; ++i) {
@@ -343,15 +352,20 @@ var yszkjgqkb;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: '100%',
                 width: 1300,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;

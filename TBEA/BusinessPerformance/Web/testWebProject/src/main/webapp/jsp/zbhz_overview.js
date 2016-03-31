@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var zbhz_overview;
 (function (zbhz_overview) {
     var YDZBDataSet = (function () {
@@ -91,6 +93,14 @@ var zbhz_overview;
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;
         };
+        //		private getCurrentCompany() :　Util.CompanyType{
+        //			if (this.mDw != Util.CompanyType.ALL){
+        //				return this.mDw;
+        //			}
+        //			else{
+        //				return this.mCy;
+        //			}
+        //		}
         View.prototype.updateUI = function () {
             var _this = this;
             this.mDataSetMgr.getData(this.mComp, function (dataSet) {
@@ -124,7 +134,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -169,7 +179,7 @@ var zbhz_overview;
                     }
                 ]
             };
-            echarts.init($('#' + this.mChartIds[0 /* YDZB */])[0]).setOption(option);
+            echarts.init($('#' + this.mChartIds[ChartType.YDZB])[0]).setOption(option);
         };
         View.prototype.updateJdUI = function (data) {
             var jdCount = data[0].length;
@@ -189,7 +199,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -234,7 +244,7 @@ var zbhz_overview;
                     }
                 ]
             };
-            echarts.init($('#' + this.mChartIds[1 /* JDZB */])[0]).setOption(option);
+            echarts.init($('#' + this.mChartIds[ChartType.JDZB])[0]).setOption(option);
         };
         View.prototype.updateNdUI = function (data) {
             var jdCount = data[0].length;
@@ -255,7 +265,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -300,7 +310,7 @@ var zbhz_overview;
                     }
                 ]
             };
-            echarts.init($('#' + this.mChartIds[2 /* NDZB */])[0]).setOption(option);
+            echarts.init($('#' + this.mChartIds[ChartType.NDZB])[0]).setOption(option);
         };
         View.prototype.updateYdtbUI = function (data) {
             var month = this.getMonth();
@@ -316,7 +326,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -361,7 +371,7 @@ var zbhz_overview;
                     }
                 ]
             };
-            echarts.init($('#' + this.mChartIds[3 /* YDTQ */])[0]).setOption(option);
+            echarts.init($('#' + this.mChartIds[ChartType.YDTQ])[0]).setOption(option);
         };
         View.prototype.updateJdtbUI = function (data) {
             var jdCount = data[0].length;
@@ -381,7 +391,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -426,7 +436,7 @@ var zbhz_overview;
                     }
                 ]
             };
-            echarts.init($('#' + this.mChartIds[4 /* JDTQ */])[0]).setOption(option);
+            echarts.init($('#' + this.mChartIds[ChartType.JDTQ])[0]).setOption(option);
         };
         View.prototype.onCySelected = function (val) {
             this.mCy = val;

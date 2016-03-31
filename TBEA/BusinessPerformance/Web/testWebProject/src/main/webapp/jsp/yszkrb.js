@@ -1,5 +1,6 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
 var yszkrb;
 (function (yszkrb) {
     var JQGridAssistantFactory = (function () {
@@ -7,13 +8,13 @@ var yszkrb;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("集团下达月度资金回笼指标", "t1", true, JQTable.TextAlign.Left),
-                new JQTable.Node("各单位自行制定的回款计划", "t2"),
-                new JQTable.Node("今日回款", "t3"),
-                new JQTable.Node("已回款中可降应收的回款金额", "t4"),
-                new JQTable.Node("确保办出", "t5"),
-                new JQTable.Node("争取办出", "t6"),
-                new JQTable.Node("截止月底应收账款账面余额", "t7")
+                new JQTable.Node("集团下达月度资金回笼指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("各单位自行制定的回款计划", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("今日回款", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("已回款中可降应收的回款金额", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("确保办出", "t5", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("争取办出", "t6", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("截止月底应收账款账面余额", "t7", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -21,8 +22,8 @@ var yszkrb;
     var View = (function () {
         function View() {
             this.mData = [];
-            this.mDataSet = new Util.Ajax("yszkDialy_update.do");
-            this.mSave = new Util.Ajax("yszkDaily_save.do");
+            this.mDataSet = new Util.Ajax("yszk_update.do", false);
+            this.mSave = new Util.Ajax("yszk_submit.do");
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -36,18 +37,18 @@ var yszkrb;
             this.mMonth = month;
             this.mDay = day;
             this.mTableId = tableId;
-            $("#date").val(year + "-" + month + "-" + day);
+            $("#date").val(year + "/" + month + "/" + day);
             $("#date").datepicker({
                 //            numberOfMonths:1,//显示几个月  
                 //            showButtonPanel:true,//是否显示按钮面板  
-                dateFormat: 'yy-mm-dd',
+                dateFormat: 'yy/mm/dd',
                 //            clearText:"清除",//清除日期的按钮名称  
                 //            closeText:"关闭",//关闭选择框的按钮名称  
                 yearSuffix: '年',
                 showMonthAfterYear: true,
-                defaultDate: year + "-" + month + "-" + day,
+                defaultDate: year + "/" + month + "/" + day,
                 //            minDate:'2011-03-05',//最小日期  
-                maxDate: year + "-" + month + "-" + day,
+                maxDate: year + "/" + month + "/" + day,
                 monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                 dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
                 dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
@@ -60,7 +61,7 @@ var yszkrb;
                 }
             });
             $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
-            this.updateTable();
+            //this.updateTable();
             this.updateUI();
         };
         View.prototype.save = function () {
@@ -70,7 +71,7 @@ var yszkrb;
             for (var i = 0; i < allData.length; ++i) {
                 submitData.push([]);
                 for (var j = 0; j < allData[i].length; ++j) {
-                    if (j != 1) {
+                    if (j != 0) {
                         submitData[i].push(allData[i][j]);
                         allData[i][j] = allData[i][j].replace(new RegExp(' ', 'g'), '');
                     }
@@ -80,37 +81,33 @@ var yszkrb;
                 year: this.mYear,
                 month: this.mMonth,
                 day: this.mDay,
-                data: JSON.stringify(submitData)
+                data: JSON.stringify(submitData[0])
             }).then(function (data) {
-                if ("true" == data.result) {
+                if (0 == data.errorCode) {
                     Util.MessageBox.tip("保存 成功");
                 }
-                else if ("false" == data.result) {
-                    Util.MessageBox.tip("保存 失败");
-                }
                 else {
-                    Util.MessageBox.tip(data.result);
+                    Util.MessageBox.tip("保存 失败");
                 }
             });
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay }).then(function (dataArray) {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay })
+                .then(function (dataArray) {
                 _this.mData = dataArray;
-                $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日 应收账款日报");
+                $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报");
                 document.title = _this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报";
                 _this.updateTable();
             });
         };
         View.prototype.updateTable = function () {
             var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist = JQGridAssistantFactory.createTable(name);
-            var data = [["沈变公司"], ["衡变公司"], ["新变厂"], ["天变公司"], ["鲁缆公司"], ["新缆厂"], ["德缆公司"], ["输变电小计"], ["新能源公司"], ["新特能源公司"], ["新能源小计"], ["天池能源公司"], ["能动公司"], ["能源小计"], ["进出口"], ["国际工程公司"], ["工程小计"], ["机关本部"], ["采购中心"], ["资金中心"], ["公司机关小计"], ["香港公司"], ["股份公司合计"], ["众和公司"], ["合计"]];
+            this.mTableAssist = JQGridAssistantFactory.createTable(name);
+            var data = [];
             var row = [];
-            for (var i = 0; i < data.length; ++i) {
-                if (data[i][0].lastIndexOf("计") >= 0) {
-                    tableAssist.setRowBgColor(i, 183, 222, 232);
-                }
+            for (var i = 0; i < this.mData.length; ++i) {
+                data.push([]);
                 if (this.mData[i] instanceof Array) {
                     row = [].concat(this.mData[i]);
                     for (var col in row) {
@@ -122,23 +119,72 @@ var yszkrb;
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
-            $("#" + name).jqGrid(tableAssist.decorate({
+            var lastsel = "";
+            var lastcell = "";
+            $("#" + name).jqGrid(this.mTableAssist.decorate({
                 // url: "TestTable/WGDD_load.do",
                 // datatype: "json",
-                data: tableAssist.getData(data),
+                data: this.mTableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
                 //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
+                cellsubmit: 'clientArray',
+                cellEdit: true,
                 height: '100%',
-                width: 1200,
+                width: 850,
                 shrinkToFit: true,
                 rowNum: 100,
-                autoScroll: true
+                autoScroll: true,
+                beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
+                    var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
+                    if (isNaN(ret)) {
+                        $.jgrid.jqModal = {
+                            width: 290,
+                            left: $("#table").offset().left + $("#table").width() / 2 - 290 / 2,
+                            top: $("#table").offset().top + $("#table").height() / 2 - 90
+                        };
+                        return v;
+                    }
+                    else {
+                        return ret;
+                    }
+                },
+                beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
+                    lastsel = iRow;
+                    lastcell = iCol;
+                    //                        console.log(iRow +', ' + iCol);
+                    $("input").attr("disabled", true);
+                },
+                afterEditCell: function (rowid, cellname, v, iRow, iCol) {
+                    $("input[type=text]").bind("keydown", function (e) {
+                        if (e.keyCode === 13) {
+                            setTimeout(function () {
+                                $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
+                            }, 10);
+                        }
+                    });
+                },
+                afterSaveCell: function () {
+                    $("input").attr("disabled", false);
+                    lastsel = "";
+                },
+                afterRestoreCell: function () {
+                    $("input").attr("disabled", false);
+                    lastsel = "";
+                }
             }));
+            $('html').bind('click', function (e) {
+                if (lastsel != "") {
+                    if ($(e.target).closest("#" + name).length == 0) {
+                        //  $("#" + name).jqGrid('saveRow', lastsel); 
+                        $("#" + name).jqGrid("saveCell", lastsel, lastcell);
+                        //$("#" + name).resetSelection(); 
+                        lastsel = "";
+                    }
+                }
+            });
         };
         return View;
     })();

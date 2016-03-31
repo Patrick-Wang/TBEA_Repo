@@ -1,7 +1,8 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
-var hzb_companysNC;
-(function (hzb_companysNC) {
+/// <reference path="messageBox.ts" />
+var hzbNC_zbhz;
+(function (hzbNC_zbhz) {
     var ZtId;
     (function (ZtId) {
         ZtId[ZtId["zb"] = 0] = "zb";
@@ -32,7 +33,8 @@ var hzb_companysNC;
     var View = (function () {
         function View() {
             this.mData = [];
-            this.mDataSet = new Util.Ajax("CompanysNC_update.do");
+            this.mDataSet = new Util.Ajax("AllCompanysNC_overview_update.do");
+            this.mType = 0;
         }
         View.newInstance = function () {
             if (View.ins == undefined) {
@@ -40,33 +42,22 @@ var hzb_companysNC;
             }
             return View.ins;
         };
-        View.prototype.init = function (opt) {
-            this.mOpt = opt;
-            if (opt.comps.length == 0) {
-                $('h1').text("没有任何可以查看的公司");
-                $('input').css("display", "none");
-            }
-            else {
-                var month = this.mOpt.date.month + (2 - (this.mOpt.date.month - 1) % 3);
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, { year: this.mOpt.date.year, month: month }, this.mOpt.dateId);
-                this.mDateSelector.select(this.mOpt.date);
-                this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
-            }
+        View.prototype.init = function (tableId, dateId, month, year) {
+            this.mTableId = tableId;
+            this.mDs = new Util.DateSelector({ year: year - 3, month: 1 }, { year: year, month: month }, dateId);
+            this.updateTable();
+            //this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            var date = this.mDateSelector.getDate();
-            var compType = this.mCompanySelector.getCompany();
-            this.mDataSet.get({ year: date.year, month: date.month, companyId: compType })
+            var date = this.mDs.getDate();
+            this.mDataSet.get({ month: date.month, year: date.year, type: this.mType })
                 .then(function (dataArray) {
                 _this.mData = dataArray;
-                _this.updateTextandTitle(date);
+                $('h1').text(date.year + "年" + date.month + "月公司整体财务指标完成情况(万元)");
+                document.title = date.year + "年" + date.month + "月公司整体财务指标完成情况(万元)";
                 _this.updateTable();
             });
-        };
-        View.prototype.updateTextandTitle = function (date) {
-            $('h1').text(date.year + "年" + date.month + "月经营单位财务指标完成情况(万元)");
-            document.title = date.year + "年" + date.month + "月经营单位财务指标完成情况(万元)";
         };
         View.prototype.initPercentList = function () {
             var precentList = new std.vector();
@@ -75,19 +66,18 @@ var hzb_companysNC;
             return precentList;
         };
         View.prototype.updateTable = function () {
-            var name = this.mOpt.tableId + "_jqgrid_1234";
-            var parent = $("#" + this.mOpt.tableId);
+            var name = this.mTableId + "_jqgrid_1234";
+            var tableAssist = null;
+            var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
+            tableAssist = JQGridAssistantFactory.createTable(name);
             if (this.mData.length == 0) {
-                $("#tips").css("display", "");
                 return;
             }
-            $("#tips").css("display", "none");
-            var tableAssist = null;
-            tableAssist = JQGridAssistantFactory.createTable(name);
             var outputData = [];
             Util.formatData(outputData, this.mData, this.initPercentList(), []);
+            //data = this.formatZtData();
             $("#" + name).jqGrid(tableAssist.decorate({
                 // url: "TestTable/WGDD_load.do",
                 // datatype: "json",
@@ -100,13 +90,13 @@ var hzb_companysNC;
                 //                    cellsubmit: 'clientArray',
                 //                    cellEdit: true,
                 height: outputData.length > 23 ? 500 : '100%',
-                width: 1300,
+                width: 1330,
                 shrinkToFit: true,
-                rowNum: 1000,
+                rowNum: 200,
                 autoScroll: true
             }));
         };
         return View;
     })();
-    hzb_companysNC.View = View;
-})(hzb_companysNC || (hzb_companysNC = {}));
+    hzbNC_zbhz.View = View;
+})(hzbNC_zbhz || (hzbNC_zbhz = {}));

@@ -127,6 +127,17 @@ var Util;
             });
             return retNodes;
         };
+        DataNode.prototype.remove = function (i) {
+            this.subNodes[i].setParent(null);
+            return this.subNodes.splice(i, 1)[0];
+        };
+        DataNode.prototype.removeAll = function () {
+            var _this = this;
+            $(this.subNodes).each(function (i) {
+                _this.subNodes[i].setParent(null);
+            });
+            this.subNodes = [];
+        };
         return DataNode;
     })();
     Util.DataNode = DataNode;
@@ -141,6 +152,13 @@ var Util;
                 this.update(path);
             }
         }
+        UnitedSelector.prototype.refresh = function () {
+            $("#" + this.mCtrlId).empty().append("<tr></tr>");
+            this.mPath = [];
+            if (Util.isExist(data) && this.mRoot.childCount() > 0) {
+                this.update(path);
+            }
+        };
         UnitedSelector.prototype.hide = function () {
             $("#" + this.mCtrlId).css("display", "none");
         };
@@ -150,6 +168,7 @@ var Util;
         UnitedSelector.prototype.change = function (fnChange) {
             this.mFnChange = fnChange;
         };
+        //selected nodes
         UnitedSelector.prototype.getNodes = function () {
             var ret = [];
             var node = this.mRoot;
@@ -158,6 +177,9 @@ var Util;
                 ret.push(node);
             }
             return ret;
+        };
+        UnitedSelector.prototype.getTopNodes = function () {
+            return this.mRoot.subNodes;
         };
         UnitedSelector.prototype.getPath = function () {
             return this.mPath;

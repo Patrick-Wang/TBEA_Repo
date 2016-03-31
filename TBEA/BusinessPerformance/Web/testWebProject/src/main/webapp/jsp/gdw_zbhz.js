@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var gdw_zbhz;
 (function (gdw_zbhz) {
     var DwZb;
@@ -25,9 +27,23 @@ var gdw_zbhz;
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                 new JQTable.Node("全年计划", "qnjh"),
-                new JQTable.Node("月度", "yd").append(new JQTable.Node("当月计划", "y1")).append(new JQTable.Node("当月实际", "y2")).append(new JQTable.Node("计划完成率", "y3")).append(new JQTable.Node("去年同期", "y4")).append(new JQTable.Node("同比增幅", "y5")),
-                new JQTable.Node("季度", "jd").append(new JQTable.Node("季度计划", "j1")).append(new JQTable.Node("季度累计", "j2")).append(new JQTable.Node("季度计划完成率", "j3")).append(new JQTable.Node("去年同期", "j4")).append(new JQTable.Node("同比增幅", "j5")),
-                new JQTable.Node("年度", "nd").append(new JQTable.Node("年度累计", "n1")).append(new JQTable.Node("累计计划完成率", "n2")).append(new JQTable.Node("去年同期", "n3")).append(new JQTable.Node("同比增幅", "n4"))
+                new JQTable.Node("月度", "yd")
+                    .append(new JQTable.Node("当月计划", "y1"))
+                    .append(new JQTable.Node("当月实际", "y2"))
+                    .append(new JQTable.Node("计划完成率", "y3"))
+                    .append(new JQTable.Node("去年同期", "y4"))
+                    .append(new JQTable.Node("同比增幅", "y5")),
+                new JQTable.Node("季度", "jd")
+                    .append(new JQTable.Node("季度计划", "j1"))
+                    .append(new JQTable.Node("季度累计", "j2"))
+                    .append(new JQTable.Node("季度计划完成率", "j3"))
+                    .append(new JQTable.Node("去年同期", "j4"))
+                    .append(new JQTable.Node("同比增幅", "j5")),
+                new JQTable.Node("年度", "nd")
+                    .append(new JQTable.Node("年度累计", "n1"))
+                    .append(new JQTable.Node("累计计划完成率", "n2"))
+                    .append(new JQTable.Node("去年同期", "n3"))
+                    .append(new JQTable.Node("同比增幅", "n4"))
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -45,7 +61,7 @@ var gdw_zbhz;
         };
         View.prototype.init = function (tableId, dateId, month, year) {
             this.mTableId = tableId;
-            this.mDs = new Util.DateSelector({ year: year - 2, month: 1 }, { year: year, month: month }, dateId);
+            this.mDs = new Util.DateSelector({ year: year - 3, month: 1 }, { year: year, month: month }, dateId);
         };
         View.prototype.onIndexSelected = function () {
             this.mZBId = $("#indextype").val();
@@ -60,7 +76,8 @@ var gdw_zbhz;
             var _this = this;
             var date = this.mDs.getDate();
             this.onIndexSelected();
-            this.mDataSet.get({ month: date.month, year: date.year, zbId: this.mZBId }).then(function (dataArray) {
+            this.mDataSet.get({ month: date.month, year: date.year, zbId: this.mZBId })
+                .then(function (dataArray) {
                 _this.mData = dataArray;
                 $('h1').text(date.year + "年" + date.month + "月各单位" + _this.mZBName + "完成情况");
                 document.title = date.year + "年" + date.month + "月各单位" + _this.mZBName + "完成情况";
@@ -100,7 +117,9 @@ var gdw_zbhz;
                 if (this.mData[i] instanceof Array) {
                     row = [].concat(this.mData[i]);
                     for (var j = 0; j < row.length; ++j) {
-                        if (j == 3 /* dyjhwcl */ || j == 5 /* dytbzf */ || j == 8 /* jdjhwcl */ || j == 10 /* jdtbzf */ || j == 12 /* ndljjhwcl */ || j == 14 /* ndtbzf */) {
+                        if (j == DwZb.dyjhwcl || j == DwZb.dytbzf ||
+                            j == DwZb.jdjhwcl || j == DwZb.jdtbzf ||
+                            j == DwZb.ndljjhwcl || j == DwZb.ndtbzf) {
                             row[j] = Util.formatPercent(row[j]);
                         }
                         else {

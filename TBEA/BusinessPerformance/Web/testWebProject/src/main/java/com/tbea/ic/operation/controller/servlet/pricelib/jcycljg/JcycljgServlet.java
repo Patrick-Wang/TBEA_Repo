@@ -29,7 +29,7 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgService;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgServiceImpl;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
-import com.tbea.ic.operation.service.pricelib.jcycljg.validation.ValidationException;
+import com.tbea.ic.operation.service.pricelib.jcycljg.excelimport.validation.ValidationException;
 
 @Controller
 @RequestMapping(value = "jcycljg")
@@ -49,21 +49,13 @@ public class JcycljgServlet {
 		return new ModelAndView("priceLib/jcycljg/jcycljg", map);
 	}
 	
-	@RequestMapping(value = "ysjs/update.do")
+	@RequestMapping(value = "update.do")
 	public @ResponseBody byte[] ysjsUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		String start = request.getParameter("start");
 		String end = request.getParameter("end");
-		List<List<String>> result = jcycljgService.getYsjs(Date.valueOf(start), Date.valueOf(end));
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
-	}
-	
-	@RequestMapping(value = "ggp/update.do")
-	public @ResponseBody byte[] ggpUpdate(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		String start = request.getParameter("start");
-		String end = request.getParameter("end");
-		List<List<String>> result = jcycljgService.getGgp(Date.valueOf(start), Date.valueOf(end));
+		int type = Integer.valueOf(request.getParameter("type")).intValue();
+		List<List<String>> result = jcycljgService.getValues(JcycljgType.valueOf(type), Date.valueOf(start), Date.valueOf(end));
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	

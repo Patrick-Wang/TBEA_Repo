@@ -13,9 +13,10 @@ var yszkrb_view;
         YSZKColumnId[YSZKColumnId["KJYSZKHK"] = 6] = "KJYSZKHK";
         YSZKColumnId[YSZKColumnId["QBBC"] = 7] = "QBBC";
         YSZKColumnId[YSZKColumnId["ZQBC"] = 8] = "ZQBC";
-        YSZKColumnId[YSZKColumnId["QYQB"] = 9] = "QYQB";
-        YSZKColumnId[YSZKColumnId["JHWCL"] = 10] = "JHWCL";
-        YSZKColumnId[YSZKColumnId["JZZMYE"] = 11] = "JZZMYE";
+        YSZKColumnId[YSZKColumnId["LZHJ"] = 9] = "LZHJ";
+        YSZKColumnId[YSZKColumnId["QYQB"] = 10] = "QYQB";
+        YSZKColumnId[YSZKColumnId["JHWCL"] = 11] = "JHWCL";
+        YSZKColumnId[YSZKColumnId["JZZMYE"] = 12] = "JZZMYE";
     })(YSZKColumnId || (YSZKColumnId = {}));
     ;
     var JQGridAssistantFactory = (function () {
@@ -44,26 +45,30 @@ var yszkrb_view;
     })();
     var View = (function () {
         function View() {
-            this.mDataSet = new Util.Ajax("yszk_view_update.do");
+            this.mDataSet = new Util.Ajax("yszk_update.do");
             this.mData = [];
         }
         View.newInstance = function () {
             return new View();
         };
-        ;
         View.prototype.init = function (tableId, month, year, day) {
             var _this = this;
             this.mYear = year;
             this.mMonth = month;
             this.mTableId = tableId;
             this.mDay = day;
-            $("#date").val(year + "-" + month + "-" + day);
+            $("#date").val(year + "/" + month + "/" + day);
             $("#date").datepicker({
-                dateFormat: 'yy-mm-dd',
+                //            numberOfMonths:1,//显示几个月  
+                //            showButtonPanel:true,//是否显示按钮面板  
+                dateFormat: 'yy/mm/dd',
+                //            clearText:"清除",//清除日期的按钮名称  
+                //            closeText:"关闭",//关闭选择框的按钮名称  
                 yearSuffix: '年',
                 showMonthAfterYear: true,
-                defaultDate: year + "-" + month + "-" + day,
-                maxDate: year + "-" + month + "-" + day,
+                defaultDate: year + "/" + month + "/" + day,
+                //            minDate:'2011-03-05',//最小日期  
+                //maxDate: year + "-" + month + "-" + day,//最大日期  
                 monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                 dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
                 dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
@@ -75,12 +80,12 @@ var yszkrb_view;
                     _this.mDay = d.getDate();
                 }
             });
-            $("#ui-datepicker-div").css('font-size', '0.8em');
+            $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
             this.updateUI();
         };
-        View.prototype.exportExcel = function () {
-            $("#exportMarketData")[0].action = "yszk_view_export.do?" + Util.Ajax.toUrlParam({});
-            $("#exportMarketData")[0].submit();
+        View.prototype.exportExcelYSDialy = function () {
+            $("#exportYSDialy")[0].action = "yszk_view_export.do?" + Util.Ajax.toUrlParam({ year: this.mYear, month: this.mMonth, day: this.mDay });
+            $("#exportYSDialy")[0].submit();
         };
         View.prototype.updateUI = function () {
             var _this = this;
@@ -89,11 +94,12 @@ var yszkrb_view;
                 _this.mData = dataArray;
                 $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报");
                 document.title = _this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报";
-                _this.updateTable();
+                _this.updateTable(); //update data for table
             });
         };
         View.prototype.initPercentList = function () {
             var precentList = new std.vector();
+            precentList.push(YSZKColumnId.HLZBWC);
             precentList.push(YSZKColumnId.HLJHWCL);
             precentList.push(YSZKColumnId.JHWCL);
             return precentList;
@@ -102,11 +108,12 @@ var yszkrb_view;
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name);
             var outputData = [];
-            Util.formatData(outputData, this.mData, this.initPercentList(), []);
+            Util.formatData(outputData, this.mData, this.initPercentList(), [], 0);
             var data = [
                 ["沈变公司"],
                 ["衡变公司"],
                 ["新变厂"],
+                ["其中：天变公司"],
                 ["鲁缆公司"],
                 ["新缆厂"],
                 ["德缆公司"],

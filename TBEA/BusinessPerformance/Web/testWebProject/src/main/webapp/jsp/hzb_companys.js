@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var hzb_companys;
 (function (hzb_companys) {
     var AllZb;
@@ -47,18 +49,47 @@ var hzb_companys;
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                 new JQTable.Node("全年计划", "qnjh"),
-                new JQTable.Node("月度", "yd").append(new JQTable.Node("当月计划", "y1")).append(new JQTable.Node("当月实际", "y2")).append(new JQTable.Node("计划完成率", "y3")).append(new JQTable.Node("去年同期", "y4")).append(new JQTable.Node("同比增幅", "y5")),
-                new JQTable.Node("季度", "jd").append(new JQTable.Node("季度计划", "j1")).append(new JQTable.Node("季度累计", "j2")).append(new JQTable.Node("季度计划完成率", "j3")).append(new JQTable.Node("去年同期", "j4")).append(new JQTable.Node("同比增幅", "j5")),
-                new JQTable.Node("年度", "nd").append(new JQTable.Node("年度累计", "n1")).append(new JQTable.Node("累计计划完成率", "n2")).append(new JQTable.Node("去年同期", "n3")).append(new JQTable.Node("同比增幅", "n4"))
+                new JQTable.Node("月度", "yd")
+                    .append(new JQTable.Node("当月计划", "y1"))
+                    .append(new JQTable.Node("当月实际", "y2"))
+                    .append(new JQTable.Node("计划完成率", "y3"))
+                    .append(new JQTable.Node("去年同期", "y4"))
+                    .append(new JQTable.Node("同比增幅", "y5")),
+                new JQTable.Node("季度", "jd")
+                    .append(new JQTable.Node("季度计划", "j1"))
+                    .append(new JQTable.Node("季度累计", "j2"))
+                    .append(new JQTable.Node("季度计划完成率", "j3"))
+                    .append(new JQTable.Node("去年同期", "j4"))
+                    .append(new JQTable.Node("同比增幅", "j5")),
+                new JQTable.Node("年度", "nd")
+                    .append(new JQTable.Node("年度累计", "n1"))
+                    .append(new JQTable.Node("累计计划完成率", "n2"))
+                    .append(new JQTable.Node("去年同期", "n3"))
+                    .append(new JQTable.Node("同比增幅", "n4"))
             ], gridName);
         };
         JQGridAssistantFactory.createHbTable = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                 new JQTable.Node("全年计划", "qnjh"),
-                new JQTable.Node("月度", "yd").append(new JQTable.Node("当月计划", "y1")).append(new JQTable.Node("当月实际", "y2")).append(new JQTable.Node("计划完成率", "y3")).append(new JQTable.Node("上月同期", "y4")).append(new JQTable.Node("环比增幅", "y4")).append(new JQTable.Node("同比增幅", "y5")),
-                new JQTable.Node("季度", "jd").append(new JQTable.Node("季度计划", "j1")).append(new JQTable.Node("季度累计", "j2")).append(new JQTable.Node("季度计划完成率", "j3")).append(new JQTable.Node("去年同期", "j4")).append(new JQTable.Node("同比增幅", "j5")),
-                new JQTable.Node("年度", "nd").append(new JQTable.Node("年度累计", "n1")).append(new JQTable.Node("累计计划完成率", "n2")).append(new JQTable.Node("去年同期", "n3")).append(new JQTable.Node("同比增幅", "n4"))
+                new JQTable.Node("月度", "yd")
+                    .append(new JQTable.Node("当月计划", "y1"))
+                    .append(new JQTable.Node("当月实际", "y2"))
+                    .append(new JQTable.Node("计划完成率", "y3"))
+                    .append(new JQTable.Node("上月同期", "y4"))
+                    .append(new JQTable.Node("环比增幅", "y4"))
+                    .append(new JQTable.Node("同比增幅", "y5")),
+                new JQTable.Node("季度", "jd")
+                    .append(new JQTable.Node("季度计划", "j1"))
+                    .append(new JQTable.Node("季度累计", "j2"))
+                    .append(new JQTable.Node("季度计划完成率", "j3"))
+                    .append(new JQTable.Node("去年同期", "j4"))
+                    .append(new JQTable.Node("同比增幅", "j5")),
+                new JQTable.Node("年度", "nd")
+                    .append(new JQTable.Node("年度累计", "n1"))
+                    .append(new JQTable.Node("累计计划完成率", "n2"))
+                    .append(new JQTable.Node("去年同期", "n3"))
+                    .append(new JQTable.Node("同比增幅", "n4"))
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -81,7 +112,9 @@ var hzb_companys;
                 $('input').css("display", "none");
             }
             else {
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 1 }, this.mOpt.date, this.mOpt.dateId);
+                var month = this.mOpt.date.month + (2 - (this.mOpt.date.month - 1) % 3);
+                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, { year: this.mOpt.date.year, month: month }, this.mOpt.dateId);
+                this.mDateSelector.select(this.mOpt.date);
                 this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
                 this.updateUI();
             }
@@ -96,85 +129,16 @@ var hzb_companys;
             var _this = this;
             var date = this.mDateSelector.getDate();
             var compType = this.mCompanySelector.getCompany();
-            this.mDataSet.get({ year: date.year, month: date.month, companyId: compType }).then(function (dataArray) {
+            this.mDataSet.get({ year: date.year, month: date.month, companyId: compType })
+                .then(function (dataArray) {
                 _this.mData = dataArray;
-                $('h1').text(date.year + "年" + date.month + "月经营单位与项目公司指标完成情况");
-                document.title = date.year + "年" + date.month + "月经营单位与项目公司指标完成情况";
+                _this.updateTextandTitle(date);
                 _this.updateTable();
             });
         };
-        View.prototype.formatAllData = function () {
-            var data = [];
-            var row = [];
-            var isRs = false;
-            var isJzcsyl = false;
-            var isSxfyl = false;
-            var isXslvl = false;
-            for (var j = 0; j < this.mData.length; ++j) {
-                row = [].concat(this.mData[j]);
-                isRs = row[0 /* zb */] == '人数';
-                isJzcsyl = row[0 /* zb */] == '净资产收益率(%)';
-                isSxfyl = row[0 /* zb */] == '三项费用率(%)';
-                isXslvl = row[0 /* zb */] == '销售利润率(%)';
-                for (var i = 0; i < row.length; ++i) {
-                    if (i == 4 /* dyjhwcl */ || i == 6 /* dytbzf */ || i == 9 /* jdjhwcl */ || i == 11 /* jdtbzf */ || i == 13 /* ndljjhwcl */ || i == 15 /* ndtbzf */) {
-                        row[i] = Util.formatPercent(row[i]);
-                    }
-                    else if (i != 0 /* zb */) {
-                        if (isRs) {
-                            row[i] = Util.formatInt(row[i]);
-                        }
-                        else if (isJzcsyl) {
-                            row[i] = Util.formatPercentSignal(row[i]);
-                        }
-                        else if (isSxfyl) {
-                            row[i] = Util.formatPercent(row[i]);
-                        }
-                        else if (isXslvl) {
-                            row[i] = Util.formatPercent(row[i]);
-                        }
-                        else {
-                            row[i] = Util.formatCurrency(row[i]);
-                        }
-                    }
-                }
-                data.push(row);
-            }
-            return data;
-        };
-        View.prototype.formatHbData = function () {
-            var data = [];
-            var row = [];
-            var isRs = false;
-            var isJzcsyl = false;
-            var isSxfyl = false;
-            for (var j = 0; j < this.mData.length; ++j) {
-                row = [].concat(this.mData[j]);
-                isRs = row[0 /* zb */] == '人数';
-                isJzcsyl = row[0 /* zb */] == '净资产收益率(%)';
-                isSxfyl = row[0 /* zb */] == '三项费用率(%)';
-                for (var i = 0; i < row.length; ++i) {
-                    if (i == 4 /* dyjhwcl */ || i == 6 /* dyhbzf */ || i == 7 /* dytbzf */ || i == 10 /* jdjhwcl */ || i == 12 /* jdtbzf */ || i == 14 /* ndljjhwcl */ || i == 16 /* ndtbzf */) {
-                        row[i] = Util.formatPercent(row[i]);
-                    }
-                    else if (i != 0 /* zb */) {
-                        if (isRs) {
-                            row[i] = Util.formatInt(row[i]);
-                        }
-                        else if (isJzcsyl) {
-                            row[i] = Util.formatPercentSignal(row[i]);
-                        }
-                        else if (isSxfyl) {
-                            row[i] = Util.formatPercent(row[i]);
-                        }
-                        else {
-                            row[i] = Util.formatCurrency(row[i]);
-                        }
-                    }
-                }
-                data.push(row);
-            }
-            return data;
+        View.prototype.updateTextandTitle = function (date) {
+            $('h1').text(date.year + "年" + date.month + "月经营单位与项目公司指标完成情况");
+            document.title = date.year + "年" + date.month + "月经营单位与项目公司指标完成情况";
         };
         View.prototype.updateTable = function () {
             var name = this.mOpt.tableId + "_jqgrid_1234";
@@ -186,22 +150,43 @@ var hzb_companys;
                 return;
             }
             $("#tips").css("display", "none");
-            var data = [];
             var tableAssist = null;
             tableAssist = JQGridAssistantFactory.createTable(name);
-            data = this.formatAllData();
+            var outputData = [];
+            Util.formatData(outputData, this.mData, this.initPercentList(), [AllZb.dysj,
+                AllZb.dyqntq,
+                AllZb.jdlj,
+                AllZb.jdqntq,
+                AllZb.ndlj,
+                AllZb.ndqntq,
+            ]);
             $("#" + name).jqGrid(tableAssist.decorate({
-                data: tableAssist.getData(data),
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
+                data: tableAssist.getData(outputData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                height: data.length > 23 ? 500 : '100%',
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
+                height: outputData.length > 23 ? 500 : '100%',
                 width: 1300,
                 shrinkToFit: true,
                 rowNum: 1000,
                 autoScroll: true
             }));
+        };
+        View.prototype.initPercentList = function () {
+            var precentList = new std.vector();
+            precentList.push(AllZb.dyjhwcl);
+            precentList.push(AllZb.dytbzf);
+            precentList.push(AllZb.jdjhwcl);
+            precentList.push(AllZb.jdtbzf);
+            precentList.push(AllZb.ndljjhwcl);
+            precentList.push(AllZb.ndtbzf);
+            return precentList;
         };
         return View;
     })();

@@ -5,15 +5,13 @@ import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.tbea.ic.operation.service.pricelib.jcycljg.validation.ValidationException;
+import com.tbea.ic.operation.service.pricelib.jcycljg.excelimport.validation.ValidationException;
 
 public interface JcycljgService {
 
-	List<List<String>> getYsjs(Date start, Date end);
-
-	List<List<String>> getGgp(Date start, Date end);
-
 	void importExcel(JcycljgType type, XSSFWorkbook workbook) throws ValidationException;
+
+	List<List<String>> getValues(JcycljgType type, Date start, Date end);
 
 
 }

@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var syhkjhzxqk;
 (function (syhkjhzxqk) {
     var JQGridAssistantFactory = (function () {
@@ -41,7 +43,8 @@ var syhkjhzxqk;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (data) {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then(function (data) {
                 _this.mData = data;
                 $('h1').text(_this.mYear + "年" + _this.mMonth + "月 回款计划执行情况");
                 document.title = _this.mYear + "年" + _this.mMonth + "月 回款计划执行情况";
@@ -75,14 +78,17 @@ var syhkjhzxqk;
                 tooltip: {
                     trigger: 'axis',
                     formatter: function (v) {
-                        return v[0][1] + '<br/>' + v[0][0] + ' : ' + Util.formatCurrency(v[0][2]) + '<br/>' + v[1][0] + ' : ' + Util.formatCurrency(v[1][2]) + '<br/>' + v[2][0] + ' : ' + v[2][2] + '%';
+                        return v[0][1] + '<br/>'
+                            + v[0][0] + ' : ' + Util.formatCurrency(v[0][2]) + '<br/>'
+                            + v[1][0] + ' : ' + Util.formatCurrency(v[1][2]) + '<br/>'
+                            + v[2][0] + ' : ' + v[2][2] + '%';
                     }
                 },
                 legend: {
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -138,7 +144,16 @@ var syhkjhzxqk;
             tableAssist.mergeColum(0, 8);
             tableAssist.mergeColum(0, 9);
             tableAssist.mergeTitle();
-            var data = [["按款项状态分", "未到期应收账款"], ["按款项状态分", "逾期款应收账款"], ["按款项状态分", "未到期款"], ["按款项状态分", "逾期款"], ["按清收性质分", "确保可回款"], ["按清收性质分", "争取可回款"], ["小", "计"], ["现款现", "货回款"], ["计划外", "回款"], ["合", "计"]];
+            var data = [["按款项状态分", "未到期应收账款"],
+                ["按款项状态分", "逾期款应收账款"],
+                ["按款项状态分", "未到期款"],
+                ["按款项状态分", "逾期款"],
+                ["按清收性质分", "确保可回款"],
+                ["按清收性质分", "争取可回款"],
+                ["小", "计"],
+                ["现款现", "货回款"],
+                ["计划外", "回款"],
+                ["合", "计"]];
             if (this.mData != undefined) {
                 for (var i = 0; i < data.length; ++i) {
                     for (var j = 0; j < this.mData[0][i].length; ++j) {
@@ -146,6 +161,7 @@ var syhkjhzxqk;
                             data[i].push(Util.formatCurrency(this.mData[0][i][j]));
                         }
                         else {
+                            //data[i].push((this.mData[0][i][j]));
                             data[i].push((parseFloat(this.mData[0][i][j]) * 100).toFixed(2) + "%");
                         }
                     }
@@ -155,15 +171,18 @@ var syhkjhzxqk;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "datasource/syhkjhzxqk.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                // autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
-                width: '100%',
+                width: '100%'
             }));
         };
         return View;

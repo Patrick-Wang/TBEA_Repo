@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var companys_zbhz_prediction;
 (function (companys_zbhz_prediction) {
     var FirstMonthZb;
@@ -74,6 +76,12 @@ var companys_zbhz_prediction;
         ThirdMonthZb[ThirdMonthZb["xjdqntq"] = 24] = "xjdqntq";
         ThirdMonthZb[ThirdMonthZb["xjdtbzf"] = 25] = "xjdtbzf";
     })(ThirdMonthZb || (ThirdMonthZb = {}));
+    var TableType;
+    (function (TableType) {
+        TableType[TableType["firstMonthinSeason"] = 0] = "firstMonthinSeason";
+        TableType[TableType["secondMonthinSeason"] = 1] = "secondMonthinSeason";
+        TableType[TableType["thirdMonthinSeason"] = 2] = "thirdMonthinSeason";
+    })(TableType || (TableType = {}));
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
@@ -83,9 +91,24 @@ var companys_zbhz_prediction;
                     new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度计划", "ndjh"),
                     new JQTable.Node("本季度计划", "jdjh"),
-                    new JQTable.Node("当月完成", "dywc").append(new JQTable.Node("本月计划值", "y1")).append(new JQTable.Node("当月预计值", "y2")).append(new JQTable.Node("计划完成率", "y3")).append(new JQTable.Node("去年同期", "y4")).append(new JQTable.Node("同比增幅", "y5")),
-                    new JQTable.Node("季度预计完成", "jdyjwc").append(new JQTable.Node("次月预计", "j1")).append(new JQTable.Node("末月预计", "j2")).append(new JQTable.Node("季度预计合计", "j3")).append(new JQTable.Node("季度预计完成率", "j4")).append(new JQTable.Node("去年同期", "j5")).append(new JQTable.Node("同比增幅", "j6")),
-                    new JQTable.Node("年度累计完成", "nd").append(new JQTable.Node("累计完成值", "n1")).append(new JQTable.Node("年度指标完成率", "n2")).append(new JQTable.Node("去年同期值", "n3")).append(new JQTable.Node("同比增幅", "n4"))
+                    new JQTable.Node("当月完成", "dywc")
+                        .append(new JQTable.Node("本月计划值", "y1"))
+                        .append(new JQTable.Node("当月预计值", "y2"))
+                        .append(new JQTable.Node("计划完成率", "y3"))
+                        .append(new JQTable.Node("去年同期", "y4"))
+                        .append(new JQTable.Node("同比增幅", "y5")),
+                    new JQTable.Node("季度预计完成", "jdyjwc")
+                        .append(new JQTable.Node("次月预计", "j1"))
+                        .append(new JQTable.Node("末月预计", "j2"))
+                        .append(new JQTable.Node("季度预计合计", "j3"))
+                        .append(new JQTable.Node("季度预计完成率", "j4"))
+                        .append(new JQTable.Node("去年同期", "j5"))
+                        .append(new JQTable.Node("同比增幅", "j6")),
+                    new JQTable.Node("年度累计完成", "nd")
+                        .append(new JQTable.Node("累计完成值", "n1"))
+                        .append(new JQTable.Node("年度指标完成率", "n2"))
+                        .append(new JQTable.Node("去年同期值", "n3"))
+                        .append(new JQTable.Node("同比增幅", "n4"))
                 ], gridName);
             }
             if (2 == gridStyle) {
@@ -93,10 +116,28 @@ var companys_zbhz_prediction;
                     new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度计划", "ndjh"),
                     new JQTable.Node("本季度计划", "jdjh"),
-                    new JQTable.Node("当月完成", "dywc").append(new JQTable.Node("本月计划值", "y1")).append(new JQTable.Node("当月预计值", "y2")).append(new JQTable.Node("计划完成率", "y3")).append(new JQTable.Node("去年同期", "y4")).append(new JQTable.Node("同比增幅", "y5")),
-                    new JQTable.Node("季度累计完成", "jdljwc").append(new JQTable.Node("季度累计", "jl1")).append(new JQTable.Node("季度计划完成率", "jl2")).append(new JQTable.Node("去年同期值", "jl3")).append(new JQTable.Node("同比增幅", "jl4")),
-                    new JQTable.Node("季度预计完成", "jdyjwc").append(new JQTable.Node("末月预计", "jy1")).append(new JQTable.Node("季度预计合计", "jy2")).append(new JQTable.Node("季度预计完成率", "jy3")).append(new JQTable.Node("去年同期", "jy4")).append(new JQTable.Node("同比增幅", "jy5")),
-                    new JQTable.Node("年度累计完成", "nd").append(new JQTable.Node("累计完成值", "n1")).append(new JQTable.Node("年度指标完成率", "n2")).append(new JQTable.Node("去年同期值", "n3")).append(new JQTable.Node("同比增幅", "n4"))
+                    new JQTable.Node("当月完成", "dywc")
+                        .append(new JQTable.Node("本月计划值", "y1"))
+                        .append(new JQTable.Node("当月预计值", "y2"))
+                        .append(new JQTable.Node("计划完成率", "y3"))
+                        .append(new JQTable.Node("去年同期", "y4"))
+                        .append(new JQTable.Node("同比增幅", "y5")),
+                    new JQTable.Node("季度累计完成", "jdljwc")
+                        .append(new JQTable.Node("季度累计", "jl1"))
+                        .append(new JQTable.Node("季度计划完成率", "jl2"))
+                        .append(new JQTable.Node("去年同期值", "jl3"))
+                        .append(new JQTable.Node("同比增幅", "jl4")),
+                    new JQTable.Node("季度预计完成", "jdyjwc")
+                        .append(new JQTable.Node("末月预计", "jy1"))
+                        .append(new JQTable.Node("季度预计合计", "jy2"))
+                        .append(new JQTable.Node("季度预计完成率", "jy3"))
+                        .append(new JQTable.Node("去年同期", "jy4"))
+                        .append(new JQTable.Node("同比增幅", "jy5")),
+                    new JQTable.Node("年度累计完成", "nd")
+                        .append(new JQTable.Node("累计完成值", "n1"))
+                        .append(new JQTable.Node("年度指标完成率", "n2"))
+                        .append(new JQTable.Node("去年同期值", "n3"))
+                        .append(new JQTable.Node("同比增幅", "n4"))
                 ], gridName);
             }
             if (3 == gridStyle) {
@@ -105,10 +146,32 @@ var companys_zbhz_prediction;
                     new JQTable.Node("年度计划", "ndjh"),
                     new JQTable.Node("本季度计划", "jdjh"),
                     new JQTable.Node("下季度计划", "xjdjh"),
-                    new JQTable.Node("当月完成", "dywc").append(new JQTable.Node("本月计划值", "y1")).append(new JQTable.Node("当月预计值", "y2")).append(new JQTable.Node("计划完成率", "y3")).append(new JQTable.Node("去年同期", "y4")).append(new JQTable.Node("同比增幅", "y5")),
-                    new JQTable.Node("季度累计完成", "jdljwc").append(new JQTable.Node("季度累计", "jl1")).append(new JQTable.Node("季度计划完成率", "jl2")).append(new JQTable.Node("去年同期值", "jl3")).append(new JQTable.Node("同比增幅", "jl4")),
-                    new JQTable.Node("年度累计完成", "nd").append(new JQTable.Node("累计完成值", "n1")).append(new JQTable.Node("年度指标完成率", "n2")).append(new JQTable.Node("去年同期值", "n3")).append(new JQTable.Node("同比增幅", "n4")),
-                    new JQTable.Node("下季度预计完成", "xjdyjwc").append(new JQTable.Node("下季度首月预计", "xjy1")).append(new JQTable.Node("下季度次月预计", "xjy2")).append(new JQTable.Node("下季度末月预计", "xjy3")).append(new JQTable.Node("季度预计合计", "xjy4")).append(new JQTable.Node("季度预计完成率", "xjy5")).append(new JQTable.Node("年度累计", "xjy6")).append(new JQTable.Node("年度累计完成率", "xjy7")).append(new JQTable.Node("去年同期", "xjy8")).append(new JQTable.Node("同比增幅", "xjy9"))
+                    new JQTable.Node("当月完成", "dywc")
+                        .append(new JQTable.Node("本月计划值", "y1"))
+                        .append(new JQTable.Node("当月预计值", "y2"))
+                        .append(new JQTable.Node("计划完成率", "y3"))
+                        .append(new JQTable.Node("去年同期", "y4"))
+                        .append(new JQTable.Node("同比增幅", "y5")),
+                    new JQTable.Node("季度累计完成", "jdljwc")
+                        .append(new JQTable.Node("季度累计", "jl1"))
+                        .append(new JQTable.Node("季度计划完成率", "jl2"))
+                        .append(new JQTable.Node("去年同期值", "jl3"))
+                        .append(new JQTable.Node("同比增幅", "jl4")),
+                    new JQTable.Node("年度累计完成", "nd")
+                        .append(new JQTable.Node("累计完成值", "n1"))
+                        .append(new JQTable.Node("年度指标完成率", "n2"))
+                        .append(new JQTable.Node("去年同期值", "n3"))
+                        .append(new JQTable.Node("同比增幅", "n4")),
+                    new JQTable.Node("下季度预计完成", "xjdyjwc")
+                        .append(new JQTable.Node("下季度首月预计", "xjy1"))
+                        .append(new JQTable.Node("下季度次月预计", "xjy2"))
+                        .append(new JQTable.Node("下季度末月预计", "xjy3"))
+                        .append(new JQTable.Node("季度预计合计", "xjy4"))
+                        .append(new JQTable.Node("季度预计完成率", "xjy5"))
+                        .append(new JQTable.Node("年度累计", "xjy6"))
+                        .append(new JQTable.Node("年度累计完成率", "xjy7"))
+                        .append(new JQTable.Node("去年同期", "xjy8"))
+                        .append(new JQTable.Node("同比增幅", "xjy9"))
                 ], gridName);
             }
         };
@@ -131,7 +194,7 @@ var companys_zbhz_prediction;
             this.mCompanyId = companyId;
             this.mComps = comps;
             this.mCompanySelector = new Util.CompanySelector(false, this.mCompanyId, this.mComps);
-            $('h1').text(this.mYear + "年" + "季度项目公司及经营单位指标预测完成情况");
+            this.updateTextandTitle();
         };
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
@@ -143,6 +206,7 @@ var companys_zbhz_prediction;
             this.mDelegateMonth = parseInt(month);
         };
         View.prototype.exportExcel = function (fName) {
+            //var date : Util.Date = this.mDateSelector.getDate();
             var compType = this.mCompanySelector.getCompany();
             $("#export")[0].action = "hzb_companys_prediction_export.do?" + Util.Ajax.toUrlParam({ month: this.mActualMonth, year: this.mYear, companyId: compType });
             $("#export")[0].submit();
@@ -151,113 +215,112 @@ var companys_zbhz_prediction;
             var _this = this;
             this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
             var compType = this.mCompanySelector.getCompany();
-            this.mDataSet.get({ month: this.mActualMonth, year: this.mYear, companyId: compType }).then(function (dataArray) {
+            this.mDataSet.get({ month: this.mActualMonth, year: this.mYear, companyId: compType })
+                .then(function (dataArray) {
                 _this.mData = dataArray;
-                $('h1').text(_this.mYear + "年" + "季度项目公司及经营单位指标预测完成情况");
                 _this.updateTable();
+                _this.updateTextandTitle();
             });
         };
-        View.prototype.formatData = function (data, precentList) {
-            var row = [];
-            var isRs = false;
-            var isSxfyl = false;
-            var isJzcsyl = false;
-            var isXslvl = false;
-            for (var j = 0; j < this.mData.length; ++j) {
-                row = [].concat(this.mData[j]);
-                isRs = row[0] == "人数";
-                isJzcsyl = row[0] == '净资产收益率(%)';
-                isSxfyl = row[0] == '三项费用率(%)';
-                isXslvl = row[0] == '销售利润率(%)';
-                for (var i = 1; i < row.length; ++i) {
-                    if (precentList.contains(i)) {
-                        row[i] = Util.formatPercent(row[i]);
-                    }
-                    else {
-                        if (isRs) {
-                            row[i] = Util.formatInt(row[i]);
-                        }
-                        else if (isJzcsyl) {
-                            row[i] = Util.formatPercentSignal(row[i]);
-                        }
-                        else if (isSxfyl) {
-                            row[i] = Util.formatPercent(row[i]);
-                        }
-                        else if (isXslvl) {
-                            row[i] = Util.formatPercent(row[i]);
-                        }
-                        else {
-                            row[i] = Util.formatCurrency(row[i]);
-                        }
-                    }
-                }
-                data.push(row);
-            }
-            return data;
+        View.prototype.updateTextandTitle = function () {
+            $('h1').text(this.mYear + "年" + "季度项目公司及经营单位指标预测完成情况");
+            document.title = this.mYear + "年" + "季度项目公司及经营单位指标预测完成情况";
         };
-        View.prototype.formatFirstMonthData = function (data) {
+        View.prototype.formatFirstMonthData = function (outputData) {
             var precentList = new std.vector();
-            precentList.push(5 /* dyjhwcl */);
-            precentList.push(7 /* dytbzf */);
-            precentList.push(11 /* jdyjwcl */);
-            precentList.push(13 /* jdtbzf */);
-            precentList.push(15 /* ndzbwcl */);
-            precentList.push(17 /* ndtbzf */);
-            return this.formatData(data, precentList);
+            precentList.push(FirstMonthZb.dyjhwcl);
+            precentList.push(FirstMonthZb.dytbzf);
+            precentList.push(FirstMonthZb.jdyjwcl);
+            precentList.push(FirstMonthZb.jdtbzf);
+            precentList.push(FirstMonthZb.ndzbwcl);
+            precentList.push(FirstMonthZb.ndtbzf);
+            return Util.formatData(outputData, this.mData, precentList, [
+                FirstMonthZb.dyyjz,
+                FirstMonthZb.dyqntq,
+                FirstMonthZb.cyyj,
+                FirstMonthZb.myyj,
+                FirstMonthZb.jdyjhj,
+                FirstMonthZb.jdqntq,
+                FirstMonthZb.ndljwcz,
+                FirstMonthZb.ndqntqz
+            ]);
         };
-        View.prototype.formatSecondMonthData = function (data) {
+        View.prototype.formatSecondMonthData = function (outputData) {
             var precentList = new std.vector();
-            precentList.push(5 /* dyjhwcl */);
-            precentList.push(7 /* dytbzf */);
-            precentList.push(9 /* jdjhwcl */);
-            precentList.push(16 /* jdyjtbzf */);
-            precentList.push(14 /* jdyjwcl */);
-            precentList.push(11 /* jdtbzf */);
-            precentList.push(18 /* ndzbwcl */);
-            precentList.push(20 /* ndtbzf */);
-            return this.formatData(data, precentList);
+            precentList.push(SecondMonthZb.dyjhwcl);
+            precentList.push(SecondMonthZb.dytbzf);
+            precentList.push(SecondMonthZb.jdjhwcl);
+            precentList.push(SecondMonthZb.jdyjtbzf);
+            precentList.push(SecondMonthZb.jdyjwcl);
+            precentList.push(SecondMonthZb.jdtbzf);
+            precentList.push(SecondMonthZb.ndzbwcl);
+            precentList.push(SecondMonthZb.ndtbzf);
+            return Util.formatData(outputData, this.mData, precentList, [
+                SecondMonthZb.dyyjz,
+                SecondMonthZb.dyqntq,
+                SecondMonthZb.jdlj,
+                SecondMonthZb.jdqntqz,
+                SecondMonthZb.jdmyyj,
+                SecondMonthZb.jdyjhj,
+                SecondMonthZb.jdyjqntq,
+                SecondMonthZb.ndljwcz,
+                SecondMonthZb.ndqntqz
+            ]);
         };
-        View.prototype.formatThirdMonthData = function (data) {
+        View.prototype.formatThirdMonthData = function (outputData) {
             var precentList = new std.vector();
-            precentList.push(6 /* dyjhwcl */);
-            precentList.push(8 /* dytbzf */);
-            precentList.push(10 /* jdjhwcl */);
-            precentList.push(12 /* jdtbzf */);
-            precentList.push(14 /* ndzbwcl */);
-            precentList.push(16 /* ndtbzf */);
-            precentList.push(21 /* xjdyjwcl */);
-            precentList.push(23 /* xjdndljwcl */);
-            precentList.push(25 /* xjdtbzf */);
-            return this.formatData(data, precentList);
+            precentList.push(ThirdMonthZb.dyjhwcl);
+            precentList.push(ThirdMonthZb.dytbzf);
+            precentList.push(ThirdMonthZb.jdjhwcl);
+            precentList.push(ThirdMonthZb.jdtbzf);
+            precentList.push(ThirdMonthZb.ndzbwcl);
+            precentList.push(ThirdMonthZb.ndtbzf);
+            precentList.push(ThirdMonthZb.xjdyjwcl);
+            precentList.push(ThirdMonthZb.xjdndljwcl);
+            precentList.push(ThirdMonthZb.xjdtbzf);
+            return Util.formatData(outputData, this.mData, precentList, [
+                ThirdMonthZb.dyyjz,
+                ThirdMonthZb.dyqntq,
+                ThirdMonthZb.jdlj,
+                ThirdMonthZb.jdqntqz,
+                ThirdMonthZb.ndljwcz,
+                ThirdMonthZb.ndqntqz,
+                ThirdMonthZb.xjdsyyj,
+                ThirdMonthZb.xjdcyyj,
+                ThirdMonthZb.xjdmyyj,
+                ThirdMonthZb.xjdyjhj,
+                ThirdMonthZb.xjdndlj,
+                ThirdMonthZb.xjdqntq
+            ]);
         };
         View.prototype.updateTable = function () {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createTable(name, this.mDelegateMonth);
-            var data = [];
+            var outputdata = [];
             if (1 == this.mDelegateMonth) {
-                data = this.formatFirstMonthData(data);
+                this.formatFirstMonthData(outputdata);
             }
             else if (2 == this.mDelegateMonth) {
-                data = this.formatSecondMonthData(data);
+                this.formatSecondMonthData(outputdata);
             }
             else if (3 == this.mDelegateMonth) {
-                data = this.formatThirdMonthData(data);
-            }
-            for (var i = 0; i < data.length; ++i) {
-                if (data[i][0].lastIndexOf("计") >= 0) {
-                    tableAssist.setRowBgColor(i, 183, 222, 232);
-                }
+                this.formatThirdMonthData(outputdata);
             }
             var parent = $("#" + this.mTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                data: tableAssist.getData(data),
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
+                data: tableAssist.getData(outputdata),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                height: data.length > 23 ? 500 : '100%',
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
+                height: outputdata.length > 23 ? 500 : '100%',
                 width: 1330,
                 shrinkToFit: true,
                 rowNum: 100,
