@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="com/google/zxing/client/android/book/|com/google/zxing/client/android/encode/|com/google/zxing/client/android/history/|com/google/zxing/client/android/share/|com/google/zxing/client/android/HelpActivity.java|com/google/zxing/client/android/ScanFromWebPageManager.java|com/google/zxing/client/android/result/supplement/AmazonInfoRetriever.java|com/google/zxing/client/android/result/supplement/URIResultInfoRetriever.java|com/google/zxing/client/android/result/supplement/" kind="src" path="src"/>
+	<classpathentry excluding="com/google/zxing/client/android/book/|com/google/zxing/client/android/encode/|com/google/zxing/client/android/history/|com/google/zxing/client/android/share/|com/google/zxing/client/android/HelpActivity.java|com/google/zxing/client/android/ScanFromWebPageManager.java|com/google/zxing/client/android/result/supplement/AmazonInfoRetriever.java|com/google/zxing/client/android/result/supplement/URIResultInfoRetriever.java|com/google/zxing/client/android/result/supplement/|com/tbea/ic/util/Coordinate.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>

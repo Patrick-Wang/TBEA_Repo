@@ -26,7 +26,7 @@ public class FirstSeasonPredictionConfiguratorProxy extends FirstSeasonPredictio
 		if (cal.get(Calendar.YEAR) >= 2016 && allCompanies.size() == 1) {
 			stub = new FSPC2016SingleCompany(sbdzbDao, sjAcc, yjhAcc, njhAcc);
 		}else if (cal.get(Calendar.YEAR) >= 2016){
-			stub = new FSPC2016(sbdzbDao, sjAcc, yjhAcc, njhAcc);
+			stub = new FSPC2016(sbdzbDao, sjAcc, yjhAcc, njhAcc);  
 		} else{
 			stub = new FSPCDefault(sbdzbDao, sjAcc, yjhAcc, njhAcc);
 		}

@@ -1,4 +1,4 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -382,7 +382,8 @@ var Util;
         return Ajax;
     })();
     Util.Ajax = Ajax;
-    function formatData(outputData, inputData, precentList, specialsjzhCols) {
+    function formatData(outputData, inputData, precentList, specialsjzhCols, formatStartColumn) {
+        if (formatStartColumn === void 0) { formatStartColumn = 1; }
         var zhZb = [
             '人均发电量（万度/人）',
             '外购电单位成本（元/度）',
@@ -405,14 +406,20 @@ var Util;
             '委托加工化成箔符单率（%）',
             '架空电缆（1KV、10KV）合格率（%）',
             '钢芯铝绞线合格率（%）',
-            '布电线合格率（%）'
-        ];
+            '布电线合格率（%）'];
         var formaterChain = new Util.FormatPercentHandler([], precentList.toArray());
-        formaterChain.next(new Util.FormatIntHandler(["人数"])).next(new Util.FormatPercentSignalHandler(['净资产收益率(%)'])).next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)', '负债率'])).next(new Util.FormatFordotHandler(1, ['人均利润', '人均收入', '精铝块13项元素和值（ppm）'])).next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], specialsjzhCols)).next(new Util.FormatFordotHandler(2, zhZb)).next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）'])).next(new Util.FormatCurrencyHandler());
+        formaterChain.next(new Util.FormatIntHandler(['人数', '制造业人数', '工程、修试业务人数', '物流贸易人数']))
+            .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
+            .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)', '负债率', '制造业三项费用率', '工程、修试业务三项费用率', '物流贸易三项费用率']))
+            .next(new Util.FormatFordotHandler(1, ['人均利润', '人均收入', '精铝块13项元素和值（ppm）']))
+            .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], specialsjzhCols))
+            .next(new Util.FormatFordotHandler(2, zhZb))
+            .next(new Util.FormatFordotHandler(4, ['单位供电成本（元/度）']))
+            .next(new Util.FormatCurrencyHandler());
         var row = [];
         for (var j = 0; j < inputData.length; ++j) {
             row = [].concat(inputData[j]);
-            for (var i = 1; i < row.length; ++i) {
+            for (var i = formatStartColumn; i < row.length; ++i) {
                 row[i] = formaterChain.handle(row[0], i, row[i]);
             }
             outputData.push(row);
@@ -420,62 +427,64 @@ var Util;
         return;
     }
     Util.formatData = formatData;
+    function toNumber(val) {
+        var numberTpe = new Number(val).valueOf();
+        return numberTpe;
+    }
+    Util.toNumber = toNumber;
     function formatInt(val) {
-        if (val === "--" || val === "") {
-            return val;
-        }
-        return parseInt(val) + "";
+        return formatFordot(val, 0);
     }
     Util.formatInt = formatInt;
-    function formatCurrency(val) {
-        if (val === "--" || val === "") {
+    function formatCommaCurrency(val, dotCount) {
+        if (dotCount === void 0) { dotCount = 0; }
+        if (val === "--" || val === "" || val === "-") {
             return val;
         }
-        return parseFloat(val).toFixed(0) + "";
-        //        val = parseFloat(val).toFixed(0) + "";
-        //        var dot: number = val.lastIndexOf('.');
-        //        var intPart: string = "";
-        //        var parts: string[] = [];
-        //        var positive: boolean = (val.charAt(0) != '-');
-        //        if (dot > 0) {
-        //            if (positive) {
-        //                intPart = val.substring(0, dot);
-        //            } else {
-        //                intPart = val.substring(1, dot);
-        //            }
-        //            parts.push(val.substring(dot));
-        //        }
-        //        else {
-        //            if (positive) {
-        //                intPart = val;
-        //            } else {
-        //                intPart = val.substring(1);
-        //            }
-        //        }
-        //
-        //        var leftLength: number = intPart.length;
-        //
-        //        while (leftLength > 3) {
-        //            parts.push("," + intPart.substring(leftLength - 3, leftLength));
-        //            leftLength -= 3;
-        //        }
-        //
-        //        parts.push(intPart.substring(0, leftLength));
-        //
-        //        if (!positive) {
-        //            parts.push("-");
-        //        }
-        //
-        //        parts = parts.reverse();
-        //
-        //        return parts.join("");
+        val = toNumber(val).toFixed(dotCount);
+        var dot = val.lastIndexOf('.');
+        var intPart = "";
+        var parts = [];
+        var positive = (val.charAt(0) != '-');
+        if (dot > 0) {
+            if (positive) {
+                intPart = val.substring(0, dot);
+            }
+            else {
+                intPart = val.substring(1, dot);
+            }
+            parts.push(val.substring(dot));
+        }
+        else {
+            if (positive) {
+                intPart = val;
+            }
+            else {
+                intPart = val.substring(1);
+            }
+        }
+        var leftLength = intPart.length;
+        while (leftLength > 3) {
+            parts.push("," + intPart.substring(leftLength - 3, leftLength));
+            leftLength -= 3;
+        }
+        parts.push(intPart.substring(0, leftLength));
+        if (!positive) {
+            parts.push("-");
+        }
+        parts = parts.reverse();
+        return parts.join("");
+    }
+    Util.formatCommaCurrency = formatCommaCurrency;
+    function formatCurrency(val) {
+        return formatFordot(val, 0);
     }
     Util.formatCurrency = formatCurrency;
     function formatPercent(val) {
         if (val === "--" || val === "" || val === "-") {
             return val;
         }
-        return (parseFloat(val) * 100).toFixed(1) + "%";
+        return (toNumber(val) * 100).toFixed(1) + "%";
     }
     Util.formatPercent = formatPercent;
     function formatFordot(val, dotCount) {
@@ -483,14 +492,14 @@ var Util;
         if (val === "--" || val === "" || val === "-") {
             return val;
         }
-        return (parseFloat(val)).toFixed(dotCount);
+        return toNumber(val).toFixed(dotCount);
     }
     Util.formatFordot = formatFordot;
     function formatPercentSignal(val) {
         if (val === "--" || val === "" || val === "-") {
             return val;
         }
-        return (parseFloat(val)).toFixed(1) + "%";
+        return toNumber(val).toFixed(1) + "%";
     }
     Util.formatPercentSignal = formatPercentSignal;
     function isExist(val) {

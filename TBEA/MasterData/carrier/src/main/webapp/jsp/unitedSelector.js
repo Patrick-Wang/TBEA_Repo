@@ -1,3 +1,4 @@
+/// <reference path="jqgrid/vector.ts" />
 var Util;
 (function (Util) {
     var DataNode = (function () {
@@ -126,7 +127,7 @@ var Util;
             return retNodes;
         };
         return DataNode;
-    }());
+    })();
     Util.DataNode = DataNode;
     var UnitedSelector = (function () {
         function UnitedSelector(data, ctrlId, path) {
@@ -257,6 +258,6 @@ var Util;
             }
         };
         return UnitedSelector;
-    }());
+    })();
     Util.UnitedSelector = UnitedSelector;
 })(Util || (Util = {}));

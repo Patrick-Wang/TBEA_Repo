@@ -1,56 +1,47 @@
 package com.tbea.ic.scanner.net;
 
 import java.io.File;
-import java.util.Calendar;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.cookie.Cookie;
 import org.jdeferred.Deferred;
 import org.jdeferred.Promise;
 import org.jdeferred.impl.DeferredObject;
-import org.json.JSONObject;
-
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-import com.tbea.ic.scanner.net.bean.User;
 import com.tbea.ic.scanner.net.config.Configurations;
 import com.tbea.ic.scanner.net.config.LANConfigurations;
 import com.tbea.ic.scanner.net.config.WANConfigurations;
-import com.tbea.ic.util.JsonUtil;
+import com.tbea.ic.scanner.net.entity.DataNode;
+import com.tbea.ic.scanner.net.entity.ErrorMessage;
+import com.tbea.ic.scanner.net.entity.User;
+import com.tbea.ic.util.Tool;
+import com.tbea.ic.util.json.JsonException;
+import com.tbea.ic.util.json.JsonReflector;
 
+import org.json.JSONArray;
 public class Server {
 
-	private AQuery aq = null;
+	private AQuery query = null;
 	private Configurations config = null;
-	private User user = null;
+	private User user = new User();
 	private static Server instance = null;
 
+	private Server(AQuery aq, Configurations config) {
+		super();
+		this.query = aq;
+		this.config = config;
+	}
+	
 	public static void resetAsLANServer(AQuery aq) {
 		instance = new Server(aq, new LANConfigurations());
 	}
 
 	public static void resetAsWANServer(AQuery aq) {
 		instance = new Server(aq, new WANConfigurations());
-	}
-
-	public static String getServerDataUpdateTime() {
-		Calendar calendar = Calendar.getInstance();
-
-		int delta = 2;
-		int hour = calendar.get(Calendar.HOUR_OF_DAY);
-		if (hour >= 2) {
-			delta = 1;
-		}
-
-		int day = calendar.get(Calendar.DAY_OF_MONTH) - delta;
-		return calendar.get(Calendar.YEAR) + "/"
-				+ (calendar.get(Calendar.MONTH) + 1) + "/" + day;
 	}
 
 	public User getUser() {
@@ -61,17 +52,11 @@ public class Server {
 		return instance;
 	}
 
-	private Server(AQuery aq, Configurations config) {
-		super();
-		this.aq = aq;
-		this.config = config;
-	}
-
 	public Promise<String, AjaxStatus, Integer> download(String url,
 			final String fileName) {
 		File file = new File(fileName);
 		final Deferred<String, AjaxStatus, Integer> deferred = new DeferredObject<String, AjaxStatus, Integer>();
-		aq.download(url, file, new AjaxCallback<File>() {
+		query.download(url, file, new AjaxCallback<File>() {
 			@Override
 			public void callback(String url, File file, AjaxStatus status) {
 				if (200 == status.getCode()) {
@@ -88,15 +73,15 @@ public class Server {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("version", "" + version);
 		final Deferred<String, AjaxStatus, Integer> deferred = new DeferredObject<String, AjaxStatus, Integer>();
-		aq.ajax(config.getUpdateUrl(), map, String.class,
-				new AjaxCallback<String>() {
+		query.ajax(config.getUpdateUrl(), map, ErrorMessage.class,
+				new AjaxCallback<ErrorMessage>() {
 					@Override
-					public void callback(String url, String ret,
+					public void callback(String url, ErrorMessage em,
 							AjaxStatus status) {
 
 						if (status.getCode() == 200) {
-							if (!"null".equals(ret)) {
-								deferred.resolve(config.getHost() + ret);
+							if (em.getErrorCode() == 0) {
+								deferred.resolve(config.getHost() + em.getMessage());
 							} else {
 								deferred.resolve(null);
 							}
@@ -104,51 +89,41 @@ public class Server {
 							deferred.reject(status);
 						}
 					}
-				}.timeout(3000));
+				}.timeout(5000));
 		return deferred.promise();
 	}
-
+	
 	public Promise<User, AjaxStatus, Integer> login(String userName,
-			String password) {
+			String password) throws NoSuchAlgorithmException {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("username", userName);
-		map.put("password", password);
+		map.put("password", Tool.getMD5(password));
+		user.setUserid(userName);
+		user.setPwd(password);
 		final Deferred<User, AjaxStatus, Integer> deferred = new DeferredObject<User, AjaxStatus, Integer>();
-		aq.ajax(config.getLoginUrl(), map, JSONObject.class,
-				new AjaxCallback<JSONObject>() {
+		query.ajax(config.getLoginUrl(), map, JSONArray.class,
+				new AjaxCallback<JSONArray>() {
 
+					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
-					public void callback(String url, JSONObject json,
+					public void callback(String url, JSONArray json,
 							AjaxStatus status) {
-						if (json != null) {
-
-							CookieSyncManager.createInstance(aq.getContext());
-							CookieManager cookieManager = CookieManager
-									.getInstance();
-							cookieManager.setAcceptCookie(true);
-							cookieManager.removeSessionCookie();
-							List<Cookie> cookies = status.getCookies();
-							if (!cookies.isEmpty()) {
-								StringBuilder sbCookie = new StringBuilder();
-
-								for (Cookie cook : cookies) {
-									sbCookie.append(String.format(";%s=%s",
-											cook.getName(), cook.getValue()));
-								}
-
-								cookieManager.setCookie(url, sbCookie
-										.toString().substring(1));
+						if (status.getCode() == 200){
+							try {
+								user.setRights((List)JsonReflector.toList(json, DataNode.class));
+							} catch (JsonException e) {
+								System.out.println(json.toString());
+								e.printStackTrace();
+							} catch (Exception e) {
+								e.printStackTrace();
 							}
-							CookieSyncManager.getInstance().sync();
-
-							user = (User) JsonUtil.jsonToBean(json, User.class);
 							deferred.resolve(user);
-						} else {
+							
+						}else{
 							deferred.reject(status);
 						}
-
 					}
-				});
+				}.timeout(5000));
 		return deferred.promise();
 	}
 }

@@ -4,66 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/main_content"
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="fill_parent"
+        android:layout_weight="1" 
+        android:orientation="vertical"/>
 
     <RadioGroup
         android:id="@+id/tab_menu"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <RadioButton
-            android:id="@+id/rb1"
-            android:layout_width="0dp"
-            android:layout_height="@pct/y8"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:background="@drawable/cu_al_radio"
-            android:button="@null"
-            android:checked="true"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="A"
-            android:textColor="#000000" />
-
-        <RadioButton
-            android:id="@+id/rb2"
-            android:layout_width="0dp"
-            android:layout_height="@pct/y8"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:background="@drawable/cu_al_radio"
-            android:button="@null"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="B"
-            android:textColor="#000000" />
-
-        <RadioButton
-            android:id="@+id/rb3"
-            android:layout_width="0dp"
-            android:layout_height="@pct/y8"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:background="@drawable/cu_al_radio"
-            android:button="@null"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="C"
-            android:textColor="#000000" />
-
-        <RadioButton
-            android:id="@+id/rb4"
-            android:layout_width="0dp" 
-            android:layout_height="@pct/y8"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:background="@drawable/cu_al_radio"
-            android:button="@null"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="D"
-            android:textColor="#000000" />
+        android:orientation="horizontal" >      
     </RadioGroup>
 
 </LinearLayout>

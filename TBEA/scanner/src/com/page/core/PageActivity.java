@@ -29,10 +29,12 @@ public abstract class PageActivity extends Activity implements Callback {
 		return bus;
 	}
 
-	public PctPixel pctPixel() {
-		return pctPixel;
+	public Integer pct2Pixel(int pctId){
+		String spct = getString(pctId).replace("px", "");
+		Double pct = Double.valueOf(spct);
+		return pctPixel.toPixel(pct.intValue());
 	}
-
+	
 	public Integer hostId() {
 		return hostId;
 	}

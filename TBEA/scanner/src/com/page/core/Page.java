@@ -50,8 +50,8 @@ public abstract class Page extends Fragment {
 		return mPage;
 	}
 
-	protected AQuery query() {
-		return mAQuery;
+	protected AQuery query(int id) {
+		return mAQuery.id(id);
 	}
 
 	protected Bus bus() {
@@ -68,13 +68,19 @@ public abstract class Page extends Fragment {
 		return mPage;
 	}
 
+
+	
+	public void updateLayout(){
+		activity().coordinatePreProcess(mPage);
+	}
+	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		if (!mInit){
 			mInit = true;
-			activity().coordinatePreProcess(mPage);
-			onInitialize();
+			updateLayout();
+			onInitialize();	
 		}
 	}
 

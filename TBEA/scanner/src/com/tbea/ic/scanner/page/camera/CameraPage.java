@@ -37,7 +37,7 @@ public class CameraPage extends Page implements SurfaceHolder.Callback {
 	protected void onInitialize() {
 		beepManager = new BeepManager(getActivity());
 		cameraManager = new CameraManager(this.getActivity().getApplication());
-		viewfinderView = (ViewfinderView) query().id(R.id.viewfinder_view)
+		viewfinderView = (ViewfinderView) query(R.id.viewfinder_view)
 				.getView();
 		viewfinderView.setCameraManager(cameraManager);
 		
@@ -54,7 +54,7 @@ public class CameraPage extends Page implements SurfaceHolder.Callback {
 	    }
 	    cameraManager.closeDriver();
 	    if (!hasSurface) {
-	    	SurfaceView surfaceView = (SurfaceView) query().id(R.id.preview_view)
+	    	SurfaceView surfaceView = (SurfaceView) query(R.id.preview_view)
 					.getView();
 	      SurfaceHolder surfaceHolder = surfaceView.getHolder();
 	      surfaceHolder.removeCallback(this);
@@ -65,7 +65,7 @@ public class CameraPage extends Page implements SurfaceHolder.Callback {
 
 	@Override
 	public void onResume() {
-		SurfaceView surfaceView = (SurfaceView) query().id(R.id.preview_view)
+		SurfaceView surfaceView = (SurfaceView) query(R.id.preview_view)
 				.getView();
 		SurfaceHolder surfaceHolder = surfaceView.getHolder();
 		if (hasSurface) {

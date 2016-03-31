@@ -1,3 +1,4 @@
+/// <reference path="vector.ts" />
 (function () {
     $.fn.jqGrid.setGroupHeaders = function (o) {
         o = $.extend({
@@ -5,9 +6,15 @@
             depth: 2,
             groupHeaders: []
         }, o || {});
-        return this.each(function () {
+        return this
+            .each(function () {
             this.p.groupHeader = o;
-            var ts = this, i, cmi, skip = 0, $tr, $colHeader, th, $th, thStyle, iCol, cghi, numberOfColumns, titleText, cVisibleColumns, colModel = ts.p.colModel, cml = colModel.length, ths = ts.grid.headers, $htable = $("table.ui-jqgrid-htable", ts.grid.hDiv), $trLabels = $htable.children("thead").children("tr.ui-jqgrid-labels:last").addClass("jqg-second-row-header"), $thead = $htable.children("thead"), $theadInTable, $firstHeaderRow = $htable.find(".jqg-first-row-header");
+            var ts = this, i, cmi, skip = 0, $tr, $colHeader, th, $th, thStyle, iCol, cghi, 
+            // startColumnName,
+            numberOfColumns, titleText, cVisibleColumns, colModel = ts.p.colModel, cml = colModel.length, ths = ts.grid.headers, $htable = $("table.ui-jqgrid-htable", ts.grid.hDiv), $trLabels = $htable
+                .children("thead").children("tr.ui-jqgrid-labels:last").addClass("jqg-second-row-header"), $thead = $htable
+                .children("thead"), $theadInTable, $firstHeaderRow = $htable
+                .find(".jqg-first-row-header");
             if ($firstHeaderRow[0] === undefined) {
                 $firstHeaderRow = $('<tr>', {
                     role: "row",
@@ -34,6 +41,7 @@
                 th = ths[i].el;
                 $th = $(th);
                 cmi = colModel[i];
+                // build the next cell for the first header row
                 thStyle = {
                     height: '0px',
                     width: ths[i].width + 'px',
@@ -42,20 +50,29 @@
                 $("<th>", {
                     role: 'gridcell'
                 }).css(thStyle).addClass("ui-first-th-" + ts.p.direction).appendTo($firstHeaderRow);
-                th.style.width = "";
+                th.style.width = ""; // remove unneeded style
                 iCol = inColumnHeader(cmi.name, o.groupHeaders);
                 if (iCol >= 0) {
                     cghi = o.groupHeaders[iCol];
                     numberOfColumns = cghi.numberOfColumns;
                     titleText = cghi.titleText;
-                    for (cVisibleColumns = 0, iCol = 0; iCol < numberOfColumns && (i + iCol < cml); iCol++) {
+                    // caclulate the number of visible columns from the
+                    // next numberOfColumns columns
+                    for (cVisibleColumns = 0, iCol = 0; iCol < numberOfColumns
+                        && (i + iCol < cml); iCol++) {
                         if (!colModel[i + iCol].hidden) {
                             cVisibleColumns++;
                         }
                     }
+                    // The next numberOfColumns headers will be moved in
+                    // the next row
+                    // in the current row will be placed the new column
+                    // header with the titleText.
+                    // The text will be over the cVisibleColumns columns
                     $colHeader = $('<th>').attr({
                         role: "columnheader"
-                    }).addClass("ui-state-default ui-th-column-header ui-th-" + ts.p.direction).css({
+                    }).addClass("ui-state-default ui-th-column-header ui-th-"
+                        + ts.p.direction).css({
                         'height': '22px',
                         'border-top': '0 none'
                     }).html(titleText);
@@ -65,22 +82,29 @@
                     if (ts.p.headertitles) {
                         $colHeader.attr("title", $colHeader.text());
                     }
+                    // hide if not a visible cols
                     if (cVisibleColumns === 0) {
                         $colHeader.hide();
                     }
-                    $th.before($colHeader);
-                    $tr.append(th);
+                    $th.before($colHeader); // insert new column header
+                    // before the current
+                    $tr.append(th); // move the current header in the
+                    // next row
+                    // set the coumter of headers which will be moved in
+                    // the next row
                     skip = numberOfColumns - 1;
                 }
                 else {
                     if (skip === 0) {
                         if (o.useColSpanStyle) {
+                            // expand the header height to two rows
                             $th.attr("rowspan", o.depth + "");
                         }
                         else {
                             $('<th>', {
                                 role: "columnheader"
-                            }).addClass("ui-state-default ui-th-column-header ui-th-" + ts.p.direction).css({
+                            }).addClass("ui-state-default ui-th-column-header ui-th-"
+                                + ts.p.direction).css({
                                 "display": cmi.hidden ? 'none' : '',
                                 'border-top': '0 none'
                             }).insertBefore($th);
@@ -88,6 +112,9 @@
                         }
                     }
                     else {
+                        // move the header to the next row
+                        // $th.css({"padding-top": "2px", height:
+                        // "19px"});
                         $tr.append(th);
                         skip--;
                     }
@@ -98,16 +125,34 @@
             $tr.insertAfter($trLabels);
             $htable.append($theadInTable);
             if (o.useColSpanStyle) {
-                $htable.find("span.ui-jqgrid-resize").each(function () {
+                // Increase the height of resizing span of visible
+                // headers
+                $htable
+                    .find("span.ui-jqgrid-resize")
+                    .each(function () {
                     var $parent = $(this).parent();
                     if ($parent.is(":visible")) {
-                        this.style.cssText = 'height: ' + $parent.height() + 'px !important; cursor: col-resize;';
+                        this.style.cssText = 'height: '
+                            + $parent.height()
+                            + 'px !important; cursor: col-resize;';
                     }
                 });
-                $htable.find("div.ui-jqgrid-sortable").each(function () {
-                    var $ts = $(this), $parent = $ts.parent();
-                    if ($parent.is(":visible") && $parent.is(":has(span.ui-jqgrid-resize)")) {
-                        $ts.css('top', ($parent.height() - $ts.outerHeight()) / 2 + 'px');
+                // Set position of the sortable div (the main lable)
+                // with the column header text to the middle of the
+                // cell.
+                // One should not do this for hidden headers.
+                $htable
+                    .find("div.ui-jqgrid-sortable")
+                    .each(function () {
+                    var $ts = $(this), $parent = $ts
+                        .parent();
+                    if ($parent.is(":visible")
+                        && $parent
+                            .is(":has(span.ui-jqgrid-resize)")) {
+                        $ts.css('top', ($parent
+                            .height() - $ts
+                            .outerHeight())
+                            / 2 + 'px');
                     }
                 });
             }
@@ -127,29 +172,63 @@ var JQTable;
     })(JQTable.TextAlign || (JQTable.TextAlign = {}));
     var TextAlign = JQTable.TextAlign;
     var Node = (function () {
-        function Node(name, id, isReadOnly, align, width) {
+        function Node(name, id, isReadOnly, align, width, editType, options, isNumber, 
+            //add by hzdqzy
+            isSortable, sorttype) {
             if (isReadOnly === void 0) { isReadOnly = true; }
-            if (align === void 0) { align = 1 /* Right */; }
+            if (align === void 0) { align = TextAlign.Right; }
             if (width === void 0) { width = 0; }
+            if (editType === void 0) { editType = undefined; }
+            if (options === void 0) { options = undefined; }
+            if (isNumber === void 0) { isNumber = true; }
+            if (isSortable === void 0) { isSortable = false; }
+            if (sorttype === void 0) { sorttype = undefined; }
             this.mChilds = [];
             this.mParent = null;
-            this.mWidth = width;
-            this.mName = name;
-            this.mId = id;
-            this.mReadOnly = isReadOnly;
-            this.mAlign = align;
+            this.mOpts = {
+                name: name,
+                id: id,
+                isReadOnly: isReadOnly,
+                isNumber: isNumber,
+                align: align,
+                width: width,
+                editType: editType,
+                options: options,
+                //add by hzdqzy
+                isSortable: isSortable,
+                sorttype: sorttype
+            };
         }
+        Node.create = function (opts) {
+            var node = new Node(null, null);
+            node.mOpts = $.extend({}, {
+                isReadOnly: true,
+                isNumber: true,
+                align: TextAlign.Right,
+                width: 0
+            }, opts);
+            return node;
+        };
         Node.prototype.align = function () {
-            return this.mAlign;
+            return this.mOpts.align;
         };
         Node.prototype.width = function () {
-            if (this.mWidth == undefined) {
+            if (this.mOpts.width == undefined) {
                 return -1;
             }
-            return this.mWidth;
+            return this.mOpts.width;
         };
         Node.prototype.isReadOnly = function () {
-            return true == this.mReadOnly;
+            return true == this.mOpts.isReadOnly;
+        };
+        Node.prototype.isNumber = function () {
+            return true == this.mOpts.isNumber;
+        };
+        Node.prototype.editType = function () {
+            return this.mOpts.editType;
+        };
+        Node.prototype.editOptions = function () {
+            return this.mOpts.options;
         };
         Node.prototype.append = function (child) {
             this.mChilds.push(child);
@@ -167,12 +246,12 @@ var JQTable;
         };
         Node.prototype.idChain = function () {
             if (this.mParent != null) {
-                return this.mParent.idChain() + "_" + this.mId;
+                return this.mParent.idChain() + "_" + this.mOpts.id;
             }
-            return this.mId;
+            return this.mOpts.id;
         };
         Node.prototype.id = function () {
-            return this.mId;
+            return this.mOpts.id;
         };
         Node.prototype.leavesCount = function () {
             var count = 0;
@@ -220,7 +299,7 @@ var JQTable;
             return childDepth + 1;
         };
         Node.prototype.name = function () {
-            return this.mName;
+            return this.mOpts.name;
         };
         Node.prototype.children = function (depth) {
             var children = new std.vector();
@@ -236,6 +315,13 @@ var JQTable;
                 }
             }
             return children.toArray();
+        };
+        //add by hzdqzy-------------------------------------------------------
+        Node.prototype.isSortable = function () {
+            return this.mOpts.isSortable;
+        };
+        Node.prototype.sorttype = function () {
+            return this.mOpts.sorttype;
         };
         return Node;
     })();
@@ -318,21 +404,25 @@ var JQTable;
                     this.mColModel.push({
                         name: colId,
                         index: colId,
-                        sortable: false,
+                        sortable: nodes[j].isSortable(),
+                        sorttype: nodes[j].sorttype(),
                         editable: !nodes[j].isReadOnly(),
-                        editrules: !nodes[j].isReadOnly() ? { number: true } : undefined,
+                        edittype: nodes[j].editType(),
+                        editoptions: nodes[j].editOptions(),
+                        editrules: !nodes[j].isReadOnly() ? { number: nodes[j].isNumber() } : undefined,
+                        //editrules:undefined,
                         cellattr: function (rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
                     });
                     switch (nodes[j].align()) {
-                        case 0 /* Left */:
+                        case TextAlign.Left:
                             this.mColModel[this.mColModel.length - 1].align = 'left';
                             break;
-                        case 2 /* Center */:
+                        case TextAlign.Center:
                             this.mColModel[this.mColModel.length - 1].align = 'center';
                             break;
-                        case 1 /* Right */:
+                        case TextAlign.Right:
                             this.mColModel[this.mColModel.length - 1].align = 'right';
                             break;
                     }
@@ -404,7 +494,8 @@ var JQTable;
             var leaves = [];
             for (var i in this.mTitle) {
                 leaves = this.mTitle[i].leaves();
-                if (colCount < (col + 1) && (col + 1) <= (colCount + leaves.length)) {
+                if (colCount < (col + 1)
+                    && (col + 1) <= (colCount + leaves.length)) {
                     return leaves[col - colCount].idChain();
                 }
                 colCount += leaves.length;
@@ -418,7 +509,11 @@ var JQTable;
         };
         JQGridAssistant.prototype.group = function () {
             var _this = this;
+            var finished = false;
             this.completeList.push(function () {
+                if (finished) {
+                    return;
+                }
                 var nodes = [];
                 var headers = [];
                 var grid = $("#" + _this.mGridName + "");
@@ -428,7 +523,8 @@ var JQTable;
                     for (var node in nodes) {
                         if (nodes[node].leavesCount() > 0) {
                             headers.push({
-                                startColumnName: nodes[node].mostLeftLeaf().idChain(),
+                                startColumnName: nodes[node].mostLeftLeaf()
+                                    .idChain(),
                                 numberOfColumns: nodes[node].leavesCount(),
                                 titleText: nodes[node].name()
                             });
@@ -440,6 +536,7 @@ var JQTable;
                         groupHeaders: headers
                     });
                 }
+                finished = true;
             });
         };
         JQGridAssistant.prototype.getLevelNodes = function (level) {
@@ -485,12 +582,19 @@ var JQTable;
             }
             return alldata;
         };
+        //			public bindSorter(col : number, sorter, grid) {
+        //				this.mColModel[col]["sorttype"] = function(cell, obj) {
+        //					return sorter.weight(cell, grid.jqGrid('getGridParam',
+        //							'sortorder') == "asc");
+        //				};
+        //			},
         JQGridAssistant.prototype.mergeRow = function (iCol, iRowStart, ilen) {
             var _this = this;
             if (iRowStart != undefined) {
                 this.completeList.push(function () {
                     var col = _this.id(iCol);
                     var grid = $("#" + _this.mGridName + "");
+                    //得到显示到界面的id集合
                     var mya = grid.getDataIDs();
                     for (var i = iRowStart + 1; i < mya.length && i < iRowStart + ilen; i++) {
                         grid.setCell(mya[i], col, '', {
@@ -507,6 +611,7 @@ var JQTable;
                 this.completeList.push(function () {
                     var col = _this.id(iCol);
                     var grid = $("#" + _this.mGridName + "");
+                    //得到显示到界面的id集合
                     var mya = grid.getDataIDs();
                     var mergelen = 1;
                     var data = grid.getCell(mya[0], col);
@@ -539,7 +644,7 @@ var JQTable;
             if (row != undefined) {
                 this.completeList.push(function () {
                     if (align == undefined) {
-                        align = 2 /* Center */;
+                        align = TextAlign.Center;
                     }
                     ++row;
                     var leftCell = $("#" + _this.mGridName + " #" + row + " #" + _this.id(col) + row);
@@ -638,7 +743,9 @@ var JQTable;
                     var widthList = [iWidht];
                     for (var i = 1; i < iCount; i++) {
                         headerMerge = $("#" + _this.mGridName + "_" + _this.id(iColStart + i));
-                        widthList.push(parseInt(headerMerge.css("width").replace("px", "")) + parseInt(headerMerge.css("padding-left").replace("px", "")) + parseInt(headerMerge.css("padding-right").replace("px", "")));
+                        widthList.push(parseInt(headerMerge.css("width").replace("px", "")) +
+                            parseInt(headerMerge.css("padding-left").replace("px", "")) +
+                            parseInt(headerMerge.css("padding-right").replace("px", "")));
                         iWidht += widthList[widthList.length - 1];
                         headerMerge.removeClass("ui-state-default");
                         headerMerge.children("span").css("display", "none");
@@ -699,6 +806,25 @@ var JQTable;
                     if (mergeLen > 1) {
                         _this.mergeTitle(_this.mTitle.length - mergeLen, mergeLen, hidden);
                     }
+                    //						this.mResizeList.push(function(nw, iCol){
+                    //							if (iCol == iColStart) {
+                    //								var usedWidth = 0;
+                    //								var curFirstWidth = nw;
+                    //								nw += nw - firstWidht + iWidht;
+                    //								sizeTitle.css("width", nw + "px");
+                    //								for (var i = 0; i < widthList.Length; i++) {
+                    //									usedWidth += (nw - iWidht) * widthList[i] / iWidht;
+                    //									widthList[i] += (nw - iWidht) * widthList[i] / iWidht;
+                    //								}
+                    //								widthList[0] += nw - usedWidth;
+                    //								
+                    //								for (var i = 0; i < widthList.length; i++) {
+                    //				("#" + this.mGridName + " .jqgfirstrow td:eq(" + i + iColStart + ")").css("width", widthList[i] + "px");
+                    //								}
+                    //								iWidht = nw;
+                    //								firstWidht = curFirstWidth;
+                    //							}
+                    //						}.bind(this));
                 });
             }
         };
@@ -791,6 +917,12 @@ var JQTable;
             if (option.colModel == undefined) {
                 option.colModel = this.getColModel();
             }
+            //            if (option.datatype != "local") {
+            //                option.jsonReader = {
+            //                    cell: "",
+            //                    id: "0"
+            //                };
+            //            }
             if (option.loadError != undefined) {
                 var onFailed = option.loadError;
                 option.loadError = function () {

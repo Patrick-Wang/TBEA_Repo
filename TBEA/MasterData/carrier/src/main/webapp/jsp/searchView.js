@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var searchView;
 (function (searchView) {
     var JQGridAssistantFactory = (function () {
@@ -22,7 +24,7 @@ var searchView;
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("query_by_name.do");
@@ -32,6 +34,7 @@ var searchView;
         };
         View.prototype.initInstance = function (opt) {
             this.mOpt = opt;
+            //this.updateTitle();
             this.updateUI();
         };
         View.prototype.updateUI = function () {
@@ -40,6 +43,7 @@ var searchView;
             if (val.length != 0) {
                 this.mDataSet.get({ companyName: val })
                     .then(function (data) {
+                    //                    this.updateTitle();
                     if (undefined != data.result) {
                         var parent = $("#table");
                         parent.empty();
@@ -51,6 +55,10 @@ var searchView;
                 });
             }
         };
+        //        private updateTitle(){
+        //             $('h1').text("new header");
+        //             document.title = "new header";    
+        //        }
         View.prototype.updateTable = function (tableId, data) {
             var name = tableId + "_jqgrid";
             var tableAssist = JQGridAssistantFactory.createFlatTable(name, [
@@ -78,11 +86,14 @@ var searchView;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: data,
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth: true,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: data.length > 25 ? 550 : '100%',
@@ -94,6 +105,6 @@ var searchView;
         };
         View.instance = new View();
         return View;
-    }());
+    })();
     searchView.View = View;
 })(searchView || (searchView = {}));

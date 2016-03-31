@@ -22,7 +22,7 @@ public class SubmitPage extends Page {
 		if (event.getResult() != null) {
 			Toast.makeText(activity(), event.getResult().getText(),
 					Toast.LENGTH_SHORT).show();
-			query().id(R.id.seriesnumber).text(event.getResult().getText());
+			query(R.id.seriesnumber).text(event.getResult().getText());
 		}else{
 			goBack();
 		}
@@ -30,17 +30,17 @@ public class SubmitPage extends Page {
 
 	@Override
 	protected void onInitialize() {
-		query().id(R.id.submit).clicked(new OnClickListener(){
+		query(R.id.submit).clicked(new OnClickListener(){
 
 			@Override
 			public void onClick(View arg0) {
 				
-				Toast.makeText(activity(), "提交 " + query().id(R.id.seriesnumber).getText(),
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(activity(), "提交 " + query(R.id.seriesnumber).getText(),
+						Toast.LENGTH_SHORT).show(); 
 			}
 			
 		});
-		query().id(R.id.rescan).clicked(new OnClickListener(){
+		query(R.id.rescan).clicked(new OnClickListener(){
 
 			@Override
 			public void onClick(View arg0) {

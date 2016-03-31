@@ -4,17 +4,13 @@ public class LANConfigurations implements Configurations {
 
 	@Override
 	public String getLoginUrl() {
-		return "http://192.168.7.22/mobile/loginServlet";
-	}
-
-	@Override
-	public String getTransferUrl() {
-		return "http://192.168.7.22/mobile/dataTransfer";
+		return "http://10.1.6.187:8080/ScannerWeb/account/login.do";
+		//		return "http://10.1.4.106:8080/ScannerWeb/account/login.do";
 	}
 
 	@Override
 	public String getUpdateUrl() {
-		return "http://192.168.7.22/mobile/versionJudgmentServlet";
+		return "";
 	}
 
 	@Override
@@ -24,22 +20,6 @@ public class LANConfigurations implements Configurations {
 
 	@Override
 	public String getHost() {
-		return "http://192.168.7.22";
+		return "";
 	}
-
-	@Override
-	public String getChangePasswordUrl() {
-		return "http://192.168.7.22/mobile/changePwd";
-	}
-
-	@Override
-	public String getRegisterUrl() {
-		return "http://192.168.7.22/mobile/verification";
-	}
-
-	@Override
-	public String getUserValidationUrl() {
-		return "http://192.168.7.22/mobile/beforeLogin";
-	}
-
 }

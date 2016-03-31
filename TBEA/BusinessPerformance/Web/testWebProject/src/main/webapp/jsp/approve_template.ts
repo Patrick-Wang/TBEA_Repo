@@ -1,4 +1,4 @@
-/// <reference path="jqgrid/jqassist.ts" />
+
 /// <reference path="dateSelector.ts" />
 /// <reference path="companySelector.ts" />
 /// <reference path="util.ts" />

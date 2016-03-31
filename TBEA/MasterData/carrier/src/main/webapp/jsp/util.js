@@ -40,7 +40,7 @@ var Util;
             return handler;
         };
         return AbstractFormatHandler;
-    }());
+    })();
     var FormatIntHandler = (function (_super) {
         __extends(FormatIntHandler, _super);
         function FormatIntHandler(zbs, cols) {
@@ -57,7 +57,7 @@ var Util;
             }
         };
         return FormatIntHandler;
-    }(AbstractFormatHandler));
+    })(AbstractFormatHandler);
     Util.FormatIntHandler = FormatIntHandler;
     var FormatCurrencyHandler = (function (_super) {
         __extends(FormatCurrencyHandler, _super);
@@ -75,7 +75,7 @@ var Util;
             }
         };
         return FormatCurrencyHandler;
-    }(AbstractFormatHandler));
+    })(AbstractFormatHandler);
     Util.FormatCurrencyHandler = FormatCurrencyHandler;
     var FormatPercentHandler = (function (_super) {
         __extends(FormatPercentHandler, _super);
@@ -93,7 +93,7 @@ var Util;
             }
         };
         return FormatPercentHandler;
-    }(AbstractFormatHandler));
+    })(AbstractFormatHandler);
     Util.FormatPercentHandler = FormatPercentHandler;
     var FormatPercentSignalHandler = (function (_super) {
         __extends(FormatPercentSignalHandler, _super);
@@ -111,7 +111,7 @@ var Util;
             }
         };
         return FormatPercentSignalHandler;
-    }(AbstractFormatHandler));
+    })(AbstractFormatHandler);
     Util.FormatPercentSignalHandler = FormatPercentSignalHandler;
     var FormatFordotHandler = (function (_super) {
         __extends(FormatFordotHandler, _super);
@@ -131,7 +131,7 @@ var Util;
             }
         };
         return FormatFordotHandler;
-    }(AbstractFormatHandler));
+    })(AbstractFormatHandler);
     Util.FormatFordotHandler = FormatFordotHandler;
     var ZBStatus = (function () {
         function ZBStatus() {
@@ -143,7 +143,7 @@ var Util;
         ZBStatus.APPROVED_2 = "APPROVED_2";
         ZBStatus.SUBMITTED_2 = "SUBMITTED_2";
         return ZBStatus;
-    }());
+    })();
     Util.ZBStatus = ZBStatus;
     (function (ZBType) {
         ZBType[ZBType["QNJH"] = 0] = "QNJH";
@@ -157,6 +157,7 @@ var Util;
         CompanyType[CompanyType["SB"] = 0] = "SB";
         CompanyType[CompanyType["HB"] = 1] = "HB";
         CompanyType[CompanyType["XB"] = 2] = "XB";
+        // TB      ,// ("天变公司"),   
         CompanyType[CompanyType["LL"] = 3] = "LL";
         CompanyType[CompanyType["XL"] = 4] = "XL";
         CompanyType[CompanyType["DL"] = 5] = "DL";
@@ -238,6 +239,34 @@ var Util;
     })(Util.CompanyType || (Util.CompanyType = {}));
     var CompanyType = Util.CompanyType;
     $.ajaxSetup({ cache: false });
+    //    export function parse(jsstr: string): any {
+    //        var jsonValue;
+    //        eval('jsonValue = ' + jsstr); 
+    //        return jsonValue;
+    //    }
+    //    
+    //    export function stringify(json : any) : string{
+    //        var s = '';
+    //
+    //        if (typeof (json) == "string") {
+    //            s = '"' + json.replace(new RegExp('\\\\',"g"), '\\\\\\\\').replace(new RegExp('"', "g"), '\\"') + '"';
+    //        } else if (typeof (json) == "object") {
+    //            if (json instanceof Array) {
+    //                for (var k in json) {
+    //                    s += "," + stringify(json[k]);
+    //                }
+    //                s = '[' + s.substring(1) + ']';
+    //            } else {
+    //                for (var k in json) {
+    //                    s += ',"' + k + '":' + stringify(json[k]);
+    //                }
+    //                s = '{' + s.substring(1) + '}';
+    //            }
+    //        } else {
+    //            s += json;
+    //        }
+    //        return s;
+    //    }
     var Promise = (function () {
         function Promise() {
             this.mSuccessList = [];
@@ -263,7 +292,7 @@ var Util;
             return this;
         };
         return Promise;
-    }());
+    })();
     Util.Promise = Promise;
     var Ajax = (function () {
         function Ajax(baseUrl, useCache) {
@@ -349,7 +378,7 @@ var Util;
             return promise;
         };
         return Ajax;
-    }());
+    })();
     Util.Ajax = Ajax;
     function formatData(outputData, inputData, precentList, specialsjzhCols) {
         var zhZb = [
@@ -407,6 +436,43 @@ var Util;
             return val;
         }
         return parseFloat(val).toFixed(0) + "";
+        //        val = parseFloat(val).toFixed(0) + "";
+        //        var dot: number = val.lastIndexOf('.');
+        //        var intPart: string = "";
+        //        var parts: string[] = [];
+        //        var positive: boolean = (val.charAt(0) != '-');
+        //        if (dot > 0) {
+        //            if (positive) {
+        //                intPart = val.substring(0, dot);
+        //            } else {
+        //                intPart = val.substring(1, dot);
+        //            }
+        //            parts.push(val.substring(dot));
+        //        }
+        //        else {
+        //            if (positive) {
+        //                intPart = val;
+        //            } else {
+        //                intPart = val.substring(1);
+        //            }
+        //        }
+        //
+        //        var leftLength: number = intPart.length;
+        //
+        //        while (leftLength > 3) {
+        //            parts.push("," + intPart.substring(leftLength - 3, leftLength));
+        //            leftLength -= 3;
+        //        }
+        //
+        //        parts.push(intPart.substring(0, leftLength));
+        //
+        //        if (!positive) {
+        //            parts.push("-");
+        //        }
+        //
+        //        parts = parts.reverse();
+        //
+        //        return parts.join("");
     }
     Util.formatCurrency = formatCurrency;
     function formatPercent(val) {

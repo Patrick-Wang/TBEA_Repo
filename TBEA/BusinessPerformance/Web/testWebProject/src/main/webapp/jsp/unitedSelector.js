@@ -239,7 +239,8 @@ var Util;
         };
         UnitedSelector.prototype.add = function (ctrlTr, begin) {
             for (var i = begin; i < this.mPath.length; ++i) {
-                ctrlTr.append('<td><select id="united_' + i + '" style="font-size:13px"></select></td>' + '<td><div style="width:5px;"></div></td>');
+                ctrlTr.append('<td><select id="united_' + i + '" style="font-size:13px"></select></td>' +
+                    '<td><div style="width:5px;"></div></td>');
                 this.appendChildren(ctrlTr.children().eq(i * 2).children().eq(0), i + 1);
             }
         };

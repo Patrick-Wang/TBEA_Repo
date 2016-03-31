@@ -1,72 +1,112 @@
 package com.tbea.ic.scanner.page;
 
-import android.view.MenuItem;
+import java.util.List;
+
+import android.annotation.SuppressLint;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.PopupMenu;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.page.core.Page;
-import com.squareup.otto.Subscribe;
 import com.tbea.ic.scaner.R;
-import com.tbea.ic.scanner.page.camera.CameraPage;
-import com.tbea.ic.scanner.page.camera.ScanEvent;
+import com.tbea.ic.scanner.net.Server;
+import com.tbea.ic.scanner.net.entity.DataNode;
 
 public class HomePage extends Page {
 
-	SubmitPage web = new SubmitPage();
-
+	private SubmitPage submitPage = new SubmitPage();
+	
 	@Override
 	protected int onGetLayoutId() {
 		return R.layout.home;
 	}
 
-//	@Subscribe
-//	public void onResult(ScanEvent event){
-//		if (event.getResult() != null){
-//			Toast.makeText(activity(), event.getResult().getText(), Toast.LENGTH_SHORT).show();
-//			query().id(R.id.test).text(event.getResult().getText());
-//		}
-//	}
-	
-	@Override
+
+	@SuppressLint("NewApi") @Override
 	protected void onInitialize() {
-//		query().id(R.id.test1).clicked(new OnClickListener(){
-//
-//			@Override
-//			public void onClick(View arg0) {
-//				navigateTo(web);
-//			}
-//			
-//		});
 		OnClickListener ocl = new OnClickListener() {
-            @Override
-            public void onClick(View v){
-                    PopupMenu popup = new PopupMenu(getActivity(), v);
-                    //Inflating the Popup using xml file
-                    popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
-                   
-       
-                    //registering popup with OnMenuItemClickListener
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        public boolean onMenuItemClick(MenuItem item) {
-                        	navigateTo(web);
-                   
-                            return true;
-                        }
-                    });
- 
-                    popup.show(); //showing popup menu 
-            }
-        };
-		TextView moreMenu = query().id(R.id.rb1).getTextView();
-	    moreMenu.setOnClickListener(ocl);
-	    moreMenu = query().id(R.id.rb2).getTextView();
-	    moreMenu.setOnClickListener(ocl);
-	    moreMenu = query().id(R.id.rb3).getTextView();
-	    moreMenu.setOnClickListener(ocl);
-	    moreMenu = query().id(R.id.rb4).getTextView();
-	    moreMenu.setOnClickListener(ocl);
+			@Override
+			public void onClick(View v) {
+				
+				DataNode node = (DataNode) v.getTag();
+				LinearLayout ll = new LinearLayout(activity());
+				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				ll.setBackground(activity().getResources().getDrawable(R.drawable.boarder));
+			    params.weight = 1.0f;
+			    ll.setOrientation(LinearLayout.VERTICAL);
+			    ll.setLayoutParams(params);
+			    
+			    final PopupWindow popWnd = new PopupWindow(ll,
+		                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+			    
+			    OnClickListener oclItem = new OnClickListener(){
+
+					@Override
+					public void onClick(View item) {
+						DataNode itemNode = (DataNode) item.getTag();
+						navigateTo(submitPage);
+						popWnd.dismiss();
+					}
+			    	
+			    };
+			    
+			    LinearLayout llview = null;
+			    for (DataNode sub : node.getSubNodes()){
+			    	 TextView view = new TextView(activity());
+			    	 view.setText(sub.getData().getValue());
+			    	 view.setTag(sub);
+			    	 view.setTextSize(20);
+			    	 view.setPadding(activity().pct2Pixel(R.pct.x2), activity().pct2Pixel(R.pct.x1), activity().pct2Pixel(R.pct.x2), activity().pct2Pixel(R.pct.x1));
+			    	 LayoutParams param = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			    	 view.setLayoutParams(param);
+			    	 view.setMinimumWidth(activity().pct2Pixel(R.pct.x25));
+			    	 view.setGravity(Gravity.CENTER_HORIZONTAL);
+			    	 view.setOnClickListener(oclItem);
+			    	 ll.addView(view);
+			    	 
+			    	 llview = new LinearLayout(activity());
+			    	 llview.setBackground(activity().getResources().getDrawable(R.drawable.seperator));
+			    	 param = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 2);
+			    	 llview.setLayoutParams(param);
+			    	 ll.addView(llview);
+			    }
+			    
+			    if (!node.getSubNodes().isEmpty()){
+			    	ll.removeView(llview);
+			    }
+			    
+			    
+			    popWnd.setTouchable(true);
+			    popWnd.setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
+			    int left = v.getLeft();
+			    int top = v.getBottom();
+				popWnd.showAtLocation(query(R.id.main_content).getView(), Gravity.LEFT | Gravity.BOTTOM, left, top);
+			}
+		};
+
+		List<DataNode> rights = Server.getInstance().getUser().getRights();
+
+		RadioGroup group = (RadioGroup) query(R.id.tab_menu).getView();
+		int height = activity().pct2Pixel(R.pct.y8);
+		for (DataNode node : rights) {
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, height);
+		    params.weight = 1.0f;
+			RadioButton radio = new RadioButton(activity());
+			group.addView(radio);
+			radio.setText(node.getData().getValue());
+			radio.setTag(node);
+			radio.setTextSize(20);
+			radio.setGravity(Gravity.BOTTOM);
+			radio.setBackground(activity().getResources().getDrawable(R.drawable.cu_al_radio));
+			radio.setButtonDrawable(android.R.color.transparent);
+			radio.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+			radio.setLayoutParams(params);
+			radio.setOnClickListener(ocl);
+		}
 	}
 }

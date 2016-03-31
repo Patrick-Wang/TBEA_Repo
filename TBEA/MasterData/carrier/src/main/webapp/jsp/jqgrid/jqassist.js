@@ -1,3 +1,4 @@
+/// <reference path="vector.ts" />
 (function () {
     $.fn.jqGrid.setGroupHeaders = function (o) {
         o = $.extend({
@@ -8,7 +9,9 @@
         return this
             .each(function () {
             this.p.groupHeader = o;
-            var ts = this, i, cmi, skip = 0, $tr, $colHeader, th, $th, thStyle, iCol, cghi, numberOfColumns, titleText, cVisibleColumns, colModel = ts.p.colModel, cml = colModel.length, ths = ts.grid.headers, $htable = $("table.ui-jqgrid-htable", ts.grid.hDiv), $trLabels = $htable
+            var ts = this, i, cmi, skip = 0, $tr, $colHeader, th, $th, thStyle, iCol, cghi, 
+            // startColumnName,
+            numberOfColumns, titleText, cVisibleColumns, colModel = ts.p.colModel, cml = colModel.length, ths = ts.grid.headers, $htable = $("table.ui-jqgrid-htable", ts.grid.hDiv), $trLabels = $htable
                 .children("thead").children("tr.ui-jqgrid-labels:last").addClass("jqg-second-row-header"), $thead = $htable
                 .children("thead"), $theadInTable, $firstHeaderRow = $htable
                 .find(".jqg-first-row-header");
@@ -38,6 +41,7 @@
                 th = ths[i].el;
                 $th = $(th);
                 cmi = colModel[i];
+                // build the next cell for the first header row
                 thStyle = {
                     height: '0px',
                     width: ths[i].width + 'px',
@@ -46,18 +50,25 @@
                 $("<th>", {
                     role: 'gridcell'
                 }).css(thStyle).addClass("ui-first-th-" + ts.p.direction).appendTo($firstHeaderRow);
-                th.style.width = "";
+                th.style.width = ""; // remove unneeded style
                 iCol = inColumnHeader(cmi.name, o.groupHeaders);
                 if (iCol >= 0) {
                     cghi = o.groupHeaders[iCol];
                     numberOfColumns = cghi.numberOfColumns;
                     titleText = cghi.titleText;
+                    // caclulate the number of visible columns from the
+                    // next numberOfColumns columns
                     for (cVisibleColumns = 0, iCol = 0; iCol < numberOfColumns
                         && (i + iCol < cml); iCol++) {
                         if (!colModel[i + iCol].hidden) {
                             cVisibleColumns++;
                         }
                     }
+                    // The next numberOfColumns headers will be moved in
+                    // the next row
+                    // in the current row will be placed the new column
+                    // header with the titleText.
+                    // The text will be over the cVisibleColumns columns
                     $colHeader = $('<th>').attr({
                         role: "columnheader"
                     }).addClass("ui-state-default ui-th-column-header ui-th-"
@@ -71,16 +82,22 @@
                     if (ts.p.headertitles) {
                         $colHeader.attr("title", $colHeader.text());
                     }
+                    // hide if not a visible cols
                     if (cVisibleColumns === 0) {
                         $colHeader.hide();
                     }
-                    $th.before($colHeader);
-                    $tr.append(th);
+                    $th.before($colHeader); // insert new column header
+                    // before the current
+                    $tr.append(th); // move the current header in the
+                    // next row
+                    // set the coumter of headers which will be moved in
+                    // the next row
                     skip = numberOfColumns - 1;
                 }
                 else {
                     if (skip === 0) {
                         if (o.useColSpanStyle) {
+                            // expand the header height to two rows
                             $th.attr("rowspan", o.depth + "");
                         }
                         else {
@@ -95,6 +112,9 @@
                         }
                     }
                     else {
+                        // move the header to the next row
+                        // $th.css({"padding-top": "2px", height:
+                        // "19px"});
                         $tr.append(th);
                         skip--;
                     }
@@ -105,6 +125,8 @@
             $tr.insertAfter($trLabels);
             $htable.append($theadInTable);
             if (o.useColSpanStyle) {
+                // Increase the height of resizing span of visible
+                // headers
                 $htable
                     .find("span.ui-jqgrid-resize")
                     .each(function () {
@@ -115,6 +137,10 @@
                             + 'px !important; cursor: col-resize;';
                     }
                 });
+                // Set position of the sortable div (the main lable)
+                // with the column header text to the middle of the
+                // cell.
+                // One should not do this for hidden headers.
                 $htable
                     .find("div.ui-jqgrid-sortable")
                     .each(function () {
@@ -284,7 +310,7 @@ var JQTable;
             return children.toArray();
         };
         return Node;
-    }());
+    })();
     JQTable.Node = Node;
     var Cell = (function () {
         function Cell(row, col) {
@@ -307,7 +333,7 @@ var JQTable;
             return this.mCol;
         };
         return Cell;
-    }());
+    })();
     JQTable.Cell = Cell;
     var Formula = (function () {
         function Formula(destCell, srcCellarray, formula) {
@@ -344,7 +370,7 @@ var JQTable;
             }
         };
         return Formula;
-    }());
+    })();
     JQTable.Formula = Formula;
     var JQGridAssistant = (function () {
         function JQGridAssistant(titleNodes, gridName) {
@@ -369,6 +395,7 @@ var JQTable;
                         edittype: nodes[j].editType(),
                         editoptions: nodes[j].editOptions(),
                         editrules: !nodes[j].isReadOnly() ? { number: nodes[j].isNumber() } : undefined,
+                        //editrules:undefined,
                         cellattr: function (rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
@@ -535,12 +562,19 @@ var JQTable;
             }
             return alldata;
         };
+        //			public bindSorter(col : number, sorter, grid) {
+        //				this.mColModel[col]["sorttype"] = function(cell, obj) {
+        //					return sorter.weight(cell, grid.jqGrid('getGridParam',
+        //							'sortorder') == "asc");
+        //				};
+        //			},
         JQGridAssistant.prototype.mergeRow = function (iCol, iRowStart, ilen) {
             var _this = this;
             if (iRowStart != undefined) {
                 this.completeList.push(function () {
                     var col = _this.id(iCol);
                     var grid = $("#" + _this.mGridName + "");
+                    //得到显示到界面的id集合
                     var mya = grid.getDataIDs();
                     for (var i = iRowStart + 1; i < mya.length && i < iRowStart + ilen; i++) {
                         grid.setCell(mya[i], col, '', {
@@ -557,6 +591,7 @@ var JQTable;
                 this.completeList.push(function () {
                     var col = _this.id(iCol);
                     var grid = $("#" + _this.mGridName + "");
+                    //得到显示到界面的id集合
                     var mya = grid.getDataIDs();
                     var mergelen = 1;
                     var data = grid.getCell(mya[0], col);
@@ -751,6 +786,25 @@ var JQTable;
                     if (mergeLen > 1) {
                         _this.mergeTitle(_this.mTitle.length - mergeLen, mergeLen, hidden);
                     }
+                    //						this.mResizeList.push(function(nw, iCol){
+                    //							if (iCol == iColStart) {
+                    //								var usedWidth = 0;
+                    //								var curFirstWidth = nw;
+                    //								nw += nw - firstWidht + iWidht;
+                    //								sizeTitle.css("width", nw + "px");
+                    //								for (var i = 0; i < widthList.Length; i++) {
+                    //									usedWidth += (nw - iWidht) * widthList[i] / iWidht;
+                    //									widthList[i] += (nw - iWidht) * widthList[i] / iWidht;
+                    //								}
+                    //								widthList[0] += nw - usedWidth;
+                    //								
+                    //								for (var i = 0; i < widthList.length; i++) {
+                    //				("#" + this.mGridName + " .jqgfirstrow td:eq(" + i + iColStart + ")").css("width", widthList[i] + "px");
+                    //								}
+                    //								iWidht = nw;
+                    //								firstWidht = curFirstWidth;
+                    //							}
+                    //						}.bind(this));
                 });
             }
         };
@@ -843,6 +897,12 @@ var JQTable;
             if (option.colModel == undefined) {
                 option.colModel = this.getColModel();
             }
+            //            if (option.datatype != "local") {
+            //                option.jsonReader = {
+            //                    cell: "",
+            //                    id: "0"
+            //                };
+            //            }
             if (option.loadError != undefined) {
                 var onFailed = option.loadError;
                 option.loadError = function () {
@@ -855,6 +915,6 @@ var JQTable;
             return option;
         };
         return JQGridAssistant;
-    }());
+    })();
     JQTable.JQGridAssistant = JQGridAssistant;
 })(JQTable || (JQTable = {}));
