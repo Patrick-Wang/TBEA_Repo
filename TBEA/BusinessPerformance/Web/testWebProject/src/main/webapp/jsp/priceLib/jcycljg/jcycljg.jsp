@@ -61,6 +61,7 @@ pageEncoding="utf-8"%>
     <style type="text/css">
         body {
             background-color: rgb(247, 247, 247);
+            visibility:hidden;
         }
 
         .panel-content-border {
@@ -163,7 +164,7 @@ pageEncoding="utf-8"%>
     <h1>基础原材料价格</h1>
 </div>
 
-<Table align="center" border="0px">
+<Table align="center" >
     <tr>
         <td>
             <Table>
@@ -189,6 +190,7 @@ pageEncoding="utf-8"%>
             <%@include file="ggp.jsp"%>
         </td>
     </tr>
+
 </Table> 
 <script type="text/javascript">
     view.init({
@@ -200,6 +202,9 @@ pageEncoding="utf-8"%>
             year: ${year}
         }
     });  
+    $(document).ready(function(){
+    	$(document.body).css("visibility", "visible");
+    });
 </script>
 <script src="jsp/style_select.js"></script>
 <script src="jsp/www2/js/echarts-plain-2-0-0.js"></script>

@@ -35,4 +35,15 @@ public class YsjsDaoImpl extends AbstractReadWriteDaoImpl<YsjsEntity> implements
 		q.setParameter("end", end);
 		return q.getResultList();
 	}
+
+	@Override
+	public YsjsEntity getByDate(Date date) {
+		Query q = this.getEntityManager().createQuery("from YsjsEntity where date = :date");
+		q.setParameter("date", date);
+		List<YsjsEntity> ret = q.getResultList();
+		if (ret.isEmpty()){
+			return null;
+		}
+		return ret.get(0);
+	}
 }

@@ -156,6 +156,7 @@ module jcycljg {
                         width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
+                        rowNum: 100,
                         data: tableAssist.getData(this.mData),
                         datatype: "local"
                     }));

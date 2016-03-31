@@ -20,6 +20,10 @@ public class Util {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return formatter.format(d);
 	}
+	public static String formatToMonth(Date d) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+		return formatter.format(d);
+	}
 
 	// d => yyyyMM
 	public static Date valueOf(String d) {
@@ -397,6 +401,10 @@ public class Util {
 	
 	public static byte[] response(ErrorCode val) throws UnsupportedEncodingException{
 		return new BMResponse(val).toJson().getBytes("utf-8");
+	}
+	
+	public static byte[] response(ErrorCode val, String msg) throws UnsupportedEncodingException{
+		return new BMResponse(val, msg).toJson().getBytes("utf-8");
 	}
 	
 	public static byte[] response(String val) throws UnsupportedEncodingException{

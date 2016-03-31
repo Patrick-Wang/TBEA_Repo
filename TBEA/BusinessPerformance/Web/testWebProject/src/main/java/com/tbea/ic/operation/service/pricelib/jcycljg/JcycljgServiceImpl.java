@@ -45,7 +45,12 @@ import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDao;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GgpEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgService;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.YsjsDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.validation.CommonValidator;
+import com.tbea.ic.operation.service.pricelib.jcycljg.validation.ValidationException;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -105,6 +110,20 @@ public class JcycljgServiceImpl implements JcycljgService {
 
 	public final static String NAME = "YsjsServiceImpl";
 
+	ImportHandler[] handlers = null;
+	@Autowired
+	public void init(){
+		handlers = new ImportHandler[]{
+			new ImportHandler(new CommonValidator(7), new YsjsDataStorage(ysjsDao))
+		};
+	}
+
+	
+	@Override
+	public void importExcel(JcycljgType type, XSSFWorkbook workbook) throws ValidationException {
+		handlers[type.ordinal()].handle(workbook);
+	}
+	
 	@Override
 	public List<List<String>> getYsjs(Date start, Date end) {
 		List<YsjsEntity> ysjsEntitys = ysjsDao.getYsjs(start, end);
@@ -131,7 +150,7 @@ public class JcycljgServiceImpl implements JcycljgService {
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (GgpEntity entity : entitys){
 			List<String> list = new ArrayList<String>();
-			list.add(Util.formatToDay(entity.getDate()));
+			list.add(Util.formatToMonth(entity.getDate()));
 			list.add("" + entity.getWg30q120());
 			list.add("" + entity.getWg30pk100());
 			list.add("" + entity.getWg27pk095());
