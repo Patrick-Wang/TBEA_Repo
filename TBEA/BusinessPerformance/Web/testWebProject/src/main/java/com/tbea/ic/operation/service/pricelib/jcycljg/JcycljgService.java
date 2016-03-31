@@ -7,5 +7,7 @@ public interface JcycljgService {
 
 	List<List<String>> getYsjs(Date start, Date end);
 
+	List<List<String>> getGgp(Date start, Date end);
+
 
 }

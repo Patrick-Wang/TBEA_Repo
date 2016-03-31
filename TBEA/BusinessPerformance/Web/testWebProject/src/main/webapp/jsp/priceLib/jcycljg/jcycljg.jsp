@@ -169,7 +169,10 @@ pageEncoding="utf-8"%>
             <Table>
                 <tr>
                     <td>
-                        <div id="dt"></div>
+                        <div id="dts"></div>
+                    </td>
+                    <td>
+                        <div id="dte"></div>
                     </td>
                     <td> 
                         <div id="type"></div>
@@ -178,27 +181,34 @@ pageEncoding="utf-8"%>
                                style="width: 80px; margin-left: 10px;" onclick="view.updateUI()"></input>
                         <script src="jsp/style_button.js"></script>
             </Table>
-        </td>
+        </td> 
     </tr>
     <tr>
         <td>
             <%@include file="ysjs.jsp"%>
         </td>
     </tr>
+     <tr>
+        <td>
+            <%@include file="ggp.jsp"%>
+        </td> 
+    </tr> 
 </Table> 
 <script type="text/javascript">
     view.init({
-        type: "type",
-        dt: "dt",
+        type: "type", 
+        dts: "dts", 
+        dte: "dte",
         date: {
             month: ${month},
             year: ${year}
         }
-    }); 
+    });  
 </script>
-
-<%@include file="../../components/loading.jsp"%>
-</body>
-<script src="jsp/www2/js/echarts-plain-2-0-0.js"></script>
 <script src="jsp/style_select.js"></script>
+<script src="jsp/www2/js/echarts-plain-2-0-0.js"></script>
+<%@include file="../../components/loading.jsp"%>
+</body>  
+
+
 </html>

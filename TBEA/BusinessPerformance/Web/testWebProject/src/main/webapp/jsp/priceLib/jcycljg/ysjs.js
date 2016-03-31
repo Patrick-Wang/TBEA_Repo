@@ -2,6 +2,11 @@
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
 /// <reference path="jcycljgdef.ts" />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var jcycljg;
 (function (jcycljg) {
     var ysjs;
@@ -24,23 +29,23 @@ var jcycljg;
             };
             return JQGridAssistantFactory;
         })();
-        var YsjsView = (function () {
+        var YsjsView = (function (_super) {
+            __extends(YsjsView, _super);
             function YsjsView() {
+                _super.apply(this, arguments);
+                this.mAjax = new Util.Ajax("jcycljg/ysjs/update.do", false);
             }
             YsjsView.newInstance = function () {
                 return new YsjsView();
             };
-            YsjsView.prototype.hide = function () {
-                $("#" + this.mOpt.host).hide();
+            YsjsView.prototype.option = function () {
+                return this.mOpt;
             };
-            YsjsView.prototype.show = function () {
-                $("#" + this.mOpt.host).show();
-            };
-            YsjsView.prototype.update = function (st, ed) {
+            YsjsView.prototype.pluginUpdate = function (start, end) {
                 var _this = this;
-                this.mDataSet.get({
-                    start: st.year + "-" + st.month + "-" + st.day,
-                    end: ed.year + "-" + ed.month + "-" + ed.day
+                this.mAjax.get({
+                    start: start,
+                    end: end
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -51,24 +56,8 @@ var jcycljg;
                 });
             };
             YsjsView.prototype.init = function (opt) {
-                this.mOpt = opt;
-                this.mDataSet = new Util.Ajax("jcycljg/ysjs/update.do", false);
+                _super.prototype.init.call(this, opt);
                 view.register("有色金属类", this);
-            };
-            YsjsView.prototype.updateUI = function () {
-                var _this = this;
-                this.mDateSelector.toString();
-                this.mDataSet.get({
-                    start: this.mDateSelector.toString() + "-1",
-                    end: this.mDateSelector.toString() + "-" + this.mDateSelector.monthDays()
-                })
-                    .then(function (jsonData) {
-                    _this.mData = jsonData;
-                    _this.updateTable();
-                    _this.updateCuChart();
-                    _this.updateAlChart();
-                    _this.updateZnChart();
-                });
             };
             YsjsView.prototype.updateCuChart = function () {
                 var _this = this;
@@ -78,7 +67,7 @@ var jcycljg;
                     data.push(_this.mData[i][1]);
                     lemData.push(_this.mData[i][4]);
                 });
-                this.updateEchart("铜 结算价格趋势", this.mOpt.cu, data, lemData);
+                this.updateEchart("铜 结算价格趋势", this.option().cu, data, lemData);
             };
             YsjsView.prototype.updateAlChart = function () {
                 var _this = this;
@@ -88,7 +77,7 @@ var jcycljg;
                     data.push(_this.mData[i][2]);
                     lemData.push(_this.mData[i][5]);
                 });
-                this.updateEchart("铝 结算价格趋势", this.mOpt.al, data, lemData);
+                this.updateEchart("铝 结算价格趋势", this.option().al, data, lemData);
             };
             YsjsView.prototype.updateZnChart = function () {
                 var _this = this;
@@ -98,7 +87,7 @@ var jcycljg;
                     data.push(_this.mData[i][3]);
                     lemData.push(_this.mData[i][6]);
                 });
-                this.updateEchart("锌 结算价格趋势", this.mOpt.zn, data, lemData);
+                this.updateEchart("锌 结算价格趋势", this.option().zn, data, lemData);
             };
             YsjsView.prototype.updateEchart = function (title, echart, data, lemData) {
                 var _this = this;
@@ -154,15 +143,15 @@ var jcycljg;
                         }
                     ]
                 };
-                echarts.init($("#" + this.mOpt.host + " #" + echart)[0]).setOption(option);
+                echarts.init(this.$(echart)[0]).setOption(option);
             };
             YsjsView.prototype.updateTable = function () {
-                var name = this.mOpt.tb + "_jqgrid_1234";
+                var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
-                var parent = $("#" + this.mOpt.host + " #" + this.mOpt.tb);
+                var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                $("#" + this.mOpt.host + " #" + name).jqGrid(tableAssist.decorate({
+                this.$(name).jqGrid(tableAssist.decorate({
                     multiselect: false,
                     drag: false,
                     resize: false,
@@ -175,7 +164,7 @@ var jcycljg;
                 }));
             };
             return YsjsView;
-        })();
+        })(jcycljg.BasePluginView);
         ysjs.pluginView = YsjsView.newInstance();
     })(ysjs = jcycljg.ysjs || (jcycljg.ysjs = {}));
 })(jcycljg || (jcycljg = {}));

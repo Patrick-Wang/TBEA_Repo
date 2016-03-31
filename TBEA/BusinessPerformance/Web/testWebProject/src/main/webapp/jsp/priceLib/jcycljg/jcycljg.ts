@@ -6,8 +6,10 @@
 
 module jcycljg {
 
+    import DataNode = Util.DataNode;
     interface Option {
-        dt:string;
+        dts:string;
+        dte:string;
         type:string;
         date : Util.Date;
     }
@@ -18,7 +20,8 @@ module jcycljg {
 
     export class View implements FrameView {
         private mOpt:Option;
-        private mDateSelector:Util.DateSelector;
+        private mDSStart:Util.DateSelector;
+        private mDSEnd:Util.DateSelector;
         private mUnitedSelector:Util.UnitedSelector;
         private mNodes:Util.DataNode[] = [];
 
@@ -46,35 +49,63 @@ module jcycljg {
                 }
             }
 
-            return (<PluginData>nod.getData()).plugin;
+            return this.plugin(nod);
         }
 
         public init(opt:Option):void {
             this.mOpt = opt;
-            this.mDateSelector = new Util.DateSelector({year: this.mOpt.date.year - 3, month: 1}, {
+            this.mDSStart = new Util.DateSelector({year: this.mOpt.date.year - 3, month: 1}, {
                 year: this.mOpt.date.year,
                 month: this.mOpt.date.month
-            }, this.mOpt.dt);
-            this.mDateSelector.select(this.mOpt.date);
+            }, this.mOpt.dts);
+            this.mDSEnd = new Util.DateSelector({year: this.mOpt.date.year - 3, month: 1}, {
+                year: this.mOpt.date.year,
+                month: this.mOpt.date.month
+            }, this.mOpt.dte);
+            this.mDSStart.select(this.mOpt.date);
+            this.mDSEnd.select(this.mOpt.date);
             this.mUnitedSelector = new Util.UnitedSelector(this.mNodes, this.mOpt.type);
             this.mNodes = this.mUnitedSelector.getNodes();
+            if (this.plugin(this.getActiveNode()).getDateType() == DateType.DAY){
+                $("#" + this.mOpt.dte).hide();
+            }
+            this.mUnitedSelector.change((sel:any, depth:number)=>{
+                if (this.plugin(this.getActiveNode()).getDateType() == DateType.MONTH){
+                    $("#" + this.mOpt.dte).show();
+                }else {
+                    $("#" + this.mOpt.dte).hide();
+                }
+            });
             this.updateUI();
         }
 
+        private plugin(node:DataNode):PluginView{
+            return  (<PluginData>node.getData()).plugin;
+        }
+
+        private getActiveNode():DataNode{
+            return this.mUnitedSelector.getDataNode(this.mUnitedSelector.getPath());
+        }
 
         public updateUI() {
-            var node:Util.DataNode = this.mUnitedSelector.getDataNode(this.mUnitedSelector.getPath());
+            let node:Util.DataNode = this.mUnitedSelector.getDataNode(this.mUnitedSelector.getPath());
             for (var i = 0; i < this.mNodes.length; ++i) {
                 if (node != this.mNodes[i]) {
-                    (<PluginData>this.mNodes[i].getData()).plugin.hide();
+                    this.plugin(this.mNodes[i]).hide();
                 }
             }
-            (<PluginData>node.getData()).plugin.show();
-            var dts:Util.Date = this.mDateSelector.getDate();
-            var dte:Util.Date = this.mDateSelector.getDate();
+            this.plugin(node).show();
+            let dts:Util.Date = this.mDSStart.getDate();
             dts.day = 1;
-            dte.day = this.mDateSelector.monthDays();
-            (<PluginData>node.getData()).plugin.update(dts, dte);
+            let dte:Util.Date = this.mDSStart.getDate();
+            if (this.plugin(node).getDateType() == DateType.MONTH){
+                dte = this.mDSEnd.getDate();
+                dte.day = this.mDSEnd.monthDays();
+            }else {
+                dte.day = this.mDSStart.monthDays();
+            }
+
+            this.plugin(node).update(dts, dte);
         }
     }
 }

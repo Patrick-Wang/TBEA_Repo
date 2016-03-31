@@ -42,6 +42,7 @@ import javax.annotation.Resource;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDaoImpl;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDao;
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GgpEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgService;
 
@@ -118,6 +119,28 @@ public class JcycljgServiceImpl implements JcycljgService {
 			entity.add(ysjs.getLEMAl() + "");
 			entity.add( ysjs.getLEMZn() + "");
 		    result.add(entity);
+		}
+		return result;
+	}
+
+
+	@Override
+	public List<List<String>> getGgp(Date start, Date end) {
+		
+		List<GgpEntity> entitys = ggpDao.getGgp(start, end);
+		List<List<String>> result = new ArrayList<List<String>>();
+		for (GgpEntity entity : entitys){
+			List<String> list = new ArrayList<String>();
+			list.add(Util.formatToDay(entity.getDate()));
+			list.add("" + entity.getWg30q120());
+			list.add("" + entity.getWg30pk100());
+			list.add("" + entity.getWg27pk095());
+			list.add("" + entity.getWg23pk085());
+			list.add("" + entity.getBgb30p120());
+			list.add("" + entity.getBgb30p110());
+			list.add("" + entity.getBgb27r095());
+			list.add("" + entity.getBgb27r085());
+		    result.add(list);
 		}
 		return result;
 	}

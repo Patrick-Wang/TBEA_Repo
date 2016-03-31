@@ -24,36 +24,30 @@ module jcycljg {
             }
         }
 
-        interface Option {
+        interface Option extends PluginOption{
             cu:string;
             al:string;
             zn:string;
             tb:string;
-            host:string;
         }
 
-        class YsjsView implements PluginView{
-            private mCurrentDate:Date;
+        class YsjsView extends BasePluginView{
             private mData:Array<string[]>;
-            private mDataSet:Util.Ajax;
-            private mOpt:Option;
+            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/ysjs/update.do", false);
             private mDateSelector:Util.DateSelector;
 
             public static newInstance():YsjsView {
                 return new YsjsView();
             }
 
-            public hide(): void{
-                $("#" + this.mOpt.host).hide();
-            }
-            public show(): void{
-                $("#" + this.mOpt.host).show();
+            private option() : Option{
+                return <Option>this.mOpt;
             }
 
-            public update(st:Util.Date, ed:Util.Date) {
-                this.mDataSet.get({
-                        start: st.year + "-" + st.month + "-" + st.day,
-                        end: ed.year + "-" + ed.month + "-" + ed.day
+            pluginUpdate(start:string, end:string):void {
+                this.mAjax.get({
+                        start: start,
+                        end: end
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
@@ -65,25 +59,8 @@ module jcycljg {
             }
 
             public init(opt:Option):void {
-                this.mOpt = opt;
-                this.mDataSet = new Util.Ajax("jcycljg/ysjs/update.do", false);
+                super.init(opt);
                 view.register("有色金属类", this);
-            }
-
-
-            public updateUI() {
-                this.mDateSelector.toString()
-                this.mDataSet.get({
-                        start: this.mDateSelector.toString() + "-1",
-                        end: this.mDateSelector.toString() + "-" + this.mDateSelector.monthDays()
-                    })
-                    .then((jsonData:any) => {
-                        this.mData = jsonData;
-                        this.updateTable();
-                        this.updateCuChart();
-                        this.updateAlChart();
-                        this.updateZnChart();
-                    });
             }
 
             public updateCuChart() {
@@ -93,17 +70,17 @@ module jcycljg {
                     data.push(this.mData[i][1]);
                     lemData.push(this.mData[i][4]);
                 })
-                this.updateEchart("铜 结算价格趋势", this.mOpt.cu, data, lemData);
+                this.updateEchart("铜 结算价格趋势", this.option().cu, data, lemData);
             }
 
             public updateAlChart() {
                 var data:string[] = [];
-                var lemData:string[] = [];
+                let lemData:string[] = [];
                 $(this.mData).each((i:number)=> {
                     data.push(this.mData[i][2]);
                     lemData.push(this.mData[i][5]);
                 })
-                this.updateEchart("铝 结算价格趋势", this.mOpt.al, data, lemData);
+                this.updateEchart("铝 结算价格趋势", this.option().al, data, lemData);
             }
 
             public updateZnChart() {
@@ -113,7 +90,7 @@ module jcycljg {
                     data.push(this.mData[i][3]);
                     lemData.push(this.mData[i][6]);
                 })
-                this.updateEchart("锌 结算价格趋势", this.mOpt.zn, data, lemData);
+                this.updateEchart("锌 结算价格趋势", this.option().zn, data, lemData);
             }
 
             private updateEchart(title:string, echart:string, data:Array<string>, lemData:Array<string>):void {
@@ -172,17 +149,17 @@ module jcycljg {
                     ]
                 };
 
-                echarts.init($("#" + this.mOpt.host + " #" + echart)[0]).setOption(option);
+                echarts.init(this.$(echart)[0]).setOption(option);
 
             }
 
             private updateTable():void {
-                var name = this.mOpt.tb + "_jqgrid_1234";
+                var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
-                var parent = $("#" + this.mOpt.host + " #" + this.mOpt.tb);
+                var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                $("#" + this.mOpt.host + " #" + name).jqGrid(
+                this.$(name).jqGrid(
                     tableAssist.decorate({
                         multiselect: false,
                         drag: false,
@@ -197,6 +174,8 @@ module jcycljg {
 
             }
         }
+
+
        export  var pluginView = YsjsView.newInstance();
     }
 }

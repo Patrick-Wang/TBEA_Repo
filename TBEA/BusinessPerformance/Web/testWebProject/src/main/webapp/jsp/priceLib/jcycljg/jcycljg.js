@@ -30,32 +30,61 @@ var jcycljg;
                     break;
                 }
             }
-            return nod.getData().plugin;
+            return this.plugin(nod);
         };
         View.prototype.init = function (opt) {
+            var _this = this;
             this.mOpt = opt;
-            this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3, month: 1 }, {
+            this.mDSStart = new Util.DateSelector({ year: this.mOpt.date.year - 3, month: 1 }, {
                 year: this.mOpt.date.year,
                 month: this.mOpt.date.month
-            }, this.mOpt.dt);
-            this.mDateSelector.select(this.mOpt.date);
+            }, this.mOpt.dts);
+            this.mDSEnd = new Util.DateSelector({ year: this.mOpt.date.year - 3, month: 1 }, {
+                year: this.mOpt.date.year,
+                month: this.mOpt.date.month
+            }, this.mOpt.dte);
+            this.mDSStart.select(this.mOpt.date);
+            this.mDSEnd.select(this.mOpt.date);
             this.mUnitedSelector = new Util.UnitedSelector(this.mNodes, this.mOpt.type);
             this.mNodes = this.mUnitedSelector.getNodes();
+            if (this.plugin(this.getActiveNode()).getDateType() == jcycljg.DateType.DAY) {
+                $("#" + this.mOpt.dte).hide();
+            }
+            this.mUnitedSelector.change(function (sel, depth) {
+                if (_this.plugin(_this.getActiveNode()).getDateType() == jcycljg.DateType.MONTH) {
+                    $("#" + _this.mOpt.dte).show();
+                }
+                else {
+                    $("#" + _this.mOpt.dte).hide();
+                }
+            });
             this.updateUI();
+        };
+        View.prototype.plugin = function (node) {
+            return node.getData().plugin;
+        };
+        View.prototype.getActiveNode = function () {
+            return this.mUnitedSelector.getDataNode(this.mUnitedSelector.getPath());
         };
         View.prototype.updateUI = function () {
             var node = this.mUnitedSelector.getDataNode(this.mUnitedSelector.getPath());
             for (var i = 0; i < this.mNodes.length; ++i) {
                 if (node != this.mNodes[i]) {
-                    this.mNodes[i].getData().plugin.hide();
+                    this.plugin(this.mNodes[i]).hide();
                 }
             }
-            node.getData().plugin.show();
-            var dts = this.mDateSelector.getDate();
-            var dte = this.mDateSelector.getDate();
+            this.plugin(node).show();
+            var dts = this.mDSStart.getDate();
             dts.day = 1;
-            dte.day = this.mDateSelector.monthDays();
-            node.getData().plugin.update(dts, dte);
+            var dte = this.mDSStart.getDate();
+            if (this.plugin(node).getDateType() == jcycljg.DateType.MONTH) {
+                dte = this.mDSEnd.getDate();
+                dte.day = this.mDSEnd.monthDays();
+            }
+            else {
+                dte.day = this.mDSStart.monthDays();
+            }
+            this.plugin(node).update(dts, dte);
         };
         return View;
     })();

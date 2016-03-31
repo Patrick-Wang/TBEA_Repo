@@ -49,4 +49,13 @@ public class JcycljgServlet {
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
+	@RequestMapping(value = "ggp/update.do")
+	public @ResponseBody byte[] ggpUpdate(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		String start = request.getParameter("start");
+		String end = request.getParameter("end");
+		List<List<String>> result = jcycljgService.getGgp(Date.valueOf(start), Date.valueOf(end));
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+	}
+	
 }
