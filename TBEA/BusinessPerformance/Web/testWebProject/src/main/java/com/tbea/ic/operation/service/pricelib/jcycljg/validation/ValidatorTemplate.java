@@ -11,9 +11,11 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 public abstract class ValidatorTemplate implements FormatValidator{
 	
 	int columnCount;
+	int startRow;
 	
-	public ValidatorTemplate(int columnCount) {
+	public ValidatorTemplate(int startRow, int columnCount) {
 		this.columnCount = columnCount;
+		this.startRow = startRow;
 	}
 
 	
@@ -36,7 +38,11 @@ public abstract class ValidatorTemplate implements FormatValidator{
 	}
 
 	public List<Object[]> validate(XSSFSheet sheet) throws ValidationException{
-		int startRow = checkStartRow(sheet);
+		
+		if (sheet.getLastRowNum() < startRow){
+			throw new ValidationException("表格中没有可导入数据");
+		}
+		
 		if (columnCount != sheet.getRow(startRow).getLastCellNum()){
 			throw new ValidationException("数据列数不匹配: 数据列数应为" + columnCount + "列，输入数据为" + sheet.getRow(startRow).getLastCellNum() + "列");
 		}
@@ -55,7 +61,4 @@ public abstract class ValidatorTemplate implements FormatValidator{
 
 
 	abstract Object checkCell(int row, int col, XSSFCell cell) throws ValidationException;
-
-
-	abstract int checkStartRow(XSSFSheet sheet) throws ValidationException;
 }

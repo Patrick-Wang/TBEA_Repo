@@ -45,7 +45,23 @@ import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDao;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GgpEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgService;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.DmdjyxDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.EVADataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.FgcDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.GgpDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.GjyyDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.GxDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.JkzjsDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.JtDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.LwgDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.LzbbDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.MyzsDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.PMICPIPPIDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.PVCSzDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.TksDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.YhjzllDataStorage;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.YsjsDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.ZhbDataStorage;
 import com.tbea.ic.operation.service.pricelib.jcycljg.validation.CommonValidator;
 import com.tbea.ic.operation.service.pricelib.jcycljg.validation.ValidationException;
 
@@ -73,7 +89,7 @@ public class JcycljgServiceImpl implements JcycljgService {
 	JkzjDao jkzjDao;
 
 	@Resource(name=EVADaoImpl.NAME)
-	EVADao eVADao;
+	EVADao evaDao;
 
 	@Resource(name=DmdjyxDaoImpl.NAME)
 	DmdjyxDao dmdjyxDao;
@@ -88,7 +104,7 @@ public class JcycljgServiceImpl implements JcycljgService {
 	ZhbDao zhbDao;
 
 	@Resource(name=LzbbDaoImpl.NAME)
-	LzbbDao lzgbDao;
+	LzbbDao lzbbDao;
 
 	@Resource(name=FgcDaoImpl.NAME)
 	FgcDao fgcDao;
@@ -114,7 +130,23 @@ public class JcycljgServiceImpl implements JcycljgService {
 	@Autowired
 	public void init(){
 		handlers = new ImportHandler[]{
-			new ImportHandler(new CommonValidator(7), new YsjsDataStorage(ysjsDao))
+			new ImportHandler(new CommonValidator(2, 7), new YsjsDataStorage(ysjsDao)),
+			new ImportHandler(new CommonValidator(2, 9), new GgpDataStorage(ggpDao)),
+			new ImportHandler(new CommonValidator(1, 3), new GjyyDataStorage(gjyyDao)),
+			new ImportHandler(new CommonValidator(2, 7), new TksDataStorage(tksDao)),
+			new ImportHandler(new CommonValidator(1, 5), new JtDataStorage(jtDao)),
+			new ImportHandler(new CommonValidator(1, 5), new FgcDataStorage(fgcDao)),
+			new ImportHandler(new CommonValidator(1, 7), new LzbbDataStorage(lzbbDao)),
+			new ImportHandler(new CommonValidator(1, 9), new ZhbDataStorage(zhbDao)),
+			new ImportHandler(new CommonValidator(1, 7), new GxDataStorage(gxDao)),
+			new ImportHandler(new CommonValidator(2, 9), new PVCSzDataStorage(pVCSzDao)),
+			new ImportHandler(new CommonValidator(1, 3), new DmdjyxDataStorage(dmdjyxDao)),
+			new ImportHandler(new CommonValidator(1, 4), new EVADataStorage(evaDao)),
+			new ImportHandler(new CommonValidator(1, 4), new JkzjsDataStorage(jkzjDao)),
+			new ImportHandler(new CommonValidator(1, 2), new MyzsDataStorage(myzsDao)),
+			new ImportHandler(new CommonValidator(2, 9), new LwgDataStorage(lwgDao)),
+			new ImportHandler(new CommonValidator(1, 4), new PMICPIPPIDataStorage(pmiCpiPpiDao)),
+			new ImportHandler(new CommonValidator(2, 7), new YhjzllDataStorage(yhjzllDao))
 		};
 	}
 
