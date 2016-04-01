@@ -20,7 +20,7 @@ public class CommonValidator extends ValidatorTemplate{
 				return parseDate(cell);
 			}
 		}catch(Exception e){
-			throw new ValidationException(row + "行 " + col + "列: " +  e.getMessage());
+			throw new ValidationException((row + 1) + "行 " + (col + 1) + "列: " +  e.getMessage());
 		}
 	}
 }
