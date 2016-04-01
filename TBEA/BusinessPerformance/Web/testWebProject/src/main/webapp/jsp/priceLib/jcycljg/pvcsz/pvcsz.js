@@ -83,7 +83,7 @@ var jcycljg;
                 }
                 $(this.mData).each(function (i) {
                     for (var j = 0; j < items.length; ++j) {
-                        data[j].push(_this.mData[i][5 + j]);
+                        data[j].push(_this.mData[i][8 + j]);
                     }
                 });
                 this.updateEchart("乙烯法PVC树脂（元/吨）", this.option().yxf, items, data);

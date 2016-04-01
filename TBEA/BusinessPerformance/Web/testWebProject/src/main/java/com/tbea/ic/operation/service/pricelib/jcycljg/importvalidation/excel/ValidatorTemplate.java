@@ -45,15 +45,16 @@ public abstract class ValidatorTemplate implements FormatValidator{
 			throw new ValidationException("表格中没有可导入数据");
 		}
 		
-		if (columnCount != sheet.getRow(startRow).getLastCellNum()){
-			throw new ValidationException("数据列数不匹配: 数据列数应为" + columnCount + "列，输入数据为" + sheet.getRow(startRow).getLastCellNum() + "列");
-		}
-		
 		List<Object[]> result = new ArrayList<Object[]>();
-		for (int i = startRow; i <= sheet.getLastRowNum(); ++i) {
+		for (int i = sheet.getFirstRowNum() + startRow; i <= sheet.getLastRowNum(); ++i) {
 			Object[] objs = new Object[columnCount];
-			XSSFRow row = sheet.getRow(i);
-			for (int j = 0; j < columnCount; ++j){
+			XSSFRow row = sheet.getRow(i);			
+			int start = row.getFirstCellNum();//返回索引
+			int end = row.getLastCellNum();//相当于列总数
+			if ((end - start) != columnCount){
+				throw new ValidationException("第" + (i + 1) + "行数据列数不匹配");
+			}
+			for (int j = start; j < end; ++j){
 				objs[j] = checkCell(i, j, row.getCell(j));
 			}
 			result.add(objs);

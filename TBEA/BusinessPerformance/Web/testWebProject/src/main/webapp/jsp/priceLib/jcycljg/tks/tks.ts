@@ -61,7 +61,7 @@ module jcycljg {
                 view.register("铁矿石", this);
             }
 
-            public updateJkChart() {
+            public updateGcChart() {
                 let items = ["山西代县(64品位)", "辽宁辽阳(65品位)", "山东淄博(65品位)", "安徽霍邱(64品位)"];
                 let data:string[][] = [];
                 for (let k = 0; k < items.length; ++k){
@@ -72,10 +72,10 @@ module jcycljg {
                         data[j].push(this.mData[i][1 + j])
                     }
                 });
-                this.updateEchart("国产矿价格趋势（元/吨）", this.option().jk,items, data);
+                this.updateEchart("国产矿价格趋势（元/吨）", this.option().gc,items, data);
             }
 
-            public updateGcChart() {
+            public updateJkChart() {
                 let items = ["青岛港巴西粉矿(63.5品位)", "印度粉矿(60品位)"];
                 let data:string[][] = [];
                 for (let k = 0; k < items.length; ++k){
@@ -86,7 +86,7 @@ module jcycljg {
                         data[j].push(this.mData[i][5 + j])
                     }
                 })
-                this.updateEchart("进口矿价格趋势（元/吨）", this.option().gc, items, data);
+                this.updateEchart("进口矿价格趋势（元/吨）", this.option().jk, items, data);
             }
 
             public  getDateType():DateType {

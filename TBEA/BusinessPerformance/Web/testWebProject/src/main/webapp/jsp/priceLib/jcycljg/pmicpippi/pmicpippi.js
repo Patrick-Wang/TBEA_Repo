@@ -77,7 +77,7 @@ var jcycljg;
                 }
                 $(this.mData).each(function (i) {
                     for (var j = 0; j < items.length; ++j) {
-                        data[j].push(_this.mData[i][5 + j]);
+                        data[j].push(_this.mData[i][2 + j]);
                     }
                 });
                 this.updateEchart("CPI（居民消费价格指数(上年同月=100)", this.option().cpi, items, data);
@@ -91,7 +91,7 @@ var jcycljg;
                 }
                 $(this.mData).each(function (i) {
                     for (var j = 0; j < items.length; ++j) {
-                        data[j].push(_this.mData[i][5 + j]);
+                        data[j].push(_this.mData[i][3 + j]);
                     }
                 });
                 this.updateEchart("PPI（生产价格指数（(上年同月=100)）", this.option().ppi, items, data);

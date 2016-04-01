@@ -85,7 +85,7 @@ module jcycljg {
                 }
                 $(this.mData).each((i:number)=> {
                     for (let j = 0; j < items.length; ++j) {
-                        data[j].push(this.mData[i][5 + j])
+                        data[j].push(this.mData[i][8 + j])
                     }
                 });
                 this.updateEchart("乙烯法PVC树脂（元/吨）", this.option().yxf, items, data);

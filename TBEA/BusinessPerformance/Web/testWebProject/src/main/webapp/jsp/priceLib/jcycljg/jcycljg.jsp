@@ -173,7 +173,7 @@ pageEncoding="utf-8"%>
                     <td>
                         <div id="dts"></div>
                     </td>
-                    <td>
+                    <td> 
                     <div style="width:10px"></div>
                 </td>
                     <td>

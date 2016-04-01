@@ -21,19 +21,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="jcycljg.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/jcycljg.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.5">
-              <caret line="210" column="9" selection-start-line="210" selection-start-column="9" selection-end-line="210" selection-end-column="9" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#td#1;n#tr#0;n#Table#0;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#td#4;n#tr#0;n#Table#0;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ysjs.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/ysjs/ysjs.ts">
           <provider selected="true" editor-type-id="text-editor">
@@ -68,12 +55,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="yhjzll.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="yhjzll.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/yhjzll/yhjzll.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.4740883">
+            <state vertical-scroll-proportion="0.0">
               <caret line="57" column="37" selection-start-line="57" selection-start-column="37" selection-end-line="57" selection-end-column="37" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pmicpippi.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/pmicpippi/pmicpippi.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="96" column="58" selection-start-line="96" selection-start-column="58" selection-end-line="96" selection-end-column="58" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -102,36 +101,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jcycljgdef.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/jcycljgdef.ts">
+      <file leaf-file-name="pvcsz.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/pvcsz/pvcsz.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="77" column="1" selection-start-line="77" selection-start-column="1" selection-end-line="77" selection-end-column="1" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jkzj.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/jkzj/jkzj.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.4942529">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            <state vertical-scroll-proportion="-1.5316699">
+              <caret line="57" column="23" selection-start-line="57" selection-start-column="23" selection-end-line="57" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jkzj.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/jkzj/jkzj.ts">
+      <file leaf-file-name="tks.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/tks/tks.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="22" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="22" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+              <caret line="87" column="18" selection-start-line="87" selection-start-column="18" selection-end-line="87" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tks.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/tks/tks.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-14.928572">
+              <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -152,7 +147,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/ysjs.jsp" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/ggp.jsp" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/jcycljgdef.js" />
         <option value="$PROJECT_DIR$/jsp/unitedSelector.ts" />
@@ -177,13 +171,11 @@
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/gjyy/gjyy.ts" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/ggp/ggp.ts" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/fgc/fgc.ts" />
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/tks/tks.ts" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/gx/zhb.jsp" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/zhb/zhb.ts" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/gx/gx.ts" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/pvcsz/pvcsz..jsp" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/pvcsz/pvcsz.jsp" />
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/pvcsz/pvcsz.ts" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/dmdjyx/dmdjyx.jsp" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/dmdjyx/dmdjyx.ts" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/eva/eva.jsp" />
@@ -203,6 +195,9 @@
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/lwg/lwg.jsp" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/yhjzll/yhjzll.jsp" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/yhjzll/yhjzll.ts" />
+        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/pmicpippi/pmicpippi.ts" />
+        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/pvcsz/pvcsz.ts" />
+        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/tks/tks.ts" />
       </list>
     </option>
   </component>
@@ -379,7 +374,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="yhjzll" />
+              <option name="myItemId" value="tks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -405,33 +400,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="lwg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="priceLib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jcycljg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jt" />
+              <option name="myItemId" value="pvcsz" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -536,10 +505,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25602028" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25602028" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293011" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26075268" sideWeight="0.49746513" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31854838" sideWeight="0.50253487" order="0" side_tool="true" content_ui="tabs" />
@@ -574,14 +543,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/jsp/jqgrid/vector.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22580644">
-          <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/dateSelector.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.67741936">
@@ -716,17 +677,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/tks/tks.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.964286">
-          <caret line="32" column="18" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="18" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#0;n#Table#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#0;n#tr#1;n#Table#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/jt/jt.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.1494255">
@@ -784,14 +734,6 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/tks/tks.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="82" column="17" selection-start-line="82" selection-start-column="17" selection-end-line="82" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -892,14 +834,6 @@
           <folding>
             <element signature="n#style#0;n#Table#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/pvcsz/pvcsz.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="76" column="43" selection-start-line="76" selection-start-column="43" selection-end-line="76" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1014,16 +948,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/lwg/lwg.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="41" selection-start-line="44" selection-start-column="41" selection-end-line="44" selection-end-column="41" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/lwg/lwg.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.03448276">
@@ -1054,8 +978,52 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/yhjzll/yhjzll.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4740883">
+        <state vertical-scroll-proportion="0.0">
           <caret line="57" column="37" selection-start-line="57" selection-start-column="37" selection-end-line="57" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/pmicpippi/pmicpippi.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="96" column="58" selection-start-line="96" selection-start-column="58" selection-end-line="96" selection-end-column="58" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/lwg/lwg.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="44" column="41" selection-start-line="44" selection-start-column="41" selection-end-line="44" selection-end-column="41" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/tks/tks.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="87" column="18" selection-start-line="87" selection-start-column="18" selection-end-line="87" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/tks/tks.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.928572">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/pvcsz/pvcsz.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.5316699">
+          <caret line="57" column="23" selection-start-line="57" selection-start-column="23" selection-end-line="57" selection-end-column="23" />
           <folding />
         </state>
       </provider>

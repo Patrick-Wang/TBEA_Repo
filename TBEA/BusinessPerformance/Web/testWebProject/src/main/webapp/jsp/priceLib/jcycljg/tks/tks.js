@@ -58,7 +58,7 @@ var jcycljg;
                 _super.prototype.init.call(this, opt);
                 view.register("铁矿石", this);
             };
-            TksView.prototype.updateJkChart = function () {
+            TksView.prototype.updateGcChart = function () {
                 var _this = this;
                 var items = ["山西代县(64品位)", "辽宁辽阳(65品位)", "山东淄博(65品位)", "安徽霍邱(64品位)"];
                 var data = [];
@@ -70,9 +70,9 @@ var jcycljg;
                         data[j].push(_this.mData[i][1 + j]);
                     }
                 });
-                this.updateEchart("国产矿价格趋势（元/吨）", this.option().jk, items, data);
+                this.updateEchart("国产矿价格趋势（元/吨）", this.option().gc, items, data);
             };
-            TksView.prototype.updateGcChart = function () {
+            TksView.prototype.updateJkChart = function () {
                 var _this = this;
                 var items = ["青岛港巴西粉矿(63.5品位)", "印度粉矿(60品位)"];
                 var data = [];
@@ -84,7 +84,7 @@ var jcycljg;
                         data[j].push(_this.mData[i][5 + j]);
                     }
                 });
-                this.updateEchart("进口矿价格趋势（元/吨）", this.option().gc, items, data);
+                this.updateEchart("进口矿价格趋势（元/吨）", this.option().jk, items, data);
             };
             TksView.prototype.getDateType = function () {
                 return jcycljg.DateType.DAY;
