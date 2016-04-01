@@ -9,41 +9,35 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var jcycljg;
 (function (jcycljg) {
-    var ggp;
-    (function (ggp) {
+    var jt;
+    (function (jt) {
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("日期", "rq", true),
-                    new JQTable.Node("武钢（元/吨）", "wg")
-                        .append(new JQTable.Node("30Q120", "w"))
-                        .append(new JQTable.Node("30RK100", "ww"))
-                        .append(new JQTable.Node("27RK095", "www"))
-                        .append(new JQTable.Node("23RK085", "wwww")),
-                    new JQTable.Node("宝钢（元/吨）", "bg")
-                        .append(new JQTable.Node("B30P120", "b"))
-                        .append(new JQTable.Node("B30P100", "bb"))
-                        .append(new JQTable.Node("B27R095", "bbb"))
-                        .append(new JQTable.Node("B27R085", "bbbb"))
+                    new JQTable.Node("山西吕梁<br/>（元/吨）", "sxll"),
+                    new JQTable.Node("河北邢台<br/>（元/吨）", "hbxt"),
+                    new JQTable.Node("山东青岛<br/>（元/吨）", "sdqd"),
+                    new JQTable.Node("河南济源<br/>（元/吨）", "hnjy"),
                 ], gridName);
             };
             return JQGridAssistantFactory;
         })();
-        var GgpView = (function (_super) {
-            __extends(GgpView, _super);
-            function GgpView() {
+        var JtView = (function (_super) {
+            __extends(JtView, _super);
+            function JtView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.GGP, false);
+                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.JT, false);
             }
-            GgpView.newInstance = function () {
-                return new GgpView();
+            JtView.newInstance = function () {
+                return new JtView();
             };
-            GgpView.prototype.option = function () {
+            JtView.prototype.option = function () {
                 return this.mOpt;
             };
-            GgpView.prototype.pluginUpdate = function (start, end) {
+            JtView.prototype.pluginUpdate = function (start, end) {
                 var _this = this;
                 this.mAjax.get({
                     start: start,
@@ -52,15 +46,14 @@ var jcycljg;
                     .then(function (jsonData) {
                     _this.mData = jsonData;
                     _this.updateTable();
-                    _this.updateWgChart();
-                    _this.updateBgChart();
+                    _this.updateChart();
                 });
             };
-            GgpView.prototype.init = function (opt) {
+            JtView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("硅钢片", this);
+                view.register("焦炭", this);
             };
-            GgpView.prototype.updateWgChart = function () {
+            JtView.prototype.updateChart = function () {
                 var _this = this;
                 var data = [[], [], [], []];
                 $(this.mData).each(function (i) {
@@ -69,23 +62,12 @@ var jcycljg;
                     data[2].push(_this.mData[i][3]);
                     data[3].push(_this.mData[i][4]);
                 });
-                this.updateEchart("武钢结算价格趋势（元/吨）", this.option().wg, ["30Q120", "30RK100", "27RK095", "23RK085"], data);
+                this.updateEchart("焦炭价格趋势（元/吨）", this.option().ct, ["山西吕梁", "河北邢台", "山东青岛", "河南济源"], data);
             };
-            GgpView.prototype.updateBgChart = function () {
-                var _this = this;
-                var data = [[], [], [], []];
-                $(this.mData).each(function (i) {
-                    data[0].push(_this.mData[i][5]);
-                    data[1].push(_this.mData[i][6]);
-                    data[2].push(_this.mData[i][7]);
-                    data[3].push(_this.mData[i][8]);
-                });
-                this.updateEchart("宝钢结算价格趋势（元/吨）", this.option().bg, ["B30P120", "B30P100", "B27R095", "B27R085"], data);
+            JtView.prototype.getDateType = function () {
+                return jcycljg.DateType.DAY;
             };
-            GgpView.prototype.getDateType = function () {
-                return jcycljg.DateType.MONTH;
-            };
-            GgpView.prototype.updateEchart = function (title, echart, legend, data) {
+            JtView.prototype.updateEchart = function (title, echart, legend, data) {
                 var _this = this;
                 var xData = [];
                 $(this.mData).each(function (i) {
@@ -131,7 +113,7 @@ var jcycljg;
                 };
                 echarts.init(this.$(echart)[0]).setOption(option);
             };
-            GgpView.prototype.updateTable = function () {
+            JtView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
@@ -150,8 +132,8 @@ var jcycljg;
                     datatype: "local"
                 }));
             };
-            return GgpView;
+            return JtView;
         })(jcycljg.BasePluginView);
-        ggp.pluginView = GgpView.newInstance();
-    })(ggp = jcycljg.ggp || (jcycljg.ggp = {}));
+        jt.pluginView = JtView.newInstance();
+    })(jt = jcycljg.jt || (jcycljg.jt = {}));
 })(jcycljg || (jcycljg = {}));

@@ -7,38 +7,33 @@ declare var echarts;
 declare var view:jcycljg.FrameView;
 
 module jcycljg {
-    export module ggp {
+    export module lzbb {
         class JQGridAssistantFactory {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("日期", "rq", true),
-                    new JQTable.Node("武钢（元/吨）", "wg")
-                        .append(new JQTable.Node("30Q120", "w"))
-                        .append(new JQTable.Node("30RK100", "ww"))
-                        .append(new JQTable.Node("27RK095", "www"))
-                        .append(new JQTable.Node("23RK085", "wwww")),
-                    new JQTable.Node("宝钢（元/吨）", "bg")
-                        .append(new JQTable.Node("B30P120", "b"))
-                        .append(new JQTable.Node("B30P100", "bb"))
-                        .append(new JQTable.Node("B27R095", "bbb"))
-                        .append(new JQTable.Node("B27R085", "bbbb"))
+                    new JQTable.Node("上海鞍钢<br/>（1.0mmST12）<br/>（元/吨）", "shan"),
+                    new JQTable.Node("南昌武钢<br/>（1.0mmST12）<br/>（元/吨）", "ncwg"),
+                    new JQTable.Node("沈阳鞍钢<br/>（1.0mmST12）<br/>（元/吨）", "syag"),
+                    new JQTable.Node("西安鞍钢<br/>（1.0mmST12）<br/>（元/吨）", "xaag"),
+                    new JQTable.Node("乌鲁木齐八钢<br/>（1.0mmSPCC）<br/>（元/吨）", "wlmqbg"),
+                    new JQTable.Node("市场均价<br/>（元/吨）", "scjj"),
                 ], gridName);
             }
         }
 
         interface Option extends PluginOption {
-            wg:string;
-            bg:string;
+            ct:string;
             tb:string;
         }
 
-        class GgpView extends BasePluginView {
+        class LzbbView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.GGP, false);
+            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.LZBB, false);
             private mDateSelector:Util.DateSelector;
 
-            public static newInstance():GgpView {
-                return new GgpView();
+            public static newInstance():LzbbView {
+                return new LzbbView();
             }
 
             private option():Option {
@@ -53,40 +48,30 @@ module jcycljg {
                     .then((jsonData:any) => {
                         this.mData = jsonData;
                         this.updateTable();
-                        this.updateWgChart();
-                        this.updateBgChart();
+                        this.updateChart();
                     });
             }
 
             public init(opt:Option):void {
                 super.init(opt);
-                view.register("硅钢片", this);
+                view.register("冷轧薄板", this);
             }
 
-            public updateWgChart() {
-                var data:string[][] = [[], [], [], []];
+            public updateChart() {
+                var data:string[][] = [[], [], [], [], [], []];
                 $(this.mData).each((i:number)=> {
                     data[0].push(this.mData[i][1]);
                     data[1].push(this.mData[i][2]);
                     data[2].push(this.mData[i][3]);
                     data[3].push(this.mData[i][4]);
+                    data[4].push(this.mData[i][5]);
+                    data[5].push(this.mData[i][6]);
                 })
-                this.updateEchart("武钢结算价格趋势（元/吨）", this.option().wg, ["30Q120", "30RK100", "27RK095", "23RK085"], data);
-            }
-
-            public updateBgChart() {
-                var data:string[][] = [[], [], [], []];
-                $(this.mData).each((i:number)=> {
-                    data[0].push(this.mData[i][5]);
-                    data[1].push(this.mData[i][6]);
-                    data[2].push(this.mData[i][7]);
-                    data[3].push(this.mData[i][8]);
-                })
-                this.updateEchart("宝钢结算价格趋势（元/吨）", this.option().bg, ["B30P120", "B30P100", "B27R095", "B27R085"], data);
+                this.updateEchart("废钢材价格趋势（元/吨）", this.option().ct, ["上海鞍钢", "南昌武钢", "沈阳鞍钢", "西安鞍钢", "乌鲁木齐八钢", "市场均价"], data);
             }
 
             public  getDateType():DateType {
-                return DateType.MONTH;
+                return DateType.DAY;
             }
 
             private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>):void {
@@ -162,6 +147,6 @@ module jcycljg {
 
             }
         }
-        export var pluginView = GgpView.newInstance();
+        export var pluginView = LzbbView.newInstance();
     }
 }

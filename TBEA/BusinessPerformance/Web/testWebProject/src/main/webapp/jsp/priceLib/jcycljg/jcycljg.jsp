@@ -174,6 +174,9 @@ pageEncoding="utf-8"%>
                         <div id="dts"></div>
                     </td>
                     <td>
+                    <div style="width:10px"></div>
+                </td>
+                    <td>
                         <div id="dte"></div>
                     </td>
                     <td> 
@@ -191,6 +194,9 @@ pageEncoding="utf-8"%>
             <%@include file="ggp/ggp.jsp"%>
             <%@include file="gjyy/gjyy.jsp"%>
             <%@include file="tks/tks.jsp"%>
+            <%@include file="jt/jt.jsp"%>
+            <%@include file="fgc/fgc.jsp"%>
+            <%@include file="lzbb/lzbb.jsp"%>
         </td>
     </tr>
 

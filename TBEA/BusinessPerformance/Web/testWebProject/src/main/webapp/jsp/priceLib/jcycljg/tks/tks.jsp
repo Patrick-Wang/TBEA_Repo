@@ -19,7 +19,7 @@
             </div>
         </td>
     </tr> 
-    <tr>  
+    <tr>
         <td> 
             <div id="table" align="center"></div>
         </td> 

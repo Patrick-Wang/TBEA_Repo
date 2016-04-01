@@ -7,38 +7,31 @@ declare var echarts;
 declare var view:jcycljg.FrameView;
 
 module jcycljg {
-    export module ggp {
+    export module jt {
         class JQGridAssistantFactory {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("日期", "rq", true),
-                    new JQTable.Node("武钢（元/吨）", "wg")
-                        .append(new JQTable.Node("30Q120", "w"))
-                        .append(new JQTable.Node("30RK100", "ww"))
-                        .append(new JQTable.Node("27RK095", "www"))
-                        .append(new JQTable.Node("23RK085", "wwww")),
-                    new JQTable.Node("宝钢（元/吨）", "bg")
-                        .append(new JQTable.Node("B30P120", "b"))
-                        .append(new JQTable.Node("B30P100", "bb"))
-                        .append(new JQTable.Node("B27R095", "bbb"))
-                        .append(new JQTable.Node("B27R085", "bbbb"))
+                    new JQTable.Node("山西吕梁<br/>（元/吨）", "sxll"),
+                    new JQTable.Node("河北邢台<br/>（元/吨）", "hbxt"),
+                    new JQTable.Node("山东青岛<br/>（元/吨）", "sdqd"),
+                    new JQTable.Node("河南济源<br/>（元/吨）", "hnjy"),
                 ], gridName);
             }
         }
 
         interface Option extends PluginOption {
-            wg:string;
-            bg:string;
+            ct:string;
             tb:string;
         }
 
-        class GgpView extends BasePluginView {
+        class JtView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.GGP, false);
+            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.JT, false);
             private mDateSelector:Util.DateSelector;
 
-            public static newInstance():GgpView {
-                return new GgpView();
+            public static newInstance():JtView {
+                return new JtView();
             }
 
             private option():Option {
@@ -53,17 +46,16 @@ module jcycljg {
                     .then((jsonData:any) => {
                         this.mData = jsonData;
                         this.updateTable();
-                        this.updateWgChart();
-                        this.updateBgChart();
+                        this.updateChart();
                     });
             }
 
             public init(opt:Option):void {
                 super.init(opt);
-                view.register("硅钢片", this);
+                view.register("焦炭", this);
             }
 
-            public updateWgChart() {
+            public updateChart() {
                 var data:string[][] = [[], [], [], []];
                 $(this.mData).each((i:number)=> {
                     data[0].push(this.mData[i][1]);
@@ -71,22 +63,11 @@ module jcycljg {
                     data[2].push(this.mData[i][3]);
                     data[3].push(this.mData[i][4]);
                 })
-                this.updateEchart("武钢结算价格趋势（元/吨）", this.option().wg, ["30Q120", "30RK100", "27RK095", "23RK085"], data);
-            }
-
-            public updateBgChart() {
-                var data:string[][] = [[], [], [], []];
-                $(this.mData).each((i:number)=> {
-                    data[0].push(this.mData[i][5]);
-                    data[1].push(this.mData[i][6]);
-                    data[2].push(this.mData[i][7]);
-                    data[3].push(this.mData[i][8]);
-                })
-                this.updateEchart("宝钢结算价格趋势（元/吨）", this.option().bg, ["B30P120", "B30P100", "B27R095", "B27R085"], data);
+                this.updateEchart("焦炭价格趋势（元/吨）", this.option().ct, ["山西吕梁", "河北邢台", "山东青岛", "河南济源"], data);
             }
 
             public  getDateType():DateType {
-                return DateType.MONTH;
+                return DateType.DAY;
             }
 
             private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>):void {
@@ -162,6 +143,6 @@ module jcycljg {
 
             }
         }
-        export var pluginView = GgpView.newInstance();
+        export var pluginView = JtView.newInstance();
     }
 }

@@ -9,41 +9,37 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var jcycljg;
 (function (jcycljg) {
-    var ggp;
-    (function (ggp) {
+    var lzbb;
+    (function (lzbb) {
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("日期", "rq", true),
-                    new JQTable.Node("武钢（元/吨）", "wg")
-                        .append(new JQTable.Node("30Q120", "w"))
-                        .append(new JQTable.Node("30RK100", "ww"))
-                        .append(new JQTable.Node("27RK095", "www"))
-                        .append(new JQTable.Node("23RK085", "wwww")),
-                    new JQTable.Node("宝钢（元/吨）", "bg")
-                        .append(new JQTable.Node("B30P120", "b"))
-                        .append(new JQTable.Node("B30P100", "bb"))
-                        .append(new JQTable.Node("B27R095", "bbb"))
-                        .append(new JQTable.Node("B27R085", "bbbb"))
+                    new JQTable.Node("上海鞍钢<br/>（1.0mmST12）<br/>（元/吨）", "shan"),
+                    new JQTable.Node("南昌武钢<br/>（1.0mmST12）<br/>（元/吨）", "ncwg"),
+                    new JQTable.Node("沈阳鞍钢<br/>（1.0mmST12）<br/>（元/吨）", "syag"),
+                    new JQTable.Node("西安鞍钢<br/>（1.0mmST12）<br/>（元/吨）", "xaag"),
+                    new JQTable.Node("乌鲁木齐八钢<br/>（1.0mmSPCC）<br/>（元/吨）", "wlmqbg"),
+                    new JQTable.Node("市场均价<br/>（元/吨）", "scjj"),
                 ], gridName);
             };
             return JQGridAssistantFactory;
         })();
-        var GgpView = (function (_super) {
-            __extends(GgpView, _super);
-            function GgpView() {
+        var LzbbView = (function (_super) {
+            __extends(LzbbView, _super);
+            function LzbbView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.GGP, false);
+                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.LZBB, false);
             }
-            GgpView.newInstance = function () {
-                return new GgpView();
+            LzbbView.newInstance = function () {
+                return new LzbbView();
             };
-            GgpView.prototype.option = function () {
+            LzbbView.prototype.option = function () {
                 return this.mOpt;
             };
-            GgpView.prototype.pluginUpdate = function (start, end) {
+            LzbbView.prototype.pluginUpdate = function (start, end) {
                 var _this = this;
                 this.mAjax.get({
                     start: start,
@@ -52,40 +48,30 @@ var jcycljg;
                     .then(function (jsonData) {
                     _this.mData = jsonData;
                     _this.updateTable();
-                    _this.updateWgChart();
-                    _this.updateBgChart();
+                    _this.updateChart();
                 });
             };
-            GgpView.prototype.init = function (opt) {
+            LzbbView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("硅钢片", this);
+                view.register("冷轧薄板", this);
             };
-            GgpView.prototype.updateWgChart = function () {
+            LzbbView.prototype.updateChart = function () {
                 var _this = this;
-                var data = [[], [], [], []];
+                var data = [[], [], [], [], [], []];
                 $(this.mData).each(function (i) {
                     data[0].push(_this.mData[i][1]);
                     data[1].push(_this.mData[i][2]);
                     data[2].push(_this.mData[i][3]);
                     data[3].push(_this.mData[i][4]);
+                    data[4].push(_this.mData[i][5]);
+                    data[5].push(_this.mData[i][6]);
                 });
-                this.updateEchart("武钢结算价格趋势（元/吨）", this.option().wg, ["30Q120", "30RK100", "27RK095", "23RK085"], data);
+                this.updateEchart("废钢材价格趋势（元/吨）", this.option().ct, ["上海鞍钢", "南昌武钢", "沈阳鞍钢", "西安鞍钢", "乌鲁木齐八钢", "市场均价"], data);
             };
-            GgpView.prototype.updateBgChart = function () {
-                var _this = this;
-                var data = [[], [], [], []];
-                $(this.mData).each(function (i) {
-                    data[0].push(_this.mData[i][5]);
-                    data[1].push(_this.mData[i][6]);
-                    data[2].push(_this.mData[i][7]);
-                    data[3].push(_this.mData[i][8]);
-                });
-                this.updateEchart("宝钢结算价格趋势（元/吨）", this.option().bg, ["B30P120", "B30P100", "B27R095", "B27R085"], data);
+            LzbbView.prototype.getDateType = function () {
+                return jcycljg.DateType.DAY;
             };
-            GgpView.prototype.getDateType = function () {
-                return jcycljg.DateType.MONTH;
-            };
-            GgpView.prototype.updateEchart = function (title, echart, legend, data) {
+            LzbbView.prototype.updateEchart = function (title, echart, legend, data) {
                 var _this = this;
                 var xData = [];
                 $(this.mData).each(function (i) {
@@ -131,7 +117,7 @@ var jcycljg;
                 };
                 echarts.init(this.$(echart)[0]).setOption(option);
             };
-            GgpView.prototype.updateTable = function () {
+            LzbbView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
@@ -150,8 +136,8 @@ var jcycljg;
                     datatype: "local"
                 }));
             };
-            return GgpView;
+            return LzbbView;
         })(jcycljg.BasePluginView);
-        ggp.pluginView = GgpView.newInstance();
-    })(ggp = jcycljg.ggp || (jcycljg.ggp = {}));
+        lzbb.pluginView = LzbbView.newInstance();
+    })(lzbb = jcycljg.lzbb || (jcycljg.lzbb = {}));
 })(jcycljg || (jcycljg = {}));

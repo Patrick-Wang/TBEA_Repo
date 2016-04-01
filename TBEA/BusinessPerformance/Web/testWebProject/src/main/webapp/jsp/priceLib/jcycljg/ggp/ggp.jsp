@@ -9,7 +9,7 @@
             </div>
         </td>
     </tr>
-    <tr> 
+    <tr>
         <td>
             <div align="center"> 
                 <div class="panel-content-border"
