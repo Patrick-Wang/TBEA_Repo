@@ -101,7 +101,7 @@ module jcycljg {
             }
 
             public  getDateType():DateType {
-                return DateType.DAY;
+                return DateType.MONTH;
             }
 
             private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>):void {

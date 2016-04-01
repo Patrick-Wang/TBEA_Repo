@@ -2,6 +2,7 @@ package com.tbea.ic.operation.service.pricelib.jcycljg.storage;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.tbea.ic.operation.common.Util;
@@ -20,6 +21,11 @@ public class PMICPIPPIDataStorage implements DataStorage<PmiCpiPpiEntity> {
 	
 	public void store(List<Object[]> data){
 		for (Object[] objs : data){
+			Date dt = (Date) objs[0];
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(dt);
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+			objs[0] = new Date(cal.getTimeInMillis());
 			PmiCpiPpiEntity entity = dao.getByDate((Date) objs[0]);
 			if (entity == null){
 			   entity = new PmiCpiPpiEntity();

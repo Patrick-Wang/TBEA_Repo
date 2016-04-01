@@ -97,7 +97,7 @@ var jcycljg;
                 this.updateEchart("PPI（生产价格指数（(上年同月=100)）", this.option().ppi, items, data);
             };
             PmiCpiPpiView.prototype.getDateType = function () {
-                return jcycljg.DateType.DAY;
+                return jcycljg.DateType.MONTH;
             };
             PmiCpiPpiView.prototype.updateEchart = function (title, echart, legend, data) {
                 var _this = this;

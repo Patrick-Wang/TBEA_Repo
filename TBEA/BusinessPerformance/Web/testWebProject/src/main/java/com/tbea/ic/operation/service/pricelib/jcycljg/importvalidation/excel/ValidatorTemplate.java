@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -23,20 +24,21 @@ public abstract class ValidatorTemplate implements FormatValidator{
 	
 	public Date parseDate(XSSFCell cell) throws ValidationException{
 		if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
-			short df = cell.getCellStyle().getDataFormat();
-			if (14 == df) {
+			if (HSSFDateUtil.isCellDateFormatted(cell)) {
 				java.util.Date date = cell.getDateCellValue();
 				return new Date(date.getTime());
 			}
+			short df = cell.getCellStyle().getDataFormat();
+			throw new ValidationException("日期解析失败，数据格式编码" + df);
 		}
-		throw new ValidationException("日期解析失败");
+		throw new ValidationException("日期解析失败，类型编码 " + cell.getCellType());
 	}
 	
 	public double parseNumber(XSSFCell cell) throws ValidationException{
-		if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
+		if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC || cell.getCellType() == XSSFCell.CELL_TYPE_FORMULA) {
 			return cell.getNumericCellValue();
 		}
-		throw new ValidationException("数值类型解析失败 ");
+		throw new ValidationException("数值类型解析失败 ，类型编码  " + cell.getCellType());
 	}
 
 	public List<Object[]> validate(XSSFSheet sheet) throws ValidationException{

@@ -28,7 +28,7 @@ var jcycljg;
             __extends(MyzsView, _super);
             function MyzsView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.EVA, false);
+                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.JKZJ, false);
             }
             MyzsView.newInstance = function () {
                 return new MyzsView();
