@@ -30,7 +30,7 @@ public class DmdjyxDaoImpl extends AbstractReadWriteDaoImpl<DmdjyxEntity> implem
 
 	@Override
 	public List<DmdjyxEntity> getEntities(Date start, Date end) {
-		Query q = this.getEntityManager().createQuery("from DmdjyxEntity where date >= :start and date <= :end");
+		Query q = this.getEntityManager().createQuery("from DmdjyxEntity where date >= :start and date <= :end order by date asc");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();

@@ -56,14 +56,17 @@ module jcycljg {
             }
 
             public updateChart() {
-                var data:string[][] = [[], [], [], []];
+                let items =  ["北京", "天津", "大连", "唐山"];
+                let data:string[][] = [];
+                for (let k = 0; k < items.length; ++k){
+                    data.push([]);
+                }
                 $(this.mData).each((i:number)=> {
-                    data[0].push(this.mData[i][1]);
-                    data[1].push(this.mData[i][2]);
-                    data[2].push(this.mData[i][3]);
-                    data[3].push(this.mData[i][4]);
-                })
-                this.updateEchart("废钢材价格趋势（元/吨）", this.option().ct, ["北京", "天津", "大连", "唐山"], data);
+                    for (let j = 0; j < items.length; ++j) {
+                        data[j].push(this.mData[i][1 + j])
+                    }
+                });
+                this.updateEchart("废钢材价格趋势（元/吨）", this.option().ct, items, data);
             }
 
             public  getDateType():DateType {

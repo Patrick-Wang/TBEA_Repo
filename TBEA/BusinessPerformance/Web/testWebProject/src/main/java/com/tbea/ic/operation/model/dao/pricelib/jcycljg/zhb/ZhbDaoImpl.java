@@ -31,7 +31,7 @@ public class ZhbDaoImpl extends AbstractReadWriteDaoImpl<ZhbEntity> implements Z
 
 	@Override
 	public List<ZhbEntity> getEntities(Date start, Date end) {
-		Query q = this.getEntityManager().createQuery("from ZhbEntity where date >= :start and date <= :end");
+		Query q = this.getEntityManager().createQuery("from ZhbEntity where date >= :start and date <= :end order by date asc");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();

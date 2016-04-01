@@ -197,9 +197,18 @@ pageEncoding="utf-8"%>
             <%@include file="jt/jt.jsp"%>
             <%@include file="fgc/fgc.jsp"%>
             <%@include file="lzbb/lzbb.jsp"%>
+            <%@include file="zhb/zhb.jsp"%>
+            <%@include file="gx/gx.jsp"%>
+            <%@include file="pvcsz/pvcsz.jsp"%>
+            <%@include file="dmdjyx/dmdjyx.jsp"%>
+            <%@include file="eva/eva.jsp"%>
+            <%@include file="jkzj/jkzj.jsp"%>
+            <%@include file="myzs/myzs.jsp"%>
+            <%@include file="lwg/lwg.jsp"%>
+            <%@include file="pmicpippi/pmicpippi.jsp"%>
+            <%@include file="yhjzll/yhjzll.jsp"%>
         </td>
     </tr>
-
 </Table> 
 <script type="text/javascript">
     view.init({
@@ -213,7 +222,21 @@ pageEncoding="utf-8"%>
     });  
     $(document).ready(function(){
     	$(document.body).css("visibility", "visible");
-    });
+        (function(){
+            $("#type select")
+                    .multiselect({
+                        multiple: false,
+                        header: false,
+                        minWidth : 180,
+                        height:'100%',
+                        // noneSelectedText: "请选择月份",
+                        selectedList: 1
+                    })
+                    .css("padding", "2px 0 2px 4px")
+                    .css("text-align", "left")
+                    .css("font-size", "12px");
+        }());
+    }); 
 </script>
 <script src="jsp/style_select.js"></script>
 <script src="jsp/www2/js/echarts-plain-2-0-0.js"></script>

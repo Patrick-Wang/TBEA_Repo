@@ -55,14 +55,17 @@ var jcycljg;
             };
             FgcView.prototype.updateChart = function () {
                 var _this = this;
-                var data = [[], [], [], []];
+                var items = ["北京", "天津", "大连", "唐山"];
+                var data = [];
+                for (var k = 0; k < items.length; ++k) {
+                    data.push([]);
+                }
                 $(this.mData).each(function (i) {
-                    data[0].push(_this.mData[i][1]);
-                    data[1].push(_this.mData[i][2]);
-                    data[2].push(_this.mData[i][3]);
-                    data[3].push(_this.mData[i][4]);
+                    for (var j = 0; j < items.length; ++j) {
+                        data[j].push(_this.mData[i][1 + j]);
+                    }
                 });
-                this.updateEchart("废钢材价格趋势（元/吨）", this.option().ct, ["北京", "天津", "大连", "唐山"], data);
+                this.updateEchart("废钢材价格趋势（元/吨）", this.option().ct, items, data);
             };
             FgcView.prototype.getDateType = function () {
                 return jcycljg.DateType.DAY;

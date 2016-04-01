@@ -50,6 +50,8 @@ var jcycljg;
         JcycljgType[JcycljgType["JKZJ"] = 12] = "JKZJ";
         JcycljgType[JcycljgType["MYZS"] = 13] = "MYZS";
         JcycljgType[JcycljgType["LWG"] = 14] = "LWG";
+        JcycljgType[JcycljgType["PMICPIPPI"] = 15] = "PMICPIPPI";
+        JcycljgType[JcycljgType["YHJZLL"] = 16] = "YHJZLL";
     })(jcycljg.JcycljgType || (jcycljg.JcycljgType = {}));
     var JcycljgType = jcycljg.JcycljgType;
 })(jcycljg || (jcycljg = {}));

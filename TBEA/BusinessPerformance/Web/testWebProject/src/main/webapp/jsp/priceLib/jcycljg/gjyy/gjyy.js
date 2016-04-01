@@ -53,12 +53,17 @@ var jcycljg;
             };
             GjyyView.prototype.updateChart = function () {
                 var _this = this;
-                var data = [[], []];
+                var items = ["WTI（美原油）", "布伦特"];
+                var data = [];
+                for (var k = 0; k < items.length; ++k) {
+                    data.push([]);
+                }
                 $(this.mData).each(function (i) {
-                    data[0].push(_this.mData[i][1]);
-                    data[1].push(_this.mData[i][2]);
+                    for (var j = 0; j < items.length; ++j) {
+                        data[j].push(_this.mData[i][1 + j]);
+                    }
                 });
-                this.updateEchart("国际原油 （美元/桶）", this.option().ct, ["WTI（美原油）", "布伦特"], data);
+                this.updateEchart("国际原油 （美元/桶）", this.option().ct, items, data);
             };
             GjyyView.prototype.getDateType = function () {
                 return jcycljg.DateType.DAY;

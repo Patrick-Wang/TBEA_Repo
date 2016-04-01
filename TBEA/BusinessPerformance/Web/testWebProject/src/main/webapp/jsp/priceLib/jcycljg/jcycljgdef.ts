@@ -71,6 +71,8 @@ module jcycljg {
         EVA,
         JKZJ,
         MYZS,
-        LWG
+        LWG,
+        PMICPIPPI,
+        YHJZLL
     }
 }

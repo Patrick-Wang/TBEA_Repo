@@ -64,25 +64,31 @@ module jcycljg {
             }
 
             public updateWgChart() {
-                var data:string[][] = [[], [], [], []];
+                let items =  ["30Q120", "30RK100", "27RK095", "23RK085"];
+                let data:string[][] = [];
+                for (let k = 0; k < items.length; ++k){
+                    data.push([]);
+                }
                 $(this.mData).each((i:number)=> {
-                    data[0].push(this.mData[i][1]);
-                    data[1].push(this.mData[i][2]);
-                    data[2].push(this.mData[i][3]);
-                    data[3].push(this.mData[i][4]);
-                })
-                this.updateEchart("武钢结算价格趋势（元/吨）", this.option().wg, ["30Q120", "30RK100", "27RK095", "23RK085"], data);
+                    for (let j = 0; j < items.length; ++j) {
+                        data[j].push(this.mData[i][1 + j])
+                    }
+                });
+                this.updateEchart("武钢结算价格趋势（元/吨）", this.option().wg, items, data);
             }
 
             public updateBgChart() {
-                var data:string[][] = [[], [], [], []];
+                let items =  ["B30P120", "B30P100", "B27R095", "B27R085"];
+                let data:string[][] = [];
+                for (let k = 0; k < items.length; ++k){
+                    data.push([]);
+                }
                 $(this.mData).each((i:number)=> {
-                    data[0].push(this.mData[i][5]);
-                    data[1].push(this.mData[i][6]);
-                    data[2].push(this.mData[i][7]);
-                    data[3].push(this.mData[i][8]);
-                })
-                this.updateEchart("宝钢结算价格趋势（元/吨）", this.option().bg, ["B30P120", "B30P100", "B27R095", "B27R085"], data);
+                    for (let j = 0; j < items.length; ++j) {
+                        data[j].push(this.mData[i][5 + j])
+                    }
+                });
+                this.updateEchart("宝钢结算价格趋势（元/吨）", this.option().bg, items, data);
             }
 
             public  getDateType():DateType {

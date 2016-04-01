@@ -21,5 +21,5 @@
         ct: "chart",
         tb: "table", 
         host: "jt"
-    });
+    }); 
 </script>

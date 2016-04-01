@@ -30,7 +30,7 @@ public class EVADaoImpl extends AbstractReadWriteDaoImpl<EVAEntity> implements E
 
 	@Override
 	public List<EVAEntity> getEntities(Date start, Date end) {
-		Query q = this.getEntityManager().createQuery("from EVAEntity where date >= :start and date <= :end");
+		Query q = this.getEntityManager().createQuery("from EVAEntity where date >= :start and date <= :end order by date asc");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();

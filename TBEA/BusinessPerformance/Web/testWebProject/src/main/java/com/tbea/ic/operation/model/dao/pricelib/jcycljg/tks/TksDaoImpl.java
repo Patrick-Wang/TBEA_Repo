@@ -30,7 +30,7 @@ public class TksDaoImpl extends AbstractReadWriteDaoImpl<TksEntity> implements T
 
 	@Override
 	public List<TksEntity> getEntities(Date start, Date end) {
-		Query q = this.getEntityManager().createQuery("from TksEntity where date >= :start and date <= :end");
+		Query q = this.getEntityManager().createQuery("from TksEntity where date >= :start and date <= :end order by date asc");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();

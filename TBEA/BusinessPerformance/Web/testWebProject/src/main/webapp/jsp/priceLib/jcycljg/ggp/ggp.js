@@ -62,25 +62,31 @@ var jcycljg;
             };
             GgpView.prototype.updateWgChart = function () {
                 var _this = this;
-                var data = [[], [], [], []];
+                var items = ["30Q120", "30RK100", "27RK095", "23RK085"];
+                var data = [];
+                for (var k = 0; k < items.length; ++k) {
+                    data.push([]);
+                }
                 $(this.mData).each(function (i) {
-                    data[0].push(_this.mData[i][1]);
-                    data[1].push(_this.mData[i][2]);
-                    data[2].push(_this.mData[i][3]);
-                    data[3].push(_this.mData[i][4]);
+                    for (var j = 0; j < items.length; ++j) {
+                        data[j].push(_this.mData[i][1 + j]);
+                    }
                 });
-                this.updateEchart("武钢结算价格趋势（元/吨）", this.option().wg, ["30Q120", "30RK100", "27RK095", "23RK085"], data);
+                this.updateEchart("武钢结算价格趋势（元/吨）", this.option().wg, items, data);
             };
             GgpView.prototype.updateBgChart = function () {
                 var _this = this;
-                var data = [[], [], [], []];
+                var items = ["B30P120", "B30P100", "B27R095", "B27R085"];
+                var data = [];
+                for (var k = 0; k < items.length; ++k) {
+                    data.push([]);
+                }
                 $(this.mData).each(function (i) {
-                    data[0].push(_this.mData[i][5]);
-                    data[1].push(_this.mData[i][6]);
-                    data[2].push(_this.mData[i][7]);
-                    data[3].push(_this.mData[i][8]);
+                    for (var j = 0; j < items.length; ++j) {
+                        data[j].push(_this.mData[i][5 + j]);
+                    }
                 });
-                this.updateEchart("宝钢结算价格趋势（元/吨）", this.option().bg, ["B30P120", "B30P100", "B27R095", "B27R085"], data);
+                this.updateEchart("宝钢结算价格趋势（元/吨）", this.option().bg, items, data);
             };
             GgpView.prototype.getDateType = function () {
                 return jcycljg.DateType.MONTH;

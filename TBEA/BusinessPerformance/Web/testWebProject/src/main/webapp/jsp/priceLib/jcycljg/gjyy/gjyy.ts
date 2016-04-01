@@ -54,12 +54,17 @@ module jcycljg {
             }
 
             public updateChart() {
-                var data:string[][] = [[], []];
+                let items =  ["WTI（美原油）", "布伦特"];
+                let data:string[][] = [];
+                for (let k = 0; k < items.length; ++k){
+                    data.push([]);
+                }
                 $(this.mData).each((i:number)=> {
-                    data[0].push(this.mData[i][1]);
-                    data[1].push(this.mData[i][2]);
-                })
-                this.updateEchart("国际原油 （美元/桶）", this.option().ct, ["WTI（美原油）", "布伦特"], data);
+                    for (let j = 0; j < items.length; ++j) {
+                        data[j].push(this.mData[i][1 + j])
+                    }
+                });
+                this.updateEchart("国际原油 （美元/桶）", this.option().ct, items, data);
             }
 
             public  getDateType():DateType {

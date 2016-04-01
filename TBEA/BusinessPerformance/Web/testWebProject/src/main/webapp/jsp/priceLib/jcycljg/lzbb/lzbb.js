@@ -57,16 +57,17 @@ var jcycljg;
             };
             LzbbView.prototype.updateChart = function () {
                 var _this = this;
-                var data = [[], [], [], [], [], []];
+                var items = ["上海鞍钢", "南昌武钢", "沈阳鞍钢", "西安鞍钢", "乌鲁木齐八钢", "市场均价"];
+                var data = [];
+                for (var k = 0; k < items.length; ++k) {
+                    data.push([]);
+                }
                 $(this.mData).each(function (i) {
-                    data[0].push(_this.mData[i][1]);
-                    data[1].push(_this.mData[i][2]);
-                    data[2].push(_this.mData[i][3]);
-                    data[3].push(_this.mData[i][4]);
-                    data[4].push(_this.mData[i][5]);
-                    data[5].push(_this.mData[i][6]);
+                    for (var j = 0; j < items.length; ++j) {
+                        data[j].push(_this.mData[i][1 + j]);
+                    }
                 });
-                this.updateEchart("废钢材价格趋势（元/吨）", this.option().ct, ["上海鞍钢", "南昌武钢", "沈阳鞍钢", "西安鞍钢", "乌鲁木齐八钢", "市场均价"], data);
+                this.updateEchart("废钢材价格趋势（元/吨）", this.option().ct, items, data);
             };
             LzbbView.prototype.getDateType = function () {
                 return jcycljg.DateType.DAY;

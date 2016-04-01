@@ -69,7 +69,7 @@ module jcycljg {
                 $(this.mData).each((i:number)=> {
                     data.push(this.mData[i][1]);
                     lemData.push(this.mData[i][4]);
-                })
+                });
                 this.updateEchart("铜 结算价格趋势", this.option().cu, data, lemData);
             }
 
@@ -79,7 +79,7 @@ module jcycljg {
                 $(this.mData).each((i:number)=> {
                     data.push(this.mData[i][2]);
                     lemData.push(this.mData[i][5]);
-                })
+                });
                 this.updateEchart("铝 结算价格趋势", this.option().al, data, lemData);
             }
 
@@ -89,7 +89,7 @@ module jcycljg {
                 $(this.mData).each((i:number)=> {
                     data.push(this.mData[i][3]);
                     lemData.push(this.mData[i][6]);
-                })
+                });
                 this.updateEchart("锌 结算价格趋势", this.option().zn, data, lemData);
             }
 

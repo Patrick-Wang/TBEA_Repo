@@ -62,23 +62,31 @@ module jcycljg {
             }
 
             public updateJkChart() {
-                var data:string[][] = [[], [], [], []];
+                let items = ["山西代县(64品位)", "辽宁辽阳(65品位)", "山东淄博(65品位)", "安徽霍邱(64品位)"];
+                let data:string[][] = [];
+                for (let k = 0; k < items.length; ++k){
+                    data.push([]);
+                }
                 $(this.mData).each((i:number)=> {
-                    data[0].push(this.mData[i][1]);
-                    data[1].push(this.mData[i][2]);
-                    data[2].push(this.mData[i][3]);
-                    data[3].push(this.mData[i][4]);
-                })
-                this.updateEchart("国产矿价格趋势（元/吨）", this.option().jk, ["山西代县(64品位)", "辽宁辽阳(65品位)", "山东淄博(65品位)", "安徽霍邱(64品位)"], data);
+                    for (let j = 0; j < items.length; ++j) {
+                        data[j].push(this.mData[i][1 + j])
+                    }
+                });
+                this.updateEchart("国产矿价格趋势（元/吨）", this.option().jk,items, data);
             }
 
             public updateGcChart() {
-                var data:string[][] = [[], []];
+                let items = ["青岛港巴西粉矿(63.5品位)", "印度粉矿(60品位)"];
+                let data:string[][] = [];
+                for (let k = 0; k < items.length; ++k){
+                    data.push([]);
+                }
                 $(this.mData).each((i:number)=> {
-                    data[0].push(this.mData[i][5]);
-                    data[1].push(this.mData[i][6]);
+                    for (let j = 0; j < items.length; ++j) {
+                        data[j].push(this.mData[i][5 + j])
+                    }
                 })
-                this.updateEchart("进口矿价格趋势（元/吨）", this.option().gc, ["青岛港巴西粉矿(63.5品位)", "印度粉矿(60品位)"], data);
+                this.updateEchart("进口矿价格趋势（元/吨）", this.option().gc, items, data);
             }
 
             public  getDateType():DateType {

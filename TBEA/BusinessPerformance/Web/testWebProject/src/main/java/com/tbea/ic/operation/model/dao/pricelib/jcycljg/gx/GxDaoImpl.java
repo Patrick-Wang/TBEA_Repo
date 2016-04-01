@@ -30,7 +30,7 @@ public class GxDaoImpl extends AbstractReadWriteDaoImpl<GxEntity> implements GxD
 
 	@Override
 	public List<GxEntity> getEntities(Date start, Date end) {
-		Query q = this.getEntityManager().createQuery("from GxEntity where date >= :start and date <= :end");
+		Query q = this.getEntityManager().createQuery("from GxEntity where date >= :start and date <= :end order by date asc");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();

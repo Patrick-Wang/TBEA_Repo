@@ -55,14 +55,17 @@ var jcycljg;
             };
             JtView.prototype.updateChart = function () {
                 var _this = this;
-                var data = [[], [], [], []];
+                var items = ["山西吕梁", "河北邢台", "山东青岛", "河南济源"];
+                var data = [];
+                for (var k = 0; k < items.length; ++k) {
+                    data.push([]);
+                }
                 $(this.mData).each(function (i) {
-                    data[0].push(_this.mData[i][1]);
-                    data[1].push(_this.mData[i][2]);
-                    data[2].push(_this.mData[i][3]);
-                    data[3].push(_this.mData[i][4]);
+                    for (var j = 0; j < items.length; ++j) {
+                        data[j].push(_this.mData[i][1 + j]);
+                    }
                 });
-                this.updateEchart("焦炭价格趋势（元/吨）", this.option().ct, ["山西吕梁", "河北邢台", "山东青岛", "河南济源"], data);
+                this.updateEchart("焦炭价格趋势（元/吨）", this.option().ct, items, data);
             };
             JtView.prototype.getDateType = function () {
                 return jcycljg.DateType.DAY;

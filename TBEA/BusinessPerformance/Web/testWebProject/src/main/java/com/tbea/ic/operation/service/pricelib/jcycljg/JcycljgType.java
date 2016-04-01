@@ -16,7 +16,9 @@ public enum JcycljgType {
 	EVA,
 	JKZJ,
 	MYZS,
-	LWG;
+	LWG,
+	PMICPIPPI,
+	YHJZLL;
 	
 	public static JcycljgType valueOf(int val){
 		JcycljgType[] types = JcycljgType.values();
