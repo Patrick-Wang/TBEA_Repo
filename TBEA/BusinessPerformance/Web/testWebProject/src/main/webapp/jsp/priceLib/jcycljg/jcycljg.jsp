@@ -187,8 +187,10 @@ pageEncoding="utf-8"%>
     </tr>
     <tr>
         <td>
-            <%@include file="ysjs.jsp"%>
-            <%@include file="ggp.jsp"%>
+            <%@include file="ysjs/ysjs.jsp"%>
+            <%@include file="ggp/ggp.jsp"%>
+            <%@include file="gjyy/gjyy.jsp"%>
+            <%@include file="tks/tks.jsp"%>
         </td>
     </tr>
 

@@ -1,7 +1,7 @@
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="jcycljgdef.ts" />
+/// <reference path="../../../jqgrid/jqassist.ts" />
+/// <reference path="../../../util.ts" />
+/// <reference path="../../../dateSelector.ts" />
+/// <reference path="../jcycljgdef.ts" />
 
 declare var echarts;
 declare var view:jcycljg.FrameView;

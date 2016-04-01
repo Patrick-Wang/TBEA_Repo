@@ -9,9 +9,9 @@
             </div>
         </td>
     </tr>
-    <tr>
+    <tr> 
         <td>
-            <div align="center">
+            <div align="center"> 
                 <div class="panel-content-border"
                      style="margin-bottom: 20px; width: 1200px">
                     <div id="chartBg" class="panel-content"></div>
@@ -25,7 +25,7 @@
         </td> 
     </tr> 
 </Table>
-<script type="text/javascript" src="jsp/priceLib/jcycljg/ggp.js"></script>
+<script type="text/javascript" src="jsp/priceLib/jcycljg/ggp/ggp.js"></script>
 <script type="text/javascript">
     jcycljg.ggp.pluginView.init({
         wg: "chartWg",

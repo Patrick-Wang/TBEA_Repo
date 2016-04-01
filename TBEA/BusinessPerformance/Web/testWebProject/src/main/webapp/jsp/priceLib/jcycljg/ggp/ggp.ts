@@ -1,7 +1,7 @@
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="jcycljgdef.ts" />
+/// <reference path="../../../jqgrid/jqassist.ts" />
+/// <reference path="../../../util.ts" />
+/// <reference path="../../../dateSelector.ts" />
+/// <reference path="../jcycljgdef.ts" />
 
 declare var echarts;
 declare var view:jcycljg.FrameView;
@@ -102,7 +102,6 @@ module jcycljg {
                         name: legend[i],
                         type: 'line',
                         smooth: true,
-                        yAxisIndex: 0,
                         // itemStyle: {normal: {areaStyle: {type: 'default'}}},
                         data: data[i].length < 1 ? [0] : data[i]
                     })

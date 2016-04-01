@@ -35,7 +35,7 @@
         </td>
     </tr>
 </Table>
-<script type="text/javascript" src="jsp/priceLib/jcycljg/ysjs.js"></script>
+<script type="text/javascript" src="jsp/priceLib/jcycljg/ysjs/ysjs.js"></script>
 <script type="text/javascript">
     jcycljg.ysjs.pluginView.init({
         cu: "chartCu",
