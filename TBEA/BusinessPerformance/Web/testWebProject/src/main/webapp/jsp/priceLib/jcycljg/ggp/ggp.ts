@@ -151,7 +151,7 @@ module jcycljg {
                 var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
+                parent.append("<table id='" + name + "'></table><div id='" + name + "pager" + "'></div>");
                 this.$(name).jqGrid(
                     tableAssist.decorate({
                         multiselect: false,
@@ -161,11 +161,12 @@ module jcycljg {
                         width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
-                        rowNum: 100,
+                        rowNum: 20,
                         data: tableAssist.getData(this.mData),
-                        datatype: "local"
+                        datatype: "local",
+                        viewrecords : true,
+                        pager : name + "pager"
                     }));
-
             }
         }
         export var pluginView = GgpView.newInstance();

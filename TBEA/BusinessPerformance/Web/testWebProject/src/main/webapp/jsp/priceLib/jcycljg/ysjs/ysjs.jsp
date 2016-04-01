@@ -10,17 +10,17 @@
         </td>
     </tr>
     <tr>
-        <td>
+        <td> 
             <div align="center">
                 <div class="panel-content-border"
                      style="margin-bottom: 20px; width: 1200px">
                     <div id="chartAl" class="panel-content"></div>
                 </div>
             </div>
-        </td>
+        </td> 
     </tr>
     <tr>
-        <td>
+        <td> 
             <div align="center">
                 <div class="panel-content-border"
                      style="margin-bottom: 20px; width: 1200px">
