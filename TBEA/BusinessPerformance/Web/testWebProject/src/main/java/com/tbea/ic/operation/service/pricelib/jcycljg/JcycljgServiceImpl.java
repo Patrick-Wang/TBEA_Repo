@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.service.pricelib.jcycljg;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.model.dao.pricelib.jcycljg.GetEntitiesDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.dmdjyx.DmdjyxDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.dmdjyx.DmdjyxDaoImpl;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.eva.EVADao;
@@ -45,9 +45,10 @@ import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDaoImpl;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.zhb.ZhbDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.zhb.ZhbDaoImpl;
-import com.tbea.ic.operation.service.pricelib.jcycljg.excelimport.ImportHandler;
-import com.tbea.ic.operation.service.pricelib.jcycljg.excelimport.validation.CommonValidator;
-import com.tbea.ic.operation.service.pricelib.jcycljg.excelimport.validation.ValidationException;
+import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.ValidationException;
+import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.excel.CommonValidator;
+import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.excel.FormatValidator;
+import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.excel.ImportHandler;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.DataStorage;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.DmdjyxDataStorage;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.EVADataStorage;
@@ -123,40 +124,35 @@ public class JcycljgServiceImpl implements JcycljgService {
 
 	public final static String NAME = "YsjsServiceImpl";
 
-	ImportHandler[] handlers = null;
-	@SuppressWarnings("rawtypes")
-	DataStorage[] storages = null;
+	
+	DataStorage<?>[] storages;
+	UtilQuery[] queries;
+	FormatValidator[] validators;
 
-	class Query {
-		GetEntitiesDao geDao;
-		public Query(GetEntitiesDao geDao){
-			this.geDao = geDao;
-		}
-		public List<?> query(Date start, Date end) {
-			return geDao.getEntities(start, end);
-		}
-	};
-
-	Query[] queries = new Query[] { new Query(ysjsDao),
-			new Query(ggpDao), 
-			new Query(gjyyDao),
-			new Query(tksDao), 
-			new Query(jtDao),
-			new Query(fgcDao), 
-			new Query(lzbbDao),
-			new Query(zhbDao), 
-			new Query(gxDao),
-			new Query(pVCSzDao),
-			new Query(dmdjyxDao), 
-			new Query(evaDao),
-			new Query(jkzjDao), 
-			new Query(myzsDao),
-			new Query(lwgDao),
-			new Query(pmiCpiPpiDao),
-			new Query(yhjzllDao) };
-
+	List<ImportHandler> importHandlers = new ArrayList<ImportHandler>();
+	List<OutputHandler> outputHandlers = new ArrayList<OutputHandler>();
+			
 	@Autowired
 	public void init() {
+		queries = new UtilQuery[] { 
+				new UtilQuery(ysjsDao),
+				new UtilQuery(ggpDao), 
+				new UtilQuery(gjyyDao),
+				new UtilQuery(tksDao), 
+				new UtilQuery(jtDao),
+				new UtilQuery(fgcDao), 
+				new UtilQuery(lzbbDao),
+				new UtilQuery(zhbDao), 
+				new UtilQuery(gxDao),
+				new UtilQuery(pVCSzDao),
+				new UtilQuery(dmdjyxDao), 
+				new UtilQuery(evaDao),
+				new UtilQuery(jkzjDao), 
+				new UtilQuery(myzsDao),
+				new UtilQuery(lwgDao),
+				new UtilQuery(pmiCpiPpiDao),
+				new UtilQuery(yhjzllDao) };
+		
 		storages = new DataStorage[] { 
 				new YsjsDataStorage(ysjsDao),
 				new GgpDataStorage(ggpDao), 
@@ -176,37 +172,41 @@ public class JcycljgServiceImpl implements JcycljgService {
 				new PMICPIPPIDataStorage(pmiCpiPpiDao),
 				new YhjzllDataStorage(yhjzllDao) };
 
-		handlers = new ImportHandler[] {
-				new ImportHandler(new CommonValidator(2, 7), storages[0]),
-				new ImportHandler(new CommonValidator(2, 9), storages[1]),
-				new ImportHandler(new CommonValidator(1, 3), storages[2]),
-				new ImportHandler(new CommonValidator(2, 7), storages[3]),
-				new ImportHandler(new CommonValidator(1, 5), storages[4]),
-				new ImportHandler(new CommonValidator(1, 5), storages[5]),
-				new ImportHandler(new CommonValidator(1, 7), storages[6]),
-				new ImportHandler(new CommonValidator(1, 9), storages[7]),
-				new ImportHandler(new CommonValidator(1, 7), storages[8]),
-				new ImportHandler(new CommonValidator(2, 9), storages[9]),
-				new ImportHandler(new CommonValidator(1, 3), storages[10]), 
-				new ImportHandler(new CommonValidator(1, 4), storages[11]),
-				new ImportHandler(new CommonValidator(1, 4), storages[12]),
-				new ImportHandler(new CommonValidator(1, 2), storages[13]),
-				new ImportHandler(new CommonValidator(2, 9), storages[14]),
-				new ImportHandler(new CommonValidator(1, 4), storages[15]),
-				new ImportHandler(new CommonValidator(2, 7), storages[16]) };
+		validators = new FormatValidator[] {
+				new CommonValidator(2, 7),
+				new CommonValidator(2, 9),
+				new CommonValidator(1, 3),
+				new CommonValidator(2, 7),
+				new CommonValidator(1, 5),
+				new CommonValidator(1, 5),
+				new CommonValidator(1, 7),
+				new CommonValidator(1, 9),
+				new CommonValidator(1, 7),
+				new CommonValidator(2, 9),
+				new CommonValidator(1, 3),
+				new CommonValidator(1, 4),
+				new CommonValidator(1, 4),
+				new CommonValidator(1, 2),
+				new CommonValidator(2, 9),
+				new CommonValidator(1, 4),
+				new CommonValidator(2, 7)};
+		
+		for (int i = 0; i < storages.length; ++i){
+			importHandlers.add(new ImportHandler(validators[i], storages[i]));
+			outputHandlers.add(new OutputHandler(queries[i], storages[i]));
+		}
+		
 	}
 
 	@Override
 	public void importExcel(JcycljgType type, XSSFWorkbook workbook)
 			throws ValidationException {
-		handlers[type.ordinal()].handle(workbook);
+		importHandlers.get(type.ordinal()).handle(workbook);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<List<String>> getValues(JcycljgType type, Date start, Date end) {
-		return storages[type.ordinal()].stringify(queries[type.ordinal()]
-				.query(start, end));
+		return outputHandlers.get(type.ordinal()).handle(start, end);
 	}
 
 }

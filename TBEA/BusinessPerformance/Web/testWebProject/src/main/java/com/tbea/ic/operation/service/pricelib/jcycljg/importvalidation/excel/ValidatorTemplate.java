@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.pricelib.jcycljg.excelimport.validation;
+package com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.excel;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
+
+import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.ValidationException;
 
 public abstract class ValidatorTemplate implements FormatValidator{
 	

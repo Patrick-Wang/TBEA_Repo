@@ -32,7 +32,7 @@ public class YhjzllEntity extends AbstractReadWriteEntity implements
 	Double dk6gyn;
 	Double dk6gyz1n;
 	Double dk1z3n;
-	Double ckhqckhq;
+	Double ckhq;
 	Double ckdqbn;
 	Double ckdqyn;
 
@@ -68,12 +68,12 @@ public class YhjzllEntity extends AbstractReadWriteEntity implements
 		this.dk1z3n = dk1z3n;
 	}
 
-	public Double getCkhqckhq() {
-		return ckhqckhq;
+	public Double getCkhq() {
+		return ckhq;
 	}
 
-	public void setCkhqckhq(Double ckhqckhq) {
-		this.ckhqckhq = ckhqckhq;
+	public void setCkhq(Double ckhqckhq) {
+		this.ckhq = ckhqckhq;
 	}
 
 	public Double getCkdqbn() {

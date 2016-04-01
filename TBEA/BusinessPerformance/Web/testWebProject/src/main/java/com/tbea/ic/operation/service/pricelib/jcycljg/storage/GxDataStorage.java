@@ -1,26 +1,55 @@
 package com.tbea.ic.operation.service.pricelib.jcycljg.storage;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.gx.GxDao;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GxEntity;
 
 public class GxDataStorage implements DataStorage<GxEntity> {
 
-	public GxDataStorage(GxDao gxDao) {
-		// TODO Auto-generated constructor stub
+	GxDao dao;
+	
+	public GxDataStorage(GxDao dao) {
+		super();
+		this.dao = dao;
 	}
+	
+	
+	public void store(List<Object[]> data){
+		for (Object[] objs : data){
+			GxEntity entity = dao.getByDate((Date) objs[0]);
+			if (entity == null){
+			   entity = new GxEntity();
+			}
+			entity.setDate((Date) objs[0]);
+			entity.setShsg((Double) objs[1]);
+			entity.setNjjy((Double) objs[2]);
+			entity.setZzjy((Double) objs[3]);
+			entity.setTjtg((Double) objs[4]);
+			entity.setCdjg((Double) objs[5]);
+			entity.setPjj((Double) objs[6]);
+			dao.merge(entity);
+		}
+	}
+
 
 	@Override
-	public void store(List<Object[]> data) {
-		// TODO Auto-generated method stub
-
+	public List<List<String>> stringify(List<GxEntity> entitys) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		for (GxEntity entity : entitys) {
+			List<String> list = new ArrayList<String>();
+			list.add(Util.formatToDay(entity.getDate()));
+			list.add("" + entity.getShsg());
+			list.add("" + entity.getNjjy());
+			list.add("" + entity.getZzjy());
+			list.add("" + entity.getTjtg());
+			list.add("" + entity.getCdjg());
+			list.add("" + entity.getPjj());
+			result.add(list);
+		}
+		return result;
 	}
-
-	@Override
-	public List<List<String>> stringify(List<GxEntity> objs) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

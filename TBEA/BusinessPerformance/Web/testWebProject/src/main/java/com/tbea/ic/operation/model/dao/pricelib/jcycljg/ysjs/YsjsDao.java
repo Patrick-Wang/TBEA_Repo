@@ -10,7 +10,7 @@ import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GjyyEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
 
 
-public interface YsjsDao extends GetEntitiesDao, AbstractReadWriteDao<YsjsEntity>{
+public interface YsjsDao extends GetEntitiesDao<YsjsEntity>, AbstractReadWriteDao<YsjsEntity>{
 
 	List<YsjsEntity> getEntities(Date start, Date end);
 

@@ -1,6 +1,8 @@
-package com.tbea.ic.operation.service.pricelib.jcycljg.excelimport.validation;
+package com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.excel;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
+
+import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.ValidationException;
 
 public class CommonValidator extends ValidatorTemplate{
 

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GgpEntity;
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GjyyEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
 
 
@@ -46,5 +47,4 @@ public class GgpDaoImpl extends AbstractReadWriteDaoImpl<GgpEntity> implements G
 		}
 		return ret.get(0);
 	}
-
 }

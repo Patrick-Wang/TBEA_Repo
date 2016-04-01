@@ -46,10 +46,10 @@ public class JkzjEntity extends AbstractReadWriteEntity implements Serializable 
 	public void setJndqzwz(Double jndqzwz) {
 		this.jndqzwz = jndqzwz;
 	}
-	public Double getJndyg() {
+	public Double getJndgy() {
 		return jndyg;
 	}
-	public void setJndyg(Double jndyg) {
+	public void setJndgy(Double jndyg) {
 		this.jndyg = jndyg;
 	}
 	public Double getZljx() {

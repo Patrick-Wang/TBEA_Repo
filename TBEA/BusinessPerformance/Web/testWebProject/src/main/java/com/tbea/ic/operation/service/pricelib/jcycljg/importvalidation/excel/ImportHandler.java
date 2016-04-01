@@ -1,9 +1,8 @@
-package com.tbea.ic.operation.service.pricelib.jcycljg.excelimport;
+package com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.excel;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.tbea.ic.operation.service.pricelib.jcycljg.excelimport.validation.FormatValidator;
-import com.tbea.ic.operation.service.pricelib.jcycljg.excelimport.validation.ValidationException;
+import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.ValidationException;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.DataStorage;
 
 public class ImportHandler {

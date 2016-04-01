@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YhjzllEntity;
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
 
 
 
@@ -27,8 +29,21 @@ public class YhjzllDaoImpl extends AbstractReadWriteDaoImpl<YhjzllEntity> implem
 	}
 
 	@Override
-	public List<?> getEntities(Date start, Date end) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<YhjzllEntity> getEntities(Date start, Date end) {
+		Query q = this.getEntityManager().createQuery("from YhjzllEntity where date >= :start and date <= :end");
+		q.setParameter("start", start);
+		q.setParameter("end", end);
+		return q.getResultList();
+	}
+
+	@Override
+	public YhjzllEntity getByDate(Date date) {
+		Query q = this.getEntityManager().createQuery("from YhjzllEntity where date = :date");
+		q.setParameter("date", date);
+		List<YhjzllEntity> ret = q.getResultList();
+		if (ret.isEmpty()){
+			return null;
+		}
+		return ret.get(0);
 	}
 }

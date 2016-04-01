@@ -29,7 +29,7 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgService;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgServiceImpl;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
-import com.tbea.ic.operation.service.pricelib.jcycljg.excelimport.validation.ValidationException;
+import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.ValidationException;
 
 @Controller
 @RequestMapping(value = "jcycljg")
