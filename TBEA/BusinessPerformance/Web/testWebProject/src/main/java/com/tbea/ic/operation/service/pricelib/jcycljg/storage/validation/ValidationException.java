@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation;
+package com.tbea.ic.operation.service.pricelib.jcycljg.storage.validation;
 
 public class ValidationException extends Exception {
 

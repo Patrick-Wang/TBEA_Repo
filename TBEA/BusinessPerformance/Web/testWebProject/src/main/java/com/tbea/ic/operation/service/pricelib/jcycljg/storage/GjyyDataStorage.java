@@ -4,25 +4,32 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ggp.GgpDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.gjyy.GjyyDao;
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GgpEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GjyyEntity;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
 
-public class GjyyDataStorage implements DataStorage<GjyyEntity> {
+@Component
+public class GjyyDataStorage implements DataStorage<GjyyEntity>,
+		DataStringify<GjyyEntity> {
 
+	@Autowired
 	GjyyDao dao;
-	
-	public GjyyDataStorage(GjyyDao dao) {
-		super();
-		this.dao = dao;
+
+	public GjyyDataStorage() {
+		StorageAssemble.register(JcycljgType.GJYY, this, this);
 	}
-	
-	
-	public void store(List<Object[]> data){
-		for (Object[] objs : data){
+
+	public void store(List<Object[]> data) {
+		for (Object[] objs : data) {
 			GjyyEntity entity = dao.getByDate((Date) objs[0]);
-			if (entity == null){
-			   entity = new GjyyEntity();
+			if (entity == null) {
+				entity = new GjyyEntity();
 			}
 			entity.setDate((Date) objs[0]);
 			entity.setWTI((Double) objs[1]);
@@ -30,7 +37,6 @@ public class GjyyDataStorage implements DataStorage<GjyyEntity> {
 			dao.merge(entity);
 		}
 	}
-
 
 	@Override
 	public List<List<String>> stringify(List<GjyyEntity> entitys) {

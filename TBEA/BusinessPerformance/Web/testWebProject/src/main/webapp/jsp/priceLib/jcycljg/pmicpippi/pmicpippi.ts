@@ -46,13 +46,22 @@ module jcycljg {
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
-                        this.updateTable();
-                        this.updatePmiChart();
-                        this.updateCpiChart();
-                        this.updatePpiChart();
+                        this.refresh();
                     });
             }
+            public refresh() : void{
+                if ( this.mData == undefined){
+                    return;
+                }
 
+                if (this.mDispType == DisplayType.CHART) {
+                    this.updatePmiChart();
+                    this.updateCpiChart();
+                    this.updatePpiChart();
+                }else{
+                    this.updateTable();
+                }
+            }
             public init(opt:Option):void {
                 super.init(opt);
                 view.register("PMI、CPI、PPI", this);

@@ -51,10 +51,20 @@ var jcycljg;
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
-                    _this.updateTable();
-                    _this.updateWgChart();
-                    _this.updateBgChart();
+                    _this.refresh();
                 });
+            };
+            GgpView.prototype.refresh = function () {
+                if (this.mData == undefined) {
+                    return;
+                }
+                if (this.mDispType == jcycljg.DisplayType.CHART) {
+                    this.updateWgChart();
+                    this.updateBgChart();
+                }
+                else {
+                    this.updateTable();
+                }
             };
             GgpView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);

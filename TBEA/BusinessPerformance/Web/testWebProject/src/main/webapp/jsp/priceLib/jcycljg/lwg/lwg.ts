@@ -52,12 +52,21 @@ module jcycljg {
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
-                        this.updateTable();
-                        this.update1214Chart();
-                        this.update1625Chart();
+                        this.refresh();
                     });
             }
+            public refresh() : void{
+                if ( this.mData == undefined){
+                    return;
+                }
 
+                if (this.mDispType == DisplayType.CHART) {
+                    this.update1214Chart();
+                    this.update1625Chart();
+                }else{
+                    this.updateTable();
+                }
+            }
             public init(opt:Option):void {
                 super.init(opt);
                 view.register("螺纹钢", this);

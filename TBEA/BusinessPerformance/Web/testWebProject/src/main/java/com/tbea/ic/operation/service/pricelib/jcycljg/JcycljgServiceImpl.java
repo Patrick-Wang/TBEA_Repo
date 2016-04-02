@@ -45,10 +45,6 @@ import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDaoImpl;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.zhb.ZhbDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.zhb.ZhbDaoImpl;
-import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.ValidationException;
-import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.excel.CommonValidator;
-import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.excel.FormatValidator;
-import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.excel.ImportHandler;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.DataStorage;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.DmdjyxDataStorage;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.EVADataStorage;
@@ -63,10 +59,16 @@ import com.tbea.ic.operation.service.pricelib.jcycljg.storage.LzbbDataStorage;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.MyzsDataStorage;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.PMICPIPPIDataStorage;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.PVCSzDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.StorageAssemble;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.TksDataStorage;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.YhjzllDataStorage;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.YsjsDataStorage;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.ZhbDataStorage;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.validation.ValidationException;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.validation.excel.CommonValidator;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.validation.excel.FormatValidator;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.validation.excel.ImportHandler;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.validation.excel.ImportHandlerFactory;
 
 @Service(JcycljgServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -121,13 +123,12 @@ public class JcycljgServiceImpl implements JcycljgService {
 
 	@Resource(name = YsjsDaoImpl.NAME)
 	YsjsDao ysjsDao;
-
+	
 	public final static String NAME = "YsjsServiceImpl";
 
 	
-	DataStorage<?>[] storages;
+	@Autowired StorageAssemble sa;
 	UtilQuery[] queries;
-	FormatValidator[] validators;
 
 	List<ImportHandler> importHandlers = new ArrayList<ImportHandler>();
 	List<OutputHandler> outputHandlers = new ArrayList<OutputHandler>();
@@ -153,47 +154,31 @@ public class JcycljgServiceImpl implements JcycljgService {
 				new UtilQuery(pmiCpiPpiDao),
 				new UtilQuery(yhjzllDao) };
 		
-		storages = new DataStorage[] { 
-				new YsjsDataStorage(ysjsDao),
-				new GgpDataStorage(ggpDao), 
-				new GjyyDataStorage(gjyyDao),
-				new TksDataStorage(tksDao), 
-				new JtDataStorage(jtDao),
-				new FgcDataStorage(fgcDao), 
-				new LzbbDataStorage(lzbbDao),
-				new ZhbDataStorage(zhbDao), 
-				new GxDataStorage(gxDao),
-				new PVCSzDataStorage(pVCSzDao),
-				new DmdjyxDataStorage(dmdjyxDao), 
-				new EVADataStorage(evaDao),
-				new JkzjDataStorage(jkzjDao), 
-				new MyzsDataStorage(myzsDao),
-				new LwgDataStorage(lwgDao),
-				new PMICPIPPIDataStorage(pmiCpiPpiDao),
-				new YhjzllDataStorage(yhjzllDao) };
+//		storages = new DataStorage[] { 
+//				new YsjsDataStorage(ysjsDao),
+//				new GgpDataStorage(ggpDao), 
+//				new GjyyDataStorage(gjyyDao),
+//				new TksDataStorage(tksDao), 
+//				new JtDataStorage(jtDao),
+//				new FgcDataStorage(fgcDao), 
+//				new LzbbDataStorage(lzbbDao),
+//				new ZhbDataStorage(zhbDao), 
+//				new GxDataStorage(gxDao),
+//				new PVCSzDataStorage(pVCSzDao),
+//				new DmdjyxDataStorage(dmdjyxDao), 
+//				new EVADataStorage(evaDao),
+//				new JkzjDataStorage(jkzjDao), 
+//				new MyzsDataStorage(myzsDao),
+//				new LwgDataStorage(lwgDao),
+//				new PMICPIPPIDataStorage(pmiCpiPpiDao),
+//				new YhjzllDataStorage(yhjzllDao) };
 
-		validators = new FormatValidator[] {
-				new CommonValidator(2, 7),
-				new CommonValidator(2, 9),
-				new CommonValidator(1, 3),
-				new CommonValidator(2, 7),
-				new CommonValidator(1, 5),
-				new CommonValidator(1, 5),
-				new CommonValidator(1, 7),
-				new CommonValidator(1, 9),
-				new CommonValidator(1, 7),
-				new CommonValidator(2, 9),
-				new CommonValidator(1, 3),
-				new CommonValidator(1, 4),
-				new CommonValidator(1, 4),
-				new CommonValidator(1, 2),
-				new CommonValidator(2, 9),
-				new CommonValidator(1, 4),
-				new CommonValidator(2, 7)};
+
 		
-		for (int i = 0; i < storages.length; ++i){
-			importHandlers.add(new ImportHandler(validators[i], storages[i]));
-			outputHandlers.add(new OutputHandler(queries[i], storages[i]));
+		for (int i = 0; i <= JcycljgType.YHJZLL.ordinal(); ++i){
+			JcycljgType type = JcycljgType.valueOf(i);
+			importHandlers.add(ImportHandlerFactory.create(type, sa));
+			outputHandlers.add(new OutputHandler(type, queries[i], sa));
 		}
 		
 	}

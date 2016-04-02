@@ -5,30 +5,40 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.model.dao.pricelib.jcycljg.fgc.FgcDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ggp.GgpDao;
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.FgcEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GgpEntity;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
 
-public class GgpDataStorage implements DataStorage<GgpEntity> {
+@Component
+public class GgpDataStorage implements DataStorage<GgpEntity>,
+		DataStringify<GgpEntity> {
 
-	GgpDao ggpDao;
-	public GgpDataStorage(GgpDao ggpDao) {
-		this.ggpDao = ggpDao;
+	@Autowired
+	GgpDao dao;
+
+	public GgpDataStorage() {
+		StorageAssemble.register(JcycljgType.GGP, this, this);
 	}
 
 	@Override
 	public void store(List<Object[]> data) {
-		for (Object[] objs : data){
+		for (Object[] objs : data) {
 			Date dt = (Date) objs[0];
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(dt);
 			cal.set(Calendar.DAY_OF_MONTH, 1);
 			objs[0] = new Date(cal.getTimeInMillis());
-			GgpEntity entity = ggpDao.getByDate((Date) objs[0]);
-			if (entity == null){
-			   entity = new GgpEntity();
+			GgpEntity entity = dao.getByDate((Date) objs[0]);
+			if (entity == null) {
+				entity = new GgpEntity();
 			}
-			entity.setDate((Date)objs[0]);
+			entity.setDate((Date) objs[0]);
 			entity.setWg30q120((Double) objs[1]);
 			entity.setWg30pk100((Double) objs[2]);
 			entity.setWg27pk095((Double) objs[3]);
@@ -37,7 +47,7 @@ public class GgpDataStorage implements DataStorage<GgpEntity> {
 			entity.setBgb30p110((Double) objs[6]);
 			entity.setBgb27r095((Double) objs[7]);
 			entity.setBgb27r085((Double) objs[8]);
-			ggpDao.merge(entity);
+			dao.merge(entity);
 		}
 	}
 

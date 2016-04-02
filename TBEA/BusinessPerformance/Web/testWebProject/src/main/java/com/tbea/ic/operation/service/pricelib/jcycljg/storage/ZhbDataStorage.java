@@ -4,25 +4,30 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.zhb.ZhbDao;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.ZhbEntity;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
 
-public class ZhbDataStorage implements DataStorage<ZhbEntity> {
+@Component
+public class ZhbDataStorage implements DataStorage<ZhbEntity>,
+		DataStringify<ZhbEntity> {
 
+	@Autowired
 	ZhbDao dao;
-	
-	public ZhbDataStorage(ZhbDao dao) {
-		super();
-		this.dao = dao;
+
+	public ZhbDataStorage() {
+		StorageAssemble.register(JcycljgType.ZHB, this, this);
 	}
-	
-	
-	public void store(List<Object[]> data){
-		for (Object[] objs : data){
+
+	public void store(List<Object[]> data) {
+		for (Object[] objs : data) {
 			ZhbEntity entity = dao.getByDate((Date) objs[0]);
-			if (entity == null){
-			   entity = new ZhbEntity();
+			if (entity == null) {
+				entity = new ZhbEntity();
 			}
 			entity.setDate((Date) objs[0]);
 			entity.setShmg((Double) objs[1]);
@@ -36,7 +41,6 @@ public class ZhbDataStorage implements DataStorage<ZhbEntity> {
 			dao.merge(entity);
 		}
 	}
-
 
 	@Override
 	public List<List<String>> stringify(List<ZhbEntity> entitys) {

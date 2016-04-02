@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.tbea.ic.operation.service.pricelib.jcycljg.importvalidation.ValidationException;
+import com.tbea.ic.operation.service.pricelib.jcycljg.storage.validation.ValidationException;
 
 public interface JcycljgService {
 

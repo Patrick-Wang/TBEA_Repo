@@ -44,11 +44,21 @@ var jcycljg;
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
-                    _this.updateTable();
-                    _this.updatePmiChart();
-                    _this.updateCpiChart();
-                    _this.updatePpiChart();
+                    _this.refresh();
                 });
+            };
+            PmiCpiPpiView.prototype.refresh = function () {
+                if (this.mData == undefined) {
+                    return;
+                }
+                if (this.mDispType == jcycljg.DisplayType.CHART) {
+                    this.updatePmiChart();
+                    this.updateCpiChart();
+                    this.updatePpiChart();
+                }
+                else {
+                    this.updateTable();
+                }
             };
             PmiCpiPpiView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);

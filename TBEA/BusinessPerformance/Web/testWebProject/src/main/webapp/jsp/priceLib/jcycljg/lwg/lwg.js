@@ -51,10 +51,20 @@ var jcycljg;
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
-                    _this.updateTable();
-                    _this.update1214Chart();
-                    _this.update1625Chart();
+                    _this.refresh();
                 });
+            };
+            LwgView.prototype.refresh = function () {
+                if (this.mData == undefined) {
+                    return;
+                }
+                if (this.mDispType == jcycljg.DisplayType.CHART) {
+                    this.update1214Chart();
+                    this.update1625Chart();
+                }
+                else {
+                    this.updateTable();
+                }
             };
             LwgView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);

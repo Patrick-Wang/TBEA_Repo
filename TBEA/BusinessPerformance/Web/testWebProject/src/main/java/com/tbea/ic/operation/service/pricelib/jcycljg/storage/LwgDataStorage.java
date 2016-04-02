@@ -4,25 +4,33 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.model.dao.pricelib.jcycljg.jt.JtDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.lwg.LwgDao;
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.JtEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.LwgEntity;
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.ZhbEntity;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
 
-public class LwgDataStorage implements DataStorage<LwgEntity> {
+@Component
+public class LwgDataStorage implements DataStorage<LwgEntity>,
+		DataStringify<LwgEntity> {
 
+	@Autowired
 	LwgDao dao;
-	
-	public LwgDataStorage(LwgDao dao) {
-		super();
-		this.dao = dao;
+
+	public LwgDataStorage() {
+		StorageAssemble.register(JcycljgType.LWG, this, this);
 	}
-	
-	
-	public void store(List<Object[]> data){
-		for (Object[] objs : data){
+
+	public void store(List<Object[]> data) {
+		for (Object[] objs : data) {
 			LwgEntity entity = dao.getByDate((Date) objs[0]);
-			if (entity == null){
-			   entity = new LwgEntity();
+			if (entity == null) {
+				entity = new LwgEntity();
 			}
 			entity.setDate((Date) objs[0]);
 			entity.setSh1214mm((Double) objs[1]);
@@ -36,7 +44,6 @@ public class LwgDataStorage implements DataStorage<LwgEntity> {
 			dao.merge(entity);
 		}
 	}
-
 
 	@Override
 	public List<List<String>> stringify(List<LwgEntity> entitys) {

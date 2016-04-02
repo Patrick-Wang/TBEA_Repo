@@ -49,11 +49,22 @@ module jcycljg {
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
-                        this.updateTable();
-                        this.updateChart();
+                        this.refresh();
                     });
             }
 
+            public refresh() : void{
+                if ( this.mData == undefined){
+                    return;
+                }
+
+                if (this.mDispType == DisplayType.CHART) {
+                    this.updateTable();
+                    this.updateChart();
+                }else{
+                    this.updateTable();
+                }
+            }
             public init(opt:Option):void {
                 super.init(opt);
                 view.register("中厚板（Q235 20mm）", this);

@@ -1,5 +1,10 @@
 <Table id="lzbb" align="center" style="display: none;">
-    <tr>
+    <tr id="tbarea">
+        <td>
+            <div id="table" align="center"></div>
+        </td>
+    </tr>
+    <tr id="ctarea">
         <td>
             <div align="center">
                 <div class="panel-content-border"
@@ -9,17 +14,15 @@
             </div>
         </td>
     </tr>
-    <tr>
-        <td>
-            <div id="table" align="center"></div>
-        </td>
-    </tr>
+
 </Table>
 <script type="text/javascript" src="jsp/priceLib/jcycljg/lzbb/lzbb.js"></script>
 <script type="text/javascript">
     jcycljg.lzbb.pluginView.init({
         ct: "chart",
         tb: "table",
-        host: "lzbb"
+        host: "lzbb",
+        ctarea: "ctarea",
+        tbarea: "tbarea"
     });
 </script>

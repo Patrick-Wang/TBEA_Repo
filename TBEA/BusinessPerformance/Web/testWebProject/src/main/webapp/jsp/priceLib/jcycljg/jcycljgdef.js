@@ -8,11 +8,41 @@ var jcycljg;
         DateType[DateType["MONTH"] = 1] = "MONTH";
     })(jcycljg.DateType || (jcycljg.DateType = {}));
     var DateType = jcycljg.DateType;
+    (function (ContentType) {
+        ContentType[ContentType["TABLE_CHART"] = 0] = "TABLE_CHART";
+        ContentType[ContentType["TABLE"] = 1] = "TABLE";
+    })(jcycljg.ContentType || (jcycljg.ContentType = {}));
+    var ContentType = jcycljg.ContentType;
+    (function (DisplayType) {
+        DisplayType[DisplayType["TABLE"] = 0] = "TABLE";
+        DisplayType[DisplayType["CHART"] = 1] = "CHART";
+    })(jcycljg.DisplayType || (jcycljg.DisplayType = {}));
+    var DisplayType = jcycljg.DisplayType;
     var BasePluginView = (function () {
         function BasePluginView() {
         }
         BasePluginView.prototype.init = function (opt) {
             this.mOpt = opt;
+        };
+        BasePluginView.prototype.switch = function (type) {
+            this.mDispType = type;
+            switch (type) {
+                case DisplayType.TABLE:
+                    this.$(this.mOpt.ctarea).hide();
+                    this.$(this.mOpt.tbarea).show();
+                    this.refresh();
+                    break;
+                case DisplayType.CHART:
+                    this.$(this.mOpt.tbarea).hide();
+                    this.$(this.mOpt.ctarea).show();
+                    this.refresh();
+                    break;
+                default:
+                    break;
+            }
+        };
+        BasePluginView.prototype.getContentType = function () {
+            return ContentType.TABLE_CHART;
         };
         BasePluginView.prototype.getDateType = function () {
             return DateType.DAY;

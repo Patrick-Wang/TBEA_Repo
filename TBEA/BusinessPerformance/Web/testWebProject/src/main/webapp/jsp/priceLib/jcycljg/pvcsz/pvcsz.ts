@@ -45,6 +45,7 @@ module jcycljg {
                 return <Option>this.mOpt;
             }
 
+
             public pluginUpdate(start:string, end:string):void {
                 this.mAjax.get({
                         start: start,
@@ -52,12 +53,21 @@ module jcycljg {
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
-                        this.updateTable();
-                        this.updateDsfChart();
-                        this.updateYxfChart();
+                        this.refresh();
                     });
             }
+            public refresh() : void{
+                if ( this.mData == undefined){
+                    return;
+                }
 
+                if (this.mDispType == DisplayType.CHART) {
+                    this.updateDsfChart();
+                    this.updateYxfChart();
+                }else{
+                    this.updateTable();
+                }
+            }
             public init(opt:Option):void {
                 super.init(opt);
                 view.register("PVC树脂", this);
@@ -145,6 +155,7 @@ module jcycljg {
                 echarts.init(this.$(echart)[0]).setOption(option);
 
             }
+
 
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";

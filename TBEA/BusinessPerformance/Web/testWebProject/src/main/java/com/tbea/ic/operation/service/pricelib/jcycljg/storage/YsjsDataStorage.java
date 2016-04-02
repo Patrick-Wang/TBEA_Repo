@@ -4,24 +4,30 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDao;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
 
-public class YsjsDataStorage implements DataStorage<YsjsEntity>{
+@Component
+public class YsjsDataStorage implements DataStorage<YsjsEntity>,
+		DataStringify<YsjsEntity> {
+
+	@Autowired
 	YsjsDao dao;
-	
-	public YsjsDataStorage(YsjsDao dao) {
-		super();
-		this.dao = dao;
+
+	public YsjsDataStorage() {
+		StorageAssemble.register(JcycljgType.YSJS, this, this);
 	}
-	
-	
-	public void store(List<Object[]> data){
-		for (Object[] objs : data){
+
+	public void store(List<Object[]> data) {
+		for (Object[] objs : data) {
 			YsjsEntity entity = dao.getByDate((Date) objs[0]);
-			if (entity == null){
-			   entity = new YsjsEntity();
+			if (entity == null) {
+				entity = new YsjsEntity();
 			}
 			entity.setDate((Date) objs[0]);
 			entity.setCjxhCu((Double) objs[1]);
@@ -33,7 +39,6 @@ public class YsjsDataStorage implements DataStorage<YsjsEntity>{
 			dao.merge(entity);
 		}
 	}
-
 
 	@Override
 	public List<List<String>> stringify(List<YsjsEntity> entitys) {

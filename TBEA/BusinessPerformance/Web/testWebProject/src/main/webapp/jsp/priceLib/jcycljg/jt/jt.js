@@ -45,9 +45,20 @@ var jcycljg;
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
-                    _this.updateTable();
+                    _this.refresh();
                     _this.updateChart();
                 });
+            };
+            JtView.prototype.refresh = function () {
+                if (this.mData == undefined) {
+                    return;
+                }
+                if (this.mDispType == jcycljg.DisplayType.CHART) {
+                    this.updateChart();
+                }
+                else {
+                    this.updateTable();
+                }
             };
             JtView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);

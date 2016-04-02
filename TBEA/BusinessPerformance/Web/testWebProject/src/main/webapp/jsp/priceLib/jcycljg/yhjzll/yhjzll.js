@@ -38,6 +38,14 @@ var jcycljg;
             YhjzllView.newInstance = function () {
                 return new YhjzllView();
             };
+            YhjzllView.prototype.getContentType = function () {
+                return jcycljg.ContentType.TABLE;
+            };
+            YhjzllView.prototype.switch = function (type) {
+            };
+            YhjzllView.prototype.refresh = function () {
+                this.updateTable();
+            };
             YhjzllView.prototype.option = function () {
                 return this.mOpt;
             };

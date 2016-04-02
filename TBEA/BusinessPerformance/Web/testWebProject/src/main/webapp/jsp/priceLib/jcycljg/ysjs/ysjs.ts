@@ -44,6 +44,19 @@ module jcycljg {
                 return <Option>this.mOpt;
             }
 
+            public refresh() : void{
+                if ( this.mData == undefined){
+                    return;
+                }
+
+                if (this.mDispType == DisplayType.CHART) {
+                    this.updateCuChart();
+                    this.updateAlChart();
+                    this.updateZnChart();
+                }else{
+                    this.updateTable();
+                }
+            }
             pluginUpdate(start:string, end:string):void {
                 this.mAjax.get({
                         start: start,
@@ -51,10 +64,7 @@ module jcycljg {
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
-                        this.updateTable();
-                        this.updateCuChart();
-                        this.updateAlChart();
-                        this.updateZnChart();
+                        this.refresh();
                     });
             }
 

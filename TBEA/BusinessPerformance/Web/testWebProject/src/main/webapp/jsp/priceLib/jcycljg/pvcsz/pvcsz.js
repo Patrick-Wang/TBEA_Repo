@@ -51,10 +51,20 @@ var jcycljg;
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
-                    _this.updateTable();
-                    _this.updateDsfChart();
-                    _this.updateYxfChart();
+                    _this.refresh();
                 });
+            };
+            PVCSzView.prototype.refresh = function () {
+                if (this.mData == undefined) {
+                    return;
+                }
+                if (this.mDispType == jcycljg.DisplayType.CHART) {
+                    this.updateDsfChart();
+                    this.updateYxfChart();
+                }
+                else {
+                    this.updateTable();
+                }
             };
             PVCSzView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);

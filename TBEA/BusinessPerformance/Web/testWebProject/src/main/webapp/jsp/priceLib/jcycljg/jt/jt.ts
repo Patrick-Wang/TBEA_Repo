@@ -38,6 +38,7 @@ module jcycljg {
                 return <Option>this.mOpt;
             }
 
+
             public pluginUpdate(start:string, end:string):void {
                 this.mAjax.get({
                         start: start,
@@ -45,11 +46,21 @@ module jcycljg {
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
-                        this.updateTable();
+                        this.refresh();
                         this.updateChart();
                     });
             }
+            public refresh() : void{
+                if ( this.mData == undefined){
+                    return;
+                }
 
+                if (this.mDispType == DisplayType.CHART) {
+                    this.updateChart();
+                }else{
+                    this.updateTable();
+                }
+            }
             public init(opt:Option):void {
                 super.init(opt);
                 view.register("焦炭", this);

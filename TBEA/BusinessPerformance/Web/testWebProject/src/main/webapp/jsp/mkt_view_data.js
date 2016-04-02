@@ -12,9 +12,7 @@ var mkt_view_data;
                 new JQTable.Node("项目信息编号", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
                 new JQTable.Node("授权编号", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
                 new JQTable.Node("办事处或项目部", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("投标日期", "t6", false, JQTable.TextAlign.Left, 0, "text", { dataInit: function (element) {
-                    $(element).datepicker({ dateFormat: "yy-mm-dd" }).attr("readonly", "readonly");
-                } }, false),
+                new JQTable.Node("投标日期", "t6", false, JQTable.TextAlign.Left, 0, "text", { dataInit: function (element) { $(element).datepicker({ dateFormat: "yy-mm-dd" }).attr("readonly", "readonly"); } }, false),
                 new JQTable.Node("所属行业", "t7", false, JQTable.TextAlign.Left, 0, "select", { value: "国网:国网;南网:南网;火电:火电;水电:水电;风电:风电;核电:核电;光伏:光伏;轨道交通:轨道交通;石油石化:石油石化;钢铁冶金:钢铁冶金;煤炭煤化工:煤炭煤化工;航天军工:航天军工;其他:其他" }, false),
                 new JQTable.Node("所属系统", "t8", false, JQTable.TextAlign.Left, 0, "select", { value: "国网公司:国网公司;南网公司:南网公司;内蒙电力:内蒙电力;兵团电力:兵团电力;华能集团:华能集团;华电集团:华电集团;大唐集团:大唐集团;中电投集团:中电投集团;国电集团:国电集团;华润集团:华润集团;神华集团:神华集团;国投集团:国投集团;京能集团:京能集团;中煤能源集团:中煤能源集团;中国风电集团:中国风电集团;中国电建集团:中国电建集团;中国能建集团:中国能建集团;三峡集团:三峡集团;粤电集团:粤电集团;浙能集团:浙能集团;深圳能源集团:深圳能源集团;申能集团:申能集团;福建能源集团:福建能源集团;山东鲁能集团:山东鲁能集团;中核集团:中核集团;中广核集团:中广核集团;中铁电气化局:中铁电气化局;中铁建电气化局:中铁建电气化局;中石油:中石油;中石化:中石化;中海油:中海油;其他:其他" }, false),
                 new JQTable.Node("项目所在区域", "t9", false, JQTable.TextAlign.Left, 0, "select", { value: "北京:北京;天津:天津;河北:河北;山西:山西;内蒙:内蒙;辽宁:辽宁;吉林:吉林;黑龙江:黑龙江;上海:上海;江苏:江苏;浙江:浙江;安徽:安徽;福建:福建;江西:江西;山东:山东;河南:河南;湖北:湖北;湖南:湖南;广东:广东;广西:广西;海南:海南;重庆:重庆;四川:四川;贵州:贵州;云南:云南;西藏:西藏;陕西:陕西;甘肃:甘肃;青海:青海;宁夏:宁夏;新疆:新疆;台湾:台湾;香港:香港;澳门:澳门;国际外省:国际外省" }, false),
@@ -63,9 +61,7 @@ var mkt_view_data;
                 new JQTable.Node("单位", "t0", true, JQTable.TextAlign.Left, 0, undefined, undefined, false),
                 new JQTable.Node("合同编号", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
                 new JQTable.Node("办事处或项目部", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("签约日期", "t3", false, JQTable.TextAlign.Left, 0, "text", { dataInit: function (element) {
-                    $(element).datepicker({ dateFormat: "yy-mm-dd" }).attr("readonly", "readonly");
-                } }, false),
+                new JQTable.Node("签约日期", "t3", false, JQTable.TextAlign.Left, 0, "text", { dataInit: function (element) { $(element).datepicker({ dateFormat: "yy-mm-dd" }).attr("readonly", "readonly"); } }, false),
                 new JQTable.Node("所属行业", "t4", false, JQTable.TextAlign.Left, 0, "select", { value: "国网:国网;南网:南网;火电:火电;水电:水电;风电:风电;核电:核电;光伏:光伏;轨道交通:轨道交通;石油石化:石油石化;钢铁冶金:钢铁冶金;煤炭煤化工:煤炭煤化工;航天军工:航天军工;其他:其他" }, false),
                 new JQTable.Node("所属系统", "t5", false, JQTable.TextAlign.Left, 0, "select", { value: "国网公司:国网公司;南网公司:南网公司;内蒙电力:内蒙电力;兵团电力:兵团电力;华能集团:华能集团;华电集团:华电集团;大唐集团:大唐集团;中电投集团:中电投集团;国电集团:国电集团;华润集团:华润集团;神华集团:神华集团;国投集团:国投集团;京能集团:京能集团;中煤能源集团:中煤能源集团;中国风电集团:中国风电集团;中国电建集团:中国电建集团;中国能建集团:中国能建集团;三峡集团:三峡集团;粤电集团:粤电集团;浙能集团:浙能集团;深圳能源集团:深圳能源集团;申能集团:申能集团;福建能源集团:福建能源集团;山东鲁能集团:山东鲁能集团;中核集团:中核集团;中广核集团:中广核集团;中铁电气化局:中铁电气化局;中铁建电气化局:中铁建电气化局;中石油:中石油;中石化:中石化;中海油:中海油;其他:其他" }, false),
                 new JQTable.Node("项目所在区域", "t6", false, JQTable.TextAlign.Left, 0, "select", { value: "北京:北京;天津:天津;河北:河北;山西:山西;内蒙:内蒙;辽宁:辽宁;吉林:吉林;黑龙江:黑龙江;上海:上海;江苏:江苏;浙江:浙江;安徽:安徽;福建:福建;江西:江西;山东:山东;河南:河南;湖北:湖北;湖南:湖南;广东:广东;广西:广西;海南:海南;重庆:重庆;四川:四川;贵州:贵州;云南:云南;西藏:西藏;陕西:陕西;甘肃:甘肃;青海:青海;宁夏:宁夏;新疆:新疆;台湾:台湾;香港:香港;澳门:澳门;国际外省:国际外省" }, false),
@@ -137,7 +133,7 @@ var mkt_view_data;
             this.mSaveDataSet.post({
                 mktType: this.mDocType,
                 data: JSON.stringify(submitData),
-                editOper: this.mEditOper,
+                editOper: this.mEditOper
             }).then(function (data) {
                 if ("true" == data.result) {
                     Util.MessageBox.tip("提交 成功");
@@ -156,7 +152,8 @@ var mkt_view_data;
             var parent = $("#" + this.TableId);
             parent.empty();
             parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
-            this.mDataSet.get({ docType: this.mDocType }).then(function (data) {
+            this.mDataSet.get({ docType: this.mDocType })
+                .then(function (data) {
                 var fktjData = data;
                 $('#dataStatus').css("display", "none");
                 if (_this.mDocType == 3) {
@@ -236,7 +233,7 @@ var mkt_view_data;
                         editOper: _this.mEditOper,
                         editOriginalKey: _this.mOriginalKey
                     }).then(function (sr) {
-                        if (0 /* OK */ == sr.errorCode) {
+                        if (ErrorCode.OK == sr.errorCode) {
                             Util.MessageBox.tip("添加成功！");
                             $.jgrid.hideModal("#" + $.jgrid.jqID("editmodtable1_jqgrid_1234"), { gb: "#gbox_" + $.jgrid.jqID("table1_jqgrid_1234"), jqm: true, onClose: null });
                             $("#" + childName).addRowData($("#" + childName)[0].p.data.length + 1, data, 'first');
@@ -249,7 +246,7 @@ var mkt_view_data;
                             $("#pager input.ui-pg-input").trigger(e);
                             $("#assist").css("display", "block");
                         }
-                        else if (2 /* PREMARY_KEY_CONFILICT */ == sr.errorCode) {
+                        else if (ErrorCode.PREMARY_KEY_CONFILICT == sr.errorCode) {
                             if (_this.mDocType == 2) {
                                 Util.MessageBox.tip("添加失败，项目序号重复！");
                             }
@@ -260,10 +257,10 @@ var mkt_view_data;
                                 Util.MessageBox.tip("添加失败，合同编号重复!");
                             }
                         }
-                        else if (1 /* DATABASE_EXCEPTION */ == sr.errorCode) {
+                        else if (ErrorCode.DATABASE_EXCEPTION == sr.errorCode) {
                             Util.MessageBox.tip("添加失败!");
                         }
-                        else if (3 /* PREMARY_KEY_NULL */ == sr.errorCode) {
+                        else if (ErrorCode.PREMARY_KEY_NULL == sr.errorCode) {
                             if (_this.mDocType == 2) {
                                 Util.MessageBox.tip("添加失败，项目序号不能为空！");
                             }
@@ -298,7 +295,7 @@ var mkt_view_data;
                         editOper: _this.mEditOper,
                         editOriginalKey: _this.mOriginalKey
                     }).then(function (sr) {
-                        if (0 /* OK */ == sr.errorCode) {
+                        if (ErrorCode.OK == sr.errorCode) {
                             Util.MessageBox.tip("编辑成功！");
                             $.jgrid.hideModal("#" + $.jgrid.jqID("editmod" + childName), { gb: "#gbox_" + $.jgrid.jqID("table1_jqgrid_1234"), jqm: true, onClose: null });
                             var page = $("#" + childName).jqGrid('getGridParam', 'page');
@@ -313,7 +310,7 @@ var mkt_view_data;
                             $("#" + childName).setRowData(selectid, data);
                             swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
                         }
-                        else if (2 /* PREMARY_KEY_CONFILICT */ == sr.errorCode) {
+                        else if (ErrorCode.PREMARY_KEY_CONFILICT == sr.errorCode) {
                             if (_this.mDocType == 2) {
                                 Util.MessageBox.tip("编辑失败，项目序号重复！");
                             }
@@ -324,10 +321,10 @@ var mkt_view_data;
                                 Util.MessageBox.tip("编辑失败，合同编号重复!");
                             }
                         }
-                        else if (1 /* DATABASE_EXCEPTION */ == sr.errorCode) {
+                        else if (ErrorCode.DATABASE_EXCEPTION == sr.errorCode) {
                             Util.MessageBox.tip("数据提交失败!");
                         }
-                        else if (3 /* PREMARY_KEY_NULL */ == sr.errorCode) {
+                        else if (ErrorCode.PREMARY_KEY_NULL == sr.errorCode) {
                             if (_this.mDocType == 2) {
                                 Util.MessageBox.tip("编辑失败，项目序号不能为空！");
                             }
@@ -345,9 +342,7 @@ var mkt_view_data;
             });
             if (this.mCompanyName == "股份公司") {
                 $("#" + childName).jqGrid('navGrid', '#pager', {
-                    del: false,
-                    add: false,
-                    edit: false,
+                    del: false, add: false, edit: false,
                     addfunc: function () {
                         var dataEdit = $("#" + childName).data("formProp");
                         if (undefined != dataEdit) {
@@ -370,9 +365,7 @@ var mkt_view_data;
             }
             else {
                 $("#" + childName).jqGrid('navGrid', '#pager', {
-                    del: false,
-                    add: true,
-                    edit: true,
+                    del: false, add: true, edit: true,
                     addfunc: function () {
                         var dataEdit = $("#" + childName).data("formProp");
                         if (undefined != dataEdit) {

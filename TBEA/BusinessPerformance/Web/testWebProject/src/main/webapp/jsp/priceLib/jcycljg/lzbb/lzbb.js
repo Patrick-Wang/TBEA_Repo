@@ -47,9 +47,19 @@ var jcycljg;
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
-                    _this.updateTable();
-                    _this.updateChart();
+                    _this.refresh();
                 });
+            };
+            LzbbView.prototype.refresh = function () {
+                if (this.mData == undefined) {
+                    return;
+                }
+                if (this.mDispType == jcycljg.DisplayType.CHART) {
+                    this.updateChart();
+                }
+                else {
+                    this.updateTable();
+                }
             };
             LzbbView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);

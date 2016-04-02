@@ -4,14 +4,28 @@
 module jcycljg {
 
     export enum DateType{
-        DAY, MONTH
+        DAY,
+        MONTH
+    }
+
+    export enum ContentType{
+        TABLE_CHART,
+        TABLE
+    }
+
+    export enum DisplayType{
+        TABLE,
+        CHART
     }
 
     export interface PluginView {
         hide (): void;
         show () : void;
+        switch(type:DisplayType):void;
         update (start:Util.Date, end:Util.Date) : void;
         getDateType():DateType;
+        getContentType():ContentType;
+        refresh():void;
     }
 
     export interface FrameView {
@@ -21,14 +35,40 @@ module jcycljg {
 
     export interface PluginOption {
         host:string;
+        ctarea:string;
+        tbarea:string;
     }
 
     export abstract class BasePluginView implements PluginView {
 
         mOpt:PluginOption;
-
+        mDispType : DisplayType;
         public init(opt:PluginOption):void {
             this.mOpt = opt;
+        }
+
+        abstract refresh():void;
+
+        public switch(type:jcycljg.DisplayType):void {
+            this.mDispType = type;
+            switch (type){
+                case DisplayType.TABLE:
+                    this.$(this.mOpt.ctarea).hide();
+                    this.$(this.mOpt.tbarea).show();
+                    this.refresh();
+                    break;
+                case DisplayType.CHART:
+                    this.$(this.mOpt.tbarea).hide();
+                    this.$(this.mOpt.ctarea).show();
+                    this.refresh();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public getContentType():ContentType{
+            return ContentType.TABLE_CHART;
         }
 
         public  getDateType():DateType {

@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var yszkpzjh;
 (function (yszkpzjh) {
     var JQGridAssistantFactory = (function () {
@@ -5,43 +7,40 @@ var yszkpzjh;
         }
         JQGridAssistantFactory.createYSPZ1 = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("上月末累计销售收入", "symljxssr", true, 1 /* Right */, 100),
-                new JQTable.Node("本月计划销售收入", "byjhxssr", true, 1 /* Right */, 100),
-                new JQTable.Node("本月目标责任书应收指标", "bymbzrsyszb", true, 1 /* Right */, 100),
-                new JQTable.Node("本月应收内控指标", "byysnkzb", true, 1 /* Right */, 100),
-                new JQTable.Node("本月资金回笼计划", "byzjhljh", true, 1 /* Right */, 120)
-            ], gridName);
+                new JQTable.Node("上月末累计销售收入", "symljxssr", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("本月计划销售收入", "byjhxssr", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("本月目标责任书应收指标", "bymbzrsyszb", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("本月应收内控指标", "byysnkzb", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("本月资金回笼计划", "byzjhljh", true, JQTable.TextAlign.Right, 120)], gridName);
         };
         JQGridAssistantFactory.createYSPZ2 = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("(加)本月销售收入新增应收金额", "byxssrxzysje", true, 1 /* Right */, 100),
-                new JQTable.Node("(减)本月可降应收资金回笼金额", "bykjyszjhlje", true, 1 /* Right */, 100),
-                new JQTable.Node("(加)本月归还保理增加应收金额", "byghblzjysje", true, 1 /* Right */, 100),
-                new JQTable.Node("(减)本月新增保理回款冲减应收金额", "byxzblhkcjysje", true, 1 /* Right */, 120),
-                new JQTable.Node("本月预计账面应收余额", "byyjzmysye", true, 1 /* Right */, 100),
-                new JQTable.Node("与目标责任书指标差距", "ymbzeszbcj", true, 1 /* Right */, 100),
-                new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, 1 /* Right */, 100)
-            ], gridName);
+                new JQTable.Node("(加)本月销售收入新增应收金额", "byxssrxzysje", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("(减)本月可降应收资金回笼金额", "bykjyszjhlje", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("(加)本月归还保理增加应收金额", "byghblzjysje", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("(减)本月新增保理回款冲减应收金额", "byxzblhkcjysje", true, JQTable.TextAlign.Right, 120),
+                new JQTable.Node("本月预计账面应收余额", "byyjzmysye", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("与目标责任书指标差距", "ymbzeszbcj", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, JQTable.TextAlign.Right, 100)], gridName);
         };
         JQGridAssistantFactory.createYSPZ3 = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("上月末账面<br/>应收余额", "symzbysye", true, 1 /* Right */, 100)
+                new JQTable.Node("上月末账面<br/>应收余额", "symzbysye", true, JQTable.TextAlign.Right, 100)
             ], gridName);
         };
         JQGridAssistantFactory.createYSPZ4 = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("(减)上月末已开票未发货产生应收金额", "symykfpfhscysje", true, 1 /* Right */, 100),
-                new JQTable.Node("(加)上月末已发货未开票增加实际应收金额", "symyfhwkpzjsjsuje", true, 1 /* Right */, 100),
-                new JQTable.Node("(加)上月末保理回款冲减应收金额", "symblhkzjysje", true, 1 /* Right */, 100),
-                new JQTable.Node("(加)上月末预收冲减应收的金额", "symyscjysdje", true, 1 /* Right */, 120),
-                new JQTable.Node("(加)其他冲减应收", "qtcjys", true, 1 /* Right */, 100),
-                new JQTable.Node("上月实际应收余额", "sysjysye", true, 1 /* Right */, 100),
-                new JQTable.Node("(加)本月发货产品新增应收金额", "byfhcpxzysje", true, 1 /* Right */, 100),
-                new JQTable.Node("(减)本月回款降低应收金额（发货后的款项）", "byhkjdysje", true, 1 /* Right */, 100),
-                new JQTable.Node("本月预计实际应收余额", "byyjsjysye", true, 1 /* Right */, 100),
-                new JQTable.Node("与目标责任书指标差距", "ymbzeszbcj", true, 1 /* Right */, 100),
-                new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, 1 /* Right */, 100)
-            ], gridName);
+                new JQTable.Node("(减)上月末已开票未发货产生应收金额", "symykfpfhscysje", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("(加)上月末已发货未开票增加实际应收金额", "symyfhwkpzjsjsuje", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("(加)上月末保理回款冲减应收金额", "symblhkzjysje", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("(加)上月末预收冲减应收的金额", "symyscjysdje", true, JQTable.TextAlign.Right, 120),
+                new JQTable.Node("(加)其他冲减应收", "qtcjys", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("上月实际应收余额", "sysjysye", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("(加)本月发货产品新增应收金额", "byfhcpxzysje", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("(减)本月回款降低应收金额（发货后的款项）", "byhkjdysje", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("本月预计实际应收余额", "byyjsjysye", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("与目标责任书指标差距", "ymbzeszbcj", true, JQTable.TextAlign.Right, 100),
+                new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, JQTable.TextAlign.Right, 100)], gridName);
         };
         return JQGridAssistantFactory;
     })();
@@ -97,7 +96,8 @@ var yszkpzjh;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (data) {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then(function (data) {
                 _this.mData = data;
                 $('#title h1').text(_this.mYear + "年" + _this.mMonth + "月 应收账款盘子规划");
                 document.title = _this.mYear + "年" + _this.mMonth + "月 应收账款盘子规划";
@@ -118,6 +118,7 @@ var yszkpzjh;
                         list[i] = -1;
                     }
                     $("#" + listName + (i + 1) + "_jqgrid_1234").trigger("reloadGrid");
+                    //$("#" + listName + (i + 1)).jqGrid('sRow', '1');
                     refreshTags[i] = false;
                 }
             }
@@ -136,6 +137,7 @@ var yszkpzjh;
             var currentList;
             var refreshTags = [false, false, false, false];
             var listCurrentColum = [-1, -1, -1, -1];
+            // for table one
             var name1 = listName + "1" + "_jqgrid_1234";
             var parent = $("#" + listName + "1");
             parent.empty();
@@ -145,7 +147,10 @@ var yszkpzjh;
             $("#" + name1).jqGrid(t1Assist.decorate({
                 data: t1Assist.getData(data[0]),
                 datatype: "local",
+                //url : "Table?q=2",
+                //datatype: "json",
                 multiselect: false,
+                //rowNum : 4,
                 drag: false,
                 resize: false,
                 autowidth: false,
@@ -154,6 +159,10 @@ var yszkpzjh;
                 width: '100%',
                 shrinkToFit: false,
                 autoScroll: true,
+                //afterSaveCell : function(id, nm, v, iRow, iCol) {
+                //	listCurrentColum[0].erase(listCurrentColum[0]
+                //			.find(iCol))
+                //},
                 beforeEditCell: function (id, nm, tmp, iRow, iCol) {
                     listCurrentColum[0] = iCol;
                 },
@@ -170,6 +179,8 @@ var yszkpzjh;
                     $("#" + name1 + " #1").css("height", "24px");
                 }
             }));
+            //t1Assist.group($("#" + listName + "1"));
+            //for table 2
             var name2 = listName + "2" + "_jqgrid_1234";
             parent = $("#" + listName + "2");
             parent.empty();
@@ -179,14 +190,21 @@ var yszkpzjh;
             $("#" + name2).jqGrid(t2Assist.decorate({
                 data: t2Assist.getData(data[1]),
                 datatype: "local",
+                //url : "Table?q=2",
+                //datatype: "json",
                 drag: false,
                 resize: false,
                 multiselect: false,
+                //rowNum : 4,
                 cellEdit: true,
                 height: '100%',
                 width: '100%',
                 shrinkToFit: false,
                 autoScroll: true,
+                //afterSaveCell : function(id, nm, v, iRow, iCol) {
+                //	listCurrentColum[1].erase(listCurrentColum[1]
+                //			.find(iCol))
+                //},
                 beforeEditCell: function (id, nm, tmp, iRow, iCol) {
                     listCurrentColum[1] = iCol;
                 },
@@ -201,6 +219,7 @@ var yszkpzjh;
                     $("#gbox_" + name2).css("border-left", "0px solid #a6c9e2");
                     $("#gbox_" + name2).css("border-bottom", "0px solid #a6c9e2");
                     $("#" + name2 + " #1").css("height", "24px");
+                    //ui-jqgrid ui-widget ui-widget-content ui-corner-all
                 }
             }));
             var name4 = listName + "4" + "_jqgrid_1234";
@@ -212,12 +231,19 @@ var yszkpzjh;
             $("#" + name4).jqGrid(t4Assist.decorate({
                 data: t4Assist.getData(data[3]),
                 datatype: "local",
+                //url : "Table?q=2",
+                //datatype: "json",
                 cellEdit: true,
                 multiselect: false,
+                //rowNum : 4,
                 height: '100%',
                 width: '100%',
                 shrinkToFit: false,
                 autoScroll: true,
+                //afterSaveCell : function(id, nm, v, iRow, iCol) {
+                //	listCurrentColum[3].erase(listCurrentColum[3]
+                //			.find(iCol));
+                //},
                 beforeEditCell: function (id, nm, tmp, iRow, iCol) {
                     listCurrentColum[3] = iCol;
                 },
@@ -233,6 +259,7 @@ var yszkpzjh;
                     $("#" + name4 + " #1").css("height", "24px");
                 }
             }));
+            //for table 3
             var name3 = listName + "3" + "_jqgrid_1234";
             parent = $("#" + listName + "3");
             parent.empty();
@@ -244,9 +271,12 @@ var yszkpzjh;
             $("#" + name3).jqGrid(t3Assist.decorate({
                 data: t3Assist.getData(data[2]),
                 datatype: "local",
+                //url : "Table?q=2",
+                //datatype: "json",
                 colModel: colModel,
                 cellEdit: true,
                 multiselect: false,
+                //rowNum : 4,
                 height: '100%',
                 width: '100%',
                 shrinkToFit: false,
@@ -258,13 +288,21 @@ var yszkpzjh;
                     }
                     _this.refreshTable(listName, refreshTags, listCurrentColum);
                 },
+                //afterSaveCell : function(id, nm, v, iRow, iCol) {
+                //	listCurrentColum[2].erase(listCurrentColum[2]
+                //			.find(iCol))
+                //},
                 beforeEditCell: function (id, nm, tmp, iRow, iCol) {
                     listCurrentColum[2] = iCol;
                 },
                 gridComplete: function () {
                     var grid = $("#" + name3);
-                    var height = parseInt($("#gview_" + name2).css("height").replace("px", "")) + parseInt($("#gview_" + name4).css("height").replace("px", ""));
+                    // var ids = grid.getDataIDs();gview_list_hb4
+                    var height = parseInt($("#gview_" + name2).css("height").replace("px", "")) +
+                        parseInt($("#gview_" + name4).css("height").replace("px", ""));
                     var titleHeight = parseInt($("#" + name2 + "_" + t2Assist.id(0)).css("height").replace("px", ""));
+                    //grid.setRowData ( '1', false, {height: 25 + 46 + 5} );
+                    //$("#" + listName + "3_" + t3Assist.id(0)).css("height", titleHeight + "px");
                     $("#" + name3 + " #1").css("height", (height - titleHeight) + "px");
                     $("#gbox_" + name3).css("border-right", "0px solid #a6c9e2");
                 }

@@ -43,6 +43,8 @@ module jcycljg {
                 return <Option>this.mOpt;
             }
 
+
+
             public pluginUpdate(start:string, end:string):void {
                 this.mAjax.get({
                         start: start,
@@ -50,10 +52,21 @@ module jcycljg {
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
-                        this.updateTable();
-                        this.updateGcChart();
-                        this.updateJkChart();
+                        this.refresh();
                     });
+            }
+
+            public refresh() : void{
+                if ( this.mData == undefined){
+                    return;
+                }
+
+                if (this.mDispType == DisplayType.CHART) {
+                    this.updateGcChart();
+                    this.updateJkChart();
+                }else{
+                    this.updateTable();
+                }
             }
 
             public init(opt:Option):void {

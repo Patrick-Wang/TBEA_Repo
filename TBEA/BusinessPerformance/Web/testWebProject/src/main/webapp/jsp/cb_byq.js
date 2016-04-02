@@ -1,41 +1,52 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var cb_byq;
 (function (cb_byq) {
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createSubNode = function (parent) {
-            return parent.append(new JQTable.Node("单价", "dj")).append(new JQTable.Node("用量", "yl"));
+            return parent
+                .append(new JQTable.Node("单价", "dj"))
+                .append(new JQTable.Node("用量", "yl"));
         };
         JQGridAssistantFactory.createMxTable = function (gridName) {
-            var title = ["订单所在单位", "订单所在项目公司", "投标报价时间", "用户单位名称", "项目名称", "预计交货时间", "型号", "电压", "产量（万KVA）", "产值", "预计开标时间", "销售部门预测的中标概率", "投标硅钢牌号", "投标硅钢用量（单台）", "投标硅钢单价", "投标电解铜用量（单台）", "投标电解铜单价", "投标变压器油用量（单台）", "投标变压器油单价", "投标钢材用量（单台）", "投标钢材单价", "投标纸板用量（单台）", "投标纸板单价", "投标五大主材成本", "投标其他材料成本", "投标材料成本总计（不含税）", "人工及制造费用", "投标制造成本", "运费", "投标毛利（单台）", "投标毛利率"];
+            var title = ["订单所在单位", "订单所在项目公司", "投标报价时间", "用户单位名称", "项目名称",
+                "预计交货时间", "型号", "电压", "产量（万KVA）", "产值",
+                "预计开标时间", "销售部门预测的中标概率", "投标硅钢牌号", "投标硅钢用量（单台）",
+                "投标硅钢单价", "投标电解铜用量（单台）", "投标电解铜单价", "投标变压器油用量（单台）",
+                "投标变压器油单价", "投标钢材用量（单台）", "投标钢材单价", "投标纸板用量（单台）",
+                "投标纸板单价", "投标五大主材成本", "投标其他材料成本", "投标材料成本总计（不含税）",
+                "人工及制造费用", "投标制造成本", "运费", "投标毛利（单台）", "投标毛利率"];
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0 || i == 1) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 90));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 90));
                 }
                 else if (i == 3 || i == 4) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 200));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 200));
                 }
                 else if (i == 6) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 120));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 120));
                 }
                 else if (i < 7) {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 0 /* Left */, 80));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Left, 80));
                 }
                 else {
-                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, 1 /* Right */, 80));
+                    nodes.push(new JQTable.Node(title[i], "Mx" + i, true, JQTable.TextAlign.Right, 80));
                 }
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         JQGridAssistantFactory.createJttbTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位", "dw", true, 0 /* Left */),
+                new JQTable.Node("单位", "dw", true, JQTable.TextAlign.Left),
                 new JQTable.Node("产值", "cz"),
                 new JQTable.Node("毛利额", "mle"),
                 new JQTable.Node("毛利率", "mll"),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("硅钢", "gg")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("电解铜", "djt")).append(new JQTable.Node("加工费", "jgf")),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("电解铜", "djt"))
+                    .append(new JQTable.Node("加工费", "jgf")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("纸板", "zb")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("变压器油", "byqy")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("钢材", "gc"))
@@ -43,12 +54,13 @@ var cb_byq;
         };
         JQGridAssistantFactory.createGstbTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("时间", "1sj", true, 0 /* Left */),
+                new JQTable.Node("时间", "1sj", true, JQTable.TextAlign.Left),
                 new JQTable.Node("产值", "1cz"),
                 new JQTable.Node("毛利额", "1mle"),
                 new JQTable.Node("毛利率", "1mll"),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("硅钢", "1gg")),
-                JQGridAssistantFactory.createSubNode(new JQTable.Node("电解铜", "1djt")).append(new JQTable.Node("加工费", "1jgf")),
+                JQGridAssistantFactory.createSubNode(new JQTable.Node("电解铜", "1djt"))
+                    .append(new JQTable.Node("加工费", "1jgf")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("纸板", "1zb")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("变压器油", "1byqy")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("钢材", "1gc"))
@@ -82,7 +94,8 @@ var cb_byq;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ companyId: this.mComp }).then(function (data) {
+            this.mDataSet.get({ companyId: this.mComp })
+                .then(function (data) {
                 _this.mMxData = data;
                 _this.updateMxTable();
             });
@@ -116,11 +129,14 @@ var cb_byq;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: 250,
@@ -137,8 +153,7 @@ var cb_byq;
                 ["沈变"],
                 ["衡变"],
                 ["新变"],
-                ["总计"]
-            ];
+                ["总计"]];
             for (var i = 0; i < data.length; ++i) {
                 data[i] = this.format(data[i].concat(this.mJtData[i]));
             }
@@ -146,17 +161,20 @@ var cb_byq;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.format = function (row) {
@@ -189,17 +207,20 @@ var cb_byq;
                 height = 110;
             }
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: height,
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;

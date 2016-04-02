@@ -38,6 +38,18 @@ module jcycljg {
                 return new YhjzllView();
             }
 
+            public getContentType():ContentType{
+                return ContentType.TABLE;
+            }
+
+            switch(type:jcycljg.DisplayType):void {
+
+            }
+
+            public refresh() : void{
+                this.updateTable();
+            }
+
             private option():Option {
                 return <Option>this.mOpt;
             }

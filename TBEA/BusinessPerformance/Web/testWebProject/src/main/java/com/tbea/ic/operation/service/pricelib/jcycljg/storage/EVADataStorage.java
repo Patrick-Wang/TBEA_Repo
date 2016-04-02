@@ -4,22 +4,31 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.eva.EVADao;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.EVAEntity;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
 
-public class EVADataStorage implements DataStorage<EVAEntity> {
 
+@Component
+public class EVADataStorage implements DataStorage<EVAEntity>,
+		DataStringify<EVAEntity> {
+
+	@Autowired
 	EVADao dao;
-	public EVADataStorage(EVADao evaDao) {
-		this.dao = evaDao;
+
+	public EVADataStorage() {
+		StorageAssemble.register(JcycljgType.EVA, this, this);
 	}
 
-	public void store(List<Object[]> data){
-		for (Object[] objs : data){
+	public void store(List<Object[]> data) {
+		for (Object[] objs : data) {
 			EVAEntity entity = dao.getByDate((Date) objs[0]);
-			if (entity == null){
-			   entity = new EVAEntity();
+			if (entity == null) {
+				entity = new EVAEntity();
 			}
 			entity.setDate((Date) objs[0]);
 			entity.setBjyj142((Double) objs[1]);
@@ -28,7 +37,6 @@ public class EVADataStorage implements DataStorage<EVAEntity> {
 			dao.merge(entity);
 		}
 	}
-
 
 	@Override
 	public List<List<String>> stringify(List<EVAEntity> entitys) {

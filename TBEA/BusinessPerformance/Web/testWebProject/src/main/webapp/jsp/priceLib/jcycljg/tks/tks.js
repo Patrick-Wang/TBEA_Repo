@@ -49,10 +49,20 @@ var jcycljg;
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
-                    _this.updateTable();
-                    _this.updateGcChart();
-                    _this.updateJkChart();
+                    _this.refresh();
                 });
+            };
+            TksView.prototype.refresh = function () {
+                if (this.mData == undefined) {
+                    return;
+                }
+                if (this.mDispType == jcycljg.DisplayType.CHART) {
+                    this.updateGcChart();
+                    this.updateJkChart();
+                }
+                else {
+                    this.updateTable();
+                }
             };
             TksView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);

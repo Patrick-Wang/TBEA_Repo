@@ -41,6 +41,19 @@ var jcycljg;
             YsjsView.prototype.option = function () {
                 return this.mOpt;
             };
+            YsjsView.prototype.refresh = function () {
+                if (this.mData == undefined) {
+                    return;
+                }
+                if (this.mDispType == jcycljg.DisplayType.CHART) {
+                    this.updateCuChart();
+                    this.updateAlChart();
+                    this.updateZnChart();
+                }
+                else {
+                    this.updateTable();
+                }
+            };
             YsjsView.prototype.pluginUpdate = function (start, end) {
                 var _this = this;
                 this.mAjax.get({
@@ -49,10 +62,7 @@ var jcycljg;
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
-                    _this.updateTable();
-                    _this.updateCuChart();
-                    _this.updateAlChart();
-                    _this.updateZnChart();
+                    _this.refresh();
                 });
             };
             YsjsView.prototype.init = function (opt) {

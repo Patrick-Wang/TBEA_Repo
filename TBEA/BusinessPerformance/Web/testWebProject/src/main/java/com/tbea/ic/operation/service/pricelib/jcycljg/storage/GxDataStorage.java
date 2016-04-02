@@ -4,25 +4,32 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.model.dao.pricelib.jcycljg.gjyy.GjyyDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.gx.GxDao;
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GjyyEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GxEntity;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
 
-public class GxDataStorage implements DataStorage<GxEntity> {
+@Component
+public class GxDataStorage implements DataStorage<GxEntity>,
+		DataStringify<GxEntity> {
 
+	@Autowired
 	GxDao dao;
-	
-	public GxDataStorage(GxDao dao) {
-		super();
-		this.dao = dao;
+
+	public GxDataStorage() {
+		StorageAssemble.register(JcycljgType.GX, this, this);
 	}
-	
-	
-	public void store(List<Object[]> data){
-		for (Object[] objs : data){
+
+	public void store(List<Object[]> data) {
+		for (Object[] objs : data) {
 			GxEntity entity = dao.getByDate((Date) objs[0]);
-			if (entity == null){
-			   entity = new GxEntity();
+			if (entity == null) {
+				entity = new GxEntity();
 			}
 			entity.setDate((Date) objs[0]);
 			entity.setShsg((Double) objs[1]);
@@ -34,7 +41,6 @@ public class GxDataStorage implements DataStorage<GxEntity> {
 			dao.merge(entity);
 		}
 	}
-
 
 	@Override
 	public List<List<String>> stringify(List<GxEntity> entitys) {

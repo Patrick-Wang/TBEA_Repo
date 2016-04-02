@@ -36,6 +36,7 @@ module jcycljg {
                 return new GxView();
             }
 
+
             private option():Option {
                 return <Option>this.mOpt;
             }
@@ -47,11 +48,20 @@ module jcycljg {
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
-                        this.updateTable();
-                        this.updateChart();
+                        this.refresh();
                     });
             }
+            public refresh() : void{
+                if ( this.mData == undefined){
+                    return;
+                }
 
+                if (this.mDispType == DisplayType.CHART) {
+                    this.updateChart();
+                }else{
+                    this.updateTable();
+                }
+            }
             public init(opt:Option):void {
                 super.init(opt);
                 view.register("高线（45-70# Φ6.5）", this);

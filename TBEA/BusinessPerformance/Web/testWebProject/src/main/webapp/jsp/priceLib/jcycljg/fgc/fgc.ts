@@ -34,6 +34,8 @@ module jcycljg {
                 return new FgcView();
             }
 
+
+
             private option():Option {
                 return <Option>this.mOpt;
             }
@@ -45,11 +47,20 @@ module jcycljg {
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
-                        this.updateTable();
-                        this.updateChart();
+                        this.refresh();
                     });
             }
+            public refresh() : void{
+                if ( this.mData == undefined){
+                    return;
+                }
 
+                if (this.mDispType == DisplayType.CHART) {
+                    this.updateChart();
+                }else{
+                    this.updateTable();
+                }
+            }
             public init(opt:Option):void {
                 super.init(opt);
                 view.register("废钢材", this);

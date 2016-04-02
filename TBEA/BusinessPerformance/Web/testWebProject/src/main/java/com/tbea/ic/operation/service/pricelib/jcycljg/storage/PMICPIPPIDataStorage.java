@@ -5,30 +5,37 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.model.dao.pricelib.jcycljg.myzs.MyzsDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.pmicpippi.PmiCpiPpiDao;
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.MyzsEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.PmiCpiPpiEntity;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
 
-public class PMICPIPPIDataStorage implements DataStorage<PmiCpiPpiEntity> {
+@Component
+public class PMICPIPPIDataStorage implements DataStorage<PmiCpiPpiEntity>,
+		DataStringify<PmiCpiPpiEntity> {
 
+	@Autowired
 	PmiCpiPpiDao dao;
-	
-	public PMICPIPPIDataStorage(PmiCpiPpiDao dao) {
-		super();
-		this.dao = dao;
+
+	public PMICPIPPIDataStorage() {
+		StorageAssemble.register(JcycljgType.PMICPIPPI, this, this);
 	}
-	
-	
-	public void store(List<Object[]> data){
-		for (Object[] objs : data){
+
+	public void store(List<Object[]> data) {
+		for (Object[] objs : data) {
 			Date dt = (Date) objs[0];
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(dt);
 			cal.set(Calendar.DAY_OF_MONTH, 1);
 			objs[0] = new Date(cal.getTimeInMillis());
 			PmiCpiPpiEntity entity = dao.getByDate((Date) objs[0]);
-			if (entity == null){
-			   entity = new PmiCpiPpiEntity();
+			if (entity == null) {
+				entity = new PmiCpiPpiEntity();
 			}
 			entity.setDate((Date) objs[0]);
 			entity.setPmi((Double) objs[1]);
@@ -37,7 +44,6 @@ public class PMICPIPPIDataStorage implements DataStorage<PmiCpiPpiEntity> {
 			dao.merge(entity);
 		}
 	}
-
 
 	@Override
 	public List<List<String>> stringify(List<PmiCpiPpiEntity> entitys) {
