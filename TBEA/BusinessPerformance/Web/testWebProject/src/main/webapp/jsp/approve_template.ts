@@ -2,6 +2,8 @@
 /// <reference path="dateSelector.ts" />
 /// <reference path="companySelector.ts" />
 /// <reference path="util.ts" />
+///<reference path="jqgrid/jqassist.ts"/>
+///<reference path="messageBox.ts"/>
 declare var echarts;
 declare var $;
 module approve_template {

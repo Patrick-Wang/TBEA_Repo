@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
 import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 
 
 public abstract class StandardConfigurator implements IPipeConfigurator {

@@ -34,8 +34,12 @@ public abstract class ValidatorTemplate implements FormatValidator{
 		throw new ValidationException("日期解析失败，类型编码 " + cell.getCellType());
 	}
 	
-	public double parseNumber(XSSFCell cell) throws ValidationException{
-		if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC || cell.getCellType() == XSSFCell.CELL_TYPE_FORMULA) {
+	public Double parseNumber(XSSFCell cell) throws ValidationException{
+		switch(cell.getCellType()){
+		case XSSFCell.CELL_TYPE_BLANK:
+			return null;
+		case XSSFCell.CELL_TYPE_NUMERIC:
+		case XSSFCell.CELL_TYPE_FORMULA:
 			return cell.getNumericCellValue();
 		}
 		throw new ValidationException("数值类型解析失败 ，类型编码  " + cell.getCellType());

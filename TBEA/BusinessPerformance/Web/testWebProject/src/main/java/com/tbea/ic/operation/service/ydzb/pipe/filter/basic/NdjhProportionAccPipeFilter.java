@@ -8,7 +8,7 @@ import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 //占比指标
 public class NdjhProportionAccPipeFilter extends AbstractDividedCompanyAccPipeFilter {
 
@@ -23,12 +23,12 @@ public class NdjhProportionAccPipeFilter extends AbstractDividedCompanyAccPipeFi
 	public NdjhProportionAccPipeFilter(SbdNdjhZbDao sbdzbDao, IAccumulator ndjhAcc, int col, Date dateS, Date dateE) {
 		super(ndjhAcc, col, dateS, dateE);
 		this.sbdzbDao = sbdzbDao;
-		addDependentZbs(GSZB.XSSR6.getValue());
+		addDependentZbs(GSZB.XSSR6.value());
 	}
 
 	public AbstractDividedCompanyAccPipeFilter addDependentZbs(Integer zb){
 		super.addDependentZbs(zb);
-		if (zb == GSZB.XSSR6.getValue()){
+		if (zb == GSZB.XSSR6.value()){
 			xssrRow = dependentZbs.indexOf(zb);
 		}
 		return this;
@@ -37,9 +37,9 @@ public class NdjhProportionAccPipeFilter extends AbstractDividedCompanyAccPipeFi
 	@Override
 	protected Double onCompute(Integer curZb, List<Double> depValues, Company comp) {
 		if (xssrRow != null && null != depValues.get(xssrRow)){
-			if (curZb == GSZB.YSZK32.getValue()){
+			if (curZb == GSZB.YSZK32.value()){
 				return Util.valueOf(depValues.get(xssrRow)) * sbdzbDao.getYszb(year, comp);
-			} else if (curZb == GSZB.CH35.getValue()){
+			} else if (curZb == GSZB.CH35.value()){
 				return Util.valueOf(depValues.get(xssrRow)) * sbdzbDao.getChzb(year, comp);
 			}
 		}

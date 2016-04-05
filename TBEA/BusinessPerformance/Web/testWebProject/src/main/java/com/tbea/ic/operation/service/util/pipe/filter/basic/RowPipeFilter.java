@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
 
@@ -33,13 +32,13 @@ public class RowPipeFilter implements IPipeFilter {
 	Map<Integer, Formula> computeMap = new HashMap<Integer, Formula>();
 	Map<Integer, Integer> indicatorMap = new HashMap<Integer, Integer>();
 
-	protected void init(GSZB dest, GSZB[] zbs, operator oper){
+	protected void init(int dest, int[] zbs, operator oper){
 		Integer[] intZbs = new Integer[zbs.length];
 		for (int i = 0; i < zbs.length; ++i){
-			indicatorMap.put(zbs[i].getValue(), null);
-			intZbs[i] = zbs[i].getValue();
+			indicatorMap.put(zbs[i], null);
+			intZbs[i] = zbs[i];
 		}
-		computeMap.put(dest.getValue(), new Formula(intZbs, oper));
+		computeMap.put(dest, new Formula(intZbs, oper));
 	}
 
 	public RowPipeFilter excludeCol(Integer col) {

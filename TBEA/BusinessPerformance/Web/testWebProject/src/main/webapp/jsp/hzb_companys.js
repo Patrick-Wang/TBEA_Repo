@@ -1,5 +1,8 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+///<reference path="dateSelector.ts"/>
+///<reference path="unitedSelector.ts"/>
+///<reference path="companySelector.ts"/>
 var hzb_companys;
 (function (hzb_companys) {
     var AllZb;

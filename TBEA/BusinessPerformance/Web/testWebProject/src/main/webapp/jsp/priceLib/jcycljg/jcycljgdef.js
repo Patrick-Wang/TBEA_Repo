@@ -28,13 +28,13 @@ var jcycljg;
             this.mDispType = type;
             switch (type) {
                 case DisplayType.TABLE:
-                    this.$(this.mOpt.ctarea).hide();
-                    this.$(this.mOpt.tbarea).show();
+                    this.$(this.mOpt.ctarea).css("display", "none");
+                    this.$(this.mOpt.tbarea).css("display", "");
                     this.refresh();
                     break;
                 case DisplayType.CHART:
-                    this.$(this.mOpt.tbarea).hide();
-                    this.$(this.mOpt.ctarea).show();
+                    this.$(this.mOpt.tbarea).css("display", "none");
+                    this.$(this.mOpt.ctarea).css("display", "");
                     this.refresh();
                     break;
                 default:

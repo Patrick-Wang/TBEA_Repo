@@ -6,8 +6,8 @@ import java.util.List;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 
 public class StandardConfiguratorProxy extends StandardConfigurator {
 

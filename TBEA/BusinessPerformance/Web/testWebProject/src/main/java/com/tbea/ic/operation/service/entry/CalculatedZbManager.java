@@ -14,22 +14,22 @@ public class CalculatedZbManager {
 	final static Set<Integer> jh2016Zbs = new HashSet<Integer>();//include 2016
 
 	static {
-		defaultZbs.add(GSZB.RJSR63.getValue());
-		defaultZbs.add(GSZB.RJLR62.getValue());
-		defaultZbs.add(GSZB.SXFYL_65.getValue());
-		defaultZbs.add(GSZB.XSLRL_28.getValue());
-		defaultZbs.add(GSZB.ZZYSXFYL231.getValue());
-		defaultZbs.add(GSZB.GC_XSYWSXFYL232.getValue());
-		defaultZbs.add(GSZB.WLMYSXFYL233.getValue());
+		defaultZbs.add(GSZB.RJSR63.value());
+		defaultZbs.add(GSZB.RJLR62.value());
+		defaultZbs.add(GSZB.SXFYL_65.value());
+		defaultZbs.add(GSZB.XSLRL_28.value());
+		defaultZbs.add(GSZB.ZZYSXFYL231.value());
+		defaultZbs.add(GSZB.GC_XSYWSXFYL232.value());
+		defaultZbs.add(GSZB.WLMYSXFYL233.value());
 	};
 
 	static {
-		jh2016Zbs.add(GSZB.RJSR63.getValue());
-		jh2016Zbs.add(GSZB.RJLR62.getValue());
-		jh2016Zbs.add(GSZB.SXFYL_65.getValue());
-		jh2016Zbs.add(GSZB.ZZYSXFYL231.getValue());
-		jh2016Zbs.add(GSZB.GC_XSYWSXFYL232.getValue());
-		jh2016Zbs.add(GSZB.WLMYSXFYL233.getValue());
+		jh2016Zbs.add(GSZB.RJSR63.value());
+		jh2016Zbs.add(GSZB.RJLR62.value());
+		jh2016Zbs.add(GSZB.SXFYL_65.value());
+		jh2016Zbs.add(GSZB.ZZYSXFYL231.value());
+		jh2016Zbs.add(GSZB.GC_XSYWSXFYL232.value());
+		jh2016Zbs.add(GSZB.WLMYSXFYL233.value());
 	};
 	
 	

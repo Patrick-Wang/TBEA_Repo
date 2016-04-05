@@ -1,6 +1,8 @@
 /// <reference path="dateSelector.ts" />
 /// <reference path="companySelector.ts" />
 /// <reference path="util.ts" />
+///<reference path="jqgrid/jqassist.ts"/>
+///<reference path="messageBox.ts"/>
 var approve_template;
 (function (approve_template) {
     var JQGridAssistantFactory = (function () {

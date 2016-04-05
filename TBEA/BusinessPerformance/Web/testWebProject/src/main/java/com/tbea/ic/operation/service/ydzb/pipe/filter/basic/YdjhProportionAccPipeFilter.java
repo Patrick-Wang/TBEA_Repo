@@ -8,7 +8,7 @@ import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 
 //占比指标
 public class YdjhProportionAccPipeFilter extends NdjhProportionAccPipeFilter {
@@ -25,13 +25,13 @@ public class YdjhProportionAccPipeFilter extends NdjhProportionAccPipeFilter {
 			Company comp) {
 
 		if (xssrRow != null && null != depValues.get(xssrRow)) {
-			if (curZb == GSZB.YSZK32.getValue()) {
+			if (curZb == GSZB.YSZK32.value()) {
 				Double value = sbdzbDao.getYszb(year, comp);
 				if (null != value) {
 					return Util.valueOf(depValues.get(xssrRow)) / month * 12
 							* value;
 				}
-			} else if (curZb == GSZB.CH35.getValue()) {
+			} else if (curZb == GSZB.CH35.value()) {
 				Double value = sbdzbDao.getChzb(year, comp);
 				if (null != value) {
 					return Util.valueOf(depValues.get(xssrRow)) / month * 12

@@ -46,7 +46,6 @@ var jcycljg;
                     .then(function (jsonData) {
                     _this.mData = jsonData;
                     _this.refresh();
-                    _this.updateChart();
                 });
             };
             JtView.prototype.refresh = function () {

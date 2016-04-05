@@ -1,6 +1,7 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
 /// <reference path="messageBox.ts" />
+///<reference path="dateSelector.ts"/>
 var hzb_zbhz;
 (function (hzb_zbhz) {
     var SrqyId;

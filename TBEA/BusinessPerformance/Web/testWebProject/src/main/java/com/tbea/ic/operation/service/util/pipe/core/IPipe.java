@@ -6,6 +6,20 @@ import java.util.List;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
 
+
+//*****table data format companies (date)****
+// ************************************************
+// zb -- -- -- -- -- -- -- -- -- -- -- -- -- --
+// zb -- -- -- -- -- -- -- -- -- -- -- -- -- --
+// zb -- -- -- -- -- -- -- -- -- -- -- -- -- --
+// zb -- -- -- -- -- -- -- -- -- -- -- -- -- --
+// zb -- -- -- -- -- -- -- -- -- -- -- -- -- --
+// zb -- -- -- -- -- -- -- -- -- -- -- -- -- --
+// zb -- -- -- -- -- -- -- -- -- -- -- -- -- --
+// ......
+// ************************************************
+
+
 public interface IPipe {
 
 	public Date getDate();

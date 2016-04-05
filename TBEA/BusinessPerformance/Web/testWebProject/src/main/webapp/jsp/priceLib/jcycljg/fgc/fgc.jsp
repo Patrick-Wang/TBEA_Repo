@@ -16,7 +16,7 @@
     </tr>
 </Table>
 <script type="text/javascript" src="jsp/priceLib/jcycljg/fgc/fgc.js"></script>
-<script type="text/javascript">
+<script type="text/javascript"> 
     jcycljg.fgc.pluginView.init({
         ct: "chart",
         tb: "table",

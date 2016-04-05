@@ -9,9 +9,9 @@ import com.tbea.ic.operation.service.market.Indicator;
 import com.tbea.ic.operation.service.market.pipe.filter.composite.CompositeRatioPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.configurator.composite.AbstractCompositeConfigurator;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.AccPipeFilter;
-import com.tbea.ic.operation.service.util.pipe.filter.composite.RatioIndicatorPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.composite.RatioPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.WclPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.ZzlPipeFilter;
 

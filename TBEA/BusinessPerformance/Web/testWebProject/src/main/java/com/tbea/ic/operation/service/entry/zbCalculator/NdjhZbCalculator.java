@@ -28,17 +28,17 @@ public class NdjhZbCalculator extends GeneralZbCalculator {
 	protected void onHandling(Integer zbId, Double val, Calendar cal,
 			Company comp, ZBStatus status) {
 		boolean isHandled = false;
-		if (GSZB.XSSR6.getValue().equals(zbId)){
+		if (GSZB.XSSR6.value().equals(zbId)){
 			xssr = val;
 		}else if (sbdCy.contains(comp)) {
-			if (GSZB.YSZK32.getValue().equals(zbId) && null != xssr) {
+			if (GSZB.YSZK32.value().equals(zbId) && null != xssr) {
 				Double yszb = sbdNdjhzbDao
 						.getYszb(cal.get(Calendar.YEAR), comp);
 				if (null != yszb) {
 					injector.inject(zbId, xssr * yszb, cal, comp, status);
 					isHandled = true;
 				}
-			} else if (GSZB.CH35.getValue().equals(zbId) && null != xssr) {
+			} else if (GSZB.CH35.value().equals(zbId) && null != xssr) {
 				Double chzb = sbdNdjhzbDao 
 						.getChzb(cal.get(Calendar.YEAR), comp);
 				if (null != chzb) {

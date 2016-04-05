@@ -1,5 +1,7 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+///<reference path="companySelector.ts"/>
+///<reference path="unitedSelector.ts"/>
 var companys_zbhz_prediction;
 (function (companys_zbhz_prediction) {
     var FirstMonthZb;

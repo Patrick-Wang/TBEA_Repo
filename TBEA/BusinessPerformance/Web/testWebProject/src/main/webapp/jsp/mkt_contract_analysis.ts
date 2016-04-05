@@ -1,5 +1,6 @@
 /// <reference path="util.ts" />
 /// <reference path="jqgrid/jqassist.ts" />
+///<reference path="dateSelector.ts"/>
 declare var echarts;
 module mkt_contract_analysis {
 

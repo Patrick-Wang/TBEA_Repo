@@ -79,44 +79,44 @@ public class GszbServiceImpl implements GszbService {
 
 	private static List<Integer> gsztzbs = new ArrayList<Integer>();
 	static {
-		gsztzbs.add(GSZB.LRZE1.getValue());
-		gsztzbs.add(GSZB.XSSR6.getValue());
-		gsztzbs.add(GSZB.JYXJXJL29.getValue());
-		gsztzbs.add(GSZB.YSZK32.getValue());
-		gsztzbs.add(GSZB.YQK33.getValue());
-		gsztzbs.add(GSZB.BL34.getValue());
-		gsztzbs.add(GSZB.CH35.getValue());
-		gsztzbs.add(GSZB.QZ_JYWZ36.getValue());
-		gsztzbs.add(GSZB.HTQYE48.getValue());
-		gsztzbs.add(GSZB.ZJHL57.getValue());
-		gsztzbs.add(GSZB.BHSCZ60.getValue());
-		gsztzbs.add(GSZB.RS61.getValue());
-		gsztzbs.add(GSZB.RJLR62.getValue());
-		gsztzbs.add(GSZB.RJSR63.getValue());
-		gsztzbs.add(GSZB.SXFY64.getValue());
-		gsztzbs.add(GSZB.SXFYL_65.getValue());
+		gsztzbs.add(GSZB.LRZE1.value());
+		gsztzbs.add(GSZB.XSSR6.value());
+		gsztzbs.add(GSZB.JYXJXJL29.value());
+		gsztzbs.add(GSZB.YSZK32.value());
+		gsztzbs.add(GSZB.YQK33.value());
+		gsztzbs.add(GSZB.BL34.value());
+		gsztzbs.add(GSZB.CH35.value());
+		gsztzbs.add(GSZB.QZ_JYWZ36.value());
+		gsztzbs.add(GSZB.HTQYE48.value());
+		gsztzbs.add(GSZB.ZJHL57.value());
+		gsztzbs.add(GSZB.BHSCZ60.value());
+		gsztzbs.add(GSZB.RS61.value());
+		gsztzbs.add(GSZB.RJLR62.value());
+		gsztzbs.add(GSZB.RJSR63.value());
+		gsztzbs.add(GSZB.SXFY64.value());
+		gsztzbs.add(GSZB.SXFYL_65.value());
 		//gsztzbs.add(GSZB.JZCSYL.getValue());
 	}
 	
 	
 	private static List<Integer> gsztzbsNC = new ArrayList<Integer>();
 	static {
-		gsztzbsNC.add(GSZB.LRZE1.getValue());
-		gsztzbsNC.add(GSZB.XSSR6.getValue());
-		gsztzbsNC.add(GSZB.JYXJXJL29.getValue());
-		gsztzbsNC.add(GSZB.YSZK32.getValue());
-		gsztzbsNC.add(GSZB.CH35.getValue());
-		gsztzbsNC.add(GSZB.SXFY64.getValue());
-		gsztzbsNC.add(GSZB.SXFYL_65.getValue());
+		gsztzbsNC.add(GSZB.LRZE1.value());
+		gsztzbsNC.add(GSZB.XSSR6.value());
+		gsztzbsNC.add(GSZB.JYXJXJL29.value());
+		gsztzbsNC.add(GSZB.YSZK32.value());
+		gsztzbsNC.add(GSZB.CH35.value());
+		gsztzbsNC.add(GSZB.SXFY64.value());
+		gsztzbsNC.add(GSZB.SXFYL_65.value());
 	}
 
 	private static List<Integer> topfivezbs = new ArrayList<Integer>();
 	static {
-		topfivezbs.add(GSZB.LRZE1.getValue());
-		topfivezbs.add(GSZB.XSSR6.getValue());
-		topfivezbs.add(GSZB.JYXJXJL29.getValue());
-		topfivezbs.add(GSZB.YSZK32.getValue());
-		topfivezbs.add(GSZB.CH35.getValue());
+		topfivezbs.add(GSZB.LRZE1.value());
+		topfivezbs.add(GSZB.XSSR6.value());
+		topfivezbs.add(GSZB.JYXJXJL29.value());
+		topfivezbs.add(GSZB.YSZK32.value());
+		topfivezbs.add(GSZB.CH35.value());
 	}
 
 	
@@ -178,37 +178,37 @@ public class GszbServiceImpl implements GszbService {
 	private static List<Integer> srqyzbs = new ArrayList<Integer>();
 	static {
 		// 销售收入
-		srqyzbs.add(GSZB.XSSR6.getValue());// 营业收入
-		srqyzbs.add(GSZB.XSSR_ZZYSR7.getValue());// 制造业收入（输变电收入、新能源收入、能源煤炭收入、众和制造业收入）
-		srqyzbs.add(GSZB.XSSR_GCXMSR12.getValue());// 工程项目收入（输变电收入、新能源产业成套工程收入、能源产业工程收入、进出口公司收入、国际工程公司收入、众和公司收入）
-		srqyzbs.add(GSZB.YYSSR15.getValue());// 运营商收入（新能源产业运营商收入）
-		srqyzbs.add(GSZB.MTXSSR19.getValue());// 煤炭销售收入（能源产业收入）
-		srqyzbs.add(GSZB.XSSR_WLMYSR16.getValue());// 物流贸易收入（输变电物流收入、能源产业贸易收入、众和公司物流业收入）
-		srqyzbs.add(GSZB.FWLSR20.getValue());// 服务类收入（新能源产业服务业收入、能源产业服务业收入、众和公司服务业收入）
+		srqyzbs.add(GSZB.XSSR6.value());// 营业收入
+		srqyzbs.add(GSZB.XSSR_ZZYSR7.value());// 制造业收入（输变电收入、新能源收入、能源煤炭收入、众和制造业收入）
+		srqyzbs.add(GSZB.XSSR_GCXMSR12.value());// 工程项目收入（输变电收入、新能源产业成套工程收入、能源产业工程收入、进出口公司收入、国际工程公司收入、众和公司收入）
+		srqyzbs.add(GSZB.YYSSR15.value());// 运营商收入（新能源产业运营商收入）
+		srqyzbs.add(GSZB.MTXSSR19.value());// 煤炭销售收入（能源产业收入）
+		srqyzbs.add(GSZB.XSSR_WLMYSR16.value());// 物流贸易收入（输变电物流收入、能源产业贸易收入、众和公司物流业收入）
+		srqyzbs.add(GSZB.FWLSR20.value());// 服务类收入（新能源产业服务业收入、能源产业服务业收入、众和公司服务业收入）
 
 		// 合同签约额
-		srqyzbs.add(GSZB.HTQYE48.getValue());// 合同签约额
-		srqyzbs.add(GSZB.GJQY_WMY_49.getValue());// 输变电、进出口国际签约
-		srqyzbs.add(GSZB.QZ_DJQY50.getValue());// 单机签约（输变电国际单机签约）
-		srqyzbs.add(GSZB.QZ_CTQY_WMY_51.getValue());// 成套签约（输变电国际成套签约、新能源产业国际成套签约、进出口公司国际成套签约、国际工程公司国际成套签约）
-		srqyzbs.add(GSZB.GNQY52.getValue());// 输变电国内签约
-		srqyzbs.add(GSZB.QZ_DJQY53.getValue());// 单机签约（输变电国内单机签约）
-		srqyzbs.add(GSZB.QZ_CTQY_WY_54.getValue());// 成套签约（输变电国内成套签约）
+		srqyzbs.add(GSZB.HTQYE48.value());// 合同签约额
+		srqyzbs.add(GSZB.GJQY_WMY_49.value());// 输变电、进出口国际签约
+		srqyzbs.add(GSZB.QZ_DJQY50.value());// 单机签约（输变电国际单机签约）
+		srqyzbs.add(GSZB.QZ_CTQY_WMY_51.value());// 成套签约（输变电国际成套签约、新能源产业国际成套签约、进出口公司国际成套签约、国际工程公司国际成套签约）
+		srqyzbs.add(GSZB.GNQY52.value());// 输变电国内签约
+		srqyzbs.add(GSZB.QZ_DJQY53.value());// 单机签约（输变电国内单机签约）
+		srqyzbs.add(GSZB.QZ_CTQY_WY_54.value());// 成套签约（输变电国内成套签约）
 		
 		// 新能源产业签约
 		srqyzbs.addAll(SrqyConfigurator.getSpecialZbs());
 		
-		srqyzbs.add(GSZB.CL67.getValue());// 产量
-		srqyzbs.add(GSZB.BYQ_WKVA_68.getValue());// 变压器(万KVA)
-		srqyzbs.add(GSZB.XLYTL_D_69.getValue());// 线缆用铜量(吨)
-		srqyzbs.add(GSZB.XLYLL_D_70.getValue());// 线缆用铝量(吨)
-		srqyzbs.add(GSZB.CL_DJG_D_71.getValue());// 多晶硅(吨)
-		srqyzbs.add(GSZB.CL_GP_WP_72.getValue());// 硅片(片)
-		srqyzbs.add(GSZB.FDL_WD_73.getValue());// 发电量（万度）（众和公司、新特能源公司、能动公司）
-		srqyzbs.add(GSZB.CL_NBQ_MW_74.getValue());// 逆变器（MW）
-		srqyzbs.add(GSZB.MTCL_WD_75.getValue());// 煤炭(万吨)
-		srqyzbs.add(GSZB.LB_D_78.getValue());// 铝箔（吨）
-		srqyzbs.add(GSZB.DJB_PM_81.getValue());// 电极箔化成量（平米）
+		srqyzbs.add(GSZB.CL67.value());// 产量
+		srqyzbs.add(GSZB.BYQ_WKVA_68.value());// 变压器(万KVA)
+		srqyzbs.add(GSZB.XLYTL_D_69.value());// 线缆用铜量(吨)
+		srqyzbs.add(GSZB.XLYLL_D_70.value());// 线缆用铝量(吨)
+		srqyzbs.add(GSZB.CL_DJG_D_71.value());// 多晶硅(吨)
+		srqyzbs.add(GSZB.CL_GP_WP_72.value());// 硅片(片)
+		srqyzbs.add(GSZB.FDL_WD_73.value());// 发电量（万度）（众和公司、新特能源公司、能动公司）
+		srqyzbs.add(GSZB.CL_NBQ_MW_74.value());// 逆变器（MW）
+		srqyzbs.add(GSZB.MTCL_WD_75.value());// 煤炭(万吨)
+		srqyzbs.add(GSZB.LB_D_78.value());// 铝箔（吨）
+		srqyzbs.add(GSZB.DJB_PM_81.value());// 电极箔化成量（平米）
 	}
 
 	private static Map<Integer, ZBXX> zbxxMap = new Hashtable<Integer, ZBXX>();
@@ -341,7 +341,7 @@ public class GszbServiceImpl implements GszbService {
 				getConfiguratorFactory().getSrqyConfigurator());
 		List<String[]> allCompResult = makeZbResult(srqyzbs, pipe.getData());
 		
-		pipe = new BasicPipe(GSZB.HTQYE48.getValue(), companyManager.getBMDBOrganization().getCompany(CompanyType.XNYSYB).getSubCompanies(), date,
+		pipe = new BasicPipe(GSZB.HTQYE48.value(), companyManager.getBMDBOrganization().getCompany(CompanyType.XNYSYB).getSubCompanies(), date,
 				getConfiguratorFactory().getSrqyConfigurator());
 		List<Integer> zbTmp = new ArrayList<Integer>();
 		zbTmp.addAll(SrqyConfigurator.getSpecialZbs());
@@ -350,10 +350,10 @@ public class GszbServiceImpl implements GszbService {
 		List<Company> comps = new ArrayList<Company>();
 		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DJGYFGS));
 		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DJGEGS));
-		pipe = new BasicPipe(GSZB.CL_DJG_D_71.getValue(), comps, date, getConfiguratorFactory().getSrqyConfigurator());
+		pipe = new BasicPipe(GSZB.CL_DJG_D_71.value(), comps, date, getConfiguratorFactory().getSrqyConfigurator());
 		
 		zbTmp.clear();
-		zbTmp.add(GSZB.CL_DJG_D_71.getValue());
+		zbTmp.add(GSZB.CL_DJG_D_71.value());
 		List<String[]> djggsResult = makeZbResult(zbTmp, pipe.getData());
 		
 		for (int i = 0; i < allCompResult.size(); ++i){
@@ -375,7 +375,7 @@ public class GszbServiceImpl implements GszbService {
 			IPipeConfigurator compositeConfig){
 		
 		Organization org = companyManager.getBMDBOrganization();
-		CompositePipe pipe = new CompositePipe(gsTop5zb.getValue(), date, compositeConfig);
+		CompositePipe pipe = new CompositePipe(gsTop5zb.value(), date, compositeConfig);
 		pipe.addCompany(org.getCompany(CompanyType.SBGS), standardConfig)
 			.addCompany(org.getCompany(CompanyType.HBGS), standardConfig)
 			.addCompany(org.getCompany(CompanyType.XBC), standardConfig)

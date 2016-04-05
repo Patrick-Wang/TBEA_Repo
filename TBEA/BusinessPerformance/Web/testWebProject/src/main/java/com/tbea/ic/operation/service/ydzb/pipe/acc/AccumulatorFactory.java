@@ -8,7 +8,7 @@ import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.service.util.pipe.acc.composite.CompositeAccDataSource;
 import com.tbea.ic.operation.service.util.pipe.acc.composite.CompositeAccumulator;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 
 
 public class AccumulatorFactory {

@@ -1,5 +1,6 @@
 /// <reference path="util.ts" />
 /// <reference path="jqgrid/jqassist.ts" />
+///<reference path="dateSelector.ts"/>
 var mkt_contract_analysis;
 (function (mkt_contract_analysis) {
     var ContractZb;

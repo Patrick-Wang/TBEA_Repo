@@ -9,23 +9,23 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 
 //计算的比例为引用指标的 当前公司 除以 合计公司，合计公司必须位于引用指标的所有公司最后一个
-public class RatioIndicatorPipeFilter extends AbstractPipeFilter {
+public class RatioPipeFilter extends AbstractPipeFilter {
 
 	Map<Integer, Integer> ratioParam = new HashMap<Integer, Integer>();
 	Set<Integer> excludeCols = new HashSet<Integer>();
 	
-	public RatioIndicatorPipeFilter exclude(Integer col) {
+	public RatioPipeFilter exclude(Integer col) {
 		excludeCols.add(col);
 		return this;
 	}
 	
-	public RatioIndicatorPipeFilter(Integer baseCompany, Integer step) {
+	public RatioPipeFilter(Integer baseCompany, Integer step) {
 		this.includeRow(baseCompany, step);
 	}
 
 	
 	
-	public RatioIndicatorPipeFilter add(int indicator, int refIndicator) {
+	public RatioPipeFilter add(int indicator, int refIndicator) {
 		ratioParam.put(indicator, refIndicator);
 		return this;
 	}

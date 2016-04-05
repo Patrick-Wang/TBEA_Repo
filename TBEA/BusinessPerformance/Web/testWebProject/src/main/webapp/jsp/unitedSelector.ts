@@ -193,8 +193,8 @@ module Util {
         public refresh(){
             $("#" + this.mCtrlId).empty().append("<tr></tr>");
             this.mPath = []
-            if (Util.isExist(data) && this.mRoot.childCount() > 0) {
-                this.update(path);
+            if (this.mRoot.childCount() > 0) {
+                this.update(this.mPath);
             }
         }
 

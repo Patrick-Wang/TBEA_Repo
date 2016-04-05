@@ -47,7 +47,6 @@ module jcycljg {
                     .then((jsonData:any) => {
                         this.mData = jsonData;
                         this.refresh();
-                        this.updateChart();
                     });
             }
             public refresh() : void{

@@ -1,5 +1,7 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+///<reference path="companySelector.ts"/>
+///<reference path="unitedSelector.ts"/>
 declare var echarts;
 
 module companys_zbhz_prediction {

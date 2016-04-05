@@ -34,8 +34,8 @@ import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 import com.tbea.ic.operation.service.util.pipe.core.CompositePipe;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.composite.DoubleArrayComparator;
@@ -110,7 +110,7 @@ public class RankServiceImpl implements RankService {
 
 	
 	private List<Double[]> getRank(GSZB zb, Date date, IPipeConfigurator rankPipeConfig, IPipeConfigurator dataConfig){
-		CompositePipe pipe = new CompositePipe(zb.getValue(), date, rankPipeConfig);
+		CompositePipe pipe = new CompositePipe(zb.value(), date, rankPipeConfig);
 		for (Company comp : jydws){
 			pipe.addCompany(comp, dataConfig);
 		}
@@ -137,31 +137,31 @@ public class RankServiceImpl implements RankService {
 
 	@Override
 	public List<String[]> getRjlrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.RJLR62.getValue(), date, configFac.getRjlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJLR62.value(), date, configFac.getRjlrRankConfigurator());
 		//List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		for (Company comp : jydws){
 			pipe.addCompany(comp, configFac.getRjlrDataConfigurator());
 		}
-		pipe.addDependentIndictor(GSZB.LRZE1.getValue());
-		pipe.addDependentIndictor(GSZB.RS61.getValue());
+		pipe.addDependentIndictor(GSZB.LRZE1.value());
+		pipe.addDependentIndictor(GSZB.RS61.value());
 		return makeResult(pipe.getData());
 	}
 
 	@Override
 	public List<String[]> getRjsrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.RJSR63.getValue(), date, configFac.getRjlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJSR63.value(), date, configFac.getRjlrRankConfigurator());
 		//List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		for (Company comp : jydws){
 			pipe.addCompany(comp, configFac.getRjlrDataConfigurator());
 		}
-		pipe.addDependentIndictor(GSZB.XSSR6.getValue());
-		pipe.addDependentIndictor(GSZB.RS61.getValue());
+		pipe.addDependentIndictor(GSZB.XSSR6.value());
+		pipe.addDependentIndictor(GSZB.RS61.value());
 		return makeResult(pipe.getData());
 	}
 	
 	@Override
 	public List<String[]> getXmgsRjsrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.RJSR63.getValue(), date, configFac.getRjlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJSR63.value(), date, configFac.getRjlrRankConfigurator());
 		//List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		List<String> compsName = new ArrayList<String>();
 		for (Company comp : jydws){
@@ -170,14 +170,14 @@ public class RankServiceImpl implements RankService {
 				compsName.add(xmgs.getName());
 			}
 		}
-		pipe.addDependentIndictor(GSZB.XSSR6.getValue());
-		pipe.addDependentIndictor(GSZB.RS61.getValue());
+		pipe.addDependentIndictor(GSZB.XSSR6.value());
+		pipe.addDependentIndictor(GSZB.RS61.value());
 		return makeResult(compsName, pipe.getData());
 	}
 	
 	@Override
 	public List<String[]> getXmgsRjlrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.RJLR62.getValue(), date, configFac.getRjlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.RJLR62.value(), date, configFac.getRjlrRankConfigurator());
 		//List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		List<String> compsName = new ArrayList<String>();
 		for (Company comp : jydws){
@@ -186,8 +186,8 @@ public class RankServiceImpl implements RankService {
 				compsName.add(xmgs.getName());
 			}
 		}
-		pipe.addDependentIndictor(GSZB.LRZE1.getValue());
-		pipe.addDependentIndictor(GSZB.RS61.getValue());
+		pipe.addDependentIndictor(GSZB.LRZE1.value());
+		pipe.addDependentIndictor(GSZB.RS61.value());
 		return makeResult(compsName, pipe.getData());
 	}
 
@@ -217,7 +217,7 @@ public class RankServiceImpl implements RankService {
 
 	@Override
 	public List<String[]> getXmgsJhlrRank(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.LRZE1.getValue(), date, configFac.getJhlrRankConfigurator());
+		CompositePipe pipe = new CompositePipe(GSZB.LRZE1.value(), date, configFac.getJhlrRankConfigurator());
 		//List<Company> jydw = BMDepartmentDB.getMainlyJydw(companyManager);
 		List<String> compsName = new ArrayList<String>();
 		for (Company comp : jydws){
@@ -259,8 +259,8 @@ public class RankServiceImpl implements RankService {
 		for (int i = 0; i < jydws.size(); ++i){
 			results.add(new Double[4]);
 			resultTemp.add(results.get(i));
-			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end) / cal.get(Calendar.MONTH + 1)) * 12;
-			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.getValue(), end, end);
+			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end) / cal.get(Calendar.MONTH + 1)) * 12;
+			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.value(), end, end);
 			if (results.get(i)[0] != null && Util.isPositive(results.get(i)[0]) &&
 				results.get(i)[1] != null && Util.isPositive(results.get(i)[1])){
 				results.get(i)[2] = results.get(i)[1] / results.get(i)[0];
@@ -287,9 +287,9 @@ public class RankServiceImpl implements RankService {
 		cal.setTime(date);
 		for (int i = 0; i < jydws.size(); ++i){
 			results.add(new Double[5]);
-			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end)/ cal.get(Calendar.MONTH + 1)) * 12;
-			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.getValue(), end, end);
-			results.get(i)[2] = getZbValues(jydws.get(i), GSZB.BL34.getValue(), end, end);
+			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end)/ cal.get(Calendar.MONTH + 1)) * 12;
+			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.value(), end, end);
+			results.get(i)[2] = getZbValues(jydws.get(i), GSZB.BL34.value(), end, end);
 			if (!(results.get(i)[1] == null && results.get(i)[2] == null)){
 				Double tmpVal = Util.valueOf(results.get(i)[1]) + Util.valueOf(results.get(i)[2]);
 				if (Util.isPositive(tmpVal) && results.get(i)[0] != null && Util.isPositive(results.get(i)[0])){
@@ -321,8 +321,8 @@ public class RankServiceImpl implements RankService {
 		cal.setTime(date);
 		for (int i = 0; i < jydws.size(); ++i){
 			results.add(new Double[4]);
-			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end) / cal.get(Calendar.MONTH + 1)) * 12;
-			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.CH35.getValue(), end, end);
+			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end) / cal.get(Calendar.MONTH + 1)) * 12;
+			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.CH35.value(), end, end);
 			if (results.get(i)[0] != null && Util.isPositive(results.get(i)[0]) &&
 					results.get(i)[1] != null && Util.isPositive(results.get(i)[1])){
 					results.get(i)[2] = results.get(i)[1] / results.get(i)[0];
@@ -352,9 +352,9 @@ public class RankServiceImpl implements RankService {
 		cal.setTime(date);
 		for (int i = 0; i < jydws.size(); ++i){
 			results.add(new Double[5]);
-			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.getValue(), start, end)/ cal.get(Calendar.MONTH + 1)) * 12;
-			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.getValue(), end, end);
-			results.get(i)[2] = getZbValues(jydws.get(i), GSZB.CH35.getValue(), end, end);
+			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end)/ cal.get(Calendar.MONTH + 1)) * 12;
+			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.value(), end, end);
+			results.get(i)[2] = getZbValues(jydws.get(i), GSZB.CH35.value(), end, end);
 			if (!(results.get(i)[1] == null && results.get(i)[2] == null)){
 				Double tmpVal = Util.valueOf(results.get(i)[1]) + Util.valueOf(results.get(i)[2]);
 				if (Util.isPositive(tmpVal) && results.get(i)[0] != null && Util.isPositive(results.get(i)[0])){

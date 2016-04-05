@@ -9,7 +9,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.MktSignContract;
 import com.tbea.ic.operation.service.market.Indicator;
 import com.tbea.ic.operation.service.market.pipe.MarketUnit;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 
 public class SignAccumulator implements IAccumulator {
 

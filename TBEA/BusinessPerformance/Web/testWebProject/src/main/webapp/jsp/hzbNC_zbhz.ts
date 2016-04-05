@@ -1,6 +1,7 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
 /// <reference path="messageBox.ts" />
+///<reference path="dateSelector.ts"/>
 declare var echarts;
 
 module hzbNC_zbhz{

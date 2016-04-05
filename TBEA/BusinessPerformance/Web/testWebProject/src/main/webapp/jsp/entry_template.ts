@@ -2,6 +2,7 @@
 /// <reference path="util.ts" />
 /// <reference path="dateSelector.ts" />
 /// <reference path="companySelector.ts" />
+///<reference path="messageBox.ts"/>
 declare var echarts;
 declare var $;
 module entry_template {

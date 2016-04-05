@@ -10,8 +10,8 @@ import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 
 public class AccPipeFilter implements IPipeFilter {
 	protected List<Double> cacheValues;
@@ -39,7 +39,7 @@ public class AccPipeFilter implements IPipeFilter {
 	}
 	
 	public AccPipeFilter exclude(GSZB zb){
-		includeZbs.remove(zb.getValue());
+		includeZbs.remove(zb.value());
 		return this;
 	}
 	
@@ -57,7 +57,7 @@ public class AccPipeFilter implements IPipeFilter {
 	
 	
 	public AccPipeFilter include(GSZB zb){
-		includeZbs.add(zb.getValue());
+		includeZbs.add(zb.value());
 		return this;
 	}
 	

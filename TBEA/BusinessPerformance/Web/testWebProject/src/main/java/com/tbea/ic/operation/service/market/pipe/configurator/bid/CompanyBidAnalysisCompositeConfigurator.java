@@ -8,9 +8,9 @@ import com.tbea.ic.operation.service.market.Indicator;
 import com.tbea.ic.operation.service.market.pipe.filter.composite.CompositeRatioPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.configurator.composite.AbstractCompositeConfigurator;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.AccPipeFilter;
-import com.tbea.ic.operation.service.util.pipe.filter.composite.RatioIndicatorPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.composite.RatioPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.WclPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.ZzlPipeFilter;
 
@@ -57,7 +57,7 @@ public class CompanyBidAnalysisCompositeConfigurator extends AbstractCompositeCo
 			.exclude(Indicator.ZBL.ordinal()))
 		.addFilter(new CompositeRatioPipeFilter(startRow, step)
 			.exclude(0))
-		.addFilter(new RatioIndicatorPipeFilter(startRow, step)
+		.addFilter(new RatioPipeFilter(startRow, step)
 			.add(Indicator.TBZB.ordinal(), Indicator.TBJE.ordinal()));
 	}
 

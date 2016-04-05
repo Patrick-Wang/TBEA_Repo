@@ -2,6 +2,7 @@
 /// <reference path="util.ts" />
 /// <reference path="dateSelector.ts" />
 /// <reference path="companySelector.ts" />
+///<reference path="messageBox.ts"/>
 var entry_template;
 (function (entry_template) {
     var JQGridAssistantFactory = (function () {

@@ -7,7 +7,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.util.pipe.acc.composite.CompositeAccDataSource;
 import com.tbea.ic.operation.service.util.pipe.configurator.composite.AbstractCompositeConfigurator;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.AccPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.WclPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.ZzlPipeFilter;

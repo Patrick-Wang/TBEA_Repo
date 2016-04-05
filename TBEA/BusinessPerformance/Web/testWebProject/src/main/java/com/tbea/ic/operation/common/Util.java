@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 
 import com.tbea.ic.operation.common.companys.Company;
@@ -409,5 +412,20 @@ public class Util {
 	
 	public static byte[] response(String val) throws UnsupportedEncodingException{
 		return new BMResponse(val).toJson().getBytes("utf-8");
+	}
+	
+	public static void correspond(Object beanFrom, Object beanTo){
+		 Method[] methods = beanFrom.getClass().getMethods();
+		 for (int i = 0; i < methods.length; ++i){
+			 String name = methods[i].getName();
+			 if (name.startsWith("get") && methods[i].getParameters().length == 0){
+				 try {
+					Method setMethod = beanTo.getClass().getMethod("set" + name.substring(3), methods[i].getReturnType());
+					setMethod.invoke(beanTo, methods[i].invoke(beanFrom));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			 }
+		 }
 	}
 }

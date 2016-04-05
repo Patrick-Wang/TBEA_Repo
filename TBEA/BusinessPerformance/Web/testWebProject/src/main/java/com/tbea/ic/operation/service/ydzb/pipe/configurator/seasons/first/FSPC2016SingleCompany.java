@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.RatioPipeFilter;
 
@@ -35,8 +35,8 @@ public class FSPC2016SingleCompany extends FSPC2016 {
 		// 添加特殊指标过滤器
 		super.onFinished();
 		RatioPipeFilter filter = (RatioPipeFilter)list.lastIndexOf(RatioPipeFilter.class);
-		filter.exclude(GSZB.XSLRL_28.getValue(), 0)
-				.exclude(GSZB.XSLRL_28.getValue(), 2);
+		filter.exclude(GSZB.XSLRL_28.value(), 0)
+				.exclude(GSZB.XSLRL_28.value(), 2);
 		return list.toList();
 	}
 }

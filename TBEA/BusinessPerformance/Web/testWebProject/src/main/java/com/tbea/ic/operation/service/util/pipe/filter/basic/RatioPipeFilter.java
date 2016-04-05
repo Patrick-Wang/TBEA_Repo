@@ -45,14 +45,14 @@ public class RatioPipeFilter extends RowPipeFilter {
 		}};
 	
 	public RatioPipeFilter() {
-		init(GSZB.RJLR62, new GSZB[]{GSZB.LRZE1, GSZB.RS61}, oper);
-		init(GSZB.RJSR63, new GSZB[]{GSZB.XSSR6, GSZB.RS61}, oper);
-		init(GSZB.SXFYL_65, new GSZB[]{GSZB.SXFY64, GSZB.XSSR6}, oper);
-		init(GSZB.XSLRL_28, new GSZB[]{GSZB.LRZE1, GSZB.XSSR6}, oper);
-		init(GSZB.FZL185, new GSZB[]{GSZB.FZZEQMS184, GSZB.ZCZE179}, oper);
-		init(GSZB.ZZYSXFYL231, new GSZB[]{GSZB.ZZY_YWKJ_228, GSZB.XSSR_ZZYSR7}, oper);
-		init(GSZB.GC_XSYWSXFYL232, new GSZB[]{GSZB.GC_XSYW229, GSZB.XSSR_GCXMSR12}, oper);
-		init(GSZB.WLMYSXFYL233, new GSZB[]{GSZB.WLMY230, GSZB.XSSR_WLMYSR16}, oper);
+		init(GSZB.RJLR62.value(), new int[]{GSZB.LRZE1.value(), GSZB.RS61.value()}, oper);
+		init(GSZB.RJSR63.value(), new int[]{GSZB.XSSR6.value(), GSZB.RS61.value()}, oper);
+		init(GSZB.SXFYL_65.value(), new int[]{GSZB.SXFY64.value(), GSZB.XSSR6.value()}, oper);
+		init(GSZB.XSLRL_28.value(), new int[]{GSZB.LRZE1.value(), GSZB.XSSR6.value()}, oper);
+		init(GSZB.FZL185.value(), new int[]{GSZB.FZZEQMS184.value(), GSZB.ZCZE179.value()}, oper);
+		init(GSZB.ZZYSXFYL231.value(), new int[]{GSZB.ZZY_YWKJ_228.value(), GSZB.XSSR_ZZYSR7.value()}, oper);
+		init(GSZB.GC_XSYWSXFYL232.value(), new int[]{GSZB.GC_XSYW229.value(), GSZB.XSSR_GCXMSR12.value()}, oper);
+		init(GSZB.WLMYSXFYL233.value(), new int[]{GSZB.WLMY230.value(), GSZB.XSSR_WLMYSR16.value()}, oper);
 	}
 
 	public RatioPipeFilter excludeCol(Integer col) {

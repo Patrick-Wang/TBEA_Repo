@@ -15,36 +15,36 @@ public class ConfiguratorUtil {
 	static List<Integer> zhHiddenZbs = new ArrayList<Integer>();
 
 	static {
-		timePointNumberZbs.add(GSZB.YSZK32.getValue());
-		timePointNumberZbs.add(GSZB.CH35.getValue());
-		timePointNumberZbs.add(GSZB.RS61.getValue());
-		timePointNumberZbs.add(GSZB.QZ_ZJXMCH38.getValue());
-		timePointNumberZbs.add(GSZB.YQK33.getValue());
-		timePointNumberZbs.add(GSZB.QZ_KCSP37.getValue());
-		timePointNumberZbs.add(GSZB.BL34.getValue());
-		timePointNumberZbs.add(GSZB.QZ_JYWZ36.getValue());
-		timePointNumberZbs.add(GSZB.GNYSZK200.getValue());
-		timePointNumberZbs.add(GSZB.QZ_ZZY201.getValue());
-		timePointNumberZbs.add(GSZB.QZ_GC_XSYW202.getValue());
-		timePointNumberZbs.add(GSZB.QZ_WLMY203.getValue());
-		timePointNumberZbs.add(GSZB.GJYSZK204.getValue());
-		timePointNumberZbs.add(GSZB.QZ_ZZY205.getValue());
-		timePointNumberZbs.add(GSZB.QZ_GC_XSYW206.getValue());
-		timePointNumberZbs.add(GSZB.QZ_WLMY207.getValue());
-		timePointNumberZbs.add(GSZB.QZ_ZZY208.getValue());
-		timePointNumberZbs.add(GSZB.QZ_GC_XSYW209.getValue());
-		timePointNumberZbs.add(GSZB.QZ_WLMY210.getValue());
+		timePointNumberZbs.add(GSZB.YSZK32.value());
+		timePointNumberZbs.add(GSZB.CH35.value());
+		timePointNumberZbs.add(GSZB.RS61.value());
+		timePointNumberZbs.add(GSZB.QZ_ZJXMCH38.value());
+		timePointNumberZbs.add(GSZB.YQK33.value());
+		timePointNumberZbs.add(GSZB.QZ_KCSP37.value());
+		timePointNumberZbs.add(GSZB.BL34.value());
+		timePointNumberZbs.add(GSZB.QZ_JYWZ36.value());
+		timePointNumberZbs.add(GSZB.GNYSZK200.value());
+		timePointNumberZbs.add(GSZB.QZ_ZZY201.value());
+		timePointNumberZbs.add(GSZB.QZ_GC_XSYW202.value());
+		timePointNumberZbs.add(GSZB.QZ_WLMY203.value());
+		timePointNumberZbs.add(GSZB.GJYSZK204.value());
+		timePointNumberZbs.add(GSZB.QZ_ZZY205.value());
+		timePointNumberZbs.add(GSZB.QZ_GC_XSYW206.value());
+		timePointNumberZbs.add(GSZB.QZ_WLMY207.value());
+		timePointNumberZbs.add(GSZB.QZ_ZZY208.value());
+		timePointNumberZbs.add(GSZB.QZ_GC_XSYW209.value());
+		timePointNumberZbs.add(GSZB.QZ_WLMY210.value());
 	}
 
 	static {
-		ratioZbs.add(GSZB.RJLR62.getValue());
-		ratioZbs.add(GSZB.RJSR63.getValue());
-		ratioZbs.add(GSZB.SXFYL_65.getValue());
-		ratioZbs.add(GSZB.XSLRL_28.getValue());
+		ratioZbs.add(GSZB.RJLR62.value());
+		ratioZbs.add(GSZB.RJSR63.value());
+		ratioZbs.add(GSZB.SXFYL_65.value());
+		ratioZbs.add(GSZB.XSLRL_28.value());
 	}
 
 	static {
-		invisiableZbs.add(GSZB.CL67.getValue());		
+		invisiableZbs.add(GSZB.CL67.value());		
 	}
 	
 	static {

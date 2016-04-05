@@ -30,7 +30,7 @@ public class CopyPipeFilter implements IPipeFilter {
 	}
 	
 	public CopyPipeFilter add(GSZB zb, int colFrom, int colTo){
-		return add(zb.getValue(), colFrom, colTo);
+		return add(zb.value(), colFrom, colTo);
 	}
 	
 	public CopyPipeFilter add(List<Integer> zbs, int colFrom, int colTo){

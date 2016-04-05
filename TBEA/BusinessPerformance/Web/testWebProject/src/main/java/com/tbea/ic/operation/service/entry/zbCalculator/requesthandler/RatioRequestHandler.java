@@ -19,9 +19,9 @@ public class RatioRequestHandler extends RequestHandler<Request>{
 	
 	public RatioRequestHandler(GSZB destZb, GSZB subZb, GSZB baseZb) {
 		super();
-		this.destZb = destZb.getValue();
-		this.subZb = subZb.getValue();
-		this.baseZb = baseZb.getValue();
+		this.destZb = destZb.value();
+		this.subZb = subZb.value();
+		this.baseZb = baseZb.value();
 	}
 
 	void setRatio(ZbInjector injector, Calendar cal, Company comp, ZBStatus status){

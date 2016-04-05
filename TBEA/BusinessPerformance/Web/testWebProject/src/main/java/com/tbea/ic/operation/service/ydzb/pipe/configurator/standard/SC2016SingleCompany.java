@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.RatioPipeFilter;
 
@@ -35,8 +35,8 @@ class SC2016SingleCompany extends SC2016 {
 	protected List<IPipeFilter> onFinished() {
 		super.onFinished();
 		RatioPipeFilter filter = (RatioPipeFilter)list.lastIndexOf(RatioPipeFilter.class);
-		filter.exclude(GSZB.XSLRL_28.getValue(), ColumnType.qnjh.ordinal())
-				.exclude(GSZB.XSLRL_28.getValue(), ColumnType.dyjh.ordinal());
+		filter.exclude(GSZB.XSLRL_28.value(), ColumnType.qnjh.ordinal())
+				.exclude(GSZB.XSLRL_28.value(), ColumnType.dyjh.ordinal());
 		return list.toList();
 	}
 }

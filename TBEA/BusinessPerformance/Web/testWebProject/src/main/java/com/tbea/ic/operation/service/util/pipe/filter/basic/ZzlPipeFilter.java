@@ -6,18 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
 
 public class ZzlPipeFilter implements IPipeFilter {
 	List<Integer[]> zzls = new ArrayList<Integer[]>();
 	Set<Integer> excludeZbs = new HashSet<Integer>();
-	
-	public ZzlPipeFilter exclude(GSZB zb){
-		excludeZbs.add(zb.getValue());
-		return this;
-	}
 	
 	public ZzlPipeFilter exclude(Integer zb){
 		excludeZbs.add(zb);

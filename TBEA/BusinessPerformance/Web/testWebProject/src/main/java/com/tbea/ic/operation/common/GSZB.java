@@ -460,14 +460,14 @@ public enum GSZB {
 		this.value = value;
 	}
 	
-	public Integer getValue() {
+	public Integer value() {
 		return value;
 	}
 	
 	public static GSZB valueOf(int Id){
 		GSZB[] types = GSZB.values();
 		for (int i = types.length - 1; i >= 0; --i){
-			if (types[i].getValue() == Id){
+			if (types[i].value() == Id){
 				return types[i];
 			}
 		}

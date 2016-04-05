@@ -114,7 +114,7 @@ public class YSZKRBServiceImpl implements YSZKRBService{
 	
 	@Override
 	public List<String[]> getYszkData(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.YSZK_DAILY_REPORT.getValue(), date, configFactory.getYszkrbCompositeConfigurator(computeMap));
+		CompositePipe pipe = new CompositePipe(GSZB.YSZK_DAILY_REPORT.value(), date, configFactory.getYszkrbCompositeConfigurator(computeMap));
 		Organization org = companyManager.getBMDBOrganization();
 		pipe.addCompany(computeMap.get(org.getCompany(CompanyType.SBDCYJT)), configFactory.getYszkrbConfigurator())
 			.addCompany(org.getCompany(CompanyType.SBDCYJT), null)

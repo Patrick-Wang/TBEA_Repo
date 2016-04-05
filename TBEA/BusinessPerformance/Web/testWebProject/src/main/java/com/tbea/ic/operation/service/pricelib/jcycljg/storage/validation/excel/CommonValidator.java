@@ -13,14 +13,23 @@ public class CommonValidator extends ValidatorTemplate{
 
 	@Override
 	Object checkCell(int row, int col, XSSFCell cell) throws ValidationException  {
-		try {
-			if (col > 0){
-				return parseNumber(cell);
-			}else{
-				return parseDate(cell);
+		Object objRet = null;
+		if (null == cell){
+			if (col == 0){
+				throw new ValidationException((row + 1) + "行 " + (col + 1) + "列: 日期不能为空");
 			}
-		}catch(Exception e){
-			throw new ValidationException((row + 1) + "行 " + (col + 1) + "列: " +  e.getMessage());
+		}else{
+			try {
+				if (col > 0){
+					objRet = parseNumber(cell);
+				}else{
+					objRet = parseDate(cell);
+				}
+			}catch(Exception e){
+				throw new ValidationException((row + 1) + "行 " + (col + 1) + "列: " +  e.getMessage());
+			}
 		}
+		return objRet;
+		
 	}
 }

@@ -49,13 +49,13 @@ public class NCController {
 	private static List<Integer> zbList = new ArrayList<Integer>();
 
 	static {
-		zbList.add(GSZB.LRZE1.getValue());
-		zbList.add(GSZB.XSSR6.getValue());
-		zbList.add(GSZB.JYXJXJL29.getValue());
-		zbList.add(GSZB.YSZK32.getValue());
-		zbList.add(GSZB.CH35.getValue());
-		zbList.add(GSZB.SXFY64.getValue());
-		zbList.add(GSZB.JZCSYL_66.getValue());
+		zbList.add(GSZB.LRZE1.value());
+		zbList.add(GSZB.XSSR6.value());
+		zbList.add(GSZB.JYXJXJL29.value());
+		zbList.add(GSZB.YSZK32.value());
+		zbList.add(GSZB.CH35.value());
+		zbList.add(GSZB.SXFY64.value());
+		zbList.add(GSZB.JZCSYL_66.value());
 	}
 	
 

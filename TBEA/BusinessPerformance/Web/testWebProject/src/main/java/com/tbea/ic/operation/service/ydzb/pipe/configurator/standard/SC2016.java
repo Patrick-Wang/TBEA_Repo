@@ -2,7 +2,7 @@ package com.tbea.ic.operation.service.ydzb.pipe.configurator.standard;
 
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.util.pipe.configurator.ConfiguratorUtil;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
 
 class SC2016 extends SCDefault {

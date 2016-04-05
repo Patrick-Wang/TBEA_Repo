@@ -1,5 +1,8 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+///<reference path="dateSelector.ts"/>
+///<reference path="unitedSelector.ts"/>
+///<reference path="companySelector.ts"/>
 declare var echarts;
 
 module hzb_companys {

@@ -1,7 +1,7 @@
 package com.tbea.ic.operation.service.nczb.pipe.acc;
 
 import com.tbea.ic.operation.model.dao.nc.NCZBDao;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 
 public class AccumulatorFactory {
 	private IAccumulator sjAcc;

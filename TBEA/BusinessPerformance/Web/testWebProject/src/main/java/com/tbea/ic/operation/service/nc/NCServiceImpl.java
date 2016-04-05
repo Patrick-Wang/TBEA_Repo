@@ -65,7 +65,7 @@ public class NCServiceImpl implements NCService {
 		Company company = companyManager.getBMDBOrganization().getCompany(
 				companyType);
 		NCZB nczb = null;
-		int zbid = zb.getValue();
+		int zbid = zb.value();
 		nczb = nczbDao.getNCZB(company, zbid, nf, yf);
 		if (null == nczb) {
 			nczb = new NCZB();

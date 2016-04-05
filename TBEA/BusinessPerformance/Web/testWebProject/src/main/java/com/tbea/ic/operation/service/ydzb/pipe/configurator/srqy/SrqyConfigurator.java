@@ -10,8 +10,8 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.WclPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.ZzlPipeFilter;
@@ -139,8 +139,8 @@ public class SrqyConfigurator implements IPipeConfigurator {
 				
 			// 同比增幅
 			.addFilter(tbzzFilter.add(9, 4, 8))
-			.addFilter(tbzzFilter.exclude(GSZB.CL67))
-			.addFilter(wclFilter.exclude(GSZB.CL67));
+			.addFilter(tbzzFilter.exclude(GSZB.CL67.value()))
+			.addFilter(wclFilter.exclude(GSZB.CL67.value()));
 	}
 
 	@Override

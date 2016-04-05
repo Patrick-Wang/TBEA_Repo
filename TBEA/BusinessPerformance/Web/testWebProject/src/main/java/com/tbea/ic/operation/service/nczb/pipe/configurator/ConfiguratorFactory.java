@@ -1,8 +1,8 @@
 package com.tbea.ic.operation.service.nczb.pipe.configurator;
 
 import com.tbea.ic.operation.service.nczb.pipe.acc.AccumulatorFactory;
-import com.tbea.ic.operation.service.util.pipe.core.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 
 
 public class ConfiguratorFactory {

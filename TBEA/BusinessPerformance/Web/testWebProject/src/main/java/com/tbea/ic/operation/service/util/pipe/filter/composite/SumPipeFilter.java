@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 
@@ -13,11 +12,7 @@ public class SumPipeFilter extends AbstractPipeFilter  {
 	Map<Integer, Integer[]> sums = new HashMap<Integer, Integer[]>();
 	Set<Integer> excludeZbs = new HashSet<Integer>();
 	
-	public SumPipeFilter exclude(GSZB zb){
-		excludeZbs.add(zb.getValue());
-		return this;
-	}
-	
+
 	public SumPipeFilter exclude(Integer zb){
 		excludeZbs.add(zb);
 		return this;

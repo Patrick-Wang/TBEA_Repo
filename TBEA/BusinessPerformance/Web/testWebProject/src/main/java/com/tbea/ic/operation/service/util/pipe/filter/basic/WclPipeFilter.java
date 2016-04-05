@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
@@ -15,11 +14,7 @@ public class WclPipeFilter implements IPipeFilter {
 	List<Integer[]> wcls = new ArrayList<Integer[]>();
 	Set<Integer> excludeZbs = new HashSet<Integer>();
 	
-	public WclPipeFilter exclude(GSZB zb){
-		excludeZbs.add(zb.getValue());
-		return this;
-	}
-	
+
 	public WclPipeFilter exclude(Integer zb){
 		excludeZbs.add(zb);
 		return this;

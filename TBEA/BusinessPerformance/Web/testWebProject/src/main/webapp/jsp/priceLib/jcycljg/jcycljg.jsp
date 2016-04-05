@@ -208,20 +208,20 @@ th.ui-th-ltr {
 		</tr> 
 	</Table>
 	<script type="text/javascript">
-    view.init({
-        type: "type",
-        dts: "dts",
-        dte: "dte",
-        contentType: "radio",
-        date: {
-            month: ${month},
-            year: ${year}
-        }
-    });
+    
     $("#radio").buttonset();
     $(document).ready(function () {
-        $(document.body).css("visibility", "visible");
-        (function () {
+    	view.init({
+            type: "type",
+            dts: "dts",
+            dte: "dte",
+            contentType: "radio",
+            date: {
+                month: ${month},
+                year: ${year}
+            }
+        });
+    	(function () {
             $("#type select")
                     .multiselect({
                         multiple: false,
@@ -235,6 +235,8 @@ th.ui-th-ltr {
                     .css("text-align", "left")
                     .css("font-size", "12px");
         }());
+        $(document.body).css("visibility", "visible");
+        
     });
 </script>
 	<script src="jsp/style_select.js"></script>

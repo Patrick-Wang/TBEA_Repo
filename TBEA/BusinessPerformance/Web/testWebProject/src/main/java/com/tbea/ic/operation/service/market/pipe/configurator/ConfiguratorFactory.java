@@ -22,8 +22,8 @@ import com.tbea.ic.operation.service.market.pipe.configurator.mixed.IndustryMixe
 import com.tbea.ic.operation.service.market.pipe.configurator.mixed.IndustryMixedAnalysisConfigurator;
 import com.tbea.ic.operation.service.market.pipe.configurator.sign.IndustrySignAnalysisCompositeConfigurator;
 import com.tbea.ic.operation.service.market.pipe.configurator.sign.IndustrySignAnalysisConfigurator;
-import com.tbea.ic.operation.service.util.pipe.core.acc.AccCombiner;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
+import com.tbea.ic.operation.service.util.pipe.filter.acc.AccCombiner;
 
 public class ConfiguratorFactory {
 
