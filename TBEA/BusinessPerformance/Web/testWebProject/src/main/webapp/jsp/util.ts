@@ -522,4 +522,13 @@ module Util {
     export function isMSIE() {
         return navigator.appName == "Microsoft Internet Explorer";
     }
+
+    export function replaceNull(arr:any[]) : any[]{
+        for (let i = 0; i < arr.length; ++i){
+            if (arr[i] == null){
+                arr[i] = 0;
+            }
+        }
+        return arr;
+    }
 }

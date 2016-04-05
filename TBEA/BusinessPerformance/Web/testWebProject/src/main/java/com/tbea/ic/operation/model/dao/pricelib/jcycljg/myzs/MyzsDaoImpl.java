@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.JkzjEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.MyzsEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.PmiCpiPpiEntity;
 
@@ -27,10 +28,11 @@ public class MyzsDaoImpl extends AbstractReadWriteDaoImpl<MyzsEntity> implements
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
 	}
+	
 
 	@Override
 	public List<MyzsEntity> getEntities(Date start, Date end) {
-		Query q = this.getEntityManager().createQuery("from MyzsEntity where date >= :start and date <= :end order by date asc");
+		Query q = this.getEntityManager().createQuery("from MyzsEntity where DateDiff(mm, date, :start) <= 0 and DateDiff(mm, date, :end) >= 0 order by date asc");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();
@@ -38,7 +40,7 @@ public class MyzsDaoImpl extends AbstractReadWriteDaoImpl<MyzsEntity> implements
 
 	@Override
 	public MyzsEntity getByDate(Date date) {
-		Query q = this.getEntityManager().createQuery("from MyzsEntity where date = :date");
+		Query q = this.getEntityManager().createQuery("from MyzsEntity where DateDiff(mm, date, :date) = 0");
 		q.setParameter("date", date);
 		List<MyzsEntity> ret = q.getResultList();
 		if (ret.isEmpty()){
@@ -46,4 +48,5 @@ public class MyzsDaoImpl extends AbstractReadWriteDaoImpl<MyzsEntity> implements
 		}
 		return ret.get(0);
 	}
+	
 }

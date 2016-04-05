@@ -96,7 +96,7 @@ module jcycljg {
                         smooth: true,
                         yAxisIndex: 0,
                         // itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                        data: data[i].length < 1 ? [0] : data[i]
+                        data: data[i].length < 1 ? [0] : Util.replaceNull(data[i])
                     })
                 }
 

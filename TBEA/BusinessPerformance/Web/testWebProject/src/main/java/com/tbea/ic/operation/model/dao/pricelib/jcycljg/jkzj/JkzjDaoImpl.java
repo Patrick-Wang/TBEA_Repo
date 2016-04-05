@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GgpEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.JkzjEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.JtEntity;
 
@@ -28,9 +29,10 @@ public class JkzjDaoImpl extends AbstractReadWriteDaoImpl<JkzjEntity> implements
 		super.setEntityManager(entityManager);
 	}
 
+
 	@Override
 	public List<JkzjEntity> getEntities(Date start, Date end) {
-		Query q = this.getEntityManager().createQuery("from JkzjEntity where date >= :start and date <= :end order by date asc");
+		Query q = this.getEntityManager().createQuery("from JkzjEntity where DateDiff(mm, date, :start) <= 0 and DateDiff(mm, date, :end) >= 0 order by date asc");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();
@@ -38,7 +40,7 @@ public class JkzjDaoImpl extends AbstractReadWriteDaoImpl<JkzjEntity> implements
 
 	@Override
 	public JkzjEntity getByDate(Date date) {
-		Query q = this.getEntityManager().createQuery("from JkzjEntity where date = :date");
+		Query q = this.getEntityManager().createQuery("from JkzjEntity where DateDiff(mm, date, :date) = 0");
 		q.setParameter("date", date);
 		List<JkzjEntity> ret = q.getResultList();
 		if (ret.isEmpty()){

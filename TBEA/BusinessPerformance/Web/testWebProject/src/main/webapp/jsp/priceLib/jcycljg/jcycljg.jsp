@@ -220,8 +220,8 @@ th.ui-th-ltr {
                 month: ${month},
                 year: ${year}
             }
-        });
-    	(function () {
+        }); 
+    	(function () { 
             $("#type select")
                     .multiselect({
                         multiple: false,

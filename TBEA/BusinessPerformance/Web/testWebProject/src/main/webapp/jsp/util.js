@@ -509,4 +509,13 @@ var Util;
         return navigator.appName == "Microsoft Internet Explorer";
     }
     Util.isMSIE = isMSIE;
+    function replaceNull(arr) {
+        for (var i = 0; i < arr.length; ++i) {
+            if (arr[i] == null) {
+                arr[i] = 0;
+            }
+        }
+        return arr;
+    }
+    Util.replaceNull = replaceNull;
 })(Util || (Util = {}));

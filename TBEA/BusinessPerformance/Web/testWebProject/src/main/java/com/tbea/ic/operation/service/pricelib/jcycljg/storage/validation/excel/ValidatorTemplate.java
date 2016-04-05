@@ -24,12 +24,14 @@ public abstract class ValidatorTemplate implements FormatValidator{
 	
 	public Date parseDate(XSSFCell cell) throws ValidationException{
 		if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
-			if (HSSFDateUtil.isCellDateFormatted(cell)) {
+			try{
 				java.util.Date date = cell.getDateCellValue();
 				return new Date(date.getTime());
+			}catch(Exception e){
+				e.printStackTrace();
+				short df = cell.getCellStyle().getDataFormat();
+				throw new ValidationException("日期解析失败，数据格式编码" + df);
 			}
-			short df = cell.getCellStyle().getDataFormat();
-			throw new ValidationException("日期解析失败，数据格式编码" + df);
 		}
 		throw new ValidationException("日期解析失败，类型编码 " + cell.getCellType());
 	}
@@ -54,16 +56,18 @@ public abstract class ValidatorTemplate implements FormatValidator{
 		List<Object[]> result = new ArrayList<Object[]>();
 		for (int i = sheet.getFirstRowNum() + startRow; i <= sheet.getLastRowNum(); ++i) {
 			Object[] objs = new Object[columnCount];
-			XSSFRow row = sheet.getRow(i);			
-			int start = row.getFirstCellNum();//返回索引
-			int end = row.getLastCellNum();//相当于列总数
-			if ((end - start) != columnCount){
-				throw new ValidationException("第" + (i + 1) + "行数据列数不匹配");
+			XSSFRow row = sheet.getRow(i);		
+			if (null != row){
+				int start = row.getFirstCellNum();//返回索引
+				int end = row.getLastCellNum();//相当于列总数
+				if ((end - start) != columnCount){
+					throw new ValidationException("第" + (i + 1) + "行数据列数不匹配");
+				}
+				for (int j = start; j < end; ++j){
+					objs[j] = checkCell(i, j, row.getCell(j));
+				}
+				result.add(objs);
 			}
-			for (int j = start; j < end; ++j){
-				objs[j] = checkCell(i, j, row.getCell(j));
-			}
-			result.add(objs);
 		}
 		return result;
 	}

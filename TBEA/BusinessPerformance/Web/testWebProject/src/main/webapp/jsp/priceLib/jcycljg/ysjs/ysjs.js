@@ -19,11 +19,11 @@ var jcycljg;
                     new JQTable.Node("日期", "rq", true),
                     new JQTable.Node("长江现货（元/吨）", "cjxh")
                         .append(new JQTable.Node("铜", "xhcu"))
-                        .append(new JQTable.Node("吕", "xhal"))
+                        .append(new JQTable.Node("铝", "xhal"))
                         .append(new JQTable.Node("锌", "xhzn")),
                     new JQTable.Node("LME结算价（美元/吨）", "cjxh")
                         .append(new JQTable.Node("铜", "LEMcu"))
-                        .append(new JQTable.Node("吕", "LEMal"))
+                        .append(new JQTable.Node("铝", "LEMal"))
                         .append(new JQTable.Node("锌", "LEMzn"))
                 ], gridName);
             };
