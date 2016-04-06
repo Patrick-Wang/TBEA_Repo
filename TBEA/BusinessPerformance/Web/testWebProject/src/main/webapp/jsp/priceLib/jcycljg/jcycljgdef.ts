@@ -21,7 +21,7 @@ module jcycljg {
     export interface PluginView {
         hide (): void;
         show () : void;
-        switch(type:DisplayType):void;
+        switchDisplayType(type:DisplayType):void;
         update (start:Util.Date, end:Util.Date) : void;
         getDateType():DateType;
         getContentType():ContentType;
@@ -49,7 +49,7 @@ module jcycljg {
 
         abstract refresh():void;
 
-        public switch(type:jcycljg.DisplayType):void {
+        public switchDisplayType(type:jcycljg.DisplayType):void {
             this.mDispType = type;
             switch (type){
                 case DisplayType.TABLE:

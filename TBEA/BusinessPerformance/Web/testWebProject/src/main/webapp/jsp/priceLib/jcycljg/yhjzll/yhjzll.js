@@ -33,7 +33,7 @@ var jcycljg;
             __extends(YhjzllView, _super);
             function YhjzllView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.YHJZLL, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.YHJZLL, false);
             }
             YhjzllView.newInstance = function () {
                 return new YhjzllView();
@@ -41,7 +41,7 @@ var jcycljg;
             YhjzllView.prototype.getContentType = function () {
                 return jcycljg.ContentType.TABLE;
             };
-            YhjzllView.prototype.switch = function (type) {
+            YhjzllView.prototype.switchDisplayType = function (type) {
             };
             YhjzllView.prototype.refresh = function () {
                 this.updateTable();

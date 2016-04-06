@@ -31,7 +31,7 @@ module jcycljg {
 
         class YhjzllView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.YHJZLL, false);
+            private mAjax:Util.Ajax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.YHJZLL, false);
             private mDateSelector:Util.DateSelector;
 
             public static newInstance():YhjzllView {
@@ -42,7 +42,7 @@ module jcycljg {
                 return ContentType.TABLE;
             }
 
-            switch(type:jcycljg.DisplayType):void {
+            switchDisplayType(type:jcycljg.DisplayType):void {
 
             }
 

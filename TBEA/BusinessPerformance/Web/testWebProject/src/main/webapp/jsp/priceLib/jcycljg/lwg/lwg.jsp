@@ -29,8 +29,9 @@
         </table></td>
     </tr>
 </Table>
-<script type="text/javascript" src="jsp/priceLib/jcycljg/lwg/lwg.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/lwg/lwg.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
     jcycljg.lwg.pluginView.init({
         ct1214: "chart1214",
         ct1625: "chart1625",
@@ -39,4 +40,5 @@
         ctarea: "ctarea",
         tbarea: "tbarea"
     });
+});
 </script>

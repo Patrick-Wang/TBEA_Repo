@@ -29,7 +29,7 @@ var jcycljg;
             __extends(JtView, _super);
             function JtView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.JT, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.JT, false);
             }
             JtView.newInstance = function () {
                 return new JtView();

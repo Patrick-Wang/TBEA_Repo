@@ -29,7 +29,7 @@ var jcycljg;
             __extends(FgcView, _super);
             function FgcView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.FGC, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.FGC, false);
             }
             FgcView.newInstance = function () {
                 return new FgcView();

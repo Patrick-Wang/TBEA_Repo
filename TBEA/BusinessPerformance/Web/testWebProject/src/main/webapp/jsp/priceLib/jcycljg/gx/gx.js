@@ -31,7 +31,7 @@ var jcycljg;
             __extends(GxView, _super);
             function GxView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.GX, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.GX, false);
             }
             GxView.newInstance = function () {
                 return new GxView();

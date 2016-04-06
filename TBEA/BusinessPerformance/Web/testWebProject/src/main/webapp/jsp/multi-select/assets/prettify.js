@@ -106,7 +106,7 @@ window['_pr_isIE6'] = function () {
       "break continue do else for if return while ";
   var C_KEYWORDS = FLOW_CONTROL_KEYWORDS + "auto case char const default " +
       "double enum extern float goto int long register short signed sizeof " +
-      "static struct switch typedef union unsigned void volatile ";
+      "static struct switchDisplayType typedef union unsigned void volatile ";
   var COMMON_KEYWORDS = C_KEYWORDS + "catch class delete false import " +
       "new operator private protected public this throw true try typeof ";
   var CPP_KEYWORDS = COMMON_KEYWORDS + "alignof align_union asm axiom bool " +

@@ -26,7 +26,7 @@ module jcycljg {
 
         class MyzsView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.JKZJ, false);
+            private mAjax:Util.Ajax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.JKZJ, false);
             private mDateSelector:Util.DateSelector;
 
             public static newInstance():MyzsView {

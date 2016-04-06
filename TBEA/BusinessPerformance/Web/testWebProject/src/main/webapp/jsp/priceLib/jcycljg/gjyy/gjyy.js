@@ -27,7 +27,7 @@ var jcycljg;
             __extends(GjyyView, _super);
             function GjyyView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.GJYY, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.GJYY, false);
             }
             GjyyView.newInstance = function () {
                 return new GjyyView();

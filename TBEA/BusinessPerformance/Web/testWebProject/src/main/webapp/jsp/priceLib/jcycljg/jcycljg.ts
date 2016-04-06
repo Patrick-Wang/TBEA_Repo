@@ -114,13 +114,13 @@ module jcycljg {
 
         private showPluginChart():void{
             if (this.mCurrentPlugin.getContentType() == ContentType.TABLE_CHART){
-                this.mCurrentPlugin.switch(DisplayType.CHART);
+                this.mCurrentPlugin.switchDisplayType(DisplayType.CHART);
             }
         }
 
         private showPluginTable():void{
             if (this.mCurrentPlugin.getContentType() == ContentType.TABLE_CHART){
-                this.mCurrentPlugin.switch(DisplayType.TABLE);
+                this.mCurrentPlugin.switchDisplayType(DisplayType.TABLE);
             }
         }
 

@@ -28,7 +28,7 @@ var jcycljg;
             __extends(PmiCpiPpiView, _super);
             function PmiCpiPpiView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.PMICPIPPI, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.PMICPIPPI, false);
             }
             PmiCpiPpiView.newInstance = function () {
                 return new PmiCpiPpiView();

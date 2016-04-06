@@ -16,8 +16,9 @@
     </tr>
 
 </Table>
-<script type="text/javascript" src="jsp/priceLib/jcycljg/myzs/myzs.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/myzs/myzs.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
     jcycljg.myzs.pluginView.init({
         ct: "chart",
         tb: "table",
@@ -25,4 +26,5 @@
         ctarea: "ctarea",
         tbarea: "tbarea"
     });
+});
 </script>

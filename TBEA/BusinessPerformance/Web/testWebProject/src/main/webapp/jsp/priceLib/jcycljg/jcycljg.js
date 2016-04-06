@@ -93,12 +93,12 @@ var jcycljg;
         };
         View.prototype.showPluginChart = function () {
             if (this.mCurrentPlugin.getContentType() == jcycljg.ContentType.TABLE_CHART) {
-                this.mCurrentPlugin.switch(jcycljg.DisplayType.CHART);
+                this.mCurrentPlugin.switchDisplayType(jcycljg.DisplayType.CHART);
             }
         };
         View.prototype.showPluginTable = function () {
             if (this.mCurrentPlugin.getContentType() == jcycljg.ContentType.TABLE_CHART) {
-                this.mCurrentPlugin.switch(jcycljg.DisplayType.TABLE);
+                this.mCurrentPlugin.switchDisplayType(jcycljg.DisplayType.TABLE);
             }
         };
         View.prototype.plugin = function (node) {

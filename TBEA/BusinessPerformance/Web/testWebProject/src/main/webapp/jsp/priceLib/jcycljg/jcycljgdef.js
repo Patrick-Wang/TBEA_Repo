@@ -24,7 +24,7 @@ var jcycljg;
         BasePluginView.prototype.init = function (opt) {
             this.mOpt = opt;
         };
-        BasePluginView.prototype.switch = function (type) {
+        BasePluginView.prototype.switchDisplayType = function (type) {
             this.mDispType = type;
             switch (type) {
                 case DisplayType.TABLE:

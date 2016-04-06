@@ -25,7 +25,7 @@ module jcycljg {
 
         class DmdjyxView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.DMDJYX, false);
+            private mAjax:Util.Ajax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.DMDJYX, false);
             private mDateSelector:Util.DateSelector;
 
             public static newInstance():DmdjyxView {

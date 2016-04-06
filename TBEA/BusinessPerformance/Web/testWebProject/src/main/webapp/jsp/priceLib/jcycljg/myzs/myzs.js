@@ -26,7 +26,7 @@ var jcycljg;
             __extends(JkzjView, _super);
             function JkzjView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.MYZS, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.MYZS, false);
             }
             JkzjView.newInstance = function () {
                 return new JkzjView();

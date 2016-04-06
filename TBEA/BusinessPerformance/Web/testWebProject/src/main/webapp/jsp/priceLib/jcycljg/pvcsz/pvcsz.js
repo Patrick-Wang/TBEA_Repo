@@ -35,7 +35,7 @@ var jcycljg;
             __extends(PVCSzView, _super);
             function PVCSzView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.PVCSZ, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.PVCSZ, false);
             }
             PVCSzView.newInstance = function () {
                 return new PVCSzView();

@@ -1336,22 +1336,22 @@ interface JQuery {
     removeProp(propertyName: string): JQuery;
 
     /**
-     * Add or remove one or more classes from each element in the set of matched elements, depending on either the class's presence or the value of the switch argument.
+     * Add or remove one or more classes from each element in the set of matched elements, depending on either the class's presence or the value of the switchDisplayType argument.
      *
      * @param className One or more class names (separated by spaces) to be toggled for each element in the matched set.
      * @param swtch A Boolean (not just truthy/falsy) value to determine whether the class should be added or removed.
      */
     toggleClass(className: string, swtch?: boolean): JQuery;
     /**
-     * Add or remove one or more classes from each element in the set of matched elements, depending on either the class's presence or the value of the switch argument.
+     * Add or remove one or more classes from each element in the set of matched elements, depending on either the class's presence or the value of the switchDisplayType argument.
      *
      * @param swtch A boolean value to determine whether the class should be added or removed.
      */
     toggleClass(swtch?: boolean): JQuery;
     /**
-     * Add or remove one or more classes from each element in the set of matched elements, depending on either the class's presence or the value of the switch argument.
+     * Add or remove one or more classes from each element in the set of matched elements, depending on either the class's presence or the value of the switchDisplayType argument.
      *
-     * @param func A function that returns class names to be toggled in the class attribute of each element in the matched set. Receives the index position of the element in the set, the old class value, and the switch as arguments.
+     * @param func A function that returns class names to be toggled in the class attribute of each element in the matched set. Receives the index position of the element in the set, the old class value, and the switchDisplayType as arguments.
      * @param swtch A boolean value to determine whether the class should be added or removed.
      */
     toggleClass(func: (index: number, className: string, swtch: boolean) => string, swtch?: boolean): JQuery;

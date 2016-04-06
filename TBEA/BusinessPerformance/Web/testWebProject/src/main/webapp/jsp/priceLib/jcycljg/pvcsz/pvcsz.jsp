@@ -29,8 +29,9 @@
         </table></td>
     </tr>
 </Table>
-<script type="text/javascript" src="jsp/priceLib/jcycljg/pvcsz/pvcsz.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/pvcsz/pvcsz.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
     jcycljg.pvcsz.pluginView.init({
         dsf: "chartDsf",
         yxf: "chartYxf",
@@ -39,4 +40,5 @@
         ctarea: "ctarea",
         tbarea: "tbarea"
     });
+});
 </script>

@@ -28,7 +28,7 @@ var jcycljg;
             __extends(EVAView, _super);
             function EVAView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.EVA, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.EVA, false);
             }
             EVAView.newInstance = function () {
                 return new EVAView();

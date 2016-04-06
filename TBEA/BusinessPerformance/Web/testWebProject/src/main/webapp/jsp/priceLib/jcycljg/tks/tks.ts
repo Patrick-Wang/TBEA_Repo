@@ -32,7 +32,7 @@ module jcycljg {
 
         class TksView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.TKS, false);
+            private mAjax:Util.Ajax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.TKS, false);
             private mDateSelector:Util.DateSelector;
 
             public static newInstance():TksView {

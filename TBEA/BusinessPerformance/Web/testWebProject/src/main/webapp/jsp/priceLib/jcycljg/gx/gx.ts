@@ -29,7 +29,7 @@ module jcycljg {
 
         class GxView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.GX, false);
+            private mAjax:Util.Ajax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.GX, false);
             private mDateSelector:Util.DateSelector;
 
             public static newInstance():GxView {

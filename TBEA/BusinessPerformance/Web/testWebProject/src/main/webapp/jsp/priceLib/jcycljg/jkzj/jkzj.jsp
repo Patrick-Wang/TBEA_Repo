@@ -15,8 +15,9 @@
         </td>
     </tr>
 </Table>
-<script type="text/javascript" src="jsp/priceLib/jcycljg/jkzj/jkzj.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/jkzj/jkzj.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
     jcycljg.jkzj.pluginView.init({
         ct: "chart",
         tb: "table",
@@ -24,4 +25,5 @@
         ctarea: "ctarea",
         tbarea: "tbarea"
     });
+});
 </script>

@@ -33,7 +33,7 @@ var jcycljg;
             __extends(ZhbView, _super);
             function ZhbView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.ZHB, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.ZHB, false);
             }
             ZhbView.newInstance = function () {
                 return new ZhbView();

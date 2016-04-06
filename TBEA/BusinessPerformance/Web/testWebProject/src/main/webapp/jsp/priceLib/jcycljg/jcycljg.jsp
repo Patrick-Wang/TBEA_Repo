@@ -3,66 +3,66 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<base href="${pageContext.request.contextPath}/" />
+
 
 <!-- message box -->
-<link href="jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
 
 <!-- jquery -->
-<script type="text/javascript" src="jsp/jqgrid/js/jquery.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.js"></script>
 
 <!-- jquery ui -->
 <!-- jquery ui gray -->
 <link rel="stylesheet" type="text/css"
-	href="jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
+	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
 <script type="text/javascript"
-	src="jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
+	src="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
 <!-- jquery ui blue -->
 <link rel="stylesheet" type="text/css" media="screen"
-	href="jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
-<script src="jsp/jqgrid/js/jquery-ui-custom.min.js"
+	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
+<script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery-ui-custom.min.js"
 	type="text/javascript"></script>
 
 <!-- 多选菜单 -->
 <link rel="stylesheet" type="text/css"
-	href="jsp/multi-select/jquery.multiselect.css" />
+	href="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.css" />
 <link rel="stylesheet" type="text/css"
-	href="jsp/multi-select/assets/style.css" />
+	href="${pageContext.request.contextPath}/jsp/multi-select/assets/style.css" />
 <link rel="stylesheet" type="text/css"
-	href="jsp/multi-select/assets/prettify.css" />
-<script type="text/javascript" src="jsp/multi-select/assets/prettify.js"></script>
+	href="${pageContext.request.contextPath}/jsp/multi-select/assets/prettify.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/multi-select/assets/prettify.js"></script>
 <script type="text/javascript"
-	src="jsp/multi-select/jquery.multiselect.js"></script>
+	src="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.js"></script>
 
 
 <!-- jqgrid -->
 <link rel="stylesheet" type="text/css" media="screen"
-	href="jsp/jqgrid/themes/ui.jqgrid.css">
+	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.jqgrid.css">
 <link rel="stylesheet" type="text/css" media="screen"
-	href="jsp/jqgrid/themes/ui.multiselect.css">
-<script src="jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
-<script src="jsp/jqgrid/js/jquery.contextmenu.js" type="text/javascript"></script>
-<script src="jsp/jqgrid/js/i18n/grid.locale-cn.js"
+	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.multiselect.css">
+<script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.contextmenu.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/jqgrid/js/i18n/grid.locale-cn.js"
 	type="text/javascript"></script>
-<script src="jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
-<script src="jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
 
 <!-- jqgrid assist -->
-<script src="jsp/jqgrid/jqassist.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/jqgrid/jqassist.js" type="text/javascript"></script>
 
-<script src="jsp/json2.js" type="text/javascript"></script>
-<script src="jsp/util.js" type="text/javascript"></script>
-<script src="jsp/jqgrid/vector.js" type="text/javascript"></script>
-<script src="jsp/unitedSelector.js" type="text/javascript"></script>
-<script src="jsp/dateSelector.js" type="text/javascript"></script>
-<script src="jsp/priceLib/jcycljg/jcycljgdef.js" type="text/javascript"></script>
-<script src="jsp/priceLib/jcycljg/jcycljgtype.js" type="text/javascript"></script>
-<script src="jsp/priceLib/jcycljg/jcycljg.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/json2.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/jqgrid/vector.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/jcycljgdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/jcycljgtype.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/jcycljg.js" type="text/javascript"></script>
 
 <!-- message box -->
-<script src="jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
-<script src="jsp/message-box/js/moaModal.js" type="text/javascript"></script>
-<script src="jsp/messageBox.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
 
 <title>基础原材料价格</title>
 
@@ -165,6 +165,12 @@ th.ui-th-ltr {
 	/* jqGrid columns name wrap  */
 	font-size: 14px;
 }
+.ui-multiselect {
+	padding: 2px 0 2px 4px;
+	text-align: left;
+	font-size: 12px;
+}
+
 </style>
 </head>
 <body>
@@ -179,7 +185,7 @@ th.ui-th-ltr {
 				<div id="dte" style="float: left; margin-left: 10px"></div>
 				<div id="type" style="float: left"></div> <input type="button"
 				value="更新" style="float: left; width: 80px; margin-left: 10px;"
-				onclick="view.updateUI()" /> <script src="jsp/style_button.js"></script>
+				onclick="view.updateUI()" />
 				<div id="radio" style="float: right">
 					<input type="radio" id="rdct" name="radio" checked="checked"><label
 						for="rdct">图</label> <input type="radio" id="rdtb" name="radio"
@@ -239,8 +245,9 @@ th.ui-th-ltr {
         
     });
 </script>
-	<script src="jsp/style_select.js"></script>
-	<script src="jsp/www2/js/echarts-plain-2-0-0.js"></script>
+	<script src="${pageContext.request.contextPath}/jsp/style_select.js"></script>
+	<script src="${pageContext.request.contextPath}/jsp/style_button.js"></script>
+	<script src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 	<%@include file="../../components/loading.jsp"%>
 </body>
 

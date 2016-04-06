@@ -31,7 +31,7 @@ var jcycljg;
             __extends(LzbbView, _super);
             function LzbbView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.LZBB, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.LZBB, false);
             }
             LzbbView.newInstance = function () {
                 return new LzbbView();

@@ -27,7 +27,7 @@ module jcycljg {
 
         class JtView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.JT, false);
+            private mAjax:Util.Ajax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.JT, false);
             private mDateSelector:Util.DateSelector;
 
             public static newInstance():JtView {

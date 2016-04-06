@@ -27,7 +27,7 @@ var jcycljg;
             __extends(DmdjyxView, _super);
             function DmdjyxView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.DMDJYX, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.DMDJYX, false);
             }
             DmdjyxView.newInstance = function () {
                 return new DmdjyxView();

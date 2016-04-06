@@ -35,7 +35,7 @@ var jcycljg;
             __extends(LwgView, _super);
             function LwgView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.LWG, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.LWG, false);
             }
             LwgView.newInstance = function () {
                 return new LwgView();

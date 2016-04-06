@@ -40,8 +40,9 @@
     </td>
     </tr>
 </Table>
-<script type="text/javascript" src="jsp/priceLib/jcycljg/ysjs/ysjs.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/ysjs/ysjs.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
     jcycljg.ysjs.pluginView.init({
         cu: "chartCu",
         al: "chartAl",
@@ -51,4 +52,5 @@
         ctarea: "ctarea",
         tbarea: "tbarea"
     });
+});
 </script>

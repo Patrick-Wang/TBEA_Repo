@@ -16,8 +16,9 @@
     </tr>
 
 </Table>
-<script type="text/javascript" src="jsp/priceLib/jcycljg/lzbb/lzbb.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/lzbb/lzbb.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
     jcycljg.lzbb.pluginView.init({
         ct: "chart",
         tb: "table",
@@ -25,4 +26,5 @@
         ctarea: "ctarea",
         tbarea: "tbarea"
     });
+});
 </script>

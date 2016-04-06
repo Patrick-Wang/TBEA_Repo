@@ -68,7 +68,7 @@
 					   modules[id].loaded = true;
 					}
 					
-					//switch require back to the parent
+					//switchDisplayType require back to the parent
 					if (modules[id].parent){
 					   window.exports = modules[id].parent.exports;
 					}

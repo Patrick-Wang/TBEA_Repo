@@ -31,7 +31,7 @@ module jcycljg {
 
         class ZhbView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.ZHB, false);
+            private mAjax:Util.Ajax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.ZHB, false);
             private mDateSelector:Util.DateSelector;
 
             public static newInstance():ZhbView {

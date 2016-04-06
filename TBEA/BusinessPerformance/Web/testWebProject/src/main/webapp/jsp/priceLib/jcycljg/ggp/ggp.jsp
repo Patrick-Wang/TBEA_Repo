@@ -30,8 +30,9 @@
         </table></td>
     </tr>
 </Table>
-<script type="text/javascript" src="jsp/priceLib/jcycljg/ggp/ggp.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/ggp/ggp.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
     jcycljg.ggp.pluginView.init({
         wg: "chartWg",
         bg: "chartBg",
@@ -40,4 +41,5 @@
         ctarea: "ctarea",
         tbarea: "tbarea"
     });
+});
 </script>

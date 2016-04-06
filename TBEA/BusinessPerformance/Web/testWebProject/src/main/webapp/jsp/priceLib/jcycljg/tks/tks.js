@@ -33,7 +33,7 @@ var jcycljg;
             __extends(TksView, _super);
             function TksView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.TKS, false);
+                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.TKS, false);
             }
             TksView.newInstance = function () {
                 return new TksView();

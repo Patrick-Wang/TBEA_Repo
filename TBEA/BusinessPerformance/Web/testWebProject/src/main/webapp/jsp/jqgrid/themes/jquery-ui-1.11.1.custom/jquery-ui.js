@@ -1618,7 +1618,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 		// IE9 throws an "Unspecified error" accessing document.activeElement from an <iframe>
 		try {
 			// Support: IE9+
-			// If the <body> is blurred, IE will switch windows, see #9520
+			// If the <body> is blurred, IE will switchDisplayType windows, see #9520
 			if ( document.activeElement && document.activeElement.nodeName.toLowerCase() !== "body" ) {
 				// Blur any element that currently has focus, see #4261
 				$( document.activeElement ).blur();
@@ -6080,7 +6080,7 @@ var accordion = $.widget( "ui.accordion", {
 		this.active = clickedIsActive ? $() : clicked;
 		this._toggle( eventData );
 
-		// switch classes
+		// switchDisplayType classes
 		// corner classes on the previously active header stay after the animation
 		active.removeClass( "ui-accordion-header-active ui-state-active" );
 		if ( options.icons ) {
@@ -9384,7 +9384,7 @@ $.extend(Datepicker.prototype, {
 		return this._daylightSavingAdjust(newDate);
 	},
 
-	/* Handle switch to/from daylight saving.
+	/* Handle switchDisplayType to/from daylight saving.
 	 * Hours may be non-zero on daylight saving cut-over:
 	 * > 12 when midnight changeover, but then cannot generate
 	 * midnight datetime, so jump to 1AM, otherwise reset.
@@ -10110,7 +10110,7 @@ var dialog = $.widget( "ui.dialog", {
 				activeElement = this.document[ 0 ].activeElement;
 
 				// Support: IE9, IE10
-				// If the <body> is blurred, IE will switch windows, see #4520
+				// If the <body> is blurred, IE will switchDisplayType windows, see #4520
 				if ( activeElement && activeElement.nodeName.toLowerCase() !== "body" ) {
 
 					// Hiding a focused element doesn't trigger blur in WebKit
@@ -13219,7 +13219,7 @@ var tabs = $.widget( "ui.tabs", {
 		if ( tab.hasClass( "ui-state-disabled" ) ||
 				// tab is already loading
 				tab.hasClass( "ui-tabs-loading" ) ||
-				// can't switch durning an animation
+				// can't switchDisplayType durning an animation
 				this.running ||
 				// click on active header, but not collapsible
 				( clickedIsActive && !options.collapsible ) ||

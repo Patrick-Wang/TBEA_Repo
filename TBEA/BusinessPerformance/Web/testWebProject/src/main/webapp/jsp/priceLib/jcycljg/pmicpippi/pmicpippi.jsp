@@ -39,8 +39,9 @@
         </table></td>
     </tr>
 </Table>
-<script type="text/javascript" src="jsp/priceLib/jcycljg/pmicpippi/pmicpippi.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/pmicpippi/pmicpippi.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
     jcycljg.pmicpippi.pluginView.init({
         pmi: "pmi",
         cpi: "cpi",
@@ -50,4 +51,5 @@
         ctarea: "ctarea",
         tbarea: "tbarea"
     });
+});
 </script>

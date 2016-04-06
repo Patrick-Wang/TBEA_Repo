@@ -28,7 +28,7 @@ module jcycljg {
 
         class PmiCpiPpiView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.PMICPIPPI, false);
+            private mAjax:Util.Ajax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.PMICPIPPI, false);
             private mDateSelector:Util.DateSelector;
 
             public static newInstance():PmiCpiPpiView {

@@ -29,7 +29,7 @@ module jcycljg {
 
         class LzbbView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("jcycljg/update.do?type=" + jcycljg.JcycljgType.LZBB, false);
+            private mAjax:Util.Ajax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.LZBB, false);
             private mDateSelector:Util.DateSelector;
 
             public static newInstance():LzbbView {

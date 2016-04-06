@@ -6383,7 +6383,7 @@
                 // values that require 90 degree rotation
                 // if ( ~[ 5, 6, 7, 8 ].indexOf( orientation ) ) {
     
-                //     switch ( orientation ) {
+                //     switchDisplayType ( orientation ) {
                 //         case 6:
                 //             tmp = x;
                 //             x = y;
