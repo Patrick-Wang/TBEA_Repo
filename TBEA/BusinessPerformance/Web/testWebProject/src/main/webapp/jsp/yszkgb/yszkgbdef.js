@@ -18,9 +18,9 @@ var yszkgb;
         BasePluginView.prototype.$ = function (id) {
             return $("#" + this.mOpt.host + " #" + id);
         };
-        BasePluginView.prototype.update = function (start) {
+        BasePluginView.prototype.update = function (start, cpType) {
             var st = start.year + "-" + start.month + "-" + start.day;
-            this.pluginUpdate(st);
+            this.pluginUpdate(st, cpType);
         };
         return BasePluginView;
     })();

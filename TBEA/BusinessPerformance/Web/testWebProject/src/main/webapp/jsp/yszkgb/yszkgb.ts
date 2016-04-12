@@ -73,11 +73,11 @@ module yszkgb {
 
 
 
-        private plugin(node:DataNode):PluginView{
+        private plugin(node:Util.DataNode):PluginView{
             return  (<PluginData>node.getData()).plugin;
         }
 
-        private getActiveNode():DataNode{
+        private getActiveNode():Util.DataNode{
             return this.mItemSelector.getDataNode(this.mItemSelector.getPath());
         }
 
@@ -93,10 +93,10 @@ module yszkgb {
                     this.plugin(this.mNodes[i]).hide();
                 }
             }
-
+           ;
             this.mCurrentPlugin.show();
             $("#headertitle")[0].innerHTML = node.getData().value;
-            this.plugin(node).update(dts);
+            this.plugin(node).update(dts,  this.mCompanySelector.getCompany());
         }
     }
 }

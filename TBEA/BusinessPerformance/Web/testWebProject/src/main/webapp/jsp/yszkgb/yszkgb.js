@@ -64,9 +64,10 @@ var yszkgb;
                     this.plugin(this.mNodes[i]).hide();
                 }
             }
+            ;
             this.mCurrentPlugin.show();
             $("#headertitle")[0].innerHTML = node.getData().value;
-            this.plugin(node).update(dts);
+            this.plugin(node).update(dts, this.mCompanySelector.getCompany());
         };
         return View;
     })();

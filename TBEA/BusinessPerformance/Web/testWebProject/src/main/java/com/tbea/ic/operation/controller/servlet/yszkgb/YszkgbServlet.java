@@ -55,8 +55,8 @@ public class YszkgbServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Date d = Date.valueOf(request.getParameter("date"));
-		
-		List<List<String>> result = yszkgbService.getZmb(d);
+		CompanyType comp = CompanySelection.getCompany(request);
+		List<List<String>> result = yszkgbService.getZmb(d, companyManager.getBMDBOrganization().getCompany(comp));
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDaoImpl;
 import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDao;
 import com.tbea.ic.operation.model.dao.yszkgb.yqyszcsys.YqyszcsysDaoImpl;
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
 
 import com.tbea.ic.operation.model.dao.yszkgb.yszkzm.YszkzmDaoImpl;
 import com.tbea.ic.operation.model.dao.yszkgb.yszkzm.YszkzmDao;
+import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
 import com.tbea.ic.operation.service.yszkgb.YszkgbService;
 
 import org.springframework.stereotype.Service;
@@ -43,8 +45,16 @@ public class YszkgbServiceImpl implements YszkgbService {
 	public final static String NAME = "YszkgbServiceImpl";
 
 	@Override
-	public List<List<String>> getZmb(Date d) {
+	public List<List<String>> getZmb(Date d, Company company) {
 		List<List<String>> result = new ArrayList<List<String>>();
+		List<YszkzmEntity> entities= yszkzmDao.getByDate(d, company);
+		for (YszkzmEntity entity : entities){
+			List<String> list = new ArrayList<String>();
+			list.add("" + entity.getZmje());
+			list.add("" + entity.getHzzb());
+			list.add("" + entity.getYz());
+			result.add(list);
+		}
 		return result;
 	}
 

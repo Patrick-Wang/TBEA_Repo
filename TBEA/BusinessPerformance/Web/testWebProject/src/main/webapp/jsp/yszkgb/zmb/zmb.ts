@@ -37,9 +37,10 @@ module yszkgb {
                 return <Option>this.mOpt;
             }
 
-            public pluginUpdate(date:string):void {
+            public pluginUpdate(date:string, cpType:Util.CompanyType):void {
                 this.mAjax.get({
-                        date: date
+                        date: date,
+                        companyId: cpType
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;

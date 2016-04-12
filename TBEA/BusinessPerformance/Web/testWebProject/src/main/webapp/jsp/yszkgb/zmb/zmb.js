@@ -35,10 +35,11 @@ var yszkgb;
             ZMBView.prototype.option = function () {
                 return this.mOpt;
             };
-            ZMBView.prototype.pluginUpdate = function (date) {
+            ZMBView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mAjax.get({
-                    date: date
+                    date: date,
+                    companyId: cpType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
