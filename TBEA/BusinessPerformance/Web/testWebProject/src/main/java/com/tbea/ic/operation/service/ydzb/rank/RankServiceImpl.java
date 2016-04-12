@@ -259,7 +259,7 @@ public class RankServiceImpl implements RankService {
 		for (int i = 0; i < jydws.size(); ++i){
 			results.add(new Double[4]);
 			resultTemp.add(results.get(i));
-			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end) / cal.get(Calendar.MONTH + 1)) * 12;
+			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end) / (cal.get(Calendar.MONTH) + 1)) * 12;
 			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.value(), end, end);
 			if (results.get(i)[0] != null && Util.isPositive(results.get(i)[0]) &&
 				results.get(i)[1] != null && Util.isPositive(results.get(i)[1])){
@@ -287,7 +287,7 @@ public class RankServiceImpl implements RankService {
 		cal.setTime(date);
 		for (int i = 0; i < jydws.size(); ++i){
 			results.add(new Double[5]);
-			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end)/ cal.get(Calendar.MONTH + 1)) * 12;
+			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end)/ (cal.get(Calendar.MONTH) + 1)) * 12;
 			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.value(), end, end);
 			results.get(i)[2] = getZbValues(jydws.get(i), GSZB.BL34.value(), end, end);
 			if (!(results.get(i)[1] == null && results.get(i)[2] == null)){
@@ -321,7 +321,7 @@ public class RankServiceImpl implements RankService {
 		cal.setTime(date);
 		for (int i = 0; i < jydws.size(); ++i){
 			results.add(new Double[4]);
-			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end) / cal.get(Calendar.MONTH + 1)) * 12;
+			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end) / (cal.get(Calendar.MONTH) + 1)) * 12;
 			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.CH35.value(), end, end);
 			if (results.get(i)[0] != null && Util.isPositive(results.get(i)[0]) &&
 					results.get(i)[1] != null && Util.isPositive(results.get(i)[1])){
@@ -352,7 +352,7 @@ public class RankServiceImpl implements RankService {
 		cal.setTime(date);
 		for (int i = 0; i < jydws.size(); ++i){
 			results.add(new Double[5]);
-			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end)/ cal.get(Calendar.MONTH + 1)) * 12;
+			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end)/ (cal.get(Calendar.MONTH) + 1)) * 12;
 			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.value(), end, end);
 			results.get(i)[2] = getZbValues(jydws.get(i), GSZB.CH35.value(), end, end);
 			if (!(results.get(i)[1] == null && results.get(i)[2] == null)){

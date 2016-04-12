@@ -1,6 +1,11 @@
 package com.tbea.ic.operation.controller.servlet.nc;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -17,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tbea.ic.operation.common.CommonMethod;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
@@ -24,6 +30,7 @@ import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.NCZB;
 import com.tbea.ic.operation.service.approve.ApproveService;
@@ -194,6 +201,102 @@ public class NCController {
 		return jsonArray;
 	}
 
+	@RequestMapping(value = "nctest.do", method = RequestMethod.GET)
+	public void nctest(HttpServletRequest request,
+			HttpServletResponse response) {
+		String driverName = "oracle.jdbc.driver.OracleDriver";
+		String dbURL = "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=dm01-scan.tbea.com.cn)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=orcl)))";
+		String userName = "iufo";
+		String userPwd = "cwf5e7n9";
+
+		Connection dbConn = null;
+		try {
+			Class.forName(driverName).newInstance();
+
+			dbConn = DriverManager.getConnection(dbURL, userName, userPwd);
+			Statement statement = dbConn
+					.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+							ResultSet.CONCUR_UPDATABLE);
+
+			String sql = 
+					"	select unit_code,	"+
+					"	       unit_name,	"+
+					"	       inputdate,	"+
+					"	       imd9.m10138 xssptglwsd, 	"+
+					"	       imd9.m10052 sdsffh, 	"+
+					"	       imd5.m10025 sddqtyjyhdygxj, 	"+
+					"	       imd9.m10181 fksdxj, 	"+
+					"	       imd5.m10008 zfbzsd, 	"+
+					"	       imd9.m10242 sdbdwtbbzj, 	"+
+					"	       imd9.m10148 sdwdwtbbzj, 	"+
+					"	       imd9.m10100 rcywjzthssdxj, 	"+
+					"	       imd5.m10053 yhcklxssdxj, 	"+
+					"	       imd5.m10025 sddqtyjyhdygxj, 	"+
+					"	       imd9.m10142 jyhdxjlr, 	"+
+					"	       imd9.m10150 gmspjslwszfxj, 	"+
+					"	       imd5.m10062 zfgzxj, 	"+
+					"	       imd9.m10309 zfgxsf, 	"+
+					"	       imd9.m10210 zfqtjyhdygxj, 	"+
+					"	       imd9.m10337 zfbdwtbbzj, 	"+
+					"	       imd5.m10040 tfwdwtbbzj, 	"+
+					"	       imd9.m10111 dlzxfzfxj, 	"+
+					"	       imd9.m10198 zbfwfzfxj, 	"+
+					"	       imd9.m10177 rcywjzzfxj, 	"+
+					"	       imd5.m10059 yhxgywsxfzfxj, 	"+
+					"	       imd5.m10039 qtjyhdygxj, 	"+
+					"	       imd5.m10061 jyhdxjlc, 	"+
+					"	       imd9.m10029 jyhdcsdxjllje 	"+
+					"	  from iufo_measure_data_9hzo24a7 imd9	"+
+					"	  left join iufo_measure_data_56m8ewc1 imd5	"+
+					"	    on imd9.alone_id = imd5.alone_id	"+
+					"	  left join (select alone_id,	"+
+					"	                    code,	"+
+					"	                    inputdate,	"+
+					"	                    keyword2,	"+
+					"	                    keyword3,	"+
+					"	                    time_code,	"+
+					"	                    ts,	"+
+					"	                    ver	"+
+					"	               from iufo_measure_pubdata) imp	"+
+					"	    on imd5.alone_id = imp.alone_id	"+
+					"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	"+
+					"	    on imp.code = iui.unit_id	"+
+					"	 where imp.ver = 0	";
+
+			ResultSet rs = statement.executeQuery(sql);
+
+			String unitCode = null;
+			CompanyType companyType = null;
+			int nf = 0;
+			int yf = 0;
+			Double jzcqms = 0.0D;
+			Double jzcqcs = 0.0D;
+			Double jlr = 0.0D;
+			Double jzcsyl = 0.0D;
+			while (rs.next()) {
+				
+			}
+			if (null != rs) {
+				rs.close();
+				rs = null;
+			}
+			if (null != statement) {
+				statement.close();
+				statement = null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (null != dbConn) {
+				try {
+					dbConn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				dbConn = null;
+			}
+		}
+	}
 
 	@RequestMapping(value = "importNC.do", method = RequestMethod.GET)
 	public void importNC(HttpServletRequest request,
