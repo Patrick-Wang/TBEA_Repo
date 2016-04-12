@@ -43,7 +43,7 @@ public class YszkgbServlet {
 		this.companyManager = companyManager;
 		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
 		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBGS));
+		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
 		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
 		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
 		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
