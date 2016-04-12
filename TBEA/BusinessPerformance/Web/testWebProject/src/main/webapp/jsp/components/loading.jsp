@@ -15,7 +15,7 @@
 }
 
 .loading { 
-	background: white url(images/loading.gif) no-repeat;
+	background: white url(${pageContext.request.contextPath}/images/loading.gif) no-repeat;
 }
 
 .lprogressBar {
