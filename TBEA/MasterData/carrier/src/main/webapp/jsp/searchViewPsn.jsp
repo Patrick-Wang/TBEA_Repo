@@ -180,9 +180,10 @@ th.ui-th-ltr {
 			<td>
 				<Table>
 					<tr>
+						<td>身份证号： </td>
 						<td><input id="searchText" type="text"></input></td>
 						<td><input id="update" type="button" value="搜索"
-							style="width: 80px; margin-left: 10px;" onclick="view.updateUI()"></input>
+							style="width: 80px; margin-left: 10px;" onclick="view.updateUI()"></input></td>
 				</Table>
 			</td>
 		</tr>

@@ -67,8 +67,8 @@ var searchView;
                 "psnname",
                 "sex",
                 "mobile",
-                "basgroupdef18",
-                "basgroupdef20",
+                "psnSSO",
+                "psnNo",
                 "birthdate",
                 "addr",
                 "pk_corp"
