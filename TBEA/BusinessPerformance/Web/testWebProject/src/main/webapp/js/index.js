@@ -74,6 +74,8 @@ var stringDescription =  '<div class="container">'
 					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="3"><a style="cursor:pointer">数据审核</a></li>';
 				}
 				
+				stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="20"><a style="cursor:pointer">管报录入</a></li>';
+				
 				stringDescription += '<li>' + 
 				'<a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">' + userName + '<b class="caret"></b></a>' +
 				'<ul class="dropdown-menu" style="width:100%">' +
@@ -160,11 +162,13 @@ function clickli(obj)
 		$("#navlist").css("display", "");
 		$("#navlist1").css("display", "none");
 		$("#navlist2").css("display", "none");
+		$("#navlistBusinessReportsInput").css("display", "none");
 		//$("#navlist3").css("display", "none");
 		
 		$("#IndexSummary").css("display", "");
 		$("#InputList").css("display", "none");
 		$("#approveList").css("display", "none");
+		$("#BusinessReportsInput").css("display", "none");
 		//$("#financeList").css("display", "none");
 		
 // $("#nav li").eq(1).removeClass("active");
@@ -177,12 +181,14 @@ function clickli(obj)
 		$("#navlist").css("display", "none");
 		$("#navlist1").css("display", "");
 		$("#navlist2").css("display", "none");
+		$("#navlistBusinessReportsInput").css("display", "none");
 		// for 财务指标
 		//$("#navlist3").css("display", "none");
 		
 		$("#IndexSummary").css("display", "none");
 		$("#InputList").css("display", "");
 		$("#approveList").css("display", "none");
+		$("#BusinessReportsInput").css("display", "none");
 		//for 财务指标
 		//$("#financeList").css("display", "none");
 		// obj
@@ -194,12 +200,14 @@ function clickli(obj)
 		$("#navlist").css("display", "none");
 		$("#navlist1").css("display", "none");
 		$("#navlist2").css("display", "");
+		$("#navlistBusinessReportsInput").css("display", "none");
 		// for 财务指标
 		//$("#navlist3").css("display", "none");
 		
 		$("#IndexSummary").css("display", "none");
 		$("#InputList").css("display", "none");
 		$("#approveList").css("display", "");
+		$("#BusinessReportsInput").css("display", "none");
 		// for 财务指标
 		//$("#financeList").css("display", "none");
 		// $("#nav li").eq(0).removeClass("active");
@@ -211,12 +219,14 @@ function clickli(obj)
 		$("#navlist").css("display", "none");
 		$("#navlist1").css("display", "none");
 		$("#navlist2").css("display", "none");
+		$("#navlistBusinessReportsInput").css("display", "none");
 		// for 财务指标
 		//$("#navlist3").css("display", "");
 		
 		$("#IndexSummary").css("display", "none");
 		$("#InputList").css("display", "none");
 		$("#approveList").css("display", "none");
+		$("#BusinessReportsInput").css("display", "none");
 		// for 财务指标
 		//$("#financeList").css("display", "");
 		
@@ -224,7 +234,19 @@ function clickli(obj)
 		// $("#nav li").eq(1).removeClass("active");
 		// $("#nav li").eq(2).removeClass("active");
 		// $("#nav li").eq(3).addClass("active");
-	break;
+		break;
+	case 20:
+		$("#navlist").css("display", "none");
+		$("#navlist1").css("display", "none");
+		$("#navlist2").css("display", "none");
+		$("#navlistBusinessReportsInput").css("display", "");
+		
+		$("#IndexSummary").css("display", "none");
+		$("#InputList").css("display", "none");
+		$("#approveList").css("display", "none");
+		$("#BusinessReportsInput").css("display", "");
+
+		break;
 	default:
 	break;
 	}
