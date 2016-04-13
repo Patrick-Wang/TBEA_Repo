@@ -9,19 +9,14 @@
 <link href="${pageContext.request.contextPath}/jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
 
 <!-- jquery -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
 
-<!-- jquery ui -->
-<!-- jquery ui gray -->
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
-<!-- jquery ui blue -->
+
+<!-- jquery ui blue --> 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
-<script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery-ui-custom.min.js"
-	type="text/javascript"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
 
 <!-- 多选菜单 -->
 <link rel="stylesheet" type="text/css"
@@ -216,10 +211,9 @@ th.ui-th-ltr {
                         multiple: false,
                         header: false,
                         minWidth: 180, 
-                        height: '100%',
+                        height: '100%', 
                         // noneSelectedText: "请选择月份",
-                        selectedList: 1,
-						appendTo:"#type"
+                        selectedList: 1
                     })
                     .css("padding", "2px 0 2px 4px")
                     .css("text-align", "left")

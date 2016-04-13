@@ -87,7 +87,7 @@ module Util {
                     height　: '100%',///*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
-                }); 
+                });
             }
             
         }
