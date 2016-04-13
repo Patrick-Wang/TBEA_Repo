@@ -22,10 +22,20 @@ public class CompanySelection {
 	private Filter mFilter;
 	private int firstCompany = 0;
 	private CompanyType firstCompanyType;
+	
+	private List<Company> removeNullObject(List<Company> topComps){
+		for (int i = topComps.size() - 1; i >= 0; --i){
+			if (topComps.get(i) == null){
+				topComps.remove(i);
+			}
+		}
+		return topComps;
+	}
+	
 	public CompanySelection(boolean topOnly, List<Company> topComps, Filter filter) {
 		super();
 		this.mTopOnly = topOnly;
-		this.mTopComps = topComps;
+		this.mTopComps = removeNullObject(topComps);
 		this.mFilter = filter;
 	}
 	
@@ -63,7 +73,7 @@ public class CompanySelection {
 	public CompanySelection(boolean topOnly, List<Company> topComps) {
 		super();
 		this.mTopOnly = topOnly;
-		this.mTopComps = topComps;
+		this.mTopComps = removeNullObject(topComps);
 		this.mFilter = new Filter(){
 			public boolean keep(Company comp){
 				return true;
