@@ -30,10 +30,10 @@
 	<div class="section">
 		<div class="thumb3">
 			<ul class="slides">
-				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
+				<li><a href="../yszkgb/show.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>应收账款管报</strong></span></a>
 				</li>
-				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
+				<li><a href="../chgb/show.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>存货管报</strong></span></a>
 				</li>
 				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
