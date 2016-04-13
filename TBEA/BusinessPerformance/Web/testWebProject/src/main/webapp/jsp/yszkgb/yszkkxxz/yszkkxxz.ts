@@ -7,20 +7,23 @@ declare var echarts;
 declare var view:yszkgb.FrameView;
 
 module yszkgb {
-    export module yszkzlbh {
+    export module yszkkxxz {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("月度", "rq", true, TextAlign.Center),
-                    new JQTable.Node("月度", "rq1", true, TextAlign.Center),
-                    new JQTable.Node("5年以上", "a1"),
-                    new JQTable.Node("4-5年", "a2"),
-                    new JQTable.Node("3-4年", "a3"),
-                    new JQTable.Node("2-3年", "a4"),
-                    new JQTable.Node("1-2年", "a5"),
-                    new JQTable.Node("1年以内", "a6"),
-                    new JQTable.Node("合计", "a7")
+                    new JQTable.Node("月度", "a0", true, TextAlign.Center),
+                    new JQTable.Node("月度", "a1", true, TextAlign.Center)
+                        .append(new JQTable.Node("逾期0-1个月", "b1"))
+                        .append(new JQTable.Node("逾期1-3月", "b2"))
+                        .append(new JQTable.Node("逾期3-6月", "b3"))
+                        .append(new JQTable.Node("逾期6-12月", "b4"))
+                        .append(new JQTable.Node("逾期1年以上", "b5"))
+                        .append(new JQTable.Node("小计", "b6")),
+                    new JQTable.Node("逾期款（含到期保证金）", "a2"),
+                    new JQTable.Node("未到期(不含质保金)", "a3"),
+                    new JQTable.Node("未到期质保金", "a4"),
+                    new JQTable.Node("合计", "a5")
                 ], gridName);
             }
         }
@@ -29,16 +32,14 @@ module yszkgb {
             tb:string;
         }
 
-        class YSZKZLBHView extends BasePluginView {
+        class YSZKKXXZView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("yszkzlbh/update.do", false);
+            private mAjax:Util.Ajax = new Util.Ajax("yszkkxxz/update.do", false);
             private mDateSelector:Util.DateSelector;
             private mDt: string;
-
-            public static newInstance():YSZKZLBHView {
-                return new YSZKZLBHView();
+            public static newInstance():YSZKKXXZView {
+                return new YSZKKXXZView();
             }
-
 
 
             private option():Option {
@@ -57,8 +58,8 @@ module yszkgb {
                     });
             }
 
-            public refresh() : void{
-                if ( this.mData == undefined){
+            public refresh():void {
+                if (this.mData == undefined) {
                     return;
                 }
 
@@ -67,7 +68,7 @@ module yszkgb {
 
             public init(opt:Option):void {
                 super.init(opt);
-                view.register("应收账款账龄变化", this);
+                view.register("应收账款款项性质情况", this);
             }
 
             private updateTable():void {
@@ -106,6 +107,6 @@ module yszkgb {
             }
         }
 
-        export var pluginView = YSZKZLBHView.newInstance();
+        export var pluginView = YSZKKXXZView.newInstance();
     }
 }

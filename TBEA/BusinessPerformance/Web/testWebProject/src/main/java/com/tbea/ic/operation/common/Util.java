@@ -28,6 +28,16 @@ public class Util {
 		return formatter.format(d);
 	}
 
+	
+	public static List resize(List list, int size){
+		if (list.size() < size){
+			for (int i = list.size(); i < size; ++i){
+				list.add(null);
+			}
+		}
+		return list;
+	}
+	
 	// d => yyyyMM
 	public static Date valueOf(String d) {
 		return java.sql.Date.valueOf(d.substring(0, 4) + "-" + d.substring(4)
@@ -194,6 +204,20 @@ public class Util {
 			return 0.0;
 		}
 		return v;
+	}
+	
+	public static Double sum(Double[] vals){
+		Double ret = null;
+		for (int i = 0; i < vals.length; ++i){
+			if (vals[i] != null){
+				if (ret == null){
+					ret = vals[i];
+				}else{
+					ret += vals[i];
+				}
+			}
+		}
+		return ret;
 	}
 
 	public static String financeFormat(String val) {

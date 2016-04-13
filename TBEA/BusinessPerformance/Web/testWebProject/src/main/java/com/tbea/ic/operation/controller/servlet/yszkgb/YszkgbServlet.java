@@ -70,7 +70,7 @@ public class YszkgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = yszkgbService.getZmb(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "yszkzlbh/update.do", method = RequestMethod.GET)
@@ -80,9 +80,17 @@ public class YszkgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = yszkgbService.getYszkzlbh(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
+	@RequestMapping(value = "yszkkxxz/update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getYszkkxxz(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
 
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		List<List<String>> result = yszkgbService.getYszkkxxz(d, companyManager.getBMDBOrganization().getCompany(comp));
+		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+	}
 	
 	
 }

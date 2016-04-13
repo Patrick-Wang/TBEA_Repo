@@ -9,40 +9,43 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var yszkgb;
 (function (yszkgb) {
-    var yszkzlbh;
-    (function (yszkzlbh) {
+    var yszkkxxz;
+    (function (yszkkxxz) {
         var TextAlign = JQTable.TextAlign;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("月度", "rq", true, TextAlign.Center),
-                    new JQTable.Node("月度", "rq1", true, TextAlign.Center),
-                    new JQTable.Node("5年以上", "a1"),
-                    new JQTable.Node("4-5年", "a2"),
-                    new JQTable.Node("3-4年", "a3"),
-                    new JQTable.Node("2-3年", "a4"),
-                    new JQTable.Node("1-2年", "a5"),
-                    new JQTable.Node("1年以内", "a6"),
-                    new JQTable.Node("合计", "a7")
+                    new JQTable.Node("月度", "a0", true, TextAlign.Center),
+                    new JQTable.Node("月度", "a1", true, TextAlign.Center)
+                        .append(new JQTable.Node("逾期0-1个月", "b1"))
+                        .append(new JQTable.Node("逾期1-3月", "b2"))
+                        .append(new JQTable.Node("逾期3-6月", "b3"))
+                        .append(new JQTable.Node("逾期6-12月", "b4"))
+                        .append(new JQTable.Node("逾期1年以上", "b5"))
+                        .append(new JQTable.Node("小计", "b6")),
+                    new JQTable.Node("逾期款（含到期保证金）", "a2"),
+                    new JQTable.Node("未到期(不含质保金)", "a3"),
+                    new JQTable.Node("未到期质保金", "a4"),
+                    new JQTable.Node("合计", "a5")
                 ], gridName);
             };
             return JQGridAssistantFactory;
         })();
-        var YSZKZLBHView = (function (_super) {
-            __extends(YSZKZLBHView, _super);
-            function YSZKZLBHView() {
+        var YSZKKXXZView = (function (_super) {
+            __extends(YSZKKXXZView, _super);
+            function YSZKKXXZView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("yszkzlbh/update.do", false);
+                this.mAjax = new Util.Ajax("yszkkxxz/update.do", false);
             }
-            YSZKZLBHView.newInstance = function () {
-                return new YSZKZLBHView();
+            YSZKKXXZView.newInstance = function () {
+                return new YSZKKXXZView();
             };
-            YSZKZLBHView.prototype.option = function () {
+            YSZKKXXZView.prototype.option = function () {
                 return this.mOpt;
             };
-            YSZKZLBHView.prototype.pluginUpdate = function (date, cpType) {
+            YSZKKXXZView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjax.get({
@@ -54,17 +57,17 @@ var yszkgb;
                     _this.refresh();
                 });
             };
-            YSZKZLBHView.prototype.refresh = function () {
+            YSZKKXXZView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            YSZKZLBHView.prototype.init = function (opt) {
+            YSZKKXXZView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("应收账款账龄变化", this);
+                view.register("应收账款款项性质情况", this);
             };
-            YSZKZLBHView.prototype.updateTable = function () {
+            YSZKKXXZView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
@@ -74,10 +77,8 @@ var yszkgb;
                 var month = curDate.getMonth() + 1;
                 var data = [];
                 for (var i = month + 1; i <= 12; ++i) {
-                    data.push(["上年度", i + "月"].concat(this.mData[i - month - 1]));
                 }
                 for (var i = 1; i <= month; ++i) {
-                    data.push(["本年度", i + "月"].concat(this.mData[12 - month + i - 1]));
                 }
                 tableAssist.mergeRow(0);
                 tableAssist.mergeTitle();
@@ -95,8 +96,8 @@ var yszkgb;
                     viewrecords: true
                 }));
             };
-            return YSZKZLBHView;
+            return YSZKKXXZView;
         })(yszkgb.BasePluginView);
-        yszkzlbh.pluginView = YSZKZLBHView.newInstance();
-    })(yszkzlbh = yszkgb.yszkzlbh || (yszkgb.yszkzlbh = {}));
+        yszkkxxz.pluginView = YSZKKXXZView.newInstance();
+    })(yszkkxxz = yszkgb.yszkkxxz || (yszkgb.yszkkxxz = {}));
 })(yszkgb || (yszkgb = {}));

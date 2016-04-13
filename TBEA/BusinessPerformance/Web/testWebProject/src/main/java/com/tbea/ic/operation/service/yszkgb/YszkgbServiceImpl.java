@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDaoImpl;
 import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDao;
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
 
 import com.tbea.ic.operation.model.dao.yszkgb.yszkzm.YszkzmDaoImpl;
 import com.tbea.ic.operation.model.dao.yszkgb.yszkzm.YszkzmDao;
+import com.tbea.ic.operation.model.entity.yszkgb.YszkKxxzEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkZlEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
 import com.tbea.ic.operation.service.yszkgb.YszkgbService;
@@ -89,10 +91,63 @@ public class YszkgbServiceImpl implements YszkgbService {
 					break;
 				}
 			}
+			if (result.get(result.size() - 1).isEmpty()){
+				Util.resize(result.get(result.size() - 1), 7);
+			}
 			cal.add(Calendar.MONTH, 1);
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<List<String>> getYszkkxxz(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.YEAR, -1);
+		cal.add(Calendar.MONTH, 1);
+		List<YszkKxxzEntity> entities= yszkKxxzDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		for (int i = 0; i < 12; ++i){
+			result.add(new ArrayList<String>());
+			for (YszkKxxzEntity entity : entities){
+				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH)){
+					result.set(result.size() - 1, toList(entity));
+					entities.remove(entity);
+					break;
+				}
+			}
+			if (result.get(result.size() - 1).isEmpty()){
+				Util.resize(result.get(result.size() - 1), 9);
+			}
+			cal.add(Calendar.MONTH, 1);
+		}
+		
+		return result;
+	}
+
+	private List<String> toList(YszkKxxzEntity entity) {
+		List<String> list = new ArrayList<String>();
+		list.add("" + entity.getYq0z1y());
+		list.add("" + entity.getYq1z3y());
+		list.add("" + entity.getYq3z6y());
+		list.add("" + entity.getYq6z12y());
+		list.add("" + entity.getYq1nys());
+		list.add("" + Util.sum(new Double[]{
+				entity.getYq0z1y(),
+				entity.getYq1z3y(),
+				entity.getYq3z6y(),
+				entity.getYq1nys()}));
+		list.add("" + entity.getWdq());
+		list.add("" + entity.getWdqzbj());
+		list.add("" + Util.sum(new Double[]{
+				entity.getYq0z1y(),
+				entity.getYq1z3y(),
+				entity.getYq3z6y(),
+				entity.getYq1nys(),
+				entity.getWdq(),
+				entity.getWdqzbj()}));
+		return list;
 	}
 
 }
