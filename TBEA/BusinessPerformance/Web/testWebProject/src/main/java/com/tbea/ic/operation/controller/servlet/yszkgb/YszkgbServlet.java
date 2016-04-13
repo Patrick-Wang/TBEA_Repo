@@ -8,15 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.tbea.ic.operation.common.CompanySelection;
-import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.common.companys.BMDepartmentDB;
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.service.yszkgb.YszkgbServiceImpl;
-import com.tbea.ic.operation.service.yszkgb.YszkgbService;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.service.yszkgb.YszkgbService;
+import com.tbea.ic.operation.service.yszkgb.YszkgbServiceImpl;
 
 @Controller
 @RequestMapping(value = "yszkgb")
