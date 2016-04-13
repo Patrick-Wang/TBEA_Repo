@@ -30,11 +30,11 @@
 	<div class="section">
 		<div class="thumb3">
 			<ul class="slides">
-				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
+				<li><a href="../jcycljg/show.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>价格库数据展示</strong></span></a>
 				</li>
-				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>价格库数据录入</strong></span></a>
+				<li><a href="../jcycljg/import/show.do" target="_blank"><img
+						src="../images/charts/bar2.png"> <span><strong>价格库数据录入</strong></span></a>
 				</li>
 			</ul>
 		</div>
