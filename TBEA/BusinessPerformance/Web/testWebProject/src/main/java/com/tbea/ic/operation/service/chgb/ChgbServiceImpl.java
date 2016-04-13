@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import com.tbea.ic.operation.model.dao.chgb.chzm.ChZmDaoImpl;
 import com.tbea.ic.operation.model.dao.chgb.chzm.ChZmDao;
 import com.tbea.ic.operation.model.entity.chgb.ChZmEntity;
+import com.tbea.ic.operation.model.entity.chgb.ChJykcEntity;
 import com.tbea.ic.operation.service.chgb.ChgbService;
 
 import org.springframework.stereotype.Service;
@@ -55,6 +56,56 @@ public class ChgbServiceImpl implements ChgbService {
 			list.add("" + entity.getYz());
 			result.add(list);
 		}
+		return result;
+	}
+	
+	@Override
+	public List<List<String>> getChjykcb(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		List<ChJykcEntity> entities= chJykcDao.getByDate(d, company);
+		
+		Double hjSyye = 0.0;
+		Double hjByxz = 0.0;
+		Double hjBycz = 0.0;
+		Double hjQmye = 0.0;
+		
+		for (ChJykcEntity entity : entities){
+			List<String> list = new ArrayList<String>();
+			list.add(entity.getJykcxmEntity().getName());
+			list.add("" + entity.getSyye());
+			list.add("" + entity.getByxz());
+			list.add("" + entity.getBycz());
+			list.add("" + entity.getQmye());
+			
+			if (entity.getSyye() != null){
+				hjSyye += entity.getSyye();
+			}
+			
+			if (entity.getByxz() != null){
+				hjByxz += entity.getByxz();
+			}
+			
+			if (entity.getBycz() != null){
+				hjBycz += entity.getBycz();
+			}
+			
+			if (entity.getQmye() != null){
+				hjQmye += entity.getQmye();
+			}
+			
+			result.add(list);
+		}
+		
+		List<String> list = new ArrayList<String>();
+
+		list.add("合计");
+		list.add("" + hjSyye);
+		list.add("" + hjByxz);
+		list.add("" + hjBycz);
+		list.add("" + hjQmye);
+		
+		result.add(list);
+		
 		return result;
 	}
 }

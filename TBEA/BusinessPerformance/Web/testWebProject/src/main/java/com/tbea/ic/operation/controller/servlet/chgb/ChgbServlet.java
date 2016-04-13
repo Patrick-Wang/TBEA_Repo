@@ -57,7 +57,17 @@ public class ChgbServlet {
 		List<List<String>> result = chgbService.getChzmb(d, companyManager.getBMDBOrganization().getCompany(comp));
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
+	
+	@RequestMapping(value = "chjykcb/update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getChjykcb_update(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
 
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		List<List<String>> result = chgbService.getChjykcb(d, companyManager.getBMDBOrganization().getCompany(comp));
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+	}
+	
 	@RequestMapping(value = "show.do", method = RequestMethod.GET)
 	public ModelAndView getChgb(HttpServletRequest request,
 			HttpServletResponse response) {
