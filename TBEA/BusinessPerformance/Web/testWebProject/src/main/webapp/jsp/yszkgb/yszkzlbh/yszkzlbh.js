@@ -11,12 +11,14 @@ var yszkgb;
 (function (yszkgb) {
     var yszkzlbh;
     (function (yszkzlbh) {
+        var TextAlign = JQTable.TextAlign;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("月度", "rq"),
+                    new JQTable.Node("月度", "rq", true, TextAlign.Center),
+                    new JQTable.Node("月度", "rq1", true, TextAlign.Center),
                     new JQTable.Node("5年以上", "a1"),
                     new JQTable.Node("4-5年", "a2"),
                     new JQTable.Node("3-4年", "a3"),
@@ -68,8 +70,8 @@ var yszkgb;
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                var curDate = Date.parse(this.mDt);
-                var month = curDate.getMonth();
+                var curDate = new Date(Date.parse(this.mDt));
+                var month = curDate.getMonth() + 1;
                 var data = [];
                 for (var i = month + 1; i <= 12; ++i) {
                     data.push(["上年度", i + "月"].concat(this.mData[i - month]));
@@ -78,6 +80,7 @@ var yszkgb;
                     data.push(["本年度", i + "月"].concat(this.mData[12 - month + i]));
                 }
                 tableAssist.mergeRow(0);
+                tableAssist.mergeTitle();
                 this.$(name).jqGrid(tableAssist.decorate({
                     multiselect: false,
                     drag: false,

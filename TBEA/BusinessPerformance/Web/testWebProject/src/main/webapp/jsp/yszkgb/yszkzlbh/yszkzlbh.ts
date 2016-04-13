@@ -8,10 +8,12 @@ declare var view:yszkgb.FrameView;
 
 module yszkgb {
     export module yszkzlbh {
+        import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("月度", "rq"),
+                    new JQTable.Node("月度", "rq", true, TextAlign.Center),
+                    new JQTable.Node("月度", "rq1", true, TextAlign.Center),
                     new JQTable.Node("5年以上", "a1"),
                     new JQTable.Node("4-5年", "a2"),
                     new JQTable.Node("3-4年", "a3"),
@@ -75,8 +77,8 @@ module yszkgb {
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
 
-                let curDate : any = Date.parse(this.mDt);
-                let month = curDate.getMonth();
+                let curDate : Date = new Date(Date.parse(this.mDt));
+                let month = curDate.getMonth() + 1;
                 let data = [];
                 for (let i = month + 1; i <= 12; ++i){
                     data.push(["上年度", i + "月"].concat(this.mData[i - month]));
@@ -86,7 +88,7 @@ module yszkgb {
                 }
 
                 tableAssist.mergeRow(0);
-
+                tableAssist.mergeTitle();
                 this.$(name).jqGrid(
                     tableAssist.decorate({
                         multiselect: false,
