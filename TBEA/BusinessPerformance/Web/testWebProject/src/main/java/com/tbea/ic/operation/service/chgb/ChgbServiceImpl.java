@@ -25,6 +25,10 @@ import com.tbea.ic.operation.service.chgb.ChgbService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDao;
+import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDaoImpl;
+import com.tbea.ic.operation.model.entity.identifier.chgb.JykcxmEntity;
+
 @Service(ChgbServiceImpl.NAME)
 @Transactional("transactionManager")
 public class ChgbServiceImpl implements ChgbService {
@@ -42,6 +46,9 @@ public class ChgbServiceImpl implements ChgbService {
 
 	@Resource(name=ChZmDaoImpl.NAME)
 	ChZmDao chzmDao;
+	
+	@Resource(name=JykcxmDaoImpl.NAME)
+	JykcxmDao jykcxmDao;
 
 	public final static String NAME = "ChgbServiceImpl";
 
@@ -63,48 +70,71 @@ public class ChgbServiceImpl implements ChgbService {
 	public List<List<String>> getChjykcb(Date d, Company company) {
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<ChJykcEntity> entities= chJykcDao.getByDate(d, company);
+		List<JykcxmEntity> jykcxmEntities = jykcxmDao.getXMMapping();
 		
-		Double hjSyye = 0.0;
-		Double hjByxz = 0.0;
-		Double hjBycz = 0.0;
-		Double hjQmye = 0.0;
+		Double hjSyye = null;
+		Double hjByxz = null;
+		Double hjBycz = null;
+		Double hjQmye = null;
 		
-		for (ChJykcEntity entity : entities){
+		for (int i = 0; i < jykcxmEntities.size(); i++) {
+			
+			Boolean bIsFind = false;
 			List<String> list = new ArrayList<String>();
-			list.add(entity.getJykcxmEntity().getName());
-			list.add("" + entity.getSyye());
-			list.add("" + entity.getByxz());
-			list.add("" + entity.getBycz());
-			list.add("" + entity.getQmye());
 			
-			if (entity.getSyye() != null){
-				hjSyye += entity.getSyye();
+			for (ChJykcEntity entity : entities){
+				
+				if (entity.getJykcxmEntity().getId() == jykcxmEntities.get(i).getId()) {
+					
+					bIsFind = true;
+					
+					list.add(entity.getJykcxmEntity().getName());
+					list.add("" + entity.getSyye());
+					list.add("" + entity.getByxz());
+					list.add("" + entity.getBycz());
+					list.add("" + entity.getQmye());
+					
+					if (entity.getSyye() != null){
+						hjSyye += entity.getSyye();
+					}
+					
+					if (entity.getByxz() != null){
+						hjByxz += entity.getByxz();
+					}
+					
+					if (entity.getBycz() != null){
+						hjBycz += entity.getBycz();
+					}
+					
+					if (entity.getQmye() != null){
+						hjQmye += entity.getQmye();
+					}
+
+					entities.remove(entity);
+					break;
+				}
 			}
 			
-			if (entity.getByxz() != null){
-				hjByxz += entity.getByxz();
+			if (!bIsFind) {
+				list.add(jykcxmEntities.get(i).getName());
+				list.add("null");
+				list.add("null");
+				list.add("null");
+				list.add("null");
 			}
-			
-			if (entity.getBycz() != null){
-				hjBycz += entity.getBycz();
-			}
-			
-			if (entity.getQmye() != null){
-				hjQmye += entity.getQmye();
-			}
-			
+
 			result.add(list);
 		}
-		
-		List<String> list = new ArrayList<String>();
+			
+		List<String> listHj = new ArrayList<String>();
 
-		list.add("合计");
-		list.add("" + hjSyye);
-		list.add("" + hjByxz);
-		list.add("" + hjBycz);
-		list.add("" + hjQmye);
+		listHj.add("合计");
+		listHj.add("" + hjSyye);
+		listHj.add("" + hjByxz);
+		listHj.add("" + hjBycz);
+		listHj.add("" + hjQmye);
 		
-		result.add(list);
+		result.add(listHj);
 		
 		return result;
 	}

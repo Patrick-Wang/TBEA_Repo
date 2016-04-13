@@ -11,18 +11,17 @@ var chgb;
 (function (chgb) {
     var chjykcb;
     (function (chjykcb) {
-        var TextAlign = JQTable.TextAlign;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("项目", "rq", true, TextAlign.Center),
-                    new JQTable.Node("项目", "rq1", true, TextAlign.Center),
-                    new JQTable.Node("上月余额", "a1"),
-                    new JQTable.Node("本月新增", "a2"),
-                    new JQTable.Node("本月处置", "a3"),
-                    new JQTable.Node("期末余额", "a4")
+                    new JQTable.Node("项目", "xm"),
+                    new JQTable.Node("项目", "xm1"),
+                    new JQTable.Node("上月余额", "syye"),
+                    new JQTable.Node("本月新增", "byxz"),
+                    new JQTable.Node("本月处置", "bycz"),
+                    new JQTable.Node("期末余额", "qmye")
                 ], gridName);
             };
             return JQGridAssistantFactory;
