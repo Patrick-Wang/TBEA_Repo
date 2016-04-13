@@ -31,6 +31,7 @@ var Util;
                 selectedText: '# 个项目公司被选中'
             };
             this.mMulti = multi;
+            this.mDivId = divId;
             if (Util.isExist(opt)) {
                 this.mOpt = opt;
             }

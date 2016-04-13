@@ -11,9 +11,14 @@ module yszkgb {
         class JQGridAssistantFactory {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("账面净额", "rq"),
-                    new JQTable.Node("坏账准备", "a1"),
-                    new JQTable.Node("原值", "a2")
+                    new JQTable.Node("月度", "rq"),
+                    new JQTable.Node("5年以上", "a1"),
+                    new JQTable.Node("4-5年", "a2"),
+                    new JQTable.Node("3-4年", "a3"),
+                    new JQTable.Node("2-3年", "a4"),
+                    new JQTable.Node("1-2年", "a5"),
+                    new JQTable.Node("1年以内", "a6"),
+                    new JQTable.Node("合计", "a7")
                 ], gridName);
             }
         }
@@ -26,6 +31,7 @@ module yszkgb {
             private mData:Array<string[]>;
             private mAjax:Util.Ajax = new Util.Ajax("yszkzlbh/update.do", false);
             private mDateSelector:Util.DateSelector;
+            private mDt: string;
 
             public static newInstance():YSZKZLBHView {
                 return new YSZKZLBHView();
@@ -38,6 +44,7 @@ module yszkgb {
             }
 
             public pluginUpdate(date:string, cpType:Util.CompanyType):void {
+                this.mDt = date;
                 this.mAjax.get({
                         date: date,
                         companyId: cpType
@@ -67,6 +74,19 @@ module yszkgb {
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
+
+                let curDate : any = Date.parse(this.mDt);
+                let month = curDate.getMonth();
+                let data = [];
+                for (let i = month + 1; i <= 12; ++i){
+                    data.push(["上年度", i + "月"].concat(this.mData[i - month]));
+                }
+                for (let i = 1; i <= month; ++i){
+                    data.push(["本年度", i + "月"].concat(this.mData[12 - month + i]));
+                }
+
+                tableAssist.mergeRow(0);
+
                 this.$(name).jqGrid(
                     tableAssist.decorate({
                         multiselect: false,
@@ -77,7 +97,7 @@ module yszkgb {
                         shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 20,
-                        data: tableAssist.getData(this.mData),
+                        data: tableAssist.getData(data),
                         datatype: "local",
                         viewrecords : true
                     }));

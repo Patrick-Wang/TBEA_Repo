@@ -16,9 +16,14 @@ var yszkgb;
             }
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("账面净额", "rq"),
-                    new JQTable.Node("坏账准备", "a1"),
-                    new JQTable.Node("原值", "a2")
+                    new JQTable.Node("月度", "rq"),
+                    new JQTable.Node("5年以上", "a1"),
+                    new JQTable.Node("4-5年", "a2"),
+                    new JQTable.Node("3-4年", "a3"),
+                    new JQTable.Node("2-3年", "a4"),
+                    new JQTable.Node("1-2年", "a5"),
+                    new JQTable.Node("1年以内", "a6"),
+                    new JQTable.Node("合计", "a7")
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -37,6 +42,7 @@ var yszkgb;
             };
             YSZKZLBHView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
+                this.mDt = date;
                 this.mAjax.get({
                     date: date,
                     companyId: cpType
@@ -62,6 +68,16 @@ var yszkgb;
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
+                var curDate = Date.parse(this.mDt);
+                var month = curDate.getMonth();
+                var data = [];
+                for (var i = month + 1; i <= 12; ++i) {
+                    data.push(["上年度", i + "月"].concat(this.mData[i - month]));
+                }
+                for (var i = 1; i <= month; ++i) {
+                    data.push(["本年度", i + "月"].concat(this.mData[12 - month + i]));
+                }
+                tableAssist.mergeRow(0);
                 this.$(name).jqGrid(tableAssist.decorate({
                     multiselect: false,
                     drag: false,
@@ -71,7 +87,7 @@ var yszkgb;
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 20,
-                    data: tableAssist.getData(this.mData),
+                    data: tableAssist.getData(data),
                     datatype: "local",
                     viewrecords: true
                 }));

@@ -33,7 +33,7 @@ module Util {
 
         private mSelectedTop: string;
         private mMulti: boolean;
-        
+        private mDivId:string;
         public hide(){
            this.mUnitedSelector.hide();
         }
@@ -109,7 +109,7 @@ module Util {
             firstComp?: number, 
             opt ? : ICompanySelectorOption) {
             this.mMulti = multi;
-           
+           this.mDivId = divId;
             if (isExist(opt)){
                 this.mOpt = opt;    
             }

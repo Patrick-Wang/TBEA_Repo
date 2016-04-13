@@ -12,12 +12,12 @@
 
 <!-- jquery ui -->
 <!-- jquery ui gray -->
-<link rel="stylesheet" type="text/css"
+<link rel="stylesheet" type="text/css" 
 	href="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
 <script type="text/javascript"
 	src="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
-<!-- jquery ui blue -->
-<link rel="stylesheet" type="text/css" media="screen"
+<!-- jquery ui blue --> 
+<link rel="stylesheet" type="text/css" media="screen" 
 	href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
 <script src="../jsp/jqgrid/js/jquery-ui-custom.min.js"
 	type="text/javascript"></script>

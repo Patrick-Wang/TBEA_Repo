@@ -43,7 +43,13 @@ public class YszkZlEntity extends AbstractReadWriteEntity implements Serializabl
 	Double zl2z3n;
 	Double zl1z2n;
 	Double zl1nyn;
-	SHZT zt;
+	Double hj;
+	public Double getHj() {
+		return hj;
+	}
+	public void setHj(Double hj) {
+		this.hj = hj;
+	}
 	public Integer getNf() {
 		return nf;
 	}
@@ -101,15 +107,6 @@ public class YszkZlEntity extends AbstractReadWriteEntity implements Serializabl
 	}
 	public void setZl1nyn(Double zl1nyn) {
 		this.zl1nyn = zl1nyn;
-	}
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "zt")
-	public SHZT getZt() {
-		return zt;
-	}
-	public void setZt(SHZT zt) {
-		this.zt = zt;
 	}
 
 }

@@ -179,7 +179,7 @@ th.ui-th-ltr {
 		<h1 id="headertitle">应收账款管报</h1>
 	</div>
 
-	<Table align="center" style="width:1200px">
+	<Table id="frameTable" align="center" style="width:1200px">
 		<tr>
 			<td>
 				<div id="dt" style="float: left"></div>
@@ -202,23 +202,24 @@ th.ui-th-ltr {
     $(document).ready(function () {
     	view.init({
             type: "type",
-			comp:"compid",
+			comp:"compid", 
             dt: "dt",
 			comps : JSON.parse('${nodeData}'),
             date: {
                 month: ${month},
                 year: ${year}
-            }
+            }  
         });
     	(function () {
             $("#type select")
                     .multiselect({
                         multiple: false,
                         header: false,
-                        minWidth: 180,
+                        minWidth: 180, 
                         height: '100%',
                         // noneSelectedText: "请选择月份",
-                        selectedList: 1
+                        selectedList: 1,
+						appendTo:"#type"
                     })
                     .css("padding", "2px 0 2px 4px")
                     .css("text-align", "left")
@@ -228,7 +229,7 @@ th.ui-th-ltr {
 
     });
 </script>
-	<script src="${pageContext.request.contextPath}/jsp/style_select.js"></script>
+
 	<script src="${pageContext.request.contextPath}/jsp/style_button.js"></script>
 	<script src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 	<%@include file="../components/loading.jsp"%>

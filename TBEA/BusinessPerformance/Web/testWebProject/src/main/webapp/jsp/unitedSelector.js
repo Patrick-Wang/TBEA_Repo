@@ -219,9 +219,9 @@ var Util;
                     select.append('<option index = "' + i + '" value="' + data.id + '">' + data.value + '</option>');
                 }
             }
-            select = $(select);
-            select.change(function (s) {
-                var selOpt = select.children('option:selected');
+            var selectTmp = select;
+            select[0].onchange = (function (s) {
+                var selOpt = selectTmp.children('option:selected');
                 if (selOpt.length > 0) {
                     var path = [];
                     for (var i = 0; i < depth - 1; ++i) {
@@ -236,7 +236,7 @@ var Util;
                     _this.update(path);
                 }
                 if (Util.isExist(_this.mFnChange)) {
-                    _this.mFnChange(select, depth);
+                    _this.mFnChange(selectTmp, depth);
                 }
             });
         };

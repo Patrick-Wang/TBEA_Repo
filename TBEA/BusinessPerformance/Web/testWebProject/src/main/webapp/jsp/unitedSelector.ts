@@ -265,9 +265,10 @@ module Util {
                     select.append('<option index = "' + i + '" value="' + data.id + '">' + data.value + '</option>');
                 }
             }
-            select = $(select);
-            select.change((s: any) => {
-                var selOpt = select.children('option:selected');
+            let selectTmp:any = select;
+
+            select[0].onchange =((s: any) => {
+                var selOpt = selectTmp.children('option:selected');
                 if (selOpt.length > 0) {
                     var path = [];
                     for (var i = 0; i < depth - 1; ++i) {
@@ -284,7 +285,7 @@ module Util {
                 }
 
                 if (Util.isExist(this.mFnChange)) {
-                    this.mFnChange(select, depth);
+                    this.mFnChange(selectTmp, depth);
                 }
             });
 

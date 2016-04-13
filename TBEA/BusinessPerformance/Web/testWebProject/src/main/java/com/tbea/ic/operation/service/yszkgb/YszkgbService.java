@@ -9,5 +9,7 @@ public interface YszkgbService {
 
 	List<List<String>> getZmb(Date d, Company company);
 
+	List<List<String>> getYszkzlbh(Date d, Company company);
+
 
 }

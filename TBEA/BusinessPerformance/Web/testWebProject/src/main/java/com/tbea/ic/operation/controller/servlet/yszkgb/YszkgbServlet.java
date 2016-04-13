@@ -48,17 +48,6 @@ public class YszkgbServlet {
 		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
 		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
 	}
-	
-	@RequestMapping(value = "zmb/update.do", method = RequestMethod.GET)
-	public @ResponseBody byte[] getYqysysfx_update(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-
-		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = yszkgbService.getZmb(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
-	}
-
 	@RequestMapping(value = "show.do", method = RequestMethod.GET)
 	public ModelAndView getYszkgb(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -73,5 +62,27 @@ public class YszkgbServlet {
 		
 		return new ModelAndView("yszkgb/yszkgb", map);
 	}
+	
+	@RequestMapping(value = "zmb/update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getYqysysfx_update(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		List<List<String>> result = yszkgbService.getZmb(d, companyManager.getBMDBOrganization().getCompany(comp));
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "yszkzlbh/update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getYszkzlbh(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		List<List<String>> result = yszkgbService.getYszkzlbh(d, companyManager.getBMDBOrganization().getCompany(comp));
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+	}
+
+	
 	
 }
