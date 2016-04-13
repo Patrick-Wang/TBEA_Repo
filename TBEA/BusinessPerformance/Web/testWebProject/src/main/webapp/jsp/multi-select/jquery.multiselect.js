@@ -41,7 +41,8 @@
       autoOpen: false,
       multiple: true,
       position: {},
-      appendTo: "body"
+      appendTo: "body",
+      host:""
     },
 
     _create: function() {
@@ -353,8 +354,8 @@
             $(this).find('input')[0].click();
           break;
         }
-      })
-      .delegate('input[type="checkbox"], input[type="radio"]', 'click.multiselect', function(e) {
+      });
+      this.menu.delegate('input[type="checkbox"], input[type="radio"]', 'click.multiselect', function(e) {
         var $this = $(this);
         var val = this.value;
         var checked = this.checked;

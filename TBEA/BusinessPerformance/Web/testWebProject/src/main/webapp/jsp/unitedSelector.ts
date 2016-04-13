@@ -183,7 +183,7 @@ module Util {
 
         public constructor(data: IDataNode[], ctrlId: string, path?: number[]) {
             this.mRoot.appendAll(DataNode.valueOfAll(data));
-            this.mCtrlId = ctrlId + "_unitedSelector";
+            this.mCtrlId = ctrlId + "_us";
             $("#" + ctrlId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
             if (Util.isExist(data) && this.mRoot.childCount() > 0) {
                 this.update(path);
@@ -315,7 +315,7 @@ module Util {
         private add(ctrlTr: any, begin: number) {
             for (var i = begin; i < this.mPath.length; ++i) {
                 ctrlTr.append(
-                    '<td><select id="united_' + i + '" style="font-size:13px"></select></td>' +
+                    '<td><select id="' + this.mCtrlId + '_united_' + i + '" style="font-size:13px"></select></td>' +
                     '<td><div style="width:5px;"></div></td>');
                 this.appendChildren(ctrlTr.children().eq(i * 2).children().eq(0), i + 1);
             }
