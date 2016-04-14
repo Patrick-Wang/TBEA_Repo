@@ -13,14 +13,14 @@ module chgb {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("月度", "chzlbhqk_rq", true, TextAlign.Center),
-                    new JQTable.Node("月度", "chzlbhqk_rq1", true, TextAlign.Center),
-                    new JQTable.Node("5年以上", "chzlbhqk_a1"),
-                    new JQTable.Node("4-5年", "chzlbhqk_a2"),
-                    new JQTable.Node("3-4年", "chzlbhqk_a3"),
-                    new JQTable.Node("2-3年", "chzlbhqk_a4"),
-                    new JQTable.Node("1-2年", "chzlbhqk_a5"),
-                    new JQTable.Node("1年以内", "chzlbhqk_a6"),
-                    new JQTable.Node("合计", "chzlbhqk_a7")
+                    new JQTable.Node("月度", "chzlbhqk_rqtwo", true, TextAlign.Center),
+                    new JQTable.Node("5年以上", "chzlbhqk_aa"),
+                    new JQTable.Node("4-5年", "chzlbhqk_ab"),
+                    new JQTable.Node("3-4年", "chzlbhqk_ac"),
+                    new JQTable.Node("2-3年", "chzlbhqk_ad"),
+                    new JQTable.Node("1-2年", "chzlbhqk_ae"),
+                    new JQTable.Node("1年以内", "chzlbhqk_af"),
+                    new JQTable.Node("合计", "chzlbhqk_ag")
                 ], gridName);
             }
         }
