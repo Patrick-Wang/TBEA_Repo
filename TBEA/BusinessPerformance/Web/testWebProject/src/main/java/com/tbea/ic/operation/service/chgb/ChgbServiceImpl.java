@@ -227,7 +227,7 @@ public class ChgbServiceImpl implements ChgbService {
 				}
 			}
 			if (result.get(result.size() - 1).isEmpty()){
-				Util.resize(result.get(result.size() - 1), 7);
+				Util.resize(result.get(result.size() - 1), 9);
 			}
 			cal.add(Calendar.MONTH, 1);
 		}
