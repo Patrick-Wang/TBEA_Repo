@@ -55,7 +55,7 @@ public class YszkgbServlet {
 		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
 		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
 	}
-	@RequestMapping(value = "show.do", method = RequestMethod.GET)
+	@RequestMapping(value = "show.do")
 	public ModelAndView getYszkgb(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -70,7 +70,7 @@ public class YszkgbServlet {
 		return new ModelAndView("yszkgb/yszkgb", map);
 	}
 	
-	@RequestMapping(value = "entry.do", method = RequestMethod.GET)
+	@RequestMapping(value = "entry.do")
 	public ModelAndView getYszkgbEntry(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -85,7 +85,7 @@ public class YszkgbServlet {
 		return new ModelAndView("yszkgb/yszkgbEntry", map);
 	}
 	
-	@RequestMapping(value = "zmb/update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "zmb/update.do")
 	public @ResponseBody byte[] getYqysysfx_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
@@ -95,7 +95,7 @@ public class YszkgbServlet {
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "yszkzlbh/update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yszkzlbh/update.do")
 	public @ResponseBody byte[] getYszkzlbh(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
@@ -104,7 +104,7 @@ public class YszkgbServlet {
 		List<List<String>> result = yszkgbService.getYszkzlbh(d, companyManager.getBMDBOrganization().getCompany(comp));
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
-	@RequestMapping(value = "yszkkxxz/update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yszkkxxz/update.do")
 	public @ResponseBody byte[] getYszkkxxz(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
@@ -115,7 +115,7 @@ public class YszkgbServlet {
 	}
 	
 	
-	@RequestMapping(value = "yqyszcsys/update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yqyszcsys/update.do")
 	public @ResponseBody byte[] getYqyszcsys(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
@@ -125,7 +125,7 @@ public class YszkgbServlet {
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "yszkyjtztjqs/update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yszkyjtztjqs/update.do")
 	public @ResponseBody byte[] getYszkyjtztjqs(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
@@ -135,7 +135,7 @@ public class YszkgbServlet {
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "yszkkxxz/entry/update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yszkkxxz/entry/update.do")
 	public @ResponseBody byte[] getYszkkxxzEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
@@ -148,7 +148,7 @@ public class YszkgbServlet {
 	}
 	
 	
-	@RequestMapping(value = "yqyszcsys/entry/update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yqyszcsys/entry/update.do")
 	public @ResponseBody byte[] getYqyszcsysEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
@@ -160,7 +160,7 @@ public class YszkgbServlet {
 		return JSONObject.fromObject(sd).toString().replaceAll("null", "").getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "yszkyjtztjqs/entry/update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yszkyjtztjqs/entry/update.do")
 	public @ResponseBody byte[] getYszkyjtztjqsEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
@@ -173,7 +173,7 @@ public class YszkgbServlet {
 		return JSONObject.fromObject(sd).toString().replaceAll("null", "").getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "yszkkxxz/entry/save.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yszkkxxz/entry/save.do")
 	public @ResponseBody byte[] entryYszkkxxz(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
@@ -184,7 +184,7 @@ public class YszkgbServlet {
 	}
 	
 	
-	@RequestMapping(value = "yqyszcsys/entry/save.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yqyszcsys/entry/save.do")
 	public @ResponseBody byte[] entryYqyszcsys(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
@@ -195,7 +195,7 @@ public class YszkgbServlet {
 	}
 	
 	
-	@RequestMapping(value = "yszkyjtztjqs/entry/save.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yszkyjtztjqs/entry/save.do")
 	public @ResponseBody byte[] entryYszkyjtztjqs(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
@@ -205,7 +205,7 @@ public class YszkgbServlet {
 		return Util.response(err);
 	}
 	
-	@RequestMapping(value = "yszkkxxz/entry/submit.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yszkkxxz/entry/submit.do")
 	public @ResponseBody byte[] submitYszkkxxz(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
@@ -216,7 +216,7 @@ public class YszkgbServlet {
 	}
 	
 	
-	@RequestMapping(value = "yqyszcsys/entry/submit.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yqyszcsys/entry/submit.do")
 	public @ResponseBody byte[] submitYqyszcsys(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
@@ -227,7 +227,7 @@ public class YszkgbServlet {
 	}
 	
 	
-	@RequestMapping(value = "yszkyjtztjqs/entry/submit.do", method = RequestMethod.GET)
+	@RequestMapping(value = "yszkyjtztjqs/entry/submit.do")
 	public @ResponseBody byte[] submitYszkyjtztjqs(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));

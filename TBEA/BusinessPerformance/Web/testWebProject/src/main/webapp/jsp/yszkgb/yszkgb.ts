@@ -66,6 +66,9 @@ module yszkgb {
                 this.mCompanySelector.hide();
             }
             this.mItemSelector = new Util.UnitedSelector(this.mNodes, this.mOpt.type);
+            if (this.mNodes.length == 1) {
+                this.mItemSelector.hide();
+            }
             this.mNodes = this.mItemSelector.getTopNodes();
             this.updateUI();
         }

@@ -9,6 +9,7 @@ import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDaoImpl;
 import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDao;
 import com.tbea.ic.operation.model.dao.yszkgb.yqyszcsys.YqyszcsysDaoImpl;
@@ -31,6 +32,7 @@ import com.tbea.ic.operation.service.yszkgb.YszkgbService;
 
 import net.sf.json.JSONArray;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +54,9 @@ public class YszkgbServiceImpl implements YszkgbService {
 	@Resource(name=YszkzmDaoImpl.NAME)
 	YszkzmDao yszkzmDao;
 
+	@Autowired
+	DWXXDao dwxxDao;
+	
 	public final static String NAME = "YszkgbServiceImpl";
 
 	@Override
@@ -295,6 +300,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			Calendar cal = Calendar.getInstance();
 			entity.setNf(cal.get(Calendar.YEAR));
 			entity.setYf(cal.get(Calendar.MONTH) + 1);
+			entity.setDwxx(dwxxDao.getById(company.getId()));
 		}
 
 		entity.setZt(status.ordinal());
@@ -318,6 +324,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			Calendar cal = Calendar.getInstance();
 			entity.setNf(cal.get(Calendar.YEAR));
 			entity.setYf(cal.get(Calendar.MONTH) + 1);
+			entity.setDwxx(dwxxDao.getById(company.getId()));
 		}
 
 		entity.setZt(status.ordinal());
@@ -341,6 +348,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			Calendar cal = Calendar.getInstance();
 			entity.setNf(cal.get(Calendar.YEAR));
 			entity.setYf(cal.get(Calendar.MONTH) + 1);
+			entity.setDwxx(dwxxDao.getById(company.getId()));
 		}
 
 		entity.setZt(status.ordinal());
