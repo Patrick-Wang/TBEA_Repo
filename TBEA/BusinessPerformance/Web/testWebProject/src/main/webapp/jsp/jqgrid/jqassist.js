@@ -541,16 +541,16 @@ var JQTable;
             });
         };
         JQGridAssistant.prototype.getLevelNodes = function (level) {
-            var levelNodes = new std.vector();
+            var levelNodes = [];
             for (var i = 0; i < this.mTitle.length; i++) {
-                levelNodes.concat(this.mTitle[i].children(level));
-                for (var j = levelNodes.size() - 1; j >= 0; --j) {
-                    if (!levelNodes.get(j).hasChilds()) {
-                        levelNodes.erase(j);
+                levelNodes = levelNodes.concat(this.mTitle[i].children(level));
+                for (var j = levelNodes.length - 1; j >= 0; --j) {
+                    if (!levelNodes[j].hasChilds()) {
+                        levelNodes.splice(j, 1);
                     }
                 }
             }
-            return levelNodes.toArray();
+            return levelNodes;
         };
         JQGridAssistant.prototype.getData = function (data) {
             var alldata = [];
@@ -751,7 +751,7 @@ var JQTable;
                     var widthList = [iWidht];
                     for (var i = 1; i < iCount; i++) {
                         headerMerge = $("#" + _this.mGridName + "_" + _this.id(iColStart + i));
-                        widthList.push(_this.parseInt(headerStart[0].style.width));
+                        widthList.push(_this.parseInt(headerMerge.css("width")));
                         iWidht += widthList[widthList.length - 1];
                         headerMerge.removeClass("ui-state-default");
                         headerMerge.children("span").css("display", "none");

@@ -9,20 +9,18 @@ declare var echarts;
 declare var entryView:yszkgb.EntryView;
 
 module yszkgb {
-    export module yszkkxxzEntry {
+    export module yqyszcsysEntry {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly : boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("日期", "aa", true, TextAlign.Center),
-                    new JQTable.Node("月度", "ab", false, TextAlign.Center)
-                        .append(new JQTable.Node("逾期0-1个月", "ba", readOnly))
-                        .append(new JQTable.Node("逾期1-3月", "bb", readOnly))
-                        .append(new JQTable.Node("逾期3-6月", "bc", readOnly))
-                        .append(new JQTable.Node("逾期6-12月", "bd", readOnly))
-                        .append(new JQTable.Node("逾期1年以上", "be", readOnly)),
-                    new JQTable.Node("未到期(不含质保金)", "ah", readOnly),
-                    new JQTable.Node("未到期质保金", "ai", readOnly)
+                    new JQTable.Node("日期", "rq", true, TextAlign.Center),
+                    new JQTable.Node("5年以上", "ab", readOnly),
+                    new JQTable.Node("4-5年", "ac", readOnly),
+                    new JQTable.Node("3-4年", "ad", readOnly),
+                    new JQTable.Node("2-3年", "ae", readOnly),
+                    new JQTable.Node("1-2年", "af", readOnly),
+                    new JQTable.Node("1年以内", "ag", readOnly)
                 ], gridName);
             }
         }
@@ -31,12 +29,12 @@ module yszkgb {
             tb:string;
         }
 
-        class YszkkxxzEntryView extends EntryPluginView {
+        class YqyszcsysEntryView extends EntryPluginView {
 
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("yszkkxxz/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("yszkkxxz/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("yszkkxxz/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("yqyszcsys/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("yqyszcsys/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("yqyszcsys/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mIsReadOnly:boolean;
@@ -46,8 +44,8 @@ module yszkgb {
                 this.mReadOnlyChange = callBack;
             }
 
-            public static newInstance():YszkkxxzEntryView {
-                return new YszkkxxzEntryView();
+            public static newInstance():YqyszcsysEntryView {
+                return new YqyszcsysEntryView();
             }
 
             private option():Option {
@@ -128,7 +126,7 @@ module yszkgb {
 
             public init(opt:Option):void {
                 super.init(opt);
-                entryView.register("应收账款款项性质情况", this);
+                entryView.register("逾期应收账产生因素", this);
             }
 
             private updateTable():void {
@@ -227,6 +225,6 @@ module yszkgb {
             }
         }
 
-        export var pluginView = YszkkxxzEntryView.newInstance();
+        export var pluginView = YqyszcsysEntryView.newInstance();
     }
 }

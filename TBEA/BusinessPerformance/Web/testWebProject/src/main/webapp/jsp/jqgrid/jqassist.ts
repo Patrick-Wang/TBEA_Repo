@@ -635,16 +635,16 @@ module JQTable {
         }
 
         public getLevelNodes(level: number): Node[] {
-            var levelNodes = new std.vector<Node>();
+            var levelNodes = [];
             for (var i = 0; i < this.mTitle.length; i++) {
-                levelNodes.concat(this.mTitle[i].children(level));
-                for (var j = levelNodes.size() - 1; j >= 0; --j) {
-                    if (!levelNodes.get(j).hasChilds()) {
-                        levelNodes.erase(j);
+                levelNodes = levelNodes.concat(this.mTitle[i].children(level));
+                for (var j = levelNodes.length - 1; j >= 0; --j) {
+                    if (!levelNodes[j].hasChilds()) {
+                        levelNodes.splice(j, 1)
                     }
                 }
             }
-            return levelNodes.toArray();
+            return levelNodes;
         }
 
         public getData(data: string[][]): any[] {
@@ -856,7 +856,7 @@ module JQTable {
                     var widthList = [iWidht];
                     for (var i = 1; i < iCount; i++) {
                         headerMerge = $("#" + this.mGridName + "_" + this.id(iColStart + i));
-                        widthList.push(this.parseInt(headerStart[0].style.width));
+                        widthList.push(this.parseInt(headerMerge.css("width")));
                         iWidht += widthList[widthList.length - 1];
                         headerMerge.removeClass("ui-state-default");
                         headerMerge.children("span").css("display", "none");

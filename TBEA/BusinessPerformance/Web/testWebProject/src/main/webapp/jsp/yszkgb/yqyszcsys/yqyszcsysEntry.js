@@ -11,45 +11,43 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var yszkgb;
 (function (yszkgb) {
-    var yszkkxxzEntry;
-    (function (yszkkxxzEntry) {
+    var yqyszcsysEntry;
+    (function (yqyszcsysEntry) {
         var TextAlign = JQTable.TextAlign;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("日期", "aa", true, TextAlign.Center),
-                    new JQTable.Node("月度", "ab", false, TextAlign.Center)
-                        .append(new JQTable.Node("逾期0-1个月", "ba", readOnly))
-                        .append(new JQTable.Node("逾期1-3月", "bb", readOnly))
-                        .append(new JQTable.Node("逾期3-6月", "bc", readOnly))
-                        .append(new JQTable.Node("逾期6-12月", "bd", readOnly))
-                        .append(new JQTable.Node("逾期1年以上", "be", readOnly)),
-                    new JQTable.Node("未到期(不含质保金)", "ah", readOnly),
-                    new JQTable.Node("未到期质保金", "ai", readOnly)
+                    new JQTable.Node("日期", "rq", true, TextAlign.Center),
+                    new JQTable.Node("5年以上", "ab", readOnly),
+                    new JQTable.Node("4-5年", "ac", readOnly),
+                    new JQTable.Node("3-4年", "ad", readOnly),
+                    new JQTable.Node("2-3年", "ae", readOnly),
+                    new JQTable.Node("1-2年", "af", readOnly),
+                    new JQTable.Node("1年以内", "ag", readOnly)
                 ], gridName);
             };
             return JQGridAssistantFactory;
         })();
-        var YszkkxxzEntryView = (function (_super) {
-            __extends(YszkkxxzEntryView, _super);
-            function YszkkxxzEntryView() {
+        var YqyszcsysEntryView = (function (_super) {
+            __extends(YqyszcsysEntryView, _super);
+            function YqyszcsysEntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("yszkkxxz/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("yszkkxxz/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("yszkkxxz/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("yqyszcsys/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("yqyszcsys/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("yqyszcsys/entry/submit.do", false);
             }
-            YszkkxxzEntryView.prototype.setReadOnlyCallBack = function (callBack) {
+            YqyszcsysEntryView.prototype.setReadOnlyCallBack = function (callBack) {
                 this.mReadOnlyChange = callBack;
             };
-            YszkkxxzEntryView.newInstance = function () {
-                return new YszkkxxzEntryView();
+            YqyszcsysEntryView.newInstance = function () {
+                return new YqyszcsysEntryView();
             };
-            YszkkxxzEntryView.prototype.option = function () {
+            YqyszcsysEntryView.prototype.option = function () {
                 return this.mOpt;
             };
-            YszkkxxzEntryView.prototype.pluginSave = function (dt, cpType) {
+            YqyszcsysEntryView.prototype.pluginSave = function (dt, cpType) {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -72,7 +70,7 @@ var yszkgb;
                     }
                 });
             };
-            YszkkxxzEntryView.prototype.pluginSubmit = function (dt, cpType) {
+            YqyszcsysEntryView.prototype.pluginSubmit = function (dt, cpType) {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -99,7 +97,7 @@ var yszkgb;
                     }
                 });
             };
-            YszkkxxzEntryView.prototype.pluginUpdate = function (date, cpType) {
+            YqyszcsysEntryView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjaxUpdate.get({
@@ -112,18 +110,18 @@ var yszkgb;
                     _this.refresh();
                 });
             };
-            YszkkxxzEntryView.prototype.refresh = function () {
+            YqyszcsysEntryView.prototype.refresh = function () {
                 this.mReadOnlyChange(this.mIsReadOnly);
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            YszkkxxzEntryView.prototype.init = function (opt) {
+            YqyszcsysEntryView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                entryView.register("应收账款款项性质情况", this);
+                entryView.register("逾期应收账产生因素", this);
             };
-            YszkkxxzEntryView.prototype.updateTable = function () {
+            YqyszcsysEntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mIsReadOnly);
                 var parent = this.$(this.option().tb);
@@ -204,8 +202,8 @@ var yszkgb;
                     }
                 });
             };
-            return YszkkxxzEntryView;
+            return YqyszcsysEntryView;
         })(yszkgb.EntryPluginView);
-        yszkkxxzEntry.pluginView = YszkkxxzEntryView.newInstance();
-    })(yszkkxxzEntry = yszkgb.yszkkxxzEntry || (yszkgb.yszkkxxzEntry = {}));
+        yqyszcsysEntry.pluginView = YqyszcsysEntryView.newInstance();
+    })(yqyszcsysEntry = yszkgb.yqyszcsysEntry || (yszkgb.yqyszcsysEntry = {}));
 })(yszkgb || (yszkgb = {}));

@@ -52,7 +52,7 @@
 <script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgbdef.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgb.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgb.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgbEntry.js" type="text/javascript"></script>
 
 <!-- message box -->
@@ -188,10 +188,10 @@ th.ui-th-ltr {
 		<tr>
 			<td>
 				<%@include file="yszkkxxz/yszkkxxzEntry.jsp"%>
-<%-- 				<%@include file="yszkyjtztjqs/yszkyjtztjqsEntry.jsp"%> --%>
-<%-- 				<%@include file="yqyszcsys/yqyszcsysEntry.jsp"%> --%>
+				<%--				<%@include file="yszkyjtztjqs/yszkyjtztjqsEntry.jsp"%>  --%>
+ 				<%@include file="yqyszcsys/yqyszcsysEntry.jsp"%>
 			</td>
-		</tr>
+		</tr> 
 		<tr>
 			<td>
 				<input id="gbsv" type="button" value="保存" style="float: right; width: 80px; margin-left: 10px;"
@@ -202,8 +202,6 @@ th.ui-th-ltr {
 		</tr>
 	</Table>
 	<script type="text/javascript">
-
-    $("#radio").buttonset();
     $(document).ready(function () {
     	entryView.init({
             type: "type",
