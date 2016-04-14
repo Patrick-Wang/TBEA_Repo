@@ -17,8 +17,8 @@ var yszkgb;
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("账面净额", "rq"),
-                    new JQTable.Node("坏账准备", "a1"),
-                    new JQTable.Node("原值", "a2")
+                    new JQTable.Node("坏账准备", "aa"),
+                    new JQTable.Node("原值", "ab")
                 ], gridName);
             };
             return JQGridAssistantFactory;

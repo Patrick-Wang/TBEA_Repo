@@ -23,6 +23,6 @@ var chgb;
             this.pluginUpdate(st, cpType);
         };
         return BasePluginView;
-    }());
+    })();
     chgb.BasePluginView = BasePluginView;
 })(chgb || (chgb = {}));

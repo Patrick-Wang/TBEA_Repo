@@ -477,7 +477,7 @@ module JQTable {
             this.mGridName = gridName;
             this.mTitle = titleNodes;
             for (var i in this.mTitle) {
-                this.mTitle[i].mOpts.id = this.mGridName + this.mTitle[i].mOpts.id;
+                //this.mTitle[i].mOpts.id = this.mGridName + this.mTitle[i].mOpts.id;
                 nodes = this.mTitle[i].leaves();
 
                 for (var j in nodes) {
@@ -701,7 +701,7 @@ module JQTable {
                             display: 'none'
                         });
                     }
-                    $("#" + col + "" + mya[iRowStart] + "").attr("rowspan", ilen);
+                    $("#" + this.mGridName + " #" + col + "" + mya[iRowStart] + "").attr("rowspan", ilen);
                     if (this.mOnMergedRows != undefined) {
                         this.mOnMergedRows(iCol, iRowStart, ilen);
                     }

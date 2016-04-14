@@ -12,18 +12,18 @@ module yszkgb {
         class JQGridAssistantFactory {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("月度", "a0", true, TextAlign.Center),
-                    new JQTable.Node("月度", "a1", true, TextAlign.Center)
-                        .append(new JQTable.Node("逾期0-1个月", "b1"))
-                        .append(new JQTable.Node("逾期1-3月", "b2"))
-                        .append(new JQTable.Node("逾期3-6月", "b3"))
-                        .append(new JQTable.Node("逾期6-12月", "b4"))
-                        .append(new JQTable.Node("逾期1年以上", "b5"))
-                        .append(new JQTable.Node("小计", "b6")),
-                    new JQTable.Node("逾期款（含到期保证金）", "a2"),
-                    new JQTable.Node("未到期(不含质保金)", "a3"),
-                    new JQTable.Node("未到期质保金", "a4"),
-                    new JQTable.Node("合计", "a5")
+                    new JQTable.Node("月度", "aa", true, TextAlign.Center),
+                    new JQTable.Node("月度", "ab", true, TextAlign.Center)
+                        .append(new JQTable.Node("逾期0-1个月", "ba"))
+                        .append(new JQTable.Node("逾期1-3月", "bb"))
+                        .append(new JQTable.Node("逾期3-6月", "bc"))
+                        .append(new JQTable.Node("逾期6-12月", "bd"))
+                        .append(new JQTable.Node("逾期1年以上", "be"))
+                        .append(new JQTable.Node("小计", "bf")),
+                    new JQTable.Node("逾期款（含到期保证金）", "ag"),
+                    new JQTable.Node("未到期(不含质保金)", "ah"),
+                    new JQTable.Node("未到期质保金", "ai"),
+                    new JQTable.Node("合计", "aj")
                 ], gridName);
             }
         }

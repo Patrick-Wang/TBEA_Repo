@@ -13,14 +13,14 @@ module yszkgb {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("月度", "rq", true, TextAlign.Center),
-                    new JQTable.Node("月度", "rq1", true, TextAlign.Center),
-                    new JQTable.Node("5年以上", "a1"),
-                    new JQTable.Node("4-5年", "a2"),
-                    new JQTable.Node("3-4年", "a3"),
-                    new JQTable.Node("2-3年", "a4"),
-                    new JQTable.Node("1-2年", "a5"),
-                    new JQTable.Node("1年以内", "a6"),
-                    new JQTable.Node("合计", "a7")
+                    new JQTable.Node("月度", "rqa", true, TextAlign.Center),
+                    new JQTable.Node("5年以上", "ab"),
+                    new JQTable.Node("4-5年", "ac"),
+                    new JQTable.Node("3-4年", "ad"),
+                    new JQTable.Node("2-3年", "ae"),
+                    new JQTable.Node("1-2年", "af"),
+                    new JQTable.Node("1年以内", "ag"),
+                    new JQTable.Node("合计", "ah")
                 ], gridName);
             }
         }

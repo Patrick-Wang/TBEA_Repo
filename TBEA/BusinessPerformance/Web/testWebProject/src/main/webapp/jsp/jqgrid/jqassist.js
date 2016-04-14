@@ -398,7 +398,7 @@ var JQTable;
             this.mGridName = gridName;
             this.mTitle = titleNodes;
             for (var i in this.mTitle) {
-                this.mTitle[i].mOpts.id = this.mGridName + this.mTitle[i].mOpts.id;
+                //this.mTitle[i].mOpts.id = this.mGridName + this.mTitle[i].mOpts.id;
                 nodes = this.mTitle[i].leaves();
                 for (var j in nodes) {
                     var colId = nodes[j].idChain();
@@ -602,7 +602,7 @@ var JQTable;
                             display: 'none'
                         });
                     }
-                    $("#" + col + "" + mya[iRowStart] + "").attr("rowspan", ilen);
+                    $("#" + _this.mGridName + " #" + col + "" + mya[iRowStart] + "").attr("rowspan", ilen);
                     if (_this.mOnMergedRows != undefined) {
                         _this.mOnMergedRows(iCol, iRowStart, ilen);
                     }
