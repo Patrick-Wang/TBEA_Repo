@@ -9,38 +9,42 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var chgb;
 (function (chgb) {
-    var chjykcb;
-    (function (chjykcb) {
+    var chzlbhqk;
+    (function (chzlbhqk) {
         var TextAlign = JQTable.TextAlign;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("项目", "xm", true, TextAlign.Center),
-                    new JQTable.Node("项目", "xm1", true, TextAlign.Center),
-                    new JQTable.Node("上月余额", "syye"),
-                    new JQTable.Node("本月新增", "byxz"),
-                    new JQTable.Node("本月处置", "bycz"),
-                    new JQTable.Node("期末余额", "qmye")
+                    new JQTable.Node("月度", "chzlbhqk_rq", true, TextAlign.Center),
+                    new JQTable.Node("月度", "chzlbhqk_rq1", true, TextAlign.Center),
+                    new JQTable.Node("5年以上", "chzlbhqk_a1"),
+                    new JQTable.Node("4-5年", "chzlbhqk_a2"),
+                    new JQTable.Node("3-4年", "chzlbhqk_a3"),
+                    new JQTable.Node("2-3年", "chzlbhqk_a4"),
+                    new JQTable.Node("1-2年", "chzlbhqk_a5"),
+                    new JQTable.Node("1年以内", "chzlbhqk_a6"),
+                    new JQTable.Node("合计", "chzlbhqk_a7")
                 ], gridName);
             };
             return JQGridAssistantFactory;
         }());
-        var CHJYKCBView = (function (_super) {
-            __extends(CHJYKCBView, _super);
-            function CHJYKCBView() {
+        var CHZLBHQKView = (function (_super) {
+            __extends(CHZLBHQKView, _super);
+            function CHZLBHQKView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("chjykcb/update.do", false);
+                this.mAjax = new Util.Ajax("chzlbhqk/update.do", false);
             }
-            CHJYKCBView.newInstance = function () {
-                return new CHJYKCBView();
+            CHZLBHQKView.newInstance = function () {
+                return new CHZLBHQKView();
             };
-            CHJYKCBView.prototype.option = function () {
+            CHZLBHQKView.prototype.option = function () {
                 return this.mOpt;
             };
-            CHJYKCBView.prototype.pluginUpdate = function (date, cpType) {
+            CHZLBHQKView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
+                this.mDt = date;
                 this.mAjax.get({
                     date: date,
                     companyId: cpType
@@ -50,27 +54,31 @@ var chgb;
                     _this.refresh();
                 });
             };
-            CHJYKCBView.prototype.refresh = function () {
+            CHZLBHQKView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            CHJYKCBView.prototype.init = function (opt) {
+            CHZLBHQKView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("积压库存表", this);
+                view.register("存货账龄变化情况", this);
             };
-            CHJYKCBView.prototype.updateTable = function () {
+            CHZLBHQKView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
+                var curDate = new Date(Date.parse(this.mDt));
+                var month = curDate.getMonth() + 1;
                 var data = [];
-                data.push(["积压库存（原值）"].concat(this.mData[0]));
-                data.push(["积压库存（原值）"].concat(this.mData[1]));
-                data.push(["积压库存（原值）"].concat(this.mData[2]));
-                data.push(["积压库存（原值）"].concat(this.mData[3]));
+                for (var i = month + 1; i <= 12; ++i) {
+                    data.push(["上年度", i + "月"].concat(this.mData[i - month - 1]));
+                }
+                for (var i = 1; i <= month; ++i) {
+                    data.push(["本年度", i + "月"].concat(this.mData[12 - month + i - 1]));
+                }
                 tableAssist.mergeRow(0);
                 tableAssist.mergeTitle();
                 this.$(name).jqGrid(tableAssist.decorate({
@@ -87,8 +95,8 @@ var chgb;
                     viewrecords: true
                 }));
             };
-            return CHJYKCBView;
+            return CHZLBHQKView;
         }(chgb.BasePluginView));
-        chjykcb.pluginView = CHJYKCBView.newInstance();
-    })(chjykcb = chgb.chjykcb || (chgb.chjykcb = {}));
+        chzlbhqk.pluginView = CHZLBHQKView.newInstance();
+    })(chzlbhqk = chgb.chzlbhqk || (chgb.chzlbhqk = {}));
 })(chgb || (chgb = {}));

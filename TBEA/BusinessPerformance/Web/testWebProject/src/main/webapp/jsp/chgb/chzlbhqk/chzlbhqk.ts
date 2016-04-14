@@ -7,17 +7,20 @@ declare var echarts;
 declare var view:chgb.FrameView;
 
 module chgb {
-    export module chjykcb {
+    export module chzlbhqk {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("项目", "xm", true, TextAlign.Center),
-                    new JQTable.Node("项目", "xm1", true, TextAlign.Center),
-                    new JQTable.Node("上月余额", "syye"),
-                    new JQTable.Node("本月新增", "byxz"),
-                    new JQTable.Node("本月处置", "bycz"),
-                    new JQTable.Node("期末余额", "qmye")
+                    new JQTable.Node("月度", "chzlbhqk_rq", true, TextAlign.Center),
+                    new JQTable.Node("月度", "chzlbhqk_rq1", true, TextAlign.Center),
+                    new JQTable.Node("5年以上", "chzlbhqk_a1"),
+                    new JQTable.Node("4-5年", "chzlbhqk_a2"),
+                    new JQTable.Node("3-4年", "chzlbhqk_a3"),
+                    new JQTable.Node("2-3年", "chzlbhqk_a4"),
+                    new JQTable.Node("1-2年", "chzlbhqk_a5"),
+                    new JQTable.Node("1年以内", "chzlbhqk_a6"),
+                    new JQTable.Node("合计", "chzlbhqk_a7")
                 ], gridName);
             }
         }
@@ -26,22 +29,22 @@ module chgb {
             tb:string;
         }
 
-        class CHJYKCBView extends BasePluginView {
+        class CHZLBHQKView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("chjykcb/update.do", false);
+            private mAjax:Util.Ajax = new Util.Ajax("chzlbhqk/update.do", false);
             private mDateSelector:Util.DateSelector;
-
-            public static newInstance():CHJYKCBView {
-                return new CHJYKCBView();
+            private mDt: string;
+            
+            public static newInstance():CHZLBHQKView {
+                return new CHZLBHQKView();
             }
-
-
 
             private option():Option {
                 return <Option>this.mOpt;
             }
 
             public pluginUpdate(date:string, cpType:Util.CompanyType):void {
+                this.mDt = date;
                 this.mAjax.get({
                         date: date,
                         companyId: cpType
@@ -62,7 +65,7 @@ module chgb {
 
             public init(opt:Option):void {
                 super.init(opt);
-                view.register("积压库存表", this);
+                view.register("存货账龄变化情况", this);
             }
 
             private updateTable():void {
@@ -72,15 +75,20 @@ module chgb {
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
                 
+                let curDate : Date = new Date(Date.parse(this.mDt));
+                let month = curDate.getMonth() + 1;
                 let data = [];
-                data.push(["积压库存（原值）"].concat(this.mData[0]));
-                data.push(["积压库存（原值）"].concat(this.mData[1]));
-                data.push(["积压库存（原值）"].concat(this.mData[2]));
-                data.push(["积压库存（原值）"].concat(this.mData[3]));
+                for (let i = month + 1; i <= 12; ++i){
+                    data.push(["上年度", i + "月"].concat(this.mData[i - month - 1]));
+                }
+                for (let i = 1; i <= month; ++i){
+                    data.push(["本年度", i + "月"].concat(this.mData[12 - month + i - 1]));
+                }
 
                 tableAssist.mergeRow(0);
                 tableAssist.mergeTitle();
-              this.$(name).jqGrid(
+                
+                this.$(name).jqGrid(
                     tableAssist.decorate({
                         multiselect: false,
                         drag: false,
@@ -97,6 +105,6 @@ module chgb {
             }
         }
 
-        export var pluginView = CHJYKCBView.newInstance();
+        export var pluginView = CHZLBHQKView.newInstance();
     }
 }
