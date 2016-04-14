@@ -849,26 +849,14 @@ module JQTable {
                 this.completeList.push(() => {
                     var headerStart = $("#" + this.mGridName + "_" + this.id(iColStart));
 
-                    var firstWidht = this.parseInt(headerStart.css("width")) +
-                        this.parseInt(headerStart.css("padding-left")) +
-                        this.parseInt(headerStart.css("padding-right"))+
-                        this.parseInt(headerStart.css("border-left")) +
-                        1 + //this.parseInt(headerStart.css("border-right"))+
-                        this.parseInt(headerStart.css("margin-left"))+
-                        this.parseInt(headerStart.css("margin-right"));
+                    var firstWidht = this.parseInt(headerStart[0].style.width);
                     var iWidht = firstWidht;
 
                     var headerMerge: any = null;
                     var widthList = [iWidht];
                     for (var i = 1; i < iCount; i++) {
                         headerMerge = $("#" + this.mGridName + "_" + this.id(iColStart + i));
-                        widthList.push(this.parseInt(headerMerge.css("width")) +
-                            this.parseInt(headerMerge.css("padding-left")) +
-                            this.parseInt(headerMerge.css("padding-right")) +
-                            this.parseInt(headerMerge.css("border-left")) +
-                            1 + //this.parseInt(headerMerge.css("border-right"))+
-                            this.parseInt(headerMerge.css("margin-left"))+
-                            this.parseInt(headerMerge.css("margin-right")))
+                        widthList.push(this.parseInt(headerStart[0].style.width));
                         iWidht += widthList[widthList.length - 1];
                         headerMerge.removeClass("ui-state-default");
                         headerMerge.children("span").css("display", "none");

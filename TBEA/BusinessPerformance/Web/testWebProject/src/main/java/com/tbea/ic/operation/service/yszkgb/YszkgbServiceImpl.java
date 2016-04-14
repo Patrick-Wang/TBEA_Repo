@@ -87,7 +87,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 		for (int i = 0; i < 12; ++i){
 			result.add(new ArrayList<String>());
 			for (YszkZlEntity entity : entities){
-				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH)){
+				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == (cal.get(Calendar.MONTH) + 1)){
 					result.set(result.size() - 1, toList(entity));
 					entities.remove(entity);
 					break;
@@ -113,7 +113,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 		for (int i = 0; i < 12; ++i){
 			result.add(new ArrayList<String>());
 			for (YszkKxxzEntity entity : entities){
-				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH)){
+				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == (cal.get(Calendar.MONTH) + 1)){
 					result.set(result.size() - 1, toList(entity));
 					entities.remove(entity);
 					break;
@@ -163,7 +163,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 		for (int i = 0; i < 12; ++i){
 			result.add(new ArrayList<String>());
 			for (YszkYjtzTjqsEntity entity : entities){
-				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH)){
+				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == (cal.get(Calendar.MONTH) + 1)){
 					result.set(result.size() - 1, toList(entity));
 					entities.remove(entity);
 					break;
@@ -202,7 +202,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 		for (int i = 0; i < 12; ++i){
 			result.add(new ArrayList<String>());
 			for (YqyszcsysEntity entity : entities){
-				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH)){
+				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == (cal.get(Calendar.MONTH) + 1)){
 					result.set(result.size() - 1, toList(entity));
 					entities.remove(entity);
 					break;

@@ -745,25 +745,13 @@ var JQTable;
             if (iColStart != undefined) {
                 this.completeList.push(function () {
                     var headerStart = $("#" + _this.mGridName + "_" + _this.id(iColStart));
-                    var firstWidht = _this.parseInt(headerStart.css("width")) +
-                        _this.parseInt(headerStart.css("padding-left")) +
-                        _this.parseInt(headerStart.css("padding-right")) +
-                        _this.parseInt(headerStart.css("border-left")) +
-                        1 +
-                        _this.parseInt(headerStart.css("margin-left")) +
-                        _this.parseInt(headerStart.css("margin-right"));
+                    var firstWidht = _this.parseInt(headerStart[0].style.width);
                     var iWidht = firstWidht;
                     var headerMerge = null;
                     var widthList = [iWidht];
                     for (var i = 1; i < iCount; i++) {
                         headerMerge = $("#" + _this.mGridName + "_" + _this.id(iColStart + i));
-                        widthList.push(_this.parseInt(headerMerge.css("width")) +
-                            _this.parseInt(headerMerge.css("padding-left")) +
-                            _this.parseInt(headerMerge.css("padding-right")) +
-                            _this.parseInt(headerMerge.css("border-left")) +
-                            1 +
-                            _this.parseInt(headerMerge.css("margin-left")) +
-                            _this.parseInt(headerMerge.css("margin-right")));
+                        widthList.push(_this.parseInt(headerStart[0].style.width));
                         iWidht += widthList[widthList.length - 1];
                         headerMerge.removeClass("ui-state-default");
                         headerMerge.children("span").css("display", "none");
