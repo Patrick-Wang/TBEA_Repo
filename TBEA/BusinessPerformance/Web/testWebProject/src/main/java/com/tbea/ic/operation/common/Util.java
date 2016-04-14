@@ -206,6 +206,14 @@ public class Util {
 		return v;
 	}
 	
+	public static Double toDoubleNull(String val) {
+		try {
+			return Double.valueOf(val);
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	
 	public static Double sum(Double[] vals){
 		Double ret = null;
 		for (int i = 0; i < vals.length; ++i){

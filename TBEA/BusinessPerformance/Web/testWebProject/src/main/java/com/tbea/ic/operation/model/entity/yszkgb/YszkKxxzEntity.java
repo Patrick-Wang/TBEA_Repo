@@ -44,7 +44,7 @@ public class YszkKxxzEntity extends AbstractReadWriteEntity implements Serializa
 	Double yq1nys;
 	Double wdq;
 	Double wdqzbj;
-	SHZT zt;
+	Integer zt;
 	public Integer getNf() {
 		return nf;
 	}
@@ -107,12 +107,12 @@ public class YszkKxxzEntity extends AbstractReadWriteEntity implements Serializa
 	public void setWdqzbj(Double wdqzbj) {
 		this.wdqzbj = wdqzbj;
 	}
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "zt")
-	public SHZT getZt() {
+
+	public Integer getZt() {
 		return zt;
 	}
-	public void setZt(SHZT zt) {
+	
+	public void setZt(Integer zt) {
 		this.zt = zt;
 	}
 

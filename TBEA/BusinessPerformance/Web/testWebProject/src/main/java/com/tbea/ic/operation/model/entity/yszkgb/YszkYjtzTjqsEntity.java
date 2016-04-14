@@ -46,7 +46,7 @@ public class YszkYjtzTjqsEntity extends AbstractReadWriteEntity implements Seria
 	Double xyzcjys;
 	Double qtyskmyx;
 	Double yjtzyszkye;
-	SHZT zt;
+	Integer zt;
 	public Integer getNf() {
 		return nf;
 	}
@@ -115,12 +115,11 @@ public class YszkYjtzTjqsEntity extends AbstractReadWriteEntity implements Seria
 	public void setYjtzyszkye(Double yjtzyszkye) {
 		this.yjtzyszkye = yjtzyszkye;
 	}
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "zt")
-	public SHZT getZt() {
+
+	public Integer getZt() {
 		return zt;
 	}
-	public void setZt(SHZT zt) {
+	public void setZt(Integer zt) {
 		this.zt = zt;
 	}
 	

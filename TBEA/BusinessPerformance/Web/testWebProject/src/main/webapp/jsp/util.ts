@@ -3,6 +3,20 @@ declare var $;
 
 module Util {
 
+    export enum ErrorCode {
+        OK,
+        DATABASE_EXCEPTION,
+        PREMARY_KEY_CONFILICT,
+        PREMARY_KEY_NULL,
+        HAVE_NO_RIGHT,
+        PRICELIB_JCYCLJG_IMPORT_ERROR
+    }
+
+    export interface IResponse {
+        errorCode:ErrorCode;
+        message:string;
+    }
+
     function indexOf(arr, val) {
         for (var i = 0; i < arr.length; i++) {
             if (arr[i] == val) {

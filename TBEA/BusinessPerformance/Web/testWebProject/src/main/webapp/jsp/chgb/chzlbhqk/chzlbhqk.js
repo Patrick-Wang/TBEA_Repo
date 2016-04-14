@@ -29,7 +29,7 @@ var chgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var CHZLBHQKView = (function (_super) {
             __extends(CHZLBHQKView, _super);
             function CHZLBHQKView() {
@@ -96,7 +96,7 @@ var chgb;
                 }));
             };
             return CHZLBHQKView;
-        }(chgb.BasePluginView));
+        })(chgb.BasePluginView);
         chzlbhqk.pluginView = CHZLBHQKView.newInstance();
     })(chzlbhqk = chgb.chzlbhqk || (chgb.chzlbhqk = {}));
 })(chgb || (chgb = {}));

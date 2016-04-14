@@ -21,12 +21,12 @@ module yszkgb {
     }
 
     export class View implements FrameView {
-        private mOpt:Option;
-        private mDtSec:Util.DateSelector;
-        private mItemSelector:Util.UnitedSelector;
-        private mCompanySelector: Util.CompanySelector;
-        private mNodes:Util.DataNode[] = [];
-        private mCurrentPlugin: PluginView;
+        protected mOpt:Option;
+        protected mDtSec:Util.DateSelector;
+        protected  mItemSelector:Util.UnitedSelector;
+        protected mCompanySelector: Util.CompanySelector;
+        protected mNodes:Util.DataNode[] = [];
+        protected mCurrentPlugin: PluginView;
         public register(name:string, plugin:PluginView):void {
             var data:PluginData = {id: this.mNodes.length, value: name, plugin: plugin};
             var node:Util.DataNode = new Util.DataNode(data);
@@ -70,14 +70,11 @@ module yszkgb {
             this.updateUI();
         }
 
-
-
-
-        private plugin(node:Util.DataNode):PluginView{
+        protected plugin(node:Util.DataNode):PluginView{
             return  (<PluginData>node.getData()).plugin;
         }
 
-        private getActiveNode():Util.DataNode{
+        protected getActiveNode():Util.DataNode{
             return this.mItemSelector.getDataNode(this.mItemSelector.getPath());
         }
 

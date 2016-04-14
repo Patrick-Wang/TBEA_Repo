@@ -4,7 +4,7 @@ import net.sf.json.JSONObject;
 
 public class BMResponse {
 	private Integer errorCode;
-	private String message;
+	private String message = "";
 	
 	public BMResponse(ErrorCode errorCode, String message) {
 		super();

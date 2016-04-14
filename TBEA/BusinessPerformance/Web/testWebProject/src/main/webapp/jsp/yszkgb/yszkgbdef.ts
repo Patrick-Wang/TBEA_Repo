@@ -47,4 +47,18 @@ module yszkgb {
 
         abstract  pluginUpdate(date:string, cpType:Util.CompanyType):void;
     }
+
+    export abstract class EntryPluginView extends BasePluginView{
+        public save(date:Util.Date, cpType:Util.CompanyType):void{
+            let dt:string = date.year + "-" + date.month + "-" + date.day;
+            this.pluginSave(dt, cpType);
+        }
+        public submit(date:Util.Date, cpType:Util.CompanyType):void{
+            let dt:string = date.year + "-" + date.month + "-" + date.day;
+            this.pluginSubmit(dt, cpType);
+        }
+
+        abstract pluginSave(dt:string, cpType:Util.CompanyType):void;
+        abstract pluginSubmit(dt:string, cpType:Util.CompanyType):void;
+    }
 }

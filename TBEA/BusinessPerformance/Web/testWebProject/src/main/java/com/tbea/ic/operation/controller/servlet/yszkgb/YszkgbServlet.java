@@ -20,11 +20,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.ic.operation.common.BMResponse;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.yszkgb.YszkgbService;
 import com.tbea.ic.operation.service.yszkgb.YszkgbServiceImpl;
 
@@ -61,6 +66,21 @@ public class YszkgbServlet {
 		dateSel.select(map);
 		
 		return new ModelAndView("yszkgb/yszkgb", map);
+	}
+	
+	@RequestMapping(value = "entry/show.do", method = RequestMethod.GET)
+	public ModelAndView getYszkgbEntry(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		CompanySelection compSel = new CompanySelection(true, yszkgbComps);
+		compSel.select(map);
+		
+		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
+		dateSel.select(map);
+		
+		return new ModelAndView("yszkgb/yszkgbEntry", map);
 	}
 	
 	@RequestMapping(value = "zmb/update.do", method = RequestMethod.GET)
@@ -103,7 +123,6 @@ public class YszkgbServlet {
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 	
-	
 	@RequestMapping(value = "yszkyjtztjqs/update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getYszkyjtztjqs(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -113,5 +132,100 @@ public class YszkgbServlet {
 		List<List<String>> result = yszkgbService.getYszkyjtztjqs(d, companyManager.getBMDBOrganization().getCompany(comp));
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
+	
+	@RequestMapping(value = "yszkkxxz/entry/update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getYszkkxxzEntry(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		List<List<String>> result = yszkgbService.getYszkkxxzEntry(d, companyManager.getBMDBOrganization().getCompany(comp));
+		return JSONArray.fromObject(result).toString().replaceAll("null", "").getBytes("utf-8");
+	}
+	
+	
+	@RequestMapping(value = "yqyszcsys/entry/update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getYqyszcsysEntry(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		List<List<String>> result = yszkgbService.getYqyszcsysEntry(d, companyManager.getBMDBOrganization().getCompany(comp));
+		return JSONArray.fromObject(result).toString().replaceAll("null", "").getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "yszkyjtztjqs/entry/update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getYszkyjtztjqsEntry(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		List<List<String>> result = yszkgbService.getYszkyjtztjqsEntry(d, companyManager.getBMDBOrganization().getCompany(comp));
+		return JSONArray.fromObject(result).toString().replaceAll("null", "").getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "yszkkxxz/entry/save.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] entryYszkkxxz(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		ErrorCode err = yszkgbService.saveYszkkxxz(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		return Util.response(err);
+	}
+	
+	
+	@RequestMapping(value = "yqyszcsys/entry/save.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] entryYqyszcsys(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		ErrorCode err = yszkgbService.saveYqyszcsys(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		return Util.response(err);
+	}
+	
+	
+	@RequestMapping(value = "yszkyjtztjqs/entry/save.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] entryYszkyjtztjqs(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		ErrorCode err = yszkgbService.saveYszkyjtztjqs(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		return Util.response(err);
+	}
+	
+	@RequestMapping(value = "yszkkxxz/entry/submit.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] submitYszkkxxz(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		ErrorCode err = yszkgbService.submitYszkkxxz(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		return Util.response(err);
+	}
+	
+	
+	@RequestMapping(value = "yqyszcsys/entry/submit.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] submitYqyszcsys(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		ErrorCode err = yszkgbService.submitYqyszcsys(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		return Util.response(err);
+	}
+	
+	
+	@RequestMapping(value = "yszkyjtztjqs/entry/submit.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] submitYszkyjtztjqs(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		ErrorCode err = yszkgbService.submitYszkyjtztjqs(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		return Util.response(err);
+	}
+	
 	
 }

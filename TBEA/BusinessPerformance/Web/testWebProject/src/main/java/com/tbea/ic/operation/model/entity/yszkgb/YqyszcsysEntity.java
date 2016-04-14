@@ -44,7 +44,7 @@ public class YqyszcsysEntity extends AbstractReadWriteEntity implements Serializ
 	Double htys;
 	Double sxbl;
 	Double ss;
-	SHZT zt;
+	Integer zt;
 	public Integer getNf() {
 		return nf;
 	}
@@ -107,12 +107,11 @@ public class YqyszcsysEntity extends AbstractReadWriteEntity implements Serializ
 	public void setSs(Double ss) {
 		this.ss = ss;
 	}
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "zt")
-	public SHZT getZt() {
+
+	public Integer getZt() {
 		return zt;
 	}
-	public void setZt(SHZT zt) {
+	public void setZt(Integer zt) {
 		this.zt = zt;
 	}
 

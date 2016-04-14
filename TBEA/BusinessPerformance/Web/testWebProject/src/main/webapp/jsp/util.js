@@ -6,6 +6,15 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="jqgrid/vector.ts" />
 var Util;
 (function (Util) {
+    (function (ErrorCode) {
+        ErrorCode[ErrorCode["OK"] = 0] = "OK";
+        ErrorCode[ErrorCode["DATABASE_EXCEPTION"] = 1] = "DATABASE_EXCEPTION";
+        ErrorCode[ErrorCode["PREMARY_KEY_CONFILICT"] = 2] = "PREMARY_KEY_CONFILICT";
+        ErrorCode[ErrorCode["PREMARY_KEY_NULL"] = 3] = "PREMARY_KEY_NULL";
+        ErrorCode[ErrorCode["HAVE_NO_RIGHT"] = 4] = "HAVE_NO_RIGHT";
+        ErrorCode[ErrorCode["PRICELIB_JCYCLJG_IMPORT_ERROR"] = 5] = "PRICELIB_JCYCLJG_IMPORT_ERROR";
+    })(Util.ErrorCode || (Util.ErrorCode = {}));
+    var ErrorCode = Util.ErrorCode;
     function indexOf(arr, val) {
         for (var i = 0; i < arr.length; i++) {
             if (arr[i] == val) {

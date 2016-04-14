@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDaoImpl;
 import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDao;
@@ -26,6 +28,8 @@ import com.tbea.ic.operation.model.entity.yszkgb.YszkYjtzTjqsEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkZlEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
 import com.tbea.ic.operation.service.yszkgb.YszkgbService;
+
+import net.sf.json.JSONArray;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -237,4 +241,153 @@ public class YszkgbServiceImpl implements YszkgbService {
 		return list;
 	}
 
+	@Override
+	public List<List<String>> getYszkkxxzEntry(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		YszkKxxzEntity entity= yszkKxxzDao.getByDate(d, company);
+		if (null != entity){
+			List<String> list = toList(entity);
+			int size = list.size();
+			list.remove(size - 1);//合计
+			list.remove(size - 4);//小计
+			result.add(list);
+		}else{
+			result.add(new ArrayList<>());
+		}
+		return result;
+	}
+
+	@Override
+	public List<List<String>> getYqyszcsysEntry(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		YqyszcsysEntity entity= yqyszcsysDao.getByDate(d, company);
+		if (null != entity){
+			List<String> list = toList(entity);
+			int size = list.size();
+			list.remove(size - 1);//合计
+			result.add(list);
+		}else{
+			result.add(new ArrayList<>());
+		}
+		return result;
+	}
+
+	@Override
+	public List<List<String>> getYszkyjtztjqsEntry(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		YszkYjtzTjqsEntity entity= yszkYjtzTjqsDao.getByDate(d, company);
+		if (null != entity){
+			List<String> list = toList(entity);
+			result.add(list);
+		}else{
+			result.add(new ArrayList<>());
+		}
+		return result;
+	}
+
+	
+	ErrorCode entryYszkkxxz(Date d, Company company, JSONArray data, ZBStatus status) {
+		ErrorCode err = ErrorCode.OK;
+		YszkKxxzEntity entity= yszkKxxzDao.getByDate(d, company);
+		if (null == entity){
+			entity = new YszkKxxzEntity();
+			Calendar cal = Calendar.getInstance();
+			entity.setNf(cal.get(Calendar.YEAR));
+			entity.setYf(cal.get(Calendar.MONTH) + 1);
+		}
+
+		entity.setZt(status.ordinal());
+		entity.setYq0z1y(Util.toDoubleNull(data.getString(0)));
+		entity.setYq1z3y(Util.toDoubleNull(data.getString(1)));
+		entity.setYq3z6y(Util.toDoubleNull(data.getString(2)));
+		entity.setYq6z12y(Util.toDoubleNull(data.getString(3)));
+		entity.setYq1nys(Util.toDoubleNull(data.getString(4)));
+		entity.setWdq(Util.toDoubleNull(data.getString(5)));
+		entity.setWdqzbj(Util.toDoubleNull(data.getString(6)));
+		yszkKxxzDao.merge(entity);
+		return err;
+	}
+
+	ErrorCode entryYqyszcsys(Date d, Company company, JSONArray data, ZBStatus status) {
+		ErrorCode err = ErrorCode.OK;
+		YqyszcsysEntity entity= yqyszcsysDao.getByDate(d, company);
+		if (null == entity){
+			entity = new YqyszcsysEntity();
+			Calendar cal = Calendar.getInstance();
+			entity.setNf(cal.get(Calendar.YEAR));
+			entity.setYf(cal.get(Calendar.MONTH) + 1);
+		}
+
+		entity.setZt(status.ordinal());
+		entity.setNbys(Util.toDoubleNull(data.getString(0)));
+		entity.setKhzx(Util.toDoubleNull(data.getString(1)));
+		entity.setGdfk(Util.toDoubleNull(data.getString(2)));
+		entity.setXmbh(Util.toDoubleNull(data.getString(3)));
+		entity.setHtys(Util.toDoubleNull(data.getString(4)));
+		entity.setSxbl(Util.toDoubleNull(data.getString(5)));
+		entity.setSs(Util.toDoubleNull(data.getString(6)));
+		yqyszcsysDao.merge(entity);
+		return err;
+	}
+
+	ErrorCode entryYszkyjtztjqs(Date d, Company company, JSONArray data, ZBStatus status) {
+		ErrorCode err = ErrorCode.OK;
+		YszkYjtzTjqsEntity entity= yszkYjtzTjqsDao.getByDate(d, company);
+		if (null == entity){
+			entity = new YszkYjtzTjqsEntity();
+			Calendar cal = Calendar.getInstance();
+			entity.setNf(cal.get(Calendar.YEAR));
+			entity.setYf(cal.get(Calendar.MONTH) + 1);
+		}
+
+		entity.setZt(status.ordinal());
+		entity.setCwzmysjsye(Util.toDoubleNull(data.getString(0)));
+		entity.setBlye(Util.toDoubleNull(data.getString(1)));
+		entity.setHfpwkje(Util.toDoubleNull(data.getString(2)));
+		entity.setPkhwfje(Util.toDoubleNull(data.getString(3)));
+		entity.setYskcjys(Util.toDoubleNull(data.getString(4)));
+		entity.setXyzcjys(Util.toDoubleNull(data.getString(5)));
+		entity.setQtyskmyx(Util.toDoubleNull(data.getString(6)));
+		entity.setYjtzyszkye(Util.toDoubleNull(data.getString(7)));
+		yszkYjtzTjqsDao.merge(entity);
+		return err;
+	}
+
+	@Override
+	public ErrorCode saveYszkkxxz(Date d, Company company, JSONArray data) {
+		return entryYszkkxxz(d, company, data, ZBStatus.SAVED);
+	}
+
+	@Override
+	public ErrorCode saveYqyszcsys(Date d, Company company, JSONArray data) {
+		return entryYqyszcsys(d, company, data, ZBStatus.SAVED);
+	}
+
+	@Override
+	public ErrorCode saveYszkyjtztjqs(Date d, Company company, JSONArray data) {
+		return entryYszkyjtztjqs(d, company, data, ZBStatus.SAVED);
+	}
+	
+	@Override
+	public ErrorCode submitYszkkxxz(Date d, Company company, JSONArray data) {
+		return entryYqyszcsys(d, company, data, ZBStatus.SUBMITTED);
+	}
+
+	@Override
+	public ErrorCode submitYqyszcsys(Date d, Company company, JSONArray data) {
+		return entryYqyszcsys(d, company, data, ZBStatus.SUBMITTED);
+	}
+
+	@Override
+	public ErrorCode submitYszkyjtztjqs(Date d, Company company, JSONArray data) {
+		return entryYszkyjtztjqs(d, company, data, ZBStatus.SUBMITTED);
+	}
+
+	@Override
+	public ZBStatus getYszkkxxzStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
