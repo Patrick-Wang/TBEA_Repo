@@ -21,7 +21,6 @@ module yszkgb {
                         .append(new JQTable.Node("逾期3-6月", "bc", readOnly))
                         .append(new JQTable.Node("逾期6-12月", "bd", readOnly))
                         .append(new JQTable.Node("逾期1年以上", "be", readOnly)),
-                    new JQTable.Node("逾期款（含到期保证金）", "ag", readOnly),
                     new JQTable.Node("未到期(不含质保金)", "ah", readOnly),
                     new JQTable.Node("未到期质保金", "ai", readOnly),
                 ], gridName);

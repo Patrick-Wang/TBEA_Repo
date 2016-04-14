@@ -19,7 +19,7 @@
 	src="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
 
 <!-- 多选菜单 -->
-<link rel="stylesheet" type="text/css"
+<link rel="stylesheet" type="text/css" 
 	href="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.css" />
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/jsp/multi-select/assets/style.css" />
