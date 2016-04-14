@@ -15,12 +15,13 @@ module yszkgb {
             public static createTable(gridName:string, readOnly : boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("日期", "rq", true, TextAlign.Center),
-                    new JQTable.Node("5年以上", "ab", readOnly),
-                    new JQTable.Node("4-5年", "ac", readOnly),
-                    new JQTable.Node("3-4年", "ad", readOnly),
-                    new JQTable.Node("2-3年", "ae", readOnly),
-                    new JQTable.Node("1-2年", "af", readOnly),
-                    new JQTable.Node("1年以内", "ag", readOnly)
+                    new JQTable.Node("内部因素", "ab", readOnly),
+                    new JQTable.Node("客户资信", "ac", readOnly),
+                    new JQTable.Node("滚动付款", "ad", readOnly),
+                    new JQTable.Node("项目变化", "ae", readOnly),
+                    new JQTable.Node("合同因素", "af", readOnly),
+                    new JQTable.Node("手续办理", "ag", readOnly),
+                    new JQTable.Node("诉讼", "ah", readOnly)
                 ], gridName);
             }
         }
@@ -136,6 +137,14 @@ module yszkgb {
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
                 let ny = this.mDt.substr(0, this.mDt.length - 2).replace("-", "年") + "月";
+
+                for (var i = 0; i < this.mData.length; ++i) {
+                    for (var j = 2; j < this.mData[i].length; ++j) {
+                        if ("" != this.mData[i][j]) {
+                            this.mData[i][j] = parseFloat(this.mData[i][j]) + "";
+                        }
+                    }
+                }
 
                 let lastsel = "";
                 let lastcell = "";

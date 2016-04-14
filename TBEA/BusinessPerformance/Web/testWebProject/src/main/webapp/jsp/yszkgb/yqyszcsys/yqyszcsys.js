@@ -18,31 +18,32 @@ var yszkgb;
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("月度", "rq", true, TextAlign.Center),
-                    new JQTable.Node("月度", "rq1", true, TextAlign.Center),
-                    new JQTable.Node("5年以上", "a1"),
-                    new JQTable.Node("4-5年", "a2"),
-                    new JQTable.Node("3-4年", "a3"),
-                    new JQTable.Node("2-3年", "a4"),
-                    new JQTable.Node("1-2年", "a5"),
-                    new JQTable.Node("1年以内", "a6"),
-                    new JQTable.Node("合计", "a7")
+                    new JQTable.Node("月度", "rqa", true, TextAlign.Center),
+                    new JQTable.Node("内部因素", "ab"),
+                    new JQTable.Node("客户资信", "ac"),
+                    new JQTable.Node("滚动付款", "ad"),
+                    new JQTable.Node("项目变化", "ae"),
+                    new JQTable.Node("合同因素", "af"),
+                    new JQTable.Node("手续办理", "ag"),
+                    new JQTable.Node("诉讼", "ah"),
+                    new JQTable.Node("合计", "ai")
                 ], gridName);
             };
             return JQGridAssistantFactory;
         })();
-        var YSZKZLBHView = (function (_super) {
-            __extends(YSZKZLBHView, _super);
-            function YSZKZLBHView() {
+        var YqyszcsysView = (function (_super) {
+            __extends(YqyszcsysView, _super);
+            function YqyszcsysView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("yszkzlbh/update.do", false);
+                this.mAjax = new Util.Ajax("yqyszcsys/update.do", false);
             }
-            YSZKZLBHView.newInstance = function () {
-                return new YSZKZLBHView();
+            YqyszcsysView.newInstance = function () {
+                return new YqyszcsysView();
             };
-            YSZKZLBHView.prototype.option = function () {
+            YqyszcsysView.prototype.option = function () {
                 return this.mOpt;
             };
-            YSZKZLBHView.prototype.pluginUpdate = function (date, cpType) {
+            YqyszcsysView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjax.get({
@@ -54,23 +55,23 @@ var yszkgb;
                     _this.refresh();
                 });
             };
-            YSZKZLBHView.prototype.refresh = function () {
+            YqyszcsysView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            YSZKZLBHView.prototype.init = function (opt) {
+            YqyszcsysView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("应收账款账龄变化", this);
+                view.register("逾期应收账产生因素", this);
             };
-            YSZKZLBHView.prototype.updateTable = function () {
+            YqyszcsysView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                var curDate = new Date(Date.parse(this.mDt));
+                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
                 var month = curDate.getMonth() + 1;
                 var data = [];
                 for (var i = month + 1; i <= 12; ++i) {
@@ -95,8 +96,8 @@ var yszkgb;
                     viewrecords: true
                 }));
             };
-            return YSZKZLBHView;
+            return YqyszcsysView;
         })(yszkgb.BasePluginView);
-        yqyszcsys.pluginView = YSZKZLBHView.newInstance();
+        yqyszcsys.pluginView = YqyszcsysView.newInstance();
     })(yqyszcsys = yszkgb.yqyszcsys || (yszkgb.yqyszcsys = {}));
 })(yszkgb || (yszkgb = {}));

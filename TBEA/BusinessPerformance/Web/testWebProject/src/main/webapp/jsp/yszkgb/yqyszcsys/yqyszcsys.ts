@@ -14,13 +14,14 @@ module yszkgb {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("月度", "rq", true, TextAlign.Center),
                     new JQTable.Node("月度", "rqa", true, TextAlign.Center),
-                    new JQTable.Node("5年以上", "ab"),
-                    new JQTable.Node("4-5年", "ac"),
-                    new JQTable.Node("3-4年", "ad"),
-                    new JQTable.Node("2-3年", "ae"),
-                    new JQTable.Node("1-2年", "af"),
-                    new JQTable.Node("1年以内", "ag"),
-                    new JQTable.Node("合计", "ah")
+                    new JQTable.Node("内部因素", "ab"),
+                    new JQTable.Node("客户资信", "ac"),
+                    new JQTable.Node("滚动付款", "ad"),
+                    new JQTable.Node("项目变化", "ae"),
+                    new JQTable.Node("合同因素", "af"),
+                    new JQTable.Node("手续办理", "ag"),
+                    new JQTable.Node("诉讼", "ah"),
+                    new JQTable.Node("合计", "ai")
                 ], gridName);
             }
         }

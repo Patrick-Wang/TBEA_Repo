@@ -253,8 +253,6 @@ public class YszkgbServiceImpl implements YszkgbService {
 		if (null != entity){
 			List<String> list = toList(entity);
 			int size = list.size();
-			list.remove(size - 1);//合计
-			list.remove(size - 4);//小计
 			result.add(list);
 		}else{
 			result.add(new ArrayList<>());
@@ -268,8 +266,6 @@ public class YszkgbServiceImpl implements YszkgbService {
 		YqyszcsysEntity entity= yqyszcsysDao.getByDate(d, company);
 		if (null != entity){
 			List<String> list = toList(entity);
-			int size = list.size();
-			list.remove(size - 1);//合计
 			result.add(list);
 		}else{
 			result.add(new ArrayList<>());

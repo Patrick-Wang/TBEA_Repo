@@ -130,6 +130,13 @@ var yszkgb;
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
                 var ny = this.mDt.substr(0, this.mDt.length - 2).replace("-", "年") + "月";
+                for (var i = 0; i < this.mData.length; ++i) {
+                    for (var j = 2; j < this.mData[i].length; ++j) {
+                        if ("" != this.mData[i][j]) {
+                            this.mData[i][j] = parseFloat(this.mData[i][j]) + "";
+                        }
+                    }
+                }
                 var lastsel = "";
                 var lastcell = "";
                 this.$(name).jqGrid(this.mTableAssist.decorate({

@@ -11,7 +11,7 @@ $(document).ready(function(){
     yszkgb.yqyszcsys.pluginView.init({
         tb: "table",
         host: "yqyszcsys",
-        tbarea:"tbarea" 
+        tbarea:"tbarea"
     });
-});
+}); 
 </script>
