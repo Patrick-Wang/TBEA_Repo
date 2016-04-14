@@ -211,7 +211,7 @@ module JQTable {
     export class Node {
         private mChilds: Node[] = [];
         private mParent: Node = null;
-        private mOpts: NodeOption;
+        mOpts: NodeOption;
 
         constructor(
             name: string,
@@ -477,6 +477,7 @@ module JQTable {
             this.mGridName = gridName;
             this.mTitle = titleNodes;
             for (var i in this.mTitle) {
+                this.mTitle[i].mOpts.id = this.mGridName + this.mTitle[i].mOpts.id;
                 nodes = this.mTitle[i].leaves();
 
                 for (var j in nodes) {

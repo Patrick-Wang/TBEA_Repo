@@ -168,13 +168,13 @@ var approve_template;
                         if (title[j - 1] == '人数') {
                             tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
                         }
-                        else if (title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
+                        else if (title[j - 1] == '三项费用率(%)') {
                             tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
                         }
                         else if (title[j - 1] == '人均收入' || title[j - 1] == '人均利润' || title[j - 1] == '精铝块13项元素和值（ppm）') {
                             tmpData[i][j] = Util.formatFordot(tmpData[i][j]) + "";
                         }
-                        else if (title[j - 1] == '净资产收益率(%)') {
+                        else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '销售利润率(%)') {
                             tmpData[i][j] = Util.formatPercentSignal(tmpData[i][j]) + "";
                         }
                         else if (title[j - 1] == '单位供电成本（元/度）') {
@@ -365,13 +365,13 @@ var approve_template;
                         if (title[j - 1] == '人数') {
                             tmpData[i][j] = Util.formatInt(tmpData[i][j]) + "";
                         }
-                        else if (title[j - 1] == '三项费用率(%)' || title[j - 1] == '销售利润率(%)') {
+                        else if (title[j - 1] == '三项费用率(%)') {
                             tmpData[i][j] = Util.formatPercent(tmpData[i][j]) + "";
                         }
                         else if (title[j - 1] == '人均收入' || title[j - 1] == '人均利润' || title[j - 1] == '精铝块13项元素和值（ppm）') {
                             tmpData[i][j] = Util.formatFordot(tmpData[i][j]) + "";
                         }
-                        else if (title[j - 1] == '净资产收益率(%)') {
+                        else if (title[j - 1] == '净资产收益率(%)' || title[j - 1] == '销售利润率(%)') {
                             tmpData[i][j] = Util.formatPercentSignal(tmpData[i][j]) + "";
                         }
                         else if (title[j - 1] == '单位供电成本（元/度）') {

@@ -9,8 +9,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var yszkgb;
 (function (yszkgb) {
-    var yszkzlbh;
-    (function (yszkzlbh) {
+    var yqyszcsys;
+    (function (yqyszcsys) {
         var TextAlign = JQTable.TextAlign;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
@@ -30,19 +30,19 @@ var yszkgb;
             };
             return JQGridAssistantFactory;
         })();
-        var YSZKZLBHView = (function (_super) {
-            __extends(YSZKZLBHView, _super);
-            function YSZKZLBHView() {
+        var YqyszcsysView = (function (_super) {
+            __extends(YqyszcsysView, _super);
+            function YqyszcsysView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("yszkzlbh/update.do", false);
+                this.mAjax = new Util.Ajax("yqyszcsys/update.do", false);
             }
-            YSZKZLBHView.newInstance = function () {
-                return new YSZKZLBHView();
+            YqyszcsysView.newInstance = function () {
+                return new YqyszcsysView();
             };
-            YSZKZLBHView.prototype.option = function () {
+            YqyszcsysView.prototype.option = function () {
                 return this.mOpt;
             };
-            YSZKZLBHView.prototype.pluginUpdate = function (date, cpType) {
+            YqyszcsysView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjax.get({
@@ -54,17 +54,17 @@ var yszkgb;
                     _this.refresh();
                 });
             };
-            YSZKZLBHView.prototype.refresh = function () {
+            YqyszcsysView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            YSZKZLBHView.prototype.init = function (opt) {
+            YqyszcsysView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("应收账款账龄变化", this);
+                view.register("逾期应收账产生因素", this);
             };
-            YSZKZLBHView.prototype.updateTable = function () {
+            YqyszcsysView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
@@ -95,8 +95,8 @@ var yszkgb;
                     viewrecords: true
                 }));
             };
-            return YSZKZLBHView;
+            return YqyszcsysView;
         })(yszkgb.BasePluginView);
-        yszkzlbh.pluginView = YSZKZLBHView.newInstance();
-    })(yszkzlbh = yszkgb.yszkzlbh || (yszkgb.yszkzlbh = {}));
+        yqyszcsys.pluginView = YqyszcsysView.newInstance();
+    })(yqyszcsys = yszkgb.yqyszcsys || (yszkgb.yqyszcsys = {}));
 })(yszkgb || (yszkgb = {}));

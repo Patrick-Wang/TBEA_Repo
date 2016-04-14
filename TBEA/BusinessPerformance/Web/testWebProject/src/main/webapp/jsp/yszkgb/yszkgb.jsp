@@ -189,6 +189,8 @@ th.ui-th-ltr {
 				<%@include file="zmb/zmb.jsp"%>
 				<%@include file="yszkzlbh/yszkzlbh.jsp"%>
 				<%@include file="yszkkxxz/yszkkxxz.jsp"%>
+				<%@include file="yszkyjtztjqs/yszkyjtztjqs.jsp"%>
+				<%@include file="yqyszcsys/yqyszcsys.jsp"%>
 			</td>
 		</tr>
 	</Table>
@@ -211,7 +213,7 @@ th.ui-th-ltr {
                     .multiselect({
                         multiple: false,
                         header: false,
-                        minWidth: 180, 
+                        minWidth: 250, 
                         height: '100%', 
                         // noneSelectedText: "请选择月份",
                         selectedList: 1
