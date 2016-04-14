@@ -4,8 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
+
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -20,6 +23,15 @@ public class JykcxmEntity extends AbstractReadWriteEntity implements Serializabl
 		return super.getId();
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	String name;
 
 	/**
 	 * 

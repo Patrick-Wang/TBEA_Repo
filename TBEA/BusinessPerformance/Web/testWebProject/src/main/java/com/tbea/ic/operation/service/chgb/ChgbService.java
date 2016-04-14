@@ -8,4 +8,6 @@ import com.tbea.ic.operation.common.companys.Company;
 public interface ChgbService {
 
 	List<List<String>> getChzmb(Date d, Company company);
+	
+	List<List<String>> getChjykcb(Date d, Company company);
 }
