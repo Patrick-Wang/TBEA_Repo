@@ -150,6 +150,13 @@ public class ChgbServiceImpl implements ChgbService {
 		list.add("" + entity.getZl2z3n());
 		list.add("" + entity.getZl1z2n());
 		list.add("" + entity.getZl1nyn());
+		list.add("" + Util.sum(new Double[]{
+				entity.getZl5nys(),
+				entity.getZl4z5n(),
+				entity.getZl3z4n(),
+				entity.getZl2z3n(),
+				entity.getZl1z2n(),
+				entity.getZl1nyn()}));
 		return list;
 	}
 	
