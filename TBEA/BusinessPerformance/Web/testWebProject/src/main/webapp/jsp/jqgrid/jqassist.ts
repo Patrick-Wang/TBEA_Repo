@@ -836,21 +836,39 @@ module JQTable {
             }
         }
 
+        private parseInt(px : string) : number{
+            if (undefined != px && null != px){
+                if (px.lastIndexOf("px") > 0){
+                    return parseInt(px.replace("px", ""));
+                }
+            }
+            return 0;
+        }
         public mergeTitle(iColStart?: number, iCount: number = 0, hidden: boolean = false) {
             if (iColStart != undefined) {
                 this.completeList.push(() => {
                     var headerStart = $("#" + this.mGridName + "_" + this.id(iColStart));
 
-                    var firstWidht = parseInt(headerStart.css("width").replace("px", ""));;
+                    var firstWidht = this.parseInt(headerStart.css("width")) +
+                        this.parseInt(headerStart.css("padding-left")) +
+                        this.parseInt(headerStart.css("padding-right"))+
+                        this.parseInt(headerStart.css("border-left")) +
+                        1 + //this.parseInt(headerStart.css("border-right"))+
+                        this.parseInt(headerStart.css("margin-left"))+
+                        this.parseInt(headerStart.css("margin-right"));
                     var iWidht = firstWidht;
 
                     var headerMerge: any = null;
                     var widthList = [iWidht];
                     for (var i = 1; i < iCount; i++) {
                         headerMerge = $("#" + this.mGridName + "_" + this.id(iColStart + i));
-                        widthList.push(parseInt(headerMerge.css("width").replace("px", "")) +
-                            parseInt(headerMerge.css("padding-left").replace("px", "")) +
-                            parseInt(headerMerge.css("padding-right").replace("px", "")))
+                        widthList.push(this.parseInt(headerMerge.css("width")) +
+                            this.parseInt(headerMerge.css("padding-left")) +
+                            this.parseInt(headerMerge.css("padding-right")) +
+                            this.parseInt(headerMerge.css("border-left")) +
+                            1 + //this.parseInt(headerMerge.css("border-right"))+
+                            this.parseInt(headerMerge.css("margin-left"))+
+                            this.parseInt(headerMerge.css("margin-right")))
                         iWidht += widthList[widthList.length - 1];
                         headerMerge.removeClass("ui-state-default");
                         headerMerge.children("span").css("display", "none");
@@ -872,9 +890,9 @@ module JQTable {
                         this.disableDragCell(iColStart + i);
                     }
 
-                    headerStart.css("width", iWidht + 1 + "px");
+                    headerStart.css("width", iWidht + "px");
                     var sizeTitle = $("#gbox_" + this.mGridName + " .jqg-first-row-header th:eq(" + iColStart + ")");
-                    sizeTitle.css("width", iWidht + 1 + "px");
+                    sizeTitle.css("width", iWidht + "px");
                     this.disableDragCell(iColStart);
 
                     if (this.mOnMergedTitles != undefined) {
