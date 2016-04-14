@@ -31,6 +31,7 @@ import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDao;
 import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDaoImpl;
 import com.tbea.ic.operation.model.entity.identifier.chgb.JykcxmEntity;
 import com.tbea.ic.operation.model.entity.chgb.ChzlbhqkEntity;
+import com.tbea.ic.operation.model.entity.chgb.ChxzqkEntity;
 
 @Service(ChgbServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -186,4 +187,51 @@ public class ChgbServiceImpl implements ChgbService {
 		return result;
 	}
 	
+	private List<String> toList(ChxzqkEntity entity) {
+		List<String> list = new ArrayList<String>();
+		list.add("" + entity.getYcl());
+		list.add("" + entity.getBcp());
+		list.add("" + entity.getSjkcsp());
+		list.add("" + entity.getYfhwkp());
+		list.add("" + entity.getQhfdyk());
+		list.add("" + entity.getQhpcyk());
+		list.add("" + entity.getWfhykp());
+		list.add("" + entity.getQt());
+		list.add("" + Util.sum(new Double[]{
+				entity.getYcl(),
+				entity.getBcp(),
+				entity.getSjkcsp(),
+				entity.getYfhwkp(),
+				entity.getQhfdyk(),
+				entity.getQhpcyk(),
+				entity.getWfhykp(),
+				entity.getQt()}));
+		return list;
+	}
+	
+	@Override
+	public List<List<String>> getChxzqk(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.YEAR, -1);
+		cal.add(Calendar.MONTH, 1);
+		List<ChxzqkEntity> entities= chxzqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		for (int i = 0; i < 12; ++i){
+			result.add(new ArrayList<String>());
+			for (ChxzqkEntity entity : entities){
+				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
+					result.set(result.size() - 1, toList(entity));
+					entities.remove(entity);
+					break;
+				}
+			}
+			if (result.get(result.size() - 1).isEmpty()){
+				Util.resize(result.get(result.size() - 1), 7);
+			}
+			cal.add(Calendar.MONTH, 1);
+		}
+		
+		return result;
+	}
 }
