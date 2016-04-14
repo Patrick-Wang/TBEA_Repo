@@ -17,11 +17,9 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.ic.operation.common.BMResponse;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ErrorCode;
@@ -30,8 +28,6 @@ import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
-import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.yszkgb.YszkgbService;
 import com.tbea.ic.operation.service.yszkgb.YszkgbServiceImpl;
 

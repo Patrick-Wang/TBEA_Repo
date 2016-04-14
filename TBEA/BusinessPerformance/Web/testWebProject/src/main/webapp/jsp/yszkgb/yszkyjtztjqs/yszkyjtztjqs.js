@@ -19,13 +19,14 @@ var yszkgb;
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("月度", "rq", true, TextAlign.Center),
                     new JQTable.Node("月度", "rqa", true, TextAlign.Center),
-                    new JQTable.Node("5年以上", "ab"),
-                    new JQTable.Node("4-5年", "ac"),
-                    new JQTable.Node("3-4年", "ad"),
-                    new JQTable.Node("2-3年", "ae"),
-                    new JQTable.Node("1-2年", "af"),
-                    new JQTable.Node("1年以内", "ag"),
-                    new JQTable.Node("合计", "ah")
+                    new JQTable.Node("财务账面应收净收余额", "ab"),
+                    new JQTable.Node("保理余额（加项）", "ac"),
+                    new JQTable.Node("货发票未开金额（加项）", "ad"),
+                    new JQTable.Node("票开货未发金额（减项）", "ae"),
+                    new JQTable.Node("预收款冲减应收（加项）", "af"),
+                    new JQTable.Node("信用证冲减应收（加项）", "ag"),
+                    new JQTable.Node("其他应收科目影响（加项）", "ah"),
+                    new JQTable.Node("预警台账应收账款余额 ", "ai")
                 ], gridName);
             };
             return JQGridAssistantFactory;
