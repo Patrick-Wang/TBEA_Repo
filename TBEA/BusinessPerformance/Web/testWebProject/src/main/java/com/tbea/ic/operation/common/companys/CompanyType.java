@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.common.companys;
+﻿package com.tbea.ic.operation.common.companys;
 
 public enum CompanyType {
 	BB		("本部"),
@@ -169,8 +169,11 @@ public enum CompanyType {
 	ZTGS		("中特公司"),
 	ZXGS		("中型公司"),
 	ZYGS		("众业公司"),
-
-	
+	//三期新增项目公司
+	SBDQSBGS	("特变电工山东沈变电气设备有限公司"),
+	CTGYGS		("特变电工超高压电气有限公司"),
+	DXDLJCZXGS	("西北电线电缆检测中心有限公司"),
+			
 	//非正式公司
 	DBSBDCYJT		("东北输变电产业集团"),
 	NFSBDCYJT		("南方输变电产业集团"),

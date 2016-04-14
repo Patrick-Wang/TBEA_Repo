@@ -13,5 +13,9 @@ public interface YszkgbService {
 
 	List<List<String>> getYszkkxxz(Date d, Company company);
 
+	List<List<String>> getYszkyjtztjqs(Date d, Company company);
+
+	List<List<String>> getYqyszcsys(Date d, Company company);
+
 
 }

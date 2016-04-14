@@ -93,4 +93,25 @@ public class YszkgbServlet {
 	}
 	
 	
+	@RequestMapping(value = "yqyszcsys/update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getYqyszcsys(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		List<List<String>> result = yszkgbService.getYqyszcsys(d, companyManager.getBMDBOrganization().getCompany(comp));
+		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+	}
+	
+	
+	@RequestMapping(value = "yszkyjtztjqs/update.do", method = RequestMethod.GET)
+	public @ResponseBody byte[] getYszkyjtztjqs(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		List<List<String>> result = yszkgbService.getYszkyjtztjqs(d, companyManager.getBMDBOrganization().getCompany(comp));
+		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+	}
+	
 }

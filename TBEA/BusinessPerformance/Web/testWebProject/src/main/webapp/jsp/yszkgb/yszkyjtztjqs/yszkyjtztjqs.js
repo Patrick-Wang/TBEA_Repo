@@ -9,8 +9,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var yszkgb;
 (function (yszkgb) {
-    var yszkzlbh;
-    (function (yszkzlbh) {
+    var yszkyjtztjqs;
+    (function (yszkyjtztjqs) {
         var TextAlign = JQTable.TextAlign;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
@@ -30,19 +30,19 @@ var yszkgb;
             };
             return JQGridAssistantFactory;
         })();
-        var YSZKZLBHView = (function (_super) {
-            __extends(YSZKZLBHView, _super);
-            function YSZKZLBHView() {
+        var YszkyjtztjqsView = (function (_super) {
+            __extends(YszkyjtztjqsView, _super);
+            function YszkyjtztjqsView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("yszkzlbh/update.do", false);
+                this.mAjax = new Util.Ajax("yszkyjtztjqs/update.do", false);
             }
-            YSZKZLBHView.newInstance = function () {
-                return new YSZKZLBHView();
+            YszkyjtztjqsView.newInstance = function () {
+                return new YszkyjtztjqsView();
             };
-            YSZKZLBHView.prototype.option = function () {
+            YszkyjtztjqsView.prototype.option = function () {
                 return this.mOpt;
             };
-            YSZKZLBHView.prototype.pluginUpdate = function (date, cpType) {
+            YszkyjtztjqsView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjax.get({
@@ -54,17 +54,17 @@ var yszkgb;
                     _this.refresh();
                 });
             };
-            YSZKZLBHView.prototype.refresh = function () {
+            YszkyjtztjqsView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            YSZKZLBHView.prototype.init = function (opt) {
+            YszkyjtztjqsView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("应收账款账龄变化", this);
+                view.register("应收账款账面与预警台账调节趋势表", this);
             };
-            YSZKZLBHView.prototype.updateTable = function () {
+            YszkyjtztjqsView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
@@ -95,8 +95,8 @@ var yszkgb;
                     viewrecords: true
                 }));
             };
-            return YSZKZLBHView;
+            return YszkyjtztjqsView;
         })(yszkgb.BasePluginView);
-        yszkzlbh.pluginView = YSZKZLBHView.newInstance();
-    })(yszkzlbh = yszkgb.yszkzlbh || (yszkgb.yszkzlbh = {}));
+        yszkyjtztjqs.pluginView = YszkyjtztjqsView.newInstance();
+    })(yszkyjtztjqs = yszkgb.yszkyjtztjqs || (yszkgb.yszkyjtztjqs = {}));
 })(yszkgb || (yszkgb = {}));

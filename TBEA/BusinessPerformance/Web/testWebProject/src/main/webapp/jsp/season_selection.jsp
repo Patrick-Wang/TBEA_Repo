@@ -14,7 +14,6 @@
 
 <table id="season_selection"  cellspacing="0" cellpadding="0">
 	<tr>
-	
 		<td style="padding-right:5px">
 		<select id="year"	onchange="instance.onYearSelected(this.value)" style="width: 125px;">
 				<option value="2013" >2013</option>
