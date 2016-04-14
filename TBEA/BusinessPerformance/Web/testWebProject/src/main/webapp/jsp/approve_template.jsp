@@ -9,7 +9,7 @@
 
 <!-- jquery -->
 <script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
- 
+
 <!-- jquery ui -->
 <!-- jquery ui gray -->
 <link rel="stylesheet" type="text/css" 

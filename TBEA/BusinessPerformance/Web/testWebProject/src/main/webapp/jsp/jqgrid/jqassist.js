@@ -730,6 +730,14 @@ var JQTable;
                 }
             }
         };
+        JQGridAssistant.prototype.parseInt = function (px) {
+            if (undefined != px && null != px) {
+                if (px.lastIndexOf("px") > 0) {
+                    return parseInt(px.replace("px", ""));
+                }
+            }
+            return 0;
+        };
         JQGridAssistant.prototype.mergeTitle = function (iColStart, iCount, hidden) {
             var _this = this;
             if (iCount === void 0) { iCount = 0; }
@@ -737,16 +745,25 @@ var JQTable;
             if (iColStart != undefined) {
                 this.completeList.push(function () {
                     var headerStart = $("#" + _this.mGridName + "_" + _this.id(iColStart));
-                    var firstWidht = parseInt(headerStart.css("width").replace("px", ""));
-                    ;
+                    var firstWidht = _this.parseInt(headerStart.css("width")) +
+                        _this.parseInt(headerStart.css("padding-left")) +
+                        _this.parseInt(headerStart.css("padding-right")) +
+                        _this.parseInt(headerStart.css("border-left")) +
+                        1 +
+                        _this.parseInt(headerStart.css("margin-left")) +
+                        _this.parseInt(headerStart.css("margin-right"));
                     var iWidht = firstWidht;
                     var headerMerge = null;
                     var widthList = [iWidht];
                     for (var i = 1; i < iCount; i++) {
                         headerMerge = $("#" + _this.mGridName + "_" + _this.id(iColStart + i));
-                        widthList.push(parseInt(headerMerge.css("width").replace("px", "")) +
-                            parseInt(headerMerge.css("padding-left").replace("px", "")) +
-                            parseInt(headerMerge.css("padding-right").replace("px", "")));
+                        widthList.push(_this.parseInt(headerMerge.css("width")) +
+                            _this.parseInt(headerMerge.css("padding-left")) +
+                            _this.parseInt(headerMerge.css("padding-right")) +
+                            _this.parseInt(headerMerge.css("border-left")) +
+                            1 +
+                            _this.parseInt(headerMerge.css("margin-left")) +
+                            _this.parseInt(headerMerge.css("margin-right")));
                         iWidht += widthList[widthList.length - 1];
                         headerMerge.removeClass("ui-state-default");
                         headerMerge.children("span").css("display", "none");
@@ -765,9 +782,9 @@ var JQTable;
                         e.css("border", "0px");
                         _this.disableDragCell(iColStart + i);
                     }
-                    headerStart.css("width", iWidht + 1 + "px");
+                    headerStart.css("width", iWidht + "px");
                     var sizeTitle = $("#gbox_" + _this.mGridName + " .jqg-first-row-header th:eq(" + iColStart + ")");
-                    sizeTitle.css("width", iWidht + 1 + "px");
+                    sizeTitle.css("width", iWidht + "px");
                     _this.disableDragCell(iColStart);
                     if (_this.mOnMergedTitles != undefined) {
                         _this.mOnMergedTitles(iColStart, iCount);
