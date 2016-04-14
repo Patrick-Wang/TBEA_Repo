@@ -14,4 +14,6 @@ public interface ChgbService {
 	List<List<String>> getChzlbhqk(Date d, Company company);
 	
 	List<List<String>> getChxzqk(Date d, Company company);
+	
+	List<List<String>> getChnych(Date d, Company company);
 }
