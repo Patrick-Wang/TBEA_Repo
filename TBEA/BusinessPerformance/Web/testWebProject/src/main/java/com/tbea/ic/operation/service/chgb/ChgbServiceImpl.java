@@ -30,8 +30,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDao;
 import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDaoImpl;
 import com.tbea.ic.operation.model.entity.identifier.chgb.JykcxmEntity;
+import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.chgb.ChzlbhqkEntity;
 import com.tbea.ic.operation.model.entity.chgb.ChxzqkEntity;
+import com.tbea.ic.operation.model.entity.chgb.NychEntity;
 
 @Service(ChgbServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -230,6 +232,64 @@ public class ChgbServiceImpl implements ChgbService {
 				Util.resize(result.get(result.size() - 1), 9);
 			}
 			cal.add(Calendar.MONTH, 1);
+		}
+		
+		return result;
+	}
+	
+	
+	private List<String> toList(NychEntity entity) {
+		List<String> list = new ArrayList<String>();
+		list.add("" + entity.getYcl());
+		//list.add("" + entity.getYl());
+		//list.add("" + entity.getBpbj());
+		list.add("" + entity.getKcsp());
+		list.add("" + entity.getSccbDpbtf());
+		list.add("" + entity.getFcsp());
+		list.add("" + entity.getDh());
+		list.add("" + Util.sum(new Double[]{
+				entity.getYcl(),
+				//entity.getYl(),
+				//entity.getBpbj(),
+				entity.getKcsp(),
+				entity.getSccbDpbtf(),
+				entity.getFcsp(),
+				entity.getDh()}));
+		return list;
+	}
+	
+	@Override
+	public List<List<String>> getChnych(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.YEAR, -1);
+		cal.add(Calendar.MONTH, 1);
+		
+		List<NychEntity> entities= nychDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		for (int i = 0; i < 12; ++i){
+			result.add(new ArrayList<String>());
+			for (NychEntity entity : entities){
+				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
+					result.set(result.size() - 1, toList(entity));
+					entities.remove(entity);
+					break;
+				}
+			}
+			if (result.get(result.size() - 1).isEmpty()){
+				Util.resize(result.get(result.size() - 1), 6);
+			}
+			cal.add(Calendar.MONTH, 1);
+		}
+		
+		NychEntity qcjyEntity = nychDao.getQCJYByDate(d, company);
+		
+		if (qcjyEntity != null) {
+			result.add(toList(qcjyEntity));
+		}
+		else {
+			qcjyEntity = new NychEntity();
+			result.add(toList(qcjyEntity));
 		}
 		
 		return result;
