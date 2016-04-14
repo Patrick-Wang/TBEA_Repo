@@ -39,7 +39,11 @@ public interface YszkgbService {
 
 	ErrorCode submitYszkyjtztjqs(Date d, Company company, JSONArray data);
 
-	ZBStatus getYszkkxxzStatus();
+	ZBStatus getYszkkxxzStatus(Date d, Company comp);
+
+	ZBStatus getYqyszcsysStatus(Date d, Company comp);
+
+	ZBStatus getYszkyjtztjqsStatus(Date d, Company comp);
 
 
 }

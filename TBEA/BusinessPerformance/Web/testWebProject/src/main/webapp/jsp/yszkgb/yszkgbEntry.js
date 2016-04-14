@@ -20,12 +20,28 @@ var yszkgb;
         }
         EntryView.prototype.register = function (name, plugin) {
             _super.prototype.register.call(this, name, plugin);
+            plugin.setReadOnlyCallBack(function (isReadOnly) {
+                if (isReadOnly) {
+                    $("#gbsv").hide();
+                    $("#gbsm").hide();
+                }
+                else {
+                    $("#gbsv").show();
+                    $("#gbsm").show();
+                }
+            });
         };
         EntryView.prototype.submit = function () {
-            this.plugin(this.getActiveNode()).submit();
+            var dt = this.mDtSec.getDate();
+            dt.day = 1;
+            var plugin = this.plugin(this.getActiveNode());
+            plugin.submit(dt, this.mCompanySelector.getCompany());
         };
         EntryView.prototype.save = function () {
-            this.plugin(this.getActiveNode()).save();
+            var dt = this.mDtSec.getDate();
+            dt.day = 1;
+            var plugin = this.plugin(this.getActiveNode());
+            plugin.save(dt, this.mCompanySelector.getCompany());
         };
         return EntryView;
     })(yszkgb.View);

@@ -182,24 +182,22 @@ th.ui-th-ltr {
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
-				onclick="view.updateUI()" />
+				onclick="entryView.updateUI()" />
 			</td>
-		</tr>
+		</tr> 
 		<tr>
 			<td>
-				<%@include file="zmb/zmbEntry.jsp"%>
-				<%@include file="yszkzlbh/yszkzlbhEntry.jsp"%>
 				<%@include file="yszkkxxz/yszkkxxzEntry.jsp"%>
-				<%@include file="yszkyjtztjqs/yszkyjtztjqsEntry.jsp"%>
-				<%@include file="yqyszcsys/yqyszcsysEntry.jsp"%>
+<%-- 				<%@include file="yszkyjtztjqs/yszkyjtztjqsEntry.jsp"%> --%>
+<%-- 				<%@include file="yqyszcsys/yqyszcsysEntry.jsp"%> --%>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<input type="button" value="保存" style="float: right; width: 80px; margin-left: 10px;"
-					   onclick="view.save()" />
-				<input type="button" value="提交" style="float: right; width: 80px; margin-left: 10px;"
-					   onclick="view.submit()" />
+				<input id="gbsv" type="button" value="保存" style="float: right; width: 80px; margin-left: 10px;"
+					   onclick="entryView.save()" />
+				<input id="gbsm" type="button" value="提交" style="float: right; width: 80px; margin-left: 10px;"
+					   onclick="entryView.submit()" />
 			</td>
 		</tr>
 	</Table>
@@ -207,7 +205,7 @@ th.ui-th-ltr {
 
     $("#radio").buttonset();
     $(document).ready(function () {
-    	view.init({
+    	entryView.init({
             type: "type",
 			comp:"compid", 
             dt: "dt",
@@ -215,7 +213,7 @@ th.ui-th-ltr {
             date: {
                 month: ${month},
                 year: ${year}
-            }  
+            }
         });
     	(function () {
             $("#type select")

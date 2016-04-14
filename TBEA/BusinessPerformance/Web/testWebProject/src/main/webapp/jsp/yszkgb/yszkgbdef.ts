@@ -60,5 +60,11 @@ module yszkgb {
 
         abstract pluginSave(dt:string, cpType:Util.CompanyType):void;
         abstract pluginSubmit(dt:string, cpType:Util.CompanyType):void;
+        abstract setReadOnlyCallBack(callBack:(isReadOnly:boolean)=>void);
+    }
+
+    export interface StatusData{
+        readOnly: boolean;
+        data:Array<string[]>;
     }
 }

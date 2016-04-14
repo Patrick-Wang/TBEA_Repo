@@ -287,6 +287,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 
 	
 	ErrorCode entryYszkkxxz(Date d, Company company, JSONArray data, ZBStatus status) {
+		data = data.getJSONArray(0);
 		ErrorCode err = ErrorCode.OK;
 		YszkKxxzEntity entity= yszkKxxzDao.getByDate(d, company);
 		if (null == entity){
@@ -309,6 +310,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 	}
 
 	ErrorCode entryYqyszcsys(Date d, Company company, JSONArray data, ZBStatus status) {
+		data = data.getJSONArray(0);
 		ErrorCode err = ErrorCode.OK;
 		YqyszcsysEntity entity= yqyszcsysDao.getByDate(d, company);
 		if (null == entity){
@@ -331,6 +333,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 	}
 
 	ErrorCode entryYszkyjtztjqs(Date d, Company company, JSONArray data, ZBStatus status) {
+		data = data.getJSONArray(0);
 		ErrorCode err = ErrorCode.OK;
 		YszkYjtzTjqsEntity entity= yszkYjtzTjqsDao.getByDate(d, company);
 		if (null == entity){
@@ -383,9 +386,31 @@ public class YszkgbServiceImpl implements YszkgbService {
 		return entryYszkyjtztjqs(d, company, data, ZBStatus.SUBMITTED);
 	}
 
+
 	@Override
-	public ZBStatus getYszkkxxzStatus() {
-		// TODO Auto-generated method stub
+	public ZBStatus getYszkkxxzStatus(Date d, Company comp) {
+		YszkKxxzEntity entity= yszkKxxzDao.getByDate(d, comp);
+		if (null != entity){
+			return ZBStatus.valueOf(entity.getZt());
+		}
+		return null;
+	}
+
+	@Override
+	public ZBStatus getYqyszcsysStatus(Date d, Company comp) {
+		YqyszcsysEntity entity= yqyszcsysDao.getByDate(d, comp);
+		if (null != entity){
+			return ZBStatus.valueOf(entity.getZt());
+		}
+		return null;
+	}
+
+	@Override
+	public ZBStatus getYszkyjtztjqsStatus(Date d, Company comp) {
+		YszkYjtzTjqsEntity entity= yszkYjtzTjqsDao.getByDate(d, comp);
+		if (null != entity){
+			return ZBStatus.valueOf(entity.getZt());
+		}
 		return null;
 	}
 

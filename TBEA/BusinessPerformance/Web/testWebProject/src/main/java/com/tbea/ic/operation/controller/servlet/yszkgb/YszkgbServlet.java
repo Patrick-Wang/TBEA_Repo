@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -68,7 +70,7 @@ public class YszkgbServlet {
 		return new ModelAndView("yszkgb/yszkgb", map);
 	}
 	
-	@RequestMapping(value = "entry/show.do", method = RequestMethod.GET)
+	@RequestMapping(value = "entry.do", method = RequestMethod.GET)
 	public ModelAndView getYszkgbEntry(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -136,11 +138,13 @@ public class YszkgbServlet {
 	@RequestMapping(value = "yszkkxxz/entry/update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getYszkkxxzEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-
 		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = yszkgbService.getYszkkxxzEntry(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "").getBytes("utf-8");
+		CompanyType type = CompanySelection.getCompany(request);
+		Company comp = companyManager.getBMDBOrganization().getCompany(type);
+		List<List<String>> result = yszkgbService.getYszkkxxzEntry(d, comp);
+		ZBStatus status = yszkgbService.getYszkkxxzStatus(d, comp);
+		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
+		return JSONObject.fromObject(sd).toString().replaceAll("null", "").getBytes("utf-8");
 	}
 	
 	
@@ -148,9 +152,12 @@ public class YszkgbServlet {
 	public @ResponseBody byte[] getYqyszcsysEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = yszkgbService.getYqyszcsysEntry(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "").getBytes("utf-8");
+		CompanyType type = CompanySelection.getCompany(request);
+		Company comp = companyManager.getBMDBOrganization().getCompany(type);
+		List<List<String>> result = yszkgbService.getYqyszcsysEntry(d, comp);
+		ZBStatus status = yszkgbService.getYqyszcsysStatus(d, comp);
+		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
+		return JSONObject.fromObject(sd).toString().replaceAll("null", "").getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "yszkyjtztjqs/entry/update.do", method = RequestMethod.GET)
@@ -158,9 +165,12 @@ public class YszkgbServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = yszkgbService.getYszkyjtztjqsEntry(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "").getBytes("utf-8");
+		CompanyType type = CompanySelection.getCompany(request);
+		Company comp = companyManager.getBMDBOrganization().getCompany(type);
+		List<List<String>> result = yszkgbService.getYszkyjtztjqsEntry(d, comp);
+		ZBStatus status = yszkgbService.getYszkyjtztjqsStatus(d, comp);
+		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
+		return JSONObject.fromObject(sd).toString().replaceAll("null", "").getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "yszkkxxz/entry/save.do", method = RequestMethod.GET)
