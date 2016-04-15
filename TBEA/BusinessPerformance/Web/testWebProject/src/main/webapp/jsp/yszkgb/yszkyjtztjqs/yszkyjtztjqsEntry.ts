@@ -1,4 +1,3 @@
-@@ -1,235 +0,0 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
@@ -136,7 +135,7 @@ module yszkgb {
                 let ny = this.mDt.substr(0, this.mDt.length - 2).replace("-", "年") + "月";
 
                 for (var i = 0; i < this.mData.length; ++i) {
-                    for (var j = 2; j < this.mData[i].length; ++j) {
+                    for (var j = 0; j < this.mData[i].length; ++j) {
                         if ("" != this.mData[i][j]) {
                             this.mData[i][j] = parseFloat(this.mData[i][j]) + "";
                         }
@@ -177,8 +176,8 @@ module yszkgb {
                             if (isNaN(ret)) {
                                 $.jgrid.jqModal = {
                                     width: 290,
-                                    left: this.$(name).offset().left + $("#table").width() / 2 - 290 / 2,
-                                    top: this.$(name).offset().top + $("#table").height() / 2 - 90
+                                    left: this.$(name).offset().left + this.$(name).width() / 2 - 290 / 2,
+                                    top: this.$(name).offset().top + this.$(name).height() / 2 - 90
                                 };
                                 return v;
                             } else {
@@ -218,7 +217,7 @@ module yszkgb {
                         //                        lastcell = "";
                         //                    }
                     }));
-                $('html').bind('click', function(e) { //用于点击其他地方保存正在编辑状态下的行
+                $('html').bind('click', (e) => { //用于点击其他地方保存正在编辑状态下的行
                     if (lastsel != "") { //if a row is selected for edit
                         if ($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row
                             //  $("#" + name).jqGrid('saveRow', lastsel);

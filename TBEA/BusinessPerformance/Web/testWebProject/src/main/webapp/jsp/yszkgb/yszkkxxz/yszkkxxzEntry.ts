@@ -136,7 +136,7 @@ module yszkgb {
                 let ny = this.mDt.substr(0, this.mDt.length - 2).replace("-", "年") + "月";
 
                 for (var i = 0; i < this.mData.length; ++i) {
-                    for (var j = 2; j < this.mData[i].length; ++j) {
+                    for (var j = 0; j < this.mData[i].length; ++j) {
                         if ("" != this.mData[i][j]) {
                             this.mData[i][j] = parseFloat(this.mData[i][j]) + "";
                         }

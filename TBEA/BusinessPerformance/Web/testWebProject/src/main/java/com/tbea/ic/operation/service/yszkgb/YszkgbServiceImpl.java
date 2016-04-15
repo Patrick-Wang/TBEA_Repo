@@ -78,9 +78,13 @@ public class YszkgbServiceImpl implements YszkgbService {
 		List<List<String>> result = new ArrayList<List<String>>();
 		YszkzmEntity entity= yszkzmDao.getByDate(d, company);
 		List<String> list = new ArrayList<String>();
-		list.add("" + entity.getZmje());
-		list.add("" + entity.getHzzb());
-		list.add("" + entity.getYz());
+		if (null != entity){
+			list.add("" + entity.getZmje());
+			list.add("" + entity.getHzzb());
+			list.add("" + entity.getYz());
+		}else{
+			Util.resize(list, 3);
+		}
 		result.add(list);
 		return result;
 	}

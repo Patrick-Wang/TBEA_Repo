@@ -3,15 +3,15 @@
         <td>
             <div id="table" align="center"></div>
         </td>
-    </tr>
+	</tr>
 </Table>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/yszkgb/yszkyjtztjqs/yszkyjtztjqsEntry.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-    yszkgb.yszkyjtztjqsEntry.pluginView.init({
-        tb: "table",
-        host: "yszkyjtztjqsEntry",
-        tbarea:"tbarea" 
+    $(document).ready(function(){
+        yszkgb.yszkyjtztjqsEntry.pluginView.init({
+            tb: "table",
+            host: "yszkyjtztjqsEntry",
+            tbarea:"tbarea"
+        });
     });
-});
 </script>
