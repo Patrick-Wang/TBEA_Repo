@@ -430,58 +430,42 @@ public class YszkgbServiceImpl implements YszkgbService {
 	}
 
 	private final static String ncSqlYszkzlbh = 
-			"	select unit_code,	"+		
-			"	       unit_name,	"+		
-			"	       inputdate,	"+		
-			"	       imd8.m10006 yclnc, 	"+	//	原材料（年初）
-			"	       imd8.m10010 kcspnc, 	"+	//	库存商品（年初）
-			"	       imd8.m10002 dpbtfnc, 	"+	//	生产成本-待配比土方（年初）
-			"	       imd8.m10008 fcspnc, 	"+	//	发出商品（年初）
-			"	       imd8.m10000 dhnc, 	"+	//	低耗（年初）
-			"	       imd8.m10004 hjnc, 	"+	//	合计（年初）
-			"	       imd8.m10007 ycl, 	"+	//	原材料（期末）
-			"	       imd8.m10011 kcsp, 	"+	//	库存商品（期末）
-			"	       imd8.m10003 dpbtf, 	"+	//	生产成本-待配比土方（期末）
-			"	       imd8.m10009 fcsp, 	"+	//	发出商品（期末）
-			"	       imd8.m10001 dh, 	"+	//	低耗（期末）
-			"	       imd8.m10005 hj 	"+	//	合计（期末）
-			"	  from iufo_measure_data_844a2dr9 imd8	"+		
-			"	  left join (select alone_id,	"+		
-			"	                    code,	"+		
-			"	                    inputdate,	"+		
-			"	                    keyword2,	"+		
-			"	                    keyword3,	"+		
-			"	                    time_code,	"+		
-			"	                    ts,	"+		
-			"	                    ver	"+		
-			"	               from iufo_measure_pubdata) imp	"+		
-			"	    on imd8.alone_id = imp.alone_id	"+		
-			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	"+		
-			"	    on imp.code = iui.unit_id	"+		
-			"	 where imp.ver = 0	";
+			"	select 	"+	
+			"	iui.unit_code,	"+	
+			"	iui.unit_name,	"+	//单位名称
+			"	imdx.m10080 wu,	"+	//五年以上
+			"	imdx.m10020 siwu,	"+	//四至五年
+			"	imdx.m10111 sansi,	"+	//三至四年
+			"	imdx.m10097 ersan,	"+	//二至三年
+			"	imdx.m10144 yier,	"+	//一至二年
+			"	imdx.m10016 yi,	"+	//一年以内
+			"	imdx.m10033 hj,	"+	//合计
+			"	inputdate	"+	//日期
+			"	from	"+	
+			"	iufo_measure_data_xyy6hd5t imdx	"+	
+			"	left join (select alone_id,code,inputdate,keyword2,keyword3,time_code,ts,ver from iufo_measure_pubdata ) imp on imdx.alone_id = imp.alone_id	"+	
+			"	left join (select unit_id,unit_code,unit_name from iufo_unit_info) iui on imp.code = iui.unit_id	"+	
+			"	where imp.ver = 0	%s "+	
+			"		"+	//and iui.unit_name like '%特变电工股份有限公司新疆变压器厂（本部）%'
+			"	order by unit_code,inputdate desc	";
+
 	
 	private final static String ncSqlZbm = 
-			"	select unit_code,	"+
-			"	       unit_name,	"+
-			"	       inputdate,	"+
-			"	       imda.m10083, 	"+
-			"	       imdo.m10000 	"+
-			"	  from iufo_measure_data_aabf9rn7 imda	"+
-			"	  left join iufo_measure_data_osrehdc8 imdo	"+
-			"	    on imda.alone_id = imdo.alone_id	"+
-			"	  left join (select alone_id,	"+
-			"	                    code,	"+
-			"	                    inputdate,	"+
-			"	                    keyword2,	"+
-			"	                    keyword3,	"+
-			"	                    time_code,	"+
-			"	                    ts,	"+
-			"	                    ver	"+
-			"	               from iufo_measure_pubdata) imp	"+
-			"	    on imda.alone_id = imp.alone_id	"+
-			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	"+
-			"	    on imp.code = iui.unit_id	"+
-			"	 where imp.ver = 0	";
+			"	select 	"+	
+			"	iui.unit_code,	"+	
+			"	iui.unit_name,	"+	//单位名称
+			"	imdx.m10063 yz,	"+	//应收账款原值
+			"	imdx.m10151 hzzb,	"+	//坏账准备
+			"	imdx.m10132 jz,	"+	//净值
+			"	inputdate	"+	//日期
+			"	from	"+	
+			"	iufo_measure_data_xyy6hd5t imdx	"+	
+			"	left join (select alone_id,code,inputdate,keyword2,keyword3,time_code,ts,ver from iufo_measure_pubdata ) imp on imdx.alone_id = imp.alone_id	"+	
+			"	left join (select unit_id,unit_code,unit_name from iufo_unit_info) iui on imp.code = iui.unit_id	"+	
+			"	where imp.ver = 0	%s "+	
+			"		"+	//and iui.unit_name like '%特变电工股份有限公司新疆变压器厂（本部）%'
+			"	order by unit_code,inputdate desc	";
+
 	
 	
 	void mergeZmEntity(Calendar cal, ResultSet rs) throws SQLException{
@@ -500,8 +484,8 @@ public class YszkgbServiceImpl implements YszkgbService {
 				entity.setYf(yf);
 			}
 			
-			entity.setZmje(rs.getDouble(4));
-			entity.setHzzb(rs.getDouble(4) - rs.getDouble(5));
+			entity.setZmje(rs.getDouble(3));
+			entity.setHzzb(rs.getDouble(4));
 			entity.setYz(rs.getDouble(5));
 			yszkzmDao.merge(entity);
 		}
@@ -527,10 +511,10 @@ public class YszkgbServiceImpl implements YszkgbService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			String whereSql = 
-				" and unit_code in (" + StringUtils.join(toCode(yszkgbComps).toArray(), ",") + ")" + 
+				" and iui.unit_code in (" + StringUtils.join(toCode(yszkgbComps).toArray(), ",") + ")" + 
 				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 				" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
-			ResultSet rs = connection.query(ncSqlZbm + whereSql);
+			ResultSet rs = connection.query(String.format(ncSqlZbm, whereSql));
 			if (null != rs){	
 				try {
 					mergeZmEntity(cal, rs);
@@ -585,10 +569,10 @@ public class YszkgbServiceImpl implements YszkgbService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			String whereSql = 
-				" and unit_code in (" + StringUtils.join(toCode(yszkgbComps).toArray(), ",") + ")" + 
+				" and iui.unit_code in (" + StringUtils.join(toCode(yszkgbComps).toArray(), ",") + ")" + 
 				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 				" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
-			ResultSet rs = connection.query(ncSqlYszkzlbh + whereSql);
+			ResultSet rs = connection.query(String.format(ncSqlYszkzlbh, whereSql));
 			if (null != rs){	
 				try {
 					mergeZlbhEntity(cal, rs);
