@@ -4,8 +4,11 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Hashtable;
 
+import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.chgb.nych.NychDaoImpl;
 import com.tbea.ic.operation.model.dao.chgb.nych.NychDao;
@@ -24,11 +27,15 @@ import com.tbea.ic.operation.model.entity.chgb.ChZmEntity;
 import com.tbea.ic.operation.model.entity.chgb.ChJykcEntity;
 import com.tbea.ic.operation.service.chgb.ChgbService;
 
+import net.sf.json.JSONArray;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDao;
 import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDaoImpl;
+import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.entity.identifier.chgb.JykcxmEntity;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.chgb.ChzlbhqkEntity;
@@ -55,7 +62,10 @@ public class ChgbServiceImpl implements ChgbService {
 	
 	@Resource(name=JykcxmDaoImpl.NAME)
 	JykcxmDao jykcxmDao;
-
+	
+	@Autowired
+	DWXXDao dwxxDao;
+	
 	public final static String NAME = "ChgbServiceImpl";
 
 	@Override
@@ -78,10 +88,16 @@ public class ChgbServiceImpl implements ChgbService {
 		List<ChJykcEntity> entities= chJykcDao.getByDate(d, company);
 		List<JykcxmEntity> jykcxmEntities = jykcxmDao.getXMMapping();
 		
-		Double hjSyye = null;
-		Double hjByxz = null;
-		Double hjBycz = null;
-		Double hjQmye = null;
+		Double hjSyye = 0.0;
+		Double hjByxz = 0.0;
+		Double hjBycz = 0.0;
+		Double hjQmye = 0.0;
+		
+		Boolean bHashjSyye = false;
+		Boolean bHashhjByxz = false;
+		Boolean bHashhjBycz = false;
+		Boolean bHashhjQmye = false;
+		
 		
 		for (int i = 0; i < jykcxmEntities.size(); i++) {
 			
@@ -102,18 +118,22 @@ public class ChgbServiceImpl implements ChgbService {
 					
 					if (entity.getSyye() != null){
 						hjSyye += entity.getSyye();
+						bHashjSyye = true;
 					}
 					
 					if (entity.getByxz() != null){
 						hjByxz += entity.getByxz();
+						bHashhjByxz = true;
 					}
 					
 					if (entity.getBycz() != null){
 						hjBycz += entity.getBycz();
+						bHashhjBycz = true;
 					}
 					
 					if (entity.getQmye() != null){
 						hjQmye += entity.getQmye();
+						bHashhjQmye = true;
 					}
 
 					entities.remove(entity);
@@ -135,10 +155,30 @@ public class ChgbServiceImpl implements ChgbService {
 		List<String> listHj = new ArrayList<String>();
 
 		listHj.add("合计");
-		listHj.add("" + hjSyye);
-		listHj.add("" + hjByxz);
-		listHj.add("" + hjBycz);
-		listHj.add("" + hjQmye);
+		
+		if (bHashjSyye) {
+			listHj.add("" + hjSyye);
+		} else {
+			listHj.add("null");
+		}
+
+		if (bHashhjByxz) {
+			listHj.add("" + hjByxz);
+		} else {
+			listHj.add("null");
+		}
+
+		if (bHashhjBycz) {
+			listHj.add("" + hjBycz);
+		} else {
+			listHj.add("null");
+		}
+
+		if (bHashhjQmye) {
+			listHj.add("" + hjQmye);
+		} else {
+			listHj.add("null");
+		}
 		
 		result.add(listHj);
 		
@@ -247,14 +287,7 @@ public class ChgbServiceImpl implements ChgbService {
 		list.add("" + entity.getSccbDpbtf());
 		list.add("" + entity.getFcsp());
 		list.add("" + entity.getDh());
-		list.add("" + Util.sum(new Double[]{
-				entity.getYcl(),
-				//entity.getYl(),
-				//entity.getBpbj(),
-				entity.getKcsp(),
-				entity.getSccbDpbtf(),
-				entity.getFcsp(),
-				entity.getDh()}));
+		list.add("" + entity.getHj());
 		return list;
 	}
 	
@@ -293,5 +326,129 @@ public class ChgbServiceImpl implements ChgbService {
 		}
 		
 		return result;
+	}
+	
+	@Override
+	public List<List<String>> getChjykcbEntry(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		List<ChJykcEntity> entities= chJykcDao.getByDate(d, company);
+		List<JykcxmEntity> jykcxmEntities = jykcxmDao.getXMMapping();
+		
+		for (int i = 0; i < jykcxmEntities.size(); i++) {
+			
+			Boolean bIsFind = false;
+			List<String> list = new ArrayList<String>();
+			
+			for (ChJykcEntity entity : entities){
+				
+				if (entity.getJykcxmEntity().getId() == jykcxmEntities.get(i).getId()) {
+					
+					bIsFind = true;
+					
+					list.add(entity.getJykcxmEntity().getName());
+					list.add("" + entity.getSyye());
+					list.add("" + entity.getByxz());
+					list.add("" + entity.getBycz());
+					list.add("" + entity.getQmye());
+					
+					entities.remove(entity);
+					break;
+				}
+			}
+			
+			if (!bIsFind) {
+				list.add(jykcxmEntities.get(i).getName());
+				list.add("null");
+				list.add("null");
+				list.add("null");
+				list.add("null");
+			}
+
+			result.add(list);
+		}
+		
+		return result;
+	}
+
+	ErrorCode entryChjykcb(Date d, Company company, JSONArray data, ZBStatus status) {
+		ErrorCode err = ErrorCode.OK;
+
+		List<JykcxmEntity> jykcxmEntities = jykcxmDao.getXMMapping();
+
+		List<ChJykcEntity> entities = chJykcDao.getByDate(d, company);
+		Hashtable<String, ChJykcEntity> hostEntities = new Hashtable<String, ChJykcEntity>();
+		
+		for (int i = 0; i < jykcxmEntities.size(); i++) {
+			
+			if (null != entities) {
+				
+				Boolean bIsFind = false;
+				
+				for (ChJykcEntity entity : entities){
+					
+					if (entity.getJykcxmEntity().getId() == jykcxmEntities.get(i).getId()) {
+					
+						bIsFind = true;					
+						hostEntities.put(jykcxmEntities.get(i).getName(), entity);
+						entities.remove(entity);
+						break;
+					}
+				}
+				
+				if (!bIsFind) {
+					ChJykcEntity newEntity = new ChJykcEntity();
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(d);
+					DWXX dwxx = new DWXX();
+					dwxx.setId(company.getId());
+					newEntity.setNf(cal.get(Calendar.YEAR));
+					newEntity.setYf(cal.get(Calendar.MONTH) + 1);
+					newEntity.setDwxx(dwxx);
+					
+					hostEntities.put(jykcxmEntities.get(i).getName(), newEntity);
+				}
+			} 
+			else {
+				
+				ChJykcEntity newEntity = new ChJykcEntity();
+				hostEntities.put(jykcxmEntities.get(i).getName(), newEntity);
+			}
+		}
+		
+		for (int i = 0; i < jykcxmEntities.size(); i++) {
+			
+			for (int j = 0; j < data.size(); j++) {
+				
+				if (data.getJSONArray(j).getString(0).equals(jykcxmEntities.get(i).getName())) {
+					
+					hostEntities.get(jykcxmEntities.get(i).getName()).setSyye(Util.toDoubleNull(data.getJSONArray(j).getString(1)));
+					hostEntities.get(jykcxmEntities.get(i).getName()).setByxz(Util.toDoubleNull(data.getJSONArray(j).getString(2)));
+					hostEntities.get(jykcxmEntities.get(i).getName()).setBycz(Util.toDoubleNull(data.getJSONArray(j).getString(3)));
+					hostEntities.get(jykcxmEntities.get(i).getName()).setQmye(Util.toDoubleNull(data.getJSONArray(j).getString(4)));
+					hostEntities.get(jykcxmEntities.get(i).getName()).setJykcxmEntity(jykcxmEntities.get(i));
+
+					ChJykcEntity toEntity = hostEntities.get(jykcxmEntities.get(i).getName());
+					
+					chJykcDao.merge(toEntity);
+				}				
+			}
+		}
+		
+		return err;
+	}
+	
+	@Override
+	public ErrorCode saveChjykcb(Date d, Company company, JSONArray data) {
+		return entryChjykcb(d, company, data, ZBStatus.SAVED);
+	}
+
+	@Override
+	public ErrorCode submitChjykcb(Date d, Company company, JSONArray data) {
+		return entryChjykcb(d, company, data, ZBStatus.SUBMITTED);
+	}
+	
+	@Override
+	public ZBStatus getChjykcbStatus(Date d, Company comp) {
+		return ZBStatus.SAVED;
 	}
 }
