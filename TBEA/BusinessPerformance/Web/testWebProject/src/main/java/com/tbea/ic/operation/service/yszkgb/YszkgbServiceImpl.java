@@ -459,6 +459,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	"+		
 			"	    on imp.code = iui.unit_id	"+		
 			"	 where imp.ver = 0	";
+	
 	private final static String ncSqlZbm = 
 			"	select unit_code,	"+
 			"	       unit_name,	"+

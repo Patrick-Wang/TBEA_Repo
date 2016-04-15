@@ -34,7 +34,8 @@ var yszkgb;
             }
             return this.plugin(nod);
         };
-        View.prototype.export = function (elemId) {
+        //不可以起名叫做export 在IE中有冲突
+        View.prototype.exportExcel = function (elemId) {
             var url = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
             $("#" + elemId)[0].action = url;
             $("#" + elemId)[0].submit();

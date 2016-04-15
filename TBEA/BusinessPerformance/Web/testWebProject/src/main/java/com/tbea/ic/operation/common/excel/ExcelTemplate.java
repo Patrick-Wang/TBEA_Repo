@@ -2,10 +2,12 @@ package com.tbea.ic.operation.common.excel;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -32,64 +34,53 @@ public class ExcelTemplate {
 	private static String pathMarketTemplate = resPath + "market_template.xls";
 	private static String pathJYGKPhase2Template = resPath + "jygk_Phase2_template.xls";
 	private static String pathYszkgbTemplate = resPath + "yszkgb_template.xls";
+	private static String pathChgbTemplate = resPath + "Chgb_template.xls";
 
-	public static ExcelTemplate createJygkTemplate(JygkSheetType type) throws IOException{
+	private static ExcelTemplate createTemplate(String path, int index, int size)
+			throws FileNotFoundException, IOException {
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
-				pathJdzbTemplate)));	
-		for (int i = 0; i < type.ordinal(); ++i){
+				path)));
+		for (int i = 0; i < index; ++i) {
 			workbook.removeSheetAt(0);
 		}
-		
-		for (int i = type.ordinal() + 1; i < JygkSheetType.END.ordinal(); ++i){
+
+		for (int i = index + 1; i < size; ++i) {
 			workbook.removeSheetAt(1);
 		}
-		
+
 		return new ExcelTemplate(workbook);
 	}
+
+	public static ExcelTemplate createJygkTemplate(JygkSheetType type)
+			throws IOException {
+		return createTemplate(pathJdzbTemplate, type.ordinal(),
+				JygkSheetType.END.ordinal());
+	}
+
+	public static ExcelTemplate createMarketTemplate(MarketSheetType type)
+			throws IOException {
+		return createTemplate(pathMarketTemplate, type.ordinal(),
+				MarketSheetType.END.ordinal());
+	}
+
+	public static ExcelTemplate createJYGKPhase2Template(
+			JYGKPhase2SheetType type) throws IOException {
+		return createTemplate(pathJYGKPhase2Template, type.ordinal(),
+				JYGKPhase2SheetType.END.ordinal());
+	}
+
+	public static ExcelTemplate createYszkgbTemplate(YszkgbSheetType type)
+			throws IOException {
+		return createTemplate(pathYszkgbTemplate, type.ordinal(),
+				YszkgbSheetType.END.ordinal());
+	}
+	public static ExcelTemplate createChgbTemplate(ChgbSheetType type)
+			throws IOException {
+		return createTemplate(pathChgbTemplate, type.ordinal(),
+				ChgbSheetType.END.ordinal());
+	}
+
 	
-	public static ExcelTemplate createMarketTemplate(MarketSheetType type) throws IOException{
-		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
-				pathMarketTemplate)));	
-		for (int i = 0; i < type.ordinal(); ++i){
-			workbook.removeSheetAt(0);
-		}
-		
-		for (int i = type.ordinal() + 1; i < MarketSheetType.END.ordinal(); ++i){
-			workbook.removeSheetAt(1);
-		}
-
-		return new ExcelTemplate(workbook);
-	}
-	
-	public static ExcelTemplate createJYGKPhase2Template(JYGKPhase2SheetType type) throws IOException{
-		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
-				pathJYGKPhase2Template)));	
-		for (int i = 0; i < type.ordinal(); ++i){
-			workbook.removeSheetAt(0);
-		}
-		
-		int j = JYGKPhase2SheetType.XMGSRJRANK.ordinal();
-		for (int i = type.ordinal() + 1; i < JYGKPhase2SheetType.END.ordinal(); ++i){
-			workbook.removeSheetAt(1);
-		}
-
-		return new ExcelTemplate(workbook);
-	}
-	
-	public static ExcelTemplate createYszkgbTemplate(YszkgbSheetType type) throws IOException{
-		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
-				pathYszkgbTemplate)));	
-		for (int i = 0; i < type.ordinal(); ++i){
-			workbook.removeSheetAt(0);
-		}
-		
-		for (int i = type.ordinal() + 1; i < YszkgbSheetType.END.ordinal(); ++i){
-			workbook.removeSheetAt(1);
-		}
-		
-		return new ExcelTemplate(workbook);
-	}
-
 	HSSFWorkbook workbook;
 	HSSFCellStyle cellStyleNull;
 	HSSFCellStyle cellStyleNumber2;

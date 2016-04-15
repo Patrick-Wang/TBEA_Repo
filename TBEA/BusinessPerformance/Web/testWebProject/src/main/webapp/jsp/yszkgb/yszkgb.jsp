@@ -52,13 +52,12 @@
 <script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgbdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgb.js" type="text/javascript"></script>
 
 <!-- message box -->
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-
+	<script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgb.js" type="text/javascript"></script>
 
 <title>应收账款管报</title>
 
@@ -202,7 +201,7 @@ th.ui-th-ltr {
 			<td>
 				<form id="export" method="post">
 					<input id="exportButton" type="button" value="导出"
-						   onclick="view.export('export')">
+						   onclick="view.exportExcel('export')">
 				</form>
 			</td>
 		</tr>

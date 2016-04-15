@@ -23,12 +23,13 @@ module yszkgb {
     export class View implements FrameView {
         protected mOpt:Option;
         protected mDtSec:Util.DateSelector;
-        protected  mItemSelector:Util.UnitedSelector;
-        protected mCompanySelector: Util.CompanySelector;
+        protected mItemSelector:Util.UnitedSelector;
+        protected mCompanySelector:Util.CompanySelector;
         protected mNodes:Util.DataNode[] = [];
-        protected mCurrentPlugin: PluginView;
+        protected mCurrentPlugin:PluginView;
         protected mCurrentDate:Util.Date;
         protected mCurrentComp:Util.CompanyType;
+
         public register(name:string, plugin:PluginView):void {
             var data:PluginData = {id: this.mNodes.length, value: name, plugin: plugin};
             var node:Util.DataNode = new Util.DataNode(data);
@@ -55,9 +56,9 @@ module yszkgb {
 
             return this.plugin(nod);
         }
-
-        public export(elemId:string){
-            let url : string = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
+        //不可以起名叫做export 在IE中有冲突
+        public exportExcel(elemId:string) {
+            let url:string = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
             $("#" + elemId)[0].action = url;
             $("#" + elemId)[0].submit();
         }
@@ -69,7 +70,7 @@ module yszkgb {
                 month: this.mOpt.date.month
             }, this.mOpt.dt);
 
-            this.mCompanySelector = new Util.CompanySelector(false,  this.mOpt.comp, this.mOpt.comps);
+            this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
             if (opt.comps.length == 1) {
                 this.mCompanySelector.hide();
             }
@@ -81,11 +82,11 @@ module yszkgb {
             this.updateUI();
         }
 
-        protected plugin(node:Util.DataNode):PluginView{
-            return  (<PluginData>node.getData()).plugin;
+        protected plugin(node:Util.DataNode):PluginView {
+            return (<PluginData>node.getData()).plugin;
         }
 
-        protected getActiveNode():Util.DataNode{
+        protected getActiveNode():Util.DataNode {
             return this.mItemSelector.getDataNode(this.mItemSelector.getPath());
         }
 
@@ -105,8 +106,8 @@ module yszkgb {
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
-            $("#headertitle")[0].innerHTML =  this.mCompanySelector.getCompanyName() + " " + node.getData().value;
-            this.plugin(node).update(dt,  this.mCurrentComp);
+            $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
+            this.plugin(node).update(dt, this.mCurrentComp);
         }
     }
 }

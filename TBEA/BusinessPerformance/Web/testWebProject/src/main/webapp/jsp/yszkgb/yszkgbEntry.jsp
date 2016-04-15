@@ -52,7 +52,6 @@
 <script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgbdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgb.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgbEntry.js" type="text/javascript"></script>
 
 <!-- message box -->
