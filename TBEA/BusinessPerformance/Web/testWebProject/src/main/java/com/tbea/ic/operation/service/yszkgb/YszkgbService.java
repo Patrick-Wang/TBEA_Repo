@@ -45,5 +45,9 @@ public interface YszkgbService {
 
 	ZBStatus getYszkyjtztjqsStatus(Date d, Company comp);
 
+	void importZbmFromNC(Date d, List<Company> yszkgbComps);
+
+	void importYszkzlbhFromNC(Date d, List<Company> yszkgbComps);
+
 
 }

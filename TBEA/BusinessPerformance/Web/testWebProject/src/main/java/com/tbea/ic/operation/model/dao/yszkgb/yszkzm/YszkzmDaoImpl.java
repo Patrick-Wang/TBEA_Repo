@@ -32,13 +32,17 @@ public class YszkzmDaoImpl extends AbstractReadWriteDaoImpl<YszkzmEntity> implem
 	}
 
 	@Override
-	public List<YszkzmEntity> getByDate(Date d, Company company) {
+	public YszkzmEntity getByDate(Date d, Company company) {
 		Query q = this.getEntityManager().createQuery("from YszkzmEntity where nf=:nf and yf=:yf and dwxx.id=:compId");
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		q.setParameter("compId", company.getId());
-		return q.getResultList();
+		List<YszkzmEntity> ret = q.getResultList();
+		if (ret.isEmpty()){
+			return null;
+		}
+		return ret.get(0);
 	}
 }

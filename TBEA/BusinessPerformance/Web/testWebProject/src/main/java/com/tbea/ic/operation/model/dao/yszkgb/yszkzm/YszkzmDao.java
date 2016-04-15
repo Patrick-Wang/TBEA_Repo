@@ -11,6 +11,6 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
 public interface YszkzmDao extends AbstractReadWriteDao<YszkzmEntity> {
 
-	List<YszkzmEntity> getByDate(Date d, Company company);
+	YszkzmEntity getByDate(Date d, Company company);
 
 }

@@ -18,6 +18,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -353,6 +354,17 @@ public class YszkgbServlet {
 			}
 		}
 		template.write(response, name + ".xls");
+	}
+	
+	//每月3到五号零点触发
+	@Scheduled(cron="0 0 0 3-5 * ?")
+	public void scheduleImport(){
+		Calendar cal = Calendar.getInstance();
+		System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+		yszkgbService.importZbmFromNC(d, yszkgbComps);
+		yszkgbService.importYszkzlbhFromNC(d, yszkgbComps);
 	}
 	
 	

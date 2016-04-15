@@ -1,14 +1,20 @@
 package com.tbea.ic.operation.service.yszkgb;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.tbea.ic.operation.common.CommonMethod;
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDaoImpl;
 import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDao;
@@ -28,10 +34,13 @@ import com.tbea.ic.operation.model.entity.yszkgb.YszkKxxzEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkYjtzTjqsEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkZlEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
+import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
+import com.tbea.ic.operation.service.util.nc.NCConnection;
 import com.tbea.ic.operation.service.yszkgb.YszkgbService;
 
 import net.sf.json.JSONArray;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,19 +66,22 @@ public class YszkgbServiceImpl implements YszkgbService {
 	@Autowired
 	DWXXDao dwxxDao;
 	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
+
+	
 	public final static String NAME = "YszkgbServiceImpl";
 
 	@Override
 	public List<List<String>> getZmb(Date d, Company company) {
 		List<List<String>> result = new ArrayList<List<String>>();
-		List<YszkzmEntity> entities= yszkzmDao.getByDate(d, company);
-		for (YszkzmEntity entity : entities){
-			List<String> list = new ArrayList<String>();
-			list.add("" + entity.getZmje());
-			list.add("" + entity.getHzzb());
-			list.add("" + entity.getYz());
-			result.add(list);
-		}
+		YszkzmEntity entity= yszkzmDao.getByDate(d, company);
+		List<String> list = new ArrayList<String>();
+		list.add("" + entity.getZmje());
+		list.add("" + entity.getHzzb());
+		list.add("" + entity.getYz());
+		result.add(list);
 		return result;
 	}
 
@@ -252,7 +264,6 @@ public class YszkgbServiceImpl implements YszkgbService {
 		YszkKxxzEntity entity= yszkKxxzDao.getByDate(d, company);
 		if (null != entity){
 			List<String> list = toList(entity);
-			int size = list.size();
 			result.add(list);
 		}else{
 			result.add(new ArrayList<>());
@@ -418,5 +429,184 @@ public class YszkgbServiceImpl implements YszkgbService {
 		return null;
 	}
 
+	private final static String ncSqlYszkzlbh = 
+			"	select unit_code,	"+		
+			"	       unit_name,	"+		
+			"	       inputdate,	"+		
+			"	       imd8.m10006 yclnc, 	"+	//	原材料（年初）
+			"	       imd8.m10010 kcspnc, 	"+	//	库存商品（年初）
+			"	       imd8.m10002 dpbtfnc, 	"+	//	生产成本-待配比土方（年初）
+			"	       imd8.m10008 fcspnc, 	"+	//	发出商品（年初）
+			"	       imd8.m10000 dhnc, 	"+	//	低耗（年初）
+			"	       imd8.m10004 hjnc, 	"+	//	合计（年初）
+			"	       imd8.m10007 ycl, 	"+	//	原材料（期末）
+			"	       imd8.m10011 kcsp, 	"+	//	库存商品（期末）
+			"	       imd8.m10003 dpbtf, 	"+	//	生产成本-待配比土方（期末）
+			"	       imd8.m10009 fcsp, 	"+	//	发出商品（期末）
+			"	       imd8.m10001 dh, 	"+	//	低耗（期末）
+			"	       imd8.m10005 hj 	"+	//	合计（期末）
+			"	  from iufo_measure_data_844a2dr9 imd8	"+		
+			"	  left join (select alone_id,	"+		
+			"	                    code,	"+		
+			"	                    inputdate,	"+		
+			"	                    keyword2,	"+		
+			"	                    keyword3,	"+		
+			"	                    time_code,	"+		
+			"	                    ts,	"+		
+			"	                    ver	"+		
+			"	               from iufo_measure_pubdata) imp	"+		
+			"	    on imd8.alone_id = imp.alone_id	"+		
+			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	"+		
+			"	    on imp.code = iui.unit_id	"+		
+			"	 where imp.ver = 0	";
+	private final static String ncSqlZbm = 
+			"	select unit_code,	"+
+			"	       unit_name,	"+
+			"	       inputdate,	"+
+			"	       imda.m10083, 	"+
+			"	       imdo.m10000 	"+
+			"	  from iufo_measure_data_aabf9rn7 imda	"+
+			"	  left join iufo_measure_data_osrehdc8 imdo	"+
+			"	    on imda.alone_id = imdo.alone_id	"+
+			"	  left join (select alone_id,	"+
+			"	                    code,	"+
+			"	                    inputdate,	"+
+			"	                    keyword2,	"+
+			"	                    keyword3,	"+
+			"	                    time_code,	"+
+			"	                    ts,	"+
+			"	                    ver	"+
+			"	               from iufo_measure_pubdata) imp	"+
+			"	    on imda.alone_id = imp.alone_id	"+
+			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	"+
+			"	    on imp.code = iui.unit_id	"+
+			"	 where imp.ver = 0	";
 	
+	
+	void mergeZmEntity(Calendar cal, ResultSet rs) throws SQLException{
+		while (rs.next()) {
+			
+			String unitCode = String.valueOf(rs.getObject(1));
+			CompanyType companyType = NCCompanyCode.getType(unitCode);
+			Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+			int nf = cal.get(Calendar.YEAR);
+			int yf = cal.get(Calendar.MONTH) + 1;
+			YszkzmEntity entity = yszkzmDao.getByDate(Util.toDate(cal), comp);
+			if (null == entity){
+				entity = new YszkzmEntity();
+				entity.setDwxx(dwxxDao.getById(comp.getId()));
+				entity.setNf(nf);
+				entity.setYf(yf);
+			}
+			
+			entity.setZmje(rs.getDouble(4));
+			entity.setHzzb(rs.getDouble(4) - rs.getDouble(5));
+			entity.setYz(rs.getDouble(5));
+			yszkzmDao.merge(entity);
+		}
+	}
+	
+	
+	List<String> toCode(List<Company> comps){
+		List<String> ret = new ArrayList<String>();
+		for (Company comp : comps){
+			String code = NCCompanyCode.getCode(comp.getType());
+			if (null != code){
+				ret.add(code);
+			}
+		}
+		
+		return ret;
+	}
+	
+	@Override
+	public void importZbmFromNC(Date d, List<Company> yszkgbComps) {
+		NCConnection connection = NCConnection.create();
+		if (null != connection){
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(d);
+			String whereSql = 
+				" and unit_code in (" + StringUtils.join(toCode(yszkgbComps).toArray(), ",") + ")" + 
+				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
+				" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
+			ResultSet rs = connection.query(ncSqlZbm + whereSql);
+			if (null != rs){	
+				try {
+					mergeZmEntity(cal, rs);
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}	
+	}
+
+	private void mergeZlbhEntity(Calendar cal, ResultSet rs) throws SQLException {
+		while (rs.next()) {
+			
+			String unitCode = String.valueOf(rs.getObject(1));
+			CompanyType companyType = NCCompanyCode.getType(unitCode);
+			Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+			int nf = cal.get(Calendar.YEAR);
+			int yf = cal.get(Calendar.MONTH) + 1;
+			YszkZlEntity entity = yszkZlDao.getByDate(Util.toDate(cal), comp);
+			if (null == entity){
+				entity = new YszkZlEntity();
+				entity.setDwxx(dwxxDao.getById(comp.getId()));
+				entity.setNf(nf);
+				entity.setYf(yf);
+			}
+			
+			entity.setZl5nys(rs.getDouble(4));
+			entity.setZl4z5n(rs.getDouble(5));
+			entity.setZl3z4n(rs.getDouble(6));
+			entity.setZl2z3n(rs.getDouble(7));
+			entity.setZl1z2n(rs.getDouble(8));
+			entity.setZl1nyn(rs.getDouble(9));
+			entity.setHj(rs.getDouble(10));
+			yszkZlDao.merge(entity);
+		}
+	}
+	
+	@Override
+	public void importYszkzlbhFromNC(Date d, List<Company> yszkgbComps) {
+		NCConnection connection = NCConnection.create();
+		if (null != connection){
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(d);
+			String whereSql = 
+				" and unit_code in (" + StringUtils.join(toCode(yszkgbComps).toArray(), ",") + ")" + 
+				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
+				" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
+			ResultSet rs = connection.query(ncSqlYszkzlbh + whereSql);
+			if (null != rs){	
+				try {
+					mergeZlbhEntity(cal, rs);
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}	
+	}
+
+
 }
