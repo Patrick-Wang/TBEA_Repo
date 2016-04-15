@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.ic.operation.controller.servlet.sbdddcbjpcqk.KglyddType;
-import com.tbea.ic.operation.model.entity.sbdddcbjPcqk.XlkglyddEntity;
+import com.tbea.ic.operation.model.entity.sbdddcbjpcqk.XlkglyddEntity;
 
 
 

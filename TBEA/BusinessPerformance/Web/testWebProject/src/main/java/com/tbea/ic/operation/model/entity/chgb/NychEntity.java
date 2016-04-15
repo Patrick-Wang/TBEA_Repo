@@ -39,14 +39,6 @@ public class NychEntity extends AbstractReadWriteEntity implements Serializable 
 	Double fcsp;
 	Double dh;
 	Double hj;
-	
-	public Double getHj() {
-		return hj;
-	}
-
-	public void setHj(Double hj) {
-		this.hj = hj;
-	}
 
 	public Integer getNf() {
 		return nf;
