@@ -38,10 +38,8 @@ public class ByqkglyddEntity extends AbstractReadWriteEntity implements Serializ
 	Double dnkglyddzlcl;
 	Double djdpcddcz;
 	Double djdpcddcl;
-	Double djdpcddcnfhl;
 	Double xjdpcddcz;
 	Double xjdpcddcl;
-	Double xjdpcddcnfhl;
 	Double cnjyhkglyddcz;
 	Double cnjyhkglyddcl;
 	Double jhqddcz;
@@ -120,12 +118,7 @@ public class ByqkglyddEntity extends AbstractReadWriteEntity implements Serializ
 	public void setDjdpcddcl(Double djdpcddcl) {
 		this.djdpcddcl = djdpcddcl;
 	}
-	public Double getDjdpcddcnfhl() {
-		return djdpcddcnfhl;
-	}
-	public void setDjdpcddcnfhl(Double djdpcddcnfhl) {
-		this.djdpcddcnfhl = djdpcddcnfhl;
-	}
+
 	public Double getXjdpcddcz() {
 		return xjdpcddcz;
 	}
@@ -138,12 +131,7 @@ public class ByqkglyddEntity extends AbstractReadWriteEntity implements Serializ
 	public void setXjdpcddcl(Double xjdpcddcl) {
 		this.xjdpcddcl = xjdpcddcl;
 	}
-	public Double getXjdpcddcnfhl() {
-		return xjdpcddcnfhl;
-	}
-	public void setXjdpcddcnfhl(Double xjdpcddcnfhl) {
-		this.xjdpcddcnfhl = xjdpcddcnfhl;
-	}
+
 	public Double getCnjyhkglyddcz() {
 		return cnjyhkglyddcz;
 	}

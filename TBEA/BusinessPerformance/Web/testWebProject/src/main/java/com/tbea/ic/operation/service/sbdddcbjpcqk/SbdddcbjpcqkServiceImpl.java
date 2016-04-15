@@ -46,15 +46,12 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 		list.add(""
 				+ Util.division(Util.division(entity.getDjdpcddcl(), 3d),
 						entity.getYccnlcl()));
-
-		list.add("" + entity.getDjdpcddcnfhl());
 		list.add("" + entity.getXjdpcddcz());
 		list.add(""
 				+ Util.division(Util.division(entity.getXjdpcddcz(), 3d),
 						entity.getYccnlcl()));
 
 		list.add("" + entity.getXjdpcddcl());
-		list.add("" + entity.getXjdpcddcnfhl());
 		list.add("" + entity.getCnjyhkglyddcz());
 		list.add("" + entity.getCnjyhkglyddcl());
 		list.add("" + entity.getJhqddcz());
@@ -79,12 +76,10 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 		list.add("" + entity.getSykglyddzlcz());
 		list.add("" + entity.getDnkglyddzlcz());
 		list.add("" + entity.getDjdpcddcz());
-		list.add("" + entity.getDjdpcddcnfhl());
 		list.add(""
-				+ Util.division(entity.getDjdpcddcnfhl(), entity.getYccnl()));
+				+ Util.division(entity.getDjdpcddcz(), entity.getYccnl()));
 		list.add("" + entity.getXjdpcddcz());
 		list.add("" + Util.division(entity.getXjdpcddcz(), entity.getYccnl()));
-		list.add("" + entity.getXjdpcddcnfhl());
 		list.add("" + entity.getCnjyhkglyddpcz());
 		list.add("" + entity.getJhqddcz());
 		return list;
@@ -111,10 +106,8 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 		list.add("" + entity.getDnkglyddzlcl());
 		list.add("" + entity.getDjdpcddcz());
 		list.add("" + entity.getDjdpcddcl());
-		list.add("" + entity.getDjdpcddcnfhl());
 		list.add("" + entity.getXjdpcddcz());
 		list.add("" + entity.getXjdpcddcl());
-		list.add("" + entity.getXjdpcddcnfhl());
 		list.add("" + entity.getCnjyhkglyddcz());
 		list.add("" + entity.getCnjyhkglyddcl());
 		list.add("" + entity.getJhqddcz());
@@ -139,9 +132,7 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 		list.add("" + entity.getSykglyddzlcz());
 		list.add("" + entity.getDnkglyddzlcz());
 		list.add("" + entity.getDjdpcddcz());
-		list.add("" + entity.getDjdpcddcnfhl());
 		list.add("" + entity.getXjdpcddcz());
-		list.add("" + entity.getXjdpcddcnfhl());
 		list.add("" + entity.getCnjyhkglyddpcz());
 		list.add("" + entity.getJhqddcz());
 		return list;

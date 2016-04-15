@@ -20,6 +20,7 @@ import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.SbdddcbjpcqkSheetType;
 import com.tbea.ic.operation.common.excel.YszkgbSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkServiceImpl;
@@ -32,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
@@ -161,16 +163,16 @@ public class SbdddcbjpcqkServlet {
 			template = ExcelTemplate.createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType.XLKGLYDD_SCLB);
 		}
 				
-				
-		
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
+		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
 		HSSFWorkbook workbook = template.getWorkbook();
-		String name = request.getParameter("date") + workbook.getSheetName(0);
+		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		for (int i = 0; i < ret.size(); ++i){
+			HSSFRow row = sheet.createRow(i + 3);
 			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
 			}
 		}
 		template.write(response, name + ".xls");
@@ -189,15 +191,16 @@ public class SbdddcbjpcqkServlet {
 		}else{
 			template = ExcelTemplate.createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType.BYQKGLYDD_SCLB);
 		}
-		
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
+		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
 		HSSFWorkbook workbook = template.getWorkbook();
-		String name = request.getParameter("date") + workbook.getSheetName(0);
+		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		for (int i = 0; i < ret.size(); ++i){
+			HSSFRow row = sheet.createRow(i + 3);
 			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
 			}
 		}
 		template.write(response, name + ".xls");

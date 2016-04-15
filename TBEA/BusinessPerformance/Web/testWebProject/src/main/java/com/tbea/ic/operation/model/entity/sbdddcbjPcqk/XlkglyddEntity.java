@@ -34,9 +34,7 @@ public class XlkglyddEntity extends AbstractReadWriteEntity implements Serializa
 	Double sykglyddzlcz;
 	Double dnkglyddzlcz;
 	Double djdpcddcz;
-	Double djdpcddcnfhl;
 	Double xjdpcddcz;
-	Double xjdpcddcnfhl;
 	Double cnjyhkglyddpcz;
 	Double jhqddcz;
 	Integer zt;
@@ -89,24 +87,14 @@ public class XlkglyddEntity extends AbstractReadWriteEntity implements Serializa
 	public void setDjdpcddcz(Double djdpcddcz) {
 		this.djdpcddcz = djdpcddcz;
 	}
-	public Double getDjdpcddcnfhl() {
-		return djdpcddcnfhl;
-	}
-	public void setDjdpcddcnfhl(Double djdpcddcnfhl) {
-		this.djdpcddcnfhl = djdpcddcnfhl;
-	}
+	
 	public Double getXjdpcddcz() {
 		return xjdpcddcz;
 	}
 	public void setXjdpcddcz(Double xjdpcddcz) {
 		this.xjdpcddcz = xjdpcddcz;
 	}
-	public Double getXjdpcddcnfhl() {
-		return xjdpcddcnfhl;
-	}
-	public void setXjdpcddcnfhl(Double xjdpcddcnfhl) {
-		this.xjdpcddcnfhl = xjdpcddcnfhl;
-	}
+	
 	public Double getCnjyhkglyddpcz() {
 		return cnjyhkglyddpcz;
 	}
