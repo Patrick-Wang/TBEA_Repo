@@ -40,6 +40,12 @@ var yszkgb;
             YszkyjtztjqsView.newInstance = function () {
                 return new YszkyjtztjqsView();
             };
+            YszkyjtztjqsView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "yszkyjtztjqs/export.do?" + Util.Ajax.toUrlParam({
+                    date: date,
+                    companyId: cpType
+                });
+            };
             YszkyjtztjqsView.prototype.option = function () {
                 return this.mOpt;
             };

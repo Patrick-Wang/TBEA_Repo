@@ -40,9 +40,6 @@ var yszkgb;
                 this.mAjaxSave = new Util.Ajax("yszkyjtztjqs/entry/save.do", false);
                 this.mAjaxSubmit = new Util.Ajax("yszkyjtztjqs/entry/submit.do", false);
             }
-            YszkyjtztjqsEntryView.prototype.setReadOnlyCallBack = function (callBack) {
-                this.mReadOnlyChange = callBack;
-            };
             YszkyjtztjqsEntryView.newInstance = function () {
                 return new YszkyjtztjqsEntryView();
             };
@@ -113,7 +110,7 @@ var yszkgb;
                 });
             };
             YszkyjtztjqsEntryView.prototype.refresh = function () {
-                this.mReadOnlyChange(this.mIsReadOnly);
+                this.raiseReadOnlyChangeEvent(this.mIsReadOnly);
                 if (this.mData == undefined) {
                     return;
                 }
@@ -212,7 +209,7 @@ var yszkgb;
                 });
             };
             return YszkyjtztjqsEntryView;
-        })(yszkgb.EntryPluginView);
+        })(yszkgb.BaseEntryPluginView);
         yszkyjtztjqsEntry.pluginView = YszkyjtztjqsEntryView.newInstance();
     })(yszkyjtztjqsEntry = yszkgb.yszkyjtztjqsEntry || (yszkgb.yszkyjtztjqsEntry = {}));
 })(yszkgb || (yszkgb = {}));

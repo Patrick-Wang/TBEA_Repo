@@ -40,6 +40,12 @@ var yszkgb;
             YqyszcsysView.newInstance = function () {
                 return new YqyszcsysView();
             };
+            YqyszcsysView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "yqyszcsys/export.do?" + Util.Ajax.toUrlParam({
+                    date: date,
+                    companyId: cpType
+                });
+            };
             YqyszcsysView.prototype.option = function () {
                 return this.mOpt;
             };

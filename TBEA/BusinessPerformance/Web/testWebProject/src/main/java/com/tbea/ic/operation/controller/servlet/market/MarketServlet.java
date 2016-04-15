@@ -38,12 +38,13 @@ import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.excel.FormatterHandler;
-import com.tbea.ic.operation.common.excel.HeaderFormatterHandler;
-import com.tbea.ic.operation.common.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.excel.PercentFormatterHandler;
-import com.tbea.ic.operation.common.excel.ExcelTemplate.MarketSheetType;
-import com.tbea.ic.operation.common.excel.NumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.common.excel.JygkSheetType;
+import com.tbea.ic.operation.common.excel.MarketSheetType;
+import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.market.MarketService;
@@ -310,11 +311,11 @@ public class MarketServlet {
 		if ("bid_industry".equals(type)) {
 			result = marketService.getIndustryBidData(companyNames, date);
 			marketTemplate = ExcelTemplate
-					.createMarketTemplate(ExcelTemplate.MarketSheetType.BID_INDUSTRY);
+					.createMarketTemplate(MarketSheetType.BID_INDUSTRY);
 		} else if ("bid_company".equals(type)) {
 			result = marketService.getCompanyBidData(companyNames, date);
 			marketTemplate = ExcelTemplate
-					.createMarketTemplate(ExcelTemplate.MarketSheetType.BID_COMPANY);
+					.createMarketTemplate(MarketSheetType.BID_COMPANY);
 		}
 		this.exportExcel(response, marketTemplate, 3, null, result,
 				formatterChain);
@@ -606,7 +607,7 @@ public class MarketServlet {
 
 		ExcelTemplate template = null;
 		template = ExcelTemplate
-				.createJygkTemplate(ExcelTemplate.JygkSheetType.MARKET_PRO);
+				.createJygkTemplate(JygkSheetType.MARKET_PRO);
 		HSSFWorkbook workbook = template.getWorkbook();
 		workbook.setSheetName(0, "市场部信息");
 		HSSFSheet sheet = workbook.getSheetAt(0);

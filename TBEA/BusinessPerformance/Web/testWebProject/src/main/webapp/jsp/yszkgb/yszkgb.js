@@ -34,6 +34,11 @@ var yszkgb;
             }
             return this.plugin(nod);
         };
+        View.prototype.export = function (elemId) {
+            var url = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
+            $("#" + elemId)[0].action = url;
+            $("#" + elemId)[0].submit();
+        };
         View.prototype.init = function (opt) {
             this.mOpt = opt;
             this.mDtSec = new Util.DateSelector({ year: this.mOpt.date.year - 3, month: 1 }, {
@@ -59,17 +64,19 @@ var yszkgb;
         };
         View.prototype.updateUI = function () {
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            var dts = this.mDtSec.getDate();
-            dts.day = 1;
+            var dt = this.mDtSec.getDate();
+            dt.day = 1;
             this.mCurrentPlugin = this.plugin(node);
             for (var i = 0; i < this.mNodes.length; ++i) {
                 if (node != this.mNodes[i]) {
                     this.plugin(this.mNodes[i]).hide();
                 }
             }
+            this.mCurrentComp = this.mCompanySelector.getCompany();
+            this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
-            $("#headertitle")[0].innerHTML = node.getData().value;
-            this.plugin(node).update(dts, this.mCompanySelector.getCompany());
+            $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
+            this.plugin(node).update(dt, this.mCurrentComp);
         };
         return View;
     })();

@@ -39,9 +39,6 @@ var yszkgb;
                 this.mAjaxSave = new Util.Ajax("yqyszcsys/entry/save.do", false);
                 this.mAjaxSubmit = new Util.Ajax("yqyszcsys/entry/submit.do", false);
             }
-            YqyszcsysEntryView.prototype.setReadOnlyCallBack = function (callBack) {
-                this.mReadOnlyChange = callBack;
-            };
             YqyszcsysEntryView.newInstance = function () {
                 return new YqyszcsysEntryView();
             };
@@ -112,7 +109,7 @@ var yszkgb;
                 });
             };
             YqyszcsysEntryView.prototype.refresh = function () {
-                this.mReadOnlyChange(this.mIsReadOnly);
+                this.raiseReadOnlyChangeEvent(this.mIsReadOnly);
                 if (this.mData == undefined) {
                     return;
                 }
@@ -211,7 +208,7 @@ var yszkgb;
                 });
             };
             return YqyszcsysEntryView;
-        })(yszkgb.EntryPluginView);
+        })(yszkgb.BaseEntryPluginView);
         yqyszcsysEntry.pluginView = YqyszcsysEntryView.newInstance();
     })(yqyszcsysEntry = yszkgb.yqyszcsysEntry || (yszkgb.yqyszcsysEntry = {}));
 })(yszkgb || (yszkgb = {}));

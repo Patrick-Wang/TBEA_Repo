@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.yszkgb;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +31,12 @@ import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
+import com.tbea.ic.operation.common.excel.YszkgbSheetType;
+import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.service.yszkgb.YszkgbService;
 import com.tbea.ic.operation.service.yszkgb.YszkgbServiceImpl;
 
@@ -82,7 +91,7 @@ public class YszkgbServlet {
 	}
 	
 	@RequestMapping(value = "zmb/update.do")
-	public @ResponseBody byte[] getYqysysfx_update(HttpServletRequest request,
+	public @ResponseBody byte[] getZmb(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Date d = Date.valueOf(request.getParameter("date"));
@@ -231,6 +240,119 @@ public class YszkgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		ErrorCode err = yszkgbService.submitYszkyjtztjqs(d, companyManager.getBMDBOrganization().getCompany(comp), data);
 		return Util.response(err);
+	}
+	
+	
+	@RequestMapping(value = "zmb/export.do")
+	public @ResponseBody byte[] exportZmbx(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		List<List<String>> ret = yszkgbService.getZmb(d, company);
+		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.ZMB);
+		
+		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = company.getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		handler.handle(null, null, template, sheet.getRow(0).getCell(1), ret.get(0).get(0));
+		handler.handle(null, null, template, sheet.getRow(0).getCell(3), ret.get(0).get(1));
+		handler.handle(null, null, template, sheet.getRow(0).getCell(5), ret.get(0).get(2));
+		template.write(response, name + ".xls");
+		return "".getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "yszkzlbh/export.do")
+	public void exportYszkzlbh(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		List<List<String>> ret = yszkgbService.getYszkzlbh(d, company);
+		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKZLBH);
+		
+		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = company.getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = 0; i < ret.size(); ++i){
+			for (int j = 0; j < ret.get(i).size(); ++j){
+				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+			}
+		}
+		template.write(response, name + ".xls");
+	}
+	
+	
+	@RequestMapping(value = "yszkkxxz/export.do")
+	public void exportYszkkxxz(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		List<List<String>> ret = yszkgbService.getYszkkxxz(d, company);
+		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKKXXZQK);
+		
+		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = company.getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = 0; i < ret.size(); ++i){
+			for (int j = 0; j < ret.get(i).size(); ++j){
+				handler.handle(null, null, template, sheet.getRow(i + 2).getCell(j + 2), ret.get(i).get(j));
+			}
+		}
+		template.write(response, name + ".xls");
+	}
+	
+	
+	@RequestMapping(value = "yqyszcsys/export.do")
+	public void exportYqyszcsys(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		List<List<String>> ret = yszkgbService.getYqyszcsys(d, company);
+		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YQYSCSYS);
+		
+		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = company.getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = 0; i < ret.size(); ++i){
+			for (int j = 0; j < ret.get(i).size(); ++j){
+				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+			}
+		}
+		template.write(response, name + ".xls");
+	}
+	
+	
+	@RequestMapping(value = "yszkyjtztjqs/export.do")
+	public void exportYszkyjtztjqs(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		List<List<String>> ret = yszkgbService.getYszkyjtztjqs(d, company);
+		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YQYSCSYS);
+		
+		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = company.getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = 0; i < ret.size(); ++i){
+			for (int j = 0; j < ret.get(i).size(); ++j){
+				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+			}
+		}
+		template.write(response, name + ".xls");
 	}
 	
 	

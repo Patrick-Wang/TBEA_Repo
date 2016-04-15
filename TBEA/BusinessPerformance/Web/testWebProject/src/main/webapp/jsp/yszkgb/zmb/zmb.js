@@ -32,6 +32,12 @@ var yszkgb;
             ZMBView.newInstance = function () {
                 return new ZMBView();
             };
+            ZMBView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "zmb/export.do?" + Util.Ajax.toUrlParam({
+                    date: date,
+                    companyId: cpType
+                });
+            };
             ZMBView.prototype.option = function () {
                 return this.mOpt;
             };

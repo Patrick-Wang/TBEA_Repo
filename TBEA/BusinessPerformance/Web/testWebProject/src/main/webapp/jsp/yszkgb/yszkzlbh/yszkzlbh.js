@@ -39,6 +39,12 @@ var yszkgb;
             YSZKZLBHView.newInstance = function () {
                 return new YSZKZLBHView();
             };
+            YSZKZLBHView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "yszkzlbh/export.do?" + Util.Ajax.toUrlParam({
+                    date: date,
+                    companyId: cpType
+                });
+            };
             YSZKZLBHView.prototype.option = function () {
                 return this.mOpt;
             };

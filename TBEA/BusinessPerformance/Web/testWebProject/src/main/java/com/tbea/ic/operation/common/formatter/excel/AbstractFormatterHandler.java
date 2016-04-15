@@ -1,9 +1,11 @@
-package com.tbea.ic.operation.common.excel;
+package com.tbea.ic.operation.common.formatter.excel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
 
 public abstract class AbstractFormatterHandler implements FormatterHandler {
 
@@ -45,10 +47,11 @@ public abstract class AbstractFormatterHandler implements FormatterHandler {
 		return mNextHandler;
 	}
 
-	protected void callNext(String zbName, Integer col, ExcelTemplate template, HSSFCell cell, String val){
+	protected String callNext(String zbName, Integer col, ExcelTemplate template, HSSFCell cell, String val){
 		if (null != mNextHandler){
-			this.mNextHandler.handle(zbName, col, template, cell, val);
+			return this.mNextHandler.handle(zbName, col, template, cell, val);
 		}
+		return val;
 	}
 	
 	protected boolean match(String zbName, Integer col){
@@ -60,20 +63,21 @@ public abstract class AbstractFormatterHandler implements FormatterHandler {
 		return false;
 	}
 	
-	abstract protected void onHandle(ExcelTemplate template, HSSFCell cell, String val);
+	abstract protected String onHandle(ExcelTemplate template, HSSFCell cell, String val);
 	
 	@Override
-	public void handle(String zbName, Integer col, ExcelTemplate template,
+	public String handle(String zbName, Integer col, ExcelTemplate template,
 			HSSFCell cell, String val) {
 		if (val != null) {
 			if (match(zbName, col)) {
-				onHandle(template, cell, val);
+				return onHandle(template, cell, val);
 			} else {
-				callNext(zbName, col, template, cell, val);
+				return callNext(zbName, col, template, cell, val);
 			}
 		} else {
 			cell.setCellValue("--");
 			cell.setCellStyle(template.getCellStyleNull());
+			return "--";
 		}
 	}
 

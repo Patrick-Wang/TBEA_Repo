@@ -377,7 +377,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 	
 	@Override
 	public ErrorCode submitYszkkxxz(Date d, Company company, JSONArray data) {
-		return entryYqyszcsys(d, company, data, ZBStatus.SUBMITTED);
+		return entryYszkkxxz(d, company, data, ZBStatus.SUBMITTED);
 	}
 
 	@Override

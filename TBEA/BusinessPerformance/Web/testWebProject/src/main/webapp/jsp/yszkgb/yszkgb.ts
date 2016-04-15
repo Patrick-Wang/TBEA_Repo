@@ -27,6 +27,8 @@ module yszkgb {
         protected mCompanySelector: Util.CompanySelector;
         protected mNodes:Util.DataNode[] = [];
         protected mCurrentPlugin: PluginView;
+        protected mCurrentDate:Util.Date;
+        protected mCurrentComp:Util.CompanyType;
         public register(name:string, plugin:PluginView):void {
             var data:PluginData = {id: this.mNodes.length, value: name, plugin: plugin};
             var node:Util.DataNode = new Util.DataNode(data);
@@ -52,6 +54,12 @@ module yszkgb {
             }
 
             return this.plugin(nod);
+        }
+
+        public export(elemId:string){
+            let url : string = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
+            $("#" + elemId)[0].action = url;
+            $("#" + elemId)[0].submit();
         }
 
         public init(opt:Option):void {
@@ -84,8 +92,8 @@ module yszkgb {
         public updateUI() {
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
 
-            let dts:Util.Date = this.mDtSec.getDate();
-            dts.day = 1;
+            let dt:Util.Date = this.mDtSec.getDate();
+            dt.day = 1;
 
             this.mCurrentPlugin = this.plugin(node);
             for (var i = 0; i < this.mNodes.length; ++i) {
@@ -94,9 +102,11 @@ module yszkgb {
                 }
             }
 
+            this.mCurrentComp = this.mCompanySelector.getCompany();
+            this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
-            $("#headertitle")[0].innerHTML = node.getData().value;
-            this.plugin(node).update(dts,  this.mCompanySelector.getCompany());
+            $("#headertitle")[0].innerHTML =  this.mCompanySelector.getCompanyName() + " " + node.getData().value;
+            this.plugin(node).update(dt,  this.mCurrentComp);
         }
     }
 }

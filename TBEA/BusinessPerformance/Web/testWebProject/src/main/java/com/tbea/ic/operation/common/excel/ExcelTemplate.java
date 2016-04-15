@@ -17,79 +17,21 @@ import com.tbea.ic.operation.controller.servlet.convertor.Convertor;
 
 public class ExcelTemplate {
 	
-	private static String pathJdzbTemplate = null;
-	private static String pathMarketTemplate = null;
-	private static String pathJYGKPhase2Template = null;
-	
+	private static String resPath;
 	static 
 	{
 		try {
-			pathMarketTemplate = new URI(Convertor.class
-					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/market_template.xls";
+			resPath = new URI(Convertor.class
+					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/";
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	static 
-	{
-		try {
-			pathJdzbTemplate = new URI(Convertor.class
-					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/jyzb_template.xls";
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	static
-	{
-		try {
-			pathJYGKPhase2Template = new URI(Convertor.class
-					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/jygk_Phase2_template.xls";
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public enum JygkSheetType{
-		GSZTZB,
-		SRQYFJG,
-		GS_SYB,
-		GCY_ZBWC,
-		GDWZBWCQK,
-		JDYJZB_SY,
-		JDFCYZBYJ_SY,
-		JDFDWZBYJ_SY,
-		JDYJZB_CY,
-		JDFCYZBYJ_CY,
-		JDFDWZBYJ_CY,
-		JDYJZB_MY,
-		JDFCYZBYJ_MY,
-		JDFDWZBYJ_MY,
-		MARKET_PRO
-	}
-	
-	public enum MarketSheetType{
-		BID_INDUSTRY,
-		BID_COMPANY,
-		SIGN_INDUSTRY,
-		SIGN_COMPANY,
-		MIXED_AREA,
-		MIXED_INDUSTRY
-	}
-	
-	public enum JYGKPhase2SheetType{
-		YSDialy,
-		JYDWLRRANK,
-		LRTBRANK,
-		XMGSLRTBRANK,
-		YSZKZSRBRANK,
-		YSZKJBLZSRRANK,
-		CHZSRBRANK,
-		YSJCHZSRBRANK,
-		RJRANK,
-		XMGSRJRANK
-	}
+
+	private static String pathJdzbTemplate = resPath + "jyzb_template.xls";
+	private static String pathMarketTemplate = resPath + "market_template.xls";
+	private static String pathJYGKPhase2Template = resPath + "jygk_Phase2_template.xls";
+	private static String pathYszkgbTemplate = resPath + "yszkgb_template.xls";
 
 	public static ExcelTemplate createJygkTemplate(JygkSheetType type) throws IOException{
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
@@ -98,9 +40,10 @@ public class ExcelTemplate {
 			workbook.removeSheetAt(0);
 		}
 		
-		for (int i = type.ordinal() + 1; i <= JygkSheetType.JDFDWZBYJ_MY.ordinal(); ++i){
+		for (int i = type.ordinal() + 1; i < JygkSheetType.END.ordinal(); ++i){
 			workbook.removeSheetAt(1);
 		}
+		
 		return new ExcelTemplate(workbook);
 	}
 	
@@ -111,9 +54,10 @@ public class ExcelTemplate {
 			workbook.removeSheetAt(0);
 		}
 		
-		for (int i = type.ordinal() + 1; i <= MarketSheetType.MIXED_INDUSTRY.ordinal(); ++i){
+		for (int i = type.ordinal() + 1; i < MarketSheetType.END.ordinal(); ++i){
 			workbook.removeSheetAt(1);
 		}
+
 		return new ExcelTemplate(workbook);
 	}
 	
@@ -125,12 +69,26 @@ public class ExcelTemplate {
 		}
 		
 		int j = JYGKPhase2SheetType.XMGSRJRANK.ordinal();
-		for (int i = type.ordinal() + 1; i <= JYGKPhase2SheetType.XMGSRJRANK.ordinal(); ++i){
+		for (int i = type.ordinal() + 1; i < JYGKPhase2SheetType.END.ordinal(); ++i){
 			workbook.removeSheetAt(1);
 		}
+
 		return new ExcelTemplate(workbook);
 	}
 	
+	public static ExcelTemplate createYszkgbTemplate(YszkgbSheetType type) throws IOException{
+		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
+				pathYszkgbTemplate)));	
+		for (int i = 0; i < type.ordinal(); ++i){
+			workbook.removeSheetAt(0);
+		}
+		
+		for (int i = type.ordinal() + 1; i < YszkgbSheetType.END.ordinal(); ++i){
+			workbook.removeSheetAt(1);
+		}
+		
+		return new ExcelTemplate(workbook);
+	}
 
 	HSSFWorkbook workbook;
 	HSSFCellStyle cellStyleNull;
@@ -253,10 +211,7 @@ public class ExcelTemplate {
 	public HSSFCellStyle getCellStyleHeader() {
 		return cellStyleHeader;
 	}
-	
-//	public CellFormatter createCellFormatter(){
-//		return new CellFormatter(this);
-//	}
+
 	
 	public void write(OutputStream os) throws IOException{
 		HSSFSheet sheet = workbook.getSheetAt(0);

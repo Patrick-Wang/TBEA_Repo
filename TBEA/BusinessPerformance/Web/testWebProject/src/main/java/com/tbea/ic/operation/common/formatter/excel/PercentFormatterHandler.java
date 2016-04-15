@@ -1,6 +1,8 @@
-package com.tbea.ic.operation.common.excel;
+package com.tbea.ic.operation.common.formatter.excel;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
 
 public class PercentFormatterHandler extends AbstractFormatterHandler {
 
@@ -17,10 +19,11 @@ public class PercentFormatterHandler extends AbstractFormatterHandler {
 	}
 
 	@Override
-	protected void onHandle(ExcelTemplate template, HSSFCell cell, String val) {
-		cell.setCellValue(String.format("%.1f", Double.valueOf(val) * 100)
-				+ "%");
+	protected String onHandle(ExcelTemplate template, HSSFCell cell, String val) {
+		String ret = String.format("%.1f", Double.valueOf(val) * 100) + "%";
+		cell.setCellValue(ret);
 		cell.setCellStyle(template.getCellStylePercent());
+		return ret;
 	}
 
 }

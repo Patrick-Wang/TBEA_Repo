@@ -33,6 +33,7 @@ module yszkgb {
         class YqyszcsysView extends BasePluginView {
             private mData:Array<string[]>;
             private mAjax:Util.Ajax = new Util.Ajax("yqyszcsys/update.do", false);
+
             private mDateSelector:Util.DateSelector;
             private mDt: string;
 
@@ -40,7 +41,12 @@ module yszkgb {
                 return new YqyszcsysView();
             }
 
-
+            pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
+                return "yqyszcsys/export.do?" + Util.Ajax.toUrlParam({
+                        date: date,
+                        companyId: cpType
+                    });
+            }
 
             private option():Option {
                 return <Option>this.mOpt;

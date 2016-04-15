@@ -31,7 +31,12 @@ module yszkgb {
                 return new ZMBView();
             }
 
-
+            pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
+                return "zmb/export.do?" + Util.Ajax.toUrlParam({
+                        date: date,
+                        companyId: cpType
+                    });
+            }
 
             private option():Option {
                 return <Option>this.mOpt;

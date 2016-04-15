@@ -30,7 +30,7 @@ module yszkgb {
             tb:string;
         }
 
-        class YqyszcsysEntryView extends EntryPluginView {
+        class YqyszcsysEntryView extends BaseEntryPluginView {
 
             private mData:Array<string[]>;
             private mAjaxUpdate:Util.Ajax = new Util.Ajax("yqyszcsys/entry/update.do", false);
@@ -39,11 +39,6 @@ module yszkgb {
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mIsReadOnly:boolean;
-            private mReadOnlyChange:(isReadOnly:boolean)=>void;
-
-            setReadOnlyCallBack(callBack:(isReadOnly:boolean)=>void) {
-                this.mReadOnlyChange = callBack;
-            }
 
             public static newInstance():YqyszcsysEntryView {
                 return new YqyszcsysEntryView();
@@ -117,7 +112,7 @@ module yszkgb {
             }
 
             public refresh():void {
-                this.mReadOnlyChange(this.mIsReadOnly);
+                this.raiseReadOnlyChangeEvent(this.mIsReadOnly);
                 if (this.mData == undefined) {
                     return;
                 }

@@ -1,5 +1,7 @@
-package com.tbea.ic.operation.common.excel;
+package com.tbea.ic.operation.common.formatter.excel;
 import org.apache.poi.hssf.usermodel.HSSFCell;
+
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
 
 public class HeaderFormatterHandler extends AbstractFormatterHandler {
 
@@ -17,13 +19,16 @@ public class HeaderFormatterHandler extends AbstractFormatterHandler {
 
 
 	@Override
-	protected void onHandle(ExcelTemplate template, HSSFCell cell, String val) {
+	protected String onHandle(ExcelTemplate template, HSSFCell cell, String val) {
+		String ret = val;
 		if (val.contains(" ")){
-			cell.setCellValue(" " + val.trim());
+			ret = " " + val.trim();
+			cell.setCellValue(ret);
 		}else{
 			cell.setCellValue(val);
 		}
 		cell.setCellStyle(template.getCellStyleHeader());
+		return val;
 	}
 
 }

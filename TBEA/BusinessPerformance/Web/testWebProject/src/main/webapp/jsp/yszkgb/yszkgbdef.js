@@ -1,8 +1,3 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
 /// <reference path="../../js/jquery/jquery.d.ts" />
@@ -23,27 +18,53 @@ var yszkgb;
         BasePluginView.prototype.$ = function (id) {
             return $("#" + this.mOpt.host + " #" + id);
         };
-        BasePluginView.prototype.update = function (start, cpType) {
-            var st = start.year + "-" + start.month + "-" + start.day;
+        BasePluginView.prototype.update = function (date, cpType) {
+            var st = date.year + "-" + date.month + "-" + date.day;
             this.pluginUpdate(st, cpType);
+        };
+        BasePluginView.prototype.getExportUrl = function (date, cpType) {
+            var st = date.year + "-" + date.month + "-" + date.day;
+            return this.pluginGetExportUrl(st, cpType);
         };
         return BasePluginView;
     })();
     yszkgb.BasePluginView = BasePluginView;
-    var EntryPluginView = (function (_super) {
-        __extends(EntryPluginView, _super);
-        function EntryPluginView() {
-            _super.apply(this, arguments);
+    var BaseEntryPluginView = (function () {
+        function BaseEntryPluginView() {
         }
-        EntryPluginView.prototype.save = function (date, cpType) {
+        BaseEntryPluginView.prototype.setOnReadOnlyChangeListener = function (callBack) {
+            this.mReadOnlyChange = callBack;
+        };
+        BaseEntryPluginView.prototype.init = function (opt) {
+            this.mOpt = opt;
+        };
+        BaseEntryPluginView.prototype.hide = function () {
+            $("#" + this.mOpt.host).hide();
+        };
+        BaseEntryPluginView.prototype.show = function () {
+            $("#" + this.mOpt.host).show();
+        };
+        BaseEntryPluginView.prototype.raiseReadOnlyChangeEvent = function (isReadOnly) {
+            if (undefined != this.mReadOnlyChange) {
+                this.mReadOnlyChange(isReadOnly);
+            }
+        };
+        BaseEntryPluginView.prototype.$ = function (id) {
+            return $("#" + this.mOpt.host + " #" + id);
+        };
+        BaseEntryPluginView.prototype.update = function (start, cpType) {
+            var st = start.year + "-" + start.month + "-" + start.day;
+            this.pluginUpdate(st, cpType);
+        };
+        BaseEntryPluginView.prototype.save = function (date, cpType) {
             var dt = date.year + "-" + date.month + "-" + date.day;
             this.pluginSave(dt, cpType);
         };
-        EntryPluginView.prototype.submit = function (date, cpType) {
+        BaseEntryPluginView.prototype.submit = function (date, cpType) {
             var dt = date.year + "-" + date.month + "-" + date.day;
             this.pluginSubmit(dt, cpType);
         };
-        return EntryPluginView;
-    })(BasePluginView);
-    yszkgb.EntryPluginView = EntryPluginView;
+        return BaseEntryPluginView;
+    })();
+    yszkgb.BaseEntryPluginView = BaseEntryPluginView;
 })(yszkgb || (yszkgb = {}));

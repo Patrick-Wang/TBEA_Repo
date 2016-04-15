@@ -1,8 +1,10 @@
-package com.tbea.ic.operation.common.excel;
+package com.tbea.ic.operation.common.formatter.excel;
 
 import java.math.BigDecimal;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
 
 public class NumberFormatterHandler extends AbstractFormatterHandler {
 
@@ -26,35 +28,37 @@ public class NumberFormatterHandler extends AbstractFormatterHandler {
 	}
 
 	@Override
-	protected void onHandle(ExcelTemplate template, HSSFCell cell, String val) {
+	protected String onHandle(ExcelTemplate template, HSSFCell cell, String val) {
 		// System.out.println(val);
 		BigDecimal b = new BigDecimal(Double.valueOf(val));
+		String ret = val;
 		// System.out.println(b);
 		// System.out.println(cell);
 		switch (type) {
 		case RESERVE_0:
-			cell.setCellValue(b.setScale(0, BigDecimal.ROUND_HALF_UP)
-					.toString());
+			ret = b.setScale(0, BigDecimal.ROUND_HALF_UP).toString();
+			cell.setCellValue(ret);
 			cell.setCellStyle(template.getCellStyleNumber0());
 			break;
 		case RESERVE_1:
-			cell.setCellValue(b.setScale(1, BigDecimal.ROUND_HALF_UP)
-					.toString());
+			ret = b.setScale(1, BigDecimal.ROUND_HALF_UP).toString();
+			cell.setCellValue(ret);
 			cell.setCellStyle(template.getCellStyleNumber1());
 			break;
 		case RESERVE_2:
-			cell.setCellValue(b.setScale(2, BigDecimal.ROUND_HALF_UP)
-					.toString());
+			ret = b.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+			cell.setCellValue(ret);
 			cell.setCellStyle(template.getCellStyleNumber2());
 			break;
 		case RESERVE_4:
-			cell.setCellValue(b.setScale(4, BigDecimal.ROUND_HALF_UP)
-					.toString());
+			ret = b.setScale(4, BigDecimal.ROUND_HALF_UP).toString();
+			cell.setCellValue(ret);
 			cell.setCellStyle(template.getCellStyleNumber4());
 			break;
 		default:
 			break;
 		}
+		return ret;
 	}
 
 }

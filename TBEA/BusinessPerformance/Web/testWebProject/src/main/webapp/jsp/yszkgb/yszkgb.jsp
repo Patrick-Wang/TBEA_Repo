@@ -166,7 +166,12 @@ th.ui-th-ltr {
 	text-align: left;
 	font-size: 12px;
 }
-
+#exportButton {
+	height: 23px;
+	width:100px;
+	padding: .1em 1em;
+	margin-top: 2px;
+}
 </style>
 </head>
 <body>
@@ -193,11 +198,25 @@ th.ui-th-ltr {
 				<%@include file="yqyszcsys/yqyszcsys.jsp"%>
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<form id="export" method="post">
+					<input id="exportButton" type="button" value="导出"
+						   onclick="view.export('export')">
+				</form>
+			</td>
+		</tr>
 	</Table>
 	<script type="text/javascript">
 
-    $("#radio").buttonset();
+
     $(document).ready(function () {
+    	
+        $("#exportButton")
+        .css("height", "23px")
+        .css("padding", ".1em 1em")
+        .css("margin-top", "2px");
+    	
     	view.init({
             type: "type",
 			comp:"compid", 

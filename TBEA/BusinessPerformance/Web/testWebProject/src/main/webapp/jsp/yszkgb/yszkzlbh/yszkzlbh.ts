@@ -39,7 +39,12 @@ module yszkgb {
                 return new YSZKZLBHView();
             }
 
-
+            pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
+                return "yszkzlbh/export.do?" + Util.Ajax.toUrlParam({
+                        date: date,
+                        companyId: cpType
+                    });
+            }
 
             private option():Option {
                 return <Option>this.mOpt;
