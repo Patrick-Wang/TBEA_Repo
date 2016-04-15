@@ -7,7 +7,7 @@ declare var echarts;
 declare var view:sbdddcbjpcqk.FrameView;
 
 module sbdddcbjpcqk {
-    export module xlkglydd {
+    export module byqkglydd {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, type:KglyddType):JQTable.JQGridAssistant {
@@ -21,17 +21,29 @@ module sbdddcbjpcqk {
 
                 return new JQTable.JQGridAssistant([
                     nodeFirst,
-                    new JQTable.Node("月产出能力（产值）", "rqa"),
-                    new JQTable.Node("所有可供履约订单总量产值", "ab"),
-                    new JQTable.Node("当年可供履约订单总量产值", "ac"),
-                    new JQTable.Node("其中：当季度排产订单", "ad")
+                    new JQTable.Node("月产出能力（产值）", "rqa")
                         .append( new JQTable.Node("产值", "ba"))
-                        .append( new JQTable.Node("产能发挥率", "bb")),
+                        .append( new JQTable.Node("产量", "bb")),
+                    new JQTable.Node("所有可供履约订单总量产值", "ab")
+                        .append( new JQTable.Node("产值", "cca"))
+                        .append( new JQTable.Node("产量", "ccb")),
+                    new JQTable.Node("当年可供履约订单总量产值", "ac")
+                        .append( new JQTable.Node("产值", "da"))
+                        .append( new JQTable.Node("产量", "db")),
+                    new JQTable.Node("其中：当季度排产订单", "ad")
+                        .append( new JQTable.Node("产值", "ea"))
+                        .append( new JQTable.Node("产量", "eb"))
+                        .append( new JQTable.Node("产能发挥率", "ec")),
                     new JQTable.Node("其中：下季度排产订单", "ae")
-                        .append( new JQTable.Node("产值", "bc"))
-                        .append( new JQTable.Node("产能发挥率", "bd")),
-                    new JQTable.Node("次年及以后可供履约订单排产值", "af"),
+                        .append( new JQTable.Node("产值", "fc"))
+                        .append( new JQTable.Node("产量", "fb"))
+                        .append( new JQTable.Node("产能发挥率", "fd")),
+                    new JQTable.Node("次年及以后可供履约订单排产值", "af")
+                        .append( new JQTable.Node("产值", "ga"))
+                        .append( new JQTable.Node("产量", "gb")),
                     new JQTable.Node("交货期待定产值", "ag")
+                        .append( new JQTable.Node("产值", "ga"))
+                        .append( new JQTable.Node("产量", "gb"))
                 ], gridName);
             }
         }
@@ -40,18 +52,18 @@ module sbdddcbjpcqk {
             tb:string;
         }
 
-        class XlkglyddView extends BasePluginView {
+        class ByqkglyddView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("xlkglydd/update.do", false);
+            private mAjax:Util.Ajax = new Util.Ajax("byqkglydd/update.do", false);
             private mDateSelector:Util.DateSelector;
             private mDt: string;
 
-            public static newInstance():XlkglyddView {
-                return new XlkglyddView();
+            public static newInstance():ByqkglyddView {
+                return new ByqkglyddView();
             }
 
             pluginGetExportUrl(date:string):string {
-                return "xlkglydd/export.do?" + Util.Ajax.toUrlParam({
+                return "byqkglydd/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         type: this.mType
                     });
@@ -83,8 +95,8 @@ module sbdddcbjpcqk {
 
             public init(opt:Option):void {
                 super.init(opt);
-                view.register("线缆可供履约订单变化情况按生产类别", new TypeViewProxy(this, KglyddType.SCLB));
-                view.register("线缆可供履约订单变化情况按生产单元", new TypeViewProxy(this, KglyddType.SCDY));
+                view.register("变压器可供履约订单变化情况按生产类别", new TypeViewProxy(this, KglyddType.SCLB));
+                view.register("变压器可供履约订单变化情况按生产单元", new TypeViewProxy(this, KglyddType.SCDY));
             }
 
             private updateTable():void {
@@ -110,6 +122,6 @@ module sbdddcbjpcqk {
             }
         }
 
-        export var pluginView = XlkglyddView.newInstance();
+        export var pluginView = ByqkglyddView.newInstance();
     }
 }

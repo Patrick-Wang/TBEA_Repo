@@ -189,8 +189,7 @@ th.ui-th-ltr {
 		</tr>
 		<tr>
 			<td>
-
-<%-- 				<%@include file="byqkglydd/byqkglydd.jsp"%> --%>
+				<%@include file="byqkglydd/byqkglydd.jsp"%>
 				<%@include file="xlkglydd/xlkglydd.jsp"%>
 			</td>
 		</tr>
@@ -199,7 +198,7 @@ th.ui-th-ltr {
 				<form id="export" method="post">
 					<input id="exportButton" type="button" value="导出"
 						   onclick="view.exportExcel('export')">
-				</form>
+				</form> 
 			</td>
 		</tr>
 	</Table>

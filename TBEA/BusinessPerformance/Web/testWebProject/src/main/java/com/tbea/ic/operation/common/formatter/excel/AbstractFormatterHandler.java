@@ -68,7 +68,7 @@ public abstract class AbstractFormatterHandler implements FormatterHandler {
 	@Override
 	public String handle(String zbName, Integer col, ExcelTemplate template,
 			HSSFCell cell, String val) {
-		if (val != null) {
+		if (val != null && !"null".equals(val)) {
 			if (match(zbName, col)) {
 				return onHandle(template, cell, val);
 			} else {
