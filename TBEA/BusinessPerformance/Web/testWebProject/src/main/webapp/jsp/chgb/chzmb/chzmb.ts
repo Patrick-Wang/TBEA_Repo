@@ -31,7 +31,12 @@ module chgb {
                 return new CHZMBView();
             }
 
-
+            pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
+                return "chzmb/export.do?" + Util.Ajax.toUrlParam({
+                        date: date,
+                        companyId: cpType
+                    });
+            }
 
             private option():Option {
                 return <Option>this.mOpt;

@@ -36,6 +36,12 @@ var chgb;
             CHJYKCBView.newInstance = function () {
                 return new CHJYKCBView();
             };
+            CHJYKCBView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "chjykcb/export.do?" + Util.Ajax.toUrlParam({
+                    date: date,
+                    companyId: cpType
+                });
+            };
             CHJYKCBView.prototype.option = function () {
                 return this.mOpt;
             };

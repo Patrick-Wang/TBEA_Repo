@@ -40,7 +40,12 @@ module chgb {
             public static newInstance():CHXZQKView {
                 return new CHXZQKView();
             }
-
+            pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
+                return "chxzqk/export.do?" + Util.Ajax.toUrlParam({
+                        date: date,
+                        companyId: cpType
+                    });
+            }
             private option():Option {
                 return <Option>this.mOpt;
             }

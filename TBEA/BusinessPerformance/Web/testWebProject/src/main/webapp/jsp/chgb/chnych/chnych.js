@@ -28,7 +28,7 @@ var chgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var CHNYCHView = (function (_super) {
             __extends(CHNYCHView, _super);
             function CHNYCHView() {
@@ -37,6 +37,12 @@ var chgb;
             }
             CHNYCHView.newInstance = function () {
                 return new CHNYCHView();
+            };
+            CHNYCHView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "chnych/export.do?" + Util.Ajax.toUrlParam({
+                    date: date,
+                    companyId: cpType
+                });
             };
             CHNYCHView.prototype.option = function () {
                 return this.mOpt;
@@ -98,7 +104,7 @@ var chgb;
                 }));
             };
             return CHNYCHView;
-        }(chgb.BasePluginView));
+        })(chgb.BasePluginView);
         chnych.pluginView = CHNYCHView.newInstance();
     })(chnych = chgb.chnych || (chgb.chnych = {}));
 })(chgb || (chgb = {}));

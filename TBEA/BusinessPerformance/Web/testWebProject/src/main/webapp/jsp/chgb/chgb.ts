@@ -27,6 +27,9 @@ module chgb {
         private mCompanySelector: Util.CompanySelector;
         private mNodes:Util.DataNode[] = [];
         private mCurrentPlugin: PluginView;
+        protected mCurrentDate:Util.Date;
+        protected mCurrentComp:Util.CompanyType;
+
         public register(name:string, plugin:PluginView):void {
             var data:PluginData = {id: this.mNodes.length, value: name, plugin: plugin};
             var node:Util.DataNode = new Util.DataNode(data);
@@ -52,6 +55,13 @@ module chgb {
             }
 
             return this.plugin(nod);
+        }
+
+        //不可以起名叫做export 在IE中有冲突
+        public exportExcel(elemId:string) {
+            let url:string = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
+            $("#" + elemId)[0].action = url;
+            $("#" + elemId)[0].submit();
         }
 
         public init(opt:Option):void {
@@ -84,8 +94,8 @@ module chgb {
         public updateUI() {
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
 
-            let dts:Util.Date = this.mDtSec.getDate();
-            dts.day = 1;
+            let dt:Util.Date = this.mDtSec.getDate();
+            dt.day = 1;
 
             this.mCurrentPlugin = this.plugin(node);
             for (var i = 0; i < this.mNodes.length; ++i) {
@@ -93,10 +103,12 @@ module chgb {
                     this.plugin(this.mNodes[i]).hide();
                 }
             }
-           ;
+
+            this.mCurrentComp = this.mCompanySelector.getCompany();
+            this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
-            $("#headertitle")[0].innerHTML = node.getData().value;
-            this.plugin(node).update(dts,  this.mCompanySelector.getCompany());
+            $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
+            this.plugin(node).update(dt, this.mCurrentComp);
         }
     }
 }

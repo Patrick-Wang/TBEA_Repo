@@ -13,7 +13,7 @@ module yszkgb {
     export interface FrameView {
         register(name:string, plugin:PluginView):void;
         unregister(name:string) :PluginView;
-        export(elemId:string):void;
+        exportExcel(elemId:string):void;
     }
 
     export interface PluginOption {
@@ -46,14 +46,15 @@ module yszkgb {
             let st = date.year + "-" + date.month + "-" + date.day;
             this.pluginUpdate(st, cpType);
         }
+
+        abstract  pluginUpdate(date:string, cpType:Util.CompanyType):void;
+
         getExportUrl(date:Util.Date, cpType:Util.CompanyType):string{
             let st = date.year + "-" + date.month + "-" + date.day;
             return this.pluginGetExportUrl(st, cpType);
         }
 
         abstract  pluginGetExportUrl(date:string, cpType:Util.CompanyType):string;
-
-        abstract  pluginUpdate(date:string, cpType:Util.CompanyType):void;
     }
 
     export interface EntryPluginView {

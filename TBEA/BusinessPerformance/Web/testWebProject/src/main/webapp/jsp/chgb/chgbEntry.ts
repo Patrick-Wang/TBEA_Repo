@@ -1,12 +1,12 @@
 /// <reference path="../jqgrid/jqassist.ts" />
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
-/// <reference path="yszkgbdef.ts" />
+/// <reference path="chgbdef.ts" />
 /// <reference path="../unitedSelector.ts"/>
 ///<reference path="../messageBox.ts"/>
 ///<reference path="../companySelector.ts"/>
 
-module yszkgb {
+module chgb {
 
     interface Option {
         dt:string;
@@ -105,4 +105,4 @@ module yszkgb {
     }
 }
 
-var entryView:yszkgb.EntryView = new yszkgb.EntryView();
+var entryView:chgb.EntryView = new chgb.EntryView();

@@ -5,7 +5,6 @@
 /// <reference path="../unitedSelector.ts"/>
 ///<reference path="../messageBox.ts"/>
 ///<reference path="../companySelector.ts"/>
-///<reference path="yszkgb.ts"/>
 var yszkgb;
 (function (yszkgb) {
     var EntryView = (function () {

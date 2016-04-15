@@ -21,10 +21,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="yszkgb.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="yszkgb.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgb.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38003838">
+            <state vertical-scroll-proportion="0.0">
               <caret line="63" column="9" selection-start-line="63" selection-start-column="9" selection-end-line="63" selection-end-column="9" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -33,37 +33,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="zmb.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/yszkgb/zmb/zmb.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.5">
-              <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="yszkgb.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgb.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.142858">
-              <caret line="204" column="23" selection-start-line="204" selection-start-column="23" selection-end-line="204" selection-end-column="23" />
-              <folding>
-                <element signature="n#style#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="yszkgb.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgb.js">
+      <file leaf-file-name="chzmb.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/chgb/chzmb/chzmb.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="70" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="38" selection-end-column="13" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -71,32 +45,70 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="yszkyjtztjqsEntry.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkyjtztjqs/yszkyjtztjqsEntry.ts">
+      <file leaf-file-name="chjykcb.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/chgb/chjykcb/chjykcb.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+              <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="chgb.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/chgb/chgb.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="110" column="33" selection-start-line="110" selection-start-column="33" selection-end-line="110" selection-end-column="33" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="chgb.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/chgb/chgb.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.6785714">
+              <caret line="210" column="64" selection-start-line="210" selection-start-column="64" selection-end-line="210" selection-end-column="64" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="yszkyjtztjqsEntry.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkyjtztjqs/yszkyjtztjqsEntry.jsp">
+      <file leaf-file-name="chgbdef.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/chgb/chgbdef.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.428571">
-              <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="chgbEntry.jsp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jsp/chgb/chgbEntry.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.11359026">
+              <caret line="188" column="0" selection-start-line="188" selection-start-column="0" selection-end-line="190" selection-end-column="70" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="yszkgbEntry.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgbEntry.jsp">
+      <file leaf-file-name="chgbEntry.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/chgb/chgbEntry.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.107143">
-              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -105,18 +117,10 @@
         <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgbEntry.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="zmb.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/yszkgb/zmb/zmb.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.4333334">
-              <caret line="65" column="20" selection-start-line="65" selection-start-column="16" selection-end-line="65" selection-end-column="20" />
-              <folding />
+              <caret line="47" column="32" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -125,7 +129,7 @@
         <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgbdef.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="50" column="40" selection-start-line="50" selection-start-column="40" selection-end-line="50" selection-end-column="40" />
+              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="67" selection-end-column="5" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -149,16 +153,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/jsp/hzbNC_zbhz.ts" />
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/jcycljg.ts" />
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/jcycljg.jsp" />
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/jcycljgdef.ts" />
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/zhb/zhb.ts" />
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/ysjs/ysjs.ts" />
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/yhjzll/yhjzll.ts" />
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/tks/tks.ts" />
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/pvcsz/pvcsz.ts" />
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/pmicpippi/pmicpippi.ts" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/myzs/myzs.ts" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/lzbb/lzbb.ts" />
         <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/lwg/lwg.ts" />
@@ -190,16 +184,26 @@
         <option value="$PROJECT_DIR$/jsp/yszkgb/yszkyjtztjqs/yszkyjtztjqsEntry.ts" />
         <option value="$PROJECT_DIR$/jsp/yszkgb/yszkkxxz/yszkkxxzEntry.ts" />
         <option value="$PROJECT_DIR$/jsp/yszkgb/yqyszcsys/yqyszcsysEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/yszkgb/yszkgbEntry.ts" />
         <option value="$PROJECT_DIR$/jsp/yszkgb/yszkzlbh/yszkzlbh.ts" />
         <option value="$PROJECT_DIR$/jsp/yszkgb/zmb/zmb.ts" />
         <option value="$PROJECT_DIR$/jsp/yszkgb/yszkyjtztjqs/yszkyjtztjqs.ts" />
         <option value="$PROJECT_DIR$/jsp/yszkgb/yszkkxxz/yszkkxxz.ts" />
         <option value="$PROJECT_DIR$/jsp/yszkgb/yqyszcsys/yqyszcsys.ts" />
-        <option value="$PROJECT_DIR$/jsp/yszkgb/yszkgbdef.ts" />
         <option value="$PROJECT_DIR$/jsp/yszkgb/yszkgbEntry.jsp" />
         <option value="$PROJECT_DIR$/jsp/yszkgb/yszkgb.jsp" />
         <option value="$PROJECT_DIR$/jsp/yszkgb/yszkgb.ts" />
+        <option value="$PROJECT_DIR$/jsp/chgb/chgb.jsp" />
+        <option value="$PROJECT_DIR$/jsp/yszkgb/yszkgbdef.ts" />
+        <option value="$PROJECT_DIR$/jsp/chgb/chzmb/chzmb.ts" />
+        <option value="$PROJECT_DIR$/jsp/chgb/chzlbhqk/chzlbhqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/chgb/chxzqk/chxzqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/chgb/chnych/chnych.ts" />
+        <option value="$PROJECT_DIR$/jsp/chgb/chjykcb/chjykcb.ts" />
+        <option value="$PROJECT_DIR$/jsp/chgb/chgb.ts" />
+        <option value="$PROJECT_DIR$/jsp/chgb/chgbdef.ts" />
+        <option value="$PROJECT_DIR$/jsp/chgb/chgbEntry.jsp" />
+        <option value="$PROJECT_DIR$/jsp/yszkgb/yszkgbEntry.ts" />
+        <option value="$PROJECT_DIR$/jsp/chgb/chgbEntry.ts" />
       </list>
     </option>
   </component>
@@ -328,121 +332,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="yszkgb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkgb.ts" />
-              <option name="myItemType" value="com.intellij.lang.typescript.compiler.ui.projectView.TypeScriptNestingTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkgb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="zmb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkgb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkzlbh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkgb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkyjtztjqs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkgb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkkxxz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkgb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yqyszcsys" />
+              <option name="myItemId" value="chgb" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -461,17 +351,17 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\priceLib\jcycljg\ysjs" />
-      <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\priceLib\jcycljg\ggp" />
-      <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\chgb" />
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\yszkgb\yszkyjtztjqs" />
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\yszkgb\yqyszcsys" />
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\yszkgb\yszkkxxz" />
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\yszkgb\zmb" />
-      <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\yszkgb" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\priceLib\jcycljg\ysjs" />
+      <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\priceLib\jcycljg\ggp" />
+      <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp" />
     </key>
   </component>
   <component name="RunManager">
@@ -585,76 +475,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/gx/gx.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="53" selection-start-line="31" selection-start-column="53" selection-end-line="31" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/gjyy/gjyy.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="53" selection-start-line="27" selection-start-column="53" selection-end-line="27" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/ggp/ggp.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="53" selection-start-line="36" selection-start-column="53" selection-end-line="36" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/fgc/fgc.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="53" selection-start-line="29" selection-start-column="53" selection-end-line="29" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/dmdjyx/dmdjyx.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/entry_template.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44250363">
-          <caret line="61" column="58" selection-start-line="61" selection-start-column="24" selection-end-line="61" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/eva/eva.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.25">
-          <caret line="21" column="15" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/eva/eva.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="21" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/ysjs/ysjs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/ysjs/ysjs.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="189" column="0" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/yszkgb/zmb/zmb.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -733,6 +553,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.178572">
           <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+          <folding>
+            <element signature="n#style#0;n#Table#0;n#!!top" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -886,16 +709,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkkxxz/yszkkxxz.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="81" selection-start-line="35" selection-start-column="81" selection-end-line="35" selection-end-column="81" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yqyszcsys/yqyszcsys.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -911,32 +724,6 @@
         <state vertical-scroll-proportion="-9.5">
           <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/yszkgb/zmb/zmb.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.4333334">
-          <caret line="65" column="20" selection-start-line="65" selection-start-column="16" selection-end-line="65" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgbEntry.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgbdef.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="40" selection-start-line="50" selection-start-column="40" selection-end-line="50" selection-end-column="40" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -974,10 +761,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/yszkgb/zmb/zmb.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.4333334">
+          <caret line="65" column="20" selection-start-line="65" selection-start-column="16" selection-end-line="65" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgb.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.142858">
-          <caret line="204" column="23" selection-start-line="204" selection-start-column="23" selection-end-line="204" selection-end-column="23" />
+          <caret line="216" column="34" selection-start-line="213" selection-start-column="7" selection-end-line="216" selection-end-column="34" />
           <folding>
             <element signature="n#style#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -988,13 +783,139 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkkxxz/yszkkxxz.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="47" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/chgb/chzlbhqk/chzlbhqk.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/chgb/chxzqk/chxzqk.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="45" column="41" selection-start-line="45" selection-start-column="41" selection-end-line="45" selection-end-column="41" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/chgb/chnych/chnych.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="44" column="13" selection-start-line="39" selection-start-column="12" selection-end-line="44" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/chgb/chjykcb/chjykcb.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgb.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38003838">
+        <state vertical-scroll-proportion="0.0">
           <caret line="63" column="9" selection-start-line="63" selection-start-column="9" selection-end-line="63" selection-end-column="9" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgbdef.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="67" selection-end-column="5" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/chgb/chgb.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="110" column="33" selection-start-line="110" selection-start-column="33" selection-end-line="110" selection-end-column="33" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/chgb/chgb.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6785714">
+          <caret line="210" column="64" selection-start-line="210" selection-start-column="64" selection-end-line="210" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/chgb/chzmb/chzmb.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="38" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/chgb/chgbdef.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgbEntry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="47" column="32" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/chgb/chgbEntry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/chgb/chgbEntry.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11359026">
+          <caret line="188" column="0" selection-start-line="188" selection-start-column="0" selection-end-line="190" selection-end-column="70" />
+          <folding />
         </state>
       </provider>
     </entry>

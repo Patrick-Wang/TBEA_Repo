@@ -39,6 +39,12 @@ var chgb;
             CHZLBHQKView.newInstance = function () {
                 return new CHZLBHQKView();
             };
+            CHZLBHQKView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "chzlbhqk/export.do?" + Util.Ajax.toUrlParam({
+                    date: date,
+                    companyId: cpType
+                });
+            };
             CHZLBHQKView.prototype.option = function () {
                 return this.mOpt;
             };
