@@ -14,7 +14,7 @@ var gdw_indexinput_summary;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mData = [];
@@ -117,6 +117,6 @@ var gdw_indexinput_summary;
             }));
         };
         return View;
-    })();
+    }());
     gdw_indexinput_summary.View = View;
 })(gdw_indexinput_summary || (gdw_indexinput_summary = {}));

@@ -33,7 +33,7 @@
 				<li><a href="../yszkgb/entry.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>应收账款数据录入</strong></span></a>
 				</li>
-				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
+				<li><a href="../chgb/entry.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>存货数据录入</strong></span></a>
 				</li>
 				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img

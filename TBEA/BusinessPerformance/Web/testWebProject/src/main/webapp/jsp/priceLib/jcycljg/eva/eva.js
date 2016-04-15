@@ -23,7 +23,7 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var EVAView = (function (_super) {
             __extends(EVAView, _super);
             function EVAView() {
@@ -106,7 +106,7 @@ var jcycljg;
                         data: legend
                     },
                     toolbox: {
-                        show: true
+                        show: true,
                     },
                     calculable: false,
                     xAxis: [
@@ -147,7 +147,7 @@ var jcycljg;
                 }));
             };
             return EVAView;
-        })(jcycljg.BasePluginView);
+        }(jcycljg.BasePluginView));
         eva.pluginView = EVAView.newInstance();
     })(eva = jcycljg.eva || (jcycljg.eva = {}));
 })(jcycljg || (jcycljg = {}));

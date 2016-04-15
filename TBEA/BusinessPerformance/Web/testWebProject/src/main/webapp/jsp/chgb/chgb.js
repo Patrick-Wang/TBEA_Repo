@@ -77,7 +77,7 @@ var chgb;
             this.plugin(node).update(dt, this.mCurrentComp);
         };
         return View;
-    })();
+    }());
     chgb.View = View;
 })(chgb || (chgb = {}));
 var view = new chgb.View();

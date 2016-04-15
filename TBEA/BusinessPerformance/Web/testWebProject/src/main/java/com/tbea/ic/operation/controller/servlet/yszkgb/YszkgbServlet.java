@@ -163,7 +163,7 @@ public class YszkgbServlet {
 		List<List<String>> result = yszkgbService.getYqyszcsysEntry(d, comp);
 		ZBStatus status = yszkgbService.getYqyszcsysStatus(d, comp);
 		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
-		return JSONObject.fromObject(sd).toString().replaceAll("null", "").getBytes("utf-8");
+		return JSONObject.fromObject(sd).toString().replaceAll("null", "''").getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "yszkyjtztjqs/entry/update.do")

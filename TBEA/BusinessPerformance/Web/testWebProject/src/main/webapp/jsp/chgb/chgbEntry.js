@@ -75,7 +75,7 @@ var chgb;
             this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
         };
         return EntryView;
-    })();
+    }());
     chgb.EntryView = EntryView;
 })(chgb || (chgb = {}));
 var entryView = new chgb.EntryView();

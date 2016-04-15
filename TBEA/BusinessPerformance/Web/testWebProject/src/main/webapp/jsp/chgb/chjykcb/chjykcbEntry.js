@@ -1,52 +1,49 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-/// <reference path="../yszkgbdef.ts" />
+/// <reference path="../chgbdef.ts" />
 ///<reference path="../../messageBox.ts"/>
-///<reference path="../yszkgbEntry.ts"/>
+///<reference path="../chgbEntry.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var yszkgb;
-(function (yszkgb) {
-    var yszkyjtztjqsEntry;
-    (function (yszkyjtztjqsEntry) {
+var chgb;
+(function (chgb) {
+    var chjykcbEntry;
+    (function (chjykcbEntry) {
         var TextAlign = JQTable.TextAlign;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("日期", "aa", true, TextAlign.Center),
-                    new JQTable.Node("财务账面应收净收余额", "ab", readOnly),
-                    new JQTable.Node("保理余额（加项）", "ac", readOnly),
-                    new JQTable.Node("货发票未开金额（加项）", "ad", readOnly),
-                    new JQTable.Node("票开货未发金额（减项）", "ae", readOnly),
-                    new JQTable.Node("预收款冲减应收（加项）", "af", readOnly),
-                    new JQTable.Node("信用证冲减应收（加项）", "ag", readOnly),
-                    new JQTable.Node("其他应收科目影响（加项）", "ah", readOnly),
-                    new JQTable.Node("预警台账应收账款余额 ", "ai", readOnly)
+                    new JQTable.Node("项目", "chjykcbentry_xm", true, TextAlign.Center),
+                    new JQTable.Node("项目", "chjykcbentry_xm1", true, TextAlign.Center),
+                    new JQTable.Node("上月余额", "chjykcbentry_syye", false),
+                    new JQTable.Node("本月新增", "chjykcbentry_byxz", false),
+                    new JQTable.Node("本月处置", "chjykcbentry_bycz", false),
+                    new JQTable.Node("期末余额", "chjykcbentry_qmye", false)
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
-        var YszkyjtztjqsEntryView = (function (_super) {
-            __extends(YszkyjtztjqsEntryView, _super);
-            function YszkyjtztjqsEntryView() {
+        }());
+        var ChjykcbEntryView = (function (_super) {
+            __extends(ChjykcbEntryView, _super);
+            function ChjykcbEntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("yszkyjtztjqs/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("yszkyjtztjqs/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("yszkyjtztjqs/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("chjykcb/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("chjykcb/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("chjykcb/entry/submit.do", false);
             }
-            YszkyjtztjqsEntryView.newInstance = function () {
-                return new YszkyjtztjqsEntryView();
+            ChjykcbEntryView.newInstance = function () {
+                return new ChjykcbEntryView();
             };
-            YszkyjtztjqsEntryView.prototype.option = function () {
+            ChjykcbEntryView.prototype.option = function () {
                 return this.mOpt;
             };
-            YszkyjtztjqsEntryView.prototype.pluginSave = function (dt, cpType) {
+            ChjykcbEntryView.prototype.pluginSave = function (dt, cpType) {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -69,7 +66,7 @@ var yszkgb;
                     }
                 });
             };
-            YszkyjtztjqsEntryView.prototype.pluginSubmit = function (dt, cpType) {
+            ChjykcbEntryView.prototype.pluginSubmit = function (dt, cpType) {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -96,7 +93,7 @@ var yszkgb;
                     }
                 });
             };
-            YszkyjtztjqsEntryView.prototype.pluginUpdate = function (date, cpType) {
+            ChjykcbEntryView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjaxUpdate.get({
@@ -109,31 +106,29 @@ var yszkgb;
                     _this.refresh();
                 });
             };
-            YszkyjtztjqsEntryView.prototype.refresh = function () {
+            ChjykcbEntryView.prototype.refresh = function () {
                 this.raiseReadOnlyChangeEvent(this.mIsReadOnly);
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            YszkyjtztjqsEntryView.prototype.init = function (opt) {
+            ChjykcbEntryView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                entryView.register("应收账款账面与预警台账调节趋势表", this);
+                entryView.register("积压库存表", this);
             };
-            YszkyjtztjqsEntryView.prototype.updateTable = function () {
+            ChjykcbEntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mIsReadOnly);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                var ny = this.mDt.substr(0, this.mDt.length - 2).replace("-", "年") + "月";
-                for (var i = 0; i < this.mData.length; ++i) {
-                    for (var j = 2; j < this.mData[i].length; ++j) {
-                        if ("" != this.mData[i][j]) {
-                            this.mData[i][j] = parseFloat(this.mData[i][j]) + "";
-                        }
-                    }
-                }
+                var data = [];
+                data.push(["积压库存（原值）"].concat(this.mData[0]));
+                data.push(["积压库存（原值）"].concat(this.mData[1]));
+                data.push(["积压库存（原值）"].concat(this.mData[2]));
+                this.mTableAssist.mergeRow(0);
+                this.mTableAssist.mergeTitle();
                 var lastsel = "";
                 var lastcell = "";
                 this.$(name).jqGrid(this.mTableAssist.decorate({
@@ -151,7 +146,7 @@ var yszkgb;
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    data: this.mTableAssist.getData([[ny].concat(this.mData[0])]),
+                    data: this.mTableAssist.getData(data),
                     viewrecords: true,
                     onSelectCell: function (id, nm, tmp, iRow, iCol) {
                         //                       console.log(iRow +', ' + iCol);
@@ -208,8 +203,8 @@ var yszkgb;
                     }
                 });
             };
-            return YszkyjtztjqsEntryView;
-        })(yszkgb.BaseEntryPluginView);
-        yszkyjtztjqsEntry.pluginView = YszkyjtztjqsEntryView.newInstance();
-    })(yszkyjtztjqsEntry = yszkgb.yszkyjtztjqsEntry || (yszkgb.yszkyjtztjqsEntry = {}));
-})(yszkgb || (yszkgb = {}));
+            return ChjykcbEntryView;
+        }(chgb.BaseEntryPluginView));
+        chjykcbEntry.pluginView = ChjykcbEntryView.newInstance();
+    })(chjykcbEntry = chgb.chjykcbEntry || (chgb.chjykcbEntry = {}));
+})(chgb || (chgb = {}));

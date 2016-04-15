@@ -64,7 +64,7 @@ var mkt_bid_analysis;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var company = {};
     company.sb = ["沈变"];
     company.hb = ["衡变"];
@@ -212,6 +212,6 @@ var mkt_bid_analysis;
             }
         };
         return View;
-    })();
+    }());
     mkt_bid_analysis.View = View;
 })(mkt_bid_analysis || (mkt_bid_analysis = {}));

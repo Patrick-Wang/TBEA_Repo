@@ -45,7 +45,7 @@ var approve_template;
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     function transposition(data) {
         var dataRet = [];
         for (var i = 0; i < data[0].length; ++i) {
@@ -229,7 +229,7 @@ var approve_template;
             return jqAssist;
         };
         return QNJHSubView;
-    })();
+    }());
     var YDSubView = (function () {
         function YDSubView(opt) {
             this.mOpt = opt;
@@ -428,7 +428,7 @@ var approve_template;
             return jqAssist;
         };
         return YDSubView;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("zb_update.do", false);
@@ -578,6 +578,6 @@ var approve_template;
         };
         View.instance = new View();
         return View;
-    })();
+    }());
     approve_template.View = View;
 })(approve_template || (approve_template = {}));

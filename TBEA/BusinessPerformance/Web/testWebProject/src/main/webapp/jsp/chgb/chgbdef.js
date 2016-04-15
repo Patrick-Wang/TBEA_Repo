@@ -27,7 +27,7 @@ var chgb;
             return this.pluginGetExportUrl(st, cpType);
         };
         return BasePluginView;
-    })();
+    }());
     chgb.BasePluginView = BasePluginView;
     var BaseEntryPluginView = (function () {
         function BaseEntryPluginView() {
@@ -65,6 +65,6 @@ var chgb;
             this.pluginSubmit(dt, cpType);
         };
         return BaseEntryPluginView;
-    })();
+    }());
     chgb.BaseEntryPluginView = BaseEntryPluginView;
 })(chgb || (chgb = {}));

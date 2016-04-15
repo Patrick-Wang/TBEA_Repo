@@ -75,7 +75,7 @@ var yszkgb;
             this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
         };
         return EntryView;
-    })();
+    }());
     yszkgb.EntryView = EntryView;
 })(yszkgb || (yszkgb = {}));
 var entryView = new yszkgb.EntryView();

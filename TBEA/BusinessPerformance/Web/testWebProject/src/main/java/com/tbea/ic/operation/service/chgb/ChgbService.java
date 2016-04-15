@@ -3,6 +3,10 @@ package com.tbea.ic.operation.service.chgb;
 import java.sql.Date;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+
+import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 
 public interface ChgbService {
@@ -16,4 +20,12 @@ public interface ChgbService {
 	List<List<String>> getChxzqk(Date d, Company company);
 	
 	List<List<String>> getChnych(Date d, Company company);
+	
+	List<List<String>> getChjykcbEntry(Date d, Company company);
+
+	ErrorCode saveChjykcb(Date d, Company company, JSONArray data);
+
+	ErrorCode submitChjykcb(Date d, Company company, JSONArray data);
+	
+	ZBStatus getChjykcbStatus(Date d, Company comp);
 }

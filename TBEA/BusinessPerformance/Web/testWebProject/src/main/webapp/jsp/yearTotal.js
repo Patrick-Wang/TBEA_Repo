@@ -22,7 +22,7 @@ var yearTotal;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.HB;
@@ -94,7 +94,7 @@ var yearTotal;
             }));
         };
         return View;
-    })();
+    }());
     yearTotal.View = View;
 })(yearTotal || (yearTotal = {}));
 var view = yearTotal.View.newInstance();

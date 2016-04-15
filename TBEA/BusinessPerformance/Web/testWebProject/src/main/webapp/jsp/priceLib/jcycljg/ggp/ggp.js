@@ -30,7 +30,7 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var GgpView = (function (_super) {
             __extends(GgpView, _super);
             function GgpView() {
@@ -128,7 +128,7 @@ var jcycljg;
                         data: legend
                     },
                     toolbox: {
-                        show: true
+                        show: true,
                     },
                     calculable: false,
                     xAxis: [
@@ -169,7 +169,7 @@ var jcycljg;
                 }));
             };
             return GgpView;
-        })(jcycljg.BasePluginView);
+        }(jcycljg.BasePluginView));
         ggp.pluginView = GgpView.newInstance();
     })(ggp = jcycljg.ggp || (jcycljg.ggp = {}));
 })(jcycljg || (jcycljg = {}));

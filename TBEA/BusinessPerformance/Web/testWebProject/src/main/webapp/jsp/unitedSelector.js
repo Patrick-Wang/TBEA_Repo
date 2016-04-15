@@ -139,7 +139,7 @@ var Util;
             this.subNodes = [];
         };
         return DataNode;
-    })();
+    }());
     Util.DataNode = DataNode;
     var UnitedSelector = (function () {
         function UnitedSelector(data, ctrlId, path) {
@@ -281,6 +281,6 @@ var Util;
             }
         };
         return UnitedSelector;
-    })();
+    }());
     Util.UnitedSelector = UnitedSelector;
 })(Util || (Util = {}));

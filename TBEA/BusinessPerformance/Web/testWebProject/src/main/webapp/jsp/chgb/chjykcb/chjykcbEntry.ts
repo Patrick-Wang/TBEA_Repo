@@ -1,28 +1,25 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-/// <reference path="../yszkgbdef.ts" />
+/// <reference path="../chgbdef.ts" />
 ///<reference path="../../messageBox.ts"/>
-///<reference path="../yszkgbEntry.ts"/>
+///<reference path="../chgbEntry.ts"/>
 
 declare var echarts;
-declare var entryView:yszkgb.EntryView;
+declare var entryView:chgb.EntryView;
 
-module yszkgb {
-    export module yszkyjtztjqsEntry {
+module chgb {
+    export module chjykcbEntry {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly : boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("日期", "aa", true, TextAlign.Center),
-                    new JQTable.Node("财务账面应收净收余额", "ab", readOnly),
-                    new JQTable.Node("保理余额（加项）", "ac", readOnly),
-                    new JQTable.Node("货发票未开金额（加项）", "ad", readOnly),
-                    new JQTable.Node("票开货未发金额（减项）", "ae", readOnly),
-                    new JQTable.Node("预收款冲减应收（加项）", "af", readOnly),
-                    new JQTable.Node("信用证冲减应收（加项）", "ag", readOnly),
-                    new JQTable.Node("其他应收科目影响（加项）", "ah", readOnly),
-                    new JQTable.Node("预警台账应收账款余额 ", "ai", readOnly)
+                    new JQTable.Node("项目", "chjykcbentry_xm", true, TextAlign.Center),
+                    new JQTable.Node("项目", "chjykcbentry_xm1", true, TextAlign.Center),
+                    new JQTable.Node("上月余额", "chjykcbentry_syye", false),
+                    new JQTable.Node("本月新增", "chjykcbentry_byxz", false),
+                    new JQTable.Node("本月处置", "chjykcbentry_bycz", false),
+                    new JQTable.Node("期末余额", "chjykcbentry_qmye", false)
                 ], gridName);
             }
         }
@@ -31,18 +28,18 @@ module yszkgb {
             tb:string;
         }
 
-        class YszkyjtztjqsEntryView extends BaseEntryPluginView {
+        class ChjykcbEntryView extends BaseEntryPluginView {
 
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("yszkyjtztjqs/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("yszkyjtztjqs/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("yszkyjtztjqs/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("chjykcb/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("chjykcb/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("chjykcb/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mIsReadOnly:boolean;
 
-            public static newInstance():YszkyjtztjqsEntryView {
-                return new YszkyjtztjqsEntryView();
+            public static newInstance():ChjykcbEntryView {
+                return new ChjykcbEntryView();
             }
 
             private option():Option {
@@ -123,7 +120,7 @@ module yszkgb {
 
             public init(opt:Option):void {
                 super.init(opt);
-                entryView.register("应收账款账面与预警台账调节趋势表", this);
+                entryView.register("积压库存表", this);
             }
 
             private updateTable():void {
@@ -132,15 +129,14 @@ module yszkgb {
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                let ny = this.mDt.substr(0, this.mDt.length - 2).replace("-", "年") + "月";
-
-                for (var i = 0; i < this.mData.length; ++i) {
-                    for (var j = 2; j < this.mData[i].length; ++j) {
-                        if ("" != this.mData[i][j]) {
-                            this.mData[i][j] = parseFloat(this.mData[i][j]) + "";
-                        }
-                    }
-                }
+                
+                let data = [];
+                data.push(["积压库存（原值）"].concat(this.mData[0]));
+                data.push(["积压库存（原值）"].concat(this.mData[1]));
+                data.push(["积压库存（原值）"].concat(this.mData[2]));
+                
+                this.mTableAssist.mergeRow(0);
+                this.mTableAssist.mergeTitle();
 
                 let lastsel = "";
                 let lastcell = "";
@@ -161,7 +157,7 @@ module yszkgb {
                         width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
-                        data: this.mTableAssist.getData([[ny].concat(this.mData[0])]),
+                        data: this.mTableAssist.getData(data),
                         viewrecords: true,
 
                         onSelectCell: (id, nm, tmp, iRow, iCol) => {
@@ -230,6 +226,6 @@ module yszkgb {
             }
         }
 
-        export var pluginView = YszkyjtztjqsEntryView.newInstance();
+        export var pluginView = ChjykcbEntryView.newInstance();
     }
 }

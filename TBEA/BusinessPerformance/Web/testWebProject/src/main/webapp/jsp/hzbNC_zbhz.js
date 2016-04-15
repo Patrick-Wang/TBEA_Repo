@@ -30,7 +30,7 @@ var hzbNC_zbhz;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mData = [];
@@ -98,6 +98,6 @@ var hzbNC_zbhz;
             }));
         };
         return View;
-    })();
+    }());
     hzbNC_zbhz.View = View;
 })(hzbNC_zbhz || (hzbNC_zbhz = {}));

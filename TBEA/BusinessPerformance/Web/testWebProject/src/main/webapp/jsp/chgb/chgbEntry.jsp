@@ -51,8 +51,8 @@
 <script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/yszkgb/chgbdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/yszkgb/chgbEntry.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/chgb/chgbdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/chgb/chgbEntry.js" type="text/javascript"></script>
 
 <!-- message box -->
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
@@ -186,9 +186,7 @@ th.ui-th-ltr {
 		</tr> 
 		<tr>
 			<td>
-				<%@include file="yszkkxxz/yszkkxxzEntry.jsp"%>
- 				<%@include file="yqyszcsys/yqyszcsysEntry.jsp"%>
- 				<%@include file="yszkyjtztjqs/yszkyjtztjqsEntry.jsp"%>
+				<%@include file="chjykcb/chjykcbEntry.jsp"%>
 			</td>
 		</tr> 
 		<tr>

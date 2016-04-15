@@ -63,7 +63,7 @@ var xl_fkfstj;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("xlfkfstj_update.do");
@@ -222,7 +222,7 @@ var xl_fkfstj;
                     orient: "vertical"
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 series: [
@@ -270,7 +270,7 @@ var xl_fkfstj;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: shrink,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.updateFdwTable = function (parentName, childName, tableAssist, rawData) {
@@ -325,6 +325,6 @@ var xl_fkfstj;
             }));
         };
         return View;
-    })();
+    }());
     xl_fkfstj.View = View;
 })(xl_fkfstj || (xl_fkfstj = {}));

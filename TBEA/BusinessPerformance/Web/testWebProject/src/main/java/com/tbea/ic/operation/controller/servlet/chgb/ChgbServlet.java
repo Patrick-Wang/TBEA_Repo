@@ -10,9 +10,13 @@ import java.util.Map;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.controller.servlet.yszkgb.StatusData;
 import com.tbea.ic.operation.service.chgb.ChgbServiceImpl;
 import com.tbea.ic.operation.service.chgb.ChgbService;
 
@@ -21,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -114,5 +119,52 @@ public class ChgbServlet {
 		return new ModelAndView("chgb/chgb", map);
 	}
 	
+	@RequestMapping(value = "entry.do")
+	public ModelAndView getChgbEntry(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		CompanySelection compSel = new CompanySelection(true, chgbComps);
+		compSel.select(map);
+		
+		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
+		dateSel.select(map);
+		
+		return new ModelAndView("chgb/chgbEntry", map);
+	}
+	
+	@RequestMapping(value = "chjykcb/entry/update.do")
+	public @ResponseBody byte[] getChjykcbEntry(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType type = CompanySelection.getCompany(request);
+		Company comp = companyManager.getBMDBOrganization().getCompany(type);
+		List<List<String>> result = chgbService.getChjykcbEntry(d, comp);
+		ZBStatus status = chgbService.getChjykcbStatus(d, comp);
+		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
+		return JSONObject.fromObject(sd).toString().replaceAll("null", "\"\"").getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "chjykcb/entry/save.do")
+	public @ResponseBody byte[] entryChjykcb(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		ErrorCode err = chgbService.saveChjykcb(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		return Util.response(err);
+	}
+	
+	@RequestMapping(value = "chjykcb/entry/submit.do")
+	public @ResponseBody byte[] submitChjykcb(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		ErrorCode err = chgbService.submitChjykcb(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		return Util.response(err);
+	}
 	
 }
