@@ -34,8 +34,9 @@ public class ExcelTemplate {
 	private static String pathMarketTemplate = resPath + "market_template.xls";
 	private static String pathJYGKPhase2Template = resPath + "jygk_Phase2_template.xls";
 	private static String pathYszkgbTemplate = resPath + "yszkgb_template.xls";
-	private static String pathChgbTemplate = resPath + "Chgb_template.xls";
-
+	private static String pathChgbTemplate = resPath + "chgb_template.xls";
+	private static String pathSbdddcbjpcqkTemplate = resPath + "sbdddcbjpcqk_template.xls";
+	
 	private static ExcelTemplate createTemplate(String path, int index, int size)
 			throws FileNotFoundException, IOException {
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
@@ -74,12 +75,18 @@ public class ExcelTemplate {
 		return createTemplate(pathYszkgbTemplate, type.ordinal(),
 				YszkgbSheetType.END.ordinal());
 	}
+	
 	public static ExcelTemplate createChgbTemplate(ChgbSheetType type)
 			throws IOException {
 		return createTemplate(pathChgbTemplate, type.ordinal(),
 				ChgbSheetType.END.ordinal());
 	}
 
+	public static ExcelTemplate createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType type)
+			throws IOException {
+		return createTemplate(pathSbdddcbjpcqkTemplate, type.ordinal(),
+				SbdddcbjpcqkSheetType.END.ordinal());
+	}
 	
 	HSSFWorkbook workbook;
 	HSSFCellStyle cellStyleNull;

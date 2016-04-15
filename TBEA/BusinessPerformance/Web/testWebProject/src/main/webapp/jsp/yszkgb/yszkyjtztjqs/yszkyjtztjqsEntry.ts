@@ -1,3 +1,4 @@
+@@ -1,235 +0,0 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
@@ -9,20 +10,20 @@ declare var echarts;
 declare var entryView:yszkgb.EntryView;
 
 module yszkgb {
-    export module yszkkxxzEntry {
+    export module yszkyjtztjqsEntry {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly : boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("日期", "aa", true, TextAlign.Center),
-                    new JQTable.Node("月度", "ab", false, TextAlign.Center)
-                        .append(new JQTable.Node("逾期0-1个月", "ba", readOnly))
-                        .append(new JQTable.Node("逾期1-3月", "bb", readOnly))
-                        .append(new JQTable.Node("逾期3-6月", "bc", readOnly))
-                        .append(new JQTable.Node("逾期6-12月", "bd", readOnly))
-                        .append(new JQTable.Node("逾期1年以上", "be", readOnly)),
-                    new JQTable.Node("未到期(不含质保金)", "ah", readOnly),
-                    new JQTable.Node("未到期质保金", "ai", readOnly)
+                    new JQTable.Node("财务账面应收净收余额", "ab", readOnly),
+                    new JQTable.Node("保理余额（加项）", "ac", readOnly),
+                    new JQTable.Node("货发票未开金额（加项）", "ad", readOnly),
+                    new JQTable.Node("票开货未发金额（减项）", "ae", readOnly),
+                    new JQTable.Node("预收款冲减应收（加项）", "af", readOnly),
+                    new JQTable.Node("信用证冲减应收（加项）", "ag", readOnly),
+                    new JQTable.Node("其他应收科目影响（加项）", "ah", readOnly),
+                    new JQTable.Node("预警台账应收账款余额 ", "ai", readOnly)
                 ], gridName);
             }
         }
@@ -31,19 +32,18 @@ module yszkgb {
             tb:string;
         }
 
-        class YszkkxxzEntryView extends BaseEntryPluginView {
+        class YszkyjtztjqsEntryView extends BaseEntryPluginView {
 
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("yszkkxxz/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("yszkkxxz/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("yszkkxxz/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("yszkyjtztjqs/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("yszkyjtztjqs/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("yszkyjtztjqs/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mIsReadOnly:boolean;
 
-
-            public static newInstance():YszkkxxzEntryView {
-                return new YszkkxxzEntryView();
+            public static newInstance():YszkyjtztjqsEntryView {
+                return new YszkyjtztjqsEntryView();
             }
 
             private option():Option {
@@ -124,7 +124,7 @@ module yszkgb {
 
             public init(opt:Option):void {
                 super.init(opt);
-                entryView.register("应收账款款项性质情况", this);
+                entryView.register("应收账款账面与预警台账调节趋势表", this);
             }
 
             private updateTable():void {
@@ -177,8 +177,8 @@ module yszkgb {
                             if (isNaN(ret)) {
                                 $.jgrid.jqModal = {
                                     width: 290,
-                                    left: $("#" + name).offset().left + $("#" + name).width() / 2 - 290 / 2,
-                                    top: $("#" + name).offset().top + $("#" + name).height() / 2 - 90
+                                    left: this.$(name).offset().left + $("#table").width() / 2 - 290 / 2,
+                                    top: this.$(name).offset().top + $("#table").height() / 2 - 90
                                 };
                                 return v;
                             } else {
@@ -218,7 +218,7 @@ module yszkgb {
                         //                        lastcell = "";
                         //                    }
                     }));
-                $('html').bind('click', (e)=> { //用于点击其他地方保存正在编辑状态下的行
+                $('html').bind('click', function(e) { //用于点击其他地方保存正在编辑状态下的行
                     if (lastsel != "") { //if a row is selected for edit
                         if ($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row
                             //  $("#" + name).jqGrid('saveRow', lastsel);
@@ -231,6 +231,6 @@ module yszkgb {
             }
         }
 
-        export var pluginView = YszkkxxzEntryView.newInstance();
+        export var pluginView = YszkyjtztjqsEntryView.newInstance();
     }
 }

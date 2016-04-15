@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.StatusData;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -37,7 +38,6 @@ import com.tbea.ic.operation.common.excel.YszkgbSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
-import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.service.yszkgb.YszkgbService;
 import com.tbea.ic.operation.service.yszkgb.YszkgbServiceImpl;
 
@@ -150,7 +150,7 @@ public class YszkgbServlet {
 		List<List<String>> result = yszkgbService.getYszkkxxzEntry(d, comp);
 		ZBStatus status = yszkgbService.getYszkkxxzStatus(d, comp);
 		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
-		return JSONObject.fromObject(sd).toString().replaceAll("null", "").getBytes("utf-8");
+		return JSONObject.fromObject(sd).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
 	
@@ -163,7 +163,7 @@ public class YszkgbServlet {
 		List<List<String>> result = yszkgbService.getYqyszcsysEntry(d, comp);
 		ZBStatus status = yszkgbService.getYqyszcsysStatus(d, comp);
 		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
-		return JSONObject.fromObject(sd).toString().replaceAll("null", "''").getBytes("utf-8");
+		return JSONObject.fromObject(sd).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "yszkyjtztjqs/entry/update.do")
@@ -176,7 +176,7 @@ public class YszkgbServlet {
 		List<List<String>> result = yszkgbService.getYszkyjtztjqsEntry(d, comp);
 		ZBStatus status = yszkgbService.getYszkyjtztjqsStatus(d, comp);
 		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
-		return JSONObject.fromObject(sd).toString().replaceAll("null", "").getBytes("utf-8");
+		return JSONObject.fromObject(sd).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "yszkkxxz/entry/save.do")

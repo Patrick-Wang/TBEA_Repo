@@ -305,6 +305,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 		if (null == entity){
 			entity = new YszkKxxzEntity();
 			Calendar cal = Calendar.getInstance();
+			cal.setTime(d);
 			entity.setNf(cal.get(Calendar.YEAR));
 			entity.setYf(cal.get(Calendar.MONTH) + 1);
 			entity.setDwxx(dwxxDao.getById(company.getId()));
@@ -329,6 +330,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 		if (null == entity){
 			entity = new YqyszcsysEntity();
 			Calendar cal = Calendar.getInstance();
+			cal.setTime(d);
 			entity.setNf(cal.get(Calendar.YEAR));
 			entity.setYf(cal.get(Calendar.MONTH) + 1);
 			entity.setDwxx(dwxxDao.getById(company.getId()));
@@ -353,6 +355,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 		if (null == entity){
 			entity = new YszkYjtzTjqsEntity();
 			Calendar cal = Calendar.getInstance();
+			cal.setTime(d);
 			entity.setNf(cal.get(Calendar.YEAR));
 			entity.setYf(cal.get(Calendar.MONTH) + 1);
 			entity.setDwxx(dwxxDao.getById(company.getId()));

@@ -358,6 +358,13 @@ public class Util {
 			return v2 / v1 + "";
 		}
 	}
+	
+	public static Double division(Double sub, Double base) {
+		if (base == null || sub == null){
+			return null;
+		}
+		return sub / base;
+	}
 
 	public static String doubleFormat(String dv) {
 		double v1 = 0;

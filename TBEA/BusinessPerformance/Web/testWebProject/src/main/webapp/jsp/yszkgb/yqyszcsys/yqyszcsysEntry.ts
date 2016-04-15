@@ -175,8 +175,8 @@ module yszkgb {
                             if (isNaN(ret)) {
                                 $.jgrid.jqModal = {
                                     width: 290,
-                                    left: $("#table").offset().left + $("#table").width() / 2 - 290 / 2,
-                                    top: $("#table").offset().top + $("#table").height() / 2 - 90
+                                    left: $("#" + name).offset().left + $("#" + name).width() / 2 - 290 / 2,
+                                    top: $("#" + name).offset().top + $("#" + name).height() / 2 - 90
                                 };
                                 return v;
                             } else {
