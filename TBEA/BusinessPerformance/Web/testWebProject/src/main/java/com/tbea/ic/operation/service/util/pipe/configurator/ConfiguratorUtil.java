@@ -34,6 +34,47 @@ public class ConfiguratorUtil {
 		timePointNumberZbs.add(GSZB.QZ_ZZY208.value());
 		timePointNumberZbs.add(GSZB.QZ_GC_XSYW209.value());
 		timePointNumberZbs.add(GSZB.QZ_WLMY210.value());
+		timePointNumberZbs.add(GSZB.YSZK_ZZYYS256.value());
+		timePointNumberZbs.add(GSZB.QZ_ZZYGNYS257.value());
+		timePointNumberZbs.add(GSZB.DJGGNYS258.value());
+		timePointNumberZbs.add(GSZB.JQKGNYS259.value());
+		timePointNumberZbs.add(GSZB.QZ_ZZYGJYS260.value());
+		timePointNumberZbs.add(GSZB.DJGGJYS261.value());
+		timePointNumberZbs.add(GSZB.YSZK_JCFWYW_HGCHJCXS_YS262.value());
+		timePointNumberZbs.add(GSZB.QZ_JCFWGNYS263.value());
+		timePointNumberZbs.add(GSZB.JCFWGNJCXS264.value());
+		timePointNumberZbs.add(GSZB.QZ_JCFWGJSR265.value());
+		timePointNumberZbs.add(GSZB.JCFWGJJCXS266.value());
+		timePointNumberZbs.add(GSZB.YSZK_WLMYYS267.value());
+		timePointNumberZbs.add(GSZB.QZ_WLMYGNYS268.value());
+		timePointNumberZbs.add(GSZB.QZ_WLMYGJYS269.value());
+		timePointNumberZbs.add(GSZB.YSZK_YYSYS270.value());
+		timePointNumberZbs.add(GSZB.QZ_YYSGNYS271.value());
+		timePointNumberZbs.add(GSZB.QZ_YYSGJYS272.value());
+		timePointNumberZbs.add(GSZB.YSZK_MTYWYS273.value());
+		timePointNumberZbs.add(GSZB.QZ_MTYWGNYS274.value());
+		timePointNumberZbs.add(GSZB.QZ_MTYWGJYS275.value());
+		timePointNumberZbs.add(GSZB.YSZK_QT276.value());
+		timePointNumberZbs.add(GSZB.QZ_QTGNYS277.value());
+		timePointNumberZbs.add(GSZB.QZ_QTGJYS278.value());
+		timePointNumberZbs.add(GSZB.ZZYCH279.value());
+		timePointNumberZbs.add(GSZB.DJGCH280.value());
+		timePointNumberZbs.add(GSZB.JQKCH281.value());
+		timePointNumberZbs.add(GSZB.JCFWYW_HGCHJCXS_CH282.value());
+		timePointNumberZbs.add(GSZB.QZ_ZYXMCH283.value());
+		timePointNumberZbs.add(GSZB.WLMYCH284.value());
+		timePointNumberZbs.add(GSZB.YYSCH285.value());
+		timePointNumberZbs.add(GSZB.MTYWCH286.value());
+		timePointNumberZbs.add(GSZB.QZ_TCNYCH287.value());
+		timePointNumberZbs.add(GSZB.QZ_XJNYCH288.value());
+		timePointNumberZbs.add(GSZB.QTCH289.value());
+		timePointNumberZbs.add(GSZB.ZZYRS217.value());
+		timePointNumberZbs.add(GSZB.GC_XSYWRS218.value());
+		timePointNumberZbs.add(GSZB.WLMYRS219.value());
+		timePointNumberZbs.add(GSZB.YYSRS333.value());
+		timePointNumberZbs.add(GSZB.MTYWRS334.value());
+		timePointNumberZbs.add(GSZB.QTRS335.value());
+		
 	}
 
 	static {

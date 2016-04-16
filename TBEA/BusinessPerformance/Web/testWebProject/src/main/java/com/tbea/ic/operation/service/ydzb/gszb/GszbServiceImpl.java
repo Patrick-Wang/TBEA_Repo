@@ -81,6 +81,7 @@ public class GszbServiceImpl implements GszbService {
 	static {
 		gsztzbs.add(GSZB.LRZE1.value());
 		gsztzbs.add(GSZB.XSSR6.value());
+		gsztzbs.add(GSZB.XSLRL_28.value()); //三期加入指标
 		gsztzbs.add(GSZB.JYXJXJL29.value());
 		gsztzbs.add(GSZB.YSZK32.value());
 		gsztzbs.add(GSZB.YQK33.value());
@@ -88,6 +89,9 @@ public class GszbServiceImpl implements GszbService {
 		gsztzbs.add(GSZB.CH35.value());
 		gsztzbs.add(GSZB.QZ_JYWZ36.value());
 		gsztzbs.add(GSZB.HTQYE48.value());
+		gsztzbs.add(GSZB.HTQY_ZZYQY290.value()); //三期加入指标
+		gsztzbs.add(GSZB.JCFWYW_HGCHJCXS_QY299.value()); //三期加入指标
+		gsztzbs.add(GSZB.HTQY_QT304.value()); //三期加入指标
 		gsztzbs.add(GSZB.ZJHL57.value());
 		gsztzbs.add(GSZB.BHSCZ60.value());
 		gsztzbs.add(GSZB.RS61.value());
