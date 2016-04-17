@@ -20,32 +20,36 @@ public class ByqkglyddEntity extends AbstractReadWriteEntity implements Serializ
 		return super.getId();
 	}
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
 	Integer nf;
 	Integer yf;
 	Integer type;//		--1 sclx-生产单元   2 sclx-生产类别
 	String sclx;
 	Double yccnlcz;
 	Double yccnlcl;
-	Double skglyddzlcz;
+	Double sykglyddzlcz;
 	Double sykglyddzlcl;
 	Double dnkglyddzlcz;
 	Double dnkglyddzlcl;
-	Double djdpcddcz;
-	Double djdpcddcl;
-	Double xjdpcddcz;
-	Double xjdpcddcl;
+	Double nj1yddlcz;
+	Double nj1yddlcl;
+	Double nj2yddlcz;
+	Double nj2yddlcl;
+	Double nj3yddlcz;
+	Double nj3yddlcl;
+	Double nj4yddlcz;
+	Double nj4yddlcl;
+	Double nj5yddlcz;
+	Double nj5yddlcl;
+	Double nj6yddlcz;
+	Double nj6yddlcl;
+	Double nj6yyhkglyddlcz;
+	Double nj6yyhkglyddlcl;
 	Double cnjyhkglyddcz;
 	Double cnjyhkglyddcl;
 	Double jhqddcz;
 	Double jhqddcl;
 	Integer zt;
-	
 	public Integer getNf() {
 		return nf;
 	}
@@ -82,11 +86,11 @@ public class ByqkglyddEntity extends AbstractReadWriteEntity implements Serializ
 	public void setYccnlcl(Double yccnlcl) {
 		this.yccnlcl = yccnlcl;
 	}
-	public Double getSkglyddzlcz() {
-		return skglyddzlcz;
+	public Double getSykglyddzlcz() {
+		return sykglyddzlcz;
 	}
-	public void setSkglyddzlcz(Double skglyddzlcz) {
-		this.skglyddzlcz = skglyddzlcz;
+	public void setSykglyddzlcz(Double sykglyddzlcz) {
+		this.sykglyddzlcz = sykglyddzlcz;
 	}
 	public Double getSykglyddzlcl() {
 		return sykglyddzlcl;
@@ -106,32 +110,90 @@ public class ByqkglyddEntity extends AbstractReadWriteEntity implements Serializ
 	public void setDnkglyddzlcl(Double dnkglyddzlcl) {
 		this.dnkglyddzlcl = dnkglyddzlcl;
 	}
-	public Double getDjdpcddcz() {
-		return djdpcddcz;
+	public Double getNj1yddlcz() {
+		return nj1yddlcz;
 	}
-	public void setDjdpcddcz(Double djdpcddcz) {
-		this.djdpcddcz = djdpcddcz;
+	public void setNj1yddlcz(Double nj1yddlcz) {
+		this.nj1yddlcz = nj1yddlcz;
 	}
-	public Double getDjdpcddcl() {
-		return djdpcddcl;
+	public Double getNj1yddlcl() {
+		return nj1yddlcl;
 	}
-	public void setDjdpcddcl(Double djdpcddcl) {
-		this.djdpcddcl = djdpcddcl;
+	public void setNj1yddlcl(Double nj1yddlcl) {
+		this.nj1yddlcl = nj1yddlcl;
 	}
-
-	public Double getXjdpcddcz() {
-		return xjdpcddcz;
+	public Double getNj2yddlcz() {
+		return nj2yddlcz;
 	}
-	public void setXjdpcddcz(Double xjdpcddcz) {
-		this.xjdpcddcz = xjdpcddcz;
+	public void setNj2yddlcz(Double nj2yddlcz) {
+		this.nj2yddlcz = nj2yddlcz;
 	}
-	public Double getXjdpcddcl() {
-		return xjdpcddcl;
+	public Double getNj2yddlcl() {
+		return nj2yddlcl;
 	}
-	public void setXjdpcddcl(Double xjdpcddcl) {
-		this.xjdpcddcl = xjdpcddcl;
+	public void setNj2yddlcl(Double nj2yddlcl) {
+		this.nj2yddlcl = nj2yddlcl;
 	}
-
+	public Double getNj3yddlcz() {
+		return nj3yddlcz;
+	}
+	public void setNj3yddlcz(Double nj3yddlcz) {
+		this.nj3yddlcz = nj3yddlcz;
+	}
+	public Double getNj3yddlcl() {
+		return nj3yddlcl;
+	}
+	public void setNj3yddlcl(Double nj3yddlcl) {
+		this.nj3yddlcl = nj3yddlcl;
+	}
+	public Double getNj4yddlcz() {
+		return nj4yddlcz;
+	}
+	public void setNj4yddlcz(Double nj4yddlcz) {
+		this.nj4yddlcz = nj4yddlcz;
+	}
+	public Double getNj4yddlcl() {
+		return nj4yddlcl;
+	}
+	public void setNj4yddlcl(Double nj4yddlcl) {
+		this.nj4yddlcl = nj4yddlcl;
+	}
+	public Double getNj5yddlcz() {
+		return nj5yddlcz;
+	}
+	public void setNj5yddlcz(Double nj5yddlcz) {
+		this.nj5yddlcz = nj5yddlcz;
+	}
+	public Double getNj5yddlcl() {
+		return nj5yddlcl;
+	}
+	public void setNj5yddlcl(Double nj5yddlcl) {
+		this.nj5yddlcl = nj5yddlcl;
+	}
+	public Double getNj6yddlcz() {
+		return nj6yddlcz;
+	}
+	public void setNj6yddlcz(Double nj6yddlcz) {
+		this.nj6yddlcz = nj6yddlcz;
+	}
+	public Double getNj6yddlcl() {
+		return nj6yddlcl;
+	}
+	public void setNj6yddlcl(Double nj6yddlcl) {
+		this.nj6yddlcl = nj6yddlcl;
+	}
+	public Double getNj6yyhkglyddlcz() {
+		return nj6yyhkglyddlcz;
+	}
+	public void setNj6yyhkglyddlcz(Double nj6yyhkglyddlcz) {
+		this.nj6yyhkglyddlcz = nj6yyhkglyddlcz;
+	}
+	public Double getNj6yyhkglyddlcl() {
+		return nj6yyhkglyddlcl;
+	}
+	public void setNj6yyhkglyddlcl(Double nj6yyhkglyddlcl) {
+		this.nj6yyhkglyddlcl = nj6yyhkglyddlcl;
+	}
 	public Double getCnjyhkglyddcz() {
 		return cnjyhkglyddcz;
 	}

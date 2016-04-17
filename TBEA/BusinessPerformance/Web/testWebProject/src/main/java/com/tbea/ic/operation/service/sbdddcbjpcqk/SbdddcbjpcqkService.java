@@ -24,5 +24,9 @@ public interface SbdddcbjpcqkService {
 
 	ErrorCode submitXlkglydd(Date d, KglyddType type);
 
+	List<String> getByqCplb();
+
+	List<String> getXlCplb();
+
 
 }

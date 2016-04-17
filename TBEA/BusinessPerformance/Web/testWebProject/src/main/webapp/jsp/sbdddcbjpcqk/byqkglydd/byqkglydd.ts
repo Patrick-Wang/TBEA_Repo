@@ -14,14 +14,14 @@ module sbdddcbjpcqk {
 
                 let nodeFirst : JQTable.Node;
                 if (type == KglyddType.SCDY){
-                    nodeFirst = new JQTable.Node("生产单元", "scdy", true, TextAlign.Center)
+                    nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", true, TextAlign.Center)
                 }else{
                     nodeFirst = new JQTable.Node("产品类别", "sclb", true, TextAlign.Center)
                 }
 
                 return new JQTable.JQGridAssistant([
                     nodeFirst,
-                    new JQTable.Node("月产出能力（产值）", "rqa")
+                    new JQTable.Node("月产出能力", "rqa")
                         .append( new JQTable.Node("产值", "ba"))
                         .append( new JQTable.Node("产量", "bb")),
                     new JQTable.Node("所有可供履约订单总量产值", "ab")
@@ -30,11 +30,31 @@ module sbdddcbjpcqk {
                     new JQTable.Node("当年可供履约订单总量产值", "ac")
                         .append( new JQTable.Node("产值", "da"))
                         .append( new JQTable.Node("产量", "db")),
-                    new JQTable.Node("其中：当季度排产订单", "ad")
+                    new JQTable.Node("n+1月订单量", "ada")
                         .append( new JQTable.Node("产值", "ea"))
                         .append( new JQTable.Node("产量", "eb"))
                         .append( new JQTable.Node("产能发挥率", "ec")),
-                    new JQTable.Node("其中：下季度排产订单", "ae")
+                    new JQTable.Node("n+2月订单量", "aeb")
+                        .append( new JQTable.Node("产值", "fc"))
+                        .append( new JQTable.Node("产量", "fb"))
+                        .append( new JQTable.Node("产能发挥率", "fd")),
+                    new JQTable.Node("n+3月订单量", "aec")
+                        .append( new JQTable.Node("产值", "fc"))
+                        .append( new JQTable.Node("产量", "fb"))
+                        .append( new JQTable.Node("产能发挥率", "fd")),
+                    new JQTable.Node("n+4月订单量", "aed")
+                        .append( new JQTable.Node("产值", "fc"))
+                        .append( new JQTable.Node("产量", "fb"))
+                        .append( new JQTable.Node("产能发挥率", "fd")),
+                    new JQTable.Node("n+5月订单量", "aef")
+                        .append( new JQTable.Node("产值", "fc"))
+                        .append( new JQTable.Node("产量", "fb"))
+                        .append( new JQTable.Node("产能发挥率", "fd")),
+                    new JQTable.Node("n+6月订单量", "aeg")
+                        .append( new JQTable.Node("产值", "fc"))
+                        .append( new JQTable.Node("产量", "fb"))
+                        .append( new JQTable.Node("产能发挥率", "fd")),
+                    new JQTable.Node("n+6月以后可供履约订单", "aeh")
                         .append( new JQTable.Node("产值", "fc"))
                         .append( new JQTable.Node("产量", "fb"))
                         .append( new JQTable.Node("产能发挥率", "fd")),
@@ -111,7 +131,7 @@ module sbdddcbjpcqk {
                         drag: false,
                         resize: false,
                         height: '100%',
-                        width: 1200,
+                        width: 1400,
                         shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 20,
