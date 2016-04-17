@@ -14,7 +14,7 @@ module sbdddcbjpcqk {
 
                 let nodeFirst : JQTable.Node;
                 if (type == KglyddType.SCDY){
-                    nodeFirst = new JQTable.Node("生产单元", "scdy", true, TextAlign.Center)
+                    nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", true, TextAlign.Center)
                 }else{
                     nodeFirst = new JQTable.Node("产品类别", "sclb", true, TextAlign.Center)
                 }
@@ -22,16 +22,24 @@ module sbdddcbjpcqk {
                 return new JQTable.JQGridAssistant([
                     nodeFirst,
                     new JQTable.Node("月产出能力（产值）", "rqa"),
-                    new JQTable.Node("所有可供履约订单总量产值", "ab"),
-                    new JQTable.Node("当年可供履约订单总量产值", "ac"),
-                    new JQTable.Node("其中：当季度排产订单", "ad")
-                        .append( new JQTable.Node("产值", "ba"))
+                    new JQTable.Node("未履约订单总额", "ab"),
+                    new JQTable.Node("当年未履约订单总量", "ac"),
+                    new JQTable.Node("n+1月订单量", "ada")
+                        .append( new JQTable.Node("已排产", "ba"))
+                        .append( new JQTable.Node("未排产", "bc"))
                         .append( new JQTable.Node("产能发挥率", "bb")),
-                    new JQTable.Node("其中：下季度排产订单", "ae")
-                        .append( new JQTable.Node("产值", "bc"))
-                        .append( new JQTable.Node("产能发挥率", "bd")),
+                    new JQTable.Node("n+2月订单量", "adb")
+                        .append( new JQTable.Node("已排产", "ba"))
+                        .append( new JQTable.Node("未排产", "bc"))
+                        .append( new JQTable.Node("产能发挥率", "bb")),
+                    new JQTable.Node("n+3月订单量", "adc")
+                        .append( new JQTable.Node("已排产", "ba"))
+                        .append( new JQTable.Node("未排产", "bc"))
+                        .append( new JQTable.Node("产能发挥率", "bb")),
+                    new JQTable.Node("n+3月以后履约订单", "ae"),
                     new JQTable.Node("次年及以后可供履约订单排产值", "af"),
-                    new JQTable.Node("交货期待定产值", "ag")
+                    new JQTable.Node("交货期待定产值", "ag"),
+                    new JQTable.Node("外协", "ah")
                 ], gridName);
             }
         }
@@ -99,7 +107,7 @@ module sbdddcbjpcqk {
                         drag: false,
                         resize: false,
                         height: '100%',
-                        width: 1200,
+                        width: 1400,
                         shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 20,

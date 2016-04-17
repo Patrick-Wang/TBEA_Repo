@@ -31,14 +31,19 @@ public class XlkglyddEntity extends AbstractReadWriteEntity implements Serializa
 	Integer type;	//	--1 sclx-生产单元   2 sclx-生产类别
 	String sclx;
 	Double yccnl;
-	Double sykglyddzlcz;
-	Double dnkglyddzlcz;
-	Double djdpcddcz;
-	Double xjdpcddcz;
+	Double wlyddzl;
+	Double dnwlyddzl;
+	Double nj1yddlypc;
+	Double nj1yddlwpc;
+	Double nj2yddlypc;
+	Double nj2yddlwpc;
+	Double nj3yddlypc;
+	Double nj3yddlwpc;
+	Double nj3yyhlydd;
 	Double cnjyhkglyddpcz;
-	Double jhqddcz;
+	Double jhqdd;
+	Double wx;
 	Integer zt;
-	
 	public Integer getNf() {
 		return nf;
 	}
@@ -69,43 +74,71 @@ public class XlkglyddEntity extends AbstractReadWriteEntity implements Serializa
 	public void setYccnl(Double yccnl) {
 		this.yccnl = yccnl;
 	}
-	public Double getSykglyddzlcz() {
-		return sykglyddzlcz;
+	public Double getWlyddzl() {
+		return wlyddzl;
 	}
-	public void setSykglyddzlcz(Double sykglyddzlcz) {
-		this.sykglyddzlcz = sykglyddzlcz;
+	public void setWlyddzl(Double wlyddzl) {
+		this.wlyddzl = wlyddzl;
 	}
-	public Double getDnkglyddzlcz() {
-		return dnkglyddzlcz;
+	public Double getNj1yddlypc() {
+		return nj1yddlypc;
 	}
-	public void setDnkglyddzlcz(Double dnkglyddzlcz) {
-		this.dnkglyddzlcz = dnkglyddzlcz;
+	public void setNj1yddlypc(Double nj1yddlypc) {
+		this.nj1yddlypc = nj1yddlypc;
 	}
-	public Double getDjdpcddcz() {
-		return djdpcddcz;
+	public Double getNj1yddlwpc() {
+		return nj1yddlwpc;
 	}
-	public void setDjdpcddcz(Double djdpcddcz) {
-		this.djdpcddcz = djdpcddcz;
+	public void setNj1yddlwpc(Double nj1yddlwpc) {
+		this.nj1yddlwpc = nj1yddlwpc;
 	}
-	
-	public Double getXjdpcddcz() {
-		return xjdpcddcz;
+	public Double getNj2yddlypc() {
+		return nj2yddlypc;
 	}
-	public void setXjdpcddcz(Double xjdpcddcz) {
-		this.xjdpcddcz = xjdpcddcz;
+	public void setNj2yddlypc(Double nj2yddlypc) {
+		this.nj2yddlypc = nj2yddlypc;
 	}
-	
+	public Double getNj2yddlwpc() {
+		return nj2yddlwpc;
+	}
+	public void setNj2yddlwpc(Double nj2yddlwpc) {
+		this.nj2yddlwpc = nj2yddlwpc;
+	}
+	public Double getNj3yddlypc() {
+		return nj3yddlypc;
+	}
+	public void setNj3yddlypc(Double nj3yddlypc) {
+		this.nj3yddlypc = nj3yddlypc;
+	}
+	public Double getNj3yddlwpc() {
+		return nj3yddlwpc;
+	}
+	public void setNj3yddlwpc(Double nj3yddlwpc) {
+		this.nj3yddlwpc = nj3yddlwpc;
+	}
+	public Double getNj3yyhlydd() {
+		return nj3yyhlydd;
+	}
+	public void setNj3yyhlydd(Double nj3yyhlydd) {
+		this.nj3yyhlydd = nj3yyhlydd;
+	}
 	public Double getCnjyhkglyddpcz() {
 		return cnjyhkglyddpcz;
 	}
 	public void setCnjyhkglyddpcz(Double cnjyhkglyddpcz) {
 		this.cnjyhkglyddpcz = cnjyhkglyddpcz;
 	}
-	public Double getJhqddcz() {
-		return jhqddcz;
+	public Double getJhqdd() {
+		return jhqdd;
 	}
-	public void setJhqddcz(Double jhqddcz) {
-		this.jhqddcz = jhqddcz;
+	public void setJhqdd(Double jhqdd) {
+		this.jhqdd = jhqdd;
+	}
+	public Double getWx() {
+		return wx;
+	}
+	public void setWx(Double wx) {
+		this.wx = wx;
 	}
 	public Integer getZt() {
 		return zt;
@@ -113,6 +146,11 @@ public class XlkglyddEntity extends AbstractReadWriteEntity implements Serializa
 	public void setZt(Integer zt) {
 		this.zt = zt;
 	}
-	
+	public Double getDnwlyddzl() {
+		return dnwlyddzl;
+	}
+	public void setDnwlyddzl(Double dnwlyddzl) {
+		this.dnwlyddzl = dnwlyddzl;
+	}
 
 }

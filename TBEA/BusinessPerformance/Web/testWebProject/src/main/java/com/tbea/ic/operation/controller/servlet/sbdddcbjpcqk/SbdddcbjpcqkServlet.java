@@ -97,7 +97,11 @@ public class SbdddcbjpcqkServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		List<List<String>> result = sbdddcbjpcqkService.getByqkglyddEntry(d, getType(request));
 		StatusData sd = new StatusData(false, result);
-		return JSONObject.fromObject(sd).toString().replaceAll("null", "\"\"").getBytes("utf-8");
+		List<String> cplb = sbdddcbjpcqkService.getByqCplb();
+		EntryLyddData eld = new EntryLyddData();
+		eld.setStatusData(sd);
+		eld.setCplb(cplb);
+		return JSONObject.fromObject(eld).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
 	
@@ -107,7 +111,11 @@ public class SbdddcbjpcqkServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		List<List<String>> result = sbdddcbjpcqkService.getXlkglyddEntry(d, getType(request));
 		StatusData sd = new StatusData(false, result);
-		return JSONObject.fromObject(sd).toString().replaceAll("null", "\"\"").getBytes("utf-8");
+		List<String> cplb = sbdddcbjpcqkService.getXlCplb();
+		EntryLyddData eld = new EntryLyddData();
+		eld.setStatusData(sd);
+		eld.setCplb(cplb);
+		return JSONObject.fromObject(eld).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "xlkglydd/entry/save.do")

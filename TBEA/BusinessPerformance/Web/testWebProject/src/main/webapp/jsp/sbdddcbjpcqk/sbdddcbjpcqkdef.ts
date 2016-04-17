@@ -8,6 +8,11 @@ module sbdddcbjpcqk {
         SCLB
     }
 
+    export interface EntryLyddData{
+        cplb:string[];
+        statusData : StatusData;
+    }
+
     export interface PluginView {
         hide (): void;
         show () : void;
