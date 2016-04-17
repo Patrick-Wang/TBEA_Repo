@@ -2,10 +2,12 @@ package com.tbea.ic.operation.model.dao.chgb.chzlbhqk;
 
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.chgb.ChzlbhqkEntity;
+import com.tbea.ic.operation.model.entity.yszkgb.YqyszcsysEntity;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
@@ -39,5 +41,20 @@ public class ChzlbhqkDaoImpl extends AbstractReadWriteDaoImpl<ChzlbhqkEntity> im
 		q.setParameter("dEnd", de);
 		q.setParameter("compId", company.getId());
 		return q.getResultList();
+	}
+	
+	@Override
+	public ChzlbhqkEntity getByDate(Date d, Company company) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		Query q = this.getEntityManager().createQuery("from ChzlbhqkEntity where nf=:nf and yf=:yf and dwxx.id=:compId");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("compId", company.getId());
+		List<ChzlbhqkEntity> list = q.getResultList();
+		if (list.isEmpty()){
+			return null;
+		}
+		return list.get(0);
 	}
 }

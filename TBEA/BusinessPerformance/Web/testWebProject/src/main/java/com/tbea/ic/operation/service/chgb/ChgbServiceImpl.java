@@ -38,6 +38,7 @@ import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.entity.identifier.chgb.JykcxmEntity;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
+import com.tbea.ic.operation.model.entity.yszkgb.YqyszcsysEntity;
 import com.tbea.ic.operation.model.entity.chgb.ChzlbhqkEntity;
 import com.tbea.ic.operation.model.entity.chgb.ChxzqkEntity;
 import com.tbea.ic.operation.model.entity.chgb.NychEntity;
@@ -426,6 +427,7 @@ public class ChgbServiceImpl implements ChgbService {
 					hostEntities.get(jykcxmEntities.get(i).getName()).setBycz(Util.toDoubleNull(data.getJSONArray(j).getString(3)));
 					hostEntities.get(jykcxmEntities.get(i).getName()).setQmye(Util.toDoubleNull(data.getJSONArray(j).getString(4)));
 					hostEntities.get(jykcxmEntities.get(i).getName()).setJykcxmEntity(jykcxmEntities.get(i));
+					hostEntities.get(jykcxmEntities.get(i).getName()).setZt(status.ordinal());
 
 					ChJykcEntity toEntity = hostEntities.get(jykcxmEntities.get(i).getName());
 					
@@ -449,6 +451,58 @@ public class ChgbServiceImpl implements ChgbService {
 	
 	@Override
 	public ZBStatus getChjykcbStatus(Date d, Company comp) {
+		return ZBStatus.SAVED;
+	}
+	
+	@Override
+	public List<List<String>> getChzlbhqkEntry(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		ChzlbhqkEntity entity= chzlbhqkDao.getByDate(d, company);
+		if (null != entity){
+			List<String> list = toList(entity);
+			result.add(list);
+		}else{
+			result.add(new ArrayList<>());
+		}
+		return result;
+	}
+
+	ErrorCode entryChzlbhqk(Date d, Company company, JSONArray data, ZBStatus status) {
+		data = data.getJSONArray(0);
+		ErrorCode err = ErrorCode.OK;
+		ChzlbhqkEntity entity= chzlbhqkDao.getByDate(d, company);
+		if (null == entity){
+			entity = new ChzlbhqkEntity();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(d);
+			entity.setNf(cal.get(Calendar.YEAR));
+			entity.setYf(cal.get(Calendar.MONTH) + 1);
+			entity.setDwxx(dwxxDao.getById(company.getId()));
+		}
+
+		entity.setZt(status.ordinal());
+		entity.setZl5nys(Util.toDoubleNull(data.getString(0)));
+		entity.setZl4z5n(Util.toDoubleNull(data.getString(1)));
+		entity.setZl3z4n(Util.toDoubleNull(data.getString(2)));
+		entity.setZl2z3n(Util.toDoubleNull(data.getString(3)));
+		entity.setZl1z2n(Util.toDoubleNull(data.getString(4)));
+		entity.setZl1nyn(Util.toDoubleNull(data.getString(5)));
+		chzlbhqkDao.merge(entity);
+		return err;
+	}
+	
+	@Override
+	public ErrorCode saveChzlbhqk(Date d, Company company, JSONArray data) {
+		return entryChzlbhqk(d, company, data, ZBStatus.SAVED);
+	}
+
+	@Override
+	public ErrorCode submitChzlbhqk(Date d, Company company, JSONArray data) {
+		return entryChzlbhqk(d, company, data, ZBStatus.SUBMITTED);
+	}
+	
+	@Override
+	public ZBStatus getChzlbhqkStatus(Date d, Company comp) {
 		return ZBStatus.SAVED;
 	}
 }

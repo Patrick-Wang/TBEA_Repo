@@ -37,6 +37,7 @@ public class ChzlbhqkEntity extends AbstractReadWriteEntity implements Serializa
 	Double zl2z3n;
 	Double zl1z2n;
 	Double zl1nyn;
+	Integer zt;
 	
 
 	public Integer getNf() {
@@ -49,6 +50,15 @@ public class ChzlbhqkEntity extends AbstractReadWriteEntity implements Serializa
 		this.nf = nf;
 	}
 
+	public Integer getZt() {
+		return zt;
+	}
+
+
+
+	public void setZt(Integer zt) {
+		this.zt = zt;
+	}
 
 
 	public Integer getYf() {

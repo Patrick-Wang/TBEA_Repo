@@ -28,4 +28,12 @@ public interface ChgbService {
 	ErrorCode submitChjykcb(Date d, Company company, JSONArray data);
 	
 	ZBStatus getChjykcbStatus(Date d, Company comp);
+	
+	List<List<String>> getChzlbhqkEntry(Date d, Company company);
+
+	ErrorCode saveChzlbhqk(Date d, Company company, JSONArray data);
+
+	ErrorCode submitChzlbhqk(Date d, Company company, JSONArray data);
+	
+	ZBStatus getChzlbhqkStatus(Date d, Company comp);
 }

@@ -36,6 +36,7 @@ public class ChJykcEntity extends AbstractReadWriteEntity implements Serializabl
 	Double byxz;
 	Double bycz;
 	Double qmye;
+	Integer zt;
 	
 	public Integer getNf() {
 		return nf;
@@ -47,6 +48,15 @@ public class ChJykcEntity extends AbstractReadWriteEntity implements Serializabl
 	}
 
 
+	public Integer getZt() {
+		return zt;
+	}
+
+
+	public void setZt(Integer zt) {
+		this.zt = zt;
+	}
+	
 	public Integer getYf() {
 		return yf;
 	}

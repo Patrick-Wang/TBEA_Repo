@@ -12,5 +12,7 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 public interface ChzlbhqkDao extends AbstractReadWriteDao<ChzlbhqkEntity> {
 	
 	List<ChzlbhqkEntity> getByDate(Date ds, Date de, Company company);
+	
+	ChzlbhqkEntity getByDate(Date d, Company company);
 
 }

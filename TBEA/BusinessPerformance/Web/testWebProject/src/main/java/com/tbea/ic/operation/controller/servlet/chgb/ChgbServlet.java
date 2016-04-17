@@ -167,4 +167,36 @@ public class ChgbServlet {
 		return Util.response(err);
 	}
 	
+	@RequestMapping(value = "chzlbhqk/entry/update.do")
+	public @ResponseBody byte[] getChzlbhqkEntry(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType type = CompanySelection.getCompany(request);
+		Company comp = companyManager.getBMDBOrganization().getCompany(type);
+		List<List<String>> result = chgbService.getChzlbhqkEntry(d, comp);
+		ZBStatus status = chgbService.getChjykcbStatus(d, comp);
+		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
+		return JSONObject.fromObject(sd).toString().replaceAll("null", "\"\"").getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "chzlbhqk/entry/save.do")
+	public @ResponseBody byte[] entryChzlbhqk(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		ErrorCode err = chgbService.saveChzlbhqk(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		return Util.response(err);
+	}
+	
+	@RequestMapping(value = "chzlbhqk/entry/submit.do")
+	public @ResponseBody byte[] submitChzlbhqk(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		ErrorCode err = chgbService.submitChzlbhqk(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		return Util.response(err);
+	}
 }
