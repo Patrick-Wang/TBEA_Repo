@@ -38,7 +38,7 @@ public class NychDaoImpl extends AbstractReadWriteDaoImpl<NychEntity> implements
 		Query q = this.getEntityManager().createQuery("from NychEntity where " + 
 				"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dStart) <= 0 and " +
 				"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dEnd) >= 0 and " +
-				"yf <= 12" +
+				"yf <= 12 and" +
 				"dwxx.id=:compId)");
 		q.setParameter("dStart", ds);
 		q.setParameter("dEnd", de);
