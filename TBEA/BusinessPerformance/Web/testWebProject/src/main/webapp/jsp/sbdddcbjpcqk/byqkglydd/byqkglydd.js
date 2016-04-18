@@ -71,7 +71,7 @@ var sbdddcbjpcqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ByqkglyddView = (function (_super) {
             __extends(ByqkglyddView, _super);
             function ByqkglyddView() {
@@ -134,7 +134,7 @@ var sbdddcbjpcqk;
                 }));
             };
             return ByqkglyddView;
-        })(wlyddqk.BasePluginView);
+        }(wlyddqk.BasePluginView));
         byqkglydd.pluginView = ByqkglyddView.newInstance();
     })(byqkglydd = sbdddcbjpcqk.byqkglydd || (sbdddcbjpcqk.byqkglydd = {}));
 })(sbdddcbjpcqk || (sbdddcbjpcqk = {}));
