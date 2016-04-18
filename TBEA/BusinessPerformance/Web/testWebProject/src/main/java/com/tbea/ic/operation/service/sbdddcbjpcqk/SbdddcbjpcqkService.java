@@ -6,7 +6,7 @@ import java.util.List;
 import net.sf.json.JSONArray;
 
 import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.controller.servlet.sbdddcbjpcqk.KglyddType;
+import com.tbea.ic.operation.controller.servlet.wlydd.sbdddcbjpcqk.KglyddType;
 
 public interface SbdddcbjpcqkService {
 
