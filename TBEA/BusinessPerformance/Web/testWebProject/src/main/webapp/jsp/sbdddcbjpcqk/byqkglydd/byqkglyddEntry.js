@@ -75,7 +75,7 @@ var sbdddcbjpcqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ByqkglyddEntryView = (function (_super) {
             __extends(ByqkglyddEntryView, _super);
             function ByqkglyddEntryView() {
@@ -199,7 +199,7 @@ var sbdddcbjpcqk;
                     autoScroll: true,
                     data: this.mTableAssist.getDataWithId(this.mData.statusData.data),
                     viewrecords: true,
-                    pager: '#' + pagername
+                    pager: '#' + pagername,
                 }));
                 var editModeWidth = 350;
                 jqTable.bind("jqGridAddEditAfterSubmit", function (event, element, data, oper) {
@@ -243,7 +243,7 @@ var sbdddcbjpcqk;
                 //}
             };
             return ByqkglyddEntryView;
-        })(wlyddqk.BaseEntryPluginView);
+        }(wlyddqk.BaseEntryPluginView));
         byqkglyddEntry.pluginView = ByqkglyddEntryView.newInstance();
     })(byqkglyddEntry = sbdddcbjpcqk.byqkglyddEntry || (sbdddcbjpcqk.byqkglyddEntry = {}));
 })(sbdddcbjpcqk || (sbdddcbjpcqk = {}));

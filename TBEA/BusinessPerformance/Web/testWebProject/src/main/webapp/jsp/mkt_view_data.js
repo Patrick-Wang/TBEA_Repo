@@ -80,7 +80,7 @@ var mkt_view_data;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var ErrorCode;
     (function (ErrorCode) {
         ErrorCode[ErrorCode["OK"] = 0] = "OK";
@@ -133,7 +133,7 @@ var mkt_view_data;
             this.mSaveDataSet.post({
                 mktType: this.mDocType,
                 data: JSON.stringify(submitData),
-                editOper: this.mEditOper
+                editOper: this.mEditOper,
             }).then(function (data) {
                 if ("true" == data.result) {
                     Util.MessageBox.tip("提交 成功");
@@ -388,6 +388,6 @@ var mkt_view_data;
             }
         };
         return View;
-    })();
+    }());
     mkt_view_data.View = View;
 })(mkt_view_data || (mkt_view_data = {}));

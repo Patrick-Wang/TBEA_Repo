@@ -295,6 +295,6 @@ var Util;
             return { year: this.mCurDate.year, month: this.mCurDate.month, day: this.mCurDate.day };
         };
         return DateSelector;
-    })();
+    }());
     Util.DateSelector = DateSelector;
 })(Util || (Util = {}));

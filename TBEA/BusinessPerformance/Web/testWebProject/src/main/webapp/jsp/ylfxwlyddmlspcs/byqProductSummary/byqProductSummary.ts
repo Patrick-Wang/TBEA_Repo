@@ -12,25 +12,28 @@ module  ylfxwlyddmlspcs {
         class JQGridAssistantFactory {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 
+                let curDate : Date = new Date();
+                let month = curDate.getMonth() + 1;
+                let data = [];
+                let node : JQTable.Node;
+                let titleNodes : JQTable.Node[] = [];
                 
+                node = new JQTable.Node("产品", "byqProductSummary_cp", true, TextAlign.Center);
+                titleNodes.push(node);
                 
+                node = new JQTable.Node("上年度", "byqProductSummary_snd", true, TextAlign.Center);
+                for (let i = month + 1; i <= 12; ++i){
+                    node.append(new JQTable.Node(i + "月", "ylfxwlyddmlspcs_snd_" + i));
+                }
+                titleNodes.push(node);
                 
+                node = new JQTable.Node("本年度", "byqProductSummary_bnd", true, TextAlign.Center);
+                for (let i = 1; i <= month; ++i){
+                    node.append(new JQTable.Node(i + "月", "ylfxwlyddmlspcs_bnd_" + i));
+                }               
+                titleNodes.push(node);
                 
-                
-                
-                return new JQTable.JQGridAssistant([
-                    new JQTable.Node("月度", "chxzqk_yd", true, TextAlign.Center),
-                    new JQTable.Node("月度", "chxzqk_ydtwo", true, TextAlign.Center),
-                    new JQTable.Node("原材料", "chxzqk_ycl"),
-                    new JQTable.Node("半成品", "chxzqk_bcp"),
-                    new JQTable.Node("实际库存商品", "chxzqk_sjkcsp"),
-                    new JQTable.Node("已发货未开票", "chxzqk_yfhwkp"),
-                    new JQTable.Node("期货浮动盈亏(盈+，亏-)", "chxzqk_qhfdyk"),
-                    new JQTable.Node("期货平仓盈亏(盈-，亏+)", "chxzqk_qhpc"),
-                    new JQTable.Node("未发货已开票", "chxzqk_wfhykp"),
-                    new JQTable.Node("其他", "chxzqk_qt"),
-                    new JQTable.Node("合计", "chxzqk_hj")
-                ], gridName);
+                return new JQTable.JQGridAssistant(titleNodes, gridName);
             }
         }
 
@@ -38,17 +41,17 @@ module  ylfxwlyddmlspcs {
             tb:string;
         }
 
-        class CHXZQKView extends BasePluginView {
+        class ByqProductSummaryView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("chxzqk/update.do", false);
+            private mAjax:Util.Ajax = new Util.Ajax("byqProductSummary/update.do", false);
             private mDateSelector:Util.DateSelector;
             private mDt: string;
             
-            public static newInstance():CHXZQKView {
-                return new CHXZQKView();
+            public static newInstance():ByqProductSummaryView {
+                return new ByqProductSummaryView();
             }
             pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
-                return "chxzqk/export.do?" + Util.Ajax.toUrlParam({
+                return "byqProductSummary/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId: cpType
                     });
@@ -79,7 +82,7 @@ module  ylfxwlyddmlspcs {
 
             public init(opt:Option):void {
                 super.init(opt);
-                view.register("存货性质情况", this);
+                view.register("未履约订单毛利水平测算 -产品综合", this);
             }
 
             private updateTable():void {
@@ -119,6 +122,6 @@ module  ylfxwlyddmlspcs {
             }
         }
 
-        export var pluginView = CHXZQKView.newInstance();
+        export var pluginView = ByqProductSummaryView.newInstance();
     }
 }

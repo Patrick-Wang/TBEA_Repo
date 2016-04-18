@@ -16,41 +16,46 @@ var ylfxwlyddmlspcs;
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName) {
-                return new JQTable.JQGridAssistant([
-                    new JQTable.Node("月度", "chxzqk_yd", true, TextAlign.Center),
-                    new JQTable.Node("月度", "chxzqk_ydtwo", true, TextAlign.Center),
-                    new JQTable.Node("原材料", "chxzqk_ycl"),
-                    new JQTable.Node("半成品", "chxzqk_bcp"),
-                    new JQTable.Node("实际库存商品", "chxzqk_sjkcsp"),
-                    new JQTable.Node("已发货未开票", "chxzqk_yfhwkp"),
-                    new JQTable.Node("期货浮动盈亏(盈+，亏-)", "chxzqk_qhfdyk"),
-                    new JQTable.Node("期货平仓盈亏(盈-，亏+)", "chxzqk_qhpc"),
-                    new JQTable.Node("未发货已开票", "chxzqk_wfhykp"),
-                    new JQTable.Node("其他", "chxzqk_qt"),
-                    new JQTable.Node("合计", "chxzqk_hj")
-                ], gridName);
+                var curDate = new Date();
+                var month = curDate.getMonth() + 1;
+                var data = [];
+                var node;
+                var titleNodes = [];
+                node = new JQTable.Node("产品", "byqProductSummary_cp", true, TextAlign.Center);
+                titleNodes.push(node);
+                node = new JQTable.Node("上年度", "byqProductSummary_snd", true, TextAlign.Center);
+                for (var i = month + 1; i <= 12; ++i) {
+                    node.append(new JQTable.Node(i + "月", "ylfxwlyddmlspcs_snd_" + i));
+                }
+                titleNodes.push(node);
+                node = new JQTable.Node("本年度", "byqProductSummary_bnd", true, TextAlign.Center);
+                for (var i = 1; i <= month; ++i) {
+                    node.append(new JQTable.Node(i + "月", "ylfxwlyddmlspcs_bnd_" + i));
+                }
+                titleNodes.push(node);
+                return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
         }());
-        var CHXZQKView = (function (_super) {
-            __extends(CHXZQKView, _super);
-            function CHXZQKView() {
+        var ByqProductSummaryView = (function (_super) {
+            __extends(ByqProductSummaryView, _super);
+            function ByqProductSummaryView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("chxzqk/update.do", false);
+                this.mAjax = new Util.Ajax("byqProductSummary/update.do", false);
             }
-            CHXZQKView.newInstance = function () {
-                return new CHXZQKView();
+            ByqProductSummaryView.newInstance = function () {
+                return new ByqProductSummaryView();
             };
-            CHXZQKView.prototype.pluginGetExportUrl = function (date, cpType) {
-                return "chxzqk/export.do?" + Util.Ajax.toUrlParam({
+            ByqProductSummaryView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "byqProductSummary/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: cpType
                 });
             };
-            CHXZQKView.prototype.option = function () {
+            ByqProductSummaryView.prototype.option = function () {
                 return this.mOpt;
             };
-            CHXZQKView.prototype.pluginUpdate = function (date, cpType) {
+            ByqProductSummaryView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjax.get({
@@ -62,17 +67,17 @@ var ylfxwlyddmlspcs;
                     _this.refresh();
                 });
             };
-            CHXZQKView.prototype.refresh = function () {
+            ByqProductSummaryView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            CHXZQKView.prototype.init = function (opt) {
+            ByqProductSummaryView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("存货性质情况", this);
+                view.register("未履约订单毛利水平测算 -产品综合", this);
             };
-            CHXZQKView.prototype.updateTable = function () {
+            ByqProductSummaryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
@@ -103,8 +108,8 @@ var ylfxwlyddmlspcs;
                     viewrecords: true
                 }));
             };
-            return CHXZQKView;
+            return ByqProductSummaryView;
         }(BasePluginView));
-        byqProductSummary.pluginView = CHXZQKView.newInstance();
+        byqProductSummary.pluginView = ByqProductSummaryView.newInstance();
     })(byqProductSummary = ylfxwlyddmlspcs.byqProductSummary || (ylfxwlyddmlspcs.byqProductSummary = {}));
 })(ylfxwlyddmlspcs || (ylfxwlyddmlspcs = {}));
