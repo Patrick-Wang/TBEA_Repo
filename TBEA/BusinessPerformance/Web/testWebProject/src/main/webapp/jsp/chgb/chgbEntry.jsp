@@ -188,6 +188,7 @@ th.ui-th-ltr {
 			<td>
 				<%@include file="chjykcb/chjykcbEntry.jsp"%>
 				<%@include file="chzlbhqk/chzlbhqkEntry.jsp"%>
+				<%@include file="chxzqk/chxzqkEntry.jsp"%>
 			</td>
 		</tr> 
 		<tr>

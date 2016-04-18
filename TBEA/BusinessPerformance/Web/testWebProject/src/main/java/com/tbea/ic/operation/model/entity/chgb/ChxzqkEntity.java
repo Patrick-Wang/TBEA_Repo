@@ -39,8 +39,17 @@ public class ChxzqkEntity extends AbstractReadWriteEntity implements Serializabl
 	Double qhpcyk;
 	Double wfhykp;
 	Double qt;
+	Integer zt;
 	
-	
+	public Integer getZt() {
+		return zt;
+	}
+
+
+
+	public void setZt(Integer nf) {
+		this.zt = zt;
+	}
 	
 	public Integer getNf() {
 		return nf;

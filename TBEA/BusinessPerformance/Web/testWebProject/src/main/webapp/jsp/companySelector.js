@@ -89,7 +89,7 @@ var Util;
         CompanySelector.prototype.updateSelect = function (sel, itemCount, multi) {
             sel = $(sel);
             var width = this.getMaxWidth(sel.children());
-            var minWidth = 80;
+            var minWidth = 120;
             var itemHeight = Util.isMSIE() ? 27.5 : 27;
             sel.css("width", width);
             if (multi) {

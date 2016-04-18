@@ -127,7 +127,7 @@ var yszkgb;
                 parent.append("<table id='" + name + "'></table>");
                 var ny = this.mDt.substr(0, this.mDt.length - 2).replace("-", "年") + "月";
                 for (var i = 0; i < this.mData.length; ++i) {
-                    for (var j = 2; j < this.mData[i].length; ++j) {
+                    for (var j = 0; j < this.mData[i].length; ++j) {
                         if ("" != this.mData[i][j]) {
                             this.mData[i][j] = parseFloat(this.mData[i][j]) + "";
                         }
@@ -163,8 +163,8 @@ var yszkgb;
                         if (isNaN(ret)) {
                             $.jgrid.jqModal = {
                                 width: 290,
-                                left: $("#table").offset().left + $("#table").width() / 2 - 290 / 2,
-                                top: $("#table").offset().top + $("#table").height() / 2 - 90
+                                left: $("#" + name).offset().left + $("#" + name).width() / 2 - 290 / 2,
+                                top: $("#" + name).offset().top + $("#" + name).height() / 2 - 90
                             };
                             return v;
                         }

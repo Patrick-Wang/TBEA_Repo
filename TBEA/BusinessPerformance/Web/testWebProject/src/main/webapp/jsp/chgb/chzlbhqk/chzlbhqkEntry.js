@@ -19,13 +19,13 @@ var chgb;
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("日期", "aa", true, TextAlign.Center),
-                    new JQTable.Node("5年以上", "chzlbhqk_aa", false),
-                    new JQTable.Node("4-5年", "chzlbhqk_ab", false),
-                    new JQTable.Node("3-4年", "chzlbhqk_ac", false),
-                    new JQTable.Node("2-3年", "chzlbhqk_ad", false),
-                    new JQTable.Node("1-2年", "chzlbhqk_ae", false),
-                    new JQTable.Node("1年以内", "chzlbhqk_af", false)
+                    new JQTable.Node("日期", "chzlbhqk_arq_entry", true, TextAlign.Center),
+                    new JQTable.Node("5年以上", "chzlbhqk_aa_entry", false),
+                    new JQTable.Node("4-5年", "chzlbhqk_ab_entry", false),
+                    new JQTable.Node("3-4年", "chzlbhqk_ac_entry", false),
+                    new JQTable.Node("2-3年", "chzlbhqk_ad_entry", false),
+                    new JQTable.Node("1-2年", "chzlbhqk_ae_entry", false),
+                    new JQTable.Node("1年以内", "chzlbhqk_af_entry", false)
                 ], gridName);
             };
             return JQGridAssistantFactory;

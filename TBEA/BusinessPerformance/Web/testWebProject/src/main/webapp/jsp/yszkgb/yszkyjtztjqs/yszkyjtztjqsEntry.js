@@ -11,8 +11,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var yszkgb;
 (function (yszkgb) {
-    var yszkkxxzEntry;
-    (function (yszkkxxzEntry) {
+    var yszkyjtztjqsEntry;
+    (function (yszkyjtztjqsEntry) {
         var TextAlign = JQTable.TextAlign;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
@@ -20,33 +20,33 @@ var yszkgb;
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("日期", "aa", true, TextAlign.Center),
-                    new JQTable.Node("月度", "ab", false, TextAlign.Center)
-                        .append(new JQTable.Node("逾期0-1个月", "ba", readOnly))
-                        .append(new JQTable.Node("逾期1-3月", "bb", readOnly))
-                        .append(new JQTable.Node("逾期3-6月", "bc", readOnly))
-                        .append(new JQTable.Node("逾期6-12月", "bd", readOnly))
-                        .append(new JQTable.Node("逾期1年以上", "be", readOnly)),
-                    new JQTable.Node("未到期(不含质保金)", "ah", readOnly),
-                    new JQTable.Node("未到期质保金", "ai", readOnly)
+                    new JQTable.Node("财务账面应收净收余额", "ab", readOnly),
+                    new JQTable.Node("保理余额（加项）", "ac", readOnly),
+                    new JQTable.Node("货发票未开金额（加项）", "ad", readOnly),
+                    new JQTable.Node("票开货未发金额（减项）", "ae", readOnly),
+                    new JQTable.Node("预收款冲减应收（加项）", "af", readOnly),
+                    new JQTable.Node("信用证冲减应收（加项）", "ag", readOnly),
+                    new JQTable.Node("其他应收科目影响（加项）", "ah", readOnly),
+                    new JQTable.Node("预警台账应收账款余额 ", "ai", readOnly)
                 ], gridName);
             };
             return JQGridAssistantFactory;
         }());
-        var YszkkxxzEntryView = (function (_super) {
-            __extends(YszkkxxzEntryView, _super);
-            function YszkkxxzEntryView() {
+        var YszkyjtztjqsEntryView = (function (_super) {
+            __extends(YszkyjtztjqsEntryView, _super);
+            function YszkyjtztjqsEntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("yszkkxxz/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("yszkkxxz/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("yszkkxxz/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("yszkyjtztjqs/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("yszkyjtztjqs/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("yszkyjtztjqs/entry/submit.do", false);
             }
-            YszkkxxzEntryView.newInstance = function () {
-                return new YszkkxxzEntryView();
+            YszkyjtztjqsEntryView.newInstance = function () {
+                return new YszkyjtztjqsEntryView();
             };
-            YszkkxxzEntryView.prototype.option = function () {
+            YszkyjtztjqsEntryView.prototype.option = function () {
                 return this.mOpt;
             };
-            YszkkxxzEntryView.prototype.pluginSave = function (dt, cpType) {
+            YszkyjtztjqsEntryView.prototype.pluginSave = function (dt, cpType) {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -69,7 +69,7 @@ var yszkgb;
                     }
                 });
             };
-            YszkkxxzEntryView.prototype.pluginSubmit = function (dt, cpType) {
+            YszkyjtztjqsEntryView.prototype.pluginSubmit = function (dt, cpType) {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -96,7 +96,7 @@ var yszkgb;
                     }
                 });
             };
-            YszkkxxzEntryView.prototype.pluginUpdate = function (date, cpType) {
+            YszkyjtztjqsEntryView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjaxUpdate.get({
@@ -109,18 +109,19 @@ var yszkgb;
                     _this.refresh();
                 });
             };
-            YszkkxxzEntryView.prototype.refresh = function () {
+            YszkyjtztjqsEntryView.prototype.refresh = function () {
                 this.raiseReadOnlyChangeEvent(this.mIsReadOnly);
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            YszkkxxzEntryView.prototype.init = function (opt) {
+            YszkyjtztjqsEntryView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                entryView.register("应收账款款项性质情况", this);
+                entryView.register("应收账款账面与预警台账调节趋势表", this);
             };
-            YszkkxxzEntryView.prototype.updateTable = function () {
+            YszkyjtztjqsEntryView.prototype.updateTable = function () {
+                var _this = this;
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mIsReadOnly);
                 var parent = this.$(this.option().tb);
@@ -164,8 +165,8 @@ var yszkgb;
                         if (isNaN(ret)) {
                             $.jgrid.jqModal = {
                                 width: 290,
-                                left: $("#" + name).offset().left + $("#" + name).width() / 2 - 290 / 2,
-                                top: $("#" + name).offset().top + $("#" + name).height() / 2 - 90
+                                left: _this.$(name).offset().left + _this.$(name).width() / 2 - 290 / 2,
+                                top: _this.$(name).offset().top + _this.$(name).height() / 2 - 90
                             };
                             return v;
                         }
@@ -208,8 +209,8 @@ var yszkgb;
                     }
                 });
             };
-            return YszkkxxzEntryView;
+            return YszkyjtztjqsEntryView;
         }(yszkgb.BaseEntryPluginView));
-        yszkkxxzEntry.pluginView = YszkkxxzEntryView.newInstance();
-    })(yszkkxxzEntry = yszkgb.yszkkxxzEntry || (yszkgb.yszkkxxzEntry = {}));
+        yszkyjtztjqsEntry.pluginView = YszkyjtztjqsEntryView.newInstance();
+    })(yszkyjtztjqsEntry = yszkgb.yszkyjtztjqsEntry || (yszkgb.yszkyjtztjqsEntry = {}));
 })(yszkgb || (yszkgb = {}));

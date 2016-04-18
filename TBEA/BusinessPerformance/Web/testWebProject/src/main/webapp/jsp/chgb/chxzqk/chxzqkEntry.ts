@@ -9,18 +9,20 @@ declare var echarts;
 declare var entryView:chgb.EntryView;
 
 module chgb {
-    export module chzlbhqkEntry {
+    export module chxzqkEntry {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly : boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("日期", "chzlbhqk_arq_entry", true, TextAlign.Center),
-                    new JQTable.Node("5年以上", "chzlbhqk_aa_entry", false),
-                    new JQTable.Node("4-5年", "chzlbhqk_ab_entry", false),
-                    new JQTable.Node("3-4年", "chzlbhqk_ac_entry", false),
-                    new JQTable.Node("2-3年", "chzlbhqk_ad_entry", false),
-                    new JQTable.Node("1-2年", "chzlbhqk_ae_entry", false),
-                    new JQTable.Node("1年以内", "chzlbhqk_af_entry", false)
+                    new JQTable.Node("日期", "chxzqk_rq_entry", true, TextAlign.Center),
+                    new JQTable.Node("原材料", "chxzqk_ycl_entry", false),
+                    new JQTable.Node("半成品", "chxzqk_bcp_entry", false),
+                    new JQTable.Node("实际库存商品", "chxzqk_sjkcsp_entry", false),
+                    new JQTable.Node("已发货未开票", "chxzqk_yfhwkp_entry", false),
+                    new JQTable.Node("期货浮动盈亏(盈+，亏-)", "chxzqk_qhfdyk_entry", false),
+                    new JQTable.Node("期货平仓盈亏(盈-，亏+)", "chxzqk_qhpc_entry", false),
+                    new JQTable.Node("未发货已开票", "chxzqk_wfhykp_entry", false),
+                    new JQTable.Node("其他", "chxzqk_qt_entry", false)
                 ], gridName);
             }
         }
@@ -29,18 +31,18 @@ module chgb {
             tb:string;
         }
 
-        class ChzlbhqkEntryView extends BaseEntryPluginView {
+        class ChxzqkEntryView extends BaseEntryPluginView {
 
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("chzlbhqk/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("chzlbhqk/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("chzlbhqk/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("chxzqk/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("chxzqk/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("chxzqk/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mIsReadOnly:boolean;
 
-            public static newInstance():ChzlbhqkEntryView {
-                return new ChzlbhqkEntryView();
+            public static newInstance():ChxzqkEntryView {
+                return new ChxzqkEntryView();
             }
 
             private option():Option {
@@ -228,6 +230,6 @@ module chgb {
             }
         }
 
-        export var pluginView = ChzlbhqkEntryView.newInstance();
+        export var pluginView = ChxzqkEntryView.newInstance();
     }
 }

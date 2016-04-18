@@ -505,4 +505,61 @@ public class ChgbServiceImpl implements ChgbService {
 	public ZBStatus getChzlbhqkStatus(Date d, Company comp) {
 		return ZBStatus.SAVED;
 	}
+	
+	@Override
+	public List<List<String>> getChxzqkEntry(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		ChxzqkEntity entity= chxzqkDao.getByDate(d, company);
+		if (null != entity){
+			List<String> list = toList(entity);
+			result.add(list);
+		}else{
+			result.add(new ArrayList<>());
+		}
+		return result;
+	}
+
+	ErrorCode entryChxzqk(Date d, Company company, JSONArray data, ZBStatus status) {
+		data = data.getJSONArray(0);
+		ErrorCode err = ErrorCode.OK;
+		ChxzqkEntity entity= chxzqkDao.getByDate(d, company);
+		if (null == entity){
+			entity = new ChxzqkEntity();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(d);
+			entity.setNf(cal.get(Calendar.YEAR));
+			entity.setYf(cal.get(Calendar.MONTH) + 1);
+			entity.setDwxx(dwxxDao.getById(company.getId()));
+		}
+
+		entity.setZt(status.ordinal());
+		entity.setYcl(Util.toDoubleNull(data.getString(0)));
+		entity.setBcp(Util.toDoubleNull(data.getString(1)));
+		entity.setSjkcsp(Util.toDoubleNull(data.getString(2)));
+		entity.setYfhwkp(Util.toDoubleNull(data.getString(3)));
+		entity.setQhfdyk(Util.toDoubleNull(data.getString(4)));
+		entity.setQhpcyk(Util.toDoubleNull(data.getString(5)));
+		entity.setWfhykp(Util.toDoubleNull(data.getString(6)));
+		entity.setQt(Util.toDoubleNull(data.getString(7)));
+		
+		chxzqkDao.merge(entity);
+		return err;
+	}
+	
+	@Override
+	public ErrorCode saveChxzqk(Date d, Company company, JSONArray data) {
+		return entryChxzqk(d, company, data, ZBStatus.SAVED);
+	}
+
+	@Override
+	public ErrorCode submitChxzqk(Date d, Company company, JSONArray data) {
+		return entryChxzqk(d, company, data, ZBStatus.SUBMITTED);
+	}
+	
+	@Override
+	public ZBStatus getChxzqkStatus(Date d, Company comp) {
+		return ZBStatus.SAVED;
+	}
+	
+	
 }
