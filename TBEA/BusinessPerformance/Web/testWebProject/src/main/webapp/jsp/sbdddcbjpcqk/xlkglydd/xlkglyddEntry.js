@@ -55,7 +55,7 @@ var sbdddcbjpcqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var XlkglyddEntryView = (function (_super) {
             __extends(XlkglyddEntryView, _super);
             function XlkglyddEntryView() {
@@ -175,7 +175,7 @@ var sbdddcbjpcqk;
                     autoScroll: true,
                     data: this.mTableAssist.getDataWithId(this.mData.statusData.data),
                     viewrecords: true,
-                    pager: '#' + pagername
+                    pager: '#' + pagername,
                 }));
                 jqTable.bind("jqGridAddEditAfterShowForm", function (event, element, oper) {
                     if (oper == "edit") {
@@ -242,7 +242,7 @@ var sbdddcbjpcqk;
                 //}
             };
             return XlkglyddEntryView;
-        })(wlyddqk.BaseEntryPluginView);
+        }(wlyddqk.BaseEntryPluginView));
         xlkglyddEntry.pluginView = XlkglyddEntryView.newInstance();
     })(xlkglyddEntry = sbdddcbjpcqk.xlkglyddEntry || (sbdddcbjpcqk.xlkglyddEntry = {}));
 })(sbdddcbjpcqk || (sbdddcbjpcqk = {}));

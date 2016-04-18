@@ -75,7 +75,7 @@ var wlyddqk;
             this.plugin(node).update(dt);
         };
         return View;
-    })();
+    }());
     wlyddqk.View = View;
 })(wlyddqk || (wlyddqk = {}));
 var view = new wlyddqk.View();

@@ -70,7 +70,7 @@ var wlyddqk;
             this.plugin(this.getActiveNode()).save(this.mCurrentDate);
         };
         return EntryView;
-    })();
+    }());
     wlyddqk.EntryView = EntryView;
 })(wlyddqk || (wlyddqk = {}));
 var entryView = new wlyddqk.EntryView();
