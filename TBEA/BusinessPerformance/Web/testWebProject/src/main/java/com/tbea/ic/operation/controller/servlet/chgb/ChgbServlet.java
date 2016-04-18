@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.chgb;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +33,12 @@ import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.common.excel.ChgbSheetType;
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
+import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.service.chgb.ChgbService;
 import com.tbea.ic.operation.service.chgb.ChgbServiceImpl;
 
@@ -232,4 +241,115 @@ public class ChgbServlet {
 		ErrorCode err = chgbService.submitChxzqk(d, companyManager.getBMDBOrganization().getCompany(comp), data);
 		return Util.response(err);
 	}
+	
+	@RequestMapping(value = "chzmb/export.do")
+	public void exportChzmb(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		List<List<String>> ret = chgbService.getChzmb(d, company);
+		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.ZMB);
+		
+		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = company.getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		handler.handle(null, null, template, sheet.getRow(0).getCell(1), ret.get(0).get(0));
+		handler.handle(null, null, template, sheet.getRow(0).getCell(3), ret.get(0).get(1));
+		handler.handle(null, null, template, sheet.getRow(0).getCell(5), ret.get(0).get(2));
+		template.write(response, name + ".xls");
+	}
+	
+	@RequestMapping(value = "chjykcb/export.do")
+	public void exportChjykcb(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		List<List<String>> ret = chgbService.getChjykcb(d, company);
+		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.JYKCB);
+		
+		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
+		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = company.getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = 0; i < ret.size(); ++i){
+			for (int j = 0; j < ret.get(i).size(); ++j){
+				handler.handle(null, j, template, sheet.getRow(i + 1).getCell(j + 1), ret.get(i).get(j));
+			}
+		}
+		template.write(response, name + ".xls");
+	}
+	
+	@RequestMapping(value = "chzlbhqk/export.do")
+	public void exportChzlbhqk(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		List<List<String>> ret = chgbService.getChzlbhqk(d, company);
+		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.CHZLBHQK);
+		
+		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = company.getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = 0; i < ret.size(); ++i){
+			for (int j = 0; j < ret.get(i).size(); ++j){
+				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+			}
+		}
+		template.write(response, name + ".xls");
+	}
+	
+	@RequestMapping(value = "chxzqk/export.do")
+	public void exportChxzqk(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		List<List<String>> ret = chgbService.getChxzqk(d, company);
+		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.CHXZQK);
+		
+		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = company.getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = 0; i < ret.size(); ++i){
+			for (int j = 0; j < ret.get(i).size(); ++j){
+				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+			}
+		}
+		template.write(response, name + ".xls");
+	}
+	
+	@RequestMapping(value = "chnych/export.do")
+	public void exportChnych(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		List<List<String>> ret = chgbService.getChnych(d, company);
+		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.NYCH);
+		
+		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = company.getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = 0; i < ret.size(); ++i){
+			for (int j = 0; j < ret.get(i).size(); ++j){
+				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+			}
+		}
+		template.write(response, name + ".xls");
+	}
+	
 }
