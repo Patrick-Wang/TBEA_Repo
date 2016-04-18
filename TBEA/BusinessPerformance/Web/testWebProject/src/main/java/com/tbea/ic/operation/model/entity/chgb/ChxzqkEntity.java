@@ -47,7 +47,7 @@ public class ChxzqkEntity extends AbstractReadWriteEntity implements Serializabl
 
 
 
-	public void setZt(Integer nf) {
+	public void setZt(Integer zt) {
 		this.zt = zt;
 	}
 	
