@@ -1,7 +1,7 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-/// <reference path="../sbdddcbjpcqkdef.ts" />
+/// <reference path="../../wlyddqk/wlyddqkdef.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -17,7 +17,7 @@ var sbdddcbjpcqk;
             }
             JQGridAssistantFactory.createTable = function (gridName, type) {
                 var nodeFirst;
-                if (type == sbdddcbjpcqk.KglyddType.SCDY) {
+                if (type == wlyddqk.KglyddType.SCDY) {
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", true, TextAlign.Center);
                 }
                 else {
@@ -47,18 +47,18 @@ var sbdddcbjpcqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var XlkglyddView = (function (_super) {
             __extends(XlkglyddView, _super);
             function XlkglyddView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("xlkglydd/update.do", false);
+                this.mAjax = new Util.Ajax("../sbdddcbjpcqk/xlkglydd/update.do", false);
             }
             XlkglyddView.newInstance = function () {
                 return new XlkglyddView();
             };
             XlkglyddView.prototype.pluginGetExportUrl = function (date) {
-                return "xlkglydd/export.do?" + Util.Ajax.toUrlParam({
+                return "../sbdddcbjpcqk/xlkglydd/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     type: this.mType
                 });
@@ -86,8 +86,8 @@ var sbdddcbjpcqk;
             };
             XlkglyddView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("线缆可供履约订单变化情况按生产类别", new sbdddcbjpcqk.TypeViewProxy(this, sbdddcbjpcqk.KglyddType.SCLB));
-                view.register("线缆可供履约订单变化情况按生产单元", new sbdddcbjpcqk.TypeViewProxy(this, sbdddcbjpcqk.KglyddType.SCDY));
+                view.register("线缆可供履约订单变化情况按生产类别", new wlyddqk.TypeViewProxy(this, wlyddqk.KglyddType.SCLB));
+                view.register("线缆可供履约订单变化情况按生产单元", new wlyddqk.TypeViewProxy(this, wlyddqk.KglyddType.SCDY));
             };
             XlkglyddView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
@@ -110,7 +110,7 @@ var sbdddcbjpcqk;
                 }));
             };
             return XlkglyddView;
-        }(sbdddcbjpcqk.BasePluginView));
+        })(wlyddqk.BasePluginView);
         xlkglydd.pluginView = XlkglyddView.newInstance();
     })(xlkglydd = sbdddcbjpcqk.xlkglydd || (sbdddcbjpcqk.xlkglydd = {}));
 })(sbdddcbjpcqk || (sbdddcbjpcqk = {}));

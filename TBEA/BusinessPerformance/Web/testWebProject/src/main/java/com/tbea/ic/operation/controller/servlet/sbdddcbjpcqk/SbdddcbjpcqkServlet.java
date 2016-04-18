@@ -8,24 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.tbea.ic.operation.common.CompanySelection;
-import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.StatusData;
-import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.ZBStatus;
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.excel.SbdddcbjpcqkSheetType;
-import com.tbea.ic.operation.common.excel.YszkgbSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
-import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkServiceImpl;
-import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkService;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,32 +23,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.StatusData;
+import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
+import com.tbea.ic.operation.common.excel.SbdddcbjpcqkSheetType;
+import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkService;
+import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkServiceImpl;
+
 @Controller
 @RequestMapping(value = "sbdddcbjpcqk")
 public class SbdddcbjpcqkServlet {
 	@Resource(name=SbdddcbjpcqkServiceImpl.NAME)
 	SbdddcbjpcqkService sbdddcbjpcqkService;
-
-	@RequestMapping(value = "show.do")
-	public ModelAndView getSbdddcbjpcqk(HttpServletRequest request,
-			HttpServletResponse response) {
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
-		dateSel.select(map);
-		return new ModelAndView("sbdddcbjpcqk/sbdddcbjpcqk", map);
-	}
-	
-	@RequestMapping(value = "entry.do")
-	public ModelAndView getByqkglyddEntry(HttpServletRequest request,
-			HttpServletResponse response) {
-
-		Map<String, Object> map = new HashMap<String, Object>();	
-		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
-		dateSel.select(map);
-		
-		return new ModelAndView("sbdddcbjpcqk/sbdddcbjpcqkEntry", map);
-	}
 	
 	private KglyddType getType(HttpServletRequest request){
 		if (0 == Integer.valueOf(request.getParameter("type"))){
@@ -123,7 +99,7 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
-		ErrorCode err = sbdddcbjpcqkService.saveXlkglydd(d, getType(request));
+		ErrorCode err = sbdddcbjpcqkService.saveXlkglydd(d, getType(request), data);
 		return Util.response(err);
 	}
 	
@@ -133,7 +109,7 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
-		ErrorCode err = sbdddcbjpcqkService.saveByqkglydd(d, getType(request));
+		ErrorCode err = sbdddcbjpcqkService.saveByqkglydd(d, getType(request), data);
 		return Util.response(err);
 	}
 	
@@ -142,8 +118,7 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = sbdddcbjpcqkService.submitByqkglydd(d, getType(request));
+		ErrorCode err = sbdddcbjpcqkService.submitByqkglydd(d, getType(request), data);
 		return Util.response(err);
 	}
 	
@@ -153,8 +128,7 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = sbdddcbjpcqkService.submitXlkglydd(d, getType(request));
+		ErrorCode err = sbdddcbjpcqkService.submitXlkglydd(d, getType(request), data);
 		return Util.response(err);
 	}
 	
@@ -178,7 +152,7 @@ public class SbdddcbjpcqkServlet {
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		for (int i = 0; i < ret.size(); ++i){
-			HSSFRow row = sheet.createRow(i + 3);
+			HSSFRow row = sheet.createRow(i + 2);
 			for (int j = 0; j < ret.get(i).size(); ++j){
 				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
 			}
@@ -206,7 +180,7 @@ public class SbdddcbjpcqkServlet {
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		for (int i = 0; i < ret.size(); ++i){
-			HSSFRow row = sheet.createRow(i + 3);
+			HSSFRow row = sheet.createRow(i + 2);
 			for (int j = 0; j < ret.get(i).size(); ++j){
 				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
 			}

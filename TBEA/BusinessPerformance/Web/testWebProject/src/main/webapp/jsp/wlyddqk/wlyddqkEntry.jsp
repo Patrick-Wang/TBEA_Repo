@@ -51,8 +51,8 @@
 <script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/sbdddcbjpcqk/sbdddcbjpcqkdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/sbdddcbjpcqk/sbdddcbjpcqkEntry.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/wlyddqk/wlyddqkdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/wlyddqk/wlyddqkEntry.js" type="text/javascript"></script>
 
 <!-- message box -->
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
@@ -184,7 +184,7 @@ th.ui-th-ltr {
 		</tr> 
 		<tr>
 			<td>
-				<%@include file="xlkglydd/xlkglyddEntry.jsp"%>
+				<%@include file="../sbdddcbjpcqk/xlkglydd/xlkglyddEntry.jsp"%>
 			</td>
 		</tr> 
 		<tr>

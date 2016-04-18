@@ -1,7 +1,7 @@
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
 /// <reference path="../../js/jquery/jquery.d.ts" />
-module sbdddcbjpcqk {
+module wlyddqk {
 
     export enum KglyddType{
         SCDY,

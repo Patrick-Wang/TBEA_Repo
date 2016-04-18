@@ -1,13 +1,13 @@
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
 /// <reference path="../../js/jquery/jquery.d.ts" />
-var sbdddcbjpcqk;
-(function (sbdddcbjpcqk) {
+var wlyddqk;
+(function (wlyddqk) {
     (function (KglyddType) {
         KglyddType[KglyddType["SCDY"] = 0] = "SCDY";
         KglyddType[KglyddType["SCLB"] = 1] = "SCLB";
-    })(sbdddcbjpcqk.KglyddType || (sbdddcbjpcqk.KglyddType = {}));
-    var KglyddType = sbdddcbjpcqk.KglyddType;
+    })(wlyddqk.KglyddType || (wlyddqk.KglyddType = {}));
+    var KglyddType = wlyddqk.KglyddType;
     var BasePluginView = (function () {
         function BasePluginView() {
         }
@@ -35,8 +35,8 @@ var sbdddcbjpcqk;
             return this.pluginGetExportUrl(st);
         };
         return BasePluginView;
-    }());
-    sbdddcbjpcqk.BasePluginView = BasePluginView;
+    })();
+    wlyddqk.BasePluginView = BasePluginView;
     var TypeViewProxy = (function () {
         function TypeViewProxy(stub, type) {
             this.mStub = stub;
@@ -59,8 +59,8 @@ var sbdddcbjpcqk;
             return this.mStub.getExportUrl(date);
         };
         return TypeViewProxy;
-    }());
-    sbdddcbjpcqk.TypeViewProxy = TypeViewProxy;
+    })();
+    wlyddqk.TypeViewProxy = TypeViewProxy;
     var BaseEntryPluginView = (function () {
         function BaseEntryPluginView() {
         }
@@ -100,8 +100,8 @@ var sbdddcbjpcqk;
             this.pluginSubmit(dt);
         };
         return BaseEntryPluginView;
-    }());
-    sbdddcbjpcqk.BaseEntryPluginView = BaseEntryPluginView;
+    })();
+    wlyddqk.BaseEntryPluginView = BaseEntryPluginView;
     var TypeEntryViewProxy = (function () {
         function TypeEntryViewProxy(stub, type) {
             this.mStub = stub;
@@ -130,6 +130,6 @@ var sbdddcbjpcqk;
             this.mStub.submit(date);
         };
         return TypeEntryViewProxy;
-    }());
-    sbdddcbjpcqk.TypeEntryViewProxy = TypeEntryViewProxy;
-})(sbdddcbjpcqk || (sbdddcbjpcqk = {}));
+    })();
+    wlyddqk.TypeEntryViewProxy = TypeEntryViewProxy;
+})(wlyddqk || (wlyddqk = {}));

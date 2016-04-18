@@ -51,13 +51,13 @@
 <script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/sbdddcbjpcqk/sbdddcbjpcqkdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/wlyddqk/wlyddqkdef.js" type="text/javascript"></script>
 
 <!-- message box -->
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/sbdddcbjpcqk/sbdddcbjpcqk.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/jsp/wlyddqk/wlyddqk.js" type="text/javascript"></script>
 
 <title>应收账款管报</title>
 
@@ -189,8 +189,8 @@ th.ui-th-ltr {
 		</tr>
 		<tr>
 			<td>
-				<%@include file="byqkglydd/byqkglydd.jsp"%>
-				<%@include file="xlkglydd/xlkglydd.jsp"%>
+				<%@include file="../sbdddcbjpcqk/byqkglydd/byqkglydd.jsp"%>
+				<%@include file="../sbdddcbjpcqk/xlkglydd/xlkglydd.jsp"%>
 			</td>
 		</tr>
 		<tr>

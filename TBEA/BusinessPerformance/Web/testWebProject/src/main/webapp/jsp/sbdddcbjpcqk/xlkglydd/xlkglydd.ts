@@ -1,19 +1,19 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-/// <reference path="../sbdddcbjpcqkdef.ts" />
+/// <reference path="../../wlyddqk/wlyddqkdef.ts" />
 
 declare var echarts;
-declare var view:sbdddcbjpcqk.FrameView;
+declare var view:wlyddqk.FrameView;
 
 module sbdddcbjpcqk {
     export module xlkglydd {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string, type:KglyddType):JQTable.JQGridAssistant {
+            public static createTable(gridName:string, type:wlyddqk.KglyddType):JQTable.JQGridAssistant {
 
                 let nodeFirst : JQTable.Node;
-                if (type == KglyddType.SCDY){
+                if (type == wlyddqk.KglyddType.SCDY){
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", true, TextAlign.Center)
                 }else{
                     nodeFirst = new JQTable.Node("产品类别", "sclb", true, TextAlign.Center)
@@ -44,13 +44,13 @@ module sbdddcbjpcqk {
             }
         }
 
-        interface Option extends PluginOption {
+        interface Option extends wlyddqk.PluginOption {
             tb:string;
         }
 
-        class XlkglyddView extends BasePluginView {
+        class XlkglyddView extends wlyddqk.BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("xlkglydd/update.do", false);
+            private mAjax:Util.Ajax = new Util.Ajax("../sbdddcbjpcqk/xlkglydd/update.do", false);
             private mDateSelector:Util.DateSelector;
             private mDt: string;
 
@@ -59,7 +59,7 @@ module sbdddcbjpcqk {
             }
 
             pluginGetExportUrl(date:string):string {
-                return "xlkglydd/export.do?" + Util.Ajax.toUrlParam({
+                return "../sbdddcbjpcqk/xlkglydd/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         type: this.mType
                     });
@@ -91,8 +91,8 @@ module sbdddcbjpcqk {
 
             public init(opt:Option):void {
                 super.init(opt);
-                view.register("线缆可供履约订单变化情况按生产类别", new TypeViewProxy(this, KglyddType.SCLB));
-                view.register("线缆可供履约订单变化情况按生产单元", new TypeViewProxy(this, KglyddType.SCDY));
+                view.register("线缆可供履约订单变化情况按生产类别", new wlyddqk.TypeViewProxy(this, wlyddqk.KglyddType.SCLB));
+                view.register("线缆可供履约订单变化情况按生产单元", new wlyddqk.TypeViewProxy(this, wlyddqk.KglyddType.SCDY));
             }
 
             private updateTable():void {

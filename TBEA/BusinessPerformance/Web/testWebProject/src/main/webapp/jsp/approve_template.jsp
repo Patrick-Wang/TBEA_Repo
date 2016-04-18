@@ -20,12 +20,12 @@
 	href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
 <script src="../jsp/jqgrid/js/jquery-ui-custom.min.js"
 	type="text/javascript"></script>
- 
+
 <!-- jqgrid -->
 <link rel="stylesheet" type="text/css" media="screen"
 	href="../jsp/jqgrid/themes/ui.jqgrid.css">
 <link rel="stylesheet" type="text/css" media="screen"
-	href="../jsp/jqgrid/themes/ui.multiselect.css">
+	href="../jsp/jqgrid/themes/ui.multiselect.css"> 
 <script src="../jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
 <script src="../jsp/jqgrid/js/jquery.contextmenu.js"
 	type="text/javascript"></script>
@@ -33,7 +33,6 @@
 	type="text/javascript"></script>
 <script src="../jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
 <script src="../jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
-
 
 <!-- 多选菜单 -->
 <link rel="stylesheet" type="text/css"
