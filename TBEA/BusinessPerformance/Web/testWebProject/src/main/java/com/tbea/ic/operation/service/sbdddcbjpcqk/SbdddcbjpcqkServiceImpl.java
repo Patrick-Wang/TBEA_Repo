@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
-import com.tbea.ic.operation.controller.servlet.sbdddcbjpcqk.KglyddType;
+import com.tbea.ic.operation.controller.servlet.wlydd.sbdddcbjpcqk.KglyddType;
 import com.tbea.ic.operation.model.dao.identifier.sbdddcbjpcqk.byqcplx.ByqcplxDao;
 import com.tbea.ic.operation.model.dao.identifier.sbdddcbjpcqk.byqcplx.ByqcplxDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.sbdddcbjpcqk.xlcplx.XlcplxDao;
@@ -26,7 +26,6 @@ import com.tbea.ic.operation.model.dao.sbdddcbjpcqk.xlkglydd.XlkglyddDao;
 import com.tbea.ic.operation.model.dao.sbdddcbjpcqk.xlkglydd.XlkglyddDaoImpl;
 import com.tbea.ic.operation.model.entity.identifier.sbdddcbjpcqk.ByqcplxEntity;
 import com.tbea.ic.operation.model.entity.identifier.sbdddcbjpcqk.XlcplxEntity;
-import com.tbea.ic.operation.model.entity.jygk.SHZT;
 import com.tbea.ic.operation.model.entity.sbdddcbjpcqk.ByqkglyddEntity;
 import com.tbea.ic.operation.model.entity.sbdddcbjpcqk.XlkglyddEntity;
 
@@ -225,6 +224,7 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 				entity.setNf(cal.get(Calendar.YEAR));
 				entity.setYf(cal.get(Calendar.MONTH) + 1);
 				entity.setType(type.ordinal());
+				entity.setZt(zt.ordinal());
 			}
 			
 			entity.setSclx(row.getString(col++));
@@ -259,7 +259,7 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 	}
 
 	private ErrorCode entryByqkglydd(Date d, KglyddType type, JSONArray data,
-			ZBStatus saved) {
+			ZBStatus zt) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		for (int i = 0; i < data.size(); ++i){
@@ -274,6 +274,8 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 				entity = new ByqkglyddEntity();
 				entity.setNf(cal.get(Calendar.YEAR));
 				entity.setYf(cal.get(Calendar.MONTH) + 1);
+				entity.setType(type.ordinal());
+				entity.setZt(zt.ordinal());
 			}
 			entity.setSclx(row.getString(col++));
 			entity.setYccnlcz(Util.toDoubleNull(row.getString(col++)));
