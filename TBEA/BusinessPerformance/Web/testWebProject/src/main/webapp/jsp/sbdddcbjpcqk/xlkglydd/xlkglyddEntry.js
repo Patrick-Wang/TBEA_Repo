@@ -71,6 +71,7 @@ var sbdddcbjpcqk;
                 return this.mOpt;
             };
             XlkglyddEntryView.prototype.pluginSave = function (dt) {
+                var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -86,6 +87,7 @@ var sbdddcbjpcqk;
                     type: this.mType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
+                        _this.pluginUpdate(dt);
                         Util.MessageBox.tip("保存 成功");
                     }
                     else {
@@ -94,6 +96,7 @@ var sbdddcbjpcqk;
                 });
             };
             XlkglyddEntryView.prototype.pluginSubmit = function (dt) {
+                var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -113,6 +116,7 @@ var sbdddcbjpcqk;
                     type: this.mType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
+                        _this.pluginUpdate(dt);
                         Util.MessageBox.tip("提交 成功");
                     }
                     else {

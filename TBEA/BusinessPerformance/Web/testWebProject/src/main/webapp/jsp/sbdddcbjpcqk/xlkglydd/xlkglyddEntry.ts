@@ -90,6 +90,7 @@ module sbdddcbjpcqk {
                     type: this.mType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
+                        this.pluginUpdate(dt);
                         Util.MessageBox.tip("保存 成功");
                     } else {
                         Util.MessageBox.tip(resp.message);
@@ -117,6 +118,7 @@ module sbdddcbjpcqk {
                     type: this.mType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
+                        this.pluginUpdate(dt);
                         Util.MessageBox.tip("提交 成功");
                     } else {
                         Util.MessageBox.tip(resp.message);
