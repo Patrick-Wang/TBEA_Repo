@@ -43,13 +43,15 @@ import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.WlyddmlspcsService;
 import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.WlyddmlspcsServiceImpl;
 
 @Controller
-@RequestMapping(value = "wlyddmlspcs")
+@RequestMapping(value = "wlydd")
 public class WlyddmlspcsServlet {
 	@Resource(name = WlyddmlspcsServiceImpl.NAME)
 	WlyddmlspcsService wlyddmlspcsService;
 
-	CompanyManager companyManager;
 	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+
 	private WlyddType getType(HttpServletRequest request){
 		if (11 == Integer.valueOf(request.getParameter("type"))){
 			return WlyddType.YLFX_WLYMLSP_BYQ_ZH;

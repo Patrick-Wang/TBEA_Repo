@@ -108,17 +108,18 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 			
 			for (int i = 0; i < 12; ++i){
 
+				Boolean bFind = false;
 				for (WlyddmlspcsEntity entity : entities){
 					if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
-						
+						bFind = true;
 						oneLine.add("" + (entity.getSr() - entity.getCb()));
 						
 						entities.remove(entity);
 						break;
 					}
 				}
-				if (result.get(result.size() - 1).isEmpty()){
-					Util.resize(result.get(result.size() - 1), 7);
+				if (!bFind) {
+					oneLine.add("null");
 				}
 				cal.add(Calendar.MONTH, 1);
 			}

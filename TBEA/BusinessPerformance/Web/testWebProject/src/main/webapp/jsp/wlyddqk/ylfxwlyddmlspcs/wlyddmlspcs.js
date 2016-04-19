@@ -97,7 +97,7 @@ var ylfxwlyddmlspcs;
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 20,
+                    rowNum: 30,
                     data: tableAssist.getData(this.mData),
                     datatype: "local",
                     viewrecords: true

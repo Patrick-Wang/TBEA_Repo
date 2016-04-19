@@ -7,11 +7,11 @@ module wlyddqk {
     export enum WlyddType{
         SCDY,
         SCLB,
-        YLFX_WLYMLSP_BYQ_ZH,
-        YLFX_WLYMLSP_BYQ_DYDJ,
-        YLFX_WLYMLSP_BYQ_CPFL,
-        YLFX_WLYMLSP_XL_ZH,
-        YLFX_WLYMLSP_XL_CPFL
+        YLFX_WLYMLSP_BYQ_ZH = 11,
+        YLFX_WLYMLSP_BYQ_DYDJ = 12,
+        YLFX_WLYMLSP_BYQ_CPFL = 13,
+        YLFX_WLYMLSP_XL_ZH = 14,
+        YLFX_WLYMLSP_XL_CPFL = 15
     }
 
     export interface EntryLyddData{
