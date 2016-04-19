@@ -4,13 +4,14 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
-import com.tbea.ic.operation.controller.servlet.wlydd.sbdddcbjpcqk.KglyddType;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.model.entity.sbdddcbjpcqk.XlkglyddEntity;
 
 
 
 public interface XlkglyddDao extends AbstractReadWriteDao<XlkglyddEntity> {
 
-	List<XlkglyddEntity> getByDate(Date d, KglyddType type);
+	List<XlkglyddEntity> getByDate(Date d, WlyddType type, Company company);
 
 }

@@ -3,10 +3,7 @@ package com.tbea.ic.operation.controller.servlet.wlydd.sbdddcbjpcqk;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,13 +18,13 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
-import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.StatusData;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.SbdddcbjpcqkSheetType;
@@ -35,6 +32,7 @@ import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkService;
 import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkServiceImpl;
 
@@ -44,18 +42,23 @@ public class SbdddcbjpcqkServlet {
 	@Resource(name=SbdddcbjpcqkServiceImpl.NAME)
 	SbdddcbjpcqkService sbdddcbjpcqkService;
 	
-	private KglyddType getType(HttpServletRequest request){
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+		
+	private WlyddType getType(HttpServletRequest request){
 		if (0 == Integer.valueOf(request.getParameter("type"))){
-			return KglyddType.SCDY;
+			return WlyddType.SCDY;
 		}
-		return KglyddType.SCLB;
+		return WlyddType.SCLB;
 	}
 	
 	@RequestMapping(value = "byqkglydd/update.do")
 	public @ResponseBody byte[] getByqkglydd(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
-		List<List<String>> result = sbdddcbjpcqkService.getByqkglydd(d, getType(request));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		List<List<String>> result = sbdddcbjpcqkService.getByqkglydd(d, getType(request), company);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 	
@@ -63,7 +66,10 @@ public class SbdddcbjpcqkServlet {
 	public @ResponseBody byte[] updateXlkglydd(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
-		List<List<String>> result = sbdddcbjpcqkService.getXlkglydd(d, getType(request));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		List<List<String>> result = sbdddcbjpcqkService.getXlkglydd(d, getType(request), company);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 	
@@ -71,7 +77,10 @@ public class SbdddcbjpcqkServlet {
 	public @ResponseBody byte[] updateByqkglyddEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
-		List<List<String>> result = sbdddcbjpcqkService.getByqkglyddEntry(d, getType(request));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		List<List<String>> result = sbdddcbjpcqkService.getByqkglyddEntry(d, getType(request), company);
 		StatusData sd = new StatusData(false, result);
 		List<String> cplb = sbdddcbjpcqkService.getByqCplb();
 		EntryLyddData eld = new EntryLyddData();
@@ -85,7 +94,10 @@ public class SbdddcbjpcqkServlet {
 	public @ResponseBody byte[] updateXlkglyddEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
-		List<List<String>> result = sbdddcbjpcqkService.getXlkglyddEntry(d, getType(request));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		List<List<String>> result = sbdddcbjpcqkService.getXlkglyddEntry(d, getType(request), company);
 		StatusData sd = new StatusData(false, result);
 		List<String> cplb = sbdddcbjpcqkService.getXlCplb();
 		EntryLyddData eld = new EntryLyddData();
@@ -99,7 +111,10 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
-		ErrorCode err = sbdddcbjpcqkService.saveXlkglydd(d, getType(request), data);
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		ErrorCode err = sbdddcbjpcqkService.saveXlkglydd(d, getType(request), data, company);
 		return Util.response(err);
 	}
 	
@@ -109,7 +124,10 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
-		ErrorCode err = sbdddcbjpcqkService.saveByqkglydd(d, getType(request), data);
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		ErrorCode err = sbdddcbjpcqkService.saveByqkglydd(d, getType(request), data, company);
 		return Util.response(err);
 	}
 	
@@ -118,7 +136,10 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
-		ErrorCode err = sbdddcbjpcqkService.submitByqkglydd(d, getType(request), data);
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		ErrorCode err = sbdddcbjpcqkService.submitByqkglydd(d, getType(request), data, company);
 		return Util.response(err);
 	}
 	
@@ -128,7 +149,10 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
-		ErrorCode err = sbdddcbjpcqkService.submitXlkglydd(d, getType(request), data);
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		ErrorCode err = sbdddcbjpcqkService.submitXlkglydd(d, getType(request), data, company);
 		return Util.response(err);
 	}
 	
@@ -136,10 +160,13 @@ public class SbdddcbjpcqkServlet {
 	public void exportXlkglydd(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
-		KglyddType type = getType(request);
-		List<List<String>> ret = sbdddcbjpcqkService.getXlkglydd(d, type);
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		WlyddType type = getType(request);
+		List<List<String>> ret = sbdddcbjpcqkService.getXlkglydd(d, type, company);
 		ExcelTemplate template = null;
-		if (type == KglyddType.SCDY){
+		if (type == WlyddType.SCDY){
 			template = ExcelTemplate.createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType.XLKGLYDD_SCDY);
 		}else{
 			template = ExcelTemplate.createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType.XLKGLYDD_SCLB);
@@ -165,10 +192,13 @@ public class SbdddcbjpcqkServlet {
 	public void exportByqkglydd(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
-		KglyddType type = getType(request);
-		List<List<String>> ret = sbdddcbjpcqkService.getByqkglydd(d, type);
+		WlyddType type = getType(request);
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		List<List<String>> ret = sbdddcbjpcqkService.getByqkglydd(d, type, company);
 		ExcelTemplate template = null;
-		if (type == KglyddType.SCDY){
+		if (type == WlyddType.SCDY){
 			template = ExcelTemplate.createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType.BYQKGLYDD_SCDY);
 		}else{
 			template = ExcelTemplate.createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType.BYQKGLYDD_SCLB);

@@ -135,19 +135,19 @@ module wlyddqk {
                     this.plugin(this.mNodesAll[i]).hide();
                 }
             }
-
+            this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
             $("#headertitle")[0].innerHTML = node.getData().value;
-            this.plugin(node).update(dt);
+            this.plugin(node).update(dt, this.mCurrentComp);
         }
 
         public submit(){
-            this.plugin(this.getActiveNode()).submit(this.mCurrentDate);
+            this.plugin(this.getActiveNode()).submit(this.mCurrentDate, this.mCurrentComp);
         }
 
         public save(){
-            this.plugin(this.getActiveNode()).save(this.mCurrentDate);
+            this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
         }
     }
 }

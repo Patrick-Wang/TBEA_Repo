@@ -14,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
-import com.tbea.ic.operation.controller.servlet.wlydd.sbdddcbjpcqk.KglyddType;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.model.entity.sbdddcbjpcqk.ByqkglyddEntity;
 
 
@@ -30,13 +31,14 @@ public class ByqkglyddDaoImpl extends AbstractReadWriteDaoImpl<ByqkglyddEntity> 
 	}
 
 	@Override
-	public List<ByqkglyddEntity> getByDate(Date d, KglyddType type) {
-		Query q = this.getEntityManager().createQuery("from ByqkglyddEntity where nf=:nf and yf=:yf and type=:type");
+	public List<ByqkglyddEntity> getByDate(Date d, WlyddType type, Company comp) {
+		Query q = this.getEntityManager().createQuery("from ByqkglyddEntity where nf=:nf and yf=:yf and type=:type and dwid=:dwid");
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		q.setParameter("type", type.ordinal());
+		q.setParameter("dwid", comp.getId());
 		return q.getResultList();
 	}
 }

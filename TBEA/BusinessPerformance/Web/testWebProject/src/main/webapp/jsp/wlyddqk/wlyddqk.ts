@@ -59,7 +59,7 @@ module wlyddqk {
 
         //不可以起名叫做export 在IE中有冲突
         public exportExcel(elemId:string) {
-            let url:string = this.mCurrentPlugin.getExportUrl(this.mCurrentDate);
+            let url:string = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
             $("#" + elemId)[0].action = url;
             $("#" + elemId)[0].submit();
         }

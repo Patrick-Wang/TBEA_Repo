@@ -23,6 +23,7 @@ public class ByqkglyddEntity extends AbstractReadWriteEntity implements Serializ
 	private static final long serialVersionUID = 1L;
 	Integer nf;
 	Integer yf;
+	Integer dwid;
 	Integer type;//		--1 sclx-生产单元   2 sclx-生产类别
 	String sclx;
 	Double yccnlcz;
@@ -223,5 +224,11 @@ public class ByqkglyddEntity extends AbstractReadWriteEntity implements Serializ
 	}
 	public void setZt(Integer zt) {
 		this.zt = zt;
+	}
+	public Integer getDwid() {
+		return dwid;
+	}
+	public void setDwid(Integer dwid) {
+		this.dwid = dwid;
 	}
 }

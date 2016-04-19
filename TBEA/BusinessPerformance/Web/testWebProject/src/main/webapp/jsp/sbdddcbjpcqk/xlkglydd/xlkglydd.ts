@@ -66,10 +66,11 @@ module sbdddcbjpcqk {
                 return new XlkglyddView();
             }
 
-            pluginGetExportUrl(date:string):string {
+            pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
                 return "../sbdddcbjpcqk/xlkglydd/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
-                        type: this.mType
+                        type: this.mType,
+                        companyId:compType
                     });
             }
 
@@ -77,11 +78,12 @@ module sbdddcbjpcqk {
                 return <Option>this.mOpt;
             }
 
-            public pluginUpdate(date:string):void {
+            public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
                 this.mAjax.get({
                         type:this.mType,
-                        date: date
+                        date: date,
+                        companyId:compType
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;

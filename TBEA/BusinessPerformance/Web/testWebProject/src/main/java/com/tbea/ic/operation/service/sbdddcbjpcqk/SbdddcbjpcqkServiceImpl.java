@@ -15,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
-import com.tbea.ic.operation.controller.servlet.wlydd.sbdddcbjpcqk.KglyddType;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.model.dao.identifier.sbdddcbjpcqk.byqcplx.ByqcplxDao;
 import com.tbea.ic.operation.model.dao.identifier.sbdddcbjpcqk.byqcplx.ByqcplxDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.sbdddcbjpcqk.xlcplx.XlcplxDao;
@@ -85,8 +86,9 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 	}
 
 	@Override
-	public List<List<String>> getByqkglydd(Date d, KglyddType type) {
-		List<ByqkglyddEntity> entities = byqkglyddDao.getByDate(d, type);
+	public List<List<String>> getByqkglydd(Date d, WlyddType type,
+			Company company) {
+		List<ByqkglyddEntity> entities = byqkglyddDao.getByDate(d, type, company);
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (ByqkglyddEntity entity : entities) {
 			result.add(toList(entity));
@@ -126,8 +128,9 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 	}
 
 	@Override
-	public List<List<String>> getXlkglydd(Date d, KglyddType type) {
-		List<XlkglyddEntity> entities = xlkglyddDao.getByDate(d, type);
+	public List<List<String>> getXlkglydd(Date d, WlyddType type,
+			Company company) {
+		List<XlkglyddEntity> entities = xlkglyddDao.getByDate(d, type, company);
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (XlkglyddEntity entity : entities) {
 			result.add(toList(entity));
@@ -167,8 +170,9 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 	}
 
 	@Override
-	public List<List<String>> getByqkglyddEntry(Date d, KglyddType type) {
-		List<ByqkglyddEntity> entities = byqkglyddDao.getByDate(d, type);
+	public List<List<String>> getByqkglyddEntry(Date d, WlyddType type,
+			Company company) {
+		List<ByqkglyddEntity> entities = byqkglyddDao.getByDate(d, type, company);
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (ByqkglyddEntity entity : entities) {
 			result.add(toEntryList(entity));
@@ -197,8 +201,8 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 	}
 
 	@Override
-	public List<List<String>> getXlkglyddEntry(Date d, KglyddType type) {
-		List<XlkglyddEntity> entities = xlkglyddDao.getByDate(d, type);
+	public List<List<String>> getXlkglyddEntry(Date d, WlyddType type, Company company) {
+		List<XlkglyddEntity> entities = xlkglyddDao.getByDate(d, type, company);
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (XlkglyddEntity entity : entities) {
 			result.add(toEntryList(entity));
@@ -208,7 +212,7 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 
 	
 	
-	private ErrorCode entryXlkglydd(Date d, KglyddType type, JSONArray data, ZBStatus zt) {
+	private ErrorCode entryXlkglydd(Date d, WlyddType type, JSONArray data, Company company, ZBStatus zt) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		for (int i = 0; i < data.size(); ++i){
@@ -223,6 +227,7 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 				entity = new XlkglyddEntity();
 				entity.setNf(cal.get(Calendar.YEAR));
 				entity.setYf(cal.get(Calendar.MONTH) + 1);
+				entity.setDwid(company.getId());
 				entity.setType(type.ordinal());
 				entity.setZt(zt.ordinal());
 			}
@@ -249,17 +254,17 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 	}
 	
 	@Override
-	public ErrorCode saveXlkglydd(Date d, KglyddType type, JSONArray data) {
-		return entryXlkglydd(d, type, data, ZBStatus.SAVED);
+	public ErrorCode saveXlkglydd(Date d, WlyddType type, JSONArray data, Company company) {
+		return entryXlkglydd(d, type, data, company, ZBStatus.SAVED);
 	}
 
 	@Override
-	public ErrorCode saveByqkglydd(Date d, KglyddType type, JSONArray data) {
-		return entryByqkglydd(d, type, data, ZBStatus.SAVED);
+	public ErrorCode saveByqkglydd(Date d, WlyddType type, JSONArray data, Company company) {
+		return entryByqkglydd(d, type, data, company, ZBStatus.SAVED);
 	}
 
-	private ErrorCode entryByqkglydd(Date d, KglyddType type, JSONArray data,
-			ZBStatus zt) {
+	private ErrorCode entryByqkglydd(Date d, WlyddType type, JSONArray data,
+			Company company, ZBStatus zt) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		for (int i = 0; i < data.size(); ++i){
@@ -274,6 +279,7 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 				entity = new ByqkglyddEntity();
 				entity.setNf(cal.get(Calendar.YEAR));
 				entity.setYf(cal.get(Calendar.MONTH) + 1);
+				entity.setDwid(company.getId());
 				entity.setType(type.ordinal());
 				entity.setZt(zt.ordinal());
 			}
@@ -311,13 +317,13 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 	}
 
 	@Override
-	public ErrorCode submitByqkglydd(Date d, KglyddType type, JSONArray data) {
-		return entryByqkglydd(d, type, data, ZBStatus.SUBMITTED);
+	public ErrorCode submitByqkglydd(Date d, WlyddType type, JSONArray data, Company company) {
+		return entryByqkglydd(d, type, data, company, ZBStatus.SUBMITTED);
 	}
 
 	@Override
-	public ErrorCode submitXlkglydd(Date d, KglyddType type, JSONArray data) {
-		return entryXlkglydd(d, type, data, ZBStatus.SUBMITTED);
+	public ErrorCode submitXlkglydd(Date d, WlyddType type, JSONArray data, Company company) {
+		return entryXlkglydd(d, type, data, company, ZBStatus.SUBMITTED);
 	}
 
 	@Override
