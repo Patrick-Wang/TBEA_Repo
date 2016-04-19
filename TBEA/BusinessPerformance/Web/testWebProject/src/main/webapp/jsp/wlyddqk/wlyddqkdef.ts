@@ -3,7 +3,7 @@
 /// <reference path="../../js/jquery/jquery.d.ts" />
 module wlyddqk {
 
-    export enum KglyddType{
+    export enum WlyddType{
         SCDY,
         SCLB
     }
@@ -16,9 +16,10 @@ module wlyddqk {
     export interface PluginView {
         hide (): void;
         show () : void;
-        update (date:Util.Date) : void;
+        update (date:Util.Date, compType:Util.CompanyType) : void;
         refresh():void;
         getExportUrl(date:Util.Date):string;
+        isSupported( compType:Util.CompanyType):boolean;
     }
 
     export interface FrameView {
@@ -35,12 +36,12 @@ module wlyddqk {
     export abstract class BasePluginView implements PluginView {
 
         mOpt:PluginOption;
-        mType : KglyddType;
+        mType : WlyddType;
         public init(opt:PluginOption):void {
             this.mOpt = opt;
         }
 
-        public setType(type : KglyddType):void{
+        public setType(type : WlyddType):void{
             this.mType = type;
         }
 
@@ -58,16 +59,20 @@ module wlyddqk {
             return $("#" + this.mOpt.host + " #" + id);
         }
 
-        public  update(date:Util.Date):void {
+        public  update(date:Util.Date, compType:Util.CompanyType):void {
             let st = date.year + "-" + date.month + "-" + date.day;
-            this.pluginUpdate(st);
+            this.pluginUpdate(st, compType);
         }
 
-        abstract  pluginUpdate(date:string):void;
+        abstract  pluginUpdate(date:string, compType:Util.CompanyType):void;
 
         getExportUrl(date:Util.Date):string{
             let st = date.year + "-" + date.month + "-" + date.day;
             return this.pluginGetExportUrl(st);
+        }
+
+        isSupported( compType:Util.CompanyType):boolean{
+            return true;
         }
 
         abstract  pluginGetExportUrl(date:string):string;
@@ -75,9 +80,9 @@ module wlyddqk {
 
     export class TypeViewProxy implements PluginView{
         mStub : BasePluginView;
-        mType : KglyddType;
+        mType : WlyddType;
 
-        constructor(stub : BasePluginView,  type : KglyddType){
+        constructor(stub : BasePluginView,  type : WlyddType){
             this.mStub = stub;
             this.mType = type;
         }
@@ -90,9 +95,13 @@ module wlyddqk {
             this.mStub.show();
         }
 
-        update(date:Util.Date):void {
+        isSupported( compType:Util.CompanyType):boolean{
+            return this.mStub.isSupported(compType);
+        }
+
+        update(date:Util.Date, compType:Util.CompanyType):void {
             this.mStub.setType(this.mType);
-            this.mStub.update(date);
+            this.mStub.update(date, compType);
         }
 
         refresh():void {
@@ -112,6 +121,7 @@ module wlyddqk {
         setOnReadOnlyChangeListener(callBack:(isReadOnly:boolean)=>void);
         save(date:Util.Date):void;
         submit(date:Util.Date):void;
+        isSupported( compType:Util.CompanyType):boolean;
     }
 
     export interface EntryFrameView {
@@ -126,12 +136,12 @@ module wlyddqk {
             this.mReadOnlyChange = callBack;
         }
         mOpt:PluginOption;
-        mType : KglyddType;
+        mType : WlyddType;
         public init(opt:PluginOption):void {
             this.mOpt = opt;
         }
 
-        public setType(type : KglyddType):void{
+        public setType(type : WlyddType):void{
             this.mType = type;
         }
         public hide():void {
@@ -166,6 +176,10 @@ module wlyddqk {
             this.pluginSubmit(dt);
         }
 
+        isSupported( compType:Util.CompanyType):boolean{
+            return true;
+        }
+
         abstract refresh():void;
         abstract  pluginUpdate(date:string):void;
         abstract pluginSave(dt:string):void;
@@ -175,11 +189,15 @@ module wlyddqk {
 
     export class TypeEntryViewProxy implements EntryPluginView{
         mStub : BaseEntryPluginView;
-        mType : KglyddType;
+        mType : WlyddType;
 
-        constructor(stub : BaseEntryPluginView,  type : KglyddType){
+        constructor(stub : BaseEntryPluginView,  type : WlyddType){
             this.mStub = stub;
             this.mType = type;
+        }
+
+        isSupported( compType:Util.CompanyType):boolean{
+            return this.mStub.isSupported(compType);
         }
 
         hide():void {
@@ -210,9 +228,6 @@ module wlyddqk {
         submit(date:Util.Date):void {
             this.mStub.submit(date);
         }
-
-
-
     }
 
     export interface StatusData{

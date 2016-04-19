@@ -29,7 +29,7 @@ module yearTotal {
         private mYear: number;
         private mMonth: number;
         private mTableData: Array<string[]>;
-        private mComp: Util.CompanyType = Util.CompanyType.HB;
+        private mComp: Util.CompanyType = Util.CompanyType.HBGS;
         private mDataSet : Util.Ajax;
         private mTableId : string;
         public init(tableId: string, year: number, month : number): void {

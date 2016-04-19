@@ -79,7 +79,7 @@ module xl_fkfstj {
         nwTableId: string;
         echartIdFDW: string;
         private mDataSet: Util.Ajax = new Util.Ajax("xlfkfstj_update.do");
-        private mComp: Util.CompanyType = Util.CompanyType.SB;
+        private mComp: Util.CompanyType = Util.CompanyType.SBGS;
 
         public init(echartIdFDW: string,
             echartIdGW: string,

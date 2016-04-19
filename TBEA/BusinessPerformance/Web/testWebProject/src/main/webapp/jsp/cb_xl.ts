@@ -78,7 +78,7 @@ module cb_xl {
                 private mYear: number;
 
         private mDataSet : Util.Ajax = new Util.Ajax("tb_update.do");
-        private mComp: Util.CompanyType = Util.CompanyType.SB;
+        private mComp: Util.CompanyType = Util.CompanyType.SBGS;
         public init(
             mxTableId: string, 
             jttbTableId: string, 

@@ -10,14 +10,11 @@
 
 <!-- jquery -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
-
-
 <!-- jquery ui blue --> 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
- 
 <!-- 多选菜单 -->
 <link rel="stylesheet" type="text/css" 
 	href="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.css" />
@@ -182,6 +179,7 @@ th.ui-th-ltr {
 		<tr>
 			<td>
 				<div id="dt" style="float: left"></div>
+				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="view.updateUI()" />
@@ -214,6 +212,8 @@ th.ui-th-ltr {
     	
     	view.init({
             type: "type",
+			comp:"compid",
+			comps : JSON.parse('${nodeData}'),
             dt: "dt",
             date: {
                 month: ${month},

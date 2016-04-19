@@ -12,9 +12,9 @@ module sbdddcbjpcqk {
     export module byqkglyddEntry {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string, type:wlyddqk.KglyddType, readOnly:boolean, cplb:string[]):JQTable.JQGridAssistant {
+            public static createTable(gridName:string, type:wlyddqk.WlyddType, readOnly:boolean, cplb:string[]):JQTable.JQGridAssistant {
                 let nodeFirst:JQTable.Node;
-                if (type == wlyddqk.KglyddType.SCDY) {
+                if (type == wlyddqk.WlyddType.SCDY) {
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", readOnly, TextAlign.Center, 0, "text", undefined, false);
                 } else {
                     let vals:string = "";
@@ -157,6 +157,13 @@ module sbdddcbjpcqk {
                     });
             }
 
+            isSupported( compType:Util.CompanyType):boolean{
+                if (compType == Util.CompanyType.SBGS || compType == Util.CompanyType.HBGS || compType == Util.CompanyType.XBC  || compType == Util.CompanyType.TBGS){
+                    return true;
+                }
+                return false;
+            }
+
             public refresh():void {
                 this.raiseReadOnlyChangeEvent(this.mData.statusData.readOnly);
                 if (this.mData == undefined) {
@@ -168,8 +175,8 @@ module sbdddcbjpcqk {
 
             public init(opt:Option):void {
                 super.init(opt);
-                entryView.register("变压器可供履约订单变化情况按生产类别", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.KglyddType.SCLB));
-                entryView.register("变压器可供履约订单变化情况按生产单元", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.KglyddType.SCDY));
+                entryView.register("变压器可供履约订单变化情况按生产类别", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCLB));
+                entryView.register("变压器可供履约订单变化情况按生产单元", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCDY));
                 $.extend($.jgrid.edit, {
                     bSubmit: "确定"
                 });

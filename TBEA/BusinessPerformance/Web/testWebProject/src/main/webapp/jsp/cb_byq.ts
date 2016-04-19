@@ -74,7 +74,7 @@ module cb_byq {
             return new View();
         }
         
-        private mComp: Util.CompanyType = Util.CompanyType.SB;
+        private mComp: Util.CompanyType = Util.CompanyType.SBGS;
         private mMxData: string[][];
         private mJtData: string[][];
         private mGsData: string[][];

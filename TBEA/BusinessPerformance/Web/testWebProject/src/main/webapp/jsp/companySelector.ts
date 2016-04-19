@@ -34,6 +34,8 @@ module Util {
         private mSelectedTop: string;
         private mMulti: boolean;
         private mDivId:string;
+        private mFnChange: (selector: CompanySelector, depth: number) => void;
+
         public hide(){
            this.mUnitedSelector.hide();
         }
@@ -41,7 +43,11 @@ module Util {
         public show(){
            this.mUnitedSelector.show();
         }
-        
+
+        public change(fnChange: (sel: any, depth: number) => void) {
+            this.mFnChange = fnChange;
+        }
+
         private getMaxWidth(opts : any) : number{
             var max = 0;
             var tmp = 0;
@@ -148,6 +154,7 @@ module Util {
                 }else {
                     this.useMultiSelect();
                 }
+                this.mFnChange(sel, depth);
             });
         }
 

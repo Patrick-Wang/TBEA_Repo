@@ -11,6 +11,8 @@ module wlyddqk {
     interface Option {
         dt:string;
         type:string;
+        comp:string;
+        comps: Util.IDataNode[];
         date: Util.Date;
     }
 
@@ -23,13 +25,15 @@ module wlyddqk {
         protected mOpt:Option;
         protected mDtSec:Util.DateSelector;
         protected mItemSelector:Util.UnitedSelector;
-        protected mNodes:Util.DataNode[] = [];
+        protected mNodesAll:Util.DataNode[] = [];
         protected mCurrentPlugin: EntryPluginView;
         protected mCurrentDate:Util.Date;
+        protected mCompanySelector:Util.CompanySelector;
+        protected mCurrentComp:Util.CompanyType;
         public register(name:string, plugin:EntryPluginView):void {
-            var data:PluginData = {id: this.mNodes.length, value: name, plugin: plugin};
+            var data:PluginData = {id: this.mNodesAll.length, value: name, plugin: plugin};
             var node:Util.DataNode = new Util.DataNode(data);
-            this.mNodes.push(node);
+            this.mNodesAll.push(node);
             plugin.setOnReadOnlyChangeListener((isReadOnly:boolean)=>{
                 if (isReadOnly){
                     $("#gbsv").hide();
@@ -52,12 +56,51 @@ module wlyddqk {
                 month: this.mOpt.date.month
             }, this.mOpt.dt);
 
-            this.mItemSelector = new Util.UnitedSelector(this.mNodes, this.mOpt.type);
-            if (this.mNodes.length == 1) {
-                this.mItemSelector.hide();
+            this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
+            if (opt.comps.length == 1) {
+                this.mCompanySelector.hide();
             }
-            this.mNodes = this.mItemSelector.getTopNodes();
+
+            this.mCompanySelector.change((selector:any, depth:number) => {
+                this.updateTypeSelector();
+            });
+
+            this.updateTypeSelector();
             this.updateUI();
+        }
+
+        private updateTypeSelector() {
+            let type:Util.CompanyType = this.mCompanySelector.getCompany();
+            let nodes = [];
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                if (this.plugin(this.mNodesAll[i]).isSupported(type)) {
+                    nodes.push(this.mNodesAll[i]);
+                }
+            }
+
+            let curNodes = [];
+            if (this.mItemSelector != undefined){
+                curNodes = this.mItemSelector.getTopNodes()
+            }
+            let typeChange = false;
+            if (nodes.length != curNodes.length) {
+                typeChange = true;
+            } else {
+                for (let i = 0; i < nodes.length; ++i) {
+                    if (this.plugin(nodes[i]) != this.plugin(curNodes[i])) {
+                        typeChange = true;
+                        break;
+                    }
+                }
+            }
+
+            if (typeChange){
+                this.mItemSelector = new Util.UnitedSelector(nodes, this.mOpt.type);
+                if (nodes.length == 1) {
+                    this.mItemSelector.hide();
+                }
+                this.mItemSelector.refresh();
+            }
         }
 
         protected plugin(node:Util.DataNode):EntryPluginView{
@@ -75,9 +118,9 @@ module wlyddqk {
             dt.day = 1;
 
             this.mCurrentPlugin = this.plugin(node);
-            for (var i = 0; i < this.mNodes.length; ++i) {
-                if (node != this.mNodes[i]) {
-                    this.plugin(this.mNodes[i]).hide();
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                if (this.plugin(node) != this.plugin(this.mNodesAll[i])) {
+                    this.plugin(this.mNodesAll[i]).hide();
                 }
             }
 

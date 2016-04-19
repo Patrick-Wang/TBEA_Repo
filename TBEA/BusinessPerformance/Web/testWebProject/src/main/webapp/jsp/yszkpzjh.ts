@@ -52,7 +52,7 @@ module yszkpzjh {
             return new View();
         }
 
-        private mComp : Util.CompanyType = Util.CompanyType.SB;
+        private mComp : Util.CompanyType = Util.CompanyType.SBGS;
         private mMonth: number;
         private mYear: number;
         private mData: Array<string[]>;
