@@ -53,7 +53,7 @@ var byq_fkfstj;
     }());
     var View = (function () {
         function View() {
-            this.mComp = Util.CompanyType.SB;
+            this.mComp = Util.CompanyType.SBGS;
         }
         View.newInstance = function () {
             return new View();

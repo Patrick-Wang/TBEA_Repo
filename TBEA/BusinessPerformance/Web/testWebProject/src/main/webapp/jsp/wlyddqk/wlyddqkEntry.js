@@ -9,12 +9,12 @@ var wlyddqk;
 (function (wlyddqk) {
     var EntryView = (function () {
         function EntryView() {
-            this.mNodes = [];
+            this.mNodesAll = [];
         }
         EntryView.prototype.register = function (name, plugin) {
-            var data = { id: this.mNodes.length, value: name, plugin: plugin };
+            var data = { id: this.mNodesAll.length, value: name, plugin: plugin };
             var node = new Util.DataNode(data);
-            this.mNodes.push(node);
+            this.mNodesAll.push(node);
             plugin.setOnReadOnlyChangeListener(function (isReadOnly) {
                 if (isReadOnly) {
                     $("#gbsv").hide();
@@ -30,17 +30,64 @@ var wlyddqk;
             return undefined;
         };
         EntryView.prototype.init = function (opt) {
+            var _this = this;
             this.mOpt = opt;
             this.mDtSec = new Util.DateSelector({ year: this.mOpt.date.year - 3, month: 1 }, {
                 year: this.mOpt.date.year,
                 month: this.mOpt.date.month
             }, this.mOpt.dt);
-            this.mItemSelector = new Util.UnitedSelector(this.mNodes, this.mOpt.type);
-            if (this.mNodes.length == 1) {
-                this.mItemSelector.hide();
+            this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
+            if (opt.comps.length == 1) {
+                this.mCompanySelector.hide();
             }
-            this.mNodes = this.mItemSelector.getTopNodes();
+            this.mCompanySelector.change(function (selector, depth) {
+                _this.updateTypeSelector();
+            });
+            this.updateTypeSelector();
             this.updateUI();
+        };
+        EntryView.prototype.updateTypeSelector = function () {
+            var type = this.mCompanySelector.getCompany();
+            var nodes = [];
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                if (this.plugin(this.mNodesAll[i]).isSupported(type)) {
+                    nodes.push(this.mNodesAll[i]);
+                }
+            }
+            var curNodes = [];
+            if (this.mItemSelector != undefined) {
+                curNodes = this.mItemSelector.getTopNodes();
+            }
+            var typeChange = false;
+            if (nodes.length != curNodes.length) {
+                typeChange = true;
+            }
+            else {
+                for (var i_1 = 0; i_1 < nodes.length; ++i_1) {
+                    if (this.plugin(nodes[i_1]) != this.plugin(curNodes[i_1])) {
+                        typeChange = true;
+                        break;
+                    }
+                }
+            }
+            if (typeChange) {
+                this.mItemSelector = new Util.UnitedSelector(nodes, this.mOpt.type);
+                if (nodes.length == 1) {
+                    this.mItemSelector.hide();
+                }
+                $("#" + this.mOpt.type + " select")
+                    .multiselect({
+                    multiple: false,
+                    header: false,
+                    minWidth: 250,
+                    height: '100%',
+                    // noneSelectedText: "请选择月份",
+                    selectedList: 1
+                })
+                    .css("padding", "2px 0 2px 4px")
+                    .css("text-align", "left")
+                    .css("font-size", "12px");
+            }
         };
         EntryView.prototype.plugin = function (node) {
             return node.getData().plugin;
@@ -53,21 +100,22 @@ var wlyddqk;
             var dt = this.mDtSec.getDate();
             dt.day = 1;
             this.mCurrentPlugin = this.plugin(node);
-            for (var i = 0; i < this.mNodes.length; ++i) {
-                if (node != this.mNodes[i]) {
-                    this.plugin(this.mNodes[i]).hide();
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                if (this.plugin(node) != this.plugin(this.mNodesAll[i])) {
+                    this.plugin(this.mNodesAll[i]).hide();
                 }
             }
+            this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
             $("#headertitle")[0].innerHTML = node.getData().value;
-            this.plugin(node).update(dt);
+            this.plugin(node).update(dt, this.mCurrentComp);
         };
         EntryView.prototype.submit = function () {
-            this.plugin(this.getActiveNode()).submit(this.mCurrentDate);
+            this.plugin(this.getActiveNode()).submit(this.mCurrentDate, this.mCurrentComp);
         };
         EntryView.prototype.save = function () {
-            this.plugin(this.getActiveNode()).save(this.mCurrentDate);
+            this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
         };
         return EntryView;
     }());

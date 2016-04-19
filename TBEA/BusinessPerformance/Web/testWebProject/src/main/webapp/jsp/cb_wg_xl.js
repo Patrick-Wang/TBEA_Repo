@@ -81,7 +81,7 @@ var cb_wg_xl;
             this.mGsData = [[]];
             this.mBtdyData = [[]];
             this.mDataSet = new Util.Ajax("wg_update.do");
-            this.mComp = Util.CompanyType.SB;
+            this.mComp = Util.CompanyType.SBGS;
         }
         View.newInstance = function () {
             return new View();

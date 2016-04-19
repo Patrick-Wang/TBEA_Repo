@@ -30,7 +30,7 @@ var yszkjgqkb;
         function View() {
             this.mCurrentSelected = 0;
             this.mDataSet = new Util.Ajax("yszkjgqk_update.do");
-            this.mComp = Util.CompanyType.SB;
+            this.mComp = Util.CompanyType.SBGS;
         }
         View.newInstance = function () {
             if (View.ins == undefined) {

@@ -17,7 +17,7 @@ var sbdddcbjpcqk;
             }
             JQGridAssistantFactory.createTable = function (gridName, type) {
                 var nodeFirst;
-                if (type == wlyddqk.KglyddType.SCDY) {
+                if (type == wlyddqk.WlyddType.SCDY) {
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", true, TextAlign.Center);
                 }
                 else {
@@ -81,6 +81,12 @@ var sbdddcbjpcqk;
             ByqkglyddView.newInstance = function () {
                 return new ByqkglyddView();
             };
+            ByqkglyddView.prototype.isSupported = function (compType) {
+                if (compType == Util.CompanyType.SBGS || compType == Util.CompanyType.HBGS || compType == Util.CompanyType.XBC || compType == Util.CompanyType.TBGS) {
+                    return true;
+                }
+                return false;
+            };
             ByqkglyddView.prototype.pluginGetExportUrl = function (date) {
                 return "../sbdddcbjpcqk/byqkglydd/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
@@ -110,8 +116,8 @@ var sbdddcbjpcqk;
             };
             ByqkglyddView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("变压器可供履约订单变化情况按生产类别", new wlyddqk.TypeViewProxy(this, wlyddqk.KglyddType.SCLB));
-                view.register("变压器可供履约订单变化情况按生产单元", new wlyddqk.TypeViewProxy(this, wlyddqk.KglyddType.SCDY));
+                view.register("变压器可供履约订单变化情况按生产类别", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCLB));
+                view.register("变压器可供履约订单变化情况按生产单元", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCDY));
             };
             ByqkglyddView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";

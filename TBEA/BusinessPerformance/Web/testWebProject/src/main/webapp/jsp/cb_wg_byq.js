@@ -84,7 +84,7 @@ var cb_wg_byq;
             this.mBtdyData = [[]];
             this.mDateDataSet = new Util.Ajax("wg_date_update.do");
             this.mCompanyDataSet = new Util.Ajax("wg_update.do");
-            this.mComp = Util.CompanyType.SB;
+            this.mComp = Util.CompanyType.SBGS;
         }
         View.newInstance = function () {
             return new View();

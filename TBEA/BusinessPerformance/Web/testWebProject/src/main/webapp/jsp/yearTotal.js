@@ -25,7 +25,7 @@ var yearTotal;
     }());
     var View = (function () {
         function View() {
-            this.mComp = Util.CompanyType.HB;
+            this.mComp = Util.CompanyType.HBGS;
         }
         View.newInstance = function () {
             return new View();

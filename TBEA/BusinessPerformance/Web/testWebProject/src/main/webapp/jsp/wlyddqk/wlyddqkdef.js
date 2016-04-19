@@ -3,16 +3,16 @@
 /// <reference path="../../js/jquery/jquery.d.ts" />
 var wlyddqk;
 (function (wlyddqk) {
-    (function (WlyddqkType) {
-        WlyddqkType[WlyddqkType["SCDY"] = 0] = "SCDY";
-        WlyddqkType[WlyddqkType["SCLB"] = 1] = "SCLB";
-        WlyddqkType[WlyddqkType["YLFX_WLYMLSP_BYQ_ZH"] = 2] = "YLFX_WLYMLSP_BYQ_ZH";
-        WlyddqkType[WlyddqkType["YLFX_WLYMLSP_BYQ_DYDJ"] = 3] = "YLFX_WLYMLSP_BYQ_DYDJ";
-        WlyddqkType[WlyddqkType["YLFX_WLYMLSP_BYQ_CPFL"] = 4] = "YLFX_WLYMLSP_BYQ_CPFL";
-        WlyddqkType[WlyddqkType["YLFX_WLYMLSP_XL_ZH"] = 5] = "YLFX_WLYMLSP_XL_ZH";
-        WlyddqkType[WlyddqkType["YLFX_WLYMLSP_XL_CPFL"] = 6] = "YLFX_WLYMLSP_XL_CPFL";
-    })(wlyddqk.WlyddqkType || (wlyddqk.WlyddqkType = {}));
-    var WlyddqkType = wlyddqk.WlyddqkType;
+    (function (WlyddType) {
+        WlyddType[WlyddType["SCDY"] = 0] = "SCDY";
+        WlyddType[WlyddType["SCLB"] = 1] = "SCLB";
+        WlyddType[WlyddType["YLFX_WLYMLSP_BYQ_ZH"] = 2] = "YLFX_WLYMLSP_BYQ_ZH";
+        WlyddType[WlyddType["YLFX_WLYMLSP_BYQ_DYDJ"] = 3] = "YLFX_WLYMLSP_BYQ_DYDJ";
+        WlyddType[WlyddType["YLFX_WLYMLSP_BYQ_CPFL"] = 4] = "YLFX_WLYMLSP_BYQ_CPFL";
+        WlyddType[WlyddType["YLFX_WLYMLSP_XL_ZH"] = 5] = "YLFX_WLYMLSP_XL_ZH";
+        WlyddType[WlyddType["YLFX_WLYMLSP_XL_CPFL"] = 6] = "YLFX_WLYMLSP_XL_CPFL";
+    })(wlyddqk.WlyddType || (wlyddqk.WlyddType = {}));
+    var WlyddType = wlyddqk.WlyddType;
     var BasePluginView = (function () {
         function BasePluginView() {
         }
@@ -31,13 +31,16 @@ var wlyddqk;
         BasePluginView.prototype.$ = function (id) {
             return $("#" + this.mOpt.host + " #" + id);
         };
-        BasePluginView.prototype.update = function (date) {
+        BasePluginView.prototype.update = function (date, compType) {
             var st = date.year + "-" + date.month + "-" + date.day;
-            this.pluginUpdate(st);
+            this.pluginUpdate(st, compType);
         };
-        BasePluginView.prototype.getExportUrl = function (date) {
+        BasePluginView.prototype.getExportUrl = function (date, compType) {
             var st = date.year + "-" + date.month + "-" + date.day;
-            return this.pluginGetExportUrl(st);
+            return this.pluginGetExportUrl(st, compType);
+        };
+        BasePluginView.prototype.isSupported = function (compType) {
+            return true;
         };
         return BasePluginView;
     }());
@@ -53,15 +56,18 @@ var wlyddqk;
         TypeViewProxy.prototype.show = function () {
             this.mStub.show();
         };
-        TypeViewProxy.prototype.update = function (date) {
+        TypeViewProxy.prototype.isSupported = function (compType) {
+            return this.mStub.isSupported(compType);
+        };
+        TypeViewProxy.prototype.update = function (date, compType) {
             this.mStub.setType(this.mType);
-            this.mStub.update(date);
+            this.mStub.update(date, compType);
         };
         TypeViewProxy.prototype.refresh = function () {
             this.mStub.refresh();
         };
-        TypeViewProxy.prototype.getExportUrl = function (date) {
-            return this.mStub.getExportUrl(date);
+        TypeViewProxy.prototype.getExportUrl = function (date, compType) {
+            return this.mStub.getExportUrl(date, compType);
         };
         return TypeViewProxy;
     }());
@@ -92,17 +98,20 @@ var wlyddqk;
         BaseEntryPluginView.prototype.$ = function (id) {
             return $("#" + this.mOpt.host + " #" + id);
         };
-        BaseEntryPluginView.prototype.update = function (start) {
+        BaseEntryPluginView.prototype.update = function (start, compType) {
             var st = start.year + "-" + start.month + "-" + start.day;
-            this.pluginUpdate(st);
+            this.pluginUpdate(st, compType);
         };
-        BaseEntryPluginView.prototype.save = function (date) {
+        BaseEntryPluginView.prototype.save = function (date, compType) {
             var dt = date.year + "-" + date.month + "-" + date.day;
-            this.pluginSave(dt);
+            this.pluginSave(dt, compType);
         };
-        BaseEntryPluginView.prototype.submit = function (date) {
+        BaseEntryPluginView.prototype.submit = function (date, compType) {
             var dt = date.year + "-" + date.month + "-" + date.day;
-            this.pluginSubmit(dt);
+            this.pluginSubmit(dt, compType);
+        };
+        BaseEntryPluginView.prototype.isSupported = function (compType) {
+            return true;
         };
         return BaseEntryPluginView;
     }());
@@ -112,15 +121,18 @@ var wlyddqk;
             this.mStub = stub;
             this.mType = type;
         }
+        TypeEntryViewProxy.prototype.isSupported = function (compType) {
+            return this.mStub.isSupported(compType);
+        };
         TypeEntryViewProxy.prototype.hide = function () {
             this.mStub.hide();
         };
         TypeEntryViewProxy.prototype.show = function () {
             this.mStub.show();
         };
-        TypeEntryViewProxy.prototype.update = function (date) {
+        TypeEntryViewProxy.prototype.update = function (date, compType) {
             this.mStub.setType(this.mType);
-            this.mStub.update(date);
+            this.mStub.update(date, compType);
         };
         TypeEntryViewProxy.prototype.refresh = function () {
             this.mStub.refresh();
@@ -128,11 +140,11 @@ var wlyddqk;
         TypeEntryViewProxy.prototype.setOnReadOnlyChangeListener = function (callBack) {
             this.mStub.setOnReadOnlyChangeListener(callBack);
         };
-        TypeEntryViewProxy.prototype.save = function (date) {
-            this.mStub.save(date);
+        TypeEntryViewProxy.prototype.save = function (date, compType) {
+            this.mStub.save(date, compType);
         };
-        TypeEntryViewProxy.prototype.submit = function (date) {
-            this.mStub.submit(date);
+        TypeEntryViewProxy.prototype.submit = function (date, compType) {
+            this.mStub.submit(date, compType);
         };
         return TypeEntryViewProxy;
     }());

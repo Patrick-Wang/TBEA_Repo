@@ -23,7 +23,7 @@ var yqysysfx;
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("yqysysfx_update.do");
-            this.mComp = Util.CompanyType.SB;
+            this.mComp = Util.CompanyType.SBGS;
         }
         View.newInstance = function () {
             return new View();

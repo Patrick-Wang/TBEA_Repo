@@ -20,7 +20,7 @@ var cqk;
     var View = (function () {
         function View() {
             this.currentSelected = 0;
-            this.mComp = Util.CompanyType.SB;
+            this.mComp = Util.CompanyType.SBGS;
             this.mDataSet = new Util.Ajax("cqk_update.do");
         }
         View.newInstance = function () {

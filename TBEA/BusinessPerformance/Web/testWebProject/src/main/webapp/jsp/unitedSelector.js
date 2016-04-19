@@ -147,16 +147,19 @@ var Util;
             this.mPath = [];
             this.mRoot.appendAll(DataNode.valueOfAll(data));
             this.mCtrlId = ctrlId + "_us";
+            $("#" + ctrlId).empty();
             $("#" + ctrlId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
             if (Util.isExist(data) && this.mRoot.childCount() > 0) {
                 this.update(path);
             }
         }
-        UnitedSelector.prototype.refresh = function () {
-            $("#" + this.mCtrlId).empty().append("<tr></tr>");
-            this.mPath = [];
+        UnitedSelector.prototype.refresh = function (data, path) {
+            if (data != undefined) {
+                this.mRoot = new DataNode(null);
+                this.mRoot.appendAll(DataNode.valueOfAll(data));
+            }
             if (this.mRoot.childCount() > 0) {
-                this.update(this.mPath);
+                this.update();
             }
         };
         UnitedSelector.prototype.hide = function () {

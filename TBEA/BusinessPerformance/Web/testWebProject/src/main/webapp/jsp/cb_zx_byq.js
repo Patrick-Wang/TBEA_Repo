@@ -65,7 +65,7 @@ var cb_zx_byq;
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("zx_update.do");
-            this.mComp = Util.CompanyType.SB;
+            this.mComp = Util.CompanyType.SBGS;
         }
         View.newInstance = function () {
             return new View();

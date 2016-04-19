@@ -18,7 +18,7 @@ var tbbzjqk;
     }());
     var View = (function () {
         function View() {
-            this.mComp = Util.CompanyType.HB;
+            this.mComp = Util.CompanyType.HBGS;
             this.mData = [];
             this.mDataSet = new Util.Ajax("tbbzjqk_update.do");
         }

@@ -67,7 +67,7 @@ var cb_xl;
             this.mJtData = [[]];
             this.mGsData = [[]];
             this.mDataSet = new Util.Ajax("tb_update.do");
-            this.mComp = Util.CompanyType.SB;
+            this.mComp = Util.CompanyType.SBGS;
         }
         View.newInstance = function () {
             return new View();

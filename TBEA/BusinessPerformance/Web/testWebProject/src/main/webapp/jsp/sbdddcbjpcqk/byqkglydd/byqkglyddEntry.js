@@ -19,7 +19,7 @@ var sbdddcbjpcqk;
             }
             JQGridAssistantFactory.createTable = function (gridName, type, readOnly, cplb) {
                 var nodeFirst;
-                if (type == wlyddqk.KglyddType.SCDY) {
+                if (type == wlyddqk.WlyddType.SCDY) {
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", readOnly, TextAlign.Center, 0, "text", undefined, false);
                 }
                 else {
@@ -90,7 +90,7 @@ var sbdddcbjpcqk;
             ByqkglyddEntryView.prototype.option = function () {
                 return this.mOpt;
             };
-            ByqkglyddEntryView.prototype.pluginSave = function (dt) {
+            ByqkglyddEntryView.prototype.pluginSave = function (dt, compType) {
                 var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
@@ -104,10 +104,11 @@ var sbdddcbjpcqk;
                 this.mAjaxSave.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    type: this.mType
+                    type: this.mType,
+                    companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        _this.pluginUpdate(dt);
+                        _this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("保存 成功");
                     }
                     else {
@@ -115,7 +116,7 @@ var sbdddcbjpcqk;
                     }
                 });
             };
-            ByqkglyddEntryView.prototype.pluginSubmit = function (dt) {
+            ByqkglyddEntryView.prototype.pluginSubmit = function (dt, compType) {
                 var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
@@ -133,10 +134,11 @@ var sbdddcbjpcqk;
                 this.mAjaxSubmit.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    type: this.mType
+                    type: this.mType,
+                    companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        _this.pluginUpdate(dt);
+                        _this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("提交 成功");
                     }
                     else {
@@ -144,17 +146,24 @@ var sbdddcbjpcqk;
                     }
                 });
             };
-            ByqkglyddEntryView.prototype.pluginUpdate = function (date) {
+            ByqkglyddEntryView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjaxUpdate.get({
                     type: this.mType,
-                    date: date
+                    date: date,
+                    companyId: compType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
                     _this.refresh();
                 });
+            };
+            ByqkglyddEntryView.prototype.isSupported = function (compType) {
+                if (compType == Util.CompanyType.SBGS || compType == Util.CompanyType.HBGS || compType == Util.CompanyType.XBC || compType == Util.CompanyType.TBGS) {
+                    return true;
+                }
+                return false;
             };
             ByqkglyddEntryView.prototype.refresh = function () {
                 this.raiseReadOnlyChangeEvent(this.mData.statusData.readOnly);
@@ -165,8 +174,8 @@ var sbdddcbjpcqk;
             };
             ByqkglyddEntryView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                entryView.register("变压器可供履约订单变化情况按生产类别", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.KglyddType.SCLB));
-                entryView.register("变压器可供履约订单变化情况按生产单元", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.KglyddType.SCDY));
+                entryView.register("变压器可供履约订单变化情况按生产类别", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCLB));
+                entryView.register("变压器可供履约订单变化情况按生产单元", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCDY));
                 $.extend($.jgrid.edit, {
                     bSubmit: "确定"
                 });

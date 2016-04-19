@@ -66,6 +66,7 @@ var Util;
                 else {
                     _this.useMultiSelect();
                 }
+                _this.mFnChange(sel, depth);
             });
         }
         CompanySelector.prototype.hide = function () {
@@ -73,6 +74,9 @@ var Util;
         };
         CompanySelector.prototype.show = function () {
             this.mUnitedSelector.show();
+        };
+        CompanySelector.prototype.change = function (fnChange) {
+            this.mFnChange = fnChange;
         };
         CompanySelector.prototype.getMaxWidth = function (opts) {
             var max = 0;

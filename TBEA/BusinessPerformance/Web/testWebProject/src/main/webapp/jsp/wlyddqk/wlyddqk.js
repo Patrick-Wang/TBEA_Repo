@@ -9,17 +9,17 @@ var wlyddqk;
 (function (wlyddqk) {
     var View = (function () {
         function View() {
-            this.mNodes = [];
+            this.mNodesAll = [];
         }
         View.prototype.register = function (name, plugin) {
-            var data = { id: this.mNodes.length, value: name, plugin: plugin };
+            var data = { id: this.mNodesAll.length, value: name, plugin: plugin };
             var node = new Util.DataNode(data);
-            this.mNodes.push(node);
+            this.mNodesAll.push(node);
         };
         View.prototype.unregister = function (name) {
             var nod;
-            for (var i = 0; i < this.mNodes.length; ++i) {
-                this.mNodes[i].accept({
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                this.mNodesAll[i].accept({
                     visit: function (node) {
                         if (node.getData().value == name) {
                             nod = node;
@@ -36,22 +36,69 @@ var wlyddqk;
         };
         //不可以起名叫做export 在IE中有冲突
         View.prototype.exportExcel = function (elemId) {
-            var url = this.mCurrentPlugin.getExportUrl(this.mCurrentDate);
+            var url = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
             $("#" + elemId)[0].action = url;
             $("#" + elemId)[0].submit();
         };
         View.prototype.init = function (opt) {
+            var _this = this;
             this.mOpt = opt;
             this.mDtSec = new Util.DateSelector({ year: this.mOpt.date.year - 3, month: 1 }, {
                 year: this.mOpt.date.year,
                 month: this.mOpt.date.month
             }, this.mOpt.dt);
-            this.mItemSelector = new Util.UnitedSelector(this.mNodes, this.mOpt.type);
-            if (this.mNodes.length == 1) {
-                this.mItemSelector.hide();
+            this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
+            if (opt.comps.length == 1) {
+                this.mCompanySelector.hide();
             }
-            this.mNodes = this.mItemSelector.getTopNodes();
+            this.mCompanySelector.change(function (selector, depth) {
+                _this.updateTypeSelector();
+            });
+            this.updateTypeSelector();
             this.updateUI();
+        };
+        View.prototype.updateTypeSelector = function () {
+            var type = this.mCompanySelector.getCompany();
+            var nodes = [];
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                if (this.plugin(this.mNodesAll[i]).isSupported(type)) {
+                    nodes.push(this.mNodesAll[i]);
+                }
+            }
+            var typeChange = false;
+            var curNodes = [];
+            if (this.mItemSelector != undefined) {
+                curNodes = this.mItemSelector.getTopNodes();
+            }
+            if (nodes.length != curNodes.length) {
+                typeChange = true;
+            }
+            else {
+                for (var i_1 = 0; i_1 < nodes.length; ++i_1) {
+                    if (this.plugin(nodes[i_1]) != this.plugin(curNodes[i_1])) {
+                        typeChange = true;
+                        break;
+                    }
+                }
+            }
+            if (typeChange) {
+                this.mItemSelector = new Util.UnitedSelector(nodes, this.mOpt.type);
+                if (nodes.length == 1) {
+                    this.mItemSelector.hide();
+                }
+                $("#" + this.mOpt.type + " select")
+                    .multiselect({
+                    multiple: false,
+                    header: false,
+                    minWidth: 250,
+                    height: '100%',
+                    // noneSelectedText: "请选择月份",
+                    selectedList: 1
+                })
+                    .css("padding", "2px 0 2px 4px")
+                    .css("text-align", "left")
+                    .css("font-size", "12px");
+            }
         };
         View.prototype.plugin = function (node) {
             return node.getData().plugin;
@@ -64,15 +111,16 @@ var wlyddqk;
             var dt = this.mDtSec.getDate();
             dt.day = 1;
             this.mCurrentPlugin = this.plugin(node);
-            for (var i = 0; i < this.mNodes.length; ++i) {
-                if (node != this.mNodes[i]) {
-                    this.plugin(this.mNodes[i]).hide();
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                if (this.plugin(node) != this.plugin(this.mNodesAll[i])) {
+                    this.plugin(this.mNodesAll[i]).hide();
                 }
             }
+            this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
-            $("#headertitle")[0].innerHTML = node.getData().value;
-            this.plugin(node).update(dt);
+            $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
+            this.plugin(node).update(dt, this.mCurrentComp);
         };
         return View;
     }());

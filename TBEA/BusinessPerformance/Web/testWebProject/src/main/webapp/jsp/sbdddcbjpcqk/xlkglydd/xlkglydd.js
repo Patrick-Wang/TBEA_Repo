@@ -17,7 +17,7 @@ var sbdddcbjpcqk;
             }
             JQGridAssistantFactory.createTable = function (gridName, type) {
                 var nodeFirst;
-                if (type == wlyddqk.KglyddType.SCDY) {
+                if (type == wlyddqk.WlyddType.SCDY) {
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", true, TextAlign.Center);
                 }
                 else {
@@ -54,24 +54,32 @@ var sbdddcbjpcqk;
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../sbdddcbjpcqk/xlkglydd/update.do", false);
             }
+            XlkglyddView.prototype.isSupported = function (compType) {
+                if (compType == Util.CompanyType.LLGS || compType == Util.CompanyType.XLC || compType == Util.CompanyType.DLGS) {
+                    return true;
+                }
+                return false;
+            };
             XlkglyddView.newInstance = function () {
                 return new XlkglyddView();
             };
-            XlkglyddView.prototype.pluginGetExportUrl = function (date) {
+            XlkglyddView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../sbdddcbjpcqk/xlkglydd/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
-                    type: this.mType
+                    type: this.mType,
+                    companyId: compType
                 });
             };
             XlkglyddView.prototype.option = function () {
                 return this.mOpt;
             };
-            XlkglyddView.prototype.pluginUpdate = function (date) {
+            XlkglyddView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjax.get({
                     type: this.mType,
-                    date: date
+                    date: date,
+                    companyId: compType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -86,8 +94,8 @@ var sbdddcbjpcqk;
             };
             XlkglyddView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("线缆可供履约订单变化情况按生产类别", new wlyddqk.TypeViewProxy(this, wlyddqk.KglyddType.SCLB));
-                view.register("线缆可供履约订单变化情况按生产单元", new wlyddqk.TypeViewProxy(this, wlyddqk.KglyddType.SCDY));
+                view.register("线缆可供履约订单变化情况按生产类别", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCLB));
+                view.register("线缆可供履约订单变化情况按生产单元", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCDY));
             };
             XlkglyddView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";

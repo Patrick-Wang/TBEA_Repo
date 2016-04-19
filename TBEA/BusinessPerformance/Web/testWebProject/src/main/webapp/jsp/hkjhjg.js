@@ -47,7 +47,7 @@ var hkjhjg;
     })(HKJHType || (HKJHType = {}));
     var View = (function () {
         function View() {
-            this.mComp = Util.CompanyType.HB;
+            this.mComp = Util.CompanyType.HBGS;
             this.mDataSet = new Util.Ajax("hkjhjg_update.do");
         }
         View.newInstance = function () {
