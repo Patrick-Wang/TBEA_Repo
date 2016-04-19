@@ -52,7 +52,7 @@ module hkjhjg {
         public static newInstance(): View {
             return new View();
         }
-        private mComp : Util.CompanyType = Util.CompanyType.HB;
+        private mComp : Util.CompanyType = Util.CompanyType.HBGS;
         private mMonth: number;
         private mYear: number;
         private mJGData: Array<string[]>;

@@ -16,7 +16,7 @@
 	<!-- jquery ui blue -->
 	<link rel="stylesheet" type="text/css" media="screen" href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
 	<script src="../jsp/jqgrid/js/jquery-ui-custom.min.js" type="text/javascript"></script>
-	
+
 	<!-- 多选菜单 -->
 	<link rel="stylesheet" type="text/css" href="../jsp/multi-select/jquery.multiselect.css" />
 	<link rel="stylesheet" type="text/css" href="../jsp/multi-select/assets/style.css" />

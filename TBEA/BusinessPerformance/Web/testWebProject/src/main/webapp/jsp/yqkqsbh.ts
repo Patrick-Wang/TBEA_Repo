@@ -27,7 +27,7 @@ module yqkqsbh {
         private mDataSet : Util.Ajax = new Util.Ajax("yqkbhqs_update.do");
         private mTableId : string;
         private mCharId : string;
-        private mComp: Util.CompanyType = Util.CompanyType.SB;
+        private mComp: Util.CompanyType = Util.CompanyType.SBGS;
         public init(echartId: string, tableId: string, args: any[]): void {
             this.mMonth = args[0];
             this.mYear = args[1];

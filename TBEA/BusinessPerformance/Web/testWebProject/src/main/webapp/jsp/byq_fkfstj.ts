@@ -63,7 +63,7 @@ module byq_fkfstj {
         private mMonth: number;
         private mYear: number;
         private mDataSet: Util.Ajax;
-        private mComp: Util.CompanyType = Util.CompanyType.SB;
+        private mComp: Util.CompanyType = Util.CompanyType.SBGS;
         echartIdGW: string;
         echartIdNW: string;
         fdwTableId: string;

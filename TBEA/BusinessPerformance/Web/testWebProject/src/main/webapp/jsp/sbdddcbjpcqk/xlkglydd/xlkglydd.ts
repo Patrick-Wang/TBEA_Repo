@@ -9,11 +9,12 @@ declare var view:wlyddqk.FrameView;
 module sbdddcbjpcqk {
     export module xlkglydd {
         import TextAlign = JQTable.TextAlign;
+        import WlyddType = wlyddqk.WlyddType;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string, type:wlyddqk.KglyddType):JQTable.JQGridAssistant {
+            public static createTable(gridName:string, type:wlyddqk.WlyddType):JQTable.JQGridAssistant {
 
                 let nodeFirst : JQTable.Node;
-                if (type == wlyddqk.KglyddType.SCDY){
+                if (type == wlyddqk.WlyddType.SCDY){
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", true, TextAlign.Center)
                 }else{
                     nodeFirst = new JQTable.Node("产品类别", "sclb", true, TextAlign.Center)
@@ -54,14 +55,22 @@ module sbdddcbjpcqk {
             private mDateSelector:Util.DateSelector;
             private mDt: string;
 
+            isSupported( compType:Util.CompanyType):boolean{
+                if (compType == Util.CompanyType.LLGS || compType == Util.CompanyType.XLC || compType == Util.CompanyType.DLGS){
+                    return true;
+                }
+                return false;
+            }
+
             public static newInstance():XlkglyddView {
                 return new XlkglyddView();
             }
 
-            pluginGetExportUrl(date:string):string {
+            pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
                 return "../sbdddcbjpcqk/xlkglydd/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
-                        type: this.mType
+                        type: this.mType,
+                        companyId:compType
                     });
             }
 
@@ -69,11 +78,12 @@ module sbdddcbjpcqk {
                 return <Option>this.mOpt;
             }
 
-            public pluginUpdate(date:string):void {
+            public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
                 this.mAjax.get({
                         type:this.mType,
-                        date: date
+                        date: date,
+                        companyId:compType
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
@@ -91,8 +101,8 @@ module sbdddcbjpcqk {
 
             public init(opt:Option):void {
                 super.init(opt);
-                view.register("线缆可供履约订单变化情况按生产类别", new wlyddqk.TypeViewProxy(this, wlyddqk.KglyddType.SCLB));
-                view.register("线缆可供履约订单变化情况按生产单元", new wlyddqk.TypeViewProxy(this, wlyddqk.KglyddType.SCDY));
+                view.register("线缆可供履约订单变化情况按生产类别", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCLB));
+                view.register("线缆可供履约订单变化情况按生产单元", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCDY));
             }
 
             private updateTable():void {

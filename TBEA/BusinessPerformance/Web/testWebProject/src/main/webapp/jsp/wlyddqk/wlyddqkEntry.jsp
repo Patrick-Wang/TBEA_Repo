@@ -177,6 +177,7 @@ th.ui-th-ltr {
 		<tr>
 			<td>
 				<div id="dt" style="float: left"></div>
+				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="entryView.updateUI()" />
@@ -202,6 +203,8 @@ th.ui-th-ltr {
     	entryView.init({
             type: "type",
             dt: "dt",
+			comp:"compid",
+			comps : JSON.parse('${nodeData}'),
             date: {
                 month: ${month},
                 year: ${year}

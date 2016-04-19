@@ -4,8 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
+
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -28,6 +31,7 @@ public class XlkglyddEntity extends AbstractReadWriteEntity implements Serializa
 
 	Integer nf;
 	Integer yf;
+	Integer dwid;
 	Integer type;	//	--1 sclx-生产单元   2 sclx-生产类别
 	String sclx;
 	Double yccnl;
@@ -152,5 +156,10 @@ public class XlkglyddEntity extends AbstractReadWriteEntity implements Serializa
 	public void setDnwlyddzl(Double dnwlyddzl) {
 		this.dnwlyddzl = dnwlyddzl;
 	}
-
+	public Integer getDwid() {
+		return dwid;
+	}
+	public void setDwid(Integer dwid) {
+		this.dwid = dwid;
+	}
 }

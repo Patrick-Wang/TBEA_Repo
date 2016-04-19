@@ -11,6 +11,8 @@ module wlyddqk {
     interface Option {
         dt:string;
         type:string;
+        comp:string;
+        comps: Util.IDataNode[];
         date: Util.Date;
     }
 
@@ -22,21 +24,23 @@ module wlyddqk {
         protected mOpt:Option;
         protected mDtSec:Util.DateSelector;
         protected mItemSelector:Util.UnitedSelector;
-        protected mNodes:Util.DataNode[] = [];
+        protected mNodesAll:Util.DataNode[] = [];
         protected mCurrentPlugin:PluginView;
         protected mCurrentDate:Util.Date;
+        protected mCompanySelector:Util.CompanySelector;
+        protected mCurrentComp:Util.CompanyType;
 
         public register(name:string, plugin:PluginView):void {
-            var data:PluginData = {id: this.mNodes.length, value: name, plugin: plugin};
+            var data:PluginData = {id: this.mNodesAll.length, value: name, plugin: plugin};
             var node:Util.DataNode = new Util.DataNode(data);
-            this.mNodes.push(node);
+            this.mNodesAll.push(node);
         }
 
         public unregister(name:string):PluginView {
             var nod:Util.DataNode;
 
-            for (var i = 0; i < this.mNodes.length; ++i) {
-                this.mNodes[i].accept({
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                this.mNodesAll[i].accept({
                     visit: (node:Util.DataNode) => {
                         if (node.getData().value == name) {
                             nod = node;
@@ -52,9 +56,10 @@ module wlyddqk {
 
             return this.plugin(nod);
         }
+
         //不可以起名叫做export 在IE中有冲突
         public exportExcel(elemId:string) {
-            let url:string = this.mCurrentPlugin.getExportUrl(this.mCurrentDate);
+            let url:string = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
             $("#" + elemId)[0].action = url;
             $("#" + elemId)[0].submit();
         }
@@ -66,13 +71,65 @@ module wlyddqk {
                 month: this.mOpt.date.month
             }, this.mOpt.dt);
 
-            this.mItemSelector = new Util.UnitedSelector(this.mNodes, this.mOpt.type);
-            if (this.mNodes.length == 1) {
-                this.mItemSelector.hide();
+            this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
+            if (opt.comps.length == 1) {
+                this.mCompanySelector.hide();
             }
-            this.mNodes = this.mItemSelector.getTopNodes();
+
+            this.mCompanySelector.change((selector:any, depth:number) => {
+                this.updateTypeSelector();
+            });
+
+            this.updateTypeSelector();
             this.updateUI();
         }
+
+
+        private updateTypeSelector() {
+            let type:Util.CompanyType = this.mCompanySelector.getCompany();
+            let nodes = [];
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                if (this.plugin(this.mNodesAll[i]).isSupported(type)) {
+                    nodes.push(this.mNodesAll[i]);
+                }
+            }
+
+            let typeChange = false;
+            let curNodes = [];
+            if (this.mItemSelector != undefined){
+                curNodes = this.mItemSelector.getTopNodes()
+            }
+            if (nodes.length != curNodes.length) {
+                typeChange = true;
+            } else {
+                for (let i = 0; i < nodes.length; ++i) {
+                    if (this.plugin(nodes[i]) != this.plugin(curNodes[i])) {
+                        typeChange = true;
+                        break;
+                    }
+                }
+            }
+
+            if (typeChange){
+                this.mItemSelector = new Util.UnitedSelector(nodes, this.mOpt.type);
+                if (nodes.length == 1) {
+                    this.mItemSelector.hide();
+                }
+                $("#" + this.mOpt.type + " select")
+                    .multiselect({
+                        multiple: false,
+                        header: false,
+                        minWidth: 250,
+                        height: '100%',
+                        // noneSelectedText: "请选择月份",
+                        selectedList: 1
+                    })
+                    .css("padding", "2px 0 2px 4px")
+                    .css("text-align", "left")
+                    .css("font-size", "12px");
+            }
+        }
+
 
         protected plugin(node:Util.DataNode):PluginView {
             return (<PluginData>node.getData()).plugin;
@@ -89,16 +146,17 @@ module wlyddqk {
             dt.day = 1;
 
             this.mCurrentPlugin = this.plugin(node);
-            for (var i = 0; i < this.mNodes.length; ++i) {
-                if (node != this.mNodes[i]) {
-                    this.plugin(this.mNodes[i]).hide();
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                if (this.plugin(node) != this.plugin(this.mNodesAll[i])) {
+                    this.plugin(this.mNodesAll[i]).hide();
                 }
             }
 
+            this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
-            $("#headertitle")[0].innerHTML = node.getData().value;
-            this.plugin(node).update(dt);
+            $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
+            this.plugin(node).update(dt, this.mCurrentComp);
         }
     }
 }

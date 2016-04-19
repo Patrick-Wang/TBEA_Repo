@@ -98,7 +98,7 @@ module cb_wg_byq {
         private mJttbTableId: string;
         private mGstbTableId: string;
         private mFdyTableId: string;
-        private mComp: Util.CompanyType = Util.CompanyType.SB;
+        private mComp: Util.CompanyType = Util.CompanyType.SBGS;
         public init(
             mxTableId: string,
             jttbTableId: string,

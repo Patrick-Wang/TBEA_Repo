@@ -184,17 +184,22 @@ module Util {
         public constructor(data: IDataNode[], ctrlId: string, path?: number[]) {
             this.mRoot.appendAll(DataNode.valueOfAll(data));
             this.mCtrlId = ctrlId + "_us";
+            $("#" + ctrlId).empty();
             $("#" + ctrlId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
             if (Util.isExist(data) && this.mRoot.childCount() > 0) {
                 this.update(path);
             }
         }
 
-        public refresh(){
-            $("#" + this.mCtrlId).empty().append("<tr></tr>");
-            this.mPath = []
+
+        public refresh(data?: IDataNode[],  path?: number[]){
+            if (data != undefined){
+                this.mRoot = new DataNode(null);
+                this.mRoot.appendAll(DataNode.valueOfAll(data));
+            }
+
             if (this.mRoot.childCount() > 0) {
-                this.update(this.mPath);
+                this.update();
             }
         }
 

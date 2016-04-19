@@ -30,7 +30,7 @@ module yqysysfx {
         private mDataSet: Util.Ajax = new Util.Ajax("yqysysfx_update.do");
         private mTableId: string;
         private mEchartId;
-        private mComp: Util.CompanyType = Util.CompanyType.SB;
+        private mComp: Util.CompanyType = Util.CompanyType.SBGS;
         private mMonth: number;
         private mYear: number;
         public init(echartId: string, tableId: string): void {

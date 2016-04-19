@@ -33,7 +33,7 @@ module cqk {
         private mEchartIdSquire: string;
         private mEchartIdLine: string;
         private mYear: number;
-        private mComp: Util.CompanyType = Util.CompanyType.SB;
+        private mComp: Util.CompanyType = Util.CompanyType.SBGS;
         private mLineData: Array<string[]>;
         private mTableData: Array<string[]>;
         private mDataSet : Util.Ajax = new Util.Ajax("cqk_update.do");

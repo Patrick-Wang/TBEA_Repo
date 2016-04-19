@@ -83,7 +83,7 @@ module cb_zx_byq {
         private mGstbTableId: string;
         private mDataSet : Util.Ajax = new Util.Ajax("zx_update.do");
         private mCompanySelector : Util.CompanySelector;
-        private mComp: Util.CompanyType = Util.CompanyType.SB;
+        private mComp: Util.CompanyType = Util.CompanyType.SBGS;
         
         public init(
             mxTableId: string,

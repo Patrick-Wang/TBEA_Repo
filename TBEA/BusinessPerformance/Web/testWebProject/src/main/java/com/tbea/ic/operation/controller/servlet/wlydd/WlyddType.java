@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.controller.servlet.wlydd;
 
 public enum WlyddType{
+
     SCDY(0),
     SCLB(1),
     YLFX_WLYMLSP_BYQ_ZH(11),
@@ -20,4 +21,5 @@ public enum WlyddType{
     {
         return _value;
     }
+
 }

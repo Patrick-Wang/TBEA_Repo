@@ -74,7 +74,7 @@ var stringDescription =  '<div class="container">'
 					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="3"><a style="cursor:pointer">数据审核</a></li>';
 				}
 				
-				stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="20"><a style="cursor:pointer">管报录入</a></li>';
+				//stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="20"><a style="cursor:pointer">管报录入</a></li>';
 				
 				stringDescription += '<li>' + 
 				'<a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">' + userName + '<b class="caret"></b></a>' +

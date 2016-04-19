@@ -10,10 +10,10 @@ module sbdddcbjpcqk {
     export module byqkglydd {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string, type:wlyddqk.KglyddType):JQTable.JQGridAssistant {
+            public static createTable(gridName:string, type:wlyddqk.WlyddType):JQTable.JQGridAssistant {
 
                 let nodeFirst : JQTable.Node;
-                if (type == wlyddqk.KglyddType.SCDY){
+                if (type == wlyddqk.WlyddType.SCDY){
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", true, TextAlign.Center)
                 }else{
                     nodeFirst = new JQTable.Node("产品类别", "sclb", true, TextAlign.Center)
@@ -81,6 +81,12 @@ module sbdddcbjpcqk {
             public static newInstance():ByqkglyddView {
                 return new ByqkglyddView();
             }
+            isSupported( compType:Util.CompanyType):boolean{
+                if (compType == Util.CompanyType.SBGS || compType == Util.CompanyType.HBGS || compType == Util.CompanyType.XBC  || compType == Util.CompanyType.TBGS){
+                    return true;
+                }
+                return false;
+            }
 
             pluginGetExportUrl(date:string):string {
                 return "../sbdddcbjpcqk/byqkglydd/export.do?" + Util.Ajax.toUrlParam({
@@ -115,8 +121,8 @@ module sbdddcbjpcqk {
 
             public init(opt:Option):void {
                 super.init(opt);
-                view.register("变压器可供履约订单变化情况按生产类别", new wlyddqk.TypeViewProxy(this, wlyddqk.KglyddType.SCLB));
-                view.register("变压器可供履约订单变化情况按生产单元", new wlyddqk.TypeViewProxy(this, wlyddqk.KglyddType.SCDY));
+                view.register("变压器可供履约订单变化情况按生产类别", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCLB));
+                view.register("变压器可供履约订单变化情况按生产单元", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCDY));
             }
 
             private updateTable():void {

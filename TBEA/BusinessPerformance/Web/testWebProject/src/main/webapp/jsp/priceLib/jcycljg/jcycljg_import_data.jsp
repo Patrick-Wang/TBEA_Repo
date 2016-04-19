@@ -3,23 +3,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<base href="${pageContext.request.contextPath}/" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- jquery -->
-<script type="text/javascript" src="js/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/webuploader.css">
 <link rel="stylesheet" type="text/css"
-	href="css/bootstrap-theme.min.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="css/syntax.css">
-<link rel="stylesheet" type="text/css" href="css/styleWebuploader.css">
+	href="${pageContext.request.contextPath}/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/syntax.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styleWebuploader.css">
 
 
 
-
-<script type="text/javascript" src="js/webuploader/webuploader.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/webuploader/webuploader.js"></script>
 
 <style type="text/css">
 .wu-example {
@@ -51,7 +49,7 @@
 						$list = $('#thelist');
 						uploader = WebUploader.create({
 							// swf文件路径
-							swf : 'js/webuploader/Uploader.swf',
+							swf : '${pageContext.request.contextPath}/js/webuploader/Uploader.swf',
 
 							// 文件接收服务端。
 							server : 'jcycljg/import.do',

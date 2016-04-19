@@ -12,9 +12,9 @@ module sbdddcbjpcqk {
     export module xlkglyddEntry {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string, type:wlyddqk.KglyddType, readOnly:boolean, cplb:string[]):JQTable.JQGridAssistant {
+            public static createTable(gridName:string, type:wlyddqk.WlyddType, readOnly:boolean, cplb:string[]):JQTable.JQGridAssistant {
                 let nodeFirst:JQTable.Node;
-                if (type == wlyddqk.KglyddType.SCDY) {
+                if (type == wlyddqk.WlyddType.SCDY) {
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", readOnly, TextAlign.Center, 0, "text", undefined, false);
                 } else {
                     let vals:string = "";
@@ -74,7 +74,14 @@ module sbdddcbjpcqk {
                 return <Option>this.mOpt;
             }
 
-            public pluginSave(dt:string):void {
+            isSupported( compType:Util.CompanyType):boolean{
+                if (compType == Util.CompanyType.LLGS || compType == Util.CompanyType.XLC || compType == Util.CompanyType.DLGS){
+                    return true;
+                }
+                return false;
+            }
+
+            public pluginSave(dt:string, compType:Util.CompanyType):void {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -87,10 +94,11 @@ module sbdddcbjpcqk {
                 this.mAjaxSave.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    type: this.mType
+                    type: this.mType,
+                    companyId:compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        this.pluginUpdate(dt);
+                        this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("保存 成功");
                     } else {
                         Util.MessageBox.tip(resp.message);
@@ -98,7 +106,7 @@ module sbdddcbjpcqk {
                 });
             }
 
-            public  pluginSubmit(dt:string):void {
+            public  pluginSubmit(dt:string, compType:Util.CompanyType):void {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -115,10 +123,11 @@ module sbdddcbjpcqk {
                 this.mAjaxSubmit.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    type: this.mType
+                    type: this.mType,
+                    companyId:compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        this.pluginUpdate(dt);
+                        this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("提交 成功");
                     } else {
                         Util.MessageBox.tip(resp.message);
@@ -126,11 +135,12 @@ module sbdddcbjpcqk {
                 });
             }
 
-            public pluginUpdate(date:string):void {
+            public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
                 this.mAjaxUpdate.get({
                         type: this.mType,
-                        date: date
+                        date: date,
+                        companyId:compType
                     })
                     .then((jsonData:wlyddqk.EntryLyddData) => {
                         this.mData = jsonData;
@@ -149,8 +159,8 @@ module sbdddcbjpcqk {
 
             public init(opt:Option):void {
                 super.init(opt);
-                entryView.register("线缆可供履约订单变化情况按生产类别", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.KglyddType.SCLB));
-                entryView.register("线缆可供履约订单变化情况按生产单元", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.KglyddType.SCDY));
+                entryView.register("线缆可供履约订单变化情况按生产类别", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCLB));
+                entryView.register("线缆可供履约订单变化情况按生产单元", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCDY));
                 $.extend($.jgrid.edit, {
                         bSubmit: "确定"
                  });
