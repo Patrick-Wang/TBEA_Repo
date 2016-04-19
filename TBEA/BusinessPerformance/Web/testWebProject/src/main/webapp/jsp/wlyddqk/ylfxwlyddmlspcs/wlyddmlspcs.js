@@ -49,7 +49,8 @@ var ylfxwlyddmlspcs;
             WLYDDMLSPCSView.prototype.pluginGetExportUrl = function (date, cpType) {
                 return "wlyddmlspcs/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
-                    companyId: cpType
+                    companyId: cpType,
+                    type: this.mType
                 });
             };
             WLYDDMLSPCSView.prototype.option = function () {
@@ -76,11 +77,11 @@ var ylfxwlyddmlspcs;
             };
             WLYDDMLSPCSView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("变压器未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddqkType.YLFX_WLYMLSP_BYQ_ZH));
-                view.register("变压器未履约订单毛利水平测算-电压等级", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddqkType.YLFX_WLYMLSP_BYQ_DYDJ));
-                view.register("变压器未履约订单毛利水平测算-产品分类", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddqkType.YLFX_WLYMLSP_BYQ_CPFL));
-                view.register("线缆未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddqkType.YLFX_WLYMLSP_XL_ZH));
-                view.register("线缆未履约订单毛利水平测算-产品分类", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddqkType.YLFX_WLYMLSP_XL_CPFL));
+                view.register("变压器未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
+                view.register("变压器未履约订单毛利水平测算-电压等级", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ));
+                view.register("变压器未履约订单毛利水平测算-产品分类", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL));
+                view.register("线缆未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
+                view.register("线缆未履约订单毛利水平测算-产品分类", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
             };
             WLYDDMLSPCSView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
@@ -103,7 +104,7 @@ var ylfxwlyddmlspcs;
                 }));
             };
             return WLYDDMLSPCSView;
-        }(BasePluginView));
+        }(wlyddqk.BasePluginView));
         wlyddmlspcs.pluginView = WLYDDMLSPCSView.newInstance();
     })(wlyddmlspcs = ylfxwlyddmlspcs.wlyddmlspcs || (ylfxwlyddmlspcs.wlyddmlspcs = {}));
 })(ylfxwlyddmlspcs || (ylfxwlyddmlspcs = {}));

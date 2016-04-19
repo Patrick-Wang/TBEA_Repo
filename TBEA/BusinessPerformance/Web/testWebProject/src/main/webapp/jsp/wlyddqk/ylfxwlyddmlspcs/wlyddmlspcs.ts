@@ -37,11 +37,11 @@ module  ylfxwlyddmlspcs {
             }
         }
 
-        interface Option extends PluginOption {
+        interface Option extends wlyddqk.PluginOption {
             tb:string;
         }
 
-        class WLYDDMLSPCSView extends BasePluginView {
+        class WLYDDMLSPCSView extends wlyddqk.BasePluginView {
             private mData:Array<string[]>;
             private mAjax:Util.Ajax = new Util.Ajax("wlyddmlspcs/update.do", false);
             private mDateSelector:Util.DateSelector;
@@ -53,7 +53,8 @@ module  ylfxwlyddmlspcs {
             pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
                 return "wlyddmlspcs/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
-                        companyId: cpType
+                        companyId: cpType,
+                        type:this.mType
                     });
             }
             private option():Option {
@@ -83,11 +84,11 @@ module  ylfxwlyddmlspcs {
 
             public init(opt:Option):void {
                 super.init(opt);
-                view.register("变压器未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddqkType.YLFX_WLYMLSP_BYQ_ZH));
-                view.register("变压器未履约订单毛利水平测算-电压等级", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddqkType.YLFX_WLYMLSP_BYQ_DYDJ));
-                view.register("变压器未履约订单毛利水平测算-产品分类", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddqkType.YLFX_WLYMLSP_BYQ_CPFL));
-                view.register("线缆未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddqkType.YLFX_WLYMLSP_XL_ZH));
-                view.register("线缆未履约订单毛利水平测算-产品分类", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddqkType.YLFX_WLYMLSP_XL_CPFL));
+                view.register("变压器未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
+                view.register("变压器未履约订单毛利水平测算-电压等级", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ));
+                view.register("变压器未履约订单毛利水平测算-产品分类", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL));
+                view.register("线缆未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
+                view.register("线缆未履约订单毛利水平测算-产品分类", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
 
             }
 
