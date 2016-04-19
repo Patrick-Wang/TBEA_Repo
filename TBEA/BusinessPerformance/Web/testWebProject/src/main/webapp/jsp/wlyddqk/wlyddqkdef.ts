@@ -3,9 +3,14 @@
 /// <reference path="../../js/jquery/jquery.d.ts" />
 module wlyddqk {
 
-    export enum KglyddType{
+    export enum WlyddqkType{
         SCDY,
-        SCLB
+        SCLB,
+        YLFX_WLYMLSP_BYQ_ZH,
+        YLFX_WLYMLSP_BYQ_DYDJ,
+        YLFX_WLYMLSP_BYQ_CPFL,
+        YLFX_WLYMLSP_XL_ZH,
+        YLFX_WLYMLSP_XL_CPFL
     }
 
     export interface EntryLyddData{
@@ -35,12 +40,12 @@ module wlyddqk {
     export abstract class BasePluginView implements PluginView {
 
         mOpt:PluginOption;
-        mType : KglyddType;
+        mType : WlyddqkType;
         public init(opt:PluginOption):void {
             this.mOpt = opt;
         }
 
-        public setType(type : KglyddType):void{
+        public setType(type : WlyddqkType):void{
             this.mType = type;
         }
 
@@ -75,9 +80,9 @@ module wlyddqk {
 
     export class TypeViewProxy implements PluginView{
         mStub : BasePluginView;
-        mType : KglyddType;
+        mType : WlyddqkType;
 
-        constructor(stub : BasePluginView,  type : KglyddType){
+        constructor(stub : BasePluginView,  type : WlyddqkType){
             this.mStub = stub;
             this.mType = type;
         }
@@ -126,12 +131,12 @@ module wlyddqk {
             this.mReadOnlyChange = callBack;
         }
         mOpt:PluginOption;
-        mType : KglyddType;
+        mType : WlyddqkType;
         public init(opt:PluginOption):void {
             this.mOpt = opt;
         }
 
-        public setType(type : KglyddType):void{
+        public setType(type : WlyddqkType):void{
             this.mType = type;
         }
         public hide():void {
@@ -175,9 +180,9 @@ module wlyddqk {
 
     export class TypeEntryViewProxy implements EntryPluginView{
         mStub : BaseEntryPluginView;
-        mType : KglyddType;
+        mType : WlyddqkType;
 
-        constructor(stub : BaseEntryPluginView,  type : KglyddType){
+        constructor(stub : BaseEntryPluginView,  type : WlyddqkType){
             this.mStub = stub;
             this.mType = type;
         }

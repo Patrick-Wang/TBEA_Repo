@@ -3,11 +3,16 @@
 /// <reference path="../../js/jquery/jquery.d.ts" />
 var wlyddqk;
 (function (wlyddqk) {
-    (function (KglyddType) {
-        KglyddType[KglyddType["SCDY"] = 0] = "SCDY";
-        KglyddType[KglyddType["SCLB"] = 1] = "SCLB";
-    })(wlyddqk.KglyddType || (wlyddqk.KglyddType = {}));
-    var KglyddType = wlyddqk.KglyddType;
+    (function (WlyddqkType) {
+        WlyddqkType[WlyddqkType["SCDY"] = 0] = "SCDY";
+        WlyddqkType[WlyddqkType["SCLB"] = 1] = "SCLB";
+        WlyddqkType[WlyddqkType["YLFX_WLYMLSP_BYQ_ZH"] = 2] = "YLFX_WLYMLSP_BYQ_ZH";
+        WlyddqkType[WlyddqkType["YLFX_WLYMLSP_BYQ_DYDJ"] = 3] = "YLFX_WLYMLSP_BYQ_DYDJ";
+        WlyddqkType[WlyddqkType["YLFX_WLYMLSP_BYQ_CPFL"] = 4] = "YLFX_WLYMLSP_BYQ_CPFL";
+        WlyddqkType[WlyddqkType["YLFX_WLYMLSP_XL_ZH"] = 5] = "YLFX_WLYMLSP_XL_ZH";
+        WlyddqkType[WlyddqkType["YLFX_WLYMLSP_XL_CPFL"] = 6] = "YLFX_WLYMLSP_XL_CPFL";
+    })(wlyddqk.WlyddqkType || (wlyddqk.WlyddqkType = {}));
+    var WlyddqkType = wlyddqk.WlyddqkType;
     var BasePluginView = (function () {
         function BasePluginView() {
         }
