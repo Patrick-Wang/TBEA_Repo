@@ -28,7 +28,8 @@ public class ExtendAuthority extends AbstractReadWriteEntity implements Serializ
 		JYAnalysisLookup,
 		YSZKDialyLookup,
 		XJLDialyLookup,
-		JYEntryLookup
+		JYEntryLookup,
+		PriceLib
 	}
 	
 	private static final long serialVersionUID = 1L;

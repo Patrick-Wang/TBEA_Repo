@@ -24,7 +24,10 @@ import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.DailyReportService;
 import com.tbea.ic.operation.service.entry.EntryService;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.login.LoginService;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgService;
+import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgServiceImpl;
 
 @Controller
 @RequestMapping(value = "Login")
@@ -47,6 +50,9 @@ public class LoginServlet {
 	@Autowired
 	private DailyReportService dailyReportService;
 
+	@Autowired
+	ExtendAuthorityService extendAuthService;
+	
 	@RequestMapping(value = "ssoLogin.do")
 	public ModelAndView ssoLogin(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -151,6 +157,8 @@ public class LoginServlet {
 		
 		session.setAttribute("JYEntryLookup",
 				dailyReportService.hasJYEntryLookupAuthority(account));
+		
+		session.setAttribute("PriceLibAuth", extendAuthService.hasPriceLibAuthority(account));
 
 		session.setAttribute("isByq", account.getId() == 9
 				|| account.getId() == 25 || account.getId() == 33);
@@ -216,11 +224,13 @@ public class LoginServlet {
 		map.put("SbdAuth", currentSession.getAttribute("SbdAuth"));
 
 		map.put("MarketAuth", currentSession.getAttribute("MarketAuth"));
+		
+		map.put("PriceLibAuth", currentSession.getAttribute("PriceLibAuth"));
 
 		map.put("userName", account.getName());
 
 		map.put("admin", "admin".equals(account.getName()));
-
+		
 		return new ModelAndView("index", map);
 
 	}

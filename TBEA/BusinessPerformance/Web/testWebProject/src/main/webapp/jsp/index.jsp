@@ -123,10 +123,11 @@
 										style="color: rgb(62, 152, 197);">投标保证金</a></li>
 --%>
 								</c:if>
-								
+								<c:if test="${PriceLibAuth}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#jgkxx"
 									style="color: rgb(62, 152, 197);">价格库数据汇总</a></li>
+								</c:if>
 								<!--<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#jygbxx"
 									style="color: rgb(62, 152, 197);">经营管报汇总</a></li>-->
@@ -155,11 +156,11 @@
 										class="ec-icon ec-icon-force"></i> <a href="#inputPrediction"
 										style="color: rgb(62, 152, 197);">经营分析录入</a></li>
 								</c:if>
-								
+								<c:if test="${PriceLibAuth}">
 								<li style="background-color: transparent"><i
 									class="ec-icon ec-icon-force"></i> <a href="#inputPriceLib"
 									style="color: rgb(62, 152, 197);">价格库数据录入</a></li>
-									
+								</c:if>
 								<!--<li style="background-color: transparent"><i
 									class="ec-icon ec-icon-force"></i> <a href="#inputBusinessReports"
 									style="color: rgb(62, 152, 197);">经营管报录入</a></li>-->
@@ -209,7 +210,9 @@
 			<c:otherwise>
 				<div id="IndexSummary" class="col-md-10">
 					<%@include file="index_IndexSummary.jsp"%>
+					<c:if test="${PriceLibAuth}">
 					<%@include file="index_IndexPriceLib.jsp"%>
+					</c:if>
 					<!--  <%@include file="index_IndexBusinessReports.jsp"%>-->
 				</div>
 				<div id="InputList" class="col-md-10" style="display: none">
