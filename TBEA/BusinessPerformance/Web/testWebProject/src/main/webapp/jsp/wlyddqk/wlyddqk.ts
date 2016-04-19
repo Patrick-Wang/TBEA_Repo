@@ -115,6 +115,18 @@ module wlyddqk {
                 if (nodes.length == 1) {
                     this.mItemSelector.hide();
                 }
+                $("#" + this.mOpt.type + " select")
+                    .multiselect({
+                        multiple: false,
+                        header: false,
+                        minWidth: 250,
+                        height: '100%',
+                        // noneSelectedText: "请选择月份",
+                        selectedList: 1
+                    })
+                    .css("padding", "2px 0 2px 4px")
+                    .css("text-align", "left")
+                    .css("font-size", "12px");
             }
         }
 

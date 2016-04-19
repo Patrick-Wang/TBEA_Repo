@@ -191,8 +191,13 @@ module Util {
             }
         }
 
-        public refresh(){
-            $("#" + this.mCtrlId).empty().append("<tr></tr>");
+
+        public refresh(data?: IDataNode[],  path?: number[]){
+            if (data != undefined){
+                this.mRoot = new DataNode(null);
+                this.mRoot.appendAll(DataNode.valueOfAll(data));
+            }
+
             if (this.mRoot.childCount() > 0) {
                 this.update();
             }

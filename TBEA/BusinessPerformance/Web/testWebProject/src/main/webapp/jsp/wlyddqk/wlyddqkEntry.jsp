@@ -183,7 +183,7 @@ th.ui-th-ltr {
 				onclick="entryView.updateUI()" />
 			</td>
 		</tr> 
-		<tr> 
+		<tr>
 			<td>
 				<%@include file="../sbdddcbjpcqk/byqkglydd/byqkglyddEntry.jsp"%>
 				<%@include file="../sbdddcbjpcqk/xlkglydd/xlkglyddEntry.jsp"%>
