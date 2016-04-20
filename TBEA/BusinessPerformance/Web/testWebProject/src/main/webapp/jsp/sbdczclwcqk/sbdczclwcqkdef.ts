@@ -1,15 +1,22 @@
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../../../js/jquery/jquery.d.ts" />
-/// <reference path="../route/route.ts" />
-///<reference path="../../unitedSelector.ts"/>
-module framework.basic {
+/// <reference path="../util.ts" />
+/// <reference path="../dateSelector.ts" />
+/// <reference path="../../js/jquery/jquery.d.ts" />
+module sbdczclwcqk {
 
-    export module FrameEvent{
-        let eventBase = 9988392;
-        export let FE_INIT_EVENT = eventBase++;
-        export let FE_REGISTER = eventBase++;
-        export let FE_EXPORT_EXCEL = eventBase++;
+
+    export enum SbdczclwcqkType{
+        SCDY,
+        SCLB,
+        YLFX_WLYMLSP_BYQ_ZH = 11,
+        YLFX_WLYMLSP_BYQ_DYDJ = 12,
+        YLFX_WLYMLSP_BYQ_CPFL = 13,
+        YLFX_WLYMLSP_XL_ZH = 14,
+        YLFX_WLYMLSP_XL_CPFL = 15
+    }
+
+    export interface EntryLyddData{
+        cplb:string[];
+        statusData : StatusData;
     }
 
     export interface PluginView {
@@ -21,85 +28,28 @@ module framework.basic {
         isSupported( compType:Util.CompanyType):boolean;
     }
 
+    export interface FrameView {
+        register(name:string, plugin:PluginView):void;
+        unregister(name:string) :PluginView;
+        exportExcel(elemId:string):void;
+    }
+
     export interface PluginOption {
         host:string;
         tbarea:string;
     }
 
-    export abstract class BasicEndpoint implements framework.route.Endpoint{
-        constructor(){
-            framework.route.router.register(this);
-        }
-
-        onEvent(e:framework.route.Event):any{
-            switch (e.id){
-                case FrameEvent.FE_INIT_EVENT:
-                    this.onInitialize(e.data);
-                    break;
-            }
-        }
-
-        abstract getId():number;
-        abstract onInitialize(opt:any):void;
-    }
-
-
-    interface FrameOption {
-        dt:string;
-        type:string;
-        comp:string;
-        comps: Util.IDataNode[];
-        date: Util.Date;
-    }
-
-
-    export abstract class FrameView extends BasicEndpoint {
-        static FRAME_ID:number = 0;
-        getId():number{
-            return FrameView.FRAME_ID;
-        }
-        onInitialize(opt:any):void{
-            this.init(<FrameOption>opt);
-        }
-        onEvent(e:framework.route.Event):any{
-            super.onEvent(e);
-            switch (e.id){
-                case FrameEvent.FE_REGISTER:
-                    this.register(e.data.name, e.data.pluginView);
-                    break;
-                case FrameEvent.FE_EXPORT_EXCEL:
-                    this.exportExcel(e.data);
-                    break;
-            }
-        }
-
-        abstract init(opt:FrameOption):void;
-        abstract register(name:string, plugin:PluginView):void;
-        abstract unregister(name:string) :PluginView;
-        abstract exportExcel(elemId:string):void;
-    }
-
-
-
-    export abstract class BasePluginView implements PluginView, framework.route.Endpoint {
-
-        static INIT_EVENT = 9988392;
-        constructor(){
-            framework.route.router.register(this);
-        }
-
-        onEvent(e:framework.route.Event):any{
-            switch (e.id){
-                case BasePluginView.INIT_EVENT:
-                    this.init(e.data);
-                    break;
-            }
-        }
+    export abstract class BasePluginView implements PluginView {
 
         mOpt:PluginOption;
 
-        private init(opt:PluginOption):void {
+        mType : WgcpqkType;
+        public init(opt:PluginOption):void {
             this.mOpt = opt;
+        }
+
+        public setType(type : WgcpqkType):void{
+            this.mType = type;
         }
 
         abstract refresh():void;
@@ -132,8 +82,44 @@ module framework.basic {
             return true;
         }
 
-        abstract getId():number;
         abstract  pluginGetExportUrl(date:string, compType:Util.CompanyType):string;
+    }
+
+    export class TypeViewProxy implements PluginView{
+        mStub : BasePluginView;
+
+        mType : WgcpqkType;
+
+        constructor(stub : BasePluginView,  type : WgcpqkType){
+            this.mStub = stub;
+            this.mType = type;
+        }
+
+        hide():void {
+            this.mStub.hide();
+        }
+
+        show():void {
+            this.mStub.show();
+        }
+
+        isSupported( compType:Util.CompanyType):boolean{
+            this.mStub.setType(this.mType);
+            return this.mStub.isSupported(compType);
+        }
+
+        update(date:Util.Date, compType:Util.CompanyType):void {
+            this.mStub.setType(this.mType);
+            this.mStub.update(date, compType);
+        }
+
+        refresh():void {
+            this.mStub.refresh();
+        }
+
+        getExportUrl(date:Util.Date, compType:Util.CompanyType):string {
+            return this.mStub.getExportUrl(date, compType);
+        }
     }
 
     export interface EntryPluginView {
@@ -160,13 +146,13 @@ module framework.basic {
         }
         mOpt:PluginOption;
 
-        mType : WlyddType;
+        mType : WgcpqkType;
         public init(opt:PluginOption):void {
             this.mOpt = opt;
         }
 
 
-        public setType(type : WlyddType):void{
+        public setType(type : WgcpqkType):void{
             this.mType = type;
         }
         public hide():void {
@@ -215,9 +201,9 @@ module framework.basic {
     export class TypeEntryViewProxy implements EntryPluginView{
         mStub : BaseEntryPluginView;
 
-        mType : WlyddType;
+        mType : WgcpqkType;
 
-        constructor(stub : BaseEntryPluginView,  type : WlyddType){
+        constructor(stub : BaseEntryPluginView,  type : WgcpqkType){
 
             this.mStub = stub;
             this.mType = type;

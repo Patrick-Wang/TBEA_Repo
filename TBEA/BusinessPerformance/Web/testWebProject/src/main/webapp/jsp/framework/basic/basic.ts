@@ -1,12 +1,14 @@
-/// <reference path="../jqgrid/jqassist.ts" />
-/// <reference path="../util.ts" />
-/// <reference path="../dateSelector.ts" />
-/// <reference path="wlyddqkdef.ts" />
-/// <reference path="../unitedSelector.ts"/>
-///<reference path="../messageBox.ts"/>
-///<reference path="../companySelector.ts"/>
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../../unitedSelector.ts"/>
+///<reference path="../../messageBox.ts"/>
+///<reference path="../../companySelector.ts"/>
+///<reference path="basicdef.ts"/>
+///<reference path="../route/route.ts"/>
+module framework.basic {
 
-module wlyddqk {
+    import router = framework.route.router;
 
     interface Option {
         dt:string;
@@ -17,40 +19,47 @@ module wlyddqk {
     }
 
     interface PluginData extends Util.IData {
-        plugin : EntryPluginView;
+        plugin : number;
     }
 
-    export class EntryView implements EntryFrameView {
-
+    export class BasicFrameView extends FrameView {
         protected mOpt:Option;
         protected mDtSec:Util.DateSelector;
         protected mItemSelector:Util.UnitedSelector;
         protected mNodesAll:Util.DataNode[] = [];
-        protected mCurrentPlugin:EntryPluginView;
+        protected mCurrentPlugin:number;
         protected mCurrentDate:Util.Date;
         protected mCompanySelector:Util.CompanySelector;
         protected mCurrentComp:Util.CompanyType;
 
-        public register(name:string, plugin:EntryPluginView):void {
+        protected register(name:string, plugin:number):void {
             var data:PluginData = {id: this.mNodesAll.length, value: name, plugin: plugin};
             var node:Util.DataNode = new Util.DataNode(data);
             this.mNodesAll.push(node);
-            plugin.setOnReadOnlyChangeListener((isReadOnly:boolean)=> {
-                if (isReadOnly) {
-                    $("#gbsv").hide();
-                    $("#gbsm").hide();
-                } else {
-                    $("#gbsv").show();
-                    $("#gbsm").show();
+        }
+
+        protected unregister(name:string):number {
+            var nod:Util.DataNode;
+
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                this.mNodesAll[i].accept({
+                    visit: (node:Util.DataNode) => {
+                        if (node.getData().value == name) {
+                            nod = node;
+                            return true;
+                        }
+                        return false;
+                    }
+                })
+                if (nod != undefined) {
+                    break;
                 }
-            });
+            }
+
+            return this.plugin(nod);
         }
 
-        unregister(name:string):EntryPluginView {
-            return undefined;
-        }
-
-        public init(opt:Option):void {
+        protected init(opt:Option):void {
             this.mOpt = opt;
             this.mDtSec = new Util.DateSelector({year: this.mOpt.date.year - 3, month: 1}, {
                 year: this.mOpt.date.year,
@@ -70,20 +79,28 @@ module wlyddqk {
             this.updateUI();
         }
 
-        protected updateTypeSelector(width : number = 285) {
+        onEvent(e:framework.route.Event):any {
+            switch (e.id) {
+                case FrameEvent.FE_UPDATE:
+                    this.updateUI();
+                    break;
+            }
+        }
+
+        protected updateTypeSelector(width:number = 285) {
             let type:Util.CompanyType = this.mCompanySelector.getCompany();
             let nodes = [];
             for (var i = 0; i < this.mNodesAll.length; ++i) {
-                if (this.plugin(this.mNodesAll[i]).isSupported(type)) {
+                if (router.to(this.plugin(this.mNodesAll[i])).send(FrameEvent.FE_IS_COMPANY_SUPPORTED, {type:type})) {
                     nodes.push(this.mNodesAll[i]);
                 }
             }
 
+            let typeChange = false;
             let curNodes = [];
-            if (this.mItemSelector != undefined) {
+            if (this.mItemSelector != undefined){
                 curNodes = this.mItemSelector.getTopNodes()
             }
-            let typeChange = false;
             if (nodes.length != curNodes.length) {
                 typeChange = true;
             } else {
@@ -95,7 +112,7 @@ module wlyddqk {
                 }
             }
 
-            if (typeChange) {
+            if (typeChange){
                 this.mItemSelector = new Util.UnitedSelector(nodes, this.mOpt.type);
                 if (nodes.length == 1) {
                     this.mItemSelector.hide();
@@ -112,45 +129,32 @@ module wlyddqk {
                     .css("padding", "2px 0 2px 4px")
                     .css("text-align", "left")
                     .css("font-size", "12px");
-
             }
         }
 
-        protected plugin(node:Util.DataNode):EntryPluginView {
+
+        protected plugin(node:Util.DataNode):number {
             return (<PluginData>node.getData()).plugin;
         }
 
-        protected getActiveNode():Util.DataNode {
-            return this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-        }
-
-        public updateUI() {
+        protected updateUI() {
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
 
             let dt:Util.Date = this.mDtSec.getDate();
             dt.day = 1;
 
             this.mCurrentPlugin = this.plugin(node);
-            for (var i = 0; i < this.mNodesAll.length; ++i) {
-                if (this.plugin(node) != this.plugin(this.mNodesAll[i])) {
-                    this.plugin(this.mNodesAll[i]).hide();
-                }
-            }
+            router.broadcast(FrameEvent.FE_HIDE);
+
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
-            this.mCurrentPlugin.show();
-            $("#headertitle")[0].innerHTML = node.getData().value;
-            this.plugin(node).update(dt, this.mCurrentComp);
-        }
-
-        public submit() {
-            this.plugin(this.getActiveNode()).submit(this.mCurrentDate, this.mCurrentComp);
-        }
-
-        public save() {
-            this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
+            router.to(this.mCurrentPlugin).send(FrameEvent.FE_SHOW);
+            $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
+            router.to(this.mCurrentPlugin).send(FrameEvent.FE_UPDATE, {
+                date:dt,
+                compType:this.mCurrentComp
+            });
         }
     }
 }
 
-var entryView:wlyddqk.EntryView = new wlyddqk.EntryView();

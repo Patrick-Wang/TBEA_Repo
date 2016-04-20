@@ -1,23 +1,33 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
 /// <reference path="../../unitedSelector.ts"/>
 ///<reference path="../../messageBox.ts"/>
 ///<reference path="../../companySelector.ts"/>
+///<reference path="basicdef.ts"/>
+///<reference path="../route/route.ts"/>
 var framework;
 (function (framework) {
     var basic;
     (function (basic) {
-        var View = (function () {
-            function View() {
+        var router = framework.route.router;
+        var BasicFrameView = (function (_super) {
+            __extends(BasicFrameView, _super);
+            function BasicFrameView() {
+                _super.apply(this, arguments);
                 this.mNodesAll = [];
             }
-            View.prototype.register = function (name, plugin) {
+            BasicFrameView.prototype.register = function (name, plugin) {
                 var data = { id: this.mNodesAll.length, value: name, plugin: plugin };
                 var node = new Util.DataNode(data);
                 this.mNodesAll.push(node);
             };
-            View.prototype.unregister = function (name) {
+            BasicFrameView.prototype.unregister = function (name) {
                 var nod;
                 for (var i = 0; i < this.mNodesAll.length; ++i) {
                     this.mNodesAll[i].accept({
@@ -35,13 +45,7 @@ var framework;
                 }
                 return this.plugin(nod);
             };
-            //不可以起名叫做export 在IE中有冲突
-            View.prototype.exportExcel = function (elemId) {
-                var url = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
-                $("#" + elemId)[0].action = url;
-                $("#" + elemId)[0].submit();
-            };
-            View.prototype.init = function (opt) {
+            BasicFrameView.prototype.init = function (opt) {
                 var _this = this;
                 this.mOpt = opt;
                 this.mDtSec = new Util.DateSelector({ year: this.mOpt.date.year - 3, month: 1 }, {
@@ -58,12 +62,19 @@ var framework;
                 this.updateTypeSelector();
                 this.updateUI();
             };
-            View.prototype.updateTypeSelector = function (width) {
+            BasicFrameView.prototype.onEvent = function (e) {
+                switch (e.id) {
+                    case basic.FrameEvent.FE_UPDATE:
+                        this.updateUI();
+                        break;
+                }
+            };
+            BasicFrameView.prototype.updateTypeSelector = function (width) {
                 if (width === void 0) { width = 285; }
                 var type = this.mCompanySelector.getCompany();
                 var nodes = [];
                 for (var i = 0; i < this.mNodesAll.length; ++i) {
-                    if (this.plugin(this.mNodesAll[i]).isSupported(type)) {
+                    if (router.to(this.plugin(this.mNodesAll[i])).send(basic.FrameEvent.FE_IS_COMPANY_SUPPORTED, { type: type })) {
                         nodes.push(this.mNodesAll[i]);
                     }
                 }
@@ -102,31 +113,26 @@ var framework;
                         .css("font-size", "12px");
                 }
             };
-            View.prototype.plugin = function (node) {
+            BasicFrameView.prototype.plugin = function (node) {
                 return node.getData().plugin;
             };
-            View.prototype.getActiveNode = function () {
-                return this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            };
-            View.prototype.updateUI = function () {
+            BasicFrameView.prototype.updateUI = function () {
                 var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
                 var dt = this.mDtSec.getDate();
                 dt.day = 1;
                 this.mCurrentPlugin = this.plugin(node);
-                for (var i = 0; i < this.mNodesAll.length; ++i) {
-                    if (this.plugin(node) != this.plugin(this.mNodesAll[i])) {
-                        this.plugin(this.mNodesAll[i]).hide();
-                    }
-                }
+                router.broadcast(basic.FrameEvent.FE_HIDE);
                 this.mCurrentComp = this.mCompanySelector.getCompany();
                 this.mCurrentDate = dt;
-                this.mCurrentPlugin.show();
+                router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_SHOW);
                 $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
-                this.plugin(node).update(dt, this.mCurrentComp);
+                router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_UPDATE, {
+                    date: dt,
+                    compType: this.mCurrentComp
+                });
             };
-            return View;
-        })();
-        basic.View = View;
+            return BasicFrameView;
+        })(basic.FrameView);
+        basic.BasicFrameView = BasicFrameView;
     })(basic = framework.basic || (framework.basic = {}));
 })(framework || (framework = {}));
-var view = new wlyddqk.View();

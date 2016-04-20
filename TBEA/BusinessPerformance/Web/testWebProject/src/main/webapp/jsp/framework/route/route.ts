@@ -52,7 +52,7 @@ module framework.route {
             return this;
         }
 
-        public broadcast(id:number, data:any):any {
+        public broadcast(id:number, data?:any):any {
             if (this.mCurEvent != undefined) {
                 for (let i in this.mEndpoints) {
                     let event = {
@@ -69,7 +69,7 @@ module framework.route {
             return Router.FAILED;
         }
 
-        public send(id:number, data:any):any {
+        public send(id:number, data?:any):any {
             if (this.mCurEvent != undefined) {
                 this.mCurEvent.id = id;
                 this.mCurEvent.data = data;
