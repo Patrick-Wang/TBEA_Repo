@@ -1,26 +1,26 @@
 /// <reference path="vector.ts" />
 
-declare var $: any;
+declare var $:any;
 
-(function() {
-    $.fn.jqGrid.setGroupHeaders = function(o) {
+(function () {
+    $.fn.jqGrid.setGroupHeaders = function (o) {
         o = $.extend({
             useColSpanStyle: false,
             depth: 2,
             groupHeaders: []
         }, o || {});
         return this
-            .each(function() {
+            .each(function () {
                 this.p.groupHeader = o;
                 var ts = this, i, cmi, skip = 0, $tr, $colHeader, th, $th, thStyle, iCol, cghi,
-                    // startColumnName,
+                // startColumnName,
                     numberOfColumns, titleText, cVisibleColumns, colModel = ts.p.colModel, cml = colModel.length, ths = ts.grid.headers, $htable = $(
-                        "table.ui-jqgrid-htable", ts.grid.hDiv), $trLabels = $htable
-                            .children("thead").children(
-                                "tr.ui-jqgrid-labels:last").addClass(
-                                    "jqg-second-row-header"), $thead = $htable
-                                        .children("thead"), $theadInTable, $firstHeaderRow = $htable
-                                            .find(".jqg-first-row-header");
+                    "table.ui-jqgrid-htable", ts.grid.hDiv), $trLabels = $htable
+                    .children("thead").children(
+                        "tr.ui-jqgrid-labels:last").addClass(
+                        "jqg-second-row-header"), $thead = $htable
+                    .children("thead"), $theadInTable, $firstHeaderRow = $htable
+                    .find(".jqg-first-row-header");
                 if ($firstHeaderRow[0] === undefined) {
                     $firstHeaderRow = $('<tr>', {
                         role: "row",
@@ -30,8 +30,8 @@ declare var $: any;
                 } else {
                     $firstHeaderRow.empty();
                 }
-                var $firstRow, inColumnHeader = function(text,
-                    columnHeaders) {
+                var $firstRow, inColumnHeader = function (text,
+                                                          columnHeaders) {
                     var length = columnHeaders.length, i;
                     for (i = 0; i < length; i++) {
                         if (columnHeaders[i].startColumnName === text) {
@@ -59,7 +59,7 @@ declare var $: any;
                         role: 'gridcell'
                     }).css(thStyle).addClass(
                         "ui-first-th-" + ts.p.direction).appendTo(
-                            $firstHeaderRow);
+                        $firstHeaderRow);
 
                     th.style.width = ""; // remove unneeded style
                     iCol = inColumnHeader(cmi.name, o.groupHeaders);
@@ -71,7 +71,7 @@ declare var $: any;
                         // caclulate the number of visible columns from the
                         // next numberOfColumns columns
                         for (cVisibleColumns = 0, iCol = 0; iCol < numberOfColumns
-                            && (i + iCol < cml); iCol++) {
+                        && (i + iCol < cml); iCol++) {
                             if (!colModel[i + iCol].hidden) {
                                 cVisibleColumns++;
                             }
@@ -87,9 +87,9 @@ declare var $: any;
                         }).addClass(
                             "ui-state-default ui-th-column-header ui-th-"
                             + ts.p.direction).css({
-                                'height': '22px',
-                                'border-top': '0 none'
-                            }).html(titleText);
+                            'height': '22px',
+                            'border-top': '0 none'
+                        }).html(titleText);
                         if (cVisibleColumns > 0) {
                             $colHeader.attr("colspan",
                                 String(cVisibleColumns));
@@ -121,9 +121,9 @@ declare var $: any;
                                 }).addClass(
                                     "ui-state-default ui-th-column-header ui-th-"
                                     + ts.p.direction).css({
-                                        "display": cmi.hidden ? 'none' : '',
-                                        'border-top': '0 none'
-                                    }).insertBefore($th);
+                                    "display": cmi.hidden ? 'none' : '',
+                                    'border-top': '0 none'
+                                }).insertBefore($th);
                                 $tr.append(th);
                             }
                         } else {
@@ -146,12 +146,12 @@ declare var $: any;
                     $htable
                         .find("span.ui-jqgrid-resize")
                         .each(
-                            function() {
+                            function () {
                                 var $parent = $(this).parent();
                                 if ($parent.is(":visible")) {
                                     this.style.cssText = 'height: '
-                                    + $parent.height()
-                                    + 'px !important; cursor: col-resize;';
+                                        + $parent.height()
+                                        + 'px !important; cursor: col-resize;';
                                 }
                             });
 
@@ -162,14 +162,14 @@ declare var $: any;
                     $htable
                         .find("div.ui-jqgrid-sortable")
                         .each(
-                            function() {
+                            function () {
                                 var $ts = $(this), $parent = $ts
                                     .parent();
                                 if ($parent.is(":visible")
                                     && $parent
                                         .is(":has(span.ui-jqgrid-resize)")) {
                                     $ts.css('top', ($parent
-                                        .height() - $ts
+                                            .height() - $ts
                                             .outerHeight())
                                         / 2 + 'px');
                                 }
@@ -178,7 +178,7 @@ declare var $: any;
 
                 $firstRow = $theadInTable.find("tr.jqg-first-row-header");
                 $(ts).bind('jqGridResizeStop.setGroupHeaders',
-                    function(e, nw, idx) {
+                    function (e, nw, idx) {
                         $firstRow.find('th').eq(idx).width(nw);
                     });
             });
@@ -209,22 +209,21 @@ module JQTable {
     }
 
     export class Node {
-        private mChilds: Node[] = [];
-        private mParent: Node = null;
-        mOpts: NodeOption;
+        private mChilds:Node[] = [];
+        private mParent:Node = null;
+        mOpts:NodeOption;
 
-        constructor(
-            name: string,
-            id: string,
-            isReadOnly: boolean = true,
-            align: TextAlign = TextAlign.Right,
-            width: number = 0,
-            editType: string = undefined,
-            options: any = undefined,
-            isNumber: boolean = true,
-            //add by hzdqzy
-            isSortable: boolean = false,
-            sorttype: string = undefined) {
+        constructor(name:string,
+                    id:string,
+                    isReadOnly:boolean = true,
+                    align:TextAlign = TextAlign.Right,
+                    width:number = 0,
+                    editType:string = undefined,
+                    options:any = undefined,
+                    isNumber:boolean = true,
+                    //add by hzdqzy
+                    isSortable:boolean = false,
+                    sorttype:string = undefined) {
             this.mOpts = {
                 name: name,
                 id: id,
@@ -240,8 +239,8 @@ module JQTable {
             }
         }
 
-        public static create(opts: NodeOption): Node {
-            var node: Node = new Node(null, null);
+        public static create(opts:NodeOption):Node {
+            var node:Node = new Node(null, null);
             node.mOpts = $.extend({}, {
                 isReadOnly: true,
                 isNumber: true,
@@ -251,63 +250,63 @@ module JQTable {
             return node;
         }
 
-        public align(): TextAlign {
+        public align():TextAlign {
             return this.mOpts.align;
         }
 
-        public width(): number {
+        public width():number {
             if (this.mOpts.width == undefined) {
                 return -1;
             }
             return this.mOpts.width;
         }
 
-        public isReadOnly(): boolean {
+        public isReadOnly():boolean {
             return true == this.mOpts.isReadOnly;
         }
 
-        public isNumber(): boolean {
+        public isNumber():boolean {
             return true == this.mOpts.isNumber;
         }
 
-        public editType(): string {
+        public editType():string {
             return this.mOpts.editType;
         }
 
-        public editOptions(): string {
+        public editOptions():string {
             return this.mOpts.options;
         }
 
-        public append(child: Node): Node {
+        public append(child:Node):Node {
             this.mChilds.push(child);
             child.mParent = this;
             return this;
         }
 
-        public parent(): Node {
+        public parent():Node {
             return this.mParent;
         }
 
-        public hasChilds(): boolean {
+        public hasChilds():boolean {
             return this.mChilds.length > 0;
         }
 
-        public childs(): Node[] {
+        public childs():Node[] {
             return this.mChilds;
         }
 
-        public idChain(): string {
+        public idChain():string {
             if (this.mParent != null) {
                 return this.mParent.idChain() + "_" + this.mOpts.id;
             }
             return this.mOpts.id;
         }
 
-        public id(): string {
+        public id():string {
             return this.mOpts.id;
         }
 
-        public leavesCount(): number {
+        public leavesCount():number {
             var count = 0;
             for (var i in this.mChilds) {
                 if (this.mChilds[i].hasChilds()) {
@@ -319,16 +318,16 @@ module JQTable {
             return count;
         }
 
-        public mostLeftLeaf(): Node {
-            var node : Node = this;
+        public mostLeftLeaf():Node {
+            var node:Node = this;
             if (this.hasChilds()) {
                 node = this.mChilds[0].mostLeftLeaf();
             }
             return node;
         }
 
-        public leaves(): Node[] {
-            var list: Node[] = [];
+        public leaves():Node[] {
+            var list:Node[] = [];
             if (this.hasChilds()) {
                 for (var i in this.mChilds) {
                     if (this.mChilds[i].hasChilds()) {
@@ -344,7 +343,7 @@ module JQTable {
             return list;
         }
 
-        public depth(): number {
+        public depth():number {
             var childDepth = 0;
             for (var i = 0; i < this.mChilds.length; i++) {
                 if (this.mChilds[i].depth() > childDepth) {
@@ -353,10 +352,12 @@ module JQTable {
             }
             return childDepth + 1;
         }
-        public name(): string {
+
+        public name():string {
             return this.mOpts.name;
         }
-        public children(depth: number): Node[] {
+
+        public children(depth:number):Node[] {
             var children = new std.vector<Node>();
             children.push(this);
             for (var j = 0; j < depth; j++) {
@@ -371,24 +372,25 @@ module JQTable {
             }
             return children.toArray();
         }
-        
+
         //add by hzdqzy-------------------------------------------------------
-        public isSortable(): boolean {
+        public isSortable():boolean {
             return this.mOpts.isSortable;
         }
-        
-        public sorttype(): string {
+
+        public sorttype():string {
             return this.mOpts.sorttype;
         }
+
         //---------------------------------------------------------------------
     }
 
     export class Cell {
-        private mRow: number;
-        private mCol: number;
-        private mGrid: any;
+        private mRow:number;
+        private mCol:number;
+        private mGrid:any;
 
-        constructor(row: number, col: number) {
+        constructor(row:number, col:number) {
             this.mRow = row;
             this.mCol = col;
         }
@@ -405,27 +407,27 @@ module JQTable {
             return this.mGrid.jqGrid("setCell", this.mRow + 1, this.mCol, val);
         }
 
-        public row(): number {
+        public row():number {
             return this.mRow;
         }
 
-        public col(): number {
+        public col():number {
             return this.mCol;
         }
     }
 
     export class Formula {
-        private mDestCell: Cell;
-        private mSrcCellarray: Cell[];
-        private mFormula: (dest: Cell, srcCells: Cell[]) => number;
+        private mDestCell:Cell;
+        private mSrcCellarray:Cell[];
+        private mFormula:(dest:Cell, srcCells:Cell[]) => number;
 
-        constructor(destCell: Cell, srcCellarray: Cell[], formula: (dest: Cell, srcCells: Cell[]) => number) {
+        constructor(destCell:Cell, srcCellarray:Cell[], formula:(dest:Cell, srcCells:Cell[]) => number) {
             this.mDestCell = destCell;
             this.mSrcCellarray = srcCellarray;
             this.mFormula = formula;
         }
 
-        public calc(newRow: number, newCol: number): boolean {
+        public calc(newRow:number, newCol:number):boolean {
             var oldVal = this.mDestCell.getVal();
             for (var i = 0; i < this.mSrcCellarray.length; i++) {
                 if (this.mSrcCellarray[i].row() == newRow && this.mSrcCellarray[i].col() == newCol) {
@@ -439,18 +441,18 @@ module JQTable {
             return false;
         }
 
-        public destCell(): Cell {
+        public destCell():Cell {
             return this.mDestCell;
         }
 
-        public setGrid(grid): void {
+        public setGrid(grid):void {
             this.mDestCell.setGrid(grid);
             for (var i = 0; i < this.mSrcCellarray.length; i++) {
                 this.mSrcCellarray[i].setGrid(grid);
             }
         }
 
-        public update(): void {
+        public update():void {
             var newVal = this.mFormula(this.mDestCell, this.mSrcCellarray);
             if (newVal != null && newVal != undefined) {
                 this.mDestCell.setVal(newVal);
@@ -459,21 +461,21 @@ module JQTable {
     }
 
     export class JQGridAssistant {
-        private completeList: Array<() => void> = [];
-        private selectedList: Array<(newRow: number, newCol: number) => void> = [];
-        private mTitle: Node[] = [];
-        private mGridName: string;
+        private completeList:Array<() => void> = [];
+        private selectedList:Array<(newRow:number, newCol:number) => void> = [];
+        private mTitle:Node[] = [];
+        private mGridName:string;
         private mColModel = [];
         private mResizeList = [];
-        private mFormula: Formula[] = [];
-        private mOnMergedRows: (iCol: number, iRowStart: number, ilen: number) => void;
-        private mOnMergedColums: (col: number, row: number) => void;
-        private mOnMergedTitles: (iColStart: number, iCount: number) => void;
+        private mFormula:Formula[] = [];
+        private mOnMergedRows:(iCol:number, iRowStart:number, ilen:number) => void;
+        private mOnMergedColums:(col:number, row:number) => void;
+        private mOnMergedTitles:(iColStart:number, iCount:number) => void;
 
-        private mDepth: number;
+        private mDepth:number;
 
-        constructor(titleNodes: Node[], gridName: string) {
-            var nodes: Node[];
+        constructor(titleNodes:Node[], gridName:string) {
+            var nodes:Node[];
             this.mGridName = gridName;
             this.mTitle = titleNodes;
             for (var i in this.mTitle) {
@@ -484,15 +486,15 @@ module JQTable {
                     var colId = nodes[j].idChain();
                     this.mColModel.push({
                         name: colId,
-                        index: colId, 
+                        index: colId,
                         sortable: nodes[j].isSortable(),//update by hzdqzy
                         sorttype: nodes[j].sorttype(),//add by hzdqzy
                         editable: !nodes[j].isReadOnly(),
                         edittype: nodes[j].editType(),
                         editoptions: nodes[j].editOptions(),
-                        editrules: !nodes[j].isReadOnly() ? { number: nodes[j].isNumber() } : undefined,
+                        editrules: !nodes[j].isReadOnly() ? {number: nodes[j].isNumber()} : undefined,
                         //editrules:undefined,
-                        cellattr: function(rowId, tv, rawObject, cm, rdata) {
+                        cellattr: function (rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
                     });
@@ -521,27 +523,62 @@ module JQTable {
             }
         }
 
-        public getCheckedRowIds(): string[] {
+        public getCheckedRowIds():string[] {
             var ids = $("#" + this.mGridName + "").jqGrid('getGridParam', 'selarrrow');
             return ids;
         }
 
-        public getAllData(): Array<string[]> {
+        public getAllData():Array<string[]> {
             var grid = $("#" + this.mGridName + "");
+            grid[0].p.data
             var ids = grid.jqGrid('getDataIDs');
-            var data: Array<string[]> = [];
-            for (var i in ids) {
+            var data:Array<string[]> = [];
+            for (var i in grid[0].p.data) {
                 var row = [];
-                row.push(ids[i]);
+                row.push(grid[0].p.data[i].id);
                 for (var j in this.mColModel) {
-                    row.push(grid.jqGrid("getCell", ids[i], this.mColModel[j].index));
+                    let val = grid[0].p.data[i][this.mColModel[j].index];
+                    row.push(undefined == val ? "" : val + "");
                 }
                 data.push(row);
             }
             return data;
         }
 
-        public testDepth(): number {
+        public getDataCount():number {
+            var grid = $("#" + this.mGridName + "");
+            return grid[0].p.data.length;
+        }
+
+        public getCurrentPageNumber():number {
+            var grid = $("#" + this.mGridName + "")
+            let curPg = $(grid[0].p.pager + "_center input").val();
+            return parseInt(curPg);
+        }
+
+        public navigateToPage(pg:number):void {
+            var grid = $("#" + this.mGridName + "")
+            grid[0].p.page = pg;
+            grid[0].grid.populate();
+        }
+
+        public showError(msg:string, width:number = 290, height:number = 90) {
+            this.centerModal(width, height);
+            setTimeout(function () {
+                $.jgrid.info_dialog($.jgrid.errors.errcap, msg, $.jgrid.edit.bClose);
+            }, 100);
+        }
+
+        public centerModal(width:number = 290, height:number = 90) {
+            var grid = $("#" + this.mGridName + "");
+            $.jgrid.jqModal = {
+                width: width,
+                left: grid.offset().left + grid.width() / 2 - width / 2,
+                top: grid.offset().top + grid.height() / 2 - height
+            };
+        }
+
+        public testDepth():number {
             var depth = 1;
             var tmp = 0;
             for (var node in this.mTitle) {
@@ -553,7 +590,7 @@ module JQTable {
             return depth;
         }
 
-        public getColNames(): string[] {
+        public getColNames():string[] {
             var leaves = [];
             var names = [];
             for (var node in this.mTitle) {
@@ -570,9 +607,9 @@ module JQTable {
         }
 
 
-        public addRowData(rowId: string, rowData: string[]) {
+        public addRowData(rowId:string, rowData:string[]) {
             var grid = $("#" + this.mGridName + "");
-            var row: any = {};
+            var row:any = {};
             for (var j in this.mColModel) {
                 if (j < rowData.length) {
                     row[this.mColModel[j].index] = rowData[j];
@@ -581,7 +618,7 @@ module JQTable {
             grid.jqGrid("addRowData", rowId, row)
         }
 
-        public id(col: number): string {
+        public id(col:number):string {
             var colCount = 0;
             var leaves = [];
             for (var i in this.mTitle) {
@@ -595,13 +632,13 @@ module JQTable {
             return "";
         }
 
-        public onResized(nw: number, idx: number) {
+        public onResized(nw:number, idx:number) {
             for (var i = 0; i < this.mResizeList.length; i++) {
                 this.mResizeList[i](nw, idx);
             }
         }
 
-        public group(): void {
+        public group():void {
             var finished = false;
             this.completeList.push(() => {
                 if (finished) {
@@ -634,7 +671,7 @@ module JQTable {
             });
         }
 
-        public getLevelNodes(level: number): Node[] {
+        public getLevelNodes(level:number):Node[] {
             var levelNodes = [];
             for (var i = 0; i < this.mTitle.length; i++) {
                 levelNodes = levelNodes.concat(this.mTitle[i].children(level));
@@ -647,9 +684,9 @@ module JQTable {
             return levelNodes;
         }
 
-        public getData(data: string[][]): any[] {
-            var alldata: any[] = [];
-            var colums: Node[] = [];
+        public getData(data:string[][]):any[] {
+            var alldata:any[] = [];
+            var colums:Node[] = [];
             for (var i in this.mTitle) {
                 colums = colums.concat(this.mTitle[i].leaves());
             }
@@ -664,15 +701,15 @@ module JQTable {
             return alldata;
         }
 
-        public getDataWithId(data: string[][]): any[] {
-            var alldata: any[] = [];
-            var colums: Node[] = [];
+        public getDataWithId(data:string[][]):any[] {
+            var alldata:any[] = [];
+            var colums:Node[] = [];
             for (var i in this.mTitle) {
                 colums = colums.concat(this.mTitle[i].leaves());
             }
 
             for (var i in data) {
-                var rowdata: any = {};
+                var rowdata:any = {};
                 rowdata["id"] = data[i][0];
                 for (var j in colums) {
                     rowdata[colums[j].idChain()] = data[i][parseInt(j) + 1];
@@ -689,7 +726,7 @@ module JQTable {
         //				};
         //			},
 
-        public mergeRow(iCol: number, iRowStart?: number, ilen?: number) {
+        public mergeRow(iCol:number, iRowStart?:number, ilen?:number) {
             if (iRowStart != undefined) {
                 this.completeList.push(() => {
                     var col = this.id(iCol);
@@ -735,13 +772,13 @@ module JQTable {
         }
 
 
-        public setRowBgColor(row: number, r: number, g: number, b: number): void {
+        public setRowBgColor(row:number, r:number, g:number, b:number):void {
             this.completeList.push(() => {
                 $("#" + this.mGridName + " #" + (row + 1)).css("background", "rgb(" + r + "," + g + "," + b + ")");
             })
         }
 
-        public mergeColum(col: number, row?: number, align?: TextAlign) {
+        public mergeColum(col:number, row?:number, align?:TextAlign) {
             if (row != undefined) {
                 this.completeList.push(() => {
                     if (align == undefined) {
@@ -761,7 +798,7 @@ module JQTable {
                     if (this.mOnMergedColums != undefined) {
                         this.mOnMergedColums(col, row);
                     }
-                    this.selectedList.push(function(newRow: number, newCol: number) {
+                    this.selectedList.push(function (newRow:number, newCol:number) {
 
                         if (newRow == row) {
                             if (col == newCol || col + 1 == newCol) {
@@ -808,16 +845,16 @@ module JQTable {
             }
         }
 
-        public selected(row: number, col: number): void {
+        public selected(row:number, col:number):void {
             for (var i = 0; i < this.selectedList.length; i++) {
                 this.selectedList[i](row, col);
             }
         }
 
-        public addFormula(formula: Formula): void {
+        public addFormula(formula:Formula):void {
             formula.setGrid($("#" + this.mGridName));
             if (this.mFormula.length == 0) {
-                this.completeList.push(function() {
+                this.completeList.push(function () {
                     for (var i = 0; i < this.mFormula.length; i++) {
                         this.mFormula[i].update();
                     }
@@ -827,7 +864,7 @@ module JQTable {
         }
 
 
-        public cellChanged(iRow: number, iCol: number) {
+        public cellChanged(iRow:number, iCol:number) {
             for (var i = 0; i < this.mFormula.length; i++) {
                 var changed = this.mFormula[i].calc(iRow - 1, iCol);
                 if (changed) {
@@ -836,15 +873,16 @@ module JQTable {
             }
         }
 
-        private parseInt(px : string) : number{
-            if (undefined != px && null != px){
-                if (px.lastIndexOf("px") > 0){
+        private parseInt(px:string):number {
+            if (undefined != px && null != px) {
+                if (px.lastIndexOf("px") > 0) {
                     return parseInt(px.replace("px", ""));
                 }
             }
             return 0;
         }
-        public mergeTitle(iColStart?: number, iCount: number = 0, hidden: boolean = false) {
+
+        public mergeTitle(iColStart?:number, iCount:number = 0, hidden:boolean = false) {
             if (iColStart != undefined) {
                 this.completeList.push(() => {
                     var headerStart = $("#" + this.mGridName + "_" + this.id(iColStart));
@@ -852,7 +890,7 @@ module JQTable {
                     var firstWidht = this.parseInt(headerStart[0].style.width);
                     var iWidht = firstWidht;
 
-                    var headerMerge: any = null;
+                    var headerMerge:any = null;
                     var widthList = [iWidht];
                     for (var i = 1; i < iCount; i++) {
                         headerMerge = $("#" + this.mGridName + "_" + this.id(iColStart + i));
@@ -892,7 +930,7 @@ module JQTable {
                 this.completeList.push(() => {
 
                     var mergeLen = 0;
-                    var data: string = null;
+                    var data:string = null;
                     for (var i = 0; i < this.mTitle.length; i++) {
                         if (!this.mTitle[i].hasChilds()) {
                             if (mergeLen == 0) {
@@ -948,7 +986,7 @@ module JQTable {
             }
         }
 
-        public disableDragCell(iCol?: number): void {
+        public disableDragCell(iCol?:number):void {
             this.completeList.push(() => {
                 var spanls = $("#gview_" + this.mGridName + " .ui-jqgrid-resize");
                 if (iCol == undefined) {
@@ -965,13 +1003,131 @@ module JQTable {
             });
         }
 
-        public complete(): void {
+        public complete():void {
             for (var i = 0; i < this.completeList.length; i++) {
                 this.completeList[i]();
             }
         }
 
-        public decorate(option: any): void {
+        private enablePageEdit(rowNum:number, pagername:string):any {
+            var grid = $("#" + this.mGridName + "");
+            let lastsel = "";
+            let lastcell = "";
+            let opt = {
+                beforeEditCell: (rowid, cellname, v, iRow, iCol) => {
+                    lastsel = iRow;
+                    lastcell = iCol;
+                    $("input").attr("disabled", true);
+                },
+
+                afterSaveCell: () => {
+                    $("input").attr("disabled", false);
+                    lastsel = "";
+                },
+
+                afterRestoreCell: () => {
+                    $("input").attr("disabled", false);
+                    lastsel = "";
+                },
+                afterEditCell: (rowid, cellname, v, iRow, iCol) => {
+                    $("#" + this.mGridName + " input[type=text]").bind("keydown", function (e) {
+                        if (e.keyCode === 13) {
+                            setTimeout(function () {
+                                grid.jqGrid("editCell", iRow + 1, iCol, true);
+                            }, 10);
+                        }
+                    });
+                }
+            }
+            $('html').bind('click', (e)=> { //用于点击其他地方保存正在编辑状态下的行
+                if (lastsel != "") { //if a row is selected for edit
+                    if ($(e.target).closest("#" + this.mGridName).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row
+                        //  $("#" + name).jqGrid('saveRow', lastsel);
+                        grid.jqGrid("saveCell", lastsel, lastcell);
+                        //$("#" + name).resetSelection();
+                        lastsel = "";
+                    }
+                }
+            });
+
+            setTimeout( () => {
+                let addId = 1;
+                grid.jqGrid('navGrid', pagername, {
+                    del: true, add: true, edit: false, refresh: false, search: false,
+                    addfunc: () => {
+                        if (lastsel != "") { //if a row is selected for edit
+                            grid.jqGrid("saveCell", lastsel, lastcell);
+                            lastsel = "";
+                        }
+                        let rid = "add" + (++addId);
+                        let rdata = {};
+                        rdata[rid] = rid;
+                        grid.addRowData(rid, rdata, 'last');
+                        let curPg = this.getCurrentPageNumber();
+                        let lastRowPg = parseInt("" + (this.getDataCount() - 1) / rowNum) + 1;
+                        if (curPg != lastRowPg) {//当前页已经填满，切换到最后一页
+                            this.navigateToPage(lastRowPg);
+                        }
+
+                        setTimeout(() => {
+                            let ids:string[] = grid.jqGrid('getDataIDs');
+                            //使用ids.length 为实验测试获得
+                            grid.jqGrid("editCell", ids.length, 0, true);
+                        }, 100);
+
+
+                    },
+                    delfunc: (rowid)=> {
+                        if (lastsel != "") { //if a row is selected for edit
+                            grid.jqGrid("saveCell", lastsel, lastcell);
+                            lastsel = "";
+                        }
+
+                        if (rowid.indexOf("add") < 0) {
+                            this.showError("数据已保存，无法删除");
+                            return;
+                        }
+
+                        let ids:string[] = grid.jqGrid('getDataIDs');
+                        grid.jqGrid("delRowData", rowid);
+                        grid.trigger("reloadGrid");
+
+                        let dataCount = this.getDataCount();
+                        if (dataCount == 0){
+                            return;
+                        }
+
+                        let curPg = this.getCurrentPageNumber();
+                        let lastRowPg = parseInt("" + (dataCount - 1) / rowNum) + 1;
+                        let curSelId = null;
+                        if (curPg > lastRowPg) {//最后一页数据已经全部被删除，切换到最新的last page
+                            this.navigateToPage(lastRowPg);
+                            ids = grid.jqGrid('getDataIDs');
+                            curSelId = ids.length - 1;
+                        } else {
+                            for (let i = 0; i < ids.length; ++i) {
+                                if (ids[i] == rowid) {
+                                    if (i == ids.length - 1) {
+                                        curSelId = i - 1;
+                                    } else if (i == 0) {
+                                        curSelId = 0;
+                                    } else {
+                                        curSelId = i;
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        //curSelId 值为实验测试获得
+                        grid.jqGrid("editCell", curSelId + 1, 0, false);
+
+                    }
+                }, {}, {}, {multipleSearch: false});
+            }, 0);
+            return opt;
+        }
+
+        public decorate(option:any):void {
             if (option.gridComplete != undefined) {
                 var gridComplete = option.gridComplete;
                 option.gridComplete = () => {
@@ -987,53 +1143,53 @@ module JQTable {
 
             if (option.onSelectCell != undefined) {
                 var onSelectCell = option.onSelectCell;
-                option.onSelectCell = (id: any, nm: any, tmp: any, iRow: any, iCol: any) => {
+                option.onSelectCell = (id:any, nm:any, tmp:any, iRow:any, iCol:any) => {
                     onSelectCell(id, nm, tmp, iRow, iCol);
                     this.selected(iRow, iCol);
                 };
             }
             else {
-                option.onSelectCell = (id: any, nm: any, tmp: any, iRow: any, iCol: any) => {
+                option.onSelectCell = (id:any, nm:any, tmp:any, iRow:any, iCol:any) => {
                     this.selected(iRow, iCol);
                 };
             }
 
             if (option.beforeEditCell != undefined) {
                 var beforeEditCell = option.beforeEditCell;
-                option.beforeEditCell = (id: any, nm: any, tmp: any, iRow: any, iCol: any) => {
+                option.beforeEditCell = (id:any, nm:any, tmp:any, iRow:any, iCol:any) => {
                     beforeEditCell(id, nm, tmp, iRow, iCol);
                     this.selected(iRow, iCol);
                 };
 
             }
             else {
-                option.beforeEditCell = (id: any, nm: any, tmp: any, iRow: any, iCol: any) => {
+                option.beforeEditCell = (id:any, nm:any, tmp:any, iRow:any, iCol:any) => {
                     this.selected(iRow, iCol);
                 };
             }
 
             if (option.afterSaveCell != undefined) {
                 var afterSaveCell = option.afterSaveCell;
-                option.afterSaveCell = (id: any, nm: any, tmp: any, iRow: any, iCol: any) => {
+                option.afterSaveCell = (id:any, nm:any, tmp:any, iRow:any, iCol:any) => {
                     afterSaveCell(id, nm, tmp, iRow, iCol);
                     this.cellChanged(iRow, iCol);
                 };
             }
             else {
-                option.afterSaveCell = (id: any, nm: any, tmp: any, iRow: any, iCol: any) => {
+                option.afterSaveCell = (id:any, nm:any, tmp:any, iRow:any, iCol:any) => {
                     this.cellChanged(iRow, iCol);
                 };
             }
 
             if (option.resizeStop != undefined) {
                 var resizeStop = option.resizeStop;
-                option.resizeStop = (nw: number, idx: number) => {
+                option.resizeStop = (nw:number, idx:number) => {
                     resizeStop(nw, idx);
                     this.onResized(nw, idx);
                 };
             }
             else {
-                option.resizeStop = (nw: number, idx: number) => {
+                option.resizeStop = (nw:number, idx:number) => {
                     this.onResized(nw, idx);
                 };
             }
@@ -1047,20 +1203,17 @@ module JQTable {
                 option.colModel = this.getColModel();
             }
 
-            //            if (option.datatype != "local") {
-            //                option.jsonReader = {
-            //                    cell: "",
-            //                    id: "0"
-            //                };
-            //            }
-
-
             if (option.loadError != undefined) {
-                var onFailed: () => void = option.loadError;
+                var onFailed:() => void = option.loadError;
                 option.loadError = () => {
                     onFailed();
                 }
             }
+
+            if (option.assistEditable && option.rowNum != undefined && option.pager != undefined) {
+                $.extend(option, this.enablePageEdit(option.rowNum, option.pager));
+            }
+
 
             this.mOnMergedRows = option.onMergedRows;
             this.mOnMergedColums = option.onMergedColums;

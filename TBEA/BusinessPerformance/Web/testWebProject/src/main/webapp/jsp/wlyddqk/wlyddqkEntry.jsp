@@ -11,7 +11,6 @@
 <!-- jquery -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
 
-
 <!-- jquery ui blue --> 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
@@ -215,7 +214,7 @@ th.ui-th-ltr {
                     .multiselect({
                         multiple: false,
                         header: false,
-                        minWidth: 250, 
+                        minWidth: 300,
                         height: '100%', 
                         // noneSelectedText: "请选择月份",
                         selectedList: 1

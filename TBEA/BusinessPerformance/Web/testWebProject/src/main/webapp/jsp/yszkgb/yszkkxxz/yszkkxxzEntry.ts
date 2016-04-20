@@ -165,13 +165,6 @@ module yszkgb {
                         data: this.mTableAssist.getData([[ny].concat(this.mData[0])]),
                         viewrecords: true,
 
-                        onSelectCell: (id, nm, tmp, iRow, iCol) => {
-                            //                       console.log(iRow +', ' + iCol);
-                        },
-
-                        //                    onCellSelect: (ri,ci,tdHtml,e) =>{
-                        //                       console.log(ri +', ' + ci);
-                        //                    },
                         beforeSaveCell: (rowid, cellname, v, iRow, iCol) => {
                             var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
                             if (isNaN(ret)) {

@@ -18,16 +18,16 @@ module sbdddcbjpcqk {
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", readOnly, TextAlign.Center, 0, "text", undefined, false);
                 } else {
                     let vals:string = "";
-                    for (let i in cplb){
-                        if (i < cplb.length - 1){
+                    for (let i in cplb) {
+                        if (i < cplb.length - 1) {
                             vals += cplb[i] + ':' + cplb[i] + ';';
-                        }else{
+                        } else {
                             vals += cplb[i] + ':' + cplb[i];
                         }
                     }
 
                     nodeFirst = new JQTable.Node("产品类别", "sclb", readOnly, TextAlign.Center, 0, "select",
-                        { value:vals }
+                        {value: vals}
                         , false);
                 }
 
@@ -59,7 +59,7 @@ module sbdddcbjpcqk {
 
         class XlkglyddEntryView extends wlyddqk.BaseEntryPluginView {
 
-            private mData: wlyddqk.EntryLyddData;
+            private mData:wlyddqk.EntryLyddData;
             private mAjaxUpdate:Util.Ajax = new Util.Ajax("../sbdddcbjpcqk/xlkglydd/entry/update.do", false);
             private mAjaxSave:Util.Ajax = new Util.Ajax("../sbdddcbjpcqk/xlkglydd/entry/save.do", false);
             private mAjaxSubmit:Util.Ajax = new Util.Ajax("../sbdddcbjpcqk/xlkglydd/entry/submit.do", false);
@@ -74,8 +74,8 @@ module sbdddcbjpcqk {
                 return <Option>this.mOpt;
             }
 
-            isSupported( compType:Util.CompanyType):boolean{
-                if (compType == Util.CompanyType.LLGS || compType == Util.CompanyType.XLC || compType == Util.CompanyType.DLGS){
+            isSupported(compType:Util.CompanyType):boolean {
+                if (compType == Util.CompanyType.LLGS || compType == Util.CompanyType.XLC || compType == Util.CompanyType.DLGS) {
                     return true;
                 }
                 return false;
@@ -95,7 +95,7 @@ module sbdddcbjpcqk {
                     date: dt,
                     data: JSON.stringify(submitData),
                     type: this.mType,
-                    companyId:compType
+                    companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
@@ -124,7 +124,7 @@ module sbdddcbjpcqk {
                     date: dt,
                     data: JSON.stringify(submitData),
                     type: this.mType,
-                    companyId:compType
+                    companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
@@ -140,7 +140,7 @@ module sbdddcbjpcqk {
                 this.mAjaxUpdate.get({
                         type: this.mType,
                         date: date,
-                        companyId:compType
+                        companyId: compType
                     })
                     .then((jsonData:wlyddqk.EntryLyddData) => {
                         this.mData = jsonData;
@@ -162,8 +162,8 @@ module sbdddcbjpcqk {
                 entryView.register("线缆可供履约订单变化情况按生产类别", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCLB));
                 entryView.register("线缆可供履约订单变化情况按生产单元", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCDY));
                 $.extend($.jgrid.edit, {
-                        bSubmit: "确定"
-                 });
+                    bSubmit: "确定"
+                });
             }
 
             private updateTable():void {
@@ -173,163 +173,29 @@ module sbdddcbjpcqk {
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                let addId = 0;
-                let delId = 0;
                 let jqTable = this.$(name);
                 jqTable.jqGrid(
                     this.mTableAssist.decorate({
                         datatype: "local",
+                        data: this.mTableAssist.getDataWithId(this.mData.statusData.data),
                         multiselect: false,
                         drag: false,
                         resize: false,
+                        assistEditable:true,
                         //autowidth : false,
-                        //cellsubmit: 'clientArray',
-                        editurl: 'clientArray',
-                        //cellEdit: true,
+                        cellsubmit: 'clientArray',
+                        //editurl: 'clientArray',
+                        cellEdit: true,
                         //height: data.length > 25 ? 550 : '100%',
                         // width: titles.length * 200,
-                        rowNum: 150,
+                        rowNum: 20,
                         height: '100%',
                         width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
-                        data: this.mTableAssist.getDataWithId(this.mData.statusData.data),
                         viewrecords: true,
                         pager: '#' + pagername,
                     }));
-
-                jqTable.bind("jqGridAddEditAfterShowForm", (event, element, oper) => {
-                    if (oper == "edit") {
-                        var page = jqTable.jqGrid('getGridParam', 'page');
-                        var selectid = parseInt(jqTable.jqGrid('getGridParam', 'selrow'));
-                        var rownum = jqTable.jqGrid('getGridParam', 'rowNum');
-                        var acRowid = ((page - 1) * rownum) + selectid;
-                        //if (this.mDocType == 2) {
-                        //    this.mOriginalKey = $("#" + childName)[0].p.data[acRowid - 1].t2;
-                        //} else if (this.mDocType == 3) {
-                        //    this.mOriginalKey = $("#" + childName)[0].p.data[acRowid - 1].t1;
-                        //} else if (this.mDocType == 4) {
-                        //    this.mOriginalKey = $("#" + childName)[0].p.data[acRowid - 1].t1;
-                        //}
-                    }
-                });
-
-                var editModeWidth = 350;
-
-
-                jqTable.bind("jqGridAddEditAfterSubmit", (event, element, data, oper) => {
-                    if (oper == "add") {
-                        jqTable.addRowData("add" + (++addId), data, 'first');
-                    } else if (oper == "edit") {
-                        let selectid = parseInt(jqTable.jqGrid('getGridParam', 'selrow'));
-                        jqTable.setRowData(selectid, data);
-                        //this.mEditOper = "edit";
-                        //data.t0 = this.mCompanyName;
-
-                        //var submitData: string[][] = [];
-                        //for (var row = 0; row < 1; row++) {
-                        //    submitData.push([]);
-                        //    submitData[row].push(data["t0"]);
-                        //    for (var col in data) {
-                        //        if (col != "id" && col != "oper" && col != "t0") {
-                        //            submitData[row].push(data[col]);
-                        //        }
-                        //    }
-                        //}
-                        //
-                        //var selectid = parseInt($("#" + childName).jqGrid('getGridParam', 'selrow'));
-                        //this.mSaveDataSet.post({
-                        //    mktType: this.mDocType,
-                        //    data: JSON.stringify(submitData),
-                        //    editOper: this.mEditOper,
-                        //    editOriginalKey: this.mOriginalKey
-                        //}).then((sr: ISubmitResult) => {
-                        //    if (ErrorCode.OK == sr.errorCode) {
-                        //        Util.MessageBox.tip("编辑成功！");
-                        //
-                        //        $.jgrid.hideModal("#" + $.jgrid.jqID("editmod" + childName), { gb: "#gbox_" + $.jgrid.jqID("table1_jqgrid_1234"), jqm: true, onClose: null });
-                        //        var page = $("#" + childName).jqGrid('getGridParam', 'page');
-                        //        var rownum = $("#" + childName).jqGrid('getGridParam', 'rowNum');
-                        //        var acRowid = ((page - 1) * rownum) + selectid;
-                        //
-                        //        function swap(arr, a, b) {
-                        //            var tmp = arr[a];
-                        //            arr[a] = arr[b];
-                        //            arr[b] = tmp;
-                        //        }
-                        //        swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
-                        //        $("#" + childName).setRowData(selectid, data);
-                        //        swap($("#" + childName)[0].p.data, selectid - 1, acRowid - 1);
-                        //
-                        //    } else if (ErrorCode.PREMARY_KEY_CONFILICT == sr.errorCode) {
-                        //        if (this.mDocType == 2) {
-                        //            Util.MessageBox.tip("编辑失败，项目序号重复！");
-                        //        } else if (this.mDocType == 3) {
-                        //            Util.MessageBox.tip("编辑失败，投标编号重复！");
-                        //        } else if (this.mDocType == 4) {
-                        //            Util.MessageBox.tip("编辑失败，合同编号重复!");
-                        //        }
-                        //    } else if (ErrorCode.DATABASE_EXCEPTION == sr.errorCode) {
-                        //        Util.MessageBox.tip("数据提交失败!");
-                        //    } else if (ErrorCode.PREMARY_KEY_NULL == sr.errorCode) {
-                        //        if (this.mDocType == 2) {
-                        //            Util.MessageBox.tip("编辑失败，项目序号不能为空！");
-                        //        } else if (this.mDocType == 3) {
-                        //            Util.MessageBox.tip("编辑失败，投标编号不能为空！");
-                        //        } else if (this.mDocType == 4) {
-                        //            Util.MessageBox.tip("编辑失败，合同编号不能为空!");
-                        //        }
-                        //    } else {
-                        //    }
-                        //});
-                    }
-                });
-
-                //if (this.mCompanyName == "股份公司") {
-                //    $("#" + childName).jqGrid('navGrid', '#pager', {
-                //        del: false, add: false, edit: false,
-                //        addfunc: function() {
-                //            var dataEdit = $("#" + childName).data("formProp");
-                //            if (undefined != dataEdit) {
-                //                dataEdit.width = editModeWidth;
-                //                dataEdit.datawidth = "auto";
-                //                $("#" + childName).data("formProp", dataEdit);
-                //            }
-                //            $("#" + childName).jqGrid("editGridRow", "new", { width: editModeWidth });
-                //        },
-                //        editfunc: function(sr) {
-                //            var dataEdit = jqTable.data("formProp");
-                //            if (undefined != dataEdit) {
-                //                dataEdit.width = editModeWidth;
-                //                dataEdit.datawidth = "auto";
-                //                jqTable.data("formProp", dataEdit);
-                //            }
-                //            jqTable.jqGrid("editGridRow", sr, { width: editModeWidth });
-                //        }
-                //    }, {}, {}, {}, { multipleSearch: true });
-                //} else {
-                jqTable.jqGrid('navGrid', '#' + pagername, {
-                    del: false, add: true, edit: true, refresh: false,
-                    addfunc: () => {
-                        var dataEdit = jqTable.data("formProp");
-                        if (undefined != dataEdit) {
-                            dataEdit.width = editModeWidth;
-                            dataEdit.datawidth = "auto";
-                            jqTable.data("formProp", dataEdit);
-                        }
-                        jqTable.jqGrid("editGridRow", "new", {width: editModeWidth, closeAfterEdit: true, closeAfterAdd:true});
-                    },
-                    editfunc: (sr) => {
-                        var dataEdit = jqTable.data("formProp");
-                        if (undefined != dataEdit) {
-                            dataEdit.width = editModeWidth;
-                            dataEdit.datawidth = "auto";
-                            jqTable.data("formProp", dataEdit);
-                        }
-                        jqTable.jqGrid("editGridRow", sr, {width: editModeWidth, closeAfterEdit: true, closeAfterAdd:true});
-                    }
-                }, {width: editModeWidth}, {}, {multipleSearch: true});
-                //}
             }
         }
 

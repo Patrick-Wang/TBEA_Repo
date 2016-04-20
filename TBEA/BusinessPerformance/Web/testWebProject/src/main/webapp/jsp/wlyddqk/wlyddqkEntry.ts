@@ -103,7 +103,7 @@ module wlyddqk {
                     .multiselect({
                         multiple: false,
                         header: false,
-                        minWidth: 250,
+                        minWidth: 300,
                         height: '100%',
                         // noneSelectedText: "请选择月份",
                         selectedList: 1

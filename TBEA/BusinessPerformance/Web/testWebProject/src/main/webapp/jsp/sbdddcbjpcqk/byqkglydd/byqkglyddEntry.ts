@@ -192,73 +192,29 @@ module sbdddcbjpcqk {
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                let addId = 0;
-                let delId = 0;
                 let jqTable = this.$(name);
                 jqTable.jqGrid(
                     this.mTableAssist.decorate({
                         datatype: "local",
+                        data: this.mTableAssist.getDataWithId(this.mData.statusData.data),
                         multiselect: false,
                         drag: false,
                         resize: false,
+                        assistEditable:true,
                         //autowidth : false,
-                        //cellsubmit: 'clientArray',
-                        editurl: 'clientArray',
-                        //cellEdit: true,
+                        cellsubmit: 'clientArray',
+                        //editurl: 'clientArray',
+                        cellEdit: true,
                         //height: data.length > 25 ? 550 : '100%',
-                        // width: titles.length * 200,
-                        rowNum: 150,
+                        //width: titles.length * 200,
+                        rowNum: 20,
                         height: '100%',
                         width: 1400,
                         shrinkToFit: true,
                         autoScroll: true,
-                        data: this.mTableAssist.getDataWithId(this.mData.statusData.data),
                         viewrecords: true,
                         pager: '#' + pagername,
                     }));
-
-                var editModeWidth = 350;
-
-
-                jqTable.bind("jqGridAddEditAfterSubmit", (event, element, data, oper) => {
-                    if (oper == "add") {
-                        jqTable.addRowData("add" + (++addId), data, 'first');
-                    } else if (oper == "edit") {
-                        let selectid = parseInt(jqTable.jqGrid('getGridParam', 'selrow'));
-                        jqTable.setRowData(selectid, data);
-                    }
-                });
-
-                jqTable.jqGrid('navGrid', '#' + pagername, {
-                    del: false, add: true, edit: true, refresh: false,
-                    addfunc: () => {
-                        var dataEdit = jqTable.data("formProp");
-                        if (undefined != dataEdit) {
-                            dataEdit.width = editModeWidth;
-                            dataEdit.datawidth = "auto";
-                            jqTable.data("formProp", dataEdit);
-                        }
-                        jqTable.jqGrid("editGridRow", "new", {
-                            width: editModeWidth,
-                            closeAfterEdit: true,
-                            closeAfterAdd: true
-                        });
-                    },
-                    editfunc: (sr) => {
-                        var dataEdit = jqTable.data("formProp");
-                        if (undefined != dataEdit) {
-                            dataEdit.width = editModeWidth;
-                            dataEdit.datawidth = "auto";
-                            jqTable.data("formProp", dataEdit);
-                        }
-                        jqTable.jqGrid("editGridRow", sr, {
-                            width: editModeWidth,
-                            closeAfterEdit: true,
-                            closeAfterAdd: true
-                        });
-                    }
-                }, {width: editModeWidth}, {}, {multipleSearch: true});
-                //}
             }
         }
 
