@@ -1,12 +1,12 @@
 /// <reference path="../jqgrid/jqassist.ts" />
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
-/// <reference path="wlyddqkdef.ts" />
+/// <reference path="wgcpqkdef.ts" />
 /// <reference path="../unitedSelector.ts"/>
 ///<reference path="../messageBox.ts"/>
 ///<reference path="../companySelector.ts"/>
 
-module wlyddqk {
+module wgcpqk {
 
     interface Option {
         dt:string;
@@ -153,4 +153,4 @@ module wlyddqk {
     }
 }
 
-var entryView:wlyddqk.EntryView = new wlyddqk.EntryView();
+var entryView:wgcpqk.EntryView = new wgcpqk.EntryView();

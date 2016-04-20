@@ -1,12 +1,11 @@
-/// <reference path="../jqgrid/jqassist.ts" />
-/// <reference path="../util.ts" />
-/// <reference path="../dateSelector.ts" />
-/// <reference path="wlyddqkdef.ts" />
-/// <reference path="../unitedSelector.ts"/>
-///<reference path="../messageBox.ts"/>
-///<reference path="../companySelector.ts"/>
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../../unitedSelector.ts"/>
+///<reference path="../../messageBox.ts"/>
+///<reference path="../../companySelector.ts"/>
 
-module wlyddqk {
+module framework.basic {
 
     interface Option {
         dt:string;
@@ -16,38 +15,58 @@ module wlyddqk {
         date: Util.Date;
     }
 
+
+
+
+
+
+
     interface PluginData extends Util.IData {
-        plugin : EntryPluginView;
+        plugin : PluginView;
     }
 
-    export class EntryView implements EntryFrameView {
-
+    export class View implements FrameView {
         protected mOpt:Option;
         protected mDtSec:Util.DateSelector;
         protected mItemSelector:Util.UnitedSelector;
         protected mNodesAll:Util.DataNode[] = [];
-        protected mCurrentPlugin:EntryPluginView;
+        protected mCurrentPlugin:PluginView;
         protected mCurrentDate:Util.Date;
         protected mCompanySelector:Util.CompanySelector;
         protected mCurrentComp:Util.CompanyType;
 
-        public register(name:string, plugin:EntryPluginView):void {
+        public register(name:string, plugin:PluginView):void {
             var data:PluginData = {id: this.mNodesAll.length, value: name, plugin: plugin};
             var node:Util.DataNode = new Util.DataNode(data);
             this.mNodesAll.push(node);
-            plugin.setOnReadOnlyChangeListener((isReadOnly:boolean)=> {
-                if (isReadOnly) {
-                    $("#gbsv").hide();
-                    $("#gbsm").hide();
-                } else {
-                    $("#gbsv").show();
-                    $("#gbsm").show();
-                }
-            });
         }
 
-        unregister(name:string):EntryPluginView {
-            return undefined;
+        public unregister(name:string):PluginView {
+            var nod:Util.DataNode;
+
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                this.mNodesAll[i].accept({
+                    visit: (node:Util.DataNode) => {
+                        if (node.getData().value == name) {
+                            nod = node;
+                            return true;
+                        }
+                        return false;
+                    }
+                })
+                if (nod != undefined) {
+                    break;
+                }
+            }
+
+            return this.plugin(nod);
+        }
+
+        //不可以起名叫做export 在IE中有冲突
+        public exportExcel(elemId:string) {
+            let url:string = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
+            $("#" + elemId)[0].action = url;
+            $("#" + elemId)[0].submit();
         }
 
         public init(opt:Option):void {
@@ -70,7 +89,8 @@ module wlyddqk {
             this.updateUI();
         }
 
-        protected updateTypeSelector(width : number = 285) {
+
+        protected updateTypeSelector(width:number = 285) {
             let type:Util.CompanyType = this.mCompanySelector.getCompany();
             let nodes = [];
             for (var i = 0; i < this.mNodesAll.length; ++i) {
@@ -79,11 +99,11 @@ module wlyddqk {
                 }
             }
 
+            let typeChange = false;
             let curNodes = [];
-            if (this.mItemSelector != undefined) {
+            if (this.mItemSelector != undefined){
                 curNodes = this.mItemSelector.getTopNodes()
             }
-            let typeChange = false;
             if (nodes.length != curNodes.length) {
                 typeChange = true;
             } else {
@@ -95,7 +115,7 @@ module wlyddqk {
                 }
             }
 
-            if (typeChange) {
+            if (typeChange){
                 this.mItemSelector = new Util.UnitedSelector(nodes, this.mOpt.type);
                 if (nodes.length == 1) {
                     this.mItemSelector.hide();
@@ -112,11 +132,11 @@ module wlyddqk {
                     .css("padding", "2px 0 2px 4px")
                     .css("text-align", "left")
                     .css("font-size", "12px");
-
             }
         }
 
-        protected plugin(node:Util.DataNode):EntryPluginView {
+
+        protected plugin(node:Util.DataNode):PluginView {
             return (<PluginData>node.getData()).plugin;
         }
 
@@ -136,21 +156,14 @@ module wlyddqk {
                     this.plugin(this.mNodesAll[i]).hide();
                 }
             }
+
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
-            $("#headertitle")[0].innerHTML = node.getData().value;
+            $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
             this.plugin(node).update(dt, this.mCurrentComp);
-        }
-
-        public submit() {
-            this.plugin(this.getActiveNode()).submit(this.mCurrentDate, this.mCurrentComp);
-        }
-
-        public save() {
-            this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
         }
     }
 }
 
-var entryView:wlyddqk.EntryView = new wlyddqk.EntryView();
+var view:wlyddqk.FrameView = new wlyddqk.View();
