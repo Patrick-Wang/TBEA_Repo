@@ -82,6 +82,28 @@ module  ylfxwlyddmlspcs {
                 this.updateTable();
             }
 
+            isSupported( compType:Util.CompanyType):boolean{
+                if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH ||
+                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ ||
+                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL){
+                    if (compType == Util.CompanyType.SBGS ||
+                        compType == Util.CompanyType.HBGS ||
+                        compType == Util.CompanyType.XBC ||
+                        compType == Util.CompanyType.TBGS
+                    ){
+                        return true;
+                    }
+                }else{
+                    if (compType == Util.CompanyType.LLGS ||
+                        compType == Util.CompanyType.XLC ||
+                        compType == Util.CompanyType.DLGS
+                    ){
+                        return true;
+                    }
+                }
+                return false;
+            }
+
             public init(opt:Option):void {
                 super.init(opt);
                 view.register("变压器未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
@@ -89,7 +111,6 @@ module  ylfxwlyddmlspcs {
                 view.register("变压器未履约订单毛利水平测算-产品分类", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL));
                 view.register("线缆未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
                 view.register("线缆未履约订单毛利水平测算-产品分类", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
-
             }
 
             private updateTable():void {

@@ -104,6 +104,7 @@ module wlyddqk {
         }
 
         isSupported( compType:Util.CompanyType):boolean{
+            this.mStub.setType(this.mType);
             return this.mStub.isSupported(compType);
         }
 
@@ -209,6 +210,7 @@ module wlyddqk {
         }
 
         isSupported( compType:Util.CompanyType):boolean{
+            this.mStub.setType(this.mType);
             return this.mStub.isSupported(compType);
         }
 

@@ -221,20 +221,6 @@ th.ui-th-ltr {
                 year: ${year}
             }  
         });
-    	(function () {
-            $("#type select")
-                    .multiselect({
-                        multiple: false,
-                        header: false,
-                        minWidth: 250, 
-                        height: '100%', 
-                        // noneSelectedText: "请选择月份",
-                        selectedList: 1
-                    })
-                    .css("padding", "2px 0 2px 4px")
-                    .css("text-align", "left")
-                    .css("font-size", "12px");
-        }());
         $(document.body).css("visibility", "visible");
 
     });

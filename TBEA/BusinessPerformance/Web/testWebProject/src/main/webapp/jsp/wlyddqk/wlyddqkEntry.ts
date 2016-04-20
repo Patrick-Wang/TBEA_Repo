@@ -26,19 +26,20 @@ module wlyddqk {
         protected mDtSec:Util.DateSelector;
         protected mItemSelector:Util.UnitedSelector;
         protected mNodesAll:Util.DataNode[] = [];
-        protected mCurrentPlugin: EntryPluginView;
+        protected mCurrentPlugin:EntryPluginView;
         protected mCurrentDate:Util.Date;
         protected mCompanySelector:Util.CompanySelector;
         protected mCurrentComp:Util.CompanyType;
+
         public register(name:string, plugin:EntryPluginView):void {
             var data:PluginData = {id: this.mNodesAll.length, value: name, plugin: plugin};
             var node:Util.DataNode = new Util.DataNode(data);
             this.mNodesAll.push(node);
-            plugin.setOnReadOnlyChangeListener((isReadOnly:boolean)=>{
-                if (isReadOnly){
+            plugin.setOnReadOnlyChangeListener((isReadOnly:boolean)=> {
+                if (isReadOnly) {
                     $("#gbsv").hide();
                     $("#gbsm").hide();
-                }else{
+                } else {
                     $("#gbsv").show();
                     $("#gbsm").show();
                 }
@@ -79,7 +80,7 @@ module wlyddqk {
             }
 
             let curNodes = [];
-            if (this.mItemSelector != undefined){
+            if (this.mItemSelector != undefined) {
                 curNodes = this.mItemSelector.getTopNodes()
             }
             let typeChange = false;
@@ -95,15 +96,15 @@ module wlyddqk {
             }
 
             if (typeChange) {
-                    this.mItemSelector = new Util.UnitedSelector(nodes, this.mOpt.type);
-                    if (nodes.length == 1) {
-                        this.mItemSelector.hide();
-                    }
+                this.mItemSelector = new Util.UnitedSelector(nodes, this.mOpt.type);
+                if (nodes.length == 1) {
+                    this.mItemSelector.hide();
+                }
                 $("#" + this.mOpt.type + " select")
                     .multiselect({
                         multiple: false,
                         header: false,
-                        minWidth: 300,
+                        minWidth: 285,
                         height: '100%',
                         // noneSelectedText: "请选择月份",
                         selectedList: 1
@@ -115,11 +116,11 @@ module wlyddqk {
             }
         }
 
-        protected plugin(node:Util.DataNode):EntryPluginView{
-            return  (<PluginData>node.getData()).plugin;
+        protected plugin(node:Util.DataNode):EntryPluginView {
+            return (<PluginData>node.getData()).plugin;
         }
 
-        protected getActiveNode():Util.DataNode{
+        protected getActiveNode():Util.DataNode {
             return this.mItemSelector.getDataNode(this.mItemSelector.getPath());
         }
 
@@ -142,11 +143,11 @@ module wlyddqk {
             this.plugin(node).update(dt, this.mCurrentComp);
         }
 
-        public submit(){
+        public submit() {
             this.plugin(this.getActiveNode()).submit(this.mCurrentDate, this.mCurrentComp);
         }
 
-        public save(){
+        public save() {
             this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
         }
     }
