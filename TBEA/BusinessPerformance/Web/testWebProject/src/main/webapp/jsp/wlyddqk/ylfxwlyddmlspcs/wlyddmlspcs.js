@@ -21,7 +21,7 @@ var ylfxwlyddmlspcs;
                 var data = [];
                 var node;
                 var titleNodes = [];
-                node = new JQTable.Node("产品", "wlyddmlspcs_cp", true, TextAlign.Center);
+                node = new JQTable.Node("产品", "wlyddmlspcs_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node("上年度", "wlyddmlspcs_snd", true, TextAlign.Center);
                 for (var i = month + 1; i <= 12; ++i) {
