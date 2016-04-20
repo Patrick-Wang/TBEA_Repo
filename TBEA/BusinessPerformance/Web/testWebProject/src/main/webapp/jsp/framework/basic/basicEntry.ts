@@ -10,6 +10,7 @@ module framework.basic {
     import router = framework.route.router;
 
     export class EntryFrameView extends BasicFrameView {
+        static ins = new EntryFrameView();
 
         onEvent(e:framework.route.Event):any {
             super.onEvent(e);
@@ -38,5 +39,3 @@ module framework.basic {
         }
     }
 }
-
-var entryView:wlyddqk.EntryView = new wlyddqk.EntryView();

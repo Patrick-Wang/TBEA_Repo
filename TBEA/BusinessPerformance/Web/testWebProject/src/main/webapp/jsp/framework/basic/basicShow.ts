@@ -16,6 +16,7 @@ module framework.basic {
     }
 
     export class ShowFrameView extends BasicFrameView {
+        static ins = new ShowFrameView();
         onEvent(e:framework.route.Event):any {
             super.onEvent(e);
             switch (e.id) {

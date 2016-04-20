@@ -44,9 +44,9 @@ var framework;
                     compType: this.mCurrentComp
                 });
             };
+            EntryFrameView.ins = new EntryFrameView();
             return EntryFrameView;
         })(basic.BasicFrameView);
         basic.EntryFrameView = EntryFrameView;
     })(basic = framework.basic || (framework.basic = {}));
 })(framework || (framework = {}));
-var entryView = new wlyddqk.EntryView();
