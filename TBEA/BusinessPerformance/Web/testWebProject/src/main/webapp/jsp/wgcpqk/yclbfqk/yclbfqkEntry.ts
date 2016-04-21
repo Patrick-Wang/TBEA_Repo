@@ -97,6 +97,11 @@ module wgcpqk {
                 });
             }
 
+            protected isSupported(compType:Util.CompanyType):boolean {
+                return true;
+            }
+
+
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
                 this.mCompType = compType;

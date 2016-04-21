@@ -97,6 +97,9 @@ var wgcpqk;
                     }
                 });
             };
+            EntryView.prototype.isSupported = function (compType) {
+                return true;
+            };
             EntryView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;

@@ -4,6 +4,7 @@
 ///<reference path="../../messageBox.ts"/>
 ///<reference path="../../framework/basic/basicdef.ts"/>
 ///<reference path="../../framework/route/route.ts"/>
+///<reference path="../dzwzgbdef.ts"/>
 declare var $:any;
 
 
@@ -29,10 +30,6 @@ module dzwzgb {
                         .append(new JQTable.Node("指导价格按照目标利润价（万元）", "ai", readOnly))
                 ], gridName);
             }
-        }
-
-        interface Option extends framework.basic.PluginOption {
-            tb:string;
         }
 
         class EntryView extends framework.basic.EntryPluginView {

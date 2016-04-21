@@ -12,8 +12,6 @@ var __extends = (this && this.__extends) || function (d, b) {
 var plugin;
 (function (plugin) {
     plugin.yclbfqk = framework.basic.endpoint.lastId();
-    plugin.xlyclbfqk = framework.basic.endpoint.lastId();
-    plugin.byqyclbfqk = framework.basic.endpoint.lastId();
 })(plugin || (plugin = {}));
 var wgcpqk;
 (function (wgcpqk) {
@@ -60,17 +58,6 @@ var wgcpqk;
                     cyType: this.mCyType
                 });
             };
-            ShowView.prototype.onEvent = function (e) {
-                if (e.redirects != undefined) {
-                    if (plugin.byqyclbfqk = e.redirects[e.redirects.length - 1]) {
-                        this.mCyType = wgcpqk.CyType.BYQ;
-                    }
-                    else {
-                        this.mCyType = wgcpqk.CyType.XL;
-                    }
-                }
-                return _super.prototype.onEvent.call(this, e);
-            };
             ShowView.prototype.option = function () {
                 return this.mOpt;
             };
@@ -96,13 +83,9 @@ var wgcpqk;
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.xlyclbfqk, this.getId()))
+                    .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况（变压器）");
-                framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.byqyclbfqk, this.getId()))
-                    .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况（线缆）");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况");
             };
             ShowView.prototype.updateTable = function () {
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));

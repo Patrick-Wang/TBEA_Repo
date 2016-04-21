@@ -7,8 +7,6 @@
 
 module plugin {
     export let yclbfqk : number = framework.basic.endpoint.lastId();
-    export let xlyclbfqk : number = framework.basic.endpoint.lastId();
-    export let byqyclbfqk : number = framework.basic.endpoint.lastId();
 }
 
 module wgcpqk {
@@ -57,17 +55,6 @@ module wgcpqk {
                     });
             }
 
-            onEvent(e:framework.route.Event):any {
-                if (e.redirects != undefined){
-                    if (plugin.byqyclbfqk = e.redirects[e.redirects.length - 1]){
-                        this.mCyType = CyType.BYQ;
-                    }else{
-                        this.mCyType = CyType.XL;
-                    }
-                }
-                return super.onEvent(e);
-            }
-
             private option():Option {
                 return <Option>this.mOpt;
             }
@@ -96,13 +83,9 @@ module wgcpqk {
 
             public init(opt:Option):void {
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.xlyclbfqk, this.getId()))
+                    .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况（变压器）");
-                framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.byqyclbfqk, this.getId()))
-                    .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况（线缆）");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况");
             }
 
             private updateTable():void {

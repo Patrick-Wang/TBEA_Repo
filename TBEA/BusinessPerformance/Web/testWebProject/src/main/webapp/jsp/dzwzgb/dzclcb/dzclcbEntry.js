@@ -9,6 +9,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 ///<reference path="../../messageBox.ts"/>
 ///<reference path="../../framework/basic/basicdef.ts"/>
 ///<reference path="../../framework/route/route.ts"/>
+///<reference path="../dzwzgbdef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.dzclcb = framework.basic.endpoint.lastId();
