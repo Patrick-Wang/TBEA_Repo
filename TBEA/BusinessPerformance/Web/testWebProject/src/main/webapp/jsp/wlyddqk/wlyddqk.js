@@ -90,7 +90,7 @@ var wlyddqk;
                     .multiselect({
                     multiple: false,
                     header: false,
-                    minWidth: 250,
+                    minWidth: 285,
                     height: '100%',
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
@@ -123,7 +123,7 @@ var wlyddqk;
             this.plugin(node).update(dt, this.mCurrentComp);
         };
         return View;
-    }());
+    })();
     wlyddqk.View = View;
 })(wlyddqk || (wlyddqk = {}));
 var view = new wlyddqk.View();

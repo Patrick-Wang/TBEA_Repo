@@ -690,11 +690,12 @@ module JQTable {
             for (var i in this.mTitle) {
                 colums = colums.concat(this.mTitle[i].leaves());
             }
-
+            let id = 1;
             for (var i in data) {
                 var rowdata = {};
+                rowdata["id"] = "" + (id++);
                 for (var j in colums) {
-                    rowdata[colums[j].idChain()] = data[i][j];
+                    rowdata[colums[j].idChain()] = data[i][j] == undefined ? "" : data[i][j];
                 }
                 alldata.push(rowdata);
             }
@@ -707,12 +708,13 @@ module JQTable {
             for (var i in this.mTitle) {
                 colums = colums.concat(this.mTitle[i].leaves());
             }
-
+            let col;
             for (var i in data) {
                 var rowdata:any = {};
                 rowdata["id"] = data[i][0];
                 for (var j in colums) {
-                    rowdata[colums[j].idChain()] = data[i][parseInt(j) + 1];
+                    col = parseInt(j) + 1;
+                    rowdata[colums[j].idChain()] = data[i][col] == undefined ? "" : data[i][col];
                 }
                 alldata.push(rowdata);
             }
@@ -1032,9 +1034,12 @@ module JQTable {
                 afterEditCell: (rowid, cellname, v, iRow, iCol) => {
                     $("#" + this.mGridName + " input[type=text]").bind("keydown", function (e) {
                         if (e.keyCode === 13) {
-                            setTimeout(function () {
-                                grid.jqGrid("editCell", iRow + 1, iCol, true);
-                            }, 10);
+                            let ids:string[] = grid.jqGrid('getDataIDs');
+                            if (ids.length > iRow){
+                                setTimeout(function () {
+                                    grid.jqGrid("editCell", iRow + 1, iCol, true);
+                                }, 10);
+                            }
                         }
                     });
                 }
@@ -1050,6 +1055,7 @@ module JQTable {
                 }
             });
 
+            if (rowNum != undefined && pagername != undefined){
             setTimeout( () => {
                 let addId = 1;
                 grid.jqGrid('navGrid', pagername, {
@@ -1124,6 +1130,7 @@ module JQTable {
                     }
                 }, {}, {}, {multipleSearch: false});
             }, 0);
+            }
             return opt;
         }
 
@@ -1210,7 +1217,7 @@ module JQTable {
                 }
             }
 
-            if (option.assistEditable && option.rowNum != undefined && option.pager != undefined) {
+            if (option.assistEditable) {
                 $.extend(option, this.enablePageEdit(option.rowNum, option.pager));
             }
 

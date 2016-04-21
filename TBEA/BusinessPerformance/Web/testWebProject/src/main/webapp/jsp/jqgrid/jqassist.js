@@ -324,7 +324,7 @@ var JQTable;
             return this.mOpts.sorttype;
         };
         return Node;
-    }());
+    })();
     JQTable.Node = Node;
     var Cell = (function () {
         function Cell(row, col) {
@@ -347,7 +347,7 @@ var JQTable;
             return this.mCol;
         };
         return Cell;
-    }());
+    })();
     JQTable.Cell = Cell;
     var Formula = (function () {
         function Formula(destCell, srcCellarray, formula) {
@@ -384,7 +384,7 @@ var JQTable;
             }
         };
         return Formula;
-    }());
+    })();
     JQTable.Formula = Formula;
     var JQGridAssistant = (function () {
         function JQGridAssistant(titleNodes, gridName) {
@@ -443,17 +443,51 @@ var JQTable;
         };
         JQGridAssistant.prototype.getAllData = function () {
             var grid = $("#" + this.mGridName + "");
+            grid[0].p.data;
             var ids = grid.jqGrid('getDataIDs');
             var data = [];
-            for (var i in ids) {
+            for (var i in grid[0].p.data) {
                 var row = [];
-                row.push(ids[i]);
+                row.push(grid[0].p.data[i].id);
                 for (var j in this.mColModel) {
-                    row.push(grid.jqGrid("getCell", ids[i], this.mColModel[j].index));
+                    var val = grid[0].p.data[i][this.mColModel[j].index];
+                    row.push(undefined == val ? "" : val + "");
                 }
                 data.push(row);
             }
             return data;
+        };
+        JQGridAssistant.prototype.getDataCount = function () {
+            var grid = $("#" + this.mGridName + "");
+            return grid[0].p.data.length;
+        };
+        JQGridAssistant.prototype.getCurrentPageNumber = function () {
+            var grid = $("#" + this.mGridName + "");
+            var curPg = $(grid[0].p.pager + "_center input").val();
+            return parseInt(curPg);
+        };
+        JQGridAssistant.prototype.navigateToPage = function (pg) {
+            var grid = $("#" + this.mGridName + "");
+            grid[0].p.page = pg;
+            grid[0].grid.populate();
+        };
+        JQGridAssistant.prototype.showError = function (msg, width, height) {
+            if (width === void 0) { width = 290; }
+            if (height === void 0) { height = 90; }
+            this.centerModal(width, height);
+            setTimeout(function () {
+                $.jgrid.info_dialog($.jgrid.errors.errcap, msg, $.jgrid.edit.bClose);
+            }, 100);
+        };
+        JQGridAssistant.prototype.centerModal = function (width, height) {
+            if (width === void 0) { width = 290; }
+            if (height === void 0) { height = 90; }
+            var grid = $("#" + this.mGridName + "");
+            $.jgrid.jqModal = {
+                width: width,
+                left: grid.offset().left + grid.width() / 2 - width / 2,
+                top: grid.offset().top + grid.height() / 2 - height
+            };
         };
         JQGridAssistant.prototype.testDepth = function () {
             var depth = 1;
@@ -558,10 +592,12 @@ var JQTable;
             for (var i in this.mTitle) {
                 colums = colums.concat(this.mTitle[i].leaves());
             }
+            var id = 1;
             for (var i in data) {
                 var rowdata = {};
+                rowdata["id"] = "" + (id++);
                 for (var j in colums) {
-                    rowdata[colums[j].idChain()] = data[i][j];
+                    rowdata[colums[j].idChain()] = data[i][j] == undefined ? "" : data[i][j];
                 }
                 alldata.push(rowdata);
             }
@@ -573,11 +609,13 @@ var JQTable;
             for (var i in this.mTitle) {
                 colums = colums.concat(this.mTitle[i].leaves());
             }
+            var col;
             for (var i in data) {
                 var rowdata = {};
                 rowdata["id"] = data[i][0];
                 for (var j in colums) {
-                    rowdata[colums[j].idChain()] = data[i][parseInt(j) + 1];
+                    col = parseInt(j) + 1;
+                    rowdata[colums[j].idChain()] = data[i][col] == undefined ? "" : data[i][col];
                 }
                 alldata.push(rowdata);
             }
@@ -855,6 +893,121 @@ var JQTable;
                 this.completeList[i]();
             }
         };
+        JQGridAssistant.prototype.enablePageEdit = function (rowNum, pagername) {
+            var _this = this;
+            var grid = $("#" + this.mGridName + "");
+            var lastsel = "";
+            var lastcell = "";
+            var opt = {
+                beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
+                    lastsel = iRow;
+                    lastcell = iCol;
+                    $("input").attr("disabled", true);
+                },
+                afterSaveCell: function () {
+                    $("input").attr("disabled", false);
+                    lastsel = "";
+                },
+                afterRestoreCell: function () {
+                    $("input").attr("disabled", false);
+                    lastsel = "";
+                },
+                afterEditCell: function (rowid, cellname, v, iRow, iCol) {
+                    $("#" + _this.mGridName + " input[type=text]").bind("keydown", function (e) {
+                        if (e.keyCode === 13) {
+                            var ids = grid.jqGrid('getDataIDs');
+                            if (ids.length > iRow) {
+                                setTimeout(function () {
+                                    grid.jqGrid("editCell", iRow + 1, iCol, true);
+                                }, 10);
+                            }
+                        }
+                    });
+                }
+            };
+            $('html').bind('click', function (e) {
+                if (lastsel != "") {
+                    if ($(e.target).closest("#" + _this.mGridName).length == 0) {
+                        //  $("#" + name).jqGrid('saveRow', lastsel);
+                        grid.jqGrid("saveCell", lastsel, lastcell);
+                        //$("#" + name).resetSelection();
+                        lastsel = "";
+                    }
+                }
+            });
+            if (rowNum != undefined && pagername != undefined) {
+                setTimeout(function () {
+                    var addId = 1;
+                    grid.jqGrid('navGrid', pagername, {
+                        del: true, add: true, edit: false, refresh: false, search: false,
+                        addfunc: function () {
+                            if (lastsel != "") {
+                                grid.jqGrid("saveCell", lastsel, lastcell);
+                                lastsel = "";
+                            }
+                            var rid = "add" + (++addId);
+                            var rdata = {};
+                            rdata[rid] = rid;
+                            grid.addRowData(rid, rdata, 'last');
+                            var curPg = _this.getCurrentPageNumber();
+                            var lastRowPg = parseInt("" + (_this.getDataCount() - 1) / rowNum) + 1;
+                            if (curPg != lastRowPg) {
+                                _this.navigateToPage(lastRowPg);
+                            }
+                            setTimeout(function () {
+                                var ids = grid.jqGrid('getDataIDs');
+                                //使用ids.length 为实验测试获得
+                                grid.jqGrid("editCell", ids.length, 0, true);
+                            }, 100);
+                        },
+                        delfunc: function (rowid) {
+                            if (lastsel != "") {
+                                grid.jqGrid("saveCell", lastsel, lastcell);
+                                lastsel = "";
+                            }
+                            if (rowid.indexOf("add") < 0) {
+                                _this.showError("数据已保存，无法删除");
+                                return;
+                            }
+                            var ids = grid.jqGrid('getDataIDs');
+                            grid.jqGrid("delRowData", rowid);
+                            grid.trigger("reloadGrid");
+                            var dataCount = _this.getDataCount();
+                            if (dataCount == 0) {
+                                return;
+                            }
+                            var curPg = _this.getCurrentPageNumber();
+                            var lastRowPg = parseInt("" + (dataCount - 1) / rowNum) + 1;
+                            var curSelId = null;
+                            if (curPg > lastRowPg) {
+                                _this.navigateToPage(lastRowPg);
+                                ids = grid.jqGrid('getDataIDs');
+                                curSelId = ids.length - 1;
+                            }
+                            else {
+                                for (var i = 0; i < ids.length; ++i) {
+                                    if (ids[i] == rowid) {
+                                        if (i == ids.length - 1) {
+                                            curSelId = i - 1;
+                                        }
+                                        else if (i == 0) {
+                                            curSelId = 0;
+                                        }
+                                        else {
+                                            curSelId = i;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                            //curSelId 值为实验测试获得
+                            grid.jqGrid("editCell", curSelId + 1, 0, false);
+                        }
+                    }, {}, {}, { multipleSearch: false });
+                }, 0);
+            }
+            return opt;
+        };
         JQGridAssistant.prototype.decorate = function (option) {
             var _this = this;
             if (option.gridComplete != undefined) {
@@ -923,17 +1076,14 @@ var JQTable;
             if (option.colModel == undefined) {
                 option.colModel = this.getColModel();
             }
-            //            if (option.datatype != "local") {
-            //                option.jsonReader = {
-            //                    cell: "",
-            //                    id: "0"
-            //                };
-            //            }
             if (option.loadError != undefined) {
                 var onFailed = option.loadError;
                 option.loadError = function () {
                     onFailed();
                 };
+            }
+            if (option.assistEditable) {
+                $.extend(option, this.enablePageEdit(option.rowNum, option.pager));
             }
             this.mOnMergedRows = option.onMergedRows;
             this.mOnMergedColums = option.onMergedColums;
@@ -941,6 +1091,6 @@ var JQTable;
             return option;
         };
         return JQGridAssistant;
-    }());
+    })();
     JQTable.JQGridAssistant = JQGridAssistant;
 })(JQTable || (JQTable = {}));

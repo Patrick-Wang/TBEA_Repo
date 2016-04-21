@@ -36,7 +36,7 @@ var ylfxwlyddmlspcs;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var WLYDDMLSPCSView = (function (_super) {
             __extends(WLYDDMLSPCSView, _super);
             function WLYDDMLSPCSView() {
@@ -75,6 +75,26 @@ var ylfxwlyddmlspcs;
                 }
                 this.updateTable();
             };
+            WLYDDMLSPCSView.prototype.isSupported = function (compType) {
+                if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH ||
+                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ ||
+                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL) {
+                    if (compType == Util.CompanyType.SBGS ||
+                        compType == Util.CompanyType.HBGS ||
+                        compType == Util.CompanyType.XBC ||
+                        compType == Util.CompanyType.TBGS) {
+                        return true;
+                    }
+                }
+                else {
+                    if (compType == Util.CompanyType.LLGS ||
+                        compType == Util.CompanyType.XLC ||
+                        compType == Util.CompanyType.DLGS) {
+                        return true;
+                    }
+                }
+                return false;
+            };
             WLYDDMLSPCSView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
                 view.register("变压器未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
@@ -104,7 +124,7 @@ var ylfxwlyddmlspcs;
                 }));
             };
             return WLYDDMLSPCSView;
-        }(wlyddqk.BasePluginView));
+        })(wlyddqk.BasePluginView);
         wlyddmlspcs.pluginView = WLYDDMLSPCSView.newInstance();
     })(wlyddmlspcs = ylfxwlyddmlspcs.wlyddmlspcs || (ylfxwlyddmlspcs.wlyddmlspcs = {}));
 })(ylfxwlyddmlspcs || (ylfxwlyddmlspcs = {}));

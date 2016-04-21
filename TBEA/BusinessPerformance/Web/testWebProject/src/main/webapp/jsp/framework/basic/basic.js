@@ -68,6 +68,7 @@ var framework;
                         this.updateUI();
                         break;
                 }
+                return _super.prototype.onEvent.call(this, e);
             };
             BasicFrameView.prototype.updateTypeSelector = function (width) {
                 if (width === void 0) { width = 285; }

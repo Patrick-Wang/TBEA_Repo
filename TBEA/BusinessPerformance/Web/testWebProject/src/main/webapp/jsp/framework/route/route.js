@@ -16,22 +16,28 @@ var framework;
                 this.mEndpoints[endpoint.getId()] = undefined;
             };
             Router.prototype.sendInternal = function (e) {
-                var targetId = e.to.getId();
-                if (this.mEndpoints[targetId] != undefined) {
-                    return e.to.onEvent(e);
+                var toEndpoint = this.mEndpoints[e.to];
+                if (toEndpoint != undefined) {
+                    return toEndpoint.onEvent(e);
                 }
                 return Router.FAILED;
             };
-            Router.prototype.from = function (src) {
+            Router.prototype.fromEp = function (from) {
+                return this.from(from.getId());
+            };
+            Router.prototype.toEp = function (to) {
+                return this.to(to.getId());
+            };
+            Router.prototype.from = function (from) {
                 this.mCurEvent = {};
-                this.mCurEvent.from = src.getId();
+                this.mCurEvent.from = from;
                 return this;
             };
             Router.prototype.to = function (target) {
                 if (this.mCurEvent == undefined) {
                     this.mCurEvent = {};
                 }
-                this.mCurEvent.to = this.getEndpoint(target);
+                this.mCurEvent.to = target;
                 return this;
             };
             Router.prototype.broadcast = function (id, data) {
@@ -39,11 +45,11 @@ var framework;
                     for (var i in this.mEndpoints) {
                         var event_1 = {
                             from: this.mCurEvent.from,
-                            to: this.mEndpoints[i],
+                            to: undefined,
                             id: id,
                             data: data
                         };
-                        event_1.to.onEvent(event_1);
+                        this.mEndpoints[i].onEvent(event_1);
                     }
                     this.mCurEvent = undefined;
                     return Router.OK;
@@ -57,6 +63,17 @@ var framework;
                     var event_2 = this.mCurEvent;
                     this.mCurEvent = undefined;
                     return this.sendInternal(event_2);
+                }
+                return Router.FAILED;
+            };
+            Router.prototype.redirect = function (to, event) {
+                if (to != undefined) {
+                    if (event.redirects == undefined) {
+                        event.redirects = [];
+                    }
+                    event.redirects.push(event.to);
+                    event.to = to;
+                    return this.sendInternal(event);
                 }
                 return Router.FAILED;
             };

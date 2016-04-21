@@ -46,7 +46,8 @@ var wlyddqk;
             this.updateTypeSelector();
             this.updateUI();
         };
-        EntryView.prototype.updateTypeSelector = function () {
+        EntryView.prototype.updateTypeSelector = function (width) {
+            if (width === void 0) { width = 285; }
             var type = this.mCompanySelector.getCompany();
             var nodes = [];
             for (var i = 0; i < this.mNodesAll.length; ++i) {
@@ -79,7 +80,7 @@ var wlyddqk;
                     .multiselect({
                     multiple: false,
                     header: false,
-                    minWidth: 250,
+                    minWidth: width,
                     height: '100%',
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
@@ -118,7 +119,7 @@ var wlyddqk;
             this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
         };
         return EntryView;
-    }());
+    })();
     wlyddqk.EntryView = EntryView;
 })(wlyddqk || (wlyddqk = {}));
 var entryView = new wlyddqk.EntryView();

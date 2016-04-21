@@ -71,7 +71,7 @@ var sbdddcbjpcqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ByqkglyddView = (function (_super) {
             __extends(ByqkglyddView, _super);
             function ByqkglyddView() {
@@ -87,21 +87,23 @@ var sbdddcbjpcqk;
                 }
                 return false;
             };
-            ByqkglyddView.prototype.pluginGetExportUrl = function (date) {
+            ByqkglyddView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../sbdddcbjpcqk/byqkglydd/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
-                    type: this.mType
+                    type: this.mType,
+                    companyId: compType
                 });
             };
             ByqkglyddView.prototype.option = function () {
                 return this.mOpt;
             };
-            ByqkglyddView.prototype.pluginUpdate = function (date) {
+            ByqkglyddView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjax.get({
                     type: this.mType,
-                    date: date
+                    date: date,
+                    companyId: compType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -140,7 +142,7 @@ var sbdddcbjpcqk;
                 }));
             };
             return ByqkglyddView;
-        }(wlyddqk.BasePluginView));
+        })(wlyddqk.BasePluginView);
         byqkglydd.pluginView = ByqkglyddView.newInstance();
     })(byqkglydd = sbdddcbjpcqk.byqkglydd || (sbdddcbjpcqk.byqkglydd = {}));
 })(sbdddcbjpcqk || (sbdddcbjpcqk = {}));

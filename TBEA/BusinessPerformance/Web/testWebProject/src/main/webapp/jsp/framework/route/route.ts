@@ -5,7 +5,8 @@ module framework.route {
 
     export interface Event {
         from:number;
-        to:Endpoint;
+        to:number;
+        redirects?:number[];
         id:number;
         data:any;
     }
@@ -31,16 +32,24 @@ module framework.route {
         }
 
         private sendInternal(e:Event):any {
-            let targetId = e.to.getId();
-            if (this.mEndpoints[targetId] != undefined) {
-                return e.to.onEvent(e);
+            let toEndpoint = this.mEndpoints[e.to];
+            if (toEndpoint != undefined) {
+                return toEndpoint.onEvent(e);
             }
             return Router.FAILED;
         }
 
-        public from(src:Endpoint):Router {
+        public fromEp(from:Endpoint):Router {
+            return this.from(from.getId());
+        }
+
+        public toEp(to:Endpoint):Router{
+            return this.to(to.getId());
+        }
+
+        public from(from:number):Router {
             this.mCurEvent = <Event>{};
-            this.mCurEvent.from = src.getId();
+            this.mCurEvent.from = from;
             return this;
         }
 
@@ -48,7 +57,7 @@ module framework.route {
             if (this.mCurEvent == undefined) {
                 this.mCurEvent = <Event>{};
             }
-            this.mCurEvent.to = this.getEndpoint(target);
+            this.mCurEvent.to = target;
             return this;
         }
 
@@ -57,11 +66,11 @@ module framework.route {
                 for (let i in this.mEndpoints) {
                     let event = {
                         from: this.mCurEvent.from,
-                        to: this.mEndpoints[i],
+                        to: undefined,
                         id: id,
                         data: data
                     }
-                    event.to.onEvent(event);
+                    this.mEndpoints[i].onEvent(event);
                 }
                 this.mCurEvent = undefined;
                 return Router.OK;
@@ -75,6 +84,18 @@ module framework.route {
                 this.mCurEvent.data = data;
                 let event = this.mCurEvent;
                 this.mCurEvent = undefined;
+                return this.sendInternal(event);
+            }
+            return Router.FAILED;
+        }
+
+        public redirect(to:number, event:Event):any {
+            if (to != undefined) {
+                if (event.redirects == undefined){
+                    event.redirects = [];
+                }
+                event.redirects.push(event.to);
+                event.to = to;
                 return this.sendInternal(event);
             }
             return Router.FAILED;

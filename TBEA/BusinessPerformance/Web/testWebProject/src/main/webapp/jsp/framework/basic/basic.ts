@@ -85,6 +85,7 @@ module framework.basic {
                     this.updateUI();
                     break;
             }
+            return super.onEvent(e);
         }
 
         protected updateTypeSelector(width:number = 285) {

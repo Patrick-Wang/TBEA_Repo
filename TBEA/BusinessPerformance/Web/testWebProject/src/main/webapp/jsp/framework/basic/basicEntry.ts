@@ -10,8 +10,6 @@ module framework.basic {
     import router = framework.route.router;
 
     export class EntryFrameView extends BasicFrameView {
-        static ins = new EntryFrameView();
-
         onEvent(e:framework.route.Event):any {
             super.onEvent(e);
             switch (e.id) {
@@ -25,14 +23,14 @@ module framework.basic {
         }
 
         protected submit() {
-            router.to(this.mCurrentPlugin).send(FrameEvent.FE_SAVE,{
+            router.to(this.mCurrentPlugin).send(FrameEvent.FE_SUBMIT,{
                 date:this.mCurrentDate,
                 compType:this.mCurrentComp
             });
         }
 
         protected save() {
-            router.to(this.mCurrentPlugin).send(FrameEvent.FE_SUBMIT,{
+            router.to(this.mCurrentPlugin).send(FrameEvent.FE_SAVE,{
                 date:this.mCurrentDate,
                 compType:this.mCurrentComp
             });

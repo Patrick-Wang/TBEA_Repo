@@ -55,7 +55,7 @@ var sbdddcbjpcqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var XlkglyddEntryView = (function (_super) {
             __extends(XlkglyddEntryView, _super);
             function XlkglyddEntryView() {
@@ -167,95 +167,31 @@ var sbdddcbjpcqk;
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                var addId = 0;
-                var delId = 0;
                 var jqTable = this.$(name);
                 jqTable.jqGrid(this.mTableAssist.decorate({
                     datatype: "local",
+                    data: this.mTableAssist.getDataWithId(this.mData.statusData.data),
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    assistEditable: true,
                     //autowidth : false,
-                    //cellsubmit: 'clientArray',
-                    editurl: 'clientArray',
-                    //cellEdit: true,
+                    cellsubmit: 'clientArray',
+                    //editurl: 'clientArray',
+                    cellEdit: true,
                     //height: data.length > 25 ? 550 : '100%',
                     // width: titles.length * 200,
-                    rowNum: 150,
+                    rowNum: 20,
                     height: '100%',
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    data: this.mTableAssist.getDataWithId(this.mData.statusData.data),
                     viewrecords: true,
-                    pager: '#' + pagername,
+                    pager: '#' + pagername
                 }));
-                jqTable.bind("jqGridAddEditAfterShowForm", function (event, element, oper) {
-                    if (oper == "edit") {
-                        var page = jqTable.jqGrid('getGridParam', 'page');
-                        var selectid = parseInt(jqTable.jqGrid('getGridParam', 'selrow'));
-                        var rownum = jqTable.jqGrid('getGridParam', 'rowNum');
-                        var acRowid = ((page - 1) * rownum) + selectid;
-                    }
-                });
-                var editModeWidth = 350;
-                jqTable.bind("jqGridAddEditAfterSubmit", function (event, element, data, oper) {
-                    if (oper == "add") {
-                        jqTable.addRowData("add" + (++addId), data, 'first');
-                    }
-                    else if (oper == "edit") {
-                        var selectid = parseInt(jqTable.jqGrid('getGridParam', 'selrow'));
-                        jqTable.setRowData(selectid, data);
-                    }
-                });
-                //if (this.mCompanyName == "股份公司") {
-                //    $("#" + childName).jqGrid('navGrid', '#pager', {
-                //        del: false, add: false, edit: false,
-                //        addfunc: function() {
-                //            var dataEdit = $("#" + childName).data("formProp");
-                //            if (undefined != dataEdit) {
-                //                dataEdit.width = editModeWidth;
-                //                dataEdit.datawidth = "auto";
-                //                $("#" + childName).data("formProp", dataEdit);
-                //            }
-                //            $("#" + childName).jqGrid("editGridRow", "new", { width: editModeWidth });
-                //        },
-                //        editfunc: function(sr) {
-                //            var dataEdit = jqTable.data("formProp");
-                //            if (undefined != dataEdit) {
-                //                dataEdit.width = editModeWidth;
-                //                dataEdit.datawidth = "auto";
-                //                jqTable.data("formProp", dataEdit);
-                //            }
-                //            jqTable.jqGrid("editGridRow", sr, { width: editModeWidth });
-                //        }
-                //    }, {}, {}, {}, { multipleSearch: true });
-                //} else {
-                jqTable.jqGrid('navGrid', '#' + pagername, {
-                    del: false, add: true, edit: true, refresh: false,
-                    addfunc: function () {
-                        var dataEdit = jqTable.data("formProp");
-                        if (undefined != dataEdit) {
-                            dataEdit.width = editModeWidth;
-                            dataEdit.datawidth = "auto";
-                            jqTable.data("formProp", dataEdit);
-                        }
-                        jqTable.jqGrid("editGridRow", "new", { width: editModeWidth, closeAfterEdit: true, closeAfterAdd: true });
-                    },
-                    editfunc: function (sr) {
-                        var dataEdit = jqTable.data("formProp");
-                        if (undefined != dataEdit) {
-                            dataEdit.width = editModeWidth;
-                            dataEdit.datawidth = "auto";
-                            jqTable.data("formProp", dataEdit);
-                        }
-                        jqTable.jqGrid("editGridRow", sr, { width: editModeWidth, closeAfterEdit: true, closeAfterAdd: true });
-                    }
-                }, { width: editModeWidth }, {}, { multipleSearch: true });
-                //}
             };
             return XlkglyddEntryView;
-        }(wlyddqk.BaseEntryPluginView));
+        })(wlyddqk.BaseEntryPluginView);
         xlkglyddEntry.pluginView = XlkglyddEntryView.newInstance();
     })(xlkglyddEntry = sbdddcbjpcqk.xlkglyddEntry || (sbdddcbjpcqk.xlkglyddEntry = {}));
 })(sbdddcbjpcqk || (sbdddcbjpcqk = {}));

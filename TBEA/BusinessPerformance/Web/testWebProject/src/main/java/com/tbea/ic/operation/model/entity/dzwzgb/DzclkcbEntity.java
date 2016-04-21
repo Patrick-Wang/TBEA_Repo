@@ -28,6 +28,7 @@ public class DzclkcbEntity extends AbstractReadWriteEntity implements Serializab
 	Integer nf;
 	Integer yf;
 	Integer clid;
+	Integer dwid;
 	Double qhyk;
 	Double scxhyjj;
 	Double cgyjj;
@@ -108,6 +109,12 @@ public class DzclkcbEntity extends AbstractReadWriteEntity implements Serializab
 	}
 	public void setZt(Integer zt) {
 		this.zt = zt;
+	}
+	public Integer getDwid() {
+		return dwid;
+	}
+	public void setDwid(Integer dwid) {
+		this.dwid = dwid;
 	}
 
 }

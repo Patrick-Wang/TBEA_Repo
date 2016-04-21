@@ -50,8 +50,9 @@
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-<%@include file="../framework/basic/basicEntry.jsp"%>
-
+<%@include file="../framework/basic/basicShow.jsp"%>
+<script src="${pageContext.request.contextPath}/jsp/dzwzgb/dzwzgbdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/dzwzgb/dzwzgb.js" type="text/javascript"></script>
 <title>应收账款管报</title>
 
 <style type="text/css">
@@ -178,21 +179,19 @@ th.ui-th-ltr {
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
-				onclick="framework.route.router.to(framework.basic.FrameView.FRAME_ID).send(FrameEvent.FE_UPDATE)" />
+				onclick="framework.route.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<%@include file="../sbdddcbjpcqk/byqkglydd/byqkglydd.jsp"%>
-				<%@include file="../sbdddcbjpcqk/xlkglydd/xlkglydd.jsp"%>
-				<%@include file="./ylfxwlyddmlspcs/wlyddmlspcs.jsp"%>
+				<%@include file="dzclcb/dzclcb.jsp"%>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<form id="export" method="post">
 					<input id="exportButton" type="button" value="导出"
-						   onclick="framework.route.router.to(framework.basic.FrameView.FRAME_ID).send(FrameEvent.FE_EXPORT_EXCEL, 'export')">
+						   onclick="framework.route.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
 				</form> 
 			</td>
 		</tr>
@@ -201,7 +200,7 @@ th.ui-th-ltr {
 
 
     $(document).ready(function () {
-		framework.route.router.to(framework.basic.FrameView.FRAME_ID).send(FrameEvent.FE_INIT_EVENT,{
+		framework.route.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
 			type: "type",
 			comp:"compid",
 			comps : JSON.parse('${nodeData}'),

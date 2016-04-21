@@ -43,7 +43,6 @@ var framework;
                 $("#" + elemId)[0].action = url;
                 $("#" + elemId)[0].submit();
             };
-            ShowFrameView.ins = new ShowFrameView();
             return ShowFrameView;
         })(basic.BasicFrameView);
         basic.ShowFrameView = ShowFrameView;

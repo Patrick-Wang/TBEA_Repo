@@ -36,6 +36,7 @@ public class ExcelTemplate {
 	private static String pathYszkgbTemplate = resPath + "yszkgb_template.xls";
 	private static String pathChgbTemplate = resPath + "chgb_template.xls";
 	private static String pathSbdddcbjpcqkTemplate = resPath + "sbdddcbjpcqk_template.xls";
+	private static String pathDzwzgbTemplate = resPath + "dzwzgb_template.xls";
 	
 	private static ExcelTemplate createTemplate(String path, int index, int size)
 			throws FileNotFoundException, IOException {
@@ -87,6 +88,14 @@ public class ExcelTemplate {
 		return createTemplate(pathSbdddcbjpcqkTemplate, type.ordinal(),
 				SbdddcbjpcqkSheetType.END.ordinal());
 	}
+	
+	public static ExcelTemplate createDzwzgbTemplate(DzwzgbSheetType type)
+			throws IOException {
+		return createTemplate(pathDzwzgbTemplate, type.ordinal(),
+				DzwzgbSheetType.END.ordinal());
+	}
+	
+	
 	
 	HSSFWorkbook workbook;
 	HSSFCellStyle cellStyleNull;
@@ -225,5 +234,15 @@ public class ExcelTemplate {
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(fileName, "UTF-8")  +"\"");
 		this.write(response.getOutputStream());
+	}
+	
+	public void writeWithRawSize(OutputStream os) throws IOException{
+		workbook.write(os);
+	}
+	
+	public void writeWithRawSize(HttpServletResponse response, String fileName) throws IOException{
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(fileName, "UTF-8")  +"\"");
+		this.writeWithRawSize(response.getOutputStream());
 	}
 }

@@ -33,18 +33,17 @@ var framework;
                 }
             };
             EntryFrameView.prototype.submit = function () {
-                router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_SAVE, {
-                    date: this.mCurrentDate,
-                    compType: this.mCurrentComp
-                });
-            };
-            EntryFrameView.prototype.save = function () {
                 router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_SUBMIT, {
                     date: this.mCurrentDate,
                     compType: this.mCurrentComp
                 });
             };
-            EntryFrameView.ins = new EntryFrameView();
+            EntryFrameView.prototype.save = function () {
+                router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_SAVE, {
+                    date: this.mCurrentDate,
+                    compType: this.mCurrentComp
+                });
+            };
             return EntryFrameView;
         })(basic.BasicFrameView);
         basic.EntryFrameView = EntryFrameView;

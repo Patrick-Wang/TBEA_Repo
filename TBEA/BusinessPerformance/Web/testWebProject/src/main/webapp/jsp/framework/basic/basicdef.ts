@@ -5,24 +5,35 @@
 ///<reference path="../../unitedSelector.ts"/>
 module framework.basic {
 
+    export module endpoint {
+        export let lastId : ()=>number= (function(idBase:number){
+            return function(){
+                return ++idBase;
+            };
+        })(100002);
+
+        export let FRAME_ID : number = lastId();
+    }
+
+
     export module FrameEvent {
-        let eventBase = 9988392;
+        export let lastEvent : ()=>number = (function(idBase:number){
+            return function(){
+                return ++idBase;
+            };
+        })(9988392);
 
-        export function lastEvent():number {
-            return ++eventBase;
-        }
-
-        export let FE_INIT_EVENT = lastEvent();
-        export let FE_REGISTER = lastEvent();
-        export let FE_EXPORT_EXCEL = lastEvent();
-        export let FE_SHOW = lastEvent();
-        export let FE_HIDE = lastEvent();
-        export let FE_REFRESH = lastEvent();
-        export let FE_IS_COMPANY_SUPPORTED = lastEvent();
-        export let FE_UPDATE = lastEvent();
-        export let FE_GET_EXPORTURL = lastEvent();
-        export let FE_SAVE = lastEvent();
-        export let FE_SUBMIT = lastEvent();
+        export let FE_INIT_EVENT : number = lastEvent();
+        export let FE_REGISTER : number = lastEvent();
+        export let FE_SHOW : number = lastEvent();
+        export let FE_HIDE : number = lastEvent();
+        export let FE_REFRESH : number = lastEvent();
+        export let FE_IS_COMPANY_SUPPORTED : number = lastEvent();
+        export let FE_UPDATE : number = lastEvent();
+        export let FE_GET_EXPORTURL : number = lastEvent();
+        export let FE_SAVE : number = lastEvent();
+        export let FE_SUBMIT : number = lastEvent();
+        export let FE_PROXY : number = lastEvent();
     }
     export interface PluginOption {
         host:string;
@@ -40,6 +51,7 @@ module framework.basic {
                     this.onInitialize(e.data);
                     break;
             }
+            return true;
         }
 
         abstract getId():number;
@@ -57,10 +69,8 @@ module framework.basic {
     }
 
     export abstract class FrameView extends BasicEndpoint {
-        static FRAME_ID:number = 0;
-
         getId():number {
-            return FrameView.FRAME_ID;
+            return endpoint.FRAME_ID;
         }
 
         onInitialize(opt:any):void {
@@ -68,12 +78,12 @@ module framework.basic {
         }
 
         onEvent(e:framework.route.Event):any {
-            super.onEvent(e);
             switch (e.id) {
                 case FrameEvent.FE_REGISTER:
-                    this.register(e.data.name, e.data.plugin);
+                    this.register(e.data, e.from);
                     break;
             }
+            return super.onEvent(e);
         }
 
         protected abstract init(opt:FrameOption):void;
@@ -87,6 +97,7 @@ module framework.basic {
         mOpt:PluginOption;
 
         onInitialize(opt:any):void {
+            this.mOpt = opt;
             this.init(<PluginOption>opt);
         }
 
@@ -118,11 +129,11 @@ module framework.basic {
             return val;
         }
 
-        private hide():void {
+        protected hide():void {
             $("#" + this.mOpt.host).hide();
         }
 
-        private show():void {
+        protected show():void {
             $("#" + this.mOpt.host).show();
         }
 
@@ -130,20 +141,20 @@ module framework.basic {
             return $("#" + this.mOpt.host + " #" + id);
         }
 
-        isSupported(compType:Util.CompanyType):boolean {
+        protected isSupported(compType:Util.CompanyType):boolean {
             return true;
         }
 
-        abstract  pluginUpdate(date:string, compType:Util.CompanyType):void;
+        protected abstract  pluginUpdate(date:string, compType:Util.CompanyType):void;
 
-        abstract refresh():void;
+        protected abstract refresh():void;
 
-        abstract init(opt:PluginOption):void;
+        protected abstract init(opt:PluginOption):void;
 
         abstract getId():number;
     }
 
-    export abstract class ShowPluginView extends BasicEndpoint {
+    export abstract class ShowPluginView extends BasePluginView {
         onEvent(e:framework.route.Event):any {
             let val = super.onEvent(e);
             switch (e.id) {
@@ -162,7 +173,7 @@ module framework.basic {
         abstract  pluginGetExportUrl(date:string, compType:Util.CompanyType):string;
     }
 
-    export abstract class EntryPluginView extends BasicEndpoint {
+    export abstract class EntryPluginView extends BasePluginView {
         onEvent(e:framework.route.Event):any {
             let val = super.onEvent(e);
             switch (e.id) {
@@ -189,8 +200,19 @@ module framework.basic {
         abstract pluginSubmit(dt:string, compType:Util.CompanyType):void;
     }
 
-    export interface StatusData {
-        readOnly: boolean;
-        data:Array<string[]>;
+    export class EndpointProxy implements framework.route.Endpoint{
+        mPluginId:number;
+        mStub : number;
+        constructor(pluginId:number, stub : number){
+            this.mPluginId = pluginId;
+            this.mStub = stub;
+        }
+
+        getId():number {
+            return this.mPluginId;
+        }
+        onEvent(e:framework.route.Event):any {
+            return framework.route.router.redirect(this.mStub, e);
+        }
     }
 }

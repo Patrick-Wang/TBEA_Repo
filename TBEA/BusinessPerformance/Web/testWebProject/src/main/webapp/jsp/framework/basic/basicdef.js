@@ -12,24 +12,33 @@ var framework;
 (function (framework) {
     var basic;
     (function (basic) {
+        var endpoint;
+        (function (endpoint) {
+            endpoint.lastId = (function (idBase) {
+                return function () {
+                    return ++idBase;
+                };
+            })(100002);
+            endpoint.FRAME_ID = endpoint.lastId();
+        })(endpoint = basic.endpoint || (basic.endpoint = {}));
         var FrameEvent;
         (function (FrameEvent) {
-            var eventBase = 9988392;
-            function lastEvent() {
-                return ++eventBase;
-            }
-            FrameEvent.lastEvent = lastEvent;
-            FrameEvent.FE_INIT_EVENT = lastEvent();
-            FrameEvent.FE_REGISTER = lastEvent();
-            FrameEvent.FE_EXPORT_EXCEL = lastEvent();
-            FrameEvent.FE_SHOW = lastEvent();
-            FrameEvent.FE_HIDE = lastEvent();
-            FrameEvent.FE_REFRESH = lastEvent();
-            FrameEvent.FE_IS_COMPANY_SUPPORTED = lastEvent();
-            FrameEvent.FE_UPDATE = lastEvent();
-            FrameEvent.FE_GET_EXPORTURL = lastEvent();
-            FrameEvent.FE_SAVE = lastEvent();
-            FrameEvent.FE_SUBMIT = lastEvent();
+            FrameEvent.lastEvent = (function (idBase) {
+                return function () {
+                    return ++idBase;
+                };
+            })(9988392);
+            FrameEvent.FE_INIT_EVENT = FrameEvent.lastEvent();
+            FrameEvent.FE_REGISTER = FrameEvent.lastEvent();
+            FrameEvent.FE_SHOW = FrameEvent.lastEvent();
+            FrameEvent.FE_HIDE = FrameEvent.lastEvent();
+            FrameEvent.FE_REFRESH = FrameEvent.lastEvent();
+            FrameEvent.FE_IS_COMPANY_SUPPORTED = FrameEvent.lastEvent();
+            FrameEvent.FE_UPDATE = FrameEvent.lastEvent();
+            FrameEvent.FE_GET_EXPORTURL = FrameEvent.lastEvent();
+            FrameEvent.FE_SAVE = FrameEvent.lastEvent();
+            FrameEvent.FE_SUBMIT = FrameEvent.lastEvent();
+            FrameEvent.FE_PROXY = FrameEvent.lastEvent();
         })(FrameEvent = basic.FrameEvent || (basic.FrameEvent = {}));
         var BasicEndpoint = (function () {
             function BasicEndpoint() {
@@ -41,6 +50,7 @@ var framework;
                         this.onInitialize(e.data);
                         break;
                 }
+                return true;
             };
             return BasicEndpoint;
         })();
@@ -51,20 +61,19 @@ var framework;
                 _super.apply(this, arguments);
             }
             FrameView.prototype.getId = function () {
-                return FrameView.FRAME_ID;
+                return endpoint.FRAME_ID;
             };
             FrameView.prototype.onInitialize = function (opt) {
                 this.init(opt);
             };
             FrameView.prototype.onEvent = function (e) {
-                _super.prototype.onEvent.call(this, e);
                 switch (e.id) {
                     case FrameEvent.FE_REGISTER:
-                        this.register(e.data.name, e.data.plugin);
+                        this.register(e.data, e.from);
                         break;
                 }
+                return _super.prototype.onEvent.call(this, e);
             };
-            FrameView.FRAME_ID = 0;
             return FrameView;
         })(BasicEndpoint);
         basic.FrameView = FrameView;
@@ -74,6 +83,7 @@ var framework;
                 _super.apply(this, arguments);
             }
             BasePluginView.prototype.onInitialize = function (opt) {
+                this.mOpt = opt;
                 this.init(opt);
             };
             BasePluginView.prototype.onEvent = function (e) {
@@ -139,7 +149,7 @@ var framework;
                 return val;
             };
             return ShowPluginView;
-        })(BasicEndpoint);
+        })(BasePluginView);
         basic.ShowPluginView = ShowPluginView;
         var EntryPluginView = (function (_super) {
             __extends(EntryPluginView, _super);
@@ -169,7 +179,21 @@ var framework;
                 return val;
             };
             return EntryPluginView;
-        })(BasicEndpoint);
+        })(BasePluginView);
         basic.EntryPluginView = EntryPluginView;
+        var EndpointProxy = (function () {
+            function EndpointProxy(pluginId, stub) {
+                this.mPluginId = pluginId;
+                this.mStub = stub;
+            }
+            EndpointProxy.prototype.getId = function () {
+                return this.mPluginId;
+            };
+            EndpointProxy.prototype.onEvent = function (e) {
+                return framework.route.router.redirect(this.mStub, e);
+            };
+            return EndpointProxy;
+        })();
+        basic.EndpointProxy = EndpointProxy;
     })(basic = framework.basic || (framework.basic = {}));
 })(framework || (framework = {}));
