@@ -9,30 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.tbea.ic.operation.common.CompanySelection;
-import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.StatusData;
-import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.ZBStatus;
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.common.excel.DzwzgbSheetType;
-import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.excel.YszkgbSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
-import com.tbea.ic.operation.service.dzwzgb.DzwzgbServiceImpl;
-import com.tbea.ic.operation.service.dzwzgb.DzwzgbService;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -40,6 +21,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.common.excel.DzwzgbSheetType;
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
+import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.service.dzwzgb.DzwzgbService;
+import com.tbea.ic.operation.service.dzwzgb.DzwzgbServiceImpl;
 
 @Controller
 @RequestMapping(value = "dzwzgb")
