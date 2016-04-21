@@ -3,7 +3,7 @@
 /// <reference path="../../dateSelector.ts" />
 ///<reference path="../../framework/basic/basicdef.ts"/>
 ///<reference path="../../framework/route/route.ts"/>
-///<reference path="../dzwzgbdef.ts"/>
+///<reference path="../wgcpqkdef.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -11,29 +11,35 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var plugin;
 (function (plugin) {
-    plugin.dzclcb = framework.basic.endpoint.lastId();
+    plugin.yclbfqk = framework.basic.endpoint.lastId();
+    plugin.xlyclbfqk = framework.basic.endpoint.lastId();
+    plugin.byqyclbfqk = framework.basic.endpoint.lastId();
 })(plugin || (plugin = {}));
-var dzwzgb;
-(function (dzwzgb) {
-    var dzclcb;
-    (function (dzclcb) {
+var wgcpqk;
+(function (wgcpqk) {
+    var yclbfqk;
+    (function (yclbfqk) {
         var TextAlign = JQTable.TextAlign;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            JQGridAssistantFactory.createTable = function (gridName) {
+            JQGridAssistantFactory.createTable = function (gridName, month) {
+                var sndfll = new JQTable.Node("上年度废料率", "ac");
+                var dndfll = new JQTable.Node("当年度废料率", "ad");
+                for (var i = month + 1; i <= 12; ++i) {
+                    sndfll.append(new JQTable.Node(i + "月", "ac" + i + "a"));
+                }
+                for (var i = 1; i <= month; ++i) {
+                    dndfll.append(new JQTable.Node(i + "月", "ad" + i + "a"));
+                }
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("月份", "rqa", true, TextAlign.Center),
-                    new JQTable.Node("材料", "ab", true, TextAlign.Center),
-                    new JQTable.Node("期货盈亏（万元）", "ac"),
-                    new JQTable.Node("市场现货月均价（元/吨）", "ada"),
-                    new JQTable.Node("采购月均价（元/吨）（摊入当月期货盈亏）", "adb"),
-                    new JQTable.Node("三项费用保本价（元/吨）", "adc"),
-                    new JQTable.Node("目标利润倒算价（元/吨）", "ae"),
-                    new JQTable.Node("采购量（吨）", "af"),
-                    new JQTable.Node("期现货合计盈亏", "ag")
-                        .append(new JQTable.Node("指导价格按照保本价（万元）", "ah"))
-                        .append(new JQTable.Node("指导价格按照目标利润价（万元）", "ai"))
+                    new JQTable.Node("材料名称", "rqa", true, TextAlign.Center),
+                    new JQTable.Node("当月（吨）", "ab", true, TextAlign.Center)
+                        .append(new JQTable.Node("领用量", "abh"))
+                        .append(new JQTable.Node("废料", "abi"))
+                        .append(new JQTable.Node("利用率", "abi")),
+                    sndfll,
+                    dndfll
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -42,16 +48,28 @@ var dzwzgb;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("dzclcb/update.do", false);
+                this.mAjax = new Util.Ajax("yclbfqk/update.do", false);
             }
             ShowView.prototype.getId = function () {
-                return plugin.dzclcb;
+                return plugin.yclbfqk;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "dzclcb/export.do?" + Util.Ajax.toUrlParam({
+                return "yclbfqk/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
-                    companyId: compType
+                    companyId: compType,
+                    cyType: this.mCyType
                 });
+            };
+            ShowView.prototype.onEvent = function (e) {
+                if (e.redirects != undefined) {
+                    if (plugin.byqyclbfqk = e.redirects[e.redirects.length - 1]) {
+                        this.mCyType = wgcpqk.CyType.BYQ;
+                    }
+                    else {
+                        this.mCyType = wgcpqk.CyType.XL;
+                    }
+                }
+                return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.option = function () {
                 return this.mOpt;
@@ -62,7 +80,8 @@ var dzwzgb;
                 this.mCompType = compType;
                 this.mAjax.get({
                     date: date,
-                    companyId: compType
+                    companyId: compType,
+                    cyType: this.mCyType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -76,11 +95,20 @@ var dzwzgb;
                 this.updateTable();
             };
             ShowView.prototype.init = function (opt) {
-                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(plugin.xlyclbfqk, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况（变压器）");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(plugin.byqyclbfqk, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况（线缆）");
             };
             ShowView.prototype.updateTable = function () {
+                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                var month = curDate.getMonth() + 1;
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+                var tableAssist = JQGridAssistantFactory.createTable(name, month);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
@@ -117,5 +145,5 @@ var dzwzgb;
             ShowView.ins = new ShowView();
             return ShowView;
         })(framework.basic.ShowPluginView);
-    })(dzclcb = dzwzgb.dzclcb || (dzwzgb.dzclcb = {}));
-})(dzwzgb || (dzwzgb = {}));
+    })(yclbfqk = wgcpqk.yclbfqk || (wgcpqk.yclbfqk = {}));
+})(wgcpqk || (wgcpqk = {}));

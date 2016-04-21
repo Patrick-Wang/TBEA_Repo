@@ -11,28 +11,20 @@ var __extends = (this && this.__extends) || function (d, b) {
 ///<reference path="../../framework/route/route.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
-    pluginEntry.dzclcb = framework.basic.endpoint.lastId();
+    pluginEntry.yclbfqk = framework.basic.endpoint.lastId();
 })(pluginEntry || (pluginEntry = {}));
-var dzwzgb;
-(function (dzwzgb) {
-    var dzclcbEntry;
-    (function (dzclcbEntry) {
-        var TextAlign = JQTable.TextAlign;
+var wgcpqk;
+(function (wgcpqk) {
+    var yclbfqkEntry;
+    (function (yclbfqkEntry) {
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("材料", "cl", true, TextAlign.Center),
-                    new JQTable.Node("期货盈亏（万元）", "ac", readOnly),
-                    new JQTable.Node("市场现货月均价（元/吨）", "ada", readOnly),
-                    new JQTable.Node("采购月均价（元/吨）（摊入当月期货盈亏）", "adb", readOnly),
-                    new JQTable.Node("三项费用保本价（元/吨）", "adc", readOnly),
-                    new JQTable.Node("目标利润倒算价（元/吨）", "ae", readOnly),
-                    new JQTable.Node("采购量（吨）", "af", readOnly),
-                    new JQTable.Node("期现货合计盈亏", "ag", readOnly)
-                        .append(new JQTable.Node("指导价格按照保本价（万元）", "ah", readOnly))
-                        .append(new JQTable.Node("指导价格按照目标利润价（万元）", "ai", readOnly))
+                    new JQTable.Node("领用量", "ac", readOnly),
+                    new JQTable.Node("领用量", "ac", readOnly),
+                    new JQTable.Node("废料", "ada", readOnly)
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -41,12 +33,12 @@ var dzwzgb;
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("dzclcb/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("dzclcb/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("dzclcb/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("yclbfqk/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("yclbfqk/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("yclbfqk/entry/submit.do", false);
             }
             EntryView.prototype.getId = function () {
-                return pluginEntry.dzclcb;
+                return pluginEntry.yclbfqk;
             };
             EntryView.prototype.option = function () {
                 return this.mOpt;
@@ -57,9 +49,9 @@ var dzwzgb;
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
+                    for (var j = 1; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
+                        submitData[i][j - 1] = submitData[i][j - 1].replace(new RegExp(' ', 'g'), '');
                     }
                 }
                 this.mAjaxSave.post({
@@ -82,10 +74,10 @@ var dzwzgb;
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
+                    for (var j = 1; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 2]) {
+                        submitData[i][j - 1] = submitData[i][j - 1].replace(new RegExp(' ', 'g'), '');
+                        if ("" == submitData[i][j - 1]) {
                             Util.MessageBox.tip("有空内容 无法提交");
                             return;
                         }
@@ -125,7 +117,7 @@ var dzwzgb;
                 this.updateTable();
             };
             EntryView.prototype.init = function (opt) {
-                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况（变压器）");
                 $.extend($.jgrid.edit, {
                     bSubmit: "确定"
                 });
@@ -151,7 +143,7 @@ var dzwzgb;
                 var jqTable = this.$(name);
                 jqTable.jqGrid(this.mTableAssist.decorate({
                     datatype: "local",
-                    data: this.mTableAssist.getData(data),
+                    data: this.mTableAssist.getData(this.mData),
                     multiselect: false,
                     drag: false,
                     resize: false,
@@ -173,5 +165,5 @@ var dzwzgb;
             EntryView.ins = new EntryView();
             return EntryView;
         })(framework.basic.EntryPluginView);
-    })(dzclcbEntry = dzwzgb.dzclcbEntry || (dzwzgb.dzclcbEntry = {}));
-})(dzwzgb || (dzwzgb = {}));
+    })(yclbfqkEntry = wgcpqk.yclbfqkEntry || (wgcpqk.yclbfqkEntry = {}));
+})(wgcpqk || (wgcpqk = {}));

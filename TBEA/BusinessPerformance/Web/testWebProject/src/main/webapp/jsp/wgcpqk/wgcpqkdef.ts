@@ -5,4 +5,9 @@ module wgcpqk{
     export interface Option extends framework.basic.PluginOption {
         tb:string;
     }
+
+    export enum CyType{
+        BYQ,
+        XL
+    }
 }
