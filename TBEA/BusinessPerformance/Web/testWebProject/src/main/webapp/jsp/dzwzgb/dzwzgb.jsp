@@ -179,7 +179,7 @@ th.ui-th-ltr {
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
-				onclick="framework.route.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
+				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
 		</tr>
 		<tr>
@@ -191,7 +191,7 @@ th.ui-th-ltr {
 			<td>
 				<form id="export" method="post">
 					<input id="exportButton" type="button" value="导出"
-						   onclick="framework.route.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
+						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
 				</form> 
 			</td>
 		</tr>
@@ -200,13 +200,13 @@ th.ui-th-ltr {
 
 
     $(document).ready(function () {
-		framework.route.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+		framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
 			type: "type",
 			comp:"compid",
 			comps : JSON.parse('${nodeData}'),
 			dt: "dt",
 			date: {
-				month: ${month},
+				month: "${month}".length == 0 ? undefined : parseInt("${month}"),
 				year: ${year}
 			}
 		});

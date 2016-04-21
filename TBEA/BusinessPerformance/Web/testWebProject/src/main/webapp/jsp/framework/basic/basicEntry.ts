@@ -7,7 +7,7 @@
 ///<reference path="../../companySelector.ts"/>
 ///<reference path="../route/route.ts"/>
 module framework.basic {
-    import router = framework.route.router;
+    import router = framework.router;
 
     export class EntryFrameView extends BasicFrameView {
         onEvent(e:framework.route.Event):any {

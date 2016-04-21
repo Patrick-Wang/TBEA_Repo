@@ -66,7 +66,7 @@ public class DzwzgbServlet {
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
+		DateSelection dateSel = new DateSelection(Calendar.getInstance(), false, false);
 		dateSel.select(map);
 		CompanySelection compSel = new CompanySelection(true, sbdComps);
 		compSel.select(map);

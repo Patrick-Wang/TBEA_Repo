@@ -9,7 +9,7 @@
 ///<reference path="basic.ts"/>
 module framework.basic {
 
-    import router = framework.route.router;
+    import router = framework.router;
 
     export module FrameEvent {
         export let FE_EXPORTEXCEL = lastEvent();

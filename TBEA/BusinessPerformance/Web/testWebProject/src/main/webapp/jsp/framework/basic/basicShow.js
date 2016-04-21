@@ -16,7 +16,7 @@ var framework;
 (function (framework) {
     var basic;
     (function (basic) {
-        var router = framework.route.router;
+        var router = framework.router;
         var FrameEvent;
         (function (FrameEvent) {
             FrameEvent.FE_EXPORTEXCEL = FrameEvent.lastEvent();

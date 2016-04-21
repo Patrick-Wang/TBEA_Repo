@@ -176,7 +176,7 @@ th.ui-th-ltr {
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
-				onclick="framework.route.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
+				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
 		</tr> 
 		<tr>
@@ -187,21 +187,21 @@ th.ui-th-ltr {
 		<tr>
 			<td>
 				<input id="gbsv" type="button" value="保存" style="float: right; width: 80px; margin-left: 10px;"
-					   onclick="framework.route.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SAVE)" />
+					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SAVE)" />
 				<input id="gbsm" type="button" value="提交" style="float: right; width: 80px; margin-left: 10px;"
-					   onclick="framework.route.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)" />
+					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)" />
 			</td>
 		</tr>
 	</Table>
 	<script type="text/javascript">
 	    $(document).ready(function () {
-			framework.route.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+			framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
 				type: "type",
 				dt: "dt",
 				comp:"compid",
 				comps : JSON.parse('${nodeData}'),
 				date: {
-					month: ${month},
+					month: "${month}".length == 0 ? undefined : parseInt("${month}"),
 					year: ${year}
 				}
 			});
@@ -212,7 +212,7 @@ th.ui-th-ltr {
 	<script src="${pageContext.request.contextPath}/jsp/style_button.js"></script>
 	<script src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 	<%@include file="../components/loading.jsp"%>
-</body>
+</body> 
 
 
 </html>

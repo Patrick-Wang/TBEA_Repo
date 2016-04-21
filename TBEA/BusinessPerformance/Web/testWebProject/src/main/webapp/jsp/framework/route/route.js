@@ -85,6 +85,9 @@ var framework;
             return Router;
         })();
         route.Router = Router;
-        route.router = new Router();
     })(route = framework.route || (framework.route = {}));
+})(framework || (framework = {}));
+var framework;
+(function (framework) {
+    framework.router = new framework.route.Router();
 })(framework || (framework = {}));

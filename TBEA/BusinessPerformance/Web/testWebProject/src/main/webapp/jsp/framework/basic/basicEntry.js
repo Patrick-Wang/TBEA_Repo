@@ -15,7 +15,7 @@ var framework;
 (function (framework) {
     var basic;
     (function (basic) {
-        var router = framework.route.router;
+        var router = framework.router;
         var EntryFrameView = (function (_super) {
             __extends(EntryFrameView, _super);
             function EntryFrameView() {

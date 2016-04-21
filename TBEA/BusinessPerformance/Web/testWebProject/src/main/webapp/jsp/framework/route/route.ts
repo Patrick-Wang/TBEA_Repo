@@ -105,6 +105,7 @@ module framework.route {
             return this.mEndpoints[id];
         }
     }
-
-    export let router:Router = new Router();
+}
+module framework{
+    export let router:route.Router = new route.Router();
 }

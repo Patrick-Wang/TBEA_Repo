@@ -42,7 +42,7 @@ var framework;
         })(FrameEvent = basic.FrameEvent || (basic.FrameEvent = {}));
         var BasicEndpoint = (function () {
             function BasicEndpoint() {
-                framework.route.router.register(this);
+                framework.router.register(this);
             }
             BasicEndpoint.prototype.onEvent = function (e) {
                 switch (e.id) {
@@ -190,7 +190,7 @@ var framework;
                 return this.mPluginId;
             };
             EndpointProxy.prototype.onEvent = function (e) {
-                return framework.route.router.redirect(this.mStub, e);
+                return framework.router.redirect(this.mStub, e);
             };
             return EndpointProxy;
         })();

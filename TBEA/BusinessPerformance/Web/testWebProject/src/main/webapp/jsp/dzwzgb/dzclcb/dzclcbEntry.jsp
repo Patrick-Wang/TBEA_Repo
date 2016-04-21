@@ -8,7 +8,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/dzwzgb/dzclcb/dzclcbEntry.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    framework.route.router
+    framework.router
             .to(pluginEntry.dzclcb)
             .send(framework.basic.FrameEvent.FE_INIT_EVENT,{
                 tb: "table",

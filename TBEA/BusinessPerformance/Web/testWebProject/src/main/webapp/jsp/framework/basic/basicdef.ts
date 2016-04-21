@@ -42,7 +42,7 @@ module framework.basic {
 
     export abstract class BasicEndpoint implements framework.route.Endpoint {
         constructor() {
-            framework.route.router.register(this);
+            router.register(this);
         }
 
         onEvent(e:framework.route.Event):any {
@@ -212,7 +212,7 @@ module framework.basic {
             return this.mPluginId;
         }
         onEvent(e:framework.route.Event):any {
-            return framework.route.router.redirect(this.mStub, e);
+            return router.redirect(this.mStub, e);
         }
     }
 }

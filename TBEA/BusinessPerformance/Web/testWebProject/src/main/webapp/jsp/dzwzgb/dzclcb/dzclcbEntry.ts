@@ -125,7 +125,7 @@ module dzwzgb {
             }
 
             protected init(opt:Option):void {
-                framework.route.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
                 $.extend($.jgrid.edit, {
                     bSubmit: "确定"
                 });

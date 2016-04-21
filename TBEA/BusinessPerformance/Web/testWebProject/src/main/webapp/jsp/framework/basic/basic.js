@@ -15,7 +15,7 @@ var framework;
 (function (framework) {
     var basic;
     (function (basic) {
-        var router = framework.route.router;
+        var router = framework.router;
         var BasicFrameView = (function (_super) {
             __extends(BasicFrameView, _super);
             function BasicFrameView() {
@@ -120,7 +120,12 @@ var framework;
             BasicFrameView.prototype.updateUI = function () {
                 var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
                 var dt = this.mDtSec.getDate();
-                dt.day = 1;
+                if (dt.month == undefined) {
+                    dt.month = 1;
+                }
+                if (dt.day == undefined) {
+                    dt.day = 1;
+                }
                 this.mCurrentPlugin = this.plugin(node);
                 router.broadcast(basic.FrameEvent.FE_HIDE);
                 this.mCurrentComp = this.mCompanySelector.getCompany();

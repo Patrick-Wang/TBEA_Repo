@@ -8,7 +8,7 @@
 ///<reference path="../route/route.ts"/>
 module framework.basic {
 
-    import router = framework.route.router;
+    import router = framework.router;
 
     interface Option {
         dt:string;
@@ -142,7 +142,13 @@ module framework.basic {
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
 
             let dt:Util.Date = this.mDtSec.getDate();
-            dt.day = 1;
+            if (dt.month == undefined){
+                dt.month = 1;
+            }
+
+            if (dt.day == undefined) {
+                dt.day = 1;
+            }
 
             this.mCurrentPlugin = this.plugin(node);
             router.broadcast(FrameEvent.FE_HIDE);
