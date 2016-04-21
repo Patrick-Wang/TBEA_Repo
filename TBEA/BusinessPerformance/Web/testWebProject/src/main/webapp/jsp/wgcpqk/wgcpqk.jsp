@@ -45,18 +45,15 @@
 <script src="${pageContext.request.contextPath}/jsp/json2.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/vector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/wgcpqk/wgcpqkdef.js" type="text/javascript"></script>
 
 <!-- message box -->
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/wgcpqk/wgcpqk.js" type="text/javascript"></script>
-
-<title>应收账款管报</title>
+<%@include file="../framework/basic/basicShow.jsp"%>
+<script src="${pageContext.request.contextPath}/jsp/wgcpqk/wgcpqkdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/wgcpqk/wgcpqk.js" type="text/javascript"></script>
+<title>完工产品情况</title>
 
 <style type="text/css">
 body {
@@ -172,7 +169,7 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class="header">
-		<h1 id="headertitle">应收账款管报</h1>
+		<h1 id="headertitle">完工产品情况</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">
@@ -182,21 +179,19 @@ th.ui-th-ltr {
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
-				onclick="view.updateUI()" />
+				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<%@include file="../sbdddcbjpcqk/byqkglydd/byqkglydd.jsp"%>
-				<%@include file="../sbdddcbjpcqk/xlkglydd/xlkglydd.jsp"%>
-				<%@include file="./ylfxwlyddmlspcs/wlyddmlspcs.jsp"%>
+				<%@include file="dzclcb/dzclcb.jsp"%>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<form id="export" method="post">
 					<input id="exportButton" type="button" value="导出"
-						   onclick="view.exportExcel('export')">
+						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
 				</form> 
 			</td>
 		</tr>
@@ -205,24 +200,21 @@ th.ui-th-ltr {
 
 
     $(document).ready(function () {
-    	
-        $("#exportButton")
-        .css("height", "23px")
-        .css("padding", ".1em 1em")
-        .css("margin-top", "2px");
-    	
-    	view.init({
-            type: "type",
+		framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+			type: "type",
 			comp:"compid",
 			comps : JSON.parse('${nodeData}'),
-            dt: "dt",
-            date: {
-                month: ${month},
-                year: ${year}
-            }  
-        });
+			dt: "dt",
+			date: {
+				month: "${month}".length == 0 ? undefined : parseInt("${month}"),
+				year: ${year}
+			}
+		});
+        $("#exportButton")
+			.css("height", "23px")
+			.css("padding", ".1em 1em")
+			.css("margin-top", "2px");
         $(document.body).css("visibility", "visible");
-
     });
 </script>
 

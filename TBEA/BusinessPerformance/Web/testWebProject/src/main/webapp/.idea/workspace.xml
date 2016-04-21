@@ -56,22 +56,68 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dzwzgbdef.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dzwzgbdef.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/dzwzgb/dzwzgbdef.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21388368">
+            <state vertical-scroll-proportion="0.0">
               <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="basic.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basic.ts">
+      <file leaf-file-name="wgcpqk.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqk.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.908046">
+              <caret line="214" column="39" selection-start-line="214" selection-start-column="39" selection-end-line="214" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wgcpqk.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqk.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="150" column="13" selection-start-line="150" selection-start-column="13" selection-end-line="150" selection-end-column="13" />
+              <caret line="3" column="13" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="13" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wgcpqkdef.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqkdef.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wgcpqkEntry.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqkEntry.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-40.609196">
+              <caret line="204" column="33" selection-start-line="204" selection-start-column="33" selection-end-line="204" selection-end-column="33" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wgcpqkEntry.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqkEntry.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.18849206">
+              <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -86,36 +132,6 @@
                 <element signature="n#style#0;n#div#1;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="basicEntry.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicEntry.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.75">
-              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="basicShow.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicShow.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.464286">
-              <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="basicShow.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicShow.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="47" selection-start-line="17" selection-start-column="47" selection-end-line="17" selection-end-column="47" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -136,7 +152,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/jsp/companySelector.ts" />
         <option value="$PROJECT_DIR$/jsp/unitedSelector.ts" />
         <option value="$PROJECT_DIR$/jsp/sbdddcbjpcqk/xlkglydd/xlkglydd.ts" />
         <option value="$PROJECT_DIR$/jsp/sbdddcbjpcqk/byqkglydd/byqkglydd.ts" />
@@ -156,10 +171,6 @@
         <option value="$PROJECT_DIR$/jsp/framework/route/route.js" />
         <option value="$PROJECT_DIR$/jsp/wgcpqk/wlyddqkdef.ts" />
         <option value="$PROJECT_DIR$/jsp/wgcpqk/wlyddqkEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/wgcpqk/wgcpqkdef.ts" />
-        <option value="$PROJECT_DIR$/jsp/wgcpqk/wgcpqkEntry.jsp" />
-        <option value="$PROJECT_DIR$/jsp/wgcpqk/wgcpqk.ts" />
-        <option value="$PROJECT_DIR$/jsp/wgcpqk/wgcpqk.jsp" />
         <option value="$PROJECT_DIR$/jsp/framework/basic/wlyddqkdef.ts" />
         <option value="$PROJECT_DIR$/jsp/framework/basic/wlyddqk.ts" />
         <option value="$PROJECT_DIR$/jsp/sbdczclwcqk/sbdczclwcqk.ts" />
@@ -187,6 +198,11 @@
         <option value="$PROJECT_DIR$/jsp/dzwzgb/dzwzgb.ts" />
         <option value="$PROJECT_DIR$/jsp/dzwzgb/dzwzgbEntry.jsp" />
         <option value="$PROJECT_DIR$/jsp/framework/basic/basic.ts" />
+        <option value="$PROJECT_DIR$/jsp/wgcpqk/wgcpqkdef.ts" />
+        <option value="$PROJECT_DIR$/jsp/wgcpqk/wgcpqk.jsp" />
+        <option value="$PROJECT_DIR$/jsp/wgcpqk/wgcpqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/wgcpqk/wgcpqkEntry.jsp" />
+        <option value="$PROJECT_DIR$/jsp/wgcpqk/wgcpqkEntry.ts" />
       </list>
     </option>
   </component>
@@ -352,16 +368,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="framework" />
+              <option name="myItemId" value="wgcpqk" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="route" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="route.ts" />
-              <option name="myItemType" value="com.intellij.lang.typescript.compiler.ui.projectView.TypeScriptNestingTreeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -378,11 +386,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="framework" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="basic" />
+              <option name="myItemId" value="sbdczclwcqk" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -425,11 +429,11 @@
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\wgcpqk" />
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\dzwzgb" />
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\dzwzgb\dzclcb" />
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\" />
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\sbdczclwcqk" />
-      <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\framework\basic" />
     </key>
   </component>
   <component name="RunManager">
@@ -506,12 +510,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-15" y="-2" width="1616" height="876" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25602028" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25602028" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293011" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24462366" sideWeight="0.47465146" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24462366" sideWeight="0.52534854" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24462366" sideWeight="0.47465146" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28360215" sideWeight="0.51520914" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28360215" sideWeight="0.48479086" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -523,7 +528,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28360215" sideWeight="0.4898606" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -668,38 +672,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqk.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.9770115">
-          <caret line="197" column="69" selection-start-line="197" selection-start-column="69" selection-end-line="197" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/unitedSelector.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.10694184">
           <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqkEntry.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-33.149426">
-          <caret line="184" column="12" selection-start-line="184" selection-start-column="12" selection-end-line="184" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqkEntry.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="139" column="35" selection-start-line="139" selection-start-column="35" selection-end-line="139" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqk.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -714,6 +690,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="56" column="79" selection-start-line="56" selection-start-column="68" selection-end-line="56" selection-end-column="79" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -721,6 +698,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="56" column="47" selection-start-line="56" selection-start-column="47" selection-end-line="56" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -735,23 +713,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="31" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqkdef.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqk.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -940,9 +901,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/dzwzgb/dzwzgbdef.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21388368">
+        <state vertical-scroll-proportion="0.0">
           <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqk.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.908046">
+          <caret line="214" column="39" selection-start-line="214" selection-start-column="39" selection-end-line="214" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqk.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqkdef.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqkEntry.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-40.609196">
+          <caret line="204" column="33" selection-start-line="204" selection-start-column="33" selection-end-line="204" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqkEntry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18849206">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

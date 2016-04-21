@@ -47,19 +47,16 @@
 <script src="${pageContext.request.contextPath}/jsp/json2.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/vector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/wgcpqk/wgcpqkdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/wgcpqk/wgcpqkEntry.js" type="text/javascript"></script>
+
 
 <!-- message box -->
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-
-
-<title>可供履约订单</title>
+<%@include file="../framework/basic/basicEntry.jsp"%>
+<script src="${pageContext.request.contextPath}/jsp/wgcpqk/wgcpqkdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/wgcpqk/wgcpqkEntry.js" type="text/javascript"></script>
+<title>完工产品情况</title>
 
 <style type="text/css">
 body {
@@ -169,7 +166,7 @@ th.ui-th-ltr {
 </head> 
 <body>
 	<div class="header">
-		<h1 id="headertitle">可供履约订单</h1>
+		<h1 id="headertitle">完工产品情况</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">
@@ -179,36 +176,35 @@ th.ui-th-ltr {
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
-				onclick="entryView.updateUI()" />
+				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
 		</tr> 
 		<tr>
 			<td>
-				<%@include file="../sbdddcbjpcqk/byqkglydd/byqkglyddEntry.jsp"%>
-				<%@include file="../sbdddcbjpcqk/xlkglydd/xlkglyddEntry.jsp"%>
+				<%@include file="dzclcb/dzclcbEntry.jsp"%>
 			</td>
 		</tr> 
 		<tr>
 			<td>
 				<input id="gbsv" type="button" value="保存" style="float: right; width: 80px; margin-left: 10px;"
-					   onclick="entryView.save()" />
+					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SAVE)" />
 				<input id="gbsm" type="button" value="提交" style="float: right; width: 80px; margin-left: 10px;"
-					   onclick="entryView.submit()" />
+					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)" />
 			</td>
 		</tr>
 	</Table>
 	<script type="text/javascript">
-    $(document).ready(function () {
-    	entryView.init({
-            type: "type",
-            dt: "dt",
-			comp:"compid",
-			comps : JSON.parse('${nodeData}'),
-            date: {
-                month: ${month},
-                year: ${year}
-            }
-        });
+	    $(document).ready(function () {
+			framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+				type: "type",
+				dt: "dt",
+				comp:"compid",
+				comps : JSON.parse('${nodeData}'),
+				date: {
+					month: "${month}".length == 0 ? undefined : parseInt("${month}"),
+					year: ${year}
+				}
+			});
         $(document.body).css("visibility", "visible");
     });
 </script>
@@ -216,7 +212,7 @@ th.ui-th-ltr {
 	<script src="${pageContext.request.contextPath}/jsp/style_button.js"></script>
 	<script src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 	<%@include file="../components/loading.jsp"%>
-</body>
+</body> 
 
 
 </html>
