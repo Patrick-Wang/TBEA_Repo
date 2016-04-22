@@ -17,4 +17,6 @@ public interface WlyddmlspcsDao extends AbstractReadWriteDao<WlyddmlspcsEntity> 
 	List<WlyddmlspcsEntity> getByDate(Date d, Company company, WlyddType type);
 	
 	List<WlyddmlspcsEntity> getByDate(Date ds, Date de, Company company, WlyddType type, Integer cpId);
+
+	WlyddmlspcsEntity getByDate(Date d, Company company, WlyddType type, Integer cpId);
 }

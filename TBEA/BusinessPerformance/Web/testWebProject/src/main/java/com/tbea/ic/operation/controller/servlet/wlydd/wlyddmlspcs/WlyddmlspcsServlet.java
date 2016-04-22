@@ -41,6 +41,7 @@ import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.Numbe
 import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.WlyddmlspcsService;
 import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.WlyddmlspcsServiceImpl;
+import com.tbea.ic.operation.common.excel.YlfxwlyddmlspcsSheetType;
 
 @Controller
 @RequestMapping(value = "wlydd")
@@ -82,14 +83,11 @@ public class WlyddmlspcsServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = wlyddmlspcsService.getWlyddmlspcs(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
-		//StatusData sd = new StatusData(false, result);
-		//List<String> cplb = wlyddmlspcsService.getByqCplb();
-		//EntryLyddData eld = new EntryLyddData();
-		//eld.setStatusData(sd);
-		//eld.setCplb(cplb);
-		//return JSONObject.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
+		List<List<String>> result = wlyddmlspcsService.getWlyddmlspcsEntry(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
+		
+		ZBStatus status = wlyddmlspcsService.getWlyddmlspcsStatus(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
+		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
+		return JSONObject.fromObject(sd).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "wlyddmlspcs/entry/save.do")
@@ -115,6 +113,26 @@ public class WlyddmlspcsServlet {
 	@RequestMapping(value = "wlyddmlspcs/export.do")
 	public void exportWlyddmlspcs(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-
+		
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		WlyddType type = getType(request);
+		
+		List<List<String>> ret = wlyddmlspcsService.getWlyddmlspcs(d, company, type);
+		
+//		ExcelTemplate template = ExcelTemplate.createYlfxwlyddmlspcsTemplate(YlfxwlyddmlspcsSheetType(type.value()));
+//		
+//		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+//		HSSFWorkbook workbook = template.getWorkbook();
+//		String name = company.getName() + workbook.getSheetName(0);
+//		workbook.setSheetName(0, name);
+//		HSSFSheet sheet = workbook.getSheetAt(0);
+//		for (int i = 0; i < ret.size(); ++i){
+//			for (int j = 0; j < ret.get(i).size(); ++j){
+//				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+//			}
+//		}
+//		template.write(response, name + ".xls");
 	}
 }

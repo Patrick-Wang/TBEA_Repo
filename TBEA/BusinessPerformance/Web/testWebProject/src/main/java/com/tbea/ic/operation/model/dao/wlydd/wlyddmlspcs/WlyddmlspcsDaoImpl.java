@@ -78,4 +78,21 @@ public class WlyddmlspcsDaoImpl extends AbstractReadWriteDaoImpl<WlyddmlspcsEnti
 		return q.getResultList();
 	}
 	
+	@Override
+	public WlyddmlspcsEntity getByDate(Date d, Company company, WlyddType type, Integer cpId) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		Query q = this.getEntityManager().createQuery("from WlyddmlspcsEntity where nf=:nf and yf=:yf and tjfs=:tjfsId and cpid=:cpId and dwxx.id=:compId");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("compId", company.getId());
+		q.setParameter("tjfsId", type.value());
+		q.setParameter("cpId", cpId);
+		List<WlyddmlspcsEntity> list = q.getResultList();
+		if (list.isEmpty()){
+			return null;
+		}
+		return list.get(0);
+		
+	}
 }

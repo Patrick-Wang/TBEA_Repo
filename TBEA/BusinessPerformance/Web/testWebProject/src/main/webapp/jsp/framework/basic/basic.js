@@ -138,7 +138,7 @@ var framework;
                 });
             };
             return BasicFrameView;
-        })(basic.FrameView);
+        }(basic.FrameView));
         basic.BasicFrameView = BasicFrameView;
     })(basic = framework.basic || (framework.basic = {}));
 })(framework || (framework = {}));

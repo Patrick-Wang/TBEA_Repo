@@ -36,7 +36,7 @@ var ylfxwlyddmlspcs;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var WLYDDMLSPCSView = (function (_super) {
             __extends(WLYDDMLSPCSView, _super);
             function WLYDDMLSPCSView() {
@@ -124,7 +124,7 @@ var ylfxwlyddmlspcs;
                 }));
             };
             return WLYDDMLSPCSView;
-        })(wlyddqk.BasePluginView);
+        }(wlyddqk.BasePluginView));
         wlyddmlspcs.pluginView = WLYDDMLSPCSView.newInstance();
     })(wlyddmlspcs = ylfxwlyddmlspcs.wlyddmlspcs || (ylfxwlyddmlspcs.wlyddmlspcs = {}));
 })(ylfxwlyddmlspcs || (ylfxwlyddmlspcs = {}));

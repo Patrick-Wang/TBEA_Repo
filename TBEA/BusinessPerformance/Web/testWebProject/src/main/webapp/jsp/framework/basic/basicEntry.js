@@ -45,7 +45,7 @@ var framework;
                 });
             };
             return EntryFrameView;
-        })(basic.BasicFrameView);
+        }(basic.BasicFrameView));
         basic.EntryFrameView = EntryFrameView;
     })(basic = framework.basic || (framework.basic = {}));
 })(framework || (framework = {}));

@@ -35,7 +35,16 @@ public class WlyddmlspcsEntity extends AbstractReadWriteEntity implements Serial
 	CpmcEntity cpmc;
 	Double cb;
 	Double sr;
+	Integer zt;
+	
+	public Integer getZt() {
+		return zt;
+	}
 
+
+	public void setZt(Integer zt) {
+		this.zt = zt;
+	}
 
 	public Integer getNf() {
 		return nf;

@@ -28,7 +28,7 @@ var wgcpqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
@@ -162,11 +162,11 @@ var wgcpqk;
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    viewrecords: true
+                    viewrecords: true,
                 }));
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        })(framework.basic.EntryPluginView);
+        }(framework.basic.EntryPluginView));
     })(yclbfqkEntry = wgcpqk.yclbfqkEntry || (wgcpqk.yclbfqkEntry = {}));
 })(wgcpqk || (wgcpqk = {}));

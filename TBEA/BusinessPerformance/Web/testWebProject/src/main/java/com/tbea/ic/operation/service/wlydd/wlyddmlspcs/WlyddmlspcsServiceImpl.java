@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Hashtable;
 
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
@@ -20,10 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDao;
-import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
-import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.dao.wlydd.wlyddmlspcs.WlyddmlspcsDao;
 import com.tbea.ic.operation.model.dao.wlydd.wlyddmlspcs.WlyddmlspcsDaoImpl;
 import com.tbea.ic.operation.model.entity.wlydd.wlyddmslspcs.WlyddmlspcsEntity;
@@ -92,14 +88,21 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 	@Override
 	public List<List<String>> getWlyddmlspcs(Date d, Company company, WlyddType type) {
 		List<List<String>> result = new ArrayList<List<String>>();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(d);
-		cal.add(Calendar.YEAR, -1);
-		cal.add(Calendar.MONTH, 1);
-		
 		List<Integer> cpIdList = getCpIdList(type);
+		List<Double> finalList = new ArrayList<Double>();
+		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
+		
+		for (int i = 0; i < 12; ++i){
+			finalList.add(0.0);
+			finalListNullOrNot.add(true);
+		}
 		
 		for (int cp = 0; cp < cpIdList.size(); cp++) {
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(d);
+			cal.add(Calendar.YEAR, -1);
+			cal.add(Calendar.MONTH, 1);
 			
 			List<WlyddmlspcsEntity> entities= wlyddmlspcsDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
 			List<String> oneLine = new ArrayList<String>();
@@ -113,7 +116,8 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 					if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
 						bFind = true;
 						oneLine.add("" + (entity.getSr() - entity.getCb()));
-						
+						finalList.set(i, finalList.get(i) + (entity.getSr() - entity.getCb()));
+						finalListNullOrNot.set(i, false);
 						entities.remove(entity);
 						break;
 					}
@@ -127,6 +131,24 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 			result.add(oneLine);
 		}		
 		
+		List<String> finalLine = new ArrayList<String>();
+		finalLine.add("合计");
+		for (int i = 0; i < 12; ++i){
+		
+			if (!finalListNullOrNot.get(i)) {
+
+				finalLine.add("" + finalList.get(i));
+			} else {
+				
+				finalLine.add("null");
+			}
+		}
+		
+		if (type != WlyddType.YLFX_WLYMLSP_BYQ_CPFL) {
+
+			result.add(finalLine);
+		}
+		
 		return result;
 	}
 
@@ -136,57 +158,85 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 		List<List<String>> result = new ArrayList<List<String>>();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		cal.add(Calendar.YEAR, -1);
-		cal.add(Calendar.MONTH, 1);
 		
 		List<Integer> cpIdList = getCpIdList(type);
 		
 		for (int cp = 0; cp < cpIdList.size(); cp++) {
 			
-			List<WlyddmlspcsEntity> entities= wlyddmlspcsDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
+			WlyddmlspcsEntity entity = wlyddmlspcsDao.getByDate(d, company, type, cpIdList.get(cp));
 			List<String> oneLine = new ArrayList<String>();
-			
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());
 			
-			for (int i = 0; i < 12; ++i){
+			if (entity == null) {
+				oneLine.add("");
+				oneLine.add("");
+			} else {
 				Boolean bFind = false;
-				for (WlyddmlspcsEntity entity : entities){
-					if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
-						bFind = true;
-						oneLine.add("" + (entity.getSr() - entity.getCb()));
-						entities.remove(entity);
-						break;
-					}
+
+				if (entity.getNf() == cal.get(Calendar.YEAR)
+						&& entity.getYf() == cal.get(Calendar.MONTH) + 1) {
+					bFind = true; 
+					oneLine.add("" + entity.getCb());
+					oneLine.add("" + entity.getSr());
 				}
-				
+
 				if (!bFind) {
 					oneLine.add("");
+					oneLine.add("");
 				}
-				
-				cal.add(Calendar.MONTH, 1);
-			}
-			
+
+			}				
 			result.add(oneLine);
 		}		
 		
 		return result;
 	}
 
+	ErrorCode entryWlyddmlspcs(Date d, Company company, WlyddType type, JSONArray data, ZBStatus status) {
+
+		ErrorCode err = ErrorCode.OK;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		List<Integer> cpIdList = getCpIdList(type);
+		
+		for (int cp = 0; cp < cpIdList.size(); cp++) {
+			WlyddmlspcsEntity entity= wlyddmlspcsDao.getByDate(d, company, type, cpIdList.get(cp));
+			
+			if (null == entity){
+				entity = new WlyddmlspcsEntity();
+
+				entity.setNf(cal.get(Calendar.YEAR));
+				entity.setYf(cal.get(Calendar.MONTH) + 1);
+				entity.setDwxx(dwxxDao.getById(company.getId()));
+				entity.setCpmc(cpmcDao.getById(cpIdList.get(cp)));
+				entity.setTjfs(type.value());
+			}
+
+			entity.setZt(status.ordinal());
+			entity.setCb(Util.toDoubleNull(data.getJSONArray(cp).getString(0)));
+			entity.setSr(Util.toDoubleNull(data.getJSONArray(cp).getString(1)));
+			
+			wlyddmlspcsDao.merge(entity);
+		}
+		
+		return err;
+	}
+	
+	
 	@Override
 	public ErrorCode saveWlyddmlspcs(Date d, Company company, WlyddType type, JSONArray data){
 
-		return null;
+		return entryWlyddmlspcs(d, company, type, data, ZBStatus.SAVED);
 	}
 
 	@Override
 	public ErrorCode submitWlyddmlspcs(Date d, Company company, WlyddType type, JSONArray data) {
 
-		return null;
+		return entryWlyddmlspcs(d, company, type, data, ZBStatus.SUBMITTED);
 	}
 	
 	@Override
 	public ZBStatus getWlyddmlspcsStatus(Date d, Company comp, WlyddType type) {
-
-		return null;
+		return ZBStatus.SAVED;
 	}
 }
