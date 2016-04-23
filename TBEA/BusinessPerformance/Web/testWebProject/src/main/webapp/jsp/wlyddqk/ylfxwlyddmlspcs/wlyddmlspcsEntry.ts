@@ -130,6 +130,28 @@ module ylfxwlyddmlspcs {
 
                 this.updateTable();
             }
+            
+            isSupported( compType:Util.CompanyType):boolean{
+                if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH ||
+                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ ||
+                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL){
+                    if (compType == Util.CompanyType.SBGS ||
+                        compType == Util.CompanyType.HBGS ||
+                        compType == Util.CompanyType.XBC ||
+                        compType == Util.CompanyType.TBGS
+                    ){
+                        return true;
+                    }
+                }else{
+                    if (compType == Util.CompanyType.LLGS ||
+                        compType == Util.CompanyType.XLC ||
+                        compType == Util.CompanyType.DLGS
+                    ){
+                        return true;
+                    }
+                }
+                return false;
+            }
 
             public init(opt:Option):void {
                 super.init(opt);

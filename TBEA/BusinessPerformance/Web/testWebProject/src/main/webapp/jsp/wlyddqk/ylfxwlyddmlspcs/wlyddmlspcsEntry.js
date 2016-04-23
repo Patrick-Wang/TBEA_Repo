@@ -121,6 +121,26 @@ var ylfxwlyddmlspcs;
                 }
                 this.updateTable();
             };
+            WlyddmlspcsEntryView.prototype.isSupported = function (compType) {
+                if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH ||
+                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ ||
+                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL) {
+                    if (compType == Util.CompanyType.SBGS ||
+                        compType == Util.CompanyType.HBGS ||
+                        compType == Util.CompanyType.XBC ||
+                        compType == Util.CompanyType.TBGS) {
+                        return true;
+                    }
+                }
+                else {
+                    if (compType == Util.CompanyType.LLGS ||
+                        compType == Util.CompanyType.XLC ||
+                        compType == Util.CompanyType.DLGS) {
+                        return true;
+                    }
+                }
+                return false;
+            };
             WlyddmlspcsEntryView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
                 entryView.register("变压器未履约订单毛利水平测算-综合", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));

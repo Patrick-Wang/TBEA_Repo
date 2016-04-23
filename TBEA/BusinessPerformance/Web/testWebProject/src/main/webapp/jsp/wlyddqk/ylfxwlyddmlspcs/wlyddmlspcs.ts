@@ -10,9 +10,9 @@ module  ylfxwlyddmlspcs {
     export module wlyddmlspcs {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string):JQTable.JQGridAssistant {
+            public static createTable(gridName:string, date : string):JQTable.JQGridAssistant {
                 
-                let curDate : Date = new Date();
+                let curDate : Date = new Date(date);
                 let month = curDate.getMonth() + 1;
                 let data = [];
                 let node : JQTable.Node;
@@ -25,7 +25,10 @@ module  ylfxwlyddmlspcs {
                 for (let i = month + 1; i <= 12; ++i){
                     node.append(new JQTable.Node(i + "月", "wlyddmlspcs_snd_" + i));
                 }
-                titleNodes.push(node);
+                
+                if (month != 12) {
+                    titleNodes.push(node);
+                }
                 
                 node = new JQTable.Node("本年度", "wlyddmlspcs_bnd", true, TextAlign.Center);
                 for (let i = 1; i <= month; ++i){
@@ -115,7 +118,7 @@ module  ylfxwlyddmlspcs {
 
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mDt);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");

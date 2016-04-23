@@ -143,15 +143,7 @@ public class WlyddmlspcsServlet {
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		for (int i = 0; i < ret.size(); ++i){
 			for (int j = 0; j < ret.get(i).size(); ++j){
-				if (null == sheet.getRow(i + 1)) {
-					name = name + "1";
-				}
-				
-				if (null == sheet.getRow(i + 1).getCell(j)) {
-					name = name + "1";
-				}
-				
-				handler.handle(null, j, template, sheet.getRow(i + 1).getCell(j), ret.get(i).get(j));
+				handler.handle(null, j, template, sheet.getRow(i + 2).getCell(j), ret.get(i).get(j));
 			}
 		}
 		template.write(response, name + "月.xls");

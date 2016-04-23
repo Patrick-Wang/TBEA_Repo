@@ -15,8 +15,8 @@ var ylfxwlyddmlspcs;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            JQGridAssistantFactory.createTable = function (gridName) {
-                var curDate = new Date();
+            JQGridAssistantFactory.createTable = function (gridName, date) {
+                var curDate = new Date(date);
                 var month = curDate.getMonth() + 1;
                 var data = [];
                 var node;
@@ -27,7 +27,9 @@ var ylfxwlyddmlspcs;
                 for (var i = month + 1; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "wlyddmlspcs_snd_" + i));
                 }
-                titleNodes.push(node);
+                if (month != 12) {
+                    titleNodes.push(node);
+                }
                 node = new JQTable.Node("本年度", "wlyddmlspcs_bnd", true, TextAlign.Center);
                 for (var i = 1; i <= month; ++i) {
                     node.append(new JQTable.Node(i + "月", "wlyddmlspcs_bnd_" + i));
@@ -105,7 +107,7 @@ var ylfxwlyddmlspcs;
             };
             WLYDDMLSPCSView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+                var tableAssist = JQGridAssistantFactory.createTable(name, this.mDt);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
