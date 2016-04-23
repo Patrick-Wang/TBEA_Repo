@@ -110,6 +110,17 @@ public class WlyddmlspcsServlet {
 		return Util.response(err);
 	}
 	
+	private YlfxwlyddmlspcsSheetType getYlfxwlyddmlspcsSheetType(WlyddType wlyddType, Date d){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		
+		Integer num = (wlyddType.value() % WlyddType.YLFX_WLYMLSP_BYQ_ZH.value()) * 12 + cal.get(Calendar.MONTH);
+		
+		YlfxwlyddmlspcsSheetType wlyddmlspcsSheetType = YlfxwlyddmlspcsSheetType.values()[num];
+		
+		return wlyddmlspcsSheetType;
+	}
+	
 	@RequestMapping(value = "wlyddmlspcs/export.do")
 	public void exportWlyddmlspcs(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
@@ -121,18 +132,28 @@ public class WlyddmlspcsServlet {
 		
 		List<List<String>> ret = wlyddmlspcsService.getWlyddmlspcs(d, company, type);
 		
-//		ExcelTemplate template = ExcelTemplate.createYlfxwlyddmlspcsTemplate(YlfxwlyddmlspcsSheetType(type.value()));
-//		
-//		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
-//		HSSFWorkbook workbook = template.getWorkbook();
-//		String name = company.getName() + workbook.getSheetName(0);
-//		workbook.setSheetName(0, name);
-//		HSSFSheet sheet = workbook.getSheetAt(0);
-//		for (int i = 0; i < ret.size(); ++i){
-//			for (int j = 0; j < ret.get(i).size(); ++j){
-//				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
-//			}
-//		}
-//		template.write(response, name + ".xls");
+		ExcelTemplate template = ExcelTemplate.createYlfxwlyddmlspcsTemplate(getYlfxwlyddmlspcsSheetType(type, d));
+				
+		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
+		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = company.getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = 0; i < ret.size(); ++i){
+			for (int j = 0; j < ret.get(i).size(); ++j){
+				if (null == sheet.getRow(i + 1)) {
+					name = name + "1";
+				}
+				
+				if (null == sheet.getRow(i + 1).getCell(j)) {
+					name = name + "1";
+				}
+				
+				handler.handle(null, j, template, sheet.getRow(i + 1).getCell(j), ret.get(i).get(j));
+			}
+		}
+		template.write(response, name + "月.xls");
 	}
 }
