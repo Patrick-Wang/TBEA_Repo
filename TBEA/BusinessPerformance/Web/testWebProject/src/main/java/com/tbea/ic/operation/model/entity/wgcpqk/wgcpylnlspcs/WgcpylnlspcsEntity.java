@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.model.entity.wlydd.wlyddmslspcs;
+package com.tbea.ic.operation.model.entity.wgcpqk.wgcpylnlspcs;
 
 import javax.persistence.Column;
 import javax.persistence.FetchType;
@@ -19,8 +19,8 @@ import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.identifier.ylfx.CpmcEntity;
 
 @Entity
-@Table(name = "ylfxgb_ylfx_wlyddmle_rglr")
-public class WlyddmlspcsEntity extends AbstractReadWriteEntity implements Serializable {
+@Table(name = "ylfxgb_ylfx_wgcpmll")
+public class WgcpylnlspcsEntity extends AbstractReadWriteEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -33,10 +33,23 @@ public class WlyddmlspcsEntity extends AbstractReadWriteEntity implements Serial
 	DWXX dwxx;
 	Integer tjfs;
 	CpmcEntity cpmc;
+	Double mll;
 	Double cb;
 	Double sr;
 	Integer zt;
 	
+	
+	
+	public Double getMll() {
+		return mll;
+	}
+
+
+	public void setMll(Double mll) {
+		this.mll = mll;
+	}
+
+
 	public Integer getZt() {
 		return zt;
 	}

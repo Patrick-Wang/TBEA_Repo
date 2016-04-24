@@ -55,7 +55,7 @@ var wgcpqk;
                 return "yclbfqk/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType,
-                    cyType: this.mCyType
+                    wgcpqkType: this.mWgcpqkType
                 });
             };
             ShowView.prototype.option = function () {
@@ -68,7 +68,7 @@ var wgcpqk;
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
-                    cyType: this.mCyType
+                    wgcpqkType: this.mWgcpqkType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;

@@ -41,7 +41,7 @@ module wgcpqk {
             private mDateSelector:Util.DateSelector;
             private mDt: string;
             private mCompType:Util.CompanyType;
-            private mCyType: CyType;
+            private mWgcpqkType: WgcpqkType;
 
             getId():number {
                 return plugin.yclbfqk;
@@ -51,7 +51,7 @@ module wgcpqk {
                 return "yclbfqk/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId:compType,
-                        cyType:this.mCyType
+                        wgcpqkType:this.mWgcpqkType
                     });
             }
 
@@ -65,7 +65,7 @@ module wgcpqk {
                 this.mAjax.get({
                         date: date,
                         companyId:compType,
-                        cyType:this.mCyType
+                        wgcpqkType:this.mWgcpqkType
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
