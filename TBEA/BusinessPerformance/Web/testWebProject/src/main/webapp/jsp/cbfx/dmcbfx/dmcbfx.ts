@@ -19,7 +19,7 @@ module cbfx {
             //吨煤成本分析表
             public static createTable(gridName:string, year:number, month:number):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("成本构成", "rqa", true, TextAlign.Right),
+                    new JQTable.Node("成本构成", "rqa", true, TextAlign.Center),
                     new JQTable.Node(year + "年"+ month +"月度完成情况", "ab")
                         .append(new JQTable.Node("计划", "jh"))
                         .append(new JQTable.Node("实际", "sj"))

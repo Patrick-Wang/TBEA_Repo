@@ -201,16 +201,16 @@ module framework.basic {
     }
 
     export class EndpointProxy implements framework.route.Endpoint{
-        mPluginId:number;
+        mId:number;
         mStub : number;
-        constructor(pluginId:number, stub : number){
-            this.mPluginId = pluginId;
+        constructor(id:number, stub : number){
+            this.mId = id;
             this.mStub = stub;
             router.register(this);
         }
 
         getId():number {
-            return this.mPluginId;
+            return this.mId;
         }
         onEvent(e:framework.route.Event):any {
             return router.redirect(this.mStub, e);
