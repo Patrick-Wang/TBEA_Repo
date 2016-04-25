@@ -499,26 +499,15 @@ public class YszkgbServiceImpl implements YszkgbService {
 	}
 	
 	
-	List<String> toCode(List<Company> comps){
-		List<String> ret = new ArrayList<String>();
-		for (Company comp : comps){
-			String code = NCCompanyCode.getCode(comp.getType());
-			if (null != code){
-				ret.add(code);
-			}
-		}
-		
-		return ret;
-	}
 	
 	@Override
-	public void importZbmFromNC(Date d, List<Company> yszkgbComps) {
+	public void importZbmFromNC(Date d, List<Company> comps) {
 		NCConnection connection = NCConnection.create();
 		if (null != connection){
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			String whereSql = 
-				" and iui.unit_code in (" + StringUtils.join(toCode(yszkgbComps).toArray(), ",") + ")" + 
+				" and iui.unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
 				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 				" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
 			ResultSet rs = connection.query(String.format(ncSqlZbm, whereSql));
@@ -576,7 +565,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			String whereSql = 
-				" and iui.unit_code in (" + StringUtils.join(toCode(yszkgbComps).toArray(), ",") + ")" + 
+				" and iui.unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(yszkgbComps).toArray(), ",") + ")" + 
 				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 				" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
 			ResultSet rs = connection.query(String.format(ncSqlYszkzlbh, whereSql));

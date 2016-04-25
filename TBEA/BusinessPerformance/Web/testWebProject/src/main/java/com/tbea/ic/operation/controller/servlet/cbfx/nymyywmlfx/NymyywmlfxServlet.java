@@ -38,7 +38,6 @@ public class NymyywmlfxServlet {
 	NymyywmlfxService nymyywmlfxService;
 
 
-
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 

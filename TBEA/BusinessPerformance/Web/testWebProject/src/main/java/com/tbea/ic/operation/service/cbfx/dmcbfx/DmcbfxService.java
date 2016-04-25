@@ -20,5 +20,7 @@ public interface DmcbfxService {
 
 	List<List<String>> getDmcbqsfx(Date d, Company company);
 
+	void importFromNC(Date d, List<Company> yszkgbComps);
+
 
 }

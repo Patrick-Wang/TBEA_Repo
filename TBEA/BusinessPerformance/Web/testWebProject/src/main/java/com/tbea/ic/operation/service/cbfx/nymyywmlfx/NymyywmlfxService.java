@@ -9,4 +9,6 @@ public interface NymyywmlfxService {
 
 	List<List<String>> getNymyywmlfx(Date d, Company company);
 
+	void importFromNC(Date d, List<Company> comps);
+
 }

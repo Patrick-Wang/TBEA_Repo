@@ -46,4 +46,10 @@ public class NymyywmlfxServiceImpl implements NymyywmlfxService {
 		list.add("" + Util.division(Util.minus(entity.getSr(), entity.getCb()), entity.getSr()));
 		return list;
 	}
+
+	@Override
+	public void importFromNC(Date d, List<Company> comps) {
+		// TODO Auto-generated method stub
+		
+	}
 }

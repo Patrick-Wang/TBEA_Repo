@@ -1,8 +1,11 @@
 package com.tbea.ic.operation.service.util.nc;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
 
 public class NCCompanyCode {
@@ -33,5 +36,16 @@ public class NCCompanyCode {
 	
 	public static CompanyType getType(String code){
 		return companyMap.get(code);
+	}
+	
+	public static List<String> toCodeList(List<Company> comps){
+		List<String> ret = new ArrayList<String>();
+		for (Company comp : comps){
+			String code = NCCompanyCode.getCode(comp.getType());
+			if (null != code){
+				ret.add(code);
+			}
+		}
+		return ret;
 	}
 }

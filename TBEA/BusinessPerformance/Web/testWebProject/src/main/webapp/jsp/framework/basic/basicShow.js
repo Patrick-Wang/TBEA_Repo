@@ -44,7 +44,7 @@ var framework;
                 $("#" + elemId)[0].submit();
             };
             return ShowFrameView;
-        }(basic.BasicFrameView));
+        })(basic.BasicFrameView);
         basic.ShowFrameView = ShowFrameView;
     })(basic = framework.basic || (framework.basic = {}));
 })(framework || (framework = {}));
