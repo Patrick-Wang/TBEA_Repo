@@ -23,10 +23,13 @@ module framework.route {
         static FAILED:number = 887292;
 
         private mEndpoints:any = {};
+        private mEplist:number[] = [];
         private mCurEvent:Event;
 
         register(endpoint:Endpoint)  {
-            this.mEndpoints[endpoint.getId()] = endpoint;
+            let id = endpoint.getId();
+            this.mEndpoints[id] = endpoint;
+            this.mEplist.push(id);
         }
 
         unregister(endpoint:Endpoint) {
@@ -64,20 +67,20 @@ module framework.route {
         }
 
         public broadcast(id:number, data?:any):any {
-            if (this.mCurEvent != undefined) {
-                for (let i in this.mEndpoints) {
+            //if (this.mCurEvent != undefined) {
+                for (let i in this.mEplist) {
                     let event = {
-                        from: this.mCurEvent.from,
+                        from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
                         to: undefined,
                         id: id,
                         data: data,
                     }
-                    this.mEndpoints[i].onEvent(event);
+                    this.mEndpoints[this.mEplist[i]].onEvent(event);
                 }
                 this.mCurEvent = undefined;
                 return Router.OK;
-            }
-            return Router.FAILED;
+            //}
+            //return Router.FAILED;
         }
 
         public send(id:number, data?:any):any {

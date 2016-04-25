@@ -1042,7 +1042,16 @@ module JQTable {
                             }
                         }
                     });
-                }
+                },
+                beforeSaveCell: (rowid, cellname, v, iRow, iCol) => {
+                    var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
+                    if (isNaN(ret)) {
+                       this.centerModal();
+                        return v;
+                    } else {
+                        return ret;
+                    }
+                },
             }
             $('html').bind('click', (e)=> { //用于点击其他地方保存正在编辑状态下的行
                 if (lastsel != "") { //if a row is selected for edit

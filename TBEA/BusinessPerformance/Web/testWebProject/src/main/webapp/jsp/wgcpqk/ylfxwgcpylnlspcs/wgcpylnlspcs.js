@@ -55,7 +55,7 @@ var ylfxwgcpylnlspcs;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("wgcpylnlspcs/update.do", false);
+                this.mAjax = new Util.Ajax("../wgcpylnlspcs/update.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.wgcpylnlspcs;
@@ -113,52 +113,54 @@ var ylfxwgcpylnlspcs;
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.wgcpylnlspcs, plugin.byq_zh))
+                    .fromEp(new framework.basic.EndpointProxy(plugin.byq_zh, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-综合");
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.wgcpylnlspcs, plugin.byq_dydj))
+                    .fromEp(new framework.basic.EndpointProxy(plugin.byq_dydj, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-电压等级");
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.wgcpylnlspcs, plugin.byq_cpfl))
+                    .fromEp(new framework.basic.EndpointProxy(plugin.byq_cpfl, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-产品分类");
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.wgcpylnlspcs, plugin.byq_cpfl_t1))
+                    .fromEp(new framework.basic.EndpointProxy(plugin.byq_cpfl_t1, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-产品分类特殊1");
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.wgcpylnlspcs, plugin.xl_zh))
+                    .fromEp(new framework.basic.EndpointProxy(plugin.xl_zh, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-综合");
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.wgcpylnlspcs, plugin.xl_cpfl))
+                    .fromEp(new framework.basic.EndpointProxy(plugin.xl_cpfl, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-产品分类");
             };
             ShowView.prototype.onEvent = function (e) {
-                switch (e.id) {
-                    case plugin.byq_zh:
-                        this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH;
-                        break;
-                    case plugin.byq_dydj:
-                        this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ;
-                        break;
-                    case plugin.byq_cpfl:
-                        this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL;
-                        break;
-                    case plugin.byq_cpfl_t1:
-                        this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL_T1;
-                        break;
-                    case plugin.xl_zh:
-                        this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_XL_ZH;
-                        break;
-                    case plugin.xl_cpfl:
-                        this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_XL_CPFL;
-                        break;
-                    default:
-                        this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH;
+                if (e.road != undefined) {
+                    switch (e.road[e.road.length - 1]) {
+                        case plugin.byq_zh:
+                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH;
+                            break;
+                        case plugin.byq_dydj:
+                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ;
+                            break;
+                        case plugin.byq_cpfl:
+                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL;
+                            break;
+                        case plugin.byq_cpfl_t1:
+                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL_T1;
+                            break;
+                        case plugin.xl_zh:
+                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_XL_ZH;
+                            break;
+                        case plugin.xl_cpfl:
+                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_XL_CPFL;
+                            break;
+                        default:
+                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH;
+                    }
                 }
                 return _super.prototype.onEvent.call(this, e);
             };

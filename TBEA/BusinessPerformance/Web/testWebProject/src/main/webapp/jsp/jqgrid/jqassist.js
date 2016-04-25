@@ -923,7 +923,17 @@ var JQTable;
                             }
                         }
                     });
-                }
+                },
+                beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
+                    var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
+                    if (isNaN(ret)) {
+                        _this.centerModal();
+                        return v;
+                    }
+                    else {
+                        return ret;
+                    }
+                },
             };
             $('html').bind('click', function (e) {
                 if (lastsel != "") {

@@ -18,7 +18,7 @@ module cbfx {
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("成本构成", "rqa", true, TextAlign.Right),
+                    new JQTable.Node("成本构成", "rqa", true, TextAlign.Center),
                     new JQTable.Node("计划", "jh", false)
                 ], gridName);
             }
@@ -49,11 +49,8 @@ module cbfx {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
-                    submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                    }
+                    submitData.push([allData[i][0], allData[i][2]]);
+                    submitData[i][1] = submitData[i][1].replace(new RegExp(' ', 'g'), '');
                 }
                 this.mAjaxSave.post({
                     date: dt,

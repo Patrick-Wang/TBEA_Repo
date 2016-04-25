@@ -42,11 +42,27 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
-		for (DmcbfxEntity entity : entities){
-			result.set(entity.getCbflid(), toList(entity, 
-					dmcbfxDao.getByCpfl(entity.getCbflid(), new Date(cal.getTimeInMillis()), company)));
-			
+		
+		for (int i = 0; i < Cbfl.END.ordinal(); ++i){
+			DmcbfxEntity entityTmp = null;
+			for (DmcbfxEntity entity : entities){
+				if (entity.getCbflid() == i){
+					entityTmp = entity;
+					entities.remove(entity);
+					break;
+				}
+			}
+			if (null != entityTmp){
+			result.set(entityTmp.getCbflid(), toList(entityTmp, 
+					dmcbfxDao.getByCpfl(entityTmp.getCbflid(), new Date(cal.getTimeInMillis()), company)));
+			}else{
+				List<String> list = new ArrayList<String>();
+				Util.resize(list, 7);
+				list.set(0, cbflDao.getById(i).getName());
+				result.set(i, list);
+			}
 		}
+		
 		return result;
 	}
 
@@ -122,8 +138,9 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 		cal.add(Calendar.YEAR, -1);
 		for (int i = 0; i < Cbfl.END.ordinal(); ++i){
 			List<String> list = new ArrayList<String>();
-			Util.resize(list, 16);
+			Util.resize(list, 17);
 			result.add(list);
+			list.set(0, cbflDao.getById(i).getName());
 		}
 		
 		for (DmcbfxEntity entity : entities){
@@ -136,27 +153,27 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 	private void setQsList(DmcbfxEntity entity, List<String> list) {
 		int area = (entity.getYf() - 1) / 3;
 		int offset = (entity.getYf() - 1) % 3;
-		list.set(area * 4 + offset, "" + entity.getSjz());
+		list.set(area * 4 + offset + 1, "" + entity.getSjz());
 		
-		list.set(3 * 4 + 3, "" + Util.division(Util.sum(new Double[]{
+		list.set(3 * 4 + 3 + 1, "" + Util.division(Util.sum(new Double[]{
 				entity.getSjz(), Util.toDouble(list.get(3 * 4 + 3))
 		}), (3 + 1) * 3d));
 		if (area < 3){
-			list.set(2 * 4 + 3, "" + Util.division(Util.sum(new Double[]{
+			list.set(2 * 4 + 3 + 1, "" + Util.division(Util.sum(new Double[]{
 					entity.getSjz(), Util.toDouble(list.get(2 * 4 + 3))
 			}), (2 + 1) * 3d));
 		}
 		
 		if (area < 2){
-			list.set(4 + 3, "" + Util.division(Util.sum(new Double[]{
+			list.set(4 + 3 + 1, "" + Util.division(Util.sum(new Double[]{
 					entity.getSjz(), Util.toDouble(list.get(4 + 3))
 			}), (1 + 1) * 3d));
 		}
 		
 		if (area < 1){
-			list.set(3, "" + Util.division(Util.sum(new Double[]{
+			list.set(3 + 1, "" + Util.division(Util.sum(new Double[]{
 					entity.getSjz(), Util.toDouble(list.get(3))
-			}), 3d));
+			}), 3d)); 
 		}
 	}
 

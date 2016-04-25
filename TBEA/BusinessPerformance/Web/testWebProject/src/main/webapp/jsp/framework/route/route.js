@@ -8,9 +8,12 @@ var framework;
         var Router = (function () {
             function Router() {
                 this.mEndpoints = {};
+                this.mEplist = [];
             }
             Router.prototype.register = function (endpoint) {
-                this.mEndpoints[endpoint.getId()] = endpoint;
+                var id = endpoint.getId();
+                this.mEndpoints[id] = endpoint;
+                this.mEplist.push(id);
             };
             Router.prototype.unregister = function (endpoint) {
                 this.mEndpoints[endpoint.getId()] = undefined;
@@ -41,20 +44,20 @@ var framework;
                 return this;
             };
             Router.prototype.broadcast = function (id, data) {
-                if (this.mCurEvent != undefined) {
-                    for (var i in this.mEndpoints) {
-                        var event_1 = {
-                            from: this.mCurEvent.from,
-                            to: undefined,
-                            id: id,
-                            data: data,
-                        };
-                        this.mEndpoints[i].onEvent(event_1);
-                    }
-                    this.mCurEvent = undefined;
-                    return Router.OK;
+                //if (this.mCurEvent != undefined) {
+                for (var i in this.mEplist) {
+                    var event_1 = {
+                        from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
+                        to: undefined,
+                        id: id,
+                        data: data,
+                    };
+                    this.mEndpoints[this.mEplist[i]].onEvent(event_1);
                 }
-                return Router.FAILED;
+                this.mCurEvent = undefined;
+                return Router.OK;
+                //}
+                //return Router.FAILED;
             };
             Router.prototype.send = function (id, data) {
                 if (this.mCurEvent != undefined) {

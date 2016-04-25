@@ -182,13 +182,13 @@ var framework;
         }(BasePluginView));
         basic.EntryPluginView = EntryPluginView;
         var EndpointProxy = (function () {
-            function EndpointProxy(pluginId, stub) {
-                this.mPluginId = pluginId;
+            function EndpointProxy(id, stub) {
+                this.mId = id;
                 this.mStub = stub;
                 framework.router.register(this);
             }
             EndpointProxy.prototype.getId = function () {
-                return this.mPluginId;
+                return this.mId;
             };
             EndpointProxy.prototype.onEvent = function (e) {
                 return framework.router.redirect(this.mStub, e);
