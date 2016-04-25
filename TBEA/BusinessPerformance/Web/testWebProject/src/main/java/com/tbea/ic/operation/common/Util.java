@@ -467,4 +467,11 @@ public class Util {
 			 }
 		 }
 	}
+
+	public static Double minus(Double val, Double val2) {
+		if (null != val && val2 != null){
+			return val - val2;
+		}
+		return null;
+	}
 }

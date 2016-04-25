@@ -4,23 +4,31 @@
 ///<reference path="../../framework/basic/basicdef.ts"/>
 ///<reference path="../../framework/route/route.ts"/>
 ///<reference path="../cbfxdef.ts"/>
-
-module plugin {
-    export let dmcbfxHost : number = framework.basic.endpoint.lastId();
-    export let dmcbfx : number = framework.basic.endpoint.lastId();
-    export let dmcbqsfx : number = framework.basic.endpoint.lastId();
-}
-
-module cbfx {
-    export module dmcbfx {
-        import TextAlign = JQTable.TextAlign;
-        import EndpointProxy = framework.basic.EndpointProxy;
-        class JQGridAssistantFactory {
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var plugin;
+(function (plugin) {
+    plugin.dmcbfxHost = framework.basic.endpoint.lastId();
+    plugin.dmcbfx = framework.basic.endpoint.lastId();
+    plugin.dmcbqsfx = framework.basic.endpoint.lastId();
+})(plugin || (plugin = {}));
+var cbfx;
+(function (cbfx) {
+    var dmcbfx;
+    (function (dmcbfx) {
+        var TextAlign = JQTable.TextAlign;
+        var EndpointProxy = framework.basic.EndpointProxy;
+        var JQGridAssistantFactory = (function () {
+            function JQGridAssistantFactory() {
+            }
             //吨煤成本分析表
-            public static createTable(gridName:string, year:number, month:number):JQTable.JQGridAssistant {
+            JQGridAssistantFactory.createTable = function (gridName, year, month) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("成本构成", "rqa", true, TextAlign.Right),
-                    new JQTable.Node(year + "年"+ month +"月度完成情况", "ab")
+                    new JQTable.Node(year + "年" + month + "月度完成情况", "ab")
                         .append(new JQTable.Node("计划", "jh"))
                         .append(new JQTable.Node("实际", "sj"))
                         .append(new JQTable.Node("完成比", "wcb")),
@@ -29,10 +37,9 @@ module cbfx {
                         .append(new JQTable.Node("增减额", "ae"))
                         .append(new JQTable.Node("完成比", "af"))
                 ], gridName);
-            }
-
+            };
             //吨煤成本趋势分析表
-            public static createQsTable(gridName:string):JQTable.JQGridAssistant {
+            JQGridAssistantFactory.createQsTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("成本构成", "aa", true, TextAlign.Center),
                     new JQTable.Node("1月", "ab"),
@@ -52,65 +59,58 @@ module cbfx {
                     new JQTable.Node("12月", "ap"),
                     new JQTable.Node("全年加权", "aq")
                 ], gridName);
+            };
+            return JQGridAssistantFactory;
+        })();
+        var ShowView = (function (_super) {
+            __extends(ShowView, _super);
+            function ShowView() {
+                _super.apply(this, arguments);
+                this.mAjax = new Util.Ajax("../dmcbfx/update.do", false);
             }
-        }
-
-        class ShowView extends framework.basic.ShowPluginView {
-            static ins = new ShowView();
-            private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("../dmcbfx/update.do", false);
-            private mDateSelector:Util.DateSelector;
-            private mDt: string;
-            private mCompType:Util.CompanyType;
-            private mCurCbfxType : CbfxType;
-            onEvent(e:framework.route.Event):any {
-                if (e.redirects[e.redirects.length - 1] == plugin.dmcbfx){
-                    this.mCurCbfxType = CbfxType.dmcbfx;
-                }else{
-                    this.mCurCbfxType = CbfxType.dmcbqsfx;
+            ShowView.prototype.onEvent = function (e) {
+                if (e.redirects[e.redirects.length - 1] == plugin.dmcbfx) {
+                    this.mCurCbfxType = cbfx.CbfxType.dmcbfx;
                 }
-                return super.onEvent(e);
-            }
-
-            getId():number {
+                else {
+                    this.mCurCbfxType = cbfx.CbfxType.dmcbqsfx;
+                }
+                return _super.prototype.onEvent.call(this, e);
+            };
+            ShowView.prototype.getId = function () {
                 return plugin.dmcbfxHost;
-            }
-
-            pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
+            };
+            ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../dmcbfx/export.do?" + Util.Ajax.toUrlParam({
-                        date: date,
-                        companyId:compType,
-                        type:this.mCurCbfxType
-                    });
-            }
-
-            private option():Option {
-                return <Option>this.mOpt;
-            }
-
-            public pluginUpdate(date:string, compType:Util.CompanyType):void {
+                    date: date,
+                    companyId: compType,
+                    type: this.mCurCbfxType
+                });
+            };
+            ShowView.prototype.option = function () {
+                return this.mOpt;
+            };
+            ShowView.prototype.pluginUpdate = function (date, compType) {
+                var _this = this;
                 this.mDt = date;
                 this.mCompType = compType;
                 this.mAjax.get({
-                        date: date,
-                        companyId:compType,
-                        type:this.mCurCbfxType
-                    })
-                    .then((jsonData:any) => {
-                        this.mData = jsonData;
-                        this.refresh();
-                    });
-            }
-
-            public refresh() : void{
-                if ( this.mData == undefined){
+                    date: date,
+                    companyId: compType,
+                    type: this.mCurCbfxType
+                })
+                    .then(function (jsonData) {
+                    _this.mData = jsonData;
+                    _this.refresh();
+                });
+            };
+            ShowView.prototype.refresh = function () {
+                if (this.mData == undefined) {
                     return;
                 }
-
                 this.updateTable();
-            }
-
-            public init(opt:Option):void {
+            };
+            ShowView.prototype.init = function (opt) {
                 framework.router
                     .fromEp(new EndpointProxy(plugin.dmcbfx, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
@@ -119,28 +119,25 @@ module cbfx {
                     .fromEp(new EndpointProxy(plugin.dmcbqsfx, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "吨煤成本趋势分析表");
-            }
-
-			private getMonth():number{
-				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-				return month;
-			}
-
-            private getYear():number{
-                let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+            };
+            ShowView.prototype.getMonth = function () {
+                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                var month = curDate.getMonth() + 1;
+                return month;
+            };
+            ShowView.prototype.getYear = function () {
+                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
                 return curDate.getFullYear();
-            }
-			
-            private updateTable():void {
+            };
+            ShowView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                let tableAssist:JQTable.JQGridAssistant;
-                if (this.mCurCbfxType == CbfxType.dmcbfx){
+                var tableAssist;
+                if (this.mCurCbfxType == cbfx.CbfxType.dmcbfx) {
                     tableAssist = JQGridAssistantFactory.createTable(name, this.getYear(), this.getMonth());
-                }else{
+                }
+                else {
                     tableAssist = JQGridAssistantFactory.createQsTable(name);
                 }
-
                 //let data : string[][] = [
                 //    ["土方剥离爆破成本"],
                 //    ["原煤爆破成本"],
@@ -158,25 +155,25 @@ module cbfx {
                 //for (let i = 0; i < data.length; ++i){
                 //    data[i] = data[i].concat(this.mData[i]);
                 //}
-
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        height: '100%',
-                        width: 1400,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        rowNum: 20,
-                        data: tableAssist.getData(this.mData),
-                        datatype: "local",
-                        viewrecords : true
-                    }));
-            }
-        }
-    }
-}
+                this.$(name).jqGrid(tableAssist.decorate({
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    height: '100%',
+                    width: 1400,
+                    shrinkToFit: true,
+                    autoScroll: true,
+                    rowNum: 20,
+                    data: tableAssist.getData(this.mData),
+                    datatype: "local",
+                    viewrecords: true
+                }));
+            };
+            ShowView.ins = new ShowView();
+            return ShowView;
+        })(framework.basic.ShowPluginView);
+    })(dmcbfx = cbfx.dmcbfx || (cbfx.dmcbfx = {}));
+})(cbfx || (cbfx = {}));

@@ -31,6 +31,7 @@ import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.controller.servlet.cbfx.CbfxType;
 import com.tbea.ic.operation.service.cbfx.dmcbfx.DmcbfxService;
 import com.tbea.ic.operation.service.cbfx.dmcbfx.DmcbfxServiceImpl;
 
@@ -41,6 +42,12 @@ public class DmcbfxServlet {
 	DmcbfxService dmcbfxService;
 
 
+	CbfxType getType(HttpServletRequest request){
+		if (CbfxType.dmcbfx.ordinal()  == Integer.valueOf(request.getParameter("type")).intValue()){
+			return CbfxType.dmcbfx;
+		}
+		return CbfxType.dmcbqsfx;
+	}
 
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -51,7 +58,13 @@ public class DmcbfxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		List<List<String>> result = dmcbfxService.getDmcbfx(d, company);
+		List<List<String>> result = null;
+		if (this.getType(request) == CbfxType.dmcbfx){
+			result = dmcbfxService.getDmcbfx(d, company);
+		}else{
+			result = dmcbfxService.getDmcbqsfx(d, company);
+		}
+	
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 
@@ -79,7 +92,6 @@ public class DmcbfxServlet {
 	}
 	
 	
-	
 	@RequestMapping(value = "entry/submit.do")
 	public @ResponseBody byte[] submitDmcbfx(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -98,12 +110,19 @@ public class DmcbfxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		ExcelTemplate template = null;
+		List<List<String>> ret = null;
+		if (this.getType(request) == CbfxType.dmcbfx){
+			template = ExcelTemplate.createCbfxTemplate(CbfxSheetType.DMCBFX);
+			ret = dmcbfxService.getDmcbfx(d, company);
+		}else{
+			template = ExcelTemplate.createCbfxTemplate(CbfxSheetType.DMCBQSFX);
+			ret = dmcbfxService.getDmcbqsfx(d, company);
+		}
 		
-		List<List<String>> ret = dmcbfxService.getDmcbfx(d, company);
-		ExcelTemplate template = ExcelTemplate.createCbfxTemplate(CbfxSheetType.DMCBFX);
-	
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
 		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);

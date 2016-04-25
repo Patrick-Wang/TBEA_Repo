@@ -18,5 +18,7 @@ public interface DmcbfxService {
 
 	ErrorCode submitDmcbfx(Date d, JSONArray data, Company company);
 
+	List<List<String>> getDmcbqsfx(Date d, Company company);
+
 
 }
