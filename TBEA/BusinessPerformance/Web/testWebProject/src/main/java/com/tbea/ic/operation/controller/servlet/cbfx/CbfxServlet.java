@@ -25,17 +25,11 @@ import com.tbea.ic.operation.common.companys.CompanyType;
 public class CbfxServlet {
 
 	CompanyManager companyManager;
-	List<Company> sbdComps = new ArrayList<Company>();
+	List<Company> COMPS = new ArrayList<Company>();
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	public void setCompanyManager(CompanyManager companyManager){
 		this.companyManager = companyManager;
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NLTK));
 	}
 	
 	@RequestMapping(value = "show.do")
@@ -45,7 +39,7 @@ public class CbfxServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		CompanySelection compSel = new CompanySelection(true, sbdComps);
+		CompanySelection compSel = new CompanySelection(true, COMPS);
 		compSel.select(map);
 		return new ModelAndView("cbfx/cbfx", map);
 	}
@@ -56,7 +50,7 @@ public class CbfxServlet {
 		Map<String, Object> map = new HashMap<String, Object>();	
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		CompanySelection compSel = new CompanySelection(true, sbdComps);
+		CompanySelection compSel = new CompanySelection(true, COMPS);
 		compSel.select(map);
 		return new ModelAndView("cbfx/cbfxEntry", map);
 	}

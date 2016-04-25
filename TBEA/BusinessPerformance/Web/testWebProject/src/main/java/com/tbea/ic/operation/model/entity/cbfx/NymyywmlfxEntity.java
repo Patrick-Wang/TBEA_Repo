@@ -25,6 +25,40 @@ public class NymyywmlfxEntity extends AbstractReadWriteEntity implements Seriali
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	String hzkh;
+	String myxm;
+	Integer sl;
+	Double sr;
+	Double cb;
+	public String getHzkh() {
+		return hzkh;
+	}
+	public void setHzkh(String hzkh) {
+		this.hzkh = hzkh;
+	}
+	public String getMyxm() {
+		return myxm;
+	}
+	public void setMyxm(String myxm) {
+		this.myxm = myxm;
+	}
+	public Integer getSl() {
+		return sl;
+	}
+	public void setSl(Integer sl) {
+		this.sl = sl;
+	}
+	public Double getSr() {
+		return sr;
+	}
+	public void setSr(Double sr) {
+		this.sr = sr;
+	}
+	public Double getCb() {
+		return cb;
+	}
+	public void setCb(Double cb) {
+		this.cb = cb;
+	}
 
 }
