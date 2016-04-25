@@ -104,6 +104,12 @@ public class ExcelTemplate {
 				YlfxwlyddmlspcsSheetType.END.ordinal());
 
 	}
+
+	public static ExcelTemplate createCbfxTemplate(CbfxSheetType type) throws IOException {
+		return createTemplate(pathCbfxTemplate, type.ordinal(),
+				CbfxSheetType.END.ordinal());
+
+	}
 	
 	HSSFWorkbook workbook;
 	HSSFCellStyle cellStyleNull;
@@ -253,4 +259,5 @@ public class ExcelTemplate {
 		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(fileName, "UTF-8")  +"\"");
 		this.writeWithRawSize(response.getOutputStream());
 	}
+
 }
