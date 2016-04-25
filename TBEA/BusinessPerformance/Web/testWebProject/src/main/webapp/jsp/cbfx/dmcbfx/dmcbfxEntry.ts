@@ -73,14 +73,11 @@ module cbfx {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
-                    submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 2]) {
-                            Util.MessageBox.tip("有空内容 无法提交")
-                            return;
-                        }
+                    submitData.push([allData[i][0], allData[i][2]]);
+                    submitData[i][1] = submitData[i][1].replace(new RegExp(' ', 'g'), '');
+                    if ("" == submitData[i][1]) {
+                        Util.MessageBox.tip("有空内容 无法提交")
+                        return;
                     }
                 }
                 this.mAjaxSubmit.post({
@@ -126,7 +123,7 @@ module cbfx {
             }
 
             private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
+                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var pagername = name + "pager";
                 this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
                 //let data : string[][] = [
