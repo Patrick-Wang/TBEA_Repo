@@ -24,14 +24,20 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.service.cbfx.dmcbfx.DmcbfxService;
 import com.tbea.ic.operation.service.cbfx.dmcbfx.DmcbfxServiceImpl;
+import com.tbea.ic.operation.service.cbfx.nymyywmlfx.NymyywmlfxService;
+import com.tbea.ic.operation.service.cbfx.nymyywmlfx.NymyywmlfxServiceImpl;
 
 @Controller
 @RequestMapping(value = "cbfx")
 public class CbfxServlet {
 	@Resource(name=DmcbfxServiceImpl.NAME)
 	DmcbfxService dmcbfxService;
+	@Resource(name=NymyywmlfxServiceImpl.NAME)
+	NymyywmlfxService nymyywmlfxService;
+	
 	CompanyManager companyManager;
 	List<Company> COMPS = new ArrayList<Company>();
+	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	public void setCompanyManager(CompanyManager companyManager){
 		this.companyManager = companyManager;
@@ -69,5 +75,6 @@ public class CbfxServlet {
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
 		dmcbfxService.importFromNC(d, COMPS);
+		nymyywmlfxService.importFromNC(d, COMPS);
 	}
 }

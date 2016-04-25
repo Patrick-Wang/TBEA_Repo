@@ -30,7 +30,7 @@
 	<div class="section">
 		<div class="thumb3">
 			<ul class="slides">
-				<li><a href="../nycbfx/entry.do" target="_blank"><img
+				<li><a href="../cbfx/entry.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>成本分析录入</strong></span></a>
 				</li>
 				<li><a href="../nyzbscxl/entry.do" target="_blank"><img
