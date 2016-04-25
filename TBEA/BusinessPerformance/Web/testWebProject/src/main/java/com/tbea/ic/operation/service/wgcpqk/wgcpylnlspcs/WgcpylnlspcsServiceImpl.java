@@ -91,6 +91,11 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 		return cpIdList;
 	}
 
+	private String getMll(WgcpylnlspcsEntity entity) {
+		
+		return String.format("%.1f", Double.valueOf((entity.getSr() - entity.getCb())/entity.getSr())) + "%";
+	}
+	
 	@Override
 	public List<List<String>> getWgcpylnlspcs(Date d, Company company, WgcpqkType type) {
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -121,8 +126,8 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 				for (WgcpylnlspcsEntity entity : entities){
 					if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
 						bFind = true;
-						oneLine.add("" + entity.getMll());
-						finalList.set(i, finalList.get(i) + entity.getMll());
+						oneLine.add("" + getMll(entity));
+						//finalList.set(i, finalList.get(i) + getMll(entity));
 						finalListNullOrNot.set(i, false);
 						entities.remove(entity);
 						break;

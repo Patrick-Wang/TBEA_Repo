@@ -33,23 +33,10 @@ public class WgcpylnlspcsEntity extends AbstractReadWriteEntity implements Seria
 	DWXX dwxx;
 	Integer tjfs;
 	CpmcEntity cpmc;
-	Double mll;
 	Double cb;
 	Double sr;
 	Integer zt;
 	
-	
-	
-	public Double getMll() {
-		return mll;
-	}
-
-
-	public void setMll(Double mll) {
-		this.mll = mll;
-	}
-
-
 	public Integer getZt() {
 		return zt;
 	}
