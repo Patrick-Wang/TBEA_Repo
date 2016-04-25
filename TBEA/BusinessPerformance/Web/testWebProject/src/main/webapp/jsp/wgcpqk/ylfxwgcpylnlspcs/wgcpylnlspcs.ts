@@ -149,11 +149,11 @@ module  ylfxwgcpylnlspcs {
                 framework.router
                     .fromEp(new framework.basic.EndpointProxy(plugin.wgcpylnlspcs, plugin.xl_zh))
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "线缆未履约订单毛利水平测算-综合");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-综合");
                 framework.router
                     .fromEp(new framework.basic.EndpointProxy(plugin.wgcpylnlspcs, plugin.xl_cpfl))
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "线缆未履约订单毛利水平测算-产品分类");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-产品分类");
             }
 
             onEvent(e: framework.route.Event): any {

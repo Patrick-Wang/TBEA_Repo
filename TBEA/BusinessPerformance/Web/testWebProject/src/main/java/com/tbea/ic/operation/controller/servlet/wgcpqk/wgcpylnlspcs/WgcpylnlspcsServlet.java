@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -15,16 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
-import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.StatusData;
 import com.tbea.ic.operation.common.Util;
@@ -40,7 +35,7 @@ import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.Numbe
 import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
 import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsService;
 import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsServiceImpl;
-import com.tbea.ic.operation.common.excel.YlfxwlyddmlspcsSheetType;
+import com.tbea.ic.operation.common.excel.YlfxwgcpylnlspcsSheetType;
 
 @Controller
 @RequestMapping(value = "wgcpylnlspcs")
@@ -71,7 +66,7 @@ public class WgcpylnlspcsServlet {
 	}
 	
 	@RequestMapping(value = "update.do")
-	public @ResponseBody byte[] updateWlyddmlspcs(HttpServletRequest request,
+	public @ResponseBody byte[] updateWgcpylnlspcs(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
@@ -80,7 +75,7 @@ public class WgcpylnlspcsServlet {
 	}
 	
 	@RequestMapping(value = "entry/update.do")
-	public @ResponseBody byte[] updateWlyddmlspcsEntry(HttpServletRequest request,
+	public @ResponseBody byte[] updateWgcpylnlspcsEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
@@ -92,7 +87,7 @@ public class WgcpylnlspcsServlet {
 	}
 	
 	@RequestMapping(value = "entry/save.do")
-	public @ResponseBody byte[] saveWlyddmlspcs(HttpServletRequest request,
+	public @ResponseBody byte[] saveWgcpylnlspcs(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
@@ -102,7 +97,7 @@ public class WgcpylnlspcsServlet {
 	}
 	
 	@RequestMapping(value = "entry/submit.do")
-	public @ResponseBody byte[] submitWlyddmlspcs(HttpServletRequest request,
+	public @ResponseBody byte[] submitWgcpylnlspcs(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
@@ -111,42 +106,42 @@ public class WgcpylnlspcsServlet {
 		return Util.response(err);
 	}
 	
-//	private YlfxwlyddmlspcsSheetType getYlfxwlyddmlspcsSheetType(WlyddType wlyddType, Date d){
-//		Calendar cal = Calendar.getInstance();
-//		cal.setTime(d);
-//		
-//		Integer num = (wlyddType.value() % WlyddType.YLFX_WLYMLSP_BYQ_ZH.value()) * 12 + cal.get(Calendar.MONTH);
-//		
-//		YlfxwlyddmlspcsSheetType wlyddmlspcsSheetType = YlfxwlyddmlspcsSheetType.values()[num];
-//		
-//		return wlyddmlspcsSheetType;
-//	}
+	private YlfxwgcpylnlspcsSheetType getYlfxwgcpylnlspcsSheetType(WgcpqkType wgcpqkType, Date d){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		
+		Integer num = (wgcpqkType.value() % WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH.value()) * 12 + cal.get(Calendar.MONTH);
+		
+		YlfxwgcpylnlspcsSheetType wgcpylnlspcsSheetType = YlfxwgcpylnlspcsSheetType.values()[num];
+		
+		return wgcpylnlspcsSheetType;
+	}
 	
 	@RequestMapping(value = "export.do")
-	public void exportWlyddmlspcs(HttpServletRequest request,
+	public void exportWgcpylnlspcs(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		
-//		Date d = Date.valueOf(request.getParameter("date"));
-//		CompanyType comp = CompanySelection.getCompany(request);
-//		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-//		WlyddType type = getType(request);
-//		
-//		List<List<String>> ret = wlyddmlspcsService.getWlyddmlspcs(d, company, type);
-//		
-//		ExcelTemplate template = ExcelTemplate.createYlfxwlyddmlspcsTemplate(getYlfxwlyddmlspcsSheetType(type, d));
-//				
-//		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-//		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
-//		
-//		HSSFWorkbook workbook = template.getWorkbook();
-//		String name = company.getName() + workbook.getSheetName(0);
-//		workbook.setSheetName(0, name);
-//		HSSFSheet sheet = workbook.getSheetAt(0);
-//		for (int i = 0; i < ret.size(); ++i){
-//			for (int j = 0; j < ret.get(i).size(); ++j){
-//				handler.handle(null, j, template, sheet.getRow(i + 2).getCell(j), ret.get(i).get(j));
-//			}
-//		}
-//		template.write(response, name + "月.xls");
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		WgcpqkType type = getType(request);
+		
+		List<List<String>> ret = wgcpylnlspcsService.getWgcpylnlspcs(d, company, type);
+		
+		ExcelTemplate template = ExcelTemplate.createYlfxwgcpylnlspcsTemplate(getYlfxwgcpylnlspcsSheetType(type, d));
+				
+		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
+		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = company.getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = 0; i < ret.size(); ++i){
+			for (int j = 0; j < ret.get(i).size(); ++j){
+				handler.handle(null, j, template, sheet.getRow(i + 2).getCell(j), ret.get(i).get(j));
+			}
+		}
+		template.write(response, name + "月.xls");
 	}
 }

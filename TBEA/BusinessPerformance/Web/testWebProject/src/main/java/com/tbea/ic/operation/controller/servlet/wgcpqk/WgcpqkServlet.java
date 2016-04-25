@@ -39,7 +39,7 @@ public class WgcpqkServlet {
 	}
 	
 	@RequestMapping(value = "show.do")
-	public ModelAndView getSbdddcbjpcqk(HttpServletRequest request,
+	public ModelAndView getWgcpqk(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -51,7 +51,7 @@ public class WgcpqkServlet {
 	}
 	
 	@RequestMapping(value = "entry.do")
-	public ModelAndView getByqkglyddEntry(HttpServletRequest request,
+	public ModelAndView getWgcpqkEntry(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();	

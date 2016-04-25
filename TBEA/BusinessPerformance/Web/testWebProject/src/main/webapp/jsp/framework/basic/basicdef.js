@@ -185,6 +185,7 @@ var framework;
             function EndpointProxy(pluginId, stub) {
                 this.mPluginId = pluginId;
                 this.mStub = stub;
+                framework.router.register(this);
             }
             EndpointProxy.prototype.getId = function () {
                 return this.mPluginId;

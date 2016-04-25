@@ -39,6 +39,7 @@ public class ExcelTemplate {
 	private static String pathDzwzgbTemplate = resPath + "dzwzgb_template.xls";
 	private static String pathCbfxTemplate = resPath + "cbfx_template.xls";
 	private static String pathYlfxwlyddmlspcsTemplate = resPath + "ylfxwlyddmlspcs_template.xls";
+	private static String pathYlfxwgcpylnlspcsTemplate = resPath + "ylfxwgcpylnlspcs_template.xls";
 	
 	private static ExcelTemplate createTemplate(String path, int index, int size)
 			throws FileNotFoundException, IOException {
@@ -104,7 +105,14 @@ public class ExcelTemplate {
 				YlfxwlyddmlspcsSheetType.END.ordinal());
 
 	}
+	
+	public static ExcelTemplate createYlfxwgcpylnlspcsTemplate(YlfxwgcpylnlspcsSheetType type)
+			throws IOException {
+		return createTemplate(pathYlfxwgcpylnlspcsTemplate, type.ordinal(),
+				YlfxwgcpylnlspcsSheetType.END.ordinal());
 
+	}
+	
 	public static ExcelTemplate createCbfxTemplate(CbfxSheetType type) throws IOException {
 		return createTemplate(pathCbfxTemplate, type.ordinal(),
 				CbfxSheetType.END.ordinal());

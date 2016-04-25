@@ -47,7 +47,7 @@ var framework;
                             from: this.mCurEvent.from,
                             to: undefined,
                             id: id,
-                            data: data
+                            data: data,
                         };
                         this.mEndpoints[i].onEvent(event_1);
                     }
@@ -68,10 +68,10 @@ var framework;
             };
             Router.prototype.redirect = function (to, event) {
                 if (to != undefined) {
-                    if (event.redirects == undefined) {
-                        event.redirects = [];
+                    if (event.road == undefined) {
+                        event.road = [];
                     }
-                    event.redirects.push(event.to);
+                    event.road.push(event.to);
                     event.to = to;
                     return this.sendInternal(event);
                 }

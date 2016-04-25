@@ -39,7 +39,7 @@ public class WlyddServlet {
 	}
 	
 	@RequestMapping(value = "show.do")
-	public ModelAndView getSbdddcbjpcqk(HttpServletRequest request,
+	public ModelAndView getWlydd(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -51,7 +51,7 @@ public class WlyddServlet {
 	}
 	
 	@RequestMapping(value = "entry.do")
-	public ModelAndView getByqkglyddEntry(HttpServletRequest request,
+	public ModelAndView getWlyddEntry(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();	
