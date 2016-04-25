@@ -92,7 +92,7 @@ module framework.basic {
             let type:Util.CompanyType = this.mCompanySelector.getCompany();
             let nodes = [];
             for (var i = 0; i < this.mNodesAll.length; ++i) {
-                if (router.to(this.plugin(this.mNodesAll[i])).send(FrameEvent.FE_IS_COMPANY_SUPPORTED, {type:type})) {
+                if (router.to(this.plugin(this.mNodesAll[i])).send(FrameEvent.FE_IS_COMPANY_SUPPORTED, type)) {
                     nodes.push(this.mNodesAll[i]);
                 }
             }

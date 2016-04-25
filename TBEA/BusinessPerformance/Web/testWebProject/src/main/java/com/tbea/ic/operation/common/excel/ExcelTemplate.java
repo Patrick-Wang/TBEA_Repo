@@ -37,6 +37,7 @@ public class ExcelTemplate {
 	private static String pathChgbTemplate = resPath + "chgb_template.xls";
 	private static String pathSbdddcbjpcqkTemplate = resPath + "sbdddcbjpcqk_template.xls";
 	private static String pathDzwzgbTemplate = resPath + "dzwzgb_template.xls";
+	private static String pathCbfxTemplate = resPath + "cbfx_template.xls";
 	private static String pathYlfxwlyddmlspcsTemplate = resPath + "ylfxwlyddmlspcs_template.xls";
 	
 	private static ExcelTemplate createTemplate(String path, int index, int size)
@@ -96,10 +97,12 @@ public class ExcelTemplate {
 				DzwzgbSheetType.END.ordinal());
 	}
 	
+
 	public static ExcelTemplate createYlfxwlyddmlspcsTemplate(YlfxwlyddmlspcsSheetType type)
 			throws IOException {
 		return createTemplate(pathYlfxwlyddmlspcsTemplate, type.ordinal(),
 				YlfxwlyddmlspcsSheetType.END.ordinal());
+
 	}
 	
 	HSSFWorkbook workbook;

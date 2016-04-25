@@ -43,7 +43,7 @@ import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsServiceImpl
 import com.tbea.ic.operation.common.excel.YlfxwlyddmlspcsSheetType;
 
 @Controller
-@RequestMapping(value = "wgcpqk")
+@RequestMapping(value = "wgcpylnlspcs")
 public class WgcpylnlspcsServlet {
 	@Resource(name = WgcpylnlspcsServiceImpl.NAME)
 	WgcpylnlspcsService wgcpylnlspcsService;
@@ -53,24 +53,24 @@ public class WgcpylnlspcsServlet {
 	CompanyManager companyManager;
 
 	private WgcpqkType getType(HttpServletRequest request){
-		if (11 == Integer.valueOf(request.getParameter("type"))){
+		if (11 == Integer.valueOf(request.getParameter("wgcpqkType"))){
 			return WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH;
-		} else if (12 == Integer.valueOf(request.getParameter("type"))) {
+		} else if (12 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
 			return WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ;
-		}else if (13 == Integer.valueOf(request.getParameter("type"))) {
+		}else if (13 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
 			return WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL;
-		}else if (14 == Integer.valueOf(request.getParameter("type"))) {
+		}else if (14 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
 			return WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL_T1;
-		}else if (15 == Integer.valueOf(request.getParameter("type"))) {
+		}else if (15 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
 			return WgcpqkType.YLFX_WGCPYLNL_XL_ZH;
-		}else if (16 == Integer.valueOf(request.getParameter("type"))) {
+		}else if (16 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
 			return WgcpqkType.YLFX_WGCPYLNL_XL_CPFL;
 		}
 		
 		return WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH;
 	}
 	
-	@RequestMapping(value = "wgcpylnlspcs/update.do")
+	@RequestMapping(value = "update.do")
 	public @ResponseBody byte[] updateWlyddmlspcs(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
@@ -79,7 +79,7 @@ public class WgcpylnlspcsServlet {
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "wlyddmlspcs/entry/update.do")
+	@RequestMapping(value = "entry/update.do")
 	public @ResponseBody byte[] updateWlyddmlspcsEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
@@ -91,7 +91,7 @@ public class WgcpylnlspcsServlet {
 		return JSONObject.fromObject(sd).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "wlyddmlspcs/entry/save.do")
+	@RequestMapping(value = "entry/save.do")
 	public @ResponseBody byte[] saveWlyddmlspcs(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
@@ -101,7 +101,7 @@ public class WgcpylnlspcsServlet {
 		return Util.response(err);
 	}
 	
-	@RequestMapping(value = "wlyddmlspcs/entry/submit.do")
+	@RequestMapping(value = "entry/submit.do")
 	public @ResponseBody byte[] submitWlyddmlspcs(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
@@ -122,7 +122,7 @@ public class WgcpylnlspcsServlet {
 //		return wlyddmlspcsSheetType;
 //	}
 	
-	@RequestMapping(value = "wlyddmlspcs/export.do")
+	@RequestMapping(value = "export.do")
 	public void exportWlyddmlspcs(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		
