@@ -40,6 +40,7 @@ public class ExcelTemplate {
 	private static String pathCbfxTemplate = resPath + "cbfx_template.xls";
 	private static String pathYlfxwlyddmlspcsTemplate = resPath + "ylfxwlyddmlspcs_template.xls";
 	private static String pathYlfxwgcpylnlspcsTemplate = resPath + "ylfxwgcpylnlspcs_template.xls";
+	private static String pathSbdscqyqkTemplate = resPath + "sbdscqyqk_template.xls";
 	
 	private static ExcelTemplate createTemplate(String path, int index, int size)
 			throws FileNotFoundException, IOException {
@@ -103,20 +104,23 @@ public class ExcelTemplate {
 			throws IOException {
 		return createTemplate(pathYlfxwlyddmlspcsTemplate, type.ordinal(),
 				YlfxwlyddmlspcsSheetType.END.ordinal());
-
 	}
 	
 	public static ExcelTemplate createYlfxwgcpylnlspcsTemplate(YlfxwgcpylnlspcsSheetType type)
 			throws IOException {
 		return createTemplate(pathYlfxwgcpylnlspcsTemplate, type.ordinal(),
 				YlfxwgcpylnlspcsSheetType.END.ordinal());
-
 	}
 	
 	public static ExcelTemplate createCbfxTemplate(CbfxSheetType type) throws IOException {
 		return createTemplate(pathCbfxTemplate, type.ordinal(),
 				CbfxSheetType.END.ordinal());
-
+	}
+	
+	public static ExcelTemplate createSbdscqyqkTemplate(
+			SbdscqyqkSheetType type) throws IOException {
+		return createTemplate(pathSbdscqyqkTemplate, type.ordinal(),
+				SbdscqyqkSheetType.END.ordinal());
 	}
 	
 	HSSFWorkbook workbook;
@@ -267,5 +271,4 @@ public class ExcelTemplate {
 		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(fileName, "UTF-8")  +"\"");
 		this.writeWithRawSize(response.getOutputStream());
 	}
-
 }

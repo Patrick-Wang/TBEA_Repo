@@ -62,7 +62,7 @@ var jcycljg;
             this.pluginUpdate(st, ed);
         };
         return BasePluginView;
-    }());
+    })();
     jcycljg.BasePluginView = BasePluginView;
     (function (JcycljgType) {
         JcycljgType[JcycljgType["YSJS"] = 0] = "YSJS";

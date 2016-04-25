@@ -3,7 +3,7 @@
 /// <reference path="../../dateSelector.ts" />
 /// <reference path="../wlyddqkdef.ts" />
 ///<reference path="../../messageBox.ts"/>
-///<reference path="..//wlyddqkEntry.ts"/>
+///<reference path="../wlyddqkEntry.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -33,7 +33,7 @@ var ylfxwlyddmlspcs;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var WlyddmlspcsEntryView = (function (_super) {
             __extends(WlyddmlspcsEntryView, _super);
             function WlyddmlspcsEntryView() {
@@ -231,7 +231,7 @@ var ylfxwlyddmlspcs;
                 });
             };
             return WlyddmlspcsEntryView;
-        }(wlyddqk.BaseEntryPluginView));
+        })(wlyddqk.BaseEntryPluginView);
         wlyddmlspcsEntry.pluginView = WlyddmlspcsEntryView.newInstance();
     })(wlyddmlspcsEntry = ylfxwlyddmlspcs.wlyddmlspcsEntry || (ylfxwlyddmlspcs.wlyddmlspcsEntry = {}));
 })(ylfxwlyddmlspcs || (ylfxwlyddmlspcs = {}));

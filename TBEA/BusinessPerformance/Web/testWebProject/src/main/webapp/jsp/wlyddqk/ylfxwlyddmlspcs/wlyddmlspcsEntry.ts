@@ -3,7 +3,7 @@
 /// <reference path="../../dateSelector.ts" />
 /// <reference path="../wlyddqkdef.ts" />
 ///<reference path="../../messageBox.ts"/>
-///<reference path="..//wlyddqkEntry.ts"/>
+///<reference path="../wlyddqkEntry.ts"/>
 
 declare var echarts;
 declare var entryView:wlyddqk.EntryView;
