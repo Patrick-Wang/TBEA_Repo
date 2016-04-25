@@ -76,7 +76,7 @@ public class DmcbfxServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		List<List<String>> result = dmcbfxService.getDmcbfxEntry(d, company);
-		return JSONObject.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
+		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "entry/save.do")
