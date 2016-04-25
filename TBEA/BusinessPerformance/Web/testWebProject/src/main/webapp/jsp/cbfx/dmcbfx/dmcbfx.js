@@ -11,9 +11,9 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var plugin;
 (function (plugin) {
-    plugin.dmcbfxHost = framework.basic.endpoint.lastId();
     plugin.dmcbfx = framework.basic.endpoint.lastId();
-    plugin.dmcbqsfx = framework.basic.endpoint.lastId();
+    plugin.dmcbfxProxy = framework.basic.endpoint.lastId();
+    plugin.dmcbqsfxProxy = framework.basic.endpoint.lastId();
 })(plugin || (plugin = {}));
 var cbfx;
 (function (cbfx) {
@@ -69,16 +69,18 @@ var cbfx;
                 this.mAjax = new Util.Ajax("../dmcbfx/update.do", false);
             }
             ShowView.prototype.onEvent = function (e) {
-                if (e.redirects[e.redirects.length - 1] == plugin.dmcbfx) {
-                    this.mCurCbfxType = cbfx.CbfxType.dmcbfx;
-                }
-                else {
-                    this.mCurCbfxType = cbfx.CbfxType.dmcbqsfx;
+                if (e.road != undefined) {
+                    if (e.road[e.road.length - 1] == plugin.dmcbfxProxy) {
+                        this.mCurCbfxType = cbfx.CbfxType.dmcbfx;
+                    }
+                    else {
+                        this.mCurCbfxType = cbfx.CbfxType.dmcbqsfx;
+                    }
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.getId = function () {
-                return plugin.dmcbfxHost;
+                return plugin.dmcbfx;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../dmcbfx/export.do?" + Util.Ajax.toUrlParam({
@@ -112,11 +114,11 @@ var cbfx;
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
-                    .fromEp(new EndpointProxy(plugin.dmcbfx, this.getId()))
+                    .fromEp(new EndpointProxy(plugin.dmcbfxProxy, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "吨煤成本分析表");
                 framework.router
-                    .fromEp(new EndpointProxy(plugin.dmcbqsfx, this.getId()))
+                    .fromEp(new EndpointProxy(plugin.dmcbqsfxProxy, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "吨煤成本趋势分析表");
             };

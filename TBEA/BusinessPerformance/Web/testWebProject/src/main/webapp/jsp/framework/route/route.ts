@@ -4,12 +4,14 @@
 module framework.route {
 
     export interface Event {
+        id:number;
         from:number;
         to:number;
-        redirects?:number[];
-        id:number;
+        road?:number[];
         data:any;
     }
+
+
 
     export interface Endpoint {
         getId():number;
@@ -23,7 +25,7 @@ module framework.route {
         private mEndpoints:any = {};
         private mCurEvent:Event;
 
-        register(endpoint:Endpoint) {
+        register(endpoint:Endpoint)  {
             this.mEndpoints[endpoint.getId()] = endpoint;
         }
 
@@ -68,7 +70,7 @@ module framework.route {
                         from: this.mCurEvent.from,
                         to: undefined,
                         id: id,
-                        data: data
+                        data: data,
                     }
                     this.mEndpoints[i].onEvent(event);
                 }
@@ -91,10 +93,10 @@ module framework.route {
 
         public redirect(to:number, event:Event):any {
             if (to != undefined) {
-                if (event.redirects == undefined){
-                    event.redirects = [];
+                if (event.road == undefined){
+                    event.road = [];
                 }
-                event.redirects.push(event.to);
+                event.road.push(event.to);
                 event.to = to;
                 return this.sendInternal(event);
             }

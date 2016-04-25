@@ -206,6 +206,7 @@ module framework.basic {
         constructor(pluginId:number, stub : number){
             this.mPluginId = pluginId;
             this.mStub = stub;
+            router.register(this);
         }
 
         getId():number {

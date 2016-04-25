@@ -42,7 +42,7 @@ var cbfx;
                 return plugin.nymyywmlfx;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "nymyywmlfx/export.do?" + Util.Ajax.toUrlParam({
+                return "../nymyywmlfx/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType
                 });

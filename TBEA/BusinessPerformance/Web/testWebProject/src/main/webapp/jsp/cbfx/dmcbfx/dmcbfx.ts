@@ -6,9 +6,9 @@
 ///<reference path="../cbfxdef.ts"/>
 
 module plugin {
-    export let dmcbfxHost : number = framework.basic.endpoint.lastId();
     export let dmcbfx : number = framework.basic.endpoint.lastId();
-    export let dmcbqsfx : number = framework.basic.endpoint.lastId();
+    export let dmcbfxProxy : number = framework.basic.endpoint.lastId();
+    export let dmcbqsfxProxy : number = framework.basic.endpoint.lastId();
 }
 
 module cbfx {
@@ -64,16 +64,18 @@ module cbfx {
             private mCompType:Util.CompanyType;
             private mCurCbfxType : CbfxType;
             onEvent(e:framework.route.Event):any {
-                if (e.redirects[e.redirects.length - 1] == plugin.dmcbfx){
-                    this.mCurCbfxType = CbfxType.dmcbfx;
-                }else{
-                    this.mCurCbfxType = CbfxType.dmcbqsfx;
+                if (e.road != undefined){
+                    if (e.road[e.road.length - 1] == plugin.dmcbfxProxy){
+                        this.mCurCbfxType = CbfxType.dmcbfx;
+                    }else{
+                        this.mCurCbfxType = CbfxType.dmcbqsfx;
+                    }
                 }
                 return super.onEvent(e);
             }
 
             getId():number {
-                return plugin.dmcbfxHost;
+                return plugin.dmcbfx;
             }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
@@ -112,11 +114,11 @@ module cbfx {
 
             public init(opt:Option):void {
                 framework.router
-                    .fromEp(new EndpointProxy(plugin.dmcbfx, this.getId()))
+                    .fromEp(new EndpointProxy(plugin.dmcbfxProxy, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "吨煤成本分析表");
                 framework.router
-                    .fromEp(new EndpointProxy(plugin.dmcbqsfx, this.getId()))
+                    .fromEp(new EndpointProxy(plugin.dmcbqsfxProxy, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "吨煤成本趋势分析表");
             }

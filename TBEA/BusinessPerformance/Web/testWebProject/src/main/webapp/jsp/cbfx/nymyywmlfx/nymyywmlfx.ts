@@ -37,7 +37,7 @@ module cbfx {
             }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
-                return "nymyywmlfx/export.do?" + Util.Ajax.toUrlParam({
+                return "../nymyywmlfx/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId:compType
                     });
