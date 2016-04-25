@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -20,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tbea.ic.operation.common.CompanySelection;
-import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -66,14 +63,15 @@ public class NymyywmlfxServlet {
 		List<List<String>> ret = nymyywmlfxService.getNymyywmlfx(d, company);
 		ExcelTemplate template = ExcelTemplate.createCbfxTemplate(CbfxSheetType.NYYWMLFX);
 	
-		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
+		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0, 1});
+		handler.next(new NumberFormatterHandler(NumberType.RESERVE_0, null, new Integer[]{2}));
 		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		for (int i = 0; i < ret.size(); ++i){
-			HSSFRow row = sheet.createRow(i + 2);
+			HSSFRow row = sheet.createRow(i + 1);
 			for (int j = 0; j < ret.get(i).size(); ++j){
 				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
 			}

@@ -2,8 +2,6 @@ package com.tbea.ic.operation.common.formatter.raw;
 
 import java.math.BigDecimal;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-
 public class RawNumberFormatterHandler extends RawAbstractFormatterHandler {
 
 	public enum NumberType {

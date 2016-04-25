@@ -25,6 +25,9 @@ public class NymyywmlfxEntity extends AbstractReadWriteEntity implements Seriali
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	Integer nf;
+	Integer yf;
+	Integer dwid;
 	String hzkh;
 	String myxm;
 	Integer sl;
@@ -59,6 +62,24 @@ public class NymyywmlfxEntity extends AbstractReadWriteEntity implements Seriali
 	}
 	public void setCb(Double cb) {
 		this.cb = cb;
+	}
+	public Integer getNf() {
+		return nf;
+	}
+	public void setNf(Integer nf) {
+		this.nf = nf;
+	}
+	public Integer getYf() {
+		return yf;
+	}
+	public void setYf(Integer yf) {
+		this.yf = yf;
+	}
+	public Integer getDwid() {
+		return dwid;
+	}
+	public void setDwid(Integer dwid) {
+		this.dwid = dwid;
 	}
 
 }

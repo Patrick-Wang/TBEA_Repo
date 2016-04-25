@@ -57,6 +57,9 @@ IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 
 DROP TABLE cbfx_nymyywmlfx
 CREATE TABLE [dbo].[cbfx_nymyywmlfx](
 	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nf] [int] not NULL,
+	[yf] [int] not NULL,
+	[dwid] [int] not NULL,
 	[hzkh] [varchar](50) not NULL,
 	[myxm] [varchar](50) not NULL,
 	[sl] [int] NULL,

@@ -52,7 +52,7 @@
 <%@include file="../framework/basic/basicShow.jsp"%>
 <script src="${pageContext.request.contextPath}/jsp/cbfx/cbfxdef.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/cbfx/cbfx.js" type="text/javascript"></script>
-<title>完工产品情况</title>
+<title>成本分析</title>
 
 <style type="text/css">
 body {
@@ -168,7 +168,7 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class="header">
-		<h1 id="headertitle">完工产品情况</h1>
+		<h1 id="headertitle">成本分析</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">

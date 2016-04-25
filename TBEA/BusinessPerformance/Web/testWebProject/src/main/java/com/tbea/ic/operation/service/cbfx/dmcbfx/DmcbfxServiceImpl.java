@@ -72,9 +72,9 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 		list.add("" + entity.getJhz());
 		list.add("" + entity.getSjz());
 		list.add("" + Util.division(entity.getSjz(), entity.getJhz()));
-		list.add("" + qn.getSjz());
-		list.add("" + Util.minus(entity.getSjz(), qn.getSjz()));
-		list.add("" + Util.division(Util.minus(entity.getSjz(), qn.getSjz()), entity.getSjz()));
+		list.add("" + (qn == null ? null : qn.getSjz()));
+		list.add("" + Util.minus(entity.getSjz(), qn == null ? null : qn.getSjz()));
+		list.add("" + Util.division(Util.minus(entity.getSjz(), qn == null ? null : qn.getSjz()), entity.getSjz()));
 		return list;
 	}
 
@@ -83,8 +83,25 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 		List<DmcbfxEntity> entities = dmcbfxDao.getByDate(d, company);
 		List<List<String>> result  = new ArrayList<List<String>>();
 		Util.resize(result, Cbfl.END.ordinal());
-		for (DmcbfxEntity entity : entities){
-			result.set(entity.getCbflid(), toList(entity));
+		
+		for (int i = 0; i < Cbfl.END.ordinal(); ++i){
+			DmcbfxEntity entityTmp = null;
+			for (DmcbfxEntity entity : entities){
+				if (entity.getCbflid() == i){
+					entityTmp = entity;
+					entities.remove(entity);
+					break;
+				}
+			}
+			if (null != entityTmp){
+				result.set(entityTmp.getCbflid(), toList(entityTmp));
+			}else{
+				List<String> list = new ArrayList<String>();
+				Util.resize(list, 3);
+				list.set(0, "" + i);
+				list.set(1, cbflDao.getById(i).getName());
+				result.set(i, list);
+			}
 		}
 		return result;
 	}
@@ -112,7 +129,7 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 				entity.setZt(zt.ordinal());
 			}
 
-			entity.setJhz(Double.valueOf(data.getString(1)));
+			entity.setJhz(Util.toDoubleNull(row.getString(1)));
 			dmcbfxDao.merge(entity);
 		}
 		return ErrorCode.OK;
@@ -156,23 +173,23 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 		list.set(area * 4 + offset + 1, "" + entity.getSjz());
 		
 		list.set(3 * 4 + 3 + 1, "" + Util.division(Util.sum(new Double[]{
-				entity.getSjz(), Util.toDouble(list.get(3 * 4 + 3))
+				entity.getSjz(), Util.toDoubleNull(list.get(3 * 4 + 3))
 		}), (3 + 1) * 3d));
 		if (area < 3){
 			list.set(2 * 4 + 3 + 1, "" + Util.division(Util.sum(new Double[]{
-					entity.getSjz(), Util.toDouble(list.get(2 * 4 + 3))
+					entity.getSjz(), Util.toDoubleNull(list.get(2 * 4 + 3))
 			}), (2 + 1) * 3d));
 		}
 		
 		if (area < 2){
 			list.set(4 + 3 + 1, "" + Util.division(Util.sum(new Double[]{
-					entity.getSjz(), Util.toDouble(list.get(4 + 3))
+					entity.getSjz(), Util.toDoubleNull(list.get(4 + 3))
 			}), (1 + 1) * 3d));
 		}
 		
 		if (area < 1){
 			list.set(3 + 1, "" + Util.division(Util.sum(new Double[]{
-					entity.getSjz(), Util.toDouble(list.get(3))
+					entity.getSjz(), Util.toDoubleNull(list.get(3))
 			}), 3d)); 
 		}
 	}

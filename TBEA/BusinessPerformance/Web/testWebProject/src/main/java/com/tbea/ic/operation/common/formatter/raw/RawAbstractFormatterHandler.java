@@ -3,8 +3,6 @@ package com.tbea.ic.operation.common.formatter.raw;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-
 public abstract class RawAbstractFormatterHandler implements RawFormatterHandler {
 
 	RawFormatterHandler mNextHandler;

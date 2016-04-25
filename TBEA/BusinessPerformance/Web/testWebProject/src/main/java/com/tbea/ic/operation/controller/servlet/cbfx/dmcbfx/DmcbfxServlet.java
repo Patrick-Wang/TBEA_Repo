@@ -112,10 +112,13 @@ public class DmcbfxServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		ExcelTemplate template = null;
 		List<List<String>> ret = null;
+		int base = 0;
 		if (this.getType(request) == CbfxType.dmcbfx){
 			template = ExcelTemplate.createCbfxTemplate(CbfxSheetType.DMCBFX);
 			ret = dmcbfxService.getDmcbfx(d, company);
+			base = 2;
 		}else{
+			base = 1;
 			template = ExcelTemplate.createCbfxTemplate(CbfxSheetType.DMCBQSFX);
 			ret = dmcbfxService.getDmcbqsfx(d, company);
 		}
@@ -127,8 +130,9 @@ public class DmcbfxServlet {
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
+		
 		for (int i = 0; i < ret.size(); ++i){
-			HSSFRow row = sheet.createRow(i + 2);
+			HSSFRow row = sheet.createRow(i + base);
 			for (int j = 0; j < ret.get(i).size(); ++j){
 				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
 			}

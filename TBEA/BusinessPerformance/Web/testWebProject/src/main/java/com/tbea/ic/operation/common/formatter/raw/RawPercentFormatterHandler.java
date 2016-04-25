@@ -1,6 +1,5 @@
 package com.tbea.ic.operation.common.formatter.raw;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 
 public class RawPercentFormatterHandler extends RawAbstractFormatterHandler {
 
