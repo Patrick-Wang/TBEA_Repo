@@ -24,10 +24,10 @@ module ylfxwgcpylnlspcs {
                 let node : JQTable.Node;
                 let titleNodes : JQTable.Node[] = [];
                 
-                node = new JQTable.Node("产品", "wgcpylnlspcsentry_cp", readOnly, TextAlign.Left);
+                node = new JQTable.Node("产品", "wgcpylnlspcsentry_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 
-                node = new JQTable.Node(year + "年" + month + "月", "wgcpylnlspcsentry_riqi", true, TextAlign.Center);
+                node = new JQTable.Node(year + "年" + month + "月", "wgcpylnlspcsentry_riqi", false, TextAlign.Center);
 
                 node.append(new JQTable.Node("成本", "wgcpylnlspcsentry_cb_", false));
                 node.append(new JQTable.Node("收入", "wgcpylnlspcsentry_sr_", false));
