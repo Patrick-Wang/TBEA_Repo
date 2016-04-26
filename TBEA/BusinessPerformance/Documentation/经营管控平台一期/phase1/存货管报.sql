@@ -31,7 +31,8 @@ CREATE  TABLE [dbo].[chgb_chzm](
 	[dwid] [int] not NULL,
 	[zmje] [numeric](18, 4) NULL,
 	[hzzb] [numeric](18, 4) NULL,
-	[yz] [numeric](18, 4) NULL
+	[yz] [numeric](18, 4) NULL,
+	[zt] [int] not NULL
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -53,7 +54,8 @@ CREATE TABLE [dbo].[chgb_jykc](
 	[syye] [numeric](18, 4) NULL,
 	[byxz] [numeric](18, 4) NULL,
 	[bycz] [numeric](18, 4) NULL,
-	[qmye] [numeric](18, 4) NULL
+	[qmye] [numeric](18, 4) NULL,
+	[zt] [int] not NULL
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -128,7 +130,8 @@ CREATE TABLE [dbo].[chgb_nych](
 	[sccbDpbtf] [numeric](18, 4) NULL,
 	[fcsp] [numeric](18, 4) NULL,
 	[dh] [numeric](18, 4) NULL,
-	[hj] [numeric](18, 4) NULL
+	[hj] [numeric](18, 4) NULL,
+	[zt] [int] not NULL
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC

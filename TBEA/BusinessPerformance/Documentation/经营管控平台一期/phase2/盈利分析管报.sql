@@ -86,6 +86,8 @@ INSERT [dbo].[identifier_ylfxgb_cpmc] ([id], [name]) VALUES (68 ,N'铜杆')
 INSERT [dbo].[identifier_ylfxgb_cpmc] ([id], [name]) VALUES (69 ,N'铝杆')
 INSERT [dbo].[identifier_ylfxgb_cpmc] ([id], [name]) VALUES (70 ,N'PVC料')
 INSERT [dbo].[identifier_ylfxgb_cpmc] ([id], [name]) VALUES (71 ,N'工装轮')
+INSERT [dbo].[identifier_ylfxgb_cpmc] ([id], [name]) VALUES (72 ,N'        非晶合金变')
+INSERT [dbo].[identifier_ylfxgb_cpmc] ([id], [name]) VALUES (73 ,N'        卷铁芯')
 
 
 SET IDENTITY_INSERT [dbo].[identifier_ylfxgb_cpmc] OFF
@@ -121,51 +123,6 @@ INSERT [dbo].[identifier_ylfxgb_clmc] ([id], [name]) VALUES (12,N'变压器油')
 SET IDENTITY_INSERT [dbo].[identifier_ylfxgb_clmc] OFF
 
 
-
-
- /***************************************************************************** 盈利分析--完工产品盈利能力水平测算--人工录入
-			产品	收入	成本	状态
-id	nf	yf	cpid	sr	cb	zt
-*****************************************************************************/
-IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ylfxgb_ylfx_wgcpynespcs_rglr')
-DROP TABLE ylfxgb_ylfx_wgcpynespcs_rglr
-CREATE TABLE [dbo].[ylfxgb_ylfx_wgcpynespcs_rglr](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[nf] [int] not NULL,
-	[yf] [int] not NULL,
-	[cpid] [int] not NULL,
-	[sr] [numeric](18, 4) NULL,
-	[cb] [numeric](18, 4) NULL,
-	[zt] [int] not NULL
-PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-
-
- /***************************************************************************** 盈利分析--完工产品盈利能力水平测算--NC导入
-			产业	统计方式	产品	毛利率
-id	nf	yf	cy	tjfs	cp	mll
-*****************************************************************************/
-IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ylfxgb_ylfx_wgcpmll_ncdr')
-DROP TABLE ylfxgb_ylfx_wgcpmll_ncdr
-CREATE TABLE [dbo].[ylfxgb_ylfx_wgcpmll_ncdr](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[nf] [int] not NULL,
-	[yf] [int] not NULL,
-	[cy] [int] not NULL,
-	[tjfs] [int] not NULL,	-- 1->综合   2->按电压等级分类	3->按产品分类
-	[cpid] [int] not NULL,
-	[mll] [numeric](18, 4) NULL
-PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-
  /***************************************************************************** 盈利分析--完工产品盈利能力水平测算--NC导入+人工录入
 			产业	统计方式	产品	毛利率
 id	nf	yf	cy	tjfs	cp	mll
@@ -179,7 +136,6 @@ CREATE TABLE [dbo].[ylfxgb_ylfx_wgcpmll](
 	[dwid] [int] not NULL,
 	[tjfs] [int] not NULL,	-- 11->变压器综合   12->变压器按电压等级分类	13->变压器按产品分类   14->变压器按产品特殊1	15->线缆综合	16->线缆按产品分类
 	[cpid] [int] not NULL,
-	[mll] [numeric](18, 4) NULL,
 	[sr] [numeric](18, 4) NULL,
 	[cb] [numeric](18, 4) NULL,
 	[zt] [int]
