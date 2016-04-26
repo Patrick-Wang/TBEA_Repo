@@ -91,20 +91,23 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 		return cpIdList;
 	}
 
-	private String getMll(WgcpylnlspcsEntity entity) {
+	private String getMll(Double cb, Double sr) {
 		
-		return String.format("%.1f", Double.valueOf((entity.getSr() - entity.getCb())/entity.getSr())) + "%";
+		return String.format("%.1f", Double.valueOf((sr - cb)/sr)) + "%";
 	}
 	
 	@Override
 	public List<List<String>> getWgcpylnlspcs(Date d, Company company, WgcpqkType type) {
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<Integer> cpIdList = getCpIdList(type);
-		List<Double> finalList = new ArrayList<Double>();
+		List<List<Double>> finalListTemp = new ArrayList<List<Double>>();
 		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
 		
 		for (int i = 0; i < 12; ++i){
-			finalList.add(0.0);
+			List<Double> tmp = new ArrayList<Double>();
+			tmp.add(0.0);
+			tmp.add(0.0);
+			finalListTemp.add(tmp);
 			finalListNullOrNot.add(true);
 		}
 		
@@ -126,8 +129,11 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 				for (WgcpylnlspcsEntity entity : entities){
 					if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
 						bFind = true;
-						oneLine.add("" + getMll(entity));
-						//finalList.set(i, finalList.get(i) + getMll(entity));
+						oneLine.add("" + getMll(entity.getCb(), entity.getSr()));
+						
+						finalListTemp.get(i).set(0, finalListTemp.get(i).get(0) + entity.getCb());
+						finalListTemp.get(i).set(1, finalListTemp.get(i).get(1) + entity.getSr());
+						
 						finalListNullOrNot.set(i, false);
 						entities.remove(entity);
 						break;
@@ -148,14 +154,14 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 		
 			if (!finalListNullOrNot.get(i)) {
 
-				finalLine.add("" + finalList.get(i));
+				finalLine.add("" + getMll(finalListTemp.get(i).get(0), finalListTemp.get(i).get(1)));
 			} else {
 				
 				finalLine.add("null");
 			}
 		}
 		
-		if (type != WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL || type != WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL_T1) {
+		if (type != WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL && type != WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL_T1) {
 
 			result.add(finalLine);
 		}

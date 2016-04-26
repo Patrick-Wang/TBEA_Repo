@@ -72,7 +72,7 @@ module  ylfxwgcpylnlspcs {
             }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
-                return "wgcpylnlspcs/export.do?" + Util.Ajax.toUrlParam({
+                return "../wgcpylnlspcs/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId: compType,
                         wgcpqkType: this.mWgcpqkType

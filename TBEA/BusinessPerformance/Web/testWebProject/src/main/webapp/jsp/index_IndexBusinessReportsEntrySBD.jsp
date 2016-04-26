@@ -48,7 +48,7 @@
 				<li><a href="../sbdscqyqk/entry.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>输变电市场签约情况录入</strong></span></a>
 				</li>
-				<li><a href="../wgccqk/entry.do" target="_blank"><img
+				<li><a href="../wgcpqk/entry.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>完工产品情况录入</strong></span></a>
 				</li>
 				<li><a href="../cpzlqk/entry.do" target="_blank"><img

@@ -1,18 +1,23 @@
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../wlyddqkdef.ts" />
-///<reference path="../../messageBox.ts"/>
-///<reference path="..//wlyddqkEntry.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ylfxwlyddmlspcs;
-(function (ylfxwlyddmlspcs) {
-    var wlyddmlspcsEntry;
-    (function (wlyddmlspcsEntry) {
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+///<reference path="../../messageBox.ts"/>
+///<reference path="../../framework/basic/basicdef.ts"/>
+///<reference path="../../framework/route/route.ts"/>
+var pluginEntry;
+(function (pluginEntry) {
+    pluginEntry.wgcpylnlspcs = framework.basic.endpoint.lastId();
+    pluginEntry.byq_cpfl_t1 = framework.basic.endpoint.lastId();
+})(pluginEntry || (pluginEntry = {}));
+var ylfxwgcpylnlspcs;
+(function (ylfxwgcpylnlspcs) {
+    var wgcpylnlspcsEntry;
+    (function (wgcpylnlspcsEntry) {
         var TextAlign = JQTable.TextAlign;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
@@ -24,47 +29,49 @@ var ylfxwlyddmlspcs;
                 var data = [];
                 var node;
                 var titleNodes = [];
-                node = new JQTable.Node("产品", "wlyddmlspcsentry_cp", readOnly, TextAlign.Left);
+                node = new JQTable.Node("产品", "wgcpylnlspcsentry_cp", readOnly, TextAlign.Left);
                 titleNodes.push(node);
-                node = new JQTable.Node(year + "年" + month + "月", "wlyddmlspcsentry_riqi", readOnly, TextAlign.Center);
-                node.append(new JQTable.Node("成本", "wlyddmlspcsentry_cb_", readOnly));
-                node.append(new JQTable.Node("收入", "wlyddmlspcsentry_sr_", readOnly));
+                node = new JQTable.Node(year + "年" + month + "月", "wgcpylnlspcsentry_riqi", true, TextAlign.Center);
+                node.append(new JQTable.Node("成本", "wgcpylnlspcsentry_cb_", false));
+                node.append(new JQTable.Node("收入", "wgcpylnlspcsentry_sr_", false));
                 titleNodes.push(node);
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
         }());
-        var WlyddmlspcsEntryView = (function (_super) {
-            __extends(WlyddmlspcsEntryView, _super);
-            function WlyddmlspcsEntryView() {
+        var EntryView = (function (_super) {
+            __extends(EntryView, _super);
+            function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("wlyddmlspcs/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("wlyddmlspcs/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("wlyddmlspcs/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("../wgcpylnlspcs/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("../wgcpylnlspcs/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("../wgcpylnlspcs/entry/submit.do", false);
             }
-            WlyddmlspcsEntryView.newInstance = function () {
-                return new WlyddmlspcsEntryView();
+            EntryView.prototype.getId = function () {
+                return pluginEntry.wgcpylnlspcs;
             };
-            WlyddmlspcsEntryView.prototype.option = function () {
+            EntryView.prototype.option = function () {
                 return this.mOpt;
             };
-            WlyddmlspcsEntryView.prototype.pluginSave = function (dt, cpType) {
+            EntryView.prototype.pluginSave = function (dt, compType) {
+                var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 0; j < allData[i].length - 2; ++j) {
-                        submitData[i].push(allData[i][j + 2]);
-                        submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
+                    for (var j = 1; j < allData[i].length; ++j) {
+                        submitData[i].push(allData[i][j]);
+                        submitData[i][j - 1] = submitData[i][j - 1].replace(new RegExp(' ', 'g'), '');
                     }
                 }
                 this.mAjaxSave.post({
                     date: dt,
-                    companyId: cpType,
-                    type: this.mType,
-                    data: JSON.stringify(submitData)
+                    data: JSON.stringify(submitData),
+                    companyId: compType,
+                    type: this.mWgcpqkType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
+                        _this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("保存 成功");
                     }
                     else {
@@ -72,15 +79,16 @@ var ylfxwlyddmlspcs;
                     }
                 });
             };
-            WlyddmlspcsEntryView.prototype.pluginSubmit = function (dt, cpType) {
+            EntryView.prototype.pluginSubmit = function (dt, compType) {
+                var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 0; j < allData[i].length - 2; ++j) {
-                        submitData[i].push(allData[i][j + 2]);
-                        submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j]) {
+                    for (var j = 1; j < allData[i].length; ++j) {
+                        submitData[i].push(allData[i][j]);
+                        submitData[i][j - 1] = submitData[i][j - 1].replace(new RegExp(' ', 'g'), '');
+                        if ("" == submitData[i][j - 1]) {
                             Util.MessageBox.tip("有空内容 无法提交");
                             return;
                         }
@@ -88,11 +96,12 @@ var ylfxwlyddmlspcs;
                 }
                 this.mAjaxSubmit.post({
                     date: dt,
-                    companyId: cpType,
-                    type: this.mType,
-                    data: JSON.stringify(submitData)
+                    data: JSON.stringify(submitData),
+                    companyId: compType,
+                    type: this.mWgcpqkType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
+                        _this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("提交 成功");
                     }
                     else {
@@ -100,31 +109,11 @@ var ylfxwlyddmlspcs;
                     }
                 });
             };
-            WlyddmlspcsEntryView.prototype.pluginUpdate = function (date, cpType) {
-                var _this = this;
-                this.mDt = date;
-                this.mAjaxUpdate.get({
-                    date: date,
-                    companyId: cpType,
-                    type: this.mType
-                })
-                    .then(function (jsonData) {
-                    _this.mData = jsonData.data;
-                    _this.mIsReadOnly = jsonData.readOnly;
-                    _this.refresh();
-                });
-            };
-            WlyddmlspcsEntryView.prototype.refresh = function () {
-                this.raiseReadOnlyChangeEvent(this.mIsReadOnly);
-                if (this.mData == undefined) {
-                    return;
-                }
-                this.updateTable();
-            };
-            WlyddmlspcsEntryView.prototype.isSupported = function (compType) {
-                if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH ||
-                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ ||
-                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL) {
+            EntryView.prototype.isSupported = function (compType) {
+                if (this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH ||
+                    this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ ||
+                    this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL ||
+                    this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL_T1) {
                     if (compType == Util.CompanyType.SBGS ||
                         compType == Util.CompanyType.HBGS ||
                         compType == Util.CompanyType.XBC ||
@@ -141,97 +130,74 @@ var ylfxwlyddmlspcs;
                 }
                 return false;
             };
-            WlyddmlspcsEntryView.prototype.init = function (opt) {
-                _super.prototype.init.call(this, opt);
-                entryView.register("变压器未履约订单毛利水平测算-综合", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
-                entryView.register("变压器未履约订单毛利水平测算-电压等级", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ));
-                entryView.register("变压器未履约订单毛利水平测算-产品分类", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL));
-                entryView.register("线缆未履约订单毛利水平测算-综合", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
-                entryView.register("线缆未履约订单毛利水平测算-产品分类", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
-            };
-            WlyddmlspcsEntryView.prototype.updateTable = function () {
+            EntryView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
+                this.mDt = date;
+                this.mCompType = compType;
+                this.mAjaxUpdate.get({
+                    date: date,
+                    companyId: compType,
+                    wgcpqkType: this.mWgcpqkType
+                })
+                    .then(function (jsonData) {
+                    _this.mData = jsonData;
+                    _this.refresh();
+                });
+            };
+            EntryView.prototype.refresh = function () {
+                if (this.mData == undefined) {
+                    return;
+                }
+                this.updateTable();
+            };
+            EntryView.prototype.init = function (opt) {
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(pluginEntry.byq_cpfl_t1, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "变压器未履约订单毛利水平测算-产品分类特殊1");
+            };
+            EntryView.prototype.onEvent = function (e) {
+                if (e.road != undefined) {
+                    switch (e.road[e.road.length - 1]) {
+                        case pluginEntry.byq_cpfl_t1:
+                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL_T1;
+                            break;
+                        default:
+                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL_T1;
+                    }
+                }
+                return _super.prototype.onEvent.call(this, e);
+            };
+            EntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mIsReadOnly, this.mDt);
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                var lastsel = "";
-                var lastcell = "";
-                this.$(name).jqGrid(this.mTableAssist.decorate({
+                var jqTable = this.$(name);
+                jqTable.jqGrid(this.mTableAssist.decorate({
                     datatype: "local",
+                    data: this.mTableAssist.getData(this.mData),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    //autowidth : true,
+                    assistEditable: true,
+                    //autowidth : false,
                     cellsubmit: 'clientArray',
+                    //editurl: 'clientArray',
                     cellEdit: true,
                     //height: data.length > 25 ? 550 : '100%',
                     // width: titles.length * 200,
-                    rowNum: 150,
+                    rowNum: 20,
                     height: '100%',
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    data: this.mTableAssist.getData(this.mData),
                     viewrecords: true,
-                    onSelectCell: function (id, nm, tmp, iRow, iCol) {
-                        //                       console.log(iRow +', ' + iCol);
-                    },
-                    //                    onCellSelect: (ri,ci,tdHtml,e) =>{
-                    //                       console.log(ri +', ' + ci);
-                    //                    },
-                    beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
-                        var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
-                        if (isNaN(ret)) {
-                            $.jgrid.jqModal = {
-                                width: 290,
-                                left: _this.$(name).offset().left + _this.$(name).width() / 2 - 290 / 2,
-                                top: _this.$(name).offset().top + _this.$(name).height() / 2 - 90
-                            };
-                            return v;
-                        }
-                        else {
-                            return ret;
-                        }
-                    },
-                    beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
-                        lastsel = iRow;
-                        lastcell = iCol;
-                        //                        console.log(iRow +', ' + iCol);
-                        $("input").attr("disabled", true);
-                    },
-                    afterEditCell: function (rowid, cellname, v, iRow, iCol) {
-                        $("input[type=text]").bind("keydown", function (e) {
-                            if (e.keyCode === 13) {
-                                setTimeout(function () {
-                                    $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
-                                }, 10);
-                            }
-                        });
-                    },
-                    afterSaveCell: function () {
-                        $("input").attr("disabled", false);
-                        lastsel = "";
-                    },
-                    afterRestoreCell: function () {
-                        $("input").attr("disabled", false);
-                        lastsel = "";
-                    }
                 }));
-                $('html').bind('click', function (e) {
-                    if (lastsel != "") {
-                        if ($(e.target).closest("#" + name).length == 0) {
-                            //  $("#" + name).jqGrid('saveRow', lastsel);
-                            $("#" + name).jqGrid("saveCell", lastsel, lastcell);
-                            //$("#" + name).resetSelection();
-                            lastsel = "";
-                        }
-                    }
-                });
             };
-            return WlyddmlspcsEntryView;
-        }(wlyddqk.BaseEntryPluginView));
-        wlyddmlspcsEntry.pluginView = WlyddmlspcsEntryView.newInstance();
-    })(wlyddmlspcsEntry = ylfxwlyddmlspcs.wlyddmlspcsEntry || (ylfxwlyddmlspcs.wlyddmlspcsEntry = {}));
-})(ylfxwlyddmlspcs || (ylfxwlyddmlspcs = {}));
+            EntryView.ins = new EntryView();
+            return EntryView;
+        }(framework.basic.EntryPluginView));
+    })(wgcpylnlspcsEntry = ylfxwgcpylnlspcs.wgcpylnlspcsEntry || (ylfxwgcpylnlspcs.wgcpylnlspcsEntry = {}));
+})(ylfxwgcpylnlspcs || (ylfxwgcpylnlspcs = {}));

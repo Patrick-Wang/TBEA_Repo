@@ -61,7 +61,7 @@ var ylfxwgcpylnlspcs;
                 return plugin.wgcpylnlspcs;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "wgcpylnlspcs/export.do?" + Util.Ajax.toUrlParam({
+                return "../wgcpylnlspcs/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType,
                     wgcpqkType: this.mWgcpqkType

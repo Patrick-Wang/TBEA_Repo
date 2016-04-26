@@ -79,6 +79,6 @@ var std;
             return this.mContainer.length == 0;
         };
         return vector;
-    })();
+    }());
     std.vector = vector;
 })(std || (std = {}));
