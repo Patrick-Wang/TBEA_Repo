@@ -87,7 +87,16 @@ public class XfscqyServiceImpl implements XfscqyService {
 	}
 
 	private ErrorCode entryXfscqy(Date d, JSONArray data, Company company, ZBStatus zt){
-		
+		for (int i = 0; i < data.size(); ++i){
+			XfscqyEntity entity = xfscqyDao.getByDate(d, company, i);
+			if (null == entity){
+				entity = new XfscqyEntity();
+				entity.setDwid(company.getId());
+				entity.setHyid(i);
+				entity.setZt(zt.ordinal());
+				entity.setNf(1); 
+			}
+		}
 		
 		
 		return ErrorCode.OK;
