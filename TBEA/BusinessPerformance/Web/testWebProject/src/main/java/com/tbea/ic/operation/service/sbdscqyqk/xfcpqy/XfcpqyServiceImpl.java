@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.model.dao.identifier.ylfx.CpmcDao;
-import com.tbea.ic.operation.model.dao.identifier.ylfx.CpmcDaoImpl;
+import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
+import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy.XfcpqyDao;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy.XfcpqyDaoImpl;
 

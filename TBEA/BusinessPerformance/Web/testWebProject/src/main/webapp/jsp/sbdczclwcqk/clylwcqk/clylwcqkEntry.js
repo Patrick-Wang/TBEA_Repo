@@ -119,7 +119,7 @@ var sbdczclwcqk;
                     sbdczclwcqkType: this.mSbdczclwcqkType
                 })
                     .then(function (jsonData) {
-                    _this.mData = jsonData.data;
+                    _this.mData = jsonData;
                     _this.refresh();
                 });
             };

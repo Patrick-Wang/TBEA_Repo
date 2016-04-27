@@ -123,7 +123,7 @@ module sbdczclwcqk {
                         sbdczclwcqkType: this.mSbdczclwcqkType
                     })
                     .then((jsonData:any) => {
-                        this.mData = jsonData.data;
+                        this.mData = jsonData;
                         this.refresh();
                     });
             }

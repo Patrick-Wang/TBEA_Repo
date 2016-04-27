@@ -45,7 +45,7 @@ public class CpczwcqkServlet {
 	private SbdczclwcqkType getType(HttpServletRequest request){
 		if (11 == Integer.valueOf(request.getParameter("sbdczclwcqkType"))){
 			return SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ;
-		} else if (12 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
+		} else if (12 == Integer.valueOf(request.getParameter("sbdczclwcqkType"))) {
 			return SbdczclwcqkType.SBDCZCLWCQK_CZ_XL;
 		}
 		

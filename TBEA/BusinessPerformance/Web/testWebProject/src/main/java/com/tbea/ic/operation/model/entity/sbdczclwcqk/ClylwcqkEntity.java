@@ -34,7 +34,7 @@ public class ClylwcqkEntity extends AbstractReadWriteEntity implements Serializa
 	DWXX dwxx;
 	Integer tjfs;
 	ClmcEntity clmc;
-	Double cz;
+	Double cl;
 	Integer zt;
 	
 	public Integer getNf() {
@@ -82,12 +82,12 @@ public class ClylwcqkEntity extends AbstractReadWriteEntity implements Serializa
 		this.clmc = clmc;
 	}
 
-	public Double getCz() {
-		return cz;
+	public Double getCl() {
+		return cl;
 	}
 
-	public void setCz(Double cz) {
-		this.cz = cz;
+	public void setCl(Double cl) {
+		this.cl = cl;
 	}
 
 	public Integer getZt() {

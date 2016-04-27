@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.model.dao.identifier.ylfx;
+package com.tbea.ic.operation.model.dao.identifier.common;
 
 
 import java.util.List;
@@ -7,7 +7,7 @@ import com.tbea.ic.operation.model.entity.identifier.common.CpmcEntity;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
-import com.tbea.ic.operation.model.dao.identifier.ylfx.CpmcDao;
+import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

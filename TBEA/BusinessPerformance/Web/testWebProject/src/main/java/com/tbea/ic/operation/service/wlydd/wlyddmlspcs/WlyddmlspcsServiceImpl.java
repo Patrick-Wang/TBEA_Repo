@@ -23,8 +23,8 @@ import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.wlydd.wlyddmlspcs.WlyddmlspcsDao;
 import com.tbea.ic.operation.model.dao.wlydd.wlyddmlspcs.WlyddmlspcsDaoImpl;
 import com.tbea.ic.operation.model.entity.wlydd.wlyddmslspcs.WlyddmlspcsEntity;
-import com.tbea.ic.operation.model.dao.identifier.ylfx.CpmcDao;
-import com.tbea.ic.operation.model.dao.identifier.ylfx.CpmcDaoImpl;
+import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
+import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 
 
 @Service(WlyddmlspcsServiceImpl.NAME)

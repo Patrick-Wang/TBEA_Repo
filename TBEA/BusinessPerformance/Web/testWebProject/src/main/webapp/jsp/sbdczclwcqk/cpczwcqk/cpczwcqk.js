@@ -76,7 +76,7 @@ var sbdczclwcqk;
                     sbdczclwcqkType: this.mSbdczclwcqkType
                 })
                     .then(function (jsonData) {
-                    _this.mData = jsonData.data;
+                    _this.mData = jsonData;
                     _this.refresh();
                 });
             };
@@ -136,7 +136,7 @@ var sbdczclwcqk;
             };
             ShowView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+                var tableAssist = JQGridAssistantFactory.createTable(name, this.mDt);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
@@ -145,7 +145,7 @@ var sbdczclwcqk;
                     drag: false,
                     resize: false,
                     height: '100%',
-                    width: 1400,
+                    width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 20,

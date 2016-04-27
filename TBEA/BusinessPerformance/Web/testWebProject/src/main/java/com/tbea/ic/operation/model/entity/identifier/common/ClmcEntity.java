@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "identifier_ylfx_clmc")
+@Table(name = "identifier_clmc")
 public class ClmcEntity extends AbstractReadWriteEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

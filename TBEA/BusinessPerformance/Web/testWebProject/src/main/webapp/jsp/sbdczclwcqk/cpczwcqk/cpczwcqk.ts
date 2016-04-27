@@ -78,7 +78,7 @@ module sbdczclwcqk {
                         sbdczclwcqkType: this.mSbdczclwcqkType
                     })
                     .then((jsonData:any) => {
-                        this.mData = jsonData.data;
+                        this.mData = jsonData;
                         this.refresh();
                     });
             }
@@ -146,7 +146,7 @@ module sbdczclwcqk {
 			
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mDt);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
@@ -156,7 +156,7 @@ module sbdczclwcqk {
                         drag: false,
                         resize: false,
                         height: '100%',
-                        width: 1400,
+                        width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 20,

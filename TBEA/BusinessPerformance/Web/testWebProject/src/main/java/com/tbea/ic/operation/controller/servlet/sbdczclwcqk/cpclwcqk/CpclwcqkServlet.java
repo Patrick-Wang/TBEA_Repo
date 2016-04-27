@@ -2,7 +2,7 @@ package com.tbea.ic.operation.controller.servlet.sbdczclwcqk.cpclwcqk;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -29,6 +29,7 @@ import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.controller.servlet.sbdczclwcqk.SbdczclwcqkType;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpclwcqk.CpclwcqkService;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpclwcqk.CpclwcqkServiceImpl;
 
@@ -38,18 +39,25 @@ public class CpclwcqkServlet {
 	@Resource(name=CpclwcqkServiceImpl.NAME)
 	CpclwcqkService cpclwcqkService;
 
-
-
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
+	private SbdczclwcqkType getType(HttpServletRequest request){
+		if (13 == Integer.valueOf(request.getParameter("sbdczclwcqkType"))){
+			return SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ;
+		}
+		
+		return SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ;
+	}
+	
+	
 	@RequestMapping(value = "update.do")
 	public @ResponseBody byte[] getCpclwcqk(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		List<List<String>> result = cpclwcqkService.getCpclwcqk(d, company);
+		List<List<String>> result = cpclwcqkService.getCpclwcqk(d, company, getType(request));
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 
@@ -60,7 +68,7 @@ public class CpclwcqkServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> result = cpclwcqkService.getCpclwcqkEntry(d, company);
+		List<List<String>> result = cpclwcqkService.getCpclwcqkEntry(d, company, getType(request));
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
@@ -72,7 +80,7 @@ public class CpclwcqkServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		ErrorCode err = cpclwcqkService.saveCpclwcqk(d, data, company);
+		ErrorCode err = cpclwcqkService.saveCpclwcqk(d, company, getType(request), data);
 		return Util.response(err);
 	}
 	
@@ -86,32 +94,32 @@ public class CpclwcqkServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		ErrorCode err = cpclwcqkService.submitCpclwcqk(d, data, company);
+		ErrorCode err = cpclwcqkService.submitCpclwcqk(d, company, getType(request), data);
 		return Util.response(err);
 	}
 	
 	@RequestMapping(value = "export.do")
 	public void exportCpclwcqk(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		
-		List<List<String>> ret = cpclwcqkService.getCpclwcqk(d, company);
-		ExcelTemplate template = ExcelTemplate.createSbdczclwcqkTemplate(SbdczclwcqkSheetType.CPCLWCQK);
-	
-		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
-		HSSFWorkbook workbook = template.getWorkbook();
-		String name = workbook.getSheetName(0);
-		workbook.setSheetName(0, name);
-		HSSFSheet sheet = workbook.getSheetAt(0);
-		for (int i = 0; i < ret.size(); ++i){
-			HSSFRow row = sheet.createRow(i + 2);
-			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
-			}
-		}
-		template.write(response, name + ".xls");
+//		Date d = Date.valueOf(request.getParameter("date"));
+//		CompanyType comp = CompanySelection.getCompany(request);
+//		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+//		
+//		List<List<String>> ret = cpclwcqkService.getCpclwcqk(d, company, getType(request));
+//		ExcelTemplate template = ExcelTemplate.createSbdczclwcqkTemplate(SbdczclwcqkSheetType.CPCLWCQK);
+//	
+//		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
+//		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+//		HSSFWorkbook workbook = template.getWorkbook();
+//		String name = workbook.getSheetName(0);
+//		workbook.setSheetName(0, name);
+//		HSSFSheet sheet = workbook.getSheetAt(0);
+//		for (int i = 0; i < ret.size(); ++i){
+//			HSSFRow row = sheet.createRow(i + 2);
+//			for (int j = 0; j < ret.get(i).size(); ++j){
+//				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
+//			}
+//		}
+//		template.write(response, name + ".xls");
 	}
 }

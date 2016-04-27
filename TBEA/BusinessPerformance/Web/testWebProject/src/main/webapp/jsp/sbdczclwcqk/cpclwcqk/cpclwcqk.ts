@@ -21,21 +21,21 @@ module sbdczclwcqk {
                 let node:JQTable.Node;
                 let titleNodes:JQTable.Node[] = [];
 
-                node = new JQTable.Node("产品", "cpczwcqk_cp", true, TextAlign.Left);
+                node = new JQTable.Node("产品", "cpclwcqk_cp", true, TextAlign.Left);
                 titleNodes.push(node);
 
-                node = new JQTable.Node("上年度", "cpczwcqk_snd", true, TextAlign.Center);
+                node = new JQTable.Node("上年度", "cpclwcqk_snd", true, TextAlign.Center);
                 for (let i = month + 1; i <= 12; ++i) {
-                    node.append(new JQTable.Node(i + "月", "cpczwcqk_snd_" + i));
+                    node.append(new JQTable.Node(i + "月", "cpclwcqk_snd_" + i));
                 }
 
                 if (month != 12) {
                     titleNodes.push(node);
                 }
 
-                node = new JQTable.Node("本年度", "cpczwcqk_bnd", true, TextAlign.Center);
+                node = new JQTable.Node("本年度", "cpclwcqk_bnd", true, TextAlign.Center);
                 for (let i = 1; i <= month; ++i) {
-                    node.append(new JQTable.Node(i + "月", "cpczwcqk_bnd_" + i));
+                    node.append(new JQTable.Node(i + "月", "cpclwcqk_bnd_" + i));
                 }
                 titleNodes.push(node);
 
@@ -77,7 +77,7 @@ module sbdczclwcqk {
                         sbdczclwcqkType: this.mSbdczclwcqkType
                     })
                     .then((jsonData:any) => {
-                        this.mData = jsonData.data;
+                        this.mData = jsonData;
                         this.refresh();
                     });
             }
@@ -138,7 +138,7 @@ module sbdczclwcqk {
 			
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mDt);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
@@ -148,7 +148,7 @@ module sbdczclwcqk {
                         drag: false,
                         resize: false,
                         height: '100%',
-                        width: 1400,
+                        width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 20,

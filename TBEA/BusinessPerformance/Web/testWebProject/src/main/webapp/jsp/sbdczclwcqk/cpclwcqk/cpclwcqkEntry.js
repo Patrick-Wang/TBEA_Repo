@@ -119,7 +119,7 @@ var sbdczclwcqk;
                     sbdczclwcqkType: this.mSbdczclwcqkType
                 })
                     .then(function (jsonData) {
-                    _this.mData = jsonData.data;
+                    _this.mData = jsonData;
                     _this.refresh();
                 });
             };
@@ -166,27 +166,15 @@ var sbdczclwcqk;
                 return _super.prototype.onEvent.call(this, e);
             };
             EntryView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
-                var data = [];
-                if (this.mCompType == Util.CompanyType.SBGS ||
-                    this.mCompType == Util.CompanyType.HBGS ||
-                    this.mCompType == Util.CompanyType.TBGS ||
-                    this.mCompType == Util.CompanyType.XBC) {
-                    data.push(["铜"].concat(this.mData[0]));
-                }
-                else {
-                    data.push(["铜"].concat(this.mData[0]));
-                    data.push(["铝"].concat(this.mData[1]));
-                }
+                var name = this.option().host + this.option().tb + "_jqgrid_1234";
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+                parent.append("<table id='" + name + "'></table>");
                 var jqTable = this.$(name);
                 jqTable.jqGrid(this.mTableAssist.decorate({
                     datatype: "local",
-                    data: this.mTableAssist.getData(data),
+                    data: this.mTableAssist.getData(this.mData),
                     multiselect: false,
                     drag: false,
                     resize: false,
