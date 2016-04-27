@@ -60,7 +60,6 @@ public class XfscqyServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		
 		List<List<String>> result = xfscqyService.getXfscqyEntry(d, company);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}

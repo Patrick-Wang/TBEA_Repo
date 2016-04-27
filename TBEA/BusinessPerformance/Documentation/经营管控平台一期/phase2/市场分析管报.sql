@@ -41,6 +41,7 @@ CREATE TABLE [dbo].[scfxgb_sbdxfscqy](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not NULL,
 	[yf] [int] not NULL,
+	[dwid]  [int] not NULL,
 	[hyid] [int] not NULL,
 	[qye] [numeric](18, 4) NULL,
 	[zt] [int] not NULL
