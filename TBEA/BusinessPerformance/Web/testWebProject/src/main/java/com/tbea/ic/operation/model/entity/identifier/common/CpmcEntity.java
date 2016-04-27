@@ -1,21 +1,18 @@
-package com.tbea.ic.operation.model.entity.identifier.ylfx;
+package com.tbea.ic.operation.model.entity.identifier.common;
 
 import javax.persistence.Column;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
 import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
-
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "identifier_ylfx_clmc")
-public class ClmcEntity extends AbstractReadWriteEntity implements Serializable {
+@Table(name = "identifier_cpmc")
+public class CpmcEntity extends AbstractReadWriteEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -23,10 +20,11 @@ public class ClmcEntity extends AbstractReadWriteEntity implements Serializable 
 		return super.getId();
 	}
 
-
-
 	String name;
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	public String getName() {

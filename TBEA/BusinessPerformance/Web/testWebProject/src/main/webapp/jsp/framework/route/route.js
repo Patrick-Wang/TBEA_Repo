@@ -50,7 +50,7 @@ var framework;
                         from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
                         to: undefined,
                         id: id,
-                        data: data,
+                        data: data
                     };
                     this.mEndpoints[this.mEplist[i]].onEvent(event_1);
                 }
@@ -86,7 +86,7 @@ var framework;
             Router.OK = 887291;
             Router.FAILED = 887292;
             return Router;
-        }());
+        })();
         route.Router = Router;
     })(route = framework.route || (framework.route = {}));
 })(framework || (framework = {}));

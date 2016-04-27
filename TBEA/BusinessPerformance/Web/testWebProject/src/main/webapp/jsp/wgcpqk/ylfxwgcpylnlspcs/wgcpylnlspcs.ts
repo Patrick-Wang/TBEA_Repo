@@ -35,21 +35,21 @@ module  ylfxwgcpylnlspcs {
                 let node:JQTable.Node;
                 let titleNodes:JQTable.Node[] = [];
 
-                node = new JQTable.Node("产品", "wlyddmlspcs_cp", true, TextAlign.Left);
+                node = new JQTable.Node("产品", "wgcpylnlspcs_cp", true, TextAlign.Left);
                 titleNodes.push(node);
 
-                node = new JQTable.Node("上年度", "wlyddmlspcs_snd", true, TextAlign.Center);
+                node = new JQTable.Node("上年度", "wgcpylnlspcs_snd", true, TextAlign.Center);
                 for (let i = month + 1; i <= 12; ++i) {
-                    node.append(new JQTable.Node(i + "月", "wlyddmlspcs_snd_" + i));
+                    node.append(new JQTable.Node(i + "月", "wgcpylnlspcs_snd_" + i));
                 }
 
                 if (month != 12) {
                     titleNodes.push(node);
                 }
 
-                node = new JQTable.Node("本年度", "wlyddmlspcs_bnd", true, TextAlign.Center);
+                node = new JQTable.Node("本年度", "wgcpylnlspcs_bnd", true, TextAlign.Center);
                 for (let i = 1; i <= month; ++i) {
-                    node.append(new JQTable.Node(i + "月", "wlyddmlspcs_bnd_" + i));
+                    node.append(new JQTable.Node(i + "月", "wgcpylnlspcs_bnd_" + i));
                 }
                 titleNodes.push(node);
 

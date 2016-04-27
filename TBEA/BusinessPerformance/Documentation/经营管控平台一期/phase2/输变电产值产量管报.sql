@@ -8,7 +8,8 @@ CREATE TABLE [dbo].[sbdclczgb_cz](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not NULL,
 	[yf] [int] not NULL,
-	[cy] [int] not NULL,
+	[dwid] [int] not NULL,
+	[tjfs] [int] not NULL,	-- 11->变压器   12->线缆
 	[cpid] [int] not NULL,
 	[cz] [numeric](18, 4) NULL,
 	[zt] [int] not NULL
@@ -29,7 +30,8 @@ CREATE TABLE [dbo].[sbdclczgb_cl_fcp](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not NULL,
 	[yf] [int] not NULL,
-	[cy] [int] not NULL,
+	[dwid] [int] not NULL,
+	[tjfs] [int] not NULL,	-- 13->变压器
 	[cpid] [int] not NULL,
 	[cl] [numeric](18, 4) NULL,
 	[zt] [int] not NULL
@@ -50,7 +52,8 @@ CREATE TABLE [dbo].[sbdclczgb_cl_fcl](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not NULL,
 	[yf] [int] not NULL,
-	[cy] [int] not NULL,
+	[dwid] [int] not NULL,
+	[tjfs] [int] not NULL,	-- 14->线缆
 	[zcid] [int] not NULL,
 	[cl] [numeric](18, 4) NULL,
 	[zt] [int] not NULL

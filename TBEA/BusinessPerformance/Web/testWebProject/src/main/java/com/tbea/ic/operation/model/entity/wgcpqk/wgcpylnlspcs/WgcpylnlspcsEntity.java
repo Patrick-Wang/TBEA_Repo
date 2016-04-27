@@ -16,7 +16,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
-import com.tbea.ic.operation.model.entity.identifier.ylfx.CpmcEntity;
+import com.tbea.ic.operation.model.entity.identifier.common.CpmcEntity;
 
 @Entity
 @Table(name = "ylfxgb_ylfx_wgcpmll")

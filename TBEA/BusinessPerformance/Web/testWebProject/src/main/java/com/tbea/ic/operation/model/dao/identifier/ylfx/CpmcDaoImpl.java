@@ -3,7 +3,7 @@ package com.tbea.ic.operation.model.dao.identifier.ylfx;
 
 import java.util.List;
 
-import com.tbea.ic.operation.model.entity.identifier.ylfx.CpmcEntity;
+import com.tbea.ic.operation.model.entity.identifier.common.CpmcEntity;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 

@@ -40,11 +40,10 @@
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
  
 <!-- jqgrid assist -->
-<script src="${pageContext.request.contextPath}/jsp/jqgrid/jqassist.js" type="text/javascript"></script>
-
-<script src="${pageContext.request.contextPath}/jsp/json2.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/vector.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/jqgrid/jqassist.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/json2.js" type="text/javascript"></script>
+
 
 <!-- message box -->
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
@@ -183,8 +182,10 @@ th.ui-th-ltr {
 			</td>
 		</tr>
 		<tr>
-			<td>
-				<%@include file="dzclcb/dzclcb.jsp"%>
+			<td id="plugin">
+				<%@include file="cpczwcqk/cpczwcqk.jsp"%>
+				<%@include file="cpclwcqk/cpclwcqk.jsp"%>
+				<%@include file="clylwcqk/clylwcqk.jsp"%>
 			</td>
 		</tr>
 		<tr>
