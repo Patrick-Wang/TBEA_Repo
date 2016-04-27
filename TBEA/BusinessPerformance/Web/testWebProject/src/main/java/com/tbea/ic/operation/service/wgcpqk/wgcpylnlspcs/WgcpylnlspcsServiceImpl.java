@@ -93,7 +93,7 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 
 	private String getMll(Double cb, Double sr) {
 		
-		return String.format("%.1f", Double.valueOf((sr - cb)/sr)) + "%";
+		return String.format("%.1f", (Double.valueOf((sr - cb)/sr)) * 100) + "%";
 	}
 	
 	@Override
@@ -230,8 +230,8 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 			}
 
 			entity.setZt(status.ordinal());
-			entity.setCb(Util.toDoubleNull(data.getJSONArray(cp).getString(0)));
-			entity.setSr(Util.toDoubleNull(data.getJSONArray(cp).getString(1)));
+			entity.setCb(Util.toDoubleNull(data.getJSONArray(cp).getString(1)));
+			entity.setSr(Util.toDoubleNull(data.getJSONArray(cp).getString(2)));
 			
 			wgcpylnlspcsDao.merge(entity);
 		}

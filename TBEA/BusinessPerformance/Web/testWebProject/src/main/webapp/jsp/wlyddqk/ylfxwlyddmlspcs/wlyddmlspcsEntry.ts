@@ -169,9 +169,6 @@ module ylfxwlyddmlspcs {
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
 
-                let lastsel = "";
-                let lastcell = "";
-
                 this.$(name).jqGrid(
                     this.mTableAssist.decorate({
                         datatype: "local",
@@ -181,6 +178,7 @@ module ylfxwlyddmlspcs {
                         //autowidth : true,
                         cellsubmit: 'clientArray',
                         cellEdit: true,
+                        assistEditable:true,
                         //height: data.length > 25 ? 550 : '100%',
                         // width: titles.length * 200,
                         rowNum: 150,
@@ -189,71 +187,9 @@ module ylfxwlyddmlspcs {
                         shrinkToFit: true,
                         autoScroll: true,
                         data: this.mTableAssist.getData(this.mData),
-                        viewrecords: true,
-
-                        onSelectCell: (id, nm, tmp, iRow, iCol) => {
-                            //                       console.log(iRow +', ' + iCol);
-                        },
-
-                        //                    onCellSelect: (ri,ci,tdHtml,e) =>{
-                        //                       console.log(ri +', ' + ci);
-                        //                    },
-                        beforeSaveCell: (rowid, cellname, v, iRow, iCol) => {
-                            var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
-                            if (isNaN(ret)) {
-                                $.jgrid.jqModal = {
-                                    width: 290,
-                                    left: this.$(name).offset().left + this.$(name).width() / 2 - 290 / 2,
-                                    top: this.$(name).offset().top + this.$(name).height() / 2 - 90
-                                };
-                                return v;
-                            } else {
-                                return ret;
-                            }
-                        },
-                        beforeEditCell: (rowid, cellname, v, iRow, iCol) => {
-                            lastsel = iRow;
-                            lastcell = iCol;
-                            //                        console.log(iRow +', ' + iCol);
-                            $("input").attr("disabled", true);
-                        },
-
-                        afterEditCell: (rowid, cellname, v, iRow, iCol) => {
-                            $("input[type=text]").bind("keydown", function(e) {
-                                if (e.keyCode === 13) {
-                                    setTimeout(function() {
-                                        $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
-                                    }, 10);
-                                }
-                            });
-                        },
-
-                        afterSaveCell: () => {
-                            $("input").attr("disabled", false);
-                            lastsel = "";
-                        },
-
-                        afterRestoreCell: () => {
-                            $("input").attr("disabled", false);
-
-                            lastsel = "";
-                        }
-                        //                    ,
-                        //                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
-                        //                        lastsel = "";
-                        //                        lastcell = "";
-                        //                    }
+                        viewrecords: true
                     }));
-                $('html').bind('click', (e) => { //用于点击其他地方保存正在编辑状态下的行
-                    if (lastsel != "") { //if a row is selected for edit
-                        if ($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row
-                            //  $("#" + name).jqGrid('saveRow', lastsel);
-                            $("#" + name).jqGrid("saveCell", lastsel, lastcell);
-                            //$("#" + name).resetSelection();
-                            lastsel = "";
-                        }
-                    }
-                });
+ 
             }
         }
 

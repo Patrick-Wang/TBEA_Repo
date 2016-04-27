@@ -68,7 +68,7 @@ var ylfxwgcpylnlspcs;
                     date: dt,
                     data: JSON.stringify(submitData),
                     companyId: compType,
-                    type: this.mWgcpqkType
+                    wgcpqkType: this.mWgcpqkType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
@@ -98,7 +98,7 @@ var ylfxwgcpylnlspcs;
                     date: dt,
                     data: JSON.stringify(submitData),
                     companyId: compType,
-                    type: this.mWgcpqkType
+                    wgcpqkType: this.mWgcpqkType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
@@ -140,7 +140,7 @@ var ylfxwgcpylnlspcs;
                     wgcpqkType: this.mWgcpqkType
                 })
                     .then(function (jsonData) {
-                    _this.mData = jsonData;
+                    _this.mData = jsonData.data;
                     _this.refresh();
                 });
             };

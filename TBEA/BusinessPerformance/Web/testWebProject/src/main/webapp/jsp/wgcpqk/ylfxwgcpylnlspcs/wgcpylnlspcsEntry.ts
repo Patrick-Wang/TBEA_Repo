@@ -75,7 +75,7 @@ module ylfxwgcpylnlspcs {
                     date: dt,
                     data: JSON.stringify(submitData),
                     companyId: compType,
-                    type:this.mWgcpqkType
+                    wgcpqkType:this.mWgcpqkType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
@@ -104,7 +104,7 @@ module ylfxwgcpylnlspcs {
                     date: dt,
                     data: JSON.stringify(submitData),
                     companyId: compType,
-                    type:this.mWgcpqkType
+                    wgcpqkType:this.mWgcpqkType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
@@ -148,7 +148,7 @@ module ylfxwgcpylnlspcs {
                         wgcpqkType: this.mWgcpqkType
                     })
                     .then((jsonData:any) => {
-                        this.mData = jsonData;
+                        this.mData = jsonData.data;
                         this.refresh();
                     });
             }
