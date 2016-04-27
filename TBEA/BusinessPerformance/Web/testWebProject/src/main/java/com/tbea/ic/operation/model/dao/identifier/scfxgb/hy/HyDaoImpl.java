@@ -1,9 +1,14 @@
 package com.tbea.ic.operation.model.dao.identifier.scfxgb.hy;
 
 
+import java.util.List;
+
 import com.tbea.ic.operation.model.entity.identifier.scfxgb.HyEntity;
+
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
+
 import com.tbea.ic.operation.model.dao.identifier.scfxgb.hy.HyDao;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -20,5 +25,11 @@ public class HyDaoImpl extends AbstractReadWriteDaoImpl<HyEntity> implements HyD
 	@PersistenceContext(unitName = "localDB")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
+	}
+
+	@Override
+	public List<HyEntity> getAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
