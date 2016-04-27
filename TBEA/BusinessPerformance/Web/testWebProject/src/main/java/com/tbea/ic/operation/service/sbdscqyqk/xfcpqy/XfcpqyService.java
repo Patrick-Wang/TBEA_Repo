@@ -14,9 +14,9 @@ public interface XfcpqyService {
 
 	List<List<String>> getXfcpqyEntry(Date d, Company company);
 
-	ErrorCode submitXfcpqy(Date d, JSONArray data, Company company);
-
 	ErrorCode saveXfcpqy(Date d, JSONArray data, Company company);
+
+	ErrorCode submitXfcpqy(Date d, JSONArray data, Company company);
 
 
 }

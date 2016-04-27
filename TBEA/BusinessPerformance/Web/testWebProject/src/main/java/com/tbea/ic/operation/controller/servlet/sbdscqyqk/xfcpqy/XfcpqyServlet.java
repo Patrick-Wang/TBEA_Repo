@@ -76,7 +76,9 @@ public class XfcpqyServlet {
 		ErrorCode err = xfcpqyService.saveXfcpqy(d, data, company);
 		return Util.response(err);
 	}
-
+	
+	
+	
 	@RequestMapping(value = "entry/submit.do")
 	public @ResponseBody byte[] submitXfcpqy(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
