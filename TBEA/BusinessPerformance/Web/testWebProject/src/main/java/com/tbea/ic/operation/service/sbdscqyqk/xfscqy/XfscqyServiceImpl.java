@@ -3,10 +3,13 @@ package com.tbea.ic.operation.service.sbdscqyqk.xfscqy;
 import java.sql.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.dao.identifier.scfxgb.hy.HyDaoImpl;
+import com.tbea.ic.operation.model.dao.identifier.scfxgb.hy.HyDao;
+
+import javax.annotation.Resource;
+
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfscqy.XfscqyDaoImpl;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfscqy.XfscqyDao;
 import com.tbea.ic.operation.service.sbdscqyqk.xfscqy.XfscqyService;
@@ -19,6 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service(XfscqyServiceImpl.NAME)
 @Transactional("transactionManager")
 public class XfscqyServiceImpl implements XfscqyService {
+	@Resource(name=HyDaoImpl.NAME)
+	HyDao hyDao;
+
 	@Resource(name=XfscqyDaoImpl.NAME)
 	XfscqyDao xfscqyDao;
 
