@@ -61,7 +61,7 @@ var jcycljg;
                     end: end
                 })
                     .then(function (jsonData) {
-                    _this.mData = jsonData;
+                    _this.mData = _this.formateData(jsonData);
                     _this.refresh();
                 });
             };
@@ -112,7 +112,6 @@ var jcycljg;
             YsjsView.prototype.updateEchart = function (title, echart, data, lemData) {
                 var _this = this;
                 var xData = [];
-                this.formateData([data]);
                 $(this.mData).each(function (i) {
                     xData.push(_this.mData[i][0]);
                 });

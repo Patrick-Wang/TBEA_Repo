@@ -63,7 +63,7 @@ module jcycljg {
                         end: end
                     })
                     .then((jsonData:any) => {
-                        this.mData = jsonData;
+                        this.mData = this.formateData(jsonData);
                         this.refresh();
                     });
             }
@@ -115,7 +115,6 @@ module jcycljg {
 
             private updateEchart(title:string, echart:string, data:Array<string>, lemData:Array<string>):void {
                 var xData:string[] = [];
-                this.formateData([data]);
                 $(this.mData).each((i:number)=> {
                     xData.push(this.mData[i][0]);
                 })
