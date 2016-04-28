@@ -7,21 +7,20 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.model.dao.dzwzgb.dzclkcb.DzclkcbDaoImpl;
 import com.tbea.ic.operation.model.dao.dzwzgb.dzclkcb.DzclkcbDao;
-import com.tbea.ic.operation.model.dao.identifier.ylfx.clmc.Clmc;
+import com.tbea.ic.operation.model.dao.dzwzgb.dzclkcb.DzclkcbDaoImpl;
+import com.tbea.ic.operation.model.dao.identifier.common.clmc.Clmc;
 import com.tbea.ic.operation.model.entity.dzwzgb.DzclkcbEntity;
-import com.tbea.ic.operation.service.dzwzgb.DzwzgbService;
-
-import net.sf.json.JSONArray;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service(DzwzgbServiceImpl.NAME)
 @Transactional("transactionManager")

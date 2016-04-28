@@ -27,9 +27,9 @@ var sbdscqyqk;
                 var data = [];
                 var node;
                 var titleNodes = [];
-                node = new JQTable.Node("行业", "hy1");
+                node = new JQTable.Node("行业", "hy1", true, TextAlign.Center);
                 titleNodes.push(node);
-                node = new JQTable.Node("行业", "hy2");
+                node = new JQTable.Node("行业", "hy2", true, TextAlign.Center);
                 titleNodes.push(node);
                 node = new JQTable.Node("上年度", "snd", true, TextAlign.Center);
                 for (var i = month + 1; i <= 12; ++i) {
@@ -46,7 +46,7 @@ var sbdscqyqk;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -95,12 +95,30 @@ var sbdscqyqk;
             ShowView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var tableAssist = JQGridAssistantFactory.createTable(name, this.mDt);
-                tableAssist.mergeTitle();
-                tableAssist.mergeRow(0);
-                tableAssist.mergeColum(0);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
+                var data = [["传统电力市场"],
+                    ["传统电力市场"],
+                    ["传统电力市场"],
+                    ["传统电力市场"],
+                    ["新能源市场"],
+                    ["新能源市场"],
+                    ["新能源市场"],
+                    ["重点领域市场"],
+                    ["重点领域市场"],
+                    ["重点领域市场"],
+                    ["重点领域市场"],
+                    ["重点领域市场"],
+                    ["重点领域市场"],
+                    ["其它"],
+                    ["合计"]];
+                for (var i = 0; i < data.length; ++i) {
+                    data[i] = data[i].concat(this.mData[i]);
+                }
+                tableAssist.mergeColum(0);
+                tableAssist.mergeRow(0);
+                tableAssist.mergeTitle();
                 this.$(name).jqGrid(tableAssist.decorate({
                     multiselect: false,
                     drag: false,
@@ -110,13 +128,13 @@ var sbdscqyqk;
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 20,
-                    data: tableAssist.getData(this.mData),
+                    data: tableAssist.getData(data),
                     datatype: "local",
                     viewrecords: true
                 }));
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(xfscqy = sbdscqyqk.xfscqy || (sbdscqyqk.xfscqy = {}));
 })(sbdscqyqk || (sbdscqyqk = {}));

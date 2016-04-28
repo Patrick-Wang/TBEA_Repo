@@ -123,14 +123,14 @@ public class XfscqyServlet {
 			HSSFCell cell = title.createCell(i + 2);
 			cell.setCellStyle(template.getCellStyleCenter());
 			if (i <= last - 2){
-				cell.setCellValue("ÉÏÄê¶È");
+				cell.setCellValue("ä¸Šå¹´åº¦");
 			}else{
-				cell.setCellValue("±¾Äê¶È");
+				cell.setCellValue("æœ¬å¹´åº¦");
 			}
 			
 			HSSFRow row = sheet.getRow(1);
 			cell = row.createCell(i + 2);
-			cell.setCellValue((calLastCur.get(Calendar.MONTH) + 1) + "ÔÂ");
+			cell.setCellValue((calLastCur.get(Calendar.MONTH) + 1) + "æœˆ");
 			cell.setCellStyle(template.getCellStyleCenter());
 			calLastCur.add(Calendar.MONTH, 1);
 		}

@@ -783,13 +783,13 @@ var JQTable;
             if (iColStart != undefined) {
                 this.completeList.push(function () {
                     var headerStart = $("#" + _this.mGridName + "_" + _this.id(iColStart));
-                    var firstWidht = _this.parseInt(headerStart[0].style.width);
+                    var firstWidht = headerStart[0].offsetWidth; //this.parseInt(headerStart[0].style.width);
                     var iWidht = firstWidht;
                     var headerMerge = null;
                     var widthList = [iWidht];
                     for (var i = 1; i < iCount; i++) {
                         headerMerge = $("#" + _this.mGridName + "_" + _this.id(iColStart + i));
-                        widthList.push(_this.parseInt(headerMerge.css("width")));
+                        widthList.push(headerMerge[0].offsetWidth); //this.parseInt(headerMerge.css("width")));
                         iWidht += widthList[widthList.length - 1];
                         headerMerge.removeClass("ui-state-default");
                         headerMerge.children("span").css("display", "none");
