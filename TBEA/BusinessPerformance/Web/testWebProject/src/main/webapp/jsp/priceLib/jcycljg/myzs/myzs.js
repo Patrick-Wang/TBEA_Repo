@@ -41,7 +41,7 @@ var jcycljg;
                     end: end
                 })
                     .then(function (jsonData) {
-                    _this.mData = jsonData;
+                    _this.mData = _this.formateData(jsonData);
                     _this.refresh();
                 });
             };
@@ -81,7 +81,7 @@ var jcycljg;
                 for (var i = 0; i < data.length; ++i) {
                     for (var j = 0; j < data[i].length; ++j) {
                         if (data[i][j] == null) {
-                            data[i][j] = '0';
+                            data[i][j] = '--';
                         }
                     }
                 }
@@ -90,7 +90,6 @@ var jcycljg;
             JkzjView.prototype.updateEchart = function (title, echart, legend, data) {
                 var _this = this;
                 var xData = [];
-                this.formateData(data);
                 $(this.mData).each(function (i) {
                     xData.push(_this.mData[i][0]);
                 });

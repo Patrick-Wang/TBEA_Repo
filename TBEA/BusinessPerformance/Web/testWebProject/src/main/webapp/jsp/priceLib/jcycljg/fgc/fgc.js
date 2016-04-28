@@ -44,7 +44,7 @@ var jcycljg;
                     end: end
                 })
                     .then(function (jsonData) {
-                    _this.mData = jsonData;
+                    _this.mData = _this.formateData(jsonData);
                     _this.refresh();
                 });
             };
@@ -84,7 +84,7 @@ var jcycljg;
                 for (var i = 0; i < data.length; ++i) {
                     for (var j = 0; j < data[i].length; ++j) {
                         if (data[i][j] == null) {
-                            data[i][j] = '0';
+                            data[i][j] = '--';
                         }
                     }
                 }

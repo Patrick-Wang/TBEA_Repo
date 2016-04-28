@@ -43,7 +43,7 @@ module jcycljg {
                         end: end
                     })
                     .then((jsonData:any) => {
-                        this.mData = jsonData;
+                        this.mData = this.formateData(jsonData);
                         this.refresh();
                     });
             }
@@ -66,7 +66,7 @@ module jcycljg {
                 for (let i = 0; i < data.length; ++i) {
                     for (let j = 0; j < data[i].length; ++j) {
                         if (data[i][j] == null) {
-                            data[i][j] = '0';
+                            data[i][j] = '--';
                         }
                     }
                 }
@@ -92,7 +92,6 @@ module jcycljg {
 
             private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>):void {
                 var xData:string[] = [];
-                this.formateData(data);
                 $(this.mData).each((i:number)=> {
                     xData.push(this.mData[i][0]);
                 })
