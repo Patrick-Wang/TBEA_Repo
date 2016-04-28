@@ -52,7 +52,7 @@
 							swf : '${pageContext.request.contextPath}/js/webuploader/Uploader.swf',
 
 							// 文件接收服务端。
-							server : 'jcycljg/import.do',
+							server : '${pageContext.request.contextPath}/jcycljg/import.do',
 
 							// 选择文件的按钮。可选。
 							// 内部根据当前运行是创建，可能是input元素，也可能是flash.

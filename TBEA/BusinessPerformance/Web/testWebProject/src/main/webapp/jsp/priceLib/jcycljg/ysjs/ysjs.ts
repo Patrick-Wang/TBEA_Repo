@@ -102,10 +102,20 @@ module jcycljg {
                 });
                 this.updateEchart("锌 结算价格趋势", this.option().zn, data, lemData);
             }
+            private formateData(data:Array<string[]>){
+                for (let i = 0; i < data.length; ++i) {
+                    for (let j = 0; j < data[i].length; ++j) {
+                        if (data[i][j] == null) {
+                            data[i][j] = '0';
+                        }
+                    }
+                }
+                return data;
+            }
 
             private updateEchart(title:string, echart:string, data:Array<string>, lemData:Array<string>):void {
                 var xData:string[] = [];
-
+                this.formateData([data]);
                 $(this.mData).each((i:number)=> {
                     xData.push(this.mData[i][0]);
                 })

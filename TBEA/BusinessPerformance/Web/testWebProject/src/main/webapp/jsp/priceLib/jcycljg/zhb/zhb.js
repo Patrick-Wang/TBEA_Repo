@@ -28,7 +28,7 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ZhbView = (function (_super) {
             __extends(ZhbView, _super);
             function ZhbView() {
@@ -85,9 +85,20 @@ var jcycljg;
             ZhbView.prototype.getDateType = function () {
                 return jcycljg.DateType.DAY;
             };
+            ZhbView.prototype.formateData = function (data) {
+                for (var i = 0; i < data.length; ++i) {
+                    for (var j = 0; j < data[i].length; ++j) {
+                        if (data[i][j] == null) {
+                            data[i][j] = '0';
+                        }
+                    }
+                }
+                return data;
+            };
             ZhbView.prototype.updateEchart = function (title, echart, legend, data) {
                 var _this = this;
                 var xData = [];
+                this.formateData(data);
                 $(this.mData).each(function (i) {
                     xData.push(_this.mData[i][0]);
                 });
@@ -98,7 +109,7 @@ var jcycljg;
                         type: 'line',
                         smooth: true,
                         // itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                        data: data[i].length < 1 ? [0] : data[i]
+                        data: data[i].length < 1 ? [0] : (data[i] == null ? 0 : data[i])
                     });
                 }
                 var option = {
@@ -112,7 +123,7 @@ var jcycljg;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -153,7 +164,7 @@ var jcycljg;
                 }));
             };
             return ZhbView;
-        }(jcycljg.BasePluginView));
+        })(jcycljg.BasePluginView);
         zhb.pluginView = ZhbView.newInstance();
     })(zhb = jcycljg.zhb || (jcycljg.zhb = {}));
 })(jcycljg || (jcycljg = {}));

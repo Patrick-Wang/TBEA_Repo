@@ -66,6 +66,7 @@ module jcycljg {
                 view.register("冷轧薄板", this);
             }
 
+
             public updateChart() {
                 let items =  ["上海鞍钢", "南昌武钢", "沈阳鞍钢", "西安鞍钢", "乌鲁木齐八钢", "市场均价"];
                 let data:string[][] = [];
@@ -84,9 +85,20 @@ module jcycljg {
                 return DateType.DAY;
             }
 
+            private formateData(data:Array<string[]>){
+                for (let i = 0; i < data.length; ++i) {
+                    for (let j = 0; j < data[i].length; ++j) {
+                        if (data[i][j] == null) {
+                            data[i][j] = '0';
+                        }
+                    }
+                }
+                return data;
+            }
+
             private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>):void {
                 var xData:string[] = [];
-
+                this.formateData(data);
                 $(this.mData).each((i:number)=> {
                     xData.push(this.mData[i][0]);
                 })

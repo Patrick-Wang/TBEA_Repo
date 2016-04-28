@@ -22,7 +22,7 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var GjyyView = (function (_super) {
             __extends(GjyyView, _super);
             function GjyyView() {
@@ -61,6 +61,16 @@ var jcycljg;
                 _super.prototype.init.call(this, opt);
                 view.register("国际原油", this);
             };
+            GjyyView.prototype.formateData = function (data) {
+                for (var i = 0; i < data.length; ++i) {
+                    for (var j = 0; j < data[i].length; ++j) {
+                        if (data[i][j] == null) {
+                            data[i][j] = '0';
+                        }
+                    }
+                }
+                return data;
+            };
             GjyyView.prototype.updateChart = function () {
                 var _this = this;
                 var items = ["WTI（美原油）", "布伦特"];
@@ -81,6 +91,7 @@ var jcycljg;
             GjyyView.prototype.updateEchart = function (title, echart, legend, data) {
                 var _this = this;
                 var xData = [];
+                this.formateData(data);
                 $(this.mData).each(function (i) {
                     xData.push(_this.mData[i][0]);
                 });
@@ -106,7 +117,7 @@ var jcycljg;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -147,7 +158,7 @@ var jcycljg;
                 }));
             };
             return GjyyView;
-        }(jcycljg.BasePluginView));
+        })(jcycljg.BasePluginView);
         gjyy.pluginView = GjyyView.newInstance();
     })(gjyy = jcycljg.gjyy || (jcycljg.gjyy = {}));
 })(jcycljg || (jcycljg = {}));

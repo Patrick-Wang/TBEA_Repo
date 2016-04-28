@@ -28,7 +28,7 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var YsjsView = (function (_super) {
             __extends(YsjsView, _super);
             function YsjsView() {
@@ -99,9 +99,20 @@ var jcycljg;
                 });
                 this.updateEchart("锌 结算价格趋势", this.option().zn, data, lemData);
             };
+            YsjsView.prototype.formateData = function (data) {
+                for (var i = 0; i < data.length; ++i) {
+                    for (var j = 0; j < data[i].length; ++j) {
+                        if (data[i][j] == null) {
+                            data[i][j] = '0';
+                        }
+                    }
+                }
+                return data;
+            };
             YsjsView.prototype.updateEchart = function (title, echart, data, lemData) {
                 var _this = this;
                 var xData = [];
+                this.formateData([data]);
                 $(this.mData).each(function (i) {
                     xData.push(_this.mData[i][0]);
                 });
@@ -116,7 +127,7 @@ var jcycljg;
                         data: ["长江现货价格", "LME结算价格"]
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -177,7 +188,7 @@ var jcycljg;
                 }));
             };
             return YsjsView;
-        }(jcycljg.BasePluginView));
+        })(jcycljg.BasePluginView);
         ysjs.pluginView = YsjsView.newInstance();
     })(ysjs = jcycljg.ysjs || (jcycljg.ysjs = {}));
 })(jcycljg || (jcycljg = {}));

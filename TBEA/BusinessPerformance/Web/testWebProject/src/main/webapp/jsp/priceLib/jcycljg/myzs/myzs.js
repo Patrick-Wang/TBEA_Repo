@@ -21,7 +21,7 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var JkzjView = (function (_super) {
             __extends(JkzjView, _super);
             function JkzjView() {
@@ -77,9 +77,20 @@ var jcycljg;
             JkzjView.prototype.getDateType = function () {
                 return jcycljg.DateType.DAY;
             };
+            JkzjView.prototype.formateData = function (data) {
+                for (var i = 0; i < data.length; ++i) {
+                    for (var j = 0; j < data[i].length; ++j) {
+                        if (data[i][j] == null) {
+                            data[i][j] = '0';
+                        }
+                    }
+                }
+                return data;
+            };
             JkzjView.prototype.updateEchart = function (title, echart, legend, data) {
                 var _this = this;
                 var xData = [];
+                this.formateData(data);
                 $(this.mData).each(function (i) {
                     xData.push(_this.mData[i][0]);
                 });
@@ -104,7 +115,7 @@ var jcycljg;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -145,7 +156,7 @@ var jcycljg;
                 }));
             };
             return JkzjView;
-        }(jcycljg.BasePluginView));
+        })(jcycljg.BasePluginView);
         myzs.pluginView = JkzjView.newInstance();
     })(myzs = jcycljg.myzs || (jcycljg.myzs = {}));
 })(jcycljg || (jcycljg = {}));

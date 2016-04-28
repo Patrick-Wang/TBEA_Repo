@@ -117,7 +117,6 @@ module sbdscqyqk {
 
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
                 this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
                 let data = [["传统电力市场"],
                     ["传统电力市场"],
@@ -142,7 +141,7 @@ module sbdscqyqk {
 
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+                parent.append("<table id='" + name + "'>");
                 let jqTable = this.$(name);
                 jqTable.jqGrid(
                     this.mTableAssist.decorate({

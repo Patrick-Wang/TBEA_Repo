@@ -24,7 +24,7 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var FgcView = (function (_super) {
             __extends(FgcView, _super);
             function FgcView() {
@@ -80,9 +80,20 @@ var jcycljg;
             FgcView.prototype.getDateType = function () {
                 return jcycljg.DateType.DAY;
             };
+            FgcView.prototype.formateData = function (data) {
+                for (var i = 0; i < data.length; ++i) {
+                    for (var j = 0; j < data[i].length; ++j) {
+                        if (data[i][j] == null) {
+                            data[i][j] = '0';
+                        }
+                    }
+                }
+                return data;
+            };
             FgcView.prototype.updateEchart = function (title, echart, legend, data) {
                 var _this = this;
                 var xData = [];
+                this.formateData(data);
                 $(this.mData).each(function (i) {
                     xData.push(_this.mData[i][0]);
                 });
@@ -107,7 +118,7 @@ var jcycljg;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -148,7 +159,7 @@ var jcycljg;
                 }));
             };
             return FgcView;
-        }(jcycljg.BasePluginView));
+        })(jcycljg.BasePluginView);
         fgc.pluginView = FgcView.newInstance();
     })(fgc = jcycljg.fgc || (jcycljg.fgc = {}));
 })(jcycljg || (jcycljg = {}));

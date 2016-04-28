@@ -8,6 +8,7 @@ CREATE TABLE [dbo].[xnych_xnych](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not NULL,
 	[yf] [int] not NULL,
+	[dwid] [int] not NULL,
 	[zmjehj] [numeric](18, 4) NULL,
 	[epcxmch] [numeric](18, 4) NULL,
 	[yzrzyxmch] [numeric](18, 4) NULL,

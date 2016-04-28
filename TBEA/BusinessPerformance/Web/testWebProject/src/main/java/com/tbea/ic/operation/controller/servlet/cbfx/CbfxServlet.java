@@ -42,6 +42,7 @@ public class CbfxServlet {
 	public void setCompanyManager(CompanyManager companyManager){
 		this.companyManager = companyManager;
 		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NLTK));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XJNY));
 	}
 	
 	@RequestMapping(value = "show.do")

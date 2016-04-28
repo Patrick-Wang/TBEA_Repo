@@ -62,7 +62,16 @@ module jcycljg {
                 super.init(opt);
                 view.register("国际原油", this);
             }
-
+            private formateData(data:Array<string[]>){
+                for (let i = 0; i < data.length; ++i) {
+                    for (let j = 0; j < data[i].length; ++j) {
+                        if (data[i][j] == null) {
+                            data[i][j] = '0';
+                        }
+                    }
+                }
+                return data;
+            }
             public updateChart() {
                 let items =  ["WTI（美原油）", "布伦特"];
                 let data:string[][] = [];
@@ -83,7 +92,7 @@ module jcycljg {
 
             private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>):void {
                 var xData:string[] = [];
-
+                this.formateData(data);
                 $(this.mData).each((i:number)=> {
                     xData.push(this.mData[i][0]);
                 })

@@ -56,7 +56,6 @@
 <script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/jcycljgdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/jcycljgtype.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/jcycljg.js" type="text/javascript"></script>
 
 <!-- message box -->

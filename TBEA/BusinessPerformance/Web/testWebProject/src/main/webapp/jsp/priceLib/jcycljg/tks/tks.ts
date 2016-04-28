@@ -106,9 +106,20 @@ module jcycljg {
                 return DateType.DAY;
             }
 
+            private formateData(data:Array<string[]>){
+                for (let i = 0; i < data.length; ++i) {
+                    for (let j = 0; j < data[i].length; ++j) {
+                        if (data[i][j] == null) {
+                            data[i][j] = '0';
+                        }
+                    }
+                }
+                return data;
+            }
+
             private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>):void {
                 var xData:string[] = [];
-
+                this.formateData(data);
                 $(this.mData).each((i:number)=> {
                     xData.push(this.mData[i][0]);
                 })

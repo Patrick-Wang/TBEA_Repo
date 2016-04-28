@@ -229,9 +229,8 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 				entity.setYf(cal.get(Calendar.MONTH) + 1);
 				entity.setDwid(company.getId());
 				entity.setType(type.ordinal());
-				entity.setZt(zt.ordinal());
 			}
-			
+			entity.setZt(zt.ordinal());
 			entity.setSclx(row.getString(col++));
 			entity.setYccnl(Util.toDoubleNull(row.getString(col++)));
 			entity.setWlyddzl(Util.toDoubleNull(row.getString(col++)));
@@ -281,8 +280,8 @@ public class SbdddcbjpcqkServiceImpl implements SbdddcbjpcqkService {
 				entity.setYf(cal.get(Calendar.MONTH) + 1);
 				entity.setDwid(company.getId());
 				entity.setType(type.ordinal());
-				entity.setZt(zt.ordinal());
 			}
+			entity.setZt(zt.ordinal());
 			entity.setSclx(row.getString(col++));
 			entity.setYccnlcz(Util.toDoubleNull(row.getString(col++)));
 			entity.setYccnlcl(Util.toDoubleNull(row.getString(col++)));

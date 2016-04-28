@@ -22,7 +22,7 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var DmdjyxView = (function (_super) {
             __extends(DmdjyxView, _super);
             function DmdjyxView() {
@@ -78,9 +78,20 @@ var jcycljg;
             DmdjyxView.prototype.getDateType = function () {
                 return jcycljg.DateType.DAY;
             };
+            DmdjyxView.prototype.formateData = function (data) {
+                for (var i = 0; i < data.length; ++i) {
+                    for (var j = 0; j < data[i].length; ++j) {
+                        if (data[i][j] == null) {
+                            data[i][j] = '0';
+                        }
+                    }
+                }
+                return data;
+            };
             DmdjyxView.prototype.updateEchart = function (title, echart, legend, data) {
                 var _this = this;
                 var xData = [];
+                this.formateData(data);
                 $(this.mData).each(function (i) {
                     xData.push(_this.mData[i][0]);
                 });
@@ -105,7 +116,7 @@ var jcycljg;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -146,7 +157,7 @@ var jcycljg;
                 }));
             };
             return DmdjyxView;
-        }(jcycljg.BasePluginView));
+        })(jcycljg.BasePluginView);
         dmdjyx.pluginView = DmdjyxView.newInstance();
     })(dmdjyx = jcycljg.dmdjyx || (jcycljg.dmdjyx = {}));
 })(jcycljg || (jcycljg = {}));
