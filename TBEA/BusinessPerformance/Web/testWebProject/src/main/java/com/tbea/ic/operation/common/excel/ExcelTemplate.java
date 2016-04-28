@@ -10,8 +10,10 @@ import java.net.URISyntaxException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
@@ -125,6 +127,7 @@ public class ExcelTemplate {
 	
 	HSSFWorkbook workbook;
 	HSSFCellStyle cellStyleNull;
+	HSSFCellStyle cellStyleCenter;
 	HSSFCellStyle cellStyleNumber2;
 	HSSFCellStyle cellStyleNumber4;
 	HSSFCellStyle cellStyleNumber1;
@@ -134,6 +137,14 @@ public class ExcelTemplate {
 	
 	ExcelTemplate(HSSFWorkbook workbook){
 		this.workbook = workbook;
+		
+		cellStyleCenter = workbook
+				.createCellStyle();
+		cellStyleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cellStyleCenter.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+		cellStyleCenter.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+		cellStyleCenter.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+		cellStyleCenter.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
 		
 		cellStyleNull = workbook
 				.createCellStyle();
@@ -202,12 +213,18 @@ public class ExcelTemplate {
 		cellStyleHeader.setFont(font);
 			
 	}
+	
+
 	/**
 	 * @return the workbook
 	 */
 	public HSSFWorkbook getWorkbook() {
 		return workbook;
 	}
+	public HSSFCellStyle getCellStyleCenter() {
+		return cellStyleCenter;
+	}
+	
 	/**
 	 * @return the cellStyleNull
 	 */
@@ -250,9 +267,9 @@ public class ExcelTemplate {
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		
 		int colCount = sheet.getRow(0).getLastCellNum();	
-		for (int j = 0; j < colCount; ++j) {
-			sheet.autoSizeColumn(j, true);
-		}
+//		for (int j = 0; j < colCount; ++j) {
+//			sheet.autoSizeColumn(j, true);
+//		}
 		workbook.write(os);
 	}
 	

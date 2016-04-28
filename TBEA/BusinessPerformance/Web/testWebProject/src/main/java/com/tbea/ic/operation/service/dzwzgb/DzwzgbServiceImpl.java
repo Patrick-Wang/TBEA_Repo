@@ -14,7 +14,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.dzwzgb.dzclkcb.DzclkcbDaoImpl;
 import com.tbea.ic.operation.model.dao.dzwzgb.dzclkcb.DzclkcbDao;
-import com.tbea.ic.operation.model.dao.identifier.common.clmc.Clmc;
+import com.tbea.ic.operation.model.dao.identifier.ylfx.clmc.Clmc;
 import com.tbea.ic.operation.model.entity.dzwzgb.DzclkcbEntity;
 import com.tbea.ic.operation.service.dzwzgb.DzwzgbService;
 

@@ -3,6 +3,7 @@ package com.tbea.ic.operation.controller.servlet.sbdscqyqk.xfscqy;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,9 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -99,17 +102,47 @@ public class XfscqyServlet {
 		
 		List<List<String>> ret = xfscqyService.getXfscqy(d, company);
 		ExcelTemplate template = ExcelTemplate.createSbdscqyqkTemplate(SbdscqyqkSheetType.XFSCQY);
-	
-		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
+		
+		Calendar calCur = Calendar.getInstance();
+		calCur.setTime(d);
+		Calendar calLastCur = Calendar.getInstance();
+		calLastCur.setTime(d);
+		calLastCur.add(Calendar.YEAR, -1);
+		calLastCur.add(Calendar.MONTH, 1);
+		Calendar calCurYear = Calendar.getInstance();
+		calCurYear.setTime(d);
+		calCurYear.set(Calendar.MONTH, 0);
+		
+		int last = 2 + 12 - (calLastCur.get(Calendar.MONTH) + 1);
+		for (int i = 0; i < 12; ++i){
+			HSSFRow title = sheet.getRow(0);
+			HSSFCell cell = title.createCell(i + 2);
+			cell.setCellStyle(template.getCellStyleCenter());
+			if (i <= last - 2){
+				cell.setCellValue("上年度");
+			}else{
+				cell.setCellValue("本年度");
+			}
+			
+			HSSFRow row = sheet.getRow(1);
+			cell = row.createCell(i + 2);
+			cell.setCellValue((calLastCur.get(Calendar.MONTH) + 1) + "月");
+			cell.setCellStyle(template.getCellStyleCenter());
+			calLastCur.add(Calendar.MONTH, 1);
+		}
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, last));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, last + 1, 13));
+		
+		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
+		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
 		for (int i = 0; i < ret.size(); ++i){
-			HSSFRow row = sheet.createRow(i + 2);
+			HSSFRow row = sheet.getRow(i + 2);
 			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
+				handler.handle(null, j, template, row.createCell(j + 1), ret.get(i).get(j));
 			}
 		}
 		template.write(response, name + ".xls");

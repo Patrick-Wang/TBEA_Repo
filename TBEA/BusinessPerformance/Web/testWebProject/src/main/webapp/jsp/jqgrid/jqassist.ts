@@ -889,14 +889,14 @@ module JQTable {
                 this.completeList.push(() => {
                     var headerStart = $("#" + this.mGridName + "_" + this.id(iColStart));
 
-                    var firstWidht = this.parseInt(headerStart[0].style.width);
+                    var firstWidht = headerStart[0].offsetWidth;//this.parseInt(headerStart[0].style.width);
                     var iWidht = firstWidht;
 
                     var headerMerge:any = null;
                     var widthList = [iWidht];
                     for (var i = 1; i < iCount; i++) {
                         headerMerge = $("#" + this.mGridName + "_" + this.id(iColStart + i));
-                        widthList.push(this.parseInt(headerMerge.css("width")));
+                        widthList.push(headerMerge[0].offsetWidth);//this.parseInt(headerMerge.css("width")));
                         iWidht += widthList[widthList.length - 1];
                         headerMerge.removeClass("ui-state-default");
                         headerMerge.children("span").css("display", "none");

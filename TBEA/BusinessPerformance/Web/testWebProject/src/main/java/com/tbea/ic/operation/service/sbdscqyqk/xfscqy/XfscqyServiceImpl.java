@@ -41,6 +41,7 @@ public class XfscqyServiceImpl implements XfscqyService {
 		List<List<String>> result = new ArrayList<List<String>>();
 		
 		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
 		cal.add(Calendar.MONTH, 1);
 		
@@ -87,6 +88,8 @@ public class XfscqyServiceImpl implements XfscqyService {
 	}
 
 	private ErrorCode entryXfscqy(Date d, JSONArray data, Company company, ZBStatus zt){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
 		for (int i = 0; i < data.size(); ++i){
 			XfscqyEntity entity = xfscqyDao.getByDate(d, company, i);
 			if (null == entity){
@@ -94,11 +97,12 @@ public class XfscqyServiceImpl implements XfscqyService {
 				entity.setDwid(company.getId());
 				entity.setHyid(i);
 				entity.setZt(zt.ordinal());
-				entity.setNf(1); 
+				entity.setNf(cal.get(Calendar.YEAR)); 
+				entity.setYf(cal.get(Calendar.MONTH) + 1); 
 			}
+			entity.setQye(Util.toDoubleNull(data.getJSONArray(i).getString(0)));
+			xfscqyDao.merge(entity);
 		}
-		
-		
 		return ErrorCode.OK;
 	}
 	
