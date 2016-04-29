@@ -31,8 +31,8 @@ public class DwxxRefClmcDaoImpl extends AbstractReadWriteDaoImpl<DwxxRefClmcEnti
 
 	@Override
 	public List<DwxxRefClmcEntity> getByCompany(Company company) {
-		Query q = this.getEntityManager().createQuery("from DwxxRefClmcEntity where compId=:cpId");
-		q.setParameter("compId", company.getId());
+		Query q = this.getEntityManager().createQuery("from DwxxRefClmcEntity where dwid=:cpId");
+		q.setParameter("cpId", company.getId());
 		return q.getResultList();
 	}
 }

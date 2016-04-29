@@ -20,14 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.geong.cas.support.SystemLinkClient;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.DailyReportService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.login.LoginService;
-import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgService;
-import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgServiceImpl;
 
 @Controller
 @RequestMapping(value = "Login")
@@ -158,7 +157,37 @@ public class LoginServlet {
 		session.setAttribute("JYEntryLookup",
 				dailyReportService.hasJYEntryLookupAuthority(account));
 		
-		session.setAttribute("PriceLibAuth", extendAuthService.hasPriceLibAuthority(account));
+		session.setAttribute("PriceLibAuth", extendAuthService.hasAuthority(account, AuthType.PriceLib));
+		
+		boolean hasGbAuthority = false;
+		boolean hasAuthority = extendAuthService.hasAuthority(account, AuthType.ChgbLookup);
+		hasGbAuthority = hasGbAuthority || hasAuthority;
+		session.setAttribute("ChgbLookup", hasAuthority);
+		
+		hasAuthority = extendAuthService.hasAuthority(account, AuthType.YszkgbLookup);
+		hasGbAuthority = hasGbAuthority || hasAuthority;
+		session.setAttribute("YszkgbLookup", hasAuthority);
+		
+		hasAuthority = extendAuthService.hasAuthority(account, AuthType.WlyddLookup);
+		hasGbAuthority = hasGbAuthority || hasAuthority;
+		session.setAttribute("WlyddLookup", hasAuthority);
+		
+		session.setAttribute("GbLookup", hasGbAuthority);
+		
+		hasGbAuthority = false;
+		hasAuthority = extendAuthService.hasAuthority(account, AuthType.ChgbEntry);
+		hasGbAuthority = hasGbAuthority || hasAuthority;
+		session.setAttribute("ChgbEntry", hasAuthority);
+		
+		hasAuthority = extendAuthService.hasAuthority(account, AuthType.YszkgbEntry);
+		hasGbAuthority = hasGbAuthority || hasAuthority;
+		session.setAttribute("YszkgbEntry", hasAuthority);
+		
+		hasAuthority = extendAuthService.hasAuthority(account, AuthType.WlyddEntry);
+		hasGbAuthority = hasGbAuthority || hasAuthority;
+		session.setAttribute("WlyddEntry", hasAuthority);
+		
+		session.setAttribute("GbEntry", hasGbAuthority);
 
 		session.setAttribute("isByq", account.getId() == 9
 				|| account.getId() == 25 || account.getId() == 33);
@@ -230,6 +259,16 @@ public class LoginServlet {
 		map.put("userName", account.getName());
 
 		map.put("admin", "admin".equals(account.getName()));
+		
+		map.put("ChgbLookup", currentSession.getAttribute("ChgbLookup"));
+		map.put("YszkgbLookup", currentSession.getAttribute("YszkgbLookup"));
+		map.put("WlyddLookup", currentSession.getAttribute("WlyddLookup"));
+		map.put("ChgbEntry", currentSession.getAttribute("ChgbEntry"));
+		map.put("YszkgbEntry", currentSession.getAttribute("YszkgbEntry"));
+		map.put("WlyddEntry", currentSession.getAttribute("WlyddEntry"));
+		map.put("GbEntry", currentSession.getAttribute("GbEntry"));
+		map.put("GbLookup", currentSession.getAttribute("GbLookup"));
+		
 		
 		return new ModelAndView("index", map);
 

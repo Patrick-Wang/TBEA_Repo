@@ -46,7 +46,7 @@ var wgcpqk;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("yclbfqk/update.do", false);
+                this.mAjax = new Util.Ajax("../yclbfqk/update.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.yclbfqk;

@@ -21,7 +21,7 @@ var sbdddcbjpcqk;
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", true, TextAlign.Center);
                 }
                 else {
-                    nodeFirst = new JQTable.Node("产品类别", "sclb", true, TextAlign.Center);
+                    nodeFirst = new JQTable.Node("产未履约订单情况(产品类别口径)品类别", "sclb", true, TextAlign.Center);
                 }
                 return new JQTable.JQGridAssistant([
                     nodeFirst,
@@ -47,7 +47,7 @@ var sbdddcbjpcqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var XlkglyddView = (function (_super) {
             __extends(XlkglyddView, _super);
             function XlkglyddView() {
@@ -94,8 +94,8 @@ var sbdddcbjpcqk;
             };
             XlkglyddView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("线缆可供履约订单变化情况按生产类别", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCLB));
-                view.register("线缆可供履约订单变化情况按生产单元", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCDY));
+                view.register("未履约订单情况(产品类别口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCLB));
+                view.register("未履约订单情况(生产单元口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCDY));
             };
             XlkglyddView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
@@ -118,7 +118,7 @@ var sbdddcbjpcqk;
                 }));
             };
             return XlkglyddView;
-        }(wlyddqk.BasePluginView));
+        })(wlyddqk.BasePluginView);
         xlkglydd.pluginView = XlkglyddView.newInstance();
     })(xlkglydd = sbdddcbjpcqk.xlkglydd || (sbdddcbjpcqk.xlkglydd = {}));
 })(sbdddcbjpcqk || (sbdddcbjpcqk = {}));

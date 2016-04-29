@@ -18,6 +18,7 @@ var yszkgb;
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("月度", "aa", true, TextAlign.Center),
+                    new JQTable.Node("月度", "a1a", true, TextAlign.Center),
                     new JQTable.Node("月度", "ab", true, TextAlign.Center)
                         .append(new JQTable.Node("逾期0-1个月", "ba"))
                         .append(new JQTable.Node("逾期1-3月", "bb"))
@@ -31,7 +32,7 @@ var yszkgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var YSZKKXXZView = (function (_super) {
             __extends(YSZKKXXZView, _super);
             function YSZKKXXZView() {
@@ -104,7 +105,7 @@ var yszkgb;
                 }));
             };
             return YSZKKXXZView;
-        }(yszkgb.BasePluginView));
+        })(yszkgb.BasePluginView);
         yszkkxxz.pluginView = YSZKKXXZView.newInstance();
     })(yszkkxxz = yszkgb.yszkkxxz || (yszkgb.yszkkxxz = {}));
 })(yszkgb || (yszkgb = {}));

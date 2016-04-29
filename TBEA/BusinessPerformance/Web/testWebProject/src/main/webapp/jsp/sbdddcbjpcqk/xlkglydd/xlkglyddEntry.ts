@@ -98,8 +98,8 @@ module sbdddcbjpcqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("保存 成功");
+                        this.pluginUpdate(dt, compType);
                     } else {
                         Util.MessageBox.tip(resp.message);
                     }
@@ -127,8 +127,8 @@ module sbdddcbjpcqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("提交 成功");
+                        this.pluginUpdate(dt, compType);
                     } else {
                         Util.MessageBox.tip(resp.message);
                     }
@@ -159,8 +159,8 @@ module sbdddcbjpcqk {
 
             public init(opt:Option):void {
                 super.init(opt);
-                entryView.register("线缆可供履约订单变化情况按生产类别", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCLB));
-                entryView.register("线缆可供履约订单变化情况按生产单元", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCDY));
+                entryView.register("未履约订单情况(产品类别口径)", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCLB));
+                entryView.register("未履约订单情况(生产单元口径)", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCDY));
                 $.extend($.jgrid.edit, {
                     bSubmit: "确定"
                 });

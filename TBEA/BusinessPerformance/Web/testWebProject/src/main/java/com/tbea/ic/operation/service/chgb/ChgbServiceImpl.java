@@ -3,29 +3,10 @@ package com.tbea.ic.operation.service.chgb;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Hashtable;
-
-import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.ZBStatus;
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.model.dao.chgb.nych.NychDaoImpl;
-import com.tbea.ic.operation.model.dao.chgb.nych.NychDao;
-import com.tbea.ic.operation.model.dao.chgb.chxzqk.ChxzqkDaoImpl;
-import com.tbea.ic.operation.model.dao.chgb.chxzqk.ChxzqkDao;
-import com.tbea.ic.operation.model.dao.chgb.chzlbhqk.ChzlbhqkDaoImpl;
-import com.tbea.ic.operation.model.dao.chgb.chzlbhqk.ChzlbhqkDao;
-import com.tbea.ic.operation.model.dao.chgb.chjykc.ChJykcDaoImpl;
-import com.tbea.ic.operation.model.dao.chgb.chjykc.ChJykcDao;
+import java.util.List;
 
 import javax.annotation.Resource;
-
-import com.tbea.ic.operation.model.dao.chgb.chzm.ChZmDaoImpl;
-import com.tbea.ic.operation.model.dao.chgb.chzm.ChZmDao;
-import com.tbea.ic.operation.model.entity.chgb.ChZmEntity;
-import com.tbea.ic.operation.model.entity.chgb.ChJykcEntity;
-import com.tbea.ic.operation.service.chgb.ChgbService;
 
 import net.sf.json.JSONArray;
 
@@ -33,15 +14,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.dao.chgb.chjykc.ChJykcDao;
+import com.tbea.ic.operation.model.dao.chgb.chjykc.ChJykcDaoImpl;
+import com.tbea.ic.operation.model.dao.chgb.chxzqk.ChxzqkDao;
+import com.tbea.ic.operation.model.dao.chgb.chxzqk.ChxzqkDaoImpl;
+import com.tbea.ic.operation.model.dao.chgb.chzlbhqk.ChzlbhqkDao;
+import com.tbea.ic.operation.model.dao.chgb.chzlbhqk.ChzlbhqkDaoImpl;
+import com.tbea.ic.operation.model.dao.chgb.chzm.ChZmDao;
+import com.tbea.ic.operation.model.dao.chgb.chzm.ChZmDaoImpl;
+import com.tbea.ic.operation.model.dao.chgb.nych.NychDao;
+import com.tbea.ic.operation.model.dao.chgb.nych.NychDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDao;
 import com.tbea.ic.operation.model.dao.identifier.chgb.jykcxm.JykcxmDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
+import com.tbea.ic.operation.model.entity.chgb.ChJykcEntity;
+import com.tbea.ic.operation.model.entity.chgb.ChZmEntity;
+import com.tbea.ic.operation.model.entity.chgb.ChxzqkEntity;
+import com.tbea.ic.operation.model.entity.chgb.ChzlbhqkEntity;
+import com.tbea.ic.operation.model.entity.chgb.NychEntity;
 import com.tbea.ic.operation.model.entity.identifier.chgb.JykcxmEntity;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
-import com.tbea.ic.operation.model.entity.yszkgb.YqyszcsysEntity;
-import com.tbea.ic.operation.model.entity.chgb.ChzlbhqkEntity;
-import com.tbea.ic.operation.model.entity.chgb.ChxzqkEntity;
-import com.tbea.ic.operation.model.entity.chgb.NychEntity;
 
 @Service(ChgbServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -240,15 +236,15 @@ public class ChgbServiceImpl implements ChgbService {
 		list.add("" + entity.getQhpcyk());
 		list.add("" + entity.getWfhykp());
 		list.add("" + entity.getQt());
-		list.add("" + Util.sum(new Double[]{
-				entity.getYcl(),
-				entity.getBcp(),
-				entity.getSjkcsp(),
-				entity.getYfhwkp(),
-				entity.getQhfdyk(),
-				entity.getQhpcyk(),
-				entity.getWfhykp(),
-				entity.getQt()}));
+		list.add("" + Util.minus(Util.sum(new Double[]{
+											entity.getYcl(),
+											entity.getBcp(),
+											entity.getSjkcsp(),
+											entity.getYfhwkp(),
+											entity.getQhfdyk(),
+											entity.getQhpcyk(),
+											entity.getQt()}), 
+								entity.getWfhykp()));
 		return list;
 	}
 	

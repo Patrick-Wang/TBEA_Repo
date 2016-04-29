@@ -13,6 +13,7 @@ module yszkgb {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("月度", "aa", true, TextAlign.Center),
+                    new JQTable.Node("月度", "a1a", true, TextAlign.Center),
                     new JQTable.Node("月度", "ab", true, TextAlign.Center)
                         .append(new JQTable.Node("逾期0-1个月", "ba"))
                         .append(new JQTable.Node("逾期1-3月", "bb"))

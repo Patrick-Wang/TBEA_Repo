@@ -154,6 +154,7 @@ public class ExcelTemplate {
 		cellStyleCenter = workbook
 				.createCellStyle();
 		cellStyleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cellStyleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		cellStyleCenter.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
 		cellStyleCenter.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleCenter.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    

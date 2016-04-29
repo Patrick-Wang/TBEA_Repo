@@ -13,7 +13,7 @@ module ylfxwlyddmlspcs {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly : boolean, date : string):JQTable.JQGridAssistant {
-                let curDate : Date = new Date(date);
+                let curDate : Date = new Date(Date.parse(date.replace(/-/g, '/')));
                 let month = curDate.getMonth() + 1;
                 let year = curDate.getFullYear();
                 let data = [];
@@ -155,11 +155,11 @@ module ylfxwlyddmlspcs {
 
             public init(opt:Option):void {
                 super.init(opt);
-                entryView.register("变压器未履约订单毛利水平测算-综合", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
-                entryView.register("变压器未履约订单毛利水平测算-电压等级", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ));
-                entryView.register("变压器未履约订单毛利水平测算-产品分类", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL));
-                entryView.register("线缆未履约订单毛利水平测算-综合", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
-                entryView.register("线缆未履约订单毛利水平测算-产品分类", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
+                entryView.register("未履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
+                entryView.register("未履约订单毛利水平测算(制造主业-电压等级口径)", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ));
+                entryView.register("未履约订单毛利水平测算(制造主业-产品类别口径)", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL));
+                entryView.register("未履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
+                entryView.register("未履约订单毛利水平测算(制造主业口径)", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
             }
 
             private updateTable():void {

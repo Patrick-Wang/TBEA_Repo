@@ -34,9 +34,6 @@ public class DwxxRefClmcEntity extends AbstractReadWriteEntity implements Serial
 	private static final long serialVersionUID = 1L;
 
 	Integer dwid;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "clid")
 	ClmcEntity clmc;
 	
 	public Integer getDwid() {
@@ -45,6 +42,9 @@ public class DwxxRefClmcEntity extends AbstractReadWriteEntity implements Serial
 	public void setDwid(Integer dwid) {
 		this.dwid = dwid;
 	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "clid")
 	public ClmcEntity getClmc() {
 		return clmc;
 	}

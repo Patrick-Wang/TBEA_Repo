@@ -123,7 +123,7 @@ module chgb {
 
             public init(opt:Option):void {
                 super.init(opt);
-                entryView.register("存货账龄变化情况", this);
+                entryView.register("存货性质情况", this);
             }
 
             private updateTable():void {

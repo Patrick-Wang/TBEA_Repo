@@ -47,7 +47,7 @@ var wlyddqk;
             this.updateUI();
         };
         EntryView.prototype.updateTypeSelector = function (width) {
-            if (width === void 0) { width = 285; }
+            if (width === void 0) { width = 325; }
             var type = this.mCompanySelector.getCompany();
             var nodes = [];
             for (var i = 0; i < this.mNodesAll.length; ++i) {
@@ -119,7 +119,7 @@ var wlyddqk;
             this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
         };
         return EntryView;
-    }());
+    })();
     wlyddqk.EntryView = EntryView;
 })(wlyddqk || (wlyddqk = {}));
 var entryView = new wlyddqk.EntryView();

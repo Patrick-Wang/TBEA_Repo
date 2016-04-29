@@ -75,7 +75,7 @@ var sbdddcbjpcqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ByqkglyddEntryView = (function (_super) {
             __extends(ByqkglyddEntryView, _super);
             function ByqkglyddEntryView() {
@@ -108,8 +108,10 @@ var sbdddcbjpcqk;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        _this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("保存 成功");
+                        setInterval(function () {
+                            _this.pluginUpdate(dt, compType);
+                        });
                     }
                     else {
                         Util.MessageBox.tip(resp.message);
@@ -138,8 +140,10 @@ var sbdddcbjpcqk;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        _this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("提交 成功");
+                        setInterval(function () {
+                            _this.pluginUpdate(dt, compType);
+                        });
                     }
                     else {
                         Util.MessageBox.tip(resp.message);
@@ -174,8 +178,8 @@ var sbdddcbjpcqk;
             };
             ByqkglyddEntryView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                entryView.register("变压器可供履约订单变化情况按生产类别", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCLB));
-                entryView.register("变压器可供履约订单变化情况按生产单元", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCDY));
+                entryView.register("未履约订单情况(产品类别口径)", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCLB));
+                entryView.register("未履约订单情况(生产单元口径)", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.SCDY));
                 $.extend($.jgrid.edit, {
                     bSubmit: "确定"
                 });
@@ -207,11 +211,11 @@ var sbdddcbjpcqk;
                     shrinkToFit: true,
                     autoScroll: true,
                     viewrecords: true,
-                    pager: '#' + pagername,
+                    pager: '#' + pagername
                 }));
             };
             return ByqkglyddEntryView;
-        }(wlyddqk.BaseEntryPluginView));
+        })(wlyddqk.BaseEntryPluginView);
         byqkglyddEntry.pluginView = ByqkglyddEntryView.newInstance();
     })(byqkglyddEntry = sbdddcbjpcqk.byqkglyddEntry || (sbdddcbjpcqk.byqkglyddEntry = {}));
 })(sbdddcbjpcqk || (sbdddcbjpcqk = {}));

@@ -18,6 +18,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,8 +40,11 @@ import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.chgb.ChgbService;
 import com.tbea.ic.operation.service.chgb.ChgbServiceImpl;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Controller
 @RequestMapping(value = "chgb")
@@ -48,19 +52,25 @@ public class ChgbServlet {
 	@Resource(name=ChgbServiceImpl.NAME)
 	ChgbService chgbService;
 
+//	CompanyManager companyManager;
+//	List<Company> chgbComps = new ArrayList<Company>();
+//	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+//	public void setCompanyManager(CompanyManager companyManager){
+//		this.companyManager = companyManager;
+//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
+//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
+//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
+//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
+//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
+//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
+//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
+//	}
+	
+	@Autowired
+	ExtendAuthorityService extendAuthService;
+	
+	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
-	List<Company> chgbComps = new ArrayList<Company>();
-	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-	public void setCompanyManager(CompanyManager companyManager){
-		this.companyManager = companyManager;
-		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
-		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-	}
 	
 	@RequestMapping(value = "chzmb/update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getChgbzmb_update(HttpServletRequest request,
@@ -119,7 +129,11 @@ public class ChgbServlet {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		CompanySelection compSel = new CompanySelection(true, chgbComps);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.ChgbLookup);
+
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
@@ -134,7 +148,11 @@ public class ChgbServlet {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		CompanySelection compSel = new CompanySelection(true, chgbComps);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.ChgbEntry);
+
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);

@@ -128,10 +128,13 @@
 									class="ec-icon ec-icon-line"></i> <a href="#jgkxx"
 									style="color: rgb(62, 152, 197);">价格库</a></li>
 								</c:if>
+								<c:if test="${GbLookup}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#sbdcyjygb"
-									style="color: rgb(62, 152, 197);">输变电产业经营管报</a></li>
-								<li style="background-color: transparent;"><i
+									style="color: rgb(62, 152, 197);">经营管报</a></li>
+								<li style="background-color: transparent;">
+								</c:if>
+								<%-- <i
 									class="ec-icon ec-icon-line"></i> <a href="#nycyjybb"
 									style="color: rgb(62, 152, 197);">能源产业经营报表</a></li>
 								<li style="background-color: transparent;"><i
@@ -140,6 +143,7 @@
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#cwbb"
 									style="color: rgb(62, 152, 197);">财务报表</a></li>
+								--%>
 
 							</ul>
 							<ul id="navlist1" style="padding: 10px 0; display: none">
@@ -170,9 +174,11 @@
 									class="ec-icon ec-icon-force"></i> <a href="#inputPriceLib"
 									style="color: rgb(62, 152, 197);">价格库数据录入</a></li>
 								</c:if>
+								<c:if test="${GbEntry}">
 								<li style="background-color: transparent"><i
 									class="ec-icon ec-icon-force"></i> <a href="#inputBusinessReports"
 									style="color: rgb(62, 152, 197);">经营管报录入</a></li>
+								</c:if>
 
 							</ul>
 
@@ -197,10 +203,13 @@
 							</ul>
 							
 							<ul id="navlistBusinessReportsInput" style="padding: 10px 0; width: 180px; display: none">
+							<c:if test="${GbEntry}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#sbdcyjygbEntry"
-									style="color: rgb(62, 152, 197);">输变电产业经营管报</a></li>
-								<li style="background-color: transparent;"><i
+									style="color: rgb(62, 152, 197);">经营管报</a></li>
+								<li style="background-color: transparent;">
+								</c:if>
+								<%--<i
 									class="ec-icon ec-icon-line"></i> <a href="#nycyjybbEntry"
 									style="color: rgb(62, 152, 197);">能源产业经营报表</a></li>
 								<li style="background-color: transparent;"><i
@@ -209,6 +218,7 @@
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#cwbbEntry"
 									style="color: rgb(62, 152, 197);">财务报表</a></li>
+								--%>
 							</ul>
 							
 							
@@ -231,10 +241,14 @@
 					<c:if test="${PriceLibAuth}">
 					<%@include file="index_IndexPriceLib.jsp"%>
 					</c:if>
+					<c:if test="${GbLookup}">
 					<%@include file="index_IndexBusinessReportsSBD.jsp"%>
+					</c:if>
+					<%--
 					<%@include file="index_IndexBusinessReportsNY.jsp"%>
 					<%@include file="index_IndexBusinessReportsXNY.jsp"%>
 					<%@include file="index_IndexBusinessReportsCW.jsp"%>
+					--%>
 				</div>
 				<div id="InputList" class="col-md-10" style="display: none">
 					<%@include file="index_InputList.jsp"%>
@@ -245,10 +259,14 @@
 				</div>
 				
 				<div id="BusinessReportsInput" class="col-md-10" style="display: none">
+				<c:if test="${GbEntry}">
 					<%@include file="index_IndexBusinessReportsEntrySBD.jsp"%>
+					</c:if>
+					<%--
 					<%@include file="index_IndexBusinessReportsEntryNY.jsp"%>
 					<%@include file="index_IndexBusinessReportsEntryXNY.jsp"%>
 					<%@include file="index_IndexBusinessReportsEntryCW.jsp"%>
+					--%>
 				</div>
 			</c:otherwise>
 			</c:choose>
@@ -425,7 +443,7 @@
 		var iPredict = ${entryPredict};
 		var aplan = ${approvePlan};
 		var aPredict = ${approvePredict};
-
+		var gbEntry = ${GbEntry};
 
 		init(iPlan, iPredict, aPredict, aplan, "${userName}");
 

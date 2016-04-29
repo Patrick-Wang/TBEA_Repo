@@ -98,7 +98,7 @@ var Util;
             sel.css("width", width);
             if (multi) {
                 var text = "n个 项目公司被选中";
-                minWidth = text.getWidth(13) + 60;
+                minWidth = text.getWidth(13) + 80;
                 sel.multiselect({
                     multiple: multi,
                     header: true,

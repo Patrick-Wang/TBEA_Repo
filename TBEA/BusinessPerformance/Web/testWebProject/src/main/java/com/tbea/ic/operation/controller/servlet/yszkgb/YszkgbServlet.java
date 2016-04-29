@@ -16,8 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +42,9 @@ import com.tbea.ic.operation.common.excel.YszkgbSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.yszkgb.YszkgbService;
 import com.tbea.ic.operation.service.yszkgb.YszkgbServiceImpl;
 
@@ -47,29 +54,25 @@ public class YszkgbServlet {
 	@Resource(name=YszkgbServiceImpl.NAME)
 	YszkgbService yszkgbService;
 
+	@Autowired
+	ExtendAuthorityService extendAuthService;
 	
+	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
-	List<Company> yszkgbComps = new ArrayList<Company>();
-	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-	public void setCompanyManager(CompanyManager companyManager){
-		this.companyManager = companyManager;
-		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
-		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-		yszkgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-	}
+	
 	@RequestMapping(value = "show.do")
 	public ModelAndView getYszkgb(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		CompanySelection compSel = new CompanySelection(true, yszkgbComps);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.YszkgbLookup);
+
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		
+	
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
 		
@@ -82,7 +85,11 @@ public class YszkgbServlet {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		CompanySelection compSel = new CompanySelection(true, yszkgbComps);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.YszkgbEntry);
+
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
@@ -279,9 +286,34 @@ public class YszkgbServlet {
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
+		
+		Calendar startMonth = Calendar.getInstance();
+		startMonth.setTime(d);
+		startMonth.add(Calendar.YEAR, -1);
+		startMonth.add(Calendar.MONTH, 1);
+
+		int last = 12 - (startMonth.get(Calendar.MONTH) + 1);
+		for (int i = 0; i < 12; ++i){
+			HSSFRow row = sheet.createRow(i + 1);
+			HSSFCell cell = row.createCell(0);
+			cell.setCellStyle(template.getCellStyleCenter());
+			if (i <= last){
+				cell.setCellValue("上年度");
+			}else{
+				cell.setCellValue("本年度");
+			}
+			cell = row.createCell(1);
+			cell.setCellValue((startMonth.get(Calendar.MONTH) + 1) + "月");
+			cell.setCellStyle(template.getCellStyleCenter());
+			startMonth.add(Calendar.MONTH, 1);
+		}
+		
+		sheet.addMergedRegion(new CellRangeAddress(1, last + 1, 0, 0));
+		sheet.addMergedRegion(new CellRangeAddress(last + 2, 12, 0, 0));
+		
 		for (int i = 0; i < ret.size(); ++i){
 			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+				handler.handle(null, null, template, sheet.getRow(i + 1).createCell(j + 2), ret.get(i).get(j));
 			}
 		}
 		template.write(response, name + ".xls");
@@ -302,9 +334,33 @@ public class YszkgbServlet {
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
+		Calendar startMonth = Calendar.getInstance();
+		startMonth.setTime(d);
+		startMonth.add(Calendar.YEAR, -1);
+		startMonth.add(Calendar.MONTH, 1);
+
+		int last = 12 - (startMonth.get(Calendar.MONTH) + 1);
+		for (int i = 0; i < 12; ++i){
+			HSSFRow row = sheet.createRow(i + 2);
+			HSSFCell cell = row.createCell(0);
+			cell.setCellStyle(template.getCellStyleCenter());
+			if (i <= last){
+				cell.setCellValue("上年度");
+			}else{
+				cell.setCellValue("本年度");
+			}
+			cell = row.createCell(1);
+			cell.setCellValue((startMonth.get(Calendar.MONTH) + 1) + "月");
+			cell.setCellStyle(template.getCellStyleCenter());
+			startMonth.add(Calendar.MONTH, 1);
+		}
+		
+		sheet.addMergedRegion(new CellRangeAddress(2, last + 2, 0, 0));
+		sheet.addMergedRegion(new CellRangeAddress(last + 3, 13, 0, 0));
+		
 		for (int i = 0; i < ret.size(); ++i){
 			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, null, template, sheet.getRow(i + 2).getCell(j + 2), ret.get(i).get(j));
+				handler.handle(null, null, template, sheet.getRow(i + 2).createCell(j + 2), ret.get(i).get(j));
 			}
 		}
 		template.write(response, name + ".xls");
@@ -325,9 +381,33 @@ public class YszkgbServlet {
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
+		Calendar startMonth = Calendar.getInstance();
+		startMonth.setTime(d);
+		startMonth.add(Calendar.YEAR, -1);
+		startMonth.add(Calendar.MONTH, 1);
+
+		int last = 12 - (startMonth.get(Calendar.MONTH) + 1);
+		for (int i = 0; i < 12; ++i){
+			HSSFRow row = sheet.createRow(i + 1);
+			HSSFCell cell = row.createCell(0);
+			cell.setCellStyle(template.getCellStyleCenter());
+			if (i <= last){
+				cell.setCellValue("上年度");
+			}else{
+				cell.setCellValue("本年度");
+			}
+			cell = row.createCell(1);
+			cell.setCellValue((startMonth.get(Calendar.MONTH) + 1) + "月");
+			cell.setCellStyle(template.getCellStyleCenter());
+			startMonth.add(Calendar.MONTH, 1);
+		}
+		
+		sheet.addMergedRegion(new CellRangeAddress(1, last + 1, 0, 0));
+		sheet.addMergedRegion(new CellRangeAddress(last + 2, 12, 0, 0));
+		
 		for (int i = 0; i < ret.size(); ++i){
 			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+				handler.handle(null, null, template, sheet.getRow(i + 1).createCell(j + 2), ret.get(i).get(j));
 			}
 		}
 		template.write(response, name + ".xls");
@@ -341,16 +421,39 @@ public class YszkgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		List<List<String>> ret = yszkgbService.getYszkyjtztjqs(d, company);
-		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YQYSCSYS);
+		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKZMYYJTZTJQS);
 		
 		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
+		Calendar startMonth = Calendar.getInstance();
+		startMonth.setTime(d);
+		startMonth.add(Calendar.YEAR, -1);
+		startMonth.add(Calendar.MONTH, 1);
+
+		int last = 12 - (startMonth.get(Calendar.MONTH) + 1);
+		for (int i = 0; i < 12; ++i){
+			HSSFRow row = sheet.createRow(i + 2);
+			HSSFCell cell = row.createCell(0);
+			cell.setCellStyle(template.getCellStyleCenter());
+			if (i <= last){
+				cell.setCellValue("上年度");
+			}else{
+				cell.setCellValue("本年度");
+			}
+			cell = row.createCell(1);
+			cell.setCellValue((startMonth.get(Calendar.MONTH) + 1) + "月");
+			cell.setCellStyle(template.getCellStyleCenter());
+			startMonth.add(Calendar.MONTH, 1);
+		}
+		
+		sheet.addMergedRegion(new CellRangeAddress(2, last + 2, 0, 0));
+		sheet.addMergedRegion(new CellRangeAddress(last + 3, 13, 0, 0));
 		for (int i = 0; i < ret.size(); ++i){
 			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+				handler.handle(null, null, template, sheet.getRow(i + 2).createCell(j + 2), ret.get(i).get(j));
 			}
 		}
 		template.write(response, name + ".xls");
@@ -363,8 +466,22 @@ public class YszkgbServlet {
 		System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
-		yszkgbService.importZbmFromNC(d, yszkgbComps);
-		yszkgbService.importYszkzlbhFromNC(d, yszkgbComps);
+		List<Company> sbdComps = new ArrayList<Company>();
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XTNYGS));
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYGS));
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TCNY));
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NDGS));
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.GJGCGS_GFGS));
+		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.JCKGS_JYDW));
+		yszkgbService.importZbmFromNC(d, sbdComps);
+		yszkgbService.importYszkzlbhFromNC(d, sbdComps);
 	}
 	
 	

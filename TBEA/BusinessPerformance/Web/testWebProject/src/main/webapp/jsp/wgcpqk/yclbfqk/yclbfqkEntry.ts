@@ -31,9 +31,9 @@ module wgcpqk {
         class EntryView extends framework.basic.EntryPluginView {
             static ins = new EntryView();
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("yclbfqk/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("yclbfqk/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("yclbfqk/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../yclbfqk/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("../yclbfqk/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../yclbfqk/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;

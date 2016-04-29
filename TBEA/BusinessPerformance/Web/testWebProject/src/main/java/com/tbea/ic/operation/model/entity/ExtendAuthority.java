@@ -23,13 +23,19 @@ public class ExtendAuthority extends AbstractReadWriteEntity implements Serializ
 	
 	public enum AuthType{
 		EMPTY,
-		YSZKDailyReportEntry,
-		JYAnalysisEntry,
-		JYAnalysisLookup,
-		YSZKDialyLookup,
-		XJLDialyLookup,
-		JYEntryLookup,
-		PriceLib
+		YSZKDailyReportEntry,//1
+		JYAnalysisEntry,//2
+		JYAnalysisLookup,//3
+		YSZKDialyLookup,//4
+		XJLDialyLookup,//5
+		JYEntryLookup,//6
+		PriceLib,//7
+		YszkgbEntry,//8
+		YszkgbLookup,//9
+		ChgbEntry,//10
+		ChgbLookup,//11
+		WlyddEntry,//12
+		WlyddLookup//13
 	}
 	
 	private static final long serialVersionUID = 1L;

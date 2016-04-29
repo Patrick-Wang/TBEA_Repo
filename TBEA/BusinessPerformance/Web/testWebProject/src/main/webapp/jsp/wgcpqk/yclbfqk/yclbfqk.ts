@@ -37,7 +37,7 @@ module wgcpqk {
         class ShowView extends framework.basic.ShowPluginView {
             static ins = new ShowView();
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("yclbfqk/update.do", false);
+            private mAjax:Util.Ajax = new Util.Ajax("../yclbfqk/update.do", false);
             private mDateSelector:Util.DateSelector;
             private mDt: string;
             private mCompType:Util.CompanyType;

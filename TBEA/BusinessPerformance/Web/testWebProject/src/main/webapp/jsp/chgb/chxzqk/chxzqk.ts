@@ -82,7 +82,7 @@ module chgb {
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
                 
-                let curDate : Date = new Date(Date.parse(this.mDt));
+                let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
                 let month = curDate.getMonth() + 1;
                 let data = [];
                 for (let i = month + 1; i <= 12; ++i){

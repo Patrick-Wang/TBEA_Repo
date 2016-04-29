@@ -31,7 +31,7 @@ var chgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ChxzqkEntryView = (function (_super) {
             __extends(ChxzqkEntryView, _super);
             function ChxzqkEntryView() {
@@ -118,7 +118,7 @@ var chgb;
             };
             ChxzqkEntryView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                entryView.register("存货账龄变化情况", this);
+                entryView.register("存货性质情况", this);
             };
             ChxzqkEntryView.prototype.updateTable = function () {
                 var _this = this;
@@ -210,7 +210,7 @@ var chgb;
                 });
             };
             return ChxzqkEntryView;
-        }(chgb.BaseEntryPluginView));
+        })(chgb.BaseEntryPluginView);
         chxzqkEntry.pluginView = ChxzqkEntryView.newInstance();
     })(chxzqkEntry = chgb.chxzqkEntry || (chgb.chxzqkEntry = {}));
 })(chgb || (chgb = {}));

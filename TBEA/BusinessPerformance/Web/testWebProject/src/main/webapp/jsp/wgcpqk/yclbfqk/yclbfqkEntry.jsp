@@ -5,7 +5,7 @@
         </td>
     </tr>
 </Table>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/dzwzgb/yclbfqk/yclbfqkEntry.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/wgcpqk/yclbfqk/yclbfqkEntry.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     framework.router

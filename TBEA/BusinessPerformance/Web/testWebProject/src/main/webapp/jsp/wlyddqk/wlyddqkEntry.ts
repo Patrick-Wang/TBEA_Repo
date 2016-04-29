@@ -70,7 +70,7 @@ module wlyddqk {
             this.updateUI();
         }
 
-        protected updateTypeSelector(width : number = 285) {
+        protected updateTypeSelector(width : number = 325) {
             let type:Util.CompanyType = this.mCompanySelector.getCompany();
             let nodes = [];
             for (var i = 0; i < this.mNodesAll.length; ++i) {

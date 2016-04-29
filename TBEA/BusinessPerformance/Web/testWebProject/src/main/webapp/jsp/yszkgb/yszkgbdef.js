@@ -27,7 +27,7 @@ var yszkgb;
             return this.pluginGetExportUrl(st, cpType);
         };
         return BasePluginView;
-    }());
+    })();
     yszkgb.BasePluginView = BasePluginView;
     var BaseEntryPluginView = (function () {
         function BaseEntryPluginView() {
@@ -65,6 +65,6 @@ var yszkgb;
             this.pluginSubmit(dt, cpType);
         };
         return BaseEntryPluginView;
-    }());
+    })();
     yszkgb.BaseEntryPluginView = BaseEntryPluginView;
 })(yszkgb || (yszkgb = {}));

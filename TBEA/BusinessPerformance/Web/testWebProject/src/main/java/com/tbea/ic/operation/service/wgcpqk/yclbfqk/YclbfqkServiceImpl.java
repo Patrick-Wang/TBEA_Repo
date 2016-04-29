@@ -45,7 +45,7 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 		List<DwxxRefClmcEntity> clmcs = dwrefclDao.getByCompany(company);
 		for (int i = 0; i < clmcs.size(); ++i) {
 			List<String> list = new ArrayList<String>();
-			Util.resize(list, clmcs.get(i).getClmc().getId());
+			Util.resize(list, 16);
 			list.set(0, clmcs.get(i).getClmc().getName());
 			result.add(list);
 		}

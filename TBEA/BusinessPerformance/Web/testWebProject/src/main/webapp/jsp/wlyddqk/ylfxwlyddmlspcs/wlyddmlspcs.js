@@ -16,7 +16,7 @@ var ylfxwlyddmlspcs;
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, date) {
-                var curDate = new Date(date);
+                var curDate = new Date(Date.parse(date.replace(/-/g, '/')));
                 var month = curDate.getMonth() + 1;
                 var data = [];
                 var node;
@@ -38,7 +38,7 @@ var ylfxwlyddmlspcs;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var WLYDDMLSPCSView = (function (_super) {
             __extends(WLYDDMLSPCSView, _super);
             function WLYDDMLSPCSView() {
@@ -99,11 +99,11 @@ var ylfxwlyddmlspcs;
             };
             WLYDDMLSPCSView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("变压器未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
-                view.register("变压器未履约订单毛利水平测算-电压等级", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ));
-                view.register("变压器未履约订单毛利水平测算-产品分类", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL));
-                view.register("线缆未履约订单毛利水平测算-综合", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
-                view.register("线缆未履约订单毛利水平测算-产品分类", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
+                view.register("未履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
+                view.register("未履约订单毛利水平测算(制造主业-电压等级口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ));
+                view.register("未履约订单毛利水平测算(制造主业-产品类别口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL));
+                view.register("未履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
+                view.register("未履约订单毛利水平测算(制造主业口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
             };
             WLYDDMLSPCSView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
@@ -126,7 +126,7 @@ var ylfxwlyddmlspcs;
                 }));
             };
             return WLYDDMLSPCSView;
-        }(wlyddqk.BasePluginView));
+        })(wlyddqk.BasePluginView);
         wlyddmlspcs.pluginView = WLYDDMLSPCSView.newInstance();
     })(wlyddmlspcs = ylfxwlyddmlspcs.wlyddmlspcs || (ylfxwlyddmlspcs.wlyddmlspcs = {}));
 })(ylfxwlyddmlspcs || (ylfxwlyddmlspcs = {}));
