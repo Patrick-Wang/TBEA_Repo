@@ -20,7 +20,7 @@ module ylfxwlyddmlspcs {
                 let node : JQTable.Node;
                 let titleNodes : JQTable.Node[] = [];
                 
-                node = new JQTable.Node("产品", "wlyddmlspcsentry_cp", readOnly, TextAlign.Left);
+                node = new JQTable.Node("产品", "wlyddmlspcsentry_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 
                 node = new JQTable.Node(year + "年" + month + "月", "wlyddmlspcsentry_riqi", readOnly, TextAlign.Center);

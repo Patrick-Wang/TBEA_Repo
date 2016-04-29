@@ -24,7 +24,7 @@ var ylfxwlyddmlspcs;
                 var data = [];
                 var node;
                 var titleNodes = [];
-                node = new JQTable.Node("产品", "wlyddmlspcsentry_cp", readOnly, TextAlign.Left);
+                node = new JQTable.Node("产品", "wlyddmlspcsentry_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node(year + "年" + month + "月", "wlyddmlspcsentry_riqi", readOnly, TextAlign.Center);
                 node.append(new JQTable.Node("成本", "wlyddmlspcsentry_cb_", readOnly));

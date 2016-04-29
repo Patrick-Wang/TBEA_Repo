@@ -85,15 +85,23 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 		return cpIdList;
 	}
 
+	private String getMll(Double cb, Double sr) {
+		
+		return String.format("%.1f", (Double.valueOf((sr - cb)/sr)) * 100) + "%";
+	}
+	
 	@Override
 	public List<List<String>> getWlyddmlspcs(Date d, Company company, WlyddType type) {
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<Integer> cpIdList = getCpIdList(type);
-		List<Double> finalList = new ArrayList<Double>();
+		List<List<Double>> finalListTemp = new ArrayList<List<Double>>();
 		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
 		
 		for (int i = 0; i < 12; ++i){
-			finalList.add(0.0);
+			List<Double> tmp = new ArrayList<Double>();
+			tmp.add(0.0);
+			tmp.add(0.0);
+			finalListTemp.add(tmp);
 			finalListNullOrNot.add(true);
 		}
 		
@@ -115,8 +123,12 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 				for (WlyddmlspcsEntity entity : entities){
 					if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
 						bFind = true;
-						oneLine.add("" + (entity.getSr() - entity.getCb()));
-						finalList.set(i, finalList.get(i) + (entity.getSr() - entity.getCb()));
+						oneLine.add("" + getMll(entity.getCb(), entity.getSr()));
+
+
+						finalListTemp.get(i).set(0, finalListTemp.get(i).get(0) + entity.getCb());
+						finalListTemp.get(i).set(1, finalListTemp.get(i).get(1) + entity.getSr());
+						
 						finalListNullOrNot.set(i, false);
 						entities.remove(entity);
 						break;
@@ -137,7 +149,7 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 		
 			if (!finalListNullOrNot.get(i)) {
 
-				finalLine.add("" + finalList.get(i));
+				finalLine.add("" + getMll(finalListTemp.get(i).get(0), finalListTemp.get(i).get(1)));
 			} else {
 				
 				finalLine.add("null");
