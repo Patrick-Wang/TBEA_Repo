@@ -26,8 +26,8 @@ PRIMARY KEY CLUSTERED
 			产业	统计方式	产品	毛利额
 id	nf	yf	cy	tjfs	cp	mle
 *****************************************************************************/
-IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ylfxgb_ylfx_wlyddmle_ncdr')
-DROP TABLE ylfxgb_ylfx_wlyddmle_ncdr
+IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ylfxgb_ylfx_wlyddmle_rglr')
+DROP TABLE ylfxgb_ylfx_wlyddmle_rglr
 CREATE TABLE  [dbo].[ylfxgb_ylfx_wlyddmle_rglr](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not NULL,
