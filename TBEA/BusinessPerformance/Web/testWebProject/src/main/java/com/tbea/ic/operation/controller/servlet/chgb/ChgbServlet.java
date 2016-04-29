@@ -16,8 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -274,9 +277,11 @@ public class ChgbServlet {
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
-		handler.handle(null, null, template, sheet.getRow(0).getCell(1), ret.get(0).get(0));
-		handler.handle(null, null, template, sheet.getRow(0).getCell(3), ret.get(0).get(1));
-		handler.handle(null, null, template, sheet.getRow(0).getCell(5), ret.get(0).get(2));
+		if (!ret.isEmpty()){
+			handler.handle(null, null, template, sheet.getRow(0).getCell(1), ret.get(0).get(0));
+			handler.handle(null, null, template, sheet.getRow(0).getCell(3), ret.get(0).get(1));
+			handler.handle(null, null, template, sheet.getRow(0).getCell(5), ret.get(0).get(2));
+		}
 		template.write(response, name + ".xls");
 	}
 	
@@ -318,9 +323,34 @@ public class ChgbServlet {
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
+		
+		Calendar startMonth = Calendar.getInstance();
+		startMonth.setTime(d);
+		startMonth.add(Calendar.YEAR, -1);
+		startMonth.add(Calendar.MONTH, 1);
+
+		int last = 12 - (startMonth.get(Calendar.MONTH) + 1);
+		for (int i = 0; i < 12; ++i){
+			HSSFRow row = sheet.createRow(i + 1);
+			HSSFCell cell = row.createCell(0);
+			cell.setCellStyle(template.getCellStyleCenter());
+			if (i <= last){
+				cell.setCellValue("上年度");
+			}else{
+				cell.setCellValue("本年度");
+			}
+			cell = row.createCell(1);
+			cell.setCellValue((startMonth.get(Calendar.MONTH) + 1) + "月");
+			cell.setCellStyle(template.getCellStyleCenter());
+			startMonth.add(Calendar.MONTH, 1);
+		}
+		
+		sheet.addMergedRegion(new CellRangeAddress(1, last + 1, 0, 0));
+		sheet.addMergedRegion(new CellRangeAddress(last + 2, 12, 0, 0));
+		
 		for (int i = 0; i < ret.size(); ++i){
 			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+				handler.handle(null, null, template, sheet.getRow(i + 1).createCell(j + 2), ret.get(i).get(j));
 			}
 		}
 		template.write(response, name + ".xls");
@@ -340,9 +370,34 @@ public class ChgbServlet {
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
+		
+		Calendar startMonth = Calendar.getInstance();
+		startMonth.setTime(d);
+		startMonth.add(Calendar.YEAR, -1);
+		startMonth.add(Calendar.MONTH, 1);
+
+		int last = 12 - (startMonth.get(Calendar.MONTH) + 1);
+		for (int i = 0; i < 12; ++i){
+			HSSFRow row = sheet.createRow(i + 1);
+			HSSFCell cell = row.createCell(0);
+			cell.setCellStyle(template.getCellStyleCenter());
+			if (i <= last){
+				cell.setCellValue("上年度");
+			}else{
+				cell.setCellValue("本年度");
+			}
+			cell = row.createCell(1);
+			cell.setCellValue((startMonth.get(Calendar.MONTH) + 1) + "月");
+			cell.setCellStyle(template.getCellStyleCenter());
+			startMonth.add(Calendar.MONTH, 1);
+		}
+		
+		sheet.addMergedRegion(new CellRangeAddress(1, last + 1, 0, 0));
+		sheet.addMergedRegion(new CellRangeAddress(last + 2, 12, 0, 0));
+		
 		for (int i = 0; i < ret.size(); ++i){
 			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+				handler.handle(null, null, template, sheet.getRow(i + 1).createCell(j + 2), ret.get(i).get(j));
 			}
 		}
 		template.write(response, name + ".xls");
@@ -362,9 +417,35 @@ public class ChgbServlet {
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		HSSFSheet sheet = workbook.getSheetAt(0);
+		
+		
+		Calendar startMonth = Calendar.getInstance();
+		startMonth.setTime(d);
+		startMonth.add(Calendar.YEAR, -1);
+		startMonth.add(Calendar.MONTH, 1);
+
+		int last = 12 - (startMonth.get(Calendar.MONTH) + 1);
+		for (int i = 0; i < 12; ++i){
+			HSSFRow row = sheet.createRow(i + 2);
+			HSSFCell cell = row.createCell(0);
+			cell.setCellStyle(template.getCellStyleCenter());
+			if (i <= last){
+				cell.setCellValue("上年度");
+			}else{
+				cell.setCellValue("本年度");
+			}
+			cell = row.createCell(1);
+			cell.setCellValue((startMonth.get(Calendar.MONTH) + 1) + "月");
+			cell.setCellStyle(template.getCellStyleCenter());
+			startMonth.add(Calendar.MONTH, 1);
+		}
+		
+		sheet.addMergedRegion(new CellRangeAddress(2, last + 2, 0, 0));
+		sheet.addMergedRegion(new CellRangeAddress(last + 3, 13, 0, 0));
+		
 		for (int i = 0; i < ret.size(); ++i){
 			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, null, template, sheet.getRow(i + 1).getCell(j + 2), ret.get(i).get(j));
+				handler.handle(null, null, template, sheet.getRow(i + 1).createCell(j + 2), ret.get(i).get(j));
 			}
 		}
 		template.write(response, name + ".xls");
