@@ -256,7 +256,7 @@ public class ChgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = chgbService.submitChxzqk(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = chgbService.submitChzlbhqk(d, companyManager.getBMDBOrganization().getCompany(comp), data);
 		return Util.response(err);
 	}
 	

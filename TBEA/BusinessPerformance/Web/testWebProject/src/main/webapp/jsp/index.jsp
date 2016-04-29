@@ -169,16 +169,7 @@
 										class="ec-icon ec-icon-force"></i> <a href="#inputPrediction"
 										style="color: rgb(62, 152, 197);">经营分析录入</a></li>
 								</c:if>
-								<c:if test="${PriceLibAuth}">
-								<li style="background-color: transparent"><i
-									class="ec-icon ec-icon-force"></i> <a href="#inputPriceLib"
-									style="color: rgb(62, 152, 197);">价格库数据录入</a></li>
-								</c:if>
-								<c:if test="${GbEntry}">
-								<li style="background-color: transparent"><i
-									class="ec-icon ec-icon-force"></i> <a href="#inputBusinessReports"
-									style="color: rgb(62, 152, 197);">经营管报录入</a></li>
-								</c:if>
+
 
 							</ul>
 
@@ -206,7 +197,7 @@
 							<c:if test="${GbEntry}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#sbdcyjygbEntry"
-									style="color: rgb(62, 152, 197);">经营管报</a></li>
+									style="color: rgb(62, 152, 197);">经营管报录入</a></li>
 								<li style="background-color: transparent;">
 								</c:if>
 								<%--<i
