@@ -14,6 +14,8 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
 
 public class Util {
+	
+
 	public static String format(Date d) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMM");
 		return formatter.format(d);

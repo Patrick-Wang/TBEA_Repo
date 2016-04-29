@@ -44,6 +44,7 @@ public class ExcelTemplate {
 	private static String pathYlfxwgcpylnlspcsTemplate = resPath + "ylfxwgcpylnlspcs_template.xls";
 	private static String pathSbdscqyqkTemplate = resPath + "sbdscqyqk_template.xls";
 	private static String pathXnychTemplate = resPath + "xnych_template.xls";
+	private static String pathWgcpqkTemplate = resPath + "wgcpqk_template.xls";
 		
 	private static ExcelTemplate createTemplate(String path, int index, int size)
 			throws FileNotFoundException, IOException {
@@ -292,5 +293,10 @@ public class ExcelTemplate {
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(fileName, "UTF-8")  +"\"");
 		this.writeWithRawSize(response.getOutputStream());
+	}
+
+	public static ExcelTemplate createWgcpqkTemplate(WgcpqkSheetType type) throws IOException {
+		return createTemplate(pathWgcpqkTemplate, type.ordinal(),
+				XnychSheetType.END.ordinal());
 	}
 }

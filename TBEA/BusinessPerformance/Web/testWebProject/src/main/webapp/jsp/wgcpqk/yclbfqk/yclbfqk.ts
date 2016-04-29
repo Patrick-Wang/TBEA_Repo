@@ -96,24 +96,7 @@ module wgcpqk {
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-
-                let data = [];
-                if (this.mCompType == Util.CompanyType.SBGS ||
-                    this.mCompType == Util.CompanyType.HBGS ||
-                    this.mCompType == Util.CompanyType.TBGS ||
-                    this.mCompType == Util.CompanyType.XBC){
-                    for (let i = 0; i < 12; ++i){
-                        data.push([i + 1, "铜"].concat(this.mData[i]));
-                    }
-                }else{
-                    for (let i = 0, j = 0; i < 12; ++i, j += 2){
-                        data.push([i + 1, "铜"].concat(this.mData[j]));
-                        data.push([i + 1, "铝"].concat(this.mData[j + 1]));
-                    }
-                }
-
                 tableAssist.mergeRow(0);
-
                 this.$(name).jqGrid(
                     tableAssist.decorate({
                         multiselect: false,
@@ -124,7 +107,7 @@ module wgcpqk {
                         shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 20,
-                        data: tableAssist.getData(data),
+                        data: tableAssist.getData(this.mData),
                         datatype: "local",
                         viewrecords : true
                     }));

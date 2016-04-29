@@ -41,7 +41,7 @@ var wgcpqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -95,21 +95,6 @@ var wgcpqk;
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                var data = [];
-                if (this.mCompType == Util.CompanyType.SBGS ||
-                    this.mCompType == Util.CompanyType.HBGS ||
-                    this.mCompType == Util.CompanyType.TBGS ||
-                    this.mCompType == Util.CompanyType.XBC) {
-                    for (var i = 0; i < 12; ++i) {
-                        data.push([i + 1, "铜"].concat(this.mData[i]));
-                    }
-                }
-                else {
-                    for (var i = 0, j = 0; i < 12; ++i, j += 2) {
-                        data.push([i + 1, "铜"].concat(this.mData[j]));
-                        data.push([i + 1, "铝"].concat(this.mData[j + 1]));
-                    }
-                }
                 tableAssist.mergeRow(0);
                 this.$(name).jqGrid(tableAssist.decorate({
                     multiselect: false,
@@ -120,13 +105,13 @@ var wgcpqk;
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 20,
-                    data: tableAssist.getData(data),
+                    data: tableAssist.getData(this.mData),
                     datatype: "local",
                     viewrecords: true
                 }));
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(yclbfqk = wgcpqk.yclbfqk || (wgcpqk.yclbfqk = {}));
 })(wgcpqk || (wgcpqk = {}));

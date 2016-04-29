@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.controller.servlet.sbdscqyqk.xfscqy;
+package com.tbea.ic.operation.controller.servlet.wgcpqk.yclbfqk;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -28,19 +28,19 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.excel.SbdscqyqkSheetType;
+import com.tbea.ic.operation.common.excel.WgcpqkSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
-import com.tbea.ic.operation.service.sbdscqyqk.xfscqy.XfscqyService;
-import com.tbea.ic.operation.service.sbdscqyqk.xfscqy.XfscqyServiceImpl;
+import com.tbea.ic.operation.service.wgcpqk.yclbfqk.YclbfqkService;
+import com.tbea.ic.operation.service.wgcpqk.yclbfqk.YclbfqkServiceImpl;
 
 @Controller
-@RequestMapping(value = "xfscqy")
-public class XfscqyServlet {
-	@Resource(name=XfscqyServiceImpl.NAME)
-	XfscqyService xfscqyService;
+@RequestMapping(value = "yclbfqk")
+public class YclbfqkServlet {
+	@Resource(name=YclbfqkServiceImpl.NAME)
+	YclbfqkService yclbfqkService;
 
 
 
@@ -48,60 +48,61 @@ public class XfscqyServlet {
 	CompanyManager companyManager;
 
 	@RequestMapping(value = "update.do")
-	public @ResponseBody byte[] getXfscqy(HttpServletRequest request,
+	public @ResponseBody byte[] getYclbfqk(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		List<List<String>> result = xfscqyService.getXfscqy(d, company);
+		List<List<String>> result = yclbfqkService.getYclbfqk(d, company);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 
 	@RequestMapping(value = "entry/update.do")
-	public @ResponseBody byte[] updateXfscqy(HttpServletRequest request,
+	public @ResponseBody byte[] updateYclbfqk(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		List<List<String>> result = xfscqyService.getXfscqyEntry(d, company);
+		
+		List<List<String>> result = yclbfqkService.getYclbfqkEntry(d, company);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "entry/save.do")
-	public @ResponseBody byte[] saveXfscqy(HttpServletRequest request,
+	public @ResponseBody byte[] saveYclbfqk(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		ErrorCode err = xfscqyService.saveXfscqy(d, data, company);
+		ErrorCode err = yclbfqkService.saveYclbfqk(d, data, company);
 		return Util.response(err);
 	}
 	
 	
 	
 	@RequestMapping(value = "entry/submit.do")
-	public @ResponseBody byte[] submitXfscqy(HttpServletRequest request,
+	public @ResponseBody byte[] submitYclbfqk(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		ErrorCode err = xfscqyService.submitXfscqy(d, data, company);
+		ErrorCode err = yclbfqkService.submitYclbfqk(d, data, company);
 		return Util.response(err);
 	}
 	
 	@RequestMapping(value = "export.do")
-	public void exportXfscqy(HttpServletRequest request,
+	public void exportYclbfqk(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> ret = xfscqyService.getXfscqy(d, company);
-		ExcelTemplate template = ExcelTemplate.createSbdscqyqkTemplate(SbdscqyqkSheetType.XFSCQY);
+		List<List<String>> ret = yclbfqkService.getYclbfqk(d, company);
+		ExcelTemplate template = ExcelTemplate.createWgcpqkTemplate(WgcpqkSheetType.YCLBFQK);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
@@ -111,33 +112,35 @@ public class XfscqyServlet {
 		startMonth.setTime(d);
 		startMonth.add(Calendar.YEAR, -1);
 		startMonth.add(Calendar.MONTH, 1);
+		Calendar current = Calendar.getInstance();
+		current.setTime(d);
 
-		int last = 2 + 12 - (startMonth.get(Calendar.MONTH) + 1);
+		int lastYearMonthCount = 12 - (current.get(Calendar.MONTH) + 1);
 		for (int i = 0; i < 12; ++i){
 			HSSFRow title = sheet.getRow(0);
-			HSSFCell cell = title.createCell(i + 2);
+			HSSFCell cell = title.createCell(i + 4);
 			cell.setCellStyle(template.getCellStyleCenter());
-			if (i <= last - 2){
+			if (i < lastYearMonthCount){
 				cell.setCellValue("上年度");
 			}else{
 				cell.setCellValue("本年度");
 			}
 			
 			HSSFRow row = sheet.getRow(1);
-			cell = row.createCell(i + 2);
+			cell = row.createCell(i + 4);
 			cell.setCellValue((startMonth.get(Calendar.MONTH) + 1) + "月");
 			cell.setCellStyle(template.getCellStyleCenter());
 			startMonth.add(Calendar.MONTH, 1);
 		}
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, last));
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, last + 1, 13));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4 + lastYearMonthCount));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 4 + lastYearMonthCount + 1, 13));
 		
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
 		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
 		for (int i = 0; i < ret.size(); ++i){
-			HSSFRow row = sheet.getRow(i + 2);
+			HSSFRow row = sheet.createRow(i + 2);
 			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, j, template, row.createCell(j + 1), ret.get(i).get(j));
+				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
 			}
 		}
 		template.write(response, name + ".xls");

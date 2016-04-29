@@ -74,11 +74,68 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+ /***************************************************************************** 单位 材料
+					单位	材料		
+id dwid clid
+*****************************************************************************/
+IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ylfxgb_yclbfqk_dw_ref_cl')
+DROP TABLE ylfxgb_yclbfqk_dw_ref_cl
+CREATE TABLE [dbo].[ylfxgb_yclbfqk_dw_ref_cl](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[dwid] [int] not NULL,
+	[clid] [int] not NULL
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+SET IDENTITY_INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ON
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (1, 1, 8)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (2, 1, 9)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (3, 1, 10)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (4, 1, 11)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (5, 1, 12)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (6, 2, 8)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (7, 2, 9)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (8, 2, 10)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (9, 2, 11)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (10, 2, 12)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (11, 3, 8)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (12, 3, 9)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (13, 3, 10)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (14, 3, 11)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (15, 3, 12)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (16, 301, 8)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (17, 302, 9)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (18, 303, 10)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (19, 304, 11)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (20, 305, 12)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (21, 4, 1)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (22, 4, 2)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (23, 4, 3)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (24, 4, 4)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (25, 4, 5)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (26, 4, 6)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (27, 4, 7)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (28, 5, 1)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (29, 5, 2)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (30, 5, 3)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (31, 5, 4)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (32, 5, 5)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (33, 5, 6)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (34, 5, 7)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (35, 6, 1)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (36, 6, 2)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (37, 6, 3)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (38, 6, 4)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (39, 6, 5)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (40, 6, 6)
+INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] ([id], [dwid], [clid]) VALUES (41, 6, 7)
 
+SET IDENTITY_INSERT [dbo].[ylfxgb_yclbfqk_dw_ref_cl] OFF
  /***************************************************************************** 原材料报废情况
-			产业	材料名称	当月（吨）		废料率	
 					领用量	废料		
-id	nf	yf	cy	clid	lyl	fl	fll	zt
+id	nf	yf	cy	clid	lyl	fl	zt
 *****************************************************************************/
 IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ylfxgb_yclbfqk')
 DROP TABLE ylfxgb_yclbfqk
@@ -86,7 +143,7 @@ CREATE TABLE [dbo].[ylfxgb_yclbfqk](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not NULL,
 	[yf] [int] not NULL,
-	[cy] [int] not NULL,
+	[dwid] [int] not NULL,
 	[clid] [int] not NULL,
 	[lyl] [numeric](18, 4) NULL,
 	[fl] [numeric](18, 4) NULL,
