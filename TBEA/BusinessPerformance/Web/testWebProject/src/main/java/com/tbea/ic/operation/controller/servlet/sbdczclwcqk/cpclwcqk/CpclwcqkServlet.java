@@ -3,6 +3,7 @@ package com.tbea.ic.operation.controller.servlet.sbdczclwcqk.cpclwcqk;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -25,6 +26,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
+import com.tbea.ic.operation.common.excel.SbdczclwcqkSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
@@ -98,28 +100,39 @@ public class CpclwcqkServlet {
 		return Util.response(err);
 	}
 	
+	private SbdczclwcqkSheetType getSbdczclwcqkSheetType(SbdczclwcqkType type, Date d){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		
+		Integer num = (type.value() % SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ.value()) * 12 + cal.get(Calendar.MONTH);
+		
+		SbdczclwcqkSheetType sheetType = SbdczclwcqkSheetType.values()[num];
+		
+		return sheetType;
+	}
+	
 	@RequestMapping(value = "export.do")
 	public void exportCpclwcqk(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-//		Date d = Date.valueOf(request.getParameter("date"));
-//		CompanyType comp = CompanySelection.getCompany(request);
-//		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-//		
-//		List<List<String>> ret = cpclwcqkService.getCpclwcqk(d, company, getType(request));
-//		ExcelTemplate template = ExcelTemplate.createSbdczclwcqkTemplate(SbdczclwcqkSheetType.CPCLWCQK);
-//	
-//		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-//		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
-//		HSSFWorkbook workbook = template.getWorkbook();
-//		String name = workbook.getSheetName(0);
-//		workbook.setSheetName(0, name);
-//		HSSFSheet sheet = workbook.getSheetAt(0);
-//		for (int i = 0; i < ret.size(); ++i){
-//			HSSFRow row = sheet.createRow(i + 2);
-//			for (int j = 0; j < ret.get(i).size(); ++j){
-//				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
-//			}
-//		}
-//		template.write(response, name + ".xls");
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		List<List<String>> ret = cpclwcqkService.getCpclwcqk(d, company, getType(request));
+		ExcelTemplate template = ExcelTemplate.createSbdczclwcqkTemplate(getSbdczclwcqkSheetType(getType(request), d));
+	
+		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
+		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = 0; i < ret.size(); ++i){
+			HSSFRow row = sheet.createRow(i + 2);
+			for (int j = 0; j < ret.get(i).size(); ++j){
+				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
+			}
+		}
+		template.write(response, name + ".xls");
 	}
 }

@@ -45,6 +45,7 @@ public class ExcelTemplate {
 	private static String pathSbdscqyqkTemplate = resPath + "sbdscqyqk_template.xls";
 	private static String pathXnychTemplate = resPath + "xnych_template.xls";
 	private static String pathWgcpqkTemplate = resPath + "wgcpqk_template.xls";
+	private static String pathSbdczclwcqkTemplate = resPath + "sbdczclwcqk_template.xls";
 		
 	private static ExcelTemplate createTemplate(String path, int index, int size)
 			throws FileNotFoundException, IOException {
@@ -126,9 +127,15 @@ public class ExcelTemplate {
 		return createTemplate(pathSbdscqyqkTemplate, type.ordinal(),
 				SbdscqyqkSheetType.END.ordinal());
 	}
+	
 	public static ExcelTemplate createXnychTemplate(XnychSheetType type) throws IOException {
 		return createTemplate(pathXnychTemplate, type.ordinal(),
 				XnychSheetType.END.ordinal());
+	}
+	
+	public static ExcelTemplate createSbdczclwcqkTemplate(SbdczclwcqkSheetType type) throws IOException {
+		return createTemplate(pathSbdczclwcqkTemplate, type.ordinal(),
+				SbdczclwcqkSheetType.END.ordinal());
 	}
 	
 	HSSFWorkbook workbook;
