@@ -193,7 +193,7 @@ var sbdczclwcqk;
                     cellEdit: true,
                     //height: data.length > 25 ? 550 : '100%',
                     // width: titles.length * 200,
-                    rowNum: 20,
+                    rowNum: 39,
                     height: '100%',
                     width: 1200,
                     shrinkToFit: true,

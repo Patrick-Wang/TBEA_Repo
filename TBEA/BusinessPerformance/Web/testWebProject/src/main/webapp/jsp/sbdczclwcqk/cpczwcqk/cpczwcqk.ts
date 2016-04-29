@@ -159,7 +159,7 @@ module sbdczclwcqk {
                         width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
-                        rowNum: 20,
+                        rowNum: 39,
                         data: tableAssist.getData(this.mData),
                         datatype: "local",
                         viewrecords : true

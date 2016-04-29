@@ -30,7 +30,7 @@ var sbdczclwcqk;
                 var data = [];
                 var node;
                 var titleNodes = [];
-                node = new JQTable.Node("产品", "clylwcqkEntry_cp", true, TextAlign.Left);
+                node = new JQTable.Node("主材", "clylwcqkEntry_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node(year + "年" + month + "月", "clylwcqkEntry_riqi", false, TextAlign.Center);
                 node.append(new JQTable.Node("用量", "clylwcqkEntry_cz", false));

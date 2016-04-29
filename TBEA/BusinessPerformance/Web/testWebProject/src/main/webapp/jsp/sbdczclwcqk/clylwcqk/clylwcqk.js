@@ -28,7 +28,7 @@ var sbdczclwcqk;
                 var data = [];
                 var node;
                 var titleNodes = [];
-                node = new JQTable.Node("产品", "clylwcqk_cp", true, TextAlign.Left);
+                node = new JQTable.Node("主材", "clylwcqk_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node("上年度", "clylwcqk_snd", true, TextAlign.Center);
                 for (var i = month + 1; i <= 12; ++i) {
@@ -45,7 +45,7 @@ var sbdczclwcqk;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -148,6 +148,6 @@ var sbdczclwcqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(framework.basic.ShowPluginView);
+        }(framework.basic.ShowPluginView));
     })(clylwcqk = sbdczclwcqk.clylwcqk || (sbdczclwcqk.clylwcqk = {}));
 })(sbdczclwcqk || (sbdczclwcqk = {}));

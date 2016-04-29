@@ -25,7 +25,7 @@ module sbdczclwcqk {
                 let node : JQTable.Node;
                 let titleNodes : JQTable.Node[] = [];
 
-                node = new JQTable.Node("产品", "clylwcqkEntry_cp", true, TextAlign.Left);
+                node = new JQTable.Node("主材", "clylwcqkEntry_cp", true, TextAlign.Left);
                 titleNodes.push(node);
 
                 node = new JQTable.Node(year + "年" + month + "月", "clylwcqkEntry_riqi", false, TextAlign.Center);

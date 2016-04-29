@@ -73,6 +73,14 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<Integer> cpIdList = getCpIdList(type);
 		
+		List<Double> finalListTemp = new ArrayList<Double>();
+		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
+		
+		for (int i = 0; i < 12; ++i){
+			finalListTemp.add(0.0);
+			finalListNullOrNot.add(true);
+		}
+		
 		for (int cp = 0; cp < cpIdList.size(); cp++) {
 			
 			Calendar cal = Calendar.getInstance();
@@ -92,6 +100,9 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 					if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
 						bFind = true;
 						oneLine.add("" + entity.getCz());
+
+						finalListTemp.set(i, finalListTemp.get(i) + entity.getCz());
+						finalListNullOrNot.set(i, false);
 						
 						entities.remove(entity);
 						break;
@@ -104,7 +115,26 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 			}
 			
 			result.add(oneLine);
-		}		
+		}
+		
+
+		if (type == SbdczclwcqkType.SBDCZCLWCQK_CZ_XL) {
+
+			List<String> finalLine = new ArrayList<String>();
+			finalLine.add("小计");
+			for (int i = 0; i < 12; ++i){
+			
+				if (!finalListNullOrNot.get(i)) {
+
+					finalLine.add("" + finalListTemp.get(i));
+				} else {
+					
+					finalLine.add("null");
+				}
+			}
+			
+			result.add(finalLine);
+		}
 		
 		return result;
 	}
@@ -166,7 +196,7 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 			}
 
 			entity.setZt(status.ordinal());
-			entity.setCz(Util.toDoubleNull(data.getJSONArray(cp).getString(1)));
+			entity.setCz(Util.toDoubleNull(data.getJSONArray(cp).getString(0)));
 			
 			cpczwcqkDao.merge(entity);
 		}

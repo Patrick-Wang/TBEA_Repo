@@ -159,7 +159,7 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 			}
 
 			entity.setZt(status.ordinal());
-			entity.setCl(Util.toDoubleNull(data.getJSONArray(cp).getString(1)));
+			entity.setCl(Util.toDoubleNull(data.getJSONArray(cp).getString(0)));
 			
 			cpclwcqkDao.merge(entity);
 		}

@@ -24,16 +24,9 @@ var sbdscqyqk;
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("材料", "cl", true, TextAlign.Center),
-                    new JQTable.Node("期货盈亏（万元）", "ac", readOnly),
-                    new JQTable.Node("市场现货月均价（元/吨）", "ada", readOnly),
-                    new JQTable.Node("采购月均价（元/吨）（摊入当月期货盈亏）", "adb", readOnly),
-                    new JQTable.Node("三项费用保本价（元/吨）", "adc", readOnly),
-                    new JQTable.Node("目标利润倒算价（元/吨）", "ae", readOnly),
-                    new JQTable.Node("采购量（吨）", "af", readOnly),
-                    new JQTable.Node("期现货合计盈亏", "ag", readOnly)
-                        .append(new JQTable.Node("指导价格按照保本价（万元）", "ah", readOnly))
-                        .append(new JQTable.Node("指导价格按照目标利润价（万元）", "ai", readOnly))
+                    new JQTable.Node("行业", "hy", true, TextAlign.Center, 100),
+                    new JQTable.Node("行业", "hy2", true, TextAlign.Center, 100),
+                    new JQTable.Node("签约额", "qye", readOnly, TextAlign.Right, 1000)
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -57,11 +50,7 @@ var sbdscqyqk;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
-                    submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                    }
+                    submitData.push([allData[i][3].replace(new RegExp(' ', 'g'), '')]);
                 }
                 this.mAjaxSave.post({
                     date: dt,
@@ -82,14 +71,10 @@ var sbdscqyqk;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
-                    submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 2]) {
-                            Util.MessageBox.tip("有空内容 无法提交");
-                            return;
-                        }
+                    submitData.push([allData[i][3].replace(new RegExp(' ', 'g'), '')]);
+                    if ("" == submitData[i][3]) {
+                        Util.MessageBox.tip("有空内容 无法提交");
+                        return;
                     }
                 }
                 this.mAjaxSubmit.post({
@@ -126,29 +111,34 @@ var sbdscqyqk;
                 this.updateTable();
             };
             EntryView.prototype.init = function (opt) {
-                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
-                $.extend($.jgrid.edit, {
-                    bSubmit: "确定"
-                });
+                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "细分市场签约");
             };
             EntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
                 this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
-                var data = [];
-                if (this.mCompType == Util.CompanyType.SBGS ||
-                    this.mCompType == Util.CompanyType.HBGS ||
-                    this.mCompType == Util.CompanyType.TBGS ||
-                    this.mCompType == Util.CompanyType.XBC) {
-                    data.push(["铜"].concat(this.mData[0]));
+                var data = [["传统电力市场"],
+                    ["传统电力市场"],
+                    ["传统电力市场"],
+                    ["传统电力市场"],
+                    ["新能源市场"],
+                    ["新能源市场"],
+                    ["新能源市场"],
+                    ["重点领域市场"],
+                    ["重点领域市场"],
+                    ["重点领域市场"],
+                    ["重点领域市场"],
+                    ["重点领域市场"],
+                    ["重点领域市场"],
+                    ["其它"]];
+                for (var i = 0; i < data.length; ++i) {
+                    data[i] = data[i].concat(this.mData[i]);
                 }
-                else {
-                    data.push(["铜"].concat(this.mData[0]));
-                    data.push(["铝"].concat(this.mData[1]));
-                }
+                this.mTableAssist.mergeColum(0);
+                this.mTableAssist.mergeRow(0);
+                this.mTableAssist.mergeTitle();
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+                parent.append("<table id='" + name + "'>");
                 var jqTable = this.$(name);
                 jqTable.jqGrid(this.mTableAssist.decorate({
                     datatype: "local",
@@ -166,9 +156,9 @@ var sbdscqyqk;
                     rowNum: 20,
                     height: '100%',
                     width: 1200,
-                    shrinkToFit: true,
+                    shrinkToFit: false,
                     autoScroll: true,
-                    viewrecords: true,
+                    viewrecords: true
                 }));
             };
             EntryView.ins = new EntryView();

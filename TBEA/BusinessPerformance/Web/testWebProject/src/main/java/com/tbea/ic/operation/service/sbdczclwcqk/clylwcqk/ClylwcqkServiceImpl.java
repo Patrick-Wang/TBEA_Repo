@@ -158,7 +158,7 @@ public class ClylwcqkServiceImpl implements ClylwcqkService {
 			}
 
 			entity.setZt(status.ordinal());
-			entity.setCl(Util.toDoubleNull(data.getJSONArray(cp).getString(1)));
+			entity.setCl(Util.toDoubleNull(data.getJSONArray(cp).getString(0)));
 			
 			clylwcqkDao.merge(entity);
 		}

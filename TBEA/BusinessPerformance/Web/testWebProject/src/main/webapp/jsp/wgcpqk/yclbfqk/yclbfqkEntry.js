@@ -22,7 +22,7 @@ var wgcpqk;
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("领用量", "ac", readOnly),
+                    new JQTable.Node("材料名称", "clmc", true),
                     new JQTable.Node("领用量", "ac", readOnly),
                     new JQTable.Node("废料", "ada", readOnly)
                 ], gridName);
@@ -49,9 +49,14 @@ var wgcpqk;
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 1; j < allData[i].length; ++j) {
+                    var index = 0;
+                    for (var j = 0; j < allData[i].length; ++j) {
+                        if (j == 1) {
+                            continue;
+                        }
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 1] = submitData[i][j - 1].replace(new RegExp(' ', 'g'), '');
+                        submitData[i][index] = submitData[i][index].replace(new RegExp(' ', 'g'), '');
+                        ++index;
                     }
                 }
                 this.mAjaxSave.post({
@@ -74,13 +79,18 @@ var wgcpqk;
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 1; j < allData[i].length; ++j) {
+                    var index = 0;
+                    for (var j = 0; j < allData[i].length; ++j) {
+                        if (j == 1) {
+                            continue;
+                        }
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 1] = submitData[i][j - 1].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 1]) {
+                        submitData[i][index] = submitData[i][index].replace(new RegExp(' ', 'g'), '');
+                        if ("" == submitData[i][index]) {
                             Util.MessageBox.tip("有空内容 无法提交");
                             return;
                         }
+                        ++index;
                     }
                 }
                 this.mAjaxSubmit.post({
@@ -120,33 +130,23 @@ var wgcpqk;
                 this.updateTable();
             };
             EntryView.prototype.init = function (opt) {
-                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况（变压器）");
-                $.extend($.jgrid.edit, {
-                    bSubmit: "确定"
-                });
+                framework.router
+                    .fromEp(this)
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况");
             };
             EntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var pagername = name + "pager";
                 this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
                 var data = [];
-                if (this.mCompType == Util.CompanyType.SBGS ||
-                    this.mCompType == Util.CompanyType.HBGS ||
-                    this.mCompType == Util.CompanyType.TBGS ||
-                    this.mCompType == Util.CompanyType.XBC) {
-                    data.push(["铜"].concat(this.mData[0]));
-                }
-                else {
-                    data.push(["铜"].concat(this.mData[0]));
-                    data.push(["铝"].concat(this.mData[1]));
-                }
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+                parent.append("<table id='" + name + "'>");
                 var jqTable = this.$(name);
                 jqTable.jqGrid(this.mTableAssist.decorate({
                     datatype: "local",
-                    data: this.mTableAssist.getData(this.mData),
+                    data: this.mTableAssist.getDataWithId(this.mData),
                     multiselect: false,
                     drag: false,
                     resize: false,
@@ -162,7 +162,7 @@ var wgcpqk;
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    viewrecords: true,
+                    viewrecords: true
                 }));
             };
             EntryView.ins = new EntryView();
