@@ -10,25 +10,34 @@ declare var $:any;
 
 module pluginEntry {
     export let xfcpqy : number = framework.basic.endpoint.lastId();
+
+    export let xfcpqy_byq:number = framework.basic.endpoint.lastId();
+
+    export let xfcpqy_xl:number = framework.basic.endpoint.lastId();
 }
 
 module sbdscqyqk {
     export module xfcpqyEntry {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
-                return new JQTable.JQGridAssistant([
-                    new JQTable.Node("材料", "cl", true, TextAlign.Center),
-                    new JQTable.Node("期货盈亏（万元）", "ac", readOnly),
-                    new JQTable.Node("市场现货月均价（元/吨）", "ada", readOnly),
-                    new JQTable.Node("采购月均价（元/吨）（摊入当月期货盈亏）", "adb", readOnly),
-                    new JQTable.Node("三项费用保本价（元/吨）", "adc", readOnly),
-                    new JQTable.Node("目标利润倒算价（元/吨）", "ae", readOnly),
-                    new JQTable.Node("采购量（吨）", "af", readOnly),
-                    new JQTable.Node("期现货合计盈亏", "ag", readOnly)
-                        .append(new JQTable.Node("指导价格按照保本价（万元）", "ah", readOnly))
-                        .append(new JQTable.Node("指导价格按照目标利润价（万元）", "ai", readOnly))
-                ], gridName);
+            public static createTable(gridName:string, readOnly : boolean, date : string):JQTable.JQGridAssistant {
+                let curDate : Date = new Date(date);
+                let month = curDate.getMonth() + 1;
+                let year = curDate.getFullYear();
+                let data = [];
+                let node : JQTable.Node;
+                let titleNodes : JQTable.Node[] = [];
+
+                node = new JQTable.Node("产品", "xfcpqyEntry_cp", true, TextAlign.Left);
+                titleNodes.push(node);
+
+                node = new JQTable.Node(year + "年" + month + "月", "xfcpqyEntry_riqi", false, TextAlign.Center);
+
+                node.append(new JQTable.Node("签约额", "xfcpqyEntry_cb_", false));
+
+                titleNodes.push(node);
+
+                return new JQTable.JQGridAssistant(titleNodes, gridName);
             }
         }
 
@@ -45,6 +54,9 @@ module sbdscqyqk {
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;
+
+            private mType:sbdscqyqk.SbdscqyqkType;
+
             getId():number {
                 return pluginEntry.xfcpqy;
             }
@@ -66,7 +78,8 @@ module sbdscqyqk {
                 this.mAjaxSave.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType
+                    companyId: compType,
+                    type: this.mType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
@@ -94,7 +107,8 @@ module sbdscqyqk {
                 this.mAjaxSubmit.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType
+                    companyId: compType,
+                    type: this.mType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
@@ -110,7 +124,8 @@ module sbdscqyqk {
                 this.mCompType = compType;
                 this.mAjaxUpdate.get({
                         date: date,
-                        companyId: compType
+                        companyId: compType,
+                        type: this.mType
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
@@ -126,36 +141,66 @@ module sbdscqyqk {
                 this.updateTable();
             }
 
+            isSupported(compType:Util.CompanyType):boolean {
+                if (this.mType == sbdscqyqk.SbdscqyqkType.BYQ) {
+                    if (compType == Util.CompanyType.SBGS ||
+                        compType == Util.CompanyType.HBGS ||
+                        compType == Util.CompanyType.XBC ||
+                        compType == Util.CompanyType.TBGS
+                    ) {
+                        return true;
+                    }
+                } else {
+                    if (compType == Util.CompanyType.LLGS ||
+                        compType == Util.CompanyType.XLC ||
+                        compType == Util.CompanyType.DLGS
+                    ) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
             protected init(opt:Option):void {
-                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
-                $.extend($.jgrid.edit, {
-                    bSubmit: "确定"
-                });
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(pluginEntry.xfcpqy_byq, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "细分产品签约情况及趋势");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(pluginEntry.xfcpqy_xl, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "细分产品签约情况及趋势");
+            }
+
+
+            onEvent(e:framework.route.Event):any {
+                if (e.road != undefined) {
+                    switch (e.road[e.road.length - 1]) {
+                        case pluginEntry.xfcpqy_byq:
+                            this.mType = sbdscqyqk.SbdscqyqkType.BYQ;
+                            break;
+                        case pluginEntry.xfcpqy_xl:
+                            this.mType = sbdscqyqk.SbdscqyqkType.XL;
+                            break;
+                        default:
+                            this.mType = sbdscqyqk.SbdscqyqkType.BYQ;
+                    }
+                }
+                return super.onEvent(e);
             }
 
             private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
-                let data = [];
-                if (this.mCompType == Util.CompanyType.SBGS ||
-                    this.mCompType == Util.CompanyType.HBGS ||
-                    this.mCompType == Util.CompanyType.TBGS ||
-                    this.mCompType == Util.CompanyType.XBC){
-                    data.push(["铜"].concat(this.mData[0]));
-                }else{
-                    data.push(["铜"].concat(this.mData[0]));
-                    data.push(["铝"].concat(this.mData[1]));
-                }
-
+                var name = this.option().host + this.option().tb + "_jqgrid_1234";
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+                parent.append("<table id='" + name + "'></table>");
+
                 let jqTable = this.$(name);
                 jqTable.jqGrid(
                     this.mTableAssist.decorate({
                         datatype: "local",
-                        data: this.mTableAssist.getData(data),
+                        data: this.mTableAssist.getData(this.mData),
                         multiselect: false,
                         drag: false,
                         resize: false,
@@ -166,7 +211,7 @@ module sbdscqyqk {
                         cellEdit: true,
                         //height: data.length > 25 ? 550 : '100%',
                         // width: titles.length * 200,
-                        rowNum: 20,
+                        rowNum: 40,
                         height: '100%',
                         width: 1200,
                         shrinkToFit: true,

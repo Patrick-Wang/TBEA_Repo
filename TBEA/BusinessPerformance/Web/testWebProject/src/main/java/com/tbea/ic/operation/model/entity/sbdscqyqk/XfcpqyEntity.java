@@ -69,12 +69,13 @@ public class XfcpqyEntity extends AbstractReadWriteEntity implements Serializabl
 	public void setTjfs(Integer tjfs) {
 		this.tjfs = tjfs;
 	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cpid")
 	public CpmcEntity getCpmc() {
 		return cpmc;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cpid")
 	public void setCpmc(CpmcEntity cpmc) {
 		this.cpmc = cpmc;
 	}
