@@ -64,6 +64,7 @@ CREATE TABLE [dbo].[scfxgb_xfcpqy](
 	[yf] [int] not NULL,
 	[dwid] [int] not NULL,
 	[cpid] [int] not NULL,
+	[tjfs] [int] not NULL,	-- 1->变压器	2->线缆
 	[qye] [numeric](18, 4) NULL,
 	[zt] [int] not NULL
 PRIMARY KEY CLUSTERED 

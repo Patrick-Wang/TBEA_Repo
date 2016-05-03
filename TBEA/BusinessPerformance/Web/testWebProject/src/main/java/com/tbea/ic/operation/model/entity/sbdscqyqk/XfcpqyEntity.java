@@ -1,13 +1,22 @@
 package com.tbea.ic.operation.model.entity.sbdscqyqk;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
+
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.tbea.ic.operation.model.entity.identifier.common.CpmcEntity;
+import com.tbea.ic.operation.model.entity.jygk.DWXX;
 
 
 @Entity
@@ -28,8 +37,9 @@ public class XfcpqyEntity extends AbstractReadWriteEntity implements Serializabl
 
 	Integer nf;
 	Integer yf;
-	Integer dwid;
-	Integer cpid;
+	DWXX dwxx;
+	Integer tjfs;
+	CpmcEntity cpmc;
 	Double qye;
 	Integer zt;
 	public Integer getNf() {
@@ -44,12 +54,29 @@ public class XfcpqyEntity extends AbstractReadWriteEntity implements Serializabl
 	public void setYf(Integer yf) {
 		this.yf = yf;
 	}
-
-	public Integer getCpid() {
-		return cpid;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dwid")
+	public DWXX getDwxx() {
+		return dwxx;
 	}
-	public void setCpid(Integer cpid) {
-		this.cpid = cpid;
+	public void setDwxx(DWXX dwxx) {
+		this.dwxx = dwxx;
+	}
+	public Integer getTjfs() {
+		return tjfs;
+	}
+	public void setTjfs(Integer tjfs) {
+		this.tjfs = tjfs;
+	}
+	public CpmcEntity getCpmc() {
+		return cpmc;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cpid")
+	public void setCpmc(CpmcEntity cpmc) {
+		this.cpmc = cpmc;
 	}
 	public Double getQye() {
 		return qye;
@@ -63,10 +90,7 @@ public class XfcpqyEntity extends AbstractReadWriteEntity implements Serializabl
 	public void setZt(Integer zt) {
 		this.zt = zt;
 	}
-	public Integer getDwid() {
-		return dwid;
-	}
-	public void setDwid(Integer dwid) {
-		this.dwid = dwid;
-	}
+
+	
+	
 }

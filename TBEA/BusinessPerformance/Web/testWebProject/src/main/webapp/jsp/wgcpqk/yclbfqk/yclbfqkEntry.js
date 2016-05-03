@@ -33,9 +33,9 @@ var wgcpqk;
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("yclbfqk/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("yclbfqk/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("yclbfqk/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("../yclbfqk/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("../yclbfqk/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("../yclbfqk/entry/submit.do", false);
             }
             EntryView.prototype.getId = function () {
                 return pluginEntry.yclbfqk;
