@@ -17,7 +17,7 @@ module wgcpqk {
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("材料名称", "clmc", true),
+                    new JQTable.Node("材料名称", "clmc", true, TextAlign.Center),
                     new JQTable.Node("领用量", "ac", readOnly),
                     new JQTable.Node("废料", "ada", readOnly)
                 ], gridName);

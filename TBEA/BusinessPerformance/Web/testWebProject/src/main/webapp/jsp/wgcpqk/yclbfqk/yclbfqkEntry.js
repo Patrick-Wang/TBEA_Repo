@@ -17,25 +17,26 @@ var wgcpqk;
 (function (wgcpqk) {
     var yclbfqkEntry;
     (function (yclbfqkEntry) {
+        var TextAlign = JQTable.TextAlign;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("材料名称", "clmc", true),
+                    new JQTable.Node("材料名称", "clmc", true, TextAlign.Center),
                     new JQTable.Node("领用量", "ac", readOnly),
                     new JQTable.Node("废料", "ada", readOnly)
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("yclbfqk/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("yclbfqk/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("yclbfqk/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("../yclbfqk/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("../yclbfqk/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("../yclbfqk/entry/submit.do", false);
             }
             EntryView.prototype.getId = function () {
                 return pluginEntry.yclbfqk;
@@ -167,6 +168,6 @@ var wgcpqk;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        }(framework.basic.EntryPluginView));
+        })(framework.basic.EntryPluginView);
     })(yclbfqkEntry = wgcpqk.yclbfqkEntry || (wgcpqk.yclbfqkEntry = {}));
 })(wgcpqk || (wgcpqk = {}));

@@ -56,7 +56,7 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 			for (YclbfqkEntity entity : entities) {
 				List<String> list = null;
 				for (int j = 0; j < clmcs.size(); ++j) {
-					if (clmcs.get(j).getClmc().getId() == entity.getId()) {
+					if (clmcs.get(j).getClmc().getId() == entity.getClid()) {
 						list = result.get(j);
 						break;
 					}
@@ -96,6 +96,7 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 			}
 			entity.setLyl(Util.toDoubleNull(row.getString(1)));
 			entity.setFl(Util.toDoubleNull(row.getString(2)));
+			yclbfqkDao.merge(entity);
 		}
 		return ErrorCode.OK;
 	}
@@ -126,7 +127,7 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 		List<YclbfqkEntity> entities = yclbfqkDao.getByDate(d, company);
 		for (YclbfqkEntity entity : entities) {
 			for (int j = 0; j < clmcs.size(); ++j) {
-				if (clmcs.get(j).getClmc().getId() == entity.getId()) {
+				if (clmcs.get(j).getClmc().getId() == entity.getClid()) {
 					List<String> list = result.get(j);
 					list.set(2, "" + entity.getLyl());
 					list.set(3, "" + entity.getFl());

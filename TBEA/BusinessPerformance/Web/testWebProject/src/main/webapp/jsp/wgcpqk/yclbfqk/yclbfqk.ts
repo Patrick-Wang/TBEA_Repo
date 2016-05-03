@@ -48,7 +48,7 @@ module wgcpqk {
             }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
-                return "yclbfqk/export.do?" + Util.Ajax.toUrlParam({
+                return "../yclbfqk/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId:compType,
                         wgcpqkType:this.mWgcpqkType
