@@ -12,6 +12,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 var plugin;
 (function (plugin) {
     plugin.xfcpqy = framework.basic.endpoint.lastId();
+    plugin.xfcpqy_byq = framework.basic.endpoint.lastId();
+    plugin.xfcpqy_xl = framework.basic.endpoint.lastId();
 })(plugin || (plugin = {}));
 var sbdscqyqk;
 (function (sbdscqyqk) {
@@ -36,7 +38,7 @@ var sbdscqyqk;
                 if (month != 12) {
                     titleNodes.push(node);
                 }
-                node = new JQTable.Node("本年度", "wlyddmlspcs_bnd", true, TextAlign.Center);
+                node = new JQTable.Node("本年度", "sbdscqyqk_bnd", true, TextAlign.Center);
                 for (var i = 1; i <= month; ++i) {
                     node.append(new JQTable.Node(i + "月", "bnd_" + i));
                 }
@@ -44,7 +46,7 @@ var sbdscqyqk;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -57,7 +59,8 @@ var sbdscqyqk;
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../xfcpqy/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
-                    companyId: compType
+                    companyId: compType,
+                    type: this.mType
                 });
             };
             ShowView.prototype.option = function () {
@@ -69,7 +72,8 @@ var sbdscqyqk;
                 this.mCompType = compType;
                 this.mAjax.get({
                     date: date,
-                    companyId: compType
+                    companyId: compType,
+                    type: this.mType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -82,8 +86,48 @@ var sbdscqyqk;
                 }
                 this.updateTable();
             };
+            ShowView.prototype.isSupported = function (compType) {
+                if (this.mType == sbdscqyqk.SbdscqyqkType.BYQ) {
+                    if (compType == Util.CompanyType.SBGS ||
+                        compType == Util.CompanyType.HBGS ||
+                        compType == Util.CompanyType.XBC ||
+                        compType == Util.CompanyType.TBGS) {
+                        return true;
+                    }
+                }
+                else {
+                    if (compType == Util.CompanyType.LLGS ||
+                        compType == Util.CompanyType.XLC ||
+                        compType == Util.CompanyType.DLGS) {
+                        return true;
+                    }
+                }
+                return false;
+            };
             ShowView.prototype.init = function (opt) {
-                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "细分产品签约情况及趋势");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(plugin.xfcpqy_byq, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "细分产品签约情况及趋势");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(plugin.xfcpqy_xl, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "细分产品签约情况及趋势");
+            };
+            ShowView.prototype.onEvent = function (e) {
+                if (e.road != undefined) {
+                    switch (e.road[e.road.length - 1]) {
+                        case plugin.xfcpqy_byq:
+                            this.mType = sbdscqyqk.SbdscqyqkType.BYQ;
+                            break;
+                        case plugin.xfcpqy_xl:
+                            this.mType = sbdscqyqk.SbdscqyqkType.XL;
+                            break;
+                        default:
+                            this.mType = sbdscqyqk.SbdscqyqkType.BYQ;
+                    }
+                }
+                return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.getMonth = function () {
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
@@ -104,7 +148,7 @@ var sbdscqyqk;
                     width: 1400,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 20,
+                    rowNum: 40,
                     data: tableAssist.getData(this.mData),
                     datatype: "local",
                     viewrecords: true
@@ -112,6 +156,6 @@ var sbdscqyqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(xfcpqy = sbdscqyqk.xfcpqy || (sbdscqyqk.xfcpqy = {}));
 })(sbdscqyqk || (sbdscqyqk = {}));

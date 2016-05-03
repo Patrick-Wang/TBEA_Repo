@@ -2,8 +2,8 @@ package com.tbea.ic.operation.controller.servlet.sbdscqyqk;
 
 public enum SbdscqyqkType{
 
-    YLFX_WGCPYLNL_BYQ(1),
-    YLFX_WGCPYLNL_XL(2);
+    YLFX_WGCPYLNL_BYQ(0),
+    YLFX_WGCPYLNL_XL(1);
     
     private int _value;
 

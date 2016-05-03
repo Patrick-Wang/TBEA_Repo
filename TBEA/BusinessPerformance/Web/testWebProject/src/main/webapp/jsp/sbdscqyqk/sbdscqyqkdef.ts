@@ -5,4 +5,9 @@ module sbdscqyqk{
     export interface Option extends framework.basic.PluginOption {
         tb:string;
     }
+
+    export enum SbdscqyqkType{
+        BYQ,
+        XL
+    }
 }
