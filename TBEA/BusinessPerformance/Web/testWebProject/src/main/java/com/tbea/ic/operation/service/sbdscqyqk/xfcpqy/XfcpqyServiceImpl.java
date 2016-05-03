@@ -194,7 +194,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 			}
 
 			entity.setZt(status.ordinal());
-			entity.setQye(Util.toDoubleNull(data.getJSONArray(cp).getString(1)));
+			entity.setQye(Util.toDoubleNull(data.getJSONArray(cp).getString(0)));
 			
 			xfcpqyDao.merge(entity);
 		}

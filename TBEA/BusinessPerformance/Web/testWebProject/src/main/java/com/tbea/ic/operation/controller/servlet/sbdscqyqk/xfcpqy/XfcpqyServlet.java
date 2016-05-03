@@ -45,9 +45,9 @@ public class XfcpqyServlet {
 	CompanyManager companyManager;
 
 	private SbdscqyqkType getType(HttpServletRequest request){
-		if (1 == Integer.valueOf(request.getParameter("type"))){
+		if (0 == Integer.valueOf(request.getParameter("type"))){
 			return SbdscqyqkType.YLFX_WGCPYLNL_BYQ;
-		} else if (2 == Integer.valueOf(request.getParameter("type"))) {
+		} else if (1 == Integer.valueOf(request.getParameter("type"))) {
 			return SbdscqyqkType.YLFX_WGCPYLNL_XL;
 		}
 		
