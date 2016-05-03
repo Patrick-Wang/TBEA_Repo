@@ -43,7 +43,6 @@ import com.tbea.ic.operation.common.excel.MarketSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
@@ -306,7 +305,7 @@ public class MarketServlet {
 		formatterChain.next(
 				new PercentFormatterHandler(null, new Integer[] { 4, 8, 9, 13,
 						14, 15 })).next(
-				new NumberFormatterHandler(NumberType.RESERVE_0));
+				new NumberFormatterHandler(0));
 
 		if ("bid_industry".equals(type)) {
 			result = marketService.getIndustryBidData(companyNames, date);
@@ -376,7 +375,7 @@ public class MarketServlet {
 		formatterChain
 				.next(new PercentFormatterHandler(null, new Integer[] { 3, 6,
 						9, 10 })).next(
-						new NumberFormatterHandler(NumberType.RESERVE_0));
+						new NumberFormatterHandler(0));
 
 		if ("contract_industry".equals(type)) {
 			result = marketService.getIndustrySignData(companyNames, date);
@@ -460,7 +459,7 @@ public class MarketServlet {
 		formatterChain.next(
 				new PercentFormatterHandler(null, new Integer[] { 3, 7, 9, 10,
 						11, 12 })).next(
-				new NumberFormatterHandler(NumberType.RESERVE_0));
+				new NumberFormatterHandler(0));
 
 		if ("region_index".equals(type)) {
 			result = marketService.getAreaMixedAnalysisData(companyNames,

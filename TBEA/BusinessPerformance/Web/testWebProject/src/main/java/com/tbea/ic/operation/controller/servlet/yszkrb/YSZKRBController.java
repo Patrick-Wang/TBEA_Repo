@@ -29,7 +29,6 @@ import com.tbea.ic.operation.common.excel.JYGKPhase2SheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
 import com.tbea.ic.operation.service.yszkrb.YSZKRBService;
 
@@ -102,7 +101,7 @@ public class YSZKRBController {
 	
 	private FormatterHandler getFormatterChainDataOnly(Integer[] percentCols, Integer[] jhCols){
 		FormatterHandler formatterChain = new PercentFormatterHandler(null, percentCols);
-		formatterChain.next(new NumberFormatterHandler(NumberType.RESERVE_0));
+		formatterChain.next(new NumberFormatterHandler(0));
 		return formatterChain;
 	}
 }

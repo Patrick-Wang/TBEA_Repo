@@ -27,9 +27,7 @@ import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.XnychSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.service.xnych.xnych.XnychService;
 import com.tbea.ic.operation.service.xnych.xnych.XnychServiceImpl;
 
@@ -101,7 +99,7 @@ public class XnychServlet {
 		List<List<String>> ret = xnychService.getXnych(d, company);
 		ExcelTemplate template = ExcelTemplate.createXnychTemplate(XnychSheetType.XNYCH);
 	
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);

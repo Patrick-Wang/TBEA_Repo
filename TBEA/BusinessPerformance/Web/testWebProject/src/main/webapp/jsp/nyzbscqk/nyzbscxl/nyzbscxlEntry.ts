@@ -19,7 +19,7 @@ module nyzbscqk {
             public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("矿区", "kq", true, TextAlign.Center),
-                    new JQTable.Node("煤种", "mz", readOnly),
+                    new JQTable.Node("煤种", "mz", true, TextAlign.Center),
                     new JQTable.Node("月销量", "yxl", readOnly),
                 ], gridName);
             }
@@ -51,10 +51,9 @@ module nyzbscqk {
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                    }
+                    submitData[i].push(allData[i][0]);
+                    submitData[i].push(allData[i][3]);
+                    submitData[i][1] = submitData[i][1].replace(new RegExp(' ', 'g'), '');
                 }
                 this.mAjaxSave.post({
                     date: dt,
@@ -75,13 +74,12 @@ module nyzbscqk {
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 2]) {
-                            Util.MessageBox.tip("有空内容 无法提交")
-                            return;
-                        }
+                    submitData[i].push(allData[i][0]);
+                    submitData[i].push(allData[i][3]);
+                    submitData[i][1] = submitData[i][1].replace(new RegExp(' ', 'g'), '');
+                    if ("" == submitData[i][1]) {
+                        Util.MessageBox.tip("有空内容 无法提交")
+                        return;
                     }
                 }
                 this.mAjaxSubmit.post({
@@ -115,37 +113,27 @@ module nyzbscqk {
                 if (this.mData == undefined) {
                     return;
                 }
-
                 this.updateTable();
             }
 
             protected init(opt:Option):void {
-
+                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "月销量")
             }
 
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var pagername = name + "pager";
                 this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
-                let data = [];
-                if (this.mCompType == Util.CompanyType.SBGS ||
-                    this.mCompType == Util.CompanyType.HBGS ||
-                    this.mCompType == Util.CompanyType.TBGS ||
-                    this.mCompType == Util.CompanyType.XBC){
-                    data.push(["铜"].concat(this.mData[0]));
-                }else{
-                    data.push(["铜"].concat(this.mData[0]));
-                    data.push(["铝"].concat(this.mData[1]));
-                }
 
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+                parent.append("<table id='" + name + "'></table>");
+                this.mTableAssist.mergeRow(0);
                 let jqTable = this.$(name);
                 jqTable.jqGrid(
                     this.mTableAssist.decorate({
                         datatype: "local",
-                        data: this.mTableAssist.getData(data),
+                        data: this.mTableAssist.getDataWithId(this.mData),
                         multiselect: false,
                         drag: false,
                         resize: false,

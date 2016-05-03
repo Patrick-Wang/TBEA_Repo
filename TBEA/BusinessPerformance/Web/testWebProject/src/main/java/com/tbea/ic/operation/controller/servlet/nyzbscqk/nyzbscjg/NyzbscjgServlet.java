@@ -29,7 +29,6 @@ import com.tbea.ic.operation.common.excel.NyzbscqkSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.service.nyzbscqk.nyzbscjg.NyzbscjgService;
 import com.tbea.ic.operation.service.nyzbscqk.nyzbscjg.NyzbscjgServiceImpl;
 
@@ -102,7 +101,7 @@ public class NyzbscjgServlet {
 		ExcelTemplate template = ExcelTemplate.createNyzbscqkTemplate(NyzbscqkSheetType.NYZBSCJG);
 	
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		handler.next(new NumberFormatterHandler(1));
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);

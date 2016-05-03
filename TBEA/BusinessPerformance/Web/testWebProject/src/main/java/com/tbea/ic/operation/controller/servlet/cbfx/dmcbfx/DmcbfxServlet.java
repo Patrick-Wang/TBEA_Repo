@@ -29,7 +29,6 @@ import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.controller.servlet.cbfx.CbfxType;
 import com.tbea.ic.operation.service.cbfx.dmcbfx.DmcbfxService;
 import com.tbea.ic.operation.service.cbfx.dmcbfx.DmcbfxServiceImpl;
@@ -123,7 +122,7 @@ public class DmcbfxServlet {
 		}
 		
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		handler.next(new NumberFormatterHandler(1));
 		
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);

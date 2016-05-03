@@ -30,7 +30,6 @@ import com.tbea.ic.operation.common.excel.JYGKPhase2SheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.service.ydzb.rank.RankService;
@@ -260,12 +259,12 @@ public class YDZBRankingController {
 	
 	private FormatterHandler getFormatterChainDataOnly(Integer[] percentCols, Integer[] jhCols){
 		FormatterHandler formatterChain = new PercentFormatterHandler(null, percentCols);
-		formatterChain.next(new NumberFormatterHandler(NumberType.RESERVE_0));
+		formatterChain.next(new NumberFormatterHandler(0));
 		return formatterChain;
 	}
 	private FormatterHandler getFormatterChainDataOnly_1(Integer[] percentCols, Integer[] jhCols){
 		FormatterHandler formatterChain = new PercentFormatterHandler(null, percentCols);
-		formatterChain.next(new NumberFormatterHandler(NumberType.RESERVE_1,null,jhCols)).next(new NumberFormatterHandler(NumberType.RESERVE_0));
+		formatterChain.next(new NumberFormatterHandler(1,null,jhCols)).next(new NumberFormatterHandler(0));
 		return formatterChain;
 	}
 }

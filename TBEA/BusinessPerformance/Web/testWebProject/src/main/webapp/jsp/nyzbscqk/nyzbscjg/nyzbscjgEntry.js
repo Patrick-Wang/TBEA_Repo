@@ -24,16 +24,9 @@ var nyzbscqk;
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("材料", "cl", true, TextAlign.Center),
-                    new JQTable.Node("期货盈亏（万元）", "ac", readOnly),
-                    new JQTable.Node("市场现货月均价（元/吨）", "ada", readOnly),
-                    new JQTable.Node("采购月均价（元/吨）（摊入当月期货盈亏）", "adb", readOnly),
-                    new JQTable.Node("三项费用保本价（元/吨）", "adc", readOnly),
-                    new JQTable.Node("目标利润倒算价（元/吨）", "ae", readOnly),
-                    new JQTable.Node("采购量（吨）", "af", readOnly),
-                    new JQTable.Node("期现货合计盈亏", "ag", readOnly)
-                        .append(new JQTable.Node("指导价格按照保本价（万元）", "ah", readOnly))
-                        .append(new JQTable.Node("指导价格按照目标利润价（万元）", "ai", readOnly))
+                    new JQTable.Node("矿区", "kq", true, TextAlign.Center),
+                    new JQTable.Node("煤种", "mz", true, TextAlign.Center),
+                    new JQTable.Node("价格", "yxl", readOnly)
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -126,33 +119,19 @@ var nyzbscqk;
                 this.updateTable();
             };
             EntryView.prototype.init = function (opt) {
-                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
-                $.extend($.jgrid.edit, {
-                    bSubmit: "确定"
-                });
+                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "销量价格");
             };
             EntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var pagername = name + "pager";
                 this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
-                var data = [];
-                if (this.mCompType == Util.CompanyType.SBGS ||
-                    this.mCompType == Util.CompanyType.HBGS ||
-                    this.mCompType == Util.CompanyType.TBGS ||
-                    this.mCompType == Util.CompanyType.XBC) {
-                    data.push(["铜"].concat(this.mData[0]));
-                }
-                else {
-                    data.push(["铜"].concat(this.mData[0]));
-                    data.push(["铝"].concat(this.mData[1]));
-                }
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                 var jqTable = this.$(name);
                 jqTable.jqGrid(this.mTableAssist.decorate({
                     datatype: "local",
-                    data: this.mTableAssist.getData(data),
+                    data: this.mTableAssist.getDataWithId(this.mData),
                     multiselect: false,
                     drag: false,
                     resize: false,

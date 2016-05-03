@@ -63,7 +63,7 @@ public abstract class RawAbstractFormatterHandler implements RawFormatterHandler
 	
 	@Override
 	public String handle(String zbName, Integer col, String val) {
-		if (val != null) {
+		if (val != null && !"null".equals(val)) {
 			if (match(zbName, col)) {
 				return onHandle(val);
 			} else {

@@ -28,14 +28,13 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
+import com.tbea.ic.operation.common.excel.YlfxwgcpylnlspcsSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
 import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsService;
 import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsServiceImpl;
-import com.tbea.ic.operation.common.excel.YlfxwgcpylnlspcsSheetType;
 
 @Controller
 @RequestMapping(value = "wgcpylnlspcs")
@@ -131,7 +130,7 @@ public class WgcpylnlspcsServlet {
 		ExcelTemplate template = ExcelTemplate.createYlfxwgcpylnlspcsTemplate(getYlfxwgcpylnlspcsSheetType(type, d));
 				
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		handler.next(new NumberFormatterHandler(1));
 		
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);

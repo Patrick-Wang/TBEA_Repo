@@ -31,7 +31,6 @@ import com.tbea.ic.operation.common.excel.SbdddcbjpcqkSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkService;
 import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkServiceImpl;
@@ -173,7 +172,7 @@ public class SbdddcbjpcqkServlet {
 		}
 				
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		handler.next(new NumberFormatterHandler(1));
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
@@ -204,7 +203,7 @@ public class SbdddcbjpcqkServlet {
 			template = ExcelTemplate.createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType.BYQKGLYDD_SCLB);
 		}
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		handler.next(new NumberFormatterHandler(1));
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);

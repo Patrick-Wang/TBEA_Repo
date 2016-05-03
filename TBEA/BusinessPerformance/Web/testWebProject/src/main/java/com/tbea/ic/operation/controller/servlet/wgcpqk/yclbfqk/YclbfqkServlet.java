@@ -32,7 +32,6 @@ import com.tbea.ic.operation.common.excel.WgcpqkSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.service.wgcpqk.yclbfqk.YclbfqkService;
 import com.tbea.ic.operation.service.wgcpqk.yclbfqk.YclbfqkServiceImpl;
 
@@ -136,7 +135,7 @@ public class YclbfqkServlet {
 		sheet.addMergedRegion(new CellRangeAddress(0, 0, 4 + lastYearMonthCount + 1, 13));
 		
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		handler.next(new NumberFormatterHandler(1));
 		for (int i = 0; i < ret.size(); ++i){
 			HSSFRow row = sheet.createRow(i + 2);
 			for (int j = 0; j < ret.get(i).size(); ++j){

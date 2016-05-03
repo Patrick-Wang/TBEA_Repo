@@ -27,7 +27,6 @@ import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.service.cbfx.nymyywmlfx.NymyywmlfxService;
 import com.tbea.ic.operation.service.cbfx.nymyywmlfx.NymyywmlfxServiceImpl;
 
@@ -63,8 +62,8 @@ public class NymyywmlfxServlet {
 		ExcelTemplate template = ExcelTemplate.createCbfxTemplate(CbfxSheetType.NYYWMLFX);
 	
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0, 1});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_0, null, new Integer[]{2}));
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		handler.next(new NumberFormatterHandler(0, null, new Integer[]{2}));
+		handler.next(new NumberFormatterHandler(1));
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);

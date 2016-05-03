@@ -27,13 +27,10 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.SbdczclwcqkSheetType;
-import com.tbea.ic.operation.common.excel.YlfxwgcpylnlspcsSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.controller.servlet.sbdczclwcqk.SbdczclwcqkType;
-import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpczwcqk.CpczwcqkService;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpczwcqk.CpczwcqkServiceImpl;
 
@@ -125,7 +122,7 @@ public class CpczwcqkServlet {
 		ExcelTemplate template = ExcelTemplate.createSbdczclwcqkTemplate(getSbdczclwcqkSheetType(getType(request), d));
 	
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		handler.next(new NumberFormatterHandler(1));
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);

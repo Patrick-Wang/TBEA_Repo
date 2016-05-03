@@ -41,7 +41,6 @@ import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.YszkgbSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
@@ -260,7 +259,7 @@ public class YszkgbServlet {
 		List<List<String>> ret = yszkgbService.getZmb(d, company);
 		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.ZMB);
 		
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
@@ -281,7 +280,7 @@ public class YszkgbServlet {
 		List<List<String>> ret = yszkgbService.getYszkzlbh(d, company);
 		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKZLBH);
 		
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
@@ -329,7 +328,7 @@ public class YszkgbServlet {
 		List<List<String>> ret = yszkgbService.getYszkkxxz(d, company);
 		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKKXXZQK);
 		
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
@@ -376,7 +375,7 @@ public class YszkgbServlet {
 		List<List<String>> ret = yszkgbService.getYqyszcsys(d, company);
 		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YQYSCSYS);
 		
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
@@ -423,7 +422,7 @@ public class YszkgbServlet {
 		List<List<String>> ret = yszkgbService.getYszkyjtztjqs(d, company);
 		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKZMYYJTZTJQS);
 		
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);

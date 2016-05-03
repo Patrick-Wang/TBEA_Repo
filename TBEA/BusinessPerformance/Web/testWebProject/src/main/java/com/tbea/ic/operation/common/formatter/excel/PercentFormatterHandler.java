@@ -22,7 +22,7 @@ public class PercentFormatterHandler extends AbstractFormatterHandler {
 	protected String onHandle(ExcelTemplate template, HSSFCell cell, String val) {
 		String ret = String.format("%.1f", Double.valueOf(val) * 100) + "%";
 		cell.setCellValue(ret);
-		cell.setCellStyle(template.getCellStylePercent());
+		cell.setCellStyle(template.getCellStyleDefault());
 		return ret;
 	}
 

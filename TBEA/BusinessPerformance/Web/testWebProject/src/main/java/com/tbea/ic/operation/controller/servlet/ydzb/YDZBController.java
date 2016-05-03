@@ -43,7 +43,6 @@ import com.tbea.ic.operation.common.excel.JygkSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.PercentSingleFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
@@ -395,15 +394,15 @@ public class YDZBController {
 	private FormatterHandler getFormatterChainDataOnly(Integer[] percentCols, Integer[] jhCols){
 		FormatterHandler formatterChain = new PercentFormatterHandler(null, percentCols);
 		formatterChain
-			.next(new NumberFormatterHandler(NumberType.RESERVE_0, new String[]{"人数"}))
+			.next(new NumberFormatterHandler(0, new String[]{"人数"}))
 			.next(new PercentSingleFormatterHandler(new String[]{"净资产收益率(%)"}))
 			.next(new PercentFormatterHandler(new String[]{"三项费用率(%)", "销售利润率(%)"}))
-			.next(new NumberFormatterHandler(NumberType.RESERVE_1, new String[]{"人均利润", "人均收入", "精铝块13项元素和值（ppm）"}))
-			.next(new NumberFormatterHandler(NumberType.RESERVE_0, new String[]{"标煤单耗（g/度）", "厂用电率（%）"}, jhCols))
-			.next(new NumberFormatterHandler(NumberType.RESERVE_2, new String[]{"标煤单耗（g/度）", "厂用电率（%）"}))
-			.next(new NumberFormatterHandler(NumberType.RESERVE_2, zhZb))
-			.next(new NumberFormatterHandler(NumberType.RESERVE_4, new String[]{"单位供电成本（元/度）"}))
-			.next(new NumberFormatterHandler(NumberType.RESERVE_0));
+			.next(new NumberFormatterHandler(1, new String[]{"人均利润", "人均收入", "精铝块13项元素和值（ppm）"}))
+			.next(new NumberFormatterHandler(0, new String[]{"标煤单耗（g/度）", "厂用电率（%）"}, jhCols))
+			.next(new NumberFormatterHandler(2, new String[]{"标煤单耗（g/度）", "厂用电率（%）"}))
+			.next(new NumberFormatterHandler(2, zhZb))
+			.next(new NumberFormatterHandler(4, new String[]{"单位供电成本（元/度）"}))
+			.next(new NumberFormatterHandler(0));
 		return formatterChain;
 	}
 	

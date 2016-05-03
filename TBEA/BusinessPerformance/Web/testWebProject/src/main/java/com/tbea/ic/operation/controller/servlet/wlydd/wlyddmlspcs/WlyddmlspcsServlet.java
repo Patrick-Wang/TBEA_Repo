@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -15,16 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
-import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.StatusData;
 import com.tbea.ic.operation.common.Util;
@@ -33,15 +28,13 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.excel.SbdddcbjpcqkSheetType;
+import com.tbea.ic.operation.common.excel.YlfxwlyddmlspcsSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.WlyddmlspcsService;
 import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.WlyddmlspcsServiceImpl;
-import com.tbea.ic.operation.common.excel.YlfxwlyddmlspcsSheetType;
 
 @Controller
 @RequestMapping(value = "wlydd")
@@ -135,7 +128,7 @@ public class WlyddmlspcsServlet {
 		ExcelTemplate template = ExcelTemplate.createYlfxwlyddmlspcsTemplate(getYlfxwlyddmlspcsSheetType(type, d));
 				
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		handler.next(new NumberFormatterHandler(1));
 		
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);

@@ -12,8 +12,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 var plugin;
 (function (plugin) {
     plugin.nyzbscjg = framework.basic.endpoint.lastId();
-    plugin.wcwzbkq = framework.basic.endpoint.lastId();
-    plugin.qtzbkq = framework.basic.endpoint.lastId();
+    plugin.wcwzbkqjg = framework.basic.endpoint.lastId();
+    plugin.qtzbkqjg = framework.basic.endpoint.lastId();
 })(plugin || (plugin = {}));
 var nyzbscqk;
 (function (nyzbscqk) {
@@ -54,7 +54,7 @@ var nyzbscqk;
                 return this.mOpt;
             };
             ShowView.prototype.isSupported = function (compType) {
-                if (this.mZbkqId == plugin.wcwzbkq) {
+                if (this.mZbkqId == plugin.wcwzbkqjg) {
                     if (Util.CompanyType.NLTK == compType) {
                         return true;
                     }
@@ -93,11 +93,11 @@ var nyzbscqk;
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.wcwzbkq, this.getId()))
+                    .fromEp(new framework.basic.EndpointProxy(plugin.wcwzbkqjg, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "五彩湾周边矿区市场销量价格情况");
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.qtzbkq, this.getId()))
+                    .fromEp(new framework.basic.EndpointProxy(plugin.qtzbkqjg, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "奇台周边矿区市场销量价格情况");
             };

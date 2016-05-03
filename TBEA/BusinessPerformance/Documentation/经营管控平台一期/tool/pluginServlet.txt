@@ -35,8 +35,6 @@
 		return Util.response(err);
 	}
 	
-	
-	
 	@RequestMapping(value = "entry/submit.do")
 	public @ResponseBody byte[] submit#template1#(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {

@@ -7,8 +7,8 @@
 
 module plugin {
     export let nyzbscjg : number = framework.basic.endpoint.lastId();
-    export let wcwzbkq : number = framework.basic.endpoint.lastId();
-    export let qtzbkq : number = framework.basic.endpoint.lastId();
+    export let wcwzbkqjg : number = framework.basic.endpoint.lastId();
+    export let qtzbkqjg : number = framework.basic.endpoint.lastId();
 }
 
 module nyzbscqk {
@@ -51,7 +51,7 @@ module nyzbscqk {
             }
 
             protected isSupported(compType:Util.CompanyType):boolean {
-                if (this.mZbkqId == plugin.wcwzbkq){
+                if (this.mZbkqId == plugin.wcwzbkqjg){
                     if (Util.CompanyType.NLTK == compType){
                         return true;
                     }
@@ -93,11 +93,11 @@ module nyzbscqk {
 
             public init(opt:Option):void {
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.wcwzbkq, this.getId()))
+                    .fromEp(new framework.basic.EndpointProxy(plugin.wcwzbkqjg, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "五彩湾周边矿区市场销量价格情况");
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.qtzbkq, this.getId()))
+                    .fromEp(new framework.basic.EndpointProxy(plugin.qtzbkqjg, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "奇台周边矿区市场销量价格情况");
             }

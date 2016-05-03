@@ -33,7 +33,6 @@ import com.tbea.ic.operation.common.excel.DzwzgbSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.service.dzwzgb.DzwzgbService;
 import com.tbea.ic.operation.service.dzwzgb.DzwzgbServiceImpl;
 
@@ -137,7 +136,7 @@ public class DzwzgbServlet {
 			template = ExcelTemplate.createDzwzgbTemplate(DzwzgbSheetType.XLDZCLCB);
 		}
 		
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);

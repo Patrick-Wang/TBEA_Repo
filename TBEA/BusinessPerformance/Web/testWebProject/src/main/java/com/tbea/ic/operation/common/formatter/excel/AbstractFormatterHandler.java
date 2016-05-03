@@ -76,7 +76,7 @@ public abstract class AbstractFormatterHandler implements FormatterHandler {
 			}
 		} else {
 			cell.setCellValue("--");
-			cell.setCellStyle(template.getCellStyleNull());
+			cell.setCellStyle(template.getCellStyleDefault());
 			return "--";
 		}
 	}

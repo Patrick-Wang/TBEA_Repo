@@ -78,7 +78,7 @@ public class NyzbscxlDaoImpl extends AbstractReadWriteDaoImpl<NyzbscxlEntity> im
 	public NyzbscxlEntity getByDate(Date d, Company company, int kq, int mz) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		Query q = this.getEntityManager().createQuery("from NyCompMiningAreaMatchEntity where id=:id and kq=:kq and mz=:mz");
+		Query q = this.getEntityManager().createQuery("from NyzbscxlEntity where dwid=:dwid and nf=:nf and yf=:yf and kq=:kq and mz=:mz");
 		q.setParameter("dwid", company.getId());
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);

@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +24,15 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.NyzbscqkSheetType;
+import com.tbea.ic.operation.common.formatter.excel.FormatterClient;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
+import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.service.nyzbscqk.nyzbscxl.NyzbscxlService;
 import com.tbea.ic.operation.service.nyzbscqk.nyzbscxl.NyzbscxlServiceImpl;
 
@@ -51,6 +54,12 @@ public class NyzbscxlServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		List<List<String>> result = nyzbscxlService.getNyzbscxl(d, company);
+		
+		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
+		handler.next(new RawNumberFormatterHandler(1));
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.doHandle(result);
+		
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 
@@ -62,6 +71,9 @@ public class NyzbscxlServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		List<List<String>> result = nyzbscxlService.getNyzbscxlEntry(d, company);
+		RawFormatterHandler handler = new RawNumberFormatterHandler(1, null, new Integer[]{3});
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.doHandle(result);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
@@ -97,22 +109,18 @@ public class NyzbscxlServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		
 		List<List<String>> ret = nyzbscxlService.getNyzbscxl(d, company);
 		ExcelTemplate template = ExcelTemplate.createNyzbscqkTemplate(NyzbscqkSheetType.NYZBSCXL);
-	
-		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
-		HSSFSheet sheet = workbook.getSheetAt(0);
-		for (int i = 0; i < ret.size(); ++i){
-			HSSFRow row = sheet.createRow(i + 2);
-			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
-			}
-		}
+	
+		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0, 1});
+		handler.next(new NumberFormatterHandler(1));
+		FormatterClient client = new FormatterClient(handler, 0, 2);
+		client.addMergeRegion(new MergeRegion(0, 2, 1, ret.size()));
+		client.doHandle(ret, template);
 		template.write(response, name + ".xls");
 	}
 }

@@ -3,7 +3,6 @@ package com.tbea.ic.operation.controller.servlet.chgb;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +41,6 @@ import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler.NumberType;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.chgb.ChgbService;
@@ -272,7 +270,7 @@ public class ChgbServlet {
 		List<List<String>> ret = chgbService.getChzmb(d, company);
 		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.ZMB);
 		
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
@@ -295,7 +293,7 @@ public class ChgbServlet {
 		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.JYKCB);
 		
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
+		handler.next(new NumberFormatterHandler(1));
 		
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
@@ -318,7 +316,7 @@ public class ChgbServlet {
 		List<List<String>> ret = chgbService.getChzlbhqk(d, company);
 		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.CHZLBHQK);
 		
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
@@ -365,7 +363,7 @@ public class ChgbServlet {
 		List<List<String>> ret = chgbService.getChxzqk(d, company);
 		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.CHXZQK);
 		
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
@@ -412,7 +410,7 @@ public class ChgbServlet {
 		List<List<String>> ret = chgbService.getChnych(d, company);
 		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.NYCH);
 		
-		FormatterHandler handler = new NumberFormatterHandler(NumberType.RESERVE_1);
+		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);

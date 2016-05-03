@@ -46,7 +46,7 @@ public class ExcelTemplate {
 	private static String pathXnychTemplate = resPath + "xnych_template.xls";
 	private static String pathWgcpqkTemplate = resPath + "wgcpqk_template.xls";
 	private static String pathSbdczclwcqkTemplate = resPath + "sbdczclwcqk_template.xls";
-		
+	private static String pathNyzbscqkTemplate = resPath + "nyzbscqk_template.xls";
 	private static ExcelTemplate createTemplate(String path, int index, int size)
 			throws FileNotFoundException, IOException {
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
@@ -60,6 +60,11 @@ public class ExcelTemplate {
 		}
 
 		return new ExcelTemplate(workbook);
+	}
+	
+	public static ExcelTemplate createSbdczclwcqkTemplate(SbdczclwcqkSheetType type) throws IOException {
+		return createTemplate(pathSbdczclwcqkTemplate, type.ordinal(),
+				SbdczclwcqkSheetType.END.ordinal());
 	}
 
 	public static ExcelTemplate createJygkTemplate(JygkSheetType type)
@@ -133,19 +138,26 @@ public class ExcelTemplate {
 				XnychSheetType.END.ordinal());
 	}
 	
-	public static ExcelTemplate createSbdczclwcqkTemplate(SbdczclwcqkSheetType type) throws IOException {
-		return createTemplate(pathSbdczclwcqkTemplate, type.ordinal(),
-				SbdczclwcqkSheetType.END.ordinal());
+	public static ExcelTemplate createWgcpqkTemplate(WgcpqkSheetType type) throws IOException {
+		return createTemplate(pathWgcpqkTemplate, type.ordinal(),
+				XnychSheetType.END.ordinal());
+	}
+	
+	public static ExcelTemplate createNyzbscqkTemplate(
+			NyzbscqkSheetType type)  throws IOException {
+		return createTemplate(pathNyzbscqkTemplate, type.ordinal(),
+				NyzbscqkSheetType.END.ordinal());
 	}
 	
 	HSSFWorkbook workbook;
-	HSSFCellStyle cellStyleNull;
+	HSSFCellStyle cellStyleDefault;
 	HSSFCellStyle cellStyleCenter;
-	HSSFCellStyle cellStyleNumber2;
-	HSSFCellStyle cellStyleNumber4;
-	HSSFCellStyle cellStyleNumber1;
-	HSSFCellStyle cellStyleNumber0;
-	HSSFCellStyle cellStylePercent;
+	HSSFCellStyle cellStyleCenterHeader;
+//	HSSFCellStyle cellStyleNumber2;
+//	HSSFCellStyle cellStyleNumber4;
+//	HSSFCellStyle cellStyleNumber1;
+//	HSSFCellStyle cellStyleNumber0;
+//	HSSFCellStyle cellStylePercent;
 	HSSFCellStyle cellStyleHeader;
 	
 	ExcelTemplate(HSSFWorkbook workbook){
@@ -160,59 +172,62 @@ public class ExcelTemplate {
 		cellStyleCenter.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
 		cellStyleCenter.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
 		
-		cellStyleNull = workbook
+		cellStyleDefault = workbook
 				.createCellStyle();
-		cellStyleNull.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		cellStyleNull.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-		cellStyleNull.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-		cellStyleNull.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-		cellStyleNull.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
+		cellStyleDefault.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+		cellStyleDefault.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+		cellStyleDefault.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+		cellStyleDefault.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+		cellStyleDefault.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
 		
-		cellStyleNumber0 = workbook.createCellStyle();
-//		cellStyleNumber0.setDataFormat(HSSFDataFormat
-//				.getBuiltinFormat("0"));
-		cellStyleNumber0.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-		cellStyleNumber0.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-		cellStyleNumber0.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-		cellStyleNumber0.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-		cellStyleNumber0.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		cellStyleNumber2 = workbook
-				.createCellStyle();
-//		cellStyleNumber2.setDataFormat(HSSFDataFormat
-//				.getBuiltinFormat("0.00"));
-		cellStyleNumber2.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-		cellStyleNumber2.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-		cellStyleNumber2.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-		cellStyleNumber2.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-		cellStyleNumber2.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		cellStyleNumber4 = workbook
-				.createCellStyle();
-//		cellStyleNumber4.setDataFormat(HSSFDataFormat
-//				.getBuiltinFormat("0.0000"));
-		cellStyleNumber4.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-		cellStyleNumber4.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-		cellStyleNumber4.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-		cellStyleNumber4.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-		cellStyleNumber4.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		cellStyleNumber1 = workbook
-				.createCellStyle();
-//		cellStyleNumber1.setDataFormat(HSSFDataFormat
-//				.getBuiltinFormat("0.0"));
-		cellStyleNumber1.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-		cellStyleNumber1.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-		cellStyleNumber1.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-		cellStyleNumber1.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-		cellStyleNumber1.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+
 		
-		cellStylePercent = workbook
-				.createCellStyle();
-//		cellStylePercent.setDataFormat(HSSFDataFormat
-//				.getBuiltinFormat("0.00%"));
-		cellStylePercent.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		cellStylePercent.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-		cellStylePercent.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-		cellStylePercent.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-		cellStylePercent.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
+//		
+//		cellStyleNumber0 = workbook.createCellStyle();
+////		cellStyleNumber0.setDataFormat(HSSFDataFormat
+////				.getBuiltinFormat("0"));
+//		cellStyleNumber0.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+//		cellStyleNumber0.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+//		cellStyleNumber0.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+//		cellStyleNumber0.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
+//		cellStyleNumber0.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+//		cellStyleNumber2 = workbook
+//				.createCellStyle();
+////		cellStyleNumber2.setDataFormat(HSSFDataFormat
+////				.getBuiltinFormat("0.00"));
+//		cellStyleNumber2.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+//		cellStyleNumber2.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+//		cellStyleNumber2.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+//		cellStyleNumber2.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
+//		cellStyleNumber2.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+//		cellStyleNumber4 = workbook
+//				.createCellStyle();
+////		cellStyleNumber4.setDataFormat(HSSFDataFormat
+////				.getBuiltinFormat("0.0000"));
+//		cellStyleNumber4.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+//		cellStyleNumber4.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+//		cellStyleNumber4.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+//		cellStyleNumber4.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
+//		cellStyleNumber4.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+//		cellStyleNumber1 = workbook
+//				.createCellStyle();
+////		cellStyleNumber1.setDataFormat(HSSFDataFormat
+////				.getBuiltinFormat("0.0"));
+//		cellStyleNumber1.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+//		cellStyleNumber1.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+//		cellStyleNumber1.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+//		cellStyleNumber1.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
+//		cellStyleNumber1.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+		
+//		cellStylePercent = workbook
+//				.createCellStyle();
+////		cellStylePercent.setDataFormat(HSSFDataFormat
+////				.getBuiltinFormat("0.00%"));
+//		cellStylePercent.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+//		cellStylePercent.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+//		cellStylePercent.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+//		cellStylePercent.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+//		cellStylePercent.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
 		
 		cellStyleHeader = workbook
 				.createCellStyle();
@@ -220,11 +235,21 @@ public class ExcelTemplate {
 		font.setFontName("宋体");    
 		font.setFontHeightInPoints((short) 10);//设置字体大小 
 		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		cellStyleHeader.setFont(font);
 		cellStyleHeader.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
 		cellStyleHeader.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleHeader.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
 		cellStyleHeader.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-		cellStyleHeader.setFont(font);
+		
+		cellStyleCenterHeader = workbook
+				.createCellStyle();
+		cellStyleCenterHeader.setFont(font);
+		cellStyleCenterHeader.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cellStyleCenterHeader.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cellStyleCenterHeader.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+		cellStyleCenterHeader.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+		cellStyleCenterHeader.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+		cellStyleCenterHeader.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
 			
 	}
 	
@@ -239,36 +264,44 @@ public class ExcelTemplate {
 		return cellStyleCenter;
 	}
 	
+	public HSSFCellStyle getCellStyleCenterHeader() {
+		return cellStyleCenterHeader;
+	}
+	
+	public HSSFSheet getSheet(){
+		return this.workbook.getSheetAt(0);
+	}
+	
 	/**
 	 * @return the cellStyleNull
 	 */
-	public HSSFCellStyle getCellStyleNull() {
-		return cellStyleNull;
+	public HSSFCellStyle getCellStyleDefault() {
+		return cellStyleDefault;
 	}
-	/**
-	 * @return the cellStyleNumber
-	 */
-	public HSSFCellStyle getCellStyleNumber2() {
-		return cellStyleNumber2;
-	}
-	
-	public HSSFCellStyle getCellStyleNumber4() {
-		return cellStyleNumber4;
-	}
-	
-	public HSSFCellStyle getCellStyleNumber1() {
-		return cellStyleNumber1;
-	}
-	
-	public HSSFCellStyle getCellStyleNumber0() {
-		return cellStyleNumber0;
-	}
-	/**
-	 * @return the cellStylePercent
-	 */
-	public HSSFCellStyle getCellStylePercent() {
-		return cellStylePercent;
-	}
+//	/**
+//	 * @return the cellStyleNumber
+//	 */
+//	public HSSFCellStyle getCellStyleNumber2() {
+//		return cellStyleNumber2;
+//	}
+//	
+//	public HSSFCellStyle getCellStyleNumber4() {
+//		return cellStyleNumber4;
+//	}
+//	
+//	public HSSFCellStyle getCellStyleNumber1() {
+//		return cellStyleNumber1;
+//	}
+//	
+//	public HSSFCellStyle getCellStyleNumber0() {
+//		return cellStyleNumber0;
+//	}
+//	/**
+//	 * @return the cellStylePercent
+//	 */
+//	public HSSFCellStyle getCellStylePercent() {
+//		return cellStylePercent;
+//	}
 	/**
 	 * @return the cellStyleHeader
 	 */
@@ -301,10 +334,5 @@ public class ExcelTemplate {
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(fileName, "UTF-8")  +"\"");
 		this.writeWithRawSize(response.getOutputStream());
-	}
-
-	public static ExcelTemplate createWgcpqkTemplate(WgcpqkSheetType type) throws IOException {
-		return createTemplate(pathWgcpqkTemplate, type.ordinal(),
-				XnychSheetType.END.ordinal());
 	}
 }

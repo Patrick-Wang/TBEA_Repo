@@ -21,7 +21,7 @@ public class RawHeaderFormatterHandler extends RawAbstractFormatterHandler {
 		if (val.contains(" ")){
 			ret = " " + val.trim();
 		}
-		return val;
+		return ret;
 	}
 
 }
