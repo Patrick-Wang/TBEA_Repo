@@ -171,6 +171,11 @@ var JQTable;
         TextAlign[TextAlign["Center"] = 2] = "Center";
     })(JQTable.TextAlign || (JQTable.TextAlign = {}));
     var TextAlign = JQTable.TextAlign;
+    JQTable.NodeId = (function (idBase) {
+        return function () {
+            return "jqTitle_" + (++idBase) + "_node";
+        };
+    })(2000);
     var Node = (function () {
         function Node(name, id, isReadOnly, align, width, editType, options, isNumber, 
             //add by hzdqzy
@@ -200,13 +205,16 @@ var JQTable;
             };
         }
         Node.create = function (opts) {
-            var node = new Node(null, null);
+            var node = new Node(undefined, undefined);
             node.mOpts = $.extend({}, {
                 isReadOnly: true,
                 isNumber: true,
                 align: TextAlign.Right,
                 width: 0
             }, opts);
+            if (node.mOpts.id == undefined) {
+                node.mOpts.id = JQTable.NodeId();
+            }
             return node;
         };
         Node.prototype.align = function () {

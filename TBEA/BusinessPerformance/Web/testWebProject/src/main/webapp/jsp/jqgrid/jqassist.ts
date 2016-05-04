@@ -194,6 +194,12 @@ module JQTable {
         Center
     }
 
+    export let NodeId : ()=>string= (function(idBase:number){
+        return function(){
+            return "jqTitle_" + (++idBase) + "_node";
+        };
+    })(2000);
+
     export interface NodeOption {
         name: string;
         id: string;
@@ -240,13 +246,16 @@ module JQTable {
         }
 
         public static create(opts:NodeOption):Node {
-            var node:Node = new Node(null, null);
+            var node:Node = new Node(undefined, undefined);
             node.mOpts = $.extend({}, {
                 isReadOnly: true,
                 isNumber: true,
                 align: TextAlign.Right,
                 width: 0
             }, opts);
+            if (node.mOpts.id == undefined){
+                node.mOpts.id = NodeId();
+            }
             return node;
         }
 
