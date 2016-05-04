@@ -3,6 +3,13 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+///<reference path="../../messageBox.ts"/>
+///<reference path="../../framework/basic/basicdef.ts"/>
+///<reference path="../../framework/route/route.ts"/>
+///<reference path="../sbdczclwcqkdef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.cpczwcqk = framework.basic.endpoint.lastId();
@@ -180,8 +187,12 @@ var sbdczclwcqk;
                     drag: false,
                     resize: false,
                     assistEditable: true,
+                    //autowidth : false,
                     cellsubmit: 'clientArray',
+                    //editurl: 'clientArray',
                     cellEdit: true,
+                    //height: data.length > 25 ? 550 : '100%',
+                    // width: titles.length * 200,
                     rowNum: 39,
                     height: '100%',
                     width: 1200,

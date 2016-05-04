@@ -1,3 +1,5 @@
+/// <reference path="util.ts" />
+/// <reference path="unitedSelector.ts" />
 var Util;
 (function (Util) {
     String.prototype["getWidth"] = function (fontSize) {
@@ -105,6 +107,7 @@ var Util;
                     noneSelectedText: this.mOpt.noneSelectedText,
                     selectedText: this.mOpt.selectedText,
                     height: '100%',
+                    // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
             }
@@ -114,6 +117,7 @@ var Util;
                     header: multi,
                     minWidth: minWidth,
                     height: '100%',
+                    // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
             }

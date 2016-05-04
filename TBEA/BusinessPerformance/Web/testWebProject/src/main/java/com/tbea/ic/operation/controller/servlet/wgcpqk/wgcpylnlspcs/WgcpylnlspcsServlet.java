@@ -141,6 +141,6 @@ public class WgcpylnlspcsServlet {
 				handler.handle(null, j, template, sheet.getRow(i + 2).getCell(j), ret.get(i).get(j));
 			}
 		}
-		template.write(response, name + "鏈�.xls");
+		template.write(response, name + "月.xls");
 	}
 }

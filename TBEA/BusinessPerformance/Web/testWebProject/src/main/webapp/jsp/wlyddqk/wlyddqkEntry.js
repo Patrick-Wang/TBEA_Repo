@@ -1,3 +1,10 @@
+/// <reference path="../jqgrid/jqassist.ts" />
+/// <reference path="../util.ts" />
+/// <reference path="../dateSelector.ts" />
+/// <reference path="wlyddqkdef.ts" />
+/// <reference path="../unitedSelector.ts"/>
+///<reference path="../messageBox.ts"/>
+///<reference path="../companySelector.ts"/>
 var wlyddqk;
 (function (wlyddqk) {
     var EntryView = (function () {
@@ -75,6 +82,7 @@ var wlyddqk;
                     header: false,
                     minWidth: width,
                     height: '100%',
+                    // noneSelectedText: "请选择月份",
                     selectedList: 1
                 })
                     .css("padding", "2px 0 2px 4px")

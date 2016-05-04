@@ -26,6 +26,7 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.SbdscqyqkSheetType;
+import com.tbea.ic.operation.common.excel.YlfxwgcpylnlspcsSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterClient;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
@@ -101,48 +102,39 @@ public class XfcpqyServlet {
 		return Util.response(err);
 	}
 	
+	private SbdscqyqkSheetType getSheetType(SbdscqyqkType type, Date d){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		
+		Integer num = SbdscqyqkSheetType.XFCPQY_BYQ_1.ordinal() + type.value() * 12 + cal.get(Calendar.MONTH);
+		
+		SbdscqyqkSheetType sheetType = SbdscqyqkSheetType.values()[num];
+		
+		return sheetType;
+	}
+	
 	@RequestMapping(value = "export.do")
 	public void exportXfcpqy(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> ret = xfcpqyService.getXfcpqy(d, company, getType(request));
-		ExcelTemplate template = ExcelTemplate.createSbdscqyqkTemplate(SbdscqyqkSheetType.XFCPQY);
-		HSSFWorkbook workbook = template.getWorkbook();
-		String name = workbook.getSheetName(0);
-		workbook.setSheetName(0, name);
-		HSSFSheet sheet = workbook.getSheetAt(0);
+		List<List<String>> ret = xfcpqyService.getXfcpqy(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
 		
-		Calendar startMonth = Calendar.getInstance();
-		startMonth.setTime(d);
-		startMonth.add(Calendar.YEAR, -1);
-		startMonth.add(Calendar.MONTH, 1);
-
-		int last = 2 + 12 - (startMonth.get(Calendar.MONTH) + 1);
-		for (int i = 0; i < 12; ++i){
-			HSSFRow title = sheet.getRow(0);
-			HSSFCell cell = title.createCell(i + 2);
-			cell.setCellStyle(template.getCellStyleCenter());
-			if (i <= last - 2){
-				cell.setCellValue("上年度");
-			}else{
-				cell.setCellValue("本年度");
-			}
-			
-			HSSFRow row = sheet.getRow(1);
-			cell = row.createCell(i + 2);
-			cell.setCellValue((startMonth.get(Calendar.MONTH) + 1) + "月");
-			cell.setCellStyle(template.getCellStyleCenter());
-			startMonth.add(Calendar.MONTH, 1);
-		}
-		
+		ExcelTemplate template = ExcelTemplate.createSbdscqyqkTemplate(getSheetType(getType(request), d));
+				
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
 		handler.next(new NumberFormatterHandler(1));
-		FormatterClient client = new FormatterClient(handler, 1, 2);
-		client.addMergeRegion(new MergeRegion(2, 0, 12, 1));
-		client.format(ret, template);
-		template.write(response, name + ".xls");
+		
+		HSSFWorkbook workbook = template.getWorkbook();
+		String name = companyManager.getBMDBOrganization().getCompany(comp).getName() + workbook.getSheetName(0);
+		workbook.setSheetName(0, name);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = 0; i < ret.size(); ++i){
+			for (int j = 0; j < ret.get(i).size(); ++j){
+				handler.handle(null, j, template, sheet.getRow(i + 2).getCell(j), ret.get(i).get(j));
+			}
+		}
+		template.write(response, name + "月.xls");
 	}
 }

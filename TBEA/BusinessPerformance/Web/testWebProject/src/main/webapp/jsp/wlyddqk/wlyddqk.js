@@ -1,3 +1,10 @@
+/// <reference path="../jqgrid/jqassist.ts" />
+/// <reference path="../util.ts" />
+/// <reference path="../dateSelector.ts" />
+/// <reference path="wlyddqkdef.ts" />
+/// <reference path="../unitedSelector.ts"/>
+///<reference path="../messageBox.ts"/>
+///<reference path="../companySelector.ts"/>
 var wlyddqk;
 (function (wlyddqk) {
     var View = (function () {
@@ -27,6 +34,7 @@ var wlyddqk;
             }
             return this.plugin(nod);
         };
+        //不可以起名叫做export 在IE中有冲突
         View.prototype.exportExcel = function (elemId) {
             var url = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
             $("#" + elemId)[0].action = url;
@@ -84,6 +92,7 @@ var wlyddqk;
                     header: false,
                     minWidth: 325,
                     height: '100%',
+                    // noneSelectedText: "请选择月份",
                     selectedList: 1
                 })
                     .css("padding", "2px 0 2px 4px")
