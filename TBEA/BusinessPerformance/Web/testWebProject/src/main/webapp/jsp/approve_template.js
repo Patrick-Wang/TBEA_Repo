@@ -1,8 +1,3 @@
-/// <reference path="dateSelector.ts" />
-/// <reference path="companySelector.ts" />
-/// <reference path="util.ts" />
-///<reference path="jqgrid/jqassist.ts"/>
-///<reference path="messageBox.ts"/>
 var approve_template;
 (function (approve_template) {
     var JQGridAssistantFactory = (function () {
@@ -88,7 +83,6 @@ var approve_template;
                 return [[]];
             }
         };
-        //[[compId ...]]
         QNJHSubView.prototype.getUnapprovedData = function () {
             if (this.mTableUnapproveAssist != null) {
                 var ids = this.mTableUnapproveAssist.getCheckedRowIds();
@@ -104,8 +98,6 @@ var approve_template;
         QNJHSubView.prototype.getDate = function () {
             return this.mData;
         };
-        //[[compId ,zbId, zbName, value] ...] approved 
-        //[[compId ,zbId, zbName, value] ...] unapproved
         QNJHSubView.prototype.process = function (data, date, companies) {
             this.mData = date;
             if (data[0].length > 0) {
@@ -115,7 +107,6 @@ var approve_template;
                 this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核数据");
             }
         };
-        //comps : selected companies
         QNJHSubView.prototype.updateTable = function (rawData, comps, tableId, caption) {
             var tmpData = [];
             var title = ["单位名称"];
@@ -123,7 +114,6 @@ var approve_template;
             var zbColMap = {};
             var compMap = {};
             var companies = [];
-            // remove unused company
             $(comps).each(function (i) {
                 $(rawData).each(function (j) {
                     if (rawData[j][0] == "" + comps[i].id) {
@@ -134,7 +124,6 @@ var approve_template;
             for (var i in compMap) {
                 companies.push(compMap[i]);
             }
-            //make title
             $(rawData).each(function (i) {
                 if (!Util.isExist(zbColMap["_" + rawData[i][1]])) {
                     colZbIds.push(rawData[i][1]);
@@ -142,7 +131,6 @@ var approve_template;
                     zbColMap["_" + rawData[i][1]] = title.length;
                 }
             });
-            //make data
             $(companies).each(function (i) {
                 tmpData.push([companies[i].id, companies[i].value]);
                 $(rawData).each(function (j) {
@@ -209,16 +197,11 @@ var approve_template;
             parent.append("<table id='" + name + "'></table>");
             var width = (title.length) * 85;
             $("#" + name).jqGrid(jqAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: jqAssist.getDataWithId(tmpData),
                 datatype: "local",
                 multiselect: true,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //cellsubmit: 'clientArray',
-                //cellEdit: false,
                 rowNum: 1500,
                 height: '100%',
                 width: 1200,
@@ -269,7 +252,6 @@ var approve_template;
             }
             return ret;
         };
-        //[[compId...], [year...], [month...]]
         YDSubView.prototype.getUnapprovedData = function () {
             var ret = [[]];
             if (this.mTableUnapproveAssist != null) {
@@ -283,8 +265,6 @@ var approve_template;
         YDSubView.prototype.getDate = function () {
             return this.mData;
         };
-        //[[compId ,zbId, zbName, value, year?, month?] ...] approved 
-        //[[compId ,zbId, zbName, value, year?, month?] ...] unapproved
         YDSubView.prototype.process = function (data, date, companies) {
             this.mData = date;
             if (data[0].length > 0) {
@@ -297,7 +277,6 @@ var approve_template;
         YDSubView.prototype.updateTable = function (rawData, comps, tableId, caption) {
             var compMap = {};
             var companies = [];
-            // remove unused company
             $(comps).each(function (i) {
                 $(rawData).each(function (j) {
                     if (rawData[j][0] == "" + comps[i].id) {
@@ -316,7 +295,6 @@ var approve_template;
                 title.push("日期");
                 colZbIds.push("rq");
             }
-            //make title
             $(rawData).each(function (i) {
                 if (!Util.isExist(zbColMap["_" + rawData[i][1]])) {
                     colZbIds.push(rawData[i][1]);
@@ -326,7 +304,6 @@ var approve_template;
             });
             var tmpData = [];
             var compYearMap = {};
-            //make data
             $(companies).each(function (i) {
                 $(rawData).each(function (j) {
                     if (rawData[j][0] == "" + companies[i].id) {
@@ -408,17 +385,12 @@ var approve_template;
             parent.append("<table id='" + name + "'></table>");
             var width = (title.length) * 85;
             $("#" + name).jqGrid(jqAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: jqAssist.getDataWithId(tmpData),
                 datatype: "local",
                 multiselect: true,
                 drag: false,
                 resize: false,
                 rowNum: 1000,
-                //autowidth : false,
-                //cellsubmit: 'clientArray',
-                //cellEdit: false,
                 height: '100%',
                 width: 1200,
                 shrinkToFit: width > 1200 ? false : true,
@@ -463,7 +435,6 @@ var approve_template;
                     break;
             }
             this.updateTitle();
-            //this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;

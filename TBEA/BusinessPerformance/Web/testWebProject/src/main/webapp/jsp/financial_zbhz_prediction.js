@@ -1,5 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
 var financial_zbhz_prediciton;
 (function (financial_zbhz_prediciton) {
     var FirstMonthZb;
@@ -186,8 +184,6 @@ var financial_zbhz_prediciton;
             this.mYear = year;
             this.mTableId = tableId;
             $('h1').text(this.mYear + "年" + "季度五大经营指标预测完成情况");
-            //this.updateTable();
-            //this.updateUI();
         };
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
@@ -327,16 +323,11 @@ var financial_zbhz_prediciton;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: 550,
                 width: 1350,
                 shrinkToFit: true,

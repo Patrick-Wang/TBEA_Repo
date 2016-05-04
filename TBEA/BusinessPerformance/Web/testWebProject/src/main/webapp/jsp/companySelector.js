@@ -1,5 +1,3 @@
-/// <reference path="util.ts" />
-/// <reference path="unitedSelector.ts" />
 var Util;
 (function (Util) {
     String.prototype["getWidth"] = function (fontSize) {
@@ -21,7 +19,7 @@ var Util;
             this.selectedText = '# 个项目公司被选中';
         }
         return ICompanySelectorOption;
-    })();
+    }());
     Util.ICompanySelectorOption = ICompanySelectorOption;
     var CompanySelector = (function () {
         function CompanySelector(multi, divId, comps, firstComp, opt) {
@@ -107,7 +105,6 @@ var Util;
                     noneSelectedText: this.mOpt.noneSelectedText,
                     selectedText: this.mOpt.selectedText,
                     height: '100%',
-                    // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
             }
@@ -117,7 +114,6 @@ var Util;
                     header: multi,
                     minWidth: minWidth,
                     height: '100%',
-                    // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
             }
@@ -190,6 +186,6 @@ var Util;
             return ret;
         };
         return CompanySelector;
-    })();
+    }());
     Util.CompanySelector = CompanySelector;
 })(Util || (Util = {}));

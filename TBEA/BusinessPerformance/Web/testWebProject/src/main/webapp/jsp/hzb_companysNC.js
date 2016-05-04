@@ -1,5 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
 var hzb_companysNC;
 (function (hzb_companysNC) {
     var ZtId;
@@ -89,16 +87,11 @@ var hzb_companysNC;
             var outputData = [];
             Util.formatData(outputData, this.mData, this.initPercentList(), []);
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(outputData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: outputData.length > 23 ? 500 : '100%',
                 width: 1300,
                 shrinkToFit: true,

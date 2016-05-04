@@ -1,5 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
 var gdw_zbhz;
 (function (gdw_zbhz) {
     var DwZb;

@@ -3,12 +3,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-///<reference path="../../messageBox.ts"/>
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.yclbfqk = framework.basic.endpoint.lastId();
@@ -29,7 +23,7 @@ var wgcpqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
@@ -152,12 +146,8 @@ var wgcpqk;
                     drag: false,
                     resize: false,
                     assistEditable: true,
-                    //autowidth : false,
                     cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
                     cellEdit: true,
-                    //height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
                     rowNum: 20,
                     height: '100%',
                     width: 1200,
@@ -168,6 +158,6 @@ var wgcpqk;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        })(framework.basic.EntryPluginView);
+        }(framework.basic.EntryPluginView));
     })(yclbfqkEntry = wgcpqk.yclbfqkEntry || (wgcpqk.yclbfqkEntry = {}));
 })(wgcpqk || (wgcpqk = {}));

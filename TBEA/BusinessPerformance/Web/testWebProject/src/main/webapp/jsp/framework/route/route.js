@@ -1,6 +1,3 @@
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../../../js/jquery/jquery.d.ts" />
 var framework;
 (function (framework) {
     var route;
@@ -44,20 +41,17 @@ var framework;
                 return this;
             };
             Router.prototype.broadcast = function (id, data) {
-                //if (this.mCurEvent != undefined) {
                 for (var i in this.mEplist) {
                     var event_1 = {
                         from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
                         to: undefined,
                         id: id,
-                        data: data
+                        data: data,
                     };
                     this.mEndpoints[this.mEplist[i]].onEvent(event_1);
                 }
                 this.mCurEvent = undefined;
                 return Router.OK;
-                //}
-                //return Router.FAILED;
             };
             Router.prototype.send = function (id, data) {
                 if (this.mCurEvent != undefined) {
@@ -86,7 +80,7 @@ var framework;
             Router.OK = 887291;
             Router.FAILED = 887292;
             return Router;
-        })();
+        }());
         route.Router = Router;
     })(route = framework.route || (framework.route = {}));
 })(framework || (framework = {}));

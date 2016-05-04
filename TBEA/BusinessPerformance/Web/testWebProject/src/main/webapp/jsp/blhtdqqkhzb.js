@@ -1,5 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
 var blhtdqqkhzb;
 (function (blhtdqqkhzb) {
     var JQGridAssistantFactory = (function () {
@@ -155,9 +153,6 @@ var blhtdqqkhzb;
                 ["保理合同\r\n到期情况", "金额"],
                 ["保理合同\r\n到期情况", "份数"]
             ];
-            //            for (var i = 0; i < data.length; ++i){
-            //                data[i] = data[i].concat(this.mTableData[i]);
-            //            }
             if (undefined != this.mTableData) {
                 var row = [];
                 for (var i = 0; i < data.length; ++i) {

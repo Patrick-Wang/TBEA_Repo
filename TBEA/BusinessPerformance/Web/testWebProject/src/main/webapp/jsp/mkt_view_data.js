@@ -1,5 +1,3 @@
-/// <reference path="util.ts" />
-/// <reference path="jqgrid/jqassist.ts" />
 var mkt_view_data;
 (function (mkt_view_data) {
     var JQGridAssistantFactory = (function () {
@@ -98,12 +96,9 @@ var mkt_view_data;
             this.mCompanyName = companyName;
             this.TableId = TableId;
             this.childTableId = TableId + "_jqgrid_1234";
-            //请求数据
             this.mDataSet = new Util.Ajax("mkt_view_update.do", false);
             this.mSaveDataSet = new Util.Ajax("mkt_entry_data.do", false);
             this.onDoc_TypeSelected();
-            //this.onCompanySelected();
-            //this.updateUI();
         };
         View.prototype.onDoc_TypeSelected = function () {
             this.mDocType = $("#rpttype").val();
@@ -148,7 +143,6 @@ var mkt_view_data;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            //删去历史内容
             var parent = $("#" + this.TableId);
             parent.empty();
             parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
@@ -173,16 +167,11 @@ var mkt_view_data;
         View.prototype.updateTable = function (parentName, childName, tableAssist, rawData) {
             var _this = this;
             $("#" + childName).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(rawData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                // autowidth : false,
-                //cellsubmit: 'clientArray',
-                //cellEdit: true,
                 editurl: 'clientArray',
                 height: '100%',
                 width: $(document).width() - 60,
@@ -190,7 +179,7 @@ var mkt_view_data;
                 autoScroll: true,
                 pager: '#pager',
                 rowNum: 20,
-                viewrecords: true //是否显示行数 
+                viewrecords: true
             }));
             if (rawData.length != 0) {
                 $("#assist").css("display", "block");
@@ -239,7 +228,6 @@ var mkt_view_data;
                             $("#" + childName).addRowData($("#" + childName)[0].p.data.length + 1, data, 'first');
                             var tmpData = $("#" + childName)[0].p.data;
                             tmpData.unshift(tmpData.pop());
-                            //$("#pager input.ui-pg-input").val($('input.ui-pg-input').next().text());
                             $("#pager input.ui-pg-input").val(1);
                             var e = $.Event("keypress");
                             e.keyCode = 13;

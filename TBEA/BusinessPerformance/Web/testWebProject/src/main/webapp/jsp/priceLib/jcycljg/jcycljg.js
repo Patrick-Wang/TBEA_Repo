@@ -1,9 +1,3 @@
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="jcycljgdef.ts" />
-/// <reference path="../../unitedSelector.ts"/>
-///<reference path="../../messageBox.ts"/>
 var jcycljg;
 (function (jcycljg) {
     var View = (function () {

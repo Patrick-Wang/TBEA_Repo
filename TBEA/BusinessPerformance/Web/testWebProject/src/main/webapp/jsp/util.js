@@ -3,7 +3,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-/// <reference path="jqgrid/vector.ts" />
 var Util;
 (function (Util) {
     (function (ErrorCode) {
@@ -50,7 +49,7 @@ var Util;
             return handler;
         };
         return AbstractFormatHandler;
-    })();
+    }());
     var FormatIntHandler = (function (_super) {
         __extends(FormatIntHandler, _super);
         function FormatIntHandler(zbs, cols) {
@@ -67,7 +66,7 @@ var Util;
             }
         };
         return FormatIntHandler;
-    })(AbstractFormatHandler);
+    }(AbstractFormatHandler));
     Util.FormatIntHandler = FormatIntHandler;
     var FormatCurrencyHandler = (function (_super) {
         __extends(FormatCurrencyHandler, _super);
@@ -85,7 +84,7 @@ var Util;
             }
         };
         return FormatCurrencyHandler;
-    })(AbstractFormatHandler);
+    }(AbstractFormatHandler));
     Util.FormatCurrencyHandler = FormatCurrencyHandler;
     var FormatPercentHandler = (function (_super) {
         __extends(FormatPercentHandler, _super);
@@ -103,7 +102,7 @@ var Util;
             }
         };
         return FormatPercentHandler;
-    })(AbstractFormatHandler);
+    }(AbstractFormatHandler));
     Util.FormatPercentHandler = FormatPercentHandler;
     var FormatPercentSignalHandler = (function (_super) {
         __extends(FormatPercentSignalHandler, _super);
@@ -121,7 +120,7 @@ var Util;
             }
         };
         return FormatPercentSignalHandler;
-    })(AbstractFormatHandler);
+    }(AbstractFormatHandler));
     Util.FormatPercentSignalHandler = FormatPercentSignalHandler;
     var FormatFordotHandler = (function (_super) {
         __extends(FormatFordotHandler, _super);
@@ -141,7 +140,7 @@ var Util;
             }
         };
         return FormatFordotHandler;
-    })(AbstractFormatHandler);
+    }(AbstractFormatHandler));
     Util.FormatFordotHandler = FormatFordotHandler;
     var ZBStatus = (function () {
         function ZBStatus() {
@@ -153,7 +152,7 @@ var Util;
         ZBStatus.APPROVED_2 = "APPROVED_2";
         ZBStatus.SUBMITTED_2 = "SUBMITTED_2";
         return ZBStatus;
-    })();
+    }());
     Util.ZBStatus = ZBStatus;
     (function (ZBType) {
         ZBType[ZBType["QNJH"] = 0] = "QNJH";
@@ -332,11 +331,9 @@ var Util;
         CompanyType[CompanyType["ZTGS"] = 165] = "ZTGS";
         CompanyType[CompanyType["ZXGS"] = 166] = "ZXGS";
         CompanyType[CompanyType["ZYGS"] = 167] = "ZYGS";
-        //三期新增项目公司
         CompanyType[CompanyType["SBDQSBGS"] = 168] = "SBDQSBGS";
         CompanyType[CompanyType["CTGYGS"] = 169] = "CTGYGS";
         CompanyType[CompanyType["DXDLJCZXGS"] = 170] = "DXDLJCZXGS";
-        //非正式公司
         CompanyType[CompanyType["DBSBDCYJT"] = 171] = "DBSBDCYJT";
         CompanyType[CompanyType["NFSBDCYJT"] = 172] = "NFSBDCYJT";
         CompanyType[CompanyType["GCCY"] = 173] = "GCCY";
@@ -349,34 +346,6 @@ var Util;
     })(Util.CompanyType || (Util.CompanyType = {}));
     var CompanyType = Util.CompanyType;
     $.ajaxSetup({ cache: false });
-    //    export function parse(jsstr: string): any {
-    //        var jsonValue;
-    //        eval('jsonValue = ' + jsstr); 
-    //        return jsonValue;
-    //    }
-    //    
-    //    export function stringify(json : any) : string{
-    //        var s = '';
-    //
-    //        if (typeof (json) == "string") {
-    //            s = '"' + json.replace(new RegExp('\\\\',"g"), '\\\\\\\\').replace(new RegExp('"', "g"), '\\"') + '"';
-    //        } else if (typeof (json) == "object") {
-    //            if (json instanceof Array) {
-    //                for (var k in json) {
-    //                    s += "," + stringify(json[k]);
-    //                }
-    //                s = '[' + s.substring(1) + ']';
-    //            } else {
-    //                for (var k in json) {
-    //                    s += ',"' + k + '":' + stringify(json[k]);
-    //                }
-    //                s = '{' + s.substring(1) + '}';
-    //            }
-    //        } else {
-    //            s += json;
-    //        }
-    //        return s;
-    //    }
     var Promise = (function () {
         function Promise() {
             this.mSuccessList = [];
@@ -402,7 +371,7 @@ var Util;
             return this;
         };
         return Promise;
-    })();
+    }());
     Util.Promise = Promise;
     var Ajax = (function () {
         function Ajax(baseUrl, useCache) {
@@ -488,7 +457,7 @@ var Util;
             return promise;
         };
         return Ajax;
-    })();
+    }());
     Util.Ajax = Ajax;
     function formatData(outputData, inputData, precentList, specialsjzhCols, formatStartColumn) {
         if (formatStartColumn === void 0) { formatStartColumn = 1; }

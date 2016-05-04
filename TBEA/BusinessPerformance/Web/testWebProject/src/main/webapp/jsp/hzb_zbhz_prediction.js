@@ -1,5 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
 var hzb_zbhz_prediciton;
 (function (hzb_zbhz_prediciton) {
     var FirstMonthZb;
@@ -188,8 +186,6 @@ var hzb_zbhz_prediciton;
             this.mYear = year;
             this.mTableId = tableId;
             $('h1').text(this.mYear + "年" + "季度指标预测完成情况");
-            //this.updateTable();
-            //this.updateUI();
         };
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
@@ -223,7 +219,6 @@ var hzb_zbhz_prediciton;
                 .then(function (dataArray) {
                 _this.mData = dataArray;
                 $('h1').text(_this.mYear + "年" + "季度指标预测完成情况");
-                //document.title = this.mYear + "年" + this.mMonth + "月 指标汇总";
                 _this.updateTable();
             });
         };
@@ -284,16 +279,11 @@ var hzb_zbhz_prediciton;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(outputData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: '100%',
                 width: 1330,
                 shrinkToFit: true,

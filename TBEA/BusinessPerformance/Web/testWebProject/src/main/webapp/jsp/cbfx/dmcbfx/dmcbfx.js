@@ -1,9 +1,3 @@
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../cbfxdef.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -24,7 +18,6 @@ var cbfx;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            //吨煤成本分析表
             JQGridAssistantFactory.createTable = function (gridName, year, month) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("成本构成", "rqa", true, TextAlign.Center),
@@ -38,7 +31,6 @@ var cbfx;
                         .append(new JQTable.Node("完成比", "af"))
                 ], gridName);
             };
-            //吨煤成本趋势分析表
             JQGridAssistantFactory.createQsTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("成本构成", "aa", true, TextAlign.Center),
@@ -140,23 +132,6 @@ var cbfx;
                 else {
                     tableAssist = JQGridAssistantFactory.createQsTable(name);
                 }
-                //let data : string[][] = [
-                //    ["土方剥离爆破成本"],
-                //    ["原煤爆破成本"],
-                //    ["原煤采运成本"],
-                //    ["回筛倒运成本"],
-                //    ["装车成本"],
-                //    ["直接成本合计"],
-                //    ["非可控成本"],
-                //    ["可控成本"],
-                //    ["制造费用小计"],
-                //    ["技改财务费用"],
-                //    ["生产成本合计"]
-                //];
-                //
-                //for (let i = 0; i < data.length; ++i){
-                //    data[i] = data[i].concat(this.mData[i]);
-                //}
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");

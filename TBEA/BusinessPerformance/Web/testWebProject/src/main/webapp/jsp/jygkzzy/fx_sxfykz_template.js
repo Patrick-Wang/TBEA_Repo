@@ -1,8 +1,3 @@
-/// <reference path="../jqgrid/jqassist.ts" />
-/// <reference path="../util.ts" />
-/// <reference path="../dateSelector.ts" />
-/// <reference path="company_selector.ts" />
-/// <reference path="bglx_selector.ts" />
 var fx_sxfykz;
 (function (fx_sxfykz) {
     var JQGridAssistantFactory = (function () {
@@ -60,7 +55,6 @@ var fx_sxfykz;
                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
                 this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy, '01');
                 this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx, opt.isByq, opt.isXl, opt.isSbdcy);
-                //this.updateTextandTitle(this.mDateSelector.getDate());
                 if (opt.comps.length == 1) {
                     this.mCompanySelector.hide();
                 }
@@ -116,16 +110,11 @@ var fx_sxfykz;
                 }
             }
             $("#" + name).jqGrid(this.mTableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: this.mTableAssist.getData(this.mTableData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: this.mTableData.length > 23 ? 500 : '100%',
                 width: this.mTableData[0].length * 100,
                 shrinkToFit: true,

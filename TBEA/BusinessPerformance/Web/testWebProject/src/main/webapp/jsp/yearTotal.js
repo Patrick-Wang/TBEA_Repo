@@ -1,8 +1,3 @@
-/**
- * Created by Floyd on 2016/3/28.
- */
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
 var yearTotal;
 (function (yearTotal) {
     var JQGridAssistantFactory = (function () {

@@ -1,5 +1,3 @@
-/// <reference path="util.ts" />
-/// <reference path="jqgrid/jqassist.ts" />
 var yszkrb_view;
 (function (yszkrb_view) {
     var YSZKColumnId;
@@ -59,16 +57,10 @@ var yszkrb_view;
             this.mDay = day;
             $("#date").val(year + "/" + month + "/" + day);
             $("#date").datepicker({
-                //            numberOfMonths:1,//显示几个月  
-                //            showButtonPanel:true,//是否显示按钮面板  
                 dateFormat: 'yy/mm/dd',
-                //            clearText:"清除",//清除日期的按钮名称  
-                //            closeText:"关闭",//关闭选择框的按钮名称  
                 yearSuffix: '年',
                 showMonthAfterYear: true,
                 defaultDate: year + "/" + month + "/" + day,
-                //            minDate:'2011-03-05',//最小日期  
-                //maxDate: year + "-" + month + "-" + day,//最大日期  
                 monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                 dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
                 dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
@@ -80,7 +72,7 @@ var yszkrb_view;
                     _this.mDay = d.getDate();
                 }
             });
-            $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
+            $("#ui-datepicker-div").css('font-size', '0.8em');
             this.updateUI();
         };
         View.prototype.exportExcelYSDialy = function () {
@@ -94,7 +86,7 @@ var yszkrb_view;
                 _this.mData = dataArray;
                 $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报");
                 document.title = _this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报";
-                _this.updateTable(); //update data for table
+                _this.updateTable();
             });
         };
         View.prototype.initPercentList = function () {

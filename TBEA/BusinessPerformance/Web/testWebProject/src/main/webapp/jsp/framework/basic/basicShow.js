@@ -3,15 +3,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../../unitedSelector.ts"/>
-///<reference path="../../messageBox.ts"/>
-///<reference path="../../companySelector.ts"/>
-///<reference path="basicdef.ts"/>
-///<reference path="../route/route.ts"/>
-///<reference path="basic.ts"/>
 var framework;
 (function (framework) {
     var basic;
@@ -34,7 +25,6 @@ var framework;
                         break;
                 }
             };
-            //不可以起名叫做export 在IE中有冲突
             ShowFrameView.prototype.exportExcel = function (elemId) {
                 var url = router.to(this.mCurrentPlugin).send(FrameEvent.FE_GET_EXPORTURL, {
                     date: this.mCurrentDate,
@@ -44,7 +34,7 @@ var framework;
                 $("#" + elemId)[0].submit();
             };
             return ShowFrameView;
-        })(basic.BasicFrameView);
+        }(basic.BasicFrameView));
         basic.ShowFrameView = ShowFrameView;
     })(basic = framework.basic || (framework.basic = {}));
 })(framework || (framework = {}));

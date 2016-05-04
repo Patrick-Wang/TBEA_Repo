@@ -1,4 +1,3 @@
-/// <reference path="util.ts" />
 var Util;
 (function (Util) {
     function addMonth(d, count) {
@@ -135,7 +134,6 @@ var Util;
                 header: false,
                 minWidth: 80,
                 height: '100%',
-                // noneSelectedText: "请选择月份",
                 selectedList: 1
             });
         };
@@ -295,6 +293,6 @@ var Util;
             return { year: this.mCurDate.year, month: this.mCurDate.month, day: this.mCurDate.day };
         };
         return DateSelector;
-    })();
+    }());
     Util.DateSelector = DateSelector;
 })(Util || (Util = {}));

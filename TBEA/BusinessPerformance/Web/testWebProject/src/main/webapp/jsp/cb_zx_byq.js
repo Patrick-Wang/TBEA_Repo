@@ -1,6 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
-/// <reference path="companySelector.ts" />
 var cb_zx_byq;
 (function (cb_zx_byq) {
     var JQGridAssistantFactory = (function () {
@@ -78,7 +75,6 @@ var cb_zx_byq;
             this.mJtData = jt;
             this.mGsData = gs;
             this.mMonth = month;
-            // this.mCompanySelector = new Util.CompanySelector(false, companyId, topComps, firstCompany, subComps);
             this.updateMxTable();
             this.updateJttbTable();
             this.updateGstbTable();
@@ -95,61 +91,6 @@ var cb_zx_byq;
                 _this.updateMxTable();
             });
         };
-        //        private initEchart(echart): void {
-        //            var ysyq_payment_Chart = echarts.init(echart)
-        //            var ysyq_payment_Option = {
-        //                animation: true,
-        //                tooltip: {
-        //                    trigger: 'axis',
-        //                    /* formatter : "{b}<br/>{a} : {c} 万元<br/>{a1} : {c1} 万元", */
-        //
-        //                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-        //                        type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
-        //                    }
-        //                },
-        //                legend: {
-        //                    x: 'right',
-        //                    data: ["合同金额", "预期阶段", "中标阶段", "完工阶段"],
-        //
-        //                },
-        //                xAxis: [{
-        //                    type: 'category',
-        //                    data: ['沈变', '衡变', '新变', '天变']
-        //                }],
-        //                yAxis: [{
-        //                    type: 'value'
-        //
-        //                }],
-        //
-        //                calculable: true,
-        //                series: [{
-        //                    name: '合同金额',
-        //                    type: 'bar',
-        //
-        //                    barCategoryGap: "50%",
-        //                    data: [63363.11, 55628.27, 58521.55, 69100.58]
-        //                }, {
-        //                        name: '预期阶段',
-        //                        type: 'bar',
-        //
-        //                        stack: '阶段',
-        //                        data: [9098.58, 1240.13, 1140.61, 3154.82]
-        //                    }, {
-        //                        name: '中标阶段',
-        //
-        //                        type: 'bar',
-        //                        stack: '阶段',
-        //                        data: [3934.13, 3200.22, 1382.52, 3934.13]
-        //                    }, {
-        //                        name: '完工阶段',
-        //                        type: 'bar',
-        //
-        //                        stack: '阶段',
-        //                        data: [11980.74, 2240.18, 3487.11, 6980.74]
-        //                    }]
-        //            };
-        //            ysyq_payment_Chart.setOption(ysyq_payment_Option);
-        //        }
         View.prototype.updateMxTable = function () {
             var name = this.mMxTableId + "_jqgrid_1234";
             var tableAssist = JQGridAssistantFactory.createMxTable(name);
@@ -176,14 +117,11 @@ var cb_zx_byq;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: 250,
@@ -197,7 +135,6 @@ var cb_zx_byq;
             var tableAssist = JQGridAssistantFactory.createJttbTable(name);
             tableAssist.mergeTitle();
             tableAssist.mergeRow(0);
-            //  tableAssist.mergeRow(1);
             var data = [
                 ["沈变", " ", "中标阶段"],
                 ["沈变", " ", "预期阶段"],
@@ -234,28 +171,15 @@ var cb_zx_byq;
                     }
                 }
             }
-            //            for (var i = 0; i < data.length; ++i) {
-            //                if (rawData[i] instanceof Array) {
-            //                    row = [].concat(rawData[i]);
-            //                    for (var col in row) {
-            //                    	if (col % 2 != 0){
-            //                        	row[col] = Util.formatCurrency(row[col]);
-            //                        }
-            //                                 data[i] = data[i].concat(row);
-            //                }
-            //            }
             var parent = $("#" + this.mJttbTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
@@ -315,14 +239,11 @@ var cb_zx_byq;
                 height = "100%";
             }
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: height,

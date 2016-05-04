@@ -1,7 +1,3 @@
-/// <reference path="../../../jqgrid/jqassist.ts" />
-/// <reference path="../../../util.ts" />
-/// <reference path="../../../dateSelector.ts" />
-/// <reference path="../jcycljgdef.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -150,7 +146,6 @@ var jcycljg;
                             type: 'line',
                             smooth: true,
                             yAxisIndex: 0,
-                            // itemStyle: {normal: {areaStyle: {type: 'default'}}},
                             data: data.length < 1 ? [0] : data
                         },
                         {
@@ -158,7 +153,6 @@ var jcycljg;
                             type: 'line',
                             yAxisIndex: 1,
                             smooth: true,
-                            // itemStyle: {normal: {areaStyle: {type: 'default'}}},
                             data: lemData.length < 1 ? [0] : lemData
                         }
                     ]

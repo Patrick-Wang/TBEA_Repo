@@ -1,5 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
 var cb_wg_xl;
 (function (cb_wg_xl) {
     var JQGridAssistantFactory = (function () {
@@ -73,9 +71,6 @@ var cb_wg_xl;
     }());
     var View = (function () {
         function View() {
-            //      private mfdwData : string[];
-            //      private mgwData : string[];
-            //      private mnwData : string[];
             this.mMxData = [[]];
             this.mJtData = [[]];
             this.mGsData = [[]];
@@ -99,7 +94,6 @@ var cb_wg_xl;
             this.updateJttbTable();
             this.updateGstbTable();
             this.updateUI();
-            // this.updateFdyTable();
         };
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;
@@ -123,10 +117,6 @@ var cb_wg_xl;
                 _this.updateMxTable();
                 _this.updateJttbTable();
                 _this.updateGstbTable();
-                //                    this.mData = dataArray;
-                //                    $('h1').text(this.mYear + "年" + this.mMonth + "月 各产业指标汇总");
-                //                    document.title = this.mYear + "年" + this.mMonth + "月 各产业指标汇总";
-                //                    this.updateTable();
             });
         };
         View.prototype.updateMxTable = function () {
@@ -155,14 +145,11 @@ var cb_wg_xl;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
                 cellsubmit: 'clientArray',
                 rowNum: 10000,
                 cellEdit: true,
@@ -218,14 +205,11 @@ var cb_wg_xl;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
@@ -277,14 +261,11 @@ var cb_wg_xl;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: 250,
@@ -359,14 +340,11 @@ var cb_wg_xl;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',

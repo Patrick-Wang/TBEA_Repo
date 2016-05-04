@@ -1,10 +1,3 @@
-/// <reference path="../jqgrid/jqassist.ts" />
-/// <reference path="../util.ts" />
-/// <reference path="../dateSelector.ts" />
-/// <reference path="chgbdef.ts" />
-/// <reference path="../unitedSelector.ts"/>
-///<reference path="../messageBox.ts"/>
-///<reference path="../companySelector.ts"/>
 var chgb;
 (function (chgb) {
     var EntryView = (function () {
@@ -75,7 +68,7 @@ var chgb;
             this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
         };
         return EntryView;
-    })();
+    }());
     chgb.EntryView = EntryView;
 })(chgb || (chgb = {}));
 var entryView = new chgb.EntryView();

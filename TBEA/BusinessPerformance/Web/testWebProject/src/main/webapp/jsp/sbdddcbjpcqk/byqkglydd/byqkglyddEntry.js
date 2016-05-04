@@ -1,9 +1,3 @@
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-///<reference path="../../messageBox.ts"/>
-// <reference path="../sbdddcbjpcqkdef.ts" />
-///<reference path="../../wlyddqk/wlyddqkEntry.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -199,12 +193,8 @@ var sbdddcbjpcqk;
                     drag: false,
                     resize: false,
                     assistEditable: true,
-                    //autowidth : false,
                     cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
                     cellEdit: true,
-                    //height: data.length > 25 ? 550 : '100%',
-                    //width: titles.length * 200,
                     rowNum: 20,
                     height: '100%',
                     width: 1400,

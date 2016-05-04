@@ -1,6 +1,3 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
-/// <reference path="dateSelector.ts" />
 var userStatus;
 (function (userStatus) {
     var JQGridAssistantFactory = (function () {
@@ -59,16 +56,11 @@ var userStatus;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : true,
-                //  cellsubmit: 'clientArray',
-                //  cellEdit: true,
                 width: 1000,
                 height: '100%',
                 shrinkToFit: true,

@@ -1,7 +1,3 @@
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../chgbdef.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26,7 +22,7 @@ var chgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var CHJYKCBView = (function (_super) {
             __extends(CHJYKCBView, _super);
             function CHJYKCBView() {
@@ -94,7 +90,7 @@ var chgb;
                 }));
             };
             return CHJYKCBView;
-        })(chgb.BasePluginView);
+        }(chgb.BasePluginView));
         chjykcb.pluginView = CHJYKCBView.newInstance();
     })(chjykcb = chgb.chjykcb || (chgb.chjykcb = {}));
 })(chgb || (chgb = {}));

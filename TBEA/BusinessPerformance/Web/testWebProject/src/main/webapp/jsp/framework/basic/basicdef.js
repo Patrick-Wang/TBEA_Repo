@@ -3,11 +3,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../../../js/jquery/jquery.d.ts" />
-/// <reference path="../route/route.ts" />
-///<reference path="../../unitedSelector.ts"/>
 var framework;
 (function (framework) {
     var basic;
@@ -53,7 +48,7 @@ var framework;
                 return true;
             };
             return BasicEndpoint;
-        })();
+        }());
         basic.BasicEndpoint = BasicEndpoint;
         var FrameView = (function (_super) {
             __extends(FrameView, _super);
@@ -75,7 +70,7 @@ var framework;
                 return _super.prototype.onEvent.call(this, e);
             };
             return FrameView;
-        })(BasicEndpoint);
+        }(BasicEndpoint));
         basic.FrameView = FrameView;
         var BasePluginView = (function (_super) {
             __extends(BasePluginView, _super);
@@ -126,7 +121,7 @@ var framework;
                 return true;
             };
             return BasePluginView;
-        })(BasicEndpoint);
+        }(BasicEndpoint));
         basic.BasePluginView = BasePluginView;
         var ShowPluginView = (function (_super) {
             __extends(ShowPluginView, _super);
@@ -149,7 +144,7 @@ var framework;
                 return val;
             };
             return ShowPluginView;
-        })(BasePluginView);
+        }(BasePluginView));
         basic.ShowPluginView = ShowPluginView;
         var EntryPluginView = (function (_super) {
             __extends(EntryPluginView, _super);
@@ -179,7 +174,7 @@ var framework;
                 return val;
             };
             return EntryPluginView;
-        })(BasePluginView);
+        }(BasePluginView));
         basic.EntryPluginView = EntryPluginView;
         var EndpointProxy = (function () {
             function EndpointProxy(id, stub) {
@@ -194,7 +189,7 @@ var framework;
                 return framework.router.redirect(this.mStub, e);
             };
             return EndpointProxy;
-        })();
+        }());
         basic.EndpointProxy = EndpointProxy;
     })(basic = framework.basic || (framework.basic = {}));
 })(framework || (framework = {}));
