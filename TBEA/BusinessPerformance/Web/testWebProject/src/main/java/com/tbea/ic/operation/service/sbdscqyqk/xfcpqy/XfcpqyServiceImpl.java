@@ -72,12 +72,24 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 	public List<List<String>> getXfcpqy(Date d, Company company, SbdscqyqkType type) {
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<Integer> cpIdList = getCpIdList(type);
-		List<Double> finalListTemp = new ArrayList<Double>();
-		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
+		List<Double> finalListTemp1 = new ArrayList<Double>();
+		List<Boolean> finalListNullOrNot1 = new ArrayList<Boolean>();
+		
+		List<Double> finalListTemp2 = new ArrayList<Double>();
+		List<Boolean> finalListNullOrNot2 = new ArrayList<Boolean>();
+		
+		List<Double> finalListTempAll = new ArrayList<Double>();
+		List<Boolean> finalListNullOrNotAll = new ArrayList<Boolean>();
 		
 		for (int i = 0; i < 12; ++i){
-			finalListTemp.add(0.0);
-			finalListNullOrNot.add(true);
+			finalListTemp1.add(0.0);
+			finalListNullOrNot1.add(true);
+			
+			finalListTemp2.add(0.0);
+			finalListNullOrNot2.add(true);
+
+			finalListTempAll.add(0.0);
+			finalListNullOrNotAll.add(true);
 		}
 		
 		for (int cp = 0; cp < cpIdList.size(); cp++) {
@@ -100,9 +112,31 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 						bFind = true;
 						oneLine.add("" + entity.getQye());
 						
-						finalListTemp.set(i, finalListTemp.get(i) + entity.getQye());
-						
-						finalListNullOrNot.set(i, false);
+						if (type == SbdscqyqkType.YLFX_WGCPYLNL_XL) {
+							
+							if (cpIdList.get(cp) <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_ZH_QT.value()) {
+
+								finalListTemp1.set(i, finalListTemp1.get(i) + entity.getQye());
+								finalListNullOrNot1.set(i, false);						
+								
+								finalListTempAll.set(i, finalListTemp1.get(i) + entity.getQye());
+								finalListNullOrNotAll.set(i, false);
+								
+							} else if (cpIdList.get(cp) <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_GJGC.value()) {
+
+								finalListTemp2.set(i, finalListTemp1.get(i) + entity.getQye());
+								finalListNullOrNot2.set(i, false);				
+								
+								finalListTempAll.set(i, finalListTemp1.get(i) + entity.getQye());
+								finalListNullOrNotAll.set(i, false);
+								
+							} else if (cpIdList.get(cp) <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_FWL.value()) {
+								
+								finalListTempAll.set(i, finalListTemp1.get(i) + entity.getQye());
+								finalListNullOrNotAll.set(i, false);							
+							}
+						}
+
 						entities.remove(entity);
 						break;
 					}
@@ -110,28 +144,59 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 				if (!bFind) {
 					oneLine.add("null");
 				}
+				
 				cal.add(Calendar.MONTH, 1);
 			}
 			
 			result.add(oneLine);
 		}		
 		
-		List<String> finalLine = new ArrayList<String>();
-		finalLine.add("合计");
+		List<String> finalLine1 = new ArrayList<String>();
+		finalLine1.add("小计");
 		for (int i = 0; i < 12; ++i){
 		
-			if (!finalListNullOrNot.get(i)) {
+			if (!finalListNullOrNot1.get(i)) {
 
-				finalLine.add("" + finalListTemp.get(i));
+				finalLine1.add("" + finalListTemp1.get(i));
 			} else {
 				
-				finalLine.add("null");
+				finalLine1.add("null");
+			}
+		}
+		
+		List<String> finalLine2 = new ArrayList<String>();
+		finalLine2.add("小计");
+		for (int i = 0; i < 12; ++i){
+		
+			if (!finalListNullOrNot2.get(i)) {
+
+				finalLine2.add("" + finalListTemp2.get(i));
+			} else {
+				
+				finalLine2.add("null");
+			}
+		}
+		
+		List<String> finalLineAll = new ArrayList<String>();
+		finalLineAll.add("合计");
+		for (int i = 0; i < 12; ++i){
+		
+			if (!finalListNullOrNotAll.get(i)) {
+
+				finalLineAll.add("" + finalListTempAll.get(i));
+			} else {
+				
+				finalLineAll.add("null");
 			}
 		}
 		
 		if (type == SbdscqyqkType.YLFX_WGCPYLNL_XL ) {
 
-			result.add(finalLine);
+			result.add(SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_ZH_QT.ordinal() + 1, finalLine1);
+
+			result.add(SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_GJGC.ordinal() + 1, finalLine2);
+			
+			result.add(finalLineAll);
 		}
 		
 		return result;
