@@ -415,6 +415,11 @@ module Util {
         }
     }
 
+    interface AjaxRedirect {
+        error : string;
+        redirect : string;
+    }
+
     export class Ajax {
         private mBaseUrl: string;
         private mCache: any = {};
@@ -450,9 +455,9 @@ module Util {
             return this.mCache[Ajax.toUrlParam(option)];
         }
 
-        private validate(data: string): boolean {
-            if (data["error"] == "invalidate session") {
-                window.location.href = data["redirect"];
+        private validate(data: AjaxRedirect): boolean {
+            if (data.error == "invalidate session") {
+                window.location.href = data.redirect;
                 return false;
             }
             return true;
@@ -482,7 +487,6 @@ module Util {
             var promise: Promise = new Promise();
             var cacheData: string = this.getCache(option);
             if (undefined == cacheData) {
-
                 $.ajax({
                     type: "GET",
                     url: this.mBaseUrl,
@@ -490,7 +494,6 @@ module Util {
                     success: (data: any) => {
                         var jsonData = JSON.parse(data);
                         if (this.validate(jsonData)) {
-
                             this.setCache(option, jsonData);
                             promise.succeed(jsonData);
                         }
