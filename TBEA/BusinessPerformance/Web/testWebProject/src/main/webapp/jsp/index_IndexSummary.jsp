@@ -23,7 +23,7 @@
 </div>
 </c:if>
 
-<c:if test="${!sbqgb}">
+<c:if test="${notSbqgb}">
 <div>
 	<h3>
 		经营指标完成情况<a name="zbhz"> </a>

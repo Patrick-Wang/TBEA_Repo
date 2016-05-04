@@ -25,14 +25,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
@@ -131,7 +129,7 @@ public class DashboardController {
 		JSONArray arrUsers = new JSONArray();
 		HttpSession latestActiveSession = null;
 		Account account = SessionManager.getAccount(request.getSession(false));
-		if (null == account || !Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())) {
+		if (!SessionManager.getAcl(request.getSession(false)).isOpen("admin")) {
 			return new ModelAndView("");
 		}
 		

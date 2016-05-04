@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.geong.cas.support.SystemLinkClient;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
@@ -106,7 +105,6 @@ public class LoginServlet {
 			ajaxRedirect = new AjaxRedirect();
 		}
 		return ajaxRedirect.toUtf8Bytes();
-		// return "{\"error\" : \"invalidate session\", \"redirect\" : \"\"}";
 	}
 
 	private void setAuthority(HttpSession session, Account account) {
@@ -162,8 +160,15 @@ public class LoginServlet {
 			.add("isXl", account.getId() == 43 || account.getId() == 50 || account.getId() == 61)
 			.add("isSbdcy",	account.getId() == 8 || account.getId() == 6
 						|| account.getId() == 147 || account.getId() == 119
-						|| account.getId() == 146);
-
+						|| account.getId() == 146)
+			.add("zhAuth", Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName()))
+			.add("notSbqgb", !Account.KNOWN_ACCOUNT_QGB.equals(account.getName()))
+			.add("admin", Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName()));
+		
+		if (Account.KNOWN_ACCOUNT_AFL.equals(account.getName())){
+			acl.openAll();
+			acl.close("MarketAuth");
+		}
 	}
 
 	@RequestMapping(value = "validate.do")
@@ -204,38 +209,7 @@ public class LoginServlet {
 
 		SessionManager.getAcl(currentSession).select(map);
 		
-		map.put("zhAuth", "众和公司".equals(account.getName()));
-
-		map.put("sbqgb", "qgb".equals(account.getName()));
-
-//		map.put("entryPlan", currentSession.getAttribute("entryPlan"));
-//
-//		map.put("entryPredict", currentSession.getAttribute("entryPredict"));
-//
-//		map.put("approvePlan", currentSession.getAttribute("approvePlan"));
-//
-//		map.put("approvePredict", currentSession.getAttribute("approvePredict"));
-//
-//		map.put("CorpAuth", currentSession.getAttribute("CorpAuth"));
-//
-//		map.put("SbdAuth", currentSession.getAttribute("SbdAuth"));
-//
-//		map.put("MarketAuth", currentSession.getAttribute("MarketAuth"));
-//
-//		map.put("PriceLibAuth", currentSession.getAttribute("PriceLibAuth"));
-
 		map.put("userName", account.getName());
-
-		map.put("admin", "admin".equals(account.getName()));
-
-//		map.put("ChgbLookup", currentSession.getAttribute("ChgbLookup"));
-//		map.put("YszkgbLookup", currentSession.getAttribute("YszkgbLookup"));
-//		map.put("WlyddLookup", currentSession.getAttribute("WlyddLookup"));
-//		map.put("ChgbEntry", currentSession.getAttribute("ChgbEntry"));
-//		map.put("YszkgbEntry", currentSession.getAttribute("YszkgbEntry"));
-//		map.put("WlyddEntry", currentSession.getAttribute("WlyddEntry"));
-//		map.put("GbEntry", currentSession.getAttribute("GbEntry"));
-//		map.put("GbLookup", currentSession.getAttribute("GbLookup"));
 
 		return new ModelAndView("index", map);
 

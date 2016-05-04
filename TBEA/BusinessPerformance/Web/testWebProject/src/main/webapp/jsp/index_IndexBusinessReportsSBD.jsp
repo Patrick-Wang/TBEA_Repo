@@ -6,23 +6,6 @@
 <p style="margin: 10px 0 0px 0"></p>
 
 
-<c:if test="${admin}">
-<div>
-	<h3>
-		Dashboard<a name="dashboard"> </a>
-	</h3>
-	<div class="section">
-		<div class="thumb3">
-			<ul class="slides">
-				<li><a href="../dashboard/user_status.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>在线用户状态</strong></span></a>
-				</li>
-			</ul>
-		</div>
-	</div>
-</div>
-</c:if>
-
 <div>
 	<h3>
 		经营管报<a name="sbdcyjygb"> </a>
