@@ -89,6 +89,8 @@ INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (71 ,N'工装轮')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (72 ,N'        非晶合金变')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (73 ,N'        卷铁芯')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (74 ,N'特殊产品')
+INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (75 ,N'国内工程')
+INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (76 ,N'国际工程')
 
 
 SET IDENTITY_INSERT [dbo].[identifier_cpmc] OFF
