@@ -69,9 +69,8 @@ public abstract class RawAbstractFormatterHandler implements RawFormatterHandler
 			} else {
 				return callNext(zbName, col, val);
 			}
-		} else {
-			return "--";
-		}
+		} 
+		return null;
 	}
 
 	

@@ -116,6 +116,7 @@ var nyzbscqk;
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
+                tableAssist.mergeRow(0);
                 this.$(name).jqGrid(tableAssist.decorate({
                     multiselect: false,
                     drag: false,

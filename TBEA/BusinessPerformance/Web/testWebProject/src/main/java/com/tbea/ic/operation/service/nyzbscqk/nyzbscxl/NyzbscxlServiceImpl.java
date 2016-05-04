@@ -8,14 +8,17 @@ import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.dao.identifier.nyzbscqk.nycompminingareamatch.NyCompMiningAreaMatchDao;
 import com.tbea.ic.operation.model.dao.nyzbscqk.nyzbscxl.NyzbscxlDao;
 import com.tbea.ic.operation.model.dao.nyzbscqk.nyzbscxl.NyzbscxlDaoImpl;
 import com.tbea.ic.operation.model.entity.nyzbscqk.NyCompMiningAreaMatchEntity;
@@ -27,12 +30,15 @@ public class NyzbscxlServiceImpl implements NyzbscxlService {
 	@Resource(name = NyzbscxlDaoImpl.NAME)
 	NyzbscxlDao nyzbscxlDao;
 
+	@Autowired
+	NyCompMiningAreaMatchDao nyCompMiningAreaMatchDao;
+	
 	public final static String NAME = "NyzbscxlServiceImpl";
 	@Override
 	public List<List<String>> getNyzbscxl(Date d, Company company) {
 		List<List<String>> result = new ArrayList<List<String>>();
 
-		List<NyCompMiningAreaMatchEntity> miningAreaMatch = nyzbscxlDao
+		List<NyCompMiningAreaMatchEntity> miningAreaMatch = nyCompMiningAreaMatchDao
 				.getMiningArea(company);
 		for (int i = 0; i < miningAreaMatch.size(); ++i) {
 			NyCompMiningAreaMatchEntity entity = miningAreaMatch.get(i);
@@ -51,10 +57,10 @@ public class NyzbscxlServiceImpl implements NyzbscxlService {
 				list.set(0, entity.getKq().getName());
 				list.set(1, "合计");
 				for (int j = 0; j < 12; ++j){
-					list.set(j + 2, "" + Util.sum(new Double[]{
-						Util.toDoubleNull(result.get(result.size() - 1).get(j + 2)),
-						Util.toDoubleNull(result.get(result.size() - 2).get(j + 2)),
-						Util.toDoubleNull(result.get(result.size() - 3).get(j + 2))	
+					list.set(j + 2, "" + MathUtil.sum(new Double[]{
+						MathUtil.toDouble(result.get(result.size() - 1).get(j + 2)),
+						MathUtil.toDouble(result.get(result.size() - 2).get(j + 2)),
+						MathUtil.toDouble(result.get(result.size() - 3).get(j + 2))	
 					}));
 				}
 				result.add(list);
@@ -67,7 +73,7 @@ public class NyzbscxlServiceImpl implements NyzbscxlService {
 	public List<List<String>> getNyzbscxlEntry(Date d, Company company) {
 		List<List<String>> result = new ArrayList<List<String>>();
 
-		List<NyCompMiningAreaMatchEntity> miningAreaMatch = nyzbscxlDao
+		List<NyCompMiningAreaMatchEntity> miningAreaMatch = nyCompMiningAreaMatchDao
 				.getMiningArea(company);
 		for (NyCompMiningAreaMatchEntity entity : miningAreaMatch) {
 			List<String> list = new ArrayList<String>();
@@ -97,7 +103,7 @@ public class NyzbscxlServiceImpl implements NyzbscxlService {
 	public ErrorCode entryNyzbscxl(Date d, JSONArray data, Company company, ZBStatus zt) {
 		for (int i = 0; i < data.size(); ++i){
 			JSONArray row = data.getJSONArray(i);
-			NyCompMiningAreaMatchEntity entity = nyzbscxlDao.getNyCompMiningAreaMatchEntityById(Integer.valueOf(row.getString(0)));
+			NyCompMiningAreaMatchEntity entity = nyCompMiningAreaMatchDao.getById(Integer.valueOf(row.getString(0)));
 			NyzbscxlEntity nyEntity = nyzbscxlDao.getByDate(d, company, entity.getKq().getId(), entity.getMz().getId());
 			if (null == nyEntity){
 				nyEntity = new NyzbscxlEntity();
@@ -109,7 +115,7 @@ public class NyzbscxlServiceImpl implements NyzbscxlService {
 				nyEntity.setMz(entity.getMz().getId());
 			}
 			nyEntity.setZt(zt.ordinal());
-			nyEntity.setXl(Util.toDoubleNull(row.getString(1)));
+			nyEntity.setXl(MathUtil.toDouble(row.getString(1)));
 			nyzbscxlDao.merge(nyEntity);
 		}
 		return ErrorCode.OK;

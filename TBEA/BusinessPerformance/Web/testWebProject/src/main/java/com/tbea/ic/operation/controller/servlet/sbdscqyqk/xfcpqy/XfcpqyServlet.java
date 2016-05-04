@@ -49,7 +49,7 @@ public class XfcpqyServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		List<List<String>> result = xfcpqyService.getXfcpqy(d, company);
+		List<List<String>> result = null;//xfcpqyService.getXfcpqy(d, company);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 
@@ -60,7 +60,7 @@ public class XfcpqyServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> result = xfcpqyService.getXfcpqyEntry(d, company);
+		List<List<String>> result = null;//xfcpqyService.getXfcpqyEntry(d, company);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
@@ -72,7 +72,7 @@ public class XfcpqyServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		ErrorCode err = xfcpqyService.saveXfcpqy(d, data, company);
+		ErrorCode err = null;//xfcpqyService.saveXfcpqy(d, data, company);
 		return Util.response(err);
 	}
 	
@@ -86,7 +86,7 @@ public class XfcpqyServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		ErrorCode err = xfcpqyService.submitXfcpqy(d, data, company);
+		ErrorCode err = null;//xfcpqyService.submitXfcpqy(d, data, company);
 		return Util.response(err);
 	}
 	
@@ -97,7 +97,7 @@ public class XfcpqyServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> ret = xfcpqyService.getXfcpqy(d, company);
+		List<List<String>> ret = null;//xfcpqyService.getXfcpqy(d, company);
 		ExcelTemplate template = ExcelTemplate.createSbdscqyqkTemplate(SbdscqyqkSheetType.XFCPQY);
 	
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});

@@ -53,14 +53,15 @@ public class NyzbscxlServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
 		List<List<String>> result = nyzbscxlService.getNyzbscxl(d, company);
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
 		handler.next(new RawNumberFormatterHandler(1));
 		RawFormatterClient client = new RawFormatterClient(handler);
-		client.doHandle(result);
+		client.acceptNullAs("--").format(result);
 		
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 
 	@RequestMapping(value = "entry/update.do")
@@ -71,10 +72,12 @@ public class NyzbscxlServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		List<List<String>> result = nyzbscxlService.getNyzbscxlEntry(d, company);
-		RawFormatterHandler handler = new RawNumberFormatterHandler(1, null, new Integer[]{3});
+		
+		RawFormatterHandler handler = new RawNumberFormatterHandler(4, null, new Integer[]{3}).trimZero(true);
 		RawFormatterClient client = new RawFormatterClient(handler);
-		client.doHandle(result);
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
+		client.acceptNullAs("").format(result);
+		
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "entry/save.do")
@@ -120,7 +123,8 @@ public class NyzbscxlServlet {
 		handler.next(new NumberFormatterHandler(1));
 		FormatterClient client = new FormatterClient(handler, 0, 2);
 		client.addMergeRegion(new MergeRegion(0, 2, 1, ret.size()));
-		client.doHandle(ret, template);
+		client.format(ret, template);
+		
 		template.write(response, name + ".xls");
 	}
 }

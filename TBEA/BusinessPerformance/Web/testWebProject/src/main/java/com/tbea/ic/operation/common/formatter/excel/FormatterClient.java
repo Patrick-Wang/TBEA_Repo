@@ -31,7 +31,7 @@ public class FormatterClient {
 		this.yOffset = yOffset;
 	}
 	
-	public void doHandle(List<List<String>> table, ExcelTemplate template){
+	public void format(List<List<String>> table, ExcelTemplate template){
 		HSSFSheet sheet = template.getSheet();
 		for (int i = 0; i < table.size(); ++i){
 			HSSFRow row = sheet.getRow(i + yOffset) == null ? sheet.createRow(i + yOffset) : sheet.getRow(i + yOffset);

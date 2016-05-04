@@ -8,8 +8,15 @@
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
 		List<List<String>> result = #template#Service.get#template1#(d, company);
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		
+		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0});
+		handler.next(new RawNumberFormatterHandler(1));
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 
 	@RequestMapping(value = "entry/update.do")
@@ -20,7 +27,12 @@
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		List<List<String>> result = #template#Service.get#template1#Entry(d, company);
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
+		
+		RawFormatterHandler handler = new RawNumberFormatterHandler(4, null, new Integer[]{3}).trimZero(true);
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("").format(result);
+		
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "entry/save.do")
@@ -54,20 +66,14 @@
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> ret = #template#Service.get#template1#(d, company);
+		List<List<String>> result = #template#Service.get#template1#(d, company);
 		ExcelTemplate template = ExcelTemplate.create#templateF#Template(#templateF#SheetType.#templateU#);
 	
-		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(NumberType.RESERVE_1));
-		HSSFWorkbook workbook = template.getWorkbook();
-		String name = workbook.getSheetName(0);
-		workbook.setSheetName(0, name);
-		HSSFSheet sheet = workbook.getSheetAt(0);
-		for (int i = 0; i < ret.size(); ++i){
-			HSSFRow row = sheet.createRow(i + 2);
-			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
-			}
-		}
-		template.write(response, name + ".xls");
+		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
+		handler.next(new NumberFormatterHandler(1));
+		FormatterClient client = new FormatterClient(handler, 0, 2);
+		client.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
+		client.format(result, template);
+	
+		template.write(response, template.getSheetName() + ".xls");
 	}

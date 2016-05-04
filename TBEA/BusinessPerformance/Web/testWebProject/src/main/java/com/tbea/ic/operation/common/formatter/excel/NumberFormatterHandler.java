@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.NumberType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 
 public class NumberFormatterHandler extends AbstractFormatterHandler {
@@ -28,7 +27,7 @@ public class NumberFormatterHandler extends AbstractFormatterHandler {
 	protected String onHandle(ExcelTemplate template, HSSFCell cell, String val) {
 		// System.out.println(val);
 		BigDecimal b = new BigDecimal(Double.valueOf(val));
-		String ret = b.setScale(this.reservedCount, BigDecimal.ROUND_HALF_UP).toString();
+		String ret = b.setScale(this.reservedCount, BigDecimal.ROUND_HALF_UP).toPlainString();
 		cell.setCellValue(ret);
 		cell.setCellStyle(template.getCellStyleDefault());
 	

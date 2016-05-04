@@ -5,7 +5,8 @@ import java.math.BigDecimal;
 public class RawNumberFormatterHandler extends RawAbstractFormatterHandler {
 
 	Integer reservedCount;
-
+	boolean trimZero = false;
+	
 	public RawNumberFormatterHandler(Integer reservedCount, String[] rows, Integer[] cols) {
 		super(toList(rows), toList(cols));
 		this.reservedCount = reservedCount;
@@ -18,28 +19,34 @@ public class RawNumberFormatterHandler extends RawAbstractFormatterHandler {
 	public RawNumberFormatterHandler(Integer reservedCount) {
 		this(reservedCount, null, null);
 	}
+	
+	public RawNumberFormatterHandler trimZero(boolean trimZero){
+		this.trimZero = trimZero;
+		return this;
+	}
 
 	@Override
 	protected String onHandle(String val) {
 		BigDecimal b = new BigDecimal(Double.valueOf(val));
-		String ret = b.setScale(this.reservedCount, BigDecimal.ROUND_HALF_UP).toString();
-//		String ret = val;
-//		switch (type) {
-//		case RESERVE_0:
-//			
-//			break;
-//		case RESERVE_1:
-//			ret = b.setScale(1, BigDecimal.ROUND_HALF_UP).toString();
-//			break;
-//		case RESERVE_2:
-//			ret = b.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
-//			break;
-//		case RESERVE_4:
-//			ret = b.setScale(4, BigDecimal.ROUND_HALF_UP).toString();
-//			break;
-//		default:
-//			break;
-//		}
+		String ret = b.setScale(this.reservedCount, BigDecimal.ROUND_HALF_UP).toPlainString();
+		if (trimZero){
+			int index = ret.indexOf('.');
+			if (index > 0){
+				int len = ret.length() - 1;
+				while (len > index){
+					if (ret.charAt(len) != '0'){
+						break;
+					}
+					--len;
+				}
+				
+				if (len == index){
+					ret = ret.substring(0, index);
+				}else if (len < ret.length() - 1){
+					ret = ret.substring(0, len + 1);
+				}
+			}
+		}
 		return ret;
 	}
 

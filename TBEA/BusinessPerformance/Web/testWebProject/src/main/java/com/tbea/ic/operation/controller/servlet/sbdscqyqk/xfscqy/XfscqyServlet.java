@@ -16,7 +16,6 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,8 +28,10 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.SbdscqyqkSheetType;
+import com.tbea.ic.operation.common.formatter.excel.FormatterClient;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.service.sbdscqyqk.xfscqy.XfscqyService;
 import com.tbea.ic.operation.service.sbdscqyqk.xfscqy.XfscqyServiceImpl;
@@ -128,17 +129,12 @@ public class XfscqyServlet {
 			cell.setCellStyle(template.getCellStyleCenter());
 			startMonth.add(Calendar.MONTH, 1);
 		}
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, last));
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, last + 1, 13));
 		
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
 		handler.next(new NumberFormatterHandler(1));
-		for (int i = 0; i < ret.size(); ++i){
-			HSSFRow row = sheet.getRow(i + 2);
-			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, j, template, row.createCell(j + 1), ret.get(i).get(j));
-			}
-		}
+		FormatterClient client = new FormatterClient(handler, 1, 2);
+		client.addMergeRegion(new MergeRegion(2, 0, 12, 1));
+		client.format(ret, template);
 		template.write(response, name + ".xls");
 	}
 }

@@ -31,12 +31,7 @@ public class NyzbscxlDaoImpl extends AbstractReadWriteDaoImpl<NyzbscxlEntity> im
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
 	}
-	
-	public List<NyCompMiningAreaMatchEntity> getMiningArea(Company company){
-		Query q = this.getEntityManager().createQuery("from NyCompMiningAreaMatchEntity where dwid=:dwid");
-		q.setParameter("dwid", company.getId());
-		return q.getResultList();
-	}
+
 
 	@Override
 	public List<NyzbscxlEntity> getByDate(Date d, Company company) {
@@ -60,18 +55,6 @@ public class NyzbscxlDaoImpl extends AbstractReadWriteDaoImpl<NyzbscxlEntity> im
 		q.setParameter("mz", mz);
 		q.setParameter("kq", kq);
 		return q.getResultList();
-	}
-
-	@Override
-	public NyCompMiningAreaMatchEntity getNyCompMiningAreaMatchEntityById(
-			Integer id) {
-		Query q = this.getEntityManager().createQuery("from NyCompMiningAreaMatchEntity where id=:id");
-		q.setParameter("id", id);
-		List ret = q.getResultList();
-		if (ret.isEmpty()){
-			return null;
-		}
-		return (NyCompMiningAreaMatchEntity) ret.get(0);
 	}
 
 	@Override

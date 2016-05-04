@@ -1,21 +1,18 @@
 package com.tbea.ic.operation.common;
 
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
 
 public class Util {
 	
-
 	public static String format(Date d) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMM");
 		return formatter.format(d);
@@ -181,7 +178,6 @@ public class Util {
 			return 0;
 		}
 		return v;
-
 	}
 
 	public static int toInt(String val) {

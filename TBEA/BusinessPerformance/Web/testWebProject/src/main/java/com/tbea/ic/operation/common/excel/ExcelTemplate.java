@@ -272,6 +272,14 @@ public class ExcelTemplate {
 		return this.workbook.getSheetAt(0);
 	}
 	
+	public String getSheetName(){
+		return this.workbook.getSheetName(0);
+	}
+	
+	public void setSheetName(String name){
+		this.workbook.setSheetName(0, name);
+	}
+	
 	/**
 	 * @return the cellStyleNull
 	 */

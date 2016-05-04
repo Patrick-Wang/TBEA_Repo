@@ -51,10 +51,9 @@ module nyzbscqk {
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                    }
+                    submitData[i].push(allData[i][0]);
+                    submitData[i].push(allData[i][3]);
+                    submitData[i][1] = submitData[i][1].replace(new RegExp(' ', 'g'), '');
                 }
                 this.mAjaxSave.post({
                     date: dt,
@@ -75,13 +74,12 @@ module nyzbscqk {
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 2]) {
-                            Util.MessageBox.tip("有空内容 无法提交")
-                            return;
-                        }
+                    submitData[i].push(allData[i][0]);
+                    submitData[i].push(allData[i][3]);
+                    submitData[i][1] = submitData[i][1].replace(new RegExp(' ', 'g'), '');
+                    if ("" == submitData[i][1]) {
+                        Util.MessageBox.tip("有空内容 无法提交")
+                        return;
                     }
                 }
                 this.mAjaxSubmit.post({
@@ -131,6 +129,7 @@ module nyzbscqk {
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                 let jqTable = this.$(name);
+                this.mTableAssist.mergeRow(0);
                 jqTable.jqGrid(
                     this.mTableAssist.decorate({
                         datatype: "local",
