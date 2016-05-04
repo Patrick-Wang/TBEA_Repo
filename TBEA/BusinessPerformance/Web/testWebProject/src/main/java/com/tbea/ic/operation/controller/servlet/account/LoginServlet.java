@@ -206,10 +206,10 @@ public class LoginServlet {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		Account account = SessionManager.getAccount(currentSession);
-
-		SessionManager.getAcl(currentSession).select(map);
-		
 		map.put("userName", account.getName());
+		
+		SessionManager.getAcl(currentSession).select(map);
+				
 
 		return new ModelAndView("index", map);
 
