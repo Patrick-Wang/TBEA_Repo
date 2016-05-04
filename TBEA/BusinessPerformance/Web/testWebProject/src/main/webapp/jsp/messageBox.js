@@ -11,7 +11,7 @@ var Util;
             }
             return $("#self_msgBox");
         };
-        MessageBox.tip = function (msg) {
+        MessageBox.tip = function (msg, onclose) {
             var container = MessageBox.getContainer();
             if (container.attr("finish") == "true") {
                 $("#self_tip").children().eq(0).text(msg);
@@ -30,6 +30,11 @@ var Util;
                 overlayClose: true,
                 //overlayOpacity : .9,
                 on: 'click'
+            });
+            $("#self_tip").on('close.modal', function () {
+                if (undefined != onclose) {
+                    onclose();
+                }
             });
             //if (MessageBox.isMSIE) {
             $(window).resize(function () {

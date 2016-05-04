@@ -1,4 +1,4 @@
-/// <reference path="vector.ts" />
+/// <reference path="../util.ts" />
 
 declare var $:any;
 
@@ -741,6 +741,10 @@ module JQTable {
                         });
                     }
                     $("#" + this.mGridName + " #" + col + "" + mya[iRowStart] + "").attr("rowspan", ilen);
+                    if (Util.isMSIE()){
+                        //IE下overflow-y 无法正常工作
+                        $("#" + this.mGridName).parent().css("overflow-y", "hidden");
+                    }
                     if (this.mOnMergedRows != undefined) {
                         this.mOnMergedRows(iCol, iRowStart, ilen);
                     }

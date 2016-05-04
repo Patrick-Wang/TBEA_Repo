@@ -21,45 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="yclbfqk.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/yclbfqk/yclbfqk.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="28" column="15" selection-start-line="28" selection-start-column="15" selection-end-line="29" selection-end-column="64" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nyzbscjg.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscjg/nyzbscjg.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="121" column="42" selection-start-line="121" selection-start-column="42" selection-end-line="121" selection-end-column="42" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nyzbscxlEntry.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscxl/nyzbscxlEntry.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="n#style#0;n#Table#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="nyzbscxlEntry.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscxl/nyzbscxlEntry.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="56" selection-end-column="17" />
+              <caret line="150" column="41" selection-start-line="150" selection-start-column="41" selection-end-line="150" selection-end-column="41" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -71,17 +37,17 @@
         <entry file="file://$PROJECT_DIR$/jsp/util.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="461" column="35" selection-start-line="461" selection-start-column="35" selection-end-line="461" selection-end-column="35" />
+              <caret line="458" column="9" selection-start-line="458" selection-start-column="9" selection-end-line="458" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nyzbscjgEntry.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="nyzbscjgEntry.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscjg/nyzbscjgEntry.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.27203065">
-              <caret line="130" column="43" selection-start-line="130" selection-start-column="43" selection-end-line="130" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="153" column="41" selection-start-line="153" selection-start-column="41" selection-end-line="153" selection-end-column="41" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -89,44 +55,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="yclbfqkEntry.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/yclbfqk/yclbfqkEntry.jsp">
+      <file leaf-file-name="jqassist.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jsp/jqgrid/jqassist.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.44918698">
+              <caret line="746" column="21" selection-start-line="746" selection-start-column="21" selection-end-line="746" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/index.js">
+      <file leaf-file-name="nyzbscjgEntry.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscjg/nyzbscjgEntry.jsp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="76" column="159" selection-start-line="76" selection-start-column="159" selection-end-line="76" selection-end-column="159" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wlyddqkEntry.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/wlyddqk/wlyddqkEntry.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="74" column="27" selection-start-line="74" selection-start-column="27" selection-end-line="74" selection-end-column="27" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <element signature="n#style#0;n#Table#0;n#!!top" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="chzlbhqkEntry.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/chgb/chzlbhqk/chzlbhqkEntry.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="174" column="44" selection-start-line="174" selection-start-column="42" selection-end-line="174" selection-end-column="44" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -147,8 +93,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/jsp/wgcpqk/byqyclbfqk/byqyclbfqk.jsp" />
-        <option value="$PROJECT_DIR$/jsp/wgcpqk/byqyclbfqk/byqyclbfqkEntry.jsp" />
         <option value="$PROJECT_DIR$/jsp/wgcpqk/xlyclbfqk/xlyclbfqk.jsp" />
         <option value="$PROJECT_DIR$/jsp/wgcpqk/xlyclbfqk/xlyclbfqkEntry.jsp" />
         <option value="$PROJECT_DIR$/jsp/wgcpqk/xlyclbfqk/xlyclbfqkEntry.ts" />
@@ -194,10 +138,12 @@
         <option value="$PROJECT_DIR$/jsp/wgcpqk/yclbfqk/yclbfqk.ts" />
         <option value="$PROJECT_DIR$/jsp/wgcpqk/yclbfqk/yclbfqkEntry.ts" />
         <option value="$PROJECT_DIR$/jsp/nyzbscqk/nyzbscxl/nyzbscxl.ts" />
-        <option value="$PROJECT_DIR$/jsp/nyzbscqk/nyzbscxl/nyzbscxlEntry.ts" />
         <option value="$PROJECT_DIR$/jsp/util.ts" />
         <option value="$PROJECT_DIR$/jsp/nyzbscqk/nyzbscjg/nyzbscjg.ts" />
+        <option value="$PROJECT_DIR$/jsp/messageBox.ts" />
         <option value="$PROJECT_DIR$/jsp/nyzbscqk/nyzbscjg/nyzbscjgEntry.ts" />
+        <option value="$PROJECT_DIR$/jsp/nyzbscqk/nyzbscxl/nyzbscxlEntry.ts" />
+        <option value="$PROJECT_DIR$/jsp/jqgrid/jqassist.ts" />
       </list>
     </option>
   </component>
@@ -290,68 +236,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nyzbscqk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nyzbscqk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nyzbscxl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nyzbscqk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nyzbscjg" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -456,7 +340,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1600" height="860" extended-state="0" />
+    <frame x="0" y="0" width="1600" height="860" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25928298" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -496,55 +380,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/jsp/sbdczclwcqk/clylwcqk/clylwcqk.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="107" column="36" selection-start-line="107" selection-start-column="36" selection-end-line="107" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/sbdczclwcqk/clylwcqk/clylwcqkEntry.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="163" column="67" selection-start-line="163" selection-start-column="67" selection-end-line="163" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/sbdczclwcqk/cpclwcqk/cpclwcqk.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="67" selection-start-line="116" selection-start-column="67" selection-end-line="116" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/sbdczclwcqk/cpclwcqk/cpclwcqkEntry.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="162" column="67" selection-start-line="162" selection-start-column="67" selection-end-line="162" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/sbdczclwcqk/cpczwcqk/cpczwcqk.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="121" column="67" selection-start-line="121" selection-start-column="67" selection-end-line="121" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/sbdczclwcqk/cpczwcqk/cpczwcqkEntry.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="170" column="67" selection-start-line="170" selection-start-column="67" selection-end-line="170" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/jquery/jquery.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3188" column="33" selection-start-line="3188" selection-start-column="33" selection-end-line="3188" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/wgcpqkEntry.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="40.714287">
@@ -802,7 +637,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="74" column="27" selection-start-line="74" selection-start-column="27" selection-end-line="74" selection-end-column="27" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -823,7 +658,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscxl/nyzbscxlEntry.jsp">
+    <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscxl/nyzbscxl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40038314">
+          <caret line="20" column="40" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="40" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscjg/nyzbscjgEntry.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -833,10 +678,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscxl/nyzbscxl.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscqkEntry.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40038314">
-          <caret line="20" column="40" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.7780172">
+          <caret line="52" column="75" selection-start-line="52" selection-start-column="67" selection-end-line="52" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscxl/nyzbscxlEntry.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26923078">
+          <caret line="7" column="52" selection-start-line="7" selection-start-column="52" selection-end-line="7" selection-end-column="52" />
+          <folding>
+            <element signature="n#style#0;n#Table#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscjg/nyzbscjg.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27203065">
+          <caret line="121" column="42" selection-start-line="121" selection-start-column="42" selection-end-line="121" selection-end-column="42" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -846,15 +709,132 @@
     <entry file="file://$PROJECT_DIR$/jsp/util.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="461" column="35" selection-start-line="461" selection-start-column="35" selection-end-line="461" selection-end-column="35" />
+          <caret line="458" column="9" selection-start-line="458" selection-start-column="9" selection-end-line="458" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscjg/nyzbscjg.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/message-box/js/moaModal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="9.931034">
+          <caret line="273" column="29" selection-start-line="273" selection-start-column="16" selection-end-line="273" selection-end-column="29" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/message-box/js/Sweefty.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.61877394">
+          <caret line="338" column="8" selection-start-line="338" selection-start-column="8" selection-end-line="338" selection-end-column="8" />
+          <folding>
+            <marker date="1459914861473" expanded="true" signature="2988:3005" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/messageBox.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.034552846">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+          <folding>
+            <marker date="1462331818688" expanded="true" signature="885:955" placeholder="..." />
+            <marker date="1462331818688" expanded="true" signature="2316:2328" placeholder="..." />
+            <marker date="1462331818688" expanded="true" signature="2393:2459" placeholder="..." />
+            <marker date="1462331818688" expanded="true" signature="2705:2717" placeholder="..." />
+            <marker date="1462331818688" expanded="true" signature="2782:2884" placeholder="..." />
+            <marker date="1462331818688" expanded="true" signature="3355:3413" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/jqgrid/js/jquery.jqGrid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3272358">
+          <caret line="4748" column="46" selection-start-line="4748" selection-start-column="46" selection-end-line="4748" selection-end-column="46" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1459410457456" expanded="true" signature="9315:9327" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="9368:9378" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="9410:9434" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="68213:68223" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="68347:68365" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="69072:69114" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="69213:69229" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="70989:71000" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="71263:71299" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="83435:83447" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="87379:87404" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="87638:87649" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="88315:88340" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="90945:90970" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="96814:96888" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="145000:145047" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="147186:147255" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="148086:148107" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="148480:148521" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="151871:151894" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="152968:152990" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="162637:162695" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="162793:162887" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="194289:194315" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="194699:194725" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="195107:195134" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="195490:195513" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="195869:195909" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="196029:196045" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="207462:207549" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="207650:207768" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="207950:208068" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="226863:226909" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="228594:228610" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="228853:228866" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="248567:248580" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="250940:250970" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="251051:251061" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="251108:251119" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="264613:264625" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="280975:281034" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="281465:281477" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="281623:281635" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="282948:282958" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="283111:283123" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="286307:286319" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="286417:286429" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="286526:286538" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="286665:286693" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="286769:286777" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="297048:297060" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="299468:299527" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="299644:299662" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="307018:307077" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="307183:307195" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="307273:307285" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="307360:307376" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="307841:307851" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="316501:316530" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="316629:316639" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="322594:322630" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="325049:325059" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="362885:362929" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="362970:362991" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="368311:368326" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="374719:374734" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="375572:375587" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="378826:378849" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="411608:411623" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="412407:412441" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="412843:412877" placeholder="..." />
+            <marker date="1459410457456" expanded="true" signature="430247:430280" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscjg/nyzbscjgEntry.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="121" column="42" selection-start-line="121" selection-start-column="42" selection-end-line="121" selection-end-column="42" />
+          <caret line="153" column="41" selection-start-line="153" selection-start-column="41" selection-end-line="153" selection-end-column="41" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -864,20 +844,18 @@
     <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscxl/nyzbscxlEntry.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="56" selection-end-column="17" />
+          <caret line="150" column="41" selection-start-line="150" selection-start-column="41" selection-end-line="150" selection-end-column="41" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/nyzbscqk/nyzbscjg/nyzbscjgEntry.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/jqgrid/jqassist.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27203065">
-          <caret line="130" column="43" selection-start-line="130" selection-start-column="43" selection-end-line="130" selection-end-column="43" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.44918698">
+          <caret line="746" column="21" selection-start-line="746" selection-start-column="21" selection-end-line="746" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>

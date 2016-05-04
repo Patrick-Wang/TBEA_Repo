@@ -1,4 +1,4 @@
-/// <reference path="vector.ts" />
+/// <reference path="../util.ts" />
 (function () {
     $.fn.jqGrid.setGroupHeaders = function (o) {
         o = $.extend({
@@ -641,6 +641,10 @@ var JQTable;
                         });
                     }
                     $("#" + _this.mGridName + " #" + col + "" + mya[iRowStart] + "").attr("rowspan", ilen);
+                    if (Util.isMSIE()) {
+                        //IE下overflow-y 无法正常工作
+                        $("#" + _this.mGridName).parent().css("overflow-y", "hidden");
+                    }
                     if (_this.mOnMergedRows != undefined) {
                         _this.mOnMergedRows(iCol, iRowStart, ilen);
                     }

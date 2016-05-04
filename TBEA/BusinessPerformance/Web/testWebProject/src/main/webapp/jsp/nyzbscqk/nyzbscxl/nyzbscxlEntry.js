@@ -61,8 +61,8 @@ var nyzbscqk;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        _this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("保存 成功");
+                        _this.pluginUpdate(dt, compType);
                     }
                     else {
                         Util.MessageBox.tip(resp.message);
@@ -89,8 +89,8 @@ var nyzbscqk;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        _this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("提交 成功");
+                        _this.pluginUpdate(dt, compType);
                     }
                     else {
                         Util.MessageBox.tip(resp.message);

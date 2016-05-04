@@ -15,7 +15,7 @@ module Util {
 
         private static isMSIE: boolean = navigator.appName == "Microsoft Internet Explorer";
 
-        static tip(msg: string): void {
+        static tip(msg: string, onclose ? : ()=>void): void {
             var container: any = MessageBox.getContainer();
             if (container.attr("finish") == "true") {
                 $("#self_tip").children().eq(0).text(msg);
@@ -33,6 +33,12 @@ module Util {
                 overlayClose: true,
                 //overlayOpacity : .9,
                 on: 'click'
+            });
+
+            $("#self_tip").on('close.modal',function(){
+                if (undefined != onclose){
+                    onclose();
+                }
             });
 
             //if (MessageBox.isMSIE) {

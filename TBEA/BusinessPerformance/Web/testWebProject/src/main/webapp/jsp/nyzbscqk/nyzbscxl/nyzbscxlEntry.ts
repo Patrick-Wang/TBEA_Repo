@@ -61,8 +61,8 @@ module nyzbscqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("保存 成功");
+                        this.pluginUpdate(dt, compType);
                     } else {
                         Util.MessageBox.tip(resp.message);
                     }
@@ -88,8 +88,8 @@ module nyzbscqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        this.pluginUpdate(dt, compType);
                         Util.MessageBox.tip("提交 成功");
+                        this.pluginUpdate(dt, compType);
                     } else {
                         Util.MessageBox.tip(resp.message);
                     }
@@ -149,8 +149,7 @@ module nyzbscqk {
                         width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
-                        viewrecords: true,
-                        //pager: '#' + pagername,
+                        viewrecords: true
                     }));
             }
         }
