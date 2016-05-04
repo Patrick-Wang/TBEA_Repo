@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.account;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,15 +52,12 @@ public class LoginServlet {
 
 	@Autowired
 	ExtendAuthorityService extendAuthService;
-	
+
 	@RequestMapping(value = "ssoLogin.do")
 	public ModelAndView ssoLogin(HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> map = SystemLinkClient.getLink(request, "43");
-		String userCode = (String) map.get("userCode");
-		// Assertion assertion = (Assertion)
-		// request.getSession().getAttribute("_const_csa_assertion_");
-		Account account = loginService.SSOLogin(userCode);
+		String userName = request.getParameter("SSO_USER");
+		Account account = loginService.SSOLogin(userName);
 
 		if (null != account) {
 			setAuthority(request.getSession(), account);
@@ -70,15 +68,15 @@ public class LoginServlet {
 		return new ModelAndView("login");
 	}
 
-	// @RequestMapping(value = "ssoLogout.do")
-	// public void ssoLogout(HttpServletRequest request,
-	// HttpServletResponse response) throws IOException {
-	// HttpSession session = request.getSession(false);
-	// if (null != session){
-	// session.invalidate();
-	// }
-	// response.sendRedirect("http://192.168.10.68:10008/cas/logout");
-	// }
+	@RequestMapping(value = "ssoLogout.do")
+	public void ssoLogout(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession(false);
+		if (null != session) {
+			session.invalidate();
+		}
+//		response.sendRedirect("http://192.168.10.68:10008/cas/logout");
+	}
 
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request,
@@ -103,7 +101,7 @@ public class LoginServlet {
 		AjaxRedirect ajaxRedirect;
 		if (isSSOLogin) {
 			ajaxRedirect = new AjaxRedirect(
-					"http://192.168.10.68:10008/cas/logout");
+					"http://dbdev.tbea.com:14100/oam/server/logout?end_url=http://dbdev.tbea.com/tbeacloud/webcenter/view/index.jsp");
 		} else {
 			ajaxRedirect = new AjaxRedirect();
 		}
@@ -112,91 +110,59 @@ public class LoginServlet {
 	}
 
 	private void setAuthority(HttpSession session, Account account) {
+		ACL acl = new ACL();
 		SessionManager.setAccount(session, account);
-
-		session.setAttribute("entryPlan",
-				entryService.hasEntryPlanPermission(account));
-
-		session.setAttribute("entryPredict",
-				entryService.hasEntryPredictPermission(account));
-
-		session.setAttribute("approvePlan",
-				approveService.hasApprovePlanPermission(account));
-
-		session.setAttribute("approvePredict",
-				approveService.hasApprovePredictPermission(account));
-
-		session.setAttribute("CorpAuth", loginService.hasCorpAuth(account));
-
-		session.setAttribute("SbdAuth", loginService.hasSbdAuth(account));
-
-		session.setAttribute("MarketAuth",
-				entryService.hasMarketPermission(account));
-
-		session.setAttribute("MarketAuth",
-				entryService.hasMarketPermission(account));
-
-		session.setAttribute("isJydw",
-				dailyReportService.hasYszkAuthority(account));
-
-		session.setAttribute("JYAnalysisEntry",
-				dailyReportService.hasJYAnalysisEntryAuthority(account));
-
-		session.setAttribute("JYAnalysisSummary",
-				dailyReportService.hasJYAnalysisLookupAuthority(account));
+		SessionManager.setAcl(session, acl);
 		
-		session.setAttribute("YSZKDialyLookup",
-				dailyReportService.hasYSZKDialyLookupAuthority(account));
-		
-		session.setAttribute("XJLDialyLookup",
-				dailyReportService.hasXJLDialyLookupAuthority(account));
-		
-		session.setAttribute("JYAnalysisLookup",
-				dailyReportService.hasJYAnalysisLookupAuthority(account) || dailyReportService.hasYSZKDialyLookupAuthority(account));
-		
-		session.setAttribute("JYEntryLookup",
-				dailyReportService.hasJYEntryLookupAuthority(account));
-		
-		session.setAttribute("PriceLibAuth", extendAuthService.hasAuthority(account, AuthType.PriceLib));
-		
-		boolean hasGbAuthority = false;
+		acl.add("entryPlan", entryService.hasEntryPlanPermission(account))
+		.add("entryPredict", entryService.hasEntryPredictPermission(account))
+		.add("approvePlan", approveService.hasApprovePlanPermission(account))
+		.add("approvePredict", approveService.hasApprovePredictPermission(account))
+		.add("CorpAuth", loginService.hasCorpAuth(account))
+		.add("SbdAuth", loginService.hasSbdAuth(account))
+		.add("MarketAuth", entryService.hasMarketPermission(account))
+		.add("isJydw", dailyReportService.hasYszkAuthority(account))
+		.add("JYAnalysisEntry", dailyReportService.hasJYAnalysisEntryAuthority(account))
+		.add("JYAnalysisSummary", dailyReportService.hasJYAnalysisLookupAuthority(account))
+		.add("YSZKDialyLookup", dailyReportService.hasYSZKDialyLookupAuthority(account))
+		.add("XJLDialyLookup", dailyReportService.hasXJLDialyLookupAuthority(account))
+		.add("JYAnalysisLookup", dailyReportService.hasJYAnalysisLookupAuthority(account)
+								|| dailyReportService.hasYSZKDialyLookupAuthority(account))
+		.add("JYEntryLookup", dailyReportService.hasJYEntryLookupAuthority(account))
+		.add("PriceLibAuth", extendAuthService.hasAuthority(account, AuthType.PriceLib));
+
+
+		boolean hasGbLookupAuthority = false;
+				
 		boolean hasAuthority = extendAuthService.hasAuthority(account, AuthType.ChgbLookup);
-		hasGbAuthority = hasGbAuthority || hasAuthority;
-		session.setAttribute("ChgbLookup", hasAuthority);
-		
+		hasGbLookupAuthority = hasGbLookupAuthority || hasAuthority;
+		acl.add("ChgbLookup", hasAuthority);
 		hasAuthority = extendAuthService.hasAuthority(account, AuthType.YszkgbLookup);
-		hasGbAuthority = hasGbAuthority || hasAuthority;
-		session.setAttribute("YszkgbLookup", hasAuthority);
-		
+		hasGbLookupAuthority = hasGbLookupAuthority || hasAuthority;
+		acl.add("YszkgbLookup", hasAuthority);
 		hasAuthority = extendAuthService.hasAuthority(account, AuthType.WlyddLookup);
-		hasGbAuthority = hasGbAuthority || hasAuthority;
-		session.setAttribute("WlyddLookup", hasAuthority);
+		hasGbLookupAuthority = hasGbLookupAuthority || hasAuthority;
+		acl.add("WlyddLookup", hasAuthority);
+
+		boolean hasGbEntryAuthority = false;
 		
-		session.setAttribute("GbLookup", hasGbAuthority);
-		
-		hasGbAuthority = false;
 		hasAuthority = extendAuthService.hasAuthority(account, AuthType.ChgbEntry);
-		hasGbAuthority = hasGbAuthority || hasAuthority;
-		session.setAttribute("ChgbEntry", hasAuthority);
-		
+		hasGbEntryAuthority = hasGbEntryAuthority || hasAuthority;
+		acl.add("ChgbEntry", hasAuthority);
 		hasAuthority = extendAuthService.hasAuthority(account, AuthType.YszkgbEntry);
-		hasGbAuthority = hasGbAuthority || hasAuthority;
-		session.setAttribute("YszkgbEntry", hasAuthority);
+		hasGbEntryAuthority = hasGbEntryAuthority || hasAuthority;
+		acl.add("YszkgbEntry", hasAuthority);
+		hasAuthority = extendAuthService.hasAuthority(account,	AuthType.WlyddEntry);
+		hasGbEntryAuthority = hasGbEntryAuthority || hasAuthority;
+		acl.add("WlyddEntry", hasAuthority);
 		
-		hasAuthority = extendAuthService.hasAuthority(account, AuthType.WlyddEntry);
-		hasGbAuthority = hasGbAuthority || hasAuthority;
-		session.setAttribute("WlyddEntry", hasAuthority);
-		
-		session.setAttribute("GbEntry", hasGbAuthority);
-
-		session.setAttribute("isByq", account.getId() == 9
-				|| account.getId() == 25 || account.getId() == 33);
-
-		session.setAttribute("isXl", account.getId() == 43
-				|| account.getId() == 50 || account.getId() == 61);
-		
-		session.setAttribute("isSbdcy", account.getId() == 8 || account.getId() == 6 || account.getId() == 147
-				|| account.getId() == 119 || account.getId() == 146);
+		acl.add("GbLookup", hasGbLookupAuthority)
+			.add("GbEntry", hasGbEntryAuthority)
+			.add("isByq", account.getId() == 9 || account.getId() == 25 || account.getId() == 33)
+			.add("isXl", account.getId() == 43 || account.getId() == 50 || account.getId() == 61)
+			.add("isSbdcy",	account.getId() == 8 || account.getId() == 6
+						|| account.getId() == 147 || account.getId() == 119
+						|| account.getId() == 146);
 
 	}
 
@@ -236,40 +202,41 @@ public class LoginServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Account account = SessionManager.getAccount(currentSession);
 
+		SessionManager.getAcl(currentSession).select(map);
+		
 		map.put("zhAuth", "众和公司".equals(account.getName()));
 
 		map.put("sbqgb", "qgb".equals(account.getName()));
 
-		map.put("entryPlan", currentSession.getAttribute("entryPlan"));
-
-		map.put("entryPredict", currentSession.getAttribute("entryPredict"));
-
-		map.put("approvePlan", currentSession.getAttribute("approvePlan"));
-
-		map.put("approvePredict", currentSession.getAttribute("approvePredict"));
-
-		map.put("CorpAuth", currentSession.getAttribute("CorpAuth"));
-
-		map.put("SbdAuth", currentSession.getAttribute("SbdAuth"));
-
-		map.put("MarketAuth", currentSession.getAttribute("MarketAuth"));
-		
-		map.put("PriceLibAuth", currentSession.getAttribute("PriceLibAuth"));
+//		map.put("entryPlan", currentSession.getAttribute("entryPlan"));
+//
+//		map.put("entryPredict", currentSession.getAttribute("entryPredict"));
+//
+//		map.put("approvePlan", currentSession.getAttribute("approvePlan"));
+//
+//		map.put("approvePredict", currentSession.getAttribute("approvePredict"));
+//
+//		map.put("CorpAuth", currentSession.getAttribute("CorpAuth"));
+//
+//		map.put("SbdAuth", currentSession.getAttribute("SbdAuth"));
+//
+//		map.put("MarketAuth", currentSession.getAttribute("MarketAuth"));
+//
+//		map.put("PriceLibAuth", currentSession.getAttribute("PriceLibAuth"));
 
 		map.put("userName", account.getName());
 
 		map.put("admin", "admin".equals(account.getName()));
-		
-		map.put("ChgbLookup", currentSession.getAttribute("ChgbLookup"));
-		map.put("YszkgbLookup", currentSession.getAttribute("YszkgbLookup"));
-		map.put("WlyddLookup", currentSession.getAttribute("WlyddLookup"));
-		map.put("ChgbEntry", currentSession.getAttribute("ChgbEntry"));
-		map.put("YszkgbEntry", currentSession.getAttribute("YszkgbEntry"));
-		map.put("WlyddEntry", currentSession.getAttribute("WlyddEntry"));
-		map.put("GbEntry", currentSession.getAttribute("GbEntry"));
-		map.put("GbLookup", currentSession.getAttribute("GbLookup"));
-		
-		
+
+//		map.put("ChgbLookup", currentSession.getAttribute("ChgbLookup"));
+//		map.put("YszkgbLookup", currentSession.getAttribute("YszkgbLookup"));
+//		map.put("WlyddLookup", currentSession.getAttribute("WlyddLookup"));
+//		map.put("ChgbEntry", currentSession.getAttribute("ChgbEntry"));
+//		map.put("YszkgbEntry", currentSession.getAttribute("YszkgbEntry"));
+//		map.put("WlyddEntry", currentSession.getAttribute("WlyddEntry"));
+//		map.put("GbEntry", currentSession.getAttribute("GbEntry"));
+//		map.put("GbLookup", currentSession.getAttribute("GbLookup"));
+
 		return new ModelAndView("index", map);
 
 	}

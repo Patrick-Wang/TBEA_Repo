@@ -7,11 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import javax.xml.ws.Endpoint;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
+import com.tbea.ic.operation.controller.servlet.account.ACL;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 
 public class SessionManager implements HttpSessionListener {
@@ -52,8 +49,8 @@ public class SessionManager implements HttpSessionListener {
 	
 	public static Account getAccount(HttpSession session) {
 		if (null != session) {
-			if (null != session.getAttribute("account")) {
-				return (Account) session.getAttribute("account");
+			if (null != session.getAttribute("_account")) {
+				return (Account) session.getAttribute("_account");
 			}
 		}
 		return null;
@@ -61,7 +58,20 @@ public class SessionManager implements HttpSessionListener {
 	
 	public static void setAccount(HttpSession session, Account account) {
 		if (null != session) {
-			session.setAttribute("account", account);
+			session.setAttribute("_account", account);
 		}
+	}
+	
+	public static void setAcl(HttpSession session, ACL acl) {
+		if (null != session) {
+			session.setAttribute("_acl", acl);
+		}
+	}
+	
+	public static ACL getAcl(HttpSession session) {
+		if (null != session) {
+			return (ACL) session.getAttribute("_acl");
+		}
+		return null;
 	}
 }
