@@ -23,11 +23,11 @@
 		</listener> -->
 
 
-	<listener>
+	<!--<listener>
 		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener
 		</listener-class>
 	</listener>
-	<filter>
+	 <filter>
 		<filter-name>CAS Single Sign Out Filter</filter-name>
 		<filter-class>org.jasig.cas.client.session.SingleSignOutFilter
 		</filter-class>
@@ -89,7 +89,7 @@
 	<filter-mapping>
 		<filter-name>CAS Assertion Thread Local Filter</filter-name>
 		<url-pattern>/Login/ssoLogin.do</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener
