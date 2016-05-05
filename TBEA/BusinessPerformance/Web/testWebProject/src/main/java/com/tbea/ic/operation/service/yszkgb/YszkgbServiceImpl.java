@@ -7,36 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.tbea.ic.operation.common.CommonMethod;
-import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.ZBStatus;
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
-import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDaoImpl;
-import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDao;
-import com.tbea.ic.operation.model.dao.yszkgb.yqyszcsys.YqyszcsysDaoImpl;
-import com.tbea.ic.operation.model.dao.yszkgb.yqyszcsys.YqyszcsysDao;
-import com.tbea.ic.operation.model.dao.yszkgb.yszkkxxz.YszkKxxzDaoImpl;
-import com.tbea.ic.operation.model.dao.yszkgb.yszkkxxz.YszkKxxzDao;
-import com.tbea.ic.operation.model.dao.yszkgb.yszkzl.YszkZlDaoImpl;
-import com.tbea.ic.operation.model.dao.yszkgb.yszkzl.YszkZlDao;
-
 import javax.annotation.Resource;
-
-import com.tbea.ic.operation.model.dao.yszkgb.yszkzm.YszkzmDaoImpl;
-import com.tbea.ic.operation.model.dao.yszkgb.yszkzm.YszkzmDao;
-import com.tbea.ic.operation.model.entity.yszkgb.YqyszcsysEntity;
-import com.tbea.ic.operation.model.entity.yszkgb.YszkKxxzEntity;
-import com.tbea.ic.operation.model.entity.yszkgb.YszkYjtzTjqsEntity;
-import com.tbea.ic.operation.model.entity.yszkgb.YszkZlEntity;
-import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
-import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
-import com.tbea.ic.operation.service.util.nc.NCConnection;
-import com.tbea.ic.operation.service.yszkgb.YszkgbService;
 
 import net.sf.json.JSONArray;
 
@@ -44,6 +15,31 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
+import com.tbea.ic.operation.model.dao.yszkgb.yqyszcsys.YqyszcsysDao;
+import com.tbea.ic.operation.model.dao.yszkgb.yqyszcsys.YqyszcsysDaoImpl;
+import com.tbea.ic.operation.model.dao.yszkgb.yszkkxxz.YszkKxxzDao;
+import com.tbea.ic.operation.model.dao.yszkgb.yszkkxxz.YszkKxxzDaoImpl;
+import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDao;
+import com.tbea.ic.operation.model.dao.yszkgb.yszkyjtztjqs.YszkYjtzTjqsDaoImpl;
+import com.tbea.ic.operation.model.dao.yszkgb.yszkzl.YszkZlDao;
+import com.tbea.ic.operation.model.dao.yszkgb.yszkzl.YszkZlDaoImpl;
+import com.tbea.ic.operation.model.dao.yszkgb.yszkzm.YszkzmDao;
+import com.tbea.ic.operation.model.dao.yszkgb.yszkzm.YszkzmDaoImpl;
+import com.tbea.ic.operation.model.entity.yszkgb.YqyszcsysEntity;
+import com.tbea.ic.operation.model.entity.yszkgb.YszkKxxzEntity;
+import com.tbea.ic.operation.model.entity.yszkgb.YszkYjtzTjqsEntity;
+import com.tbea.ic.operation.model.entity.yszkgb.YszkZlEntity;
+import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
+import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
+import com.tbea.ic.operation.service.util.nc.NCConnection;
 
 @Service(YszkgbServiceImpl.NAME)
 @Transactional("transactionManager")

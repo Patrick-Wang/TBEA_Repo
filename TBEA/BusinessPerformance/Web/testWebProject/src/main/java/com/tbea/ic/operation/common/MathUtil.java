@@ -80,4 +80,17 @@ public class MathUtil {
 		}
 		return val;
 	}
+	
+	public static Double minus(Double val1, Double val2) {
+		if (val1 != null && val2 != null){
+			return val1 - val2;
+		}else if (val1 == null && val2 != null){
+			return -val2;
+		}else if (val1 == null && val2 == null){
+			return null;
+		}else {
+			return val1;
+		}
+	}
+
 }

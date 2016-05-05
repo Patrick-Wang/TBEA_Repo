@@ -11,4 +11,6 @@ public interface SzDao extends AbstractReadWriteDao<SzEntity> {
 
 	List<SzEntity> getAll();
 
+	int getSzCount();
+
 }
