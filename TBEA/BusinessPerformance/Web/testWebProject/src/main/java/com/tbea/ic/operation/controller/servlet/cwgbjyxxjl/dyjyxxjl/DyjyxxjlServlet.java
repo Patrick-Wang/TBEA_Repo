@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.controller.servlet.cwgb.jyxxjl;
+package com.tbea.ic.operation.controller.servlet.cwgbjyxxjl.dyjyxxjl;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -31,12 +31,12 @@ import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
-import com.tbea.ic.operation.service.cwgb.jyxxjl.JyxxjlService;
-import com.tbea.ic.operation.service.cwgb.jyxxjl.JyxxjlServiceImpl;
+import com.tbea.ic.operation.service.cwgbjyxxjl.jyxxjl.JyxxjlService;
+import com.tbea.ic.operation.service.cwgbjyxxjl.jyxxjl.JyxxjlServiceImpl;
 
 @Controller
-@RequestMapping(value = "jyxxjl")
-public class JyxxjlServlet {
+@RequestMapping(value = "dyjyxxjl")
+public class DyjyxxjlServlet {
 	@Resource(name=JyxxjlServiceImpl.NAME)
 	JyxxjlService jyxxjlService;
 
@@ -46,13 +46,13 @@ public class JyxxjlServlet {
 	CompanyManager companyManager;
 
 	@RequestMapping(value = "update.do")
-	public @ResponseBody byte[] getJyxxjl(HttpServletRequest request,
+	public @ResponseBody byte[] getDyjyxxjl(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> result = null; //jyxxjlService.getJyxxjl(d, company);
+		List<List<String>> result = null;//dyjyxxjlService.getDyjyxxjl(d, company);
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0});
 		handler.next(new RawNumberFormatterHandler(1));
@@ -63,13 +63,13 @@ public class JyxxjlServlet {
 	}
 
 	@RequestMapping(value = "entry/update.do")
-	public @ResponseBody byte[] updateJyxxjl(HttpServletRequest request,
+	public @ResponseBody byte[] updateDyjyxxjl(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> result = null; //jyxxjlService.getJyxxjlEntry(d, company);
+		List<List<String>> result = null;//dyjyxxjlService.getDyjyxxjlEntry(d, company);
 		
 		RawFormatterHandler handler = new RawNumberFormatterHandler(4, null, new Integer[]{3}).trimZero(true);
 		RawFormatterClient client = new RawFormatterClient(handler);
@@ -79,38 +79,38 @@ public class JyxxjlServlet {
 	}
 	
 	@RequestMapping(value = "entry/save.do")
-	public @ResponseBody byte[] saveJyxxjl(HttpServletRequest request,
+	public @ResponseBody byte[] saveDyjyxxjl(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		ErrorCode err = null; //jyxxjlService.saveJyxxjl(d, data, company);
+		ErrorCode err = null;//dyjyxxjlService.saveDyjyxxjl(d, data, company);
 		return Util.response(err);
 	}
 	
 	@RequestMapping(value = "entry/submit.do")
-	public @ResponseBody byte[] submitJyxxjl(HttpServletRequest request,
+	public @ResponseBody byte[] submitDyjyxxjl(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		ErrorCode err = null; //jyxxjlService.submitJyxxjl(d, data, company);
+		ErrorCode err = null;//dyjyxxjlService.submitDyjyxxjl(d, data, company);
 		return Util.response(err);
 	}
 	
 	@RequestMapping(value = "export.do")
-	public void exportJyxxjl(HttpServletRequest request,
+	public void exportDyjyxxjl(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 //		Date d = Date.valueOf(request.getParameter("date"));
 //		CompanyType comp = CompanySelection.getCompany(request);
 //		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 //		
-//		List<List<String>> result = jyxxjlService.getJyxxjl(d, company);
-//		ExcelTemplate template = ExcelTemplate.createCwgbTemplate(CwgbSheetType.JYXXJL);
+//		List<List<String>> result = dyjyxxjlService.getDyjyxxjl(d, company);
+//		ExcelTemplate template = ExcelTemplate.createCwgbjyxxjlTemplate(CwgbjyxxjlSheetType.DYJYXXJL);
 //	
 //		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
 //		handler.next(new NumberFormatterHandler(1));

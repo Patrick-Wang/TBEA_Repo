@@ -332,7 +332,7 @@ var JQTable;
             return this.mOpts.sorttype;
         };
         return Node;
-    })();
+    }());
     JQTable.Node = Node;
     var Cell = (function () {
         function Cell(row, col) {
@@ -355,7 +355,7 @@ var JQTable;
             return this.mCol;
         };
         return Cell;
-    })();
+    }());
     JQTable.Cell = Cell;
     var Formula = (function () {
         function Formula(destCell, srcCellarray, formula) {
@@ -392,7 +392,7 @@ var JQTable;
             }
         };
         return Formula;
-    })();
+    }());
     JQTable.Formula = Formula;
     var JQGridAssistant = (function () {
         function JQGridAssistant(titleNodes, gridName) {
@@ -796,13 +796,13 @@ var JQTable;
                 this.completeList.push(function () {
                     var headerStart = $("#" + _this.mGridName + "_" + _this.id(iColStart));
                     var firstWidht = headerStart[0].offsetWidth; //this.parseInt(headerStart[0].style.width);
-                    var iWidht = firstWidht;
+                    var iWidth = firstWidht;
                     var headerMerge = null;
-                    var widthList = [iWidht];
+                    var widthList = [iWidth];
                     for (var i = 1; i < iCount; i++) {
                         headerMerge = $("#" + _this.mGridName + "_" + _this.id(iColStart + i));
                         widthList.push(headerMerge[0].offsetWidth); //this.parseInt(headerMerge.css("width")));
-                        iWidht += widthList[widthList.length - 1];
+                        iWidth += widthList[widthList.length - 1];
                         headerMerge.removeClass("ui-state-default");
                         headerMerge.children("span").css("display", "none");
                         headerMerge.children("div").css("display", "none");
@@ -820,9 +820,11 @@ var JQTable;
                         e.css("border", "0px");
                         _this.disableDragCell(iColStart + i);
                     }
-                    headerStart.css("width", iWidht + "px");
+                    headerStart.css("width", iWidth + "px");
+                    var len = headerStart[0].offsetWidth - iWidth;
+                    headerStart.css("width", (iWidth - len) + "px");
                     var sizeTitle = $("#gbox_" + _this.mGridName + " .jqg-first-row-header th:eq(" + iColStart + ")");
-                    sizeTitle.css("width", iWidht + "px");
+                    sizeTitle.css("width", iWidth + "px");
                     _this.disableDragCell(iColStart);
                     if (_this.mOnMergedTitles != undefined) {
                         _this.mOnMergedTitles(iColStart, iCount);
@@ -945,7 +947,7 @@ var JQTable;
                     else {
                         return ret;
                     }
-                }
+                },
             };
             $('html').bind('click', function (e) {
                 if (lastsel != "") {
@@ -1113,6 +1115,6 @@ var JQTable;
             return option;
         };
         return JQGridAssistant;
-    })();
+    }());
     JQTable.JQGridAssistant = JQGridAssistant;
 })(JQTable || (JQTable = {}));
