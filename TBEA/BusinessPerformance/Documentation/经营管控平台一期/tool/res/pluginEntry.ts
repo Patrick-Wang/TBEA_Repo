@@ -19,11 +19,11 @@ module #FRAME# {
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    Node.create({id : "月份", align : TextAlign.Center}),
-                    Node.create({id : "材料", isReadOnly: readOnly}),
-                    Node.create({id : "期现货合计盈亏", isReadOnly: readOnly})
-                        .append(Node.create({id : "指导价格按照保本价（万元）", isReadOnly: readOnly}))
-                        .append(Node.create({id : "指导价格按照目标利润价（万元）", isReadOnly: readOnly}))
+                    Node.create({name : "月份", align : TextAlign.Center}),
+                    Node.create({name : "材料", isReadOnly: readOnly}),
+                    Node.create({name : "期现货合计盈亏", isReadOnly: readOnly})
+                        .append(Node.create({name : "指导价格按照保本价（万元）", isReadOnly: readOnly}))
+                        .append(Node.create({name : "指导价格按照目标利润价（万元）", isReadOnly: readOnly}))
                 ], gridName);
             }
         }

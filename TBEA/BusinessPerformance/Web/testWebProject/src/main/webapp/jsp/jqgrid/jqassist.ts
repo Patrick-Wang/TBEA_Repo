@@ -202,7 +202,7 @@ module JQTable {
 
     export interface NodeOption {
         name: string;
-        id: string;
+        id?: string;
         isReadOnly?: boolean;
         isNumber?: boolean;
         align?: TextAlign;

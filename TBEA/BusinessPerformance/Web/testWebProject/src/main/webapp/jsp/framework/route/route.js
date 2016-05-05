@@ -86,7 +86,7 @@ var framework;
             Router.OK = 887291;
             Router.FAILED = 887292;
             return Router;
-        }());
+        })();
         route.Router = Router;
     })(route = framework.route || (framework.route = {}));
 })(framework || (framework = {}));
