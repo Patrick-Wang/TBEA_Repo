@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.controller.servlet.cwcpdlml.cpdlml;
+package com.tbea.ic.operation.controller.servlet.cwyjsf.yjsfljs;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.common.excel.CwcpdlmlSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterClient;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
@@ -30,14 +31,14 @@ import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
-import com.tbea.ic.operation.service.cwcpdlml.cpdlml.CpdlmlService;
-import com.tbea.ic.operation.service.cwcpdlml.cpdlml.CpdlmlServiceImpl;
+import com.tbea.ic.operation.service.cwyjsf.yjsfljs.YjsfljsService;
+import com.tbea.ic.operation.service.cwyjsf.yjsfljs.YjsfljsServiceImpl;
 
 @Controller
-@RequestMapping(value = "cpdlml")
-public class CpdlmlServlet {
-	@Resource(name=CpdlmlServiceImpl.NAME)
-	CpdlmlService cpdlmlService;
+@RequestMapping(value = "yjsfljs")
+public class YjsfljsServlet {
+	@Resource(name=YjsfljsServiceImpl.NAME)
+	YjsfljsService yjsfljsService;
 
 
 
@@ -45,13 +46,13 @@ public class CpdlmlServlet {
 	CompanyManager companyManager;
 
 	@RequestMapping(value = "update.do")
-	public @ResponseBody byte[] getCpdlml(HttpServletRequest request,
+	public @ResponseBody byte[] getYjsfljs(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> result = cpdlmlService.getCpdlml(d, company);
+		List<List<String>> result = yjsfljsService.getYjsfljs(d, company);
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0});
 		handler.next(new RawNumberFormatterHandler(1));
@@ -60,16 +61,16 @@ public class CpdlmlServlet {
 		
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
-	
+
 	@RequestMapping(value = "export.do")
-	public void exportCpdlml(HttpServletRequest request,
+	public void exportYjsfljs(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> result = cpdlmlService.getCpdlml(d, company);
-		ExcelTemplate template = ExcelTemplate.createCwcpdlmlTemplate(CwcpdlmlSheetType.CPDLML);
+		List<List<String>> result = yjsfljsService.getYjsfljs(d, company);
+		ExcelTemplate template = ExcelTemplate.createCwyjsfTemplate(CwyjsfSheetType.YJSFLJS);
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
 		handler.next(new NumberFormatterHandler(1));

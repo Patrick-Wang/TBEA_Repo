@@ -10,15 +10,13 @@
 
 <!-- jquery -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
-
 <!-- jquery ui blue --> 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
-
-<!-- 多选菜单 -->
-<link rel="stylesheet" type="text/css"
+<!-- 多选菜单 -->  
+<link rel="stylesheet" type="text/css" 
 	href="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.css" />
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/jsp/multi-select/assets/style.css" />
@@ -29,7 +27,7 @@
 	src="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.js"></script>
 
 
-<!-- jqgrid -->
+<!-- jqgrid --> 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.jqgrid.css">
 <link rel="stylesheet" type="text/css" media="screen"
@@ -40,22 +38,20 @@
 	type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
-
+ 
 <!-- jqgrid assist -->
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/vector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/jqassist.js" type="text/javascript"></script>
-
-
 <script src="${pageContext.request.contextPath}/jsp/json2.js" type="text/javascript"></script>
+
 
 <!-- message box -->
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-
-<%@include file="../framework/basic/basicEntry.jsp"%>
-<script src="${pageContext.request.contextPath}/jsp/cwcpdlml/cwcpdlmldef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/cwcpdlml/cwcpdlmlEntry.js" type="text/javascript"></script>
+<%@include file="../framework/basic/basicShow.jsp"%>
+<script src="${pageContext.request.contextPath}/jsp/cwyjsf/cwyjsfdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/cwyjsf/cwyjsf.js" type="text/javascript"></script>
 <title>完工产品情况</title>
 
 <style type="text/css">
@@ -143,7 +139,7 @@ body {
 	margin-top: 10px;
 	margin-left: 90px;
 	border: 0;
-	background-color: #5cb85c; 
+	background-color: #5cb85c;
 }
 
 th.ui-th-column div {
@@ -162,8 +158,14 @@ th.ui-th-ltr {
 	text-align: left;
 	font-size: 12px;
 }
+#exportButton {
+	height: 23px;
+	width:100px;
+	padding: .1em 1em;
+	margin-top: 2px;
+}
 </style>
-</head> 
+</head>
 <body>
 	<div class="header">
 		<h1 id="headertitle">完工产品情况</h1>
@@ -178,33 +180,40 @@ th.ui-th-ltr {
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
-		</tr> 
+		</tr>
 		<tr>
 			<td id="plugin">
-				<%@include file="cpdlml/cpdlmlEntry.jsp"%>
+				<%@include file="yjsf/yjsf.jsp"%>
+				<%@include file="yjsfljs/yjsfljs.jsp"%>
 			</td>
-		</tr> 
+		</tr>
 		<tr>
 			<td>
-				<input id="gbsv" type="button" value="保存" style="float: right; width: 80px; margin-left: 10px;"
-					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SAVE)" />
-				<input id="gbsm" type="button" value="提交" style="float: right; width: 80px; margin-left: 10px;"
-					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)" />
+				<form id="export" method="post">
+					<input id="exportButton" type="button" value="导出"
+						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
+				</form> 
 			</td>
 		</tr>
 	</Table>
 	<script type="text/javascript">
-	    $(document).ready(function () {
-			framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
-				type: "type",
-				dt: "dt",
-				comp:"compid",
-				comps : JSON.parse('${nodeData}'),
-				date: {
-					month: "${month}".length == 0 ? undefined : parseInt("${month}"),
-					year: ${year}
-				}
-			});
+
+
+    $(document).ready(function () {
+		framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+			type: "type",
+			comp:"compid",
+			comps : JSON.parse('${nodeData}'),
+			dt: "dt",
+			date: {
+				month: "${month}".length == 0 ? undefined : parseInt("${month}"),
+				year: ${year}
+			}
+		});
+        $("#exportButton")
+			.css("height", "23px")
+			.css("padding", ".1em 1em")
+			.css("margin-top", "2px");
         $(document.body).css("visibility", "visible");
     });
 </script>
@@ -212,7 +221,7 @@ th.ui-th-ltr {
 	<script src="${pageContext.request.contextPath}/jsp/style_button.js"></script>
 	<script src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 	<%@include file="../components/loading.jsp"%>
-</body> 
+</body>
 
 
 </html>

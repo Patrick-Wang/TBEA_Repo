@@ -21,12 +21,14 @@ INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (3,N'城建税')
 INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (4,N'教育费附加(包括地方教育费附加)')
 INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (5,N'企业所得税')
 INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (6,N'土地使用税')
-INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (7,N'房产税')
-INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (8,N'印花税')
-INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (9,N'个人所得税')
-INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (10,N'资源税')
-INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (11,N'关税')
-INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (12,N'其他税费')
+INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (7,N'土地增值税')
+INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (8,N'车船使用税')
+INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (9,N'房产税')
+INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (10,N'印花税')
+INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (11,N'个人所得税')
+INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (12,N'资源税')
+INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (13,N'关税')
+INSERT [dbo].[identifier_cwgb_sz] ([id], [name])VALUES (14,N'其他税费')
 SET IDENTITY_INSERT [dbo].[identifier_cwgb_sz] OFF      
 
 /***************************************************************************** 产业
@@ -170,6 +172,7 @@ CREATE TABLE [dbo].[cwgb_yjsf](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not NULL,
 	[yf] [int] not NULL,
+	[dwid] [int] not NULL,
 	[sz] [int] not NULL,
 	[yjs] [numeric](18, 4) NULL,
 	[yijs] [numeric](18, 4) NULL,
@@ -194,6 +197,7 @@ DROP TABLE cwgb_ndqcs
 CREATE TABLE [dbo].[cwgb_ndqcs](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not NULL,
+	[dwid] [int] not NULL,
 	[sz] [int] not NULL,
 	[qcs] [numeric](18, 4) NULL
 PRIMARY KEY CLUSTERED 

@@ -24,11 +24,6 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 
 	public final static String NAME = "CpdlmlServiceImpl";
 
-	@Override
-	public ErrorCode submitCpdlml(Date d, JSONArray data, Company company) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List<List<String>> getCpdlml(Date d, Company company) {
@@ -36,16 +31,5 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 		return null;
 	}
 
-	@Override
-	public ErrorCode saveCpdlml(Date d, JSONArray data, Company company) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<List<String>> getCpdlmlEntry(Date d, Company company) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

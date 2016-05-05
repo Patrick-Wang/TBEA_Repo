@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.controller.servlet.cwcpdlml;
+package com.tbea.ic.operation.controller.servlet.cwyjsf;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,10 +19,15 @@ import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.service.cwyjsf.CwyjsfService;
+import com.tbea.ic.operation.service.cwyjsf.CwyjsfServiceImpl;
 
 @Controller
-@RequestMapping(value = "cwcpdlml")
-public class CwcpdlmlServlet {
+@RequestMapping(value = "cwyjsf")
+public class CwyjsfServlet {
+	@Resource(name=CwyjsfServiceImpl.NAME)
+	CwyjsfService cwyjsfService;
+
 
 	CompanyManager companyManager;
 	List<Company> COMPS = new ArrayList<Company>();
@@ -47,6 +52,7 @@ public class CwcpdlmlServlet {
 		dateSel.select(map);
 		CompanySelection compSel = new CompanySelection(true, COMPS);
 		compSel.select(map);
-		return new ModelAndView("cwcpdlml/cwcpdlml", map);
+		return new ModelAndView("cwyjsf/cwyjsf", map);
 	}
+	
 }
