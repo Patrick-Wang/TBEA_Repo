@@ -332,7 +332,7 @@ var JQTable;
             return this.mOpts.sorttype;
         };
         return Node;
-    }());
+    })();
     JQTable.Node = Node;
     var Cell = (function () {
         function Cell(row, col) {
@@ -355,7 +355,7 @@ var JQTable;
             return this.mCol;
         };
         return Cell;
-    }());
+    })();
     JQTable.Cell = Cell;
     var Formula = (function () {
         function Formula(destCell, srcCellarray, formula) {
@@ -392,7 +392,7 @@ var JQTable;
             }
         };
         return Formula;
-    }());
+    })();
     JQTable.Formula = Formula;
     var JQGridAssistant = (function () {
         function JQGridAssistant(titleNodes, gridName) {
@@ -945,7 +945,7 @@ var JQTable;
                     else {
                         return ret;
                     }
-                },
+                }
             };
             $('html').bind('click', function (e) {
                 if (lastsel != "") {
@@ -1113,6 +1113,6 @@ var JQTable;
             return option;
         };
         return JQGridAssistant;
-    }());
+    })();
     JQTable.JQGridAssistant = JQGridAssistant;
 })(JQTable || (JQTable = {}));
