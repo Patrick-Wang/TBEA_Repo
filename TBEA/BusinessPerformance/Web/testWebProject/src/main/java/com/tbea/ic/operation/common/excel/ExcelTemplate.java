@@ -10,10 +10,8 @@ import java.net.URISyntaxException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
@@ -48,6 +46,7 @@ public class ExcelTemplate {
 	private static String pathSbdczclwcqkTemplate = resPath + "sbdczclwcqk_template.xls";
 	private static String pathNyzbscqkTemplate = resPath + "nyzbscqk_template.xls";
 	private static String pathCwcpdlmlTemplate = resPath + "cwcpdlml_template.xls";
+	private static String pathCwyjsfTemplate = resPath + "cwyjsf_template.xls";
 	private static ExcelTemplate createTemplate(String path, int index, int size)
 			throws FileNotFoundException, IOException {
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
@@ -154,6 +153,13 @@ public class ExcelTemplate {
 		return createTemplate(pathCwcpdlmlTemplate, type.ordinal(),
 				CwcpdlmlSheetType.END.ordinal());
 	}
+	
+
+	public static ExcelTemplate createCwyjsfTemplate(CwyjsfSheetType type)   throws IOException {
+		return createTemplate(pathCwyjsfTemplate, type.ordinal(),
+				CwyjsfSheetType.END.ordinal());
+	}
+
 	
 	HSSFWorkbook workbook;
 	HSSFCellStyle cellStyleDefault;
@@ -349,4 +355,5 @@ public class ExcelTemplate {
 		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(fileName, "UTF-8")  +"\"");
 		this.writeWithRawSize(response.getOutputStream());
 	}
+
 }
