@@ -16,7 +16,7 @@ module cwyjsf {
         class JQGridAssistantFactory {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    Node.create({name : "税种", align : TextAlign.Center}),
+                    Node.create({name : "税种", align : TextAlign.Left}),
                     Node.create({name : "期初余额"}),
                     Node.create({name : "本期应交税额"})
                         .append( Node.create({name : "本月数"}))

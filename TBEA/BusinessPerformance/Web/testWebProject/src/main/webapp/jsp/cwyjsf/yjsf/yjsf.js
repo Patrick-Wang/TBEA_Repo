@@ -32,7 +32,7 @@ var cwyjsf;
                     dyyijs.append(Node.create({ name: i + "" }));
                 }
                 return new JQTable.JQGridAssistant([
-                    Node.create({ name: "税种", align: TextAlign.Center }),
+                    Node.create({ name: "税种", align: TextAlign.Left }),
                     Node.create({ name: "期初数" }),
                     dyyjs,
                     dyyijs

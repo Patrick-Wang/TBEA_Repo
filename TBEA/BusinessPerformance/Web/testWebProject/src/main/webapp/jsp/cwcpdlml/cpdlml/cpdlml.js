@@ -1,3 +1,9 @@
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../cwcpdlmldef.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -18,15 +24,15 @@ var cwcpdlml;
             }
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
-                    Node.create({ id: "月份", align: TextAlign.Center }),
-                    Node.create({ id: "材料" }),
-                    Node.create({ id: "期现货合计盈亏" })
-                        .append(Node.create({ id: "指导价格按照保本价（万元）" }))
-                        .append(Node.create({ id: "指导价格按照目标利润价（万元）" }))
+                    Node.create({ name: "月份", align: TextAlign.Center }),
+                    Node.create({ name: "材料" }),
+                    Node.create({ name: "期现货合计盈亏" })
+                        .append(Node.create({ name: "指导价格按照保本价（万元）" }))
+                        .append(Node.create({ name: "指导价格按照目标利润价（万元）" }))
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -97,6 +103,6 @@ var cwcpdlml;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(cpdlml = cwcpdlml.cpdlml || (cwcpdlml.cpdlml = {}));
 })(cwcpdlml || (cwcpdlml = {}));
