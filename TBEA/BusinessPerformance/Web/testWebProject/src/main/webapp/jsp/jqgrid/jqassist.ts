@@ -211,7 +211,7 @@ module JQTable {
         options?: any;
         //add by hzdqzy
         isSortable?: boolean;
-        sorttype: string
+        sorttype?: string
     }
 
     export class Node {

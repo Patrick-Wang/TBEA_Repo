@@ -90,6 +90,8 @@ module #FRAME# {
                 parent.append("<table id='" + name + "'></table>");
                 this.$(name).jqGrid(
                     tableAssist.decorate({
+						datatype: "local",
+						data: tableAssist.getData(this.mData),
                         multiselect: false,
                         drag: false,
                         resize: false,
@@ -98,8 +100,6 @@ module #FRAME# {
                         shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 20,
-                        data: tableAssist.getData(this.mData),
-                        datatype: "local",
                         viewrecords : true
                     }));
             }

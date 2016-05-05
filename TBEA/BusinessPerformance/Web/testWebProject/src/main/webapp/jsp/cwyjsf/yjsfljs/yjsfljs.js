@@ -11,31 +11,31 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var plugin;
 (function (plugin) {
-    plugin.yjsf = framework.basic.endpoint.lastId();
+    plugin.yjsfljs = framework.basic.endpoint.lastId();
 })(plugin || (plugin = {}));
 var cwyjsf;
 (function (cwyjsf) {
-    var yjsf;
-    (function (yjsf) {
+    var yjsfljs;
+    (function (yjsfljs) {
         var TextAlign = JQTable.TextAlign;
         var Node = JQTable.Node;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName) {
-                var dyyjs = Node.create({ name: "本年当月应交数" });
-                for (var i = 1; i <= 12; ++i) {
-                    dyyjs.append(Node.create({ name: i + "" }));
-                }
-                var dyyijs = Node.create({ name: "本年当月应交数" });
-                for (var i = 1; i <= 12; ++i) {
-                    dyyijs.append(Node.create({ name: i + "" }));
-                }
                 return new JQTable.JQGridAssistant([
                     Node.create({ name: "税种", align: TextAlign.Center }),
-                    Node.create({ name: "期初数" }),
-                    dyyjs,
-                    dyyijs
+                    Node.create({ name: "期初余额" }),
+                    Node.create({ name: "本期应交税额" })
+                        .append(Node.create({ name: "本月数" }))
+                        .append(Node.create({ name: "累计数" })),
+                    Node.create({ name: "本期已交税额" })
+                        .append(Node.create({ name: "本月数" }))
+                        .append(Node.create({ name: "累计数" })),
+                    Node.create({ name: "本期未交税额" })
+                        .append(Node.create({ name: "本月数" }))
+                        .append(Node.create({ name: "累计数" })),
+                    Node.create({ name: "期末余额" })
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -44,13 +44,13 @@ var cwyjsf;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../yjsf/update.do", false);
+                this.mAjax = new Util.Ajax("../yjsfljs/update.do", false);
             }
             ShowView.prototype.getId = function () {
-                return plugin.yjsf;
+                return plugin.yjsfljs;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../yjsf/export.do?" + Util.Ajax.toUrlParam({
+                return "../yjsfljs/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType
                 });
@@ -81,7 +81,7 @@ var cwyjsf;
                 framework.router
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "应交税费");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "应交税费累计对比");
             };
             ShowView.prototype.getMonth = function () {
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
@@ -95,8 +95,6 @@ var cwyjsf;
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
                 this.$(name).jqGrid(tableAssist.decorate({
-                    datatype: "local",
-                    data: tableAssist.getData(this.mData),
                     multiselect: false,
                     drag: false,
                     resize: false,
@@ -105,11 +103,13 @@ var cwyjsf;
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 20,
+                    data: tableAssist.getData(this.mData),
+                    datatype: "local",
                     viewrecords: true
                 }));
             };
             ShowView.ins = new ShowView();
             return ShowView;
         })(framework.basic.ShowPluginView);
-    })(yjsf = cwyjsf.yjsf || (cwyjsf.yjsf = {}));
+    })(yjsfljs = cwyjsf.yjsfljs || (cwyjsf.yjsfljs = {}));
 })(cwyjsf || (cwyjsf = {}));

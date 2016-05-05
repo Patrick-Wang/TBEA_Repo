@@ -44,13 +44,17 @@ public class YjsfServiceImpl implements YjsfService {
 		Util.resize(hj, 2 + 12 * 2);
 		List<String> list = null;
 		for (SzEntity sz : szs){
-			YjsfNdqcsEntity ndqcs = yjsfNdqcsDao.getByDate(d, company, sz.getId());
 			list = new ArrayList<String>();
 			result.add(list);
 			Util.resize(list, 2 + 12 * 2);
 			list.set(0, sz.getName());
-			list.set(1, "" + ndqcs.getQcs());
-			hj.set(1, MathUtil.sum(hj.get(1), ndqcs.getQcs()));
+			
+			YjsfNdqcsEntity ndqcs = yjsfNdqcsDao.getByDate(d, company, sz.getId());
+			if (null != ndqcs){
+				list.set(1, "" + ndqcs.getQcs());
+				hj.set(1, MathUtil.sum(hj.get(1), ndqcs.getQcs()));
+			}
+			
 			List<YjsfEntity> yjsfs = yjsfDao.getByYear(d, company, sz.getId());
 			for (YjsfEntity yjsf : yjsfs){
 				list.set(1 + yjsf.getYf(), "" + yjsf.getYjs());

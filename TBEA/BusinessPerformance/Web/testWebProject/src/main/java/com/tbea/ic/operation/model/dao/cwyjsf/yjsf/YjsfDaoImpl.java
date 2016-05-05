@@ -16,6 +16,7 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.cwyjsf.YjsfEntity;
+import com.tbea.ic.operation.model.entity.cwyjsf.YjsfNdqcsEntity;
 
 
 
@@ -40,5 +41,23 @@ public class YjsfDaoImpl extends AbstractReadWriteDaoImpl<YjsfEntity> implements
 		q.setParameter("sz", sz);
 		q.setParameter("compId", company.getId());
 		return q.getResultList();
+	}
+
+	@Override
+	public YjsfEntity getByDate(Date d, Company company, Integer sz) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		
+		Query q = this.getEntityManager().createQuery("from YjsfEntity where nf=:nf and yf=:yf and dwid=:compId and sz = :sz)");
+		
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("sz", sz);
+		q.setParameter("compId", company.getId());
+		List<YjsfEntity> ret = q.getResultList();
+		if (ret.isEmpty()){
+			return null;
+		}
+		return ret.get(0);
 	}
 }

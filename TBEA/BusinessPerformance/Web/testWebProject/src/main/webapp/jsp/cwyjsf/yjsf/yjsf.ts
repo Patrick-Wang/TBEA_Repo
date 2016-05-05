@@ -15,12 +15,19 @@ module cwyjsf {
 		import Node = JQTable.Node;
         class JQGridAssistantFactory {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
+                let dyyjs =  Node.create({name : "本年当月应交数"});
+                for (let i = 1; i <= 12; ++i){
+                    dyyjs.append( Node.create({name : i + ""}));
+                }
+                let dyyijs =  Node.create({name : "本年当月应交数"});
+                for (let i = 1; i <= 12; ++i){
+                    dyyijs.append( Node.create({name : i + ""}));
+                }
                 return new JQTable.JQGridAssistant([
 					Node.create({name : "税种", align : TextAlign.Center}),
-                    Node.create({id : "材料"}),
-                    Node.create({id : "期现货合计盈亏"})
-                        .append(Node.create({id : "指导价格按照保本价（万元）"}))
-                        .append(Node.create({id : "指导价格按照目标利润价（万元）"}))
+                    Node.create({name : "期初数"}),
+                    dyyjs,
+                    dyyijs
                 ], gridName);
             }
         }
@@ -73,7 +80,7 @@ module cwyjsf {
                 framework.router
 					.fromEp(this)
 					.to(framework.basic.endpoint.FRAME_ID)
-					.send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+					.send(framework.basic.FrameEvent.FE_REGISTER, "应交税费");
             }
 
 			private getMonth():number{
@@ -90,6 +97,8 @@ module cwyjsf {
                 parent.append("<table id='" + name + "'></table>");
                 this.$(name).jqGrid(
                     tableAssist.decorate({
+                        datatype: "local",
+                        data: tableAssist.getData(this.mData),
                         multiselect: false,
                         drag: false,
                         resize: false,
@@ -98,8 +107,6 @@ module cwyjsf {
                         shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 20,
-                        data: tableAssist.getData(this.mData),
-                        datatype: "local",
                         viewrecords : true
                     }));
             }
