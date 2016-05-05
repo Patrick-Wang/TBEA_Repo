@@ -182,7 +182,6 @@ th.ui-th-ltr {
 		<tr>
 			<td id="plugin">
 				<%@include file="dyjyxxjl/dyjyxxjlEntry.jsp"%>
-				<%@include file="ndjyxxjl/ndjyxxjlEntry.jsp"%>
 			</td>
 		</tr> 
 		<tr>

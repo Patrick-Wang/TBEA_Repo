@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/vector.ts" />
+/// <reference path="util.ts" />
 var Util;
 (function (Util) {
     var DataNode = (function () {
@@ -169,6 +171,7 @@ var Util;
         UnitedSelector.prototype.change = function (fnChange) {
             this.mFnChange = fnChange;
         };
+        //selected nodes
         UnitedSelector.prototype.getNodes = function () {
             var ret = [];
             var node = this.mRoot;

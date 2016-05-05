@@ -3,6 +3,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../../unitedSelector.ts"/>
+///<reference path="../../messageBox.ts"/>
+///<reference path="../../companySelector.ts"/>
+///<reference path="basicdef.ts"/>
+///<reference path="../route/route.ts"/>
 var framework;
 (function (framework) {
     var basic;
@@ -98,6 +106,7 @@ var framework;
                         header: false,
                         minWidth: width,
                         height: '100%',
+                        // noneSelectedText: "请选择月份",
                         selectedList: 1
                     })
                         .css("padding", "2px 0 2px 4px")

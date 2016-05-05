@@ -17,14 +17,33 @@ module cwgbjyxxjl {
         import TextAlign = JQTable.TextAlign;
         import Node = JQTable.Node;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
-                return new JQTable.JQGridAssistant([
-                    Node.create({id : "月份", align : TextAlign.Center}),
-                    Node.create({id : "材料", isReadOnly: readOnly}),
-                    Node.create({id : "期现货合计盈亏", isReadOnly: readOnly})
-                        .append(Node.create({id : "指导价格按照保本价（万元）", isReadOnly: readOnly}))
-                        .append(Node.create({id : "指导价格按照目标利润价（万元）", isReadOnly: readOnly}))
-                ], gridName);
+            public static createTable(gridName:string, date:string):JQTable.JQGridAssistant {
+
+                let curDate:Date = new Date(date);
+                let month = curDate.getMonth() + 1;
+                let data = [];
+                let node:JQTable.Node;
+                let titleNodes:JQTable.Node[] = [];
+
+                node = new JQTable.Node("科目", "ndjyxxjlEntry_cp", true, TextAlign.Left);
+                titleNodes.push(node);
+
+                node = new JQTable.Node("上年度", "ndjyxxjlEntry_snd", true, TextAlign.Center);
+                for (let i = month + 1; i <= 12; ++i) {
+                    node.append(new JQTable.Node(i + "月", "ndjyxxjlEntry_snd_" + i));
+                }
+
+                if (month != 12) {
+                    titleNodes.push(node);
+                }
+
+                node = new JQTable.Node("本年度", "ndjyxxjlEntry_bnd", true, TextAlign.Center);
+                for (let i = 1; i <= month; ++i) {
+                    node.append(new JQTable.Node(i + "月", "ndjyxxjlEntry_bnd_" + i));
+                }
+                titleNodes.push(node);
+
+                return new JQTable.JQGridAssistant(titleNodes, gridName);
             }
         }
 

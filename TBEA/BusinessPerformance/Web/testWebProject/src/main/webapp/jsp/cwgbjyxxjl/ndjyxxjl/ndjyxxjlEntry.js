@@ -3,13 +3,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../../messageBox.ts"/>
-/// <reference path="../../framework/basic/basicdef.ts"/>
-/// <reference path="../../framework/route/route.ts"/>
-/// <reference path="../cwgbjyxxjldef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.ndjyxxjl = framework.basic.endpoint.lastId();
@@ -19,18 +12,30 @@ var cwgbjyxxjl;
     var ndjyxxjlEntry;
     (function (ndjyxxjlEntry) {
         var TextAlign = JQTable.TextAlign;
-        var Node = JQTable.Node;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            JQGridAssistantFactory.createTable = function (gridName, readOnly) {
-                return new JQTable.JQGridAssistant([
-                    Node.create({ id: "月份", align: TextAlign.Center }),
-                    Node.create({ id: "材料", isReadOnly: readOnly }),
-                    Node.create({ id: "期现货合计盈亏", isReadOnly: readOnly })
-                        .append(Node.create({ id: "指导价格按照保本价（万元）", isReadOnly: readOnly }))
-                        .append(Node.create({ id: "指导价格按照目标利润价（万元）", isReadOnly: readOnly }))
-                ], gridName);
+            JQGridAssistantFactory.createTable = function (gridName, date) {
+                var curDate = new Date(date);
+                var month = curDate.getMonth() + 1;
+                var data = [];
+                var node;
+                var titleNodes = [];
+                node = new JQTable.Node("科目", "ndjyxxjlEntry_cp", true, TextAlign.Left);
+                titleNodes.push(node);
+                node = new JQTable.Node("上年度", "ndjyxxjlEntry_snd", true, TextAlign.Center);
+                for (var i = month + 1; i <= 12; ++i) {
+                    node.append(new JQTable.Node(i + "月", "ndjyxxjlEntry_snd_" + i));
+                }
+                if (month != 12) {
+                    titleNodes.push(node);
+                }
+                node = new JQTable.Node("本年度", "ndjyxxjlEntry_bnd", true, TextAlign.Center);
+                for (var i = 1; i <= month; ++i) {
+                    node.append(new JQTable.Node(i + "月", "ndjyxxjlEntry_bnd_" + i));
+                }
+                titleNodes.push(node);
+                return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
         }());
@@ -144,18 +149,13 @@ var cwgbjyxxjl;
                     drag: false,
                     resize: false,
                     assistEditable: true,
-                    //autowidth : false,
                     cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
                     cellEdit: true,
-                    // height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
                     rowNum: 20,
                     height: '100%',
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    //pager: '#' + pagername,
                     viewrecords: true
                 }));
             };

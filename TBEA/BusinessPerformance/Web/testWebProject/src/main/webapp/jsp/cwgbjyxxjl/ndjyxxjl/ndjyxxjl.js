@@ -1,9 +1,3 @@
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../../framework/basic/basicdef.ts"/>
-/// <reference path="../../framework/route/route.ts"/>
-/// <reference path="../cwgbjyxxjldef.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -18,18 +12,30 @@ var cwgbjyxxjl;
     var ndjyxxjl;
     (function (ndjyxxjl) {
         var TextAlign = JQTable.TextAlign;
-        var Node = JQTable.Node;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            JQGridAssistantFactory.createTable = function (gridName) {
-                return new JQTable.JQGridAssistant([
-                    Node.create({ id: "月份", align: TextAlign.Center }),
-                    Node.create({ id: "材料" }),
-                    Node.create({ id: "期现货合计盈亏" })
-                        .append(Node.create({ id: "指导价格按照保本价（万元）" }))
-                        .append(Node.create({ id: "指导价格按照目标利润价（万元）" }))
-                ], gridName);
+            JQGridAssistantFactory.createTable = function (gridName, date) {
+                var curDate = new Date(date);
+                var month = curDate.getMonth() + 1;
+                var data = [];
+                var node;
+                var titleNodes = [];
+                node = new JQTable.Node("科目", "cwgbjyxxjl_cp", true, TextAlign.Left);
+                titleNodes.push(node);
+                node = new JQTable.Node("上年度", "cwgbjyxxjl_snd", true, TextAlign.Center);
+                for (var i = month + 1; i <= 12; ++i) {
+                    node.append(new JQTable.Node(i + "月", "cwgbjyxxjl_snd_" + i));
+                }
+                if (month != 12) {
+                    titleNodes.push(node);
+                }
+                node = new JQTable.Node("本年度", "cwgbjyxxjl_bnd", true, TextAlign.Center);
+                for (var i = 1; i <= month; ++i) {
+                    node.append(new JQTable.Node(i + "月", "cwgbjyxxjl_bnd_" + i));
+                }
+                titleNodes.push(node);
+                return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
         }());
@@ -74,7 +80,7 @@ var cwgbjyxxjl;
                 framework.router
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "经营性现金流年度情况");
             };
             ShowView.prototype.getMonth = function () {
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
