@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.cwyjsf;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -10,12 +11,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -54,5 +57,13 @@ public class CwyjsfServlet {
 		compSel.select(map);
 		return new ModelAndView("cwyjsf/cwyjsf", map);
 	}
-	
+	//每月3到五号零点触发
+	@Scheduled(cron="0 0 0 3-5 * ?")
+	public void scheduleImport(){
+		Calendar cal = Calendar.getInstance();
+		System.out.println(cal.getTime().toLocaleString() + "CwcpdlmlServlet import data from NC");
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+		cwyjsfService.importFromNC(d, COMPS);
+	}
 }

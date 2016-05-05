@@ -9,7 +9,6 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "identifier_cwgb_sz")
 public class SzEntity extends AbstractReadWriteEntity implements Serializable {
@@ -20,11 +19,18 @@ public class SzEntity extends AbstractReadWriteEntity implements Serializable {
 		return super.getId();
 	}
 
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	String name;
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

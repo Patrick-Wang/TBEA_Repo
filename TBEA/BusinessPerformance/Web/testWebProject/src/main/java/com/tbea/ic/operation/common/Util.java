@@ -472,4 +472,12 @@ public class Util {
 		}
 		return null;
 	}
+
+	public static List<String> toList(List<Double> hj) {
+		List<String> ret = new ArrayList<String>();
+		for (int i = 0; i < hj.size(); ++i){
+			ret.add("" + hj.get(i));
+		}
+		return ret;
+	}
 }

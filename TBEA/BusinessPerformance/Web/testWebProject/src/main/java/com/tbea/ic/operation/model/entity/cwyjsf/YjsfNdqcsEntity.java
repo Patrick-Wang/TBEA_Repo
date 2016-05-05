@@ -1,13 +1,15 @@
 package com.tbea.ic.operation.model.entity.cwyjsf;
 
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
+
+import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 
 
 @Entity
@@ -25,6 +27,33 @@ public class YjsfNdqcsEntity extends AbstractReadWriteEntity implements Serializ
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	Integer nf;
+	Integer dwid;
+	Integer sz;
+	Double qcs;
+	public Integer getNf() {
+		return nf;
+	}
+	public void setNf(Integer nf) {
+		this.nf = nf;
+	}
+	public Integer getDwid() {
+		return dwid;
+	}
+	public void setDwid(Integer dwid) {
+		this.dwid = dwid;
+	}
+	public Integer getSz() {
+		return sz;
+	}
+	public void setSz(Integer sz) {
+		this.sz = sz;
+	}
+	public Double getQcs() {
+		return qcs;
+	}
+	public void setQcs(Double qcs) {
+		this.qcs = qcs;
+	}
 
 }

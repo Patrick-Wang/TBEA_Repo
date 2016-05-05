@@ -1,14 +1,21 @@
 package com.tbea.ic.operation.model.dao.cwyjsf.yjsf;
 
 
-import com.tbea.ic.operation.model.entity.cwyjsf.YjsfEntity;
-import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
-import com.tbea.ic.operation.model.dao.cwyjsf.yjsf.YjsfDao;
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
+
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.entity.cwyjsf.YjsfEntity;
 
 
 
@@ -20,5 +27,18 @@ public class YjsfDaoImpl extends AbstractReadWriteDaoImpl<YjsfEntity> implements
 	@PersistenceContext(unitName = "localDB")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
+	}
+
+	@Override
+	public List<YjsfEntity> getByYear(Date d, Company company, Integer sz) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		
+		Query q = this.getEntityManager().createQuery("from YjsfEntity where nf=:nf and dwid=:compId and sz = :sz)");
+		
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("sz", sz);
+		q.setParameter("compId", company.getId());
+		return q.getResultList();
 	}
 }

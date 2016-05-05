@@ -5,20 +5,17 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.model.entity.chgb.NychEntity;
-import com.tbea.ic.operation.model.entity.dzwzgb.DzclkcbEntity;
-
-import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
-
-import com.tbea.ic.operation.model.dao.dzwzgb.dzclkcb.DzclkcbDao;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
+
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.entity.dzwzgb.DzclkcbEntity;
 
 
 
