@@ -19,7 +19,7 @@
 				<li><a href="../cwcpdlmlb/entry.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>财务-产品大类毛利表录入</strong></span></a>
 				</li>
-				<li><a href="../cwyyxxjl/entry.do" target="_blank"><img
+				<li><a href="../cwgbjyxxjl/entry.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>财务-经营性现金流录入</strong></span></a>
 				</li>
 				
