@@ -144,7 +144,7 @@ INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (5,N'其中：收到本�
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (6,N'其中：收到外单位投标保证金所收到的现金')
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (7,N'其中：日常业务借支退回所收到的现金')
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (8,N'其中：银行存款利息所收到到的现金')
-INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (9,,N'其中：收到的其他与经营活动有关的现金')
+INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (9,N'其中：收到的其他与经营活动有关的现金')
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (10,N'现金流入小计')
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (11,N'购买商品、接受劳务所支付的现金')
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (12,N'支付给职工以及为职工支付的现金')
@@ -256,6 +256,29 @@ CREATE TABLE [dbo].[cwgb_jyxxjl_sj](
 	[km] [int] not NULL,
 	[sjz] [numeric](18, 4) NULL,
 	[ndlj] [numeric](18, 4) NULL
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+/***************************************************************************** 经营性现金流
+			科目	计划值	状态
+id	nf	yf	km	jhz	zt
+
+*****************************************************************************/
+IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'cwgb_jyxxjl')
+DROP TABLE cwgb_jyxxjl
+CREATE TABLE [dbo].[cwgb_jyxxjl](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nf] [int] not NULL,
+	[yf] [int] not NULL,
+	[dwid] [int] not NULL,
+	[km] [int] not NULL,
+	[jhz] [numeric](18, 4) ,
+	[sjz] [numeric](18, 4) ,
+	[ndlj] [numeric](18, 4) ,	
+	[zt] [int] NULL
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
