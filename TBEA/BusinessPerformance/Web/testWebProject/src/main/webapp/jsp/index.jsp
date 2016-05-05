@@ -23,12 +23,12 @@
 
 <link rel="shortcut icon" href="../images/logo.png">
 
-<!--
+<%--
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://echarts.baidu.com/doc/asset/css/bootstrap.css" rel="stylesheet">
     <link href="http://echarts.baidu.com/doc/asset/css/carousel.css" rel="stylesheet">
     <link href="http://echarts.baidu.com/doc/asset/css/echartsHome.css" rel="stylesheet">
--->
+--%>
 <link href="../css/font-awesome.min.css" rel="stylesheet">
 <link href="../css/bootstrap.css" rel="stylesheet">
 <link href="../css/carousel.css" rel="stylesheet">

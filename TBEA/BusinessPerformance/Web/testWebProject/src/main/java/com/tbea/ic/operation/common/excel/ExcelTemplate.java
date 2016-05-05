@@ -47,6 +47,7 @@ public class ExcelTemplate {
 	private static String pathWgcpqkTemplate = resPath + "wgcpqk_template.xls";
 	private static String pathSbdczclwcqkTemplate = resPath + "sbdczclwcqk_template.xls";
 	private static String pathNyzbscqkTemplate = resPath + "nyzbscqk_template.xls";
+	private static String pathCwcpdlmlTemplate = resPath + "cwcpdlml_template.xls";
 	private static ExcelTemplate createTemplate(String path, int index, int size)
 			throws FileNotFoundException, IOException {
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
@@ -147,6 +148,11 @@ public class ExcelTemplate {
 			NyzbscqkSheetType type)  throws IOException {
 		return createTemplate(pathNyzbscqkTemplate, type.ordinal(),
 				NyzbscqkSheetType.END.ordinal());
+	}
+	
+	public static ExcelTemplate createCwcpdlmlTemplate(CwcpdlmlSheetType type)  throws IOException {
+		return createTemplate(pathCwcpdlmlTemplate, type.ordinal(),
+				CwcpdlmlSheetType.END.ordinal());
 	}
 	
 	HSSFWorkbook workbook;
