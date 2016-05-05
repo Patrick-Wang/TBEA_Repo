@@ -206,9 +206,9 @@ PRIMARY KEY CLUSTERED
 			产业	产品大类	累计收入	累计成本	期货配比情况	去年全年收入	去年全年成本
 id	nf	yf	cy	cpdl	ljsr	ljcb	qhpbqk	qnqnsr	qnqncb
 *****************************************************************************/
-IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'cwgb_cpdlmx')
-DROP TABLE cwgb_cpdlmx
-CREATE TABLE [dbo].[cwgb_cpdlmx](
+IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'cwgb_cpdlml')
+DROP TABLE cwgb_cpdlml
+CREATE TABLE [dbo].[cwgb_cpdlml](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not NULL,
 	[yf] [int] not NULL,
