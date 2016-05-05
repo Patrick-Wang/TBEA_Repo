@@ -903,14 +903,14 @@ module JQTable {
                     var headerStart = $("#" + this.mGridName + "_" + this.id(iColStart));
 
                     var firstWidht = headerStart[0].offsetWidth;//this.parseInt(headerStart[0].style.width);
-                    var iWidht = firstWidht;
+                    var iWidth = firstWidht;
 
                     var headerMerge:any = null;
-                    var widthList = [iWidht];
+                    var widthList = [iWidth];
                     for (var i = 1; i < iCount; i++) {
                         headerMerge = $("#" + this.mGridName + "_" + this.id(iColStart + i));
                         widthList.push(headerMerge[0].offsetWidth);//this.parseInt(headerMerge.css("width")));
-                        iWidht += widthList[widthList.length - 1];
+                        iWidth += widthList[widthList.length - 1];
                         headerMerge.removeClass("ui-state-default");
                         headerMerge.children("span").css("display", "none");
                         headerMerge.children("div").css("display", "none");
@@ -931,9 +931,11 @@ module JQTable {
                         this.disableDragCell(iColStart + i);
                     }
 
-                    headerStart.css("width", iWidht + "px");
+                    headerStart.css("width", iWidth + "px");
+                    let len = headerStart[0].offsetWidth - iWidth;
+                    headerStart.css("width", (iWidth - len) + "px");
                     var sizeTitle = $("#gbox_" + this.mGridName + " .jqg-first-row-header th:eq(" + iColStart + ")");
-                    sizeTitle.css("width", iWidht + "px");
+                    sizeTitle.css("width", iWidth + "px");
                     this.disableDragCell(iColStart);
 
                     if (this.mOnMergedTitles != undefined) {
