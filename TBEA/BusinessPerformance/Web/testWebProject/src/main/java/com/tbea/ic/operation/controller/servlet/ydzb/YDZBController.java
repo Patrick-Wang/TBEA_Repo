@@ -141,7 +141,8 @@ public class YDZBController {
 				}
 			}
 
-
+			template.setRowHeight(3, 3 + data.size() - 1, 16.5f);
+			template.setColumnWidth(0, data.get(0).length - 1, 6.5f);
 			int sheetMergerCount = sheet.getNumMergedRegions();
 			 
 			String compName;
@@ -181,6 +182,9 @@ public class YDZBController {
 //						formatter.format(j, cell, data.get(i)[j]);
 					}
 				}
+				
+				template.setRowHeight(lastRow, lastRow + data.size() - 1, 16.5f);
+				template.setColumnWidth(0, data.get(0).length - 1, 6.5f);
 			}
 		} else {
 			data = gszbService.getSrqy(d);
@@ -203,9 +207,10 @@ public class YDZBController {
 				for (int j = 0, jlen = data.get(i).length; j < jlen; ++j) {
 					HSSFCell cell = row.createCell(j);
 					formatterChain.handle(data.get(i)[0], j, template, cell, data.get(i)[j]);
-
 				}
 			}
+			template.setRowHeight(3, 3 + data.size() - 1, 16.5f);
+			template.setColumnWidth(0, data.get(0).length - 1, 6.5f);
 		}
 		String timeStamp = "" + Calendar.getInstance().getTimeInMillis();
 		request.getSession(false).setAttribute(timeStamp + "template", template);

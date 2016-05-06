@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -14,6 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.util.SheetUtil;
 
 import com.tbea.ic.operation.controller.servlet.convertor.Convertor;
 
@@ -165,18 +167,14 @@ public class ExcelTemplate {
 	HSSFCellStyle cellStyleDefault;
 	HSSFCellStyle cellStyleCenter;
 	HSSFCellStyle cellStyleCenterHeader;
-//	HSSFCellStyle cellStyleNumber2;
-//	HSSFCellStyle cellStyleNumber4;
-//	HSSFCellStyle cellStyleNumber1;
-//	HSSFCellStyle cellStyleNumber0;
-//	HSSFCellStyle cellStylePercent;
 	HSSFCellStyle cellStyleHeader;
 	
 	ExcelTemplate(HSSFWorkbook workbook){
 		this.workbook = workbook;
-		HSSFFont fonts = workbook.createFont();    
-		fonts.setFontName("宋体");    
-		fonts.setFontHeightInPoints((short) 10);//设置字体大小 
+		
+		HSSFFont font10 = workbook.createFont();    
+		font10.setFontName("宋体");    
+		font10.setFontHeightInPoints((short) 10);//设置字体大小 
 		
 		cellStyleCenter = workbook
 				.createCellStyle();
@@ -186,6 +184,7 @@ public class ExcelTemplate {
 		cellStyleCenter.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleCenter.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
 		cellStyleCenter.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
+		cellStyleCenter.setFont(font10);
 		
 		cellStyleDefault = workbook
 				.createCellStyle();
@@ -194,63 +193,14 @@ public class ExcelTemplate {
 		cellStyleDefault.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleDefault.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
 		cellStyleDefault.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-		cellStyleDefault.setFont(fonts);
+		cellStyleDefault.setFont(font10);
 
-		
-//		
-//		cellStyleNumber0 = workbook.createCellStyle();
-////		cellStyleNumber0.setDataFormat(HSSFDataFormat
-////				.getBuiltinFormat("0"));
-//		cellStyleNumber0.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-//		cellStyleNumber0.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-//		cellStyleNumber0.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-//		cellStyleNumber0.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-//		cellStyleNumber0.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-//		cellStyleNumber2 = workbook
-//				.createCellStyle();
-////		cellStyleNumber2.setDataFormat(HSSFDataFormat
-////				.getBuiltinFormat("0.00"));
-//		cellStyleNumber2.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-//		cellStyleNumber2.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-//		cellStyleNumber2.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-//		cellStyleNumber2.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-//		cellStyleNumber2.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-//		cellStyleNumber4 = workbook
-//				.createCellStyle();
-////		cellStyleNumber4.setDataFormat(HSSFDataFormat
-////				.getBuiltinFormat("0.0000"));
-//		cellStyleNumber4.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-//		cellStyleNumber4.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-//		cellStyleNumber4.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-//		cellStyleNumber4.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-//		cellStyleNumber4.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-//		cellStyleNumber1 = workbook
-//				.createCellStyle();
-////		cellStyleNumber1.setDataFormat(HSSFDataFormat
-////				.getBuiltinFormat("0.0"));
-//		cellStyleNumber1.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-//		cellStyleNumber1.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-//		cellStyleNumber1.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-//		cellStyleNumber1.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-//		cellStyleNumber1.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		
-//		cellStylePercent = workbook
-//				.createCellStyle();
-////		cellStylePercent.setDataFormat(HSSFDataFormat
-////				.getBuiltinFormat("0.00%"));
-//		cellStylePercent.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-//		cellStylePercent.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-//		cellStylePercent.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-//		cellStylePercent.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-//		cellStylePercent.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-		
-		cellStyleHeader = workbook
-				.createCellStyle();
-		HSSFFont font = workbook.createFont();    
-		font.setFontName("宋体");    
-		font.setFontHeightInPoints((short) 10);//设置字体大小 
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		cellStyleHeader.setFont(font);
+		cellStyleHeader = workbook.createCellStyle();
+		HSSFFont font10Bold = workbook.createFont();    
+		font10Bold.setFontName("宋体");    
+		font10Bold.setFontHeightInPoints((short) 10);//设置字体大小 
+		font10Bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		cellStyleHeader.setFont(font10Bold);
 		cellStyleHeader.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
 		cellStyleHeader.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleHeader.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
@@ -258,7 +208,7 @@ public class ExcelTemplate {
 		
 		cellStyleCenterHeader = workbook
 				.createCellStyle();
-		cellStyleCenterHeader.setFont(font);
+		cellStyleCenterHeader.setFont(font10Bold);
 		cellStyleCenterHeader.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cellStyleCenterHeader.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		cellStyleCenterHeader.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
@@ -267,7 +217,6 @@ public class ExcelTemplate {
 		cellStyleCenterHeader.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
 			
 	}
-	
 
 	/**
 	 * @return the workbook
@@ -295,60 +244,36 @@ public class ExcelTemplate {
 		this.workbook.setSheetName(0, name);
 	}
 	
-	/**
-	 * @return the cellStyleNull
-	 */
 	public HSSFCellStyle getCellStyleDefault() {
 		return cellStyleDefault;
 	}
-//	/**
-//	 * @return the cellStyleNumber
-//	 */
-//	public HSSFCellStyle getCellStyleNumber2() {
-//		return cellStyleNumber2;
-//	}
-//	
-//	public HSSFCellStyle getCellStyleNumber4() {
-//		return cellStyleNumber4;
-//	}
-//	
-//	public HSSFCellStyle getCellStyleNumber1() {
-//		return cellStyleNumber1;
-//	}
-//	
-//	public HSSFCellStyle getCellStyleNumber0() {
-//		return cellStyleNumber0;
-//	}
-//	/**
-//	 * @return the cellStylePercent
-//	 */
-//	public HSSFCellStyle getCellStylePercent() {
-//		return cellStylePercent;
-//	}
-	/**
-	 * @return the cellStyleHeader
-	 */
+
 	public HSSFCellStyle getCellStyleHeader() {
 		return cellStyleHeader;
 	}
 
+	//width 为excel中查看到的宽度，非pixel
+	public void setColumnWidth(int colFrom, int colTo, float width) {
+		//在默认 宋体  11号字情况下     6.5  ->  1832
+ 		int poiWidth = (int)((1832  * width) / 6.5);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = colFrom; i <= colTo; ++i){
+			sheet.setColumnWidth(i, (short)(poiWidth));
+		}
+	}
+
 	//磅（Point）
 	//excel 字体单位是 磅（Point）
+	public void setRowHeight(int rowFrom, int rowTo, float point){
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = rowFrom; i <= rowTo; ++i){
+			sheet.getRow(i).setHeightInPoints(point);
+		}
+	}
+	
+	
 	public void write(OutputStream os) throws IOException{
 		HSSFSheet sheet = workbook.getSheetAt(0);
-		sheet.setDefaultRowHeightInPoints(16.5f);	// 16.5;
-		
-		//Set the width (in units of 1/256th of a character width)
-		//它的api文档里写的很清楚了，以一个字符的1/256的宽度作为一个单位	
-		sheet.setDefaultColumnWidth((short)(1832));// 16.5;  宋体 10号  字符0宽度为7pixel
-//		sheet.setColumnWidth(columnIndex, width);
-		int colCount = sheet.getRow(0).getLastCellNum();	
-		for (int i = 0; i <= sheet.getLastRowNum(); ++i){
-			sheet.getRow(i).setHeightInPoints(16.5f); // 16.5
-			for (int j = 0; j < colCount; ++j) {
-				sheet.setColumnWidth(j, (short)(1832));
-			}
-		}
 		
 //		sheet.setColumnWidth(columnIndex, width);
 //		for (int j = 0; j < colCount; ++j) {
