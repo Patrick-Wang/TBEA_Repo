@@ -21,12 +21,6 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterClient;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
@@ -52,7 +46,7 @@ public class DyjyxxjlServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> result = null;//dyjyxxjlService.getDyjyxxjl(d, company);
+		List<List<String>> result = jyxxjlService.getJyxxjlYD(d, company);
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0});
 		handler.next(new RawNumberFormatterHandler(1));
@@ -69,7 +63,7 @@ public class DyjyxxjlServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> result = null;//dyjyxxjlService.getDyjyxxjlEntry(d, company);
+		List<List<String>> result = jyxxjlService.getJyxxjlEntry(d, company);
 		
 		RawFormatterHandler handler = new RawNumberFormatterHandler(4, null, new Integer[]{3}).trimZero(true);
 		RawFormatterClient client = new RawFormatterClient(handler);
@@ -86,7 +80,7 @@ public class DyjyxxjlServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		ErrorCode err = null;//dyjyxxjlService.saveDyjyxxjl(d, data, company);
+		ErrorCode err = jyxxjlService.saveJyxxjl(d, company, data);
 		return Util.response(err);
 	}
 	
@@ -98,7 +92,7 @@ public class DyjyxxjlServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		ErrorCode err = null;//dyjyxxjlService.submitDyjyxxjl(d, data, company);
+		ErrorCode err = jyxxjlService.submitJyxxjl(d, company, data);
 		return Util.response(err);
 	}
 	

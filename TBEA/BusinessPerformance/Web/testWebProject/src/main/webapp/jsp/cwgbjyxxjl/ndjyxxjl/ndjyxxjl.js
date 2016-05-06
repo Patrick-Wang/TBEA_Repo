@@ -1,3 +1,9 @@
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../cwgbjyxxjldef.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -21,7 +27,7 @@ var cwgbjyxxjl;
                 var data = [];
                 var node;
                 var titleNodes = [];
-                node = new JQTable.Node("科目", "cwgbjyxxjl_cp", true, TextAlign.Left);
+                node = new JQTable.Node("科目", "cwgbjyxxjl_cp", true, TextAlign.Left, 300);
                 titleNodes.push(node);
                 node = new JQTable.Node("上年度", "cwgbjyxxjl_snd", true, TextAlign.Center);
                 for (var i = month + 1; i <= 12; ++i) {
@@ -89,7 +95,7 @@ var cwgbjyxxjl;
             };
             ShowView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+                var tableAssist = JQGridAssistantFactory.createTable(name, this.mDt);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
@@ -101,7 +107,7 @@ var cwgbjyxxjl;
                     width: 1400,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 20,
+                    rowNum: 40,
                     data: tableAssist.getData(this.mData),
                     datatype: "local",
                     viewrecords: true

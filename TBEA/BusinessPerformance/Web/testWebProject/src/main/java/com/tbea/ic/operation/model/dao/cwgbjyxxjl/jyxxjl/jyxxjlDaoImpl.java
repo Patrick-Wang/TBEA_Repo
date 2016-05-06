@@ -61,13 +61,12 @@ public class jyxxjlDaoImpl extends AbstractReadWriteDaoImpl<JyxxjlEntity> implem
 		Query q = this.getEntityManager().createQuery("from JyxxjlEntity where " + 
 				"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dStart) <= 0 and " +
 				"dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dEnd) >= 0 and " +
-				"tjfs=:tjfsId and " +
-				"km=:kmId and " +
+				"km.id=:kmId and " +
 				"dwxx.id=:compId)");
 		q.setParameter("dStart", ds);
 		q.setParameter("dEnd", de);
 		q.setParameter("compId", company.getId());
-		q.setParameter("km", kmId);
+		q.setParameter("kmId", kmId);
 		return q.getResultList();
 	}
 
@@ -75,11 +74,11 @@ public class jyxxjlDaoImpl extends AbstractReadWriteDaoImpl<JyxxjlEntity> implem
 	public JyxxjlEntity getByDate(Date d, Company company, Integer kmId) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		Query q = this.getEntityManager().createQuery("from JyxxjlEntity where nf=:nf and yf=:yf and km=:kmId and dwxx.id=:compId");
+		Query q = this.getEntityManager().createQuery("from JyxxjlEntity where nf=:nf and yf=:yf and km.id=:kmId and dwxx.id=:compId");
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		q.setParameter("compId", company.getId());
-		q.setParameter("km", kmId);
+		q.setParameter("kmId", kmId);
 		List<JyxxjlEntity> list = q.getResultList();
 		if (list.isEmpty()){
 			return null;

@@ -14,20 +14,33 @@ module cwgbjyxxjl {
         import TextAlign = JQTable.TextAlign;
 		import Node = JQTable.Node;
         class JQGridAssistantFactory {
+            
             public static createTable(gridName:string):JQTable.JQGridAssistant {
-                return new JQTable.JQGridAssistant([
-					Node.create({id : "科目", align : TextAlign.Center}),
-                    Node.create({id : "月度"})
-                        .append(Node.create({id : "当月计划"}))
-                        .append(Node.create({id : "当月实际"}))
-                        .append(Node.create({id : "计划完成率"}))
-                        .append(Node.create({id : "去年同期"}))
-                        .append(Node.create({id : "同比增幅"})),
-                    Node.create({id : "年度"})
-                        .append(Node.create({id : "年度累计"}))
-                        .append(Node.create({id : "去年同期"}))
-                        .append(Node.create({id : "同比增幅"}))
-                ], gridName);
+
+                let data = [];
+                let node:JQTable.Node;
+                let titleNodes:JQTable.Node[] = [];
+
+                node = new JQTable.Node("科目", "cwgbjyxxjl_cp", true, TextAlign.Left, 300);
+                titleNodes.push(node);
+
+                node = new JQTable.Node("月度", "cwgbjyxxjl_snd", true, TextAlign.Center);
+                node.append(new JQTable.Node("当月计划", "dyjyxxjl_dyjh"));
+                node.append(new JQTable.Node("当月实际", "dyjyxxjl_dysj"));
+                node.append(new JQTable.Node("计划完成率", "dyjyxxjl_jhwcl"));
+                node.append(new JQTable.Node("去年同期", "dyjyxxjl_qntq"));
+                node.append(new JQTable.Node("同比增幅", "dyjyxxjl_tbzf"));
+
+                titleNodes.push(node);
+
+                node = new JQTable.Node("年度", "cwgbjyxxjl_bnd", true, TextAlign.Center);
+                node.append(new JQTable.Node("年度累计", "dyjyxxjl_ndlj"));
+                node.append(new JQTable.Node("去年同期", "dyjyxxjl_qntq"));
+                node.append(new JQTable.Node("同比增幅", "dyjyxxjl_tbzf"));
+
+                titleNodes.push(node);
+
+                return new JQTable.JQGridAssistant(titleNodes, gridName);
             }
         }
 
@@ -103,7 +116,7 @@ module cwgbjyxxjl {
                         width: 1400,
                         shrinkToFit: true,
                         autoScroll: true,
-                        rowNum: 20,
+                        rowNum: 40,
                         data: tableAssist.getData(this.mData),
                         datatype: "local",
                         viewrecords : true

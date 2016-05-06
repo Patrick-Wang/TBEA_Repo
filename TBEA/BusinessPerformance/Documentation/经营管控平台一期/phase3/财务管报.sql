@@ -147,7 +147,7 @@ INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (6,N'其中：收到外�
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (7,N'其中：日常业务借支退回所收到的现金')
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (8,N'其中：银行存款利息所收到到的现金')
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (9,N'其中：收到的其他与经营活动有关的现金')
-INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (10,N'现金流入小计')
+INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (10,N'		现金流入小计')
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (11,N'购买商品、接受劳务所支付的现金')
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (12,N'支付给职工以及为职工支付的现金')
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (13,N'支付的各项税费')
@@ -159,8 +159,8 @@ INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (18,N'其中：中标服�
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (19,N'其中：日常业务借支所支付的现金')
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (20,N'其中：银行相关业务手续费所支付的现金')
 INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (21,N'其中：支付的其他与经营活动有关的现金')
-INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (22,N'现金流出小计')
-INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (23,N'经营活动产生的现金流量净额')
+INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (22,N'		现金流出小计')
+INSERT [dbo].[identifier_cwgb_km] ([id], [name])VALUES (23,N'	经营活动产生的现金流量净额')
 SET IDENTITY_INSERT [dbo].[identifier_cwgb_km] OFF
 /***************************************************************************** 应交税费
 	税种	应交数	已交数	未交数	累积应交	累计已交	累计未交	 期末数

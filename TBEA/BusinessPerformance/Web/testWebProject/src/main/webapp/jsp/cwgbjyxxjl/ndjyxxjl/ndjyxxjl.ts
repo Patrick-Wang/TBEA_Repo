@@ -22,7 +22,7 @@ module cwgbjyxxjl {
                 let node:JQTable.Node;
                 let titleNodes:JQTable.Node[] = [];
 
-                node = new JQTable.Node("科目", "cwgbjyxxjl_cp", true, TextAlign.Left);
+                node = new JQTable.Node("科目", "cwgbjyxxjl_cp", true, TextAlign.Left, 300);
                 titleNodes.push(node);
 
                 node = new JQTable.Node("上年度", "cwgbjyxxjl_snd", true, TextAlign.Center);
@@ -103,7 +103,7 @@ module cwgbjyxxjl {
 			
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mDt);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
@@ -116,7 +116,7 @@ module cwgbjyxxjl {
                         width: 1400,
                         shrinkToFit: true,
                         autoScroll: true,
-                        rowNum: 20,
+                        rowNum: 40,
                         data: tableAssist.getData(this.mData),
                         datatype: "local",
                         viewrecords : true
