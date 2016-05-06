@@ -65,7 +65,7 @@ public class YjsfServiceImpl implements YjsfService {
 		}
 		
 		list = Util.toList(hj);
-		list.set(0, "合計");
+		list.set(0, "合计");
 		result.add(list);
 		return result;
 	}

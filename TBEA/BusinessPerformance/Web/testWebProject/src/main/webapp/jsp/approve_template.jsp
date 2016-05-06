@@ -182,7 +182,7 @@ th.ui-th-column div {
 
 th.ui-th-ltr {
 	/* jqGrid columns name wrap  */
-	font-size: 14px;
+	font-size: 12px;
 }
 
 #update {

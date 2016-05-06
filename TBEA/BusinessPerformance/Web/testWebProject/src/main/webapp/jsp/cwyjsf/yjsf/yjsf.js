@@ -22,12 +22,12 @@ var cwyjsf;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            JQGridAssistantFactory.createTable = function (gridName) {
-                var dyyjs = Node.create({ name: "本年当月应交数" });
+            JQGridAssistantFactory.createTable = function (gridName, year) {
+                var dyyjs = Node.create({ name: year + "年当月应交数" });
                 for (var i = 1; i <= 12; ++i) {
                     dyyjs.append(Node.create({ name: i + "" }));
                 }
-                var dyyijs = Node.create({ name: "本年当月应交数" });
+                var dyyijs = Node.create({ name: year + "年当月应交数" });
                 for (var i = 1; i <= 12; ++i) {
                     dyyijs.append(Node.create({ name: i + "" }));
                 }
@@ -67,15 +67,20 @@ var cwyjsf;
                     companyId: compType
                 })
                     .then(function (jsonData) {
-                    _this.mData = jsonData;
-                    _this.refresh();
+                    _this.updateTable(_this.option().tb, _this.getYear(), jsonData);
+                });
+                this.mAjax.get({
+                    date: (this.getYear() - 1) + "-" + this.getMonth() + "-1",
+                    companyId: compType
+                })
+                    .then(function (jsonData) {
+                    _this.updateTable(_this.option().tb1, _this.getYear() - 1, jsonData);
                 });
             };
             ShowView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
-                this.updateTable();
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
@@ -88,15 +93,19 @@ var cwyjsf;
                 var month = curDate.getMonth() + 1;
                 return month;
             };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
-                var parent = this.$(this.option().tb);
+            ShowView.prototype.getYear = function () {
+                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                return curDate.getFullYear();
+            };
+            ShowView.prototype.updateTable = function (tbid, year, data) {
+                var name = this.option().host + tbid + "_jqgrid_uiframe";
+                var tableAssist = JQGridAssistantFactory.createTable(name, year);
+                var parent = this.$(tbid);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
                 this.$(name).jqGrid(tableAssist.decorate({
                     datatype: "local",
-                    data: tableAssist.getData(this.mData),
+                    data: tableAssist.getData(data),
                     multiselect: false,
                     drag: false,
                     resize: false,
