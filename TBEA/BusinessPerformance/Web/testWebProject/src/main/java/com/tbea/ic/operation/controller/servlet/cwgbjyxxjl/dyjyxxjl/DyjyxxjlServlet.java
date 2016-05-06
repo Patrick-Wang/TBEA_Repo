@@ -21,6 +21,13 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.common.excel.CwgbjyxxjlSheetType;
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
+import com.tbea.ic.operation.common.formatter.excel.FormatterClient;
+import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
+import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
@@ -99,19 +106,19 @@ public class DyjyxxjlServlet {
 	@RequestMapping(value = "export.do")
 	public void exportDyjyxxjl(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-//		Date d = Date.valueOf(request.getParameter("date"));
-//		CompanyType comp = CompanySelection.getCompany(request);
-//		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-//		
-//		List<List<String>> result = dyjyxxjlService.getDyjyxxjl(d, company);
-//		ExcelTemplate template = ExcelTemplate.createCwgbjyxxjlTemplate(CwgbjyxxjlSheetType.DYJYXXJL);
-//	
-//		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
-//		handler.next(new NumberFormatterHandler(1));
-//		FormatterClient client = new FormatterClient(handler, 0, 2);
-//		client.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
-//		client.format(result, template);
-//	
-//		template.write(response, template.getSheetName() + ".xls");
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		List<List<String>> result = jyxxjlService.getJyxxjlYD(d, company);
+		ExcelTemplate template = ExcelTemplate.createCwgbjyxxjlTemplate(CwgbjyxxjlSheetType.YD);
+	
+		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
+		handler.next(new NumberFormatterHandler(1));
+		FormatterClient client = new FormatterClient(handler, 0, 2);
+		client.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
+		client.format(result, template);
+	
+		template.write(response, template.getSheetName() + ".xls");
 	}
 }
