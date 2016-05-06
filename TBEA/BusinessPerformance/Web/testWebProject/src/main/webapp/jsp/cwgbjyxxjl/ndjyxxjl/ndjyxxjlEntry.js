@@ -3,6 +3,13 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../../messageBox.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../cwgbjyxxjldef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.ndjyxxjl = framework.basic.endpoint.lastId();
@@ -137,7 +144,7 @@ var cwgbjyxxjl;
             EntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mDt);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
@@ -149,13 +156,18 @@ var cwgbjyxxjl;
                     drag: false,
                     resize: false,
                     assistEditable: true,
+                    //autowidth : false,
                     cellsubmit: 'clientArray',
+                    //editurl: 'clientArray',
                     cellEdit: true,
-                    rowNum: 20,
+                    // height: data.length > 25 ? 550 : '100%',
+                    // width: titles.length * 200,
+                    rowNum: 40,
                     height: '100%',
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
+                    //pager: '#' + pagername,
                     viewrecords: true
                 }));
             };

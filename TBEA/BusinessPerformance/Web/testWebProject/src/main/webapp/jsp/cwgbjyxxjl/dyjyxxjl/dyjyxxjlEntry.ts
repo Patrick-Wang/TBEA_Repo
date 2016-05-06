@@ -17,15 +17,27 @@ module cwgbjyxxjl {
         import TextAlign = JQTable.TextAlign;
         import Node = JQTable.Node;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
-                return new JQTable.JQGridAssistant([
-                    Node.create({id : "月份", align : TextAlign.Center}),
-                    Node.create({id : "材料", isReadOnly: readOnly}),
-                    Node.create({id : "期现货合计盈亏", isReadOnly: readOnly})
-                        .append(Node.create({id : "指导价格按照保本价（万元）", isReadOnly: readOnly}))
-                        .append(Node.create({id : "指导价格按照目标利润价（万元）", isReadOnly: readOnly}))
-                ], gridName);
+
+            public static createTable(gridName:string, readOnly : boolean, date : string):JQTable.JQGridAssistant {
+                let curDate : Date = new Date(date);
+                let month = curDate.getMonth() + 1;
+                let year = curDate.getFullYear();
+                let data = [];
+                let node : JQTable.Node;
+                let titleNodes : JQTable.Node[] = [];
+
+                node = new JQTable.Node("科目", "dyjyxxjlEntry_cp", true, TextAlign.Left);
+                titleNodes.push(node);
+
+                node = new JQTable.Node(year + "年" + month + "月", "dyjyxxjlEntry_riqi", false, TextAlign.Center);
+
+                node.append(new JQTable.Node("当月计划", "dyjyxxjlEntry_cz", false));
+
+                titleNodes.push(node);
+
+                return new JQTable.JQGridAssistant(titleNodes, gridName);
             }
+            
         }
 
         interface Option extends framework.basic.PluginOption {
@@ -128,13 +140,13 @@ module cwgbjyxxjl {
                 framework.router
 					.fromEp(this)
 					.to(framework.basic.endpoint.FRAME_ID)
-					.send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+					.send(framework.basic.FrameEvent.FE_REGISTER, "经营性现金流月度计划录入");
             }
 
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
 
                 var parent = this.$(this.option().tb);
                 parent.empty();
@@ -143,7 +155,7 @@ module cwgbjyxxjl {
                 jqTable.jqGrid(
                     this.mTableAssist.decorate({
                         datatype: "local",
-                        data: this.mTableAssist.getDataWithId(this.mData),
+                        data: this.mTableAssist.getData(this.mData),
                         multiselect: false,
                         drag: false,
                         resize: false,
@@ -154,7 +166,7 @@ module cwgbjyxxjl {
                         cellEdit: true,
                         // height: data.length > 25 ? 550 : '100%',
                         // width: titles.length * 200,
-                        rowNum: 20,
+                        rowNum: 40,
                         height: '100%',
                         width: 1200,
                         shrinkToFit: true,

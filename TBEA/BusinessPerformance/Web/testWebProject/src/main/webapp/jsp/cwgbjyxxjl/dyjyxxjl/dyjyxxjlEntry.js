@@ -3,6 +3,13 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../../messageBox.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../cwgbjyxxjldef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.dyjyxxjl = framework.basic.endpoint.lastId();
@@ -12,18 +19,22 @@ var cwgbjyxxjl;
     var dyjyxxjlEntry;
     (function (dyjyxxjlEntry) {
         var TextAlign = JQTable.TextAlign;
-        var Node = JQTable.Node;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            JQGridAssistantFactory.createTable = function (gridName, readOnly) {
-                return new JQTable.JQGridAssistant([
-                    Node.create({ id: "月份", align: TextAlign.Center }),
-                    Node.create({ id: "材料", isReadOnly: readOnly }),
-                    Node.create({ id: "期现货合计盈亏", isReadOnly: readOnly })
-                        .append(Node.create({ id: "指导价格按照保本价（万元）", isReadOnly: readOnly }))
-                        .append(Node.create({ id: "指导价格按照目标利润价（万元）", isReadOnly: readOnly }))
-                ], gridName);
+            JQGridAssistantFactory.createTable = function (gridName, readOnly, date) {
+                var curDate = new Date(date);
+                var month = curDate.getMonth() + 1;
+                var year = curDate.getFullYear();
+                var data = [];
+                var node;
+                var titleNodes = [];
+                node = new JQTable.Node("科目", "dyjyxxjlEntry_cp", true, TextAlign.Left);
+                titleNodes.push(node);
+                node = new JQTable.Node(year + "年" + month + "月", "dyjyxxjlEntry_riqi", false, TextAlign.Center);
+                node.append(new JQTable.Node("当月计划", "dyjyxxjlEntry_cz", false));
+                titleNodes.push(node);
+                return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
         }());
@@ -120,30 +131,35 @@ var cwgbjyxxjl;
                 framework.router
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "经营性现金流月度计划录入");
             };
             EntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                 var jqTable = this.$(name);
                 jqTable.jqGrid(this.mTableAssist.decorate({
                     datatype: "local",
-                    data: this.mTableAssist.getDataWithId(this.mData),
+                    data: this.mTableAssist.getData(this.mData),
                     multiselect: false,
                     drag: false,
                     resize: false,
                     assistEditable: true,
+                    //autowidth : false,
                     cellsubmit: 'clientArray',
+                    //editurl: 'clientArray',
                     cellEdit: true,
-                    rowNum: 20,
+                    // height: data.length > 25 ? 550 : '100%',
+                    // width: titles.length * 200,
+                    rowNum: 40,
                     height: '100%',
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
+                    //pager: '#' + pagername,
                     viewrecords: true
                 }));
             };

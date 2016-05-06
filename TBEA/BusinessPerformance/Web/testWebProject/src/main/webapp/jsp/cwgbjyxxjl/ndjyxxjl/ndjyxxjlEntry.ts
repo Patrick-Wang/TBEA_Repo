@@ -153,7 +153,7 @@ module cwgbjyxxjl {
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mDt);
 
                 var parent = this.$(this.option().tb);
                 parent.empty();
@@ -173,7 +173,7 @@ module cwgbjyxxjl {
                         cellEdit: true,
                         // height: data.length > 25 ? 550 : '100%',
                         // width: titles.length * 200,
-                        rowNum: 20,
+                        rowNum: 40,
                         height: '100%',
                         width: 1200,
                         shrinkToFit: true,
