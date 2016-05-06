@@ -14,9 +14,9 @@ module approve_template {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left, 85));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left, 50));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, false, JQTable.TextAlign.Right, 85));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, false, JQTable.TextAlign.Right, 50));
                 }
 
             }
@@ -27,9 +27,9 @@ module approve_template {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i < 1) {
-                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 85));
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 50));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 85));
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 50));
                 }
 
             }
@@ -40,9 +40,9 @@ module approve_template {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i <= 1) {
-                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 85));
+                    nodes.push(new JQTable.Node(title[i], ids[i], true, JQTable.TextAlign.Left, 50));
                 } else {
-                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 85));
+                    nodes.push(new JQTable.Node(title[i], ids[i], false, JQTable.TextAlign.Right, 50));
                 }
 
             }
@@ -251,7 +251,7 @@ module approve_template {
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
 
-            var width = (title.length) * 85;
+            var width = (title.length) * 50;
 
 
             $("#" + name).jqGrid(
@@ -266,10 +266,10 @@ module approve_template {
                     //autowidth : false,
                     //cellsubmit: 'clientArray',
                     //cellEdit: false,
-                    rowNum: 1500,
+                    rowNum: 1350,
                     height: '100%',
-                    width: 1200,
-                    shrinkToFit: width > 1200 ? false : true,
+                    width: 1350,
+                    shrinkToFit: width > 1350 ? false : true,
                     autoScroll: true,
                     caption: caption
                 }));
@@ -476,7 +476,7 @@ module approve_template {
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
 
-            var width = (title.length) * 85;
+            var width = (title.length) * 50;
 
 
             $("#" + name).jqGrid(
@@ -493,8 +493,8 @@ module approve_template {
                     //cellsubmit: 'clientArray',
                     //cellEdit: false,
                     height: '100%',
-                    width: 1200,
-                    shrinkToFit: width > 1200 ? false : true,
+                    width: 1350,
+                    shrinkToFit: width > 1350 ? false : true,
                     autoScroll: true,
                     caption: caption
                 }));

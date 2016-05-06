@@ -4,5 +4,6 @@
 module cwyjsf{
     export interface Option extends framework.basic.PluginOption {
         tb:string;
+        tb1:string;
     }
 }

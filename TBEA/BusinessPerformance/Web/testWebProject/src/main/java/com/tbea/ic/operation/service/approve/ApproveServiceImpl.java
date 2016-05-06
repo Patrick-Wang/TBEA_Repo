@@ -120,7 +120,7 @@ public class ApproveServiceImpl implements ApproveService {
 		for (ZBXX zbxx : zbSet) {
 			inserted = false;
 			for (int i = 0; i < zbList.size(); ++i) {
-				if (zbList.get(i).getId() > zbxx.getId()) {
+				if (zbList.get(i).getSequence() > zbxx.getSequence()) {
 					inserted = true;
 					zbList.add(i, zbxx);
 					break;

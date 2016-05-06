@@ -210,7 +210,8 @@ var JQTable;
                 isReadOnly: true,
                 isNumber: true,
                 align: TextAlign.Right,
-                width: 0
+                width: 0,
+                isSortable: false
             }, opts);
             if (node.mOpts.id == undefined) {
                 node.mOpts.id = JQTable.NodeId();

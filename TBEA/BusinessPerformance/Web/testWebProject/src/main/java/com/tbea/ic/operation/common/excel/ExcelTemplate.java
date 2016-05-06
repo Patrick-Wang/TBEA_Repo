@@ -179,6 +179,9 @@ public class ExcelTemplate {
 	
 	ExcelTemplate(HSSFWorkbook workbook){
 		this.workbook = workbook;
+		HSSFFont fonts = workbook.createFont();    
+		fonts.setFontName("宋体");    
+		fonts.setFontHeightInPoints((short) 10);//设置字体大小 
 		
 		cellStyleCenter = workbook
 				.createCellStyle();
@@ -196,7 +199,7 @@ public class ExcelTemplate {
 		cellStyleDefault.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
 		cellStyleDefault.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
 		cellStyleDefault.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
-		
+		cellStyleDefault.setFont(fonts);
 
 		
 //		
@@ -334,11 +337,25 @@ public class ExcelTemplate {
 		return cellStyleHeader;
 	}
 
-	
+	//磅（Point）
+	//excel 字体单位是 磅（Point）
 	public void write(OutputStream os) throws IOException{
 		HSSFSheet sheet = workbook.getSheetAt(0);
+		sheet.setDefaultRowHeightInPoints(16.5f);	// 16.5;
 		
+		//Set the width (in units of 1/256th of a character width)
+		//它的api文档里写的很清楚了，以一个字符的1/256的宽度作为一个单位	
+		sheet.setDefaultColumnWidth((short)(1832));// 16.5;  宋体 10号  字符0宽度为7pixel
+//		sheet.setColumnWidth(columnIndex, width);
 		int colCount = sheet.getRow(0).getLastCellNum();	
+		for (int i = 0; i <= sheet.getLastRowNum(); ++i){
+			sheet.getRow(i).setHeightInPoints(16.5f); // 16.5
+			for (int j = 0; j < colCount; ++j) {
+				sheet.setColumnWidth(j, (short)(1832));
+			}
+		}
+		
+//		sheet.setColumnWidth(columnIndex, width);
 //		for (int j = 0; j < colCount; ++j) {
 //			sheet.autoSizeColumn(j, true);
 //		}

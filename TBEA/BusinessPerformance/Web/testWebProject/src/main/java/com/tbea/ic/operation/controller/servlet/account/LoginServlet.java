@@ -164,7 +164,7 @@ public class LoginServlet {
 			.add("zhAuth", Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName()))
 			.add("notSbqgb", !Account.KNOWN_ACCOUNT_QGB.equals(account.getName()))
 			.add("admin", Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName()))
-			.add("debug", true);
+			.add("debug", false);
 		
 		if (Account.KNOWN_ACCOUNT_AFL.equals(account.getName())){
 			acl.openAll();

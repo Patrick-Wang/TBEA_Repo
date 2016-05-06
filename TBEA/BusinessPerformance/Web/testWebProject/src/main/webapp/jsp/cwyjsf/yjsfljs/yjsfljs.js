@@ -22,17 +22,17 @@ var cwyjsf;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            JQGridAssistantFactory.createTable = function (gridName) {
+            JQGridAssistantFactory.createTable = function (gridName, year) {
                 return new JQTable.JQGridAssistant([
                     Node.create({ name: "税种", align: TextAlign.Left }),
                     Node.create({ name: "期初余额" }),
-                    Node.create({ name: "本期应交税额" })
+                    Node.create({ name: year + "年应交税额" })
                         .append(Node.create({ name: "本月数" }))
                         .append(Node.create({ name: "累计数" })),
-                    Node.create({ name: "本期已交税额" })
+                    Node.create({ name: year + "年已交税额" })
                         .append(Node.create({ name: "本月数" }))
                         .append(Node.create({ name: "累计数" })),
-                    Node.create({ name: "本期未交税额" })
+                    Node.create({ name: year + "年未交税额" })
                         .append(Node.create({ name: "本月数" }))
                         .append(Node.create({ name: "累计数" })),
                     Node.create({ name: "期末余额" })
@@ -67,15 +67,20 @@ var cwyjsf;
                     companyId: compType
                 })
                     .then(function (jsonData) {
-                    _this.mData = jsonData;
-                    _this.refresh();
+                    _this.updateTable(_this.option().tb, _this.getYear(), jsonData);
+                });
+                this.mAjax.get({
+                    date: (this.getYear() - 1) + "-" + this.getMonth() + "-1",
+                    companyId: compType
+                })
+                    .then(function (jsonData) {
+                    _this.updateTable(_this.option().tb1, _this.getYear() - 1, jsonData);
                 });
             };
             ShowView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
-                this.updateTable();
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
@@ -88,13 +93,19 @@ var cwyjsf;
                 var month = curDate.getMonth() + 1;
                 return month;
             };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
-                var parent = this.$(this.option().tb);
+            ShowView.prototype.getYear = function () {
+                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                return curDate.getFullYear();
+            };
+            ShowView.prototype.updateTable = function (tbid, year, data) {
+                var name = this.option().host + tbid + "_jqgrid_uiframe";
+                var tableAssist = JQGridAssistantFactory.createTable(name, year);
+                var parent = this.$(tbid);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
                 this.$(name).jqGrid(tableAssist.decorate({
+                    datatype: "local",
+                    data: tableAssist.getData(data),
                     multiselect: false,
                     drag: false,
                     resize: false,
@@ -103,8 +114,6 @@ var cwyjsf;
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 20,
-                    data: tableAssist.getData(this.mData),
-                    datatype: "local",
                     viewrecords: true
                 }));
             };

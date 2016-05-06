@@ -14,12 +14,12 @@ module cwyjsf {
         import TextAlign = JQTable.TextAlign;
 		import Node = JQTable.Node;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string):JQTable.JQGridAssistant {
-                let dyyjs =  Node.create({name : "本年当月应交数"});
+            public static createTable(gridName:string, year:number):JQTable.JQGridAssistant {
+                let dyyjs =  Node.create({name : year + "年当月应交数"});
                 for (let i = 1; i <= 12; ++i){
                     dyyjs.append( Node.create({name : i + ""}));
                 }
-                let dyyijs =  Node.create({name : "本年当月应交数"});
+                let dyyijs =  Node.create({name : year + "年当月应交数"});
                 for (let i = 1; i <= 12; ++i){
                     dyyijs.append( Node.create({name : i + ""}));
                 }
@@ -63,8 +63,14 @@ module cwyjsf {
                         companyId:compType
                     })
                     .then((jsonData:any) => {
-                        this.mData = jsonData;
-                        this.refresh();
+                        this.updateTable(this.option().tb, this.getYear(), jsonData);
+                    });
+                this.mAjax.get({
+                        date: (this.getYear() - 1) + "-" + this.getMonth() + "-1",
+                        companyId:compType
+                    })
+                    .then((jsonData:any) => {
+                        this.updateTable(this.option().tb1, this.getYear() - 1, jsonData);
                     });
             }
 
@@ -72,8 +78,6 @@ module cwyjsf {
                 if ( this.mData == undefined){
                     return;
                 }
-
-                this.updateTable();
             }
 
             public init(opt:Option):void {
@@ -88,17 +92,21 @@ module cwyjsf {
                 let month = curDate.getMonth() + 1;
 				return month;
 			}
+            private getYear():number{
+                let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                return curDate.getFullYear();
+            }
 			
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
-                var parent = this.$(this.option().tb);
+            private updateTable(tbid : string, year:number, data:string[][]):void {
+                let name = this.option().host + tbid + "_jqgrid_uiframe";
+                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, year);
+                var parent = this.$(tbid);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
                 this.$(name).jqGrid(
                     tableAssist.decorate({
                         datatype: "local",
-                        data: tableAssist.getData(this.mData),
+                        data: tableAssist.getData(data),
                         multiselect: false,
                         drag: false,
                         resize: false,
