@@ -266,10 +266,10 @@ module approve_template {
                     //autowidth : false,
                     //cellsubmit: 'clientArray',
                     //cellEdit: false,
-                    rowNum: 1450,
+                    rowNum: 1350,
                     height: '100%',
-                    width: 1450,
-                    shrinkToFit: width > 1450 ? false : true,
+                    width: 1350,
+                    shrinkToFit: width > 1350 ? false : true,
                     autoScroll: true,
                     caption: caption
                 }));
@@ -493,8 +493,8 @@ module approve_template {
                     //cellsubmit: 'clientArray',
                     //cellEdit: false,
                     height: '100%',
-                    width: 1450,
-                    shrinkToFit: width > 1450 ? false : true,
+                    width: 1350,
+                    shrinkToFit: width > 1350 ? false : true,
                     autoScroll: true,
                     caption: caption
                 }));
