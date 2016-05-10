@@ -1,16 +1,16 @@
 package com.tbea.ic.operation.common.formatter.raw;
 
-public class RawHeaderFormatterHandler extends RawAbstractFormatterHandler {
+public class RawTextFormatterHandler extends RawAbstractFormatterHandler {
 
-	public RawHeaderFormatterHandler(String[] rows, Integer[] cols) {
+	public RawTextFormatterHandler(String[] rows, Integer[] cols) {
 		super(toList(rows), toList(cols));
 	}
 	
-	public RawHeaderFormatterHandler(String[] rows) {
+	public RawTextFormatterHandler(String[] rows) {
 		this(rows, null);
 	}
 	
-	public RawHeaderFormatterHandler() {
+	public RawTextFormatterHandler() {
 		this(null, null);
 	}
 

@@ -196,7 +196,7 @@ module JQTable {
 
     export let NodeId : ()=>string= (function(idBase:number){
         return function(){
-            return "jqTitle_" + (++idBase) + "_node";
+            return "jq_" + (++idBase) + "_node";
         };
     })(2000);
 

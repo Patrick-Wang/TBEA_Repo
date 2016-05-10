@@ -6,7 +6,7 @@ import com.tbea.ic.operation.common.MathUtil;
 
 public class RawNumberFormatterHandler extends RawAbstractFormatterHandler {
 
-	Integer reservedCount;
+	Integer reservedCount = 1;
 	boolean trimZero = false;
 	
 	public RawNumberFormatterHandler(Integer reservedCount, String[] rows, Integer[] cols) {

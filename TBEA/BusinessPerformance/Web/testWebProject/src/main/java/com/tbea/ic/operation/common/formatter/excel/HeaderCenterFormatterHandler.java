@@ -3,10 +3,10 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 
-public class HeaderCenterFormatterHandler extends AbstractFormatterHandler {
+public class HeaderCenterFormatterHandler extends TextFormatterHandler {
 
 	public HeaderCenterFormatterHandler(String[] rows, Integer[] cols) {
-		super(toList(rows), toList(cols));
+		super(rows, cols);
 	}
 	
 	public HeaderCenterFormatterHandler(String[] rows) {
@@ -20,15 +20,9 @@ public class HeaderCenterFormatterHandler extends AbstractFormatterHandler {
 
 	@Override
 	protected String onHandle(ExcelTemplate template, HSSFCell cell, String val) {
-		String ret = val;
-		if (val.contains(" ")){
-			ret = " " + val.trim();
-			cell.setCellValue(ret);
-		}else{
-			cell.setCellValue(val);
-		}
+		String ret = super.onHandle(template, cell, val);
 		cell.setCellStyle(template.getCellStyleCenterHeader());
-		return val;
+		return ret;
 	}
 
 }

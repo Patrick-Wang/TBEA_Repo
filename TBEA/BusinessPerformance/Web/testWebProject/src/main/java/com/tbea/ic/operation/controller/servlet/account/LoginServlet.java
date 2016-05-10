@@ -55,7 +55,8 @@ public class LoginServlet {
 	@RequestMapping(value = "ssoLogin.do")
 	public ModelAndView ssoLogin(HttpServletRequest request,
 			HttpServletResponse response) {
-		String userName = request.getParameter("SSO_USER");
+
+		String userName = request.getHeader("SSO_USER");
 		Account account = loginService.SSOLogin(userName);
 
 		if (null != account) {

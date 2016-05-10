@@ -8,7 +8,7 @@ import com.tbea.ic.operation.common.excel.ExcelTemplate;
 
 public class NumberFormatterHandler extends AbstractFormatterHandler {
 
-	Integer reservedCount;
+	Integer reservedCount = 1;
 
 	public NumberFormatterHandler(Integer reservedCount, String[] rows, Integer[] cols) {
 		super(toList(rows), toList(cols));

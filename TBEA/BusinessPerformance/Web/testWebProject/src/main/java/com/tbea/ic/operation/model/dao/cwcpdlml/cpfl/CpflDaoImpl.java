@@ -1,20 +1,18 @@
-package com.tbea.ic.operation.model.dao.identifier.cwgb.cpfl;
+package com.tbea.ic.operation.model.dao.cwcpdlml.cpfl;
 
 
 import java.util.List;
 
-import com.tbea.ic.operation.model.entity.identifier.cwgb.CpflEntity;
-import com.tbea.ic.operation.model.entity.identifier.cwgb.CyEntity;
-
-import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
-
-import com.tbea.ic.operation.model.dao.identifier.cwgb.cpfl.CpflDao;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
+
+import com.tbea.ic.operation.model.entity.cwcpdlml.CpflEntity;
 
 
 
@@ -29,8 +27,9 @@ public class CpflDaoImpl extends AbstractReadWriteDaoImpl<CpflEntity> implements
 	}
 
 	@Override
-	public List<CyEntity> getByCy(int ordinal) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CpflEntity> getCpflByCy(Integer cyId) {
+		Query q = this.getEntityManager().createQuery("from CpflEntity where cy.id=:cyid");
+		q.setParameter("cyid", cyId);
+		return q.getResultList();
 	}
 }

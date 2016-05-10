@@ -63,15 +63,14 @@ public class YSZKRBServiceImpl implements YSZKRBService{
 		companies.add(org.getCompany(CompanyType.SBGS));
 		companies.add(org.getCompany(CompanyType.HBGS));
 		companies.add(org.getCompany(CompanyType.XBC));
-		companies.add(org.getCompany(CompanyType.TBGS));
 		companies.add(org.getCompany(CompanyType.LLGS));
 		companies.add(org.getCompany(CompanyType.XLC));
 		companies.add(org.getCompany(CompanyType.DLGS));
 		computeMap.put(org.getCompany(CompanyType.SBDCYJT), companies);
 		
 		companies = new ArrayList<Company>();
-		companies.add(org.getCompany(CompanyType.XTNYGS));
 		companies.add(org.getCompany(CompanyType.XNYGS));
+		companies.add(org.getCompany(CompanyType.XTNYGS));
 		computeMap.put(org.getCompany(CompanyType.XNYSYB), companies);
 
 		companies = new ArrayList<Company>();
@@ -116,7 +115,20 @@ public class YSZKRBServiceImpl implements YSZKRBService{
 	public List<String[]> getYszkData(Date date) {
 		CompositePipe pipe = new CompositePipe(GSZB.YSZK_DAILY_REPORT.value(), date, configFactory.getYszkrbCompositeConfigurator(computeMap));
 		Organization org = companyManager.getBMDBOrganization();
-		pipe.addCompany(computeMap.get(org.getCompany(CompanyType.SBDCYJT)), configFactory.getYszkrbConfigurator())
+		
+
+		
+		List<Company> companies = new ArrayList<Company>();
+		companies.add(org.getCompany(CompanyType.SBGS));
+		companies.add(org.getCompany(CompanyType.HBGS));
+		companies.add(org.getCompany(CompanyType.XBC));
+		companies.add(org.getCompany(CompanyType.TBGS));
+		companies.add(org.getCompany(CompanyType.LLGS));
+		companies.add(org.getCompany(CompanyType.XLC));
+		companies.add(org.getCompany(CompanyType.DLGS));
+		
+		
+		pipe.addCompany(companies, configFactory.getYszkrbConfigurator())
 			.addCompany(org.getCompany(CompanyType.SBDCYJT), null)
 			.addCompany(computeMap.get(org.getCompany(CompanyType.XNYSYB)), configFactory.getYszkrbConfigurator())
 			.addCompany(org.getCompany(CompanyType.XNYSYB), null)

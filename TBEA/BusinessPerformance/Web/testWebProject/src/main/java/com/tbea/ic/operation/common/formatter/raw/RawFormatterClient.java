@@ -10,7 +10,7 @@ public class RawFormatterClient {
 		this.handler = handler;
 	}
 	
-	String nullAs = null;
+	String nullAs = "--";
 	
 	public RawFormatterClient acceptNullAs(String nullAs){
 		this.nullAs = nullAs;

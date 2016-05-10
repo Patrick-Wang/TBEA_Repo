@@ -26,10 +26,13 @@ import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.TextFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
 import com.tbea.ic.operation.service.cwcpdlml.cpdlml.CpdlmlService;
 import com.tbea.ic.operation.service.cwcpdlml.cpdlml.CpdlmlServiceImpl;
 
@@ -53,7 +56,8 @@ public class CpdlmlServlet {
 		
 		List<List<String>> result = cpdlmlService.getCpdlml(d, company);
 		
-		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0});
+		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
+		handler.next(new RawPercentFormatterHandler(1, null, new Integer[]{3, 6, 7, 10, 11}));
 		handler.next(new RawNumberFormatterHandler(1));
 		RawFormatterClient client = new RawFormatterClient(handler);
 		client.acceptNullAs("--").format(result);
@@ -72,6 +76,8 @@ public class CpdlmlServlet {
 		ExcelTemplate template = ExcelTemplate.createCwcpdlmlTemplate(CwcpdlmlSheetType.CPDLML);
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
+		handler.next(new TextFormatterHandler(null, new Integer[]{1}));
+		handler.next(new PercentFormatterHandler(1, null, new Integer[]{3, 6, 7, 10, 11}));
 		handler.next(new NumberFormatterHandler(1));
 		FormatterClient client = new FormatterClient(handler, 0, 2);
 		client.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));

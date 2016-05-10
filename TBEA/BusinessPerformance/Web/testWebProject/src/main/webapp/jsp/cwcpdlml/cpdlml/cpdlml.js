@@ -24,15 +24,24 @@ var cwcpdlml;
             }
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
-                    Node.create({ name: "月份", align: TextAlign.Center }),
-                    Node.create({ name: "材料" }),
-                    Node.create({ name: "期现货合计盈亏" })
-                        .append(Node.create({ name: "指导价格按照保本价（万元）" }))
-                        .append(Node.create({ name: "指导价格按照目标利润价（万元）" }))
+                    Node.create({ name: "产业", align: TextAlign.Center }),
+                    Node.create({ name: "产品大类", align: TextAlign.Left }),
+                    Node.create({ name: "本年累计" })
+                        .append(Node.create({ name: "累计收入" }))
+                        .append(Node.create({ name: "比重" }))
+                        .append(Node.create({ name: "累计成本" }))
+                        .append(Node.create({ name: "毛利额" }))
+                        .append(Node.create({ name: "毛利贡献率" }))
+                        .append(Node.create({ name: "毛利率" })),
+                    Node.create({ name: "去年全年累计" })
+                        .append(Node.create({ name: "去年全年收入" }))
+                        .append(Node.create({ name: "去年全年成本" }))
+                        .append(Node.create({ name: "上年平均毛利率" })),
+                    Node.create({ name: "较毛利率均值增减比" })
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -74,7 +83,7 @@ var cwcpdlml;
                 framework.router
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产品大类毛利表");
             };
             ShowView.prototype.getMonth = function () {
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
@@ -84,6 +93,7 @@ var cwcpdlml;
             ShowView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
+                tableAssist.mergeRow(0);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
@@ -92,7 +102,7 @@ var cwcpdlml;
                     drag: false,
                     resize: false,
                     height: '100%',
-                    width: 1400,
+                    width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 20,
@@ -103,6 +113,6 @@ var cwcpdlml;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(cpdlml = cwcpdlml.cpdlml || (cwcpdlml.cpdlml = {}));
 })(cwcpdlml || (cwcpdlml = {}));

@@ -1,22 +1,25 @@
-package com.tbea.ic.operation.model.entity.identifier.cwgb;
-
-import java.io.Serializable;
+package com.tbea.ic.operation.model.entity.cwcpdlml;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import com.tbea.ic.operation.model.entity.identifier.cwgb.CyEntity;
+
 
 @Entity
-@Table(name = "identifier_cwgb_cpfl")
+@Table(name = "cwgb_cy_cpfl")
 public class CpflEntity extends AbstractReadWriteEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,13 +28,20 @@ public class CpflEntity extends AbstractReadWriteEntity implements Serializable 
 		return super.getId();
 	}
 
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cy")
+
+
+	
 	CyEntity cy;
 	String name;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cy")
 	public CyEntity getCy() {
 		return cy;
 	}
@@ -47,4 +57,5 @@ public class CpflEntity extends AbstractReadWriteEntity implements Serializable 
 	
 	
 	
+
 }
