@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -14,6 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.util.SheetUtil;
 
 import com.tbea.ic.operation.controller.servlet.convertor.Convertor;
 
@@ -47,6 +49,7 @@ public class ExcelTemplate {
 	private static String pathNyzbscqkTemplate = resPath + "nyzbscqk_template.xls";
 	private static String pathCwcpdlmlTemplate = resPath + "cwcpdlml_template.xls";
 	private static String pathCwyjsfTemplate = resPath + "cwyjsf_template.xls";
+	private static String pathCwgbjyxxjlTemplate = resPath + "cwgbjyxxjl_template.xls";
 	private static ExcelTemplate createTemplate(String path, int index, int size)
 			throws FileNotFoundException, IOException {
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
@@ -160,6 +163,10 @@ public class ExcelTemplate {
 				CwyjsfSheetType.END.ordinal());
 	}
 
+	public static ExcelTemplate createCwgbjyxxjlTemplate(CwgbjyxxjlSheetType type)   throws IOException {
+		return createTemplate(pathCwgbjyxxjlTemplate, type.ordinal(),
+				CwgbjyxxjlSheetType.END.ordinal());
+	}
 	
 	HSSFWorkbook workbook;
 	HSSFCellStyle cellStyleDefault;
@@ -181,6 +188,7 @@ public class ExcelTemplate {
 		HSSFFont fontDefault = workbook.createFont();    
 		fontDefault.setFontName("宋体");    
 		fontDefault.setFontHeightInPoints((short) 10);//设置字体大小 
+
 		
 		HSSFFont fontBold = workbook.createFont();    
 		fontBold.setFontName("宋体");    
@@ -191,15 +199,12 @@ public class ExcelTemplate {
 				.createCellStyle());
 		cellStyleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cellStyleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cellStyleCenter.setFont(fontDefault);
 		
 		
 		cellStyleDefault = border(workbook
 				.createCellStyle());
 		cellStyleDefault.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		cellStyleDefault.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
-		cellStyleDefault.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
-		cellStyleDefault.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
-		cellStyleDefault.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框 
 		cellStyleDefault.setFont(fontDefault);
 
 		cellStyleHeader = border(workbook
@@ -219,7 +224,6 @@ public class ExcelTemplate {
 		cellStyleText.setAlignment(HSSFCellStyle.ALIGN_LEFT);
 		cellStyleText.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);			
 	}
-	
 
 	/**
 	 * @return the workbook
@@ -251,9 +255,6 @@ public class ExcelTemplate {
 		this.workbook.setSheetName(0, name);
 	}
 	
-	/**
-	 * @return the cellStyleNull
-	 */
 	public HSSFCellStyle getCellStyleDefault() {
 		return cellStyleDefault;
 	}
@@ -262,23 +263,28 @@ public class ExcelTemplate {
 		return cellStyleHeader;
 	}
 
+	//width 为excel中查看到的宽度，非pixel
+	public void setColumnWidth(int colFrom, int colTo, float width) {
+		//在默认 宋体  11号字情况下     6.5  ->  1832
+ 		int poiWidth = (int)((1832  * width) / 6.5);
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = colFrom; i <= colTo; ++i){
+			sheet.setColumnWidth(i, (short)(poiWidth));
+		}
+	}
+
 	//磅（Point）
 	//excel 字体单位是 磅（Point）
+	public void setRowHeight(int rowFrom, int rowTo, float point){
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		for (int i = rowFrom; i <= rowTo; ++i){
+			sheet.getRow(i).setHeightInPoints(point);
+		}
+	}
+	
+	
 	public void write(OutputStream os) throws IOException{
 		HSSFSheet sheet = workbook.getSheetAt(0);
-		sheet.setDefaultRowHeightInPoints(16.5f);	// 16.5;
-		
-		//Set the width (in units of 1/256th of a character width)
-		//它的api文档里写的很清楚了，以一个字符的1/256的宽度作为一个单位	
-		sheet.setDefaultColumnWidth((short)(1832));// 16.5;  宋体 10号  字符0宽度为7pixel
-//		sheet.setColumnWidth(columnIndex, width);
-		int colCount = sheet.getRow(0).getLastCellNum();	
-		for (int i = 0; i <= sheet.getLastRowNum(); ++i){
-			sheet.getRow(i).setHeightInPoints(16.5f); // 16.5
-			for (int j = 0; j < colCount; ++j) {
-				sheet.setColumnWidth(j, (short)(1832));
-			}
-		}
 		
 //		sheet.setColumnWidth(columnIndex, width);
 //		for (int j = 0; j < colCount; ++j) {
