@@ -44,4 +44,8 @@ public interface ChgbService {
 	ErrorCode submitChxzqk(Date d, Company company, JSONArray data);
 	
 	ZBStatus getChxzqkStatus(Date d, Company comp);
+
+	void importZbmFromNC(Date d, List<Company> cOMPS);
+
+	void importNychFromNC(Date d, List<Company> cOMPS);
 }

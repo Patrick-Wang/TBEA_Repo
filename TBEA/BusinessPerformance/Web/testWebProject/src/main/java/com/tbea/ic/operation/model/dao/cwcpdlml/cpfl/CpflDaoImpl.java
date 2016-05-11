@@ -32,4 +32,10 @@ public class CpflDaoImpl extends AbstractReadWriteDaoImpl<CpflEntity> implements
 		q.setParameter("cyid", cyId);
 		return q.getResultList();
 	}
+
+	@Override
+	public List<CpflEntity> getAll() {
+		Query q = this.getEntityManager().createQuery("from CpflEntity");
+		return q.getResultList();
+	}
 }

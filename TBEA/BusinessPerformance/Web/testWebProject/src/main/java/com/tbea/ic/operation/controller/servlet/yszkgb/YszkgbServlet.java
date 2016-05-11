@@ -56,8 +56,7 @@ public class YszkgbServlet {
 	@Autowired
 	ExtendAuthorityService extendAuthService;
 	
-	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
-	CompanyManager companyManager;
+
 	
 	@RequestMapping(value = "show.do")
 	public ModelAndView getYszkgb(HttpServletRequest request,
@@ -458,6 +457,27 @@ public class YszkgbServlet {
 		template.write(response, name + ".xls");
 	}
 	
+	
+	CompanyManager companyManager;
+	List<Company> COMPS = new ArrayList<Company>();
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	public void setCompanyManager(CompanyManager companyManager){
+		this.companyManager = companyManager;
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XTNYGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TCNY));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NDGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.GJGCGS_GFGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.JCKGS_JYDW));
+	}
+	
 	//每月3到五号零点触发
 	@Scheduled(cron="0 0 0 3-5 * ?")
 	public void scheduleImport(){
@@ -465,23 +485,22 @@ public class YszkgbServlet {
 		System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
-		List<Company> sbdComps = new ArrayList<Company>();
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XTNYGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TCNY));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NDGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.GJGCGS_GFGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.JCKGS_JYDW));
-		yszkgbService.importZbmFromNC(d, sbdComps);
-		yszkgbService.importYszkzlbhFromNC(d, sbdComps);
+
+		yszkgbService.importZbmFromNC(d, COMPS);
+		yszkgbService.importYszkzlbhFromNC(d, COMPS);
 	}
 	
-	
+	@RequestMapping(value = "nctest.do")
+	public @ResponseBody byte[] nctest(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+		if (!(request.getParameter("date") == null)){
+			d = Date.valueOf(request.getParameter("date"));
+		}
+		yszkgbService.importZbmFromNC(d, COMPS);
+		yszkgbService.importYszkzlbhFromNC(d, COMPS);
+		return "OK".getBytes("utf-8");
+	}
 }

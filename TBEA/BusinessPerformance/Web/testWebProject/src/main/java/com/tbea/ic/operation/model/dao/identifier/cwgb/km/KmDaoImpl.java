@@ -36,4 +36,10 @@ public class KmDaoImpl extends AbstractReadWriteDaoImpl<KmEntity> implements KmD
 		}
 		return result.get(0);
 	}
+
+	@Override
+	public List<KmEntity> getAll() {
+		Query q = this.getEntityManager().createQuery("from KmEntity");
+		return q.getResultList();
+	}
 }

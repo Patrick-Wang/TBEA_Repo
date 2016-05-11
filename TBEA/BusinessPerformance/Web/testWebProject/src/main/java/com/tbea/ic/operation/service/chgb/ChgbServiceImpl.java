@@ -1,15 +1,19 @@
 package com.tbea.ic.operation.service.chgb;
 
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +22,8 @@ import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.chgb.chjykc.ChJykcDao;
 import com.tbea.ic.operation.model.dao.chgb.chjykc.ChJykcDaoImpl;
 import com.tbea.ic.operation.model.dao.chgb.chxzqk.ChxzqkDao;
@@ -36,8 +42,13 @@ import com.tbea.ic.operation.model.entity.chgb.ChZmEntity;
 import com.tbea.ic.operation.model.entity.chgb.ChxzqkEntity;
 import com.tbea.ic.operation.model.entity.chgb.ChzlbhqkEntity;
 import com.tbea.ic.operation.model.entity.chgb.NychEntity;
+import com.tbea.ic.operation.model.entity.cwgbjyxxjl.JyxxjlEntity;
 import com.tbea.ic.operation.model.entity.identifier.chgb.JykcxmEntity;
+import com.tbea.ic.operation.model.entity.identifier.cwgb.KmEntity;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
+import com.tbea.ic.operation.service.cwgbjyxxjl.CwgbjyxxjlServiceImpl.OnSetValue;
+import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
+import com.tbea.ic.operation.service.util.nc.NCConnection;
 
 @Service(ChgbServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -557,5 +568,184 @@ public class ChgbServiceImpl implements ChgbService {
 		return ZBStatus.SAVED;
 	}
 	
+	
+	//-----------------------------存货账面表-----------------------------------(账面原值为净额+减值）		
+	private static String sqlZmb =  			
+		"	select unit_code,	" +	
+		"	       unit_name,	" +	
+		"	       inputdate,	" +	
+		"	       imda.m10083,	" +	//账面净额
+		"	       imdo.m10000 	" +	//减值
+		"	  from iufo_measure_data_aabf9rn7 imda	" +	
+		"	  left join iufo_measure_data_osrehdc8 imdo	" +	
+		"	    on imda.alone_id = imdo.alone_id	" +	
+		"	  left join (select alone_id,	" +	
+		"	                    code,	" +	
+		"	                    inputdate,	" +	
+		"	                    keyword2,	" +	
+		"	                    keyword3,	" +	
+		"	                    time_code,	" +	
+		"	                    ts,	" +	
+		"	                    ver	" +	
+		"	               from iufo_measure_pubdata) imp	" +	
+		"	    on imda.alone_id = imp.alone_id	" +	
+		"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
+		"	    on imp.code = iui.unit_id	" +	
+		"	 where imp.ver = 0	%s ";	
+				
+				
+		//-----------------------------能源存货-----------------------------------		
+		private static String sqlNych =  			
+			"	select unit_code,	" +	
+			"	       unit_name,	" +	
+			"	       inputdate,	" +	
+			"	       imd8.m10006 yclnc,	" +	//原材料（年初）
+			"	       imd8.m10010 kcspnc,	" +	//库存商品（年初）
+			"	       imd8.m10002 dpbtfnc,	" +	//生产成本-待配比土方（年初）
+			"	       imd8.m10008 fcspnc,	" +	//发出商品（年初）
+			"	       imd8.m10000 dhnc,	" +	//低耗（年初）
+			"	       imd8.m10004 hjnc,	" +	//合计（年初）
+			"	       imd8.m10007 ycl,	" +	//原材料（期末）
+			"	       imd8.m10011 kcsp,	" +	//库存商品（期末）
+			"	       imd8.m10003 dpbtf,	" +	//生产成本-待配比土方（期末）
+			"	       imd8.m10009 fcsp,	" +	//发出商品（期末）
+			"	       imd8.m10001 dh,	" +	//低耗（期末）
+			"	       imd8.m10005 hj 	" +	//合计（期末）
+			"	  from iufo_measure_data_844a2dr9 imd8	" +	
+			"	  left join (select alone_id,	" +	
+			"	                    code,	" +	
+			"	                    inputdate,	" +	
+			"	                    keyword2,	" +	
+			"	                    keyword3,	" +	
+			"	                    time_code,	" +	
+			"	                    ts,	" +	
+			"	                    ver	" +	
+			"	               from iufo_measure_pubdata) imp	" +	
+			"	    on imd8.alone_id = imp.alone_id	" +	
+			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
+			"	    on imp.code = iui.unit_id	" +	
+			"	 where imp.ver = 0	%s ";
+		@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+		CompanyManager companyManager;
+		@Override
+		public void importZbmFromNC(Date d, List<Company> comps) {
+			NCConnection connection = NCConnection.create();
+			if (null != connection){
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(d);
+				String whereSql = 
+					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
+					" and substr(inputdate,1,7) = '" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "' ";
+				ResultSet rs = connection.query(String.format(sqlZmb, whereSql));
+				if (rs != null){
+					mergeZmb(cal, rs);
+				}
+			}	
+			
+		}
+
+		private void mergeZmb(Calendar cal, ResultSet rs) {
+			try {
+				
+				int nf = cal.get(Calendar.YEAR);
+				int yf = cal.get(Calendar.MONTH) + 1;
+				Date d = Util.toDate(cal);
+				while (rs.next()) {
+
+					String unitCode = String.valueOf(rs.getObject(1));
+					CompanyType companyType = NCCompanyCode.getType(unitCode);
+					Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+					
+					List<ChZmEntity> entities = chzmDao.getByDate(d, comp);
+					ChZmEntity entity = null;
+					if (entities.isEmpty()){
+						entity = new ChZmEntity();
+						entity.setDwxx(dwxxDao.getById(comp.getId()));
+						entity.setNf(nf);
+						entity.setYf(yf);
+					}else{
+						entity = entities.get(0);
+					}
+					
+					entity.setZmje(rs.getDouble(4));
+					entity.setYz(rs.getDouble(5));
+					entity.setYz(rs.getDouble(4) - rs.getDouble(5));
+					
+					chzmDao.merge(entity);
+				}
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void importNychFromNC(Date d, List<Company> comps) {
+			NCConnection connection = NCConnection.create();
+			if (null != connection){
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(d);
+				String whereSql = 
+					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
+					" and substr(inputdate,1,7) = '" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "' ";
+				ResultSet rs = connection.query(String.format(sqlNych, whereSql));
+				if (rs != null){
+					mergeNych(cal, rs);
+				}
+			}	
+		}
+
+		private void mergeNych(Calendar cal, ResultSet rs) {
+			try {
+				int nf = cal.get(Calendar.YEAR);
+				int yf = cal.get(Calendar.MONTH) + 1;
+				Date d = Util.toDate(cal);
+				while (rs.next()) {
+
+					String unitCode = String.valueOf(rs.getObject(1));
+					CompanyType companyType = NCCompanyCode.getType(unitCode);
+					Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+					
+					List<NychEntity> entities = nychDao.getByDate(d, d, comp);
+					NychEntity entity = null;
+					if (entities.isEmpty()){
+						entity = new NychEntity();
+						entity.setDwxx(dwxxDao.getById(comp.getId()));
+						entity.setNf(nf);
+						entity.setYf(yf);
+					}else{
+						entity = entities.get(0);
+					}
+					
+					int base = 4;
+					entity.setYcl(rs.getDouble(base++));
+					entity.setKcsp(rs.getDouble(base++));
+					entity.setSccbDpbtf(rs.getDouble(base++));
+					entity.setFcsp(rs.getDouble(base++));
+					entity.setDh(rs.getDouble(base++));
+					entity.setHj(rs.getDouble(base++));
+					nychDao.merge(entity);
+					
+					entity = nychDao.getQCJYByDate(d, comp);
+					if (null == entity){
+						entity = new NychEntity();
+						entity.setDwxx(dwxxDao.getById(comp.getId()));
+						entity.setNf(nf);
+						entity.setYf(yf);
+					}
+					
+					entity.setYcl(rs.getDouble(base++));
+					entity.setKcsp(rs.getDouble(base++));
+					entity.setSccbDpbtf(rs.getDouble(base++));
+					entity.setFcsp(rs.getDouble(base++));
+					entity.setDh(rs.getDouble(base++));
+					entity.setHj(rs.getDouble(base++));
+					nychDao.merge(entity);
+				}
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
 	
 }

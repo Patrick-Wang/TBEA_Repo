@@ -45,11 +45,20 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 SET IDENTITY_INSERT [dbo].[identifier_cwgb_cy] ON
-INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (0,N'变压器产业')
-INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (1,N'线缆产业')
-INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (2,N'天池能源')
-INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (3,N'光伏产业')
-INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (4,N'工程劳务')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (0,	N'变压器行业(按产品电压等级分类)')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (1,	N'变压器行业（按产品类型分类）')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (2,	N'线缆行业')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (3,	N'新能源行业-硅片')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (4,	N'新能源行业-西科')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (5,	N'新能源行业-柔输')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (6,	N'新能源行业-硅业')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (7,	N'新能源行业')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (8,	N'工程分类')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (9,	N'运营商类')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (10,	N'煤炭产业')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (11,	N'物流贸易类')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (12,	N'服务类')
+INSERT [dbo].[identifier_cwgb_cy] ([id], [name])VALUES (13,	N'合计')
 SET IDENTITY_INSERT [dbo].[identifier_cwgb_cy] OFF
 
 /***************************************************************************** 产品分类
@@ -60,71 +69,147 @@ DROP TABLE cwgb_cy_cpfl
 CREATE TABLE [dbo].[cwgb_cy_cpfl](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[cy] [int] not NULL,
-	[name] [varchar](50) not NULL
+	[name] [varchar](50) not NULL,
+	[type] [int] not NULL
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 SET IDENTITY_INSERT [dbo].[cwgb_cy_cpfl] ON
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (0,0, N'110kV及以下')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (1,0, N'220kV')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (2,0, N'330kV')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (3,0, N'500kV及以上')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (4,0, N'直流产品')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (5,0, N'电抗器')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (6,0, N'物流贸易')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (7,0, N'工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (8,0, N'其中：国内工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (9,0, N'其中：国际工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (10,0, N'其他类')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (11,1, N'导线')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (12,1, N'交联')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (13,1, N'其中:高压交联(66KV以上)')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (14,1, N'     中压交联(3.6-66KV)')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (15,1, N'     低压交联(1KV以下)')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (16,1, N'电力电缆')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (17,1, N'控制电缆')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (18,1, N'架空线')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (19,1, N'布电线')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (20,1, N'特种电缆')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (21,1, N'物流贸易')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (22,1, N'工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (23,1, N'其中：国内工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (24,1, N'其中：国际工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (25,1, N'其他')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (26,2, N'大块')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (27,2, N'中块')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (28,2, N'三八块')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (29,2, N'沫煤')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (30,2, N'混煤')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (31,2, N'物流贸易')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (32,2, N'工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (33,2, N'其中：国内工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (34,2, N'其中：国际工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (35,2, N'其他')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (36,3, N'硅片')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (37,3, N'光伏电站建设')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (38,3, N'风电工程建设')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (39,3, N'逆变器')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (40,3, N'电池组件制造及离网电站建设')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (41,3, N'设计调试服务')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (42,3, N'物流贸易')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (43,3, N'工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (44,3, N'其中：国内工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (45,3, N'其中：国际工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (46,3, N'其他')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (47,3, N'多晶硅')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (48,4, N'物流贸易')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (49,4, N'工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (50,4, N'其中：国内工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (51,4, N'其中：国际工程')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (52,4, N'其他')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (53,0, N'合计')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (54,1, N'合计')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (55,2, N'合计')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (56,3, N'合计')
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name])VALUES (57,4, N'合计')
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (0,	0,	N'交流变压器'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (1,	0,	N'其中：35KV及以下'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (2,	0,	N'66-110KV'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (3,	0,	N'220KV'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (4,	0,	N'330KV'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (5,	0,	N'500KV'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (6,	0,	N'750kV'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (7,	0,	N'1000kV'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (8,	0,	N'直流变压器'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (9,	0,	N'其中：±400kv及以下'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (10,	0,	N'±500kv'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (11,	0,	N'±600kv'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (12,	0,	N'±800kv'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (13,	0,	N'平波电抗器'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (14,	0,	N'电抗器'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (15,	0,	N'其中：330kV及以下'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (16,	0,	N'500kV电'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (17,	0,	N'750kV电'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (18,	0,	N'1000kV电'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (19,	0,	N'小计'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (20,	1,	N'干式变压器'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (21,	1,	N'其中：F级干变'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (22,	1,	N'H级干变'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (23,	1,	N'箱式变电站'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (24,	1,	N'干式电抗器'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (25,	1,	N'特种变压器'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (26,	1,	N'其中：隔爆变'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (27,	1,	N'整流变'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (28,	1,	N'牵引变'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (29,	1,	N'油田变'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (30,	1,	N'其它'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (31,	1,	N'延伸类'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (32,	1,	N'配电自动化'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (33,	1,	N'开关'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (34,	1,	N'套管'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (35,	1,	N'互感器'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (36,	1,	N'维修备件'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (37,	1,	N'小计'	,	1)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (38,	2,	N'导线'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (39,	2,	N'布电线'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (40,	2,	N'架空线'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (41,	2,	N'控制电缆'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (42,	2,	N'交联电缆'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (43,	2,	N'电力电缆'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (44,	2,	N'电磁线'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (45,	2,	N'特种电缆'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (46,	2,	N'电缆附件'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (47,	2,	N'铜杆'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (48,	2,	N'铝杆'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (49,	2,	N'PVC料'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (50,	2,	N'工装轮'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (51,	2,	N'其他'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (52,	2,	N'小计'	,	1)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (53,	3,	N'单晶硅片'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (54,	3,	N'多晶硅片'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (55,	3,	N'准方棒'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (56,	3,	N'多晶锭'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (57,	3,	N'圆棒'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (58,	4,	N'并网逆变器'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (59,	4,	N'汇流箱'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (60,	4,	N'配电柜'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (61,	4,	N'一体化机房'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (62,	4,	N'充电桩产品'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (63,	4,	N'APF'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (64,	5,	N'SVG'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (65,	5,	N'SVG半成品'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (66,	6,	N'多晶硅'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (67,	6,	N'白炭黑'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (68,	6,	N'加气块'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (69,	7,	N'其他'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (70,	7,	N'小计'	,	1)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (71,	8,	N'国内工程'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (72,	8,	N'其中：输变电工程'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (73,	8,	N'        输变电-EPC模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (74,	8,	N'        输变电-BT模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (75,	8,	N'        输变电-其他模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (76,	8,	N'      光伏工程'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (77,	8,	N'        光伏-EPC模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (78,	8,	N'        光伏-BT模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (79,	8,	N'        光伏-其他模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (80,	8,	N'      风电工程'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (81,	8,	N'        风电-EPC模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (82,	8,	N'        风电-BT模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (83,	8,	N'        风电-其他模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (84,	8,	N'国际工程'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (85,	8,	N'其中：输变电工程'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (86,	8,	N'        输变电-EPC模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (87,	8,	N'        输变电-BT模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (88,	8,	N'        输变电-其他模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (89,	8,	N'      光伏工程'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (90,	8,	N'        光伏-EPC模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (91,	8,	N'        光伏-BT模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (92,	8,	N'        光伏-其他模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (93,	8,	N'      风电工程'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (94,	8,	N'        风电-EPC模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (95,	8,	N'        风电-BT模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (96,	8,	N'        风电-其他模式'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (97,	8,	N'小计'	,	1)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (98,	9,	N'自备电厂'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (99,	9,	N'火电电厂'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (100,	9,	N'光伏电厂'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (101,	9,	N'风能电厂'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (102,	9,	N'充电站'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (103,	9,	N'售电公司'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (104,	9,	N'供热公司'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (105,	9,	N'其他'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (106,	9,	N'小计'	,	1)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (107,	10,	N'原煤'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (108,	10,	N'大块'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (109,	10,	N'中块'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (110,	10,	N'小中块'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (111,	10,	N'三八块'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (112,	10,	N'二五块'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (113,	10,	N'四六块'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (114,	10,	N'锯采煤'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (115,	10,	N'末煤'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (116,	10,	N'其他'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (117,	10,	N'小计'	,	1)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (118,	11,	N'物流贸易'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (119,	11,	N'小计'	,	1)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (120,	12,	N'会议费收入'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (121,	12,	N'物业费收入'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (122,	12,	N'劳务收入'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (123,	12,	N'花苗收入'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (124,	12,	N'住宿收入'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (125,	12,	N'机票代理收入'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (126,	12,	N'日用百货收入'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (127,	12,	N'电费收入'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (128,	12,	N'水汽暖收入'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (129,	12,	N'餐饮收入'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (130,	12,	N'其他收入'	,	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (131,	12,	N'小计'	,	1)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [type])VALUES (132,	13,	N'合计'	,	2)
 SET IDENTITY_INSERT [dbo].[cwgb_cy_cpfl] OFF
 /***************************************************************************** 科目
 id	name
@@ -213,8 +298,8 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 /***************************************************************************** 产品大类毛利表
-			产业	产品大类	累计收入	累计成本	期货配比情况	去年全年收入	去年全年成本
-id	nf	yf	dwid	cpdl	ljsr	ljcb	qhpbqk	qnqnsr	qnqncb
+			产品大类	累计收入	累计成本	期货配比情况	去年全年收入	去年全年成本
+id	nf	yf	cpdl	ljsr	ljcb	qhpbqk	qnqnsr	qnqncb
 *****************************************************************************/
 IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'cwgb_cpdlml')
 DROP TABLE cwgb_cpdlml
@@ -222,7 +307,6 @@ CREATE TABLE [dbo].[cwgb_cpdlml](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not NULL,
 	[yf] [int] not NULL,
-	[dwid] [int] not NULL,
 	[cpdl] [int] not NULL,
 	[ljsr] [numeric](18, 4) NULL,
 	[ljcb] [numeric](18, 4) NULL,
@@ -233,58 +317,6 @@ PRIMARY KEY CLUSTERED
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
-
-/***************************************************************************** 产品大类毛利计算公式
-			id	cpid	formula
-*****************************************************************************/
-IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'cwgb_cpdlml_formula')
-DROP TABLE cwgb_cpdlml_formula
-CREATE TABLE [dbo].[cwgb_cpdlml_formula](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[cpid] [int] not NULL,
-	[formula] [varchar](100) not NULL
-PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-SET IDENTITY_INSERT [dbo].[cwgb_cpdlml_formula] ON
-INSERT [dbo].[cwgb_cpdlml_formula] ([id], [cpid], [formula])VALUES (0,	7,	N'#8 + #9')
-INSERT [dbo].[cwgb_cpdlml_formula] ([id], [cpid], [formula])VALUES (1,	53,	N'#+(0-6) + #+(8-10)')
-INSERT [dbo].[cwgb_cpdlml_formula] ([id], [cpid], [formula])VALUES (2,	22,	N'#23 + #24')
-INSERT [dbo].[cwgb_cpdlml_formula] ([id], [cpid], [formula])VALUES (3,	54,	N'#+(11-21) + #+(23-25)')
-INSERT [dbo].[cwgb_cpdlml_formula] ([id], [cpid], [formula])VALUES (4,	32,	N'#33 + #34')
-INSERT [dbo].[cwgb_cpdlml_formula] ([id], [cpid], [formula])VALUES (5,	55,	N'#+(26-31) + #+(33-35)')
-INSERT [dbo].[cwgb_cpdlml_formula] ([id], [cpid], [formula])VALUES (6,	43,	N'#44 + #45')
-INSERT [dbo].[cwgb_cpdlml_formula] ([id], [cpid], [formula])VALUES (7,	56,	N'#+(36-42) + #+(44-47)')
-INSERT [dbo].[cwgb_cpdlml_formula] ([id], [cpid], [formula])VALUES (8,	49,	N'#50 + #51')
-INSERT [dbo].[cwgb_cpdlml_formula] ([id], [cpid], [formula])VALUES (9,	57,	N'#48 + #+(50-52)')
-SET IDENTITY_INSERT [dbo].[cwgb_cpdlml_formula] OFF
-/***************************************************************************** 产业单位映射表
-			单位  产业
-id	dwid cyid
-*****************************************************************************/
-IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'cwgb_cy_ref_dw')
-DROP TABLE cwgb_cy_ref_dw
-CREATE TABLE [dbo].[cwgb_cy_ref_dw](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[cyid] [int] not NULL,
-	[dwid] [int] not NULL
-PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-SET IDENTITY_INSERT [dbo].[cwgb_cy_ref_dw] ON
-INSERT [dbo].[cwgb_cy_ref_dw] ([id], [cyid], [dwid])VALUES 	(0,	0,	1)
-INSERT [dbo].[cwgb_cy_ref_dw] ([id], [cyid], [dwid])VALUES 	(1,	0,	2)
-INSERT [dbo].[cwgb_cy_ref_dw] ([id], [cyid], [dwid])VALUES 	(2,	0,	3)
-INSERT [dbo].[cwgb_cy_ref_dw] ([id], [cyid], [dwid])VALUES 	(3,	0,	301)
-INSERT [dbo].[cwgb_cy_ref_dw] ([id], [cyid], [dwid])VALUES 	(4,	1,	4)
-INSERT [dbo].[cwgb_cy_ref_dw] ([id], [cyid], [dwid])VALUES 	(5,	1,	5)
-INSERT [dbo].[cwgb_cy_ref_dw] ([id], [cyid], [dwid])VALUES 	(6,	1,	6)
-INSERT [dbo].[cwgb_cy_ref_dw] ([id], [cyid], [dwid])VALUES 	(7,	2,	7)
-SET IDENTITY_INSERT [dbo].[cwgb_cy_ref_dw] OFF
 
 /***************************************************************************** 经营性现金流 计划值表
 			科目	计划值	状态

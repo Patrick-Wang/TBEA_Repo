@@ -7,7 +7,7 @@ import com.tbea.ic.operation.common.companys.Company;
 
 public interface CpdlmlService {
 
-	List<List<String>> getCpdlml(Date d, Company company);
+	List<List<String>> getCpdlml(Date d);
 
 
 }

@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.cbfx;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
@@ -76,6 +78,18 @@ public class CbfxServlet {
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
 		dmcbfxService.importFromNC(d, COMPS);
-		nymyywmlfxService.importFromNC(d, COMPS);
+	}
+	
+	@RequestMapping(value = "nctest.do")
+	public @ResponseBody byte[] nctest(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+		if (!(request.getParameter("date") == null)){
+			d = Date.valueOf(request.getParameter("date"));
+		}
+		dmcbfxService.importFromNC(d, COMPS);
+		return "OK".getBytes("utf-8");
 	}
 }

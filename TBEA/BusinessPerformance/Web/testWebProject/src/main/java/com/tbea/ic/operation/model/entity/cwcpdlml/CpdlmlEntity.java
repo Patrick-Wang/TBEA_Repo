@@ -27,7 +27,6 @@ public class CpdlmlEntity extends AbstractReadWriteEntity implements Serializabl
 	private static final long serialVersionUID = 1L;
 	Integer nf;
 	Integer yf;
-	Integer dwid;
 	Integer cpdl;
 	Double ljsr;
 	Double ljcb;
@@ -45,12 +44,7 @@ public class CpdlmlEntity extends AbstractReadWriteEntity implements Serializabl
 	public void setYf(Integer yf) {
 		this.yf = yf;
 	}
-	public Integer getDwid() {
-		return dwid;
-	}
-	public void setDwid(Integer dwid) {
-		this.dwid = dwid;
-	}
+
 	public Integer getCpdl() {
 		return cpdl;
 	}

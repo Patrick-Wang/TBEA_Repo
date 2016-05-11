@@ -28,25 +28,8 @@ import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 @RequestMapping(value = "wlydd")
 public class WlyddServlet {
 	
-//	CompanyManager companyManager;
-//	List<Company> sbdComps = new ArrayList<Company>();
-//	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-//	public void setCompanyManager(CompanyManager companyManager){
-//		this.companyManager = companyManager;
-//		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-//		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-//		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-//		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
-//		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-//		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-//		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-//	}
-	
 	@Autowired
 	ExtendAuthorityService extendAuthService;
-	
-	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
-	CompanyManager companyManager;
 	
 	@RequestMapping(value = "show.do")
 	public ModelAndView getWlydd(HttpServletRequest request,

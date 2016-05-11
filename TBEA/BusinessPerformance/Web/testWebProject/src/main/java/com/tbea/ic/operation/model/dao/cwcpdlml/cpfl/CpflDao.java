@@ -11,4 +11,6 @@ public interface CpflDao extends AbstractReadWriteDao<CpflEntity> {
 
 	List<CpflEntity> getCpflByCy(Integer cyId);
 
+	List<CpflEntity> getAll();
+
 }

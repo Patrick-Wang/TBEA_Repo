@@ -15,10 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tbea.ic.operation.common.CompanySelection;
-import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CwcpdlmlSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterClient;
@@ -43,7 +40,6 @@ public class CpdlmlServlet {
 	CpdlmlService cpdlmlService;
 
 
-
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
@@ -51,10 +47,9 @@ public class CpdlmlServlet {
 	public @ResponseBody byte[] getCpdlml(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+
 		
-		List<List<String>> result = cpdlmlService.getCpdlml(d, company);
+		List<List<String>> result = cpdlmlService.getCpdlml(d);
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
 		handler.next(new RawPercentFormatterHandler(1, null, new Integer[]{3, 6, 7, 10, 11}));
@@ -69,10 +64,8 @@ public class CpdlmlServlet {
 	public void exportCpdlml(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
-		List<List<String>> result = cpdlmlService.getCpdlml(d, company);
+		List<List<String>> result = cpdlmlService.getCpdlml(d);
 		ExcelTemplate template = ExcelTemplate.createCwcpdlmlTemplate(CwcpdlmlSheetType.CPDLML);
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});

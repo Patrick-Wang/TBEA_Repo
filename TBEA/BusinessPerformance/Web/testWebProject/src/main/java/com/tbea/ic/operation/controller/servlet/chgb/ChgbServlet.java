@@ -3,6 +3,7 @@ package com.tbea.ic.operation.controller.servlet.chgb;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,25 +55,29 @@ public class ChgbServlet {
 	@Resource(name=ChgbServiceImpl.NAME)
 	ChgbService chgbService;
 
-//	CompanyManager companyManager;
-//	List<Company> chgbComps = new ArrayList<Company>();
-//	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-//	public void setCompanyManager(CompanyManager companyManager){
-//		this.companyManager = companyManager;
-//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
-//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-//		chgbComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-//	}
+	CompanyManager companyManager;
+	List<Company> COMPS = new ArrayList<Company>();
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	public void setCompanyManager(CompanyManager companyManager){
+		this.companyManager = companyManager;
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XTNYGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TCNY));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NDGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.GJGCGS_GFGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.JCKGS_JYDW));
+	}
 	
 	@Autowired
 	ExtendAuthorityService extendAuthService;
-	
-	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
-	CompanyManager companyManager;
+
 	
 	@RequestMapping(value = "chzmb/update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getChgbzmb_update(HttpServletRequest request,
@@ -449,4 +455,29 @@ public class ChgbServlet {
 		template.write(response, name + ".xls");
 	}
 	
+	//每月3到五号零点触发
+	@Scheduled(cron="0 0 0 3-5 * ?")
+	public void scheduleImport(){
+		Calendar cal = Calendar.getInstance();
+		System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+
+		chgbService.importZbmFromNC(d, COMPS);
+		chgbService.importNychFromNC(d, COMPS);
+	}
+	
+	@RequestMapping(value = "nctest.do")
+	public @ResponseBody byte[] nctest(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+		if (!(request.getParameter("date") == null)){
+			d = Date.valueOf(request.getParameter("date"));
+		}
+		chgbService.importZbmFromNC(d, COMPS);
+		chgbService.importNychFromNC(d, COMPS);
+		return "OK".getBytes("utf-8");
+	}
 }

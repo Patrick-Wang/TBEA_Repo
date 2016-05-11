@@ -30,13 +30,12 @@ public class CpdlmlDaoImpl extends AbstractReadWriteDaoImpl<CpdlmlEntity> implem
 	}
 
 	@Override
-	public CpdlmlEntity getByDw(Date d, Company company, Integer cpid) {
+	public CpdlmlEntity getByDate(Date d, Integer cpid) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		Query q = this.getEntityManager().createQuery("from CpdlmlEntity where nf=:nf and yf=:yf and dwid=:compId and cpdl = :cpid");
+		Query q = this.getEntityManager().createQuery("from CpdlmlEntity where nf=:nf and yf=:yf and cpdl = :cpid");
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
-		q.setParameter("compId", company.getId());
 		q.setParameter("cpid", cpid);
 		List<CpdlmlEntity> list = q.getResultList();
 		if (list.isEmpty()){
