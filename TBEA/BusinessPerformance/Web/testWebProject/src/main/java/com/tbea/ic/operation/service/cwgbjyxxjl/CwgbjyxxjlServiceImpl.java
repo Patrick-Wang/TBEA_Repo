@@ -175,7 +175,7 @@ public class CwgbjyxxjlServiceImpl implements CwgbjyxxjlService {
 			for (String key : cacheMap.keySet()){
 				jyxxjlDao.merge(cacheMap.get(key));
 			}
-		}	
+		}
 		
 	}
 

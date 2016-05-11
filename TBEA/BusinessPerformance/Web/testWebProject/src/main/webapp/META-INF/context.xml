@@ -1,4 +1,4 @@
-<Context>
+<Context sessionCookieName="TBEA_JSESSIONID">
 	<Resource name="jdbc/my_test_db" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		url="jdbc:sqlserver://localhost:1433; DatabaseName=operating_management"
