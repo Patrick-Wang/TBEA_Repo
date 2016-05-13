@@ -66,7 +66,7 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 			Util.resize(line, 12);
 			line.set(0, cpflEntity.getCy().getName());
 			line.set(1, cpflEntity.getName());		
-			if (cpflEntity.getType() > 0){
+			if (cpflEntity.getLx() > 0){
 				hjs.add(i);
 			}
 			CpdlmlEntity dlmx = cpdlmlDao.getByDate(d, cpflEntity.getId());

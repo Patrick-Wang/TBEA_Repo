@@ -39,7 +39,7 @@ public class CpflEntity extends AbstractReadWriteEntity implements Serializable 
 	
 	CyEntity cy;
 	String name;
-	Integer type;
+	Integer lx;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cy")
@@ -55,14 +55,10 @@ public class CpflEntity extends AbstractReadWriteEntity implements Serializable 
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getType() {
-		return type;
+	public Integer getLx() {
+		return lx;
 	}
-	public void setType(Integer type) {
-		this.type = type;
+	public void setLx(Integer lx) {
+		this.lx = lx;
 	}
-	
-	
-	
-
 }
