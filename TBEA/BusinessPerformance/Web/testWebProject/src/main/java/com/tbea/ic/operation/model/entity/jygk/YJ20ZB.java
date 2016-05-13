@@ -2,8 +2,8 @@ package com.tbea.ic.operation.model.entity.jygk;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,9 +41,9 @@ public class YJ20ZB extends AbstractReadWriteEntity implements Serializable{
 
 	private SHZT yj20shzt;
 
-	private Date yj20xgsj;
+	private Timestamp yj20xgsj;
 	
-	private Date yj20shsj;
+	private Timestamp yj20shsj;
 
 
 
@@ -91,7 +91,7 @@ public class YJ20ZB extends AbstractReadWriteEntity implements Serializable{
 	/**
 	 * @return the yj20xgsj
 	 */
-	public Date getYj20xgsj() {
+	public Timestamp getYj20xgsj() {
 		return yj20xgsj;
 	}
 
@@ -115,7 +115,7 @@ public class YJ20ZB extends AbstractReadWriteEntity implements Serializable{
 	 * @param yj20xgsj
 	 *            the yj20xgsj to set
 	 */
-	public void setYj20xgsj(Date yj20xgsj) {
+	public void setYj20xgsj(Timestamp yj20xgsj) {
 		this.yj20xgsj = yj20xgsj;
 	}
 
@@ -135,11 +135,11 @@ public class YJ20ZB extends AbstractReadWriteEntity implements Serializable{
 		this.yf = yf;
 	}
 	
-	public Date getYj20shsj() {
+	public Timestamp getYj20shsj() {
 		return yj20shsj;
 	}
 
-	public void setYj20shsj(Date yj20shsj) {
+	public void setYj20shsj(Timestamp yj20shsj) {
 		this.yj20shsj = yj20shsj;
 	}
 

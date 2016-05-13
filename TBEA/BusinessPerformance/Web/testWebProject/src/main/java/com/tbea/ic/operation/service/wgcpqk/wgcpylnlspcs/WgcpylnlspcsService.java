@@ -21,4 +21,6 @@ public interface WgcpylnlspcsService {
 	ErrorCode submitWgcpylnlspcs(Date d, Company company, WgcpqkType type, JSONArray data);
 	
 	ZBStatus getWgcpylnlspcsStatus(Date d, Company comp, WgcpqkType type);
+
+	List<Integer> getCpIdList(WgcpqkType type);
 }

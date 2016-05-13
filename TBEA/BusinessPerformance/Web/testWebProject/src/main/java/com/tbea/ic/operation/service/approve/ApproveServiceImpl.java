@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.service.approve;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -38,7 +39,6 @@ import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
-import com.tbea.ic.operation.service.approve.OnGetStatus;
 import com.tbea.ic.operation.service.entry.EntryServiceImpl;
 
 @Service
@@ -407,11 +407,11 @@ public class ApproveServiceImpl implements ApproveService {
 		if (!comps.isEmpty()) {
 			Integer approveStatus = account.getRole() == 1 ? ZBStatus.APPROVED_2
 					.ordinal() : ZBStatus.APPROVED.ordinal();
-
+			Timestamp timestamp = new java.sql.Timestamp(Calendar.getInstance().getTimeInMillis());
 			List<NDJHZB> ndjhzbs = ndjhzbDao.getZbs(date, comps);
 			for (NDJHZB ndjhzb : ndjhzbs) {
 				ndjhzb.setNdjhshzt(shztDao.getById(approveStatus));
-				ndjhzb.setNdjhshsj(new java.sql.Date(new java.util.Date().getTime()));
+				ndjhzb.setNdjhshsj(timestamp);
 				ndjhzbDao.merge(ndjhzb);
 			}
 		}
@@ -453,11 +453,11 @@ public class ApproveServiceImpl implements ApproveService {
 		if (!comps.isEmpty()) {
 			Integer approveStatus = account.getRole() == 1 ? ZBStatus.APPROVED_2
 					.ordinal() : ZBStatus.APPROVED.ordinal();
-
+			Timestamp timestamp = new java.sql.Timestamp(Calendar.getInstance().getTimeInMillis());
 			List<YJ20ZB> zbs = yj20zbDao.getZbs(date, comps);
 			for (YJ20ZB yj20zb : zbs) {
 				yj20zb.setYj20shzt(shztDao.getById(approveStatus));
-				yj20zb.setYj20shsj(new java.sql.Date(new java.util.Date().getTime()));
+				yj20zb.setYj20shsj(timestamp);
 				yj20zbDao.merge(yj20zb);
 			}
 			
@@ -484,11 +484,11 @@ public class ApproveServiceImpl implements ApproveService {
 		if (!comps.isEmpty()) {
 			Integer approveStatus = account.getRole() == 1 ? ZBStatus.APPROVED_2
 					.ordinal() : ZBStatus.APPROVED.ordinal();
-
+			Timestamp timestamp = new java.sql.Timestamp(Calendar.getInstance().getTimeInMillis());
 			List<YJ28ZB> zbs = yj28zbDao.getZbs(date, comps);
 			for (YJ28ZB yj28zb : zbs) {
 				yj28zb.setYj28shzt(shztDao.getById(approveStatus));
-				yj28zb.setYj28shsj(new java.sql.Date(new java.util.Date().getTime()));
+				yj28zb.setYj28shsj(timestamp);
 				yj28zbDao.merge(yj28zb);
 			}
 			
@@ -515,11 +515,11 @@ public class ApproveServiceImpl implements ApproveService {
 		if (!comps.isEmpty()) {
 			Integer approveStatus = account.getRole() == 1 ? ZBStatus.APPROVED_2
 					.ordinal() : ZBStatus.APPROVED.ordinal();
-
+			Timestamp timestamp = new java.sql.Timestamp(Calendar.getInstance().getTimeInMillis());
 			List<SJZB> zbs = sjzbDao.getZbs(date, comps);
 			for (SJZB zb : zbs) {
 				zb.setSjshzt(shztDao.getById(approveStatus));
-				zb.setSjshsj(new java.sql.Date(new java.util.Date().getTime()));
+				zb.setSjshsj(timestamp);
 				sjzbDao.merge(zb);			
 			}
 			
@@ -623,9 +623,10 @@ public class ApproveServiceImpl implements ApproveService {
 			if (preApprovedCompanyFilter.filter(comps.get(i))) {
 				List<YDJHZB> zbs = ydjhzbDao.getZbs(dateList.get(i),
 						comps.get(i));
+				Timestamp timestamp = new java.sql.Timestamp(Calendar.getInstance().getTimeInMillis());
 				for (YDJHZB zb : zbs) {
 					zb.setYdjhshzt(shztDao.getById(approveStatus));
-					zb.setYdjhshsj(new java.sql.Date(new java.util.Date().getTime()));
+					zb.setYdjhshsj(timestamp);
 					ydjhzbDao.merge(zb);
 				}
 			}
@@ -734,7 +735,7 @@ public class ApproveServiceImpl implements ApproveService {
 
 		for (Company comp : mainCompanies) {
 			if (approveCompletedCompanies.contains(comp.getId())) {
-				Date time = null;
+				Timestamp time = null;
 				switch (entryType) {
 				case BY20YJ:
 					time = yj20zbDao.getApprovedTime(date, comp);
@@ -754,7 +755,7 @@ public class ApproveServiceImpl implements ApproveService {
 				}
 
 				result.add(new String[] { comp.getName(), "true",
-						null != time ? Util.formatToDay(time) : null });
+						null != time ? Util.formatToSecond(time) : null });
 			} else {
 				result.add(new String[] { comp.getName(), "false", null });
 			}

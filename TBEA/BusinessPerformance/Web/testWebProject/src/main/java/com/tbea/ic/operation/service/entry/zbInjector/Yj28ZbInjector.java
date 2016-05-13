@@ -34,8 +34,7 @@ class Yj28ZbInjector extends ZbInjector {
 		}
 
 		zb.setYj28shzt(shztDao.getById(status.ordinal()));
-		zb.setYj28xgsj(new java.sql.Date(new java.util.Date()
-				.getTime()));
+		zb.setYj28xgsj(new java.sql.Timestamp(Calendar.getInstance().getTimeInMillis()));
 		zb.setNf(cal.get(Calendar.YEAR));
 		zb.setYf(cal.get(Calendar.MONTH) + 1);
 		zb.setYj28z(val);

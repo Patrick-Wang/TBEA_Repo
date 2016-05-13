@@ -31,6 +31,10 @@ import com.tbea.ic.operation.common.excel.SbdddcbjpcqkSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkService;
 import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkServiceImpl;
@@ -58,7 +62,11 @@ public class SbdddcbjpcqkServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		List<List<String>> result = sbdddcbjpcqkService.getByqkglydd(d, getType(request), company);
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		RawFormatterHandler handler = new RawPercentFormatterHandler(1, null, new Integer[]{8, 11, 14, 17, 20, 23, 26});
+		handler.next(new RawNumberFormatterHandler(1));
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "xlkglydd/update.do")
@@ -67,9 +75,13 @@ public class SbdddcbjpcqkServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		
 		List<List<String>> result = sbdddcbjpcqkService.getXlkglydd(d, getType(request), company);
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		
+		RawFormatterHandler handler = new RawPercentFormatterHandler(1, null, new Integer[]{6, 9, 12});
+		handler.next(new RawNumberFormatterHandler(1));
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "byqkglydd/entry/update.do")
@@ -78,8 +90,7 @@ public class SbdddcbjpcqkServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		
-		List<List<String>> result = sbdddcbjpcqkService.getByqkglyddEntry(d, getType(request), company);
+		List<List<String>> result = sbdddcbjpcqkService.getByqkglyddEntry(d, getType(request), company);	
 		StatusData sd = new StatusData(false, result);
 		List<String> cplb = sbdddcbjpcqkService.getByqCplb();
 		EntryLyddData eld = new EntryLyddData();

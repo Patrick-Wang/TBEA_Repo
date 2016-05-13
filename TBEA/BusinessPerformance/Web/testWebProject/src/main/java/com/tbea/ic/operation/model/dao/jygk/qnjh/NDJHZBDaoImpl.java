@@ -2,6 +2,7 @@ package com.tbea.ic.operation.model.dao.jygk.qnjh;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -143,7 +144,7 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 	}
 
 	@Override
-	public Date getEntryTime(Date date, Company comp) {
+	public Timestamp getEntryTime(Date date, Company comp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		Query q = this.getEntityManager().createQuery("from NDJHZB where nf = :nf and dwxx.id = :compId");
@@ -194,7 +195,7 @@ public class NDJHZBDaoImpl extends AbstractReadWriteDaoImpl<NDJHZB> implements N
 	}
 
 	@Override
-	public Date getApprovedTime(Date date, Company comp) {
+	public Timestamp getApprovedTime(Date date, Company comp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		Query q = this.getEntityManager().createQuery("from NDJHZB where nf = :nf and dwxx.id = :compId");

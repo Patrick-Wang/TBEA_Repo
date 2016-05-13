@@ -1,6 +1,10 @@
 package com.tbea.ic.operation.service.cwcpdlml;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -8,11 +12,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.EasyCalendar;
+import com.tbea.ic.operation.common.MathUtil;
+import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpdlml.CpdlmlDao;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpfl.CpflDao;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpfl.CpflDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.cwgb.cy.CyDao;
 import com.tbea.ic.operation.model.dao.identifier.cwgb.cy.CyDaoImpl;
+import com.tbea.ic.operation.model.entity.cwcpdlml.CpdlmlEntity;
+import com.tbea.ic.operation.model.entity.cwcpdlml.CpflEntity;
+import com.tbea.ic.operation.model.entity.cwgbjyxxjl.JyxxjlEntity;
+import com.tbea.ic.operation.model.entity.identifier.cwgb.KmEntity;
+import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
+import com.tbea.ic.operation.service.util.nc.NCConnection;
 
 @Service(CwcpdlmlServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -189,7 +204,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	       imdg.m10109 sqncb,	" +	//今年累计水汽暖收入销售成本
 	"	       imdg.m10083 cycb,	" +	//今年累计餐饮收入销售成本
 	"	       imdg.m10057 qtcb,	" +	//今年累计其他收入销售成本
-	"	       imdg.m10031 xjcb	" +	//今年累计小计销售成本
+	"	       imdg.m10031 xjcb		" +	//今年累计小计销售成本
 	"	  from iufo_measure_data_gyin4hlu imdg	" +	
 	"	  left join (select alone_id,	" +	
 	"	                    code,	" +	
@@ -688,9 +703,128 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 
 	@Override
 	public void importFromNC(Date d) {
-		// TODO Auto-generated method stub
+		NCConnection connection = NCConnection.create();
+		if (null != connection){
+			EasyCalendar cal = new EasyCalendar(d);
+			String whereSql = " and substr(inputdate,1,7) = '" + cal.getYear() + "-" + cal.getMonth() + "' ";
+
+			
+			List<CpflEntity> entities = cpflDao.getAll();
+			int index = 0;
+			ResultSet rsCb = connection.query(sqlCbByqcyAdydjfl + whereSql);
+			ResultSet rsSr = connection.query(sqlSrByqcyAdydjfl + whereSql);
+			
+			
+			CpdlmlEntity hjEntity = cpdlmlDao.getByDate(d, entities.get(entities.size() - 1).getId());
+			if (hjEntity == null){
+				hjEntity = new CpdlmlEntity();
+				hjEntity.setCpdl(entities.get(entities.size() - 1).getId());
+				hjEntity.setNf(cal.getYear());
+				hjEntity.setYf(cal.getMonth());
+			}
+			
+			
+			index = mergerEntity(index, hjEntity, cal, rsCb, rsSr, entities);
 		
+			rsCb = connection.query(sqlCbByqcyAcplxfl + whereSql);
+			rsSr = connection.query(sqlSrByqcyAcplxfl + whereSql);
+			index = mergerEntity(index, hjEntity, cal, rsCb, rsSr, entities);
+			
+			rsCb = connection.query(sqlCbXlcy + whereSql);
+			rsSr = connection.query(sqlSrXlcy + whereSql);
+			index = mergerEntity(index, hjEntity, cal, rsCb, rsSr, entities);
+			
+			rsCb = connection.query(sqlCbXny + whereSql);
+			rsSr = connection.query(sqlSrXny + whereSql);
+			index = mergerEntity(index, hjEntity, cal, rsCb, rsSr, entities);
+			
+			rsCb = connection.query(sqlCbGcl + whereSql);
+			rsSr = connection.query(sqlSrGcl + whereSql);
+			index = mergerEntity(index, hjEntity, cal, rsCb, rsSr, entities);
+			
+			rsCb = connection.query(sqlCbYysl + whereSql);
+			rsSr = connection.query(sqlSrYysl + whereSql);
+			index = mergerEntity(index, hjEntity, cal, rsCb, rsSr, entities);
+			
+			rsCb = connection.query(sqlCbMtcy + whereSql);
+			rsSr = connection.query(sqlSrMtcy + whereSql);
+			index = mergerEntity(index, hjEntity, cal, rsCb, rsSr, entities);
+			
+			rsCb = connection.query(sqlCbWlmyl + whereSql);
+			rsSr = connection.query(sqlSrWlmyl + whereSql);
+			index = mergerEntity(index, hjEntity, cal, rsCb, rsSr, entities);
+			
+			cpdlmlDao.merge(hjEntity);
+		}
 	}
+
+
+	private int mergerEntity(int index, CpdlmlEntity hjEntity, EasyCalendar cal, ResultSet rsCb,
+			ResultSet rsSr, List<CpflEntity> entities) {
+		Date d = cal.getDate();
+		try {
+			int start = index;
+			rsCb.next(); 
+			rsSr.next();
+			for (int i = 4; i <= rsCb.getMetaData().getColumnCount(); ++i){
+				CpdlmlEntity entity = cpdlmlDao.getByDate(d, entities.get(index).getId());
+				if (null == entity){
+					entity = new CpdlmlEntity();
+					entity.setCpdl(entities.get(index).getId());
+					entity.setNf(cal.getYear());
+					entity.setYf(cal.getMonth());
+				}
+				entity.setLjcb(rsCb.getDouble(index - start + 4));
+				entity.setLjsr(rsSr.getDouble(index - start + 4));
+				cpdlmlDao.merge(entity);
+				hjEntity.setLjcb(MathUtil.sum(hjEntity.getLjcb(), entity.getLjcb()));
+				hjEntity.setLjsr(MathUtil.sum(hjEntity.getLjsr(), entity.getLjsr()));
+				++index;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		try {
+//			
+//			List<KmEntity> kms = kmDao.getAll();
+//			int nf = cal.get(Calendar.YEAR);
+//			int yf = cal.get(Calendar.MONTH) + 1;
+//			Date d = Util.toDate(cal);
+//			while (rs.next()) {
+//
+//				String unitCode = String.valueOf(rs.getObject(1));
+//				CompanyType companyType = NCCompanyCode.getType(unitCode);
+//				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+//				
+//				
+//				for (int i = 0; i < kms.size(); ++i){
+//					String key = "dwid" + comp.getId() + "km" + kms.get(i).getId();
+//					JyxxjlEntity entity = cacheMap.get(key);
+//
+//					if (null == entity){
+//						entity = jyxxjlDao.getByDate(d, comp, kms.get(i).getId());
+//						
+//					}
+//					
+//					if (null == entity) {
+//						entity = new JyxxjlEntity();
+//						entity.setDwxx(dwxxDao.getById(comp.getId()));
+//						entity.setNf(nf);
+//						entity.setYf(yf);
+//					}
+//					cacheMap.put(key, entity);
+//					onSetValue.onSet(entity, rs.getDouble(i + 4));
+//				}
+//			}
+//			rs.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		return 0;
+	}
+
 
 
 

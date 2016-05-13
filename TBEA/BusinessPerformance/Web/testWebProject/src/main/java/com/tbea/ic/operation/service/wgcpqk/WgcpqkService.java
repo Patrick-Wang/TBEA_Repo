@@ -8,8 +8,9 @@ import com.tbea.ic.operation.common.companys.Company;
 
 
 public interface WgcpqkService {
+	void importByqFromNC(Date d, List<Company> comps);
 
-	void importFromNC(Date d, List<Company> cOMPS);
+	void importXlFromNC(Date d, List<Company> comps);
 
 
 }

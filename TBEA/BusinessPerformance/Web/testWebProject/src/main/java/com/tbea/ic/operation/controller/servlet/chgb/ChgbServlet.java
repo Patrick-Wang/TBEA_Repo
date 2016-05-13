@@ -43,6 +43,10 @@ import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.chgb.ChgbService;
@@ -86,7 +90,11 @@ public class ChgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = chgbService.getChzmb(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		
+		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "chjykcb/update.do", method = RequestMethod.GET)
@@ -96,7 +104,12 @@ public class ChgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = chgbService.getChjykcb(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		
+		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0});
+		handler.next(new RawNumberFormatterHandler(1));
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	
@@ -107,7 +120,10 @@ public class ChgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = chgbService.getChzlbhqk(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "chxzqk/update.do", method = RequestMethod.GET)
@@ -117,7 +133,10 @@ public class ChgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = chgbService.getChxzqk(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "chnych/update.do", method = RequestMethod.GET)
@@ -127,7 +146,10 @@ public class ChgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = chgbService.getChnych(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "show.do", method = RequestMethod.GET)

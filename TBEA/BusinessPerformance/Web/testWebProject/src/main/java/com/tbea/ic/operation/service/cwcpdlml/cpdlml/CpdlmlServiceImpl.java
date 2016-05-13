@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpdlml.CpdlmlDao;
@@ -55,6 +56,9 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 		List<CpflEntity> cpfls = cpflDao.getAll();
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<Integer> hjs = new ArrayList<Integer>();
+		EasyCalendar ec = new EasyCalendar(d);
+		ec.addYear(-1);
+		ec.setMonth(12);
 		for (int i = 0; i < cpfls.size(); ++i){
 			CpflEntity cpflEntity = cpfls.get(i);
 			List<String> line = new ArrayList<String>();
@@ -69,8 +73,11 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 			if (dlmx != null){
 				line.set(2, "" + dlmx.getLjsr());
 				line.set(4, "" + dlmx.getLjcb());
-				line.set(8, "" + dlmx.getQnqnsr());
-				line.set(9, "" + dlmx.getQnqncb());
+			}
+			dlmx = cpdlmlDao.getByDate(ec.getDate(), cpflEntity.getId());
+			if (dlmx != null){
+				line.set(8, "" + dlmx.getLjsr());
+				line.set(9, "" + dlmx.getLjcb());
 			}
 		}
 		hjs.add(cpfls.size() - 1);

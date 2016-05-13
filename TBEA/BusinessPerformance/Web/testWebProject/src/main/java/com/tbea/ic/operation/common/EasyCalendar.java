@@ -45,6 +45,11 @@ public class EasyCalendar {
 		return this;
 	}
 	
+	public EasyCalendar setMonth(int month){
+		cal.set(Calendar.MONTH, month - 1);
+		return this;
+	}
+	
 	public Date getDate(){
 		return new Date(cal.getTimeInMillis());
 	}

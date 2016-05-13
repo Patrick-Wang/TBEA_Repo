@@ -33,6 +33,9 @@ import com.tbea.ic.operation.common.excel.DzwzgbSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.service.dzwzgb.DzwzgbService;
 import com.tbea.ic.operation.service.dzwzgb.DzwzgbServiceImpl;
 
@@ -87,7 +90,10 @@ public class DzwzgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = dzwzgbService.getDzclcb(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	@RequestMapping(value = "dzclcb/entry/update.do")
 	public @ResponseBody byte[] getDzclcbEntry(HttpServletRequest request,

@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.model.dao.jygk.sjzb;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
@@ -36,7 +37,7 @@ public interface SJZBDao  extends AbstractReadWriteDao<SJZB>{
 
 	List<Object[]> getEntryCompletedCompanies(Date date);
 
-	Date getEntryTime(Date date, Company comp);
+	Timestamp getEntryTime(Date date, Company comp);
 
 //	int getSavedZbsCount(Date date, Company company);
 	
@@ -44,5 +45,5 @@ public interface SJZBDao  extends AbstractReadWriteDao<SJZB>{
 
 	List<Integer> getApprovedCompletedCompanies(Date date);
 
-	Date getApprovedTime(Date date, Company comp);
+	Timestamp getApprovedTime(Date date, Company comp);
 }

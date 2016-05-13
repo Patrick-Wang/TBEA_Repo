@@ -30,8 +30,6 @@ public class CpdlmlEntity extends AbstractReadWriteEntity implements Serializabl
 	Integer cpdl;
 	Double ljsr;
 	Double ljcb;
-	Double qnqnsr;
-	Double qnqncb;
 	public Integer getNf() {
 		return nf;
 	}
@@ -63,17 +61,4 @@ public class CpdlmlEntity extends AbstractReadWriteEntity implements Serializabl
 	public void setLjcb(Double ljcb) {
 		this.ljcb = ljcb;
 	}
-	public Double getQnqnsr() {
-		return qnqnsr;
-	}
-	public void setQnqnsr(Double qnqnsr) {
-		this.qnqnsr = qnqnsr;
-	}
-	public Double getQnqncb() {
-		return qnqncb;
-	}
-	public void setQnqncb(Double qnqncb) {
-		this.qnqncb = qnqncb;
-	}
-
 }

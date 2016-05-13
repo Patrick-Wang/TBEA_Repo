@@ -117,6 +117,7 @@ public class DashboardController {
 		dateSel.select(map);
 		Account account = SessionManager.getAccount(request.getSession(false));
 		map.put("zhAuth", Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName()));
+		SessionManager.getAcl(request.getSession()).select(map);
 		return new ModelAndView("gdw_indexInput_summary", map);
 	}
 	

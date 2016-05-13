@@ -33,7 +33,7 @@ class NdjhZbInjector extends ZbInjector {
 			zb.setDwxx(dwxxDao.getById(comp.getId()));
 		}
 		zb.setNdjhshzt(shztDao.getById(status.ordinal()));	
-		zb.setNdjhxgsj(new java.sql.Date(new java.util.Date().getTime()));
+		zb.setNdjhxgsj(new java.sql.Timestamp(Calendar.getInstance().getTimeInMillis()));
 		zb.setNf(cal.get(Calendar.YEAR));
 		zb.setNdjhz(val);
 		

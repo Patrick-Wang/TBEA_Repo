@@ -2,8 +2,8 @@ package com.tbea.ic.operation.model.entity.jygk;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,9 +41,9 @@ public class SJZB extends AbstractReadWriteEntity implements Serializable {
 
 	private SHZT sjshzt;
 
-	private Date sjxgsj;
+	private Timestamp sjxgsj;
 	
-	private Date sjshsj;
+	private Timestamp sjshsj;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dwid")
@@ -89,7 +89,7 @@ public class SJZB extends AbstractReadWriteEntity implements Serializable {
 	/**
 	 * @return the sjxgsj
 	 */
-	public Date getSjxgsj() {
+	public Timestamp getSjxgsj() {
 		return sjxgsj;
 	}
 
@@ -113,7 +113,7 @@ public class SJZB extends AbstractReadWriteEntity implements Serializable {
 	 * @param sjxgsj
 	 *            the sjxgsj to set
 	 */
-	public void setSjxgsj(Date sjxgsj) {
+	public void setSjxgsj(Timestamp sjxgsj) {
 		this.sjxgsj = sjxgsj;
 	}
 
@@ -133,11 +133,11 @@ public class SJZB extends AbstractReadWriteEntity implements Serializable {
 		this.yf = yf;
 	}
 
-	public Date getSjshsj() {
+	public Timestamp getSjshsj() {
 		return sjshsj;
 	}
 
-	public void setSjshsj(Date sjshsj) {
+	public void setSjshsj(Timestamp sjshsj) {
 		this.sjshsj = sjshsj;
 	}
 

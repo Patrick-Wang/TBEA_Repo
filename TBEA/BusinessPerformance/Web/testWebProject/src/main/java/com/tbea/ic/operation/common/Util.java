@@ -2,6 +2,7 @@ package com.tbea.ic.operation.common;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,6 +23,13 @@ public class Util {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return formatter.format(d);
 	}
+	
+	public static String formatToSecond(Timestamp d) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return formatter.format(new Date(d.getTime()));
+	}
+	
+	
 	public static String formatToMonth(Date d) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
 		return formatter.format(d);

@@ -73,26 +73,54 @@ public class WgcpqkServlet {
 	}
 	
 	//每月3到五号零点触发
-		@Scheduled(cron="0 0 0 3-5 * ?")
-		public void scheduleImport(){
-			Calendar cal = Calendar.getInstance();
-			System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");
-			cal.add(Calendar.MONTH, -1);
-			Date d = Util.toDate(cal);
+	@Scheduled(cron="0 0 0 3-5 * ?")
+	public void scheduleImport(){
+		Calendar cal = Calendar.getInstance();
+		System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
 
-			wgcpqkService.importFromNC(d, COMPS);
-		}
+		List<Company> comps = new ArrayList<Company>();
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
 		
-		@RequestMapping(value = "nctest.do")
-		public @ResponseBody byte[] nctest(HttpServletRequest request,
-				HttpServletResponse response) throws UnsupportedEncodingException {
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.MONTH, -1);
-			Date d = Util.toDate(cal);
-			if (!(request.getParameter("date") == null)){
-				d = Date.valueOf(request.getParameter("date"));
-			}
-			wgcpqkService.importFromNC(d, COMPS);
-			return "OK".getBytes("utf-8");
+		
+		wgcpqkService.importByqFromNC(d, comps);
+		
+		comps.clear();
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
+		
+		wgcpqkService.importXlFromNC(d, comps);
+	}
+	
+	@RequestMapping(value = "nctest.do")
+	public @ResponseBody byte[] nctest(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+		if (!(request.getParameter("date") == null)){
+			d = Date.valueOf(request.getParameter("date"));
 		}
+		List<Company> comps = new ArrayList<Company>();
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
+		
+		
+		wgcpqkService.importByqFromNC(d, comps);
+		
+		comps.clear();
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
+		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
+		
+		wgcpqkService.importXlFromNC(d, comps);
+		return "OK".getBytes("utf-8");
+	}
 }

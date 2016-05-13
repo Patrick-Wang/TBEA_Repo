@@ -5,12 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.ZBStatus;
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
-
 import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
@@ -19,12 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
+import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
+import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.wgcpylnlspcs.WgcpylnlspcsDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.wgcpylnlspcs.WgcpylnlspcsDaoImpl;
 import com.tbea.ic.operation.model.entity.wgcpqk.wgcpylnlspcs.WgcpylnlspcsEntity;
-import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
-import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 
 
 @Service(WgcpylnlspcsServiceImpl.NAME)
@@ -41,7 +40,8 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 	
 	public final static String NAME = "WgcpylnlspcsServiceImpl";
 
-	private List<Integer> getCpIdList(WgcpqkType type) {
+	@Override
+	public List<Integer> getCpIdList(WgcpqkType type) {
 		
 		List<Integer> cpIdList = new ArrayList<Integer>();
 	    

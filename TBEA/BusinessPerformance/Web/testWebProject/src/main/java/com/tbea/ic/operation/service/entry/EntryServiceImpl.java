@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.service.entry;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -809,7 +810,7 @@ public class EntryServiceImpl implements EntryService{
 		
 		for (Company comp : mainCompanies){	
 				if (entryCompletedCompanies.containsKey(comp.getId())){
-				Date time = null;
+				Timestamp time = null;
 				switch (entryType){
 				case BY20YJ:
 					time = yj20zbDao.getEntryTime(date, comp);
@@ -828,7 +829,8 @@ public class EntryServiceImpl implements EntryService{
 					break;
 				}
 				
-				result.add(new String[]{comp.getName(), entryCompletedCompanies.get(comp.getId()), null != time ? Util.formatToDay(time) : null});
+				result.add(new String[]{comp.getName(), entryCompletedCompanies.get(comp.getId()), 
+						null != time ? Util.formatToSecond(time) : null});
 			} else{
 				result.add(new String[]{comp.getName(), null, null});
 			}

@@ -273,7 +273,7 @@ module companys_ranking {
                     //                    cellsubmit: 'clientArray',
                     //                    cellEdit: true,
                     height: '100%',
-                    width: 1000,
+                    width: 1200,
                     shrinkToFit: true,
                     rowNum: 100,
                     autoScroll: true

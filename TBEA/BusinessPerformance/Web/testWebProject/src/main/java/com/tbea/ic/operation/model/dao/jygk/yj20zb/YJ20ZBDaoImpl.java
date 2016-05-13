@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.model.dao.jygk.yj20zb;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
@@ -11,17 +12,13 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
+
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.model.entity.jygk.SJZB;
-import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
 import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
-import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
-
-import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
-import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
 @Repository
 @Transactional("transactionManager")
 public class YJ20ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ20ZB> implements YJ20ZBDao {
@@ -155,7 +152,7 @@ public class YJ20ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ20ZB> implements Y
 	}
 
 	@Override
-	public Date getEntryTime(Date date, Company comp) {
+	public Timestamp getEntryTime(Date date, Company comp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		Query q = this.getEntityManager().createQuery("from YJ20ZB where nf = :nf and yf = :yf and dwxx.id = :compId");
@@ -220,7 +217,7 @@ public class YJ20ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ20ZB> implements Y
 	}
 
 	@Override
-	public Date getApprovedTime(Date date, Company comp) {
+	public Timestamp getApprovedTime(Date date, Company comp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		Query q = this.getEntityManager().createQuery("from YJ20ZB where nf = :nf and yf = :yf and dwxx.id = :compId");

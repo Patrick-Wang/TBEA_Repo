@@ -41,6 +41,9 @@ import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.YszkgbSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
@@ -103,7 +106,10 @@ public class YszkgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = yszkgbService.getZmb(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "yszkzlbh/update.do")
@@ -113,7 +119,10 @@ public class YszkgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = yszkgbService.getYszkzlbh(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	@RequestMapping(value = "yszkkxxz/update.do")
 	public @ResponseBody byte[] getYszkkxxz(HttpServletRequest request,
@@ -122,7 +131,10 @@ public class YszkgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = yszkgbService.getYszkkxxz(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	
@@ -133,7 +145,10 @@ public class YszkgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = yszkgbService.getYqyszcsys(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "yszkyjtztjqs/update.do")
@@ -143,7 +158,10 @@ public class YszkgbServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = yszkgbService.getYszkyjtztjqs(d, companyManager.getBMDBOrganization().getCompany(comp));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "yszkkxxz/entry/update.do")
@@ -153,9 +171,12 @@ public class YszkgbServlet {
 		CompanyType type = CompanySelection.getCompany(request);
 		Company comp = companyManager.getBMDBOrganization().getCompany(type);
 		List<List<String>> result = yszkgbService.getYszkkxxzEntry(d, comp);
+		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("").format(result);
 		ZBStatus status = yszkgbService.getYszkkxxzStatus(d, comp);
 		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
-		return JSONObject.fromObject(sd).toString().replaceAll("null", "\"\"").getBytes("utf-8");
+		return JSONObject.fromObject(sd).toString().getBytes("utf-8");
 	}
 	
 	

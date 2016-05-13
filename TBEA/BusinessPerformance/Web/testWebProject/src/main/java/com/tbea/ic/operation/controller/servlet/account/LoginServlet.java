@@ -64,8 +64,9 @@ public class LoginServlet {
 			request.getSession().setAttribute("sso", true);
 			return new ModelAndView("redirect:/Login/index.do");
 		}
-
-		return new ModelAndView("login");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("error", true);
+		return new ModelAndView("login", map);
 	}
 
 	@RequestMapping(value = "ssoLogout.do")

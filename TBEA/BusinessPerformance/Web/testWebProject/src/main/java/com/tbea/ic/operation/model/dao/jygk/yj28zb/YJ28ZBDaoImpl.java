@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.model.dao.jygk.yj28zb;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
@@ -152,7 +153,7 @@ public class YJ28ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ28ZB> implements Y
 	}
 
 	@Override
-	public Date getEntryTime(Date date, Company comp) {
+	public Timestamp getEntryTime(Date date, Company comp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		Query q = this.getEntityManager().createQuery("from YJ28ZB where nf = :nf and yf = :yf and dwxx.id = :compId");
@@ -217,7 +218,7 @@ public class YJ28ZBDaoImpl extends AbstractReadWriteDaoImpl<YJ28ZB> implements Y
 	}
 
 	@Override
-	public Date getApprovedTime(Date date, Company comp) {
+	public Timestamp getApprovedTime(Date date, Company comp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		Query q = this.getEntityManager().createQuery("from YJ28ZB where nf = :nf and yf = :yf and dwxx.id = :compId");

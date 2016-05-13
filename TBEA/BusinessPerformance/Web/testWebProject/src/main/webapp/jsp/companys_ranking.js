@@ -1,3 +1,6 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+//利润计划完成率排名,经营性净现金流实际完成排名
 var RANKINGTYPE1;
 (function (RANKINGTYPE1) {
     RANKINGTYPE1[RANKINGTYPE1["GSMC"] = 0] = "GSMC";
@@ -11,6 +14,7 @@ var RANKINGTYPE1;
     RANKINGTYPE1[RANKINGTYPE1["MONTHRANKING"] = 8] = "MONTHRANKING";
 })(RANKINGTYPE1 || (RANKINGTYPE1 = {}));
 ;
+//利润指标年度累计完成同比增长情况排名
 var RANKINGTYPE2;
 (function (RANKINGTYPE2) {
     RANKINGTYPE2[RANKINGTYPE2["GSMC"] = 0] = "GSMC";
@@ -24,6 +28,7 @@ var RANKINGTYPE2;
     RANKINGTYPE2[RANKINGTYPE2["MONTHRANKING"] = 8] = "MONTHRANKING";
 })(RANKINGTYPE2 || (RANKINGTYPE2 = {}));
 ;
+//人均利润，人均收入
 var RANKINGTYPE3;
 (function (RANKINGTYPE3) {
     RANKINGTYPE3[RANKINGTYPE3["GSMC"] = 0] = "GSMC";
@@ -33,6 +38,7 @@ var RANKINGTYPE3;
     RANKINGTYPE3[RANKINGTYPE3["MONTHRANKING"] = 4] = "MONTHRANKING";
 })(RANKINGTYPE3 || (RANKINGTYPE3 = {}));
 ;
+//应收账款占收入排名
 var RANKINGTYPE4;
 (function (RANKINGTYPE4) {
     RANKINGTYPE4[RANKINGTYPE4["GSMC"] = 0] = "GSMC";
@@ -42,6 +48,7 @@ var RANKINGTYPE4;
     RANKINGTYPE4[RANKINGTYPE4["MONTHRANKING"] = 4] = "MONTHRANKING";
 })(RANKINGTYPE4 || (RANKINGTYPE4 = {}));
 ;
+//应收账款加保理
 var RANKINGTYPE5;
 (function (RANKINGTYPE5) {
     RANKINGTYPE5[RANKINGTYPE5["GSMC"] = 0] = "GSMC";
@@ -52,6 +59,7 @@ var RANKINGTYPE5;
     RANKINGTYPE5[RANKINGTYPE5["MONTHRANKING"] = 5] = "MONTHRANKING";
 })(RANKINGTYPE5 || (RANKINGTYPE5 = {}));
 ;
+//存货占比
 var RANKINGTYPE6;
 (function (RANKINGTYPE6) {
     RANKINGTYPE6[RANKINGTYPE6["GSMC"] = 0] = "GSMC";
@@ -61,6 +69,7 @@ var RANKINGTYPE6;
     RANKINGTYPE6[RANKINGTYPE6["MONTHRANKING"] = 4] = "MONTHRANKING";
 })(RANKINGTYPE6 || (RANKINGTYPE6 = {}));
 ;
+//应收账款加存货占比
 var RANKINGTYPE7;
 (function (RANKINGTYPE7) {
     RANKINGTYPE7[RANKINGTYPE7["GSMC"] = 0] = "GSMC";
@@ -158,7 +167,7 @@ var companys_ranking;
             }
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -179,7 +188,9 @@ var companys_ranking;
         };
         View.prototype.onIndexSelected = function () {
             this.mIndex = $("#ranktype").val();
+            //this.mIndex = $("#indextype  option:selected").text();
         };
+        //导出excel
         View.prototype.exportExcel = function (fName) {
             var date = this.mDs.getDate();
             $("#export")[0].action = "companys_ranking_export.do?" + Util.Ajax.toUrlParam({ year: date.year, month: date.month, rankingType: this.mIndex });
@@ -321,13 +332,18 @@ var companys_ranking;
             }
             tableAssist = JQGridAssistantFactory.createTable(name, rankingType);
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: '100%',
-                width: 1000,
+                width: 1200,
                 shrinkToFit: true,
                 rowNum: 100,
                 autoScroll: true
@@ -335,6 +351,6 @@ var companys_ranking;
             $("#export").css('display', 'block');
         };
         return View;
-    }());
+    })();
     companys_ranking.View = View;
 })(companys_ranking || (companys_ranking = {}));

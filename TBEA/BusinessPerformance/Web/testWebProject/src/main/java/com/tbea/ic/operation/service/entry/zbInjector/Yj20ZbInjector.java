@@ -35,8 +35,7 @@ class Yj20ZbInjector extends ZbInjector {
 			
 		}
 		zb.setYj20shzt(shztDao.getById(status.ordinal()));
-		zb.setYj20xgsj(new java.sql.Date(new java.util.Date()
-				.getTime()));
+		zb.setYj20xgsj(new java.sql.Timestamp(Calendar.getInstance().getTimeInMillis()));
 		zb.setNf(cal.get(Calendar.YEAR));
 		zb.setYf(cal.get(Calendar.MONTH) + 1);
 		zb.setYj20z(val);

@@ -32,6 +32,11 @@ import com.tbea.ic.operation.common.excel.YlfxwlyddmlspcsSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.WlyddmlspcsService;
 import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.WlyddmlspcsServiceImpl;
@@ -68,7 +73,11 @@ public class WlyddmlspcsServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = wlyddmlspcsService.getWlyddmlspcs(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
+		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0});
+		handler.next(new RawNumberFormatterHandler(1));
+		RawFormatterClient client = new RawFormatterClient(handler);
+		client.acceptNullAs("--").format(result);
+		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "wlyddmlspcs/entry/update.do")

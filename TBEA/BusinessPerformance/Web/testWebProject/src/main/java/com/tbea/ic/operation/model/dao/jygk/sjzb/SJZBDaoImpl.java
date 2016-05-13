@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.model.dao.jygk.sjzb;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -15,15 +16,14 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
+
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.model.entity.jygk.NDJHZB;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
 import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
-
-import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 @Repository
 @Transactional("transactionManager")
 public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBDao{
@@ -381,7 +381,7 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 	}
 
 	@Override
-	public Date getEntryTime(Date date, Company comp) {
+	public Timestamp getEntryTime(Date date, Company comp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		Query q = this.getEntityManager().createQuery("from SJZB where nf = :nf and yf = :yf and dwxx.id = :compId");
@@ -436,7 +436,7 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 	}
 
 	@Override
-	public Date getApprovedTime(Date date, Company comp) {
+	public Timestamp getApprovedTime(Date date, Company comp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		Query q = this.getEntityManager().createQuery("from SJZB where nf = :nf and yf = :yf and dwxx.id = :compId");
