@@ -172,6 +172,18 @@ public class YszkgbServiceImpl implements YszkgbService {
 				entity.getWdqzbj()}));
 		return list;
 	}
+	
+	private List<String> toEntryList(YszkKxxzEntity entity) {
+		List<String> list = new ArrayList<String>();
+		list.add("" + entity.getYq0z1y());
+		list.add("" + entity.getYq1z3y());
+		list.add("" + entity.getYq3z6y());
+		list.add("" + entity.getYq6z12y());
+		list.add("" + entity.getYq1nys());		
+		list.add("" + entity.getWdq());
+		list.add("" + entity.getWdqzbj());
+		return list;
+	}
 
 	@Override
 	public List<List<String>> getYszkyjtztjqs(Date d, Company company) {
@@ -263,7 +275,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 		List<List<String>> result = new ArrayList<List<String>>();
 		YszkKxxzEntity entity= yszkKxxzDao.getByDate(d, company);
 		if (null != entity){
-			List<String> list = toList(entity);
+			List<String> list = toEntryList(entity);
 			result.add(list);
 		}else{
 			result.add(new ArrayList<>());
