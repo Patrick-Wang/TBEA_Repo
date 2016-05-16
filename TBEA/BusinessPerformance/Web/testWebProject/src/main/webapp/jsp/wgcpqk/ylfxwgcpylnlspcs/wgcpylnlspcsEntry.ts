@@ -17,7 +17,7 @@ module ylfxwgcpylnlspcs {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly : boolean, date : string):JQTable.JQGridAssistant {
-                let curDate : Date = new Date(date);
+                let curDate : Date = new Date(Date.parse(date.replace(/-/g, '/')));
                 let month = curDate.getMonth() + 1;
                 let year = curDate.getFullYear();
                 let data = [];
@@ -166,7 +166,7 @@ module ylfxwgcpylnlspcs {
                 framework.router
                     .fromEp(new framework.basic.EndpointProxy(pluginEntry.byq_cpfl_t1, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "变压器未履约订单毛利水平测算-产品分类特殊1");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "变压器未履约订单毛利水平测算-产品分类特殊");
 
             }
             

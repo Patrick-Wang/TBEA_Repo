@@ -19,7 +19,7 @@ module sbdczclwcqk {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly : boolean, date : string):JQTable.JQGridAssistant {
-                let curDate : Date = new Date(date);
+                let curDate : Date = new Date(Date.parse(date.replace(/-/g, '/')));
                 let month = curDate.getMonth() + 1;
                 let year = curDate.getFullYear();
                 let data = [];
