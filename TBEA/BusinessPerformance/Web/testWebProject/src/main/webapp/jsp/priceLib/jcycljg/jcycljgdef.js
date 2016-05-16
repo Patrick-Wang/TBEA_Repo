@@ -1,3 +1,6 @@
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../../../js/jquery/jquery.d.ts" />
 var jcycljg;
 (function (jcycljg) {
     (function (DateType) {
@@ -59,7 +62,7 @@ var jcycljg;
             this.pluginUpdate(st, ed);
         };
         return BasePluginView;
-    }());
+    })();
     jcycljg.BasePluginView = BasePluginView;
     (function (JcycljgType) {
         JcycljgType[JcycljgType["YSJS"] = 0] = "YSJS";

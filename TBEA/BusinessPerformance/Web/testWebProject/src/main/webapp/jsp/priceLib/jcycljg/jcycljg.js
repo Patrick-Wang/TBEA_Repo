@@ -1,3 +1,9 @@
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="jcycljgdef.ts" />
+/// <reference path="../../unitedSelector.ts"/>
+///<reference path="../../messageBox.ts"/>
 var jcycljg;
 (function (jcycljg) {
     var View = (function () {
@@ -148,7 +154,7 @@ var jcycljg;
             this.plugin(node).update(dts, dte);
         };
         return View;
-    }());
+    })();
     jcycljg.View = View;
 })(jcycljg || (jcycljg = {}));
 var view = new jcycljg.View();
