@@ -169,7 +169,7 @@ th.ui-th-ltr {
 		<h1 id="headertitle">完工产品情况</h1>
 	</div>
 
-	<Table id="frameTable" align="center" style="width:1200px">
+	<Table id="frameTable" align="center" style="width:700px">
 		<tr>
 			<td>
 				<div id="dt" style="float: left"></div>

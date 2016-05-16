@@ -153,9 +153,9 @@ var sbdscqyqk;
                     cellEdit: true,
                     //height: data.length > 25 ? 550 : '100%',
                     // width: titles.length * 200,
-                    rowNum: 20,
+                    rowNum: 1000,
                     height: '100%',
-                    width: 1200,
+                    width: 700,
                     shrinkToFit: false,
                     autoScroll: true,
                     viewrecords: true
