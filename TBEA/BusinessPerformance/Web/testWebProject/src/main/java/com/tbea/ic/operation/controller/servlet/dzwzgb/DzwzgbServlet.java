@@ -17,6 +17,7 @@ import net.sf.json.JSONArray;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,8 +37,11 @@ import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.dzwzgb.DzwzgbService;
 import com.tbea.ic.operation.service.dzwzgb.DzwzgbServiceImpl;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Controller
 @RequestMapping(value = "dzwzgb")
@@ -45,19 +49,14 @@ public class DzwzgbServlet {
 	@Resource(name=DzwzgbServiceImpl.NAME)
 	DzwzgbService dzwzgbService;
 
-	CompanyManager companyManager;
-	List<Company> sbdComps = new ArrayList<Company>();
+	
+
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-	public void setCompanyManager(CompanyManager companyManager){
-		this.companyManager = companyManager;
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-		sbdComps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-	}
+	CompanyManager companyManager;
+
+	
+	@Autowired
+	ExtendAuthorityService extendAuthService;
 	
 	@RequestMapping(value = "show.do")
 	public ModelAndView getSbdddcbjpcqk(HttpServletRequest request,
@@ -66,7 +65,11 @@ public class DzwzgbServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), false, false);
 		dateSel.select(map);
-		CompanySelection compSel = new CompanySelection(true, sbdComps);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.SbdgbLookup);
+		
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		return new ModelAndView("dzwzgb/dzwzgb", map);
 	}
@@ -78,7 +81,10 @@ public class DzwzgbServlet {
 		Map<String, Object> map = new HashMap<String, Object>();	
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		CompanySelection compSel = new CompanySelection(true, sbdComps);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.SbdgbEntry);
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		return new ModelAndView("dzwzgb/dzwzgbEntry", map);
 	}

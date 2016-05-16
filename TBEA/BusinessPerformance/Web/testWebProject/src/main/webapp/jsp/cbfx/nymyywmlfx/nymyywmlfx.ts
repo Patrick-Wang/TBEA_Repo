@@ -69,7 +69,7 @@ module cbfx {
             }
 
             public init(opt:Option):void {
-                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "能源贸易业务毛利分析");
             }
 
 			private getMonth():number{

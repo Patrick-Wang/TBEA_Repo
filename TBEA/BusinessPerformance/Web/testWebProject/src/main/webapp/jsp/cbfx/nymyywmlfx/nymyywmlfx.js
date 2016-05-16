@@ -1,3 +1,9 @@
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+///<reference path="../../framework/basic/basicdef.ts"/>
+///<reference path="../../framework/route/route.ts"/>
+///<reference path="../cbfxdef.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -25,7 +31,7 @@ var cbfx;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -64,7 +70,7 @@ var cbfx;
                 this.updateTable();
             };
             ShowView.prototype.init = function (opt) {
-                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "能源贸易业务毛利分析");
             };
             ShowView.prototype.getMonth = function () {
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
@@ -93,6 +99,6 @@ var cbfx;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(nymyywmlfx = cbfx.nymyywmlfx || (cbfx.nymyywmlfx = {}));
 })(cbfx || (cbfx = {}));

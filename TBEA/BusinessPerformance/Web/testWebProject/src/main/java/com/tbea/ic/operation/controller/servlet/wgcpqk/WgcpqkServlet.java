@@ -25,28 +25,22 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.wgcpqk.WgcpqkService;
 
 @Controller
 @RequestMapping(value = "wgcpqk")
 public class WgcpqkServlet {
-	
-	CompanyManager companyManager;
-	List<Company> COMPS = new ArrayList<Company>();
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-	public void setCompanyManager(CompanyManager companyManager){
-		this.companyManager = companyManager;
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-	}
+	CompanyManager companyManager;
 	
 	@Autowired
 	WgcpqkService wgcpqkService;
+	
+	@Autowired
+	ExtendAuthorityService extendAuthService;
 	
 	@RequestMapping(value = "show.do")
 	public ModelAndView getWgcpqk(HttpServletRequest request,
@@ -55,7 +49,10 @@ public class WgcpqkServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		CompanySelection compSel = new CompanySelection(true, COMPS);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.SbdgbLookup);
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		return new ModelAndView("wgcpqk/wgcpqk", map);
 	}
@@ -67,7 +64,10 @@ public class WgcpqkServlet {
 		Map<String, Object> map = new HashMap<String, Object>();	
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		CompanySelection compSel = new CompanySelection(true, COMPS);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.SbdgbEntry);
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		return new ModelAndView("wgcpqk/wgcpqkEntry", map);
 	}

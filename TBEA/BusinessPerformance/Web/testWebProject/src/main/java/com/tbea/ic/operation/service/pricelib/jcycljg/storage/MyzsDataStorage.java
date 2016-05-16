@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.model.dao.pricelib.jcycljg.lzbb.LzbbDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.myzs.MyzsDao;
-import com.tbea.ic.operation.model.entity.pricelib.jcycljg.LzbbEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.MyzsEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
 

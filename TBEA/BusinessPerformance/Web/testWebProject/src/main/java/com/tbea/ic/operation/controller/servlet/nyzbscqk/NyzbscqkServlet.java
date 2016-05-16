@@ -1,6 +1,5 @@
 package com.tbea.ic.operation.controller.servlet.nyzbscqk;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,20 +18,19 @@ import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Controller
 @RequestMapping(value = "nyzbscqk")
 public class NyzbscqkServlet {
 
-	CompanyManager companyManager;
-	List<Company> COMPS = new ArrayList<Company>();
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
-	public void setCompanyManager(CompanyManager companyManager){
-		this.companyManager = companyManager;
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NLTK));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XJNY));
-	}
+	CompanyManager companyManager;
+
+	@Autowired
+	ExtendAuthorityService extendAuthService;
 	
 	@RequestMapping(value = "show.do")
 	public ModelAndView getShow(HttpServletRequest request,
@@ -40,7 +39,10 @@ public class NyzbscqkServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		CompanySelection compSel = new CompanySelection(true, COMPS);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.NygbLookup);
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		return new ModelAndView("nyzbscqk/nyzbscqk", map);
 	}
@@ -51,7 +53,10 @@ public class NyzbscqkServlet {
 		Map<String, Object> map = new HashMap<String, Object>();	
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		CompanySelection compSel = new CompanySelection(true, COMPS);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.NygbEntry);
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		return new ModelAndView("nyzbscqk/nyzbscqkEntry", map);
 	}

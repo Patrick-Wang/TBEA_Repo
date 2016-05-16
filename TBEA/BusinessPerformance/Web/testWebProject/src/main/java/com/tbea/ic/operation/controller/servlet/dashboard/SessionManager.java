@@ -1,7 +1,10 @@
 package com.tbea.ic.operation.controller.servlet.dashboard;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -14,15 +17,40 @@ import com.tbea.ic.operation.model.entity.jygk.Account;
 public class SessionManager implements HttpSessionListener {
 
 	private static Map<String, HttpSession> onlineSessions = Collections.synchronizedMap(new HashMap<String, HttpSession>());
-
+	private static List<OnSessionChangedListener> listeners = Collections.synchronizedList(new ArrayList<OnSessionChangedListener>());
+	
+	
+	public static void onChange(OnSessionChangedListener listener){
+		listeners.add(listener);
+	}
+	
+	public interface OnSessionChangedListener{
+		void onCreated(HttpSession session);
+		void onDestroyed(HttpSession session);
+	}
+	
 	@Override
 	public void sessionCreated(HttpSessionEvent event) {
-		onlineSessions.put(event.getSession().getId(), event.getSession());
+		HttpSession session = event.getSession();
+		synchronized (listeners) {
+			Iterator<OnSessionChangedListener> it = listeners.iterator();
+	        while (it.hasNext()){
+	        	it.next().onCreated(session);
+	        }
+	    }
+		onlineSessions.put(session.getId(), session);
 	}
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
-		onlineSessions.remove(event.getSession().getId());
+		HttpSession session = event.getSession();
+		synchronized (listeners) {
+			Iterator<OnSessionChangedListener> it = listeners.iterator();
+	        while (it.hasNext()){
+	        	it.next().onDestroyed(session);
+	        }
+	    }
+		onlineSessions.remove(session.getId());
 	}
 
 	public static Map<String, HttpSession> getOnlineSessions(){

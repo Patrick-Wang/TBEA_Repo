@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +25,13 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.cbfx.dmcbfx.DmcbfxService;
 import com.tbea.ic.operation.service.cbfx.dmcbfx.DmcbfxServiceImpl;
 import com.tbea.ic.operation.service.cbfx.nymyywmlfx.NymyywmlfxService;
 import com.tbea.ic.operation.service.cbfx.nymyywmlfx.NymyywmlfxServiceImpl;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Controller
 @RequestMapping(value = "cbfx")
@@ -39,6 +43,9 @@ public class CbfxServlet {
 	
 	CompanyManager companyManager;
 	List<Company> COMPS = new ArrayList<Company>();
+	
+	@Autowired
+	ExtendAuthorityService extendAuthService;
 	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	public void setCompanyManager(CompanyManager companyManager){
@@ -54,7 +61,10 @@ public class CbfxServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		CompanySelection compSel = new CompanySelection(true, COMPS);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.NygbLookup);
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		return new ModelAndView("cbfx/cbfx", map);
 	}
@@ -65,7 +75,10 @@ public class CbfxServlet {
 		Map<String, Object> map = new HashMap<String, Object>();	
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		CompanySelection compSel = new CompanySelection(true, COMPS);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.NygbEntry);
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		return new ModelAndView("cbfx/cbfxEntry", map);
 	}

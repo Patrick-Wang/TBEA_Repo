@@ -12,4 +12,6 @@ public interface ExtendAuthorityService {
 
 	Boolean hasAuthority(Account account, AuthType authType);
 
+	void removeCache(Account account);
+
 }

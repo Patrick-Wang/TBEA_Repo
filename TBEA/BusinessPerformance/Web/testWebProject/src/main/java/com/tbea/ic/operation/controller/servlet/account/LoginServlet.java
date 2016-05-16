@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager.OnSessionChangedListener;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
@@ -30,11 +31,10 @@ import com.tbea.ic.operation.service.login.LoginService;
 
 @Controller
 @RequestMapping(value = "Login")
-public class LoginServlet {
+public class LoginServlet implements OnSessionChangedListener {
 
 	class Logic{
 		boolean ret = false;
-		
 		
 		public Logic(boolean ret) {
 			super();
@@ -48,7 +48,7 @@ public class LoginServlet {
 			ret = ret && val;
 			return val;
 		}
-		public boolean result(){
+		public boolean value(){
 			return ret;
 		}
 	}
@@ -73,6 +73,11 @@ public class LoginServlet {
 	@Autowired
 	ExtendAuthorityService extAuthServ;
 
+	@Autowired
+	public void init(){
+		SessionManager.onChange(this);
+	}
+	
 	@RequestMapping(value = "ssoLogin.do")
 	public ModelAndView ssoLogin(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -167,11 +172,11 @@ public class LoginServlet {
 		.add("SbdgbEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.SbdgbEntry)))
 		.add("XnygbEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.XnygbEntry)))
 		.add("NygbEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.NygbEntry)))
-		.add("GbLookup", lookup.result())
-		.add("GbEntry", entry.result())
-		.add("ComGbLookup", comGbLookup.result())
-		.add("ComGbEntry", comGbEntry.result())
-		.add("GbEntry", entry.result())
+		.add("GbLookup", lookup.value())
+		.add("GbEntry", entry.value())
+		.add("ComGbLookup", comGbLookup.value())
+		.add("ComGbEntry", comGbEntry.value())
+		.add("GbEntry", entry.value())
 		.add("isByq", account.getId() == 9 || account.getId() == 25 || account.getId() == 33)
 		.add("isXl", account.getId() == 43 || account.getId() == 50 || account.getId() == 61)
 		.add("isSbdcy",	account.getId() == 8 || account.getId() == 6
@@ -230,5 +235,17 @@ public class LoginServlet {
 
 		return new ModelAndView("index", map);
 
+	}
+
+	@Override
+	public void onCreated(HttpSession session) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDestroyed(HttpSession session) {
+		// TODO Auto-generated method stub
+		
 	}
 }
