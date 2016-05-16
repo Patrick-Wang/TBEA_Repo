@@ -8,10 +8,12 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/chgb/chzlbhqk/chzlbhqk.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    chgb.chzlbhqk.pluginView.init({
-        tb: "table",
-        host: "chzlbhqk",
-        tbarea:"tbarea" 
-    });
+    framework.router
+            .to(plugin.chzlbhqk)
+            .send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+                tb: "table",
+                host: "chzlbhqk",
+                tbarea:"tbarea"
+            });
 });
 </script>

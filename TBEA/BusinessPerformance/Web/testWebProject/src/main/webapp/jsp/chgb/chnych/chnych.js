@@ -1,12 +1,18 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-/// <reference path="../chgbdef.ts" />
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../chgbdef.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var plugin;
+(function (plugin) {
+    plugin.chnych = framework.basic.endpoint.lastId();
+})(plugin || (plugin = {}));
 var chgb;
 (function (chgb) {
     var chnych;
@@ -28,28 +34,35 @@ var chgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
-        var CHNYCHView = (function (_super) {
-            __extends(CHNYCHView, _super);
-            function CHNYCHView() {
+        })();
+        var ShowView = (function (_super) {
+            __extends(ShowView, _super);
+            function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("chnych/update.do", false);
             }
-            CHNYCHView.newInstance = function () {
-                return new CHNYCHView();
+            ShowView.prototype.getId = function () {
+                return plugin.chnych;
             };
-            CHNYCHView.prototype.pluginGetExportUrl = function (date, cpType) {
+            ShowView.prototype.pluginGetExportUrl = function (date, cpType) {
                 return "chnych/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: cpType
                 });
             };
-            CHNYCHView.prototype.option = function () {
+            ShowView.prototype.option = function () {
                 return this.mOpt;
             };
-            CHNYCHView.prototype.pluginUpdate = function (date, cpType) {
+            ShowView.prototype.isSupported = function (compType) {
+                if (compType == Util.CompanyType.TCNY || compType == Util.CompanyType.NDGS) {
+                    return true;
+                }
+                return false;
+            };
+            ShowView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
+                this.mCompType = cpType;
                 this.mAjax.get({
                     date: date,
                     companyId: cpType
@@ -59,18 +72,25 @@ var chgb;
                     _this.refresh();
                 });
             };
-            CHNYCHView.prototype.refresh = function () {
+            ShowView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            CHNYCHView.prototype.init = function (opt) {
-                _super.prototype.init.call(this, opt);
-                view.register("能源存货", this);
+            ShowView.prototype.init = function (opt) {
+                framework.router
+                    .fromEp(this)
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "能源存货");
             };
-            CHNYCHView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
+            ShowView.prototype.getMonth = function () {
+                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                var month = curDate.getMonth() + 1;
+                return month;
+            };
+            ShowView.prototype.updateTable = function () {
+                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
                 parent.empty();
@@ -90,6 +110,8 @@ var chgb;
                 tableAssist.mergeTitle();
                 tableAssist.mergeColum(0);
                 this.$(name).jqGrid(tableAssist.decorate({
+                    datatype: "local",
+                    data: tableAssist.getData(data),
                     multiselect: false,
                     drag: false,
                     resize: false,
@@ -98,13 +120,11 @@ var chgb;
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 20,
-                    data: tableAssist.getData(data),
-                    datatype: "local",
                     viewrecords: true
                 }));
             };
-            return CHNYCHView;
-        }(chgb.BasePluginView));
-        chnych.pluginView = CHNYCHView.newInstance();
+            ShowView.ins = new ShowView();
+            return ShowView;
+        })(framework.basic.ShowPluginView);
     })(chnych = chgb.chnych || (chgb.chnych = {}));
 })(chgb || (chgb = {}));

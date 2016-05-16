@@ -234,12 +234,14 @@
 					<c:if test="${PriceLibAuth}">
 					<%@include file="index_IndexPriceLib.jsp"%>
 					</c:if>
+
 					<c:if test="${GbLookup}">
 					<%@include file="index_IndexBusinessReportsSBD.jsp"%>
 					</c:if>
-					<c:if test="${debug}">
+					
 					<%@include file="index_IndexBusinessReportsNY.jsp"%>
 					<%@include file="index_IndexBusinessReportsXNY.jsp"%>
+					<c:if test="${debug}">
 					<%@include file="index_IndexBusinessReportsCW.jsp"%>
 					</c:if>
 				</div>
@@ -255,9 +257,9 @@
 				<c:if test="${GbEntry}">
 					<%@include file="index_IndexBusinessReportsEntrySBD.jsp"%>
 					</c:if>
-					<c:if test="${debug}">
 					<%@include file="index_IndexBusinessReportsEntryNY.jsp"%>
 					<%@include file="index_IndexBusinessReportsEntryXNY.jsp"%>
+					<c:if test="${debug}">
 					<%@include file="index_IndexBusinessReportsEntryCW.jsp"%>
 					</c:if>
 				</div>
@@ -282,7 +284,7 @@
 	<script type="text/javascript">
 	
 	function logout(){
-		var logoutAjax = new Util.Ajax("logout.do");
+		var logoutAjax = new Util.Ajax("exit.do");
 		logoutAjax.get().then(function onSuccess(){
 			
 		}, function onFailed(){

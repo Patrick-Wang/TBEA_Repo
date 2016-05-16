@@ -1,14 +1,18 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-/// <reference path="../chgbdef.ts" />
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../chgbdef.ts"/>
 
-declare var echarts;
-declare var view:chgb.FrameView;
+module plugin {
+    export let chzlbhqk : number = framework.basic.endpoint.lastId();
+}
 
 module chgb {
     export module chzlbhqk {
         import TextAlign = JQTable.TextAlign;
+		import Node = JQTable.Node;
         class JQGridAssistantFactory {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
@@ -25,18 +29,16 @@ module chgb {
             }
         }
 
-        interface Option extends PluginOption {
-            tb:string;
-        }
-
-        class CHZLBHQKView extends BasePluginView {
+        class ShowView extends framework.basic.ShowPluginView {
+            static ins = new ShowView();
             private mData:Array<string[]>;
             private mAjax:Util.Ajax = new Util.Ajax("chzlbhqk/update.do", false);
             private mDateSelector:Util.DateSelector;
             private mDt: string;
-            
-            public static newInstance():CHZLBHQKView {
-                return new CHZLBHQKView();
+            private mCompType:Util.CompanyType;
+
+            getId():number {
+                return plugin.chzlbhqk;
             }
             pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
                 return "chzlbhqk/export.do?" + Util.Ajax.toUrlParam({
@@ -69,12 +71,20 @@ module chgb {
             }
 
             public init(opt:Option):void {
-                super.init(opt);
-                view.register("存货账龄变化情况", this);
+                framework.router
+					.fromEp(this)
+					.to(framework.basic.endpoint.FRAME_ID)
+					.send(framework.basic.FrameEvent.FE_REGISTER, "存货账龄变化情况");
             }
 
+			private getMonth():number{
+				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                let month = curDate.getMonth() + 1;
+				return month;
+			}
+			
             private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
+                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
                 parent.empty();
@@ -109,7 +119,5 @@ module chgb {
                     }));
             }
         }
-
-        export var pluginView = CHZLBHQKView.newInstance();
     }
 }

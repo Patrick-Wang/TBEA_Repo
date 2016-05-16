@@ -1,10 +1,13 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-/// <reference path="../chgbdef.ts" />
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../chgbdef.ts"/>
 
-declare var echarts;
-declare var view:chgb.FrameView;
+module plugin {
+    export let chnych : number = framework.basic.endpoint.lastId();
+}
 
 module chgb {
     export module chnych {
@@ -24,18 +27,16 @@ module chgb {
             }
         }
 
-        interface Option extends PluginOption {
-            tb:string;
-        }
-
-        class CHNYCHView extends BasePluginView {
+        class ShowView extends framework.basic.ShowPluginView {
+            static ins = new ShowView();
             private mData:Array<string[]>;
             private mAjax:Util.Ajax = new Util.Ajax("chnych/update.do", false);
             private mDateSelector:Util.DateSelector;
             private mDt: string;
-            
-            public static newInstance():CHNYCHView {
-                return new CHNYCHView();
+            private mCompType:Util.CompanyType;
+
+            getId():number {
+                return plugin.chnych;
             }
             pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
                 return "chnych/export.do?" + Util.Ajax.toUrlParam({
@@ -47,8 +48,16 @@ module chgb {
                 return <Option>this.mOpt;
             }
 
+            protected isSupported(compType:Util.CompanyType):boolean {
+                if (compType == Util.CompanyType.TCNY || compType == Util.CompanyType.NDGS){
+                    return true;
+                }
+                return false;
+            }
+
             public pluginUpdate(date:string, cpType:Util.CompanyType):void {
                 this.mDt = date;
+                this.mCompType = cpType;
                 this.mAjax.get({
                         date: date,
                         companyId: cpType
@@ -68,12 +77,20 @@ module chgb {
             }
 
             public init(opt:Option):void {
-                super.init(opt);
-                view.register("能源存货", this);
+                framework.router
+					.fromEp(this)
+					.to(framework.basic.endpoint.FRAME_ID)
+					.send(framework.basic.FrameEvent.FE_REGISTER, "能源存货");
             }
 
+			private getMonth():number{
+				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                let month = curDate.getMonth() + 1;
+				return month;
+			}
+			
             private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
+                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
                 parent.empty();
@@ -100,6 +117,8 @@ module chgb {
                 
                 this.$(name).jqGrid(
                     tableAssist.decorate({
+						datatype: "local",
+						data: tableAssist.getData(data),
                         multiselect: false,
                         drag: false,
                         resize: false,
@@ -108,13 +127,9 @@ module chgb {
                         shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 20,
-                        data: tableAssist.getData(data),
-                        datatype: "local",
                         viewrecords : true
                     }));
             }
         }
-
-        export var pluginView = CHNYCHView.newInstance();
     }
 }

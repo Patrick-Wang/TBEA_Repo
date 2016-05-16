@@ -95,6 +95,7 @@ module cwcpdlml {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
                 tableAssist.mergeRow(0);
+                tableAssist.mergeColum(0);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
@@ -107,7 +108,7 @@ module cwcpdlml {
                         width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
-                        rowNum: 20,
+                        rowNum: 1000,
                         data: tableAssist.getData(this.mData),
                         datatype: "local",
                         viewrecords : true

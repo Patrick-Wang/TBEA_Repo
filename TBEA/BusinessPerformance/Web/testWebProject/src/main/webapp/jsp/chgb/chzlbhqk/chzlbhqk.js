@@ -1,12 +1,18 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-/// <reference path="../chgbdef.ts" />
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../chgbdef.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var plugin;
+(function (plugin) {
+    plugin.chzlbhqk = framework.basic.endpoint.lastId();
+})(plugin || (plugin = {}));
 var chgb;
 (function (chgb) {
     var chzlbhqk;
@@ -29,26 +35,26 @@ var chgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
-        var CHZLBHQKView = (function (_super) {
-            __extends(CHZLBHQKView, _super);
-            function CHZLBHQKView() {
+        })();
+        var ShowView = (function (_super) {
+            __extends(ShowView, _super);
+            function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("chzlbhqk/update.do", false);
             }
-            CHZLBHQKView.newInstance = function () {
-                return new CHZLBHQKView();
+            ShowView.prototype.getId = function () {
+                return plugin.chzlbhqk;
             };
-            CHZLBHQKView.prototype.pluginGetExportUrl = function (date, cpType) {
+            ShowView.prototype.pluginGetExportUrl = function (date, cpType) {
                 return "chzlbhqk/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: cpType
                 });
             };
-            CHZLBHQKView.prototype.option = function () {
+            ShowView.prototype.option = function () {
                 return this.mOpt;
             };
-            CHZLBHQKView.prototype.pluginUpdate = function (date, cpType) {
+            ShowView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjax.get({
@@ -60,18 +66,25 @@ var chgb;
                     _this.refresh();
                 });
             };
-            CHZLBHQKView.prototype.refresh = function () {
+            ShowView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            CHZLBHQKView.prototype.init = function (opt) {
-                _super.prototype.init.call(this, opt);
-                view.register("存货账龄变化情况", this);
+            ShowView.prototype.init = function (opt) {
+                framework.router
+                    .fromEp(this)
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "存货账龄变化情况");
             };
-            CHZLBHQKView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
+            ShowView.prototype.getMonth = function () {
+                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                var month = curDate.getMonth() + 1;
+                return month;
+            };
+            ShowView.prototype.updateTable = function () {
+                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var tableAssist = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
                 parent.empty();
@@ -101,8 +114,8 @@ var chgb;
                     viewrecords: true
                 }));
             };
-            return CHZLBHQKView;
-        }(chgb.BasePluginView));
-        chzlbhqk.pluginView = CHZLBHQKView.newInstance();
+            ShowView.ins = new ShowView();
+            return ShowView;
+        })(framework.basic.ShowPluginView);
     })(chzlbhqk = chgb.chzlbhqk || (chgb.chzlbhqk = {}));
 })(chgb || (chgb = {}));

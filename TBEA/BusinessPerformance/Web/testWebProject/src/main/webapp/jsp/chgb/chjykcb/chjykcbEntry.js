@@ -3,6 +3,17 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../../messageBox.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../chgbdef.ts"/>
+var pluginEntry;
+(function (pluginEntry) {
+    pluginEntry.chjykcb = framework.basic.endpoint.lastId();
+})(pluginEntry || (pluginEntry = {}));
 var chgb;
 (function (chgb) {
     var chjykcbEntry;
@@ -22,22 +33,23 @@ var chgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
-        var ChjykcbEntryView = (function (_super) {
-            __extends(ChjykcbEntryView, _super);
-            function ChjykcbEntryView() {
+        })();
+        var EntryView = (function (_super) {
+            __extends(EntryView, _super);
+            function EntryView() {
                 _super.apply(this, arguments);
                 this.mAjaxUpdate = new Util.Ajax("chjykcb/entry/update.do", false);
                 this.mAjaxSave = new Util.Ajax("chjykcb/entry/save.do", false);
                 this.mAjaxSubmit = new Util.Ajax("chjykcb/entry/submit.do", false);
             }
-            ChjykcbEntryView.newInstance = function () {
-                return new ChjykcbEntryView();
+            EntryView.prototype.getId = function () {
+                return pluginEntry.chjykcb;
             };
-            ChjykcbEntryView.prototype.option = function () {
+            EntryView.prototype.option = function () {
                 return this.mOpt;
             };
-            ChjykcbEntryView.prototype.pluginSave = function (dt, cpType) {
+            EntryView.prototype.pluginSave = function (dt, cpType) {
+                var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -53,14 +65,17 @@ var chgb;
                     data: JSON.stringify(submitData)
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功");
+                        Util.MessageBox.tip("保存 成功", function () {
+                            _this.pluginUpdate(dt, cpType);
+                        });
                     }
                     else {
                         Util.MessageBox.tip(resp.message);
                     }
                 });
             };
-            ChjykcbEntryView.prototype.pluginSubmit = function (dt, cpType) {
+            EntryView.prototype.pluginSubmit = function (dt, cpType) {
+                var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -80,115 +95,77 @@ var chgb;
                     data: JSON.stringify(submitData)
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功");
+                        Util.MessageBox.tip("提交 成功", function () {
+                            _this.pluginUpdate(dt, cpType);
+                        });
                     }
                     else {
                         Util.MessageBox.tip(resp.message);
                     }
                 });
             };
-            ChjykcbEntryView.prototype.pluginUpdate = function (date, cpType) {
+            EntryView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
+                this.mCompType = cpType;
                 this.mAjaxUpdate.get({
                     date: date,
                     companyId: cpType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData.data;
-                    _this.mIsReadOnly = jsonData.readOnly;
                     _this.refresh();
                 });
             };
-            ChjykcbEntryView.prototype.refresh = function () {
-                this.raiseReadOnlyChangeEvent(this.mIsReadOnly);
+            EntryView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            ChjykcbEntryView.prototype.init = function (opt) {
-                _super.prototype.init.call(this, opt);
-                entryView.register("积压库存表", this);
+            EntryView.prototype.init = function (opt) {
+                framework.router
+                    .fromEp(this)
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "积压库存表");
             };
-            ChjykcbEntryView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mIsReadOnly);
+            EntryView.prototype.updateTable = function () {
+                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+                var pagername = name + "pager";
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
+                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                 var data = [];
                 data.push(["积压库存（原值）"].concat(this.mData[0]));
                 data.push(["积压库存（原值）"].concat(this.mData[1]));
                 data.push(["积压库存（原值）"].concat(this.mData[2]));
                 this.mTableAssist.mergeRow(0);
                 this.mTableAssist.mergeTitle();
-                var lastsel = "";
-                var lastcell = "";
                 this.$(name).jqGrid(this.mTableAssist.decorate({
                     datatype: "local",
+                    data: this.mTableAssist.getData(data),
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    assistEditable: true,
+                    //autowidth : false,
                     cellsubmit: 'clientArray',
+                    //editurl: 'clientArray',
                     cellEdit: true,
+                    // height: data.length > 25 ? 550 : '100%',
+                    // width: titles.length * 200,
                     rowNum: 150,
                     height: '100%',
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    data: this.mTableAssist.getData(data),
-                    viewrecords: true,
-                    onSelectCell: function (id, nm, tmp, iRow, iCol) {
-                    },
-                    beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
-                        var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
-                        if (isNaN(ret)) {
-                            $.jgrid.jqModal = {
-                                width: 290,
-                                left: $("#table").offset().left + $("#table").width() / 2 - 290 / 2,
-                                top: $("#table").offset().top + $("#table").height() / 2 - 90
-                            };
-                            return v;
-                        }
-                        else {
-                            return ret;
-                        }
-                    },
-                    beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
-                        lastsel = iRow;
-                        lastcell = iCol;
-                        $("input").attr("disabled", true);
-                    },
-                    afterEditCell: function (rowid, cellname, v, iRow, iCol) {
-                        $("input[type=text]").bind("keydown", function (e) {
-                            if (e.keyCode === 13) {
-                                setTimeout(function () {
-                                    $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
-                                }, 10);
-                            }
-                        });
-                    },
-                    afterSaveCell: function () {
-                        $("input").attr("disabled", false);
-                        lastsel = "";
-                    },
-                    afterRestoreCell: function () {
-                        $("input").attr("disabled", false);
-                        lastsel = "";
-                    }
+                    //pager: '#' + pagername,
+                    viewrecords: true
                 }));
-                $('html').bind('click', function (e) {
-                    if (lastsel != "") {
-                        if ($(e.target).closest("#" + name).length == 0) {
-                            $("#" + name).jqGrid("saveCell", lastsel, lastcell);
-                            lastsel = "";
-                        }
-                    }
-                });
             };
-            return ChjykcbEntryView;
-        }(chgb.BaseEntryPluginView));
-        chjykcbEntry.pluginView = ChjykcbEntryView.newInstance();
+            EntryView.ins = new EntryView();
+            return EntryView;
+        })(framework.basic.EntryPluginView);
     })(chjykcbEntry = chgb.chjykcbEntry || (chgb.chjykcbEntry = {}));
 })(chgb || (chgb = {}));

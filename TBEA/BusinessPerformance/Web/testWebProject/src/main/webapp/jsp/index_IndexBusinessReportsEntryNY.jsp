@@ -16,11 +16,8 @@
 				<li><a href="../cbfx/entry.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>成本分析录入</strong></span></a>
 				</li>
-				<li><a href="../nyzbscxl/entry.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>能源-周边市场销量录入</strong></span></a>
-				</li>
-				<li><a href="../nyzbscjg/entry.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>能源-周边市场价格录入</strong></span></a>
+				<li><a href="../nyzbscqk/entry.do" target="_blank"><img
+						src="../images/charts/bar1.png"> <span><strong>能源-周边市场情况录入</strong></span></a>
 				</li>
 			</ul>
 		</div>

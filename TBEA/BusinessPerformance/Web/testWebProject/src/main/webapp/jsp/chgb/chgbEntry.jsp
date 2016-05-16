@@ -11,7 +11,6 @@
 <!-- jquery -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
 
-
 <!-- jquery ui blue --> 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
@@ -43,23 +42,20 @@
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
 
 <!-- jqgrid assist -->
+<script src="${pageContext.request.contextPath}/jsp/jqgrid/vector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/jqassist.js" type="text/javascript"></script>
 
+
 <script src="${pageContext.request.contextPath}/jsp/json2.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/jqgrid/vector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/chgb/chgbdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/chgb/chgbEntry.js" type="text/javascript"></script>
 
 <!-- message box -->
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
 
-
+<%@include file="../framework/basic/basicEntry.jsp"%>
+<script src="${pageContext.request.contextPath}/jsp/chgb/chgbdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/chgb/chgbEntry.js" type="text/javascript"></script>
 <title>存货管报</title>
 
 <style type="text/css">
@@ -147,7 +143,7 @@ body {
 	margin-top: 10px;
 	margin-left: 90px;
 	border: 0;
-	background-color: #5cb85c;
+	background-color: #5cb85c; 
 }
 
 th.ui-th-column div {
@@ -166,9 +162,8 @@ th.ui-th-ltr {
 	text-align: left;
 	font-size: 12px;
 }
-
 </style>
-</head>
+</head> 
 <body>
 	<div class="header">
 		<h1 id="headertitle">存货管报</h1>
@@ -181,11 +176,11 @@ th.ui-th-ltr {
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
-				onclick="entryView.updateUI()" />
+				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
 		</tr> 
 		<tr>
-			<td>
+			<td id="plugin">
 				<%@include file="chjykcb/chjykcbEntry.jsp"%>
 				<%@include file="chzlbhqk/chzlbhqkEntry.jsp"%>
 				<%@include file="chxzqk/chxzqkEntry.jsp"%>
@@ -194,38 +189,24 @@ th.ui-th-ltr {
 		<tr>
 			<td>
 				<input id="gbsv" type="button" value="保存" style="float: right; width: 80px; margin-left: 10px;"
-					   onclick="entryView.save()" />
+					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SAVE)" />
 				<input id="gbsm" type="button" value="提交" style="float: right; width: 80px; margin-left: 10px;"
-					   onclick="entryView.submit()" />
+					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)" />
 			</td>
 		</tr>
 	</Table>
 	<script type="text/javascript">
-    $(document).ready(function () {
-    	entryView.init({
-            type: "type",
-			comp:"compid", 
-            dt: "dt",
-			comps : JSON.parse('${nodeData}'),
-            date: {
-                month: ${month},
-                year: ${year}
-            }
-        });
-    	(function () {
-            $("#type select")
-                    .multiselect({
-                        multiple: false,
-                        header: false,
-                        minWidth: 250, 
-                        height: '100%', 
-                        // noneSelectedText: "请选择月份",
-                        selectedList: 1
-                    })
-                    .css("padding", "2px 0 2px 4px")
-                    .css("text-align", "left")
-                    .css("font-size", "12px");
-        }());
+	    $(document).ready(function () {
+			framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+				type: "type",
+				dt: "dt",
+				comp:"compid",
+				comps : JSON.parse('${nodeData}'),
+				date: {
+					month: "${month}".length == 0 ? undefined : parseInt("${month}"),
+					year: ${year}
+				}
+			});
         $(document.body).css("visibility", "visible");
     });
 </script>
@@ -233,7 +214,7 @@ th.ui-th-ltr {
 	<script src="${pageContext.request.contextPath}/jsp/style_button.js"></script>
 	<script src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 	<%@include file="../components/loading.jsp"%>
-</body>
+</body> 
 
 
 </html>

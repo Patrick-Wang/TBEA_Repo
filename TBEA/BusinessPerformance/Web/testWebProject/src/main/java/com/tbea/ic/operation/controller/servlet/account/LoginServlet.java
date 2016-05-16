@@ -89,7 +89,7 @@ public class LoginServlet {
 		return new ModelAndView("login");
 	}
 
-	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
+	@RequestMapping(value = "exit.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] logout(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		HttpSession session = request.getSession(false);

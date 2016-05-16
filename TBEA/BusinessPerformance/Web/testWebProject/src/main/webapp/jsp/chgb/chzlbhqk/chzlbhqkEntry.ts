@@ -1,16 +1,21 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-/// <reference path="../chgbdef.ts" />
-///<reference path="../../messageBox.ts"/>
-///<reference path="../chgbEntry.ts"/>
+/// <reference path="../../messageBox.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../chgbdef.ts"/>
+declare var $:any;
 
-declare var echarts;
-declare var entryView:chgb.EntryView;
+
+module pluginEntry {
+    export let chzlbhqk : number = framework.basic.endpoint.lastId();
+}
 
 module chgb {
     export module chzlbhqkEntry {
         import TextAlign = JQTable.TextAlign;
+        import Node = JQTable.Node;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly : boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
@@ -25,22 +30,21 @@ module chgb {
             }
         }
 
-        interface Option extends PluginOption {
+        interface Option extends framework.basic.PluginOption {
             tb:string;
         }
 
-        class ChzlbhqkEntryView extends BaseEntryPluginView {
-
+        class EntryView extends framework.basic.EntryPluginView {
+            static ins = new EntryView();
             private mData:Array<string[]>;
             private mAjaxUpdate:Util.Ajax = new Util.Ajax("chzlbhqk/entry/update.do", false);
             private mAjaxSave:Util.Ajax = new Util.Ajax("chzlbhqk/entry/save.do", false);
             private mAjaxSubmit:Util.Ajax = new Util.Ajax("chzlbhqk/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
-            private mIsReadOnly:boolean;
-
-            public static newInstance():ChzlbhqkEntryView {
-                return new ChzlbhqkEntryView();
+            private mCompType:Util.CompanyType;
+            getId():number {
+                return pluginEntry.chzlbhqk;
             }
 
             private option():Option {
@@ -63,7 +67,9 @@ module chgb {
                     data: JSON.stringify(submitData)
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功");
+                        Util.MessageBox.tip("保存 成功", ()=>{
+                            this.pluginUpdate(dt, cpType);
+                        });
                     } else {
                         Util.MessageBox.tip(resp.message);
                     }
@@ -90,7 +96,9 @@ module chgb {
                     data: JSON.stringify(submitData)
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功");
+                        Util.MessageBox.tip("提交 成功", ()=>{
+                            this.pluginUpdate(dt, cpType);
+                        });
                     } else {
                         Util.MessageBox.tip(resp.message);
                     }
@@ -103,15 +111,13 @@ module chgb {
                         date: date,
                         companyId: cpType
                     })
-                    .then((jsonData: StatusData) => {
+                    .then((jsonData: any) => {
                         this.mData = jsonData.data;
-                        this.mIsReadOnly = jsonData.readOnly;
                         this.refresh();
                     });
             }
 
             public refresh():void {
-                this.raiseReadOnlyChangeEvent(this.mIsReadOnly);
                 if (this.mData == undefined) {
                     return;
                 }
@@ -119,14 +125,18 @@ module chgb {
                 this.updateTable();
             }
 
-            public init(opt:Option):void {
-                super.init(opt);
-                entryView.register("存货账龄变化情况", this);
+            protected init(opt:Option):void {
+                framework.router
+					.fromEp(this)
+					.to(framework.basic.endpoint.FRAME_ID)
+					.send(framework.basic.FrameEvent.FE_REGISTER, "存货账龄变化情况");
             }
 
             private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mIsReadOnly);
+                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+                var pagername = name + "pager";
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
@@ -140,8 +150,6 @@ module chgb {
                     }
                 }
 
-                let lastsel = "";
-                let lastcell = "";
 
                 this.$(name).jqGrid(
                     this.mTableAssist.decorate({
@@ -149,6 +157,7 @@ module chgb {
                         multiselect: false,
                         drag: false,
                         resize: false,
+                        assistEditable:true,
                         //autowidth : false,
                         cellsubmit: 'clientArray',
                         cellEdit: true,
@@ -160,74 +169,10 @@ module chgb {
                         shrinkToFit: true,
                         autoScroll: true,
                         data: this.mTableAssist.getData([[ny].concat(this.mData[0])]),
-                        viewrecords: true,
-
-                        onSelectCell: (id, nm, tmp, iRow, iCol) => {
-                            //                       console.log(iRow +', ' + iCol);
-                        },
-
-                        //                    onCellSelect: (ri,ci,tdHtml,e) =>{
-                        //                       console.log(ri +', ' + ci);
-                        //                    },
-                        beforeSaveCell: (rowid, cellname, v, iRow, iCol) => {
-                            var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
-                            if (isNaN(ret)) {
-                                $.jgrid.jqModal = {
-                                    width: 290,
-                                    left: this.$(name).offset().left + this.$(name).width() / 2 - 290 / 2,
-                                    top: this.$(name).offset().top + this.$(name).height() / 2 - 90
-                                };
-                                return v;
-                            } else {
-                                return ret;
-                            }
-                        },
-                        beforeEditCell: (rowid, cellname, v, iRow, iCol) => {
-                            lastsel = iRow;
-                            lastcell = iCol;
-                            //                        console.log(iRow +', ' + iCol);
-                            $("input").attr("disabled", true);
-                        },
-
-                        afterEditCell: (rowid, cellname, v, iRow, iCol) => {
-                            $("input[type=text]").bind("keydown", function(e) {
-                                if (e.keyCode === 13) {
-                                    setTimeout(function() {
-                                        $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
-                                    }, 10);
-                                }
-                            });
-                        },
-
-                        afterSaveCell: () => {
-                            $("input").attr("disabled", false);
-                            lastsel = "";
-                        },
-
-                        afterRestoreCell: () => {
-                            $("input").attr("disabled", false);
-
-                            lastsel = "";
-                        }
-                        //                    ,
-                        //                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
-                        //                        lastsel = "";
-                        //                        lastcell = "";
-                        //                    }
+                        viewrecords: true
                     }));
-                $('html').bind('click', (e) => { //用于点击其他地方保存正在编辑状态下的行
-                    if (lastsel != "") { //if a row is selected for edit
-                        if ($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row
-                            //  $("#" + name).jqGrid('saveRow', lastsel);
-                            $("#" + name).jqGrid("saveCell", lastsel, lastcell);
-                            //$("#" + name).resetSelection();
-                            lastsel = "";
-                        }
-                    }
-                });
+
             }
         }
-
-        export var pluginView = ChzlbhqkEntryView.newInstance();
     }
 }

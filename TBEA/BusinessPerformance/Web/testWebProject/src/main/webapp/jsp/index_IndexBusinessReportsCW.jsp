@@ -16,7 +16,7 @@
 				<li><a href="../cwyjsf/show.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>财务-应交税费</strong></span></a>
 				</li>
-				<li><a href="../cwcpdlmlb/show.do" target="_blank"><img
+				<li><a href="../cwcpdlml/show.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>财务-产品大类毛利表</strong></span></a>
 				</li>
 				<li><a href="../cwgbjyxxjl/show.do" target="_blank"><img
