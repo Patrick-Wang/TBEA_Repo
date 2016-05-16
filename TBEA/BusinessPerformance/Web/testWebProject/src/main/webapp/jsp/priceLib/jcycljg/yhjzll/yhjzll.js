@@ -1,3 +1,7 @@
+/// <reference path="../../../jqgrid/jqassist.ts" />
+/// <reference path="../../../util.ts" />
+/// <reference path="../../../dateSelector.ts" />
+/// <reference path="../jcycljgdef.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -24,7 +28,7 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var YhjzllView = (function (_super) {
             __extends(YhjzllView, _super);
             function YhjzllView() {
@@ -61,7 +65,7 @@ var jcycljg;
                 view.register("银行基准利率", this);
             };
             YhjzllView.prototype.getDateType = function () {
-                return jcycljg.DateType.DAY;
+                return jcycljg.DateType.YEAR;
             };
             YhjzllView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
@@ -85,7 +89,7 @@ var jcycljg;
                 }));
             };
             return YhjzllView;
-        }(jcycljg.BasePluginView));
+        })(jcycljg.BasePluginView);
         yhjzll.pluginView = YhjzllView.newInstance();
     })(yhjzll = jcycljg.yhjzll || (jcycljg.yhjzll = {}));
 })(jcycljg || (jcycljg = {}));

@@ -6,6 +6,7 @@ var jcycljg;
     (function (DateType) {
         DateType[DateType["DAY"] = 0] = "DAY";
         DateType[DateType["MONTH"] = 1] = "MONTH";
+        DateType[DateType["YEAR"] = 2] = "YEAR";
     })(jcycljg.DateType || (jcycljg.DateType = {}));
     var DateType = jcycljg.DateType;
     (function (ContentType) {

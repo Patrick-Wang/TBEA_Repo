@@ -54,8 +54,14 @@ var jcycljg;
             this.mItemSelector.change(function (sel, depth) {
                 if (_this.plugin(_this.getActiveNode()).getDateType() == jcycljg.DateType.MONTH) {
                     $("#" + _this.mOpt.dte).show();
+                    $("#" + _this.mOpt.dts).show();
+                }
+                else if (_this.plugin(_this.getActiveNode()).getDateType() == jcycljg.DateType.YEAR) {
+                    $("#" + _this.mOpt.dts).hide();
+                    $("#" + _this.mOpt.dte).hide();
                 }
                 else {
+                    $("#" + _this.mOpt.dts).show();
                     $("#" + _this.mOpt.dte).hide();
                 }
             });

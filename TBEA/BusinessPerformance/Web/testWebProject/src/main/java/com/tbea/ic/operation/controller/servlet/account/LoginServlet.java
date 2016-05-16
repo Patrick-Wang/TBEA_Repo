@@ -32,32 +32,53 @@ import com.tbea.ic.operation.service.login.LoginService;
 @RequestMapping(value = "Login")
 public class LoginServlet {
 
+	class Logic{
+		boolean ret = false;
+		
+		
+		public Logic(boolean ret) {
+			super();
+			this.ret = ret;
+		}
+		public boolean or(boolean val){
+			ret = ret || val;
+			return val;
+		}
+		public boolean and(boolean val){
+			ret = ret && val;
+			return val;
+		}
+		public boolean result(){
+			return ret;
+		}
+	}
+	
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
 	// private String view = "index";
 	// private static Logger logger = Logger.getLogger(LoginServlet.class);
 	@Autowired
-	private EntryService entryService;
+	private EntryService entryServ;
 
 	@Autowired
-	private ApproveService approveService;
+	private ApproveService approveServ;
 
 	@Autowired
-	private LoginService loginService;
+	private LoginService loginServ;
 
 	@Autowired
-	private DailyReportService dailyReportService;
+	private DailyReportService drServ;
 
 	@Autowired
-	ExtendAuthorityService extendAuthService;
+	ExtendAuthorityService extAuthServ;
 
 	@RequestMapping(value = "ssoLogin.do")
 	public ModelAndView ssoLogin(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		String userName = request.getHeader("SSO_USER");
-		Account account = loginService.SSOLogin(userName);
+		Account account = loginServ.SSOLogin(userName);
 
 		if (null != account) {
 			setAuthority(request.getSession(), account);
@@ -89,7 +110,7 @@ public class LoginServlet {
 		return new ModelAndView("login");
 	}
 
-	@RequestMapping(value = "exit.do", method = RequestMethod.GET)
+	@RequestMapping(value = "exitSystem.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] logout(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		HttpSession session = request.getSession(false);
@@ -114,59 +135,52 @@ public class LoginServlet {
 		SessionManager.setAccount(session, account);
 		SessionManager.setAcl(session, acl);
 		
-		acl.add("entryPlan", entryService.hasEntryPlanPermission(account))
-		.add("entryPredict", entryService.hasEntryPredictPermission(account))
-		.add("approvePlan", approveService.hasApprovePlanPermission(account))
-		.add("approvePredict", approveService.hasApprovePredictPermission(account))
-		.add("CorpAuth", loginService.hasCorpAuth(account))
-		.add("SbdAuth", loginService.hasSbdAuth(account))
-		.add("MarketAuth", entryService.hasMarketPermission(account))
-		.add("isJydw", dailyReportService.hasYszkAuthority(account))
-		.add("JYAnalysisEntry", dailyReportService.hasJYAnalysisEntryAuthority(account))
-		.add("JYAnalysisSummary", dailyReportService.hasJYAnalysisLookupAuthority(account))
-		.add("YSZKDialyLookup", dailyReportService.hasYSZKDialyLookupAuthority(account))
-		.add("XJLDialyLookup", dailyReportService.hasXJLDialyLookupAuthority(account))
-		.add("JYAnalysisLookup", dailyReportService.hasJYAnalysisLookupAuthority(account)
-								|| dailyReportService.hasYSZKDialyLookupAuthority(account))
-		.add("JYEntryLookup", dailyReportService.hasJYEntryLookupAuthority(account))
-		.add("PriceLibAuth", extendAuthService.hasAuthority(account, AuthType.PriceLib));
-
-
-		boolean hasGbLookupAuthority = false;
-				
-		boolean hasAuthority = extendAuthService.hasAuthority(account, AuthType.ChgbLookup);
-		hasGbLookupAuthority = hasGbLookupAuthority || hasAuthority;
-		acl.add("ChgbLookup", hasAuthority);
-		hasAuthority = extendAuthService.hasAuthority(account, AuthType.YszkgbLookup);
-		hasGbLookupAuthority = hasGbLookupAuthority || hasAuthority;
-		acl.add("YszkgbLookup", hasAuthority);
-		hasAuthority = extendAuthService.hasAuthority(account, AuthType.WlyddLookup);
-		hasGbLookupAuthority = hasGbLookupAuthority || hasAuthority;
-		acl.add("WlyddLookup", hasAuthority);
-
-		boolean hasGbEntryAuthority = false;
-		
-		hasAuthority = extendAuthService.hasAuthority(account, AuthType.ChgbEntry);
-		hasGbEntryAuthority = hasGbEntryAuthority || hasAuthority;
-		acl.add("ChgbEntry", hasAuthority);
-		hasAuthority = extendAuthService.hasAuthority(account, AuthType.YszkgbEntry);
-		hasGbEntryAuthority = hasGbEntryAuthority || hasAuthority;
-		acl.add("YszkgbEntry", hasAuthority);
-		hasAuthority = extendAuthService.hasAuthority(account,	AuthType.WlyddEntry);
-		hasGbEntryAuthority = hasGbEntryAuthority || hasAuthority;
-		acl.add("WlyddEntry", hasAuthority);
-		
-		acl.add("GbLookup", hasGbLookupAuthority)
-			.add("GbEntry", hasGbEntryAuthority)
-			.add("isByq", account.getId() == 9 || account.getId() == 25 || account.getId() == 33)
-			.add("isXl", account.getId() == 43 || account.getId() == 50 || account.getId() == 61)
-			.add("isSbdcy",	account.getId() == 8 || account.getId() == 6
+		Logic lookup = new Logic(false);
+		Logic entry = new Logic(false);
+		Logic comGbLookup = new Logic(false);
+		Logic comGbEntry = new Logic(false);
+		acl
+		.add("entryPlan", entryServ.hasEntryPlanPermission(account))
+		.add("entryPredict", entryServ.hasEntryPredictPermission(account))
+		.add("approvePlan", approveServ.hasApprovePlanPermission(account))
+		.add("approvePredict", approveServ.hasApprovePredictPermission(account))
+		.add("CorpAuth", loginServ.hasCorpAuth(account))
+		.add("SbdAuth", loginServ.hasSbdAuth(account))
+		.add("MarketAuth", entryServ.hasMarketPermission(account))
+		.add("isJydw", drServ.hasYszkAuthority(account))
+		.add("JYAnalysisEntry", drServ.hasJYAnalysisEntryAuthority(account))
+		.add("JYAnalysisSummary", drServ.hasJYAnalysisLookupAuthority(account))
+		.add("YSZKDialyLookup", drServ.hasYSZKDialyLookupAuthority(account))
+		.add("XJLDialyLookup", drServ.hasXJLDialyLookupAuthority(account))
+		.add("JYAnalysisLookup", drServ.hasJYAnalysisLookupAuthority(account)
+								|| drServ.hasYSZKDialyLookupAuthority(account))
+		.add("JYEntryLookup", drServ.hasJYEntryLookupAuthority(account))
+		.add("PriceLibAuth", extAuthServ.hasAuthority(account, AuthType.PriceLib))
+		.add("ChgbLookup", comGbLookup.or(lookup.or(extAuthServ.hasAuthority(account, AuthType.ChgbLookup))))
+		.add("YszkgbLookup", comGbLookup.or(lookup.or(extAuthServ.hasAuthority(account, AuthType.YszkgbLookup))))
+		.add("SbdgbLookup", lookup.or(extAuthServ.hasAuthority(account, AuthType.SbdgbLookup)))
+		.add("XnygbLookup", lookup.or(extAuthServ.hasAuthority(account, AuthType.XnygbLookup)))
+		.add("NygbLookup", lookup.or(extAuthServ.hasAuthority(account, AuthType.NygbLookup)))
+		.add("SbdgbLookup", lookup.or(extAuthServ.hasAuthority(account, AuthType.SbdgbLookup)))
+		.add("ChgbEntry", comGbEntry.or(entry.or(extAuthServ.hasAuthority(account, AuthType.ChgbEntry))))
+		.add("YszkgbEntry", comGbEntry.or(entry.or(extAuthServ.hasAuthority(account, AuthType.YszkgbEntry))))
+		.add("SbdgbEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.SbdgbEntry)))
+		.add("XnygbEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.XnygbEntry)))
+		.add("NygbEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.NygbEntry)))
+		.add("GbLookup", lookup.result())
+		.add("GbEntry", entry.result())
+		.add("ComGbLookup", comGbLookup.result())
+		.add("ComGbEntry", comGbEntry.result())
+		.add("GbEntry", entry.result())
+		.add("isByq", account.getId() == 9 || account.getId() == 25 || account.getId() == 33)
+		.add("isXl", account.getId() == 43 || account.getId() == 50 || account.getId() == 61)
+		.add("isSbdcy",	account.getId() == 8 || account.getId() == 6
 						|| account.getId() == 147 || account.getId() == 119
 						|| account.getId() == 146)
-			.add("zhAuth", Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName()))
-			.add("notSbqgb", !Account.KNOWN_ACCOUNT_QGB.equals(account.getName()))
-			.add("admin", Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName()))
-			.add("debug", false);
+		.add("zhAuth", Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName()))
+		.add("notSbqgb", !Account.KNOWN_ACCOUNT_QGB.equals(account.getName()))
+		.add("admin", Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName()))
+		.add("debug", false);
 		
 		if (Account.KNOWN_ACCOUNT_AFL.equals(account.getName())){
 			acl.openAll();
@@ -180,7 +194,7 @@ public class LoginServlet {
 			@RequestParam(value = "j_username") String j_username,
 			@RequestParam(value = "j_password") String j_password) {
 
-		Account account = loginService.Login(j_username, j_password);
+		Account account = loginServ.Login(j_username, j_password);
 		if (null != account) {
 
 			HttpSession currentSession = request.getSession(false);

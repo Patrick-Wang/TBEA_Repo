@@ -15,12 +15,12 @@
 			<ul class="slides">
 			<c:if test="${YszkgbEntry}">
 				<li><a href="../yszkgb/entry.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>应收账款管报录入</strong></span></a>
+						src="../images/charts/bar4.png"> <span><strong>应收账款管报录入</strong></span></a>
 				</li>
 				</c:if>
 				<c:if test="${ChgbEntry}">
 				<li><a href="../chgb/entry.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>存货管报录入</strong></span></a>
+						src="../images/charts/bar9.png"> <span><strong>存货管报录入</strong></span></a>
 				</li>
 				</c:if>
 			</ul>

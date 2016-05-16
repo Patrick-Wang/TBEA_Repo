@@ -36,7 +36,7 @@ public class WlyddServlet {
 		dateSel.select(map);
 		List<Company> comps = extendAuthService.getAuthedCompanies(
 				SessionManager.getAccount(request.getSession()),
-				AuthType.WlyddLookup);
+				AuthType.SbdgbLookup);
 
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
@@ -52,7 +52,7 @@ public class WlyddServlet {
 		dateSel.select(map);
 		List<Company> comps = extendAuthService.getAuthedCompanies(
 				SessionManager.getAccount(request.getSession()),
-				AuthType.WlyddEntry);
+				AuthType.SbdgbEntry);
 
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);

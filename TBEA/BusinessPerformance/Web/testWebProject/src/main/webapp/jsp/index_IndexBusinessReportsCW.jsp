@@ -14,13 +14,13 @@
 		<div class="thumb3">
 			<ul class="slides">
 				<li><a href="../cwyjsf/show.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>财务-应交税费</strong></span></a>
+						src="../images/charts/bar5.png"> <span><strong>财务-应交税费</strong></span></a>
 				</li>
 				<li><a href="../cwcpdlml/show.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>财务-产品大类毛利表</strong></span></a>
+						src="../images/charts/bar8.png"> <span><strong>财务-产品大类毛利表</strong></span></a>
 				</li>
 				<li><a href="../cwgbjyxxjl/show.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>财务-经营性现金流</strong></span></a>
+						src="../images/charts/bar4.png"> <span><strong>财务-经营性现金流</strong></span></a>
 				</li>
 				
 			</ul>

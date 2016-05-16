@@ -71,7 +71,7 @@ module jcycljg {
             }
 
             public  getDateType():DateType {
-                return DateType.DAY;
+                return DateType.YEAR;
             }
 
             private updateTable():void {

@@ -15,12 +15,12 @@
 			<ul class="slides">
 				<c:if test="${YszkgbLookup}">
 				<li><a href="../yszkgb/show.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>应收账款管报汇总</strong></span></a>
+						src="../images/charts/bar10.png"> <span><strong>应收账款管报汇总</strong></span></a>
 				</li>
 				</c:if>
 				<c:if test="${ChgbLookup}">
 				<li><a href="../chgb/show.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>存货管报汇总</strong></span></a>
+						src="../images/charts/bar4.png"> <span><strong>存货管报汇总</strong></span></a>
 				</li>
 				</c:if>
 			</ul>

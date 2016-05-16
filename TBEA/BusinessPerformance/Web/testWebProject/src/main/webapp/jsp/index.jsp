@@ -131,23 +131,31 @@
 									style="color: rgb(62, 152, 197);">价格库</a></li>
 								</c:if>
 								<c:if test="${GbLookup}">
-								<li style="background-color: transparent;"><i
-									class="ec-icon ec-icon-line"></i> <a href="#commonjygb"
-									style="color: rgb(62, 152, 197);">通用经营管报</a></li>
-								<li style="background-color: transparent;"><i
-									class="ec-icon ec-icon-line"></i> <a href="#sbdcyjygb"
-									style="color: rgb(62, 152, 197);">输变电经营管报</a></li>
-								<li style="background-color: transparent;"><i
-									class="ec-icon ec-icon-line"></i> <a href="#nycyjybb"
-									style="color: rgb(62, 152, 197);">能源产业经营报表</a></li>
-								<li style="background-color: transparent;"><i
-									class="ec-icon ec-icon-line"></i> <a href="#xnycyjybb"
-									style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
-								</c:if>
-								<c:if test="${debug}">
-								<li style="background-color: transparent;"><i
-									class="ec-icon ec-icon-line"></i> <a href="#cwbb"
-									style="color: rgb(62, 152, 197);">财务报表</a></li>
+									<c:if test="${ComGbLookup}">
+										<li style="background-color: transparent;"><i
+											class="ec-icon ec-icon-line"></i> <a href="#commonjygb"
+											style="color: rgb(62, 152, 197);">通用经营管报</a></li>
+									</c:if>
+									<c:if test="${SbdgbLookup}">
+										<li style="background-color: transparent;"><i
+											class="ec-icon ec-icon-line"></i> <a href="#sbdcyjygb"
+											style="color: rgb(62, 152, 197);">输变电经营管报</a></li>
+									</c:if>
+									<c:if test="${NygbLookup}">
+										<li style="background-color: transparent;"><i
+											class="ec-icon ec-icon-line"></i> <a href="#nycyjybb"
+											style="color: rgb(62, 152, 197);">能源产业经营报表</a></li>
+									</c:if>
+									<c:if test="${XnygbLookup}">
+										<li style="background-color: transparent;"><i
+											class="ec-icon ec-icon-line"></i> <a href="#xnycyjybb"
+											style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
+									</c:if>
+									<c:if test="${debug}">
+										<li style="background-color: transparent;"><i
+											class="ec-icon ec-icon-line"></i> <a href="#cwbb"
+											style="color: rgb(62, 152, 197);">财务报表</a></li>
+									</c:if>
 								</c:if>
 							</ul>
 							<ul id="navlist1" style="padding: 10px 0; display: none">
@@ -199,23 +207,31 @@
 							</ul>
 							
 							<ul id="navlistBusinessReportsInput" style="padding: 10px 0; width: 180px; display: none">
-							<c:if test="${GbEntry}">
-							<li style="background-color: transparent;"><i
-									class="ec-icon ec-icon-line"></i> <a href="#commonEntry"
-									style="color: rgb(62, 152, 197);">通用经营管报录入</a></li>
-								<li style="background-color: transparent;"><i
-									class="ec-icon ec-icon-line"></i> <a href="#sbdcyjygbEntry"
-									style="color: rgb(62, 152, 197);">输变电产业 经营管报录入</a></li>
-								<li style="background-color: transparent;"><i
-									class="ec-icon ec-icon-line"></i> <a href="#nycyjybbEntry"
-									style="color: rgb(62, 152, 197);">能源产业经营报表</a></li>
-								<li style="background-color: transparent;"><i
-									class="ec-icon ec-icon-line"></i> <a href="#xnycyjybbEntry"
-									style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
+								<c:if test="${GbEntry}">
+									<c:if test="${ComGbEntry}">
+										<li style="background-color: transparent;"><i
+											class="ec-icon ec-icon-line"></i> <a href="#commonEntry"
+											style="color: rgb(62, 152, 197);">通用经营管报录入</a></li>
+									</c:if>
+									<c:if test="${SbdgbEntry}">
+										<li style="background-color: transparent;"><i
+											class="ec-icon ec-icon-line"></i> <a href="#sbdcyjygbEntry"
+											style="color: rgb(62, 152, 197);">输变电经营管报录入</a></li>
+									</c:if>
+									<c:if test="${NygbEntry}">
+										<li style="background-color: transparent;"><i
+											class="ec-icon ec-icon-line"></i> <a href="#nycyjybbEntry"
+											style="color: rgb(62, 152, 197);">能源产业经营报表</a></li>
+									</c:if>
+									<c:if test="${XnygbEntry}">
+										<li style="background-color: transparent;"><i
+											class="ec-icon ec-icon-line"></i> <a href="#xnycyjybbEntry"
+											style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
+									</c:if>
 									<c:if test="${debug}">
-								<li style="background-color: transparent;"><i
-									class="ec-icon ec-icon-line"></i> <a href="#cwbbEntry"
-									style="color: rgb(62, 152, 197);">财务报表</a></li>
+										<li style="background-color: transparent;"><i
+											class="ec-icon ec-icon-line"></i> <a href="#cwbbEntry"
+											style="color: rgb(62, 152, 197);">财务报表</a></li>
 									</c:if>
 								</c:if>
 							</ul>
@@ -234,42 +250,59 @@
 					<%@include file="index_market.jsp"%>
 				</div> 
 			</c:when>
-			<c:otherwise>
-				<div id="IndexSummary" class="col-md-10">
-					<%@include file="index_IndexSummary.jsp"%>
-					<c:if test="${PriceLibAuth}">
-					<%@include file="index_IndexPriceLib.jsp"%>
-					</c:if>
-					<c:if test="${GbLookup}">
-					<%@include file="index_IndexBusinessReportsGBCommon.jsp"%>
-					<%@include file="index_IndexBusinessReportsSBD.jsp"%>				
-					<%@include file="index_IndexBusinessReportsNY.jsp"%>
-					<%@include file="index_IndexBusinessReportsXNY.jsp"%>
-					</c:if>
-					<c:if test="${debug}">
-					<%@include file="index_IndexBusinessReportsCW.jsp"%>
-					</c:if>
-				</div>
-				<div id="InputList" class="col-md-10" style="display: none">
-					<%@include file="index_InputList.jsp"%>
-				</div>
-	
-				<div id="approveList" class="col-md-10" style="display: none">
-					<%@include file="index_approveList.jsp"%>
-				</div>
-				
-				<div id="BusinessReportsInput" class="col-md-10" style="display: none">
-				<c:if test="${GbEntry}">
-					<%@include file="index_IndexBusinessReportsEntryGBCommon.jsp"%>
-					<%@include file="index_IndexBusinessReportsEntrySBD.jsp"%>
-					<%@include file="index_IndexBusinessReportsEntryNY.jsp"%>
-					<%@include file="index_IndexBusinessReportsEntryXNY.jsp"%>
-					</c:if>
-					<c:if test="${debug}">
-					<%@include file="index_IndexBusinessReportsEntryCW.jsp"%>
-					</c:if>
-				</div>
-			</c:otherwise>
+				<c:otherwise>
+					<div id="IndexSummary" class="col-md-10">
+						<%@include file="index_IndexSummary.jsp"%>
+						<c:if test="${PriceLibAuth}">
+							<%@include file="index_IndexPriceLib.jsp"%>
+						</c:if>
+						<c:if test="${GbLookup}">
+							<c:if test="${ComGbLookup}">
+								<%@include file="index_IndexBusinessReportsGBCommon.jsp"%>
+							</c:if>
+							<c:if test="${SbdgbLookup}">
+								<%@include file="index_IndexBusinessReportsSBD.jsp"%>
+							</c:if>
+							<c:if test="${NygbLookup}">
+								<%@include file="index_IndexBusinessReportsNY.jsp"%>
+							</c:if>
+							<c:if test="${XnygbLookup}">
+								<%@include file="index_IndexBusinessReportsXNY.jsp"%>
+							</c:if>
+							<c:if test="${debug}">
+								<%@include file="index_IndexBusinessReportsCW.jsp"%>
+							</c:if>
+						</c:if>
+					</div>
+					<div id="InputList" class="col-md-10" style="display: none">
+						<%@include file="index_InputList.jsp"%>
+					</div>
+
+					<div id="approveList" class="col-md-10" style="display: none">
+						<%@include file="index_approveList.jsp"%>
+					</div>
+
+					<div id="BusinessReportsInput" class="col-md-10"
+						style="display: none">
+						<c:if test="${GbEntry}">
+							<c:if test="${ComGbEntry}">
+								<%@include file="index_IndexBusinessReportsEntryGBCommon.jsp"%>
+							</c:if>
+							<c:if test="${SbdgbEntry}">
+								<%@include file="index_IndexBusinessReportsEntrySBD.jsp"%>
+							</c:if>
+							<c:if test="${NygbEntry}">
+								<%@include file="index_IndexBusinessReportsEntryNY.jsp"%>
+							</c:if>
+							<c:if test="${XnygbEntry}">
+								<%@include file="index_IndexBusinessReportsEntryXNY.jsp"%>
+							</c:if>
+							<c:if test="${debug}">
+								<%@include file="index_IndexBusinessReportsEntryCW.jsp"%>
+							</c:if>
+						</c:if>
+					</div>
+				</c:otherwise>
 			</c:choose>
 			
 
@@ -290,7 +323,7 @@
 	<script type="text/javascript">
 	
 	function logout(){
-		var logoutAjax = new Util.Ajax("exit.do");
+		var logoutAjax = new Util.Ajax("exitSystem.do");
 		logoutAjax.get().then(function onSuccess(){
 			
 		}, function onFailed(){
