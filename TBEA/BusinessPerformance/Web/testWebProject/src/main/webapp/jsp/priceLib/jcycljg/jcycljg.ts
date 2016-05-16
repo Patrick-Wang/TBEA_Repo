@@ -75,7 +75,12 @@ module jcycljg {
             this.mItemSelector.change((sel:any, depth:number)=>{
                 if (this.plugin(this.getActiveNode()).getDateType() == DateType.MONTH){
                     $("#" + this.mOpt.dte).show();
+                    $("#" + this.mOpt.dts).show();
+                }else if (this.plugin(this.getActiveNode()).getDateType() == DateType.YEAR){
+                    $("#" + this.mOpt.dts).hide();
+                    $("#" + this.mOpt.dte).hide();
                 }else {
+                    $("#" + this.mOpt.dts).show();
                     $("#" + this.mOpt.dte).hide();
                 }
             });

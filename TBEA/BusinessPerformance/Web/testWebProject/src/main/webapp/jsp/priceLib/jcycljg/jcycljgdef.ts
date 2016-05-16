@@ -5,7 +5,8 @@ module jcycljg {
 
     export enum DateType{
         DAY,
-        MONTH
+        MONTH,
+        YEAR
     }
 
     export enum ContentType{

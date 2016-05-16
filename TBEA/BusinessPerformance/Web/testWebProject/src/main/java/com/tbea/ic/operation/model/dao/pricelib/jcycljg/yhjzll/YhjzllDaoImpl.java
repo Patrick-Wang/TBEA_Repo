@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YhjzllEntity;
-import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
 
 
 
@@ -45,5 +44,11 @@ public class YhjzllDaoImpl extends AbstractReadWriteDaoImpl<YhjzllEntity> implem
 			return null;
 		}
 		return ret.get(0);
+	}
+
+	@Override
+	public List<?> getEntities() {
+		Query q = this.getEntityManager().createQuery("from YhjzllEntity order by date asc");
+		return q.getResultList();
 	}
 }

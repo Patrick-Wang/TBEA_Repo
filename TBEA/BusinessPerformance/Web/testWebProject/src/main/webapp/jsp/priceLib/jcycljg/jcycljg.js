@@ -1,3 +1,9 @@
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="jcycljgdef.ts" />
+/// <reference path="../../unitedSelector.ts"/>
+///<reference path="../../messageBox.ts"/>
 var jcycljg;
 (function (jcycljg) {
     var View = (function () {
@@ -48,8 +54,14 @@ var jcycljg;
             this.mItemSelector.change(function (sel, depth) {
                 if (_this.plugin(_this.getActiveNode()).getDateType() == jcycljg.DateType.MONTH) {
                     $("#" + _this.mOpt.dte).show();
+                    $("#" + _this.mOpt.dts).show();
+                }
+                else if (_this.plugin(_this.getActiveNode()).getDateType() == jcycljg.DateType.YEAR) {
+                    $("#" + _this.mOpt.dts).hide();
+                    $("#" + _this.mOpt.dte).hide();
                 }
                 else {
+                    $("#" + _this.mOpt.dts).show();
                     $("#" + _this.mOpt.dte).hide();
                 }
             });
@@ -148,7 +160,7 @@ var jcycljg;
             this.plugin(node).update(dts, dte);
         };
         return View;
-    }());
+    })();
     jcycljg.View = View;
 })(jcycljg || (jcycljg = {}));
 var view = new jcycljg.View();

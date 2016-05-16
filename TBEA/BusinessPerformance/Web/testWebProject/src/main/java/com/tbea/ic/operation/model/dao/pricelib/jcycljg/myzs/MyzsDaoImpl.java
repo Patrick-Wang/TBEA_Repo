@@ -32,7 +32,7 @@ public class MyzsDaoImpl extends AbstractReadWriteDaoImpl<MyzsEntity> implements
 
 	@Override
 	public List<MyzsEntity> getEntities(Date start, Date end) {
-		Query q = this.getEntityManager().createQuery("from MyzsEntity where DateDiff(mm, date, :start) <= 0 and DateDiff(mm, date, :end) >= 0 order by date asc");
+		Query q = this.getEntityManager().createQuery("from MyzsEntity where DateDiff(dd, date, :start) <= 0 and DateDiff(dd, date, :end) >= 0 order by date asc");
 		q.setParameter("start", start);
 		q.setParameter("end", end);
 		return q.getResultList();
@@ -40,7 +40,7 @@ public class MyzsDaoImpl extends AbstractReadWriteDaoImpl<MyzsEntity> implements
 
 	@Override
 	public MyzsEntity getByDate(Date date) {
-		Query q = this.getEntityManager().createQuery("from MyzsEntity where DateDiff(mm, date, :date) = 0");
+		Query q = this.getEntityManager().createQuery("from MyzsEntity where DateDiff(dd, date, :date) = 0");
 		q.setParameter("date", date);
 		List<MyzsEntity> ret = q.getResultList();
 		if (ret.isEmpty()){
