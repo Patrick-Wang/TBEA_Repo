@@ -25,7 +25,7 @@ var sbdscqyqk;
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly, date) {
-                var curDate = new Date(date);
+                var curDate = new Date(Date.parse(date.replace(/-/g, '/')));
                 var month = curDate.getMonth() + 1;
                 var year = curDate.getFullYear();
                 var data = [];
@@ -39,7 +39,7 @@ var sbdscqyqk;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
@@ -198,11 +198,11 @@ var sbdscqyqk;
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    viewrecords: true,
+                    viewrecords: true
                 }));
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        }(framework.basic.EntryPluginView));
+        })(framework.basic.EntryPluginView);
     })(xfcpqyEntry = sbdscqyqk.xfcpqyEntry || (sbdscqyqk.xfcpqyEntry = {}));
 })(sbdscqyqk || (sbdscqyqk = {}));
