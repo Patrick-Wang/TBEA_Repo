@@ -239,13 +239,11 @@ public class LoginServlet implements OnSessionChangedListener {
 
 	@Override
 	public void onCreated(HttpSession session) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onDestroyed(HttpSession session) {
-		// TODO Auto-generated method stub
-		
+		extAuthServ.removeCache(SessionManager.getAccount(session));
 	}
 }
