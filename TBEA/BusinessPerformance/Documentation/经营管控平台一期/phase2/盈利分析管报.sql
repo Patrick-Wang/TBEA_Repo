@@ -59,6 +59,7 @@ CREATE TABLE [dbo].[ylfxgb_dzclkcb](
 	[nf] [int] not NULL,
 	[yf] [int] not NULL,
 	[clid] [int] not NULL,
+	[dwid] [int] not NULL,
 	[qhyk] [numeric](18, 4) NULL,
 	[scxhyjj] [numeric](18, 4) NULL,
 	[cgyjj] [numeric](18, 4) NULL,

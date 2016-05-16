@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "dzwgb_ylfx_dzclkcb")
+@Table(name = "ylfxgb_dzclkcb")
 public class DzclkcbEntity extends AbstractReadWriteEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
