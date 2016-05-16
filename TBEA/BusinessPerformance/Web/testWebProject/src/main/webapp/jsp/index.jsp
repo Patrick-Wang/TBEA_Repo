@@ -132,16 +132,19 @@
 								</c:if>
 								<c:if test="${GbLookup}">
 								<li style="background-color: transparent;"><i
+									class="ec-icon ec-icon-line"></i> <a href="#commonjygb"
+									style="color: rgb(62, 152, 197);">通用经营管报</a></li>
+								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#sbdcyjygb"
-									style="color: rgb(62, 152, 197);">经营管报</a></li>
-								</c:if>
-								<c:if test="${debug}">
+									style="color: rgb(62, 152, 197);">输变电经营管报</a></li>
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#nycyjybb"
 									style="color: rgb(62, 152, 197);">能源产业经营报表</a></li>
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#xnycyjybb"
 									style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
+								</c:if>
+								<c:if test="${debug}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#cwbb"
 									style="color: rgb(62, 152, 197);">财务报表</a></li>
@@ -197,20 +200,23 @@
 							
 							<ul id="navlistBusinessReportsInput" style="padding: 10px 0; width: 180px; display: none">
 							<c:if test="${GbEntry}">
+							<li style="background-color: transparent;"><i
+									class="ec-icon ec-icon-line"></i> <a href="#commonEntry"
+									style="color: rgb(62, 152, 197);">通用经营管报录入</a></li>
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#sbdcyjygbEntry"
-									style="color: rgb(62, 152, 197);">经营管报录入</a></li>
-								</c:if>
-								<c:if test="${debug}">
+									style="color: rgb(62, 152, 197);">输变电产业 经营管报录入</a></li>
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#nycyjybbEntry"
 									style="color: rgb(62, 152, 197);">能源产业经营报表</a></li>
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#xnycyjybbEntry"
 									style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
+									<c:if test="${debug}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#cwbbEntry"
 									style="color: rgb(62, 152, 197);">财务报表</a></li>
+									</c:if>
 								</c:if>
 							</ul>
 							
@@ -234,13 +240,12 @@
 					<c:if test="${PriceLibAuth}">
 					<%@include file="index_IndexPriceLib.jsp"%>
 					</c:if>
-
 					<c:if test="${GbLookup}">
-					<%@include file="index_IndexBusinessReportsSBD.jsp"%>
-					</c:if>
-					
+					<%@include file="index_IndexBusinessReportsGBCommon.jsp"%>
+					<%@include file="index_IndexBusinessReportsSBD.jsp"%>				
 					<%@include file="index_IndexBusinessReportsNY.jsp"%>
 					<%@include file="index_IndexBusinessReportsXNY.jsp"%>
+					</c:if>
 					<c:if test="${debug}">
 					<%@include file="index_IndexBusinessReportsCW.jsp"%>
 					</c:if>
@@ -255,10 +260,11 @@
 				
 				<div id="BusinessReportsInput" class="col-md-10" style="display: none">
 				<c:if test="${GbEntry}">
+					<%@include file="index_IndexBusinessReportsEntryGBCommon.jsp"%>
 					<%@include file="index_IndexBusinessReportsEntrySBD.jsp"%>
-					</c:if>
 					<%@include file="index_IndexBusinessReportsEntryNY.jsp"%>
 					<%@include file="index_IndexBusinessReportsEntryXNY.jsp"%>
+					</c:if>
 					<c:if test="${debug}">
 					<%@include file="index_IndexBusinessReportsEntryCW.jsp"%>
 					</c:if>

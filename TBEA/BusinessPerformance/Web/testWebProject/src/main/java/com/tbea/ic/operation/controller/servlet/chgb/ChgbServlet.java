@@ -60,23 +60,23 @@ public class ChgbServlet {
 	ChgbService chgbService;
 
 	CompanyManager companyManager;
-	List<Company> COMPS = new ArrayList<Company>();
+	List<Company> NCCOMPS = new ArrayList<Company>();
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	public void setCompanyManager(CompanyManager companyManager){
 		this.companyManager = companyManager;
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XTNYGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TCNY));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NDGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.GJGCGS_GFGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.JCKGS_JYDW));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XTNYGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TCNY));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NDGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.GJGCGS_GFGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.JCKGS_JYDW));
 	}
 	
 	@Autowired
@@ -485,8 +485,8 @@ public class ChgbServlet {
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
 
-		chgbService.importZbmFromNC(d, COMPS);
-		chgbService.importNychFromNC(d, COMPS);
+		chgbService.importZbmFromNC(d, NCCOMPS);
+		chgbService.importNychFromNC(d, NCCOMPS);
 	}
 	
 	@RequestMapping(value = "nctest.do")
@@ -498,8 +498,8 @@ public class ChgbServlet {
 		if (!(request.getParameter("date") == null)){
 			d = Date.valueOf(request.getParameter("date"));
 		}
-		chgbService.importZbmFromNC(d, COMPS);
-		chgbService.importNychFromNC(d, COMPS);
+		chgbService.importZbmFromNC(d, NCCOMPS);
+		chgbService.importNychFromNC(d, NCCOMPS);
 		return "OK".getBytes("utf-8");
 	}
 }

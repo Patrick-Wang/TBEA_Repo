@@ -58,9 +58,7 @@ public class YszkgbServlet {
 
 	@Autowired
 	ExtendAuthorityService extendAuthService;
-	
 
-	
 	@RequestMapping(value = "show.do")
 	public ModelAndView getYszkgb(HttpServletRequest request,
 			HttpServletResponse response) {
