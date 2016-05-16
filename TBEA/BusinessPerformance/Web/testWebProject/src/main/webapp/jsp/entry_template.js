@@ -1,3 +1,8 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+/// <reference path="dateSelector.ts" />
+/// <reference path="companySelector.ts" />
+///<reference path="messageBox.ts"/>
 var entry_template;
 (function (entry_template) {
     var JQGridAssistantFactory = (function () {
@@ -16,7 +21,7 @@ var entry_template;
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("zb_update.do", false);
@@ -42,11 +47,13 @@ var entry_template;
                     this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, this.mOpt.date, this.mOpt.dateId);
                     break;
             }
+            // this.mDateSelector.select(this.mOpt.date);
             this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
             if (opt.comps.length == 1) {
                 this.mCompanySelector.hide();
             }
             this.updateTitle();
+            //this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
@@ -71,10 +78,12 @@ var entry_template;
             });
         };
         View.prototype.updateApproveStatusFromDeputy = function (year, month, entryType) {
+            //年度计划数经营副总审核状态
             var isShowSubmit_2 = false;
             var isShowapprove_2 = false;
             var approve_2Content = "";
             var submit_2Content = "";
+            //年度计划数据和实际计划数据
             if ((Util.ZBType.QNJH == entryType || Util.ZBType.BYSJ) && this.mStatusList.length == 1) {
                 if (this.mStatusList[0] == Util.ZBStatus.SUBMITTED_2) {
                     isShowSubmit_2 = true;
@@ -96,7 +105,9 @@ var entry_template;
                 }
                 this.addContent(isShowapprove_2, isShowSubmit_2, approve_2Content, submit_2Content);
             }
+            //月度-季度计划数经营副总审核状态
             if (Util.ZBType.YDJDMJH == entryType && this.mStatusList.length == 3) {
+                //Init MatchArray for Month
                 var MatchArray = this.initMatchArray(entryType, month, year);
                 for (var i = 0; i < this.mStatusList.length; i++) {
                     if (this.mStatusList[i] == Util.ZBStatus.SUBMITTED_2) {
@@ -118,6 +129,7 @@ var entry_template;
                 }
                 this.addContent(isShowapprove_2, isShowSubmit_2, approve_2Content, submit_2Content);
             }
+            //20号实际数据和28号实际数据
             if ((Util.ZBType.BY20YJ == entryType || Util.ZBType.BY28YJ == entryType) && this.mStatusList.length > 1) {
                 var MatchArray = this.initMatchArray(entryType, month, year);
                 if (month == 12) {
@@ -449,11 +461,14 @@ var entry_template;
             var lastsel = "";
             var lastcell = "";
             $("#" + name).jqGrid(this.mTableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: this.mTableAssist.getDataWithId(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: data.length > 25 ? 550 : '100%',
@@ -462,7 +477,11 @@ var entry_template;
                 autoScroll: true,
                 rowNum: 150,
                 onSelectCell: function (id, nm, tmp, iRow, iCol) {
+                    //                       console.log(iRow +', ' + iCol);
                 },
+                //                    onCellSelect: (ri,ci,tdHtml,e) =>{
+                //                       console.log(ri +', ' + ci);
+                //                    },
                 beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
                     var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
                     if (isNaN(ret)) {
@@ -480,6 +499,7 @@ var entry_template;
                 beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
                     lastsel = iRow;
                     lastcell = iCol;
+                    //                        console.log(iRow +', ' + iCol);
                     $("input").attr("disabled", true);
                 },
                 afterEditCell: function (rowid, cellname, v, iRow, iCol) {
@@ -503,7 +523,9 @@ var entry_template;
             $('html').bind('click', function (e) {
                 if (lastsel != "") {
                     if ($(e.target).closest("#" + name).length == 0) {
+                        //  $("#" + name).jqGrid('saveRow', lastsel); 
                         $("#" + name).jqGrid("saveCell", lastsel, lastcell);
+                        //$("#" + name).resetSelection(); 
                         lastsel = "";
                     }
                 }
@@ -511,6 +533,6 @@ var entry_template;
         };
         View.instance = new View();
         return View;
-    }());
+    })();
     entry_template.View = View;
 })(entry_template || (entry_template = {}));
