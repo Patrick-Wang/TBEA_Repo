@@ -14,7 +14,7 @@
 		<div class="thumb3">
 			<ul class="slides">
 				<li><a href="../xnychFrame/entry.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>新能源存货录入</strong></span></a>
+						src="../images/charts/bar2.png"> <span><strong>新能源存货录入</strong></span></a>
 				</li>
 				
 			</ul>

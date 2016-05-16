@@ -16,7 +16,7 @@
 						src="../images/charts/bar1.png"> <span><strong>成本分析</strong></span></a>
 				</li>
 				<li><a href="../nyzbscqk/show.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>能源-周边市场情况</strong></span></a>
+						src="../images/charts/bar7.png"> <span><strong>能源-周边市场情况</strong></span></a>
 				</li>
 			</ul>
 		</div>
