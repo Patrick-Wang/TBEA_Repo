@@ -148,10 +148,10 @@ module chgb {
                 
                 this.mTableAssist.mergeRow(0);
                 this.mTableAssist.mergeTitle();
-
                 this.$(name).jqGrid(
                     this.mTableAssist.decorate({
                         datatype: "local",
+                        data: this.mTableAssist.getData(data),
                         multiselect: false,
                         drag: false,
                         resize: false,
