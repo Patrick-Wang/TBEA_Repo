@@ -35,7 +35,7 @@ public class CpmcDaoImpl extends AbstractReadWriteDaoImpl<CpmcEntity> implements
 		Query q = this.getEntityManager().createQuery("from CpmcEntity where id=:cpId");
 		q.setParameter("cpId", id);
 		List<CpmcEntity> result = q.getResultList();
-		if (result == null) {
+		if (result.isEmpty()) {
 			return null;
 		}
 		return result.get(0);

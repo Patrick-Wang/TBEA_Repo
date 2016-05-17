@@ -6,18 +6,18 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-/// <reference path="../../messageBox.ts"/>
-/// <reference path="../../framework/basic/basicdef.ts"/>
-/// <reference path="../../framework/route/route.ts"/>
-/// <reference path="../cpzlqkyddef.ts"/>
+///<reference path="../../messageBox.ts"/>
+///<reference path="../../framework/basic/basicdef.ts"/>
+///<reference path="../../framework/route/route.ts"/>
+///<reference path="../cbfxdef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
-    pluginEntry.yylkvyscpycssbhg = framework.basic.endpoint.lastId();
+    pluginEntry.nymyywmlfx = framework.basic.endpoint.lastId();
 })(pluginEntry || (pluginEntry = {}));
-var cpzlqkyd;
-(function (cpzlqkyd) {
-    var yylkvyscpycssbhgEntry;
-    (function (yylkvyscpycssbhgEntry) {
+var cbfx;
+(function (cbfx) {
+    var nymyywmlfxEntry;
+    (function (nymyywmlfxEntry) {
         var TextAlign = JQTable.TextAlign;
         var Node = JQTable.Node;
         var JQGridAssistantFactory = (function () {
@@ -25,11 +25,11 @@ var cpzlqkyd;
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
                 return new JQTable.JQGridAssistant([
-                    Node.create({ name: "月份", align: TextAlign.Center }),
-                    Node.create({ name: "材料", isReadOnly: readOnly }),
-                    Node.create({ name: "期现货合计盈亏", isReadOnly: readOnly })
-                        .append(Node.create({ name: "指导价格按照保本价（万元）", isReadOnly: readOnly }))
-                        .append(Node.create({ name: "指导价格按照目标利润价（万元）", isReadOnly: readOnly }))
+                    Node.create({ name: "合作客户", align: TextAlign.Left, isReadOnly: readOnly }),
+                    Node.create({ name: "贸易项目", align: TextAlign.Left, isReadOnly: readOnly }),
+                    Node.create({ name: "数量", isReadOnly: readOnly }),
+                    Node.create({ name: "收入", isReadOnly: readOnly }),
+                    Node.create({ name: "成本", isReadOnly: readOnly })
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -38,12 +38,12 @@ var cpzlqkyd;
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("../yylkvyscpycssbhg/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("../yylkvyscpycssbhg/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("../yylkvyscpycssbhg/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("../nymyywmlfx/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("../nymyywmlfx/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("../nymyywmlfx/entry/submit.do", false);
             }
             EntryView.prototype.getId = function () {
-                return pluginEntry.yylkvyscpycssbhg;
+                return pluginEntry.nymyywmlfx;
             };
             EntryView.prototype.option = function () {
                 return this.mOpt;
@@ -54,9 +54,9 @@ var cpzlqkyd;
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
+                    for (var j = 0; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
+                        submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
                     }
                 }
                 this.mAjaxSave.post({
@@ -65,9 +65,8 @@ var cpzlqkyd;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功", function () {
-                            _this.pluginUpdate(dt, compType);
-                        });
+                        _this.pluginUpdate(dt, compType);
+                        Util.MessageBox.tip("保存 成功");
                     }
                     else {
                         Util.MessageBox.tip(resp.message);
@@ -79,14 +78,11 @@ var cpzlqkyd;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
-                    submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 2]) {
-                            Util.MessageBox.tip("有空内容 无法提交");
-                            return;
-                        }
+                    submitData.push([allData[i][0], allData[i][2]]);
+                    submitData[i][1] = submitData[i][1].replace(new RegExp(' ', 'g'), '');
+                    if ("" == submitData[i][1]) {
+                        Util.MessageBox.tip("有空内容 无法提交");
+                        return;
                     }
                 }
                 this.mAjaxSubmit.post({
@@ -95,9 +91,8 @@ var cpzlqkyd;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功", function () {
-                            _this.pluginUpdate(dt, compType);
-                        });
+                        _this.pluginUpdate(dt, compType);
+                        Util.MessageBox.tip("提交 成功");
                     }
                     else {
                         Util.MessageBox.tip(resp.message);
@@ -127,7 +122,7 @@ var cpzlqkyd;
                 framework.router
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "能源贸易业务毛利分析");
             };
             EntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
@@ -144,23 +139,19 @@ var cpzlqkyd;
                     drag: false,
                     resize: false,
                     assistEditable: true,
-                    //autowidth : false,
                     cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
                     cellEdit: true,
-                    // height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 20,
+                    rowNum: 22,
                     height: '100%',
-                    width: 1200,
+                    width: 1000,
                     shrinkToFit: true,
                     autoScroll: true,
-                    //pager: '#' + pagername,
-                    viewrecords: true
+                    viewrecords: true,
+                    pager: '#' + pagername
                 }));
             };
             EntryView.ins = new EntryView();
             return EntryView;
         })(framework.basic.EntryPluginView);
-    })(yylkvyscpycssbhgEntry = cpzlqkyd.yylkvyscpycssbhgEntry || (cpzlqkyd.yylkvyscpycssbhgEntry = {}));
-})(cpzlqkyd || (cpzlqkyd = {}));
+    })(nymyywmlfxEntry = cbfx.nymyywmlfxEntry || (cbfx.nymyywmlfxEntry = {}));
+})(cbfx || (cbfx = {}));

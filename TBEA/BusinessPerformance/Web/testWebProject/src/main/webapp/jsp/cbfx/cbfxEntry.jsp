@@ -169,7 +169,7 @@ th.ui-th-ltr {
 		<h1 id="headertitle">成本分析</h1>
 	</div>
 
-	<Table id="frameTable" align="center" style="width:1200px">
+	<Table id="frameTable" align="center" style="width:700px">
 		<tr>
 			<td>
 				<div id="dt" style="float: left"></div>
@@ -182,6 +182,7 @@ th.ui-th-ltr {
 		<tr>
 			<td id="plugin">
 				<%@include file="dmcbfx/dmcbfxEntry.jsp"%>
+				<%@include file="nymyywmlfx/nymyywmlfxEntry.jsp"%>
 			</td>
 		</tr> 
 		<tr>

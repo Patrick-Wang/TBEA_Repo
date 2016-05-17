@@ -3,6 +3,13 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+///<reference path="../../messageBox.ts"/>
+///<reference path="../../framework/basic/basicdef.ts"/>
+///<reference path="../../framework/route/route.ts"/>
+///<reference path="../cbfxdef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.dmcbfx = framework.basic.endpoint.lastId();
@@ -22,7 +29,7 @@ var cbfx;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
@@ -114,6 +121,23 @@ var cbfx;
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var pagername = name + "pager";
                 this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+                //let data : string[][] = [
+                //    ["土方剥离爆破成本"],
+                //    ["原煤爆破成本"],
+                //    ["原煤采运成本"],
+                //    ["回筛倒运成本"],
+                //    ["装车成本"],
+                //    ["直接成本合计"],
+                //    ["非可控成本"],
+                //    ["可控成本"],
+                //    ["制造费用小计"],
+                //    ["技改财务费用"],
+                //    ["生产成本合计"]
+                //];
+                //
+                //for (let i = 0; i < data.length; ++i){
+                //    data[i] = data[i].concat(this.mData[i]);
+                //}
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
@@ -125,18 +149,22 @@ var cbfx;
                     drag: false,
                     resize: false,
                     assistEditable: true,
+                    //autowidth : false,
                     cellsubmit: 'clientArray',
+                    //editurl: 'clientArray',
                     cellEdit: true,
-                    rowNum: 20,
+                    //height: data.length > 25 ? 550 : '100%',
+                    // width: titles.length * 200,
+                    rowNum: 1000,
                     height: '100%',
-                    width: 1200,
+                    width: 700,
                     shrinkToFit: true,
                     autoScroll: true,
-                    viewrecords: true,
+                    viewrecords: true
                 }));
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        }(framework.basic.EntryPluginView));
+        })(framework.basic.EntryPluginView);
     })(dmcbfxEntry = cbfx.dmcbfxEntry || (cbfx.dmcbfxEntry = {}));
 })(cbfx || (cbfx = {}));

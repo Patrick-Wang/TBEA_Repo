@@ -9,17 +9,21 @@ declare var $:any;
 
 
 module pluginEntry {
-    export let dmcbfx : number = framework.basic.endpoint.lastId();
+    export let nymyywmlfx : number = framework.basic.endpoint.lastId();
 }
 
 module cbfx {
-    export module dmcbfxEntry {
+    export module nymyywmlfxEntry {
         import TextAlign = JQTable.TextAlign;
+        import Node = JQTable.Node;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("成本构成", "rqa", true, TextAlign.Center),
-                    new JQTable.Node("计划", "jh", false)
+                    Node.create({name:"合作客户", align:TextAlign.Left, isReadOnly : readOnly}),
+                    Node.create({name:"贸易项目", align:TextAlign.Left, isReadOnly : readOnly}),
+                    Node.create({name:"数量", isReadOnly : readOnly}),
+                    Node.create({name:"收入", isReadOnly : readOnly}),
+                    Node.create({name:"成本", isReadOnly : readOnly})
                 ], gridName);
             }
         }
@@ -31,14 +35,14 @@ module cbfx {
         class EntryView extends framework.basic.EntryPluginView {
             static ins = new EntryView();
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../dmcbfx/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("../dmcbfx/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../dmcbfx/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../nymyywmlfx/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("../nymyywmlfx/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../nymyywmlfx/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;
             getId():number {
-                return pluginEntry.dmcbfx;
+                return pluginEntry.nymyywmlfx;
             }
 
             private option():Option {
@@ -49,8 +53,11 @@ module cbfx {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
-                    submitData.push([allData[i][0], allData[i][2]]);
-                    submitData[i][1] = submitData[i][1].replace(new RegExp(' ', 'g'), '');
+                    submitData.push([]);
+                    for (var j = 0; j < allData[i].length; ++j) {
+                        submitData[i].push(allData[i][j]);
+                        submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
+                    }
                 }
                 this.mAjaxSave.post({
                     date: dt,
@@ -108,40 +115,22 @@ module cbfx {
                 if (this.mData == undefined) {
                     return;
                 }
-
                 this.updateTable();
             }
 
             protected init(opt:Option):void {
-                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "吨煤成本分析表");
-                $.extend($.jgrid.edit, {
-                    bSubmit: "确定"
-                });
+                framework.router
+                    .fromEp(this)
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "能源贸易业务毛利分析");
             }
 
             private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
+                let name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+                let pagername = name + "pager";
                 this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
-                //let data : string[][] = [
-                //    ["土方剥离爆破成本"],
-                //    ["原煤爆破成本"],
-                //    ["原煤采运成本"],
-                //    ["回筛倒运成本"],
-                //    ["装车成本"],
-                //    ["直接成本合计"],
-                //    ["非可控成本"],
-                //    ["可控成本"],
-                //    ["制造费用小计"],
-                //    ["技改财务费用"],
-                //    ["生产成本合计"]
-                //];
-                //
-                //for (let i = 0; i < data.length; ++i){
-                //    data[i] = data[i].concat(this.mData[i]);
-                //}
 
-                var parent = this.$(this.option().tb);
+                let parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                 let jqTable = this.$(name);
@@ -153,19 +142,15 @@ module cbfx {
                         drag: false,
                         resize: false,
                         assistEditable:true,
-                        //autowidth : false,
                         cellsubmit: 'clientArray',
-                        //editurl: 'clientArray',
                         cellEdit: true,
-                        //height: data.length > 25 ? 550 : '100%',
-                        // width: titles.length * 200,
-                        rowNum: 1000,
+                        rowNum: 22,
                         height: '100%',
-                        width: 700,
+                        width: 1000,
                         shrinkToFit: true,
                         autoScroll: true,
                         viewrecords: true,
-                        //pager: '#' + pagername,
+                        pager: '#' + pagername,
                     }));
             }
         }

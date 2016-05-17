@@ -27,7 +27,9 @@ var cbfx;
                     new JQTable.Node("贸易项目", "ab", true, TextAlign.Left, 0, "text"),
                     new JQTable.Node("数量", "ac", true),
                     new JQTable.Node("收入", "ada", true),
-                    new JQTable.Node("成本", "adb", true)
+                    new JQTable.Node("成本", "adb", true),
+                    new JQTable.Node("毛利", "adbml", true),
+                    new JQTable.Node("毛利率", "adbmll", true)
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -88,7 +90,7 @@ var cbfx;
                     drag: false,
                     resize: false,
                     height: '100%',
-                    width: 1400,
+                    width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 20,

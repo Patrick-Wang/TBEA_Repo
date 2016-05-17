@@ -46,7 +46,7 @@ var sbdscqyqk;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -145,7 +145,7 @@ var sbdscqyqk;
                     drag: false,
                     resize: false,
                     height: '100%',
-                    width: 1400,
+                    width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 40,
@@ -156,6 +156,6 @@ var sbdscqyqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(xfcpqy = sbdscqyqk.xfcpqy || (sbdscqyqk.xfcpqy = {}));
 })(sbdscqyqk || (sbdscqyqk = {}));

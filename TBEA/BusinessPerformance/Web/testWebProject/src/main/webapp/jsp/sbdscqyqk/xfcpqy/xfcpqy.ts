@@ -159,7 +159,7 @@ module sbdscqyqk {
                         drag: false,
                         resize: false,
                         height: '100%',
-                        width: 1400,
+                        width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 40,
