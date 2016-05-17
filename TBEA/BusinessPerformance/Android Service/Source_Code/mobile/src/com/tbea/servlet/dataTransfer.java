@@ -49,11 +49,7 @@ public class dataTransfer extends HttpServlet {
 		String companyQX=request.getParameter("companyQX");
 		String year=request.getParameter("year");
 		String month=request.getParameter("month");
-		menuqx="1";
-		companyID="103";
-		companyQX="4,5,6,7,8,9,10,11,23,25,27,29,30,66,67,68,69,70,74,120,122";
-		year="2014";
-		month="10";		
+
 		String companylist2="0";
 		if(companyQX!=null&&companyQX!="null"&&companyQX!=""){
 			companylist2=companyQX.replace(",", ";");

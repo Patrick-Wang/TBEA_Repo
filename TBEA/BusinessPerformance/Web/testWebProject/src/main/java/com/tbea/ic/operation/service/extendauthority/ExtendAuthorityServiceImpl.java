@@ -55,7 +55,9 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 	@Override
 	public void removeCache(Account account) {
 		try{
-			cacheAuth.remove(account.getId());
+			if (null != account){
+				cacheAuth.remove(account.getId());
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
