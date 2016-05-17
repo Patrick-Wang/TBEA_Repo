@@ -30,21 +30,31 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
-	Map<Integer, List<Company>> cacheAuth = Collections.synchronizedMap(new HashMap<Integer, List<Company>>());
+	Map<Integer, Map<Integer, List<Company>>> cacheAuth = Collections.synchronizedMap(new HashMap<Integer, Map<Integer, List<Company>>>());
+	
+	private List<Company> getAuthedCompaniesInternal(Account account,
+			AuthType authType){
+		List<Company> comps = new ArrayList<Company>();
+		List<ExtendAuthority> auths = extendAuthDao.getAuthority(account, authType.ordinal());
+		for (int i = 0; i < auths.size(); ++i){
+			comps.add(companyManager.getBMDBOrganization().getCompany(auths.get(i).getDwxx().getId()));
+		}
+		return comps;
+	}
 	
 	@Override
 	public List<Company> getAuthedCompanies(Account account,
 			AuthType authType) {
-		List<Company> comps = cacheAuth.get(account.getId());
-		if (null == comps){
-			comps = new ArrayList<Company>();
-			List<ExtendAuthority> auths = extendAuthDao.getAuthority(account, authType.ordinal());
-			for (int i = 0; i < auths.size(); ++i){
-				comps.add(companyManager.getBMDBOrganization().getCompany(auths.get(i).getDwxx().getId()));
-			}
-			cacheAuth.put(account.getId(), comps);
+		Map<Integer, List<Company>> compsMap = cacheAuth.get(account.getId());
+		if (null == compsMap){
+			compsMap = new HashMap<Integer, List<Company>>();
+			cacheAuth.put(account.getId(), compsMap);
 		}
-		return comps;
+
+		if (!compsMap.containsKey(authType.ordinal())){
+			compsMap.put(authType.ordinal(), getAuthedCompaniesInternal(account ,authType));
+		}
+		return compsMap.get(authType.ordinal());
 	}
 	
 	@Override
