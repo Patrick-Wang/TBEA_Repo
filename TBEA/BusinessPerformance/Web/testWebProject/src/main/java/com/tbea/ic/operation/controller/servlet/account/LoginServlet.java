@@ -239,7 +239,7 @@ public class LoginServlet implements OnSessionChangedListener {
 
 	@Override
 	public void onCreated(HttpSession session) {
-
+		extAuthServ.removeCache(SessionManager.getAccount(session));
 	}
 
 	@Override
