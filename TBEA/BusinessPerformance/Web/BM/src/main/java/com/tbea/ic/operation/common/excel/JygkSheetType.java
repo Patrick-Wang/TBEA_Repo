@@ -1,0 +1,20 @@
+package com.tbea.ic.operation.common.excel;
+
+public enum JygkSheetType{
+	GSZTZB,
+	SRQYFJG,
+	GS_SYB,
+	GCY_ZBWC,
+	GDWZBWCQK,
+	JDYJZB_SY,
+	JDFCYZBYJ_SY,
+	JDFDWZBYJ_SY,
+	JDYJZB_CY,
+	JDFCYZBYJ_CY,
+	JDFDWZBYJ_CY,
+	JDYJZB_MY,
+	JDFCYZBYJ_MY,
+	JDFDWZBYJ_MY,
+	MARKET_PRO,
+	END
+}

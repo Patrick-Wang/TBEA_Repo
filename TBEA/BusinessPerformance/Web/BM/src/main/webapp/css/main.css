@@ -1,0 +1,175 @@
+@charset "utf-8";
+/* 简单流媒体
+   注意: 流媒体要求您删除 HTML 中媒体的高度和宽度属性
+   http://www.alistapart.com/articles/fluid-images/ 
+*/
+img, object, embed, video {
+	max-width: 100%;
+}
+/* IE 6 不支持最大宽度，因此默认为 100% 宽度 */
+.ie6 img {
+	width: 100%;
+}
+/*#title_bg_div {
+	height:177dp; 
+	background-image:url(../img/detailstitle_bk.png); 
+	background-repeat: repeat-x; 
+	line-height:0;
+}
+#title_img {
+	height:177dp; 
+}*/
+body {
+	background-image: url(../img/background.png);
+	background-repeat: repeat;
+}
+
+#func_div {
+	width: 100%;
+	height: 100%;
+	/*text-align: center;*/
+}
+
+.header {
+	width: 100%;
+	height: 60px;
+}
+/*#bottom_bg_div {
+	background-image: url(../img/bottom.png);
+	background-repeat: repeat-x;
+	height: 36px;
+	position: fixed; 
+	bottom: 0;
+	left:0;
+}*/
+/**+ html .children {
+	display: inline;
+	zoom: 1;
+}
+* html .children {
+	display: inline;
+	zoom: 1;
+}*/
+/*
+	Dreamweaver 流体网格属性
+	----------------------------------
+	dw-num-cols-mobile:		5;
+	dw-num-cols-tablet:		8;
+	dw-num-cols-desktop:	10;
+	dw-gutter-percentage:	25;
+	
+	灵感来自于 Ethan Marcotte 的“具有响应的 Web 设计” 
+	http://www.alistapart.com/articles/responsive-web-design
+	
+	和 Joni Korpi 的“黄金网格系统”
+	http://goldengridsystem.com/
+*/
+
+/* 移动设备布局: 480px 及更低。 */
+/*  width: 87.36%;
+	padding-left: 1.82%;
+	padding-right: 1.82%;*/
+.gridContainer {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+
+#LayoutDiv1 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+.children {
+	display: inline-block;
+	width: 25%;
+	max-width: 142dp;
+	margin-top: 3.5%;
+	margin-left: 3.5%;
+	margin-right: 3.5%;
+	margin-bottom: 3.5%;
+	padding-top: 0;
+}
+
+.func_span {
+	text-align: center;
+	margin-bottom: 0;
+	display: table-cell;
+	vertical-align: middle;
+	word-break: break-all;
+}
+
+/* 平板电脑布局: 481px 至 768px。样式继承自: 移动设备布局。 */
+/*  width: 90.675%;
+	padding-left: 1.1625%;
+	padding-right: 1.1625%;*/
+@media only screen and (min-width: 481px) {
+	.gridContainer {
+		width: 100%;
+	}
+	#LayoutDiv1 {
+		clear: both;
+		float: left;
+		margin-left: 0;
+		width: 100%;
+		display: block;
+	}
+	.children {
+		display: inline-block;
+		width: 142px;
+		max-width: 142px;
+		margin-top: 30px;
+		margin-left: 20px;
+		margin-right: 30px;
+		margin-bottom: 20px;
+		padding-top: 0;
+	}
+	.func_span {
+		text-align: center;
+		margin-bottom: 0;
+		display: block;
+		vertical-align: middle;
+		word-break: break-all;
+	}
+}
+
+/* 桌面电脑布局: 769px 至最高 1232px。样式继承自: 移动设备布局和平板电脑布局。 */
+/*  width: 88.2%;
+	max-width: 1232px;
+	padding-left: 0.9%;
+	padding-right: 0.9%;
+	margin: auto;*/
+@media only screen and (min-width: 769px) {
+	.gridContainer {
+		width: 100%;
+		max-width: 1232px;
+		margin: auto;
+	}
+	#LayoutDiv1 {
+		clear: both;
+		float: left;
+		margin-left: 0;
+		width: 100%;
+		display: block;
+	}
+	.children {
+		display: inline-block;
+		width: 142px;
+		max-width: 142px;
+		margin-top: 30px;
+		margin-left: 20px;
+		margin-right: 30px;
+		margin-bottom: 20px;
+		padding-top: 0;
+	}
+	.func_span {
+		text-align: center;
+		margin-bottom: 0;
+		vertical-align: middle;
+		word-break: break-all;
+		display: block;
+	}
+}
