@@ -1,0 +1,15 @@
+package com.tbea.ic.operation.common.excel;
+
+public enum JYGKPhase2SheetType{
+	YSDialy,
+	JYDWLRRANK,
+	LRTBRANK,
+	XMGSLRTBRANK,
+	YSZKZSRBRANK,
+	YSZKJBLZSRRANK,
+	CHZSRBRANK,
+	YSJCHZSRBRANK,
+	RJRANK,
+	XMGSRJRANK,
+	END
+}

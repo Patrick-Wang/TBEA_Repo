@@ -1,0 +1,39 @@
+package com.tbea.ic.operation.service.wlydd.wlyddmlspcs;
+
+public enum MLSPCS_BYQ_ZH_Type{
+
+	MLSPCS_BYQ_ZH_CTXM_GN(2),
+	MLSPCS_BYQ_ZH_CTXM_GN_EPCMS(3),
+	MLSPCS_BYQ_ZH_CTXM_GN_BTMS(4),
+	MLSPCS_BYQ_ZH_CTXM_GN_QTMS(5),
+	MLSPCS_BYQ_ZH_CTXM_GJ(6),
+	MLSPCS_BYQ_ZH_CTXM_GJ_EPCMS(7),
+	MLSPCS_BYQ_ZH_CTXM_GJ_BTMS(8),
+	MLSPCS_BYQ_ZH_CTXM_GJ_QTMS(9),
+	MLSPCS_BYQ_ZH_WLMY(10),
+	MLSPCS_BYQ_ZH_FWL(11),
+	MLSPCS_BYQ_ZH_FWL_HYFSR(12),
+	MLSPCS_BYQ_ZH_FWL_WYFSR(13),
+	MLSPCS_BYQ_ZH_FWL_LWSR(14),
+	MLSPCS_BYQ_ZH_FWL_HMSR(15),
+	MLSPCS_BYQ_ZH_FWL_ZSSR(16),
+	MLSPCS_BYQ_ZH_FWL_JPDLSR(17),
+	MLSPCS_BYQ_ZH_FWL_RYBHSR(18),
+	MLSPCS_BYQ_ZH_FWL_DFSR(19),
+	MLSPCS_BYQ_ZH_FWLSQNSR(20),
+	MLSPCS_BYQ_ZH_FWLCYSR(21),
+	MLSPCS_BYQ_ZH_FWLQTSR(22),
+	MLSPCS_BYQ_ZH_QT(1);
+    
+    private int _value;
+
+    private MLSPCS_BYQ_ZH_Type(int value)
+    {
+        _value = value;
+    }
+
+    public int value()
+    {
+        return _value;
+    }
+}

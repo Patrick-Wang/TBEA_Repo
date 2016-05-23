@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ECharts">
+<meta name="author" content="">
+<title>应收账款客户结构分析</title>
+
+
+<!-- grid dependency -->
+
+<link rel="stylesheet" type="text/css" media="screen"
+	href="jqgrid/themes/ui.jqgrid.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="jqgrid/themes/ui.multiselect.css">
+<script src="jqgrid/js/jquery.js" type="text/javascript"></script>
+
+<script src="jqgrid/js/jquery.layout.js" type="text/javascript"></script>
+<script src="jqgrid/js/i18n/grid.locale-en.js" type="text/javascript"></script>
+
+
+<script src="jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
+<script src="jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
+<script src="jqgrid/js/jquery.contextmenu.js" type="text/javascript"></script>
+<script src="class.js" type="text/javascript"></script>
+<script src="vector.js" type="text/javascript"></script>
+<script src="title.js" type="text/javascript"></script>
+<script src="jqassist.js" type="text/javascript"></script>
+
+<link rel="stylesheet" type="text/css" media="screen"
+	href="jqgrid/themes/redmond/jquery-ui-custom.css">
+<script src="jqgrid/js/jquery-ui-custom.min.js" type="text/javascript"></script>
+<script src="jqgrid/js/ui.multiselect.js" type="text/javascript"></script>
+
+<style>
+html{
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	align: left;
+	valign: left;
+}
+body{
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	align: left;
+	valign: left;
+	background-color:rgb(247, 247, 247);
+}
+
+.panel-content-border{
+	height: 460px;
+	width: 100%;
+	border: 2px solid #e3e3e3;
+	margin: 0;
+	padding: 0;
+
+	
+}
+
+.panel-content {
+	height: 450px;
+	width: 1200px;
+	margin: 0;
+	padding: 0;
+}
+.right{
+	width:45%;
+	height:450px;
+	display:none;
+	float:left;
+}
+.jg1{
+width:100%;
+height:40px;
+}
+.contract{text-align: center; }
+.contract h1 {display: none; color: #003B8F;}
+.btn_loading, .btn_detail{
+	width:120px;
+	height:30px;
+	padding:5px,10px;
+	font-size:12px;
+	line-height:1.5;
+	boder-radius:3px;
+	background-color:#5cb85c;
+	boder-color:#4cae4c;
+	color:#fff
+}
+.header{
+width:100%;
+height:60px;
+}
+
+.header h1{text-align:center;
+color:#000000
+}
+
+</style>
+
+</head>
+
+
+<script type="text/javascript">
+function showdetail()
+{
+	$("#yszkdetail").css("display","block");
+}
+</script>
+
+<body>
+<div class="header">
+<h1 style="padding-top:10px">应收账款客户结构分析</h1>
+</div>
+<div  align="center">
+
+<div style="width:1200px; height:350px;">
+	<!--left part ys/yq-->
+    <div class="panel-content-border">
+		<div id="trend" class="panel-content"></div>
+	</div>
+	
+	<!--right part zbje/zbyq
+	<div class="panel-content-border">
+		<div id="pie" class="panel-content"></div>
+	</div>
+	-->
+</div>
+	</div>
+	<div class="jg1"></div>
+	
+
+	
+	<!--bottom title part contract table-->
+	<div class="contract">
+		<h1 id ="title"></h1>
+	</div>
+	
+	<!--bottom part contract table-->
+	<div id="yszkdetail" align="center" style="margin-top:95px">
+		<table id="list" ></table>
+		<div id="pager"></div>
+	</div>
+
+	
+</body>
+<script src="www2/js/echarts-plain-2-0-0.js" type="text/javascript"></script>
+	<!--应收余额-->
+	<script type="text/javascript">
+	$().ready(function(){
+		var ysyq_trend_Chart = echarts.init(document
+				.getElementById('trend'));
+		var trend_payment_Option = {
+				animation:true,
+			tooltip:{
+                trigger : 'axis',
+                /* formatter : "{b}<br/>{a} : {c} 万元<br/>{a1} : {c1} 万元", */
+                transitionDuration : 0
+            },
+            legend:{
+                x : 'center',
+                y : 'top',
+				
+                data : [ '国网', '南网','自营出口','代理出口','省市电力公司','电力配套','华能集团','其它' ],
+            },
+			xAxis : [ {
+				type : 'category',
+				boundaryGap : false,
+				data : [ '逾期1个月内', '逾期1-3个月', '逾期3-6个月', '逾期6-12个月','逾期1年以上']
+			} ],
+			yAxis : [ {
+				type : 'value',
+				position: 'left',
+			} ],
+
+			series : [
+				{
+					name:'国网',
+					type:'line',
+					data:[3444.8,11699.82,1283.64,8934.58,2150.82],
+
+				},
+				{
+					name:'南网',
+					type:'line',
+					data:[0,3804.76,303.32,1339.92,16.01],
+				},
+				{
+					name:'自营出口',
+					type:'line',
+					data:[381.52,2621.34,5891.51,364.72,4.7],
+				},
+				{
+					name:'代理出口',
+					type:'line',
+					data:[1006.14,1193.91,778.28,57.44,11.42],
+				},
+				{
+					name:'省市电力公司',
+					type:'line',
+					data:[0,59.26,595.09,911.24,699.27],
+				},
+				{
+					name:'电力配套',
+					type:'line',
+					data:[0,0.00,97.6,25.5,47.06],
+				},
+				{
+					name:'华能集团',
+					type:'line',
+					data:[584.41,357.75,232.7,750,110.89],
+				},
+				{
+					name:'其它',
+					type:'line',
+					data:[13.57,2078.75,1152.79,6229.51,1022.14],
+				},
+				 {
+					name:'客户结构细分',
+					type:'pie',
+					tooltip : {
+						trigger: 'item',
+						formatter: '{a} <br/>{b} : {c} ({d}%)'
+					},
+					center: [1040,110],
+					radius : [0, 90],
+					itemStyle :　{
+							normal : {
+								labelLine : {
+									length : 20
+								}
+							}
+					},
+				data:[
+					{value:85945.40, name:'国网'},
+					{value:15686.42, name:'南网'},
+					{value:49564.68, name:'自营出口'},
+					{value:8611.20, name:'代理出口'},
+					{value:10228.91, name:'省市电力公司'},
+					{value:3417.12, name:'电力配套'},
+					{value:4504.52, name:'华能集团'},
+					{value:38555.92, name:'其它'}
+					]
+				}
+			]
+		};
+		ysyq_trend_Chart.setOption(trend_payment_Option);
+	});
+		
+	</script>
+	
+		<script type="text/javascript">
+		var data = [["大唐集团","1265.56","3","0.01","0.00","0.00","0.00","0.00","4.80","951.44","309.32"],
+		            ["代理出口","8611.20","11","0.04","1006.14","1193.91","778.28","57.44","11.42","1940.53","3623.48"],
+		            ["电力配套","3417.12","8","0.02","0.00","0.00","97.60","25.50","47.06","2765.51","481.45"],
+		            ["公路运输","313.40","1","0.00","0.00","0.00","0.00","0.00","0.00","313.40","0.00"],
+		            ["国电集团","3009.81","10","0.01","0.00","228.50","0.00","0.00","229.50","1327.25","1224.56"],
+		            ["国网","85945.40","61","0.38","3444.80","11699.82","1283.64","8934.58","2150.82","25209.03","33222.71"],
+		            ["华电集团","1038.72","5","0.00","0.00","0.00","0.00","85.00","63.90","386.45","503.37"],
+		            ["华能集团","4504.52","10","0.02","584.41","357.75","232.70","750.00","110.89","277.06","2191.71"],
+		            ["机械行业","3.57","2","0.00","0.00","0.00","0.00","2.95","0.62","0.00","0.00"],
+		            ["南网","15686.42","18","0.07","0.00","3804.76","303.32","1339.92","16.01","3885.58","6336.84"],
+		            ["其它","38555.92","119","0.17","13.57","2078.75","1152.79","6229.51","1022.14","15242.53","12816.64"],
+		            ["省、市电力公司","10228.91","45","0.04","0.00","59.26","595.09","911.24","699.27","3485.14","4478.91"],
+		            ["石油化工","220.75","6","0.00","0.00","56.87","13.60","97.78","0.00","47.35","5.15"],
+		            ["铁路运输","338.49","4","0.00","0.00","0.00","0.00","0.00","0.00","99.63","238.86"],
+		            ["冶金行业","1260.90","9","0.01","27.50","0.00","1.75","0.00","0.00","735.55","496.10"],
+		            ["有色金属行业","879.00","3","0.00","0.00","0.00","90.00","201.00","0.00","391.00","197.00"],
+		            ["政府部门","164.15","2","0.00","0.00","0.00","0.00","106.15","0.00","0.00","58.00"],
+		            ["中国电力投资集团","2730.06","7","0.01","0.00","0.00","0.00","885.10","1011.90","481.78","351.28"],
+		            ["自营出口","49564.68","20","0.22","381.52","2621.34","5891.51","364.72","4.70","32920.20","7380.67"],
+		            ["合计","227738.58","344","1","5457.94","22100.96","10440.28","19990.88","5373.03","90459.43","73916.05"]];
+
+
+		var titleManager = JQGridAssistantFactory.createAcountsReceivableCustomerStructureAnalysis("list");
+
+// 		titleManager.bindSorter(0, JQGridSorter.createChineseSorter(data, 0)
+// 				.moveToTail("合计").lockPos("合计"), $("#list"));
+// 		for (var i = 1; i < data[0].length; i++) {
+// 			titleManager.bindSorter(i, JQGridSorter.createFloatSorter(data, i)
+// 					.moveToTail(data[data.length - 1][i])
+// 					.lockPos(data[data.length - 1][i]), $("#list"));
+// 		}
+
+		$("#list").jqGrid({
+			data : titleManager.getData(data),
+			datatype : "local",
+			//url : "Table?q=2",
+			//datatype: "json",
+			colNames : titleManager.getColNames(),
+			colModel : titleManager.getColModel(),
+			multiselect : false,
+			//rowNum : 4,
+			width : 1200,
+			height : 200,
+			shrinkToFit : false,
+			autoScroll : true,
+			gridComplete : function(){
+				titleManager.complete();
+			}
+			//rowList : [ 4, 8, 12],
+			//viewrecords : true,
+			//pager : "#pager"
+			//caption : "应收账款预警台账"
+		});
+		
+	</script>
+	
+</html>
