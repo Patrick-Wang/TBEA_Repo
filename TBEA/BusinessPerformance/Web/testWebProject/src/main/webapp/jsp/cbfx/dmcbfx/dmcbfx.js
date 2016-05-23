@@ -89,6 +89,9 @@ var cbfx;
                     type: this.mCurCbfxType
                 });
             };
+            ShowView.prototype.isSupported = function (compType) {
+                return compType == Util.CompanyType.XJNY || compType == Util.CompanyType.NLTK;
+            };
             ShowView.prototype.option = function () {
                 return this.mOpt;
             };

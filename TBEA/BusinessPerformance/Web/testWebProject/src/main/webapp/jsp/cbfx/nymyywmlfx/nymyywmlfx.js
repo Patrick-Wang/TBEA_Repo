@@ -49,6 +49,9 @@ var cbfx;
                     companyId: compType
                 });
             };
+            ShowView.prototype.isSupported = function (compType) {
+                return compType == Util.CompanyType.TCNY;
+            };
             ShowView.prototype.option = function () {
                 return this.mOpt;
             };

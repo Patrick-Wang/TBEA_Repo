@@ -89,7 +89,7 @@ module cpzlqk {
                     });
             }
 
-            private updateEchart(data:Array<string[]>):void {
+            private updateEchart():void {
                 let title = "按产品统计结果";
                 let legend:Array<string> = [];
                 let echart = this.option().ct;
@@ -148,10 +148,14 @@ module cpzlqk {
                 if ( this.mData == undefined){
                     return;
                 }
-                if (this.mYdjdType == YDJDType.YD){
-                    this.updateEchart(this.mData.waveItems)
-                }
                 this.updateTable();
+
+                if (this.mYdjdType == YDJDType.YD){
+                    this.$(this.option().ctarea).show();
+                    this.updateEchart();
+                }else{
+                    this.$(this.option().ctarea).hide();
+                }
             }
 
             public init(opt:Option):void {

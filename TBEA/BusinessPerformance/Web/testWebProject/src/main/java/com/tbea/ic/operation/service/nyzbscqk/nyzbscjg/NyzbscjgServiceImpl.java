@@ -83,8 +83,8 @@ public class NyzbscjgServiceImpl implements NyzbscjgService {
 			list.set(1, entity.getKq().getName());
 			list.set(2, entity.getMz().getName());
 			result.add(list);
-
  		}
+
 
 		List<NyzbscjgEntity> entities = nyzbscjgDao.getByDate(d, company);
 		for (NyzbscjgEntity entity : entities) {

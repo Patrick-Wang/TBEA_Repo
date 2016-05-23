@@ -48,6 +48,9 @@ var cbfx;
             EntryView.prototype.option = function () {
                 return this.mOpt;
             };
+            EntryView.prototype.isSupported = function (compType) {
+                return compType == Util.CompanyType.TCNY;
+            };
             EntryView.prototype.pluginSave = function (dt, compType) {
                 var _this = this;
                 var allData = this.mTableAssist.getAllData();
@@ -147,7 +150,7 @@ var cbfx;
                     shrinkToFit: true,
                     autoScroll: true,
                     viewrecords: true,
-                    pager: '#' + pagername
+                    pager: '#' + pagername,
                 }));
             };
             EntryView.ins = new EntryView();

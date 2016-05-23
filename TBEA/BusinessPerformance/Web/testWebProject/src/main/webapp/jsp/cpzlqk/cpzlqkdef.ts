@@ -5,6 +5,7 @@ module cpzlqk{
     export interface Option extends framework.basic.PluginOption {
         tb:string;
         ct?:string;
+        ctarea?:string;
     }
 
     export interface FrameOption extends framework.basic.Option {

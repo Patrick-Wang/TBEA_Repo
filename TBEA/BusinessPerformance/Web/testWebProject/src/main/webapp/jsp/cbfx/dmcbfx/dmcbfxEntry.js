@@ -41,6 +41,9 @@ var cbfx;
             EntryView.prototype.getId = function () {
                 return pluginEntry.dmcbfx;
             };
+            EntryView.prototype.isSupported = function (compType) {
+                return compType == Util.CompanyType.XJNY || compType == Util.CompanyType.NLTK;
+            };
             EntryView.prototype.option = function () {
                 return this.mOpt;
             };
@@ -160,7 +163,7 @@ var cbfx;
                     width: 700,
                     shrinkToFit: true,
                     autoScroll: true,
-                    viewrecords: true
+                    viewrecords: true,
                 }));
             };
             EntryView.ins = new EntryView();
