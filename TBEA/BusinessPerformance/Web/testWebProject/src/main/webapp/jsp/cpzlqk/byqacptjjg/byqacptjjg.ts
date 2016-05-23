@@ -9,9 +9,17 @@
 module plugin {
     export let byqacptjjg : number = framework.basic.endpoint.lastId();
 }
-
+declare var echarts;
 module cpzlqk {
     export module byqacptjjg {
+
+
+        interface ByqacptjjgResp{
+            acptjjg : string[][];
+            waveItems: WaveItem[];
+        }
+
+
         import TextAlign = JQTable.TextAlign;
 		import Node = JQTable.Node;
         class JQGridAssistantFactory {
@@ -33,7 +41,7 @@ module cpzlqk {
 
         class ShowView extends ZlPluginView {
             static ins = new ShowView();
-            private mData:Array<string[]>;
+            private mData:ByqacptjjgResp;
             private mAjax:Util.Ajax = new Util.Ajax("../byqacptjjg/update.do", false);
             private mDateSelector:Util.DateSelector;
             private mDt: string;
@@ -81,22 +89,26 @@ module cpzlqk {
                     });
             }
 
-            private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>):void {
-                var xData:string[] = [];
-
-                $(this.mData).each((i:number)=> {
-                    xData.push(this.mData[i][0]);
-                })
+            private updateEchart(data:Array<string[]>):void {
+                let title = "按产品统计结果";
+                let legend:Array<string> = [];
+                let echart = this.option().ct;
 
                 let series = [];
-                for (let i in legend) {
+                for (let i in this.mData.waveItems){
+                    legend.push(this.mData.waveItems[i].name);
                     series.push({
-                        name: legend[i],
+                        name: this.mData.waveItems[i].name,
                         type: 'line',
                         smooth: true,
                         // itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                        data: data[i].length < 1 ? [0] : Util.replaceNull(data[i])
-                    })
+                        data: this.mData.waveItems[i].data
+                    });
+                }
+
+                var xData:string[] = [];
+                for (let i = 0; i < 12; ++i){
+                    xData.push((i + 1) + "月");
                 }
 
                 var option = {
@@ -136,7 +148,9 @@ module cpzlqk {
                 if ( this.mData == undefined){
                     return;
                 }
-
+                if (this.mYdjdType == YDJDType.YD){
+                    this.updateEchart(this.mData.waveItems)
+                }
                 this.updateTable();
             }
 
@@ -165,7 +179,7 @@ module cpzlqk {
                 this.$(name).jqGrid(
                     tableAssist.decorate({
 						datatype: "local",
-						data: tableAssist.getData(this.mData),
+						data: tableAssist.getData(this.mData.acptjjg),
                         multiselect: false,
                         drag: false,
                         resize: false,

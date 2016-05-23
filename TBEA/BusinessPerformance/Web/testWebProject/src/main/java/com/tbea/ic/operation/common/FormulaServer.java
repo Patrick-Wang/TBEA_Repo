@@ -14,9 +14,11 @@ public class FormulaServer<T> {
 		int length = rules.size();
 		Pair<Integer, T> pair = null;
 		Pair<Formula, FormulaClient<T>> rule = null;
+		
 		for (int i = 0, j = 0; i < length; ++i){
 			rule = rules.get(j);
 			pair = null;
+			rule.second.onStart(this);
 			if (rule.getFirst().isThis()){
 				pair = rule.getSecond().onThis();
 				rules.remove(j);
@@ -29,7 +31,7 @@ public class FormulaServer<T> {
 			if (null != pair){
 				paramCache.put(pair.getFirst(), pair.getSecond());
 			}
-			
+			rule.second.onComplete(this);
 		}
 		length = rules.size();
 		for (int i = 0; i < length; ++i){

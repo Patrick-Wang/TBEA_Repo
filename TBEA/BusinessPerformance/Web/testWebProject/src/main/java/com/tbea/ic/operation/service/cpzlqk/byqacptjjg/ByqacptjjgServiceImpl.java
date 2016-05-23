@@ -11,14 +11,15 @@ import net.sf.json.JSONArray;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Formula;
-import com.tbea.ic.operation.common.FormulaClient;
 import com.tbea.ic.operation.common.FormulaServer;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqjdacptjjg.ByqJdAcptjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqjdacptjjg.ByqJdAcptjjgDaoImpl;
@@ -99,7 +100,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		for (ByqJdAcptjjgEntity entity : entities){
 			ZltjjgEntity dj = zltjjgDao.getJdAcc(d, entity.getCpxl().getId(), company);
 			ZltjjgEntity tq = zltjjgDao.getJdAccQntq(d, entity.getCpxl().getId(), company);
-			clients.add(new FormulaClientJd(entity, dj, tq));
+			clients.add(new FormulaClientJd(this, entity, dj, tq));
 			fs.addRule(new Formula(entity.getFormul()), clients.get(clients.size() - 1));
 		}
 		
@@ -125,89 +126,6 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		setZltjjg(row, start, tj2);
 	}
 	
-	class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>{
-
-
-		protected List<String> row = null;
-		private ByqJdAcptjjgEntity entity;
-		private ZltjjgEntity zltj1;
-		private ZltjjgEntity zltj2;
-		
-		public List<String> getRow(){
-			return row;
-		}
-		
-		public FormulaClientJd(ByqJdAcptjjgEntity entity, ZltjjgEntity zltj1, ZltjjgEntity zltj2){
-			this.entity = entity;
-			this.zltj1 = zltj1;
-			this.zltj2 = zltj2;
-
-		}
-		
-		private Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> getDjTq(){
-			return new Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>>(
-					entity.getId(), 
-					new Pair<ZltjjgEntity, ZltjjgEntity>(zltj1, zltj2));
-		}
-		
-		@Override
-		public Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> onThis() {
-			Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> pair = this.getDjTq();
-			row = new ArrayList<String>();
-			Util.resize(row, 8);
-			setRow(row, entity, pair.getSecond().getFirst(), pair.getSecond().getSecond());
-			return pair;
-		}
-
-		@Override
-		public Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> onNull() {
-			return this.getDjTq();
-		}
-
-		@Override
-		public Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> onFormula(
-				FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> server,
-				Formula formula) {
-			row = new ArrayList<String>();
-			Util.resize(row, 8);
-			Pair<ZltjjgEntity, ZltjjgEntity> pair;
-			for (Integer id : formula.getParameters()){
-				pair = server.getCache(id);
-				if (null != pair){
-					if (null != pair.getFirst()){
-						formula.setParameter(id, 0, MathUtil.toDouble(pair.getFirst().getBhgs()));
-						formula.setParameter(id, 1, MathUtil.toDouble(pair.getFirst().getZs()));
-					}
-					if (null != pair.getSecond()){
-						formula.setParameter(id, 2, MathUtil.toDouble(pair.getSecond().getBhgs()));
-						formula.setParameter(id, 3, MathUtil.toDouble(pair.getSecond().getZs()));
-					}
-				}
-			}
-			
-			ZltjjgEntity dj = new ZltjjgEntity();
-			dj.setBhgs(MathUtil.toInteger(formula.compute(0)));
-			dj.setZs(MathUtil.toInteger(formula.compute(1)));
-			ZltjjgEntity tq = new ZltjjgEntity();
-			tq.setBhgs(MathUtil.toInteger(formula.compute(2)));
-			tq.setZs(MathUtil.toInteger(formula.compute(3)));
-			setRow(row, entity, dj, tq);
-			
-			return new Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>>(
-					entity.getId(), 
-					new Pair<ZltjjgEntity, ZltjjgEntity>(dj, tq));
-		}
-
-		@Override
-		public Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> onFormulaNoCache(
-				FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> server,
-				Formula formula) {
-			row = new ArrayList<String>();
-			Util.resize(row, 8);
-			return null;
-		}
-	}
-
 	@Override
 	public ErrorCode saveByqacptjjg(Date d, JSONArray data, Company company) {
 		// TODO Auto-generated method stub
@@ -224,6 +142,27 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 	public List<List<String>> getByqacptjjgEntry(Date d, Company company) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<WaveItem> getWaveValues(Date d, Company company) {
+		List<WaveItem> ret = new ArrayList<WaveItem>();
+		List<String> row = Util.resize(new ArrayList<String>(), 12);
+		EasyCalendar ec = new EasyCalendar(d);
+		List<ByqYdAcptjjgEntity> entities = byqYdAcptjjgDao.getAll();
+		ec.setMonth(1);
+		for (ByqYdAcptjjgEntity entity : entities){
+			for (int i = 0; i < 12; ++i){
+				ZltjjgEntity zltjjg = zltjjgDao.getByDate(d, entity.getCpxl().getId(), company);
+				if (null != zltjjg){
+					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
+				}else{
+					row.set(i, null);
+				}
+			}
+			ret.add(new WaveItem(entity.getCpxl().getName(), row));
+		}
+		return ret;
 	}
 
 }

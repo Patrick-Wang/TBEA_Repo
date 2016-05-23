@@ -31,7 +31,7 @@ import com.tbea.ic.operation.common.excel.SbdddcbjpcqkSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
@@ -64,8 +64,8 @@ public class SbdddcbjpcqkServlet {
 		List<List<String>> result = sbdddcbjpcqkService.getByqkglydd(d, getType(request), company);
 		RawFormatterHandler handler = new RawPercentFormatterHandler(1, null, new Integer[]{8, 11, 14, 17, 20, 23, 26});
 		handler.next(new RawNumberFormatterHandler(1));
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("--").format(result);
+		RawFormatterServer serv = new RawFormatterServer(handler);
+		serv.acceptNullAs("--").format(result);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
@@ -79,8 +79,8 @@ public class SbdddcbjpcqkServlet {
 		
 		RawFormatterHandler handler = new RawPercentFormatterHandler(1, null, new Integer[]{6, 9, 12});
 		handler.next(new RawNumberFormatterHandler(1));
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("--").format(result);
+		RawFormatterServer serv = new RawFormatterServer(handler);
+		serv.acceptNullAs("--").format(result);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	

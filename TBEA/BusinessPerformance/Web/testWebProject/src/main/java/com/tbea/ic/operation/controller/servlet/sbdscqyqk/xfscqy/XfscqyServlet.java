@@ -28,7 +28,7 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.SbdscqyqkSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterClient;
+import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
@@ -132,9 +132,9 @@ public class XfscqyServlet {
 		
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
 		handler.next(new NumberFormatterHandler(1));
-		FormatterClient client = new FormatterClient(handler, 1, 2);
-		client.addMergeRegion(new MergeRegion(2, 0, 12, 1));
-		client.format(ret, template);
+		FormatterServer serv = new FormatterServer(handler, 1, 2);
+		serv.addMergeRegion(new MergeRegion(2, 0, 12, 1));
+		serv.format(ret, template);
 		template.write(response, name + ".xls");
 	}
 }

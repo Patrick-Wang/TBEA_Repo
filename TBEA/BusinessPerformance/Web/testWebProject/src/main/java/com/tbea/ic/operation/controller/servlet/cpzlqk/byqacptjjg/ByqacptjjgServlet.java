@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,16 +24,15 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CpzlqkSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterClient;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.service.cpzlqk.byqacptjjg.ByqacptjjgService;
 import com.tbea.ic.operation.service.cpzlqk.byqacptjjg.ByqacptjjgServiceImpl;
@@ -58,14 +58,14 @@ public class ByqacptjjgServlet {
 		
 		
 		List<List<String>> result = byqacptjjgService.getByqacptjjg(d, company, yjType);
+		List<WaveItem> waveItems = null;
+		if (yjType == YDJDType.YD){
+			waveItems  = byqacptjjgService.getWaveValues(d, company);
+		}
 		
-		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
-		handler.next(new RawPercentFormatterHandler(1, null, new Integer[]{4, 7}))
-			.next(new RawNumberFormatterHandler(0));
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("--").format(result);
+		ByqacptjjgResp resp = new ByqacptjjgResp(result, waveItems);
 		
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+		return JSONObject.fromObject(resp.formate()).toString().getBytes("utf-8");
 	}
 
 	@RequestMapping(value = "entry/update.do")
@@ -78,8 +78,8 @@ public class ByqacptjjgServlet {
 		List<List<String>> result = byqacptjjgService.getByqacptjjgEntry(d, company);
 		
 		RawFormatterHandler handler = new RawNumberFormatterHandler(4, null, new Integer[]{3}).trimZero(true);
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("").format(result);
+		RawFormatterServer serv = new RawFormatterServer(handler);
+		serv.acceptNullAs("").format(result);
 		
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
@@ -121,9 +121,9 @@ public class ByqacptjjgServlet {
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0, 1});
 		handler.next(new NumberFormatterHandler(0));
-		FormatterClient client = new FormatterClient(handler, 0, 2);
-		client.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
-		client.format(result, template);
+		FormatterServer serv = new FormatterServer(handler, 0, 2);
+		serv.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
+		serv.format(result, template);
 	
 		template.write(response, template.getSheetName() + ".xls");
 	}

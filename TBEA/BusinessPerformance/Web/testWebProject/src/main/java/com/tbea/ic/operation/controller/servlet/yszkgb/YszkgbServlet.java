@@ -41,7 +41,7 @@ import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.YszkgbSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
@@ -105,8 +105,8 @@ public class YszkgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = yszkgbService.getZmb(d, companyManager.getBMDBOrganization().getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("--").format(result);
+		RawFormatterServer serv = new RawFormatterServer(handler);
+		serv.acceptNullAs("--").format(result);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
@@ -118,8 +118,8 @@ public class YszkgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = yszkgbService.getYszkzlbh(d, companyManager.getBMDBOrganization().getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("--").format(result);
+		RawFormatterServer serv = new RawFormatterServer(handler);
+		serv.acceptNullAs("--").format(result);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	@RequestMapping(value = "yszkkxxz/update.do")
@@ -130,8 +130,8 @@ public class YszkgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = yszkgbService.getYszkkxxz(d, companyManager.getBMDBOrganization().getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("--").format(result);
+		RawFormatterServer serv = new RawFormatterServer(handler);
+		serv.acceptNullAs("--").format(result);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
@@ -144,8 +144,8 @@ public class YszkgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = yszkgbService.getYqyszcsys(d, companyManager.getBMDBOrganization().getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("--").format(result);
+		RawFormatterServer serv = new RawFormatterServer(handler);
+		serv.acceptNullAs("--").format(result);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
@@ -157,8 +157,8 @@ public class YszkgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = yszkgbService.getYszkyjtztjqs(d, companyManager.getBMDBOrganization().getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("--").format(result);
+		RawFormatterServer serv = new RawFormatterServer(handler);
+		serv.acceptNullAs("--").format(result);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
@@ -170,8 +170,8 @@ public class YszkgbServlet {
 		Company comp = companyManager.getBMDBOrganization().getCompany(type);
 		List<List<String>> result = yszkgbService.getYszkkxxzEntry(d, comp);
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("").format(result);
+		RawFormatterServer serv = new RawFormatterServer(handler);
+		serv.acceptNullAs("").format(result);
 		ZBStatus status = yszkgbService.getYszkkxxzStatus(d, comp);
 		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
 		return JSONObject.fromObject(sd).toString().getBytes("utf-8");
