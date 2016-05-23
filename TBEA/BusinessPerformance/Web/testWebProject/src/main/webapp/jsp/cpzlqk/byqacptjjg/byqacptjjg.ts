@@ -81,6 +81,57 @@ module cpzlqk {
                     });
             }
 
+            private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>):void {
+                var xData:string[] = [];
+
+                $(this.mData).each((i:number)=> {
+                    xData.push(this.mData[i][0]);
+                })
+
+                let series = [];
+                for (let i in legend) {
+                    series.push({
+                        name: legend[i],
+                        type: 'line',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: data[i].length < 1 ? [0] : Util.replaceNull(data[i])
+                    })
+                }
+
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true,
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: series
+                };
+
+                echarts.init(this.$(echart)[0]).setOption(option);
+
+            }
+
             public refresh() : void{
                 if ( this.mData == undefined){
                     return;
