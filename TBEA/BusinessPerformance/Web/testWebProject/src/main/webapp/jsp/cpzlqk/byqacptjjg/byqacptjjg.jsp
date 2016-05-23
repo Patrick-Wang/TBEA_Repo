@@ -4,6 +4,11 @@
             <div id="table" align="center"></div>
         </td>
     </tr>
+    <tr id="ctarea">
+        <td>
+            <div id="chart" align="center"></div>
+        </td>
+    </tr>
 </Table>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/cpzlqk/byqacptjjg/byqacptjjg.js"></script>
 <script type="text/javascript">
@@ -12,6 +17,7 @@ $(document).ready(function(){
             .to(plugin.byqacptjjg)
             .send(framework.basic.FrameEvent.FE_INIT_EVENT,{
                 tb: "table",
+                ct:"chart",
                 host: "byqacptjjg",
                 tbarea:"tbarea"
             });

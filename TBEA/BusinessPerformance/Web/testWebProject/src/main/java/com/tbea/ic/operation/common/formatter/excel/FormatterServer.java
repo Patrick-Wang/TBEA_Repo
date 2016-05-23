@@ -9,22 +9,22 @@ import org.apache.poi.ss.util.CellRangeAddress;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 
-public class FormatterClient {
+public class FormatterServer {
 	FormatterHandler handler;
 	int xOffset = 0;
 	int yOffset = 0;
 	List<MergeRegion> mrs = new ArrayList<MergeRegion>();
-	public FormatterClient addMergeRegion(MergeRegion mr){
+	public FormatterServer addMergeRegion(MergeRegion mr){
 		mrs.add(mr);
 		return this;
 	}
 	
-	public FormatterClient(FormatterHandler handler) {
+	public FormatterServer(FormatterHandler handler) {
 		super();
 		this.handler = handler;
 	}
 	
-	public FormatterClient(FormatterHandler handler, int xOffset, int yOffset) {
+	public FormatterServer(FormatterHandler handler, int xOffset, int yOffset) {
 		super();
 		this.handler = handler;
 		this.xOffset = xOffset;

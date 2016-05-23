@@ -4,6 +4,7 @@
 module cpzlqk{
     export interface Option extends framework.basic.PluginOption {
         tb:string;
+        ct?:string;
     }
 
     export interface FrameOption extends framework.basic.Option {
@@ -18,5 +19,10 @@ module cpzlqk{
     export enum ByqBhgType{
         YBYSQFJYS,
         PBCP
+    }
+
+    export interface WaveItem{
+        name : string;
+        data : string[];
     }
 }

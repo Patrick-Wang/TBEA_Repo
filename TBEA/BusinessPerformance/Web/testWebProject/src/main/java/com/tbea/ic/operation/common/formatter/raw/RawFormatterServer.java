@@ -2,17 +2,17 @@ package com.tbea.ic.operation.common.formatter.raw;
 
 import java.util.List;
 
-public class RawFormatterClient {
+public class RawFormatterServer {
 	RawFormatterHandler handler;
 
-	public RawFormatterClient(RawFormatterHandler handler) {
+	public RawFormatterServer(RawFormatterHandler handler) {
 		super();
 		this.handler = handler;
 	}
 	
 	String nullAs = "--";
 	
-	public RawFormatterClient acceptNullAs(String nullAs){
+	public RawFormatterServer acceptNullAs(String nullAs){
 		this.nullAs = nullAs;
 		return this;
 	}
@@ -29,5 +29,17 @@ public class RawFormatterClient {
 			}
 		}
 		return table;
+	}
+	
+	public List<String> formatRow(List<String> list){
+		String val = null;
+		for (int j = 0; j < list.size(); ++j){
+			val = handler.handle(list.get(0), j, list.get(j));
+			if (val == null){
+				val = nullAs;
+			}
+			list.set(j, val);
+		}
+		return list;
 	}
 }

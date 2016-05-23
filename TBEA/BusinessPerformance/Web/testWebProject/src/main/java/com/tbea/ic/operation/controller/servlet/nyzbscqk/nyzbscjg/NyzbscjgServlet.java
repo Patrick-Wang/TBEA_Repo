@@ -23,13 +23,13 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.NyzbscqkSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterClient;
+import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.service.nyzbscqk.nyzbscjg.NyzbscjgService;
@@ -54,8 +54,8 @@ public class NyzbscjgServlet {
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
 		handler.next(new RawNumberFormatterHandler(1));
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("--").format(result);
+		RawFormatterServer serv = new RawFormatterServer(handler);
+		serv.acceptNullAs("--").format(result);
 		
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
@@ -70,8 +70,8 @@ public class NyzbscjgServlet {
 		List<List<String>> result = nyzbscjgService.getNyzbscjgEntry(d, company);
 		
 		RawFormatterHandler handler = new RawNumberFormatterHandler(4, null, new Integer[]{3}).trimZero(true);
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("").format(result);
+		RawFormatterServer serv = new RawFormatterServer(handler);
+		serv.acceptNullAs("").format(result);
 		
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
@@ -114,9 +114,9 @@ public class NyzbscjgServlet {
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0, 1});
 		handler.next(new NumberFormatterHandler(1));
-		FormatterClient client = new FormatterClient(handler, 0, 2);
-		client.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
-		client.format(result, template);
+		FormatterServer serv = new FormatterServer(handler, 0, 2);
+		serv.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
+		serv.format(result, template);
 		
 		template.write(response, template.getSheetName() + ".xls");
 	}

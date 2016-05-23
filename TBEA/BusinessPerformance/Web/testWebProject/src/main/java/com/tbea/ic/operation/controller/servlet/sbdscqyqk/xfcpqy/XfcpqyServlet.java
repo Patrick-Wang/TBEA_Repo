@@ -27,7 +27,7 @@ import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.SbdscqyqkSheetType;
 import com.tbea.ic.operation.common.excel.YlfxwgcpylnlspcsSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterClient;
+import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;

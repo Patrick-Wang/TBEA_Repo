@@ -33,7 +33,7 @@ import com.tbea.ic.operation.common.excel.DzwzgbSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterClient;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
@@ -96,8 +96,8 @@ public class DzwzgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = dzwzgbService.getDzclcb(d, companyManager.getBMDBOrganization().getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
-		RawFormatterClient client = new RawFormatterClient(handler);
-		client.acceptNullAs("--").format(result);
+		RawFormatterServer serv = new RawFormatterServer(handler);
+		serv.acceptNullAs("--").format(result);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	@RequestMapping(value = "dzclcb/entry/update.do")

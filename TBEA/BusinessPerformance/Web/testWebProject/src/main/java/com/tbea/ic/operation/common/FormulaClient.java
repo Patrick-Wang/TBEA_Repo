@@ -10,4 +10,7 @@ public interface FormulaClient<T>{
 	
 	Pair<Integer, T> onFormulaNoCache(FormulaServer<T> server, Formula formula);
 	
+	void onStart(FormulaServer<T> server);
+	
+	void onComplete(FormulaServer<T> server);
 }
