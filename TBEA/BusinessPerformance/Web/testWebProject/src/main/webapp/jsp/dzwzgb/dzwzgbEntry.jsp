@@ -56,7 +56,7 @@
 <%@include file="../framework/basic/basicEntry.jsp"%>
 <script src="${pageContext.request.contextPath}/jsp/dzwzgb/dzwzgbdef.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/dzwzgb/dzwzgbEntry.js" type="text/javascript"></script>
-<title>可供履约订单</title>
+<title>大宗材料控成本</title>
 
 <style type="text/css">
 body {
@@ -166,7 +166,7 @@ th.ui-th-ltr {
 </head> 
 <body>
 	<div class="header">
-		<h1 id="headertitle">可供履约订单</h1>
+		<h1 id="headertitle">大宗材料控成本</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">

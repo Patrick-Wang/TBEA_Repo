@@ -56,7 +56,7 @@
 <%@include file="../framework/basic/basicEntry.jsp"%>
 <script src="${pageContext.request.contextPath}/jsp/sbdczclwcqk/sbdczclwcqkdef.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/sbdczclwcqk/sbdczclwcqkEntry.js" type="text/javascript"></script>
-<title>完工产品情况</title>
+<title>输变电产值产量情况</title>
 
 <style type="text/css">
 body {
@@ -166,7 +166,7 @@ th.ui-th-ltr {
 </head> 
 <body>
 	<div class="header">
-		<h1 id="headertitle">完工产品情况</h1>
+		<h1 id="headertitle">输变电产值产量情况</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:700px">
