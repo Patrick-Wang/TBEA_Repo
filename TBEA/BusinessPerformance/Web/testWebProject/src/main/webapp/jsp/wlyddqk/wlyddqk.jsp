@@ -56,7 +56,7 @@
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/wlyddqk/wlyddqk.js" type="text/javascript"></script>
 
-<title>未履约订单管报</title>
+<title>输变电未履约订单情况</title>
 
 <style type="text/css">
 body {
@@ -172,7 +172,7 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class="header">
-		<h1 id="headertitle">未履约订单管报</h1>
+		<h1 id="headertitle">输变电未履约订单情况</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">
