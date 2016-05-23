@@ -3,7 +3,7 @@ package com.tbea.ic.operation.controller.servlet.cpzlqk;
 import java.util.List;
 
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
-import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
 
 public class WaveItem {
 	private String name;
@@ -29,7 +29,7 @@ public class WaveItem {
 	} 
 	
 	public void formate(){
-		RawFormatterServer serv = new RawFormatterServer(new RawNumberFormatterHandler(1));
+		RawFormatterServer serv = new RawFormatterServer(new RawPercentFormatterHandler(1, null, null));
 		serv.acceptNullAs("0").formatRow(data);
 	}
 }
