@@ -177,7 +177,7 @@
 										style="color: rgb(62, 152, 197);">日报录入</a></li>
 								</c:if> --%>
 
-								<c:if test="${JYAnalysisEntry}">
+								<c:if test="${isJydw}">
 									<li style="background-color: transparent"><i
 										class="ec-icon ec-icon-force"></i> <a href="#inputPrediction"
 										style="color: rgb(62, 152, 197);">经营分析录入</a></li>
