@@ -53,7 +53,7 @@
 <%@include file="../framework/basic/basicShow.jsp"%>
 <script src="${pageContext.request.contextPath}/jsp/dzwzgb/dzwzgbdef.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/dzwzgb/dzwzgb.js" type="text/javascript"></script>
-<title>应收账款管报</title>
+<title>大宗材料控成本</title>
 
 <style type="text/css">
 body {
@@ -169,7 +169,7 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class="header">
-		<h1 id="headertitle">应收账款管报</h1>
+		<h1 id="headertitle">大宗材料控成本</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">
