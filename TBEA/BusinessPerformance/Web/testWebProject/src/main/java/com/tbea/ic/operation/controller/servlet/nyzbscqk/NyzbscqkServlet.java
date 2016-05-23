@@ -41,7 +41,7 @@ public class NyzbscqkServlet {
 		dateSel.select(map);
 		List<Company> comps = extendAuthService.getAuthedCompanies(
 				SessionManager.getAccount(request.getSession()),
-				AuthType.NygbLookup);
+				AuthType.NYzbscqkLookup);
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		return new ModelAndView("nyzbscqk/nyzbscqk", map);

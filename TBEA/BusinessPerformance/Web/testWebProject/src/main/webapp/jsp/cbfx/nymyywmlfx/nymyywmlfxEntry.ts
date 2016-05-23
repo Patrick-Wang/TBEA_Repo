@@ -15,7 +15,7 @@ module pluginEntry {
 module cbfx {
     export module nymyywmlfxEntry {
         import TextAlign = JQTable.TextAlign;
-        import Node = JQTable.Node;
+import Node = JQTable.Node;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
@@ -48,7 +48,11 @@ module cbfx {
             private option():Option {
                 return <Option>this.mOpt;
             }
-
+            
+            protected isSupported(compType: Util.CompanyType): boolean {
+                return compType == Util.CompanyType.TCNY;
+            }
+            
             public pluginSave(dt:string, compType:Util.CompanyType):void {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];

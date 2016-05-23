@@ -23,6 +23,8 @@ module cbfx {
                 ], gridName);
             }
         }
+        
+  
 
         interface Option extends framework.basic.PluginOption {
             tb:string;
@@ -40,7 +42,11 @@ module cbfx {
             getId():number {
                 return pluginEntry.dmcbfx;
             }
-
+            
+            protected isSupported(compType: Util.CompanyType): boolean {
+                return compType == Util.CompanyType.XJNY || compType == Util.CompanyType.NLTK;
+            }
+            
             private option():Option {
                 return <Option>this.mOpt;
             }

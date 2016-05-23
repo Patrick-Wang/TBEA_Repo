@@ -44,6 +44,10 @@ module cbfx {
                         companyId:compType
                     });
             }
+            
+            protected isSupported(compType: Util.CompanyType): boolean {
+                return compType == Util.CompanyType.TCNY;
+            }
 
             private option():Option {
                 return <Option>this.mOpt;

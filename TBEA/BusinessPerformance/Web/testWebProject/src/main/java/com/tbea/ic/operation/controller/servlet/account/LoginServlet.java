@@ -172,6 +172,7 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("SbdgbEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.SbdgbEntry)))
 		.add("XnygbEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.XnygbEntry)))
 		.add("NygbEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.NygbEntry)))
+		.add("NYzbscqkEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.NYzbscqkEntry)))
 		.add("GbLookup", lookup.value())
 		.add("GbEntry", entry.value())
 		.add("ComGbLookup", comGbLookup.value())

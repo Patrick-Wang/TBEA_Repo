@@ -77,6 +77,13 @@ public class NyzbscjgServiceImpl implements NyzbscjgService {
 		List<NyCompMiningAreaMatchEntity> miningAreaMatch = nyCompMiningAreaMatchDao
 				.getMiningArea(company);
 		for (NyCompMiningAreaMatchEntity entity : miningAreaMatch) {
+			List<String> list = new ArrayList<String>();
+			Util.resize(list, 4);
+			list.set(0, "" + entity.getId());
+			list.set(1, entity.getKq().getName());
+			list.set(2, entity.getMz().getName());
+			result.add(list);
+
  		}
 
 		List<NyzbscjgEntity> entities = nyzbscjgDao.getByDate(d, company);

@@ -184,7 +184,9 @@ th.ui-th-ltr {
 		<tr>
 			<td id="plugin">
 				<%@include file="dmcbfx/dmcbfx.jsp"%>
+				<c:if test="${NYmyywmlEntry}">
 				<%@include file="nymyywmlfx/nymyywmlfx.jsp"%>
+				</c:if>
 			</td>
 		</tr>
 		<tr>

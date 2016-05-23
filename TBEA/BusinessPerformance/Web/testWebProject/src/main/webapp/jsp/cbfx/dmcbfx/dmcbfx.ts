@@ -14,7 +14,7 @@ module plugin {
 module cbfx {
     export module dmcbfx {
         import TextAlign = JQTable.TextAlign;
-        import EndpointProxy = framework.basic.EndpointProxy;
+import EndpointProxy = framework.basic.EndpointProxy;
         class JQGridAssistantFactory {
             //吨煤成本分析表
             public static createTable(gridName:string, year:number, month:number):JQTable.JQGridAssistant {
@@ -84,6 +84,10 @@ module cbfx {
                         companyId:compType,
                         type:this.mCurCbfxType
                     });
+            }
+            
+            protected isSupported(compType: Util.CompanyType): boolean {
+                return compType == Util.CompanyType.XJNY || compType == Util.CompanyType.NLTK;
             }
 
             private option():Option {

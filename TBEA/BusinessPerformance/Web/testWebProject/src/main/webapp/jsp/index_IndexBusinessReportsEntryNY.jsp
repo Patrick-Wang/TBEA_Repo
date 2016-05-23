@@ -16,9 +16,11 @@
 				<li><a href="../cbfx/entry.do" target="_blank"><img
 						src="../images/charts/bar3.png"> <span><strong>成本分析录入</strong></span></a>
 				</li>
+				<c:if test="${NYzbscqkEntry}">
 				<li><a href="../nyzbscqk/entry.do" target="_blank"><img
 						src="../images/charts/bar2.png"> <span><strong>能源-周边市场情况录入</strong></span></a>
 				</li>
+				</c:if>
 			</ul>
 		</div>
 	</div>
