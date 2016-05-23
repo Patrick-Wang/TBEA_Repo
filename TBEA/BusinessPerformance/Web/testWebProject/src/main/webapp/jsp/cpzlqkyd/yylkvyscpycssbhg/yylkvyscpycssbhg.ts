@@ -71,9 +71,21 @@ module cpzlqkyd {
 
             public init(opt:Option):void {
                 framework.router
-					.fromEp(this)
-					.to(framework.basic.endpoint.FRAME_ID)
-					.send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+                    .fromEp(new framework.basic.EndpointProxy(plugin.byq_cp, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "月度按产品统计结果");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(plugin.byq_dw, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "月度按单位统计结果");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(plugin.xl_cp, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "月度按产品类型统计结果");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(plugin.xl_dydj, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "月度按电压等级统计结果");
             }
 
 			private getMonth():number{

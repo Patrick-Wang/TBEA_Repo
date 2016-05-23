@@ -89,4 +89,45 @@ public class MathUtil {
 		}
 	}
 
+	public static Double division(Integer sub, Integer base) {
+		if (base == null || sub == null){
+			return null;
+		}
+		return sub.doubleValue() / base.doubleValue();
+	}
+
+	public static Integer toInteger(Double val) {
+		if (null == val){
+			return null;
+		}
+		return val.intValue();
+	}
+
+	public static Double toDouble(Integer val) {
+		if (null == val){
+			return null;
+		}
+		return val.doubleValue();
+	}
+
+	public static Integer minus(Integer val1, Integer val2) {
+		if (val1 == null || val2 == null){
+			return null;
+		}else {
+			return val1 - val2;
+		}
+	}
+
+	public static Integer sum(Integer val1, Integer val2) {
+		Integer ret = val1;
+		if (val2 != null){
+			if (ret != null){
+				ret += val2;
+			}else{
+				ret = val2;
+			}
+		}
+		return ret;
+	}
+
 }

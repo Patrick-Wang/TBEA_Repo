@@ -10,7 +10,7 @@ module framework.basic {
 
     import router = framework.router;
 
-    interface Option {
+    export interface Option {
         dt:string;
         type:string;
         comp:string;
@@ -88,7 +88,7 @@ module framework.basic {
             return super.onEvent(e);
         }
 
-        protected updateTypeSelector(width:number = 285) {
+        protected updateTypeSelector(width:number = 285) :boolean{
             let type:Util.CompanyType = this.mCompanySelector.getCompany();
             let nodes = [];
             for (var i = 0; i < this.mNodesAll.length; ++i) {
@@ -131,6 +131,7 @@ module framework.basic {
                     .css("text-align", "left")
                     .css("font-size", "12px");
             }
+            return typeChange;
         }
 
 

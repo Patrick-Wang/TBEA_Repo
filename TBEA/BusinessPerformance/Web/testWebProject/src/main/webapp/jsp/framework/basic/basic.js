@@ -113,6 +113,7 @@ var framework;
                         .css("text-align", "left")
                         .css("font-size", "12px");
                 }
+                return typeChange;
             };
             BasicFrameView.prototype.plugin = function (node) {
                 return node.getData().plugin;

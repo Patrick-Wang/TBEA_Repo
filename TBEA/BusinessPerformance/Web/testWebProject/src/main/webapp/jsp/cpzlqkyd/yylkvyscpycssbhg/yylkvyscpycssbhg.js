@@ -32,7 +32,7 @@ var cpzlqkyd;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -72,9 +72,21 @@ var cpzlqkyd;
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
-                    .fromEp(this)
+                    .fromEp(new framework.basic.EndpointProxy(plugin.byq_cp, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "月度按产品统计结果");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(plugin.byq_dw, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "月度按单位统计结果");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(plugin.xl_cp, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "月度按产品类型统计结果");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(plugin.xl_dydj, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "月度按电压等级统计结果");
             };
             ShowView.prototype.getMonth = function () {
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
@@ -103,6 +115,6 @@ var cpzlqkyd;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(yylkvyscpycssbhg = cpzlqkyd.yylkvyscpycssbhg || (cpzlqkyd.yylkvyscpycssbhg = {}));
 })(cpzlqkyd || (cpzlqkyd = {}));

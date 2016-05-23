@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.common;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Calendar;
 
 public class EasyCalendar {
@@ -54,4 +55,15 @@ public class EasyCalendar {
 		return new Date(cal.getTimeInMillis());
 	}
 	
+	public Timestamp getTimestamp(){
+		return new Timestamp(cal.getTimeInMillis());
+	}
+	
+	public static int getJdCount(int month){
+		return (month - 1) / 3 + 1;
+	}
+	
+	public int getCurrentSeasonFirstMonth(){
+		return (getJdCount(this.getMonth()) - 1) * 3 + 1;
+	}
 }
