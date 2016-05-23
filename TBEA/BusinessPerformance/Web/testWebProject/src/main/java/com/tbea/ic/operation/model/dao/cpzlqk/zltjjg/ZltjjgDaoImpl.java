@@ -101,4 +101,22 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 		entity.setZs(((Long)ret.get(0)[1]).intValue());
 		return entity;
 	}
+
+	@Override
+	public ZltjjgEntity getByDateTotal(Date d, List<Integer> cplist, Company company) {
+		 EasyCalendar ec = new EasyCalendar(d);
+	        Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf = :yf and cpid in :cpid and dwid = :dwid group by dwid");
+			q.setParameter("nf", ec.getYear());
+			q.setParameter("yf", ec.getMonth());
+			q.setParameter("cpid", cplist);
+			q.setParameter("dwid", company.getId());
+			List<Object[]> ret = q.getResultList();
+			if (ret.isEmpty() || ret.get(0)[0] == null && ret.get(0)[1] == null){
+				return null;
+			}
+			ZltjjgEntity entity = new ZltjjgEntity();
+			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+			entity.setZs(((Long)ret.get(0)[1]).intValue());
+			return entity;
+	}
 }

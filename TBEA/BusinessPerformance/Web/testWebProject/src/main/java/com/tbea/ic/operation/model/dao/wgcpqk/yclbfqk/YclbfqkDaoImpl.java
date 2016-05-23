@@ -34,7 +34,11 @@ public class YclbfqkDaoImpl extends AbstractReadWriteDaoImpl<YclbfqkEntity> impl
 
 	@Override
 	public List<YclbfqkEntity> getByDate(Date date, Company company) {
-		Query q = this.getEntityManager().createQuery("from YclbfqkEntity where dwid=:cpId");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("from YclbfqkEntity where  nf=:nf and yf=:yf and dwid=:cpId");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		q.setParameter("cpId", company.getId());
 		return q.getResultList();
 	}

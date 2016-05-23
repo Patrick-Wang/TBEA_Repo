@@ -4,9 +4,14 @@
             <div id="table" align="center"></div>
         </td>
     </tr>
-    <tr id="ctarea">
+    <tr id="ctarea" style="display: none;">
         <td>
-            <div id="chart" align="center"></div>
+            <div align="center">
+                <div class="panel-content-border"
+                     style="margin-bottom: 20px; width: 1200px">
+                    <div id="chart" class="panel-content"></div>
+                </div>
+            </div>
         </td>
     </tr>
 </Table>
@@ -18,6 +23,7 @@ $(document).ready(function(){
             .send(framework.basic.FrameEvent.FE_INIT_EVENT,{
                 tb: "table",
                 ct:"chart",
+                ctarea:"ctarea",
                 host: "byqacptjjg",
                 tbarea:"tbarea"
             });

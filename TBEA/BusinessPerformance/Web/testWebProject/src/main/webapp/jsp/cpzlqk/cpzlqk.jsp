@@ -180,9 +180,9 @@ th.ui-th-ltr {
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 				<div id="radio" style="float: right">
-					<input type="radio" id="rdyd" name="radio">
+					<input type="radio" id="rdyd" name="radio" checked="checked">
 					<label	for="rdyd">月度</label>
-					<input type="radio" id="rdjd" name="radio" checked="checked">
+					<input type="radio" id="rdjd" name="radio">
 					<label for="rdjd">季度</label>
 				</div>
 			</td>

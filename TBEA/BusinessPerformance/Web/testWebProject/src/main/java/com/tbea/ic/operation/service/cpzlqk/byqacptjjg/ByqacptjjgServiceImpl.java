@@ -147,21 +147,54 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 	@Override
 	public List<WaveItem> getWaveValues(Date d, Company company) {
 		List<WaveItem> ret = new ArrayList<WaveItem>();
-		List<String> row = Util.resize(new ArrayList<String>(), 12);
+		List<String> row = null;
 		EasyCalendar ec = new EasyCalendar(d);
 		List<ByqYdAcptjjgEntity> entities = byqYdAcptjjgDao.getAll();
-		ec.setMonth(1);
+		
+		List<Integer> cpids = new ArrayList<Integer>();
+		String cpName = null;
 		for (ByqYdAcptjjgEntity entity : entities){
+			if (cpName == null || entity.getCpdl().getName().equals(cpName)){
+				cpids.add(entity.getCpxl().getId());
+				cpName = entity.getCpdl().getName();
+				continue;
+			}
+			row = Util.resize(new ArrayList<String>(), 12);
+			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
-				ZltjjgEntity zltjjg = zltjjgDao.getByDate(d, entity.getCpxl().getId(), company);
+				
+				ZltjjgEntity zltjjg = zltjjgDao.getByDateTotal(ec.getDate(), cpids, company);
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
 				}else{
 					row.set(i, null);
 				}
+				ec.addMonth(1);
 			}
-			ret.add(new WaveItem(entity.getCpxl().getName(), row));
+			ec.addMonth(-1);
+			ret.add(new WaveItem(cpName, row));
+			cpids.clear();
+			cpids.add(entity.getCpxl().getId());
+			cpName = entity.getCpdl().getName();
+			
 		}
+		
+		if (cpName != null){
+			row = Util.resize(new ArrayList<String>(), 12);
+			ec.setMonth(1);
+			for (int i = 0; i < 12; ++i){
+				ZltjjgEntity zltjjg = zltjjgDao.getByDateTotal(ec.getDate(), cpids, company);
+				if (null != zltjjg){
+					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
+				}else{
+					row.set(i, null);
+				}
+				ec.addMonth(1);
+			}
+			ec.addMonth(-1);
+			ret.add(new WaveItem(cpName, row));
+		}
+		
 		return ret;
 	}
 
