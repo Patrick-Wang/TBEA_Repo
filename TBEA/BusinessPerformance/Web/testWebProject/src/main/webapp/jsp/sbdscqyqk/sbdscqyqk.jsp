@@ -52,7 +52,7 @@
 <%@include file="../framework/basic/basicShow.jsp"%>
 <script src="${pageContext.request.contextPath}/jsp/sbdscqyqk/sbdscqyqkdef.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/sbdscqyqk/sbdscqyqk.js" type="text/javascript"></script>
-<title>输变电市场情况</title>
+<title>输变电市场签约情况</title>
 
 <style type="text/css">
 body {
@@ -168,7 +168,7 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class="header">
-		<h1 id="headertitle">输变电市场情况</h1>
+		<h1 id="headertitle">输变电市场签约情况</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">

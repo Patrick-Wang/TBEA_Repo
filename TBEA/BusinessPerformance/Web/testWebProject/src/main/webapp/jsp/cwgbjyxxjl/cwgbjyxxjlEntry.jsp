@@ -56,7 +56,7 @@
 <%@include file="../framework/basic/basicEntry.jsp"%>
 <script src="${pageContext.request.contextPath}/jsp/cwgbjyxxjl/cwgbjyxxjldef.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/cwgbjyxxjl/cwgbjyxxjlEntry.js" type="text/javascript"></script>
-<title>完工产品情况</title>
+<title>财务-应交税费</title>
 
 <style type="text/css">
 body {

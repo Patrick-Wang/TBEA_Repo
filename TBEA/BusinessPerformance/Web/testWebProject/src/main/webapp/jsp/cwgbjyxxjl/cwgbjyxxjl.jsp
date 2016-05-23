@@ -52,7 +52,7 @@
 <%@include file="../framework/basic/basicShow.jsp"%>
 <script src="${pageContext.request.contextPath}/jsp/cwgbjyxxjl/cwgbjyxxjldef.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/cwgbjyxxjl/cwgbjyxxjl.js" type="text/javascript"></script>
-<title>完工产品情况</title>
+<title>财务-经营性现金流情况</title>
 
 <style type="text/css">
 body {
@@ -168,7 +168,7 @@ th.ui-th-ltr {
 </head>
 <body>
 	<div class="header">
-		<h1 id="headertitle">经营性现金流</h1>
+		<h1 id="headertitle">财务-经营性现金流情况</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">
