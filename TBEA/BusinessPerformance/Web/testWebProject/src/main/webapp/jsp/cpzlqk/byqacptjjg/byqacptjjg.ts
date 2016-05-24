@@ -13,13 +13,6 @@ declare var echarts;
 module cpzlqk {
     export module byqacptjjg {
 
-
-        interface ByqacptjjgResp{
-            acptjjg : string[][];
-            waveItems: WaveItem[];
-        }
-
-
         import TextAlign = JQTable.TextAlign;
 		import Node = JQTable.Node;
         class JQGridAssistantFactory {
@@ -41,7 +34,7 @@ module cpzlqk {
 
         class ShowView extends ZlPluginView {
             static ins = new ShowView();
-            private mData:ByqacptjjgResp;
+            private mData:CpzlqkResp;
             private mAjax:Util.Ajax = new Util.Ajax("../byqacptjjg/update.do", false);
             private mDateSelector:Util.DateSelector;
             private mDt: string;
@@ -183,7 +176,7 @@ module cpzlqk {
                 this.$(name).jqGrid(
                     tableAssist.decorate({
 						datatype: "local",
-						data: tableAssist.getData(this.mData.acptjjg),
+						data: tableAssist.getData(this.mData.tjjg),
                         multiselect: false,
                         drag: false,
                         resize: false,
@@ -192,7 +185,8 @@ module cpzlqk {
                         shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 1000,
-                        viewrecords : true
+                        viewrecords : true,
+                        caption:"按产品统计结果"
                     }));
             }
         }

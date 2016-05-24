@@ -26,6 +26,7 @@ import com.tbea.ic.operation.common.formatter.excel.TextFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.service.cpzlqk.xlbhgcpmx.XlbhgcpmxService;
 import com.tbea.ic.operation.service.cpzlqk.xlbhgcpmx.XlbhgcpmxServiceImpl;
 
@@ -65,9 +66,11 @@ public class XlbhgcpmxServlet {
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
 		handler.next(new TextFormatterHandler(null, null));
 		FormatterServer serv = new FormatterServer(handler, 0, 1);
-		serv.addMergeRegion(new MergeRegion(0, 1, 1, result.size()));
+		serv.addMergeRegion(new MergeRegion(0, 1, 2, result.size()));
 		serv.format(result, template);
 	
-		template.write(response, template.getSheetName() + ".xls");
+		String name = template.getSheetName();
+
+		template.write(response, name + ".xls");
 	}
 }

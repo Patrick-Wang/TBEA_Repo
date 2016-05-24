@@ -32,6 +32,7 @@ import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.service.cpzlqk.byqacptjjg.ByqacptjjgService;
@@ -63,9 +64,9 @@ public class ByqacptjjgServlet {
 			waveItems  = byqacptjjgService.getWaveValues(d, company);
 		}
 		
-		ByqacptjjgResp resp = new ByqacptjjgResp(result, waveItems);
+		CpzlqkResp resp = new CpzlqkResp(result, waveItems);
 		
-		return JSONObject.fromObject(resp.formate()).toString().getBytes("utf-8");
+		return JSONObject.fromObject(resp.format()).toString().getBytes("utf-8");
 	}
 
 	@RequestMapping(value = "entry/update.do")
@@ -118,13 +119,18 @@ public class ByqacptjjgServlet {
 		
 		List<List<String>> result = byqacptjjgService.getByqacptjjg(d, company, yjType);
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQACPTJJG);
-	
+		
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0, 1});
 		handler.next(new NumberFormatterHandler(0));
 		FormatterServer serv = new FormatterServer(handler, 0, 2);
 		serv.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
 		serv.format(result, template);
-	
-		template.write(response, template.getSheetName() + ".xls");
+		String yj = "月度";
+		if (yjType == YDJDType.JD){
+			yj = "季度";
+		}
+		String name = company.getName() + yj + template.getSheetName();
+
+		template.write(response, name + ".xls");
 	}
 }

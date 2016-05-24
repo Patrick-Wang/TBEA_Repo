@@ -83,11 +83,67 @@ var cpzlqk;
                     _this.refresh();
                 });
             };
+            ShowView.prototype.updateEchart = function () {
+                var title = "";
+                var legend = [];
+                var echart = this.option().ct;
+                var series = [];
+                for (var i in this.mData.waveItems) {
+                    legend.push(this.mData.waveItems[i].name);
+                    series.push({
+                        name: this.mData.waveItems[i].name,
+                        type: 'line',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: this.mData.waveItems[i].data
+                    });
+                }
+                var xData = [];
+                for (var i = 0; i < 12; ++i) {
+                    xData.push((i + 1) + "月");
+                }
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: series
+                };
+                echarts.init(this.$(echart)[0]).setOption(option);
+            };
             ShowView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
+                if (this.mYdjdType == cpzlqk.YDJDType.YD) {
+                    this.$(this.option().ctarea).show();
+                    this.updateEchart();
+                }
+                else {
+                    this.$(this.option().ctarea).hide();
+                }
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
@@ -111,7 +167,7 @@ var cpzlqk;
                 tableAssist.mergeRow(0);
                 this.$(name).jqGrid(tableAssist.decorate({
                     datatype: "local",
-                    data: tableAssist.getData(this.mData),
+                    data: tableAssist.getData(this.mData.tjjg),
                     multiselect: false,
                     drag: false,
                     resize: false,

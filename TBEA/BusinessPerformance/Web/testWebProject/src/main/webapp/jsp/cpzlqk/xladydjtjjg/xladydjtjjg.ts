@@ -9,7 +9,7 @@
 module plugin {
     export let xladydjtjjg : number = framework.basic.endpoint.lastId();
 }
-
+declare var echarts;
 module cpzlqk {
     export module xladydjtjjg {
         import TextAlign = JQTable.TextAlign;
@@ -33,7 +33,7 @@ module cpzlqk {
 
         class ShowView extends ZlPluginView {
             static ins = new ShowView();
-            private mData:Array<string[]>;
+            private mData:CpzlqkResp;
             private mAjax:Util.Ajax = new Util.Ajax("../xladydjtjjg/update.do", false);
             private mDateSelector:Util.DateSelector;
             private mDt: string;
@@ -78,6 +78,60 @@ module cpzlqk {
                 }
 
                 this.updateTable();
+                this.$(this.option().ctarea).show();
+                this.updateEchart();
+            }
+
+            private updateEchart():void {
+                let title = "统计结果";
+                let legend:Array<string> = [];
+                let echart = this.option().ct;
+
+                let series = [];
+                for (let i in this.mData.waveItems){
+                    legend.push(this.mData.waveItems[i].name);
+                    series.push({
+                        name: this.mData.waveItems[i].name,
+                        type: 'line',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: this.mData.waveItems[i].data
+                    });
+                }
+                this.mData.waveX.splice(this.mData.waveX.length - 1, 1);
+                let xData = this.mData.waveX;
+
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true,
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: series
+                };
+
+                echarts.init(this.$(echart)[0]).setOption(option);
+
             }
 
             public init(opt:Option):void {
@@ -105,7 +159,7 @@ module cpzlqk {
                 this.$(name).jqGrid(
                     tableAssist.decorate({
 						datatype: "local",
-						data: tableAssist.getData(this.mData),
+						data: tableAssist.getData(this.mData.tjjg),
                         multiselect: false,
                         drag: false,
                         resize: false,

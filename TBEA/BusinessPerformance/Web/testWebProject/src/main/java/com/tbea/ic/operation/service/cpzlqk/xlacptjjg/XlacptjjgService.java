@@ -7,6 +7,7 @@ import net.sf.json.JSONArray;
 
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 
 public interface XlacptjjgService {
@@ -18,6 +19,8 @@ public interface XlacptjjgService {
 	ErrorCode saveXlacptjjg(Date d, JSONArray data, Company company);
 
 	ErrorCode submitXlacptjjg(Date d, JSONArray data, Company company);
+
+	List<WaveItem> getWaveValues(Date d, Company company);
 
 
 }

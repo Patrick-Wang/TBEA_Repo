@@ -22,6 +22,12 @@ module cpzlqk{
         PBCP
     }
 
+    export interface CpzlqkResp{
+        tjjg : string[][];
+        waveItems: WaveItem[];
+        waveX?:string[];
+    }
+
     export interface WaveItem{
         name : string;
         data : string[];

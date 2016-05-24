@@ -73,6 +73,17 @@ public class ByqcpycssbhgwtmxServlet {
 		serv.addMergeRegion(new MergeRegion(0, 1, 1, result.size()));
 		serv.format(result, template);
 	
-		template.write(response, template.getSheetName() + ".xls");
+		String yj = "月度";
+		if (yjType == YDJDType.JD){
+			yj = "季度";
+		}
+
+		String bhg = "配变";
+		if (bhgType == ByqBhgType.YBYSQFJYS){
+			bhg = "110kV及以上";
+		}
+		String name = yj + bhg + template.getSheetName();
+
+		template.write(response, name + ".xls");
 	}
 }

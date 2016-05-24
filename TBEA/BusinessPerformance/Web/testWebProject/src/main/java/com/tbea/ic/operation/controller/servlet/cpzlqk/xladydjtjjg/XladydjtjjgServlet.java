@@ -3,6 +3,7 @@ package com.tbea.ic.operation.controller.servlet.cpzlqk.xladydjtjjg;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,8 @@ import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.service.cpzlqk.xladydjtjjg.XladydjtjjgService;
 import com.tbea.ic.operation.service.cpzlqk.xladydjtjjg.XladydjtjjgServiceImpl;
@@ -51,13 +55,26 @@ public class XladydjtjjgServlet {
 		
 		List<List<String>> result = xladydjtjjgService.getXladydjtjjg(d, yjType);
 		
-		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
-		handler.next(new RawPercentFormatterHandler(1, null, new Integer[]{4, 7}))
-			.next(new RawNumberFormatterHandler(0));
-		RawFormatterServer serv = new RawFormatterServer(handler);
-		serv.acceptNullAs("--").format(result);
+		List<String> waveX = new ArrayList<String>();
+		WaveItem item = null;
+		List<WaveItem> waveItems = new ArrayList<WaveItem>();
+		for (int i = 0; i < result.size(); ++i){
+			if (waveX.isEmpty() || !waveX.contains(result.get(i).get(0))){
+				waveX.add(result.get(i).get(0));
+				
+			}
+			
+			item = WaveItem.find(waveItems, result.get(i).get(1));
+			if (null != item){
+				item.getData().add(result.get(i).get(4));
+			}else{
+				item = new WaveItem(result.get(i).get(1), new ArrayList<String>());
+				waveItems.add(item); 
+				item.getData().add(result.get(i).get(4));
+			}
+		}
 		
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+		return JSONObject.fromObject(new CpzlqkResp(result, waveItems, waveX).format()).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "export.do")
@@ -75,6 +92,12 @@ public class XladydjtjjgServlet {
 		serv.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
 		serv.format(result, template);
 	
-		template.write(response, template.getSheetName() + ".xls");
+		String yj = "月度";
+		if (yjType == YDJDType.JD){
+			yj = "季度";
+		}
+		String name = yj + template.getSheetName();
+
+		template.write(response, name + ".xls");
 	}
 }

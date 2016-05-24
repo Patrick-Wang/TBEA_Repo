@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,8 @@ import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.service.cpzlqk.xlacptjjg.XlacptjjgService;
 import com.tbea.ic.operation.service.cpzlqk.xlacptjjg.XlacptjjgServiceImpl;
@@ -58,13 +61,14 @@ public class XlacptjjgServlet {
 		
 		List<List<String>> result = xlacptjjgService.getXlacptjjg(d, company, yjType);
 		
-		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
-		handler.next(new RawPercentFormatterHandler(1, null, new Integer[]{4, 7}))
-			.next(new RawNumberFormatterHandler(0));
-		RawFormatterServer serv = new RawFormatterServer(handler);
-		serv.acceptNullAs("--").format(result);
+		List<WaveItem> waveItems = null;
+		if (yjType == YDJDType.YD){
+			waveItems  = xlacptjjgService.getWaveValues(d, company);
+		}
 		
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+		CpzlqkResp resp = new CpzlqkResp(result, waveItems);
+		
+		return JSONObject.fromObject(resp.format()).toString().getBytes("utf-8");
 	}
 
 	@RequestMapping(value = "entry/update.do")
@@ -124,6 +128,12 @@ public class XlacptjjgServlet {
 		serv.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
 		serv.format(result, template);
 	
-		template.write(response, template.getSheetName() + ".xls");
+		String yj = "月度";
+		if (yjType == YDJDType.JD){
+			yj = "季度";
+		}
+		String name = company.getName() + yj + template.getSheetName();
+
+		template.write(response, name + ".xls");
 	}
 }

@@ -126,8 +126,8 @@ public class XladydjtjjgServiceImpl implements XladydjtjjgService {
 		}else{
 			row.set(start++, entity.getDwmc().getName());
 		}
-				
-		row.set(start++, entity.getCpxl().getName());
+				 
+		row.set(start++, entity.getCpdl().getName());
 		start = setZltjjg(row, start, tj1);
 		setZltjjg(row, start, tj2);
 	}

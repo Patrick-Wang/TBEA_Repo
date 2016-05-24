@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.model.dao.cpzlqk.xlacptjjg.XlAcptjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
@@ -91,6 +93,33 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 	public ErrorCode submitXlacptjjg(Date d, JSONArray data, Company company) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<WaveItem> getWaveValues(Date d, Company company) {
+		List<WaveItem> ret = new ArrayList<WaveItem>();
+		List<String> row = null;
+		EasyCalendar ec = new EasyCalendar(d);
+		List<XlAcptjjgEntity> entities = xlacptjjgDao.getAll();
+		
+		for (XlAcptjjgEntity entity : entities){
+
+			row = Util.resize(new ArrayList<String>(), 12);
+			ec.setMonth(1);
+			for (int i = 0; i < 12; ++i){
+				
+				ZltjjgEntity zltjjg = zltjjgDao.getByDate(d, entity.getCpxl().getId(), company);
+				if (null != zltjjg){
+					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
+				}else{
+					row.set(i, null);
+				}
+				ec.addMonth(1);
+			}
+			ec.addMonth(-1);
+			ret.add(new WaveItem(entity.getCpxl().getName(), row));		
+		}
+		return ret;
 	}
 
 }

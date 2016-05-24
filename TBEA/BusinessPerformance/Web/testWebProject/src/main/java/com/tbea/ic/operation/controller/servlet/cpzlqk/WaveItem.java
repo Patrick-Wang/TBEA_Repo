@@ -32,4 +32,13 @@ public class WaveItem {
 		RawFormatterServer serv = new RawFormatterServer(new RawNumberFormatterHandler(3));
 		serv.acceptNullAs("0").formatRow(data);
 	}
+	
+	public static WaveItem find(List<WaveItem> items, String name){
+		for (int i = 0; i < items.size(); ++i){
+			if (items.get(i).getName().equals(name)){
+				return items.get(i);
+			}
+		}
+		return null;
+	}
 }

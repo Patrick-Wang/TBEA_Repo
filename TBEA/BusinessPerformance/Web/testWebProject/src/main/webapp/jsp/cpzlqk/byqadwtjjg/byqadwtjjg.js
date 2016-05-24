@@ -81,6 +81,55 @@ var cpzlqk;
                     return;
                 }
                 this.updateTable();
+                this.$(this.option().ctarea).show();
+                this.updateEchart();
+            };
+            ShowView.prototype.updateEchart = function () {
+                var title = "按产单位计结果";
+                var legend = [];
+                var echart = this.option().ct;
+                var series = [];
+                for (var i in this.mData.waveItems) {
+                    legend.push(this.mData.waveItems[i].name);
+                    series.push({
+                        name: this.mData.waveItems[i].name,
+                        type: 'line',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: this.mData.waveItems[i].data
+                    });
+                }
+                this.mData.waveX.splice(this.mData.waveX.length - 1, 1);
+                var xData = this.mData.waveX;
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: series
+                };
+                echarts.init(this.$(echart)[0]).setOption(option);
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
@@ -104,7 +153,7 @@ var cpzlqk;
                 tableAssist.mergeRow(0);
                 this.$(name).jqGrid(tableAssist.decorate({
                     datatype: "local",
-                    data: tableAssist.getData(this.mData),
+                    data: tableAssist.getData(this.mData.tjjg),
                     multiselect: false,
                     drag: false,
                     resize: false,
