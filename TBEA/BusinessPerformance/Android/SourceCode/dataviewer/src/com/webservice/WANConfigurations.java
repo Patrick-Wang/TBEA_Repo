@@ -4,17 +4,17 @@ public class WANConfigurations implements Configurations {
 
 	@Override
 	public String getLoginUrl() {
-		return "http://218.84.134.160:8081/mobile/loginServlet";
+		return "http://10.1.4.107:8080/mobile/loginServlet";
 	}
 
 	@Override
 	public String getTransferUrl() {
-		return "http://218.84.134.160:8081/mobile/dataTransfer";
+		return "http://10.1.4.107:8080/mobile/dataTransfer";
 	}
 
 	@Override
 	public String getUpdateUrl() {
-		return "http://218.84.134.160:8081/mobile/versionJudgmentServlet";
+		return "http://10.1.4.107:8080/mobile/versionJudgmentServlet";
 	}
 	
 	@Override
@@ -24,21 +24,21 @@ public class WANConfigurations implements Configurations {
 
 	@Override
 	public String getHome() {
-		return "http://218.84.134.160:8081";
+		return "http://10.1.4.107:8080";
 	}
 
 	@Override
 	public String getChangePasswordUrl() {
-		return "http://218.84.134.160:8081/mobile/changePwd";
+		return "http://10.1.4.107:8080/mobile/changePwd";
 	}
 
 	@Override
 	public String getRegisterUrl() {
-		return "http://218.84.134.160:8081/mobile/verification";
+		return "http://10.1.4.107:8080/mobile/verification";
 	}
 
 	@Override
 	public String getUserValidationUrl() {
-		return "http://218.84.134.160:8081/mobile/beforeLogin";
+		return "http://10.1.4.107:8080/mobile/beforeLogin";
 	}
 }
