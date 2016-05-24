@@ -220,6 +220,14 @@ public class Util {
 		return null;
 	}
 	
+	public static Integer toIntNull(String val) {
+		try {
+			return Integer.valueOf(val);
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	
 	public static Double sum(Double[] vals){
 		Double ret = null;
 		for (int i = 0; i < vals.length; ++i){

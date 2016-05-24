@@ -39,6 +39,9 @@ var framework;
             FrameEvent.FE_SAVE = FrameEvent.lastEvent();
             FrameEvent.FE_SUBMIT = FrameEvent.lastEvent();
             FrameEvent.FE_PROXY = FrameEvent.lastEvent();
+            FrameEvent.FE_APPROVE = FrameEvent.lastEvent();
+            FrameEvent.FE_NOT_SUBMITTED = FrameEvent.lastEvent();
+            FrameEvent.FE_SUBMITTED = FrameEvent.lastEvent();
         })(FrameEvent = basic.FrameEvent || (basic.FrameEvent = {}));
         var BasicEndpoint = (function () {
             function BasicEndpoint() {
@@ -181,6 +184,29 @@ var framework;
             return EntryPluginView;
         })(BasePluginView);
         basic.EntryPluginView = EntryPluginView;
+        var ApprovePluginView = (function (_super) {
+            __extends(ApprovePluginView, _super);
+            function ApprovePluginView() {
+                _super.apply(this, arguments);
+            }
+            ApprovePluginView.prototype.onEvent = function (e) {
+                var val = _super.prototype.onEvent.call(this, e);
+                switch (e.id) {
+                    case FrameEvent.FE_APPROVE:
+                        {
+                            var date = e.data.date;
+                            var st = date.year + "-" + date.month + "-" + date.day;
+                            this.pluginApprove(st, e.data.compType);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return val;
+            };
+            return ApprovePluginView;
+        })(BasePluginView);
+        basic.ApprovePluginView = ApprovePluginView;
         var EndpointProxy = (function () {
             function EndpointProxy(id, stub) {
                 this.mId = id;

@@ -41,74 +41,26 @@ public class ByqadwtjjgServiceImpl implements ByqadwtjjgService {
 	@Override
 	public List<List<String>> getByqadwtjjg(Date d,
 			YDJDType yjType) {
-		if (yjType == YDJDType.YD){
-			return getByqYdAdwtjjg(d);
-		}
-		return getByqJdAdwtjjg(d);
-	}
-
-	private List<List<String>> getByqJdAdwtjjg(Date d) {
 		List<ByqAdwtjjgEntity> entities = byqAdwtjjgDao.getAll();
-		List<List<String>> result = new ArrayList<List<String>>();
-		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>();
-		List<FormulaClientJd> clients = new ArrayList<FormulaClientJd>();
+		
+		List<Integer> comps = new ArrayList<Integer>();
+		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, comps, d, yjType);
+		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
 		for (ByqAdwtjjgEntity entity : entities){
-			ZltjjgEntity dj = null;
-			ZltjjgEntity tq = null;
+			Formula formula = new Formula(entity.getFormul());
+			Company comp = null;
 			if (entity.getDw() != null){
-				Company comp = companyManager.getBMDBOrganization().getCompany(entity.getDw().getId());
-				dj = zltjjgDao.getJdAcc(d, entity.getCpxl().getId(), comp);
-				tq = zltjjgDao.getJdAccQntq(d, entity.getCpxl().getId(), comp);
+				comp = companyManager.getBMDBOrganization().getCompany(entity.getDw().getId());
+				comps.add(comp.getId());
 			}
-			clients.add(new FormulaClientJd(this, entity, dj, tq));
-			fs.addRule(new Formula(entity.getFormul()), clients.get(clients.size() - 1));
+			client.add(formula, entity, comp);
+			fs.addFormul(formula);
 		}
 		
 		fs.run();
-		
-		for (FormulaClientJd client : clients){
-			List<String> list = client.getRow();
-			if (null != list){
-				result.add(list);
-			}
-		}
-
-		return result;
+		return client.getResult();
 	}
 
-	
-
-	
-	
-	private List<List<String>> getByqYdAdwtjjg(Date d) {
-		List<ByqAdwtjjgEntity> entities = byqAdwtjjgDao.getAll();
-		List<List<String>> result = new ArrayList<List<String>>();
-		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>();
-		List<FormulaClientJd> clients = new ArrayList<FormulaClientJd>();
-		for (ByqAdwtjjgEntity entity : entities){
-			ZltjjgEntity dy = null;
-			ZltjjgEntity lj = null;
-			if (entity.getDw() != null){
-				Company comp = companyManager.getBMDBOrganization().getCompany(entity.getDw().getId());
-				dy = zltjjgDao.getByDate(d, entity.getCpxl().getId(), comp);
-				lj = zltjjgDao.getYearAcc(d, entity.getCpxl().getId(), comp);
-			}
-			clients.add(new FormulaClientJd(this, entity, dy, lj));
-			fs.addRule(new Formula(entity.getFormul()), clients.get(clients.size() - 1));
-		}
-		
-		fs.run();
-		
-		for (FormulaClientJd client : clients){
-			List<String> list = client.getRow();
-			if (null != list){
-				result.add(list);
-			}
-		}
-		
-		return result;
-	}
-	
 	private int setZltjjg(List<String> row, int start, ZltjjgEntity zltjjg){
 		if (null != zltjjg){
 			row.set(start++, "" + zltjjg.getBhgs());

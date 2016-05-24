@@ -18,6 +18,7 @@ import com.tbea.ic.operation.common.FormulaServer;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
@@ -26,6 +27,7 @@ import com.tbea.ic.operation.model.dao.cpzlqk.byqjdacptjjg.ByqJdAcptjjgDaoImpl;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqydacptjjg.ByqYdAcptjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqydacptjjg.ByqYdAcptjjgDaoImpl;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
+import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoCacheProxy;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoImpl;
 import com.tbea.ic.operation.model.entity.cpzlqk.ByqJdAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ByqYdAcptjjgEntity;
@@ -58,23 +60,24 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 			YDJDType yjType) {
 		List<ByqYdAcptjjgEntity> entities = byqYdAcptjjgDao.getAll();
 		List<List<String>> result = new ArrayList<List<String>>();
+		ZltjjgDao tjjgDao = new ZltjjgDaoCacheProxy(zltjjgDao, company.getId());
 		for (ByqYdAcptjjgEntity entity : entities){
-			result.add(toList(entity, d, company));
+			result.add(toList(tjjgDao, entity, d, company));
 		}
 		return result;
 	}
 
-	private List<String> toList(ByqYdAcptjjgEntity entity, Date d, Company company) {
+	private List<String> toList(ZltjjgDao tjjgDao, ByqYdAcptjjgEntity entity, Date d, Company company) {
 		List<String> row = new ArrayList<String>();
 		Util.resize(row, 8);
 		int start = 0;
 		row.set(start++, entity.getCpdl().getName());
 		row.set(start++, entity.getCpxl().getName());
 	
-		ZltjjgEntity zltjjg = zltjjgDao.getByDate(d, entity.getCpxl().getId(), company);
+		ZltjjgEntity zltjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company);
 		start = setZltjjg(row, start, zltjjg);
 
-		zltjjg = zltjjgDao.getYearAcc(d, entity.getCpxl().getId(), company);
+		zltjjg = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company);
 		start = setZltjjg(row, start, zltjjg);
 		return row;
 	}
@@ -94,27 +97,15 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 	private List<List<String>> getByqJdAcptjjg(Date d, Company company,
 			YDJDType yjType) {
 		List<ByqJdAcptjjgEntity> entities = byqJdAcptjjgDao.getAll();
-		List<List<String>> result = new ArrayList<List<String>>();
-		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>();
-		List<FormulaClientJd> clients = new ArrayList<FormulaClientJd>();
+		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, company, d);
+		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
 		for (ByqJdAcptjjgEntity entity : entities){
-			ZltjjgEntity dj = zltjjgDao.getJdAcc(d, entity.getCpxl().getId(), company);
-			ZltjjgEntity tq = zltjjgDao.getJdAccQntq(d, entity.getCpxl().getId(), company);
-			clients.add(new FormulaClientJd(this, entity, dj, tq));
-			fs.addRule(new Formula(entity.getFormul()), clients.get(clients.size() - 1));
+			Formula formula = new Formula(entity.getFormul());
+			client.add(formula, entity);
+			fs.addFormul(formula);
 		}
-		
-
 		fs.run();
-		
-		for (FormulaClientJd client : clients){
-			List<String> list = client.getRow();
-			if (null != list){
-				result.add(list);
-			}
-		}
-		
-		return result;
+		return client.getResult();
 	}
 
 	
@@ -126,22 +117,64 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		setZltjjg(row, start, tj2);
 	}
 	
+
+	public ErrorCode entryByqacptjjg(Date d, JSONArray data, Company company, ZBStatus zt) {
+		ZltjjgEntity zltjjg = null;
+		EasyCalendar ec = new EasyCalendar(d);
+		for (int i = 0; i < data.size(); ++i){
+			JSONArray row = data.getJSONArray(i);
+			Integer cpid = Integer.valueOf(row.getInt(0));
+			zltjjg = zltjjgDao.getByDate(d, cpid, company);
+			if (null == zltjjg){
+				zltjjg = new ZltjjgEntity();
+				zltjjg.setNf(ec.getYear());
+				zltjjg.setYf(ec.getMonth());
+				zltjjg.setDwid(company.getId());
+				zltjjg.setCpid(cpid);
+			}
+			zltjjg.setZt(zt.ordinal());
+			zltjjg.setBhgs(Util.toIntNull(row.getString(1)));
+			zltjjg.setZs(Util.toIntNull(row.getString(2)));
+			zltjjgDao.merge(zltjjg);
+		}
+		return ErrorCode.OK;
+	}
+
+	
 	@Override
 	public ErrorCode saveByqacptjjg(Date d, JSONArray data, Company company) {
-		// TODO Auto-generated method stub
-		return null;
+		return entryByqacptjjg(d, data, company, ZBStatus.SAVED);
 	}
 
 	@Override
 	public ErrorCode submitByqacptjjg(Date d, JSONArray data, Company company) {
-		// TODO Auto-generated method stub
-		return null;
+		return entryByqacptjjg(d, data, company, ZBStatus.SUBMITTED);
 	}
 
+	private List<String> toEntryList(ZltjjgDao tjjgDao, ByqYdAcptjjgEntity entity, Date d, Company company) {
+		List<String> row = new ArrayList<String>();
+		Util.resize(row, 5);
+		int start = 0;
+		row.set(start++, "" + entity.getCpxl().getId());
+		row.set(start++, entity.getCpdl().getName());
+		row.set(start++, entity.getCpxl().getName());
+		ZltjjgEntity zltjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company);
+		if (null != zltjjg){
+			row.set(start++, "" + zltjjg.getBhgs());
+			row.set(start++, "" + zltjjg.getZs());
+		}
+		return row;
+	}
+	
 	@Override
 	public List<List<String>> getByqacptjjgEntry(Date d, Company company) {
-		// TODO Auto-generated method stub
-		return null;
+		List<ByqYdAcptjjgEntity> entities = byqYdAcptjjgDao.getAll();
+		List<List<String>> result = new ArrayList<List<String>>();
+		ZltjjgDao tjjgDao = new ZltjjgDaoCacheProxy(zltjjgDao, company.getId());
+		for (ByqYdAcptjjgEntity entity : entities){
+			result.add(toEntryList(tjjgDao, entity, d, company));
+		}
+		return result;
 	}
 
 	@Override
@@ -150,7 +183,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		List<String> row = null;
 		EasyCalendar ec = new EasyCalendar(d);
 		List<ByqYdAcptjjgEntity> entities = byqYdAcptjjgDao.getAll();
-		
+		ZltjjgDao tjjgDao = new ZltjjgDaoCacheProxy(zltjjgDao, company.getId());
 		List<Integer> cpids = new ArrayList<Integer>();
 		String cpName = null;
 		for (ByqYdAcptjjgEntity entity : entities){
@@ -163,7 +196,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
 				
-				ZltjjgEntity zltjjg = zltjjgDao.getByDateTotal(ec.getDate(), cpids, company);
+				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company);
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
 				}else{
@@ -183,7 +216,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 			row = Util.resize(new ArrayList<String>(), 12);
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
-				ZltjjgEntity zltjjg = zltjjgDao.getByDateTotal(ec.getDate(), cpids, company);
+				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company);
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
 				}else{
@@ -197,5 +230,30 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		
 		return ret;
 	}
+
+	@Override
+	public ErrorCode approveByqacptjjg(Date d, JSONArray data, Company company) {
+		ZltjjgEntity zltjjg = null;
+		for (int i = 0; i < data.size(); ++i){
+			JSONArray row = data.getJSONArray(i);
+			Integer cpid = Integer.valueOf(row.getInt(0));
+			zltjjg = zltjjgDao.getByDate(d, cpid, company);
+			if (null != zltjjg){
+				zltjjg.setZt(ZBStatus.APPROVED.ordinal());
+				zltjjgDao.merge(zltjjg);
+			}
+		}
+		return ErrorCode.OK;
+	}
+
+	@Override
+	public ZBStatus getStatus(Date d, Company company) {
+		ZltjjgEntity zltjjg = zltjjgDao.getFirstTjjg(d, company);
+		if (zltjjg != null){
+			return ZBStatus.valueOf(zltjjg.getZt());
+		}
+		return ZBStatus.NONE;
+	}
+
 
 }

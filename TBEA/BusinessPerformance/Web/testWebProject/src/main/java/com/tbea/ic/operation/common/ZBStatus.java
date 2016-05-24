@@ -18,7 +18,7 @@ public enum ZBStatus{
 		if (types.length > tyOrd){
 			return types[tyOrd];
 		}
-		return null;
+		return NONE;
 	}
 	
 	public static ZBStatus fromString(String value){

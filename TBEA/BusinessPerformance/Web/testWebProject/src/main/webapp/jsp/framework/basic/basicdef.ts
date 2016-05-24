@@ -34,6 +34,9 @@ module framework.basic {
         export let FE_SAVE : number = lastEvent();
         export let FE_SUBMIT : number = lastEvent();
         export let FE_PROXY : number = lastEvent();
+        export let FE_APPROVE : number = lastEvent();
+        export let FE_NOT_SUBMITTED : number = lastEvent();
+        export let FE_SUBMITTED : number = lastEvent();
     }
     export interface PluginOption {
         host:string;
@@ -198,6 +201,25 @@ module framework.basic {
         }
         abstract pluginSave(dt:string, compType:Util.CompanyType):void;
         abstract pluginSubmit(dt:string, compType:Util.CompanyType):void;
+    }
+
+    export abstract class ApprovePluginView extends BasePluginView {
+        onEvent(e:framework.route.Event):any {
+            let val = super.onEvent(e);
+            switch (e.id) {
+                case FrameEvent.FE_APPROVE:
+                {
+                    let date:Util.Date = e.data.date;
+                    let st:string = date.year + "-" + date.month + "-" + date.day;
+                    this.pluginApprove(st, e.data.compType);
+                }
+                    break;
+                default:
+                    break;
+            }
+            return val;
+        }
+        abstract pluginApprove(dt:string, compType:Util.CompanyType):void;
     }
 
     export class EndpointProxy implements framework.route.Endpoint{

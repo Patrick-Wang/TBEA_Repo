@@ -89,7 +89,7 @@ public class XladydjtjjgServlet {
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0, 1});
 		handler.next(new NumberFormatterHandler(0));
 		FormatterServer serv = new FormatterServer(handler, 0, 2);
-		serv.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
+		serv.addMergeRegion(new MergeRegion(0, 2, 2, result.size()));
 		serv.format(result, template);
 	
 		String yj = "月度";

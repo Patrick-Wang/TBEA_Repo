@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -80,7 +81,7 @@ public class XlacptjjgServlet {
 		
 		List<List<String>> result = xlacptjjgService.getXlacptjjgEntry(d, company);
 		
-		RawFormatterHandler handler = new RawNumberFormatterHandler(4, null, new Integer[]{3}).trimZero(true);
+		RawFormatterHandler handler = new RawNumberFormatterHandler(4, null, new Integer[]{3, 4}).trimZero(true);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("").format(result);
 		
@@ -108,6 +109,39 @@ public class XlacptjjgServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		ErrorCode err = xlacptjjgService.submitXlacptjjg(d, data, company);
+		return Util.response(err);
+	}
+	
+	
+	@RequestMapping(value = "approve/update.do")
+	public @ResponseBody byte[] updateApproveXlacptjjg(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		List<List<String>> result = null;
+		ZBStatus status = xlacptjjgService.getStatus(d, company);
+		if (status == ZBStatus.APPROVED || status == ZBStatus.SUBMITTED){
+			
+			result = xlacptjjgService.getXlacptjjgEntry(d, company);
+		
+			RawFormatterHandler handler = new RawNumberFormatterHandler(4, null, new Integer[]{3, 4}).trimZero(true);
+			RawFormatterServer serv = new RawFormatterServer(handler);
+			serv.acceptNullAs("--").format(result);
+		}
+		
+		return JSONObject.fromObject(new CpzlqkResp(result, status)).toString().getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "approve/approve.do")
+	public @ResponseBody byte[] approveXlacptjjg(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		ErrorCode err = xlacptjjgService.approveXlacptjjg(d, data, company);
 		return Util.response(err);
 	}
 	

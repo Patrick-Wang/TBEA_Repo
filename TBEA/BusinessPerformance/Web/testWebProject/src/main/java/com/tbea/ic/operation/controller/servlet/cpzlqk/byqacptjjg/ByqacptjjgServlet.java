@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -29,6 +30,7 @@ import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
@@ -78,7 +80,7 @@ public class ByqacptjjgServlet {
 		
 		List<List<String>> result = byqacptjjgService.getByqacptjjgEntry(d, company);
 		
-		RawFormatterHandler handler = new RawNumberFormatterHandler(4, null, new Integer[]{3}).trimZero(true);
+		RawFormatterHandler handler = new RawEmptyHandler();
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("").format(result);
 		
@@ -109,6 +111,41 @@ public class ByqacptjjgServlet {
 		return Util.response(err);
 	}
 	
+	
+	@RequestMapping(value = "approve/update.do")
+	public @ResponseBody byte[] updateApproveByqacptjjg(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		List<List<String>> result = null;
+		ZBStatus status = byqacptjjgService.getStatus(d, company);
+		if (status == ZBStatus.APPROVED || status == ZBStatus.SUBMITTED){
+		
+			result = byqacptjjgService.getByqacptjjgEntry(d, company);
+		
+			RawFormatterHandler handler = new RawEmptyHandler();
+			RawFormatterServer serv = new RawFormatterServer(handler);
+			serv.acceptNullAs("--").format(result);
+		}
+		
+		
+		return JSONObject.fromObject(new CpzlqkResp(result, status)).toString().getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "approve/approve.do")
+	public @ResponseBody byte[] approveByqacptjjg(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		ErrorCode err = byqacptjjgService.approveByqacptjjg(d, data, company);
+		return Util.response(err);
+	}
+	
 	@RequestMapping(value = "export.do")
 	public void exportByqacptjjg(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
@@ -123,7 +160,7 @@ public class ByqacptjjgServlet {
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0, 1});
 		handler.next(new NumberFormatterHandler(0));
 		FormatterServer serv = new FormatterServer(handler, 0, 2);
-		serv.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
+		serv.addMergeRegion(new MergeRegion(0, 2, 2, result.size()));
 		serv.format(result, template);
 		String yj = "月度";
 		if (yjType == YDJDType.JD){

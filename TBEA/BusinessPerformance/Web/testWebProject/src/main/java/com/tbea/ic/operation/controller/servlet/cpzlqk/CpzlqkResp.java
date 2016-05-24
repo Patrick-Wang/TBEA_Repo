@@ -2,6 +2,7 @@ package com.tbea.ic.operation.controller.servlet.cpzlqk;
 
 import java.util.List;
 
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
@@ -13,6 +14,7 @@ import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
 public class CpzlqkResp {
 	
 	List<List<String>> tjjg;
+	ZBStatus status;
 	List<WaveItem> waveItems;
 	List<String> waveX;
 
@@ -25,7 +27,11 @@ public class CpzlqkResp {
 		this.waveItems = waveItems;
 	}
 	
-	
+	public CpzlqkResp(List<List<String>> tjjg, ZBStatus status) {
+		super();
+		this.tjjg = tjjg;
+		this.status = status;
+	}
 	
 	public CpzlqkResp(List<List<String>> tjjg, List<WaveItem> waveItems) {
 		super();
@@ -72,6 +78,14 @@ public class CpzlqkResp {
 
 	public void setWaveX(List<String> waveX) {
 		this.waveX = waveX;
+	}
+
+	public ZBStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ZBStatus status) {
+		this.status = status;
 	}
 	
 }

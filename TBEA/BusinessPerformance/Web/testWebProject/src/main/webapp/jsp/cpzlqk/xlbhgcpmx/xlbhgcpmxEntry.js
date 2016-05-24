@@ -9,15 +9,15 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../../messageBox.ts"/>
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
-/// <reference path="../cpzlqkyddef.ts"/>
+/// <reference path="../cpzlqkdef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
-    pluginEntry.pbcpycssbhg = framework.basic.endpoint.lastId();
+    pluginEntry.xlbhgcpmx = framework.basic.endpoint.lastId();
 })(pluginEntry || (pluginEntry = {}));
-var cpzlqkyd;
-(function (cpzlqkyd) {
-    var pbcpycssbhgEntry;
-    (function (pbcpycssbhgEntry) {
+var cpzlqk;
+(function (cpzlqk) {
+    var xlbhgcpmxEntry;
+    (function (xlbhgcpmxEntry) {
         var TextAlign = JQTable.TextAlign;
         var Node = JQTable.Node;
         var JQGridAssistantFactory = (function () {
@@ -38,12 +38,12 @@ var cpzlqkyd;
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("../pbcpycssbhg/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("../pbcpycssbhg/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("../pbcpycssbhg/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("../xlbhgcpmx/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("../xlbhgcpmx/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("../xlbhgcpmx/entry/submit.do", false);
             }
             EntryView.prototype.getId = function () {
-                return pluginEntry.pbcpycssbhg;
+                return pluginEntry.xlbhgcpmx;
             };
             EntryView.prototype.option = function () {
                 return this.mOpt;
@@ -162,5 +162,5 @@ var cpzlqkyd;
             EntryView.ins = new EntryView();
             return EntryView;
         })(framework.basic.EntryPluginView);
-    })(pbcpycssbhgEntry = cpzlqkyd.pbcpycssbhgEntry || (cpzlqkyd.pbcpycssbhgEntry = {}));
-})(cpzlqkyd || (cpzlqkyd = {}));
+    })(xlbhgcpmxEntry = cpzlqk.xlbhgcpmxEntry || (cpzlqk.xlbhgcpmxEntry = {}));
+})(cpzlqk || (cpzlqk = {}));

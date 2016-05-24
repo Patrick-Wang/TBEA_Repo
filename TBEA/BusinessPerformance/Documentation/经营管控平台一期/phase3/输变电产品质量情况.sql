@@ -460,8 +460,8 @@ CREATE TABLE [dbo].[cpzlqk_zltjjg](
 	[yf] [int] not NULL,
 	[dwid] [int] not NULL,
 	[cpid] [int] not NULL,
-	[bhgs] [int] not NULL,
-	[zs] [int] not NULL,
+	[bhgs] [int],
+	[zs] [int],
 	[zt] [int] not NULL
 PRIMARY KEY CLUSTERED 
 (

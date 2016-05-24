@@ -150,7 +150,7 @@ var cbfx;
                     shrinkToFit: true,
                     autoScroll: true,
                     viewrecords: true,
-                    pager: '#' + pagername,
+                    pager: '#' + pagername
                 }));
             };
             EntryView.ins = new EntryView();

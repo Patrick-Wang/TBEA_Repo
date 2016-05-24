@@ -9,20 +9,21 @@ declare var $:any;
 
 
 module pluginEntry {
-    export let xlacptjjg : number = framework.basic.endpoint.lastId();
+    export let xlbhgcpmx : number = framework.basic.endpoint.lastId();
 }
 
 module cpzlqk {
-    export module xlacptjjgEntry {
+    export module xlbhgcpmxEntry {
         import TextAlign = JQTable.TextAlign;
         import Node = JQTable.Node;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    Node.create({name : "考核项目", align : TextAlign.Center}),
-                    Node.create({name : "考核项目", align : TextAlign.Center}),
-                    Node.create({name : "不合格数(台)", isReadOnly:false}),
-                    Node.create({name : "总数(台)", isReadOnly:false})
+                    Node.create({name : "月份", align : TextAlign.Center}),
+                    Node.create({name : "材料", isReadOnly: readOnly}),
+                    Node.create({name : "期现货合计盈亏", isReadOnly: readOnly})
+                        .append(Node.create({name : "指导价格按照保本价（万元）", isReadOnly: readOnly}))
+                        .append(Node.create({name : "指导价格按照目标利润价（万元）", isReadOnly: readOnly}))
                 ], gridName);
             }
         }
@@ -34,23 +35,14 @@ module cpzlqk {
         class EntryView extends framework.basic.EntryPluginView {
             static ins = new EntryView();
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../xlacptjjg/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("../xlacptjjg/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../xlacptjjg/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../xlbhgcpmx/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("../xlbhgcpmx/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../xlbhgcpmx/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;
             getId():number {
-                return pluginEntry.xlacptjjg;
-            }
-
-            protected isSupported(compType:Util.CompanyType):boolean {
-                if (compType == Util.CompanyType.LLGS ||
-                    compType == Util.CompanyType.XLC ||
-                    compType == Util.CompanyType.DLGS){
-                    return true;
-                }
-                return false;
+                return pluginEntry.xlbhgcpmx;
             }
 
             private option():Option {
@@ -61,10 +53,10 @@ module cpzlqk {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
-                    submitData.push([allData[i][0]]);
-                    for (var j = 3; j < allData[i].length; ++j) {
+                    submitData.push([]);
+                    for (var j = 2; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 3] = submitData[i][j - 3].replace(new RegExp(' ', 'g'), '');
+                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
                     }
                 }
                 this.mAjaxSave.post({
@@ -86,11 +78,11 @@ module cpzlqk {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
-                    submitData.push([allData[i][0]]);
-                    for (var j = 3; j < allData[i].length; ++j) {
+                    submitData.push([]);
+                    for (var j = 2; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 3] = submitData[i][j - 3].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 3]) {
+                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
+                        if ("" == submitData[i][j - 2]) {
                             Util.MessageBox.tip("有空内容 无法提交")
                             return;
                         }
@@ -136,7 +128,7 @@ module cpzlqk {
                 framework.router
 					.fromEp(this)
 					.to(framework.basic.endpoint.FRAME_ID)
-					.send(framework.basic.FrameEvent.FE_REGISTER, "按产品类型录入");
+					.send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
             }
 
             private updateTable():void {
@@ -148,8 +140,6 @@ module cpzlqk {
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                 let jqTable = this.$(name);
-                this.mTableAssist.mergeColum(0);
-                this.mTableAssist.mergeRow(0);
                 jqTable.jqGrid(
                     this.mTableAssist.decorate({
                         datatype: "local",
@@ -164,7 +154,7 @@ module cpzlqk {
                         cellEdit: true,
                         // height: data.length > 25 ? 550 : '100%',
                         // width: titles.length * 200,
-                        rowNum: 1000,
+                        rowNum: 20,
                         height: '100%',
                         width: 1200,
                         shrinkToFit: true,

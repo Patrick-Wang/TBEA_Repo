@@ -9,28 +9,28 @@
 module framework.basic {
     import router = framework.router;
 
-    export class EntryFrameView extends BasicFrameView {
+    export interface ApproveOption extends Option{
+        approveBtn: string;
+    }
+
+    export class ApproveFrameView extends BasicFrameView {
         onEvent(e:framework.route.Event):any {
             switch (e.id) {
-                case FrameEvent.FE_SAVE:
-                    this.save();
+                case FrameEvent.FE_APPROVE:
+                    this.approve();
                     break;
-                case FrameEvent.FE_SUBMIT:
-                    this.submit();
+                case FrameEvent.FE_NOT_SUBMITTED:
+                    $("#" + (<ApproveOption>(this.mOpt)).approveBtn).hide();
+                    break;
+                case FrameEvent.FE_SUBMITTED:
+                    $("#" + (<ApproveOption>(this.mOpt)).approveBtn).show();
                     break;
             }
             return super.onEvent(e);
         }
 
-        protected submit() {
-            router.to(this.mCurrentPlugin).send(FrameEvent.FE_SUBMIT,{
-                date:this.mCurrentDate,
-                compType:this.mCurrentComp
-            });
-        }
-
-        protected save() {
-            router.to(this.mCurrentPlugin).send(FrameEvent.FE_SAVE,{
+        protected approve() {
+            router.to(this.mCurrentPlugin).send(FrameEvent.FE_APPROVE,{
                 date:this.mCurrentDate,
                 compType:this.mCurrentComp
             });

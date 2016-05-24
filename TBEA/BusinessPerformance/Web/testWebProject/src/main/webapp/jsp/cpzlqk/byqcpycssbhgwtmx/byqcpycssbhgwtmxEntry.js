@@ -9,15 +9,15 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../../messageBox.ts"/>
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
-/// <reference path="../cpzlqkyddef.ts"/>
+/// <reference path="../cpzlqkdef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
-    pluginEntry.yylkvyscpycssbhg = framework.basic.endpoint.lastId();
+    pluginEntry.byqcpycssbhgwtmx = framework.basic.endpoint.lastId();
 })(pluginEntry || (pluginEntry = {}));
-var cpzlqkyd;
-(function (cpzlqkyd) {
-    var yylkvyscpycssbhgEntry;
-    (function (yylkvyscpycssbhgEntry) {
+var cpzlqk;
+(function (cpzlqk) {
+    var byqcpycssbhgwtmxEntry;
+    (function (byqcpycssbhgwtmxEntry) {
         var TextAlign = JQTable.TextAlign;
         var Node = JQTable.Node;
         var JQGridAssistantFactory = (function () {
@@ -25,11 +25,15 @@ var cpzlqkyd;
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
                 return new JQTable.JQGridAssistant([
-                    Node.create({ name: "月份", align: TextAlign.Center }),
-                    Node.create({ name: "材料", isReadOnly: readOnly }),
-                    Node.create({ name: "期现货合计盈亏", isReadOnly: readOnly })
-                        .append(Node.create({ name: "指导价格按照保本价（万元）", isReadOnly: readOnly }))
-                        .append(Node.create({ name: "指导价格按照目标利润价（万元）", isReadOnly: readOnly }))
+                    Node.create({ name: "产品类型", align: TextAlign.Center, isReadOnly: false }),
+                    Node.create({ name: "生产号", align: TextAlign.Center, isReadOnly: false }),
+                    Node.create({ name: "产品型号", align: TextAlign.Center, isReadOnly: false }),
+                    Node.create({ name: "试验不合格现象", align: TextAlign.Center, isReadOnly: false }),
+                    Node.create({ name: "不合格类别", align: TextAlign.Center, isReadOnly: false }),
+                    Node.create({ name: "原因分析", align: TextAlign.Center, isReadOnly: false }),
+                    Node.create({ name: "处理措施", align: TextAlign.Center, isReadOnly: false }),
+                    Node.create({ name: "处理结果", align: TextAlign.Center, isReadOnly: false }),
+                    Node.create({ name: "责任类别", align: TextAlign.Center, isReadOnly: false })
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -38,12 +42,12 @@ var cpzlqkyd;
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("../yylkvyscpycssbhg/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("../yylkvyscpycssbhg/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("../yylkvyscpycssbhg/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("../byqcpycssbhgwtmx/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("../byqcpycssbhgwtmx/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("../byqcpycssbhgwtmx/entry/submit.do", false);
             }
             EntryView.prototype.getId = function () {
-                return pluginEntry.yylkvyscpycssbhg;
+                return pluginEntry.byqcpycssbhgwtmx;
             };
             EntryView.prototype.option = function () {
                 return this.mOpt;
@@ -155,12 +159,12 @@ var cpzlqkyd;
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    //pager: '#' + pagername,
+                    pager: '#' + pagername,
                     viewrecords: true
                 }));
             };
             EntryView.ins = new EntryView();
             return EntryView;
         })(framework.basic.EntryPluginView);
-    })(yylkvyscpycssbhgEntry = cpzlqkyd.yylkvyscpycssbhgEntry || (cpzlqkyd.yylkvyscpycssbhgEntry = {}));
-})(cpzlqkyd || (cpzlqkyd = {}));
+    })(byqcpycssbhgwtmxEntry = cpzlqk.byqcpycssbhgwtmxEntry || (cpzlqk.byqcpycssbhgwtmxEntry = {}));
+})(cpzlqk || (cpzlqk = {}));

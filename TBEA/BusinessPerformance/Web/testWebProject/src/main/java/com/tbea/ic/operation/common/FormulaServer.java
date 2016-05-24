@@ -5,66 +5,75 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class FormulaServer<T> {
 	private Map<Integer, T> paramCache = new HashMap<Integer, T>();
-	private List<Pair<Formula, FormulaClient<T>>> rules = new ArrayList<Pair<Formula, FormulaClient<T>>>();
+	private List<Formula> formulas = new ArrayList<Formula>();
+	FormulaClient<T> client;
 	
+	
+	public FormulaServer(FormulaClient<T> client) {
+		super();
+		this.client = client;
+	}
+
 	public void run(){
 		
-		int length = rules.size();
+		int length = formulas.size();
 		Pair<Integer, T> pair = null;
-		Pair<Formula, FormulaClient<T>> rule = null;
-		
+		Formula formula = null;
 		for (int i = 0, j = 0; i < length; ++i){
-			rule = rules.get(j);
+			formula = formulas.get(j);
 			pair = null;
-			rule.second.onStart(this);
-			if (rule.getFirst().isThis()){
-				pair = rule.getSecond().onThis();
-				rules.remove(j);
-			}else if(rule.getFirst().isNull()){
-				pair = rule.getSecond().onNull();
-				rules.remove(j);
+			client.onStart(this, formula);
+			if (formula.isThis()){
+				pair = client.onThis(this, formula);
+				client.onComplete(this, formula);
+				formulas.remove(j);
+			}else if(formula.isNull()){
+				pair = client.onNull(this, formula);
+				client.onComplete(this, formula);
+				formulas.remove(j);
 			}else{
 				++j;
 			}
 			if (null != pair){
 				paramCache.put(pair.getFirst(), pair.getSecond());
 			}
-			rule.second.onComplete(this);
 		}
-		length = rules.size();
+		
+		length = formulas.size();
 		for (int i = 0; i < length; ++i){
 			pair = null;
-			rule = rules.get(i);
+			formula = formulas.get(i);
 			boolean hasCache = false;
-			List<Integer> vals = rule.getFirst().getParameters();
+			List<Integer> vals = formula.getParameters();
 			for(Integer param : vals){
 				if (paramCache.containsKey(param)){
 					hasCache = true;
 					break;					
 				}
 			}
-			
 			if (hasCache){
-				pair = rule.getSecond().onFormula(this, rule.getFirst());
+				pair = client.onFormula(this, formula);
 			}else{
-				pair = rule.getSecond().onFormulaNoCache(this, rule.getFirst());
+				pair = client.onFormulaNoCache(this, formula);
 			}
+			client.onComplete(this, formula);
 			if (null != pair){
 				paramCache.put(pair.getFirst(), pair.getSecond());
 			}
 		}
-		rules.clear();
+		formulas.clear();
 		paramCache.clear();
 	}
 	
 	public T getCache(Integer key){
 		return paramCache.get(key);
 	}
-
-	public FormulaServer<T> addRule(Formula formula, FormulaClient<T> client) {
-		this.rules.add(new Pair<Formula, FormulaClient<T>>(formula, client));
+	
+	public FormulaServer<T> addFormul(Formula formula) {
+		this.formulas.add(formula);
 		return this;
 	}
 }

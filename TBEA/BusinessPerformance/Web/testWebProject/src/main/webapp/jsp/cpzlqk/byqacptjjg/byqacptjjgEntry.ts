@@ -21,8 +21,8 @@ module cpzlqk {
                 return new JQTable.JQGridAssistant([
                     Node.create({name : "产品类别", align : TextAlign.Center}),
                     Node.create({name : "产品类别", align : TextAlign.Center}),
-                    Node.create({name : "不合格数(台)"}),
-                    Node.create({name : "总数(台)"})
+                    Node.create({name : "不合格数(台)", isReadOnly:false}),
+                    Node.create({name : "总数(台)", isReadOnly:false})
                 ], gridName);
             }
         }
@@ -62,10 +62,10 @@ module cpzlqk {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
-                    submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
+                    submitData.push([allData[i][0]]);
+                    for (var j = 3; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
+                        submitData[i][j - 3] = submitData[i][j - 3].replace(new RegExp(' ', 'g'), '');
                     }
                 }
                 this.mAjaxSave.post({
@@ -87,11 +87,11 @@ module cpzlqk {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
-                    submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
+                    submitData.push([allData[i][0]]);
+                    for (var j = 3; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 2]) {
+                        submitData[i][j - 3] = submitData[i][j - 3].replace(new RegExp(' ', 'g'), '');
+                        if ("" == submitData[i][j - 3]) {
                             Util.MessageBox.tip("有空内容 无法提交")
                             return;
                         }
@@ -130,6 +130,9 @@ module cpzlqk {
                     return;
                 }
 
+                if (this.mData)
+
+
                 this.updateTable();
             }
 
@@ -165,7 +168,7 @@ module cpzlqk {
                         cellEdit: true,
                         // height: data.length > 25 ? 550 : '100%',
                         // width: titles.length * 200,
-                        rowNum: 20,
+                        rowNum: 1000,
                         height: '100%',
                         width: 1200,
                         shrinkToFit: true,

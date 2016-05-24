@@ -50,6 +50,18 @@ public class CpzlqkServlet {
 		return new ModelAndView("cpzlqk/cpzlqk", map);
 	}
 	
+	@RequestMapping(value = "approve.do")
+	public ModelAndView getApprove(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
+		dateSel.select(map);
+		CompanySelection compSel = new CompanySelection(true, COMPS);
+		compSel.select(map);
+		return new ModelAndView("cpzlqk/cpzlqkApprove", map);
+	}
+	
 	@RequestMapping(value = "entry.do")
 	public ModelAndView getEntry(HttpServletRequest request,
 			HttpServletResponse response) {

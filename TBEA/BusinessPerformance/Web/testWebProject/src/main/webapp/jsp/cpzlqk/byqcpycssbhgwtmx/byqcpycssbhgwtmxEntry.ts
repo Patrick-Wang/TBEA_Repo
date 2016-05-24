@@ -4,26 +4,30 @@
 /// <reference path="../../messageBox.ts"/>
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
-/// <reference path="../cpzlqkyddef.ts"/>
+/// <reference path="../cpzlqkdef.ts"/>
 declare var $:any;
 
 
 module pluginEntry {
-    export let tjjg : number = framework.basic.endpoint.lastId();
+    export let byqcpycssbhgwtmx : number = framework.basic.endpoint.lastId();
 }
 
-module cpzlqkyd {
-    export module tjjgEntry {
+module cpzlqk {
+    export module byqcpycssbhgwtmxEntry {
         import TextAlign = JQTable.TextAlign;
         import Node = JQTable.Node;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    Node.create({name : "月份", align : TextAlign.Center}),
-                    Node.create({name : "材料", isReadOnly: readOnly}),
-                    Node.create({name : "期现货合计盈亏", isReadOnly: readOnly})
-                        .append(Node.create({name : "指导价格按照保本价（万元）", isReadOnly: readOnly}))
-                        .append(Node.create({name : "指导价格按照目标利润价（万元）", isReadOnly: readOnly}))
+                    Node.create({name : "产品类型", align : TextAlign.Center, isReadOnly:false}),
+                    Node.create({name : "生产号", align : TextAlign.Center, isReadOnly:false}),
+                    Node.create({name : "产品型号", align : TextAlign.Center, isReadOnly:false}),
+                    Node.create({name : "试验不合格现象", align : TextAlign.Center, isReadOnly:false}),
+                    Node.create({name : "不合格类别", align : TextAlign.Center, isReadOnly:false}),
+                    Node.create({name : "原因分析", align : TextAlign.Center, isReadOnly:false}),
+                    Node.create({name : "处理措施", align : TextAlign.Center, isReadOnly:false}),
+                    Node.create({name : "处理结果", align : TextAlign.Center, isReadOnly:false}),
+                    Node.create({name : "责任类别", align : TextAlign.Center, isReadOnly:false})
                 ], gridName);
             }
         }
@@ -35,14 +39,14 @@ module cpzlqkyd {
         class EntryView extends framework.basic.EntryPluginView {
             static ins = new EntryView();
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../tjjg/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("../tjjg/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../tjjg/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;
             getId():number {
-                return pluginEntry.tjjg;
+                return pluginEntry.byqcpycssbhgwtmx;
             }
 
             private option():Option {
@@ -159,7 +163,7 @@ module cpzlqkyd {
                         width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
-                        //pager: '#' + pagername,
+                        pager: '#' + pagername,
                         viewrecords: true
                     }));
             }

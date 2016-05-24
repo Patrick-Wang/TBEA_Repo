@@ -22,7 +22,6 @@ var framework;
                 _super.apply(this, arguments);
             }
             EntryFrameView.prototype.onEvent = function (e) {
-                _super.prototype.onEvent.call(this, e);
                 switch (e.id) {
                     case basic.FrameEvent.FE_SAVE:
                         this.save();
@@ -31,6 +30,7 @@ var framework;
                         this.submit();
                         break;
                 }
+                return _super.prototype.onEvent.call(this, e);
             };
             EntryFrameView.prototype.submit = function () {
                 router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_SUBMIT, {

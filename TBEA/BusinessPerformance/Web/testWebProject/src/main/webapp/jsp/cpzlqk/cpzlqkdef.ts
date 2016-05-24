@@ -6,6 +6,7 @@ module cpzlqk{
         tb:string;
         ct?:string;
         ctarea?:string;
+        tips?:string
     }
 
     export interface FrameOption extends framework.basic.Option {
@@ -26,6 +27,9 @@ module cpzlqk{
         tjjg : string[][];
         waveItems: WaveItem[];
         waveX?:string[];
+        status?:Util.ZBStatus;
+        bhglx?:string[];
+        zrlb?:string[];
     }
 
     export interface WaveItem{

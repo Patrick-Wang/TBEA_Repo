@@ -27,8 +27,8 @@ var cpzlqk;
                 return new JQTable.JQGridAssistant([
                     Node.create({ name: "考核项目", align: TextAlign.Center }),
                     Node.create({ name: "考核项目", align: TextAlign.Center }),
-                    Node.create({ name: "不合格数(台)" }),
-                    Node.create({ name: "总数(台)" })
+                    Node.create({ name: "不合格数(台)", isReadOnly: false }),
+                    Node.create({ name: "总数(台)", isReadOnly: false })
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -159,7 +159,7 @@ var cpzlqk;
                     cellEdit: true,
                     // height: data.length > 25 ? 550 : '100%',
                     // width: titles.length * 200,
-                    rowNum: 20,
+                    rowNum: 1000,
                     height: '100%',
                     width: 1200,
                     shrinkToFit: true,

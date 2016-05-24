@@ -17,12 +17,12 @@ module framework.basic {
 
     export class ShowFrameView extends BasicFrameView {
         onEvent(e:framework.route.Event):any {
-            super.onEvent(e);
             switch (e.id) {
                 case FrameEvent.FE_EXPORTEXCEL:
                     this.exportExcel(e.data);
                     break;
             }
+            return super.onEvent(e);
         }
 
         //不可以起名叫做export 在IE中有冲突

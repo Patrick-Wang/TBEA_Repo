@@ -113,7 +113,7 @@ var cpzlqk;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -167,7 +167,7 @@ var cpzlqk;
                 tableAssist.mergeRow(0);
                 this.$(name).jqGrid(tableAssist.decorate({
                     datatype: "local",
-                    data: tableAssist.getData(this.mData.acptjjg),
+                    data: tableAssist.getData(this.mData.tjjg),
                     multiselect: false,
                     drag: false,
                     resize: false,
@@ -176,7 +176,8 @@ var cpzlqk;
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 1000,
-                    viewrecords: true
+                    viewrecords: true,
+                    caption: "按产品统计结果"
                 }));
             };
             ShowView.ins = new ShowView();

@@ -53,10 +53,10 @@
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
 
-<%@include file="../framework/basic/basicEntry.jsp"%>
-<script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqkdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqkEntry.js" type="text/javascript"></script>
-<title>产品质量情况</title>
+	<%@include file="../framework/basic/basicEntry.jsp"%>
+	<script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqkdef.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqkEntry.js" type="text/javascript"></script>
+<title>产品质量情况录入</title>
 
 <style type="text/css">
 body {
@@ -166,7 +166,7 @@ th.ui-th-ltr {
 </head> 
 <body>
 	<div class="header">
-		<h1 id="headertitle">产品质量情况</h1>
+		<h1 id="headertitle">产品质量情况录入</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">
@@ -182,7 +182,9 @@ th.ui-th-ltr {
 		<tr>
 			<td id="plugin">
 				<%@include file="byqacptjjg/byqacptjjgEntry.jsp"%>
+				<%@include file="byqacptjjg/byqcpycssbhgwtmxEntry.jsp"%>
 				<%@include file="xlacptjjg/xlacptjjgEntry.jsp"%>
+				<%@include file="xlacptjjg/xlbhgcpmxEntry.jsp"%>
 			</td>
 		</tr> 
 		<tr>
