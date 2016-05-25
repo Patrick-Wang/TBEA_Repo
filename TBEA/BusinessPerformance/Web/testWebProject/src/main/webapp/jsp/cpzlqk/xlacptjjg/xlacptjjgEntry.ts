@@ -22,8 +22,8 @@ module cpzlqk {
                 return new JQTable.JQGridAssistant([
                     Node.create({name : "考核项目", align : TextAlign.Center}),
                     Node.create({name : "考核项目", align : TextAlign.Center}),
-                    Node.create({name : "不合格数(台)", isReadOnly:false}),
-                    Node.create({name : "总数(台)", isReadOnly:false})
+                    Node.create({name : "不合格数(台)", isReadOnly:readOnly}),
+                    Node.create({name : "总数(台)", isReadOnly:readOnly})
                 ], gridName);
             }
         }
@@ -34,7 +34,7 @@ module cpzlqk {
 
         class EntryView extends ZlEntryPluginView {
             static ins = new EntryView();
-            private mData:Array<string[]>;
+            private mData:CpzlqkResp;
             private mAjaxUpdate:Util.Ajax = new Util.Ajax("../xlacptjjg/entry/update.do", false);
             private mAjaxSave:Util.Ajax = new Util.Ajax("../xlacptjjg/entry/save.do", false);
             private mAjaxSubmit:Util.Ajax = new Util.Ajax("../xlacptjjg/entry/submit.do", false);
@@ -143,7 +143,7 @@ module cpzlqk {
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, Util.ZBStatus.APPROVED == this.mData.status);
 
                 var parent = this.$(this.option().tb);
                 parent.empty();
@@ -154,7 +154,7 @@ module cpzlqk {
                 jqTable.jqGrid(
                     this.mTableAssist.decorate({
                         datatype: "local",
-                        data: this.mTableAssist.getDataWithId(this.mData),
+                        data: this.mTableAssist.getDataWithId(this.mData.tjjg),
                         multiselect: false,
                         drag: false,
                         resize: false,

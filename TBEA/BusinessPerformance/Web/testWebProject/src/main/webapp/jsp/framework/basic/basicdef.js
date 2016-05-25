@@ -40,8 +40,10 @@ var framework;
             FrameEvent.FE_SUBMIT = FrameEvent.lastEvent();
             FrameEvent.FE_PROXY = FrameEvent.lastEvent();
             FrameEvent.FE_APPROVE = FrameEvent.lastEvent();
+            FrameEvent.FE_UNAPPROVE = FrameEvent.lastEvent();
             FrameEvent.FE_NOT_SUBMITTED = FrameEvent.lastEvent();
             FrameEvent.FE_SUBMITTED = FrameEvent.lastEvent();
+            FrameEvent.FE_APPROVED = FrameEvent.lastEvent();
         })(FrameEvent = basic.FrameEvent || (basic.FrameEvent = {}));
         var BasicEndpoint = (function () {
             function BasicEndpoint() {
@@ -197,6 +199,13 @@ var framework;
                             var date = e.data.date;
                             var st = date.year + "-" + date.month + "-" + date.day;
                             this.pluginApprove(st, e.data.compType);
+                        }
+                        break;
+                    case FrameEvent.FE_UNAPPROVE:
+                        {
+                            var date = e.data.date;
+                            var st = date.year + "-" + date.month + "-" + date.day;
+                            this.pluginUnapprove(st, e.data.compType);
                         }
                         break;
                     default:

@@ -190,6 +190,8 @@ th.ui-th-ltr {
 		</tr> 
 		<tr>
 			<td>
+				<input id="unaprv" type="button" value="反审核" style="display:none; float: right; width: 80px; margin-left: 10px;"
+					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UNAPPROVE)" />
 				<input id="aprv" type="button" value="审核" style="float: right; width: 80px; margin-left: 10px;"
 					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_APPROVE)" />
 			</td>
@@ -207,7 +209,8 @@ th.ui-th-ltr {
 					month: "${month}".length == 0 ? undefined : parseInt("${month}"),
 					year: ${year}
 				},
-				approveBtn:"aprv"
+				approveBtn:"aprv",
+				unapproveBtn:"unaprv"
 			});
         $(document.body).css("visibility", "visible");
     });

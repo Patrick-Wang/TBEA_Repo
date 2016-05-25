@@ -26,17 +26,32 @@ var framework;
                     case basic.FrameEvent.FE_APPROVE:
                         this.approve();
                         break;
+                    case basic.FrameEvent.FE_UNAPPROVE:
+                        this.unapprove();
+                        break;
                     case basic.FrameEvent.FE_NOT_SUBMITTED:
                         $("#" + (this.mOpt).approveBtn).hide();
+                        $("#" + (this.mOpt).unapproveBtn).hide();
                         break;
                     case basic.FrameEvent.FE_SUBMITTED:
                         $("#" + (this.mOpt).approveBtn).show();
+                        $("#" + (this.mOpt).unapproveBtn).hide();
+                        break;
+                    case basic.FrameEvent.FE_APPROVED:
+                        $("#" + (this.mOpt).approveBtn).hide();
+                        $("#" + (this.mOpt).unapproveBtn).show();
                         break;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
             ApproveFrameView.prototype.approve = function () {
                 router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_APPROVE, {
+                    date: this.mCurrentDate,
+                    compType: this.mCurrentComp
+                });
+            };
+            ApproveFrameView.prototype.unapprove = function () {
+                router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_UNAPPROVE, {
                     date: this.mCurrentDate,
                     compType: this.mCurrentComp
                 });

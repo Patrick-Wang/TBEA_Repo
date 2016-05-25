@@ -45,6 +45,7 @@ var cpzlqk;
                 _super.apply(this, arguments);
                 this.mAjaxUpdate = new Util.Ajax("../byqcpycssbhgwtmx/approve/update.do", false);
                 this.mAjaxApprove = new Util.Ajax("../byqcpycssbhgwtmx/approve/approve.do", false);
+                this.mAjaxUnapprove = new Util.Ajax("../byqcpycssbhgwtmx/approve/unapprove.do", false);
             }
             ApproveView.prototype.getId = function () {
                 return pluginApprove.byqcpycssbhgwtmx;
@@ -101,6 +102,28 @@ var cpzlqk;
                     _this.refresh();
                 });
             };
+            ApproveView.prototype.pluginUnapprove = function (dt, compType) {
+                var _this = this;
+                var allData = this.mTableAssist.getAllData();
+                var submitData = [];
+                for (var i = 0; i < allData.length; ++i) {
+                    submitData.push([allData[i][0]]);
+                }
+                this.mAjaxUnapprove.post({
+                    date: dt,
+                    data: JSON.stringify(submitData),
+                    companyId: compType
+                }).then(function (resp) {
+                    if (Util.ErrorCode.OK == resp.errorCode) {
+                        Util.MessageBox.tip("反审核 成功", function () {
+                            _this.pluginUpdate(dt, compType);
+                        });
+                    }
+                    else {
+                        Util.MessageBox.tip(resp.message);
+                    }
+                });
+            };
             ApproveView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
@@ -111,7 +134,7 @@ var cpzlqk;
                     framework.router
                         .fromEp(this)
                         .to(framework.basic.endpoint.FRAME_ID)
-                        .send(framework.basic.FrameEvent.FE_SUBMITTED);
+                        .send(framework.basic.FrameEvent.FE_APPROVED);
                     this.updateTable();
                 }
                 else if (this.mData.status == Util.ZBStatus.SUBMITTED) {

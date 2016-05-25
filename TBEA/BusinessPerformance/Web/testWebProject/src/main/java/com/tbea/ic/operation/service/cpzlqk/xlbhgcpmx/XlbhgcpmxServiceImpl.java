@@ -184,4 +184,18 @@ public class XlbhgcpmxServiceImpl implements XlbhgcpmxService {
 		return ret;
 	}
 
+	@Override
+	public ErrorCode unapproveXlbhgcpmx(Date d, JSONArray data, Company company) {
+		for (int i = 0; i < data.size(); ++i){
+			JSONArray row = data.getJSONArray(i);
+			Integer id = Util.toIntNull(row.getString(0));
+			XlBhgwtmxEntity entity = xlBhgwtmxDao.getById(id);
+			if (null != entity){
+				entity.setZt(ZBStatus.SUBMITTED.ordinal());
+				xlBhgwtmxDao.merge(entity);
+			}
+		}
+		return ErrorCode.OK;
+	}
+
 }

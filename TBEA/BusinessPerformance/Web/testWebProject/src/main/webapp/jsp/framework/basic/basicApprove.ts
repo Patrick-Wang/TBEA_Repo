@@ -11,6 +11,7 @@ module framework.basic {
 
     export interface ApproveOption extends Option{
         approveBtn: string;
+        unapproveBtn:string;
     }
 
     export class ApproveFrameView extends BasicFrameView {
@@ -19,11 +20,20 @@ module framework.basic {
                 case FrameEvent.FE_APPROVE:
                     this.approve();
                     break;
+                case FrameEvent.FE_UNAPPROVE:
+                    this.unapprove();
+                    break;
                 case FrameEvent.FE_NOT_SUBMITTED:
                     $("#" + (<ApproveOption>(this.mOpt)).approveBtn).hide();
+                    $("#" + (<ApproveOption>(this.mOpt)).unapproveBtn).hide();
                     break;
                 case FrameEvent.FE_SUBMITTED:
                     $("#" + (<ApproveOption>(this.mOpt)).approveBtn).show();
+                    $("#" + (<ApproveOption>(this.mOpt)).unapproveBtn).hide();
+                    break;
+                case FrameEvent.FE_APPROVED:
+                    $("#" + (<ApproveOption>(this.mOpt)).approveBtn).hide();
+                    $("#" + (<ApproveOption>(this.mOpt)).unapproveBtn).show();
                     break;
             }
             return super.onEvent(e);
@@ -31,6 +41,13 @@ module framework.basic {
 
         protected approve() {
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_APPROVE,{
+                date:this.mCurrentDate,
+                compType:this.mCurrentComp
+            });
+        }
+
+        protected unapprove() {
+            router.to(this.mCurrentPlugin).send(FrameEvent.FE_UNAPPROVE,{
                 date:this.mCurrentDate,
                 compType:this.mCurrentComp
             });

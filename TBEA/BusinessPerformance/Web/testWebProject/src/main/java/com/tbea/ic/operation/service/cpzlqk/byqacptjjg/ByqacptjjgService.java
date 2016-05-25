@@ -27,4 +27,6 @@ public interface ByqacptjjgService {
 
 	ZBStatus getStatus(Date d, Company company);
 
+	ErrorCode unapproveByqacptjjg(Date d, JSONArray data, Company company);
+
 }

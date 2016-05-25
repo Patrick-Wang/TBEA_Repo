@@ -27,5 +27,7 @@ public interface XlbhgcpmxService {
 
 	List<String> getBhglx();
 
+	ErrorCode unapproveXlbhgcpmx(Date d, JSONArray data, Company company);
+
 
 }

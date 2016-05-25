@@ -21,5 +21,6 @@ var cpzlqk;
         Event.ZLFE_JD_SELECTED = FrameEvent.lastEvent();
         Event.ZLFE_IS_BHGLX_SUPPORTED = FrameEvent.lastEvent();
         Event.ZLFE_GET_BHGLX = FrameEvent.lastEvent();
+        Event.ZLFE_SET_ZBSTATUS = FrameEvent.lastEvent();
     })(Event = cpzlqk.Event || (cpzlqk.Event = {}));
 })(cpzlqk || (cpzlqk = {}));

@@ -75,10 +75,11 @@ public class ByqcpycssbhgwtmxServlet {
 		List<List<String>> result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmxEntry(d, company, bhgType);
 		List<String> zrlb = byqcpycssbhgwtmxService.getZrlb();
 		List<String> bhglx = byqcpycssbhgwtmxService.getBhglx();
+		ZBStatus status = byqcpycssbhgwtmxService.getStatus(d, company, bhgType);
 		RawFormatterHandler handler = new RawEmptyHandler();
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("").format(result);
-		CpzlqkResp resp = new CpzlqkResp(result, null, zrlb, bhglx);
+		CpzlqkResp resp = new CpzlqkResp(result, status, zrlb, bhglx);
 		return JSONObject.fromObject(resp).toString().getBytes("utf-8");
 	}
 	
@@ -138,6 +139,18 @@ public class ByqcpycssbhgwtmxServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		ErrorCode err = byqcpycssbhgwtmxService.approveByqcpycssbhgwtmx(d, data, company);
+		return Util.response(err);
+	}
+	
+	@RequestMapping(value = "approve/unapprove.do")
+	public @ResponseBody byte[] unapproveByqcpycssbhgwtmx(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		ErrorCode err = byqcpycssbhgwtmxService.unapproveByqcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
 	}
 	

@@ -35,8 +35,10 @@ module framework.basic {
         export let FE_SUBMIT : number = lastEvent();
         export let FE_PROXY : number = lastEvent();
         export let FE_APPROVE : number = lastEvent();
+        export let FE_UNAPPROVE : number = lastEvent();
         export let FE_NOT_SUBMITTED : number = lastEvent();
         export let FE_SUBMITTED : number = lastEvent();
+        export let FE_APPROVED : number = lastEvent();
     }
     export interface PluginOption {
         host:string;
@@ -214,12 +216,20 @@ module framework.basic {
                     this.pluginApprove(st, e.data.compType);
                 }
                     break;
+                case FrameEvent.FE_UNAPPROVE:
+                {
+                    let date:Util.Date = e.data.date;
+                    let st:string = date.year + "-" + date.month + "-" + date.day;
+                    this.pluginUnapprove(st, e.data.compType);
+                }
+                    break;
                 default:
                     break;
             }
             return val;
         }
         abstract pluginApprove(dt:string, compType:Util.CompanyType):void;
+        abstract pluginUnapprove(dt:string, compType:Util.CompanyType):void;
     }
 
     export class EndpointProxy implements framework.route.Endpoint{

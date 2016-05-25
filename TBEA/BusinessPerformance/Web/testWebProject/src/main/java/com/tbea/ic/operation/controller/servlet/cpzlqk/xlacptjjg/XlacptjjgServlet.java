@@ -25,16 +25,14 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CpzlqkSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
@@ -80,12 +78,12 @@ public class XlacptjjgServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		List<List<String>> result = xlacptjjgService.getXlacptjjgEntry(d, company);
-		
+		ZBStatus status = xlacptjjgService.getStatus(d, company);
 		RawFormatterHandler handler = new RawNumberFormatterHandler(4, null, new Integer[]{3, 4}).trimZero(true);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("").format(result);
-		
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+		CpzlqkResp resp = new CpzlqkResp(result, status);
+		return JSONObject.fromObject(resp).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "entry/save.do")
@@ -142,6 +140,18 @@ public class XlacptjjgServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		ErrorCode err = xlacptjjgService.approveXlacptjjg(d, data, company);
+		return Util.response(err);
+	}
+	
+	@RequestMapping(value = "approve/unapprove.do")
+	public @ResponseBody byte[] unapproveXlacptjjg(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		ErrorCode err = xlacptjjgService.unapproveXlacptjjg(d, data, company);
 		return Util.response(err);
 	}
 	

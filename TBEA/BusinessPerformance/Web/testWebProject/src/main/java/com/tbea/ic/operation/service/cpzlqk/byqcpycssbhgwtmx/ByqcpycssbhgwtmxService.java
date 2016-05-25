@@ -30,6 +30,8 @@ public interface ByqcpycssbhgwtmxService {
 
 	List<String> getBhglx();
 
+	ErrorCode unapproveByqcpycssbhgwtmx(Date d, JSONArray data, Company company);
+
 
 
 

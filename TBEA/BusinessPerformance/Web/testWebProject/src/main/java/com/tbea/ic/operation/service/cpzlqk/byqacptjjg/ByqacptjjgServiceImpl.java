@@ -255,5 +255,20 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		return ZBStatus.NONE;
 	}
 
+	@Override
+	public ErrorCode unapproveByqacptjjg(Date d, JSONArray data, Company company) {
+		ZltjjgEntity zltjjg = null;
+		for (int i = 0; i < data.size(); ++i){
+			JSONArray row = data.getJSONArray(i);
+			Integer cpid = Integer.valueOf(row.getInt(0));
+			zltjjg = zltjjgDao.getByDateIgnoreStatus(d, cpid, company);
+			if (null != zltjjg){
+				zltjjg.setZt(ZBStatus.SUBMITTED.ordinal());
+				zltjjgDao.merge(zltjjg);
+			}
+		}
+		return ErrorCode.OK;
+	}
+
 
 }

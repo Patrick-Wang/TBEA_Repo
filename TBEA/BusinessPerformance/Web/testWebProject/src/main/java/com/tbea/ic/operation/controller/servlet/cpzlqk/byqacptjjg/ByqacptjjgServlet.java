@@ -79,12 +79,12 @@ public class ByqacptjjgServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		List<List<String>> result = byqacptjjgService.getByqacptjjgEntry(d, company);
-		
+		ZBStatus status = byqacptjjgService.getStatus(d, company);
 		RawFormatterHandler handler = new RawEmptyHandler();
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("").format(result);
-		
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+		CpzlqkResp resp = new CpzlqkResp(result, status);
+		return JSONObject.fromObject(resp).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "entry/save.do")
@@ -143,6 +143,18 @@ public class ByqacptjjgServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		ErrorCode err = byqacptjjgService.approveByqacptjjg(d, data, company);
+		return Util.response(err);
+	}
+	
+	@RequestMapping(value = "approve/unapprove.do")
+	public @ResponseBody byte[] unapproveByqacptjjg(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		ErrorCode err = byqacptjjgService.unapproveByqacptjjg(d, data, company);
 		return Util.response(err);
 	}
 	

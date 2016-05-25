@@ -38,6 +38,8 @@ module cpzlqk {
             private mData:CpzlqkResp;
             private mAjaxUpdate:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/approve/update.do", false);
             private mAjaxApprove:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/approve/approve.do", false);
+            private mAjaxUnapprove:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/approve/unapprove.do", false);
+
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;
@@ -98,7 +100,26 @@ module cpzlqk {
                         this.refresh();
                     });
             }
-
+            public pluginUnapprove(dt:string, compType:Util.CompanyType):void {
+                var allData = this.mTableAssist.getAllData();
+                var submitData = [];
+                for (var i = 0; i < allData.length; ++i) {
+                    submitData.push([allData[i][0]]);
+                }
+                this.mAjaxUnapprove.post({
+                    date: dt,
+                    data: JSON.stringify(submitData),
+                    companyId: compType
+                }).then((resp:Util.IResponse) => {
+                    if (Util.ErrorCode.OK == resp.errorCode) {
+                        Util.MessageBox.tip("反审核 成功", ()=>{
+                            this.pluginUpdate(dt, compType);
+                        });
+                    } else {
+                        Util.MessageBox.tip(resp.message);
+                    }
+                });
+            }
             public refresh():void {
                 if (this.mData == undefined) {
                     return;
@@ -109,7 +130,7 @@ module cpzlqk {
                     framework.router
                         .fromEp(this)
                         .to(framework.basic.endpoint.FRAME_ID)
-                        .send(framework.basic.FrameEvent.FE_SUBMITTED);
+                        .send(framework.basic.FrameEvent.FE_APPROVED);
                     this.updateTable();
                 }else if (this.mData.status == Util.ZBStatus.SUBMITTED){
                     this.$(this.option().tbarea).show();

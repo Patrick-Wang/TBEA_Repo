@@ -71,10 +71,11 @@ public class XlbhgcpmxServlet {
 		List<List<String>> result = xlbhgcpmxService.getXlbhgcpmxEntry(d, company);
 		List<String> zrlb = xlbhgcpmxService.getZrlb();
 		List<String> bhglx = xlbhgcpmxService.getBhglx();
+		ZBStatus status = xlbhgcpmxService.getStatus(d, company);
 		RawFormatterHandler handler = new RawEmptyHandler();
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("").format(result);
-		CpzlqkResp resp = new CpzlqkResp(result, null, zrlb, bhglx);
+		CpzlqkResp resp = new CpzlqkResp(result, status, zrlb, bhglx);
 		return JSONObject.fromObject(resp).toString().getBytes("utf-8");
 	}
 	
@@ -134,6 +135,18 @@ public class XlbhgcpmxServlet {
 		return Util.response(err);
 	}
 	
+	@RequestMapping(value = "approve/unapprove.do")
+	public @ResponseBody byte[] unapproveXlbhgcpmx(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		
+		ErrorCode err = xlbhgcpmxService.unapproveXlbhgcpmx(d, data, company);
+		return Util.response(err);
+	}	
+
 	@RequestMapping(value = "export.do")
 	public void exportXlbhgcpmx(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {

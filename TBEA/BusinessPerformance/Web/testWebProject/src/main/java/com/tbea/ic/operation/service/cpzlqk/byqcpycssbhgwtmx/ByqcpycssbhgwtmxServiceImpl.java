@@ -193,4 +193,19 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 		return ret;
 	}
 
+	@Override
+	public ErrorCode unapproveByqcpycssbhgwtmx(Date d, JSONArray data,
+			Company company) {
+		for (int i = 0; i < data.size(); ++i){
+			JSONArray row = data.getJSONArray(i);
+			Integer id = Util.toIntNull(row.getString(0));
+			ByqBhgwtmxEntity entity = byqBhgwtmxDao.getById(id);
+			if (null != entity){
+				entity.setZt(ZBStatus.SUBMITTED.ordinal());
+				byqBhgwtmxDao.merge(entity);
+			}
+		}
+		return ErrorCode.OK;
+	}
+
 }

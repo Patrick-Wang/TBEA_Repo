@@ -24,17 +24,17 @@ var cpzlqk;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            JQGridAssistantFactory.createTable = function (gridName, bhglx, zrlb) {
+            JQGridAssistantFactory.createTable = function (gridName, readOnly, bhglx, zrlb) {
                 return new JQTable.JQGridAssistant([
-                    Node.create({ name: "产品类型", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
-                    Node.create({ name: "生产号", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
-                    Node.create({ name: "产品型号", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
-                    Node.create({ name: "试验不合格现象", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
-                    Node.create({ name: "不合格类别", align: TextAlign.Center, isReadOnly: false, editType: "select", options: { value: bhglx } }),
-                    Node.create({ name: "原因分析", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
-                    Node.create({ name: "处理措施", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
-                    Node.create({ name: "处理结果", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
-                    Node.create({ name: "责任类别", align: TextAlign.Center, isReadOnly: false, editType: "select", options: { value: zrlb } })
+                    Node.create({ name: "产品类型", align: TextAlign.Center, isReadOnly: readOnly, isNumber: false }),
+                    Node.create({ name: "生产号", align: TextAlign.Center, isReadOnly: readOnly, isNumber: false }),
+                    Node.create({ name: "产品型号", align: TextAlign.Center, isReadOnly: readOnly, isNumber: false }),
+                    Node.create({ name: "试验不合格现象", align: TextAlign.Center, isReadOnly: readOnly, isNumber: false }),
+                    Node.create({ name: "不合格类别", align: TextAlign.Center, isReadOnly: readOnly, editType: "select", options: { value: bhglx } }),
+                    Node.create({ name: "原因分析", align: TextAlign.Center, isReadOnly: readOnly, isNumber: false }),
+                    Node.create({ name: "处理措施", align: TextAlign.Center, isReadOnly: readOnly, isNumber: false }),
+                    Node.create({ name: "处理结果", align: TextAlign.Center, isReadOnly: readOnly, isNumber: false }),
+                    Node.create({ name: "责任类别", align: TextAlign.Center, isReadOnly: readOnly, editType: "select", options: { value: zrlb } })
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -162,7 +162,7 @@ var cpzlqk;
             EntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mData.bhglx, this.mData.zrlb);
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, Util.ZBStatus.APPROVED == this.mData.status, this.mData.bhglx, this.mData.zrlb);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");

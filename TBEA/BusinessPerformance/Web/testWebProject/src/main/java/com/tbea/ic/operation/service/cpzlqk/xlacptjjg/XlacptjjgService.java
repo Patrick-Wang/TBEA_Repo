@@ -27,5 +27,7 @@ public interface XlacptjjgService {
 
 	ZBStatus getStatus(Date d, Company company);
 
+	ErrorCode unapproveXlacptjjg(Date d, JSONArray data, Company company);
+
 
 }
