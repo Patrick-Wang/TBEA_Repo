@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var cb_wg_byq;
 (function (cb_wg_byq) {
     var JQGridAssistantFactory = (function () {
@@ -70,9 +72,12 @@ var cb_wg_byq;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
+            //		private mfdwData : string[];
+            //		private mgwData : string[];
+            //		private mnwData : string[];
             this.mMxData = [[]];
             this.mJtData = [[]];
             this.mGsData = [[]];
@@ -89,10 +94,11 @@ var cb_wg_byq;
             this.mJttbTableId = jttbTableId;
             this.mGstbTableId = gstbTableId;
             this.mFdyTableId = fdyTableId;
-            this.mMonth = month;
-            this.mYear = year;
+            this.mMonth = month; //month;
+            this.mYear = year; //year;
             this.updateMxTable();
             this.updateJttbTable();
+            //this.updateGstbTable();
             this.updateFdyTable();
             this.updateCompany();
             this.updateDate();
@@ -153,18 +159,21 @@ var cb_wg_byq;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 rowNum: 10000,
                 cellEdit: true,
                 height: 250,
                 width: 1250,
                 shrinkToFit: false,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.updateJttbTable = function () {
@@ -213,17 +222,20 @@ var cb_wg_byq;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.updateGstbTable = function () {
@@ -253,21 +265,34 @@ var cb_wg_byq;
                 ["X月", "小计", " ", "预期阶段"],
                 ["X月", "小计", " ", "完工阶段"]];
             var row = [];
+            //            for (var i = 0; i < data.length; ++i) {
+            //                if (rawData[i] instanceof Array) {
+            //                    row = [].concat(rawData[i]);
+            //                    for (var col in row) {
+            //                    	if (col % 2 != 0){
+            //                        	row[col] = Util.formatCurrency(row[col]);
+            //                        }
+            //                                 data[i] = data[i].concat(row);
+            //                }
+            //            }
             var parent = $("#" + this.mGstbTableId);
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.updateFdyTable = function () {
@@ -323,21 +348,24 @@ var cb_wg_byq;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
                 rowNum: 200,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;
-    }());
+    })();
     cb_wg_byq.View = View;
 })(cb_wg_byq || (cb_wg_byq = {}));

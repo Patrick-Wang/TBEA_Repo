@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var gdw_zbhz;
 (function (gdw_zbhz) {
     var DwZb;
@@ -45,7 +47,7 @@ var gdw_zbhz;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -145,6 +147,6 @@ var gdw_zbhz;
             $("#export").css('display', 'block');
         };
         return View;
-    }());
+    })();
     gdw_zbhz.View = View;
 })(gdw_zbhz || (gdw_zbhz = {}));

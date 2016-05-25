@@ -1,3 +1,5 @@
+/// <reference path="util.ts" />
+/// <reference path="jqgrid/jqassist.ts" />
 var mkt_bid_analysis;
 (function (mkt_bid_analysis) {
     var Bid4IndustryZb;
@@ -62,7 +64,7 @@ var mkt_bid_analysis;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var company = {};
     company.sb = ["沈变"];
     company.hb = ["衡变"];
@@ -86,13 +88,31 @@ var mkt_bid_analysis;
             this.TableId = TableId;
             this.childTableId = TableId + "_jqgrid_1234";
             this.mDs = new Util.DateSelector({ year: year - 1, month: 1 }, { year: year, month: month }, dateId);
+            //请求数据
             this.mDataSet = new Util.Ajax("mkt_bid_analysis_update.do", false);
             this.onType_TypeSelected();
+            //if (this.mCompanyName == "股份公司") {
+            //    this.onCompanySelected();
+            //} 
+            //                else {
+            //                for (var i in company) {
+            //                    if (company[i].length == 1) {
+            //                        if (this.mCompanyName == company[i][0]) {
+            //                            this.mSelCompanys = company[i];
+            //                        }
+            //                    }
+            //
+            //                }
+            //            }
+            //this.updateUI();
         };
         View.prototype.onType_TypeSelected = function () {
+            //this.mAnalysisType = company[$("#analysisType").val()];
             this.mAnalysisType = $("#analysisType").val();
         };
         View.prototype.onCompanySelected = function () {
+            //this.mCompanyName = $("#comp_category").val();
+            //this.mSelCompanys = company[$("#comp_category").val()];
         };
         View.prototype.exportExcel = function () {
             var dt = this.mDs.getDate();
@@ -168,11 +188,16 @@ var mkt_bid_analysis;
                 data = this.formatData(rawData, integerList, percentList);
             }
             $("#" + childName).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                // autowidth : false,
+                //cellsubmit: 'clientArray',
+                //cellEdit: true,
                 editurl: 'clientArray',
                 height: '100%',
                 width: $(document).width() - 60,
@@ -180,13 +205,13 @@ var mkt_bid_analysis;
                 autoScroll: true,
                 pager: '#pager',
                 rowNum: 20,
-                viewrecords: true
+                viewrecords: true //是否显示行数 
             }));
             if (rawData.length != 0) {
                 $("#assist").css("display", "block");
             }
         };
         return View;
-    }());
+    })();
     mkt_bid_analysis.View = View;
 })(mkt_bid_analysis || (mkt_bid_analysis = {}));

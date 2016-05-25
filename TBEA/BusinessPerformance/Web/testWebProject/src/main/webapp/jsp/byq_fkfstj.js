@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var byq_fkfstj;
 (function (byq_fkfstj) {
     var JQGridAssistantFactory = (function () {
@@ -48,7 +50,7 @@ var byq_fkfstj;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.SBGS;
@@ -139,7 +141,7 @@ var byq_fkfstj;
                     orient: "vertical"
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 series: [
@@ -173,20 +175,23 @@ var byq_fkfstj;
             parent.empty();
             parent.append("<table id='" + childName + "'></table>");
             $("#" + childName).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                // autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;
-    }());
+    })();
     byq_fkfstj.View = View;
 })(byq_fkfstj || (byq_fkfstj = {}));

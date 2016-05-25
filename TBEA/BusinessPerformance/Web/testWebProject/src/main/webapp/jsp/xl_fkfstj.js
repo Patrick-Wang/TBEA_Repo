@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var xl_fkfstj;
 (function (xl_fkfstj) {
     var JQGridAssistantFactory = (function () {
@@ -61,7 +63,7 @@ var xl_fkfstj;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("xlfkfstj_update.do");
@@ -220,7 +222,7 @@ var xl_fkfstj;
                     orient: "vertical"
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 series: [
@@ -255,17 +257,20 @@ var xl_fkfstj;
             parent.empty();
             parent.append("<table id='" + childName + "'></table>");
             $("#" + childName).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
                 shrinkToFit: shrink,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.updateFdwTable = function (parentName, childName, tableAssist, rawData) {
@@ -304,11 +309,14 @@ var xl_fkfstj;
             parent.empty();
             parent.append("<table id='" + childName + "'></table>");
             $("#" + childName).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
@@ -317,6 +325,6 @@ var xl_fkfstj;
             }));
         };
         return View;
-    }());
+    })();
     xl_fkfstj.View = View;
 })(xl_fkfstj || (xl_fkfstj = {}));

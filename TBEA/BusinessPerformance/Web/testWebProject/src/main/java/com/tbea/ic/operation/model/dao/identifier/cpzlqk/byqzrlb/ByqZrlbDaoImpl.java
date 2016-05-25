@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.model.dao.identifier.cpzlqk.xlzrlb;
+package com.tbea.ic.operation.model.dao.identifier.cpzlqk.byqzrlb;
 
 
 import java.util.List;
@@ -12,14 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
-import com.tbea.ic.operation.model.entity.identifier.cpzlqk.XlZrlbEntity;
+import com.tbea.ic.operation.model.entity.identifier.cpzlqk.ByqZrlbEntity;
 
 
 
-@Repository(XlZrlbDaoImpl.NAME)
+@Repository(ByqZrlbDaoImpl.NAME)
 @Transactional("transactionManager")
-public class XlZrlbDaoImpl extends AbstractReadWriteDaoImpl<XlZrlbEntity> implements XlZrlbDao {
-	public final static String NAME = "XlZrlbDaoImpl";
+public class ByqZrlbDaoImpl extends AbstractReadWriteDaoImpl<ByqZrlbEntity> implements ByqZrlbDao {
+	public final static String NAME = "ByqZrlbDaoImpl";
 
 	@PersistenceContext(unitName = "localDB")
 	public void setEntityManager(EntityManager entityManager) {
@@ -27,16 +27,16 @@ public class XlZrlbDaoImpl extends AbstractReadWriteDaoImpl<XlZrlbEntity> implem
 	}
 	
 	@Override
-	public List<XlZrlbEntity> getAll() {
-		 Query q = getEntityManager().createQuery("from XlZrlbEntity");
+	public List<ByqZrlbEntity> getAll() {
+		 Query q = getEntityManager().createQuery("from ByqZrlbEntity");
 		return q.getResultList();
 	}
 	
 	@Override
-	public XlZrlbEntity getByName(String name) {
-		 Query q = getEntityManager().createQuery("from XlZrlbEntity where name=:name");
+	public ByqZrlbEntity getByName(String name) {
+		 Query q = getEntityManager().createQuery("from ByqZrlbEntity where name=:name");
 		 q.setParameter("name", name);
-		 List<XlZrlbEntity> ret = q.getResultList();
+		 List<ByqZrlbEntity> ret = q.getResultList();
 		 if (ret.isEmpty()){
 			 return null;
 		 }

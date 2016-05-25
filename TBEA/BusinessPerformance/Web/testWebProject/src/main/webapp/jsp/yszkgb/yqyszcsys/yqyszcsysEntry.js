@@ -1,3 +1,9 @@
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../yszkgbdef.ts" />
+///<reference path="../../messageBox.ts"/>
+///<reference path="../yszkgbEntry.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -24,7 +30,7 @@ var yszkgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var YqyszcsysEntryView = (function (_super) {
             __extends(YqyszcsysEntryView, _super);
             function YqyszcsysEntryView() {
@@ -134,8 +140,11 @@ var yszkgb;
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    //autowidth : false,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
+                    //height: data.length > 25 ? 550 : '100%',
+                    // width: titles.length * 200,
                     rowNum: 150,
                     height: '100%',
                     width: 1200,
@@ -144,7 +153,11 @@ var yszkgb;
                     data: this.mTableAssist.getData([[ny].concat(this.mData[0])]),
                     viewrecords: true,
                     onSelectCell: function (id, nm, tmp, iRow, iCol) {
+                        //                       console.log(iRow +', ' + iCol);
                     },
+                    //                    onCellSelect: (ri,ci,tdHtml,e) =>{
+                    //                       console.log(ri +', ' + ci);
+                    //                    },
                     beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
                         var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
                         if (isNaN(ret)) {
@@ -162,6 +175,7 @@ var yszkgb;
                     beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
                         lastsel = iRow;
                         lastcell = iCol;
+                        //                        console.log(iRow +', ' + iCol);
                         $("input").attr("disabled", true);
                     },
                     afterEditCell: function (rowid, cellname, v, iRow, iCol) {
@@ -185,14 +199,16 @@ var yszkgb;
                 $('html').bind('click', function (e) {
                     if (lastsel != "") {
                         if ($(e.target).closest("#" + name).length == 0) {
+                            //  $("#" + name).jqGrid('saveRow', lastsel);
                             $("#" + name).jqGrid("saveCell", lastsel, lastcell);
+                            //$("#" + name).resetSelection();
                             lastsel = "";
                         }
                     }
                 });
             };
             return YqyszcsysEntryView;
-        }(yszkgb.BaseEntryPluginView));
+        })(yszkgb.BaseEntryPluginView);
         yqyszcsysEntry.pluginView = YqyszcsysEntryView.newInstance();
     })(yqyszcsysEntry = yszkgb.yqyszcsysEntry || (yszkgb.yqyszcsysEntry = {}));
 })(yszkgb || (yszkgb = {}));

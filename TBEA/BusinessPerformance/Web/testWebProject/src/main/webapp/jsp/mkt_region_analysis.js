@@ -1,3 +1,5 @@
+/// <reference path="util.ts" />
+/// <reference path="jqgrid/jqassist.ts" />
 var mkt_region_analysis;
 (function (mkt_region_analysis) {
     var RegionZb;
@@ -50,7 +52,7 @@ var mkt_region_analysis;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mSelCompanys = [];
@@ -63,16 +65,20 @@ var mkt_region_analysis;
             this.TableId = TableId;
             this.childTableId = TableId + "_jqgrid_1234";
             this.mDs = new Util.DateSelector({ year: year - 1, month: 1 }, { year: year, month: month }, dateId);
+            //请求数据
             this.mDataSet = new Util.Ajax("mkt_region_analysis_update.do", false);
             this.onType_TypeSelected();
+            //this.onCompanySelected();
             this.onYearSelected();
             this.onStartMonthSelected();
             this.onEndMonthSelected();
+            //this.updateUI();
         };
         View.prototype.onType_TypeSelected = function () {
             this.mAnalysisType = $("#analysisType").val();
         };
         View.prototype.onCompanySelected = function () {
+            //this.mCompanyName = $("#comp_category").val();
         };
         View.prototype.exportExcel = function () {
             $("#exportBidAnalysisData")[0].action = "mkt_region_analysis_export.do?" + Util.Ajax.toUrlParam({ companyName: JSON.stringify(this.mSelCompanys), year: this.mYear, month: this.mEndMonth, startYear: this.mYear, startMonth: this.mStartMonth, type: this.mAnalysisType });
@@ -146,6 +152,22 @@ var mkt_region_analysis;
                     }
                 });
             }
+            //            this.mDataSet.get({ AnalysisType: this.mAnalysisType })
+            //                .then((data: any) => {
+            //                    var fktjData = data;
+            //
+            //                    $('#dataStatus').css("display", "none");
+            //                    if (this.mAnalysisType == "bid_industry") {
+            //                        this.updateTable(
+            //                            this.TableId,
+            //                            this.childTableId,
+            //                            JQGridAssistantFactory.createBidTable4Industry(this.childTableId),
+            //                            fktjData[0]);
+            //                    }else if (this.mAnalysisType == "bid_company"){
+            //                        
+            //                    } 
+            //
+            //                });
         };
         View.prototype.updateTable = function (parentName, childName, tableAssist, rawData) {
             $(rawData).each(function (i, item) {
@@ -154,11 +176,16 @@ var mkt_region_analysis;
                 }
             });
             $("#" + childName).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(rawData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                // autowidth : false,
+                //cellsubmit: 'clientArray',
+                //cellEdit: true,
                 editurl: 'clientArray',
                 height: '100%',
                 width: $(document).width() - 60,
@@ -166,13 +193,13 @@ var mkt_region_analysis;
                 autoScroll: true,
                 pager: '#pager',
                 rowNum: 20,
-                viewrecords: true
+                viewrecords: true //是否显示行数 
             }));
             if (rawData.length != 0) {
                 $("#assist").css("display", "block");
             }
         };
         return View;
-    }());
+    })();
     mkt_region_analysis.View = View;
 })(mkt_region_analysis || (mkt_region_analysis = {}));

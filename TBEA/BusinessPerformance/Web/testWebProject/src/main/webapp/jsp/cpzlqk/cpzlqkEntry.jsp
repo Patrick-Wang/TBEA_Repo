@@ -175,6 +175,7 @@ th.ui-th-ltr {
 				<div id="dt" style="float: left"></div>
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
+				<div id="bhglx" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
@@ -182,9 +183,9 @@ th.ui-th-ltr {
 		<tr>
 			<td id="plugin">
 				<%@include file="byqacptjjg/byqacptjjgEntry.jsp"%>
-				<%@include file="byqacptjjg/byqcpycssbhgwtmxEntry.jsp"%>
+				<%@include file="byqcpycssbhgwtmx/byqcpycssbhgwtmxEntry.jsp"%>
 				<%@include file="xlacptjjg/xlacptjjgEntry.jsp"%>
-				<%@include file="xlacptjjg/xlbhgcpmxEntry.jsp"%>
+				<%@include file="xlbhgcpmx/xlbhgcpmxEntry.jsp"%>
 			</td>
 		</tr> 
 		<tr>
@@ -203,6 +204,7 @@ th.ui-th-ltr {
 				dt: "dt",
 				comp:"compid",
 				comps : JSON.parse('${nodeData}'),
+				bhglx:"bhglx",
 				date: {
 					month: "${month}".length == 0 ? undefined : parseInt("${month}"),
 					year: ${year}

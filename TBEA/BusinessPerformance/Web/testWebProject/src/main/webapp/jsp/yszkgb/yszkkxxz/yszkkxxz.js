@@ -32,7 +32,7 @@ var yszkgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var YSZKKXXZView = (function (_super) {
             __extends(YSZKKXXZView, _super);
             function YSZKKXXZView() {
@@ -105,7 +105,7 @@ var yszkgb;
                 }));
             };
             return YSZKKXXZView;
-        }(yszkgb.BasePluginView));
+        })(yszkgb.BasePluginView);
         yszkkxxz.pluginView = YSZKKXXZView.newInstance();
     })(yszkkxxz = yszkgb.yszkkxxz || (yszkgb.yszkkxxz = {}));
 })(yszkgb || (yszkgb = {}));

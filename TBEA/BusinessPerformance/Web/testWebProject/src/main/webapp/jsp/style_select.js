@@ -5,6 +5,7 @@
         header: false,
         minWidth: 80,
         height: '100%',
+        // noneSelectedText: "请选择月份",
         selectedList: 1
     })
         .css("padding", "2px 0 2px 4px")

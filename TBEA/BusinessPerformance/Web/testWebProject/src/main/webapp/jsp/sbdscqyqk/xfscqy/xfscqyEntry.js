@@ -24,9 +24,9 @@ var sbdscqyqk;
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("行业", "hy", true, TextAlign.Center, 100),
-                    new JQTable.Node("行业", "hy2", true, TextAlign.Center, 100),
-                    new JQTable.Node("签约额", "qye", readOnly, TextAlign.Right, 1000)
+                    new JQTable.Node("行业", "hy", true, TextAlign.Center),
+                    new JQTable.Node("行业", "hy2", true, TextAlign.Center),
+                    new JQTable.Node("签约额", "qye", readOnly, TextAlign.Right)
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -156,7 +156,7 @@ var sbdscqyqk;
                     rowNum: 1000,
                     height: '100%',
                     width: 700,
-                    shrinkToFit: false,
+                    shrinkToFit: true,
                     autoScroll: true,
                     viewrecords: true
                 }));

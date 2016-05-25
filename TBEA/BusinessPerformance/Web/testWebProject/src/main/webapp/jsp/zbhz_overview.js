@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var zbhz_overview;
 (function (zbhz_overview) {
     var YDZBDataSet = (function () {
@@ -29,7 +31,7 @@ var zbhz_overview;
             return this.companyId;
         };
         return YDZBDataSet;
-    }());
+    })();
     var DataSetManager = (function () {
         function DataSetManager(zbid) {
             this.dataSetMap = {};
@@ -59,7 +61,7 @@ var zbhz_overview;
             }
         };
         return DataSetManager;
-    }());
+    })();
     var ChartType;
     (function (ChartType) {
         ChartType[ChartType["YDZB"] = 0] = "YDZB";
@@ -91,6 +93,14 @@ var zbhz_overview;
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;
         };
+        //		private getCurrentCompany() :　Util.CompanyType{
+        //			if (this.mDw != Util.CompanyType.ALL){
+        //				return this.mDw;
+        //			}
+        //			else{
+        //				return this.mCy;
+        //			}
+        //		}
         View.prototype.updateUI = function () {
             var _this = this;
             this.mDataSetMgr.getData(this.mComp, function (dataSet) {
@@ -124,7 +134,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -189,7 +199,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -255,7 +265,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -316,7 +326,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -381,7 +391,7 @@ var zbhz_overview;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -437,6 +447,6 @@ var zbhz_overview;
             this.mDw = val;
         };
         return View;
-    }());
+    })();
     zbhz_overview.View = View;
 })(zbhz_overview || (zbhz_overview = {}));

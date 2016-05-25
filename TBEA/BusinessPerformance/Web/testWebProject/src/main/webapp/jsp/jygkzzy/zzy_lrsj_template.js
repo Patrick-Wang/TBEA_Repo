@@ -1,3 +1,8 @@
+/// <reference path="../jqgrid/jqassist.ts" />
+/// <reference path="../util.ts" />
+/// <reference path="../dateSelector.ts" />
+/// <reference path="company_selector.ts" />
+/// <reference path="bglx_selector.ts" />
 var zzy_lrsj_template;
 (function (zzy_lrsj_template) {
     var JQGridAssistantFactory = (function () {
@@ -16,7 +21,7 @@ var zzy_lrsj_template;
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("zb_update.do", false);
@@ -373,11 +378,14 @@ var zzy_lrsj_template;
             var lastcell = "";
             var len = 500;
             $("#" + name).jqGrid(this.mTableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: this.mTableAssist.getDataWithId(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: data.length > 25 ? 550 : '100%',
@@ -386,7 +394,11 @@ var zzy_lrsj_template;
                 autoScroll: true,
                 rowNum: 150,
                 onSelectCell: function (id, nm, tmp, iRow, iCol) {
+                    //                       console.log(iRow +', ' + iCol);
                 },
+                //                    onCellSelect: (ri,ci,tdHtml,e) =>{
+                //                       console.log(ri +', ' + ci);
+                //                    },
                 beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
                     var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
                     if (isNaN(ret)) {
@@ -403,6 +415,7 @@ var zzy_lrsj_template;
                 beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
                     lastsel = iRow;
                     lastcell = iCol;
+                    //                        console.log(iRow +', ' + iCol);
                     $("input").attr("disabled", true);
                 },
                 afterEditCell: function (rowid, cellname, v, iRow, iCol) {
@@ -426,7 +439,9 @@ var zzy_lrsj_template;
             $('html').bind('click', function (e) {
                 if (lastsel != "") {
                     if ($(e.target).closest("#" + name).length == 0) {
+                        //  $("#" + name).jqGrid('saveRow', lastsel); 
                         $("#" + name).jqGrid("saveCell", lastsel, lastcell);
+                        //$("#" + name).resetSelection(); 
                         lastsel = "";
                     }
                 }
@@ -434,6 +449,6 @@ var zzy_lrsj_template;
         };
         View.instance = new View();
         return View;
-    }());
+    })();
     zzy_lrsj_template.View = View;
 })(zzy_lrsj_template || (zzy_lrsj_template = {}));

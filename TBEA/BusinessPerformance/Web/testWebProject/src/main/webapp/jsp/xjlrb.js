@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var xjlrb;
 (function (xjlrb) {
     var JQGridAssistantFactory = (function () {
@@ -14,11 +16,12 @@ var xjlrb;
                 new JQTable.Node("本年累计流出", "bnljlc"),
                 new JQTable.Node("本日净流量", "brjll"),
                 new JQTable.Node("本月累计净流量", "byljjll"),
+                //new JQTable.Node("截止上月末报表累计调整数", "bbbytzs"),
                 new JQTable.Node("本年累计净流量", "bnljjll")
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -38,10 +41,15 @@ var xjlrb;
             this.mDay = day;
             $("#date").val(year + "/" + month + "/" + day);
             $("#date").datepicker({
+                //            numberOfMonths:1,//显示几个月  
+                //            showButtonPanel:true,//是否显示按钮面板  
                 dateFormat: 'yy/mm/dd',
+                //            clearText:"清除",//清除日期的按钮名称  
+                //            closeText:"关闭",//关闭选择框的按钮名称  
                 yearSuffix: '年',
                 showMonthAfterYear: true,
                 defaultDate: year + "/" + month + "/" + day,
+                //            minDate:'2011-03-05',//最小日期  
                 maxDate: year + "/" + month + "/" + day,
                 monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                 dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
@@ -54,7 +62,7 @@ var xjlrb;
                     _this.mDay = d.getDate();
                 }
             });
-            $("#ui-datepicker-div").css('font-size', '0.8em');
+            $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
             this.updateTable();
             this.updateUI();
         };
@@ -123,11 +131,16 @@ var xjlrb;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: '100%',
                 width: 1200,
                 shrinkToFit: true,
@@ -136,6 +149,6 @@ var xjlrb;
             }));
         };
         return View;
-    }());
+    })();
     xjlrb.View = View;
 })(xjlrb || (xjlrb = {}));

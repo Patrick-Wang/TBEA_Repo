@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var yqysysfx;
 (function (yqysysfx) {
     var JQGridAssistantFactory = (function () {
@@ -17,7 +19,7 @@ var yqysysfx;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("yqysysfx_update.do");
@@ -27,6 +29,7 @@ var yqysysfx;
             return new View();
         };
         View.prototype.init = function (echartId, tableId) {
+            // this.initEchart($('#' + echartId)[0]);
             this.mTableId = tableId;
             this.mEchartId = echartId;
             this.updateTable();
@@ -37,6 +40,8 @@ var yqysysfx;
             this.mDataSet.get({ year: this.mYear, month: this.mMonth, companyId: this.mComp })
                 .then(function (dataArray) {
                 _this.mData = dataArray;
+                //                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报");
+                //                    document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日 现金流日报";
                 _this.updateTable();
                 _this.updateEchart();
             });
@@ -86,7 +91,7 @@ var yqysysfx;
                     data: ['总金额', '其中法律清收']
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: true,
                 xAxis: [
@@ -106,7 +111,7 @@ var yqysysfx;
                 ],
                 yAxis: [
                     {
-                        type: 'value',
+                        type: 'value'
                     }
                 ],
                 series: [
@@ -155,11 +160,14 @@ var yqysysfx;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
@@ -169,6 +177,6 @@ var yqysysfx;
             }));
         };
         return View;
-    }());
+    })();
     yqysysfx.View = View;
 })(yqysysfx || (yqysysfx = {}));

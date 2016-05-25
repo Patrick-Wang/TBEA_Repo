@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var hkjhjg;
 (function (hkjhjg) {
     var JQGridAssistantFactory = (function () {
@@ -36,7 +38,7 @@ var hkjhjg;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var HKJHType;
     (function (HKJHType) {
         HKJHType[HKJHType["JG"] = 0] = "JG";
@@ -118,6 +120,8 @@ var hkjhjg;
             if (val.value > 0) {
                 dataIn.push({ name: "争取", value: parseFloat(this.mXZData[1]).toFixed(2) });
             }
+            //          [{ name: "确保", value: qbTotal },
+            //          { name: "争取", value: zqTotal }];
             var hkjhjgOption = {
                 tooltip: {
                     trigger: 'item',
@@ -129,7 +133,7 @@ var hkjhjg;
                     orient: "vertical"
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 series: [
@@ -179,11 +183,14 @@ var hkjhjg;
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
                 caption: "回款计划结构",
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
@@ -207,11 +214,14 @@ var hkjhjg;
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
                 caption: "回款计划款项状态结构",
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
@@ -235,11 +245,14 @@ var hkjhjg;
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
                 caption: "回款计划款项性质结构",
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
@@ -250,6 +263,6 @@ var hkjhjg;
             $(".ui-jqgrid-titlebar-close").hide();
         };
         return View;
-    }());
+    })();
     hkjhjg.View = View;
 })(hkjhjg || (hkjhjg = {}));

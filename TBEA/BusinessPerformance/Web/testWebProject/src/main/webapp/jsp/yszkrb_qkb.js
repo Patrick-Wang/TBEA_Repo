@@ -1,3 +1,4 @@
+/// <reference path="jqgrid/jqassist.ts" />
 var yszkrb_qkb;
 (function (yszkrb_qkb) {
     var JQGridAssistantFactory = (function () {
@@ -23,7 +24,7 @@ var yszkrb_qkb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
         }
@@ -57,11 +58,16 @@ var yszkrb_qkb;
                 }
             }
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: '100%',
                 width: 1200,
                 shrinkToFit: false,
@@ -70,6 +76,6 @@ var yszkrb_qkb;
             }));
         };
         return View;
-    }());
+    })();
     yszkrb_qkb.View = View;
 })(yszkrb_qkb || (yszkrb_qkb = {}));

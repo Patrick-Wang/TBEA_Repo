@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var blhtdqqkhzb;
 (function (blhtdqqkhzb) {
     var JQGridAssistantFactory = (function () {
@@ -40,7 +42,7 @@ var blhtdqqkhzb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.HBGS;
@@ -110,7 +112,7 @@ var blhtdqqkhzb;
                     data: [this.mYear - 1 + "年", this.mYear + "年"]
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -153,6 +155,9 @@ var blhtdqqkhzb;
                 ["保理合同\r\n到期情况", "金额"],
                 ["保理合同\r\n到期情况", "份数"]
             ];
+            //            for (var i = 0; i < data.length; ++i){
+            //                data[i] = data[i].concat(this.mTableData[i]);
+            //            }
             if (undefined != this.mTableData) {
                 var row = [];
                 for (var i = 0; i < data.length; ++i) {
@@ -179,6 +184,6 @@ var blhtdqqkhzb;
             }));
         };
         return View;
-    }());
+    })();
     blhtdqqkhzb.View = View;
 })(blhtdqqkhzb || (blhtdqqkhzb = {}));

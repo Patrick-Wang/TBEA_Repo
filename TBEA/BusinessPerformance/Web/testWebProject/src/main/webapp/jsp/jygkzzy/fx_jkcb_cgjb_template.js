@@ -1,3 +1,8 @@
+/// <reference path="../jqgrid/jqassist.ts" />
+/// <reference path="../util.ts" />
+/// <reference path="../dateSelector.ts" />
+/// <reference path="../companySelector.ts" />
+/// <reference path="bglx_selector.ts" />
 var fx_jkcb_cgjb;
 (function (fx_jkcb_cgjb) {
     var JQGridAssistantFactory = (function () {
@@ -17,7 +22,7 @@ var fx_jkcb_cgjb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("readview.do", false);
@@ -94,11 +99,16 @@ var fx_jkcb_cgjb;
                 }
             }
             $("#" + name).jqGrid(this.mTableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: this.mTableAssist.getData(this.mTableData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: this.mTableData.length > 23 ? 500 : '100%',
                 width: this.mTableData[0].length * 100,
                 shrinkToFit: true,
@@ -107,6 +117,6 @@ var fx_jkcb_cgjb;
             }));
         };
         return View;
-    }());
+    })();
     fx_jkcb_cgjb.View = View;
 })(fx_jkcb_cgjb || (fx_jkcb_cgjb = {}));

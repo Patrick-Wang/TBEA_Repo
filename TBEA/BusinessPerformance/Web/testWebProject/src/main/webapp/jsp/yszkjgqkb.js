@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var yszkjgqkb;
 (function (yszkjgqkb) {
     var JQGridAssistantFactory = (function () {
@@ -23,7 +25,7 @@ var yszkjgqkb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mCurrentSelected = 0;
@@ -126,7 +128,7 @@ var yszkjgqkb;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [{
@@ -187,7 +189,7 @@ var yszkjgqkb;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -236,7 +238,7 @@ var yszkjgqkb;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -350,18 +352,23 @@ var yszkjgqkb;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: '100%',
                 width: 1300,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;
-    }());
+    })();
     yszkjgqkb.View = View;
 })(yszkjgqkb || (yszkjgqkb = {}));

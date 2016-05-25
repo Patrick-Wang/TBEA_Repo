@@ -1,3 +1,7 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+///<reference path="companySelector.ts"/>
+///<reference path="unitedSelector.ts"/>
 var companys_zbhz_prediction;
 (function (companys_zbhz_prediction) {
     var FirstMonthZb;
@@ -174,7 +178,7 @@ var companys_zbhz_prediction;
             }
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -204,6 +208,7 @@ var companys_zbhz_prediction;
             this.mDelegateMonth = parseInt(month);
         };
         View.prototype.exportExcel = function (fName) {
+            //var date : Util.Date = this.mDateSelector.getDate();
             var compType = this.mCompanySelector.getCompany();
             $("#export")[0].action = "hzb_companys_prediction_export.do?" + Util.Ajax.toUrlParam({ month: this.mActualMonth, year: this.mYear, companyId: compType });
             $("#export")[0].submit();
@@ -307,11 +312,16 @@ var companys_zbhz_prediction;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(outputdata),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: outputdata.length > 23 ? 500 : '100%',
                 width: 1330,
                 shrinkToFit: true,
@@ -321,6 +331,6 @@ var companys_zbhz_prediction;
             $("#export").css('display', 'block');
         };
         return View;
-    }());
+    })();
     companys_zbhz_prediction.View = View;
 })(companys_zbhz_prediction || (companys_zbhz_prediction = {}));

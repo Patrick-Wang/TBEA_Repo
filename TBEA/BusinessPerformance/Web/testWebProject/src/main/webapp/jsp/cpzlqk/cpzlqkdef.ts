@@ -11,6 +11,7 @@ module cpzlqk{
 
     export interface FrameOption extends framework.basic.Option {
         contentType: string;
+        bhglx:string;
     }
 
     export enum YDJDType{

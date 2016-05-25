@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var gdw_indexinput_summary;
 (function (gdw_indexinput_summary) {
     var JQGridAssistantFactory = (function () {
@@ -12,7 +14,7 @@ var gdw_indexinput_summary;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -35,14 +37,17 @@ var gdw_indexinput_summary;
         };
         View.prototype.onIndexSelected = function () {
             this.mIndex = $("#indextype").val();
+            //this.mIndex = $("#indextype  option:selected").text();
         };
         View.prototype.onCompanysSelected = function () {
             this.mCompanyType = $("#companytype").val();
             this.mCompanyName = $("#companytype  option:selected").text();
+            //this.mIndex = $("#indextype  option:selected").text();
         };
         View.prototype.updateUI = function () {
             var _this = this;
             var date = this.mDs.getDate();
+            //this.onIndexSelected();
             this.mDataSet.get({ month: date.month, year: date.year, entryType: this.mIndex, companyType: this.mCompanyType })
                 .then(function (dataArray) {
                 _this.mData = dataArray;
@@ -77,6 +82,7 @@ var gdw_indexinput_summary;
                         row[3] = "--";
                     }
                 }
+                //mdata[j] = data[j].concat(row);
                 data.push(row);
             }
             return data;
@@ -91,21 +97,26 @@ var gdw_indexinput_summary;
             parent.empty();
             parent.append("<table id='" + name + "'></table>" + "<div id= 'pager'></div>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: '100%',
                 width: 500,
                 shrinkToFit: true,
                 autoScroll: true,
                 pager: '#pager',
                 rowNum: 20,
-                viewrecords: true
+                viewrecords: true //是否显示行数 
             }));
         };
         return View;
-    }());
+    })();
     gdw_indexinput_summary.View = View;
 })(gdw_indexinput_summary || (gdw_indexinput_summary = {}));

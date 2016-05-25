@@ -10,6 +10,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../cpzlqkdef.ts"/>
+///<reference path="../cpzlqkEntry.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.byqcpycssbhgwtmx = framework.basic.endpoint.lastId();
@@ -23,17 +24,17 @@ var cpzlqk;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            JQGridAssistantFactory.createTable = function (gridName, readOnly) {
+            JQGridAssistantFactory.createTable = function (gridName, bhglx, zrlb) {
                 return new JQTable.JQGridAssistant([
-                    Node.create({ name: "产品类型", align: TextAlign.Center, isReadOnly: false }),
-                    Node.create({ name: "生产号", align: TextAlign.Center, isReadOnly: false }),
-                    Node.create({ name: "产品型号", align: TextAlign.Center, isReadOnly: false }),
-                    Node.create({ name: "试验不合格现象", align: TextAlign.Center, isReadOnly: false }),
-                    Node.create({ name: "不合格类别", align: TextAlign.Center, isReadOnly: false }),
-                    Node.create({ name: "原因分析", align: TextAlign.Center, isReadOnly: false }),
-                    Node.create({ name: "处理措施", align: TextAlign.Center, isReadOnly: false }),
-                    Node.create({ name: "处理结果", align: TextAlign.Center, isReadOnly: false }),
-                    Node.create({ name: "责任类别", align: TextAlign.Center, isReadOnly: false })
+                    Node.create({ name: "产品类型", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
+                    Node.create({ name: "生产号", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
+                    Node.create({ name: "产品型号", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
+                    Node.create({ name: "试验不合格现象", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
+                    Node.create({ name: "不合格类别", align: TextAlign.Center, isReadOnly: false, editType: "select", options: { value: bhglx } }),
+                    Node.create({ name: "原因分析", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
+                    Node.create({ name: "处理措施", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
+                    Node.create({ name: "处理结果", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
+                    Node.create({ name: "责任类别", align: TextAlign.Center, isReadOnly: false, editType: "select", options: { value: zrlb } })
                 ], gridName);
             };
             return JQGridAssistantFactory;
@@ -49,6 +50,18 @@ var cpzlqk;
             EntryView.prototype.getId = function () {
                 return pluginEntry.byqcpycssbhgwtmx;
             };
+            EntryView.prototype.isSupportBhglb = function () {
+                return true;
+            };
+            EntryView.prototype.isSupported = function (compType) {
+                if (compType == Util.CompanyType.SBGS ||
+                    compType == Util.CompanyType.HBGS ||
+                    compType == Util.CompanyType.TBGS ||
+                    compType == Util.CompanyType.XBC) {
+                    return true;
+                }
+                return false;
+            };
             EntryView.prototype.option = function () {
                 return this.mOpt;
             };
@@ -58,15 +71,26 @@ var cpzlqk;
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
+                    for (var j = 0; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
+                        submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
+                        if ("" == submitData[i][j]) {
+                            if (j == 5) {
+                                Util.MessageBox.tip("不合格类别不能为空");
+                                return;
+                            }
+                            else if (j == 9) {
+                                Util.MessageBox.tip("责任类别不能为空");
+                                return;
+                            }
+                        }
                     }
                 }
                 this.mAjaxSave.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType
+                    companyId: compType,
+                    bhgType: this.getBhglx()
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("保存 成功", function () {
@@ -84,10 +108,9 @@ var cpzlqk;
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 2]) {
+                    for (var j = 0; j < allData[i].length; ++j) {
+                        submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
+                        if ("" == submitData[i][j]) {
                             Util.MessageBox.tip("有空内容 无法提交");
                             return;
                         }
@@ -96,7 +119,8 @@ var cpzlqk;
                 this.mAjaxSubmit.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType
+                    companyId: compType,
+                    bhgType: this.getBhglx()
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("提交 成功", function () {
@@ -114,7 +138,8 @@ var cpzlqk;
                 this.mCompType = compType;
                 this.mAjaxUpdate.get({
                     date: date,
-                    companyId: compType
+                    companyId: compType,
+                    bhgType: this.getBhglx()
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -131,19 +156,19 @@ var cpzlqk;
                 framework.router
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产品一次送试不合格问题明细");
             };
             EntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mData.bhglx, this.mData.zrlb);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                 var jqTable = this.$(name);
                 jqTable.jqGrid(this.mTableAssist.decorate({
                     datatype: "local",
-                    data: this.mTableAssist.getDataWithId(this.mData),
+                    data: this.mTableAssist.getDataWithId(this.mData.tjjg),
                     multiselect: false,
                     drag: false,
                     resize: false,
@@ -165,6 +190,6 @@ var cpzlqk;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        })(framework.basic.EntryPluginView);
+        })(cpzlqk.ZlEntryPluginView);
     })(byqcpycssbhgwtmxEntry = cpzlqk.byqcpycssbhgwtmxEntry || (cpzlqk.byqcpycssbhgwtmxEntry = {}));
 })(cpzlqk || (cpzlqk = {}));

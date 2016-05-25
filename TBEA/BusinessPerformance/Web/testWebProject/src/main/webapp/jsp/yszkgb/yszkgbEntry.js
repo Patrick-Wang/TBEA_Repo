@@ -1,3 +1,10 @@
+/// <reference path="../jqgrid/jqassist.ts" />
+/// <reference path="../util.ts" />
+/// <reference path="../dateSelector.ts" />
+/// <reference path="yszkgbdef.ts" />
+/// <reference path="../unitedSelector.ts"/>
+///<reference path="../messageBox.ts"/>
+///<reference path="../companySelector.ts"/>
 var yszkgb;
 (function (yszkgb) {
     var EntryView = (function () {
@@ -68,7 +75,7 @@ var yszkgb;
             this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
         };
         return EntryView;
-    }());
+    })();
     yszkgb.EntryView = EntryView;
 })(yszkgb || (yszkgb = {}));
 var entryView = new yszkgb.EntryView();

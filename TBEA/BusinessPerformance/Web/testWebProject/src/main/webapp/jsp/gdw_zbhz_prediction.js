@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var gdw_zbhz_prediciton;
 (function (gdw_zbhz_prediciton) {
     var FirstMonthZb;
@@ -165,7 +167,7 @@ var gdw_zbhz_prediciton;
             }
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -180,6 +182,11 @@ var gdw_zbhz_prediciton;
         View.prototype.init = function (tableId, year, zbId) {
             this.mYear = year;
             this.mTableId = tableId;
+            //this.mZB = zbId;
+            //this.mZBName = zbName;
+            //$('h1').text(this.mYear + "年"  + "季度" + this.mZBName + "预测完成情况");
+            //this.updateTable();
+            //this.updateUI();
         };
         View.prototype.onYearSelected = function (year) {
             this.mYear = year;
@@ -303,11 +310,16 @@ var gdw_zbhz_prediciton;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: '100%',
                 width: 1330,
                 shrinkToFit: true,
@@ -317,6 +329,6 @@ var gdw_zbhz_prediciton;
             $("#export").css('display', 'block');
         };
         return View;
-    }());
+    })();
     gdw_zbhz_prediciton.View = View;
 })(gdw_zbhz_prediciton || (gdw_zbhz_prediciton = {}));

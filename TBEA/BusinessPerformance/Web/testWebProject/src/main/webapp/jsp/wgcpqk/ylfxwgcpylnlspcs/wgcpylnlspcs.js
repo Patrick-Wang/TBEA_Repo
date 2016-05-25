@@ -28,7 +28,7 @@ var ylfxwgcpylnlspcs;
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, date) {
-                var curDate = new Date(date);
+                var curDate = new Date(Date.parse(date.replace(/-/g, '/')));
                 var month = curDate.getMonth() + 1;
                 var data = [];
                 var node;

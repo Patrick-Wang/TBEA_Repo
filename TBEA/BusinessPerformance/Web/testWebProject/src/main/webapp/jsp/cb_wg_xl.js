@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var cb_wg_xl;
 (function (cb_wg_xl) {
     var JQGridAssistantFactory = (function () {
@@ -68,9 +70,12 @@ var cb_wg_xl;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
+            //      private mfdwData : string[];
+            //      private mgwData : string[];
+            //      private mnwData : string[];
             this.mMxData = [[]];
             this.mJtData = [[]];
             this.mGsData = [[]];
@@ -94,6 +99,7 @@ var cb_wg_xl;
             this.updateJttbTable();
             this.updateGstbTable();
             this.updateUI();
+            // this.updateFdyTable();
         };
         View.prototype.onCompanySelected = function (comp) {
             this.mComp = comp;
@@ -117,6 +123,10 @@ var cb_wg_xl;
                 _this.updateMxTable();
                 _this.updateJttbTable();
                 _this.updateGstbTable();
+                //                    this.mData = dataArray;
+                //                    $('h1').text(this.mYear + "年" + this.mMonth + "月 各产业指标汇总");
+                //                    document.title = this.mYear + "年" + this.mMonth + "月 各产业指标汇总";
+                //                    this.updateTable();
             });
         };
         View.prototype.updateMxTable = function () {
@@ -145,18 +155,21 @@ var cb_wg_xl;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 rowNum: 10000,
                 cellEdit: true,
                 height: 250,
                 width: 1250,
                 shrinkToFit: false,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.updateJttbTable = function () {
@@ -205,17 +218,20 @@ var cb_wg_xl;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.updateGstbTable = function () {
@@ -261,11 +277,14 @@ var cb_wg_xl;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: 250,
@@ -340,21 +359,24 @@ var cb_wg_xl;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
                 rowNum: 200,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;
-    }());
+    })();
     cb_wg_xl.View = View;
 })(cb_wg_xl || (cb_wg_xl = {}));

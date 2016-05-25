@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var syhkjhzxqk;
 (function (syhkjhzxqk) {
     var JQGridAssistantFactory = (function () {
@@ -13,7 +15,7 @@ var syhkjhzxqk;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.HBGS;
@@ -86,7 +88,7 @@ var syhkjhzxqk;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -159,6 +161,7 @@ var syhkjhzxqk;
                             data[i].push(Util.formatCurrency(this.mData[0][i][j]));
                         }
                         else {
+                            //data[i].push((this.mData[0][i][j]));
                             data[i].push((parseFloat(this.mData[0][i][j]) * 100).toFixed(2) + "%");
                         }
                     }
@@ -168,18 +171,21 @@ var syhkjhzxqk;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "datasource/syhkjhzxqk.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                // autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
-                width: '100%',
+                width: '100%'
             }));
         };
         return View;
-    }());
+    })();
     syhkjhzxqk.View = View;
 })(syhkjhzxqk || (syhkjhzxqk = {}));

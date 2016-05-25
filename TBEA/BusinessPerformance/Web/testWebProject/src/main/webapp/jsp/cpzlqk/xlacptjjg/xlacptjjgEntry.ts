@@ -5,6 +5,7 @@
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../cpzlqkdef.ts"/>
+///<reference path="../cpzlqkEntry.ts"/>
 declare var $:any;
 
 
@@ -31,7 +32,7 @@ module cpzlqk {
             tb:string;
         }
 
-        class EntryView extends framework.basic.EntryPluginView {
+        class EntryView extends ZlEntryPluginView {
             static ins = new EntryView();
             private mData:Array<string[]>;
             private mAjaxUpdate:Util.Ajax = new Util.Ajax("../xlacptjjg/entry/update.do", false);

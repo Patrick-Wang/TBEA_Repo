@@ -1,3 +1,7 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
+///<reference path="dateSelector.ts"/>
 var hzbNC_zbhz;
 (function (hzbNC_zbhz) {
     var ZtId;
@@ -26,7 +30,7 @@ var hzbNC_zbhz;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -43,6 +47,7 @@ var hzbNC_zbhz;
             this.mTableId = tableId;
             this.mDs = new Util.DateSelector({ year: year - 3, month: 1 }, { year: year, month: month }, dateId);
             this.updateTable();
+            //this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
@@ -73,12 +78,18 @@ var hzbNC_zbhz;
             }
             var outputData = [];
             Util.formatData(outputData, this.mData, this.initPercentList(), []);
+            //data = this.formatZtData();
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(outputData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: outputData.length > 23 ? 500 : '100%',
                 width: 1330,
                 shrinkToFit: true,
@@ -87,6 +98,6 @@ var hzbNC_zbhz;
             }));
         };
         return View;
-    }());
+    })();
     hzbNC_zbhz.View = View;
 })(hzbNC_zbhz || (hzbNC_zbhz = {}));

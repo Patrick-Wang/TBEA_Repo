@@ -17,7 +17,8 @@ public class CpzlqkResp {
 	ZBStatus status;
 	List<WaveItem> waveItems;
 	List<String> waveX;
-
+	List<String> zrlb;
+	List<String> bhglx;
 	
 	public List<WaveItem> getWaveItems() {
 		return waveItems;
@@ -27,6 +28,15 @@ public class CpzlqkResp {
 		this.waveItems = waveItems;
 	}
 	
+	public CpzlqkResp(List<List<String>> tjjg, ZBStatus status,
+			List<String> zrlb, List<String> bhglx) {
+		super();
+		this.tjjg = tjjg;
+		this.status = status;
+		this.zrlb = zrlb;
+		this.bhglx = bhglx;
+	}
+
 	public CpzlqkResp(List<List<String>> tjjg, ZBStatus status) {
 		super();
 		this.tjjg = tjjg;
@@ -86,6 +96,22 @@ public class CpzlqkResp {
 
 	public void setStatus(ZBStatus status) {
 		this.status = status;
+	}
+
+	public List<String> getZrlb() {
+		return zrlb;
+	}
+
+	public void setZrlb(List<String> zrlb) {
+		this.zrlb = zrlb;
+	}
+
+	public List<String> getBhglx() {
+		return bhglx;
+	}
+
+	public void setBhglx(List<String> bhglx) {
+		this.bhglx = bhglx;
 	}
 	
 }

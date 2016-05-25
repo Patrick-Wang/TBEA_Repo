@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.ic.operation.common.EasyCalendar;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.cpzlqk.ByqBhgwtmxEntity;
 
 
@@ -69,6 +70,34 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
 		q.setParameter("jdstart", ec.getCurrentSeasonFirstMonth());
 		List<Object[]> result = q.getResultList();
 		return result;
+	}
+
+	@Override
+	public ByqBhgwtmxEntity getFirstBhgwtmx(Date d, Company company, int tjfs) {
+		EasyCalendar ec = new EasyCalendar(d);
+        Query q = getEntityManager().createQuery("from ByqBhgwtmxEntity where tjfs = :tjfs and nf = :nf and  yf = :yf and dwid = :dwid");
+        q.setFirstResult(0);
+        q.setMaxResults(1);
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("tjfs", tjfs);
+		q.setParameter("dwid", company.getId());
+		List<ByqBhgwtmxEntity> result = q.getResultList();
+		if (result.isEmpty()){
+			return null;
+		}
+		return result.get(0);
+	}
+
+	@Override
+	public List<ByqBhgwtmxEntity> getByDate(Date d, Company company, int tjfs) {
+		EasyCalendar ec = new EasyCalendar(d);
+        Query q = getEntityManager().createQuery("from ByqBhgwtmxEntity where  tjfs = :tjfs and nf = :nf and  yf = :yf and dwid = :dwid");
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("tjfs", tjfs);
+		q.setParameter("dwid", company.getId());
+		return q.getResultList();
 	}
 
 }

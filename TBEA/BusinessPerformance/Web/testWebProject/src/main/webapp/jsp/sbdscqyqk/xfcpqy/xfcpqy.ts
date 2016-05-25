@@ -19,7 +19,7 @@ module sbdscqyqk {
         class JQGridAssistantFactory {
             public static createTable(gridName:string, date:string):JQTable.JQGridAssistant {
 
-                let curDate:Date = new Date(date);
+                let curDate:Date = new Date(Date.parse(date.replace(/-/g, '/')));
                 let month = curDate.getMonth() + 1;
                 let data = [];
                 let node:JQTable.Node;

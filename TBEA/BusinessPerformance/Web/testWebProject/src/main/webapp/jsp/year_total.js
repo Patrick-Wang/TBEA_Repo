@@ -1,3 +1,8 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+///<reference path="dateSelector.ts"/>
+///<reference path="unitedSelector.ts"/>
+///<reference path="companySelector.ts"/>
 var year_total;
 (function (year_total) {
     var AllZb;
@@ -91,7 +96,7 @@ var year_total;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -159,11 +164,16 @@ var year_total;
                 AllZb.ndqntq,
             ]);
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(outputData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: outputData.length > 23 ? 500 : '100%',
                 width: 1300,
                 shrinkToFit: true,
@@ -182,6 +192,6 @@ var year_total;
             return precentList;
         };
         return View;
-    }());
+    })();
     year_total.View = View;
 })(year_total || (year_total = {}));

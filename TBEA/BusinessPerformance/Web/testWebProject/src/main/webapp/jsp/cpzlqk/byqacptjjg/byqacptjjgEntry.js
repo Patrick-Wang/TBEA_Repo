@@ -10,6 +10,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../cpzlqkdef.ts"/>
+///<reference path="../cpzlqkEntry.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.byqacptjjg = framework.basic.endpoint.lastId();
@@ -172,6 +173,6 @@ var cpzlqk;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        })(framework.basic.EntryPluginView);
+        })(cpzlqk.ZlEntryPluginView);
     })(byqacptjjgEntry = cpzlqk.byqacptjjgEntry || (cpzlqk.byqacptjjgEntry = {}));
 })(cpzlqk || (cpzlqk = {}));

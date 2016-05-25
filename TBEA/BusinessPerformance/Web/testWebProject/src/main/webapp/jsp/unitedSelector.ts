@@ -9,8 +9,8 @@ module Util {
 
     export interface IDataNode {
         data: IData;
-        parent: IDataNode;
-        subNodes: Array<IDataNode>;
+        parent?: IDataNode;
+        subNodes?: Array<IDataNode>;
     }
 
     export interface NodeVisitor {

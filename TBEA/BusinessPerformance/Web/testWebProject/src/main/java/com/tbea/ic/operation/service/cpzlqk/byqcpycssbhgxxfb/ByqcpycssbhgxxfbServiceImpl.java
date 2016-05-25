@@ -16,11 +16,11 @@ import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.ByqBhgType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
-import com.tbea.ic.operation.model.dao.cpzlqk.byqbhglb.ByqBhglbDao;
-import com.tbea.ic.operation.model.dao.cpzlqk.byqbhglb.ByqBhglbDaoImpl;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqbhgwtmx.ByqBhgwtmxDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqbhgwtmx.ByqBhgwtmxDaoImpl;
 import com.tbea.ic.operation.model.dao.cpzlqk.dwmc.DwmcDao;
+import com.tbea.ic.operation.model.dao.identifier.cpzlqk.byqbhglb.ByqBhglbDao;
+import com.tbea.ic.operation.model.dao.identifier.cpzlqk.byqbhglb.ByqBhglbDaoImpl;
 import com.tbea.ic.operation.model.entity.identifier.cpzlqk.ByqBhglbEntity;
 
 @Service(ByqcpycssbhgxxfbServiceImpl.NAME)

@@ -5,6 +5,7 @@
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../cpzlqkdef.ts"/>
+///<reference path="../cpzlqkEntry.ts"/>
 declare var $:any;
 
 
@@ -17,17 +18,17 @@ module cpzlqk {
         import TextAlign = JQTable.TextAlign;
         import Node = JQTable.Node;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
+            public static createTable(gridName:string, bhglx:string[], zrlb:string[]):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    Node.create({name : "产品类型", align : TextAlign.Center, isReadOnly:false}),
-                    Node.create({name : "生产号", align : TextAlign.Center, isReadOnly:false}),
-                    Node.create({name : "产品型号", align : TextAlign.Center, isReadOnly:false}),
-                    Node.create({name : "试验不合格现象", align : TextAlign.Center, isReadOnly:false}),
-                    Node.create({name : "不合格类别", align : TextAlign.Center, isReadOnly:false}),
-                    Node.create({name : "原因分析", align : TextAlign.Center, isReadOnly:false}),
-                    Node.create({name : "处理措施", align : TextAlign.Center, isReadOnly:false}),
-                    Node.create({name : "处理结果", align : TextAlign.Center, isReadOnly:false}),
-                    Node.create({name : "责任类别", align : TextAlign.Center, isReadOnly:false})
+                    Node.create({name : "产品类型", align : TextAlign.Center, isReadOnly:false, isNumber: false}),
+                    Node.create({name : "生产号", align : TextAlign.Center, isReadOnly:false, isNumber: false}),
+                    Node.create({name : "产品型号", align : TextAlign.Center, isReadOnly:false, isNumber: false}),
+                    Node.create({name : "试验不合格现象", align : TextAlign.Center, isReadOnly:false, isNumber: false}),
+                    Node.create({name : "不合格类别", align : TextAlign.Center, isReadOnly:false, editType:"select", options:{value: bhglx}}),
+                    Node.create({name : "原因分析", align : TextAlign.Center, isReadOnly:false, isNumber: false}),
+                    Node.create({name : "处理措施", align : TextAlign.Center, isReadOnly:false, isNumber: false}),
+                    Node.create({name : "处理结果", align : TextAlign.Center, isReadOnly:false, isNumber: false}),
+                    Node.create({name : "责任类别", align : TextAlign.Center, isReadOnly:false, editType:"select", options:{value: zrlb}})
                 ], gridName);
             }
         }
@@ -36,9 +37,9 @@ module cpzlqk {
             tb:string;
         }
 
-        class EntryView extends framework.basic.EntryPluginView {
+        class EntryView extends ZlEntryPluginView {
             static ins = new EntryView();
-            private mData:Array<string[]>;
+            private mData:CpzlqkResp;
             private mAjaxUpdate:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/entry/update.do", false);
             private mAjaxSave:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/entry/save.do", false);
             private mAjaxSubmit:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/entry/submit.do", false);
@@ -47,6 +48,19 @@ module cpzlqk {
             private mCompType:Util.CompanyType;
             getId():number {
                 return pluginEntry.byqcpycssbhgwtmx;
+            }
+
+            isSupportBhglb():boolean{
+                return true;
+            }
+            protected isSupported(compType:Util.CompanyType):boolean {
+                if (compType == Util.CompanyType.SBGS ||
+                    compType == Util.CompanyType.HBGS ||
+                    compType == Util.CompanyType.TBGS ||
+                    compType == Util.CompanyType.XBC){
+                    return true;
+                }
+                return false;
             }
 
             private option():Option {
@@ -58,15 +72,27 @@ module cpzlqk {
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
+                    for (var j = 0; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
+                        submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
+                        if ("" == submitData[i][j]) {
+                            if (j == 5){
+                                Util.MessageBox.tip("不合格类别不能为空");
+                                return;
+                            }else if (j == 9){
+                                Util.MessageBox.tip("责任类别不能为空");
+                                return;
+                            }
+
+                        }
+
                     }
                 }
                 this.mAjaxSave.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType
+                    companyId: compType,
+                    bhgType:this.getBhglx()
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("保存 成功", ()=>{
@@ -83,10 +109,9 @@ module cpzlqk {
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 2]) {
+                    for (var j = 0; j < allData[i].length; ++j) {
+                        submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
+                        if ("" == submitData[i][j]) {
                             Util.MessageBox.tip("有空内容 无法提交")
                             return;
                         }
@@ -95,7 +120,8 @@ module cpzlqk {
                 this.mAjaxSubmit.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType
+                    companyId: compType,
+                    bhgType:this.getBhglx()
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("提交 成功", ()=>{
@@ -112,7 +138,8 @@ module cpzlqk {
                 this.mCompType = compType;
                 this.mAjaxUpdate.get({
                         date: date,
-                        companyId: compType
+                        companyId: compType,
+                        bhgType:this.getBhglx()
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
@@ -132,13 +159,13 @@ module cpzlqk {
                 framework.router
 					.fromEp(this)
 					.to(framework.basic.endpoint.FRAME_ID)
-					.send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
+					.send(framework.basic.FrameEvent.FE_REGISTER, "产品一次送试不合格问题明细");
             }
 
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mData.bhglx, this.mData.zrlb);
 
                 var parent = this.$(this.option().tb);
                 parent.empty();
@@ -147,7 +174,7 @@ module cpzlqk {
                 jqTable.jqGrid(
                     this.mTableAssist.decorate({
                         datatype: "local",
-                        data: this.mTableAssist.getDataWithId(this.mData),
+                        data: this.mTableAssist.getDataWithId(this.mData.tjjg),
                         multiselect: false,
                         drag: false,
                         resize: false,

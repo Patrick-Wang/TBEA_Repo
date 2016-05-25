@@ -18,16 +18,16 @@ module cpzlqk {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
                     Node.create({name : "单位", align : TextAlign.Center}),
-                    Node.create({name : "产品类型"}),
-                    Node.create({name : "生产号"}),
-                    Node.create({name : "产品型号"}),
-                    Node.create({name : "不合格数量"}),
-                    Node.create({name : "试验不合格现象"}),
-                    Node.create({name : "不合格类别"}),
-                    Node.create({name : "原因分析"}),
-                    Node.create({name : "处理措施"}),
-                    Node.create({name : "处理结果"}),
-                    Node.create({name : "责任类别"})
+                    Node.create({name : "产品类型", align : TextAlign.Center,}),
+                    Node.create({name : "生产号", align : TextAlign.Center,}),
+                    Node.create({name : "产品型号", align : TextAlign.Center,}),
+                    Node.create({name : "不合格数量", align : TextAlign.Center,}),
+                    Node.create({name : "试验不合格现象", align : TextAlign.Center,}),
+                    Node.create({name : "不合格类别", align : TextAlign.Center,}),
+                    Node.create({name : "原因分析", align : TextAlign.Center,}),
+                    Node.create({name : "处理措施", align : TextAlign.Center,}),
+                    Node.create({name : "处理结果", align : TextAlign.Center,}),
+                    Node.create({name : "责任类别", align : TextAlign.Center,})
                 ], gridName);
             }
         }

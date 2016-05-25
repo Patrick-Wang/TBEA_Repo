@@ -1,3 +1,8 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+///<reference path="dateSelector.ts"/>
+///<reference path="unitedSelector.ts"/>
+///<reference path="companySelector.ts"/>
 var hzb_companys;
 (function (hzb_companys) {
     var AllZb;
@@ -91,7 +96,7 @@ var hzb_companys;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -159,11 +164,16 @@ var hzb_companys;
                 AllZb.ndqntq,
             ]);
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(outputData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: outputData.length > 23 ? 500 : '100%',
                 width: 1300,
                 shrinkToFit: true,
@@ -182,6 +192,6 @@ var hzb_companys;
             return precentList;
         };
         return View;
-    }());
+    })();
     hzb_companys.View = View;
 })(hzb_companys || (hzb_companys = {}));

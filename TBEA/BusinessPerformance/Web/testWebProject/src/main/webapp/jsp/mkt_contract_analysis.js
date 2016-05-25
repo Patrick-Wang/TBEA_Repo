@@ -1,3 +1,6 @@
+/// <reference path="util.ts" />
+/// <reference path="jqgrid/jqassist.ts" />
+///<reference path="dateSelector.ts"/>
 var mkt_contract_analysis;
 (function (mkt_contract_analysis) {
     var ContractZb;
@@ -54,7 +57,7 @@ var mkt_contract_analysis;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mSelCompanys = [];
@@ -67,13 +70,19 @@ var mkt_contract_analysis;
             this.TableId = TableId;
             this.childTableId = TableId + "_jqgrid_1234";
             this.mDs = new Util.DateSelector({ year: year - 1, month: 1 }, { year: year, month: month }, dateId);
+            //请求数据
             this.mDataSet = new Util.Ajax("mkt_contract_analysis_update.do", false);
             this.onType_TypeSelected();
+            //if (this.mCompanyName == "股份公司") {
+            //    this.onCompanySelected();
+            //}
+            //this.updateUI();
         };
         View.prototype.onType_TypeSelected = function () {
             this.mAnalysisType = $("#analysisType").val();
         };
         View.prototype.onCompanySelected = function () {
+            //this.mCompanyName = $("#comp_category").val();
         };
         View.prototype.exportExcel = function () {
             var dt = this.mDs.getDate();
@@ -134,11 +143,16 @@ var mkt_contract_analysis;
             percentList.push(ContractZb.htzz);
             data = this.formatData(rawData, integerList, percentList);
             $("#" + childName).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                // autowidth : false,
+                //cellsubmit: 'clientArray',
+                //cellEdit: true,
                 editurl: 'clientArray',
                 height: '100%',
                 width: $(document).width() - 60,
@@ -146,13 +160,13 @@ var mkt_contract_analysis;
                 autoScroll: true,
                 pager: '#pager',
                 rowNum: 20,
-                viewrecords: true
+                viewrecords: true //是否显示行数 
             }));
             if (rawData.length != 0) {
                 $("#assist").css("display", "block");
             }
         };
         return View;
-    }());
+    })();
     mkt_contract_analysis.View = View;
 })(mkt_contract_analysis || (mkt_contract_analysis = {}));

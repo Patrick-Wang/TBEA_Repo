@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var cb_byq;
 (function (cb_byq) {
     var JQGridAssistantFactory = (function () {
@@ -65,7 +67,7 @@ var cb_byq;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.SBGS;
@@ -127,11 +129,14 @@ var cb_byq;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: 250,
@@ -156,17 +161,20 @@ var cb_byq;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.format = function (row) {
@@ -199,20 +207,23 @@ var cb_byq;
                 height = 110;
             }
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: height,
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;
-    }());
+    })();
     cb_byq.View = View;
 })(cb_byq || (cb_byq = {}));

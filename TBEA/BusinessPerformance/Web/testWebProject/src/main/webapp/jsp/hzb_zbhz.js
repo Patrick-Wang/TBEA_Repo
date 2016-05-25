@@ -1,3 +1,7 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
+///<reference path="dateSelector.ts"/>
 var hzb_zbhz;
 (function (hzb_zbhz) {
     var SrqyId;
@@ -79,7 +83,7 @@ var hzb_zbhz;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -140,6 +144,70 @@ var hzb_zbhz;
                 $("#exportxmgs")[0].submit();
             });
         };
+        //收入签约
+        //        private formatSrqyData() {
+        //            var data = [];
+        //            var row = [];
+        //            var isRs = false;
+        //            for (var j = 0; j < this.mData.length; ++j) {
+        //                row = [].concat(this.mData[j]);
+        //                isRs = row[SrqyId.zb] == '人数';
+        //                for (var i = 0; i < row.length; ++i) {
+        //                    if (i == SrqyId.jhwcl || i == SrqyId.ljwcl || i == SrqyId.tbzzl || i == SrqyId.ljtbzzl) {
+        //                        row[i] = Util.formatPercent(row[i]);
+        //                    } else if (i != SrqyId.zb) 
+        //                    { 
+        //                        if (isRs) {
+        //                            row[i] = Util.formatInt(row[i]);
+        //                        } else {
+        //                            row[i] = Util.formatCurrency(row[i]);
+        //                        }
+        //                    }
+        //                }
+        //                data.push(row);
+        //            }
+        //            return data;
+        //        }
+        //        //整体指标数据
+        //        private formatZtData() {
+        //            var data = [];
+        //            var row = [];
+        //            var isRs = false;
+        //            var isSxfyl = false;
+        //            var isRjlr = false;
+        //            var isRjsr = false;
+        //            for (var j = 0; j < this.mData.length; ++j) {
+        //                row = [].concat(this.mData[j]);
+        //                isRs = row[ZtId.zb] == '人数';
+        //                isSxfyl = row[ZtId.zb] == '三项费用率(%)';
+        //                isRjlr = row[ZtId.zb] == '人均利润';
+        //                isRjsr = row[ZtId.zb] == '人均收入';
+        //                for (var i = 0; i < row.length; ++i) {
+        //                    if (i == ZtId.dyjhwcl || i == ZtId.jdjhwcl || i == ZtId.dytbzf || i == ZtId.jdtbzf || i == ZtId.ndljjhwcl || i == ZtId.ndtbzf) {
+        //                        row[i] = Util.formatPercent(row[i]);
+        //                    } else if (i != ZtId.zb) {
+        //                        if (isRs) {
+        //                            row[i] = Util.formatInt(row[i]);
+        //                        } 
+        //                        else if (isRjlr)
+        //                        {
+        //                            row[i] = Util.formatFordot(row[i], 1);
+        //                        }
+        //                        else if (isRjsr)
+        //                        {
+        //                            row[i] = Util.formatFordot(row[i], 1);
+        //                        }  
+        //                        else if (isSxfyl){
+        //                             row[i] = Util.formatPercent(row[i]);
+        //                        }else {
+        //                            row[i] = Util.formatCurrency(row[i]);
+        //                        }
+        //                    }
+        //                }
+        //                data.push(row);
+        //            }
+        //            return data;
+        //        }
         View.prototype.initZTPercentList = function () {
             var precentList = new std.vector();
             precentList.push(ZtId.dyjhwcl);
@@ -178,11 +246,16 @@ var hzb_zbhz;
                 Util.formatData(outputData, this.mData, this.initSrqyPercentList(), []);
             }
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(outputData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: data.length > 23 ? 500 : '100%',
                 width: 1330,
                 shrinkToFit: true,
@@ -191,6 +264,6 @@ var hzb_zbhz;
             }));
         };
         return View;
-    }());
+    })();
     hzb_zbhz.View = View;
 })(hzb_zbhz || (hzb_zbhz = {}));

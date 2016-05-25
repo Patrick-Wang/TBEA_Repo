@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.model.dao.cpzlqk.byqbhglb;
+package com.tbea.ic.operation.model.dao.identifier.cpzlqk.byqbhglb;
 
 
 import java.util.List;
@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.ic.operation.model.entity.identifier.cpzlqk.ByqBhglbEntity;
+import com.tbea.ic.operation.model.entity.identifier.cpzlqk.ByqZrlbEntity;
 
 
 
@@ -30,5 +31,16 @@ public class ByqBhglbDaoImpl extends AbstractReadWriteDaoImpl<ByqBhglbEntity> im
 	public List<ByqBhglbEntity> getAll() {
 		 Query q = getEntityManager().createQuery("from ByqBhglbEntity");
 		return q.getResultList();
+	}
+	
+	@Override
+	public ByqBhglbEntity getByName(String name) {
+		 Query q = getEntityManager().createQuery("from ByqBhglbEntity where name=:name");
+		 q.setParameter("name", name);
+		 List<ByqBhglbEntity> ret = q.getResultList();
+		 if (ret.isEmpty()){
+			 return null;
+		 }
+		return ret.get(0);
 	}
 }
