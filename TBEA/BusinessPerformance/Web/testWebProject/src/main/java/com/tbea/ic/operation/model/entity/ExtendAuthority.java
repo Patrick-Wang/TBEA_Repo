@@ -41,7 +41,10 @@ public class ExtendAuthority extends AbstractReadWriteEntity implements Serializ
 		XnygbEntry,//16
 		XnygbLookup,//17
 		NYzbscqkEntry, //18
-		NYzbscqkLookup //19
+		NYzbscqkLookup, //19
+		QualityLookup, //20
+		QualityEntry,  //21
+		QualityApprove //22
 	}
 	
 	private static final long serialVersionUID = 1L;

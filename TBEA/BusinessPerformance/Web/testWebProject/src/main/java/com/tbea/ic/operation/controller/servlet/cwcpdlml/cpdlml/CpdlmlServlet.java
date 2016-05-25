@@ -68,9 +68,9 @@ public class CpdlmlServlet {
 		List<List<String>> result = cpdlmlService.getCpdlml(d);
 		ExcelTemplate template = ExcelTemplate.createCwcpdlmlTemplate(CwcpdlmlSheetType.CPDLML);
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
-		handler.next(new TextFormatterHandler(null, new Integer[]{1}));
-		handler.next(new PercentFormatterHandler(1, null, new Integer[]{3, 6, 7, 10, 11}));
-		handler.next(new NumberFormatterHandler(1));
+		handler.next(new TextFormatterHandler(null, new Integer[]{0, 1}))
+		.next(new PercentFormatterHandler(1, null, new Integer[]{3, 6, 7, 10, 11}))
+		.next(new NumberFormatterHandler(1));
 		FormatterServer serv = new FormatterServer(handler, 0, 2);
 		serv.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
 		serv.format(result, template);
