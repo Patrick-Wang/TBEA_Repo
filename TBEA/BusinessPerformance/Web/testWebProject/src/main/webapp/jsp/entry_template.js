@@ -36,15 +36,15 @@ var entry_template;
             this.mOpt = opt;
             switch (this.mOpt.entryType) {
                 case Util.ZBType.YDJDMJH:
-                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, Util.addMonth({ year: this.mOpt.date.year, month: this.mOpt.date.month }, 3), this.mOpt.dateId, true);
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, Util.addMonth({ year: this.mOpt.date.year, month: this.mOpt.date.month }, 3), this.mOpt.dateId, true);
                     break;
                 case Util.ZBType.QNJH:
-                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, { year: this.mOpt.date.year }, this.mOpt.dateId, true);
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, { year: this.mOpt.date.year }, this.mOpt.dateId, true);
                     break;
                 case Util.ZBType.BY20YJ:
                 case Util.ZBType.BY28YJ:
                 case Util.ZBType.BYSJ:
-                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, this.mOpt.date, this.mOpt.dateId);
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
                     break;
             }
             // this.mDateSelector.select(this.mOpt.date);
