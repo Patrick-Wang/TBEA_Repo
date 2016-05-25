@@ -179,7 +179,7 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("FinanceLookup", extAuthServ.hasAuthority(account, AuthType.FinanceLookup))
 		.add("FinanceEntry", extAuthServ.hasAuthority(account, AuthType.FinanceEntry))
 //		.add("GbLookup", lookup.value())
-//		.add("GbEntry", entry.value())
+		.add("GbEntry", entry.value())
 		.add("ComGbLookup", comGbLookup.value())
 		.add("ComGbEntry", comGbEntry.value())
 		.add("GbEntry", entry.value())

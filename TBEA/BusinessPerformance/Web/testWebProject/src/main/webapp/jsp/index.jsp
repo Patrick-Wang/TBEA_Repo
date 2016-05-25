@@ -83,7 +83,7 @@
 										style="color: rgb(62, 152, 197);">Dashboard</a></li>
 								</c:if>
 								
-								<c:if test="${!QualityApprove || notSbqgb}">
+								<c:if test="${!QualityApprove}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">经营指标完成情况</a></li>
@@ -256,7 +256,9 @@
 			</c:when>
 				<c:otherwise>
 					<div id="IndexSummary" class="col-md-10">
+						<c:if test="${!QualityApprove}">
 						<%@include file="index_IndexSummary.jsp"%>
+						</c:if>
 						<c:if test="${PriceLibAuth}">
 							<%@include file="index_IndexPriceLib.jsp"%>
 						</c:if>
