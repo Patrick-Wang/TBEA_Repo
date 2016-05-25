@@ -17,6 +17,7 @@
 						src="../images/charts/bar5.png"> <span><strong>产品质量情况</strong></span></a>
 				</li>
 				<li><a href="../cpzlqk/approve.do" target="_blank"><img
+						src="../images/charts/bar8.png"> <span><strong>质量管报审核</strong></span></a>
 				</li>
 			</ul>
 		</div>
