@@ -49,6 +49,9 @@ public class FuturesChartPage extends AQueryFragment implements OnCheckedChangeL
 
 	// private UserBean userBean = new UserBean();
 
+	QHMXBean qhmxBeanCuTotal;
+	QHMXBean qhmxBeanAlTotal;
+	
 	public List<QHMXBean> qhmxBeans_Copper = new ArrayList<QHMXBean>();
 
 	public List<QHMXBean> qhmxBeans_Aluminium = new ArrayList<QHMXBean>();
@@ -116,6 +119,7 @@ public class FuturesChartPage extends AQueryFragment implements OnCheckedChangeL
 		for (QHMXBean qhmxBean : qhmxBeans_Copper) {
 			tempCompanyId = qhmxBean.getQybh();
 			if ("1000".equals(tempCompanyId)) {
+				qhmxBeanCuTotal = qhmxBean;
 				getAQ().id(R.id.profit_lost_webview_details).getTextView()
 						.setText("盈亏金额总计: " + StringUtil.financeFormat(qhmxBean.getYkje()) + " 元");
 
@@ -179,6 +183,11 @@ public class FuturesChartPage extends AQueryFragment implements OnCheckedChangeL
 		blankArray_Copper = new JSONArray(blankObjects);
 	}
 
+	private void refreshYkje(QHMXBean qhmxBean){
+		getAQ().id(R.id.profit_lost_webview_details).getTextView()
+		.setText("盈亏金额总计: " + StringUtil.financeFormat(qhmxBean.getYkje()) + " 元");
+	}
+	
 	private void transformOfAluminium(List<String> companyAuthorityList) throws JSONException {
 		String tempCompanyId = null;
 		String tempCompanyName = null;
@@ -194,6 +203,7 @@ public class FuturesChartPage extends AQueryFragment implements OnCheckedChangeL
 		for (QHMXBean qhmxBean : qhmxBeans_Aluminium) {
 			tempCompanyId = qhmxBean.getQybh();
 			if ("1000".equals(tempCompanyId)) {
+				qhmxBeanAlTotal = qhmxBean;
 				getAQ().id(R.id.profit_lost_webview_details).getTextView()
 						.setText("盈亏金额总计: " + StringUtil.financeFormat(qhmxBean.getYkje()) + " 元");
 			}
@@ -440,6 +450,7 @@ public class FuturesChartPage extends AQueryFragment implements OnCheckedChangeL
 							+ xAxisArray_Copper + "," + yAxisMin_Copper + "," + yAxisMax_Copper + ","
 							+ blankArray_Copper + ");";
 					webView.loadUrl(url);
+					FuturesChartPage.this.refreshYkje(qhmxBeanCuTotal);
 				}
 			});
 			break;
@@ -452,6 +463,7 @@ public class FuturesChartPage extends AQueryFragment implements OnCheckedChangeL
 							+ "," + xAxisArray_Aluminium + "," + yAxisMin_Aluminium + "," + yAxisMax_Aluminium + ","
 							+ blankArray_Aluminium + ");";
 					webView.loadUrl(url);
+					FuturesChartPage.this.refreshYkje(qhmxBeanAlTotal);
 				}
 			});
 			break;
