@@ -83,17 +83,17 @@
 										style="color: rgb(62, 152, 197);">Dashboard</a></li>
 								</c:if>
 								
-								<c:if test="${!QualityApprove}">
+								<c:if test="${!(QualityApprove|| QualityEntry)}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">经营指标完成情况</a></li>
 								</c:if>
-								<c:if test="${!QualityApprove}">
+								<c:if test="${!(QualityApprove|| QualityEntry)}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
 								</c:if>
-								<c:if test="${!QualityApprove}">
+								<c:if test="${!(QualityApprove|| QualityEntry)}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">财务指标完成情况</a></li>
@@ -256,7 +256,7 @@
 			</c:when>
 				<c:otherwise>
 					<div id="IndexSummary" class="col-md-10">
-						<c:if test="${!QualityApprove}">
+						<c:if test="${!(QualityApprove|| QualityEntry)}">
 						<%@include file="index_IndexSummary.jsp"%>
 						</c:if>
 						<c:if test="${PriceLibAuth}">
@@ -304,8 +304,9 @@
 							<c:if test="${XnygbEntry}">
 								<%@include file="index_IndexBusinessReportsEntryXNY.jsp"%>
 							</c:if>
-
+							<c:if test="${FinanceEntry}">
 							<%@include file="index_IndexBusinessReportsEntryCW.jsp"%>
+							</c:if>
 							<c:if test="${QualityEntry}">
 							<%@include file="index_IndexBusinessReportsEntryZL.jsp"%>
 							</c:if>
