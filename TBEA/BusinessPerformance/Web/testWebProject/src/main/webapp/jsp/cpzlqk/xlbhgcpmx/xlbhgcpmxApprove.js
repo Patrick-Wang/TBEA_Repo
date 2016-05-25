@@ -141,8 +141,6 @@ var cpzlqk;
                 parent.empty();
                 parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                 var jqTable = this.$(name);
-                this.mTableAssist.mergeColum(0);
-                this.mTableAssist.mergeRow(0);
                 jqTable.jqGrid(this.mTableAssist.decorate({
                     datatype: "local",
                     data: this.mTableAssist.getDataWithId(this.mData.tjjg),
