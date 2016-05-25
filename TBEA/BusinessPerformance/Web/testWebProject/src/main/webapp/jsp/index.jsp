@@ -231,11 +231,9 @@
 											class="ec-icon ec-icon-line"></i> <a href="#xnycyjybbEntry"
 											style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
 									</c:if>
-									<c:if test="${debug}">
-										<li style="background-color: transparent;"><i
+									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#cwbbEntry"
 											style="color: rgb(62, 152, 197);">财务报表</a></li>
-									</c:if>
 									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#zlgbEntry"
 											style="color: rgb(62, 152, 197);">质量管报录入</a></li>
@@ -275,7 +273,7 @@
 							<c:if test="${XnygbLookup}">
 								<%@include file="index_IndexBusinessReportsXNY.jsp"%>
 							</c:if>
-				
+							<%@include file="index_IndexBusinessReportsCW.jsp"%>
 							<%@include file="index_IndexBusinessReportsZL.jsp"%>
 						
 						</c:if>
@@ -303,9 +301,9 @@
 							<c:if test="${XnygbEntry}">
 								<%@include file="index_IndexBusinessReportsEntryXNY.jsp"%>
 							</c:if>
-							<c:if test="${debug}">
-								<%@include file="index_IndexBusinessReportsEntryCW.jsp"%>
-							</c:if>
+
+							<%@include file="index_IndexBusinessReportsEntryCW.jsp"%>
+
 							<%@include file="index_IndexBusinessReportsEntryZL.jsp"%>
 						</c:if>
 					</div>
