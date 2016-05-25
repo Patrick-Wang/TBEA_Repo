@@ -130,7 +130,6 @@
 									class="ec-icon ec-icon-line"></i> <a href="#jgkxx"
 									style="color: rgb(62, 152, 197);">价格库</a></li>
 								</c:if>
-								<c:if test="${GbLookup}">
 									<c:if test="${ComGbLookup}">
 										<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#commonjygb"
@@ -155,11 +154,11 @@
 									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#cwbb"
 											style="color: rgb(62, 152, 197);">财务报表</a></li>
-
+									<c:if test="${QualityLookup || 	QualityApprove}">
 									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="zlgb"
 											style="color: rgb(62, 152, 197);">质量管报</a></li>
-								</c:if>
+									</c:if>
 							</ul>
 							<ul id="navlist1" style="padding: 10px 0; display: none">
 								<c:if test="${entryPlan}">
@@ -210,7 +209,7 @@
 							</ul>
 							
 							<ul id="navlistBusinessReportsInput" style="padding: 10px 0; width: 180px; display: none">
-								<c:if test="${GbEntry}">
+								
 									<c:if test="${ComGbEntry}">
 										<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#commonEntry"
@@ -231,21 +230,18 @@
 											class="ec-icon ec-icon-line"></i> <a href="#xnycyjybbEntry"
 											style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
 									</c:if>
+									
 									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#cwbbEntry"
 											style="color: rgb(62, 152, 197);">财务报表</a></li>
+									<c:if test="${QualityEntry}">
 									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#zlgbEntry"
 											style="color: rgb(62, 152, 197);">质量管报录入</a></li>
-								</c:if>
+									</c:if>
 							</ul>
-							
-							
 						</c:otherwise>
 					</c:choose>
-
-
-
 				</div>
 			</div>
 			<c:choose>
@@ -303,8 +299,9 @@
 							</c:if>
 
 							<%@include file="index_IndexBusinessReportsEntryCW.jsp"%>
-
+							<c:if test="${QualityEntry}">
 							<%@include file="index_IndexBusinessReportsEntryZL.jsp"%>
+							</c:if>
 						</c:if>
 					</div>
 				</c:otherwise>
