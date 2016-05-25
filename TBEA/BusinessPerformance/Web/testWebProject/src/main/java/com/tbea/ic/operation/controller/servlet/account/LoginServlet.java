@@ -128,7 +128,7 @@ public class LoginServlet implements OnSessionChangedListener {
 		AjaxRedirect ajaxRedirect;
 		if (isSSOLogin) {
 			ajaxRedirect = new AjaxRedirect(
-					"http://dbdev.tbea.com:14100/oam/server/logout?end_url=http://dbdev.tbea.com/tbeacloud/webcenter/view/index.jsp");
+					"http://soa1.tbea.com/oam/server/logout?end_url=http://soa.tbea.com");
 		} else {
 			ajaxRedirect = new AjaxRedirect();
 		}
