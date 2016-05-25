@@ -83,19 +83,21 @@
 										style="color: rgb(62, 152, 197);">Dashboard</a></li>
 								</c:if>
 								
-								<c:if test="${notSbqgb || !QualityApprove}">
+								<c:if test="${!QualityApprove || notSbqgb}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">经营指标完成情况</a></li>
 								</c:if>
-								
+								<c:if test="${!QualityApprove}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
-
+								</c:if>
+								<c:if test="${!QualityApprove}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">财务指标完成情况</a></li>
+								</c:if>
 								<c:if test="${JYAnalysisLookup}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#zbhz"
@@ -150,14 +152,15 @@
 											class="ec-icon ec-icon-line"></i> <a href="#xnycyjybb"
 											style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
 									</c:if>
-
+									<c:if test="${FinanceLookup}">
 									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#cwbb"
-											style="color: rgb(62, 152, 197);">财务报表</a></li>
+											style="color: rgb(62, 152, 197);">财务管报汇总</a></li>
+									</c:if>
 									<c:if test="${QualityLookup || QualityApprove}">
 									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#zlgb"
-											style="color: rgb(62, 152, 197);">质量管报</a></li>
+											style="color: rgb(62, 152, 197);">质量管报汇总</a></li>
 									</c:if>
 							</ul>
 							<ul id="navlist1" style="padding: 10px 0; display: none">
@@ -223,17 +226,18 @@
 									<c:if test="${NygbEntry}">
 										<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#nycyjybbEntry"
-											style="color: rgb(62, 152, 197);">能源产业经营报表</a></li>
+											style="color: rgb(62, 152, 197);">能源产业经营报表录入</a></li>
 									</c:if>
 									<c:if test="${XnygbEntry}">
 										<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#xnycyjybbEntry"
-											style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
+											style="color: rgb(62, 152, 197);">新能源产业经营报表录入</a></li>
 									</c:if>
-									
+									<c:if test="${FinanceEntry}">
 									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#cwbbEntry"
-											style="color: rgb(62, 152, 197);">财务报表</a></li>
+											style="color: rgb(62, 152, 197);">财务管报录入</a></li>
+									</c:if>
 									<c:if test="${QualityEntry}">
 									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#zlgbEntry"
@@ -268,8 +272,12 @@
 							<c:if test="${XnygbLookup}">
 								<%@include file="index_IndexBusinessReportsXNY.jsp"%>
 							</c:if>
+							<c:if test="${FinanceLookup}">
 							<%@include file="index_IndexBusinessReportsCW.jsp"%>
+							</c:if>
+							<c:if test="${QualityLookup || QualityApprove}">
 							<%@include file="index_IndexBusinessReportsZL.jsp"%>
+							</c:if>
 						
 					</div>
 					<div id="InputList" class="col-md-10" style="display: none">
