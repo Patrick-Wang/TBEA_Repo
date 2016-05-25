@@ -107,9 +107,9 @@
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-pie"></i> <a href="#yszk"
 										style="color: rgb(62, 152, 197);">应收账款</a></li>
-									<li style="background-color: transparent;"><i
+									<!-- <li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-pie"></i> <a href="#bl"
-										style="color: rgb(62, 152, 197);">保理状态</a></li>
+										style="color: rgb(62, 152, 197);">保理状态</a></li> -->
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-pie"></i> <a href="#ht"
 										style="color: rgb(62, 152, 197);">合同付款</a></li>

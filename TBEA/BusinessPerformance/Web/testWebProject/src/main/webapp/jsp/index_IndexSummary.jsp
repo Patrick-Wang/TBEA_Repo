@@ -224,7 +224,7 @@
 	</div>
 </div>
 
-<div>
+<!-- <div>
 	<h3>
 		保理状态<a name="bl"> </a>
 	</h3>
@@ -235,11 +235,11 @@
 					href="../blhtdqqkhz/blhtdqqkhz.do" target="_blank"><img
 						src="../images/charts/k1.png"> <span><strong>保理合同到期情况汇总</strong></span></a>
 				</li>
-				<!--/li-->
+				/li
 			</ul>
 		</div>
 	</div>
-</div>
+</div> -->
 <div>
 	<h3>
 		合同付款<a name="ht"> </a>
