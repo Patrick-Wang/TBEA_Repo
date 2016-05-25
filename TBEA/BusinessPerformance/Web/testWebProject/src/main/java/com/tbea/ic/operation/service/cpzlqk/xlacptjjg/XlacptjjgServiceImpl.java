@@ -48,11 +48,11 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 		ZltjjgDao tjjgDao = new ZltjjgDaoCacheProxy(zltjjgDao, company.getId());
 		for (XlAcptjjgEntity entity : entities){
 			if (yjType == YDJDType.YD){
-				tjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company);
-				tjjg1 = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company);
+				tjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
+				tjjg1 = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
 			}else{
-				tjjg = tjjgDao.getJdAcc(d, entity.getCpxl().getId(), company);
-				tjjg1 = tjjgDao.getJdAccQntq(d, entity.getCpxl().getId(), company);
+				tjjg = tjjgDao.getJdAcc(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
+				tjjg1 = tjjgDao.getJdAccQntq(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
 			}
 			result.add(toList(entity, tjjg, tjjg1));
 		}
@@ -86,7 +86,7 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 		ZltjjgEntity tjjg = null;
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (XlAcptjjgEntity entity : entities){
-			tjjg = zltjjgDao.getByDate(d, entity.getCpxl().getId(), company);
+			tjjg = zltjjgDao.getByDateIgnoreStatus(d, entity.getCpxl().getId(), company);
 			result.add(toEntryList(entity, tjjg));
 		}
 		return result;
@@ -112,7 +112,7 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 		for (int i = 0; i < data.size(); ++i){
 			JSONArray row = data.getJSONArray(i);
 			Integer cpid = Integer.valueOf(row.getInt(0));
-			zltjjg = zltjjgDao.getByDate(d, cpid, company);
+			zltjjg = zltjjgDao.getByDateIgnoreStatus(d, cpid, company);
 			if (null == zltjjg){
 				zltjjg = new ZltjjgEntity();
 				zltjjg.setNf(ec.getYear());
@@ -152,7 +152,7 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
 				cpIds.set(0, entity.getCpxl().getId());
-				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpIds, company);
+				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpIds, company, ZBStatus.APPROVED);
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
 				}else{
@@ -172,7 +172,7 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 		for (int i = 0; i < data.size(); ++i){
 			JSONArray row = data.getJSONArray(i);
 			Integer cpid = Integer.valueOf(row.getInt(0));
-			zltjjg = zltjjgDao.getByDate(d, cpid, company);
+			zltjjg = zltjjgDao.getByDateIgnoreStatus(d, cpid, company);
 			if (null != zltjjg){
 				zltjjg.setZt(ZBStatus.APPROVED.ordinal());
 				zltjjgDao.merge(zltjjg);

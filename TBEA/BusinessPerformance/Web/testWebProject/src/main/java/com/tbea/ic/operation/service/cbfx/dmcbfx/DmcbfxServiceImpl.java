@@ -27,8 +27,6 @@ import com.tbea.ic.operation.model.dao.cbfx.dmcbfx.DmcbfxDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.cbfx.cbfl.Cbfl;
 import com.tbea.ic.operation.model.dao.identifier.cbfx.cbfl.CbflDao;
 import com.tbea.ic.operation.model.entity.cbfx.DmcbfxEntity;
-import com.tbea.ic.operation.model.entity.yszkgb.YszkZlEntity;
-import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
 import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 

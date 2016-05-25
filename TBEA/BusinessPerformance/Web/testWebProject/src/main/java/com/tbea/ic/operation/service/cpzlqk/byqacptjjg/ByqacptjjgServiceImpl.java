@@ -62,22 +62,22 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		List<List<String>> result = new ArrayList<List<String>>();
 		ZltjjgDao tjjgDao = new ZltjjgDaoCacheProxy(zltjjgDao, company.getId());
 		for (ByqYdAcptjjgEntity entity : entities){
-			result.add(toList(tjjgDao, entity, d, company));
+			result.add(toList(tjjgDao, entity, d, company, ZBStatus.APPROVED));
 		}
 		return result;
 	}
 
-	private List<String> toList(ZltjjgDao tjjgDao, ByqYdAcptjjgEntity entity, Date d, Company company) {
+	private List<String> toList(ZltjjgDao tjjgDao, ByqYdAcptjjgEntity entity, Date d, Company company, ZBStatus zt) {
 		List<String> row = new ArrayList<String>();
 		Util.resize(row, 8);
 		int start = 0;
 		row.set(start++, entity.getCpdl().getName());
 		row.set(start++, entity.getCpxl().getName());
 	
-		ZltjjgEntity zltjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company);
+		ZltjjgEntity zltjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company, zt);
 		start = setZltjjg(row, start, zltjjg);
 
-		zltjjg = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company);
+		zltjjg = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company, zt);
 		start = setZltjjg(row, start, zltjjg);
 		return row;
 	}
@@ -124,7 +124,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		for (int i = 0; i < data.size(); ++i){
 			JSONArray row = data.getJSONArray(i);
 			Integer cpid = Integer.valueOf(row.getInt(0));
-			zltjjg = zltjjgDao.getByDate(d, cpid, company);
+			zltjjg = zltjjgDao.getByDateIgnoreStatus(d, cpid, company);
 			if (null == zltjjg){
 				zltjjg = new ZltjjgEntity();
 				zltjjg.setNf(ec.getYear());
@@ -158,7 +158,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		row.set(start++, "" + entity.getCpxl().getId());
 		row.set(start++, entity.getCpdl().getName());
 		row.set(start++, entity.getCpxl().getName());
-		ZltjjgEntity zltjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company);
+		ZltjjgEntity zltjjg = tjjgDao.getByDateIgnoreStatus(d, entity.getCpxl().getId(), company);
 		if (null != zltjjg){
 			row.set(start++, "" + zltjjg.getBhgs());
 			row.set(start++, "" + zltjjg.getZs());
@@ -196,7 +196,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
 				
-				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company);
+				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
 				}else{
@@ -216,7 +216,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 			row = Util.resize(new ArrayList<String>(), 12);
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
-				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company);
+				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
 				}else{
@@ -237,7 +237,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		for (int i = 0; i < data.size(); ++i){
 			JSONArray row = data.getJSONArray(i);
 			Integer cpid = Integer.valueOf(row.getInt(0));
-			zltjjg = zltjjgDao.getByDate(d, cpid, company);
+			zltjjg = zltjjgDao.getByDateIgnoreStatus(d, cpid, company);
 			if (null != zltjjg){
 				zltjjg.setZt(ZBStatus.APPROVED.ordinal());
 				zltjjgDao.merge(zltjjg);

@@ -12,6 +12,7 @@ import com.tbea.ic.operation.common.FormulaServer;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoCacheProxy;
@@ -47,8 +48,8 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 
 
 	private Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> getDjTq(Formula formula){
-		ZltjjgEntity tj1 = tjjgDao.getJdAcc(d, forMap.get(formula).getCpxl().getId(), company);
-		ZltjjgEntity tj2 = tjjgDao.getJdAccQntq(d, forMap.get(formula).getCpxl().getId(), company);
+		ZltjjgEntity tj1 = tjjgDao.getJdAcc(d, forMap.get(formula).getCpxl().getId(), company, ZBStatus.APPROVED);
+		ZltjjgEntity tj2 = tjjgDao.getJdAccQntq(d, forMap.get(formula).getCpxl().getId(), company, ZBStatus.APPROVED);
 
 		return new Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>>(
 				forMap.get(formula).getId(), 

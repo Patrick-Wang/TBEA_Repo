@@ -12,6 +12,7 @@ import com.tbea.ic.operation.common.FormulaServer;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
@@ -53,11 +54,11 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 		ZltjjgEntity tj2 = null;
 		if (pair.getSecond() != null){
 			if (this.yjType == YDJDType.YD){
-				tj1 = tjjgDao.getByDate(d, pair.getFirst().getCpxl().getId(), pair.getSecond());
-				tj2 = tjjgDao.getYearAcc(d, pair.getFirst().getCpxl().getId(), pair.getSecond());
+				tj1 = tjjgDao.getByDate(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), ZBStatus.APPROVED);
+				tj2 = tjjgDao.getYearAcc(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), ZBStatus.APPROVED);
 			}else{
-				tj1 = tjjgDao.getJdAcc(d, pair.getFirst().getCpxl().getId(), pair.getSecond());
-				tj2 = tjjgDao.getJdAccQntq(d, pair.getFirst().getCpxl().getId(), pair.getSecond());
+				tj1 = tjjgDao.getJdAcc(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), ZBStatus.APPROVED);
+				tj2 = tjjgDao.getJdAccQntq(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), ZBStatus.APPROVED);
 			}
 		}
 

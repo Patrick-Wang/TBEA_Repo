@@ -41,8 +41,14 @@ public class CwgbjyxxjlServlet {
 		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
 		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
 		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
 		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XTNYGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TCNY));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NDGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.JCKGS_JYDW));
+		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.GJGCGS_GFGS));
 	}
 	
 	@Autowired
