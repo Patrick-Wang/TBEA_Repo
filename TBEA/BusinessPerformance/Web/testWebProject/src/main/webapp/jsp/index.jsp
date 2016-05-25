@@ -83,7 +83,7 @@
 										style="color: rgb(62, 152, 197);">Dashboard</a></li>
 								</c:if>
 								
-								<c:if test="${notSbqgb}">
+								<c:if test="${notSbqgb || !QualityApprove}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">经营指标完成情况</a></li>
@@ -154,7 +154,7 @@
 									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#cwbb"
 											style="color: rgb(62, 152, 197);">财务报表</a></li>
-									<c:if test="${QualityLookup || 	QualityApprove}">
+									<c:if test="${QualityLookup || QualityApprove}">
 									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#zlgb"
 											style="color: rgb(62, 152, 197);">质量管报</a></li>
