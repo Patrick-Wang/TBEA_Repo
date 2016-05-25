@@ -114,10 +114,11 @@ module cpzlqk {
 			
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+                var pagername = name + "pager";
                 var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
+                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                 tableAssist.mergeColum(0);
                 tableAssist.mergeTitle();
                 tableAssist.mergeRow(0);
@@ -132,8 +133,9 @@ module cpzlqk {
                         width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
-                        rowNum: 1000,
-                        viewrecords : true
+                        rowNum: 20,
+                        viewrecords : true,
+                        pager: '#' + pagername,
                     }));
             }
         }

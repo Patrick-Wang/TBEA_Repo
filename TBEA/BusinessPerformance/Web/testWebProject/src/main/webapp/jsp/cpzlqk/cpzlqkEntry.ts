@@ -6,13 +6,7 @@ module cpzlqk{
 
     import router = framework.router;
     import FrameEvent = framework.basic.FrameEvent;
-    import FRAME_ID = framework.basic.endpoint.FRAME_ID;
 
-
-    export module Event{
-        export let ZLFE_IS_BHGLX_SUPPORTED : number = FrameEvent.lastEvent();
-        export let ZLFE_GET_BHGLX : number = FrameEvent.lastEvent();
-    }
 
     class CpzlqkEntryFrameView extends framework.basic.EntryFrameView {
 

@@ -37,4 +37,15 @@ module cpzlqk{
         name : string;
         data : string[];
     }
+
+    import FrameEvent = framework.basic.FrameEvent;
+
+    export module Event{
+        export let ZLFE_IS_COMPANY_SUPPORTED : number = FrameEvent.lastEvent();
+        export let ZLFE_IS_YDJD_SUPPORTED : number = FrameEvent.lastEvent();
+        export let ZLFE_YD_SELECTED : number = FrameEvent.lastEvent();
+        export let ZLFE_JD_SELECTED : number = FrameEvent.lastEvent();
+        export let ZLFE_IS_BHGLX_SUPPORTED : number = FrameEvent.lastEvent();
+        export let ZLFE_GET_BHGLX : number = FrameEvent.lastEvent();
+    }
 }

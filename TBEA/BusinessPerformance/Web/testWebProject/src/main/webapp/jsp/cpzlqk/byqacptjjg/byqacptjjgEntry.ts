@@ -155,6 +155,7 @@ module cpzlqk {
                 let jqTable = this.$(name);
                 this.mTableAssist.mergeColum(0);
                 this.mTableAssist.mergeRow(0);
+                this.mTableAssist.mergeTitle(0);
                 jqTable.jqGrid(
                     this.mTableAssist.decorate({
                         datatype: "local",

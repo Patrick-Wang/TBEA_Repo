@@ -10,6 +10,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../cpzlqkdef.ts"/>
+///<reference path="../cpzlqkApprove.ts"/>
 var pluginApprove;
 (function (pluginApprove) {
     pluginApprove.byqacptjjg = framework.basic.endpoint.lastId();
@@ -61,10 +62,6 @@ var cpzlqk;
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([allData[i][0]]);
-                    for (var j = 3; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 3] = submitData[i][j - 3].replace(new RegExp(' ', 'g'), '');
-                    }
                 }
                 this.mAjaxApprove.post({
                     date: dt,
@@ -165,6 +162,6 @@ var cpzlqk;
             };
             ApproveView.ins = new ApproveView();
             return ApproveView;
-        })(framework.basic.ApprovePluginView);
+        })(cpzlqk.ZlApprovePluginView);
     })(byqacptjjgApprove = cpzlqk.byqacptjjgApprove || (cpzlqk.byqacptjjgApprove = {}));
 })(cpzlqk || (cpzlqk = {}));

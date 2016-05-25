@@ -6,13 +6,6 @@ module cpzlqk {
     import router = framework.router;
     import FrameEvent = framework.basic.FrameEvent;
 
-    export module Event{
-        export let ZLFE_IS_COMPANY_SUPPORTED : number = FrameEvent.lastEvent();
-        export let ZLFE_IS_YDJD_SUPPORTED : number = FrameEvent.lastEvent();
-        export let ZLFE_YD_SELECTED : number = FrameEvent.lastEvent();
-        export let ZLFE_JD_SELECTED : number = FrameEvent.lastEvent();
-    }
-
     class CpzlqkFrameView extends framework.basic.ShowFrameView {
 
         isCompanySupported:boolean = false;

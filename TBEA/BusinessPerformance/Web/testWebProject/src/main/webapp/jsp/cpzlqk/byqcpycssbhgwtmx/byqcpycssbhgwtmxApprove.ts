@@ -10,20 +10,25 @@ declare var $:any;
 
 
 module pluginApprove {
-    export let byqacptjjg : number = framework.basic.endpoint.lastId();
+    export let byqcpycssbhgwtmx : number = framework.basic.endpoint.lastId();
 }
 
 module cpzlqk {
-    export module byqacptjjgApprove {
+    export module byqcpycssbhgwtmxApprove {
         import TextAlign = JQTable.TextAlign;
         import Node = JQTable.Node;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
-                    Node.create({name : "产品类别", align : TextAlign.Center}),
-                    Node.create({name : "产品类别", align : TextAlign.Center}),
-                    Node.create({name : "不合格数(台)"}),
-                    Node.create({name : "总数(台)"})
+                    Node.create({name : "产品类型", align : TextAlign.Center}),
+                    Node.create({name : "生产号", align : TextAlign.Center}),
+                    Node.create({name : "产品型号", align : TextAlign.Center}),
+                    Node.create({name : "试验不合格现象", align : TextAlign.Center}),
+                    Node.create({name : "不合格类别", align : TextAlign.Center}),
+                    Node.create({name : "原因分析", align : TextAlign.Center}),
+                    Node.create({name : "处理措施", align : TextAlign.Center}),
+                    Node.create({name : "处理结果", align : TextAlign.Center}),
+                    Node.create({name : "责任类别", align : TextAlign.Center})
                 ], gridName);
             }
         }
@@ -31,15 +36,17 @@ module cpzlqk {
         class ApproveView extends ZlApprovePluginView {
             static ins = new ApproveView();
             private mData:CpzlqkResp;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../byqacptjjg/approve/update.do", false);
-            private mAjaxApprove:Util.Ajax = new Util.Ajax("../byqacptjjg/approve/approve.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/approve/update.do", false);
+            private mAjaxApprove:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/approve/approve.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;
             getId():number {
-                return pluginApprove.byqacptjjg;
+                return pluginApprove.byqcpycssbhgwtmx;
             }
-
+            isSupportBhglb():boolean{
+                return true;
+            }
             protected isSupported(compType:Util.CompanyType):boolean {
                 if (compType == Util.CompanyType.SBGS ||
                     compType == Util.CompanyType.HBGS ||
@@ -63,7 +70,8 @@ module cpzlqk {
                 this.mAjaxApprove.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType
+                    companyId: compType,
+                    bhgType:this.getBhglx()
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("审核 成功", ()=>{
@@ -82,7 +90,8 @@ module cpzlqk {
                 this.mCompType = compType;
                 this.mAjaxUpdate.get({
                         date: date,
-                        companyId: compType
+                        companyId: compType,
+                        bhgType:this.getBhglx()
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
@@ -124,7 +133,7 @@ module cpzlqk {
                 framework.router
 					.fromEp(this)
 					.to(framework.basic.endpoint.FRAME_ID)
-					.send(framework.basic.FrameEvent.FE_REGISTER, "按产品统计结果");
+					.send(framework.basic.FrameEvent.FE_REGISTER, "产品一次送试不合格明细");
             }
 
             private updateTable():void {

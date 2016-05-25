@@ -9,12 +9,6 @@ var __extends = (this && this.__extends) || function (d, b) {
 var cpzlqk;
 (function (cpzlqk) {
     var router = framework.router;
-    var FrameEvent = framework.basic.FrameEvent;
-    var Event;
-    (function (Event) {
-        Event.ZLFE_IS_BHGLX_SUPPORTED = FrameEvent.lastEvent();
-        Event.ZLFE_GET_BHGLX = FrameEvent.lastEvent();
-    })(Event = cpzlqk.Event || (cpzlqk.Event = {}));
     var CpzlqkEntryFrameView = (function (_super) {
         __extends(CpzlqkEntryFrameView, _super);
         function CpzlqkEntryFrameView() {
@@ -22,7 +16,7 @@ var cpzlqk;
         }
         CpzlqkEntryFrameView.prototype.onEvent = function (e) {
             switch (e.id) {
-                case Event.ZLFE_GET_BHGLX:
+                case cpzlqk.Event.ZLFE_GET_BHGLX:
                     var node = this.mBhglxSelector.getDataNode(this.mBhglxSelector.getPath());
                     return node.getData().id;
             }
@@ -35,7 +29,7 @@ var cpzlqk;
             if (ret) {
                 this.mItemSelector.change(function () {
                     var node = _this.mItemSelector.getDataNode(_this.mItemSelector.getPath());
-                    if (!router.to(_this.plugin(node)).send(Event.ZLFE_IS_BHGLX_SUPPORTED)) {
+                    if (!router.to(_this.plugin(node)).send(cpzlqk.Event.ZLFE_IS_BHGLX_SUPPORTED)) {
                         _this.mBhglxSelector.hide();
                     }
                     else {
@@ -43,7 +37,7 @@ var cpzlqk;
                     }
                 });
                 var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-                if (!router.to(this.plugin(node)).send(Event.ZLFE_IS_BHGLX_SUPPORTED)) {
+                if (!router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_IS_BHGLX_SUPPORTED)) {
                     this.mBhglxSelector.hide();
                 }
                 else {
@@ -81,7 +75,7 @@ var cpzlqk;
         }
         ZlEntryPluginView.prototype.onEvent = function (e) {
             switch (e.id) {
-                case Event.ZLFE_IS_BHGLX_SUPPORTED:
+                case cpzlqk.Event.ZLFE_IS_BHGLX_SUPPORTED:
                     return this.isSupportBhglb();
             }
             return _super.prototype.onEvent.call(this, e);
@@ -90,7 +84,7 @@ var cpzlqk;
             return false;
         };
         ZlEntryPluginView.prototype.getBhglx = function () {
-            return router.from(this.getId()).to(framework.basic.endpoint.FRAME_ID).send(Event.ZLFE_GET_BHGLX);
+            return router.from(this.getId()).to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_GET_BHGLX);
         };
         return ZlEntryPluginView;
     })(framework.basic.EntryPluginView);

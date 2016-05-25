@@ -29,7 +29,7 @@ var cpzlqk;
                     Node.create({ name: "产品类型", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
                     Node.create({ name: "生产号", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
                     Node.create({ name: "产品型号", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
-                    Node.create({ name: "不合格数量", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
+                    Node.create({ name: "不合格数量", align: TextAlign.Center, isReadOnly: false }),
                     Node.create({ name: "试验不合格现象", align: TextAlign.Center, isReadOnly: false, isNumber: false }),
                     Node.create({ name: "不合格类别", align: TextAlign.Center, isReadOnly: false, editType: "select", options: { value: bhglx } }),
                     Node.create({ name: "原因分析", align: TextAlign.Center, isReadOnly: false, isNumber: false }),

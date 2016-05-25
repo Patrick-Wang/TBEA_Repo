@@ -10,13 +10,6 @@ var cpzlqk;
 (function (cpzlqk) {
     var router = framework.router;
     var FrameEvent = framework.basic.FrameEvent;
-    var Event;
-    (function (Event) {
-        Event.ZLFE_IS_COMPANY_SUPPORTED = FrameEvent.lastEvent();
-        Event.ZLFE_IS_YDJD_SUPPORTED = FrameEvent.lastEvent();
-        Event.ZLFE_YD_SELECTED = FrameEvent.lastEvent();
-        Event.ZLFE_JD_SELECTED = FrameEvent.lastEvent();
-    })(Event = cpzlqk.Event || (cpzlqk.Event = {}));
     var CpzlqkFrameView = (function (_super) {
         __extends(CpzlqkFrameView, _super);
         function CpzlqkFrameView() {
@@ -25,7 +18,7 @@ var cpzlqk;
         }
         CpzlqkFrameView.prototype.checkCompanySupported = function () {
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            var isSupported = router.to(this.plugin(node)).send(Event.ZLFE_IS_COMPANY_SUPPORTED);
+            var isSupported = router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED);
             if (undefined == isSupported || isSupported) {
                 this.mCompanySelector.show();
                 this.isCompanySupported = true;
@@ -37,7 +30,7 @@ var cpzlqk;
         };
         CpzlqkFrameView.prototype.checkYdjdSupported = function () {
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            var isSupported = router.to(this.plugin(node)).send(Event.ZLFE_IS_YDJD_SUPPORTED);
+            var isSupported = router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_IS_YDJD_SUPPORTED);
             if (isSupported) {
                 $("#" + this.mOpt.contentType).show();
                 this.triggerYdjdChecked();
@@ -54,11 +47,11 @@ var cpzlqk;
                 if (true == inputs[i].checked) {
                     if (inputs[i].id == 'rdyd') {
                         this.mYdjdType = cpzlqk.YDJDType.YD;
-                        router.to(this.plugin(node)).send(Event.ZLFE_YD_SELECTED);
+                        router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_YD_SELECTED);
                     }
                     else {
                         this.mYdjdType = cpzlqk.YDJDType.JD;
-                        router.to(this.plugin(node)).send(Event.ZLFE_JD_SELECTED);
+                        router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_JD_SELECTED);
                     }
                 }
             }
@@ -125,15 +118,15 @@ var cpzlqk;
         }
         ZlPluginView.prototype.onEvent = function (e) {
             switch (e.id) {
-                case Event.ZLFE_IS_YDJD_SUPPORTED:
+                case cpzlqk.Event.ZLFE_IS_YDJD_SUPPORTED:
                     return true;
-                case Event.ZLFE_JD_SELECTED:
+                case cpzlqk.Event.ZLFE_JD_SELECTED:
                     this.mYdjdType = cpzlqk.YDJDType.JD;
                     break;
-                case Event.ZLFE_YD_SELECTED:
+                case cpzlqk.Event.ZLFE_YD_SELECTED:
                     this.mYdjdType = cpzlqk.YDJDType.YD;
                     break;
-                case Event.ZLFE_IS_COMPANY_SUPPORTED:
+                case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                     return false;
             }
             return _super.prototype.onEvent.call(this, e);

@@ -5,6 +5,7 @@
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../cpzlqkdef.ts"/>
+///<reference path="../cpzlqkApprove.ts"/>
 declare var $:any;
 
 
@@ -27,7 +28,7 @@ module cpzlqk {
             }
         }
 
-        class ApproveView extends framework.basic.ApprovePluginView {
+        class ApproveView extends ZlApprovePluginView {
             static ins = new ApproveView();
             private mData:CpzlqkResp;
             private mAjaxUpdate:Util.Ajax = new Util.Ajax("../xlacptjjg/approve/update.do", false);
@@ -57,10 +58,6 @@ module cpzlqk {
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([allData[i][0]]);
-                    for (var j = 3; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j - 3] = submitData[i][j - 3].replace(new RegExp(' ', 'g'), '');
-                    }
                 }
                 this.mAjaxApprove.post({
                     date: dt,

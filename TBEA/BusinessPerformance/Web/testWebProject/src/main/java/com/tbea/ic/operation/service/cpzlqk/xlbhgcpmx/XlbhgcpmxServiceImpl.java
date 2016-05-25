@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.cpzlqk.dwmc.DwmcDao;
@@ -71,21 +73,52 @@ public class XlbhgcpmxServiceImpl implements XlbhgcpmxService {
 
 	@Override
 	public List<List<String>> getXlbhgcpmxEntry(Date d, Company company) {
-		// TODO Auto-generated method stub
-		return null;
+		List<XlBhgwtmxEntity> entities = xlBhgwtmxDao.getByDate(d, company);
+		List<List<String>> result = new ArrayList<List<String>>(); 
+		for (XlBhgwtmxEntity entity : entities){
+			result.add(toEntryList(entity));
+		}
+		return result;
+	}
+
+	private List<String> toEntryList(XlBhgwtmxEntity entity) {
+		List<String> row = new ArrayList<String>();
+		row.add("" + entity.getId());
+		row.add(entity.getCplx());
+		row.add(entity.getSch());
+		row.add(entity.getCpxh());
+		row.add("" + entity.getBhgsl());
+		row.add(entity.getSybhgxx());
+		row.add(entity.getBhglx().getName());
+		row.add(entity.getYyfx());
+		row.add(entity.getClcs());
+		row.add(entity.getCljg());
+		row.add(entity.getZrlb().getName());
+		return row;
 	}
 
 	@Override
 	public ErrorCode approveXlbhgcpmx(Date d, JSONArray data, Company company) {
-		// TODO Auto-generated method stub
-		return null;
+		for (int i = 0; i < data.size(); ++i){
+			JSONArray row = data.getJSONArray(i);
+			Integer id = Util.toIntNull(row.getString(0));
+			XlBhgwtmxEntity entity = xlBhgwtmxDao.getById(id);
+			if (null != entity){
+				entity.setZt(ZBStatus.APPROVED.ordinal());
+				xlBhgwtmxDao.merge(entity);
+			}
+		}
+		return ErrorCode.OK;
 	}
 
 	@Override
 	public ZBStatus getStatus(Date d, Company company) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		XlBhgwtmxEntity entity = xlBhgwtmxDao.getFirstBhgwtmx(d, company);
+		if (null != entity){
+			return ZBStatus.valueOf(entity.getZt());
+		}
+		return ZBStatus.NONE;
+	} 
 
 	@Override
 	public ErrorCode submitXlbhgcpmx(Date d, JSONArray data, Company company) {
@@ -98,8 +131,36 @@ public class XlbhgcpmxServiceImpl implements XlbhgcpmxService {
 	}
 
 	private ErrorCode entryXlbhgcpmx(Date d, JSONArray data, Company company,
-			ZBStatus saved) {
-		// TODO Auto-generated method stub
+			ZBStatus zt) {
+		EasyCalendar ec = new EasyCalendar(d);
+		for (int i = 0; i < data.size(); ++i){
+			JSONArray row = data.getJSONArray(i);
+			XlBhgwtmxEntity entity = null;
+			if (!row.getString(0).contains("add")){
+				Integer id = Util.toIntNull(row.getString(0));
+				entity = xlBhgwtmxDao.getById(id);
+			}
+			
+			if (null == entity){
+				entity = new XlBhgwtmxEntity();
+				entity.setNf(ec.getYear());
+				entity.setYf(ec.getMonth());
+				entity.setDwid(company.getId());
+			}
+			int start = 1;
+			entity.setZt(zt.ordinal());
+			entity.setCplx(row.getString(start++));
+			entity.setSch(row.getString(start++));
+			entity.setCpxh(row.getString(start++));
+			entity.setBhgsl(Util.toIntNull(row.getString(start++)));
+			entity.setSybhgxx(row.getString(start++));
+			entity.setBhglx(xlBhglbDao.getByName(row.getString(start++)));
+			entity.setYyfx(row.getString(start++));
+			entity.setClcs(row.getString(start++));
+			entity.setCljg(row.getString(start++));
+			entity.setZrlb(xlZrlbDao.getByName(row.getString(start++)));
+			xlBhgwtmxDao.merge(entity);
+		}
 		return ErrorCode.OK;
 	}
 

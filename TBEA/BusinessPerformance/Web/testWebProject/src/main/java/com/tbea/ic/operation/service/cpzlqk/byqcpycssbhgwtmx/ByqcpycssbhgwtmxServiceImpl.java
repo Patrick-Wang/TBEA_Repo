@@ -107,13 +107,11 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 			Company company) {
 		for (int i = 0; i < data.size(); ++i){
 			JSONArray row = data.getJSONArray(i);
-			for (int j = 0; j < row.size(); ++j){
-				Integer id = Util.toIntNull(row.getString(0));
-				ByqBhgwtmxEntity entity = byqBhgwtmxDao.getById(id);
-				if (null != entity){
-					entity.setZt(ZBStatus.APPROVED.ordinal());
-					byqBhgwtmxDao.merge(entity);
-				}
+			Integer id = Util.toIntNull(row.getString(0));
+			ByqBhgwtmxEntity entity = byqBhgwtmxDao.getById(id);
+			if (null != entity){
+				entity.setZt(ZBStatus.APPROVED.ordinal());
+				byqBhgwtmxDao.merge(entity);
 			}
 		}
 		return ErrorCode.OK;
