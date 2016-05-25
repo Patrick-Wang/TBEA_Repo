@@ -156,7 +156,7 @@
 											style="color: rgb(62, 152, 197);">财务报表</a></li>
 									<c:if test="${QualityLookup || 	QualityApprove}">
 									<li style="background-color: transparent;"><i
-											class="ec-icon ec-icon-line"></i> <a href="zlgb"
+											class="ec-icon ec-icon-line"></i> <a href="#zlgb"
 											style="color: rgb(62, 152, 197);">质量管报</a></li>
 									</c:if>
 							</ul>
@@ -256,7 +256,6 @@
 						<c:if test="${PriceLibAuth}">
 							<%@include file="index_IndexPriceLib.jsp"%>
 						</c:if>
-						<c:if test="${GbLookup}">
 							<c:if test="${ComGbLookup}">
 								<%@include file="index_IndexBusinessReportsGBCommon.jsp"%>
 							</c:if>
@@ -272,7 +271,6 @@
 							<%@include file="index_IndexBusinessReportsCW.jsp"%>
 							<%@include file="index_IndexBusinessReportsZL.jsp"%>
 						
-						</c:if>
 					</div>
 					<div id="InputList" class="col-md-10" style="display: none">
 						<%@include file="index_InputList.jsp"%>
@@ -284,7 +282,6 @@
 
 					<div id="BusinessReportsInput" class="col-md-10"
 						style="display: none">
-						<c:if test="${GbEntry}">
 							<c:if test="${ComGbEntry}">
 								<%@include file="index_IndexBusinessReportsEntryGBCommon.jsp"%>
 							</c:if>
@@ -302,7 +299,6 @@
 							<c:if test="${QualityEntry}">
 							<%@include file="index_IndexBusinessReportsEntryZL.jsp"%>
 							</c:if>
-						</c:if>
 					</div>
 				</c:otherwise>
 			</c:choose>
