@@ -33,7 +33,7 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
@@ -171,6 +171,6 @@ var cpzlqk;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        })(cpzlqk.ZlEntryPluginView);
+        }(cpzlqk.ZlEntryPluginView));
     })(xlacptjjgEntry = cpzlqk.xlacptjjgEntry || (cpzlqk.xlacptjjgEntry = {}));
 })(cpzlqk || (cpzlqk = {}));

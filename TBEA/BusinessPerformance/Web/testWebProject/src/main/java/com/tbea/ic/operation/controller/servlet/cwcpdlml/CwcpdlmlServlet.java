@@ -61,7 +61,8 @@ public class CwcpdlmlServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);		
-		CompanySelection compSel = new CompanySelection(true, COMPS);
+		
+		CompanySelection compSel = new CompanySelection(true, new ArrayList<Company>());
 		compSel.select(map);
 		return new ModelAndView("cwcpdlml/cwcpdlml", map);
 	}

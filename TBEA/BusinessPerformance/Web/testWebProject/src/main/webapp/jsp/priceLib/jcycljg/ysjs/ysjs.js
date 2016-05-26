@@ -28,7 +28,7 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var YsjsView = (function (_super) {
             __extends(YsjsView, _super);
             function YsjsView() {
@@ -126,7 +126,7 @@ var jcycljg;
                         data: ["长江现货价格", "LME结算价格"]
                     },
                     toolbox: {
-                        show: true
+                        show: true,
                     },
                     calculable: false,
                     xAxis: [
@@ -187,7 +187,7 @@ var jcycljg;
                 }));
             };
             return YsjsView;
-        })(jcycljg.BasePluginView);
+        }(jcycljg.BasePluginView));
         ysjs.pluginView = YsjsView.newInstance();
     })(ysjs = jcycljg.ysjs || (jcycljg.ysjs = {}));
 })(jcycljg || (jcycljg = {}));

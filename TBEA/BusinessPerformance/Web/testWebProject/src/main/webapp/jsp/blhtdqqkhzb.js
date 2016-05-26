@@ -42,7 +42,7 @@ var blhtdqqkhzb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.HBGS;
@@ -112,7 +112,7 @@ var blhtdqqkhzb;
                     data: [this.mYear - 1 + "年", this.mYear + "年"]
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -184,6 +184,6 @@ var blhtdqqkhzb;
             }));
         };
         return View;
-    })();
+    }());
     blhtdqqkhzb.View = View;
 })(blhtdqqkhzb || (blhtdqqkhzb = {}));

@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -200,21 +201,21 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			"	select iui.unit_code,	" +	
 			"	       iui.unit_name,	" +	//单位名称
 			"	       inputdate,	" +	
-			"	imd5.m10056 zzs_m,--增值税期末数	" +	
-			"	imd5.m10032 xfs_m,--消费税期末数	" +	
-			"	imd5.m10008 yys_m,--营业税期末数	" +	
-			"	imd5.m10112 cjs_m,--城建税期末数	" +	
-			"	imd5.m10088 jyffj_m,--教育费附加(包括地方教育费附加)期末数	" +	
-			"	imd5.m10063 qysds_m,--企业所得税期末数	" +	
-			"	imd5.m10039 tdsys_m,--土地使用税期末数	" +	
-			"	imd5.m10015 tdzzs_m,--土地增值税期末数	" +	
-			"	imd5.m10119 ccsys_m,--车船使用税期末数	" +	
-			"	imd5.m10095 fcs_m,--房产税期末数	" +	
-			"	imd5.m10070 yhs_m,--印花税期末数	" +	
-			"	imd5.m10047 grsds_m,--个人所得税期末数	" +	
-			"	imd5.m10023 zys_m,--资源税期末数	" +	
-			"	imd5.m10126 gs_m,--关税期末数	" +	
-			"	imd5.m10079 hj_m--合计期末数（其它税费没有值，直接用合计减去以上所列税费）	" +	
+			"	imd5.m10056 zzs_m,"+//增值税期末数	" +	
+			"	imd5.m10032 xfs_m,"+//消费税期末数	" +	
+			"	imd5.m10008 yys_m,"+//营业税期末数	" +	
+			"	imd5.m10112 cjs_m,"+//城建税期末数	" +	
+			"	imd5.m10088 jyffj_m,"+//教育费附加(包括地方教育费附加)期末数	" +	
+			"	imd5.m10063 qysds_m,"+//企业所得税期末数	" +	
+			"	imd5.m10039 tdsys_m,"+//土地使用税期末数	" +	
+			"	imd5.m10015 tdzzs_m,"+//土地增值税期末数	" +	
+			"	imd5.m10119 ccsys_m,"+//车船使用税期末数	" +	
+			"	imd5.m10095 fcs_m,"+//房产税期末数	" +	
+			"	imd5.m10070 yhs_m,"+//印花税期末数	" +	
+			"	imd5.m10047 grsds_m,"+//个人所得税期末数	" +	
+			"	imd5.m10023 zys_m,"+//资源税期末数	" +	
+			"	imd5.m10126 gs_m,"+//关税期末数	" +	
+			"	imd5.m10079 hj_m"+//合计期末数（其它税费没有值，直接用合计减去以上所列税费）	" +	
 			"	  from iufo_measure_data_55pe8cph imd5	" +	
 			"	  left join (select alone_id,	" +	
 			"	                    code,	" +	
@@ -228,7 +229,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			"	    on imd5.alone_id = imp.alone_id	" +	
 			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 			"	    on imp.code = iui.unit_id	" +	
-			"	 where imp.ver = 0	" +	
+			"	 where imp.ver = 0	%s " +	
 			"	 order by unit_code, inputdate desc	";	
 		 		
 		//-------------应交税费表（累计应交数）----------------------		
@@ -371,7 +372,8 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 					" and iui.unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
-			
+			Logger logger = Logger.getLogger("LOG-NC");
+			logger.debug("财务已交税费  sqlBnqcs");
 			ResultSet rsNdqcs = connection.query(String.format(sqlBnqcs, whereSql));
 			if (null != rsNdqcs){	
 				mergersNdqcsEntity(cal, rsNdqcs);
@@ -383,6 +385,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 				}
 			}
 			Map<String, YjsfEntity> cacheMap = new HashMap<String, YjsfEntity>();
+			logger.debug("财务已交税费  sqlByqms");
 			ResultSet rsYjsf = connection.query(String.format(CwyjsfServiceImpl.sqlByqms, whereMonthSql));
 			mergersYjsfEntity(cal, cacheMap, rsYjsf, new OnSetValue(){
 				@Override
@@ -390,6 +393,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 					entity.setQms(val);
 				}
 			});	
+			logger.debug("财务已交税费  sqlBywjs");
 			rsYjsf = connection.query(String.format(CwyjsfServiceImpl.sqlBywjs, whereMonthSql));
 			mergersYjsfEntity(cal, cacheMap, rsYjsf, new OnSetValue(){
 				@Override
@@ -397,6 +401,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 					entity.setWjs(val);
 				}
 			});	
+			logger.debug("财务已交税费  sqlByyijs");
 			rsYjsf = connection.query(String.format(CwyjsfServiceImpl.sqlByyijs, whereMonthSql));
 			mergersYjsfEntity(cal, cacheMap, rsYjsf, new OnSetValue(){
 				@Override
@@ -404,6 +409,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 					entity.setYijs(val);
 				}
 			});	
+			logger.debug("财务已交税费  sqlByyjs");
 			rsYjsf = connection.query(String.format(CwyjsfServiceImpl.sqlByyjs, whereMonthSql));
 			mergersYjsfEntity(cal, cacheMap, rsYjsf, new OnSetValue(){
 				@Override
@@ -411,6 +417,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 					entity.setYjs(val);
 				}
 			});
+			logger.debug("财务已交税费  sqlLjwjs");
 			rsYjsf = connection.query(String.format(CwyjsfServiceImpl.sqlLjwjs, whereMonthSql));
 			mergersYjsfEntity(cal, cacheMap, rsYjsf, new OnSetValue(){
 				@Override
@@ -418,6 +425,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 					entity.setLjwj(val);
 				}
 			});
+			logger.debug("财务已交税费  sqlLjyijs");
 			rsYjsf = connection.query(String.format(CwyjsfServiceImpl.sqlLjyijs, whereMonthSql));
 			mergersYjsfEntity(cal, cacheMap, rsYjsf, new OnSetValue(){
 				@Override
@@ -425,6 +433,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 					entity.setLjyij(val);
 				}
 			});
+			logger.debug("财务已交税费  sqlLjyjs");
 			rsYjsf = connection.query(String.format(CwyjsfServiceImpl.sqlLjyjs, whereMonthSql));
 			mergersYjsfEntity(cal, cacheMap, rsYjsf, new OnSetValue(){
 				@Override

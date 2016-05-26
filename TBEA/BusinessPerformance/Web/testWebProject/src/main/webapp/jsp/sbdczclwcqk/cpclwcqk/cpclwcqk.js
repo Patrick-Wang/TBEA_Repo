@@ -45,7 +45,7 @@ var sbdczclwcqk;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -148,6 +148,6 @@ var sbdczclwcqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(framework.basic.ShowPluginView);
+        }(framework.basic.ShowPluginView));
     })(cpclwcqk = sbdczclwcqk.cpclwcqk || (sbdczclwcqk.cpclwcqk = {}));
 })(sbdczclwcqk || (sbdczclwcqk = {}));

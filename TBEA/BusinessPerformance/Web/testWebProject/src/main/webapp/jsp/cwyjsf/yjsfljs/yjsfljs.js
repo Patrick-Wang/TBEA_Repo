@@ -1,14 +1,14 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../cwyjsfdef.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var plugin;
 (function (plugin) {
     plugin.yjsfljs = framework.basic.endpoint.lastId();
@@ -39,7 +39,7 @@ var cwyjsf;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -48,6 +48,13 @@ var cwyjsf;
             }
             ShowView.prototype.getId = function () {
                 return plugin.yjsfljs;
+            };
+            ShowView.prototype.onEvent = function (e) {
+                switch (e.id) {
+                    case cwyjsf.Event.CW_ISMONTH_SUPPORTED:
+                        return true;
+                }
+                return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../yjsfljs/export.do?" + Util.Ajax.toUrlParam({
@@ -119,6 +126,6 @@ var cwyjsf;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(framework.basic.ShowPluginView);
+        }(framework.basic.ShowPluginView));
     })(yjsfljs = cwyjsf.yjsfljs || (cwyjsf.yjsfljs = {}));
 })(cwyjsf || (cwyjsf = {}));

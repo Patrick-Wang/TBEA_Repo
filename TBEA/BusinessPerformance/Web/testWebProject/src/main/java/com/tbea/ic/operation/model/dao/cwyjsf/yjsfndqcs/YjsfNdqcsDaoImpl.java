@@ -35,10 +35,9 @@ public class YjsfNdqcsDaoImpl extends AbstractReadWriteDaoImpl<YjsfNdqcsEntity> 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		
-		Query q = this.getEntityManager().createQuery("from YjsfEntity where nf=:nf and yf = :yf and dwid=:compId and sz = :sz)");
+		Query q = this.getEntityManager().createQuery("from YjsfNdqcsEntity where nf=:nf and dwid=:compId and sz = :sz)");
 		
 		q.setParameter("nf", cal.get(Calendar.YEAR));
-		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		q.setParameter("sz", sz);
 		q.setParameter("compId", company.getId());
 		List<YjsfNdqcsEntity> ret = q.getResultList();

@@ -42,7 +42,7 @@ var yszkrb_view;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("yszk_update.do");
@@ -156,6 +156,6 @@ var yszkrb_view;
             $("#export").css('display', 'block');
         };
         return View;
-    })();
+    }());
     yszkrb_view.View = View;
 })(yszkrb_view || (yszkrb_view = {}));

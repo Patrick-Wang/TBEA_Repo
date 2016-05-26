@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -93,21 +94,11 @@ public class JyxxjlServiceImpl implements JyxxjlService {
 	}
 	
 	private String getJhWcl(Double jh, Double sj) {
-		
-		if (jh != null && sj != null && jh != 0.0) {
-			return String.format("%.1f", (Double.valueOf(sj/jh)) * 100) + "%";
-		} else {
-			return "null";
-		}
+		return "" + MathUtil.division(sj, jh);
 	}
 	
 	private String getTbzf(Double sj, Double tq) {
-		
-		if (sj != null && tq != null && tq != 0.0) {
-			return String.format("%.1f", (Double.valueOf((sj - tq)/tq)) * 100) + "%";
-		} else {
-			return "null";
-		}
+		return "" + MathUtil.division(MathUtil.minus(sj, tq), tq);
 	}
 	
 	

@@ -43,7 +43,7 @@ var yszkpzjh;
                 new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, JQTable.TextAlign.Right, 100)], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.SBGS;
@@ -309,6 +309,6 @@ var yszkpzjh;
             }));
         };
         return View;
-    })();
+    }());
     yszkpzjh.View = View;
 })(yszkpzjh || (yszkpzjh = {}));

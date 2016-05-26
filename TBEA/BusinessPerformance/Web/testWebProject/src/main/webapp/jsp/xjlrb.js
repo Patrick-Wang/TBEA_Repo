@@ -21,7 +21,7 @@ var xjlrb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mData = [];
@@ -149,6 +149,6 @@ var xjlrb;
             }));
         };
         return View;
-    })();
+    }());
     xjlrb.View = View;
 })(xjlrb || (xjlrb = {}));

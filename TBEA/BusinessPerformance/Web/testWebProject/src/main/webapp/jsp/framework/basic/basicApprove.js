@@ -57,7 +57,7 @@ var framework;
                 });
             };
             return ApproveFrameView;
-        })(basic.BasicFrameView);
+        }(basic.BasicFrameView));
         basic.ApproveFrameView = ApproveFrameView;
     })(basic = framework.basic || (framework.basic = {}));
 })(framework || (framework = {}));

@@ -19,7 +19,7 @@ module cwyjsf {
                 for (let i = 1; i <= 12; ++i){
                     dyyjs.append( Node.create({name : i + ""}));
                 }
-                let dyyijs =  Node.create({name : year + "年当月应交数"});
+                let dyyijs =  Node.create({name : year + "年当已交数"});
                 for (let i = 1; i <= 12; ++i){
                     dyyijs.append( Node.create({name : i + ""}));
                 }
@@ -39,7 +39,7 @@ module cwyjsf {
             private mDateSelector:Util.DateSelector;
             private mDt: string;
             private mCompType:Util.CompanyType;
-
+            
             getId():number {
                 return plugin.yjsf;
             }
@@ -51,6 +51,14 @@ module cwyjsf {
                     });
             }
 
+            onEvent(e:framework.route.Event):any {
+                switch (e.id) {
+                    case Event.CW_ISMONTH_SUPPORTED:
+                        return false;
+                }
+                return super.onEvent(e);
+            }
+            
             private option():Option {
                 return <Option>this.mOpt;
             }

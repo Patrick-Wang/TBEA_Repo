@@ -22,15 +22,16 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CwgbjyxxjlSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
 import com.tbea.ic.operation.service.cwgbjyxxjl.jyxxjl.JyxxjlService;
 import com.tbea.ic.operation.service.cwgbjyxxjl.jyxxjl.JyxxjlServiceImpl;
 

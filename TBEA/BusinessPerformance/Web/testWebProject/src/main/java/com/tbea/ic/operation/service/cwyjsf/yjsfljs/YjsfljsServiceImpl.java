@@ -58,26 +58,30 @@ public class YjsfljsServiceImpl implements YjsfljsService {
 			if (null != ndqcs){
 				list.add("" + ndqcs.getQcs());
 				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1), ndqcs.getQcs()));
+			}else{
+				list.add(null);
 			}
 			YjsfEntity yjsf = yjsfDao.getByDate(d, company, sz.getId());
 			
 			if (null != yjsf){
 				list.add("" + yjsf.getYjs());
-				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1 + yjsf.getYf()), yjsf.getYjs()));
+				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1), yjsf.getYjs()));
 				list.add("" + yjsf.getLjyj());
-				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1 + yjsf.getYf()), yjsf.getLjyj()));
+				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1), yjsf.getLjyj()));
 				list.add("" + yjsf.getYijs());
-				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1 + yjsf.getYf()), yjsf.getYijs()));
+				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1), yjsf.getYijs()));
 				list.add("" + yjsf.getLjyij());
-				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1 + yjsf.getYf()), yjsf.getLjyij()));
+				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1), yjsf.getLjyij()));
 				list.add("" + yjsf.getWjs());
-				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1 + yjsf.getYf()), yjsf.getWjs()));
+				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1), yjsf.getWjs()));
 				list.add("" + yjsf.getLjwj());
-				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1 + yjsf.getYf()), yjsf.getLjwj()));
+				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1), yjsf.getLjwj()));
 			}else{
 				Util.resize(list, 8);
 			}
-			Double smVal =  MathUtil.sum(new Double[]{ndqcs == null ? null : ndqcs.getQcs(), yjsf == null ? null : yjsf.getLjyj(), yjsf == null ? null : yjsf.getLjyij()});
+			Double smVal = MathUtil.minus(MathUtil.sum(ndqcs == null ? null
+					: ndqcs.getQcs(), yjsf == null ? null : yjsf.getLjyj()),
+					yjsf == null ? null : yjsf.getLjyij());
 			list.add("" + smVal);
 			hj.set(list.size() - 1, smVal);
 		}

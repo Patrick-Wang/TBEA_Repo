@@ -67,7 +67,7 @@ var cb_byq;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.SBGS;
@@ -174,7 +174,7 @@ var cb_byq;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.format = function (row) {
@@ -220,10 +220,10 @@ var cb_byq;
                 height: height,
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;
-    })();
+    }());
     cb_byq.View = View;
 })(cb_byq || (cb_byq = {}));

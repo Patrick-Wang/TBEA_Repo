@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +25,11 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.cwyjsf.CwyjsfService;
 import com.tbea.ic.operation.service.cwyjsf.CwyjsfServiceImpl;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Controller
 @RequestMapping(value = "cwyjsf")
@@ -54,6 +58,9 @@ public class CwyjsfServlet {
 		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.GJGCGS_GFGS));
 	}
 	
+	@Autowired
+	ExtendAuthorityService extendAuthService;
+	
 	@RequestMapping(value = "show.do")
 	public ModelAndView getShow(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -61,7 +68,10 @@ public class CwyjsfServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		CompanySelection compSel = new CompanySelection(true, COMPS);
+		List<Company> comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.FinanceLookup);
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		return new ModelAndView("cwyjsf/cwyjsf", map);
 	}

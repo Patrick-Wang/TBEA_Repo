@@ -77,7 +77,7 @@ var ModuleLoader;
             return this;
         };
         return Listener;
-    })();
+    }());
     ModuleLoader.Listener = Listener;
     function listen(url, callback) {
         url = getTotalUrl(url);

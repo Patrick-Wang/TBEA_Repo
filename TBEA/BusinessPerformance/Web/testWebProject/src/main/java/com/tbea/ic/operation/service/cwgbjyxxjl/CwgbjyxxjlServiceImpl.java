@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -156,8 +157,13 @@ public class CwgbjyxxjlServiceImpl implements CwgbjyxxjlService {
 			cal.setTime(d);
 			String whereSql = 
 				" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
-				" and substr(inputdate,1,7) = '" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "' ";
+						" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
+						" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
+
 			Map<String, JyxxjlEntity> cacheMap = new HashMap<String, JyxxjlEntity>();
+			
+			Logger logger = Logger.getLogger("LOG-NC");
+			logger.debug("财务经营性现金流 sqlDyz");
 			ResultSet rs = connection.query(String.format(sqlDyz, whereSql));
 			mergersEntity(cal, cacheMap, rs, new OnSetValue(){
 				@Override
@@ -165,6 +171,8 @@ public class CwgbjyxxjlServiceImpl implements CwgbjyxxjlService {
 					entity.setSjz(val);
 				}
 			});
+			
+			logger.debug("财务经营性现金流 sqlBnljs");
 			rs = connection.query(String.format(sqlBnljs, whereSql));
 			mergersEntity(cal, cacheMap, rs, new OnSetValue(){
 				@Override
@@ -210,6 +218,7 @@ public class CwgbjyxxjlServiceImpl implements CwgbjyxxjlService {
 						entity.setDwxx(dwxxDao.getById(comp.getId()));
 						entity.setNf(nf);
 						entity.setYf(yf);
+						entity.setKm(kms.get(i));
 					}
 					cacheMap.put(key, entity);
 					onSetValue.onSet(entity, rs.getDouble(i + 4));

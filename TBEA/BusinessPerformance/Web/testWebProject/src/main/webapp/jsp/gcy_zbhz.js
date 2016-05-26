@@ -48,7 +48,7 @@ var gcy_zbhz;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mData = [];
@@ -163,6 +163,6 @@ var gcy_zbhz;
             }));
         };
         return View;
-    })();
+    }());
     gcy_zbhz.View = View;
 })(gcy_zbhz || (gcy_zbhz = {}));

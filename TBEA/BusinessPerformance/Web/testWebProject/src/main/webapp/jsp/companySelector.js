@@ -21,7 +21,7 @@ var Util;
             this.selectedText = '# 个项目公司被选中';
         }
         return ICompanySelectorOption;
-    })();
+    }());
     Util.ICompanySelectorOption = ICompanySelectorOption;
     var CompanySelector = (function () {
         function CompanySelector(multi, divId, comps, firstComp, opt) {
@@ -190,6 +190,6 @@ var Util;
             return ret;
         };
         return CompanySelector;
-    })();
+    }());
     Util.CompanySelector = CompanySelector;
 })(Util || (Util = {}));

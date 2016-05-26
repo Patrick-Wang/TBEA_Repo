@@ -31,8 +31,7 @@ CREATE  TABLE [dbo].[chgb_chzm](
 	[dwid] [int] not NULL,
 	[zmje] [numeric](18, 4) NULL,
 	[hzzb] [numeric](18, 4) NULL,
-	[yz] [numeric](18, 4) NULL,
-	[zt] [int] not NULL
+	[yz] [numeric](18, 4) NULL
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC

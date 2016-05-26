@@ -23,7 +23,7 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var PmiCpiPpiView = (function (_super) {
             __extends(PmiCpiPpiView, _super);
             function PmiCpiPpiView() {
@@ -146,7 +146,7 @@ var jcycljg;
                         data: legend
                     },
                     toolbox: {
-                        show: true
+                        show: true,
                     },
                     calculable: false,
                     xAxis: [
@@ -187,7 +187,7 @@ var jcycljg;
                 }));
             };
             return PmiCpiPpiView;
-        })(jcycljg.BasePluginView);
+        }(jcycljg.BasePluginView));
         pmicpippi.pluginView = PmiCpiPpiView.newInstance();
     })(pmicpippi = jcycljg.pmicpippi || (jcycljg.pmicpippi = {}));
 })(jcycljg || (jcycljg = {}));

@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -518,6 +519,8 @@ public class YszkgbServiceImpl implements YszkgbService {
 				" and iui.unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
 				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 				" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
+			Logger logger = Logger.getLogger("LOG-NC");
+			logger.debug("应收账款管报 账面表");
 			ResultSet rs = connection.query(String.format(ncSqlZbm, whereSql));
 			if (null != rs){	
 				try {
@@ -555,13 +558,13 @@ public class YszkgbServiceImpl implements YszkgbService {
 				entity.setYf(yf);
 			}
 			
-			entity.setZl5nys(rs.getDouble(4));
-			entity.setZl4z5n(rs.getDouble(5));
-			entity.setZl3z4n(rs.getDouble(6));
-			entity.setZl2z3n(rs.getDouble(7));
-			entity.setZl1z2n(rs.getDouble(8));
-			entity.setZl1nyn(rs.getDouble(9));
-			entity.setHj(rs.getDouble(10));
+			entity.setZl5nys(rs.getDouble(3));
+			entity.setZl4z5n(rs.getDouble(4));
+			entity.setZl3z4n(rs.getDouble(5));
+			entity.setZl2z3n(rs.getDouble(6));
+			entity.setZl1z2n(rs.getDouble(7));
+			entity.setZl1nyn(rs.getDouble(8));
+			entity.setHj(rs.getDouble(9));
 			yszkZlDao.merge(entity);
 		}
 	}
@@ -576,6 +579,9 @@ public class YszkgbServiceImpl implements YszkgbService {
 				" and iui.unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(yszkgbComps).toArray(), ",") + ")" + 
 				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 				" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
+			
+			Logger logger = Logger.getLogger("LOG-NC");
+			logger.debug("应收账款管报 账龄变化");
 			ResultSet rs = connection.query(String.format(ncSqlYszkzlbh, whereSql));
 			if (null != rs){	
 				try {

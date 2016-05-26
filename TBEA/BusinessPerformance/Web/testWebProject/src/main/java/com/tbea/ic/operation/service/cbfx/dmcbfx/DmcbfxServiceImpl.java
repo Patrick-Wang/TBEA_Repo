@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -247,6 +248,9 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 				" and iui.unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
 				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 				" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
+			
+			Logger logger = Logger.getLogger("LOG-NC");
+			logger.debug("成本分析  吨煤成本分析");
 			ResultSet rs = connection.query(String.format(ncSql, whereSql));
 			if (null != rs){	
 				try {

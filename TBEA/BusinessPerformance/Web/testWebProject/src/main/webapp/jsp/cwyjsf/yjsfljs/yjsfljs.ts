@@ -4,7 +4,6 @@
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../cwyjsfdef.ts"/>
-
 module plugin {
     export let yjsfljs : number = framework.basic.endpoint.lastId();
 }
@@ -42,6 +41,14 @@ module cwyjsf {
 
             getId():number {
                 return plugin.yjsfljs;
+            }
+            
+            onEvent(e:framework.route.Event):any {
+                switch (e.id) {
+                    case Event.CW_ISMONTH_SUPPORTED:
+                        return true;
+                }
+                return super.onEvent(e);
             }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {

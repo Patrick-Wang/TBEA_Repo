@@ -49,13 +49,19 @@ var Util;
                 year = date.year;
                 bChanged = true;
             }
-            if (Util.isExist(date.month) && Util.isExist(this.mCurDate.month) && this.getStartMonth() <= date.month && this.getLatestMonth() >= date.month) {
+            if (Util.isExist(date.month) && this.getStartMonth() <= date.month && this.getLatestMonth() >= date.month) {
                 this.mCurDate.month = date.month;
                 bChanged = true;
             }
-            if (Util.isExist(date.day) && Util.isExist(this.mCurDate.day) && this.getStartDay() <= date.day && this.getLatestDay() >= date.day) {
+            if (!Util.isExist(date.month)) {
+                this.mCurDate.month = undefined;
+            }
+            if (Util.isExist(date.day) && this.getStartDay() <= date.day && this.getLatestDay() >= date.day) {
                 this.mCurDate.day = date.day;
                 bChanged = true;
+            }
+            if (!Util.isExist(date.day)) {
+                this.mCurDate.day = undefined;
             }
             if (bChanged) {
                 this.onYearSelected(year);
@@ -141,8 +147,8 @@ var Util;
         };
         DateSelector.prototype.updateMonth = function (selMonth) {
             var _this = this;
+            var monthSel = $("#" + this.mCtrlId + "month");
             if (Util.isExist(this.mEndDate.month)) {
-                var monthSel = $("#" + this.mCtrlId + "month");
                 if (0 == monthSel.length) {
                     $("#" + this.mCtrlId + " tr").append('<td>' +
                         '<select id="' + this.mCtrlId + 'month"' +
@@ -203,8 +209,8 @@ var Util;
         };
         DateSelector.prototype.updateDay = function (selDay) {
             var _this = this;
+            var daySel = $("#" + this.mCtrlId + "day");
             if (Util.isExist(this.mEndDate.day)) {
-                var daySel = $("#" + this.mCtrlId + "day");
                 if (0 == daySel.length) {
                     $("#" + this.mCtrlId + " tr").append('<td>' +
                         '<select id="' + this.mCtrlId + 'day"' +
@@ -262,6 +268,12 @@ var Util;
                 this.updateMonth(curMonth);
                 this.onMonthSelected(curMonth);
             }
+            else {
+                var monthSel = $("#" + this.mCtrlId + "month");
+                monthSel.parent().empty();
+                var daySel = $("#" + this.mCtrlId + "day");
+                daySel.parent().empty();
+            }
         };
         DateSelector.prototype.onMonthSelected = function (month) {
             this.mCurDate.month = month;
@@ -277,6 +289,8 @@ var Util;
                 }
                 this.updateDay(curDay);
                 this.onDaySelected(curDay);
+            }
+            else {
             }
         };
         DateSelector.prototype.onDaySelected = function (day) {
@@ -295,6 +309,6 @@ var Util;
             return { year: this.mCurDate.year, month: this.mCurDate.month, day: this.mCurDate.day };
         };
         return DateSelector;
-    })();
+    }());
     Util.DateSelector = DateSelector;
 })(Util || (Util = {}));

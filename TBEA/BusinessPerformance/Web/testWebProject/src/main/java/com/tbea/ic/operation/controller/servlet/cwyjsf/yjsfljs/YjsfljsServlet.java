@@ -54,7 +54,7 @@ public class YjsfljsServlet {
 		List<List<String>> result = yjsfljsService.getYjsfljs(d, company);
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0});
-		handler.next(new RawNumberFormatterHandler(1));
+		handler.next(new RawNumberFormatterHandler(2));
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
 		
@@ -72,7 +72,7 @@ public class YjsfljsServlet {
 		ExcelTemplate template = ExcelTemplate.createCwyjsfTemplate(CwyjsfSheetType.YJSFLJS);
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(1));
+		handler.next(new NumberFormatterHandler(2));
 		FormatterServer serv = new FormatterServer(handler, 0, 2);
 		serv.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
 		serv.format(result, template);

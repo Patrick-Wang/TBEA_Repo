@@ -80,7 +80,7 @@ var yszkgb;
             this.plugin(node).update(dt, this.mCurrentComp);
         };
         return View;
-    })();
+    }());
     yszkgb.View = View;
 })(yszkgb || (yszkgb = {}));
 var view = new yszkgb.View();

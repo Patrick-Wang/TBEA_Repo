@@ -43,7 +43,7 @@ var wlyddqk;
             return true;
         };
         return BasePluginView;
-    })();
+    }());
     wlyddqk.BasePluginView = BasePluginView;
     var TypeViewProxy = (function () {
         function TypeViewProxy(stub, type) {
@@ -71,7 +71,7 @@ var wlyddqk;
             return this.mStub.getExportUrl(date, compType);
         };
         return TypeViewProxy;
-    })();
+    }());
     wlyddqk.TypeViewProxy = TypeViewProxy;
     var BaseEntryPluginView = (function () {
         function BaseEntryPluginView() {
@@ -115,7 +115,7 @@ var wlyddqk;
             return true;
         };
         return BaseEntryPluginView;
-    })();
+    }());
     wlyddqk.BaseEntryPluginView = BaseEntryPluginView;
     var TypeEntryViewProxy = (function () {
         function TypeEntryViewProxy(stub, type) {
@@ -149,6 +149,6 @@ var wlyddqk;
             this.mStub.submit(date, compType);
         };
         return TypeEntryViewProxy;
-    })();
+    }());
     wlyddqk.TypeEntryViewProxy = TypeEntryViewProxy;
 })(wlyddqk || (wlyddqk = {}));

@@ -157,7 +157,14 @@ module framework.basic {
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_SHOW);
-            $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
+            if (null != this.mCurrentComp){
+                $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
+            }
+            else{
+                $("#headertitle")[0].innerHTML = node.getData().value;
+            }
+            
+            
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_UPDATE, {
                 date:dt,
                 compType:this.mCurrentComp

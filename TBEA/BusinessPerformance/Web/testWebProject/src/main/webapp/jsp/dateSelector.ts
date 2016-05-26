@@ -71,14 +71,22 @@ module Util {
                 bChanged = true;
             }
 
-            if (isExist(date.month) && isExist(this.mCurDate.month) && this.getStartMonth() <= date.month && this.getLatestMonth() >= date.month) {
+            if (isExist(date.month) && this.getStartMonth() <= date.month && this.getLatestMonth() >= date.month) {
                 this.mCurDate.month = date.month;
                 bChanged = true;
             }
 
-            if (isExist(date.day) && isExist(this.mCurDate.day) && this.getStartDay() <= date.day && this.getLatestDay() >= date.day) {
+            if (!isExist(date.month)){
+                this.mCurDate.month = undefined;
+            }
+
+            if (isExist(date.day) && this.getStartDay() <= date.day && this.getLatestDay() >= date.day) {
                 this.mCurDate.day = date.day;
                 bChanged = true;
+            }
+            
+            if (!isExist(date.day)){
+                this.mCurDate.day = undefined;
             }
 
             if (bChanged) {
@@ -176,8 +184,9 @@ module Util {
         }
 
         private updateMonth(selMonth: number) {
+             var monthSel = $("#" + this.mCtrlId + "month");
             if (isExist(this.mEndDate.month)) {
-                var monthSel = $("#" + this.mCtrlId + "month");
+               
                 if (0 == monthSel.length) {
                     $("#" + this.mCtrlId + " tr").append('<td>' +
                         '<select id="' + this.mCtrlId + 'month"' +
@@ -239,8 +248,8 @@ module Util {
         }
 
         private updateDay(selDay: number) {
+            var daySel = $("#" + this.mCtrlId + "day");
             if (isExist(this.mEndDate.day)) {
-                var daySel = $("#" + this.mCtrlId + "day");
                 if (0 == daySel.length) {
                     $("#" + this.mCtrlId + " tr").append('<td>' +
                         '<select id="' + this.mCtrlId + 'day"' +
@@ -306,6 +315,11 @@ module Util {
 
                 this.updateMonth(curMonth);
                 this.onMonthSelected(curMonth);
+            }else{
+                var monthSel = $("#" + this.mCtrlId + "month");
+                monthSel.parent().empty();
+                var daySel = $("#" + this.mCtrlId + "day");
+                daySel.parent().empty();
             }
         }
 
@@ -325,6 +339,8 @@ module Util {
 
                 this.updateDay(curDay);
                 this.onDaySelected(curDay);
+            }else{
+                
             }
         }
 

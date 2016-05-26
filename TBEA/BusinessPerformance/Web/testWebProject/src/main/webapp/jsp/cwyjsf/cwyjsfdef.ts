@@ -6,4 +6,9 @@ module cwyjsf{
         tb:string;
         tb1:string;
     }
+    
+    import FrameEvent = framework.basic.FrameEvent;
+    export module Event{
+        export let CW_ISMONTH_SUPPORTED : number = FrameEvent.lastEvent();
+    }
 }

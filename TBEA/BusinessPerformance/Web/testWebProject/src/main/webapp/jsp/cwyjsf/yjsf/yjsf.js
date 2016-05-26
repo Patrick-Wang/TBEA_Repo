@@ -27,7 +27,7 @@ var cwyjsf;
                 for (var i = 1; i <= 12; ++i) {
                     dyyjs.append(Node.create({ name: i + "" }));
                 }
-                var dyyijs = Node.create({ name: year + "年当月应交数" });
+                var dyyijs = Node.create({ name: year + "年当已交数" });
                 for (var i = 1; i <= 12; ++i) {
                     dyyijs.append(Node.create({ name: i + "" }));
                 }
@@ -39,7 +39,7 @@ var cwyjsf;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -54,6 +54,13 @@ var cwyjsf;
                     date: date,
                     companyId: compType
                 });
+            };
+            ShowView.prototype.onEvent = function (e) {
+                switch (e.id) {
+                    case cwyjsf.Event.CW_ISMONTH_SUPPORTED:
+                        return false;
+                }
+                return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.option = function () {
                 return this.mOpt;
@@ -119,6 +126,6 @@ var cwyjsf;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(framework.basic.ShowPluginView);
+        }(framework.basic.ShowPluginView));
     })(yjsf = cwyjsf.yjsf || (cwyjsf.yjsf = {}));
 })(cwyjsf || (cwyjsf = {}));

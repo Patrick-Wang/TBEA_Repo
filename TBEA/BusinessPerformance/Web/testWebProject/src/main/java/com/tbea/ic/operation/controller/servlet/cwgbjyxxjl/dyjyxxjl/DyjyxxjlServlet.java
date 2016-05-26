@@ -32,6 +32,7 @@ import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
 import com.tbea.ic.operation.service.cwgbjyxxjl.jyxxjl.JyxxjlService;
 import com.tbea.ic.operation.service.cwgbjyxxjl.jyxxjl.JyxxjlServiceImpl;
 
@@ -56,7 +57,8 @@ public class DyjyxxjlServlet {
 		List<List<String>> result = jyxxjlService.getJyxxjlYD(d, company);
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0});
-		handler.next(new RawNumberFormatterHandler(1));
+		handler.next(new RawPercentFormatterHandler(1, null, new Integer[]{3, 5, 8}))
+		.next(new RawNumberFormatterHandler(1));
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
 		

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -517,10 +519,15 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 		NCConnection connection = NCConnection.create();
 		if (null != connection){
 			EasyCalendar cal = new EasyCalendar(d);
-			String whereSql = " and substr(inputdate,1,7) = '" + cal.getYear() + "-" + cal.getMonth() + "' " +
-					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")"; 
-
+			String whereSql = 
+					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getYear() + 
+					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getMonth() +
+					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")";
+			
+			Logger logger = Logger.getLogger("LOG-NC");
+			logger.debug("完工成品情况  sqlCbByqcyAdydjfl");
 			ResultSet rsCb = connection.query(sqlCbByqcyAdydjfl + whereSql);
+			logger.debug("完工成品情况  sqlSrByqcyAdydjfl");
 			ResultSet rsSr = connection.query(sqlSrByqcyAdydjfl + whereSql);
 			List<Integer> cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ);
 			mergeResultSets(
@@ -532,7 +539,9 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					0, 
 					4, 
 					cpList.size());
+			logger.debug("完工成品情况  sqlCbByqcyAcplxfl");
 			rsCb = connection.query(sqlCbByqcyAcplxfl + whereSql);
+			logger.debug("完工成品情况  sqlSrByqcyAcplxfl");
 			rsSr = connection.query(sqlSrByqcyAcplxfl + whereSql);
 			cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL);
 			mergeResultSets(
@@ -544,8 +553,9 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					0, 
 					4, 
 					cpList.size());
-			
+			logger.debug("完工成品情况  sqlCbGcl");
 			rsCb = connection.query(sqlCbGcl + whereSql);
+			logger.debug("完工成品情况  sqlSrGcl");
 			rsSr = connection.query(sqlSrGcl + whereSql);
 			cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH);
 			mergeResultSets(
@@ -559,8 +569,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					4);
 			
 			try {
-				rsCb.first();
-				rsSr.first();
+				rsCb.beforeFirst();
+				rsSr.beforeFirst();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -574,8 +584,9 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					4, 
 					18, 
 					4);
-			
+			logger.debug("完工成品情况  sqlCbWlmyl");
 			rsCb = connection.query(sqlCbWlmyl + whereSql);
+			logger.debug("完工成品情况  sqlSrWlmyl");
 			rsSr = connection.query(sqlSrWlmyl + whereSql);
 			mergeResultSets(
 					d, 
@@ -586,8 +597,9 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					8, 
 					4, 
 					1);
-			
+			logger.debug("完工成品情况  sqlCbFwl");
 			rsCb = connection.query(sqlCbFwl + whereSql);
+			logger.debug("完工成品情况  sqlSrFwl");
 			rsSr = connection.query(sqlSrFwl + whereSql);
 			mergeResultSets(
 					d, 
@@ -599,8 +611,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					cpList.size() - 9 - 1 + 4, 
 					1);
 			try {
-				rsCb.first();
-				rsSr.first();
+				rsCb.beforeFirst();
+				rsSr.beforeFirst();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -695,10 +707,15 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 		NCConnection connection = NCConnection.create();
 		if (null != connection){
 			EasyCalendar cal = new EasyCalendar(d);
-			String whereSql = " and substr(inputdate,1,7) = '" + cal.getYear() + "-" + cal.getMonth() + "' " +
+			String whereSql = 
+					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getYear() + 
+					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getMonth() +
 					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")"; 
 
+			Logger logger = Logger.getLogger("LOG-NC");
+			logger.debug("完工成品情况  sqlCbXlcy");
 			ResultSet rsCb = connection.query(sqlCbXlcy + whereSql);
+			logger.debug("完工成品情况  sqlCbXlcy");
 			ResultSet rsSr = connection.query(sqlSrXlcy + whereSql);
 			List<Integer> cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_XL_CPFL);
 			mergeResultSets(
@@ -710,8 +727,9 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					0, 
 					4, 
 					cpList.size());
-			
+			logger.debug("完工成品情况  sqlCbGcl");
 			rsCb = connection.query(sqlCbGcl + whereSql);
+			logger.debug("完工成品情况  sqlSrGcl");
 			rsSr = connection.query(sqlSrGcl + whereSql);
 			cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_XL_ZH);
 			mergeResultSets(
@@ -725,8 +743,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					4);
 			
 			try {
-				rsCb.first();
-				rsSr.first();
+				rsCb.beforeFirst();
+				rsSr.beforeFirst();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -740,8 +758,9 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					4, 
 					18, 
 					4);
-			
+			logger.debug("完工成品情况  sqlCbWlmyl");
 			rsCb = connection.query(sqlCbWlmyl + whereSql);
+			logger.debug("完工成品情况  sqlSrWlmyl");
 			rsSr = connection.query(sqlSrWlmyl + whereSql);
 			mergeResultSets(
 					d, 
@@ -752,8 +771,9 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					8, 
 					4, 
 					1);
-			
+			logger.debug("完工成品情况  sqlCbFwl");
 			rsCb = connection.query(sqlCbFwl + whereSql);
+			logger.debug("完工成品情况  sqlSrFwl");
 			rsSr = connection.query(sqlSrFwl + whereSql);
 			mergeResultSets(
 					d, 
@@ -765,8 +785,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					cpList.size() - 9 - 1 + 4, 
 					1);
 			try {
-				rsCb.first();
-				rsSr.first();
+				rsCb.beforeFirst();
+				rsSr.beforeFirst();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

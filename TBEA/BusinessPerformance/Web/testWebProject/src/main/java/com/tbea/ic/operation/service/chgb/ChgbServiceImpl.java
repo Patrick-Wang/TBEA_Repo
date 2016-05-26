@@ -4,21 +4,21 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -42,11 +42,8 @@ import com.tbea.ic.operation.model.entity.chgb.ChZmEntity;
 import com.tbea.ic.operation.model.entity.chgb.ChxzqkEntity;
 import com.tbea.ic.operation.model.entity.chgb.ChzlbhqkEntity;
 import com.tbea.ic.operation.model.entity.chgb.NychEntity;
-import com.tbea.ic.operation.model.entity.cwgbjyxxjl.JyxxjlEntity;
 import com.tbea.ic.operation.model.entity.identifier.chgb.JykcxmEntity;
-import com.tbea.ic.operation.model.entity.identifier.cwgb.KmEntity;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
-import com.tbea.ic.operation.service.cwgbjyxxjl.CwgbjyxxjlServiceImpl.OnSetValue;
 import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 
@@ -635,13 +632,16 @@ public class ChgbServiceImpl implements ChgbService {
 				cal.setTime(d);
 				String whereSql = 
 					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
-					" and substr(inputdate,1,7) = '" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "' ";
+					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
+					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
+
+				Logger logger = Logger.getLogger("LOG-NC");
+				logger.debug("存货账款管报  账面表");
 				ResultSet rs = connection.query(String.format(sqlZmb, whereSql));
 				if (rs != null){
 					mergeZmb(cal, rs);
 				}
-			}	
-			
+			}
 		}
 
 		private void mergeZmb(Calendar cal, ResultSet rs) {
@@ -668,8 +668,8 @@ public class ChgbServiceImpl implements ChgbService {
 					}
 					
 					entity.setZmje(rs.getDouble(4));
-					entity.setYz(rs.getDouble(5));
-					entity.setYz(rs.getDouble(4) - rs.getDouble(5));
+					entity.setHzzb(rs.getDouble(5));
+					entity.setYz(MathUtil.sum(rs.getDouble(4), rs.getDouble(5)));
 					
 					chzmDao.merge(entity);
 				}
@@ -687,7 +687,12 @@ public class ChgbServiceImpl implements ChgbService {
 				cal.setTime(d);
 				String whereSql = 
 					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
-					" and substr(inputdate,1,7) = '" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "' ";
+					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
+					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
+				
+				Logger logger = Logger.getLogger("LOG-NC");
+				logger.debug("存货账款管报  能源存货");
+				
 				ResultSet rs = connection.query(String.format(sqlNych, whereSql));
 				if (rs != null){
 					mergeNych(cal, rs);

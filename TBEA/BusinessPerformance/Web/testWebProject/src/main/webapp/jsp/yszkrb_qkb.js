@@ -24,7 +24,7 @@ var yszkrb_qkb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
         }
@@ -76,6 +76,6 @@ var yszkrb_qkb;
             }));
         };
         return View;
-    })();
+    }());
     yszkrb_qkb.View = View;
 })(yszkrb_qkb || (yszkrb_qkb = {}));
