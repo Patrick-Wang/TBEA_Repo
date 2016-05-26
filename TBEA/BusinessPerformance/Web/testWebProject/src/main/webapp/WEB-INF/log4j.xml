@@ -33,18 +33,6 @@
      </layout>  
    </appender>  
   
-   <!-- [组件日志APPENDER] -->  
-   <appender name="COMPONENT-APPENDER"  
-	class="org.apache.log4j.DailyRollingFileAppender">  
-     <param name="File" value="${webapp.root}/logs/logistics-component.log" />  
-     <param name="Append" value="true" />  
-     <param name="encoding" value="GBK" />  
-     <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />  
-     <layout class="org.apache.log4j.PatternLayout">  
-    	<param name="ConversionPattern" value="%d %-5p %c{2} - %m%n" />  
-     </layout>  
-   </appender>  
-  
      <!-- [NC  APPENDER] -->  
    <appender name="NC-APPENDER"  
 	class="org.apache.log4j.DailyRollingFileAppender">  
@@ -57,6 +45,16 @@
      </layout>  
    </appender>  
   
+  <appender name="NC-APPENDER1"  
+	class="org.apache.log4j.DailyRollingFileAppender">  
+     <param name="File" value="${webapp.root}/logs/nc1.log" />  
+     <param name="Append" value="true" />  
+     <param name="encoding" value="utf-8" />  
+     <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />  
+     <layout class="org.apache.log4j.PatternLayout">  
+    	<param name="ConversionPattern" value="%d %-5p %c{2} - %m%n" />  
+     </layout>  
+   </appender>  
    <!-- [组件日志] -->  
    <logger name="LOG-NC">  
       <level value="DEBUG" />  
@@ -65,7 +63,7 @@
   
    <!-- Root Logger -->  
    <root>  
-       <level value="${rootLevel}"></level>  
+       <level value="INFO"></level>  
        <appender-ref ref="DEFAULT-APPENDER" />  
        <appender-ref ref="ERROR-APPENDER" />  
    </root>  
