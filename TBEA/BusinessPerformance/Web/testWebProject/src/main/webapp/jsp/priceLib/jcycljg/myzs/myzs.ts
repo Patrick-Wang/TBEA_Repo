@@ -72,7 +72,7 @@ module jcycljg {
                         data[j].push(this.mData[i][1 + j])
                     }
                 });
-                this.updateEchart("美元指数（收盘价）价格趋势", this.option().ct, items, data);
+                this.updateEchart("美元指数（收盘价）价格趋势", this.option().ct, items, data, 80, 100, 10);
             }
 
             public  getDateType():DateType {
@@ -90,7 +90,7 @@ module jcycljg {
                 return data;
             }
 
-            private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>):void {
+            private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>, yStart:number, yEnd:number, ySplit:number):void {
                 var xData:string[] = [];
                 $(this.mData).each((i:number)=> {
                     xData.push(this.mData[i][0]);
@@ -130,7 +130,10 @@ module jcycljg {
                     ],
                     yAxis: [
                         {
-                            type: 'value'
+                            type: 'value',
+                            	min:yStart,
+                                max:yEnd,
+                                splitNumber:ySplit
                         }
                     ],
                     series: series

@@ -78,7 +78,7 @@ module jcycljg {
                         data[j].push(this.mData[i][1 + j])
                     }
                 });
-                this.updateEchart("PMI（制造业采购经理指数）", this.option().pmi, items, data);
+                this.updateEchart("PMI（制造业采购经理指数）", this.option().pmi, items, data, 40, 65, 10);
             }
 
             public updateCpiChart() {
@@ -92,7 +92,7 @@ module jcycljg {
                         data[j].push(this.mData[i][2 + j])
                     }
                 });
-                this.updateEchart("CPI（居民消费价格指数(上年同月=100)", this.option().cpi, items, data);
+                this.updateEchart("CPI（居民消费价格指数(上年同月=100)", this.option().cpi, items, data, 84, 110, 10);
             }
 
             private updatePpiChart():void {
@@ -106,7 +106,7 @@ module jcycljg {
                         data[j].push(this.mData[i][3 + j])
                     }
                 });
-                this.updateEchart("PPI（生产价格指数（(上年同月=100)）", this.option().ppi, items, data);
+                this.updateEchart("PPI（生产价格指数（(上年同月=100)）", this.option().ppi, items, data, 80, 105, 10);
             }
 
             public  getDateType():DateType {
@@ -122,7 +122,7 @@ module jcycljg {
                 }
                 return data;
             }
-            private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>):void {
+            private updateEchart(title:string, echart:string, legend:Array<string>, data:Array<string[]>, yStart:number,yEnd:number, ySplit:number):void {
                 var xData:string[] = [];
                 $(this.mData).each((i:number)=> {
                     xData.push(this.mData[i][0]);
@@ -162,7 +162,10 @@ module jcycljg {
                     ],
                     yAxis: [
                         {
-                            type: 'value'
+                            type: 'value',
+                            min:yStart,
+                            max:yEnd,
+                            splitNumber:ySplit
                         }
                     ],
                     series: series

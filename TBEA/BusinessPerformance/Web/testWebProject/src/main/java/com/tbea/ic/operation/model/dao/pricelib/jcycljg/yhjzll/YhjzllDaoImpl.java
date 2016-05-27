@@ -29,16 +29,16 @@ public class YhjzllDaoImpl extends AbstractReadWriteDaoImpl<YhjzllEntity> implem
 
 	@Override
 	public List<YhjzllEntity> getEntities(Date start, Date end) {
-		Query q = this.getEntityManager().createQuery("from YhjzllEntity where date >= :start and date <= :end order by date asc");
-		q.setParameter("start", start);
-		q.setParameter("end", end);
+		Query q = this.getEntityManager().createQuery("from YhjzllEntity");
+		//q.setParameter("start", start);
+		//q.setParameter("end", end);
 		return q.getResultList();
 	}
 
 	@Override
 	public YhjzllEntity getByDate(Date date) {
-		Query q = this.getEntityManager().createQuery("from YhjzllEntity where date = :date");
-		q.setParameter("date", date);
+		Query q = this.getEntityManager().createQuery("from YhjzllEntity");
+		//q.setParameter("date", date);
 		List<YhjzllEntity> ret = q.getResultList();
 		if (ret.isEmpty()){
 			return null;
