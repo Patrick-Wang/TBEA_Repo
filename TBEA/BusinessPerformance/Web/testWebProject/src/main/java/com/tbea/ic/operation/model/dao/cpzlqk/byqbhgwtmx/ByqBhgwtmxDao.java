@@ -24,4 +24,16 @@ public interface ByqBhgwtmxDao extends AbstractReadWriteDao<ByqBhgwtmxEntity> {
 
 	List<ByqBhgwtmxEntity> getByDate(Date d, Company company, int tjfs);
 
+	List<ByqBhgwtmxEntity> getByYd(Date d, int tjfs, Company company,
+			ZBStatus zt);
+
+	List<ByqBhgwtmxEntity> getByJd(Date d, int tjfs, Company company,
+			ZBStatus zt);
+
+	List<Object[]> getByYdFb(Date d, int tjfs, Company company,
+			ZBStatus zt);
+	
+	List<Object[]> getByJdFb(Date d, int tjfs, Company company,
+			ZBStatus zt);
+
 }

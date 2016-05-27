@@ -198,4 +198,14 @@ public class XlbhgcpmxServiceImpl implements XlbhgcpmxService {
 		return ErrorCode.OK;
 	}
 
+	@Override
+	public List<List<String>> getXlbhgcpmx(Date d, Company company) {
+		List<XlBhgwtmxEntity> entities = xlBhgwtmxDao.getByDate(d, company, ZBStatus.APPROVED);
+		List<List<String>> result = new ArrayList<List<String>>();
+		for (XlBhgwtmxEntity entity : entities){
+			result.add(toList(entity));
+		}
+		return result;
+	}
+
 }

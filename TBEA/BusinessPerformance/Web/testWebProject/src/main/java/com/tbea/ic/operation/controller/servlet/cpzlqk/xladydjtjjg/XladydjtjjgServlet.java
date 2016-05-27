@@ -10,26 +10,23 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CpzlqkSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
@@ -53,28 +50,39 @@ public class XladydjtjjgServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		
-		List<List<String>> result = xladydjtjjgService.getXladydjtjjg(d, yjType);
 		
-		List<String> waveX = new ArrayList<String>();
-		WaveItem item = null;
-		List<WaveItem> waveItems = new ArrayList<WaveItem>();
-		for (int i = 0; i < result.size(); ++i){
-			if (waveX.isEmpty() || !waveX.contains(result.get(i).get(0))){
-				waveX.add(result.get(i).get(0));
+		
+		boolean all = Boolean.valueOf(request.getParameter("all"));
+		CpzlqkResp resp = null;
+		
+		if (all){
+			List<List<String>> result = xladydjtjjgService.getXladydjtjjg(d, yjType);
+			List<String> waveX = new ArrayList<String>();
+			WaveItem item = null;
+			List<WaveItem> waveItems = new ArrayList<WaveItem>();
+			for (int i = 0; i < result.size(); ++i){
+				if (waveX.isEmpty() || !waveX.contains(result.get(i).get(0))){
+					waveX.add(result.get(i).get(0));
+				}
 				
+				item = WaveItem.find(waveItems, result.get(i).get(1));
+				if (null != item){
+					item.getData().add(result.get(i).get(4));
+				}else{
+					item = new WaveItem(result.get(i).get(1), new ArrayList<String>());
+					waveItems.add(item); 
+					item.getData().add(result.get(i).get(4));
+				}
+				resp = new CpzlqkResp(result, waveItems, waveX);
 			}
-			
-			item = WaveItem.find(waveItems, result.get(i).get(1));
-			if (null != item){
-				item.getData().add(result.get(i).get(4));
-			}else{
-				item = new WaveItem(result.get(i).get(1), new ArrayList<String>());
-				waveItems.add(item); 
-				item.getData().add(result.get(i).get(4));
-			}
+		}else{
+			CompanyType comp = CompanySelection.getCompany(request);
+			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			List<List<String>> result = xladydjtjjgService.getXladydjtjjg(d, yjType, company);
+			resp = new CpzlqkResp(result);
 		}
 		
-		return JSONObject.fromObject(new CpzlqkResp(result, waveItems, waveX).format()).toString().getBytes("utf-8");
+		return JSONObject.fromObject(resp.format()).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "export.do")
@@ -83,7 +91,17 @@ public class XladydjtjjgServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		
-		List<List<String>> result = xladydjtjjgService.getXladydjtjjg(d, yjType);
+		
+		boolean all = Boolean.valueOf(request.getParameter("all"));
+		List<List<String>> result = null;
+		if (all){
+			result = xladydjtjjgService.getXladydjtjjg(d, yjType);
+		}else{
+			CompanyType comp = CompanySelection.getCompany(request);
+			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			result = xladydjtjjgService.getXladydjtjjg(d, yjType, company);
+		}
+		
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.XLADYDJTJJG);
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0, 1});

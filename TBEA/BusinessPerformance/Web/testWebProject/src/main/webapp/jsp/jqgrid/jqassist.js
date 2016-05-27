@@ -940,13 +940,15 @@ var JQTable;
                     });
                 },
                 beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
-                    var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
-                    if (isNaN(ret)) {
-                        _this.centerModal();
-                        return v;
-                    }
-                    else {
-                        return ret;
+                    if (_this.mColModel[iCol].edittype != "select") {
+                        var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
+                        if (isNaN(ret)) {
+                            _this.centerModal();
+                            return v;
+                        }
+                        else {
+                            return ret;
+                        }
                     }
                 },
             };

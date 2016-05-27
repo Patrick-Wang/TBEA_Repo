@@ -59,7 +59,8 @@ var cpzlqk;
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType,
-                    bhgType: this.mBhgmxType
+                    bhgType: this.mBhgmxType,
+                    all: this.mCompSize > 1
                 });
             };
             ShowView.prototype.option = function () {
@@ -73,7 +74,8 @@ var cpzlqk;
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType,
-                    bhgType: this.mBhgmxType
+                    bhgType: this.mBhgmxType,
+                    all: this.mCompSize > 1
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;

@@ -52,8 +52,15 @@ public class XlbhgcpmxServlet {
 	public @ResponseBody byte[] getXlbhgcpmx(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
-		
-		List<List<String>> result = xlbhgcpmxService.getXlbhgcpmx(d);
+		boolean all = Boolean.valueOf(request.getParameter("all"));
+		List<List<String>> result = null;
+		if (all){
+			result = xlbhgcpmxService.getXlbhgcpmx(d);
+		}else{
+			CompanyType comp = CompanySelection.getCompany(request);
+			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			result = xlbhgcpmxService.getXlbhgcpmx(d, company);
+		}
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, null);
 		RawFormatterServer serv = new RawFormatterServer(handler);
@@ -151,8 +158,16 @@ public class XlbhgcpmxServlet {
 	public void exportXlbhgcpmx(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
+		boolean all = Boolean.valueOf(request.getParameter("all"));
+		List<List<String>> result = null;
+		if (all){
+			result = xlbhgcpmxService.getXlbhgcpmx(d);
+		}else{
+			CompanyType comp = CompanySelection.getCompany(request);
+			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			result = xlbhgcpmxService.getXlbhgcpmx(d, company);
+		}
 		
-		List<List<String>> result = xlbhgcpmxService.getXlbhgcpmx(d);
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.XLBHGCPMX);
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});

@@ -41,24 +41,7 @@ public class ByqadwtjjgServiceImpl implements ByqadwtjjgService {
 	@Override
 	public List<List<String>> getByqadwtjjg(Date d,
 			YDJDType yjType) {
-		List<ByqAdwtjjgEntity> entities = byqAdwtjjgDao.getAll();
-		
-		List<Integer> comps = new ArrayList<Integer>();
-		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, comps, d, yjType);
-		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
-		for (ByqAdwtjjgEntity entity : entities){
-			Formula formula = new Formula(entity.getFormul());
-			Company comp = null;
-			if (entity.getDw() != null){
-				comp = companyManager.getBMDBOrganization().getCompany(entity.getDw().getId());
-				comps.add(comp.getId());
-			}
-			client.add(formula, entity, comp);
-			fs.addFormul(formula);
-		}
-		
-		fs.run();
-		return client.getResult();
+		return getByqadwtjjg(d, yjType, byqAdwtjjgDao.getAll());
 	}
 
 	private int setZltjjg(List<String> row, int start, ZltjjgEntity zltjjg){
@@ -79,5 +62,31 @@ public class ByqadwtjjgServiceImpl implements ByqadwtjjgService {
 		row.set(start++, entity.getCpxl().getName());
 		start = setZltjjg(row, start, tj1);
 		setZltjjg(row, start, tj2);
+	}
+
+	
+	private List<List<String>> getByqadwtjjg(Date d, YDJDType yjType, List<ByqAdwtjjgEntity> entities) {
+		List<Integer> comps = new ArrayList<Integer>();
+		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, comps, d, yjType);
+		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
+		for (ByqAdwtjjgEntity entity : entities){
+			Formula formula = new Formula(entity.getFormul());
+			Company comp = null;
+			if (entity.getDw() != null){
+				comp = companyManager.getBMDBOrganization().getCompany(entity.getDw().getId());
+				comps.add(comp.getId());
+			}
+			client.add(formula, entity, comp);
+			fs.addFormul(formula);
+		}
+		
+		fs.run();
+		return client.getResult();
+	}
+	
+	@Override
+	public List<List<String>> getByqadwtjjg(Date d, YDJDType yjType,
+			Company company) {
+		return this.getByqadwtjjg(d, yjType, byqAdwtjjgDao.getByDw(company));
 	}
 }

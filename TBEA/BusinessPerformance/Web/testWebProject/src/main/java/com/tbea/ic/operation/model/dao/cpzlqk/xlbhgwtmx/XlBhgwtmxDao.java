@@ -18,4 +18,6 @@ public interface XlBhgwtmxDao extends AbstractReadWriteDao<XlBhgwtmxEntity> {
 
 	List<XlBhgwtmxEntity> getByDate(Date d, Company company);
 
+	List<XlBhgwtmxEntity> getByDate(Date d, Company company, ZBStatus zt);
+
 }

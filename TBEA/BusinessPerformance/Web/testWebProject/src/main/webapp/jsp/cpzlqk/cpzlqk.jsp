@@ -201,7 +201,7 @@ th.ui-th-ltr {
 		<tr>
 			<td>
 				<form id="export" method="post">
-					<input id="exportButton" type="button" value="导出"
+					<input id="exportButton" type="button" value="导出" style="display:none"
 						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
 				</form> 
 			</td>

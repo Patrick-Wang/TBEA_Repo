@@ -16,7 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CpzlqkSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
@@ -48,29 +51,41 @@ public class ByqadwtjjgServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		
-		List<List<String>> result = byqadwtjjgService.getByqadwtjjg(d, yjType);
+		boolean all = Boolean.valueOf(request.getParameter("all"));
+		CpzlqkResp resp = null;
 		
-		List<String> waveX = new ArrayList<String>();
-		WaveItem item = null;
-		List<WaveItem> waveItems = new ArrayList<WaveItem>();
-		for (int i = 0; i < result.size(); ++i){
-			if (waveX.isEmpty() || !waveX.contains(result.get(i).get(0))){
-				waveX.add(result.get(i).get(0));
+		if (all){
+			List<List<String>> result = byqadwtjjgService.getByqadwtjjg(d, yjType);
+			List<WaveItem> waveItems = new ArrayList<WaveItem>();
+			List<String> waveX = new ArrayList<String>();
+
+			WaveItem item = null;
+			for (int i = 0; i < result.size(); ++i){
+				if (waveX.isEmpty() || !waveX.contains(result.get(i).get(0))){
+					waveX.add(result.get(i).get(0));
+				}
 				
+				item = WaveItem.find(waveItems, result.get(i).get(1));
+				if (null != item){
+					item.getData().add(result.get(i).get(4));
+				}else{
+					item = new WaveItem(result.get(i).get(1), new ArrayList<String>());
+					waveItems.add(item); 
+					item.getData().add(result.get(i).get(4));
+				}
 			}
-			
-			item = WaveItem.find(waveItems, result.get(i).get(1));
-			if (null != item){
-				item.getData().add(result.get(i).get(4));
-			}else{
-				item = new WaveItem(result.get(i).get(1), new ArrayList<String>());
-				waveItems.add(item); 
-				item.getData().add(result.get(i).get(4));
-			}
+			resp = new CpzlqkResp(result, waveItems, waveX);
+		}else{
+			CompanyType comp = CompanySelection.getCompany(request);
+			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			List<List<String>> result = byqadwtjjgService.getByqadwtjjg(d, yjType, company);
+			resp = new CpzlqkResp(result);
 		}
 		
+		
+		
 	
-		return JSONObject.fromObject(new CpzlqkResp(result, waveItems, waveX).format()).toString().getBytes("utf-8");
+		return JSONObject.fromObject(resp.format()).toString().getBytes("utf-8");
 	}
 
 
@@ -79,7 +94,20 @@ public class ByqadwtjjgServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
-		List<List<String>> result = byqadwtjjgService.getByqadwtjjg(d, yjType);
+		List<List<String>> result = null;
+		
+		boolean all = Boolean.valueOf(request.getParameter("all"));
+	
+		if (all){
+			result = byqadwtjjgService.getByqadwtjjg(d, yjType);
+			
+		}else{
+			CompanyType comp = CompanySelection.getCompany(request);
+			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			result = byqadwtjjgService.getByqadwtjjg(d, yjType, company);
+		}
+		
+		
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQADWTJJG);
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0, 1});

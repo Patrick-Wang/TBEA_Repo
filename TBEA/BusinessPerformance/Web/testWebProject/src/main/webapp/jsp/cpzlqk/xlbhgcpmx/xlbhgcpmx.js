@@ -63,7 +63,8 @@ var cpzlqk;
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../xlbhgcpmx/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
-                    companyId: compType
+                    companyId: compType,
+                    all: this.mCompSize > 1
                 });
             };
             ShowView.prototype.option = function () {
@@ -75,7 +76,8 @@ var cpzlqk;
                 this.mCompType = compType;
                 this.mAjax.get({
                     date: date,
-                    companyId: compType
+                    companyId: compType,
+                    all: this.mCompSize > 1
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;

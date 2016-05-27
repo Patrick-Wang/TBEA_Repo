@@ -163,7 +163,7 @@ module cpzlqk {
                         multiselect: false,
                         drag: false,
                         resize: false,
-                        assistEditable:true,
+                        assistEditable: Util.ZBStatus.APPROVED != this.mData.status,
                         //autowidth : false,
                         cellsubmit: 'clientArray',
                         //editurl: 'clientArray',

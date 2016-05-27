@@ -1060,12 +1060,14 @@ module JQTable {
                     });
                 },
                 beforeSaveCell: (rowid, cellname, v, iRow, iCol) => {
-                    var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
-                    if (isNaN(ret)) {
-                       this.centerModal();
-                        return v;
-                    } else {
-                        return ret;
+                    if (this.mColModel[iCol].edittype != "select"){
+                        var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
+                        if (isNaN(ret)) {
+                           this.centerModal();
+                            return v;
+                        } else {
+                            return ret;
+                        }
                     }
                 },
             }

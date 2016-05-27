@@ -57,6 +57,10 @@ public class CpzlqkResp {
 		this.waveX = waveX;
 	}
 
+	public CpzlqkResp(List<List<String>> tjjg) {
+		this.tjjg = tjjg;
+	}
+
 	public CpzlqkResp format(){
 		if (null != waveItems){
 			for (WaveItem item : waveItems){

@@ -105,4 +105,60 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
 		return q.getResultList();
 	}
 
+	@Override
+	public List<ByqBhgwtmxEntity> getByYd(Date d, int tjfs, Company company,
+			ZBStatus zt) {
+		EasyCalendar ec = new EasyCalendar(d);
+        Query q = getEntityManager().createQuery("from ByqBhgwtmxEntity where tjfs = :tjfs and dwid=:dwid and nf = :nf and yf = :yf and zt=:zt");
+        q.setParameter("tjfs", tjfs);
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("dwid", company.getId());
+		q.setParameter("zt", zt.ordinal());
+		return q.getResultList();
+	}
+
+	@Override
+	public List<ByqBhgwtmxEntity> getByJd(Date d, int tjfs, Company company,
+			ZBStatus zt) {
+		EasyCalendar ec = new EasyCalendar(d);
+        Query q = getEntityManager().createQuery("from ByqBhgwtmxEntity where tjfs = :tjfs  and dwid=:dwid and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt=:zt");
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("tjfs", tjfs);
+		q.setParameter("dwid", company.getId());
+		q.setParameter("jdstart", ec.getCurrentSeasonFirstMonth());
+		q.setParameter("zt", zt.ordinal());
+		return q.getResultList();
+	}
+
+	@Override
+	public List<Object[]> getByYdFb(Date d, int tjfs, Company company,
+			ZBStatus zt) {
+		EasyCalendar ec = new EasyCalendar(d);
+        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from ByqBhgwtmxEntity where tjfs = :tjfs  and dwid=:dwid  and  nf = :nf and yf = :yf  and zt=:zt group by dwid, bhglb.id order by dwid");
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("dwid", company.getId());
+		q.setParameter("tjfs", tjfs);
+		q.setParameter("zt", zt.ordinal());
+		List<Object[]> result = q.getResultList();
+		return result;
+	}
+
+	@Override
+	public List<Object[]> getByJdFb(Date d, int tjfs, Company company,
+			ZBStatus zt) {
+		EasyCalendar ec = new EasyCalendar(d);
+        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from ByqBhgwtmxEntity where tjfs = :tjfs and dwid=:dwid  and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt=:zt group by dwid, bhglb.id order by dwid");
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("tjfs", tjfs);
+		q.setParameter("dwid", company.getId());
+		q.setParameter("jdstart", ec.getCurrentSeasonFirstMonth());
+		q.setParameter("zt", zt.ordinal());
+		List<Object[]> result = q.getResultList();
+		return result;
+	}
+
 }

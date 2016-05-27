@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.cpzlqk.XlAdwtjjgEntity;
 
 
@@ -29,6 +30,13 @@ public class XlAdwtjjgDaoImpl extends AbstractReadWriteDaoImpl<XlAdwtjjgEntity> 
 	@Override
 	public List<XlAdwtjjgEntity> getAll() {
         Query q = getEntityManager().createQuery("from XlAdwtjjgEntity");
+		return q.getResultList();
+	}
+
+	@Override
+	public List<XlAdwtjjgEntity> getByDw(Company company) {
+		 Query q = getEntityManager().createQuery("from XlAdwtjjgEntity where dw != null and dw.id = :dwid");
+		 q.setParameter("dwid", company.getId());
 		return q.getResultList();
 	}
 }

@@ -12,9 +12,11 @@ module cpzlqk {
         mYdjdType : YDJDType;
         protected checkCompanySupported() {
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            let isSupported = router.to(this.plugin(node)).send(Event.ZLFE_IS_COMPANY_SUPPORTED);
+            let isSupported = router.to(this.plugin(node)).send(Event.ZLFE_IS_COMPANY_SUPPORTED, this.mOpt.comps.length);
             if (undefined == isSupported || isSupported) {
-                this.mCompanySelector.show();
+                if (this.mOpt.comps.length > 1){
+                    this.mCompanySelector.show();
+                }
                 this.isCompanySupported = true;
             } else {
                 this.mCompanySelector.hide();
@@ -111,6 +113,7 @@ module cpzlqk {
 
     export abstract class ZlPluginView extends framework.basic.ShowPluginView {
         protected mYdjdType : YDJDType;
+        protected mCompSize:number;
         onEvent(e:framework.route.Event):any {
             switch (e.id) {
                 case Event.ZLFE_IS_YDJD_SUPPORTED:
@@ -122,6 +125,7 @@ module cpzlqk {
                     this.mYdjdType = YDJDType.YD;
                     break;
                 case Event.ZLFE_IS_COMPANY_SUPPORTED:
+                    this.mCompSize = e.data;
                     return false;
             }
             return super.onEvent(e);

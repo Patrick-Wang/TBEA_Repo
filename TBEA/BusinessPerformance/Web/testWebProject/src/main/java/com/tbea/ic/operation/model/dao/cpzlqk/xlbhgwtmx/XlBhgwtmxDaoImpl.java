@@ -65,4 +65,15 @@ public class XlBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<XlBhgwtmxEntity> 
 		q.setParameter("dwid", company.getId());
 		return q.getResultList();
 	}
+
+	@Override
+	public List<XlBhgwtmxEntity> getByDate(Date d, Company company, ZBStatus zt) {
+		EasyCalendar ec = new EasyCalendar(d);
+        Query q = getEntityManager().createQuery("from XlBhgwtmxEntity where zt = :zt and nf = :nf and  yf = :yf and dwid = :dwid");
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("zt", zt.ordinal());
+		q.setParameter("dwid", company.getId());
+		return q.getResultList();
+	}
 }

@@ -37,9 +37,7 @@ public class XladydjtjjgServiceImpl implements XladydjtjjgService {
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 	
-	@Override
-	public List<List<String>> getXladydjtjjg(Date d, YDJDType yjType) {
-		List<XlAdwtjjgEntity> entities = xladwtjjgDao.getAll();
+	private List<List<String>> getXladydjtjjg(Date d, YDJDType yjType, List<XlAdwtjjgEntity> entities){
 		List<Integer> comps = new ArrayList<Integer>();
 		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, comps, d, yjType);
 		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
@@ -56,6 +54,12 @@ public class XladydjtjjgServiceImpl implements XladydjtjjgService {
 		
 		fs.run();
 		return client.getResult();
+	}
+	
+	@Override
+	public List<List<String>> getXladydjtjjg(Date d, YDJDType yjType) {
+		List<XlAdwtjjgEntity> entities = xladwtjjgDao.getAll();
+		return this.getXladydjtjjg(d, yjType, entities);
 	}
 	
 	private int setZltjjg(List<String> row, int start, ZltjjgEntity zltjjg){
@@ -81,6 +85,13 @@ public class XladydjtjjgServiceImpl implements XladydjtjjgService {
 		row.set(start++, entity.getCpdl().getName());
 		start = setZltjjg(row, start, tj1);
 		setZltjjg(row, start, tj2);
+	}
+
+	@Override
+	public List<List<String>> getXladydjtjjg(Date d, YDJDType yjType,
+			Company company) {
+		List<XlAdwtjjgEntity> entities = xladwtjjgDao.getByDw(company);
+		return this.getXladydjtjjg(d, yjType, entities);
 	}
 
 }

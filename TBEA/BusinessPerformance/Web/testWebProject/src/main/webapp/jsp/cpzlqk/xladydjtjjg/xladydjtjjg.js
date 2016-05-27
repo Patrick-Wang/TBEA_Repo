@@ -49,14 +49,15 @@ var cpzlqk;
                 return plugin.xladydjtjjg;
             };
             ShowView.prototype.isSupported = function (compType) {
-                return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
-                    || compType == Util.CompanyType.XLC;
+                return this.mCompSize > 1 && (compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
+                    || compType == Util.CompanyType.XLC);
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../xladydjtjjg/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType,
-                    ydjd: this.mYdjdType
+                    ydjd: this.mYdjdType,
+                    all: this.mCompSize > 1
                 });
             };
             ShowView.prototype.option = function () {
@@ -69,7 +70,8 @@ var cpzlqk;
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
-                    ydjd: this.mYdjdType
+                    ydjd: this.mYdjdType,
+                    all: this.mCompSize > 1
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -81,8 +83,10 @@ var cpzlqk;
                     return;
                 }
                 this.updateTable();
-                this.$(this.option().ctarea).show();
-                this.updateEchart();
+                if (this.mCompSize > 1) {
+                    this.$(this.option().ctarea).show();
+                    this.updateEchart();
+                }
             };
             ShowView.prototype.updateEchart = function () {
                 var title = "统计结果";

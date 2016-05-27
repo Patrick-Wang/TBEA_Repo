@@ -10,5 +10,7 @@ public interface ByqadwtjjgService {
 
 	List<List<String>> getByqadwtjjg(Date d, YDJDType yjType);
 
+	List<List<String>> getByqadwtjjg(Date d, YDJDType yjType, Company company);
+
 
 }

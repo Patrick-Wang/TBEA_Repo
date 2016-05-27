@@ -192,7 +192,7 @@ th.ui-th-ltr {
 			<td>
 				<input id="gbsv" type="button" value="保存" style="float: right; width: 80px; margin-left: 10px;"
 					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SAVE)" />
-				<input id="gbsm" type="button" value="提交" style="float: right; width: 80px; margin-left: 10px;"
+				<input id="gbsm" type="button" value="提交审核" style="float: right; width: 80px; margin-left: 10px;"
 					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)" />
 			</td>
 		</tr>

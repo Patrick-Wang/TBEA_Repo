@@ -43,14 +43,15 @@ module cpzlqk {
                 return plugin.xladydjtjjg;
             }
             protected isSupported(compType:Util.CompanyType):boolean {
-                return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
-                    ||compType == Util.CompanyType.XLC;
+                return this.mCompSize > 1 && (compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
+                    ||compType == Util.CompanyType.XLC);
             }
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
                 return "../xladydjtjjg/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId:compType,
-                        ydjd:this.mYdjdType
+                        ydjd:this.mYdjdType,
+                        all: this.mCompSize > 1
                     });
             }
 
@@ -64,7 +65,8 @@ module cpzlqk {
                 this.mAjax.get({
                         date: date,
                         companyId:compType,
-                        ydjd:this.mYdjdType
+                        ydjd:this.mYdjdType,
+                        all: this.mCompSize > 1
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
@@ -78,8 +80,10 @@ module cpzlqk {
                 }
 
                 this.updateTable();
-                this.$(this.option().ctarea).show();
-                this.updateEchart();
+                if (this.mCompSize > 1){
+                    this.$(this.option().ctarea).show();
+                    this.updateEchart();
+                }
             }
 
             private updateEchart():void {

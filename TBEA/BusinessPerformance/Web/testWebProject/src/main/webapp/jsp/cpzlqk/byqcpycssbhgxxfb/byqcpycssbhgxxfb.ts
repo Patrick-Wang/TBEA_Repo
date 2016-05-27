@@ -52,7 +52,8 @@ module cpzlqk {
                         date: date,
                         companyId:compType,
                         bhgType:this.mBhgmxType,
-                        ydjd:this.mYdjdType
+                        ydjd:this.mYdjdType,
+                        all: this.mCompSize > 1
                     });
             }
 
@@ -67,7 +68,8 @@ module cpzlqk {
                         date: date,
                         companyId:compType,
                         bhgType:this.mBhgmxType,
-                        ydjd:this.mYdjdType
+                        ydjd:this.mYdjdType,
+                        all: this.mCompSize > 1
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;

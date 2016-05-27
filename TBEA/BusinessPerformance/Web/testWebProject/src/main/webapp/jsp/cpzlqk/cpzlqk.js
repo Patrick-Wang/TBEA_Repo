@@ -18,9 +18,11 @@ var cpzlqk;
         }
         CpzlqkFrameView.prototype.checkCompanySupported = function () {
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            var isSupported = router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED);
+            var isSupported = router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED, this.mOpt.comps.length);
             if (undefined == isSupported || isSupported) {
-                this.mCompanySelector.show();
+                if (this.mOpt.comps.length > 1) {
+                    this.mCompanySelector.show();
+                }
                 this.isCompanySupported = true;
             }
             else {
@@ -127,6 +129,7 @@ var cpzlqk;
                     this.mYdjdType = cpzlqk.YDJDType.YD;
                     break;
                 case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
+                    this.mCompSize = e.data;
                     return false;
             }
             return _super.prototype.onEvent.call(this, e);

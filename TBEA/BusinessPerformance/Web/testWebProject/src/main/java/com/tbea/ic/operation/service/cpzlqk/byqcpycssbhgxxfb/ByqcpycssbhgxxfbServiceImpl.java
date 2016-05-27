@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.ByqBhgType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqbhgwtmx.ByqBhgwtmxDao;
@@ -38,16 +39,7 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 
 	public final static String NAME = "ByqcpycssbhgxxfbServiceImpl";
 
-	@Override
-	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType,
-			ByqBhgType bhgType) {
-		List<Object[]> entities = null;// [Integer dwid, Integer bhglxid, Long
-										// count]
-		if (yjType == YDJDType.YD) {
-			entities = byqBhgwtmxDao.getByYdFb(d, bhgType.ordinal(), ZBStatus.APPROVED);
-		} else {
-			entities = byqBhgwtmxDao.getByJdFb(d, bhgType.ordinal(), ZBStatus.APPROVED);
-		}
+	private List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType, List<Object[]> entities){
 		List<List<String>> result = new ArrayList<List<String>>();
 		if (!entities.isEmpty()) {
 
@@ -89,6 +81,20 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 		}
 		return result;
 	}
+	
+	
+	@Override
+	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType,
+			ByqBhgType bhgType) {
+		List<Object[]> entities = null;// [Integer dwid, Integer bhglxid, Long
+										// count]
+		if (yjType == YDJDType.YD) {
+			entities = byqBhgwtmxDao.getByYdFb(d, bhgType.ordinal(), ZBStatus.APPROVED);
+		} else {
+			entities = byqBhgwtmxDao.getByJdFb(d, bhgType.ordinal(), ZBStatus.APPROVED);
+		}
+		return this.getByqcpycssbhgxxfb(d, yjType, entities);
+	}
 
 	@Override
 	public List<String> getBhglbs() {
@@ -98,5 +104,20 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 			result.add(bhglbs.get(i).getName());
 		}
 		return result;
+	}
+
+	@Override
+	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType,
+			ByqBhgType bhgType, Company company) {
+		List<Object[]> entities = null;// [Integer dwid, Integer bhglxid, Long
+		// count]
+		if (yjType == YDJDType.YD) {
+			entities = byqBhgwtmxDao.getByYdFb(d, bhgType.ordinal(), company,
+					ZBStatus.APPROVED);
+		} else {
+			entities = byqBhgwtmxDao.getByJdFb(d, bhgType.ordinal(), company,
+					ZBStatus.APPROVED);
+		}
+		return this.getByqcpycssbhgxxfb(d, yjType, entities);
 	}
 }

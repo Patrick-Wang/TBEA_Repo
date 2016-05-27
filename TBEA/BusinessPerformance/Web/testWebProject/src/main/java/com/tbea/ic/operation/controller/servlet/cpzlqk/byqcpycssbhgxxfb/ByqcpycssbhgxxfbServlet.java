@@ -15,7 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CpzlqkSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
@@ -49,8 +52,15 @@ public class ByqcpycssbhgxxfbServlet {
 		ByqBhgType bhgType = ByqBhgType.valueOf(Integer.valueOf(request.getParameter("bhgType")));
 		
 		List<String> bhglbs = byqcpycssbhgxxfbService.getBhglbs();
-		
-		List<List<String>> result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, bhgType);
+		boolean all = Boolean.valueOf(request.getParameter("all"));
+		List<List<String>> result = null;
+		if (all){
+			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, bhgType);
+		}else{
+			CompanyType comp = CompanySelection.getCompany(request);
+			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, bhgType, company);
+		}
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, null);
 		RawFormatterServer serv = new RawFormatterServer(handler);
@@ -67,7 +77,16 @@ public class ByqcpycssbhgxxfbServlet {
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		ByqBhgType bhgType = ByqBhgType.valueOf(Integer.valueOf(request.getParameter("bhgType")));
 		
-		List<List<String>> result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, bhgType);
+		boolean all = Boolean.valueOf(request.getParameter("all"));
+		List<List<String>> result = null;
+		if (all){
+			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, bhgType);
+		}else{
+			CompanyType comp = CompanySelection.getCompany(request);
+			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, bhgType, company);
+		}
+		
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQCPYCSSBHGXXFB);
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0, 1});

@@ -208,4 +208,20 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 		return ErrorCode.OK;
 	}
 
+	@Override
+	public List<List<String>> getByqcpycssbhgwtmx(Date d, YDJDType yjType,
+			ByqBhgType bhgType, Company company) {
+		List<ByqBhgwtmxEntity> entities = null;
+		if (yjType == YDJDType.YD){
+			entities = byqBhgwtmxDao.getByYd(d, bhgType.ordinal(), company, ZBStatus.APPROVED);
+		}else{
+			entities = byqBhgwtmxDao.getByJd(d, bhgType.ordinal(), company, ZBStatus.APPROVED);
+		}
+		List<List<String>> result = new ArrayList<List<String>>();
+		for (ByqBhgwtmxEntity entity : entities){
+			result.add(toList(entity));
+		}
+		return result;
+	}
+
 }

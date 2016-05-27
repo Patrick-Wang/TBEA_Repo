@@ -60,8 +60,9 @@ module cpzlqk {
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
                 return "../xlbhgcpmx/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
-                        companyId:compType
-                    });
+                        companyId:compType,
+                        all: this.mCompSize > 1
+                });
             }
 
             private option():Option {
@@ -73,7 +74,8 @@ module cpzlqk {
                 this.mCompType = compType;
                 this.mAjax.get({
                         date: date,
-                        companyId:compType
+                        companyId:compType,
+                        all: this.mCompSize > 1
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;

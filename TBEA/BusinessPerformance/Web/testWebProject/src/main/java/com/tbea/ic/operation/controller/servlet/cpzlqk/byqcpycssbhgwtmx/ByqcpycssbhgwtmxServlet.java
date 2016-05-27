@@ -56,7 +56,17 @@ public class ByqcpycssbhgwtmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		ByqBhgType bhgType = ByqBhgType.valueOf(Integer.valueOf(request.getParameter("bhgType")));
-		List<List<String>> result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, bhgType);
+		boolean all = Boolean.valueOf(request.getParameter("all"));
+		List<List<String>> result = null;
+		if (all){
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, bhgType);
+		}else{
+			CompanyType comp = CompanySelection.getCompany(request);
+			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, bhgType, company);
+		}
+		
+		
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, null);
 		RawFormatterServer serv = new RawFormatterServer(handler);
@@ -161,7 +171,16 @@ public class ByqcpycssbhgwtmxServlet {
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		ByqBhgType bhgType = ByqBhgType.valueOf(Integer.valueOf(request.getParameter("bhgType")));
 		
-		List<List<String>> result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, bhgType);
+		boolean all = Boolean.valueOf(request.getParameter("all"));
+		List<List<String>> result = null;
+		if (all){
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, bhgType);
+		}else{
+			CompanyType comp = CompanySelection.getCompany(request);
+			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, bhgType, company);
+		}
+		
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQCPYCSSBHGWTMX);
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
