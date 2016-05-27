@@ -76,7 +76,7 @@ var jcycljg;
                         data[j].push(_this.mData[i][1 + j]);
                     }
                 });
-                this.updateEchart("PMI（制造业采购经理指数）", this.option().pmi, items, data);
+                this.updateEchart("PMI（制造业采购经理指数）", this.option().pmi, items, data, 40, 65, 10);
             };
             PmiCpiPpiView.prototype.updateCpiChart = function () {
                 var _this = this;
@@ -90,7 +90,7 @@ var jcycljg;
                         data[j].push(_this.mData[i][2 + j]);
                     }
                 });
-                this.updateEchart("CPI（居民消费价格指数(上年同月=100)", this.option().cpi, items, data);
+                this.updateEchart("CPI（居民消费价格指数(上年同月=100)", this.option().cpi, items, data, 84, 110, 10);
             };
             PmiCpiPpiView.prototype.updatePpiChart = function () {
                 var _this = this;
@@ -104,7 +104,7 @@ var jcycljg;
                         data[j].push(_this.mData[i][3 + j]);
                     }
                 });
-                this.updateEchart("PPI（生产价格指数（(上年同月=100)）", this.option().ppi, items, data);
+                this.updateEchart("PPI（生产价格指数（(上年同月=100)）", this.option().ppi, items, data, 80, 105, 10);
             };
             PmiCpiPpiView.prototype.getDateType = function () {
                 return jcycljg.DateType.MONTH;
@@ -119,7 +119,7 @@ var jcycljg;
                 }
                 return data;
             };
-            PmiCpiPpiView.prototype.updateEchart = function (title, echart, legend, data) {
+            PmiCpiPpiView.prototype.updateEchart = function (title, echart, legend, data, yStart, yEnd, ySplit) {
                 var _this = this;
                 var xData = [];
                 $(this.mData).each(function (i) {
@@ -158,7 +158,10 @@ var jcycljg;
                     ],
                     yAxis: [
                         {
-                            type: 'value'
+                            type: 'value',
+                            min: yStart,
+                            max: yEnd,
+                            splitNumber: ySplit
                         }
                     ],
                     series: series

@@ -72,7 +72,7 @@ var jcycljg;
                         data[j].push(_this.mData[i][1 + j]);
                     }
                 });
-                this.updateEchart("美元指数（收盘价）价格趋势", this.option().ct, items, data);
+                this.updateEchart("美元指数（收盘价）价格趋势", this.option().ct, items, data, 80, 100, 10);
             };
             JkzjView.prototype.getDateType = function () {
                 return jcycljg.DateType.DAY;
@@ -87,7 +87,7 @@ var jcycljg;
                 }
                 return data;
             };
-            JkzjView.prototype.updateEchart = function (title, echart, legend, data) {
+            JkzjView.prototype.updateEchart = function (title, echart, legend, data, yStart, yEnd, ySplit) {
                 var _this = this;
                 var xData = [];
                 $(this.mData).each(function (i) {
@@ -126,7 +126,10 @@ var jcycljg;
                     ],
                     yAxis: [
                         {
-                            type: 'value'
+                            type: 'value',
+                            min: yStart,
+                            max: yEnd,
+                            splitNumber: ySplit
                         }
                     ],
                     series: series

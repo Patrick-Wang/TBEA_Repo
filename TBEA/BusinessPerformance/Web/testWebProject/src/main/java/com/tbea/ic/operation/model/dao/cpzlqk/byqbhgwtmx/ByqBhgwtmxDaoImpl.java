@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.ic.operation.common.EasyCalendar;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.cpzlqk.ByqBhgwtmxEntity;
 
@@ -30,44 +31,48 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
 	}
 
 	@Override
-	public List<ByqBhgwtmxEntity> getByYd(Date d, int tjfs) {
+	public List<ByqBhgwtmxEntity> getByYd(Date d, int tjfs, ZBStatus zt) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("from ByqBhgwtmxEntity where tjfs = :tjfs and nf = :nf and yf = :yf");
+        Query q = getEntityManager().createQuery("from ByqBhgwtmxEntity where tjfs = :tjfs and nf = :nf and yf = :yf and zt=:zt");
         q.setParameter("tjfs", tjfs);
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
+		q.setParameter("zt", zt.ordinal());
 		return q.getResultList();
 	}
 
 	@Override
-	public List<ByqBhgwtmxEntity> getByJd(Date d, int tjfs) {
+	public List<ByqBhgwtmxEntity> getByJd(Date d, int tjfs, ZBStatus zt) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("from ByqBhgwtmxEntity where tjfs = :tjfs and  nf = :nf and  yf <= :yf and yf >= :jdstart");
+        Query q = getEntityManager().createQuery("from ByqBhgwtmxEntity where tjfs = :tjfs and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt=:zt");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("tjfs", tjfs);
 		q.setParameter("jdstart", ec.getCurrentSeasonFirstMonth());
+		q.setParameter("zt", zt.ordinal());
 		return q.getResultList();
 	}
 	@Override
-	public List<Object[]> getByYdFb(Date d, int tjfs) {
+	public List<Object[]> getByYdFb(Date d, int tjfs, ZBStatus zt) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from ByqBhgwtmxEntity where tjfs = :tjfs and  nf = :nf and yf = :yf group by dwid, bhglb.id order by dwid");
+        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from ByqBhgwtmxEntity where tjfs = :tjfs and  nf = :nf and yf = :yf  and zt=:zt group by dwid, bhglb.id order by dwid");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("tjfs", tjfs);
+		q.setParameter("zt", zt.ordinal());
 		List<Object[]> result = q.getResultList();
 		return result;
 	}
 
 	@Override
-	public List<Object[]> getByJdFb(Date d, int tjfs) {
+	public List<Object[]> getByJdFb(Date d, int tjfs, ZBStatus zt) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from ByqBhgwtmxEntity where tjfs = :tjfs and  nf = :nf and  yf <= :yf and yf >= :jdstart group by dwid, bhglb.id order by dwid");
+        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from ByqBhgwtmxEntity where tjfs = :tjfs and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt=:zt group by dwid, bhglb.id order by dwid");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("tjfs", tjfs);
 		q.setParameter("jdstart", ec.getCurrentSeasonFirstMonth());
+		q.setParameter("zt", zt.ordinal());
 		List<Object[]> result = q.getResultList();
 		return result;
 	}

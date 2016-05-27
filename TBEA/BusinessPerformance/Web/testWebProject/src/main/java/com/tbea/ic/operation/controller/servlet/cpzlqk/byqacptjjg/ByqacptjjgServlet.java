@@ -30,10 +30,10 @@ import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
-import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
@@ -170,15 +170,13 @@ public class ByqacptjjgServlet {
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQACPTJJG);
 		
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0, 1});
-		handler.next(new NumberFormatterHandler(0));
+		handler.next(new PercentFormatterHandler(1, null, new Integer[]{4, 7}))
+		.next(new NumberFormatterHandler(0));
 		FormatterServer serv = new FormatterServer(handler, 0, 2);
 		serv.addMergeRegion(new MergeRegion(0, 2, 2, result.size()));
 		serv.format(result, template);
-		String yj = "月度";
-		if (yjType == YDJDType.JD){
-			yj = "季度";
-		}
-		String name = company.getName() + yj + template.getSheetName();
+
+		String name = company.getName() + yjType.val() + template.getSheetName();
 
 		template.write(response, name + ".xls");
 	}

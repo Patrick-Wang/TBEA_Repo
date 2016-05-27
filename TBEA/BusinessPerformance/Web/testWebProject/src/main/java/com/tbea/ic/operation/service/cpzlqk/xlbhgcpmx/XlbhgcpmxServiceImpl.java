@@ -47,7 +47,7 @@ public class XlbhgcpmxServiceImpl implements XlbhgcpmxService {
 
 	@Override
 	public List<List<String>> getXlbhgcpmx(Date d) {
-		List<XlBhgwtmxEntity> entities = xlBhgwtmxDao.getByDate(d);
+		List<XlBhgwtmxEntity> entities = xlBhgwtmxDao.getByDate(d, ZBStatus.APPROVED);
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (XlBhgwtmxEntity entity : entities){
 			result.add(toList(entity));

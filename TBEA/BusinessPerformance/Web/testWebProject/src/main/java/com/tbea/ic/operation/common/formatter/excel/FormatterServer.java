@@ -54,6 +54,10 @@ public class FormatterServer {
 	}
 
 	private void merge(HSSFSheet sheet, MergeRegion mergeRegion) {
+	
+		if (mergeRegion.getWidth() <= 0 || mergeRegion.getHeight() <= 0){
+			return;
+		}
 		
 		String preText = null;
 		for (int i = mergeRegion.getY(); i < mergeRegion.getY() + mergeRegion.getHeight(); ++i){

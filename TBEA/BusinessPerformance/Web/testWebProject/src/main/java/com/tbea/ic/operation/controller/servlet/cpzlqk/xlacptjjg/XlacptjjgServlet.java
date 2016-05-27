@@ -171,12 +171,8 @@ public class XlacptjjgServlet {
 		FormatterServer serv = new FormatterServer(handler, 0, 2);
 		serv.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
 		serv.format(result, template);
-	
-		String yj = "月度";
-		if (yjType == YDJDType.JD){
-			yj = "季度";
-		}
-		String name = company.getName() + yj + template.getSheetName();
+
+		String name = company.getName() + yjType.val() + template.getSheetName();
 
 		template.write(response, name + ".xls");
 	}

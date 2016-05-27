@@ -88,12 +88,8 @@ public class ByqadwtjjgServlet {
 		FormatterServer serv = new FormatterServer(handler, 0, 2);
 		serv.addMergeRegion(new MergeRegion(0, 2, 1, result.size()));
 		serv.format(result, template);
-		
-		String yj = "月度";
-		if (yjType == YDJDType.JD){
-			yj = "季度";
-		}
-		String name = yj + template.getSheetName();
+
+		String name = yjType.val() + template.getSheetName();
 
 		template.write(response, name + ".xls");
 	}

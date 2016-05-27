@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.ByqBhgType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqbhgwtmx.ByqBhgwtmxDao;
@@ -43,9 +44,9 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 		List<Object[]> entities = null;// [Integer dwid, Integer bhglxid, Long
 										// count]
 		if (yjType == YDJDType.YD) {
-			entities = byqBhgwtmxDao.getByYdFb(d, bhgType.ordinal());
+			entities = byqBhgwtmxDao.getByYdFb(d, bhgType.ordinal(), ZBStatus.APPROVED);
 		} else {
-			entities = byqBhgwtmxDao.getByJdFb(d, bhgType.ordinal());
+			entities = byqBhgwtmxDao.getByJdFb(d, bhgType.ordinal(), ZBStatus.APPROVED);
 		}
 		List<List<String>> result = new ArrayList<List<String>>();
 		if (!entities.isEmpty()) {

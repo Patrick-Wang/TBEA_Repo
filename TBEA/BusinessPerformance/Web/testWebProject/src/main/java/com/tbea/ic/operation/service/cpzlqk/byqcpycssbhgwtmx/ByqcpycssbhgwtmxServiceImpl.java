@@ -51,9 +51,9 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 			YDJDType yjType, ByqBhgType bhgType) {
 		List<ByqBhgwtmxEntity> entities = null;
 		if (yjType == YDJDType.YD){
-			entities = byqBhgwtmxDao.getByYd(d, bhgType.ordinal());
+			entities = byqBhgwtmxDao.getByYd(d, bhgType.ordinal(), ZBStatus.APPROVED);
 		}else{
-			entities = byqBhgwtmxDao.getByJd(d, bhgType.ordinal());
+			entities = byqBhgwtmxDao.getByJd(d, bhgType.ordinal(), ZBStatus.APPROVED);
 		}
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (ByqBhgwtmxEntity entity : entities){

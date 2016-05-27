@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.ic.operation.common.EasyCalendar;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.cpzlqk.XlBhgwtmxEntity;
 
@@ -30,11 +31,12 @@ public class XlBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<XlBhgwtmxEntity> 
 	}
 
 	@Override
-	public List<XlBhgwtmxEntity> getByDate(Date d) {
+	public List<XlBhgwtmxEntity> getByDate(Date d, ZBStatus zt) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("from XlBhgwtmxEntity where nf = :nf and yf = :yf");
+        Query q = getEntityManager().createQuery("from XlBhgwtmxEntity where nf = :nf and yf = :yf and zt=:zt");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
+		q.setParameter("zt", zt.ordinal());
 		return q.getResultList();
 	}
 
