@@ -45,10 +45,8 @@ public class FormatterServer {
 			}
 		}
 		
-		if (!this.mrs.isEmpty()){
-			for (int i = 0; i < this.mrs.size(); ++i){
-				this.merge(sheet, this.mrs.get(i));
-			}
+		for (int i = 0; i < this.mrs.size(); ++i){
+			this.merge(sheet, this.mrs.get(i));
 		}
 		
 	}
