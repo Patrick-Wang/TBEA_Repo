@@ -1161,7 +1161,7 @@ module JQTable {
             return opt;
         }
 
-        public decorate(option:any):void {
+        public decorate(option:any):any {
             if (option.gridComplete != undefined) {
                 var gridComplete = option.gridComplete;
                 option.gridComplete = () => {

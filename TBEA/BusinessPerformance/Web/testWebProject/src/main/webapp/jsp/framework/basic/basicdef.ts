@@ -142,7 +142,7 @@ module framework.basic {
             $("#" + this.mOpt.host).show();
         }
 
-        protected $(id:string):jQuery {
+        protected $(id:string):JQuery {
             return $("#" + this.mOpt.host + " #" + id);
         }
 

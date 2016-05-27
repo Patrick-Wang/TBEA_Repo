@@ -9,6 +9,7 @@ module framework.route {
         to:number;
         road?:number[];
         data:any;
+        isBroadcast?:boolean;
     }
 
 
@@ -19,8 +20,8 @@ module framework.route {
     }
 
     export class Router {
-        static OK:number = 887291;
-        static FAILED:number = 887292;
+        static OK:string = "framework.route.OK";
+        static FAILED:string = "framework.route.FAILED";
 
         private mEndpoints:any = {};
         private mEplist:number[] = [];
@@ -67,20 +68,18 @@ module framework.route {
         }
 
         public broadcast(id:number, data?:any):any {
-            //if (this.mCurEvent != undefined) {
-                for (let i in this.mEplist) {
-                    let event = {
-                        from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
-                        to: undefined,
-                        id: id,
-                        data: data,
-                    }
-                    this.mEndpoints[this.mEplist[i]].onEvent(event);
+            for (let i in this.mEplist) {
+                let event = {
+                    from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
+                    to: undefined,
+                    id: id,
+                    data: data,
+                    isBroadcast:true
                 }
-                this.mCurEvent = undefined;
-                return Router.OK;
-            //}
-            //return Router.FAILED;
+                this.mEndpoints[this.mEplist[i]].onEvent(event);
+            }
+            this.mCurEvent = undefined;
+            return Router.OK;
         }
 
         public send(id:number, data?:any):any {
@@ -111,6 +110,7 @@ module framework.route {
         }
     }
 }
+
 module framework{
     export let router:route.Router = new route.Router();
 }

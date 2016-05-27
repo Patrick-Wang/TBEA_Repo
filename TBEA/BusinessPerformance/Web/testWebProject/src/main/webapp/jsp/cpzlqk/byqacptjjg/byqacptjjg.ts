@@ -5,6 +5,7 @@
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../cpzlqkdef.ts"/>
 ///<reference path="../cpzlqk.ts"/>
+///<reference path="../../jqgrid/jqgrid.d.ts"/>
 
 module plugin {
     export let byqacptjjg : number = framework.basic.endpoint.lastId();
