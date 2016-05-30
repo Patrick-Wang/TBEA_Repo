@@ -64,7 +64,6 @@ module framework.basic {
         abstract onInitialize(opt:any):void;
     }
 
-
     interface FrameOption {
         dt:string;
         type:string;
