@@ -1,0 +1,82 @@
+package com.tbea.ic.operation.common.formatter.v2.core;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import com.tbea.ic.operation.common.EasyList;
+import com.tbea.ic.operation.common.Pair;
+
+public class FormatterServer {
+	public final static int GROP_DATA = 0;
+	public final static int GROP_EXCEL = 1;
+	public final static int GROP_EXCELMERGE = 2;
+	public final static int GROP_WORD = 3;
+	
+	Map<Integer, Pair<FormatterHandler, FormatterHandler>> groupHandler = 
+			new HashMap<Integer, Pair<FormatterHandler, FormatterHandler>>();
+	String nullAs = "--";
+	
+	public FormatterServer addHandler(FormatterHandler handler, int group){
+		if (groupHandler.containsKey(group)){
+			groupHandler.get(group).getSecond().next(handler);
+			groupHandler.get(group).setSecond(handler);
+		}else{
+			groupHandler.put(group, new Pair<FormatterHandler, FormatterHandler>(handler, handler));
+		}
+		return this;
+	}
+	
+	public FormatterServer addHandler(FormatterHandler handler){
+		return addHandler(handler, GROP_DATA);
+	}
+	
+	
+	public FormatterServer acceptNullAs(String nullAs){
+		this.nullAs = nullAs;
+		return this;
+	}
+	
+	public List<List<String>> format(List<List<String>> table){
+		String result = null;
+		String cell = null;
+		List<String> row;
+		for (int i = 0, r = table.size(); i < r; ++i){
+			row = table.get(i);
+			for (int j = 0, c = row.size(); j < c; ++j){
+				for (Entry<Integer, Pair<FormatterHandler, FormatterHandler>> entry : groupHandler.entrySet()){
+					cell = row.get(j);
+					result = entry.getValue().getFirst().handle(table, i, j, cell);
+					if (null == result){
+						result = nullAs;
+					}
+					if (cell != result){
+						row.set(j, result);
+					}
+				}
+			}
+		}
+		return table;
+	}
+	
+	public List<List<String>> formatArray(List<String[]> table){
+		List<List<String>> tableCopy = new ArrayList<List<String>>(table.size());
+		for (int i = 0, len = table.size(); i < len; ++i){
+			tableCopy.add(new EasyList<String>(table.get(i)).toList());
+		}
+		return format(tableCopy);
+	}
+	
+	public List<String> formatRow(List<String> list){
+		List<List<String>> table = new ArrayList<List<String>>(1);
+		table.add(list);
+		format(table);
+		return list;		
+	}
+
+
+
+
+}
