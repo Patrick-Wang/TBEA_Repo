@@ -28,6 +28,10 @@ public class EasyCalendar {
 		cal.setTime(d);
 	}
 	
+	public int getDay(){
+		return cal.get(Calendar.DAY_OF_MONTH);
+	}
+	
 	public int getMonth(){
 		return cal.get(Calendar.MONTH) + 1;
 	}

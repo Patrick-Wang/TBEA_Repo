@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!-- message box -->
 <link href="../jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
 

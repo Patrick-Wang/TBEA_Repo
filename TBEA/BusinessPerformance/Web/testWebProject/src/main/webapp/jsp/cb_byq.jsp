@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="../jsp/jqgrid/themes/ui.jqgrid.css">
 <link rel="stylesheet" type="text/css" media="screen"

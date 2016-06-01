@@ -1,12 +1,18 @@
 package com.tbea.ic.operation.controller.servlet.account;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.tbea.ic.operation.common.Pair;
 
-public class ACL {
+public class ACL implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	List<Pair<String, Boolean>> aces = new ArrayList<Pair<String, Boolean>>();
 	public ACL add(String authName, boolean access){
 		aces.add(new Pair<String, Boolean>(authName, access));

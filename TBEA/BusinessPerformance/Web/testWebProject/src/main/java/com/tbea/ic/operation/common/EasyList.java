@@ -6,6 +6,18 @@ import java.util.List;
 public class EasyList<T> {
 	List<T> list = new ArrayList<T>();
 
+	public EasyList(T[] arr){
+		if (null == arr){
+			list = null;
+		}else{
+			for (int i = 0; i < arr.length; ++i){
+				list.add(arr[i]);
+			}
+		}
+	}
+	
+	public EasyList(){}
+	
 	public EasyList<T> add(T t) {
 		list.add(t);
 		return this;

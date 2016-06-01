@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!-- jquery -->
 <script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
 

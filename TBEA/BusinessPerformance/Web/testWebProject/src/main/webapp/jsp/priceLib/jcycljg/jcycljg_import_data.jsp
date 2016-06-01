@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- jquery -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
