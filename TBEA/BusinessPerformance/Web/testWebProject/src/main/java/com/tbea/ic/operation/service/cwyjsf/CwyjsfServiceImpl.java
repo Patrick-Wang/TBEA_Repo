@@ -82,7 +82,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			"	    on imd5.alone_id = imp.alone_id	" +	
 			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 			"	    on imp.code = iui.unit_id	" +	
-			"	 where imp.ver = 0	%s " +	
+			"	 where imp.ver = 510	%s " +	
 			//"	   and to_number(substr(inputdate, 6, 2)) = 1	" +	
 			"	 	" +	// and iui.unit_name like '%特变电工股份有限公司新疆变压器厂（本部）%'
 			"	 order by unit_code, inputdate desc	";	
@@ -120,7 +120,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			"	    on imd5.alone_id = imp.alone_id	" +	
 			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 			"	    on imp.code = iui.unit_id	" +	
-			"	 where imp.ver = 0	%s " +	
+			"	 where imp.ver = 510	%s " +	
 			//"	--and iui.unit_name like '%特变电工股份有限公司新疆变压器厂（本部）%'	" +	
 			"	 order by unit_code, inputdate desc	";	
 		 		
@@ -157,7 +157,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			"	    on imd5.alone_id = imp.alone_id	" +	
 			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 			"	    on imp.code = iui.unit_id	" +	
-			"	 where imp.ver = 0	%s " +	
+			"	 where imp.ver = 510	%s " +	
 			"	 order by unit_code, inputdate desc	";	
 		 		
 		//------------应交税费表（本月未交数）-----------------		
@@ -193,7 +193,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			"	    on imd5.alone_id = imp.alone_id	" +	
 			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 			"	    on imp.code = iui.unit_id	" +	
-			"	 where imp.ver = 0	%s " +	
+			"	 where imp.ver = 510	%s " +	
 			"	 order by unit_code, inputdate desc	";												
 		 		
 		//--------------应交税金表（本月期末数）------------------		
@@ -229,7 +229,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			"	    on imd5.alone_id = imp.alone_id	" +	
 			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 			"	    on imp.code = iui.unit_id	" +	
-			"	 where imp.ver = 0	%s " +	
+			"	 where imp.ver = 510	%s " +	
 			"	 order by unit_code, inputdate desc	";	
 		 		
 		//-------------应交税费表（累计应交数）----------------------		
@@ -265,7 +265,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			"	    on imd5.alone_id = imp.alone_id	" +	
 			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 			"	    on imp.code = iui.unit_id	" +	
-			"	 where imp.ver = 0	%s " +	
+			"	 where imp.ver = 510	%s " +	
 			//"	--and iui.unit_name like '%特变电工股份有限公司新疆变压器厂（本部）%'	" +	
 			"	 order by unit_code, inputdate desc	";	
 		 		
@@ -303,7 +303,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			"	    on imd5.alone_id = imp.alone_id	" +	
 			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 			"	    on imp.code = iui.unit_id	" +	
-			"	 where imp.ver = 0	%s " +	
+			"	 where imp.ver = 510	%s " +	
 			//"	--and iui.unit_name like '%特变电工股份有限公司新疆变压器厂（本部）%'	" +	
 			"	 order by unit_code, inputdate desc	";	
 				
@@ -340,7 +340,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			"	    on imd5.alone_id = imp.alone_id	" +	
 			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 			"	    on imp.code = iui.unit_id	" +	
-			"	 where imp.ver = 0	%s " +	
+			"	 where imp.ver = 510	%s " +	
 			//"	--and iui.unit_name like '%特变电工股份有限公司新疆变压器厂（本部）%'	" +	
 			"	 order by unit_code, inputdate desc	";			
 

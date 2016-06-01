@@ -17,7 +17,7 @@ module chgb {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("账面净额", "rq"),
-                    new JQTable.Node("坏账准备", "a1"),
+                    new JQTable.Node("跌价准备", "a1"),
                     new JQTable.Node("原值", "a2")
                 ], gridName);
             }

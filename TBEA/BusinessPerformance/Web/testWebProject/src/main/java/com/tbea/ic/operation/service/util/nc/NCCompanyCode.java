@@ -14,17 +14,17 @@ public class NCCompanyCode {
 	static {
 		companyMap.put("0202AA000000", CompanyType.SBGS);
 		companyMap.put("0203AA000000", CompanyType.HBGS);
-		companyMap.put("0201AA000000", CompanyType.XBC);
+		companyMap.put("CC01", CompanyType.XBC);
 		companyMap.put("0204AA000000", CompanyType.TBGS);
 		companyMap.put("0303AA000000", CompanyType.LLGS);
 		companyMap.put("0304AA000000", CompanyType.DLGS);
-		companyMap.put("030100000000", CompanyType.XLC);
+		companyMap.put("CC03", CompanyType.XLC);
 		companyMap.put("040203AA0000", CompanyType.XNYGS);
 		companyMap.put("040202AA0000", CompanyType.XTNYGS);
-		companyMap.put("0501AA000000", CompanyType.TCNY);
-		companyMap.put("070100000000", CompanyType.NDGS);
-		companyMap.put("060100000000", CompanyType.JCKGS_JYDW);
-		companyMap.put("060400000000", CompanyType.GJGCGS_GFGS);
+		companyMap.put("CC11", CompanyType.TCNY);
+		companyMap.put("CC10", CompanyType.NDGS);
+		companyMap.put("CC12", CompanyType.JCKGS_JYDW);
+		companyMap.put("CC04", CompanyType.GJGCGS_GFGS);
 		companyMap.put("050200000000", CompanyType.XJNY);
 		companyMap.put("050101010000 ", CompanyType.NLTK);
 	}

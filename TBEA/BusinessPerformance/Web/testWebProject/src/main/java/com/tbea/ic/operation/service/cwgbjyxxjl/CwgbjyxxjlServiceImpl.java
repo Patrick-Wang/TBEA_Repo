@@ -91,7 +91,7 @@ public class CwgbjyxxjlServiceImpl implements CwgbjyxxjlService {
 		"	    on imd5.alone_id = imp.alone_id	" +	
 		"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 		"	    on imp.code = iui.unit_id	" +	
-		"	 where imp.ver = 0	%s ";	
+		"	 where imp.ver = 510	%s ";	
 			/*   and iui.unit_name like '%新疆变压器厂%'		
 			   and substr(inputdate, 1, 7) = '2016-03'*/		
 	
@@ -139,7 +139,7 @@ public class CwgbjyxxjlServiceImpl implements CwgbjyxxjlService {
 		"	    on imd5.alone_id = imp.alone_id	" +	
 		"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 		"	    on imp.code = iui.unit_id	" +	
-		"	 where imp.ver = 0	%s ";	
+		"	 where imp.ver = 510	%s ";	
 		/*and iui.unit_name like '%新疆变压器厂%'		
 		and substr(inputdate,1,7) = '2016-03'*/
 

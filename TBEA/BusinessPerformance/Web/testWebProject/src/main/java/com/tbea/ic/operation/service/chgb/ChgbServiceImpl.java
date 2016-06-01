@@ -588,7 +588,7 @@ public class ChgbServiceImpl implements ChgbService {
 		"	    on imda.alone_id = imp.alone_id	" +	
 		"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 		"	    on imp.code = iui.unit_id	" +	
-		"	 where imp.ver = 513	%s ";	
+		"	 where imp.ver = 510	%s ";	
 				
 				
 		//-----------------------------能源存货-----------------------------------		
@@ -621,7 +621,7 @@ public class ChgbServiceImpl implements ChgbService {
 			"	    on imd8.alone_id = imp.alone_id	" +	
 			"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 			"	    on imp.code = iui.unit_id	" +	
-			"	 where imp.ver = 513	%s ";
+			"	 where imp.ver = 510	%s ";
 		@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 		CompanyManager companyManager;
 		@Override

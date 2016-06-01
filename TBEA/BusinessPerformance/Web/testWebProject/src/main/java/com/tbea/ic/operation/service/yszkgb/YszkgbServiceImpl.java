@@ -461,7 +461,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			"	iufo_measure_data_xyy6hd5t imdx	"+	
 			"	left join (select alone_id,code,inputdate,keyword2,keyword3,time_code,ts,ver from iufo_measure_pubdata ) imp on imdx.alone_id = imp.alone_id	"+	
 			"	left join (select unit_id,unit_code,unit_name from iufo_unit_info) iui on imp.code = iui.unit_id	"+	
-			"	where imp.ver = 513	%s "+	
+			"	where imp.ver = 510	%s "+	
 			"		"+	//and iui.unit_name like '%特变电工股份有限公司新疆变压器厂（本部）%'
 			"	order by unit_code,inputdate desc	";
 
@@ -478,7 +478,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			"	iufo_measure_data_xyy6hd5t imdx	"+	
 			"	left join (select alone_id,code,inputdate,keyword2,keyword3,time_code,ts,ver from iufo_measure_pubdata ) imp on imdx.alone_id = imp.alone_id	"+	
 			"	left join (select unit_id,unit_code,unit_name from iufo_unit_info) iui on imp.code = iui.unit_id	"+	
-			"	where imp.ver = 513	%s "+	
+			"	where imp.ver = 510	%s "+	
 			"		"+	//and iui.unit_name like '%特变电工股份有限公司新疆变压器厂（本部）%'
 			"	order by unit_code,inputdate desc	";
 

@@ -61,6 +61,7 @@ public class ChgbServlet {
 
 	CompanyManager companyManager;
 	List<Company> NCCOMPS = new ArrayList<Company>();
+	List<Company> NCCOMPS4NYCH = new ArrayList<Company>();
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	public void setCompanyManager(CompanyManager companyManager){
 		this.companyManager = companyManager;
@@ -77,6 +78,9 @@ public class ChgbServlet {
 		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NDGS));
 		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.GJGCGS_GFGS));
 		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.JCKGS_JYDW));
+		
+		//NYCH List
+		NCCOMPS4NYCH.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TCNY));
 	}
 	
 	@Autowired
@@ -486,7 +490,7 @@ public class ChgbServlet {
 		Date d = Util.toDate(cal);
 
 		chgbService.importZbmFromNC(d, NCCOMPS);
-		chgbService.importNychFromNC(d, NCCOMPS);
+		chgbService.importNychFromNC(d, NCCOMPS4NYCH);
 	}
 	
 	@RequestMapping(value = "nctest.do")
@@ -499,7 +503,7 @@ public class ChgbServlet {
 			d = Date.valueOf(request.getParameter("date"));
 		}
 		chgbService.importZbmFromNC(d, NCCOMPS);
-		chgbService.importNychFromNC(d, NCCOMPS);
+		chgbService.importNychFromNC(d, NCCOMPS4NYCH);
 		return "OK".getBytes("utf-8");
 	}
 }
