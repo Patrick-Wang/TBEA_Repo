@@ -28,7 +28,7 @@ var hzb_companysNC;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -107,6 +107,6 @@ var hzb_companysNC;
             }));
         };
         return View;
-    }());
+    })();
     hzb_companysNC.View = View;
 })(hzb_companysNC || (hzb_companysNC = {}));

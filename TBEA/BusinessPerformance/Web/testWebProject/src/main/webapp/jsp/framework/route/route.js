@@ -44,20 +44,18 @@ var framework;
                 return this;
             };
             Router.prototype.broadcast = function (id, data) {
-                //if (this.mCurEvent != undefined) {
                 for (var i in this.mEplist) {
                     var event_1 = {
                         from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
                         to: undefined,
                         id: id,
                         data: data,
+                        isBroadcast: true
                     };
                     this.mEndpoints[this.mEplist[i]].onEvent(event_1);
                 }
                 this.mCurEvent = undefined;
                 return Router.OK;
-                //}
-                //return Router.FAILED;
             };
             Router.prototype.send = function (id, data) {
                 if (this.mCurEvent != undefined) {
@@ -83,10 +81,10 @@ var framework;
             Router.prototype.getEndpoint = function (id) {
                 return this.mEndpoints[id];
             };
-            Router.OK = 887291;
-            Router.FAILED = 887292;
+            Router.OK = "framework.route.OK";
+            Router.FAILED = "framework.route.FAILED";
             return Router;
-        }());
+        })();
         route.Router = Router;
     })(route = framework.route || (framework.route = {}));
 })(framework || (framework = {}));

@@ -52,6 +52,9 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public boolean hasCorpAuth(Account account) {
+		if (account.getDwxxs().isEmpty()){
+			account = accountDao.getAccount(account.getName());
+		}
 		Company gfgs = companyManager.getBMDBOrganization().getCompany(CompanyType.GFGS);
 		for (DWXX dwxx : account.getDwxxs()){
 			if (dwxx.getId() == gfgs.getId()){
@@ -65,6 +68,10 @@ public class LoginServiceImpl implements LoginService {
 	public boolean hasSbdAuth(Account account) {
 //		Company gfgs = companyManager
 //				.getBMDBOrganization().getCompany(CompanyType.GFGS);
+		if (account.getDwxxs().isEmpty()){
+			account = accountDao.getAccount(account.getName());
+		}
+		
 		Company sbd = companyManager.getBMDBOrganization().getCompany(CompanyType.SBDCYJT);
 		for (DWXX dwxx : account.getDwxxs()){
 //			if (dwxx.getId() == gfgs.getId() || dwxx.getId() == sbd.getId()){

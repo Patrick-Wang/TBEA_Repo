@@ -21,6 +21,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
+import com.tbea.ic.operation.model.dao.account.AccountDao;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
@@ -71,6 +72,10 @@ public class GszbServiceImpl implements GszbService {
 
 	@Autowired
 	DWXXDao dwxxDao;
+	
+	@Autowired
+	AccountDao accountDao;
+	
 	CompanyManager companyManager;
 
 	AccumulatorFactory accFac;
@@ -550,6 +555,9 @@ public class GszbServiceImpl implements GszbService {
 
 	@Override
 	public List<Company> getCompanies(Account account) {
+		if (account.getDwxxs().isEmpty()){
+			account = accountDao.getAccount(account.getName());
+		}
 		Set<DWXX> dwxxs = account.getDwxxs();
 		List<Company> ret = new ArrayList<Company>();
 		Organization org = companyManager.getBMDBOrganization();

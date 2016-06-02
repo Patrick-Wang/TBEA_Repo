@@ -23,12 +23,12 @@ var chgb;
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("账面净额", "rq"),
-                    new JQTable.Node("坏账准备", "a1"),
+                    new JQTable.Node("跌价准备", "a1"),
                     new JQTable.Node("原值", "a2")
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -99,6 +99,6 @@ var chgb;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(chzmb = chgb.chzmb || (chgb.chzmb = {}));
 })(chgb || (chgb = {}));

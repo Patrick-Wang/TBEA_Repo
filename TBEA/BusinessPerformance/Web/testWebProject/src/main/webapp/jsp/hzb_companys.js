@@ -96,7 +96,7 @@ var hzb_companys;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -192,6 +192,6 @@ var hzb_companys;
             return precentList;
         };
         return View;
-    }());
+    })();
     hzb_companys.View = View;
 })(hzb_companys || (hzb_companys = {}));

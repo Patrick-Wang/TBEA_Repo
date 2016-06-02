@@ -58,7 +58,7 @@ var framework;
                 return true;
             };
             return BasicEndpoint;
-        }());
+        })();
         basic.BasicEndpoint = BasicEndpoint;
         var FrameView = (function (_super) {
             __extends(FrameView, _super);
@@ -80,7 +80,7 @@ var framework;
                 return _super.prototype.onEvent.call(this, e);
             };
             return FrameView;
-        }(BasicEndpoint));
+        })(BasicEndpoint);
         basic.FrameView = FrameView;
         var BasePluginView = (function (_super) {
             __extends(BasePluginView, _super);
@@ -131,7 +131,7 @@ var framework;
                 return true;
             };
             return BasePluginView;
-        }(BasicEndpoint));
+        })(BasicEndpoint);
         basic.BasePluginView = BasePluginView;
         var ShowPluginView = (function (_super) {
             __extends(ShowPluginView, _super);
@@ -154,7 +154,7 @@ var framework;
                 return val;
             };
             return ShowPluginView;
-        }(BasePluginView));
+        })(BasePluginView);
         basic.ShowPluginView = ShowPluginView;
         var EntryPluginView = (function (_super) {
             __extends(EntryPluginView, _super);
@@ -184,7 +184,7 @@ var framework;
                 return val;
             };
             return EntryPluginView;
-        }(BasePluginView));
+        })(BasePluginView);
         basic.EntryPluginView = EntryPluginView;
         var ApprovePluginView = (function (_super) {
             __extends(ApprovePluginView, _super);
@@ -214,7 +214,7 @@ var framework;
                 return val;
             };
             return ApprovePluginView;
-        }(BasePluginView));
+        })(BasePluginView);
         basic.ApprovePluginView = ApprovePluginView;
         var EndpointProxy = (function () {
             function EndpointProxy(id, stub) {
@@ -229,7 +229,7 @@ var framework;
                 return framework.router.redirect(this.mStub, e);
             };
             return EndpointProxy;
-        }());
+        })();
         basic.EndpointProxy = EndpointProxy;
     })(basic = framework.basic || (framework.basic = {}));
 })(framework || (framework = {}));
