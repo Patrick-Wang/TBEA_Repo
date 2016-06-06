@@ -154,7 +154,9 @@ module Util {
                 }else {
                     this.useMultiSelect();
                 }
-                this.mFnChange(sel, depth);
+                if (this.mFnChange != undefined){
+                    this.mFnChange(sel, depth);
+                }
             });
         }
 

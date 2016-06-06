@@ -293,7 +293,7 @@ public class Docx4jUtils {
      * @throws Exception 
      * @author myclover 
      */  
-    private static void addObject(WordprocessingMLPackage wordPackage , Object info , boolean unmarshal)throws Exception{  
+    public static void addObject(WordprocessingMLPackage wordPackage , Object info , boolean unmarshal)throws Exception{  
         if(unmarshal){  
             wordPackage.getMainDocumentPart().addObject(org.docx4j.XmlUtils.unmarshalString(String.valueOf(info)));  
         }else{  
@@ -764,7 +764,7 @@ public class Docx4jUtils {
 //		return ftr;
 //	}
 
-	private static org.docx4j.wml.P getPImage(
+	public static org.docx4j.wml.P getPImage(
 			WordprocessingMLPackage wordPackage, Part sourcePart, byte[] bytes,
 			String filenameHint, String altText, int id1, int id2)
 			throws Exception {

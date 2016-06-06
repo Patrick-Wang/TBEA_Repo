@@ -5,6 +5,8 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +14,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
@@ -81,6 +84,8 @@ public class YDZBController {
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
+	Map<String, Object> tmpCache = Collections.synchronizedMap(new HashMap<String, Object>());
+	
 	@Autowired
 	private YDZBService service;
 
@@ -213,8 +218,8 @@ public class YDZBController {
 			template.setColumnWidth(0, data.get(0).length - 1, 6.5f);
 		}
 		String timeStamp = "" + Calendar.getInstance().getTimeInMillis();
-		request.getSession(false).setAttribute(timeStamp + "template", template);
-		request.getSession(false).setAttribute(timeStamp + "fileName", request.getParameter("fileName") + ".xls");
+		tmpCache.put(timeStamp + "template", template);
+		tmpCache.put(timeStamp + "fileName", request.getParameter("fileName") + ".xls");
 		return ("{\"timeStamp\" : \"" + timeStamp + "\"}").getBytes("utf-8");
 
 	}
@@ -302,8 +307,8 @@ public class YDZBController {
 		}
 
 		String timeStamp = "" + Calendar.getInstance().getTimeInMillis();
-		request.getSession(false).setAttribute(timeStamp + "template", template);
-		request.getSession(false).setAttribute(timeStamp + "fileName", request.getParameter("fileName") + ".xls");
+		tmpCache.put(timeStamp + "template", template);
+		tmpCache.put(timeStamp + "fileName", request.getParameter("fileName") + ".xls");
 		return ("{\"timeStamp\" : \"" + timeStamp + "\"}").getBytes("utf-8");
 	}
 	
@@ -1041,8 +1046,8 @@ public class YDZBController {
 		}
 		
 		String timeStamp = "" + Calendar.getInstance().getTimeInMillis();
-		request.getSession(false).setAttribute(timeStamp + "template", template);
-		request.getSession(false).setAttribute(timeStamp + "fileName", fileNameAndSheetName + ".xls");
+		tmpCache.put(timeStamp + "template", template);
+		tmpCache.put(timeStamp + "fileName", fileNameAndSheetName + ".xls");
 		
 		return ("{\"timeStamp\" : \"" + timeStamp + "\"}").getBytes("utf-8");
 	}
@@ -1053,10 +1058,10 @@ public class YDZBController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String timeStamp = request.getParameter("timeStamp");
-		ExcelTemplate template = (ExcelTemplate) request.getSession(false).getAttribute(timeStamp + "template");
-		template.write(response, (String) request.getSession(false).getAttribute(timeStamp + "fileName"));
-		request.getSession(false).removeAttribute(timeStamp + "template");
-		request.getSession(false).removeAttribute(timeStamp + "fileName");
+		ExcelTemplate template = (ExcelTemplate) tmpCache.get(timeStamp + "template");
+		template.write(response, (String) tmpCache.get(timeStamp + "fileName"));
+		tmpCache.remove(timeStamp + "template");
+		tmpCache.remove(timeStamp + "fileName");
 		return "".getBytes("utf-8");
 	}
 
@@ -1156,8 +1161,8 @@ public class YDZBController {
 		}
 		
 		String timeStamp = "" + Calendar.getInstance().getTimeInMillis();
-		request.getSession(false).setAttribute(timeStamp + "template", template);
-		request.getSession(false).setAttribute(timeStamp + "fileName", fileNameAndSheetName + ".xls");
+		tmpCache.put(timeStamp + "template", template);
+		tmpCache.put(timeStamp + "fileName", fileNameAndSheetName + ".xls");
 		
 		return ("{\"timeStamp\" : \"" + timeStamp + "\"}").getBytes("utf-8");
 	}
