@@ -11,6 +11,7 @@ var wlyddqk;
         WlyddType[WlyddType["YLFX_WLYMLSP_BYQ_CPFL"] = 13] = "YLFX_WLYMLSP_BYQ_CPFL";
         WlyddType[WlyddType["YLFX_WLYMLSP_XL_ZH"] = 14] = "YLFX_WLYMLSP_XL_ZH";
         WlyddType[WlyddType["YLFX_WLYMLSP_XL_CPFL"] = 15] = "YLFX_WLYMLSP_XL_CPFL";
+        WlyddType[WlyddType["YLFX_WLYMLSP_BYQ_ZZY"] = 16] = "YLFX_WLYMLSP_BYQ_ZZY";
     })(wlyddqk.WlyddType || (wlyddqk.WlyddType = {}));
     var WlyddType = wlyddqk.WlyddType;
     var BasePluginView = (function () {

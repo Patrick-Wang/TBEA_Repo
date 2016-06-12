@@ -24,7 +24,7 @@ var ylfxwlyddmlspcs;
                 node = new JQTable.Node("产品", "wlyddmlspcs_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node("上年度", "wlyddmlspcs_snd", true, TextAlign.Center);
-                for (var i = month + 1; i <= 12; ++i) {
+                for (var i = month; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "wlyddmlspcs_snd_" + i));
                 }
                 if (month != 12) {
@@ -80,7 +80,8 @@ var ylfxwlyddmlspcs;
             WLYDDMLSPCSView.prototype.isSupported = function (compType) {
                 if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH ||
                     this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ ||
-                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL) {
+                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL ||
+                    this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZZY) {
                     if (compType == Util.CompanyType.SBGS ||
                         compType == Util.CompanyType.HBGS ||
                         compType == Util.CompanyType.XBC ||
@@ -99,11 +100,12 @@ var ylfxwlyddmlspcs;
             };
             WLYDDMLSPCSView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("未履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
-                view.register("未履约订单毛利水平测算(制造主业-电压等级口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ));
-                view.register("未履约订单毛利水平测算(制造主业-产品类别口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL));
-                view.register("未履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
-                view.register("未履约订单毛利水平测算(制造主业口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
+                view.register("可供履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
+                //view.register("可供履约订单毛利水平测算(制造主业-电压等级口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ));
+                //view.register("可供履约订单毛利水平测算(制造主业-产品类别口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL));
+                view.register("可供履约订单毛利水平测算(制造业)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZZY));
+                view.register("可供履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
+                view.register("可供履约订单毛利水平测算(制造业)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
             };
             WLYDDMLSPCSView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
@@ -119,7 +121,7 @@ var ylfxwlyddmlspcs;
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 30,
+                    rowNum: 100,
                     data: tableAssist.getData(this.mData),
                     datatype: "local",
                     viewrecords: true

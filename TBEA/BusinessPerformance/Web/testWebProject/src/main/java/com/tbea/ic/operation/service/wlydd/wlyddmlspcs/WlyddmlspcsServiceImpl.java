@@ -77,6 +77,12 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 			}
 			break;
 		}
+		case YLFX_WLYMLSP_BYQ_ZZY: {
+			for (MLSPCS_BYQ_ZZY_Type cp : MLSPCS_BYQ_ZZY_Type.values()) {
+				cpIdList.add(cp.value());
+			}
+			break;
+		}
 		default: 
 			break;
 

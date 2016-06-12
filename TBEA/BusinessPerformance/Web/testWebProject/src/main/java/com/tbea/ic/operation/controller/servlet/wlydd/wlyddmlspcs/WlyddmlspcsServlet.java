@@ -61,6 +61,8 @@ public class WlyddmlspcsServlet {
 			return WlyddType.YLFX_WLYMLSP_XL_ZH;
 		}else if (15 == Integer.valueOf(request.getParameter("type"))) {
 			return WlyddType.YLFX_WLYMLSP_XL_CPFL;
+		}else if (16 == Integer.valueOf(request.getParameter("type"))) {
+			return WlyddType.YLFX_WLYMLSP_BYQ_ZZY;
 		}
 		
 		return WlyddType.YLFX_WLYMLSP_BYQ_ZH;
