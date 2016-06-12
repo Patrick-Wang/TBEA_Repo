@@ -31,7 +31,7 @@ var dzwzgb;
                         new JQTable.Node("采购月均价（元/吨）（摊入当月期货盈亏）", "adb"),
                         new JQTable.Node("目标利润倒算价（元/吨）", "ae"),
                         new JQTable.Node("采购量（吨）", "af"),
-                        new JQTable.Node("期现货合计盈亏", "ag")
+                        new JQTable.Node("期现货合计盈亏（万元）", "ag")
                     ], gridName);
                 }
                 else {

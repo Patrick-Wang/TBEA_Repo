@@ -46,3 +46,8 @@ TBEA/BusinessPerformance/Web/testWebProject/.project
 *.prefs
 *.class
 *.map
+*.class
+*.class
+*.class
+TBEA/BusinessPerformance/Android Service/Source_Code/mobile/build/classes/com/tbea/servlet/beforeLoginServlet.class
+*.class

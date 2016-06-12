@@ -15,4 +15,6 @@ public interface DzclkcbDao extends AbstractReadWriteDao<DzclkcbEntity> {
 
 	List<DzclkcbEntity> getByNy(Date d, Company company);
 
+	DzclkcbEntity getByNy(Date d, Company company, Integer clid);
+
 }
