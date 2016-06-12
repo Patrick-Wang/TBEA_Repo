@@ -13,20 +13,33 @@ module dzwzgb {
     export module dzclcb {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string):JQTable.JQGridAssistant {
-                return new JQTable.JQGridAssistant([
-                    new JQTable.Node("月份", "rqa", true, TextAlign.Center),
-                    new JQTable.Node("材料", "ab", true, TextAlign.Center),
-                    new JQTable.Node("期货盈亏（万元）", "ac"),
-                    new JQTable.Node("市场现货月均价（元/吨）", "ada"),
-                    new JQTable.Node("采购月均价（元/吨）（摊入当月期货盈亏）", "adb"),
-                    new JQTable.Node("三项费用保本价（元/吨）", "adc"),
-                    new JQTable.Node("目标利润倒算价（元/吨）", "ae"),
-                    new JQTable.Node("采购量（吨）", "af"),
-                    new JQTable.Node("期现货合计盈亏", "ag")
-                        .append(new JQTable.Node("指导价格按照保本价（万元）", "ah"))
-                        .append(new JQTable.Node("指导价格按照目标利润价（万元）", "ai"))
-                ], gridName);
+            public static createTable(gridName:string, isByq:boolean):JQTable.JQGridAssistant {
+                if (isByq){
+                    return new JQTable.JQGridAssistant([
+                        new JQTable.Node("月份", "rqa", true, TextAlign.Center),
+                        new JQTable.Node("材料", "ab", true, TextAlign.Center),
+                        new JQTable.Node("期货盈亏（万元）", "ac"),
+                        new JQTable.Node("市场现货月均价（元/吨）", "ada"),
+                        new JQTable.Node("采购月均价（元/吨）（摊入当月期货盈亏）", "adb"),
+                        new JQTable.Node("目标利润倒算价（元/吨）", "ae"),
+                        new JQTable.Node("采购量（吨）", "af"),
+                        new JQTable.Node("期现货合计盈亏", "ag")
+                    ], gridName);
+                }else{
+                    return new JQTable.JQGridAssistant([
+                        new JQTable.Node("月份", "rqa", true, TextAlign.Center),
+                        new JQTable.Node("材料", "ab", true, TextAlign.Center),
+                        new JQTable.Node("期货盈亏（万元）", "ac"),
+                        new JQTable.Node("市场现货月均价（元/吨）", "ada"),
+                        new JQTable.Node("采购月均价（元/吨）（摊入当月期货盈亏）", "adb"),
+                        new JQTable.Node("三项费用保本价（元/吨）", "adc"),
+                        new JQTable.Node("目标利润倒算价（元/吨）", "ae"),
+                        new JQTable.Node("采购量（吨）", "af"),
+                        new JQTable.Node("期现货合计盈亏", "ag")
+                            .append(new JQTable.Node("指导价格按照保本价（万元）", "ah"))
+                            .append(new JQTable.Node("指导价格按照目标利润价（万元）", "ai"))
+                    ], gridName);
+                }
             }
         }
 
@@ -79,29 +92,35 @@ module dzwzgb {
             }
 
             private updateTable():void {
+                let isByq = false;
+                if (this.mCompType == Util.CompanyType.SBGS ||
+                    this.mCompType == Util.CompanyType.HBGS ||
+                    this.mCompType == Util.CompanyType.TBGS ||
+                    this.mCompType == Util.CompanyType.XBC){
+                    isByq = true;
+                }
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, isByq);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
 
                 let data = [];
-                if (this.mCompType == Util.CompanyType.SBGS ||
-                    this.mCompType == Util.CompanyType.HBGS ||
-                    this.mCompType == Util.CompanyType.TBGS ||
-                    this.mCompType == Util.CompanyType.XBC){
+                if (isByq){
                     for (let i = 0; i < 12; ++i){
-                        data.push([i + 1, "铜"].concat(this.mData[i]));
+                        let arr = this.mData[i];
+                        data.push([i + 1, "铜"].concat(arr));
                     }
                 }else{
                     for (let i = 0, j = 0; i < 12; ++i, j += 2){
-                        data.push([i + 1, "铜"].concat(this.mData[j]));
-                        data.push([i + 1, "铝"].concat(this.mData[j + 1]));
+                        let arr = this.mData[j];
+                        data.push([i + 1, "铜"].concat(arr));
+                        arr = this.mData[j + 1];
+                        data.push([i + 1, "铝"].concat(arr));
                     }
                 }
 
                 tableAssist.mergeRow(0);
-
                 this.$(name).jqGrid(
                     tableAssist.decorate({
                         multiselect: false,

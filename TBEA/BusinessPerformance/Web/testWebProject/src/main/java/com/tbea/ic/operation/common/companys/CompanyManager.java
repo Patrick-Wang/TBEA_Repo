@@ -10,7 +10,7 @@ public class CompanyManager {
 	Organization opera = new OperationDepartment();
 	Organization BM = new BMDepartment();
 	Organization zbhz = new OperationZBHZ(new OperationDepartment());
-	
+	Organization org15 = new Org15DB();
 	Organization BMDB;
 	Organization virtualYSZK;
 	Organization virtualJYZB;
@@ -30,6 +30,10 @@ public class CompanyManager {
 	
 	public Organization getVirtualJYZBOrganization() {
 		return virtualJYZB;
+	}
+	
+	public Organization get15Org() {
+		return org15;
 	}
 	
 	public Organization getVirtualYSZKOrganization() {

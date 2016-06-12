@@ -43,29 +43,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="byqcpycssbhgwtmx.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmx.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="137" column="34" selection-start-line="137" selection-start-column="34" selection-end-line="137" selection-end-column="34" />
-              <folding>
-                <marker date="1464581495310" expanded="true" signature="340:575" placeholder="..." />
-                <marker date="1464581495310" expanded="true" signature="591:6179" placeholder="..." />
-                <marker date="1464581495310" expanded="true" signature="743:1677" placeholder="{...}" />
-                <marker date="1464581495310" expanded="true" signature="824:1667" placeholder="{...}" />
-                <marker date="1464581495310" expanded="true" signature="877:1641" placeholder="[...]" />
-                <marker date="1464581495310" expanded="true" signature="1723:6171" placeholder="{...}" />
-                <marker date="1464581495310" expanded="true" signature="2108:2171" placeholder="{...}" />
-                <marker date="1464581495310" expanded="true" signature="2241:2443" placeholder="{...}" />
-                <marker date="1464581495310" expanded="true" signature="2522:2777" placeholder="{...}" />
-                <marker date="1464581495310" expanded="true" signature="2603:2777" placeholder="{...}" />
-                <marker date="1464581495310" expanded="true" signature="3370:3392" placeholder="{...}" />
-                <marker date="1464581495310" expanded="true" signature="3370:3564" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="xlbhgcpmxApprove.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/xlbhgcpmx/xlbhgcpmxApprove.ts">
           <provider selected="true" editor-type-id="text-editor">
@@ -83,7 +60,6 @@
               <caret line="82" column="40" selection-start-line="82" selection-start-column="40" selection-end-line="82" selection-end-column="40" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1464158087316" expanded="true" signature="19259:19273" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -137,11 +113,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hzb_zbhz_prediction.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hzb_zbhz_prediction.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/hzb_zbhz_prediction.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6863118">
-              <caret line="180" column="9" selection-start-line="180" selection-start-column="9" selection-end-line="180" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="173" column="34" selection-start-line="173" selection-start-column="34" selection-end-line="173" selection-end-column="34" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dzclcb.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jsp/dzwzgb/dzclcb/dzclcb.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.30147058">
+              <caret line="111" column="60" selection-start-line="111" selection-start-column="60" selection-end-line="111" selection-end-column="60" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -165,7 +153,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/jsp/cpzlqkyd/tjjg_jd/tjjg_jd.ts" />
         <option value="$PROJECT_DIR$/jsp/sbdczclwcqk/sbdczclwcqkEntry.jsp" />
         <option value="$PROJECT_DIR$/jsp/sbdczclwcqk/cpczwcqk/cpczwcqkEntry.ts" />
         <option value="$PROJECT_DIR$/jsp/sbdczclwcqk/cpclwcqk/cpclwcqkEntry.ts" />
@@ -216,6 +203,7 @@
         <option value="$PROJECT_DIR$/jsp/entry_template.ts" />
         <option value="$PROJECT_DIR$/jsp/hzb_zbhz.ts" />
         <option value="$PROJECT_DIR$/jsp/hzb_zbhz_prediction.ts" />
+        <option value="$PROJECT_DIR$/jsp/dzwzgb/dzclcb/dzclcb.ts" />
       </list>
     </option>
   </component>
@@ -225,7 +213,7 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1600" />
+    <option name="width" value="1440" />
     <option name="height" value="860" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -278,7 +266,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -312,8 +299,49 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dzwzgb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dzwzgb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dzclcb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -416,12 +444,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1600" height="860" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="860" extended-state="1" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22663252" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2261236" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293011" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23763736" sideWeight="0.4721166" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2370173" sideWeight="0.4721166" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24380705" sideWeight="0.5278834" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -480,13 +508,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicShow.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6850095">
-          <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/util.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.36812145">
@@ -737,22 +758,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="77" column="42" selection-start-line="77" selection-start-column="42" selection-end-line="77" selection-end-column="42" />
-          <folding>
-            <marker date="1464581495336" expanded="true" signature="340:414" placeholder="..." />
-            <marker date="1464581495336" expanded="true" signature="430:5248" placeholder="..." />
-            <marker date="1464581495336" expanded="true" signature="575:1611" placeholder="{...}" />
-            <marker date="1464581495336" expanded="true" signature="656:1601" placeholder="{...}" />
-            <marker date="1464581495336" expanded="true" signature="709:1575" placeholder="[...]" />
-            <marker date="1464581495336" expanded="true" signature="1657:5240" placeholder="{...}" />
-            <marker date="1464581495336" expanded="true" signature="2033:2198" placeholder="{...}" />
-            <marker date="1464581495336" expanded="true" signature="2249:2448" placeholder="{...}" />
-            <marker date="1464581495336" expanded="true" signature="2281:2393" placeholder="{...}" />
-            <marker date="1464581495336" expanded="true" signature="2477:2533" placeholder="{...}" />
-            <marker date="1464581495336" expanded="true" signature="2613:2767" placeholder="{...}" />
-            <marker date="1464581495336" expanded="true" signature="2687:2767" placeholder="{...}" />
-            <marker date="1464581495336" expanded="true" signature="3262:3284" placeholder="{...}" />
-            <marker date="1464581495336" expanded="true" signature="3262:3456" placeholder="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -760,7 +765,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="86" column="9" selection-start-line="86" selection-start-column="9" selection-end-line="86" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -768,7 +772,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="57" column="6" selection-start-line="56" selection-start-column="6" selection-end-line="56" selection-end-column="109" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -776,7 +779,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="45" column="51" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -784,7 +786,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="102" column="58" selection-start-line="102" selection-start-column="58" selection-end-line="102" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -792,20 +793,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="137" column="34" selection-start-line="137" selection-start-column="34" selection-end-line="137" selection-end-column="34" />
-          <folding>
-            <marker date="1464581495310" expanded="true" signature="340:575" placeholder="..." />
-            <marker date="1464581495310" expanded="true" signature="591:6179" placeholder="..." />
-            <marker date="1464581495310" expanded="true" signature="743:1677" placeholder="{...}" />
-            <marker date="1464581495310" expanded="true" signature="824:1667" placeholder="{...}" />
-            <marker date="1464581495310" expanded="true" signature="877:1641" placeholder="[...]" />
-            <marker date="1464581495310" expanded="true" signature="1723:6171" placeholder="{...}" />
-            <marker date="1464581495310" expanded="true" signature="2108:2171" placeholder="{...}" />
-            <marker date="1464581495310" expanded="true" signature="2241:2443" placeholder="{...}" />
-            <marker date="1464581495310" expanded="true" signature="2522:2777" placeholder="{...}" />
-            <marker date="1464581495310" expanded="true" signature="2603:2777" placeholder="{...}" />
-            <marker date="1464581495310" expanded="true" signature="3370:3392" placeholder="{...}" />
-            <marker date="1464581495310" expanded="true" signature="3370:3564" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -841,7 +829,6 @@
           <caret line="82" column="40" selection-start-line="82" selection-start-column="40" selection-end-line="82" selection-end-column="40" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1464158087316" expanded="true" signature="19259:19273" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -888,8 +875,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/hzb_zbhz_prediction.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6863118">
-          <caret line="180" column="9" selection-start-line="180" selection-start-column="9" selection-end-line="180" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="173" column="34" selection-start-line="173" selection-start-column="34" selection-end-line="173" selection-end-column="34" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/dzwzgb/dzclcb/dzclcb.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30147058">
+          <caret line="111" column="60" selection-start-line="111" selection-start-column="60" selection-end-line="111" selection-end-column="60" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

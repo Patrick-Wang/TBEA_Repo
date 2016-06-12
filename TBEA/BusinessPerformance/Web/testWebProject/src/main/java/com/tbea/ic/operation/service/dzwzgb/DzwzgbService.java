@@ -18,5 +18,7 @@ public interface DzwzgbService {
 
 	ErrorCode saveDzclcb(Date d, Company company, JSONArray data);
 
+	ErrorCode importDzclcb(Date d);
+
 
 }

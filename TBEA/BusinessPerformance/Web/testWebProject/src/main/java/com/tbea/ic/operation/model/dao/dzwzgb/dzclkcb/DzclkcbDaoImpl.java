@@ -34,7 +34,7 @@ public class DzclkcbDaoImpl extends AbstractReadWriteDaoImpl<DzclkcbEntity> impl
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		
-		Query q = this.getEntityManager().createQuery("from DzclkcbEntity where nf=:nf and dwid=:compId)");
+		Query q = this.getEntityManager().createQuery("from DzclkcbEntity where nf=:nf and dwid=:compId");
 		
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("compId", company.getId());
@@ -47,11 +47,29 @@ public class DzclkcbDaoImpl extends AbstractReadWriteDaoImpl<DzclkcbEntity> impl
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		
-		Query q = this.getEntityManager().createQuery("from DzclkcbEntity where nf=:nf and yf = :yf and dwid=:compId)");
+		Query q = this.getEntityManager().createQuery("from DzclkcbEntity where nf=:nf and yf = :yf and dwid=:compId");
 		
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		q.setParameter("compId", company.getId());
 		return q.getResultList();
+	}
+
+	@Override
+	public DzclkcbEntity getByNy(Date d, Company company, Integer clid) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		
+		Query q = this.getEntityManager().createQuery("from DzclkcbEntity where nf=:nf and yf = :yf and dwid=:compId and clid=:clid");
+		
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("clid", clid);
+		q.setParameter("compId", company.getId());
+		List ret = q.getResultList();
+		if (ret.isEmpty()){
+			return null;
+		}
+		return (DzclkcbEntity) ret.get(0);
 	}
 }

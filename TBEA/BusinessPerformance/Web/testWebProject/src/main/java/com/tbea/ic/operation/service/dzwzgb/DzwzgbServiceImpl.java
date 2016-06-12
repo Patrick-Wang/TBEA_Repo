@@ -3,7 +3,9 @@ package com.tbea.ic.operation.service.dzwzgb;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -12,22 +14,41 @@ import net.sf.json.JSONArray;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.model.dao.dzwzgb.dzclkcb.DzclkcbDao;
 import com.tbea.ic.operation.model.dao.dzwzgb.dzclkcb.DzclkcbDaoImpl;
+import com.tbea.ic.operation.model.dao.dzwzgb.dzclkcb.TqbzYjjDao;
+import com.tbea.ic.operation.model.dao.dzwzgb.dzclkcb.TqbzYjjDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.common.clmc.Clmc;
 import com.tbea.ic.operation.model.entity.dzwzgb.DzclkcbEntity;
+import com.tbea.ic.operation.model.entity.dzwzgb.TqbzYjjEntity;
 
 @Service(DzwzgbServiceImpl.NAME)
 @Transactional("transactionManager")
 public class DzwzgbServiceImpl implements DzwzgbService {
 	@Resource(name=DzclkcbDaoImpl.NAME)
 	DzclkcbDao dzclkcbDao;
+	
+	@Resource(name=TqbzYjjDaoImpl.NAME)
+	TqbzYjjDao tqbzyjjDao;
 
+	static Map<Integer, Clmc> tqbzCllxMcMap = new HashMap<Integer, Clmc>();
+	static{
+		tqbzCllxMcMap.put(1, Clmc.CU);
+		tqbzCllxMcMap.put(2, Clmc.AL);
+	}
+	
+	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	public final static String NAME = "DzwzgbServiceImpl";
 
 	@Override
@@ -49,7 +70,10 @@ public class DzwzgbServiceImpl implements DzwzgbService {
 				}
 				if (null != entityCu){
 					entities.remove(entityCu);
-					result.add(toList(entityCu));
+					List<String> row = toList(entityCu);
+					row.remove(6);
+					row.remove(3);
+					result.add(row);
 				}else{
 					result.add(new ArrayList<String>());
 				}
@@ -201,6 +225,62 @@ public class DzwzgbServiceImpl implements DzwzgbService {
 	@Override
 	public ErrorCode saveDzclcb(Date d, Company company, JSONArray data) {
 		return entryDzclcb(d, company, data, ZBStatus.SAVED);
+	}
+	
+	@Override
+	public ErrorCode importDzclcb(Date d){
+		List<TqbzYjjEntity> entities = tqbzyjjDao.getByDate(d);
+		for (TqbzYjjEntity entity : entities){
+			importToDzclcb(entity, d);
+		}
+		return ErrorCode.OK;
+	}
+
+	private void importToDzclcb(TqbzYjjEntity entity, Date d) {
+		if (tqbzCllxMcMap.containsKey(entity.getCLLB().intValue())){
+			Organization org15 = companyManager.get15Org();
+			Company comp = org15.getCompany(entity.getQYBH().intValue());
+			if (null != comp){
+				Organization bmdb = companyManager.getBMDBOrganization();
+				comp = bmdb.getCompany(comp.getType());
+				DzclkcbEntity dzclkcb = dzclkcbDao.getByNy(d, comp, tqbzCllxMcMap.get(entity.getCLLB().intValue()).ordinal());
+				if (null == dzclkcb){
+					EasyCalendar ec = new EasyCalendar(d);
+					dzclkcb = new DzclkcbEntity();
+					dzclkcb.setNf(ec.getYear());
+					dzclkcb.setYf(ec.getMonth());
+					dzclkcb.setClid(tqbzCllxMcMap.get(entity.getCLLB().intValue()).ordinal());
+					dzclkcb.setDwid(comp.getId());
+					dzclkcb.setZt(ZBStatus.APPROVED.ordinal());
+				}
+
+				dzclkcb.setQhyk(entity.getDYQHYK());//期货盈亏
+				dzclkcb.setScxhyjj(entity.getSCJ());//市场现货月均价
+				dzclkcb.setCgyjj(entity.getCGJ2());//采购月均价
+				dzclkcb.setSxfybbj(entity.getSXFYJ());//三项费用保本价
+				dzclkcb.setMblrdsj(entity.getMBLRDSJ());//目标利润倒算假
+				dzclkcb.setCgl(entity.getCGL());//采购量
+				
+				if (comp.getType() == CompanyType.SBGS ||
+						comp.getType() == CompanyType.HBGS ||
+						comp.getType() == CompanyType.TBGS ||
+						comp.getType() == CompanyType.XBC){
+					dzclkcb.setZdjazmulr(MathUtil.division(MathUtil.mul(entity.getCGL(),
+																		MathUtil.minus(entity.getCGJ2(), entity.getMBLRDSJ())),
+															10000d));//指导价格按照目标利润价
+				}else{
+					dzclkcb.setZdjazmulr(MathUtil.division(MathUtil.mul(entity.getCGL(),
+																		MathUtil.minus(entity.getCGJ2(), entity.getMBLRDSJ())),
+															10000d));//指导价格按照目标利润价
+					dzclkcb.setZdjazbbj(MathUtil.division(MathUtil.mul(entity.getCGL(),
+																		MathUtil.minus(entity.getCGJ2(), entity.getSXFYJ())),
+															10000d));//指导价格按照保本价
+				}
+				dzclkcbDao.merge(dzclkcb);
+				
+			}
+		}
+		
 	}
 
 }

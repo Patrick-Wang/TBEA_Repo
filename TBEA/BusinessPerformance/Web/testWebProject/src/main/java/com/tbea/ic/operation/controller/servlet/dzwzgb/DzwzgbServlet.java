@@ -17,6 +17,7 @@ import net.sf.json.JSONArray;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,8 +34,8 @@ import com.tbea.ic.operation.common.excel.DzwzgbSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
@@ -158,5 +159,28 @@ public class DzwzgbServlet {
 			}
 		}
 		template.writeWithRawSize(response, name + ".xls");
+	}
+	
+	//每月3到五号零点触发
+	@Scheduled(cron="0 0 0 6-7 * ?")
+	public void scheduleImport(){
+		Calendar cal = Calendar.getInstance();
+		System.out.println(cal.getTime().toLocaleString() + "dzwzgb import data from 15db");
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+		dzwzgbService.importDzclcb(d);
+	}
+	
+	@RequestMapping(value = "importTest.do")
+	public @ResponseBody byte[] nctest(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+		if (!(request.getParameter("date") == null)){
+			d = Date.valueOf(request.getParameter("date"));
+		}
+		dzwzgbService.importDzclcb(d);
+		return "OK".getBytes("utf-8");
 	}
 }
