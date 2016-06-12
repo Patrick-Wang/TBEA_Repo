@@ -110,12 +110,12 @@ module  ylfxwlyddmlspcs {
 
             public init(opt:Option):void {
                 super.init(opt);
-                view.register("可供履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
-                //view.register("可供履约订单毛利水平测算(制造主业-电压等级口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ));
-                //view.register("可供履约订单毛利水平测算(制造主业-产品类别口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL));
-                view.register("可供履约订单毛利水平测算(制造业)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZZY));
-                view.register("可供履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
-                view.register("可供履约订单毛利水平测算(制造业)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
+                view.register("未履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH));
+                //view.register("未履约订单毛利水平测算(制造主业-电压等级口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ));
+                //view.register("未履约订单毛利水平测算(制造主业-产品类别口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL));
+                view.register("未履约订单毛利水平测算(制造业)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZZY));
+                view.register("未履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
+                view.register("未履约订单毛利水平测算(制造业)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
             }
 
             private updateTable():void {

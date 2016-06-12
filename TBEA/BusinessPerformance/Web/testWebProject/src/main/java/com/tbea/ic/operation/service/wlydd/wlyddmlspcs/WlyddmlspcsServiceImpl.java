@@ -103,7 +103,7 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 		List<List<Double>> finalListTemp = new ArrayList<List<Double>>();
 		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
 		
-		for (int i = 0; i < 12; ++i){
+		for (int i = 0; i < 13; ++i){
 			List<Double> tmp = new ArrayList<Double>();
 			tmp.add(0.0);
 			tmp.add(0.0);
@@ -116,14 +116,14 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			cal.add(Calendar.YEAR, -1);
-			cal.add(Calendar.MONTH, 1);
+			//cal.add(Calendar.MONTH, 1);
 			
 			List<WlyddmlspcsEntity> entities= wlyddmlspcsDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
 			List<String> oneLine = new ArrayList<String>();
 
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());
 			
-			for (int i = 0; i < 12; ++i){
+			for (int i = 0; i < 13; ++i){
 
 				Boolean bFind = false;
 				for (WlyddmlspcsEntity entity : entities){
@@ -151,7 +151,7 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 		
 		List<String> finalLine = new ArrayList<String>();
 		finalLine.add("合计");
-		for (int i = 0; i < 12; ++i){
+		for (int i = 0; i < 13; ++i){
 		
 			if (!finalListNullOrNot.get(i)) {
 
