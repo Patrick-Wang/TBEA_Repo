@@ -66,7 +66,9 @@ var Util;
                 else {
                     _this.useMultiSelect();
                 }
-                _this.mFnChange(sel, depth);
+                if (_this.mFnChange != undefined) {
+                    _this.mFnChange(sel, depth);
+                }
             });
         }
         CompanySelector.prototype.hide = function () {

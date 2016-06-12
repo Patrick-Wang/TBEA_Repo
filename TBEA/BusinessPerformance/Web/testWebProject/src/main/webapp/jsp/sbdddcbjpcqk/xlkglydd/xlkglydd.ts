@@ -17,14 +17,14 @@ module sbdddcbjpcqk {
                 if (type == wlyddqk.WlyddType.SCDY){
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", true, TextAlign.Center)
                 }else{
-                    nodeFirst = new JQTable.Node("产未履约订单情况(产品类别口径)品类别", "sclb", true, TextAlign.Center)
+                    nodeFirst = new JQTable.Node("产品类别", "sclb", true, TextAlign.Center)
                 }
 
                 return new JQTable.JQGridAssistant([
                     nodeFirst,
                     new JQTable.Node("月产出能力（产值）", "rqa"),
-                    new JQTable.Node("未履约订单总额", "ab"),
-                    new JQTable.Node("当年未履约订单总量", "ac"),
+                    new JQTable.Node("可供履约订单总额", "ab"),
+                    new JQTable.Node("当年可供履约订单总量", "ac"),
                     new JQTable.Node("n+1月订单量", "ada")
                         .append( new JQTable.Node("已排产", "ba"))
                         .append( new JQTable.Node("未排产", "bc"))
@@ -101,8 +101,8 @@ module sbdddcbjpcqk {
 
             public init(opt:Option):void {
                 super.init(opt);
-                view.register("未履约订单情况(产品类别口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCLB));
-                view.register("未履约订单情况(生产单元口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCDY));
+                view.register("可供履约订单情况(产品类别口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCLB));
+                view.register("可供履约订单情况(生产单元口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCDY));
             }
 
             private updateTable():void {

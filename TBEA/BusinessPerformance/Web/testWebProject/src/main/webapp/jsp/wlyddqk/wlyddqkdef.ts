@@ -11,7 +11,8 @@ module wlyddqk {
         YLFX_WLYMLSP_BYQ_DYDJ = 12,
         YLFX_WLYMLSP_BYQ_CPFL = 13,
         YLFX_WLYMLSP_XL_ZH = 14,
-        YLFX_WLYMLSP_XL_CPFL = 15
+        YLFX_WLYMLSP_XL_CPFL = 15,
+        YLFX_WLYMLSP_BYQ_ZZY = 16
     }
 
     export interface EntryLyddData{

@@ -129,8 +129,7 @@ CREATE TABLE [dbo].[chgb_nych](
 	[sccbDpbtf] [numeric](18, 4) NULL,
 	[fcsp] [numeric](18, 4) NULL,
 	[dh] [numeric](18, 4) NULL,
-	[hj] [numeric](18, 4) NULL,
-	[zt] [int] not NULL
+	[hj] [numeric](18, 4) NULL
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC

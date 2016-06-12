@@ -30,7 +30,9 @@ import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.YlfxwlyddmlspcsSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
@@ -61,6 +63,8 @@ public class WlyddmlspcsServlet {
 			return WlyddType.YLFX_WLYMLSP_XL_ZH;
 		}else if (15 == Integer.valueOf(request.getParameter("type"))) {
 			return WlyddType.YLFX_WLYMLSP_XL_CPFL;
+		}else if (16 == Integer.valueOf(request.getParameter("type"))) {
+			return WlyddType.YLFX_WLYMLSP_BYQ_ZZY;
 		}
 		
 		return WlyddType.YLFX_WLYMLSP_BYQ_ZH;
@@ -115,7 +119,7 @@ public class WlyddmlspcsServlet {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		
-		Integer num = (wlyddType.value() % WlyddType.YLFX_WLYMLSP_BYQ_ZH.value()) * 12 + cal.get(Calendar.MONTH);
+		Integer num = cal.get(Calendar.MONTH);
 		
 		YlfxwlyddmlspcsSheetType wlyddmlspcsSheetType = YlfxwlyddmlspcsSheetType.values()[num];
 		
@@ -138,15 +142,21 @@ public class WlyddmlspcsServlet {
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
 		handler.next(new NumberFormatterHandler(1));
 		
+		
+		
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
-		HSSFSheet sheet = workbook.getSheetAt(0);
-		for (int i = 0; i < ret.size(); ++i){
-			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, j, template, sheet.getRow(i + 2).getCell(j), ret.get(i).get(j));
-			}
-		}
+		
+		FormatterServer serv = new FormatterServer(handler, 0, 2);
+		serv.format(ret, template);
+		
+//		HSSFSheet sheet = workbook.getSheetAt(0);
+//		for (int i = 0; i < ret.size(); ++i){
+//			for (int j = 0; j < ret.get(i).size(); ++j){
+//				handler.handle(null, j, template, sheet.createRow(i + 2).createCell(j), ret.get(i).get(j));
+//			}
+//		}
 		template.write(response, name + "月.xls");
 	}
 }

@@ -12,7 +12,7 @@
   
   <!-- [公共Appender] -->  
   <appender name="DEFAULT-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">  
-     <param name="File" value="${webapp.root}/logs/common-default.log" />  
+     <param name="File" value="${catalina.home}/logs/common-default.log" />  
      <param name="Append" value="true" />  
      <param name="encoding" value="GBK" />  
      <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />  
@@ -23,7 +23,7 @@
   
    <!-- [错误日志APPENDER] -->  
    <appender name="ERROR-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">  
-     <param name="File" value="${webapp.root}/logs/common-error.log" />  
+     <param name="File" value="${catalina.home}/logs/common-error.log" />  
      <param name="Append" value="true" />  
      <param name="encoding" value="GBK" />  
      <param name="threshold" value="error" />  
@@ -36,7 +36,7 @@
      <!-- [NC  APPENDER] -->  
    <appender name="NC-APPENDER"  
 	class="org.apache.log4j.DailyRollingFileAppender">  
-     <param name="File" value="${webapp.root}/logs/nc.log" />  
+     <param name="File" value="${catalina.home}/logs/nc.log" />  
      <param name="Append" value="true" />  
      <param name="encoding" value="utf-8" />  
      <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />  
