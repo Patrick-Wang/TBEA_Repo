@@ -10,7 +10,7 @@ declare var $:any;
 
 module pluginEntry {
     export let cpclwcqk : number = framework.basic.endpoint.lastId();
-    export let cpclwcqk_byq : number = framework.basic.endpoint.lastId();
+    export let cpczclwcqk_byq : number = framework.basic.endpoint.lastId();
 }
 
 module sbdczclwcqk {
@@ -30,8 +30,9 @@ module sbdczclwcqk {
 
                 node = new JQTable.Node(year + "年" + month + "月", "cpclwcqkEntry_riqi", false, TextAlign.Center);
 
-                node.append(new JQTable.Node("产量", "cpclwcqkEntry_cz", false));
-
+                node.append(new JQTable.Node("产值", "cpclwcqkEntry_cz", false));
+                node.append(new JQTable.Node("产量", "cpclwcqkEntry_cl", false));
+                
                 titleNodes.push(node);
 
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
@@ -158,9 +159,9 @@ module sbdczclwcqk {
 
             protected init(opt:Option):void {
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpclwcqk_byq, this.getId()))
+                    .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpczclwcqk_byq, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "产量完成情况");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产值产量完成情况");
             }
 
             onEvent(e: framework.route.Event): any {

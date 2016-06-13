@@ -23,7 +23,10 @@ import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpclwcqk.CpclwcqkDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpclwcqk.CpclwcqkDaoImpl;
+import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDao;
+import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDaoImpl;
 import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpclwcqkEntity;
+import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpczwcqkEntity;
 
 @Service(CpclwcqkServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -31,6 +34,9 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 	@Resource(name=CpclwcqkDaoImpl.NAME)
 	CpclwcqkDao cpclwcqkDao;
 
+	@Resource(name=CpczwcqkDaoImpl.NAME)
+	CpczwcqkDao cpczwcqkDao;
+	
 	@Resource(name=CpmcDaoImpl.NAME)
 	CpmcDao cpmcDao;
 	
@@ -65,26 +71,40 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 	public List<List<String>> getCpclwcqk(Date d, Company company, SbdczclwcqkType type) {
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<Integer> cpIdList = getCpIdList(type);
+
+		
+		List<Double> finalListTemp = new ArrayList<Double>();
+		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
+		
+		for (int i = 0; i < 13; ++i){
+			finalListTemp.add(0.0);
+			finalListNullOrNot.add(true);
+		}
+		
 		
 		for (int cp = 0; cp < cpIdList.size(); cp++) {
 			
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			cal.add(Calendar.YEAR, -1);
-			cal.add(Calendar.MONTH, 1);
+			//cal.add(Calendar.MONTH, 1);
 			
 			List<CpclwcqkEntity> entities= cpclwcqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
 			List<String> oneLine = new ArrayList<String>();
 
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());
 			
-			for (int i = 0; i < 12; ++i){
+			for (int i = 0; i < 13; ++i){
 
 				Boolean bFind = false;
 				for (CpclwcqkEntity entity : entities){
 					if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
 						bFind = true;
 						oneLine.add("" + entity.getCl());
+						
+
+						finalListTemp.set(i, finalListTemp.get(i) + entity.getCl());
+						finalListNullOrNot.set(i, false);
 						
 						entities.remove(entity);
 						break;
@@ -99,6 +119,22 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 			result.add(oneLine);
 		}		
 		
+		List<String> finalLine = new ArrayList<String>();
+		finalLine.add("合计");
+
+		for (int i = 0; i < 13; ++i) {
+
+			if (!finalListNullOrNot.get(i)) {
+
+				finalLine.add("" + finalListTemp.get(i));
+			} else {
+
+				finalLine.add("null");
+			}
+		}
+
+		result.add(finalLine);
+		
 		return result;
 	}
 	
@@ -112,26 +148,45 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 		
 		for (int cp = 0; cp < cpIdList.size(); cp++) {
 			
-			CpclwcqkEntity entity = cpclwcqkDao.getByDate(d, company, type, cpIdList.get(cp));
+			CpclwcqkEntity entityCl = cpclwcqkDao.getByDate(d, company, SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ, cpIdList.get(cp));
+			CpczwcqkEntity entityCz = cpczwcqkDao.getByDate(d, company, SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ, cpIdList.get(cp));
 			List<String> oneLine = new ArrayList<String>();
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());
 			
-			if (entity == null) {
+			if (entityCz == null) {
 				oneLine.add("");
 			} else {
 				Boolean bFind = false;
 
-				if (entity.getNf() == cal.get(Calendar.YEAR)
-						&& entity.getYf() == cal.get(Calendar.MONTH) + 1) {
+				if (entityCz.getNf() == cal.get(Calendar.YEAR)
+						&& entityCz.getYf() == cal.get(Calendar.MONTH) + 1) {
 					bFind = true; 
-					oneLine.add("" + entity.getCl());
+					oneLine.add("" + entityCz.getCz());
 				}
 
 				if (!bFind) {
 					oneLine.add("");
 				}
 
-			}				
+			}	
+			
+			if (entityCl == null) {
+				oneLine.add("");
+			} else {
+				Boolean bFind = false;
+
+				if (entityCl.getNf() == cal.get(Calendar.YEAR)
+						&& entityCl.getYf() == cal.get(Calendar.MONTH) + 1) {
+					bFind = true; 
+					oneLine.add("" + entityCl.getCl());
+				}
+
+				if (!bFind) {
+					oneLine.add("");
+				}
+
+			}	
+			
 			result.add(oneLine);
 		}		
 		
@@ -146,22 +201,38 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 		List<Integer> cpIdList = getCpIdList(type);
 		
 		for (int cp = 0; cp < cpIdList.size(); cp++) {
-			CpclwcqkEntity entity= cpclwcqkDao.getByDate(d, company, type, cpIdList.get(cp));
+			CpclwcqkEntity entityCl = cpclwcqkDao.getByDate(d, company, type, cpIdList.get(cp));
+			CpczwcqkEntity entityCz = cpczwcqkDao.getByDate(d, company, type, cpIdList.get(cp));
 			
-			if (null == entity){
-				entity = new CpclwcqkEntity();
+			if (null == entityCz){
+				entityCz = new CpczwcqkEntity();
 
-				entity.setNf(cal.get(Calendar.YEAR));
-				entity.setYf(cal.get(Calendar.MONTH) + 1);
-				entity.setDwxx(dwxxDao.getById(company.getId()));
-				entity.setCpmc(cpmcDao.getById(cpIdList.get(cp)));
-				entity.setTjfs(type.value());
+				entityCz.setNf(cal.get(Calendar.YEAR));
+				entityCz.setYf(cal.get(Calendar.MONTH) + 1);
+				entityCz.setDwxx(dwxxDao.getById(company.getId()));
+				entityCz.setCpmc(cpmcDao.getById(cpIdList.get(cp)));
+				entityCz.setTjfs(SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ.value());
 			}
 
-			entity.setZt(status.ordinal());
-			entity.setCl(Util.toDoubleNull(data.getJSONArray(cp).getString(0)));
+			entityCz.setZt(status.ordinal());
+			entityCz.setCz(Util.toDoubleNull(data.getJSONArray(cp).getString(0)));
 			
-			cpclwcqkDao.merge(entity);
+			cpczwcqkDao.merge(entityCz);
+			
+			if (null == entityCl){
+				entityCl = new CpclwcqkEntity();
+
+				entityCl.setNf(cal.get(Calendar.YEAR));
+				entityCl.setYf(cal.get(Calendar.MONTH) + 1);
+				entityCl.setDwxx(dwxxDao.getById(company.getId()));
+				entityCl.setCpmc(cpmcDao.getById(cpIdList.get(cp)));
+				entityCl.setTjfs(SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ.value());
+			}
+
+			entityCl.setZt(status.ordinal());
+			entityCl.setCl(Util.toDoubleNull(data.getJSONArray(cp).getString(1)));
+			
+			cpclwcqkDao.merge(entityCl);
 		}
 		
 		return err;

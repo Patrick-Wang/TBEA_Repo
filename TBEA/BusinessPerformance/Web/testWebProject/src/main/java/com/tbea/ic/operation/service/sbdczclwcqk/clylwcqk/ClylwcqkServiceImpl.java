@@ -70,14 +70,14 @@ public class ClylwcqkServiceImpl implements ClylwcqkService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			cal.add(Calendar.YEAR, -1);
-			cal.add(Calendar.MONTH, 1);
+			//cal.add(Calendar.MONTH, 1);
 			
 			List<ClylwcqkEntity> entities= clylwcqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
 			List<String> oneLine = new ArrayList<String>();
 
 			oneLine.add(clmcDao.getById(cpIdList.get(cp)).getName());
 			
-			for (int i = 0; i < 12; ++i){
+			for (int i = 0; i < 13; ++i){
 
 				Boolean bFind = false;
 				for (ClylwcqkEntity entity : entities){

@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.cpclwcqk = framework.basic.endpoint.lastId();
-    pluginEntry.cpclwcqk_byq = framework.basic.endpoint.lastId();
+    pluginEntry.cpczclwcqk_byq = framework.basic.endpoint.lastId();
 })(pluginEntry || (pluginEntry = {}));
 var sbdczclwcqk;
 (function (sbdczclwcqk) {
@@ -33,7 +33,8 @@ var sbdczclwcqk;
                 node = new JQTable.Node("产品", "cpclwcqkEntry_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node(year + "年" + month + "月", "cpclwcqkEntry_riqi", false, TextAlign.Center);
-                node.append(new JQTable.Node("产量", "cpclwcqkEntry_cz", false));
+                node.append(new JQTable.Node("产值", "cpclwcqkEntry_cz", false));
+                node.append(new JQTable.Node("产量", "cpclwcqkEntry_cl", false));
                 titleNodes.push(node);
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
@@ -149,9 +150,9 @@ var sbdczclwcqk;
             };
             EntryView.prototype.init = function (opt) {
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpclwcqk_byq, this.getId()))
+                    .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpczclwcqk_byq, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "产量完成情况");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产值产量完成情况");
             };
             EntryView.prototype.onEvent = function (e) {
                 if (e.road != undefined) {

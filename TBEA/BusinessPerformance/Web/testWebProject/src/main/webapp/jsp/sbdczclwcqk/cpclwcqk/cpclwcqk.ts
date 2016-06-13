@@ -25,7 +25,7 @@ module sbdczclwcqk {
                 titleNodes.push(node);
 
                 node = new JQTable.Node("上年度", "cpclwcqk_snd", true, TextAlign.Center);
-                for (let i = month + 1; i <= 12; ++i) {
+                for (let i = month; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "cpclwcqk_snd_" + i));
                 }
 
@@ -151,7 +151,7 @@ module sbdczclwcqk {
                         width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
-                        rowNum: 39,
+                        rowNum: 50,
                         data: tableAssist.getData(this.mData),
                         datatype: "local",
                         viewrecords : true

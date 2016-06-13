@@ -149,10 +149,10 @@ var sbdczclwcqk;
                 return false;
             };
             EntryView.prototype.init = function (opt) {
-                framework.router
-                    .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpczwcqk_byq, this.getId()))
-                    .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "产值完成情况");
+                //                framework.router
+                //                    .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpczwcqk_byq, this.getId()))
+                //                    .to(framework.basic.endpoint.FRAME_ID)
+                //                    .send(framework.basic.FrameEvent.FE_REGISTER, "产值完成情况");
                 framework.router
                     .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpczwcqk_xl, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)

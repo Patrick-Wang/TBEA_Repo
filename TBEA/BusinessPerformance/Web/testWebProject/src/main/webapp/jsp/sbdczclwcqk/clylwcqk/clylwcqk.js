@@ -31,7 +31,7 @@ var sbdczclwcqk;
                 node = new JQTable.Node("主材", "clylwcqk_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node("上年度", "clylwcqk_snd", true, TextAlign.Center);
-                for (var i = month + 1; i <= 12; ++i) {
+                for (var i = month; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "clylwcqk_snd_" + i));
                 }
                 if (month != 12) {
@@ -140,7 +140,7 @@ var sbdczclwcqk;
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 20,
+                    rowNum: 50,
                     data: tableAssist.getData(this.mData),
                     datatype: "local",
                     viewrecords: true
