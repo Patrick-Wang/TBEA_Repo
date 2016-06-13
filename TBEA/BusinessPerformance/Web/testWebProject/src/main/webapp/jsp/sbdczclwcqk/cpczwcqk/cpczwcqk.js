@@ -32,7 +32,7 @@ var sbdczclwcqk;
                 node = new JQTable.Node("产品", "cpczwcqk_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node("上年度", "cpczwcqk_snd", true, TextAlign.Center);
-                for (var i = month + 1; i <= 12; ++i) {
+                for (var i = month; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "cpczwcqk_snd_" + i));
                 }
                 if (month != 12) {
@@ -148,7 +148,7 @@ var sbdczclwcqk;
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 39,
+                    rowNum: 50,
                     data: tableAssist.getData(this.mData),
                     datatype: "local",
                     viewrecords: true

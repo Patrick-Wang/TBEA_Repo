@@ -76,8 +76,8 @@ public class WlyddmlspcsServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = wlyddmlspcsService.getWlyddmlspcs(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
-		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0});
-		handler.next(new RawNumberFormatterHandler(1));
+		RawFormatterHandler handler = new RawEmptyHandler(null, null);
+		//handler.next(new RawNumberFormatterHandler(1));
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
@@ -139,8 +139,8 @@ public class WlyddmlspcsServlet {
 		
 		ExcelTemplate template = ExcelTemplate.createYlfxwlyddmlspcsTemplate(getYlfxwlyddmlspcsSheetType(type, d));
 				
-		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(1));
+		FormatterHandler handler = new HeaderFormatterHandler(null, null);
+		//handler.next(new NumberFormatterHandler(1));
 		
 		
 		

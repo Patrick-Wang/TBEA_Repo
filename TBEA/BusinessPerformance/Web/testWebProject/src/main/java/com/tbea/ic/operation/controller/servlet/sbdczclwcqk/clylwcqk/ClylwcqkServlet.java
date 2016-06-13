@@ -102,7 +102,7 @@ public class ClylwcqkServlet {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		
-		Integer num = (type.value() % SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ.value()) * 12 + cal.get(Calendar.MONTH);
+		Integer num = cal.get(Calendar.MONTH);
 		
 		SbdczclwcqkSheetType sheetType = SbdczclwcqkSheetType.values()[num];
 		

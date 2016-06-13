@@ -76,7 +76,7 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 		List<Double> finalListTemp = new ArrayList<Double>();
 		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
 		
-		for (int i = 0; i < 12; ++i){
+		for (int i = 0; i < 13; ++i){
 			finalListTemp.add(0.0);
 			finalListNullOrNot.add(true);
 		}
@@ -86,14 +86,14 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			cal.add(Calendar.YEAR, -1);
-			cal.add(Calendar.MONTH, 1);
+			//cal.add(Calendar.MONTH, 1);
 			
 			List<CpczwcqkEntity> entities= cpczwcqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
 			List<String> oneLine = new ArrayList<String>();
 
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());
 			
-			for (int i = 0; i < 12; ++i){
+			for (int i = 0; i < 13; ++i){
 
 				Boolean bFind = false;
 				for (CpczwcqkEntity entity : entities){
@@ -118,23 +118,27 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 		}
 		
 
+		
+		List<String> finalLine = new ArrayList<String>();
 		if (type == SbdczclwcqkType.SBDCZCLWCQK_CZ_XL) {
-
-			List<String> finalLine = new ArrayList<String>();
 			finalLine.add("小计");
-			for (int i = 0; i < 12; ++i){
-			
-				if (!finalListNullOrNot.get(i)) {
-
-					finalLine.add("" + finalListTemp.get(i));
-				} else {
-					
-					finalLine.add("null");
-				}
-			}
-			
-			result.add(finalLine);
+		} else {
+			finalLine.add("合计");
 		}
+
+		for (int i = 0; i < 13; ++i) {
+
+			if (!finalListNullOrNot.get(i)) {
+
+				finalLine.add("" + finalListTemp.get(i));
+			} else {
+
+				finalLine.add("null");
+			}
+		}
+
+		result.add(finalLine);
+
 		
 		return result;
 	}
