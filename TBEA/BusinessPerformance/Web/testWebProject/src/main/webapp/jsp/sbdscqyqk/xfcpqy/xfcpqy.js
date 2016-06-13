@@ -56,6 +56,9 @@ var sbdscqyqk;
             ShowView.prototype.getId = function () {
                 return plugin.xfcpqy;
             };
+            ShowView.prototype.pluginGetUnit = function () {
+                return "单位：万元";
+            };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../xfcpqy/export.do?" + Util.Ajax.toUrlParam({
                     date: date,

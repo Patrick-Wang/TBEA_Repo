@@ -27,13 +27,13 @@ module sbdscqyqk {
                 titleNodes.push(node);
 
                 node = new JQTable.Node("上年度", "snd", true, TextAlign.Center);
-                for (let i = month + 1; i <= 12; ++i) {
+                for (let i = month; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "snd_" + i));
                 }
 
-                if (month != 12) {
-                    titleNodes.push(node);
-                }
+                //if (month != 12) {
+                //    titleNodes.push(node);
+                //}
 
                 node = new JQTable.Node("本年度", "wlyddmlspcs_bnd", true, TextAlign.Center);
                 for (let i = 1; i <= month; ++i) {
@@ -55,6 +55,10 @@ module sbdscqyqk {
 
             getId():number {
                 return plugin.xfscqy;
+            }
+
+            pluginGetUnit():string{
+                return "单位：万元";
             }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
@@ -119,10 +123,17 @@ module sbdscqyqk {
                     ["重点领域市场"],
                     ["重点领域市场"],
                     ["重点领域市场"],
+                    ["连锁经营"],
                     ["其它"],
                     ["合计"]];
                 for (let i = 0; i < data.length; ++i){
-                    data[i] = data[i].concat(this.mData[i]);
+                    if (i == data.length - 3){
+                        data[i] = data[i].concat(this.mData[i + 1]);
+                    }else if(i == data.length - 2){
+                        data[i] = data[i].concat(this.mData[i - 1]);
+                    }else{
+                        data[i] = data[i].concat(this.mData[i]);
+                    }
                 }
                 tableAssist.mergeColum(0);
                 tableAssist.mergeRow(0);

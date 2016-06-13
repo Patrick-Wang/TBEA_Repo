@@ -60,6 +60,10 @@ module sbdscqyqk {
                 return plugin.xfcpqy;
             }
 
+            pluginGetUnit():string{
+                return "单位：万元";
+            }
+
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
                 return "../xfcpqy/export.do?" + Util.Ajax.toUrlParam({
                         date: date,

@@ -57,7 +57,7 @@ var sbdscqyqk;
                 return plugin.xfscqy;
             };
             ShowView.prototype.pluginGetUnit = function () {
-                return "单位:万元";
+                return "单位：万元";
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../xfscqy/export.do?" + Util.Ajax.toUrlParam({
