@@ -28,7 +28,6 @@ import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
 import com.tbea.ic.operation.common.formatter.v2.core.Offset;
 import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
-import com.tbea.ic.operation.common.formatter.v2.data.TextFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTitleYearScrollerFilter;
