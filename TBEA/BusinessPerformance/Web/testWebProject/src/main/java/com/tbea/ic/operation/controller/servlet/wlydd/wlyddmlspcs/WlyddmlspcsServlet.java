@@ -139,8 +139,8 @@ public class WlyddmlspcsServlet {
 		
 		ExcelTemplate template = ExcelTemplate.createYlfxwlyddmlspcsTemplate(getYlfxwlyddmlspcsSheetType(type, d));
 				
-		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(1));
+		FormatterHandler handler = new HeaderFormatterHandler(null, null);
+		//handler.next(new NumberFormatterHandler(1));
 		
 		
 		
