@@ -15,15 +15,15 @@ PRIMARY KEY CLUSTERED
 
 SET IDENTITY_INSERT [dbo].[identifier_cpmc] ON
 
-INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (1 ,N'其他')
+INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (1 ,N'其它')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (2 ,N'成套项目(国内工程)')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (3 ,N'        输变电-EPC模式')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (4 ,N'        输变电-BT模式')
-INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (5 ,N'        输变电-其他模式')
+INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (5 ,N'        输变电-其它模式')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (6 ,N'成套项目(国际工程)')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (7 ,N'        输变电-EPC模式')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (8 ,N'        输变电-BT模式')
-INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (9 ,N'        输变电-其他模式')
+INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (9 ,N'        输变电-其它模式')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (10 ,N'物流贸易')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (11 ,N'服务类')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (12 ,N'        会议费收入')
@@ -36,7 +36,7 @@ INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (18 ,N'        日用百货
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (19 ,N'        电费收入')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (20 ,N'        水汽暖收入')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (21 ,N'        餐饮收入')
-INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (22 ,N'        其他收入')
+INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (22 ,N'        其它收入')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (23 ,N'交流变压器')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (24 ,N'        35KV及以下')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (25 ,N'        66-110KV')
@@ -102,6 +102,12 @@ INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (82 ,N'        欧式变电
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (83 ,N'        美式变电站')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (84 ,N'        华式变电站')
 INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (87 ,N'        其它')
+INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (88 ,N'集成服务业务')
+INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (89 ,N'其中：国内成套')
+INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (90 ,N'        国际成套')
+INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (91 ,N'        检测修试')
+INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (92 ,N'        其它')
+INSERT [dbo].[identifier_cpmc] ([id], [name]) VALUES (93 ,N'其它')
 
 
 

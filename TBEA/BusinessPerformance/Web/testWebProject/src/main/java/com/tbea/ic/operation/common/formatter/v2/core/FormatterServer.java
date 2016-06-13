@@ -10,6 +10,35 @@ import com.tbea.ic.operation.common.EasyList;
 import com.tbea.ic.operation.common.Pair;
 
 public class FormatterServer {
+	
+	public static class HandlerBuilder{
+		FormatterHandler current;
+		FormatterServer serv;
+		
+		public HandlerBuilder(FormatterServer serv){
+			this.serv = serv;
+		}
+		
+		public HandlerBuilder add(FormatterHandler h){
+			if (this.current != null){
+				this.serv.add(current);
+			}
+			this.current = h;
+			return this;
+		}
+		
+		public HandlerBuilder to(int group){
+			this.serv.add(current, group);
+			current = null;
+			return this;
+		}
+		
+		public FormatterServer server(){
+			return serv;
+		}
+	}
+	
+	
 	public final static int GROP_DATA = 0;
 	public final static int GROP_EXCEL = 1;
 	public final static int GROP_EXCELMERGE = 2;
@@ -19,7 +48,7 @@ public class FormatterServer {
 			new HashMap<Integer, Pair<FormatterHandler, FormatterHandler>>();
 	String nullAs = "--";
 	
-	public FormatterServer addHandler(FormatterHandler handler, int group){
+	public FormatterServer add(FormatterHandler handler, int group){
 		if (groupHandler.containsKey(group)){
 			groupHandler.get(group).getSecond().next(handler);
 			groupHandler.get(group).setSecond(handler);
@@ -29,8 +58,12 @@ public class FormatterServer {
 		return this;
 	}
 	
-	public FormatterServer addHandler(FormatterHandler handler){
-		return addHandler(handler, GROP_DATA);
+	public HandlerBuilder handlerBuilder(){
+		return new HandlerBuilder(this);
+	}
+	
+	public FormatterServer add(FormatterHandler handler){
+		return add(handler, GROP_DATA);
 	}
 	
 	

@@ -151,7 +151,7 @@ var sbdscqyqk;
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 40,
+                    rowNum: 1000,
                     data: tableAssist.getData(this.mData),
                     datatype: "local",
                     viewrecords: true

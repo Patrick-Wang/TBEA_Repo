@@ -97,8 +97,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
 	"	 where imp.ver = 0	";	
-		 		
-		//------------------------变压器产业（按产品类型分类）-------------------------------		
+
+	//------------------------变压器产业（按产品类型分类）-------------------------------		
 	private static String sqlCbByqcyAcplxfl = 			
 	"	select unit_code,	" +	
 	"	       unit_name,	" +	
