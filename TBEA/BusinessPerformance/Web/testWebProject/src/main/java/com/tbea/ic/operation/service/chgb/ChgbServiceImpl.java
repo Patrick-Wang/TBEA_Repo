@@ -722,29 +722,30 @@ public class ChgbServiceImpl implements ChgbService {
 						entity = entities.get(0);
 					}
 					
-					int base = 4;
-					entity.setYcl(rs.getDouble(base++));
-					entity.setKcsp(rs.getDouble(base++));
-					entity.setSccbDpbtf(rs.getDouble(base++));
-					entity.setFcsp(rs.getDouble(base++));
-					entity.setDh(rs.getDouble(base++));
-					entity.setHj(rs.getDouble(base++));
+					int base = 10;
+					entity.setYcl(MathUtil.division(rs.getDouble(base++), 10000d));
+					entity.setKcsp(MathUtil.division(rs.getDouble(base++), 10000d));
+					entity.setSccbDpbtf(MathUtil.division(rs.getDouble(base++), 10000d));
+					entity.setFcsp(MathUtil.division(rs.getDouble(base++), 10000d));
+					entity.setDh(MathUtil.division(rs.getDouble(base++), 10000d));
+					entity.setHj(MathUtil.division(rs.getDouble(base++), 10000d));
 					nychDao.merge(entity);
 					
+					base = 4;
 					entity = nychDao.getQCJYByDate(d, comp);
 					if (null == entity){
 						entity = new NychEntity();
 						entity.setDwxx(dwxxDao.getById(comp.getId()));
 						entity.setNf(nf);
-						entity.setYf(yf);
+						entity.setYf(13);
 					}
 					
-					entity.setYcl(rs.getDouble(base++));
-					entity.setKcsp(rs.getDouble(base++));
-					entity.setSccbDpbtf(rs.getDouble(base++));
-					entity.setFcsp(rs.getDouble(base++));
-					entity.setDh(rs.getDouble(base++));
-					entity.setHj(rs.getDouble(base++));
+					entity.setYcl(MathUtil.division(rs.getDouble(base++), 10000d));
+					entity.setKcsp(MathUtil.division(rs.getDouble(base++), 10000d));
+					entity.setSccbDpbtf(MathUtil.division(rs.getDouble(base++), 10000d));
+					entity.setFcsp(MathUtil.division(rs.getDouble(base++), 10000d));
+					entity.setDh(MathUtil.division(rs.getDouble(base++), 10000d));
+					entity.setHj(MathUtil.division(rs.getDouble(base++), 10000d));
 					nychDao.merge(entity);
 				}
 				rs.close();

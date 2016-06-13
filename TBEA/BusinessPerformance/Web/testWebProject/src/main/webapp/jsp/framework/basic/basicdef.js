@@ -44,6 +44,7 @@ var framework;
             FrameEvent.FE_NOT_SUBMITTED = FrameEvent.lastEvent();
             FrameEvent.FE_SUBMITTED = FrameEvent.lastEvent();
             FrameEvent.FE_APPROVED = FrameEvent.lastEvent();
+            FrameEvent.FE_GETUNIT = FrameEvent.lastEvent();
         })(FrameEvent = basic.FrameEvent || (basic.FrameEvent = {}));
         var BasicEndpoint = (function () {
             function BasicEndpoint() {
@@ -148,10 +149,18 @@ var framework;
                             val = this.pluginGetExportUrl(st, e.data.compType);
                         }
                         break;
+                    case FrameEvent.FE_GETUNIT:
+                        {
+                            val = this.pluginGetUnit();
+                        }
+                        break;
                     default:
                         break;
                 }
                 return val;
+            };
+            ShowPluginView.prototype.pluginGetUnit = function () {
+                return undefined;
             };
             return ShowPluginView;
         })(BasePluginView);

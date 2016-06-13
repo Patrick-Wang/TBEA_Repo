@@ -13,9 +13,9 @@
 	<div class="section">
 		<div class="thumb3">
 			<ul class="slides">
-				<li><a href="../dzwzgb/entry.do" target="_blank"><img
+<%-- 				<li><a href="../dzwzgb/entry.do" target="_blank"><img
 						src="../images/charts/bar5.png"> <span><strong>大宗物资管报录入</strong></span></a>
-				</li>
+				</li> --%>
 				<li><a href="../wlydd/entry.do" target="_blank"><img
 						src="../images/charts/bar6.png"> <span><strong>未履约订单情况录入</strong></span></a>
 				</li>

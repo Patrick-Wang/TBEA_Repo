@@ -163,8 +163,14 @@ module framework.basic {
             else{
                 $("#headertitle")[0].innerHTML = node.getData().value;
             }
-            
-            
+
+            let unit = router.to(this.mCurrentPlugin).send(FrameEvent.FE_GETUNIT);
+            if (undefined != unit){
+                $("#unit").text(unit);
+            }else{
+                $("#unit").text("");
+            }
+
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_UPDATE, {
                 date:dt,
                 compType:this.mCurrentComp

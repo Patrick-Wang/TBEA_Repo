@@ -66,8 +66,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 		
 		return cpIdList;
 	}
-	
-	
+
 	@Override
 	public List<List<String>> getXfcpqy(Date d, Company company, SbdscqyqkType type) {
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -81,7 +80,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 		List<Double> finalListTempAll = new ArrayList<Double>();
 		List<Boolean> finalListNullOrNotAll = new ArrayList<Boolean>();
 		
-		for (int i = 0; i < 12; ++i){
+		for (int i = 0; i < 13; ++i){
 			finalListTemp1.add(0.0);
 			finalListNullOrNot1.add(true);
 			
@@ -97,14 +96,14 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			cal.add(Calendar.YEAR, -1);
-			cal.add(Calendar.MONTH, 1);
+//			cal.add(Calendar.MONTH, 1);
 			
 			List<XfcpqyEntity> entities= xfcpqyDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
 			List<String> oneLine = new ArrayList<String>();
 
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());
 			
-			for (int i = 0; i < 12; ++i){
+			for (int i = 0; i < 13; ++i){
 
 				Boolean bFind = false;
 				for (XfcpqyEntity entity : entities){
@@ -153,7 +152,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 		
 		List<String> finalLine1 = new ArrayList<String>();
 		finalLine1.add("小计");
-		for (int i = 0; i < 12; ++i){
+		for (int i = 0; i < 13; ++i){
 		
 			if (!finalListNullOrNot1.get(i)) {
 
@@ -166,7 +165,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 		
 		List<String> finalLine2 = new ArrayList<String>();
 		finalLine2.add("小计");
-		for (int i = 0; i < 12; ++i){
+		for (int i = 0; i < 13; ++i){
 		
 			if (!finalListNullOrNot2.get(i)) {
 
@@ -179,7 +178,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 		
 		List<String> finalLineAll = new ArrayList<String>();
 		finalLineAll.add("合计");
-		for (int i = 0; i < 12; ++i){
+		for (int i = 0; i < 13; ++i){
 		
 			if (!finalListNullOrNotAll.get(i)) {
 
@@ -192,10 +191,10 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 		
 		if (type == SbdscqyqkType.YLFX_WGCPYLNL_XL ) {
 
-			result.add(SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_ZH_QT.ordinal() + 1, finalLine1);
-
 			result.add(SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_GJGC.ordinal() + 1, finalLine2);
 			
+			result.add(SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_ZH_QT.ordinal() + 1, finalLine1);
+
 			result.add(finalLineAll);
 		}
 		
@@ -283,7 +282,5 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 	public ZBStatus getXfcpqyStatus(Date d, Company comp, SbdscqyqkType type) {
 		return ZBStatus.SAVED;
 	}
-
-	
 
 }

@@ -138,6 +138,13 @@ var framework;
                 else {
                     $("#headertitle")[0].innerHTML = node.getData().value;
                 }
+                var unit = router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_GETUNIT);
+                if (undefined != unit) {
+                    $("#unit").text(unit);
+                }
+                else {
+                    $("#unit").text("");
+                }
                 router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_UPDATE, {
                     date: dt,
                     compType: this.mCurrentComp

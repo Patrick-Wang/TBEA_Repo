@@ -47,6 +47,12 @@ public class XfscqyServlet {
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
+	private void swap(List<List<String>> result, int rowStart, int rowEnd){
+		List<String> tmp = result.get(rowStart);
+		result.set(rowStart, result.get(rowEnd));
+		result.set(rowEnd, tmp);
+	}
+	
 	@RequestMapping(value = "update.do")
 	public @ResponseBody byte[] getXfscqy(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -101,6 +107,7 @@ public class XfscqyServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		List<List<String>> ret = xfscqyService.getXfscqy(d, company);
+		swap(ret, ret.size() - 2, ret.size() - 3);
 		ExcelTemplate template = ExcelTemplate.createSbdscqyqkTemplate(SbdscqyqkSheetType.XFSCQY);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
@@ -110,10 +117,9 @@ public class XfscqyServlet {
 		Calendar startMonth = Calendar.getInstance();
 		startMonth.setTime(d);
 		startMonth.add(Calendar.YEAR, -1);
-		startMonth.add(Calendar.MONTH, 1);
 
 		int last = 2 + 12 - (startMonth.get(Calendar.MONTH) + 1);
-		for (int i = 0; i < 12; ++i){
+		for (int i = 0; i < 13; ++i){
 			HSSFRow title = sheet.getRow(0);
 			HSSFCell cell = title.createCell(i + 2);
 			cell.setCellStyle(template.getCellStyleCenter());
@@ -133,7 +139,7 @@ public class XfscqyServlet {
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
 		handler.next(new NumberFormatterHandler(1));
 		FormatterServer serv = new FormatterServer(handler, 1, 2);
-		serv.addMergeRegion(new MergeRegion(2, 0, 12, 1));
+		serv.addMergeRegion(new MergeRegion(2, 0, 13, 1));
 		serv.format(ret, template);
 		template.write(response, name + ".xls");
 	}

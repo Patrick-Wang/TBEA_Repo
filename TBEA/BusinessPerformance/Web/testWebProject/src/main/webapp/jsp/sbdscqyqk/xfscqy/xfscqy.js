@@ -32,12 +32,12 @@ var sbdscqyqk;
                 node = new JQTable.Node("行业", "hy2", true, TextAlign.Center);
                 titleNodes.push(node);
                 node = new JQTable.Node("上年度", "snd", true, TextAlign.Center);
-                for (var i = month + 1; i <= 12; ++i) {
+                for (var i = month; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "snd_" + i));
                 }
-                if (month != 12) {
-                    titleNodes.push(node);
-                }
+                //if (month != 12) {
+                //    titleNodes.push(node);
+                //}
                 node = new JQTable.Node("本年度", "wlyddmlspcs_bnd", true, TextAlign.Center);
                 for (var i = 1; i <= month; ++i) {
                     node.append(new JQTable.Node(i + "月", "bnd_" + i));
@@ -46,7 +46,7 @@ var sbdscqyqk;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -55,6 +55,9 @@ var sbdscqyqk;
             }
             ShowView.prototype.getId = function () {
                 return plugin.xfscqy;
+            };
+            ShowView.prototype.pluginGetUnit = function () {
+                return "单位:万元";
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../xfscqy/export.do?" + Util.Ajax.toUrlParam({
@@ -111,10 +114,19 @@ var sbdscqyqk;
                     ["重点领域市场"],
                     ["重点领域市场"],
                     ["重点领域市场"],
+                    ["连锁经营"],
                     ["其它"],
                     ["合计"]];
                 for (var i = 0; i < data.length; ++i) {
-                    data[i] = data[i].concat(this.mData[i]);
+                    if (i == data.length - 3) {
+                        data[i] = data[i].concat(this.mData[i + 1]);
+                    }
+                    else if (i == data.length - 2) {
+                        data[i] = data[i].concat(this.mData[i - 1]);
+                    }
+                    else {
+                        data[i] = data[i].concat(this.mData[i]);
+                    }
                 }
                 tableAssist.mergeColum(0);
                 tableAssist.mergeRow(0);
@@ -135,6 +147,6 @@ var sbdscqyqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(xfscqy = sbdscqyqk.xfscqy || (sbdscqyqk.xfscqy = {}));
 })(sbdscqyqk || (sbdscqyqk = {}));

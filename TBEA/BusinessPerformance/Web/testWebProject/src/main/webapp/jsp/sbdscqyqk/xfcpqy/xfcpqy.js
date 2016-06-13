@@ -32,12 +32,12 @@ var sbdscqyqk;
                 node = new JQTable.Node("产品", "cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node("上年度", "snd", true, TextAlign.Center);
-                for (var i = month + 1; i <= 12; ++i) {
+                for (var i = month; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "snd_" + i));
                 }
-                if (month != 12) {
-                    titleNodes.push(node);
-                }
+                //if (month != 12) {
+                //    titleNodes.push(node);
+                //}
                 node = new JQTable.Node("本年度", "sbdscqyqk_bnd", true, TextAlign.Center);
                 for (var i = 1; i <= month; ++i) {
                     node.append(new JQTable.Node(i + "月", "bnd_" + i));
@@ -46,7 +46,7 @@ var sbdscqyqk;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -156,6 +156,6 @@ var sbdscqyqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(xfcpqy = sbdscqyqk.xfcpqy || (sbdscqyqk.xfcpqy = {}));
 })(sbdscqyqk || (sbdscqyqk = {}));

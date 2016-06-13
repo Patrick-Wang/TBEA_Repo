@@ -43,20 +43,19 @@ public class XfscqyServiceImpl implements XfscqyService {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
-		cal.add(Calendar.MONTH, 1);
 		
 		List<HyEntity> hys = hyDao.getAll();
 		for (HyEntity entity: hys){
 			List<String> list = new ArrayList<String>();
-			Util.resize(list, 13);
+			Util.resize(list, 14);
 			list.set(0, entity.getName());
 			result.add(list);
 		}
 		List<String> listHj = new ArrayList<String>();
-		Util.resize(listHj, 13);
+		Util.resize(listHj, 14);
 		listHj.set(0, "合计");
 		result.add(listHj);
-		for (int i = 0; i < 12; ++i){
+		for (int i = 0; i < 13; ++i){
 			List<XfscqyEntity> entities = xfscqyDao.getByDate(new Date(cal.getTimeInMillis()), company);
 			Double sum = null;
 			for (XfscqyEntity entity: entities){

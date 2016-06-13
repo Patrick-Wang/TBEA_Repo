@@ -39,6 +39,7 @@ module framework.basic {
         export let FE_NOT_SUBMITTED : number = lastEvent();
         export let FE_SUBMITTED : number = lastEvent();
         export let FE_APPROVED : number = lastEvent();
+        export let FE_GETUNIT : number = lastEvent();
     }
     export interface PluginOption {
         host:string;
@@ -169,12 +170,20 @@ module framework.basic {
                     val = this.pluginGetExportUrl(st, e.data.compType);
                 }
                     break;
+                case FrameEvent.FE_GETUNIT:
+                {
+                    val = this.pluginGetUnit();
+                }
+                    break;
                 default:
                     break;
             }
             return val;
         }
         abstract  pluginGetExportUrl(date:string, compType:Util.CompanyType):string;
+        pluginGetUnit():string{
+            return undefined
+        }
     }
 
     export abstract class EntryPluginView extends BasePluginView {

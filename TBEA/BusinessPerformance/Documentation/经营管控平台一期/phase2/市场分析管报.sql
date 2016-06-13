@@ -28,6 +28,7 @@ INSERT [dbo].[identifier_scfxgb_hy] ([id], [name])	VALUES (10,N'钢铁冶金')
 INSERT [dbo].[identifier_scfxgb_hy] ([id], [name])	VALUES (11,N'航天军工')
 INSERT [dbo].[identifier_scfxgb_hy] ([id], [name])	VALUES (12,N'内贸')
 INSERT [dbo].[identifier_scfxgb_hy] ([id], [name])	VALUES (13,N'其它')
+INSERT [dbo].[identifier_scfxgb_hy] ([id], [name])	VALUES (14,N'连锁经营')
 SET IDENTITY_INSERT [dbo].[identifier_scfxgb_hy] OFF        
 
 

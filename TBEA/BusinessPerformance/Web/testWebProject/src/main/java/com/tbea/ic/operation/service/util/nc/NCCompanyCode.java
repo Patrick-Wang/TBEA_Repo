@@ -26,7 +26,7 @@ public class NCCompanyCode {
 		companyMap.put("CC12", CompanyType.JCKGS_JYDW);
 		companyMap.put("CC04", CompanyType.GJGCGS_GFGS);
 		companyMap.put("050200000000", CompanyType.XJNY);
-		companyMap.put("050101010000 ", CompanyType.NLTK);
+		companyMap.put("050101010000", CompanyType.NLTK);
 	}
 	public static String getCode(CompanyType type){
 		for (Entry<String, CompanyType> entry : companyMap.entrySet()){
