@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -500,9 +501,9 @@ public class YszkgbServiceImpl implements YszkgbService {
 				entity.setYf(yf);
 			}
 			
-			entity.setZmje(rs.getDouble(3));
-			entity.setHzzb(rs.getDouble(4));
-			entity.setYz(rs.getDouble(5));
+			entity.setZmje(MathUtil.division(rs.getDouble(3), 10000d));
+			entity.setHzzb(MathUtil.division(rs.getDouble(4), 10000d));
+			entity.setYz(MathUtil.division(rs.getDouble(5), 10000d));
 			yszkzmDao.merge(entity);
 		}
 	}
@@ -558,13 +559,13 @@ public class YszkgbServiceImpl implements YszkgbService {
 				entity.setYf(yf);
 			}
 			
-			entity.setZl5nys(rs.getDouble(3));
-			entity.setZl4z5n(rs.getDouble(4));
-			entity.setZl3z4n(rs.getDouble(5));
-			entity.setZl2z3n(rs.getDouble(6));
-			entity.setZl1z2n(rs.getDouble(7));
-			entity.setZl1nyn(rs.getDouble(8));
-			entity.setHj(rs.getDouble(9));
+			entity.setZl5nys(MathUtil.division(rs.getDouble(3), 10000d));
+			entity.setZl4z5n(MathUtil.division(rs.getDouble(4), 10000d));
+			entity.setZl3z4n(MathUtil.division(rs.getDouble(5), 10000d));
+			entity.setZl2z3n(MathUtil.division(rs.getDouble(6), 10000d));
+			entity.setZl1z2n(MathUtil.division(rs.getDouble(7), 10000d));
+			entity.setZl1nyn(MathUtil.division(rs.getDouble(8), 10000d));
+			entity.setHj(MathUtil.division(rs.getDouble(9), 10000d));
 			yszkZlDao.merge(entity);
 		}
 	}

@@ -287,7 +287,7 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 					entity.setYf(yf);
 					entity.setDwid(comp.getId());
 				}
-				entity.setSjz(Util.division(rs.getDouble(i + 4), rs.getDouble(4 + Cbfl.END.ordinal())));
+				entity.setSjz(Util.division(Util.division(rs.getDouble(i + 4), rs.getDouble(4 + Cbfl.END.ordinal())), 10000d));
 				dmcbfxDao.merge(entity);
 			}
 		}

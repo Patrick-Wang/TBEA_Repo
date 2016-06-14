@@ -16,7 +16,7 @@ module wgcpqk {
             public static createTable(gridName:string, month:number):JQTable.JQGridAssistant {
                 let sndfll : JQTable.Node = new JQTable.Node("上年度废料率", "ac");
                 let dndfll : JQTable.Node = new JQTable.Node("当年度废料率", "ad");
-                for (let i = month + 1; i <= 12; ++i){
+                for (let i = month; i <= 12; ++i){
                     sndfll.append(new JQTable.Node(i + "月", "ac" + i + "a"));
                 }
                 for (let i = 1; i <= month; ++i){

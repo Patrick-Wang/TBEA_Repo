@@ -85,6 +85,10 @@ module  ylfxwlyddmlspcs {
                 this.updateTable();
             }
 
+            pluginGetUnit():string{
+                return "单位：万元";
+            }
+
             isSupported( compType:Util.CompanyType):boolean{
                 if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH ||
                     this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ ||

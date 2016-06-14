@@ -24,7 +24,7 @@ var wgcpqk;
             JQGridAssistantFactory.createTable = function (gridName, month) {
                 var sndfll = new JQTable.Node("上年度废料率", "ac");
                 var dndfll = new JQTable.Node("当年度废料率", "ad");
-                for (var i = month + 1; i <= 12; ++i) {
+                for (var i = month; i <= 12; ++i) {
                     sndfll.append(new JQTable.Node(i + "月", "ac" + i + "a"));
                 }
                 for (var i = 1; i <= month; ++i) {
@@ -41,7 +41,7 @@ var wgcpqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -112,6 +112,6 @@ var wgcpqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(yclbfqk = wgcpqk.yclbfqk || (wgcpqk.yclbfqk = {}));
 })(wgcpqk || (wgcpqk = {}));

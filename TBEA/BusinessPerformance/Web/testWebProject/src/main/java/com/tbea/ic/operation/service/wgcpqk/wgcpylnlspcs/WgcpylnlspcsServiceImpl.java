@@ -53,24 +53,24 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 			}
 			break;
 		}
-		case YLFX_WGCPYLNL_BYQ_DYDJ: {
-			for (WGCPYLNL_BYQ_DYDJ_Type cp : WGCPYLNL_BYQ_DYDJ_Type.values()) {
+		case YLFX_WGCPYLNL_BYQ_MLL: {
+			for (WGCPYLNL_BYQ_MLL_Type cp : WGCPYLNL_BYQ_MLL_Type.values()) {
 				cpIdList.add(cp.value());
 			}
 			break;
 		}
-		case YLFX_WGCPYLNL_BYQ_CPFL: {
-			for (WGCPYLNL_BYQ_CPFL_Type cp : WGCPYLNL_BYQ_CPFL_Type.values()) {
-				cpIdList.add(cp.value());
-			}
-			break;
-		}
-		case YLFX_WGCPYLNL_BYQ_CPFL_T1: {
-			for (WGCPYLNL_BYQ_CPFL_T1_Type cp : WGCPYLNL_BYQ_CPFL_T1_Type.values()) {
-				cpIdList.add(cp.value());
-			}
-			break;
-		}
+//		case YLFX_WGCPYLNL_BYQ_CPFL: {
+//			for (WGCPYLNL_BYQ_CPFL_Type cp : WGCPYLNL_BYQ_CPFL_Type.values()) {
+//				cpIdList.add(cp.value());
+//			}
+//			break;
+//		}
+//		case YLFX_WGCPYLNL_BYQ_CPFL_T1: {
+//			for (WGCPYLNL_BYQ_CPFL_T1_Type cp : WGCPYLNL_BYQ_CPFL_T1_Type.values()) {
+//				cpIdList.add(cp.value());
+//			}
+//			break;
+//		}
 		case YLFX_WGCPYLNL_XL_ZH: {
 			for (WGCPYLNL_XL_ZH_Type cp : WGCPYLNL_XL_ZH_Type.values()) {
 				cpIdList.add(cp.value());
@@ -103,7 +103,7 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 		List<List<Double>> finalListTemp = new ArrayList<List<Double>>();
 		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
 		
-		for (int i = 0; i < 12; ++i){
+		for (int i = 0; i < 13; ++i){
 			List<Double> tmp = new ArrayList<Double>();
 			tmp.add(0.0);
 			tmp.add(0.0);
@@ -116,14 +116,13 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			cal.add(Calendar.YEAR, -1);
-			cal.add(Calendar.MONTH, 1);
 			
 			List<WgcpylnlspcsEntity> entities= wgcpylnlspcsDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
 			List<String> oneLine = new ArrayList<String>();
 
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());
 			
-			for (int i = 0; i < 12; ++i){
+			for (int i = 0; i < 13; ++i){
 
 				Boolean bFind = false;
 				for (WgcpylnlspcsEntity entity : entities){
@@ -150,7 +149,7 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 		
 		List<String> finalLine = new ArrayList<String>();
 		finalLine.add("合计");
-		for (int i = 0; i < 12; ++i){
+		for (int i = 0; i < 13; ++i){
 		
 			if (!finalListNullOrNot.get(i)) {
 
@@ -161,10 +160,7 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 			}
 		}
 		
-		if (type != WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL && type != WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL_T1) {
-
-			result.add(finalLine);
-		}
+		result.add(finalLine);
 		
 		return result;
 	}

@@ -31,6 +31,7 @@ module sbdscqyqk {
                     node.append(new JQTable.Node(i + "月", "snd_" + i));
                 }
 
+                titleNodes.push(node);
                 //if (month != 12) {
                 //    titleNodes.push(node);
                 //}

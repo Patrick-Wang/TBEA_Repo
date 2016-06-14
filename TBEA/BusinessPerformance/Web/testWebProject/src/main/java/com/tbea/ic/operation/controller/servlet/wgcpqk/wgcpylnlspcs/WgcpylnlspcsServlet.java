@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +28,14 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.YlfxwgcpylnlspcsSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
+import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
+import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
+import com.tbea.ic.operation.common.formatter.v2.core.Offset;
+import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
+import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderFormatter;
+import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
+import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTitleYearScrollerFilter;
 import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
 import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsService;
 import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsServiceImpl;
@@ -50,11 +54,7 @@ public class WgcpylnlspcsServlet {
 		if (11 == Integer.valueOf(request.getParameter("wgcpqkType"))){
 			return WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH;
 		} else if (12 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
-			return WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ;
-		}else if (13 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
-			return WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL;
-		}else if (14 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
-			return WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL_T1;
+			return WgcpqkType.YLFX_WGCPYLNL_BYQ_MLL;
 		}else if (15 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
 			return WgcpqkType.YLFX_WGCPYLNL_XL_ZH;
 		}else if (16 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
@@ -70,6 +70,12 @@ public class WgcpylnlspcsServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		List<List<String>> result = wgcpylnlspcsService.getWgcpylnlspcs(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
+		FormatterServer serv = new FormatterServer();
+		serv.handlerBuilder()
+			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
+			.add(new NumberFormatter(1))
+			.server()
+			.format(result);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 	
@@ -108,12 +114,13 @@ public class WgcpylnlspcsServlet {
 	private YlfxwgcpylnlspcsSheetType getYlfxwgcpylnlspcsSheetType(WgcpqkType wgcpqkType, Date d){
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		
-		Integer num = (wgcpqkType.value() % WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH.value()) * 12 + cal.get(Calendar.MONTH);
-		
-		YlfxwgcpylnlspcsSheetType wgcpylnlspcsSheetType = YlfxwgcpylnlspcsSheetType.values()[num];
-		
-		return wgcpylnlspcsSheetType;
+		if (wgcpqkType == WgcpqkType.YLFX_WGCPYLNL_BYQ_MLL){
+			return YlfxwgcpylnlspcsSheetType.YLFX_WGCPYINL_MLL;
+		}else if(wgcpqkType == WgcpqkType.YLFX_WGCPYLNL_XL_CPFL){
+			return YlfxwgcpylnlspcsSheetType.YLFX_WGCPYINL_CPFL;
+		}else{
+			return YlfxwgcpylnlspcsSheetType.YLFX_WGCPYINL_ZH;
+		}
 	}
 	
 	@RequestMapping(value = "export.do")
@@ -128,19 +135,33 @@ public class WgcpylnlspcsServlet {
 		List<List<String>> ret = wgcpylnlspcsService.getWgcpylnlspcs(d, company, type);
 		
 		ExcelTemplate template = ExcelTemplate.createYlfxwgcpylnlspcsTemplate(getYlfxwgcpylnlspcsSheetType(type, d));
-				
-		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(1));
+
+		FormatterServer serv = new FormatterServer();
+		serv.handlerBuilder()
+			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
+			.add(new NumberFormatter(1)) 
+			.add(new ExcelTitleYearScrollerFilter(template, new Offset(0, 1), d))
+			.to(FormatterServer.GROP_EXCEL)
+			.add(new ExcelHeaderFormatter(DefaultMatcher.LEFT1_MATCHER, template, new Offset(2, 0)))
+			.to(FormatterServer.GROP_EXCEL)
+			.add(new ExcelOffsetFormatter(null, template, new Offset(2, 0)))
+			.to(FormatterServer.GROP_EXCEL)
+			.server()
+			.format(ret);
+		
+		
+//		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
+//		handler.next(new NumberFormatterHandler(1));
 		
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = company.getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
-		HSSFSheet sheet = workbook.getSheetAt(0);
-		for (int i = 0; i < ret.size(); ++i){
-			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, j, template, sheet.getRow(i + 2).getCell(j), ret.get(i).get(j));
-			}
-		}
+//		HSSFSheet sheet = workbook.getSheetAt(0);
+//		for (int i = 0; i < ret.size(); ++i){
+//			for (int j = 0; j < ret.get(i).size(); ++j){
+//				handler.handle(null, j, template, sheet.getRow(i + 2).getCell(j), ret.get(i).get(j));
+//			}
+//		}
 		template.write(response, name + "月.xls");
 	}
 }

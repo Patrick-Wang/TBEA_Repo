@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.EasyCalendar;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -523,39 +524,39 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")";
 			
 			Logger logger = Logger.getLogger("LOG-NC");
-			logger.debug("完工成品情况  sqlCbByqcyAdydjfl");
-			ResultSet rsCb = connection.query(sqlCbByqcyAdydjfl + whereSql);
-			logger.debug("完工成品情况  sqlSrByqcyAdydjfl");
-			ResultSet rsSr = connection.query(sqlSrByqcyAdydjfl + whereSql);
-			List<Integer> cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ);
-			mergeResultSets(
-					d, 
-					rsCb, 
-					rsSr, 
-					WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ, 
-					cpList, 
-					0, 
-					4, 
-					cpList.size());
-			logger.debug("完工成品情况  sqlCbByqcyAcplxfl");
-			rsCb = connection.query(sqlCbByqcyAcplxfl + whereSql);
-			logger.debug("完工成品情况  sqlSrByqcyAcplxfl");
-			rsSr = connection.query(sqlSrByqcyAcplxfl + whereSql);
-			cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL);
-			mergeResultSets(
-					d, 
-					rsCb, 
-					rsSr, 
-					WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL, 
-					cpList, 
-					0, 
-					4, 
-					cpList.size());
+//			logger.debug("完工成品情况  sqlCbByqcyAdydjfl");
+//			ResultSet rsCb = connection.query(sqlCbByqcyAdydjfl + whereSql);
+//			logger.debug("完工成品情况  sqlSrByqcyAdydjfl");
+//			ResultSet rsSr = connection.query(sqlSrByqcyAdydjfl + whereSql);
+//			List<Integer> cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ);
+//			mergeResultSets(
+//					d, 
+//					rsCb, 
+//					rsSr, 
+//					WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ, 
+//					cpList, 
+//					0, 
+//					4, 
+//					cpList.size());
+//			logger.debug("完工成品情况  sqlCbByqcyAcplxfl");
+//			rsCb = connection.query(sqlCbByqcyAcplxfl + whereSql);
+//			logger.debug("完工成品情况  sqlSrByqcyAcplxfl");
+//			rsSr = connection.query(sqlSrByqcyAcplxfl + whereSql);
+//			cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL);
+//			mergeResultSets(
+//					d, 
+//					rsCb, 
+//					rsSr, 
+//					WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL, 
+//					cpList, 
+//					0, 
+//					4, 
+//					cpList.size());
 			logger.debug("完工成品情况  sqlCbGcl");
-			rsCb = connection.query(sqlCbGcl + whereSql);
+			ResultSet rsCb = connection.query(sqlCbGcl + whereSql);
 			logger.debug("完工成品情况  sqlSrGcl");
-			rsSr = connection.query(sqlSrGcl + whereSql);
-			cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH);
+			ResultSet rsSr = connection.query(sqlSrGcl + whereSql);
+			List<Integer> cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH);
 			mergeResultSets(
 					d, 
 					rsCb, 
@@ -695,8 +696,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 			entity.setZt(ZBStatus.SUBMITTED.ordinal());
 			entity.setTjfs(type.value());
 		}
-		entity.setSr(sr);
-		entity.setCb(cb);
+		entity.setSr(MathUtil.division(sr, 10000d));
+		entity.setCb(MathUtil.division(cb, 10000d));
 		wgcpylnlspcsDao.merge(entity);
 	}
 	

@@ -181,7 +181,7 @@ th.ui-th-ltr {
 		</tr> 
 		<tr>
 			<td>
-				<%@include file="./ylfxwgcpylnlspcs/wgcpylnlspcsEntry.jsp"%>
+				<%-- @include file="./ylfxwgcpylnlspcs/wgcpylnlspcsEntry.jsp" --%>
 				<%@include file="./yclbfqk/yclbfqkEntry.jsp"%>
 			</td>
 		</tr> 

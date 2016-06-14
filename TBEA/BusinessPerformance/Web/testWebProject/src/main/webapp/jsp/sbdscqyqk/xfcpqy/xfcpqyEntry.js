@@ -34,7 +34,7 @@ var sbdscqyqk;
                 node = new JQTable.Node("产品", "xfcpqyEntry_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node(year + "年" + month + "月", "xfcpqyEntry_riqi", false, TextAlign.Center);
-                node.append(new JQTable.Node("签约额", "xfcpqyEntry_cb_", false));
+                node.append(new JQTable.Node("签约额(万元)", "xfcpqyEntry_cb_", false));
                 titleNodes.push(node);
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };

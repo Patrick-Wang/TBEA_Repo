@@ -25,6 +25,7 @@ module wlyddqk {
         show () : void;
         update (date:Util.Date, compType:Util.CompanyType) : void;
         refresh():void;
+        pluginGetUnit():string;
         getExportUrl(date:Util.Date, compType:Util.CompanyType):string;
         isSupported( compType:Util.CompanyType):boolean;
     }
@@ -61,6 +62,10 @@ module wlyddqk {
 
         public show():void {
             $("#" + this.mOpt.host).show();
+        }
+
+        pluginGetUnit():string{
+            return undefined;
         }
 
         protected $(id:string):jQuery {
@@ -102,6 +107,11 @@ module wlyddqk {
 
         show():void {
             this.mStub.show();
+        }
+
+        pluginGetUnit():string{
+            this.mStub.setType(this.mType);
+            return this.mStub.pluginGetUnit();
         }
 
         isSupported( compType:Util.CompanyType):boolean{

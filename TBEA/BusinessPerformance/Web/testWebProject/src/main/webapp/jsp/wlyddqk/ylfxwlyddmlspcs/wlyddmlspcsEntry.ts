@@ -25,8 +25,8 @@ module ylfxwlyddmlspcs {
                 
                 node = new JQTable.Node(year + "年" + month + "月", "wlyddmlspcsentry_riqi", readOnly, TextAlign.Center);
 
-                node.append(new JQTable.Node("成本", "wlyddmlspcsentry_cb_", readOnly));
-                node.append(new JQTable.Node("收入", "wlyddmlspcsentry_sr_", readOnly));
+                node.append(new JQTable.Node("成本(万元)", "wlyddmlspcsentry_cb_", readOnly));
+                node.append(new JQTable.Node("收入(万元)", "wlyddmlspcsentry_sr_", readOnly));
 
                 titleNodes.push(node);
             

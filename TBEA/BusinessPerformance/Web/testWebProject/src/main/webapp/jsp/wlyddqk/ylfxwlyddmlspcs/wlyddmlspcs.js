@@ -38,7 +38,7 @@ var ylfxwlyddmlspcs;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var WLYDDMLSPCSView = (function (_super) {
             __extends(WLYDDMLSPCSView, _super);
             function WLYDDMLSPCSView() {
@@ -76,6 +76,9 @@ var ylfxwlyddmlspcs;
                     return;
                 }
                 this.updateTable();
+            };
+            WLYDDMLSPCSView.prototype.pluginGetUnit = function () {
+                return "单位：万元";
             };
             WLYDDMLSPCSView.prototype.isSupported = function (compType) {
                 if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH ||
@@ -128,7 +131,7 @@ var ylfxwlyddmlspcs;
                 }));
             };
             return WLYDDMLSPCSView;
-        }(wlyddqk.BasePluginView));
+        })(wlyddqk.BasePluginView);
         wlyddmlspcs.pluginView = WLYDDMLSPCSView.newInstance();
     })(wlyddmlspcs = ylfxwlyddmlspcs.wlyddmlspcs || (ylfxwlyddmlspcs.wlyddmlspcs = {}));
 })(ylfxwlyddmlspcs || (ylfxwlyddmlspcs = {}));

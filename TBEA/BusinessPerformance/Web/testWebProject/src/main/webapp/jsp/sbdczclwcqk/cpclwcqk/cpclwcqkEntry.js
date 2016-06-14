@@ -33,13 +33,13 @@ var sbdczclwcqk;
                 node = new JQTable.Node("产品", "cpclwcqkEntry_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node(year + "年" + month + "月", "cpclwcqkEntry_riqi", false, TextAlign.Center);
-                node.append(new JQTable.Node("产值", "cpclwcqkEntry_cz", false));
-                node.append(new JQTable.Node("产量", "cpclwcqkEntry_cl", false));
+                node.append(new JQTable.Node("产值(万元)", "cpclwcqkEntry_cz", false));
+                node.append(new JQTable.Node("产量(万kVA(其中电抗器产量万kvar))", "cpclwcqkEntry_cl", false));
                 titleNodes.push(node);
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
@@ -191,11 +191,11 @@ var sbdczclwcqk;
                     width: 700,
                     shrinkToFit: true,
                     autoScroll: true,
-                    viewrecords: true,
+                    viewrecords: true
                 }));
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        }(framework.basic.EntryPluginView));
+        })(framework.basic.EntryPluginView);
     })(cpclwcqkEntry = sbdczclwcqk.cpclwcqkEntry || (sbdczclwcqk.cpclwcqkEntry = {}));
 })(sbdczclwcqk || (sbdczclwcqk = {}));

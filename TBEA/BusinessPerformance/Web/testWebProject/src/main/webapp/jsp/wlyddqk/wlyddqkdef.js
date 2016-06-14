@@ -29,6 +29,9 @@ var wlyddqk;
         BasePluginView.prototype.show = function () {
             $("#" + this.mOpt.host).show();
         };
+        BasePluginView.prototype.pluginGetUnit = function () {
+            return undefined;
+        };
         BasePluginView.prototype.$ = function (id) {
             return $("#" + this.mOpt.host + " #" + id);
         };
@@ -44,7 +47,7 @@ var wlyddqk;
             return true;
         };
         return BasePluginView;
-    }());
+    })();
     wlyddqk.BasePluginView = BasePluginView;
     var TypeViewProxy = (function () {
         function TypeViewProxy(stub, type) {
@@ -56,6 +59,10 @@ var wlyddqk;
         };
         TypeViewProxy.prototype.show = function () {
             this.mStub.show();
+        };
+        TypeViewProxy.prototype.pluginGetUnit = function () {
+            this.mStub.setType(this.mType);
+            return this.mStub.pluginGetUnit();
         };
         TypeViewProxy.prototype.isSupported = function (compType) {
             this.mStub.setType(this.mType);
@@ -72,7 +79,7 @@ var wlyddqk;
             return this.mStub.getExportUrl(date, compType);
         };
         return TypeViewProxy;
-    }());
+    })();
     wlyddqk.TypeViewProxy = TypeViewProxy;
     var BaseEntryPluginView = (function () {
         function BaseEntryPluginView() {
@@ -116,7 +123,7 @@ var wlyddqk;
             return true;
         };
         return BaseEntryPluginView;
-    }());
+    })();
     wlyddqk.BaseEntryPluginView = BaseEntryPluginView;
     var TypeEntryViewProxy = (function () {
         function TypeEntryViewProxy(stub, type) {
@@ -150,6 +157,6 @@ var wlyddqk;
             this.mStub.submit(date, compType);
         };
         return TypeEntryViewProxy;
-    }());
+    })();
     wlyddqk.TypeEntryViewProxy = TypeEntryViewProxy;
 })(wlyddqk || (wlyddqk = {}));

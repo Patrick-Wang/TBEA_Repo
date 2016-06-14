@@ -116,6 +116,13 @@ var wlyddqk;
                     this.plugin(this.mNodesAll[i]).hide();
                 }
             }
+            var unit = this.mCurrentPlugin.pluginGetUnit();
+            if (undefined != unit) {
+                $("#unit").text(unit);
+            }
+            else {
+                $("#unit").text("");
+            }
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
@@ -123,7 +130,7 @@ var wlyddqk;
             this.plugin(node).update(dt, this.mCurrentComp);
         };
         return View;
-    }());
+    })();
     wlyddqk.View = View;
 })(wlyddqk || (wlyddqk = {}));
 var view = new wlyddqk.View();

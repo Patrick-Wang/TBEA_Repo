@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -148,7 +149,7 @@ public class CwgbjyxxjlServiceImpl implements CwgbjyxxjlService {
 		void onSet(JyxxjlEntity entity, Double val);
 	}
 
-	
+
 	@Override
 	public void importFromNC(Date d, List<Company> comps) {
 		NCConnection connection = NCConnection.create();
@@ -221,7 +222,7 @@ public class CwgbjyxxjlServiceImpl implements CwgbjyxxjlService {
 						entity.setKm(kms.get(i));
 					}
 					cacheMap.put(key, entity);
-					onSetValue.onSet(entity, rs.getDouble(i + 4));
+					onSetValue.onSet(entity, MathUtil.division(rs.getDouble(i + 4), 10000d));
 				}
 			}
 			rs.close();

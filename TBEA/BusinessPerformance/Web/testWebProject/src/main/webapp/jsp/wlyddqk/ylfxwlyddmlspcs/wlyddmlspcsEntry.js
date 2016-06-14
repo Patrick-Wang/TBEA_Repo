@@ -27,13 +27,13 @@ var ylfxwlyddmlspcs;
                 node = new JQTable.Node("产品", "wlyddmlspcsentry_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node(year + "年" + month + "月", "wlyddmlspcsentry_riqi", readOnly, TextAlign.Center);
-                node.append(new JQTable.Node("成本", "wlyddmlspcsentry_cb_", readOnly));
-                node.append(new JQTable.Node("收入", "wlyddmlspcsentry_sr_", readOnly));
+                node.append(new JQTable.Node("成本(万元)", "wlyddmlspcsentry_cb_", readOnly));
+                node.append(new JQTable.Node("收入(万元)", "wlyddmlspcsentry_sr_", readOnly));
                 titleNodes.push(node);
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var WlyddmlspcsEntryView = (function (_super) {
             __extends(WlyddmlspcsEntryView, _super);
             function WlyddmlspcsEntryView() {
@@ -178,7 +178,7 @@ var ylfxwlyddmlspcs;
                 }));
             };
             return WlyddmlspcsEntryView;
-        }(wlyddqk.BaseEntryPluginView));
+        })(wlyddqk.BaseEntryPluginView);
         wlyddmlspcsEntry.pluginView = WlyddmlspcsEntryView.newInstance();
     })(wlyddmlspcsEntry = ylfxwlyddmlspcs.wlyddmlspcsEntry || (ylfxwlyddmlspcs.wlyddmlspcsEntry = {}));
 })(ylfxwlyddmlspcs || (ylfxwlyddmlspcs = {}));

@@ -181,6 +181,7 @@ th.ui-th-ltr {
 				<div id="dt" style="float: left"></div>
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
+				<span id="unit" style="float: right;margin-right:10px;padding-top:10px"></span>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="view.updateUI()" />
 			</td>

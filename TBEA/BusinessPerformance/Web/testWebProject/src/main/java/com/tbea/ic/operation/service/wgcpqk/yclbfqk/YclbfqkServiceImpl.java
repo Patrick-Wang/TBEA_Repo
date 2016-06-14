@@ -41,16 +41,15 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 		EasyCalendar ecCur = new EasyCalendar(d);
 		EasyCalendar ec = new EasyCalendar(d);
 		ec.addYear(-1);
-		ec.addMonth(1);
 		List<DwxxRefClmcEntity> clmcs = dwrefclDao.getByCompany(company);
 		for (int i = 0; i < clmcs.size(); ++i) {
 			List<String> list = new ArrayList<String>();
-			Util.resize(list, 16);
+			Util.resize(list, 17);
 			list.set(0, clmcs.get(i).getClmc().getName());
 			result.add(list);
 		}
 
-		for (int i = 0; i < 12; ++i) {
+		for (int i = 0; i < 13; ++i) {
 			List<YclbfqkEntity> entities = yclbfqkDao.getByDate(
 					ec.getDate(), company);
 			for (YclbfqkEntity entity : entities) {

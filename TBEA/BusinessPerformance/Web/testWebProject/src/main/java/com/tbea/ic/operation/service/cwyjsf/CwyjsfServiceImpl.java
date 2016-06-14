@@ -478,9 +478,9 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 					}
 					cacheMap.put(key, entity);
 					if (i == szCount - 1){
-						onSetValue.setValue(entity, MathUtil.minus(rs.getDouble(i + 4), onSetValue.getSum()));
+						onSetValue.setValue(entity, MathUtil.division(MathUtil.minus(rs.getDouble(i + 4), onSetValue.getSum()), 10000d));
 					}else{
-						onSetValue.setValue(entity, rs.getDouble(i + 4));
+						onSetValue.setValue(entity, MathUtil.division(rs.getDouble(i + 4), 10000d));
 					}
 				}
 			}

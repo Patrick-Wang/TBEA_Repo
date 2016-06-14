@@ -34,6 +34,10 @@ public class FormatterServer {
 		}
 		
 		public FormatterServer server(){
+			if (this.current != null){
+				this.serv.add(current);
+			}
+			this.current = null;
 			return serv;
 		}
 	}

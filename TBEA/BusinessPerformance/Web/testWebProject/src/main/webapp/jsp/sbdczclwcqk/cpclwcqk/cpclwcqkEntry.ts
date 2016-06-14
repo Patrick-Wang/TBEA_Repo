@@ -30,8 +30,8 @@ module sbdczclwcqk {
 
                 node = new JQTable.Node(year + "年" + month + "月", "cpclwcqkEntry_riqi", false, TextAlign.Center);
 
-                node.append(new JQTable.Node("产值", "cpclwcqkEntry_cz", false));
-                node.append(new JQTable.Node("产量", "cpclwcqkEntry_cl", false));
+                node.append(new JQTable.Node("产值(万元)", "cpclwcqkEntry_cz", false));
+                node.append(new JQTable.Node("产量(万kVA(其中电抗器产量万kvar))", "cpclwcqkEntry_cl", false));
                 
                 titleNodes.push(node);
 

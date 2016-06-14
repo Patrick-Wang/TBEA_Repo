@@ -13,9 +13,7 @@ var plugin;
 (function (plugin) {
     plugin.wgcpylnlspcs = framework.basic.endpoint.lastId();
     plugin.byq_zh = framework.basic.endpoint.lastId();
-    plugin.byq_dydj = framework.basic.endpoint.lastId();
-    plugin.byq_cpfl = framework.basic.endpoint.lastId();
-    plugin.byq_cpfl_t1 = framework.basic.endpoint.lastId();
+    plugin.byq_mll = framework.basic.endpoint.lastId();
     plugin.xl_zh = framework.basic.endpoint.lastId();
     plugin.xl_cpfl = framework.basic.endpoint.lastId();
 })(plugin || (plugin = {}));
@@ -36,12 +34,12 @@ var ylfxwgcpylnlspcs;
                 node = new JQTable.Node("产品", "wgcpylnlspcs_cp", true, TextAlign.Left);
                 titleNodes.push(node);
                 node = new JQTable.Node("上年度", "wgcpylnlspcs_snd", true, TextAlign.Center);
-                for (var i = month + 1; i <= 12; ++i) {
+                for (var i = month; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "wgcpylnlspcs_snd_" + i));
                 }
-                if (month != 12) {
-                    titleNodes.push(node);
-                }
+                // if (month != 12) {
+                titleNodes.push(node);
+                //  }
                 node = new JQTable.Node("本年度", "wgcpylnlspcs_bnd", true, TextAlign.Center);
                 for (var i = 1; i <= month; ++i) {
                     node.append(new JQTable.Node(i + "月", "wgcpylnlspcs_bnd_" + i));
@@ -50,7 +48,7 @@ var ylfxwgcpylnlspcs;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -92,9 +90,7 @@ var ylfxwgcpylnlspcs;
             };
             ShowView.prototype.isSupported = function (compType) {
                 if (this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH ||
-                    this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ ||
-                    this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL ||
-                    this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL_T1) {
+                    this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_MLL) {
                     if (compType == Util.CompanyType.SBGS ||
                         compType == Util.CompanyType.HBGS ||
                         compType == Util.CompanyType.XBC ||
@@ -117,17 +113,9 @@ var ylfxwgcpylnlspcs;
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-综合");
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.byq_dydj, this.getId()))
+                    .fromEp(new framework.basic.EndpointProxy(plugin.byq_mll, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-电压等级");
-                framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.byq_cpfl, this.getId()))
-                    .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-产品分类");
-                framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.byq_cpfl_t1, this.getId()))
-                    .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-产品分类特殊1");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势（毛利率）");
                 framework.router
                     .fromEp(new framework.basic.EndpointProxy(plugin.xl_zh, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
@@ -143,14 +131,8 @@ var ylfxwgcpylnlspcs;
                         case plugin.byq_zh:
                             this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH;
                             break;
-                        case plugin.byq_dydj:
-                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ;
-                            break;
-                        case plugin.byq_cpfl:
-                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL;
-                            break;
-                        case plugin.byq_cpfl_t1:
-                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL_T1;
+                        case plugin.byq_mll:
+                            this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_MLL;
                             break;
                         case plugin.xl_zh:
                             this.mWgcpqkType = wgcpqk.WgcpqkType.YLFX_WGCPYLNL_XL_ZH;
@@ -178,7 +160,7 @@ var ylfxwgcpylnlspcs;
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 30,
+                    rowNum: 1000,
                     data: tableAssist.getData(this.mData),
                     datatype: "local",
                     viewrecords: true
@@ -186,6 +168,6 @@ var ylfxwgcpylnlspcs;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(wgcpylnlspcs = ylfxwgcpylnlspcs.wgcpylnlspcs || (ylfxwgcpylnlspcs.wgcpylnlspcs = {}));
 })(ylfxwgcpylnlspcs || (ylfxwgcpylnlspcs = {}));

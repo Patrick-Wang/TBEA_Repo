@@ -35,6 +35,7 @@ var sbdscqyqk;
                 for (var i = month; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "snd_" + i));
                 }
+                titleNodes.push(node);
                 //if (month != 12) {
                 //    titleNodes.push(node);
                 //}

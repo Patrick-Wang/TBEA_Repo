@@ -152,6 +152,12 @@ module wlyddqk {
                 }
             }
 
+            let unit = this.mCurrentPlugin.pluginGetUnit();
+            if (undefined != unit){
+                $("#unit").text(unit);
+            }else{
+                $("#unit").text("");
+            }
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             this.mCurrentPlugin.show();

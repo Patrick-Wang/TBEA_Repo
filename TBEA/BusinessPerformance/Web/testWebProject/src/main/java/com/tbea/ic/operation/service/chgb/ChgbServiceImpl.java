@@ -667,9 +667,9 @@ public class ChgbServiceImpl implements ChgbService {
 						entity = entities.get(0);
 					}
 					
-					entity.setZmje(rs.getDouble(4));
-					entity.setHzzb(rs.getDouble(5));
-					entity.setYz(MathUtil.sum(rs.getDouble(4), rs.getDouble(5)));
+					entity.setZmje(MathUtil.division(rs.getDouble(4), 10000d));
+					entity.setHzzb(MathUtil.division(rs.getDouble(5), 10000d));
+					entity.setYz(MathUtil.division(MathUtil.sum(rs.getDouble(4), rs.getDouble(5)), 10000d));
 					
 					chzmDao.merge(entity);
 				}
