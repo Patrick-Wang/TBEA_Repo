@@ -15,7 +15,7 @@ public class PercentFormatter extends NumberFormatter {
 
 	@Override
 	protected String onHandle(List<List<String>> table, int row, int col, String val) {
-		if (!isNull(val)){
+		if (!isInvalid(val)){
 			String ret = String.format("%." + reservedCount + "f", Double.valueOf(val) * 100);
 			return trimZero(ret) + "%";
 		}

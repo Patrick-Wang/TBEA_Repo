@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.formatter.v2.core.AbstractFormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.AbstractFormatter;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterMatcher;
 
-public class NumberFormatter extends AbstractFormatterHandler {
+public class NumberFormatter extends AbstractFormatter {
 
 	Integer reservedCount = 1;
 	boolean trimZero = false;
@@ -37,7 +37,7 @@ public class NumberFormatter extends AbstractFormatterHandler {
 	
 	@Override
 	protected String onHandle(List<List<String>> table, int row, int col, String val) {
-		if (!isNull(val)){
+		if (!isInvalid(val)){
 			BigDecimal b = new BigDecimal(Double.valueOf(val));
 			String ret = b.setScale(this.reservedCount, BigDecimal.ROUND_HALF_UP).toPlainString();
 			return trimZero(ret);

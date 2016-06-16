@@ -5,11 +5,11 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.v2.core.AbstractFilterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.AbstractFilter;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterMatcher;
 import com.tbea.ic.operation.common.formatter.v2.core.Offset;
 
-public abstract class ExcelAbstractOffsetFilter extends AbstractFilterHandler {
+public abstract class ExcelAbstractOffsetFilter extends AbstractFilter {
 
 	protected ExcelTemplate template;
 	protected Offset offset;

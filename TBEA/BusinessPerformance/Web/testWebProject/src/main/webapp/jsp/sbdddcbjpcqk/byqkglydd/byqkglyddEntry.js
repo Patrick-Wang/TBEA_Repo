@@ -108,8 +108,7 @@ var sbdddcbjpcqk;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功");
-                        setInterval(function () {
+                        Util.MessageBox.tip("保存 成功", function () {
                             _this.pluginUpdate(dt, compType);
                         });
                     }
@@ -140,8 +139,7 @@ var sbdddcbjpcqk;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功");
-                        setInterval(function () {
+                        Util.MessageBox.tip("提交 成功", function () {
                             _this.pluginUpdate(dt, compType);
                         });
                     }
@@ -206,7 +204,7 @@ var sbdddcbjpcqk;
                     //height: data.length > 25 ? 550 : '100%',
                     //width: titles.length * 200,
                     rowNum: 20,
-                    height: '100%',
+                    height: this.mData.statusData.data.length > 25 ? 550 : '100%',
                     width: 1400,
                     shrinkToFit: true,
                     autoScroll: true,

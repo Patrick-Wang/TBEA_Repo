@@ -3,14 +3,13 @@ package com.tbea.ic.operation.common.formatter.v2.core;
 import java.util.List;
 
 
-public abstract class AbstractFilterHandler implements FormatterHandler {
+public abstract class AbstractFilter implements FormatterHandler {
 
 	FormatterHandler mNextHandler;
 
-	protected boolean isNull(String val){
-		return val == null || "null".equals(val);
+	protected boolean isInvalid(String val){
+		return val == null || "null".equals(val) || val.isEmpty();
 	}
-	
 
 	@Override
 	public FormatterHandler next(FormatterHandler handler) {

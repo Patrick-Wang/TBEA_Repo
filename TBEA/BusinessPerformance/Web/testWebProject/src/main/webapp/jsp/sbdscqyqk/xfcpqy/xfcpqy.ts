@@ -163,7 +163,7 @@ module sbdscqyqk {
                         multiselect: false,
                         drag: false,
                         resize: false,
-                        height: '100%',
+                        height: this.mData.length > 25 ? 550 : '100%',
                         width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,

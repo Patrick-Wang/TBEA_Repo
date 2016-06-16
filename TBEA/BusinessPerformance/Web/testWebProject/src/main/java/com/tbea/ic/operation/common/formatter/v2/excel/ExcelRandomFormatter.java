@@ -8,10 +8,10 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.v2.core.AbstractFormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.AbstractFormatter;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterMatcher;
 
-public class ExcelRandomFormatter extends AbstractFormatterHandler {
+public class ExcelRandomFormatter extends AbstractFormatter {
 
 	protected ExcelTemplate template;
 	protected Map<Integer, Integer> colMap;

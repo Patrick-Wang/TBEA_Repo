@@ -29,6 +29,10 @@ import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
+import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
+import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
+import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
 import com.tbea.ic.operation.controller.servlet.cbfx.CbfxType;
 import com.tbea.ic.operation.service.cbfx.dmcbfx.DmcbfxService;
 import com.tbea.ic.operation.service.cbfx.dmcbfx.DmcbfxServiceImpl;
@@ -62,7 +66,12 @@ public class DmcbfxServlet {
 		}else{
 			result = dmcbfxService.getDmcbqsfx(d, company);
 		}
-	
+		FormatterServer serv = new FormatterServer();
+		serv.handlerBuilder()
+			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
+			.add(new NumberFormatter(1))
+			.server()
+			.format(result);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 

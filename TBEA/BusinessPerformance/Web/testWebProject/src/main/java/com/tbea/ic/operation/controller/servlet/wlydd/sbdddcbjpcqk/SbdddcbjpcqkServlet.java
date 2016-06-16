@@ -31,10 +31,18 @@ import com.tbea.ic.operation.common.excel.SbdddcbjpcqkSheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
+import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
+import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
+import com.tbea.ic.operation.common.formatter.v2.core.Offset;
+import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
+import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
+import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderCenterFormatter;
+import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
 import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkService;
 import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkServiceImpl;
@@ -62,10 +70,17 @@ public class SbdddcbjpcqkServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		List<List<String>> result = sbdddcbjpcqkService.getByqkglydd(d, getType(request), company);
-		RawFormatterHandler handler = new RawPercentFormatterHandler(1, null, new Integer[]{8, 11, 14, 17, 20, 23, 26});
-		handler.next(new RawNumberFormatterHandler(1));
-		RawFormatterServer serv = new RawFormatterServer(handler);
-		serv.acceptNullAs("--").format(result);
+		FormatterServer serv = new FormatterServer();
+		serv.handlerBuilder()
+			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
+			.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{9, 12, 15, 18, 21, 24, 27}), 1))
+			.add(new NumberFormatter(1))
+			.server()
+			.format(result);
+//		RawFormatterHandler handler = new RawPercentFormatterHandler(1, null, new Integer[]{8, 11, 14, 17, 20, 23, 26});
+//		handler.next(new RawNumberFormatterHandler(1));
+//		RawFormatterServer serv = new RawFormatterServer(handler);
+//		serv.acceptNullAs("--").format(result);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
@@ -76,11 +91,17 @@ public class SbdddcbjpcqkServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		List<List<String>> result = sbdddcbjpcqkService.getXlkglydd(d, getType(request), company);
-		
-		RawFormatterHandler handler = new RawPercentFormatterHandler(1, null, new Integer[]{6, 9, 12});
-		handler.next(new RawNumberFormatterHandler(1));
-		RawFormatterServer serv = new RawFormatterServer(handler);
-		serv.acceptNullAs("--").format(result);
+		FormatterServer serv = new FormatterServer();
+		serv.handlerBuilder()
+		.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
+		.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{6, 9, 12}), 1))
+		.add(new NumberFormatter(1))
+		.server()
+		.format(result);
+//		RawFormatterHandler handler = new RawPercentFormatterHandler(1, null, new Integer[]{6, 9, 12});
+//		handler.next(new RawNumberFormatterHandler(1));
+//		RawFormatterServer serv = new RawFormatterServer(handler);
+//		serv.acceptNullAs("--").format(result);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
@@ -181,19 +202,31 @@ public class SbdddcbjpcqkServlet {
 		}else{
 			template = ExcelTemplate.createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType.XLKGLYDD_SCLB);
 		}
+		
+		FormatterServer serv = new FormatterServer();
+		serv.handlerBuilder()
+			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
+			.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{6, 9, 12}), 1))
+			.add(new NumberFormatter(1))
+			.add(new ExcelHeaderCenterFormatter(DefaultMatcher.LEFT1_MATCHER, template, new Offset(2, 0)))
+			.to(FormatterServer.GROP_EXCEL)
+			.add(new ExcelOffsetFormatter(template, new Offset(2, 0)))
+			.to(FormatterServer.GROP_EXCEL)
+			.server()
+			.format(ret);
 				
-		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(1));
+//		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
+//		handler.next(new NumberFormatterHandler(1));
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
-		HSSFSheet sheet = workbook.getSheetAt(0);
-		for (int i = 0; i < ret.size(); ++i){
-			HSSFRow row = sheet.createRow(i + 2);
-			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
-			}
-		}
+//		HSSFSheet sheet = workbook.getSheetAt(0);
+//		for (int i = 0; i < ret.size(); ++i){
+//			HSSFRow row = sheet.createRow(i + 2);
+//			for (int j = 0; j < ret.get(i).size(); ++j){
+//				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
+//			}
+//		}
 		template.write(response, name + ".xls");
 	}
 	
@@ -213,18 +246,31 @@ public class SbdddcbjpcqkServlet {
 		}else{
 			template = ExcelTemplate.createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType.BYQKGLYDD_SCLB);
 		}
-		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-		handler.next(new NumberFormatterHandler(1));
+		
+		FormatterServer serv = new FormatterServer();
+		serv.handlerBuilder()
+			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
+			.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{9, 12, 15, 18, 21, 24, 27}), 1))
+			.add(new NumberFormatter(1))
+			.add(new ExcelHeaderCenterFormatter(DefaultMatcher.LEFT1_MATCHER, template, new Offset(2, 0)))
+			.to(FormatterServer.GROP_EXCEL)
+			.add(new ExcelOffsetFormatter(template, new Offset(2, 0)))
+			.to(FormatterServer.GROP_EXCEL)
+			.server()
+			.format(ret);
+		
+//		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
+//		handler.next(new NumberFormatterHandler(1));
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
-		HSSFSheet sheet = workbook.getSheetAt(0);
-		for (int i = 0; i < ret.size(); ++i){
-			HSSFRow row = sheet.createRow(i + 2);
-			for (int j = 0; j < ret.get(i).size(); ++j){
-				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
-			}
-		}
+//		HSSFSheet sheet = workbook.getSheetAt(0);
+//		for (int i = 0; i < ret.size(); ++i){
+//			HSSFRow row = sheet.createRow(i + 2);
+//			for (int j = 0; j < ret.get(i).size(); ++j){
+//				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
+//			}
+//		}
 		template.write(response, name + ".xls");
 	}
 	

@@ -7,11 +7,11 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.v2.core.AbstractFormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.AbstractFormatter;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterMatcher;
 import com.tbea.ic.operation.common.formatter.v2.core.Offset;
 
-public class ExcelOffsetFormatter extends AbstractFormatterHandler {
+public class ExcelOffsetFormatter extends AbstractFormatter {
 
 	protected ExcelTemplate template;
 	protected Offset offset;

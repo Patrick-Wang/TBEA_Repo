@@ -14,7 +14,7 @@ public class PercentSingleFormatter extends NumberFormatter {
 	@Override
 	protected String onHandle(List<List<String>> table, int row, int col, String val) {
 		String ret = super.onHandle(table, row, col, val);
-		if (!isNull(ret)){
+		if (!isInvalid(ret)){
 			return ret + "%";
 		}
 		return null;

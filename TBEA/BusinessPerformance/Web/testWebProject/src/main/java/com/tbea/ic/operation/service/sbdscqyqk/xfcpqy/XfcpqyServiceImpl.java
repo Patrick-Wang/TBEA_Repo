@@ -113,25 +113,25 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 						
 						if (type == SbdscqyqkType.YLFX_WGCPYLNL_XL) {
 							
-							if (cpIdList.get(cp) <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_ZH_QT.value()) {
+							if (cp <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_ZH_QT.ordinal()) {
 
 								finalListTemp1.set(i, finalListTemp1.get(i) + entity.getQye());
 								finalListNullOrNot1.set(i, false);						
 								
-								finalListTempAll.set(i, finalListTemp1.get(i) + entity.getQye());
+								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
 								finalListNullOrNotAll.set(i, false);
 								
-							} else if (cpIdList.get(cp) <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_GJGC.value()) {
+							} else if (cp <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_GJGC.ordinal()) {
 
-								finalListTemp2.set(i, finalListTemp1.get(i) + entity.getQye());
+								finalListTemp2.set(i, finalListTemp2.get(i) + entity.getQye());
 								finalListNullOrNot2.set(i, false);				
 								
-								finalListTempAll.set(i, finalListTemp1.get(i) + entity.getQye());
+								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
 								finalListNullOrNotAll.set(i, false);
 								
-							} else if (cpIdList.get(cp) <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_FWL.value()) {
+							} else if (cp <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_FWL.ordinal()) {
 								
-								finalListTempAll.set(i, finalListTemp1.get(i) + entity.getQye());
+								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
 								finalListNullOrNotAll.set(i, false);							
 							}
 						}

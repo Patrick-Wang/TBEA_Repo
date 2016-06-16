@@ -2,7 +2,7 @@ package com.tbea.ic.operation.common.formatter.v2.core;
 
 import java.util.List;
 
-public class EmptyFormatter extends AbstractFormatterHandler {
+public class EmptyFormatter extends AbstractFormatter {
 
 
 	public EmptyFormatter(FormatterMatcher matcher) {

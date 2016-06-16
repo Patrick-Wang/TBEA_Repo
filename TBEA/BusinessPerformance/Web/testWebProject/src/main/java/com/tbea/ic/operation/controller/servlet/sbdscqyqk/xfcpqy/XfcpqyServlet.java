@@ -81,6 +81,7 @@ public class XfcpqyServlet {
 		List<List<String>> result = xfcpqyService.getXfcpqyEntry(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
+			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
 			.add(new NumberFormatter(1))
 			.server()
 			.acceptNullAs("")

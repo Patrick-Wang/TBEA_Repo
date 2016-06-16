@@ -169,7 +169,7 @@ var sbdscqyqk;
                     //height: data.length > 25 ? 550 : '100%',
                     // width: titles.length * 200,
                     rowNum: 1000,
-                    height: '100%',
+                    height: data.length > 25 ? 550 : '100%',
                     width: 700,
                     shrinkToFit: true,
                     autoScroll: true,

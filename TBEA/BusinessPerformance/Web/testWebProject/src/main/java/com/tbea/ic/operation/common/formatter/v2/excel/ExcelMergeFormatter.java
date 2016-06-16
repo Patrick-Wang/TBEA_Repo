@@ -7,10 +7,10 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.v2.core.AbstractFormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.AbstractFormatter;
 import com.tbea.ic.operation.common.formatter.v2.core.MergeRegion;
 
-public class ExcelMergeFormatter extends AbstractFormatterHandler {
+public class ExcelMergeFormatter extends AbstractFormatter {
 
 	protected ExcelTemplate template;
 	List<MergeRegion> mrs = new ArrayList<MergeRegion>();

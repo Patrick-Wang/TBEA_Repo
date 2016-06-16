@@ -3,22 +3,22 @@ package com.tbea.ic.operation.common.formatter.v2.core;
 import java.util.List;
 
 
-public abstract class AbstractFormatterHandler implements FormatterHandler {
+public abstract class AbstractFormatter implements FormatterHandler {
 
 	FormatterHandler mNextHandler;
 	FormatterMatcher matcher;
 
-	public AbstractFormatterHandler(FormatterMatcher matcher) {
+	public AbstractFormatter(FormatterMatcher matcher) {
 		super();
 		this.matcher = matcher;
 	}
 	
-	public AbstractFormatterHandler() {
+	public AbstractFormatter() {
 	}
 
 
-	protected boolean isNull(String val){
-		return val == null || "null".equals(val);
+	protected boolean isInvalid(String val){
+		return val == null || "null".equals(val) || val.isEmpty();
 	}
 	
 
@@ -40,7 +40,7 @@ public abstract class AbstractFormatterHandler implements FormatterHandler {
 	@Override
 	public String handle(List<List<String>> table, int row, int col, String val) {
 		String ret = null;
-		val = isNull(val) ? null : val;
+		val = isInvalid(val) ? null : val;
 		if (null == matcher || matcher.match(table, row, col)) {
 			ret =  onHandle(table, row, col, val);
 		} else {

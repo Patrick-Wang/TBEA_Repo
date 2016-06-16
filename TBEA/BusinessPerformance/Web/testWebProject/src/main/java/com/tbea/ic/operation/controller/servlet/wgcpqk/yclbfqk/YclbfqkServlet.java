@@ -29,6 +29,7 @@ import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
 import com.tbea.ic.operation.common.formatter.v2.core.Offset;
 import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
+import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTitleYearScrollerFilter;
@@ -56,6 +57,7 @@ public class YclbfqkServlet {
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
 			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
+			.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{3}), 1))
 			.add(new NumberFormatter(1)) 
 			.server()
 			.format(result);
@@ -112,10 +114,10 @@ public class YclbfqkServlet {
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 //		HSSFSheet sheet = workbook.getSheetAt(0);
-		
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
 			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
+			.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{3}), 1))
 			.add(new NumberFormatter(1)) 
 			.add(new ExcelTitleYearScrollerFilter(template, new Offset(0, 4), d))
 			.to(FormatterServer.GROP_EXCEL)
@@ -125,42 +127,7 @@ public class YclbfqkServlet {
 			.to(FormatterServer.GROP_EXCEL)
 			.server()
 			.format(ret);
-		
-//		Calendar startMonth = Calendar.getInstance();
-//		startMonth.setTime(d);
-//		startMonth.add(Calendar.YEAR, -1);
-//		startMonth.add(Calendar.MONTH, 1);
-//		Calendar current = Calendar.getInstance();
-//		current.setTime(d);
-//
-//		int lastYearMonthCount = 12 - (current.get(Calendar.MONTH) + 1);
-//		for (int i = 0; i < 12; ++i){
-//			HSSFRow title = sheet.getRow(0);
-//			HSSFCell cell = title.createCell(i + 4);
-//			cell.setCellStyle(template.getCellStyleCenter());
-//			if (i < lastYearMonthCount){
-//				cell.setCellValue("上年度");
-//			}else{
-//				cell.setCellValue("本年度");
-//			}
-//			
-//			HSSFRow row = sheet.getRow(1);
-//			cell = row.createCell(i + 4);
-//			cell.setCellValue((startMonth.get(Calendar.MONTH) + 1) + "月");
-//			cell.setCellStyle(template.getCellStyleCenter());
-//			startMonth.add(Calendar.MONTH, 1);
-//		}
-//		sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4 + lastYearMonthCount));
-//		sheet.addMergedRegion(new CellRangeAddress(0, 0, 4 + lastYearMonthCount + 1, 13));
-//		
-//		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
-//		handler.next(new NumberFormatterHandler(1));
-//		for (int i = 0; i < ret.size(); ++i){
-//			HSSFRow row = sheet.createRow(i + 2);
-//			for (int j = 0; j < ret.get(i).size(); ++j){
-//				handler.handle(null, j, template, row.createCell(j), ret.get(i).get(j));
-//			}
-//		}
+
 		template.write(response, name + ".xls");
 	}
 }

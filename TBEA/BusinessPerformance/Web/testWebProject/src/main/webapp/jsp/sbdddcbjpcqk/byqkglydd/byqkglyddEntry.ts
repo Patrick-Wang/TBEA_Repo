@@ -110,8 +110,7 @@ module sbdddcbjpcqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功");
-                        setInterval(()=>{
+                        Util.MessageBox.tip("保存 成功", ()=>{
                             this.pluginUpdate(dt, compType);
                         });
                     } else {
@@ -141,9 +140,8 @@ module sbdddcbjpcqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功");
-                        setInterval(()=>{
-                            this.pluginUpdate(dt, compType);
+                        Util.MessageBox.tip("提交 成功", ()=>{
+                        	this.pluginUpdate(dt, compType);
                         });
                     } else {
                         Util.MessageBox.tip(resp.message);
@@ -212,7 +210,7 @@ module sbdddcbjpcqk {
                         //height: data.length > 25 ? 550 : '100%',
                         //width: titles.length * 200,
                         rowNum: 20,
-                        height: '100%',
+                        height: this.mData.statusData.data.length > 25 ? 550 : '100%',
                         width: 1400,
                         shrinkToFit: true,
                         autoScroll: true,

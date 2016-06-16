@@ -27,7 +27,7 @@ module wgcpqk {
                     new JQTable.Node("当月（吨）", "ab", true, TextAlign.Center)
                         .append(new JQTable.Node("领用量", "abh"))
                         .append(new JQTable.Node("废料", "abi"))
-                        .append(new JQTable.Node("利用率", "abi")),
+                        .append(new JQTable.Node("利用率", "abkm")),
                     sndfll,
                     dndfll
                 ], gridName);

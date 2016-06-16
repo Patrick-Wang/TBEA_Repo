@@ -5,11 +5,11 @@ import java.util.List;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.v2.core.AbstractFormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.AbstractFormatter;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterMatcher;
 import com.tbea.ic.operation.common.formatter.v2.core.Offset;
 
-public class WordOffsetFormatter extends AbstractFormatterHandler {
+public class WordOffsetFormatter extends AbstractFormatter {
 
 	protected ExcelTemplate template;
 	protected Offset offset;
