@@ -25,6 +25,7 @@ import com.tbea.ic.operation.model.dao.wlydd.wlyddmlspcs.WlyddmlspcsDaoImpl;
 import com.tbea.ic.operation.model.entity.wlydd.wlyddmslspcs.WlyddmlspcsEntity;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
+import com.tbea.ic.operation.service.sbdczclwcqk.cpczwcqk.SBDCZCLWCQK_CZ_BYQ_Type;
 
 
 @Service(WlyddmlspcsServiceImpl.NAME)
@@ -40,7 +41,49 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 	DWXXDao dwxxDao;
 	
 	public final static String NAME = "WlyddmlspcsServiceImpl";
+	private List<Integer> getHjList(WlyddType type) {
+		
+		List<Integer> hjList = new ArrayList<Integer>();
+	    
+		switch (type) {
 
+		case YLFX_WLYMLSP_BYQ_ZH: {
+			hjList.add(MLSPCS_BYQ_ZH_Type.MLSPCS_BYQ_ZH_CTXM_GN.value());
+			hjList.add(MLSPCS_BYQ_ZH_Type.MLSPCS_BYQ_ZH_CTXM_GJ.value());
+			hjList.add(MLSPCS_BYQ_ZH_Type.MLSPCS_BYQ_ZH_WLMY.value());
+			hjList.add(MLSPCS_BYQ_ZH_Type.MLSPCS_BYQ_ZH_FWL.value());
+			hjList.add(MLSPCS_BYQ_ZH_Type.MLSPCS_BYQ_ZH_QT.value());
+			break;
+		}
+		case YLFX_WLYMLSP_XL_ZH: {
+			hjList.add(MLSPCS_XL_ZH_Type.MLSPCS_XL_ZH_CTXM_GN.value());
+			hjList.add(MLSPCS_XL_ZH_Type.MLSPCS_XL_ZH_CTXM_GJ.value());
+			hjList.add(MLSPCS_XL_ZH_Type.MLSPCS_XL_ZH_WLMY.value());
+			hjList.add(MLSPCS_XL_ZH_Type.MLSPCS_XL_ZH_FWL.value());
+			hjList.add(MLSPCS_XL_ZH_Type.MLSPCS_XL_ZH_QT.value());
+			break;
+		}
+
+		case YLFX_WLYMLSP_BYQ_ZZY: {
+			hjList.add(MLSPCS_BYQ_ZZY_Type.MLSPCS_BYQ_DYDJ_JLBYQ.value());
+			hjList.add(MLSPCS_BYQ_ZZY_Type.MLSPCS_BYQ_DYDJ_ZLBYQ.value());
+			hjList.add(MLSPCS_BYQ_ZZY_Type.MLSPCS_BYQ_DYDJ_DKQ.value());
+			hjList.add(MLSPCS_BYQ_ZZY_Type.MLSPCS_BYQ_CPFL_GSBYQ.value());
+			hjList.add(MLSPCS_BYQ_ZZY_Type.MLSPCS_BYQ_CPFL_77.value());
+			hjList.add(MLSPCS_BYQ_ZZY_Type.MLSPCS_BYQ_CPFL_81.value());
+			hjList.add(MLSPCS_BYQ_ZZY_Type.MLSPCS_BYQ_CPFL_TZBYQ.value());
+			hjList.add(MLSPCS_BYQ_ZZY_Type.MLSPCS_BYQ_CPFL_YSL.value());
+			break;
+		}
+		default: 
+			break;
+
+		}
+		
+		return hjList;
+	}
+
+	
 	private List<Integer> getCpIdList(WlyddType type) {
 		
 		List<Integer> cpIdList = new ArrayList<Integer>();
@@ -102,7 +145,7 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 		List<Integer> cpIdList = getCpIdList(type);
 		List<List<Double>> finalListTemp = new ArrayList<List<Double>>();
 		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
-		
+		List<Integer> hjList = getHjList(type);
 		for (int i = 0; i < 13; ++i){
 			List<Double> tmp = new ArrayList<Double>();
 			tmp.add(0.0);
@@ -132,10 +175,12 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 						oneLine.add("" + getMll(entity.getCb(), entity.getSr()));
 
 
-						finalListTemp.get(i).set(0, finalListTemp.get(i).get(0) + entity.getCb());
-						finalListTemp.get(i).set(1, finalListTemp.get(i).get(1) + entity.getSr());
+						if (hjList.isEmpty() || hjList.contains(entity.getCpmc().getId())){
+							finalListTemp.get(i).set(0, finalListTemp.get(i).get(0) + entity.getCb());
+							finalListTemp.get(i).set(1, finalListTemp.get(i).get(1) + entity.getSr());
+							finalListNullOrNot.set(i, false);
+						}
 						
-						finalListNullOrNot.set(i, false);
 						entities.remove(entity);
 						break;
 					}

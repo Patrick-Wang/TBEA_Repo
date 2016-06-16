@@ -18,12 +18,16 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
+import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.wgcpylnlspcs.WgcpylnlspcsDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.wgcpylnlspcs.WgcpylnlspcsDaoImpl;
 import com.tbea.ic.operation.model.entity.wgcpqk.wgcpylnlspcs.WgcpylnlspcsEntity;
+import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.MLSPCS_BYQ_ZH_Type;
+import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.MLSPCS_BYQ_ZZY_Type;
+import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.MLSPCS_XL_ZH_Type;
 
 
 @Service(WgcpylnlspcsServiceImpl.NAME)
@@ -40,6 +44,47 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 	
 	public final static String NAME = "WgcpylnlspcsServiceImpl";
 
+private List<Integer> getHjList(WgcpqkType type) {
+		
+		List<Integer> hjList = new ArrayList<Integer>();
+	    
+		switch (type) {
+
+		case YLFX_WGCPYLNL_BYQ_ZH: {
+			hjList.add(WGCPYLNL_BYQ_ZH_Type.WGCPYLNL_BYQ_ZH_CTXM_GN.value());
+			hjList.add(WGCPYLNL_BYQ_ZH_Type.WGCPYLNL_BYQ_ZH_CTXM_GJ.value());
+			hjList.add(WGCPYLNL_BYQ_ZH_Type.WGCPYLNL_BYQ_ZH_WLMY.value());
+			hjList.add(WGCPYLNL_BYQ_ZH_Type.WGCPYLNL_BYQ_ZH_FWL.value());
+			break;
+		}
+		
+		case YLFX_WGCPYLNL_XL_ZH: {
+			hjList.add(WGCPYLNL_XL_ZH_Type.WGCPYLNL_XL_ZH_CTXM_GN.value());
+			hjList.add(WGCPYLNL_XL_ZH_Type.WGCPYLNL_XL_ZH_CTXM_GJ.value());
+			hjList.add(WGCPYLNL_XL_ZH_Type.WGCPYLNL_XL_ZH_WLMY.value());
+			hjList.add(WGCPYLNL_XL_ZH_Type.WGCPYLNL_XL_ZH_FWL.value());
+			break;
+		}
+
+		case YLFX_WGCPYLNL_BYQ_MLL: {
+			hjList.add(WGCPYLNL_BYQ_MLL_Type.MLSPCS_BYQ_DYDJ_JLBYQ.value());
+			hjList.add(WGCPYLNL_BYQ_MLL_Type.MLSPCS_BYQ_DYDJ_ZLBYQ.value());
+			hjList.add(WGCPYLNL_BYQ_MLL_Type.MLSPCS_BYQ_DYDJ_DKQ.value());
+			hjList.add(WGCPYLNL_BYQ_MLL_Type.SBDCZCLWCQK_CZ_BYQ_DYDJ_GSBYQ.value());
+			hjList.add(WGCPYLNL_BYQ_MLL_Type.SBDCZCLWCQK_CZ_BYQ_DYDJ_77.value());
+			hjList.add(WGCPYLNL_BYQ_MLL_Type.SBDCZCLWCQK_CZ_BYQ_DYDJ_81.value());
+			hjList.add(WGCPYLNL_BYQ_MLL_Type.SBDCZCLWCQK_CZ_BYQ_DYDJ_TZBYQ.value());
+			hjList.add(WGCPYLNL_BYQ_MLL_Type.SBDCZCLWCQK_CZ_BYQ_DYDJ_YSL.value());
+			break;
+		}
+		default: 
+			break;
+
+		}
+		
+		return hjList;
+	}
+	
 	@Override
 	public List<Integer> getCpIdList(WgcpqkType type) {
 		
@@ -102,7 +147,7 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 		List<Integer> cpIdList = getCpIdList(type);
 		List<List<Double>> finalListTemp = new ArrayList<List<Double>>();
 		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
-		
+		List<Integer> hjList = getHjList(type);
 		for (int i = 0; i < 13; ++i){
 			List<Double> tmp = new ArrayList<Double>();
 			tmp.add(0.0);
@@ -130,10 +175,13 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 						bFind = true;
 						oneLine.add("" + getMll(entity.getCb(), entity.getSr()));
 						
-						finalListTemp.get(i).set(0, finalListTemp.get(i).get(0) + entity.getCb());
-						finalListTemp.get(i).set(1, finalListTemp.get(i).get(1) + entity.getSr());
-						
-						finalListNullOrNot.set(i, false);
+						if (hjList.isEmpty() || hjList.contains(entity.getCpmc().getId())){
+							finalListTemp.get(i).set(0, finalListTemp.get(i).get(0) + entity.getCb());
+							finalListTemp.get(i).set(1, finalListTemp.get(i).get(1) + entity.getSr());
+							
+							finalListNullOrNot.set(i, false);
+						}						
+
 						entities.remove(entity);
 						break;
 					}

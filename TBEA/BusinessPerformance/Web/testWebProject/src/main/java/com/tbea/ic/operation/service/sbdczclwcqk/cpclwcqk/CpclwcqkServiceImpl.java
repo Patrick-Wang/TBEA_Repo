@@ -46,6 +46,30 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 	public final static String NAME = "CpclwcqkServiceImpl";
 
 	
+	private List<Integer> getHjList(SbdczclwcqkType type) {
+		
+		List<Integer> hjList = new ArrayList<Integer>();
+		
+		switch (type) {
+
+		case SBDCZCLWCQK_CL_BYQ: {
+			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_DYDJ_JLBYQ.value());
+			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_DYDJ_ZLBYQ.value());
+			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_DYDJ_DKQ.value());
+			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_CPFL_GSBYQ.value());
+			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_CPFL_77.value());
+			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_CPFL_81.value());
+			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_CPFL_TZBYQ.value());
+			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_CPFL_YSL.value());
+			break;
+		}
+		default: 
+			break;
+
+		}
+		return hjList;
+	}
+	
 	private List<Integer> getCpIdList(SbdczclwcqkType type) {
 		
 		List<Integer> cpIdList = new ArrayList<Integer>();
@@ -71,7 +95,7 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 	public List<List<String>> getCpclwcqk(Date d, Company company, SbdczclwcqkType type) {
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<Integer> cpIdList = getCpIdList(type);
-
+		List<Integer> hjList = getHjList(type);
 		
 		List<Double> finalListTemp = new ArrayList<Double>();
 		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
@@ -102,9 +126,10 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 						bFind = true;
 						oneLine.add("" + entity.getCl());
 						
-
-						finalListTemp.set(i, finalListTemp.get(i) + entity.getCl());
-						finalListNullOrNot.set(i, false);
+						if (hjList.contains(entity.getCpmc().getId())){
+							finalListTemp.set(i, finalListTemp.get(i) + entity.getCl());
+							finalListNullOrNot.set(i, false);
+						}
 						
 						entities.remove(entity);
 						break;

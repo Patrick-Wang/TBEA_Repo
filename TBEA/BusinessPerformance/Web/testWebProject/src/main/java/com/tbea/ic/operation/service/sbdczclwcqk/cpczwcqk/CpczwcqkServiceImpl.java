@@ -18,6 +18,7 @@ import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDaoImpl;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDao;
 import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpczwcqkEntity;
+import com.tbea.ic.operation.service.sbdczclwcqk.cpclwcqk.SBDCZCLWCQK_CL_BYQ_Type;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpczwcqk.CpczwcqkService;
 
 import net.sf.json.JSONArray;
@@ -40,6 +41,30 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 	DWXXDao dwxxDao;
 
 	public final static String NAME = "CpczwcqkServiceImpl";
+	
+	private List<Integer> getHjList(SbdczclwcqkType type) {
+		
+		List<Integer> hjList = new ArrayList<Integer>();
+		
+		switch (type) {
+
+		case SBDCZCLWCQK_CZ_BYQ: {
+			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_DYDJ_JLBYQ.value());
+			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_DYDJ_ZLBYQ.value());
+			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_DYDJ_DKQ.value());
+			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_CPFL_GSBYQ.value());
+			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_CPFL_77.value());
+			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_CPFL_81.value());
+			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_CPFL_TZBYQ.value());
+			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_CPFL_YSL.value());
+			break;
+		}
+		default: 
+			break;
+
+		}
+		return hjList;
+	}
 	
 	private List<Integer> getCpIdList(SbdczclwcqkType type) {
 		
@@ -72,7 +97,7 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 	public List<List<String>> getCpczwcqk(Date d, Company company, SbdczclwcqkType type) {
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<Integer> cpIdList = getCpIdList(type);
-		
+		List<Integer> hjList = getHjList(type);
 		List<Double> finalListTemp = new ArrayList<Double>();
 		List<Boolean> finalListNullOrNot = new ArrayList<Boolean>();
 		
@@ -100,9 +125,11 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 					if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
 						bFind = true;
 						oneLine.add("" + entity.getCz());
-
-						finalListTemp.set(i, finalListTemp.get(i) + entity.getCz());
-						finalListNullOrNot.set(i, false);
+						
+						if (hjList.isEmpty() || hjList.contains(entity.getCpmc().getId())){
+							finalListTemp.set(i, finalListTemp.get(i) + entity.getCz());
+							finalListNullOrNot.set(i, false);
+						}
 						
 						entities.remove(entity);
 						break;
