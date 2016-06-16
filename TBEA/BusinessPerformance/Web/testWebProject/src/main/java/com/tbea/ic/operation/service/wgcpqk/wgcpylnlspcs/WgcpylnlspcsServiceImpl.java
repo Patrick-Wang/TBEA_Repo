@@ -44,7 +44,7 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 	
 	public final static String NAME = "WgcpylnlspcsServiceImpl";
 
-private List<Integer> getHjList(WgcpqkType type) {
+	private List<Integer> getHjList(WgcpqkType type) {
 		
 		List<Integer> hjList = new ArrayList<Integer>();
 	    

@@ -16,12 +16,16 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.sbdscqyqk.SbdscqyqkType;
+import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy.XfcpqyDao;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy.XfcpqyDaoImpl;
 import com.tbea.ic.operation.model.entity.sbdscqyqk.XfcpqyEntity;
+import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WGCPYLNL_BYQ_MLL_Type;
+import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WGCPYLNL_BYQ_ZH_Type;
+import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WGCPYLNL_XL_ZH_Type;
 
 import net.sf.json.JSONArray;
 
@@ -40,6 +44,31 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 
 	public final static String NAME = "XfcpqyServiceImpl";
 
+	private List<Integer> getHjList(SbdscqyqkType type) {
+		
+		List<Integer> hjList = new ArrayList<Integer>();
+	    
+		switch (type) {
+
+		case YLFX_WGCPYLNL_BYQ: {
+			hjList.add(SBDCPQY_XFCP_BYQ.MLSPCS_BYQ_DYDJ_JLBYQ.value());
+			hjList.add(SBDCPQY_XFCP_BYQ.MLSPCS_BYQ_DYDJ_ZLBYQ.value());
+			hjList.add(SBDCPQY_XFCP_BYQ.MLSPCS_BYQ_DYDJ_DKQ.value());
+			hjList.add(SBDCPQY_XFCP_BYQ.SBDCZCLWCQK_CZ_BYQ_DYDJ_GSBYQ.value());
+			hjList.add(SBDCPQY_XFCP_BYQ.SBDCZCLWCQK_CZ_BYQ_DYDJ_77.value());
+			hjList.add(SBDCPQY_XFCP_BYQ.SBDCZCLWCQK_CZ_BYQ_DYDJ_81.value());
+			hjList.add(SBDCPQY_XFCP_BYQ.SBDCZCLWCQK_CZ_BYQ_DYDJ_TZBYQ.value());
+			hjList.add(SBDCPQY_XFCP_BYQ.SBDCZCLWCQK_CZ_BYQ_DYDJ_YSL.value());
+			hjList.add(SBDCPQY_XFCP_BYQ.SBDCZCLWCQK_CZ_BYQ_DYDJ_JCFWYW.value());
+			break;
+		}
+		default: 
+			break;
+
+		}
+		
+		return hjList;
+	}
 	
 	private List<Integer> getCpIdList(SbdscqyqkType type) {
 		
@@ -79,7 +108,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 		
 		List<Double> finalListTempAll = new ArrayList<Double>();
 		List<Boolean> finalListNullOrNotAll = new ArrayList<Boolean>();
-		
+		List<Integer> hjlist = getHjList(type);
 		for (int i = 0; i < 13; ++i){
 			finalListTemp1.add(0.0);
 			finalListNullOrNot1.add(true);
@@ -133,6 +162,11 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 								
 								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
 								finalListNullOrNotAll.set(i, false);							
+							}
+						}else{
+							if (hjlist.contains(entity.getCpmc().getId())){
+								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
+								finalListNullOrNotAll.set(i, false);
 							}
 						}
 
@@ -195,6 +229,8 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 			
 			result.add(SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_ZH_QT.ordinal() + 1, finalLine1);
 
+			result.add(finalLineAll);
+		}else{
 			result.add(finalLineAll);
 		}
 		
