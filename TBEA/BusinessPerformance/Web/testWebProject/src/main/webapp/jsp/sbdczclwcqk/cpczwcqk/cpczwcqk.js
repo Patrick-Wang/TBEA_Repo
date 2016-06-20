@@ -80,6 +80,9 @@ var sbdczclwcqk;
                     _this.refresh();
                 });
             };
+            ShowView.prototype.pluginGetUnit = function () {
+                return "单位：万元";
+            };
             ShowView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;

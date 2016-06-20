@@ -43,6 +43,11 @@ public class MathUtil {
 		if (base == null || sub == null){
 			return null;
 		}
+		
+		if (isZero(base)){
+			return null;
+		}
+		
 		return sub / base;
 	}
 
@@ -93,6 +98,10 @@ public class MathUtil {
 		if (base == null || sub == null){
 			return null;
 		}
+		if (0 == base){
+			return null;
+		}
+		
 		return sub.doubleValue() / base.doubleValue();
 	}
 

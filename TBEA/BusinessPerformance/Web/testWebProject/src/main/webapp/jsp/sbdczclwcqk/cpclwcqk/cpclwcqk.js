@@ -85,6 +85,9 @@ var sbdczclwcqk;
                 }
                 this.updateTable();
             };
+            ShowView.prototype.pluginGetUnit = function () {
+                return "单位：万kVA（其中电抗器产量万kvar）";
+            };
             ShowView.prototype.isSupported = function (compType) {
                 if (this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_BYQ) {
                     if (compType == Util.CompanyType.SBGS ||

@@ -47,6 +47,7 @@ module wgcpqk {
                 return plugin.yclbfqk;
             }
 
+
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
                 return "../yclbfqk/export.do?" + Util.Ajax.toUrlParam({
                         date: date,

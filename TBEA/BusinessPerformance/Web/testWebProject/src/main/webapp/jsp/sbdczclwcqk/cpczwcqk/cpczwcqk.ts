@@ -83,6 +83,10 @@ module sbdczclwcqk {
                     });
             }
 
+            pluginGetUnit():string{
+                return "单位：万元";
+            }
+
             public refresh() : void{
                 if ( this.mData == undefined){
                     return;

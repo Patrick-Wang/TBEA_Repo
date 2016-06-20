@@ -57,8 +57,8 @@ public class YclbfqkServlet {
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
 			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
-			.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{3}), 1))
-			.add(new NumberFormatter(1)) 
+			.add(new NumberFormatter(new DefaultMatcher(null, new Integer[]{1, 2}), 1)) 
+			.add(new PercentFormatter(null, 1))
 			.server()
 			.format(result);
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
@@ -117,8 +117,8 @@ public class YclbfqkServlet {
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
 			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
-			.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{3}), 1))
-			.add(new NumberFormatter(1)) 
+			.add(new NumberFormatter(new DefaultMatcher(null, new Integer[]{1, 2}), 1)) 
+			.add(new PercentFormatter(null, 1))
 			.add(new ExcelTitleYearScrollerFilter(template, new Offset(0, 4), d))
 			.to(FormatterServer.GROP_EXCEL)
 			.add(new ExcelHeaderFormatter(DefaultMatcher.LEFT1_MATCHER, template, new Offset(2, 0)))

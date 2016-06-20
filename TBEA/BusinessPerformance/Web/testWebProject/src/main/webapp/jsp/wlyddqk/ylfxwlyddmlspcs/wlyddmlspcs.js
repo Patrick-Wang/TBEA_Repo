@@ -78,7 +78,7 @@ var ylfxwlyddmlspcs;
                 this.updateTable();
             };
             WLYDDMLSPCSView.prototype.pluginGetUnit = function () {
-                return "单位：万元";
+                return "单位：百分比";
             };
             WLYDDMLSPCSView.prototype.isSupported = function (compType) {
                 if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH ||

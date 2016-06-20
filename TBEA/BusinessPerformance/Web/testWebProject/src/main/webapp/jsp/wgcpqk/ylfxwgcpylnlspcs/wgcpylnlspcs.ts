@@ -123,6 +123,10 @@ module  ylfxwgcpylnlspcs {
             }
 
 
+            pluginGetUnit():string{
+                return "单位：百分比";
+            }
+
             public init(opt:Option):void {
 
                 framework.router

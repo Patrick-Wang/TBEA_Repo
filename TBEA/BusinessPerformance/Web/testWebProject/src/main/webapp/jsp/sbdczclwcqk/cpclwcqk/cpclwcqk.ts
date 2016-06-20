@@ -90,6 +90,10 @@ module sbdczclwcqk {
                 this.updateTable();
             }
 
+            pluginGetUnit():string{
+                return "单位：万kVA（其中电抗器产量万kvar）";
+            }
+
             isSupported(compType:Util.CompanyType):boolean {
                 if (this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_BYQ) {
                     if (compType == Util.CompanyType.SBGS ||

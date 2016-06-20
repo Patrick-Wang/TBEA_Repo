@@ -107,6 +107,9 @@ var ylfxwgcpylnlspcs;
                 }
                 return false;
             };
+            ShowView.prototype.pluginGetUnit = function () {
+                return "单位：百分比";
+            };
             ShowView.prototype.init = function (opt) {
                 framework.router
                     .fromEp(new framework.basic.EndpointProxy(plugin.byq_zh, this.getId()))

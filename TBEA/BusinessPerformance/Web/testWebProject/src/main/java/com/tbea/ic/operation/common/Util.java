@@ -377,6 +377,11 @@ public class Util {
 		if (base == null || sub == null){
 			return null;
 		}
+		
+		if (isZero(base)){
+			return null;
+		}
+		
 		return sub / base;
 	}
 

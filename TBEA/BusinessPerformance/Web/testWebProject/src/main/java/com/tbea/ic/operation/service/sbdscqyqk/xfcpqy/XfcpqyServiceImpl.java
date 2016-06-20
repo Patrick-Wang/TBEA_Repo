@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,18 +18,12 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.sbdscqyqk.SbdscqyqkType;
-import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy.XfcpqyDao;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy.XfcpqyDaoImpl;
 import com.tbea.ic.operation.model.entity.sbdscqyqk.XfcpqyEntity;
-import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WGCPYLNL_BYQ_MLL_Type;
-import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WGCPYLNL_BYQ_ZH_Type;
-import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WGCPYLNL_XL_ZH_Type;
-
-import net.sf.json.JSONArray;
 
 @Service(XfcpqyServiceImpl.NAME)
 @Transactional("transactionManager")

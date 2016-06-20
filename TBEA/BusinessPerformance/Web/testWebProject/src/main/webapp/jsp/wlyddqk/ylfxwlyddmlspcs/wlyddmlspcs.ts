@@ -86,7 +86,8 @@ module  ylfxwlyddmlspcs {
             }
 
             pluginGetUnit():string{
-                return "单位：万元";
+                return "单位：百分比";
+
             }
 
             isSupported( compType:Util.CompanyType):boolean{
