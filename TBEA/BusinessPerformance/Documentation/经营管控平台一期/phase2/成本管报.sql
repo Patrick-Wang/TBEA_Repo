@@ -22,8 +22,7 @@ INSERT [dbo].[identifier_cbfx_cbfl] ([id], [name])VALUES (5,N'直接成本合计
 INSERT [dbo].[identifier_cbfx_cbfl] ([id], [name])VALUES (6,N'非可控成本')
 INSERT [dbo].[identifier_cbfx_cbfl] ([id], [name])VALUES (7,N'可控成本')
 INSERT [dbo].[identifier_cbfx_cbfl] ([id], [name])VALUES (8,N'制造费用小计')
-INSERT [dbo].[identifier_cbfx_cbfl] ([id], [name])VALUES (9,N'技改财务费用')
-INSERT [dbo].[identifier_cbfx_cbfl] ([id], [name])VALUES (10,N'生产成本合计')
+INSERT [dbo].[identifier_cbfx_cbfl] ([id], [name])VALUES (9,N'生产成本合计')
 SET IDENTITY_INSERT [dbo].[identifier_cbfx_cbfl] OFF      
 
 

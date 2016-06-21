@@ -1,6 +1,4 @@
 package com.tbea.ic.operation.model.dao.identifier.cbfx.cbfl;
-import com.tbea.ic.operation.model.entity.identifier.cbfx.CbflEntity;
-import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
 //INSERT [dbo].[identifier_cbfx_cbfl] ([id], [name])VALUES (0,N'土方剥离爆破成本')
 //INSERT [dbo].[identifier_cbfx_cbfl] ([id], [name])VALUES (1,N'原煤爆破成本')
@@ -24,7 +22,6 @@ public enum Cbfl {
 	FKKCB,
 	KKCB,
 	ZZFYXJ,
-	JGCWFY,
 	SCCBHJ,
 	END
 }
