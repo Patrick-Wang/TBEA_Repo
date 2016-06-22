@@ -226,8 +226,8 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 		List<Integer> cpIdList = getCpIdList(type);
 		
 		for (int cp = 0; cp < cpIdList.size(); cp++) {
-			CpclwcqkEntity entityCl = cpclwcqkDao.getByDate(d, company, type, cpIdList.get(cp));
-			CpczwcqkEntity entityCz = cpczwcqkDao.getByDate(d, company, type, cpIdList.get(cp));
+			CpclwcqkEntity entityCl = cpclwcqkDao.getByDate(d, company, SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ, cpIdList.get(cp));
+			CpczwcqkEntity entityCz = cpczwcqkDao.getByDate(d, company, SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ, cpIdList.get(cp));
 			
 			if (null == entityCz){
 				entityCz = new CpczwcqkEntity();

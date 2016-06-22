@@ -15,6 +15,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.identifier.common.CpmcEntity;
 

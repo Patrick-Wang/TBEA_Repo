@@ -18,16 +18,12 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
-import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.wgcpylnlspcs.WgcpylnlspcsDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.wgcpylnlspcs.WgcpylnlspcsDaoImpl;
 import com.tbea.ic.operation.model.entity.wgcpqk.wgcpylnlspcs.WgcpylnlspcsEntity;
-import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.MLSPCS_BYQ_ZH_Type;
-import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.MLSPCS_BYQ_ZZY_Type;
-import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.MLSPCS_XL_ZH_Type;
 
 
 @Service(WgcpylnlspcsServiceImpl.NAME)
