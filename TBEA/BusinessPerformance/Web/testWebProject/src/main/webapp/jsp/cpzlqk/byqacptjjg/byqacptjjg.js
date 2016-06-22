@@ -5,6 +5,7 @@
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../cpzlqkdef.ts"/>
 ///<reference path="../cpzlqk.ts"/>
+///<reference path="../../jqgrid/jqgrid.d.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -38,7 +39,7 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -113,7 +114,7 @@ var cpzlqk;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -182,6 +183,6 @@ var cpzlqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(cpzlqk.ZlPluginView));
+        })(cpzlqk.ZlPluginView);
     })(byqacptjjg = cpzlqk.byqacptjjg || (cpzlqk.byqacptjjg = {}));
 })(cpzlqk || (cpzlqk = {}));

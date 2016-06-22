@@ -67,7 +67,7 @@ var cpzlqk;
             _super.prototype.init.call(this, opt);
         };
         return CpzlqkEntryFrameView;
-    }(framework.basic.EntryFrameView));
+    })(framework.basic.EntryFrameView);
     var ZlEntryPluginView = (function (_super) {
         __extends(ZlEntryPluginView, _super);
         function ZlEntryPluginView() {
@@ -87,7 +87,7 @@ var cpzlqk;
             return router.from(this.getId()).to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_GET_BHGLX);
         };
         return ZlEntryPluginView;
-    }(framework.basic.EntryPluginView));
+    })(framework.basic.EntryPluginView);
     cpzlqk.ZlEntryPluginView = ZlEntryPluginView;
     var ins = new CpzlqkEntryFrameView();
 })(cpzlqk || (cpzlqk = {}));

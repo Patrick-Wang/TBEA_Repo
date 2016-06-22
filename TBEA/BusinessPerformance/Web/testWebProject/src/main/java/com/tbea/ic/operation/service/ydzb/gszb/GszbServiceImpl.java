@@ -107,6 +107,14 @@ public class GszbServiceImpl implements GszbService {
 		//gsztzbs.add(GSZB.JZCSYL.getValue());
 	}
 	
+	private static List<Integer> CorpIndicators = new ArrayList<Integer>();
+	static {
+		CorpIndicators.add(GSZB.LRZE1.value());
+		CorpIndicators.add(GSZB.XSSR6.value());
+		CorpIndicators.add(GSZB.JYXJXJL29.value());
+		CorpIndicators.add(GSZB.YSZK32.value());
+		CorpIndicators.add(GSZB.CH35.value());
+	}
 	
 	private static List<Integer> gsztzbsNC = new ArrayList<Integer>();
 	static {
@@ -309,6 +317,13 @@ public class GszbServiceImpl implements GszbService {
 		return makeZbResult(gsztzbs, pipe.getData());
 	}
 
+	@Override
+	public List<Double[]> getCorpIndicators(Date date) {
+		BasicPipe pipe = new BasicPipe(CorpIndicators, BMDepartmentDB.getMainlyJydw(companyManager), date,
+				getConfiguratorFactory().getStandardConfigurator());
+		return pipe.getData();
+	}
+	
 	@Override
 	public List<String[]> getGcyzb(Date date) {
 		Organization org = companyManager.getBMDBOrganization();

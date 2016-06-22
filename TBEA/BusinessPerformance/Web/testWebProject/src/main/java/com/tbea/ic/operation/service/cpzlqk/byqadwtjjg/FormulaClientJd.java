@@ -22,9 +22,6 @@ import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
 
 class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>{
 
-	/**
-	 * 
-	 */
 	private final ByqadwtjjgServiceImpl byqadwtjjgServiceImpl;
 	protected List<List<String>> result = new ArrayList<List<String>>();
 	private Map<Formula, Pair<ByqAdwtjjgEntity, Company>> forMap = new HashMap<Formula, Pair<ByqAdwtjjgEntity, Company>>();

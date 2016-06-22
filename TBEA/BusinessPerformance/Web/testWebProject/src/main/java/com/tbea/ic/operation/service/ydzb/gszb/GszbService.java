@@ -34,4 +34,5 @@ public interface GszbService {
 	List<Company> getCompanies(Account account);
 	
 	List<String[]> getGsztzbNC(Date d, com.tbea.ic.operation.service.nczb.pipe.configurator.ConfiguratorFactory config);
+	List<Double[]> getCorpIndicators(Date date);
 }

@@ -40,8 +40,6 @@ public class ByqadwtjjgServlet {
 	@Resource(name=ByqadwtjjgServiceImpl.NAME)
 	ByqadwtjjgService byqadwtjjgService;
 
-
-
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 

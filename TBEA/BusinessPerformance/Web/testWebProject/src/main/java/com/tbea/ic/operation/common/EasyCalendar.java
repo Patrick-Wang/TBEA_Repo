@@ -12,6 +12,13 @@ public class EasyCalendar {
 		this.cal = cal;
 	}
 	
+	public EasyCalendar(int year, int month, int day) {
+		this.cal = Calendar.getInstance();
+		this.setYear(year);
+		this.setMonth(month);
+		this.setDay(day);
+	}
+	
 	public EasyCalendar() {
 		this.cal = Calendar.getInstance();
 	}
@@ -52,6 +59,16 @@ public class EasyCalendar {
 	
 	public EasyCalendar setMonth(int month){
 		cal.set(Calendar.MONTH, month - 1);
+		return this;
+	}
+	
+	public EasyCalendar setYear(int year){
+		cal.set(Calendar.YEAR, year);
+		return this;
+	}
+	
+	public EasyCalendar setDay(int day){
+		cal.set(Calendar.DAY_OF_MONTH, day);
 		return this;
 	}
 	

@@ -45,6 +45,7 @@ public class YDZBRankingController {
 	@Autowired
 	private RankService rankService;
 	
+	
 	@RequestMapping(value = "companys_ranking.do", method = RequestMethod.GET)
 	public ModelAndView getCompanys_Ranking(HttpServletRequest request,
 			HttpServletResponse response) {

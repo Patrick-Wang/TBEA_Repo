@@ -67,7 +67,7 @@ var cpzlqk;
             _super.prototype.init.call(this, opt);
         };
         return CpzlqkApproveFrameView;
-    }(framework.basic.ApproveFrameView));
+    })(framework.basic.ApproveFrameView);
     var ZlApprovePluginView = (function (_super) {
         __extends(ZlApprovePluginView, _super);
         function ZlApprovePluginView() {
@@ -87,7 +87,7 @@ var cpzlqk;
             return router.from(this.getId()).to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_GET_BHGLX);
         };
         return ZlApprovePluginView;
-    }(framework.basic.ApprovePluginView));
+    })(framework.basic.ApprovePluginView);
     cpzlqk.ZlApprovePluginView = ZlApprovePluginView;
     var ins = new CpzlqkApproveFrameView();
 })(cpzlqk || (cpzlqk = {}));

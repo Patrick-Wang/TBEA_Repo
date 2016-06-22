@@ -3,10 +3,9 @@ package com.tbea.ic.operation.service.ydzb.rank;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -29,17 +28,11 @@ import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
-import com.tbea.ic.operation.model.entity.jygk.SJZB;
-import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
-import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
-import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 import com.tbea.ic.operation.service.util.pipe.core.CompositePipe;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
-import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.composite.DoubleArrayComparator;
-import com.tbea.ic.operation.service.ydzb.pipe.filter.composite.RankPipeFilter;
 
 
 @Service
@@ -215,6 +208,22 @@ public class RankServiceImpl implements RankService {
 		return result;
 	}
 
+	static private Set<String> excludedComps = new HashSet<String>();
+	static
+	{
+		excludedComps.add("新疆众和动力保障公司");
+		excludedComps.add("特变电工股份有限公司能源动力分公司动力厂");
+		excludedComps.add("特变电工新疆变压器厂国际公司");
+		excludedComps.add("新疆天池能源销售有限公司");
+		excludedComps.add("西北电线电缆检测中心有限公司");
+		excludedComps.add("服务公司");
+		excludedComps.add("特变电工股份有限公司能源动力分公司总配电车间");
+		excludedComps.add("新疆中特国际物流有限公司");
+		excludedComps.add("新疆新特国际物流贸易公司");
+		excludedComps.add("特变电工新疆新能源股份有限公司国际部");
+		excludedComps.add("特变电工沈阳变压器集团有限公司国际贸易成套分公司");
+	};
+	
 	@Override
 	public List<String[]> getXmgsJhlrRank(Date date) {
 		CompositePipe pipe = new CompositePipe(GSZB.LRZE1.value(), date, configFac.getJhlrRankConfigurator());
@@ -222,8 +231,10 @@ public class RankServiceImpl implements RankService {
 		List<String> compsName = new ArrayList<String>();
 		for (Company comp : jydws){
 			for (Company xmgs : comp.getSubCompanies()){
-				pipe.addCompany(xmgs, configFac.getJhlrDataConfigurator());
-				compsName.add(xmgs.getName());
+				if (!excludedComps.contains(xmgs.getName())){
+					pipe.addCompany(xmgs, configFac.getJhlrDataConfigurator());
+					compsName.add(xmgs.getName());
+				}
 			}
 		}
 		return makeResult(compsName, pipe.getData());

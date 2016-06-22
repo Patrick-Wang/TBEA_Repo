@@ -35,7 +35,20 @@
 	</listener> 
 
 
-
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext-webservices.xml</param-value>
+		</init-param>
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/webservice/*</url-pattern>
+	</servlet-mapping>
 		
 	<!-- <context-param> 
 	<param-name>log4jConfigLocation</param-name> 
@@ -124,7 +137,7 @@
 	</listener>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/applicationContext-services.xml</param-value>
+		<param-value>/WEB-INF/applicationContext-services.xml,/WEB-INF/applicationContext-webservices.xml</param-value>
 	</context-param>
 	<servlet>
 		<servlet-name>spring-mvc</servlet-name>
