@@ -33,6 +33,7 @@ import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
 import com.tbea.ic.operation.common.formatter.v2.core.Offset;
 import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
+import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTitleYearScrollerFilter;
@@ -73,7 +74,7 @@ public class WgcpylnlspcsServlet {
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
 			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
-			.add(new NumberFormatter(1))
+			.add(new PercentFormatter(null, 1))
 			.server()
 			.format(result);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
@@ -139,7 +140,7 @@ public class WgcpylnlspcsServlet {
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
 			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
-			.add(new NumberFormatter(1)) 
+			.add(new PercentFormatter(null, 1)) 
 			.add(new ExcelTitleYearScrollerFilter(template, new Offset(0, 1), d))
 			.to(FormatterServer.GROP_EXCEL)
 			.add(new ExcelHeaderFormatter(DefaultMatcher.LEFT1_MATCHER, template, new Offset(2, 0)))

@@ -158,6 +158,7 @@ function doPost(url, date, data, sbdczclwcqkType, suc){
 			sbdczclwcqkType:sbdczclwcqkType
 		},
 		url: url,
+		async:false,
 		success: suc,
 		error: function (XMLHttpRequest, textStatus, errorThrown) {
 			alter("failed");

@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[ylfxgb_ylfx_wgcpmll](
 	[nf] [int] not NULL,
 	[yf] [int] not NULL,
 	[dwid] [int] not NULL,
-	[tjfs] [int] not NULL,	-- 11->变压器综合   12->变压器按电压等级分类	13->变压器按产品分类   14->变压器按产品特殊1	15->线缆综合	16->线缆按产品分类
+	[tjfs] [int] not NULL,	-- 11->变压器综合   12->变压器毛利率	14->线缆综合	15->线缆按产品分类
 	[cpid] [int] not NULL,
 	[sr] [numeric](18, 4) NULL,
 	[cb] [numeric](18, 4) NULL,

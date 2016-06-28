@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -133,8 +134,7 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 	}
 
 	private String getMll(Double cb, Double sr) {
-		
-		return String.format("%.1f", (Double.valueOf((sr - cb)/sr)) * 100) + "%";
+		return "" + MathUtil.division(MathUtil.minus(sr, cb), sr);
 	}
 	
 	@Override
@@ -172,8 +172,8 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 						oneLine.add("" + getMll(entity.getCb(), entity.getSr()));
 						
 						if (hjList.isEmpty() || hjList.contains(entity.getCpmc().getId())){
-							finalListTemp.get(i).set(0, finalListTemp.get(i).get(0) + entity.getCb());
-							finalListTemp.get(i).set(1, finalListTemp.get(i).get(1) + entity.getSr());
+							finalListTemp.get(i).set(0, MathUtil.sum(finalListTemp.get(i).get(0), entity.getCb()));
+							finalListTemp.get(i).set(1, MathUtil.sum(finalListTemp.get(i).get(1), entity.getSr()));
 							
 							finalListNullOrNot.set(i, false);
 						}						

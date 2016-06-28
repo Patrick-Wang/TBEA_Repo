@@ -95,7 +95,7 @@ module sbdscqyqk {
             }
 
             public init(opt:Option):void {
-                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "细分市场签约");
+                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "细分市场签约（国内市场制造业签约）");
             }
 
 			private getMonth():number{

@@ -159,6 +159,7 @@ function doPost(date, data, suc){
 		},
 		url: "../wgcpylnlspcs/entry/submit.do",
 		success: suc,
+		async: false,
 		error: function (XMLHttpRequest, textStatus, errorThrown) {
 			alter("failed");
 		}
