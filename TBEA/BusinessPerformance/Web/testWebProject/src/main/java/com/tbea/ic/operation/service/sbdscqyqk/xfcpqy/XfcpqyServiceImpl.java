@@ -95,21 +95,21 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 	public List<List<String>> getXfcpqy(Date d, Company company, SbdscqyqkType type) {
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<Integer> cpIdList = getCpIdList(type);
-		List<Double> finalListTemp1 = new ArrayList<Double>();
-		List<Boolean> finalListNullOrNot1 = new ArrayList<Boolean>();
+//		List<Double> finalListTemp1 = new ArrayList<Double>();
+//		List<Boolean> finalListNullOrNot1 = new ArrayList<Boolean>();
 		
-		List<Double> finalListTemp2 = new ArrayList<Double>();
-		List<Boolean> finalListNullOrNot2 = new ArrayList<Boolean>();
+//		List<Double> finalListTemp2 = new ArrayList<Double>();
+//		List<Boolean> finalListNullOrNot2 = new ArrayList<Boolean>();
 		
 		List<Double> finalListTempAll = new ArrayList<Double>();
 		List<Boolean> finalListNullOrNotAll = new ArrayList<Boolean>();
 		List<Integer> hjlist = getHjList(type);
 		for (int i = 0; i < 13; ++i){
-			finalListTemp1.add(0.0);
-			finalListNullOrNot1.add(true);
-			
-			finalListTemp2.add(0.0);
-			finalListNullOrNot2.add(true);
+//			finalListTemp1.add(0.0);
+//			finalListNullOrNot1.add(true);
+//			
+//			finalListTemp2.add(0.0);
+//			finalListNullOrNot2.add(true);
 
 			finalListTempAll.add(0.0);
 			finalListNullOrNotAll.add(true);
@@ -139,25 +139,26 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 							
 							if (cp <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_ZH_QT.ordinal()) {
 
-								finalListTemp1.set(i, finalListTemp1.get(i) + entity.getQye());
-								finalListNullOrNot1.set(i, false);						
+//								finalListTemp1.set(i, finalListTemp1.get(i) + entity.getQye());
+//								finalListNullOrNot1.set(i, false);						
 								
 								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
 								finalListNullOrNotAll.set(i, false);
 								
-							} else if (cp <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_GJGC.ordinal()) {
-
-								finalListTemp2.set(i, finalListTemp2.get(i) + entity.getQye());
-								finalListNullOrNot2.set(i, false);				
-								
-								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
-								finalListNullOrNotAll.set(i, false);
-								
-							} else if (cp <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_FWL.ordinal()) {
-								
-								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
-								finalListNullOrNotAll.set(i, false);							
-							}
+							} 
+//							else if (cp <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_GJGC.ordinal()) {
+//
+//								finalListTemp2.set(i, finalListTemp2.get(i) + entity.getQye());
+//								finalListNullOrNot2.set(i, false);				
+//								
+//								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
+//								finalListNullOrNotAll.set(i, false);
+//								
+//							} else if (cp <= SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_FWL.ordinal()) {
+//								
+//								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
+//								finalListNullOrNotAll.set(i, false);							
+//							}
 						}else{
 							if (hjlist.contains(entity.getCpmc().getId())){
 								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
@@ -179,31 +180,31 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 			result.add(oneLine);
 		}		
 		
-		List<String> finalLine1 = new ArrayList<String>();
-		finalLine1.add("小计");
-		for (int i = 0; i < 13; ++i){
-		
-			if (!finalListNullOrNot1.get(i)) {
-
-				finalLine1.add("" + finalListTemp1.get(i));
-			} else {
-				
-				finalLine1.add("null");
-			}
-		}
-		
-		List<String> finalLine2 = new ArrayList<String>();
-		finalLine2.add("小计");
-		for (int i = 0; i < 13; ++i){
-		
-			if (!finalListNullOrNot2.get(i)) {
-
-				finalLine2.add("" + finalListTemp2.get(i));
-			} else {
-				
-				finalLine2.add("null");
-			}
-		}
+//		List<String> finalLine1 = new ArrayList<String>();
+//		finalLine1.add("小计");
+//		for (int i = 0; i < 13; ++i){
+//		
+//			if (!finalListNullOrNot1.get(i)) {
+//
+//				finalLine1.add("" + finalListTemp1.get(i));
+//			} else {
+//				
+//				finalLine1.add("null");
+//			}
+//		}
+//		
+//		List<String> finalLine2 = new ArrayList<String>();
+//		finalLine2.add("小计");
+//		for (int i = 0; i < 13; ++i){
+//		
+//			if (!finalListNullOrNot2.get(i)) {
+//
+//				finalLine2.add("" + finalListTemp2.get(i));
+//			} else {
+//				
+//				finalLine2.add("null");
+//			}
+//		}
 		
 		List<String> finalLineAll = new ArrayList<String>();
 		finalLineAll.add("合计");
@@ -220,9 +221,9 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 		
 		if (type == SbdscqyqkType.YLFX_WGCPYLNL_XL ) {
 
-			result.add(SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_GJGC.ordinal() + 1, finalLine2);
-			
-			result.add(SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_ZH_QT.ordinal() + 1, finalLine1);
+//			result.add(SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_GJGC.ordinal() + 1, finalLine2);
+//			
+//			result.add(SBDCPQY_XFCP_XL.SBDCZCLWCQK_CZ_XL_ZH_QT.ordinal() + 1, finalLine1);
 
 			result.add(finalLineAll);
 		}else{
