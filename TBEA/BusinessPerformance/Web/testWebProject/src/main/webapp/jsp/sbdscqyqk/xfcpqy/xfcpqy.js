@@ -112,11 +112,11 @@ var sbdscqyqk;
                 framework.router
                     .fromEp(new framework.basic.EndpointProxy(plugin.xfcpqy_byq, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "细分产品签约情况及趋势");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "细分产品签约情况及趋势（国内市场制造业签约）");
                 framework.router
                     .fromEp(new framework.basic.EndpointProxy(plugin.xfcpqy_xl, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "细分产品签约情况及趋势");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "细分产品签约情况及趋势（国内市场制造业签约）");
             };
             ShowView.prototype.onEvent = function (e) {
                 if (e.road != undefined) {

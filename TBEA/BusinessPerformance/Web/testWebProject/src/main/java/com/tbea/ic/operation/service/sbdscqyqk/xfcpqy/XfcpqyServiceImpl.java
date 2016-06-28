@@ -55,7 +55,6 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 			hjList.add(SBDCPQY_XFCP_BYQ.SBDCZCLWCQK_CZ_BYQ_DYDJ_81.value());
 			hjList.add(SBDCPQY_XFCP_BYQ.SBDCZCLWCQK_CZ_BYQ_DYDJ_TZBYQ.value());
 			hjList.add(SBDCPQY_XFCP_BYQ.SBDCZCLWCQK_CZ_BYQ_DYDJ_YSL.value());
-			hjList.add(SBDCPQY_XFCP_BYQ.SBDCZCLWCQK_CZ_BYQ_DYDJ_JCFWYW.value());
 			break;
 		}
 		default: 

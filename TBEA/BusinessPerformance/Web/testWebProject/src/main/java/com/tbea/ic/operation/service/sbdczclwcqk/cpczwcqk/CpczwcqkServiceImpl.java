@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -127,7 +128,7 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 						oneLine.add("" + entity.getCz());
 						
 						if (hjList.isEmpty() || hjList.contains(entity.getCpmc().getId())){
-							finalListTemp.set(i, finalListTemp.get(i) + entity.getCz());
+							finalListTemp.set(i, MathUtil.sum(finalListTemp.get(i), entity.getCz()));
 							finalListNullOrNot.set(i, false);
 						}
 						

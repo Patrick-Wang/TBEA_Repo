@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -127,7 +128,7 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 						oneLine.add("" + entity.getCl());
 						
 						if (hjList.contains(entity.getCpmc().getId())){
-							finalListTemp.set(i, finalListTemp.get(i) + entity.getCl());
+							finalListTemp.set(i, MathUtil.sum(finalListTemp.get(i), entity.getCl()));
 							finalListNullOrNot.set(i, false);
 						}
 						
