@@ -83,7 +83,7 @@ function doPost(date, data, suc){
 		}
 	});
 }
-
+ 
 var count = 0;
 function simulateSubmit(ds, de){
 	console.log("simulateSubmit('" + ds + "', '" + de + "')");

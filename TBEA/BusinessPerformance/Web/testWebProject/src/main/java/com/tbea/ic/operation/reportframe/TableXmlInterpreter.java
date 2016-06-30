@@ -27,7 +27,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 				Element subCol = (Element) cols.item(i);
 				loadHeader(component, header1, subCol, tbValues, ids);
 				header.getSubNodes().add(header1);
-				header1.setParent(header);
+				//header1.setParent(header);
 			}
 		}
 
@@ -73,7 +73,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 				Element col = (Element) cols.item(i);
 				loadHeader(component, header1, col, tbValues, tb.getIds());
 				header.getSubNodes().add(header1);
-				header1.setParent(header);
+				//header1.setParent(header);
 			}
 		}
 		tb.setHeader(header);

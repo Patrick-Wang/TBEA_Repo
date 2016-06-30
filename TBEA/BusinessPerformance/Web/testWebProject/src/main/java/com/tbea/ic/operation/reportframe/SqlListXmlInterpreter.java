@@ -46,8 +46,9 @@ public class SqlListXmlInterpreter implements XmlInterpreter {
 		for (int i = 0; i < order.size(); ++i){
 			objs.add(null);
 			for (int j = 0; j < sqlRet.size(); ++j){
-				if (order.get(index).equals(sqlRet.get(j)[by])){
+				if (order.get(i).equals(sqlRet.get(j)[by])){
 					objs.set(objs.size() - 1, sqlRet.get(j)[index]);
+					break;
 				}
 			}
 		}

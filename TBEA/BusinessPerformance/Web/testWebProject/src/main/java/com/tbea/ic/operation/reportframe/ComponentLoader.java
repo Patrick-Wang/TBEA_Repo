@@ -45,7 +45,7 @@ public class ComponentLoader {
 	}
 
 
-	private void testChange() {
+	private void scan() {
 		File dir = new File(resPath);
 		File[] fs = dir.listFiles();
 		for (int i = 0; i < fs.length; i++) {
@@ -64,9 +64,9 @@ public class ComponentLoader {
 		Timer timer = new Timer(true);
 		timer.schedule(new TimerTask() {
 			public void run() {
-				testChange();
+				scan();
 			}
-		}, 0, 5 * 60 * 1000);
+		}, 0, 30 * 1000);
 	}
 
 	private void loadComponent(File file) {

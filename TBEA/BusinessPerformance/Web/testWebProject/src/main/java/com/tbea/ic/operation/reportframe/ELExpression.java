@@ -12,7 +12,7 @@ import javax.script.ScriptException;
 import com.tbea.ic.operation.reportframe.ELParser.ObjectLoader;
 
 class ELExpression{
-	static final Pattern objPattern = Pattern.compile("^[a-zA-Z][a-zA-Z0-9]*");   
+	static final Pattern objPattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*");   
 	int start;
 	int end;
 	String express;
@@ -90,7 +90,7 @@ class ELExpression{
 			}
 		}
 		try {
-			return jse.eval(express);
+			return jse.eval(expressTmp);
 		} catch (ScriptException e) {
 			e.printStackTrace();
 		}	

@@ -30,11 +30,13 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 	FormatterMatcher parserMatcher(Element handler){
 		NodeList list = handler.getChildNodes();
 		for (int i = 0; i < list.getLength(); ++i){
-			Element matcher = (Element) list.item(i);
-			if ("DefaultMatcher".equals(matcher.getTagName())){
-				return parserDefaultMatcher(matcher);
-			}else if ("IndicatorMatcher".equals(matcher.getTagName())){
-				return parserIndicatorMatcher(matcher);
+			if (list.item(i) instanceof Element){
+				Element matcher = (Element) list.item(i);
+				if ("DefaultMatcher".equals(matcher.getTagName())){
+					return parserDefaultMatcher(matcher);
+				}else if ("IndicatorMatcher".equals(matcher.getTagName())){
+					return parserIndicatorMatcher(matcher);
+				}
 			}
 		}
 		return null;
@@ -85,9 +87,11 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		List<FormatterHandler> handlers = new ArrayList<FormatterHandler>();
 		NodeList list = e.getChildNodes();
 		for (int i = 0; i < list.getLength(); ++i){
-			FormatterHandler handler = parserHandler(component, (Element) list.item(i));
-			if (null != handler){
-				handlers.add(handler);
+			if (list.item(i) instanceof Element){
+				FormatterHandler handler = parserHandler(component, (Element) list.item(i));
+				if (null != handler){
+					handlers.add(handler);
+				}
 			}
 		}
 

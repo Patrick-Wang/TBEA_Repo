@@ -115,7 +115,7 @@ public class FormatterServer {
 
 	List<List<String>> table;
 	public void setTable(List<List<String>> value) {
-		this.table = table;
+		this.table = value;
 	}
 
 	public List<List<String>> getResult(){

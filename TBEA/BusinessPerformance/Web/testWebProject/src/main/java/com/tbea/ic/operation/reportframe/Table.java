@@ -29,11 +29,14 @@ public class Table {
 	}
 	
 	public List<List<String>> getMatrix() {
-		List<List<String>> matrix = Util.resize(new ArrayList<List<String>>(), ids.size());
+		List<List<String>> matrix = new ArrayList<List<String>>();
 		for (int i = 0; i < ids.size(); ++i){
+			List<String> tmpList = new ArrayList<String>();
+			tmpList.add("" + ids.get(i));
 			for (int j = 0; j < values.size(); ++j){
-				matrix.get(i).add(values.get(j).get(i) + "");
+				tmpList.add(values.get(j).get(i) + "");
 			}
+			matrix.add(tmpList);
 		}
 		return matrix;
 	}

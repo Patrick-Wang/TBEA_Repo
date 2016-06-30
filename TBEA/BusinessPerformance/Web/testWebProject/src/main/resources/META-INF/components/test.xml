@@ -1,0 +1,111 @@
+﻿<components>
+	<service id="gsztzbhz" transaction="transactionManager" db="localDB">
+		
+		<list id="dwids" type="int">
+			<item>1</item>
+			<item>2</item>
+			<item>3</item>
+		</list>
+		
+		<list id="zbids" type="int">
+			<item>1</item>
+			<item>6</item>
+			<item>28</item>
+			<item>29</item>
+			<item>32</item>
+			<item>33</item>
+			<item>34</item>
+			<item>35</item>
+			<item>36</item>
+			<item>48</item>
+			<item>290</item>
+			<item>299</item>
+			<item>304</item>
+			<item>57</item>
+			<item>60</item>
+			<item>61</item>
+			<item>62</item>
+			<item>63</item>
+			<item>64</item>
+			<item>65</item>
+		</list>
+		
+		<sql id="ndjhsql">select zbid, sum(ndjhz) from jygk_ndjhzb 
+			where dwid in ${dwids} and zbid in ${zbids} and nf = ${date.year} group by zbid</sql>
+		<sql id="zbssql">select ID,name from jygk_zbxx 
+			where ID in ${zbids}</sql>
+		
+		<sqllist id="ndjhslist" sql="ndjhsql" value="1" order="zbids" by="0" type="int"/>
+		<sqllist id="zbsslist" sql="zbssql" value="1" order="zbids" by="0" type="int"/>
+
+		
+		<table id="result" name="全年计划" rowIds="zbids">
+			<col name="指标"> 
+				<value list="zbsslist"/>
+			</col>
+			<col name="全年计划"> 
+				<value list="ndjhslist"/>
+			</col>
+			<col name="月度"> 
+				<col name="当月计划">
+					<value />
+				</col>
+				<col name="当月实际">
+					<value />
+				</col>
+			</col> 
+<!-- 			<sumRow toId="1" toRow="0"> -->
+<!-- 				<inIds>1,2,3,4</inIds> -->
+<!-- 				<inRows>1,2,3,4</inRows> -->
+<!-- 				<excIds>1,2,3,4</excIds> -->
+<!-- 				<excRows>1,2,3,4</excRows> -->
+<!-- 				<rangeIds>1,4</rangeIds> -->
+<!-- 				<rangeRows>1, ${sample1.size - 1}</rangeRows> -->
+<!-- 			</sumRow> -->
+<!-- 			<divRow toId="1" toRow="0"> -->
+<!-- 				<subId>2</subId> -->
+<!-- 				<subRow>${sample1.size - 1}</subRow> -->
+<!-- 				<baseId>2</baseId> -->
+<!-- 				<baseRow>${sample1.size - 1}</baseRow> -->
+<!-- 			</divRow> -->
+		</table>
+
+		<context key="tbs" value="result"/>
+	</service>
+
+	<controller id="hzb_zbhz" service="gsztzbhz">
+		<formatter id="data">
+			<EmptyHandler>
+				<DefaultMatcher cols="0"/>
+			</EmptyHandler>
+		</formatter>
+		
+		<ExcelTemplate id="excel"/>
+		
+<!-- 		<formatter id="excel"> -->
+<!-- 			<ExcelHeaderCenterFormatter> -->
+<!-- 				<DefaultMatcher rows="" cols=""/> -->
+<!-- 				<ExcelTemplate ref="excel"/> -->
+<!-- 				<Offset row="" col=""/> -->
+<!-- 			</ExcelHeaderCenterFormatter> -->
+<!-- 			<ExcelMergeFormatter> -->
+<!-- 				<ExcelTemplate ref="excel"/> -->
+<!-- 				<MergeRegion x="" y="" width="" height=""/> -->
+<!-- 			</ExcelMergeFormatter> -->
+<!-- 		</formatter> -->
+		
+		<formatterServer id="serv" table="${tbs.matrix}" acceptNullAs="--">
+			<formatter ref="data"/>
+<!-- 			<formatter ref="excel"/> -->
+<!-- 			<formatter ref="word"/> -->
+		</formatterServer> 
+
+<!-- 		<response type="stream" ref="excel" name=""/> -->
+		
+		<response type="json"> 
+			<name>${tbs.name}</name>
+			<header>${tbs.header}</header>
+			<data>${serv.result}</data>
+		</response>
+	</controller> 
+</components>
