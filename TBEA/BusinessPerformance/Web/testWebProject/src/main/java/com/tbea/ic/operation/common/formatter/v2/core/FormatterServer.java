@@ -113,6 +113,14 @@ public class FormatterServer {
 		return list;		
 	}
 
+	List<List<String>> table;
+	public void setTable(List<List<String>> value) {
+		this.table = table;
+	}
+
+	public List<List<String>> getResult(){
+		return this.format(table);
+	}
 
 
 

@@ -37,7 +37,7 @@ public class ExcelTemplate {
 		return style;
 	}
 	
-	ExcelTemplate(HSSFWorkbook workbook){
+	public ExcelTemplate(HSSFWorkbook workbook){
 		this.workbook = workbook;
 		HSSFFont fontDefault = workbook.createFont();    
 		fontDefault.setFontName("宋体");    
