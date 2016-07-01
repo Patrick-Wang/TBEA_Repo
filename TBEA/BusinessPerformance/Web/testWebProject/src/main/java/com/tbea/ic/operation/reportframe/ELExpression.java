@@ -68,7 +68,7 @@ class ELExpression{
 		while (matcher.find()){
 			Object obj = parseObject(matcher.group());
 			if (isNumber(obj)){
-				expressTmp = expressTmp.substring(0, start) + obj + expressTmp.substring(matcher.end());
+				expressTmp = expressTmp.substring(0, matcher.start()) + obj + expressTmp.substring(matcher.end());
 				matcher = objPattern.matcher(expressTmp);
 			}else{
 				return obj;
@@ -83,7 +83,7 @@ class ELExpression{
 	}
 
 	private Object parseObject(String exp) {
-		String[] exps = exp.split(".");
+		String[] exps = exp.split("\\.");
 		Object obj = loader.onGetObject(exps[0]);
 		for (int i = 1; i < exps.length; ++i){
 			obj = getProperty(obj, exps[i]);
