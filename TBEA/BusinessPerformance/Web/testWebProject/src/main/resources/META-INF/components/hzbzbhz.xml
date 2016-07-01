@@ -47,9 +47,7 @@
 		<table id="result" name="全年计划" rowIds="zbids">
 			<col list="zbsslist"/>
 			<col list="ndjhslist"/>
-			<col list="ndjhslist"/>
 			<col/> 
-			<col/>
 			<col/>
 			<sumRow toId="20000">
 				<rangeRows>1, ${zbids.size - 2}</rangeRows>
@@ -59,10 +57,6 @@
 				<subId>1</subId>
 				<baseRow>${zbids.size - 2}</baseRow>
 			</divRow>
-			<divCol toCol="5" sub="1" base="2">
-				<excludeRow>0,1,2,3</excludeRow>
-			</divCol>
-			<copyCol rowId="20000" from="1" to="4,3"></copyCol>
  		<!-- 	<sumRow toId="1" toRow="0">
  				<excludeCol>1,2</excludeCol>
 				<inIds>1,2,3,4</inIds>
@@ -84,7 +78,7 @@
 		<context key="tbs" value="${result.matrix}"/>
 	</service>
 
-	<controller id="test" service="gsztzbhz">
+	<controller id="hzb_zbhz" service="gsztzbhz">
 
 		<formatter id="data">
 			<EmptyFormatter>

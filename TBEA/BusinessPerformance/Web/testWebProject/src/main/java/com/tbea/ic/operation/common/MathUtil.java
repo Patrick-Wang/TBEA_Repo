@@ -94,6 +94,15 @@ public class MathUtil {
 		}
 	}
 
+	public static Double o2d(Object val){
+		if (val instanceof Integer){
+			return ((Integer)val).doubleValue();
+		}else if (val instanceof Double){
+			return (Double) val;
+		}
+		return null;
+	}
+	
 	public static Double division(Integer sub, Integer base) {
 		if (base == null || sub == null){
 			return null;

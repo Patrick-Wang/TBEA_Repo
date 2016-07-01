@@ -35,12 +35,51 @@ public class TableXmlInterpreter implements XmlInterpreter {
 					parseSumRow(component, tb, elem);
 				}else if ("divRow".equals(elem.getTagName())){
 					parseDivRow(component, tb, elem);
+				}else if ("divCol".equals(elem.getTagName())){
+					parseDivCol(component, tb, elem);
+				}else if ("copyCol".equals(elem.getTagName())){
+					parseCopyCol(component, tb, elem);
 				}
 			}
 			
 		});
 		component.local(id, tb);
 		return true;
+	}
+
+	protected void parseCopyCol(AbstractXmlComponent component, Table tb,
+			Element elem) {
+		ELParser elp = new ELParser(component);
+		Integer row = tb.getIds().indexOf(XmlUtil.getIntAttr(elem, "rowId", elp, null));
+		Integer from = XmlUtil.getIntAttr(elem, "from", elp, null);
+		List<Integer> targets = parserArray(component, elem.getAttribute("to"));
+		if (row != null && from != null && !targets.isEmpty()){
+			for (Integer tar : targets){
+				tb.getValues().get(tar).set(row, tb.getValues().get(from).get(row));
+			}
+		}
+	}
+
+	protected void parseDivCol(AbstractXmlComponent component, Table tb,
+			Element elem) {
+		ELParser elp = new ELParser(component);
+		Integer sub = XmlUtil.getIntAttr(elem, "sub", elp, null);
+		Integer base = XmlUtil.getIntAttr(elem, "base", elp, null);
+		Integer target = XmlUtil.getIntAttr(elem, "toCol", elp, null);
+		if (sub != null && base != null && target != null){
+			NodeList list = elem.getElementsByTagName("excludeRow");
+			List<Integer> excludeRows = parserArray(component, XmlUtil.elementText(list, 0));
+			List<Object> tarCols = tb.getValues().get(target);
+			List<Object> subCols = tb.getValues().get(sub);
+			List<Object> baseCols = tb.getValues().get(base);
+			for (int i = 0; i < tarCols.size(); ++i) {
+				if (excludeRows.indexOf(i) < 0){
+					tarCols.set(i, MathUtil.division(
+									MathUtil.o2d(subCols.get(i)), 
+									MathUtil.o2d(baseCols.get(i))));
+				}
+			}
+		}
 	}
 
 	protected void parseCol(AbstractXmlComponent component, Table tb, Element elem) {
