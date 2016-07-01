@@ -78,9 +78,51 @@ public class ListXmlInterpreter implements XmlInterpreter {
 		return bRet;
 	}
 
+	public static List<Integer> parserArray(AbstractXmlComponent component, String arr) {
+		List<Integer> ret = new ArrayList<Integer>();
+		arr = arr.replaceAll(" ", "");
+		if (!arr.isEmpty()){
+			String[] sarr = arr.split(",");
+			ELParser elp = new ELParser(component);
+			for (int i = 0; i < sarr.length; ++i) {
+				List<ELExpression> elexps = elp.parser(sarr[i]);
+				if (elexps.isEmpty()) {
+					ret.add(Integer.valueOf(sarr[i]));
+				} else {
+					try {
+						ret.add((Integer) (elexps.get(0).value()));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return ret;
+	}
+	
 	private void parseItems(AbstractXmlComponent component, Element e, List<Object> objs) {
 		NodeList children = e.getChildNodes();
 		int type = TypeUtil.typeof(e);
+		if (null != e.getFirstChild()){
+			String text = e.getFirstChild().getTextContent();
+			text = text.replaceAll("\\s", "");
+			if (!text.isEmpty()){
+				String[] sarr = text.split(",");
+				if (TypeUtil.STRING == type){
+					for (String str : sarr){
+						objs.add(str);
+					}
+				} else if (TypeUtil.INT == type){
+					for (String str : sarr){
+						objs.add(Integer.valueOf(str));
+					}
+				} else if (TypeUtil.DOUBLE == type){
+					for (String str : sarr){
+						objs.add(Double.valueOf(str));
+					}
+				}  
+			}
+		}
 		ELParser elp = new ELParser(component);
 		XmlUtil.each(children, new OnLoop(){
 			@Override

@@ -1,5 +1,5 @@
 ﻿<components>
-	<service id="gsztzbhz" transaction="transactionManager" db="localDB">
+	<service id="gsztzbhz1" transaction="transactionManager" db="localDB">
 		
 		<list id="dwids" type="int">
 			<item>1</item>

@@ -8,28 +8,28 @@
 		</list>
 		
 		<list id="zbids" type="int">
-			<item>1</item>
-			<item>6</item>
-			<item>28</item>
-			<item>29</item>
-			<item>32</item>
-			<item>33</item>
-			<item>34</item>
-			<item>35</item>
-			<item>36</item>
-			<item>48</item>
-			<item>290</item>
-			<item>299</item>
-			<item>304</item>
-			<item>57</item>
-			<item>60</item>
-			<item>61</item>
-			<item>62</item>
-			<item>63</item>
-			<item>64</item>
-			<item>65</item>
-			<item>20000</item>
-			<item>20001</item>
+			1,
+			6,
+			28,
+			29,
+			32,
+			33,
+			34,
+			35,
+			36,
+			48,
+			290,
+			299,
+			304,
+			57,
+			60,
+			61,
+			62,
+			63,
+			64,
+			65,
+			20000,
+			20001
 		</list>
 		
 		<sql id="ndjhsql">select zbid, sum(ndjhz) from jygk_ndjhzb 
