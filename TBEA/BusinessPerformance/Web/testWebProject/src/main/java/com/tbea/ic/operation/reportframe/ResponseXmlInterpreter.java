@@ -10,13 +10,48 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.controller.servlet.account.AjaxRedirect;
 
 
 public class ResponseXmlInterpreter implements XmlInterpreter {
+
+	
+	JSONObject parseJsonObject(Element pElem, ELParser elParser){
+		JSONObject pJson = new JSONObject();
+		XmlUtil.each(pElem.getChildNodes(), new XmlUtil.OnLoop(){
+			@Override
+			public void on(Element elem) {
+				if ("array".equals(elem.getAttribute("type"))){
+					JSONArray ja = parseJsonArray(elem, elParser);
+					pJson.put(elem.getTagName(), ja);
+				} else {
+					String text = elem.getFirstChild().getTextContent();
+					if (null != text && !text.isEmpty()){
+						pJson.put(elem.getTagName(), parseElObj(elParser, text));
+					}else {
+						pJson.put(elem.getTagName(), parseJsonObject(elem, elParser));
+					}
+				}
+			}
+		});
+		return pJson;
+	}
+	
+	protected JSONArray parseJsonArray(Element elem, ELParser elParser) {
+		JSONArray ja = new JSONArray();
+		XmlUtil.each(elem.getElementsByTagName("item"), new XmlUtil.OnLoop(){
+			@Override
+			public void on(Element el) {
+				if ("array".equals(el.getAttribute("type"))){
+					ja.add(parseJsonArray(el, elParser));
+				}else{
+					ja.add(parseJsonObject(el, elParser));
+				}
+			}
+		});
+		return ja;
+	}
 
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) {
@@ -28,20 +63,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 		HttpServletResponse resp = (HttpServletResponse) component.getVar("response");
 		String type = e.getAttribute("type");
 		if ("json".equals(type)){
-			NodeList children = e.getChildNodes();
-			JSONObject jo = new JSONObject();
-			for (int i = 0; i < children.getLength(); ++i){
-				if (children.item(i) instanceof Element) {
-					Element child = (Element) children.item(i);
-					if ("name".equals(child.getTagName())){
-						jo.put("name", parseElObj(component, child.getFirstChild().getTextContent()));
-					} else if ("header".equals(child.getTagName())){
-						jo.put("header", JSONObject.fromObject(parseElObj(component, child.getFirstChild().getTextContent())));
-					} else if ("data".equals(child.getTagName())){
-						jo.put("data", JSONArray.fromObject(parseElObj(component, child.getFirstChild().getTextContent())));
-					} 
-				}
-			}
+			JSONObject jo = parseJsonObject(e, new ELParser(component));
 			try {
 				resp.setCharacterEncoding("utf-8");       
 				resp.setContentType("text/html; charset=utf-8");
@@ -49,7 +71,6 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				pw.write(jo.toString());
 				pw.close();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
@@ -59,7 +80,6 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 			try {
 				temp.write(resp, e.getAttribute("name"));
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -67,15 +87,15 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 		return true;
 	}
 
-	private Object parseElObj(AbstractXmlComponent component, String textContent) {
-		ELParser elp = new ELParser(component);
-		List<ELExpression> elexps = elp.parser(textContent);
-		Object obj = null;
-		try {
-			obj = elexps.get(0).value();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	private Object parseElObj(ELParser elp, String text) {
+		Object obj = text;
+		List<ELExpression> elexps = elp.parser(text);
+		if (!elexps.isEmpty()){
+			try {
+				obj = elexps.get(0).value();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return obj;
 	}

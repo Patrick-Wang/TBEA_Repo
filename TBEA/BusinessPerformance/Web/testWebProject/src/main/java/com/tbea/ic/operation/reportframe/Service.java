@@ -7,7 +7,6 @@ public class Service extends AbstractXmlComponent {
 
 	XmlInterpreter[] interpreters = new XmlInterpreter[] {
 			new SqlXmlInterpreter(), 
-			new SqlListXmlInterpreter(),
 			new ListXmlInterpreter(), 
 			new TableXmlInterpreter(),
 			new ContextXmlInterpreter() };

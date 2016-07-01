@@ -23,43 +23,49 @@ import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelMergeFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTextFormatter;
+import com.tbea.ic.operation.reportframe.XmlUtil.OnLoop;
 
 
 public class FormatterXmlInterpreter implements XmlInterpreter {
 
 	FormatterMatcher parserMatcher(Element handler){
-		NodeList list = handler.getChildNodes();
-		for (int i = 0; i < list.getLength(); ++i){
-			if (list.item(i) instanceof Element){
-				Element matcher = (Element) list.item(i);
-				if ("DefaultMatcher".equals(matcher.getTagName())){
-					return parserDefaultMatcher(matcher);
-				}else if ("IndicatorMatcher".equals(matcher.getTagName())){
-					return parserIndicatorMatcher(matcher);
+		FormatterMatcher[] mRet = new FormatterMatcher[]{null};
+		XmlUtil.each(handler.getChildNodes(), new XmlUtil.OnEach(){
+
+			@Override
+			public boolean on(Element elem) {
+				if ("DefaultMatcher".equals(elem.getTagName())){
+					mRet[0] = parserDefaultMatcher(elem);
+				}else if ("IndicatorMatcher".equals(elem.getTagName())){
+					mRet[0] = parserIndicatorMatcher(elem);
 				}
+				return mRet[0] != null;
 			}
-		}
-		return null;
+			
+		});
+		return mRet[0];
 	}
 	
 	public List<Integer> asIntArray(String str){
 		String[] arr = str.replaceAll(" ", "").split(",");
-		if (arr.length > 0){
+		if (!arr[0].isEmpty()){
 			List<Integer> ret = new ArrayList<Integer>();
 			for (String item : arr){
 				ret.add(Integer.parseInt(item));
 			}
+			return ret;
 		}
 		return null;
 	}
 	
 	public List<String> asStringArray(String str){
 		String[] arr = str.replaceAll(" ", "").split(",");
-		if (arr.length > 0){
+		if (!arr[0].isEmpty()){
 			List<String> ret = new ArrayList<String>();
 			for (String item : arr){
 				ret.add(item);
 			}
+			return ret;
 		}
 		return null;
 	}
@@ -85,21 +91,24 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		}
 		
 		List<FormatterHandler> handlers = new ArrayList<FormatterHandler>();
-		NodeList list = e.getChildNodes();
-		for (int i = 0; i < list.getLength(); ++i){
-			if (list.item(i) instanceof Element){
-				FormatterHandler handler = parserHandler(component, (Element) list.item(i));
+		XmlUtil.each(e.getChildNodes(), new OnLoop(){
+
+			@Override
+			public void on(Element elem) {
+				FormatterHandler handler = parserHandler(component, elem);
 				if (null != handler){
 					handlers.add(handler);
 				}
 			}
-		}
-
+			
+		});
+		
 		String id = e.getAttribute("id");
 		component.local(id, handlers);
 		return true;
 	}
 
+	
 	private FormatterHandler parserHandler(AbstractXmlComponent component, Element item) {
 		FormatterHandler handler = null;
 		if ("EmptyFormatter".equals(item.getTagName())){
@@ -157,19 +166,20 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 	}
 	
 	private void parserMergeRegion(ExcelMergeFormatter handler, Element item) {
-		NodeList list = item.getChildNodes();
-		for (int i = 0; i < list.getLength(); ++i){
-			if (list.item(i) instanceof Element){
-				Element e = (Element) list.item(i);
-				if ("MergeRegion".equals(e.getTagName())){
+		XmlUtil.each(item.getChildNodes(), new OnLoop(){
+			
+			@Override
+			public void on(Element elem) {
+				if ("MergeRegion".equals(elem.getTagName())){
 					handler.addMergeRegion(new MergeRegion(
-						getIntAttribute(e, "x", 0),	
-						getIntAttribute(e, "y", 0),	
-						getIntAttribute(e, "width", 0),	
-						getIntAttribute(e, "height", 0)));
+						getIntAttribute(elem, "x", 0),	
+						getIntAttribute(elem, "y", 0),	
+						getIntAttribute(elem, "width", 0),	
+						getIntAttribute(elem, "height", 0)));
 				}
 			}
-		}
+
+		});
 	}
 
 	private ExcelTemplate parserExcelTemplate(AbstractXmlComponent component,

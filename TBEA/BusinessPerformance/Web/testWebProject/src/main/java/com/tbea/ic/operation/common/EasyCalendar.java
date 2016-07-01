@@ -12,6 +12,10 @@ public class EasyCalendar {
 		this.cal = cal;
 	}
 	
+	public void setTime(Date d){
+		this.cal.setTime(d);
+	}
+	
 	public EasyCalendar(int year, int month, int day) {
 		this.cal = Calendar.getInstance();
 		this.setYear(year);
