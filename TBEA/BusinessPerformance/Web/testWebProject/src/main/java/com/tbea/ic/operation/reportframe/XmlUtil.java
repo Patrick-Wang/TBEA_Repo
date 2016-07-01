@@ -17,7 +17,11 @@ public class XmlUtil {
 	}
 	
 	public static String elementText(NodeList list, int index) {
-		return element(list, index).getFirstChild().getTextContent();
+		Element e = element(list, index);
+		if (null != e){
+			return e.getFirstChild().getTextContent();
+		}
+		return "";
 	}
 	
 	public static Element element(NodeList list, int index) {

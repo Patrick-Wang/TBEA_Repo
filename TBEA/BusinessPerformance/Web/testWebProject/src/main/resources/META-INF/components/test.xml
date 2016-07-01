@@ -53,10 +53,12 @@
 				<rangeRows>1, ${zbids.size - 2}</rangeRows>
 			</sumRow>
 			<divRow toId="20001">
+				<excludeCol>0, 1</excludeCol>
 				<subId>1</subId>
 				<baseRow>${zbids.size - 2}</baseRow>
 			</divRow>
  		<!-- 	<sumRow toId="1" toRow="0">
+ 				<excludeCol>1,2</excludeCol>
 				<inIds>1,2,3,4</inIds>
 				<inRows>1,2,3,4</inRows>
 				<excIds>1,2,3,4</excIds>
@@ -65,6 +67,7 @@
 				<rangeRows>1, ${sample1.size - 1}</rangeRows>
 			</sumRow> 
 			<divRow toId="1" toRow="0">
+				<excludeCol>1,2</excludeCol>
 				<subId>2</subId>
 				<subRow>${sample1.size - 1}</subRow>
 				<baseId>2</baseId>
