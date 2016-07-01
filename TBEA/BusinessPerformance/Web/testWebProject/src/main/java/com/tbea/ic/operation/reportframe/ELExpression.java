@@ -12,7 +12,7 @@ import javax.script.ScriptException;
 import com.tbea.ic.operation.reportframe.ELParser.ObjectLoader;
 
 class ELExpression{
-	static final Pattern objPattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*");   
+	static final Pattern objPattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*");   
 	int start;
 	int end;
 	String express;
@@ -35,8 +35,7 @@ class ELExpression{
 		return end;
 	}
 	
-	private Object getVal(String objName, String method){
-		Object obj = loader.onGetObject(objName);
+	private Object getProperty(Object obj, String method){
 		Method md = null;
 		try {
 			if (method.equals("size")){
@@ -62,31 +61,17 @@ class ELExpression{
 	private boolean isNumber(Object ob){
 		return ob instanceof Integer || ob instanceof Double;  
 	}
-	
+
 	public Object value() throws Exception{
 		Matcher matcher = objPattern.matcher(express);
 		String expressTmp = express;
-		int start = 0;
 		while (matcher.find()){
-			String obj = matcher.group();
-			start = matcher.start();
-			if (expressTmp.length() > matcher.end()){
-				if ('.' == expressTmp.charAt(matcher.end())){
-					if (matcher.find()){
-						String method = matcher.group();
-						Object ret = getVal(obj, method);
-						if (isNumber(ret)){
-							expressTmp = expressTmp.substring(0, start) + ret + expressTmp.substring(matcher.end());
-							matcher = objPattern.matcher(expressTmp);
-						}else{
-							return ret;
-						}
-					}else{
-						throw new Exception("EL Error : " + express);
-					}
-				}
+			Object obj = parseObject(matcher.group());
+			if (isNumber(obj)){
+				expressTmp = expressTmp.substring(0, start) + obj + expressTmp.substring(matcher.end());
+				matcher = objPattern.matcher(expressTmp);
 			}else{
-				return loader.onGetObject(obj);
+				return obj;
 			}
 		}
 		try {
@@ -95,5 +80,14 @@ class ELExpression{
 			e.printStackTrace();
 		}	
 		return null;
+	}
+
+	private Object parseObject(String exp) {
+		String[] exps = exp.split(".");
+		Object obj = loader.onGetObject(exps[0]);
+		for (int i = 1; i < exps.length; ++i){
+			obj = getProperty(obj, exps[i]);
+		}
+		return obj;
 	}
 }

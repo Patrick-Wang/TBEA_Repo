@@ -259,16 +259,14 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			}
 
 			if (subRow != null && baseRow != null) {
+				List<Object> col = null;
 				for (int i = 0; i < tb.getValues().size(); ++i) {
-					if (!(tb.getValues().get(i).get(index) instanceof String)) {
-						tb.getValues()
-								.get(i)
-								.set(index,
-										MathUtil.division(
-												(Double) tb.getValues().get(i)
-														.get(subRow),
-												(Double) tb.getValues().get(i)
-														.get(baseRow)));
+					col = tb.getValues().get(i);
+					if (col.get(subRow) instanceof Double ||
+							col.get(baseRow) instanceof Double) {
+						col.set(index, MathUtil.division(
+								(Double) col.get(subRow),
+								(Double)col.get(baseRow)));
 					}
 				}
 			}
