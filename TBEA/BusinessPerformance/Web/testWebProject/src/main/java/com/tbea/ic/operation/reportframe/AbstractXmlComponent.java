@@ -9,6 +9,11 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	protected Context local = new Context();
 	protected Context global;
 	protected Element config;
+	protected ComponentManager mgr;
+	
+	public ComponentManager getCM(){
+		return mgr;
+	}
 	
 	@Override
 	public Object onGetObject(String key){
@@ -32,8 +37,9 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 		global.put(key, value);
 	}
 	
-	public AbstractXmlComponent(Element e){
+	public AbstractXmlComponent(Element e, ComponentManager mgr){
 		this.config = e;
+		this.mgr = mgr;
 	}
 	
 	public Object getVar(String key){
@@ -51,5 +57,9 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	}
 
 	protected abstract void onRun();
+
+	public Context globalContext() {
+		return global;
+	}
 
 }

@@ -76,12 +76,19 @@ public class ExcelMergeFormatter extends AbstractFormatter {
 		
 	}
 	
+	
 	@Override
-	protected String onHandle(List<List<String>> table, int row, int col,
-			String val) {
+	public String handle(List<List<String>> table, int row, int col, String val) {
+		callNext(table, row, col, val);
 		if (table.size() - 1 == row && table.get(0).size() - 1== col){
 			merge(table);
 		}
+		return val;
+	}
+
+	@Override
+	protected String onHandle(List<List<String>> table, int row, int col,
+			String val) {
 		return val;
 	}
 

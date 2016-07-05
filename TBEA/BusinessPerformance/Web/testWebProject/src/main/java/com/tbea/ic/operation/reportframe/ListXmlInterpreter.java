@@ -103,6 +103,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	private void parseItems(AbstractXmlComponent component, Element e, List<Object> objs) {
 		NodeList children = e.getChildNodes();
 		int type = TypeUtil.typeof(e);
+		ELParser elp = new ELParser(component);
 		if (null != e.getFirstChild()){
 			String text = e.getFirstChild().getTextContent();
 			text = text.replaceAll("\\s", "");
@@ -110,20 +111,51 @@ public class ListXmlInterpreter implements XmlInterpreter {
 				String[] sarr = text.split(",");
 				if (TypeUtil.STRING == type){
 					for (String str : sarr){
-						objs.add(str);
+						List<ELExpression> exp = elp.parser(str);
+						if (exp.isEmpty()){
+							objs.add("" + str);
+						}else{
+							try {
+								objs.add(exp.get(0).value());
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
 					}
 				} else if (TypeUtil.INT == type){
 					for (String str : sarr){
-						objs.add(Integer.valueOf(str));
+						List<ELExpression> exp = elp.parser(str);
+						if (exp.isEmpty()){
+							objs.add(Integer.valueOf(str));
+						}else{
+							try {
+								objs.add(exp.get(0).value());
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						
 					}
 				} else if (TypeUtil.DOUBLE == type){
 					for (String str : sarr){
-						objs.add(Double.valueOf(str));
+					
+						List<ELExpression> exp = elp.parser(str);
+						if (exp.isEmpty()){
+							objs.add(Double.valueOf(str));
+						}else{
+							try {
+								objs.add(exp.get(0).value());
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
 					}
 				}  
 			}
 		}
-		ELParser elp = new ELParser(component);
 		XmlUtil.each(children, new OnLoop(){
 			@Override
 			public void on(Element elem) {
@@ -177,7 +209,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			if (val.isEmpty()) {
 				repeatAdd(objs, "", repeat, insert);
 			} else {
-				repeatAdd(objs, val, repeat, insert);
+				repeatAdd(objs, "" + val, repeat, insert);
 			}
 		}
 	}

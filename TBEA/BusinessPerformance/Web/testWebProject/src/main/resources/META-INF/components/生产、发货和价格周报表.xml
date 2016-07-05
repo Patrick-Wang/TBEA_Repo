@@ -1,0 +1,154 @@
+﻿<components>
+	<service id="xnyscfhjgzbbServ" transaction="transactionManager" db="localDB">
+		
+		<sql id="xnyzb">
+			select 
+				ZB.id, 
+				CONVERT(varchar(20), ZB.ksrq, 23) as startDate, 
+				CONVERT(varchar(20), ZB.jzrq, 23) as endDate, 
+				DWXX.name,
+				ZB.cpzl,
+				ZB.cpxh,
+				ZB.bzscl,
+				ZB.bzfhl,
+				ZB.bzxsjg
+			from 
+				xnyzb ZB, 
+				jygk_dwxx DWXX
+			where 
+				ZB.xmgs = DWXX.id and 
+				ZB.ksrq &gt;= ${dStart.date} and 
+				ZB.jzrq &lt;= ${dEnd.date}
+			order by 
+				ZB.xmgs
+		</sql>
+		
+		<list id="ids" type="int" sql="xnyzb" value="0" />
+		<list id="ks" type="string" sql="xnyzb" value="1" />
+		<list id="jz" type="string" sql="xnyzb" value="2" />
+		<list id="xmgs" type="string" sql="xnyzb" value="3" />
+		<list id="cpzl" type="string" sql="xnyzb" value="4" />
+		<list id="cpxh" type="string" sql="xnyzb" value="5" />
+		<list id="bzscl" type="double" sql="xnyzb" value="6" />
+		<list id="bzfhl" type="double" sql="xnyzb" value="7" />
+		<list id="bzxsjg" type="string" sql="xnyzb" value="8" />
+		
+		
+		<table id="result" rowIds="ids">
+			<col list="ks"/>
+			<col list="jz"/>
+			<col list="xmgs"/>
+			<col list="cpzl"/>
+			<col list="cpxh"/>
+			<col list="bzscl"/> 
+			<col list="bzfhl"/> 
+			<col list="bzxsjg"/>
+		</table>
+
+		<context key="result" value="${result}"/>
+	</service>
+	<controller id="xnyscfhjgzbb">
+
+		<context key="dStart" value="${request.dStart.calendar}"/>
+		<context key="dEnd" value="${request.dEnd.calendar}"/>
+		
+		<callservice id="xnyscfhjgzbbServ"/>
+		
+		<formatter id="data">
+			<NumberFormatter reservedCount="1">
+				<DefaultMatcher cols="6,7"/>
+			</NumberFormatter>
+		</formatter>
+
+		<formatterServer id="serv" table="${result.matrix}">
+			<formatter ref="data"/>
+		</formatterServer>
+		
+		<response type="json"> 
+			<header type="array">
+				<item>
+					<name>周期</name>
+					<sub type="array">
+						<item><name>开始</name></item>
+						<item><name>截止</name></item>
+					</sub>
+				</item>
+				<item>
+					<name>项目公司</name>
+				</item>
+				<item>
+					<name>产品种类</name>
+				</item>
+				<item>
+					<name>产品型号</name>
+				</item>
+				<item>
+					<name>本周生产量</name>
+				</item>
+				<item>
+					<name>本周发货量</name>
+				</item>
+				<item>
+					<name>本周销售价格</name>
+				</item>
+			</header>
+			<title>生产、发货和价格周报表</title>
+			<data>${serv.result}</data>
+		</response>
+	</controller> 
+	
+	<controller id="xnyscfhjgzbbexport">
+
+		<context key="dStart" value="${request.dStart.calendar}"/>
+		<context key="dEnd" value="${request.dEnd.calendar}"/>
+		<callservice id="xnyscfhjgzbbServ"/>
+		<context key="tbs" value="${result.matrixNoIds}"/>
+		
+		<ExcelTemplate id="excelTemplate" sheet="生产、发货和价格周报表"/>
+		
+		<list id="title1" type="string">
+			周期, 周期, 项目公司, 产品种类, 产品型号, 本周生产量, 本周发货量, 本周销售价格
+		</list>
+		<list id="title2" type="string">
+			开始, 截止, 项目公司, 产品种类, 产品型号, 本周生产量, 本周发货量, 本周销售价格
+		</list>
+		
+		<formatter id="data">
+			<NumberFormatter reservedCount="1">
+				<DefaultMatcher cols="5,6"/>
+			</NumberFormatter>
+		</formatter>
+		
+		<formatter id="excel">
+			<ExcelTitleFilter>
+				<ExcelTemplate ref="excelTemplate"/>
+				<Offset row="0" col="0"/>
+				<titles>
+					<title ref="${title1}"></title>
+					<title ref="${title2}"></title>
+				</titles>
+			</ExcelTitleFilter>
+			<ExcelMergeFormatter>
+				<ExcelTemplate ref="excelTemplate"/>
+				<MergeRegion x="0" y="0" width="8" height="2"/>
+				<MergeRegion x="0" y="2" width="5" height="${tbs.size}"/>
+			</ExcelMergeFormatter>
+			<ExcelTextFormatter>
+				<DefaultMatcher cols="0, 1, 2, 3, 4, 7"/>
+				<ExcelTemplate ref="excelTemplate"/>
+				<Offset row="2" col="0"/>
+			</ExcelTextFormatter>
+			<ExcelOffsetFormatter>
+				<ExcelTemplate ref="excelTemplate"/>
+				<Offset row="2" col="0"/>
+			</ExcelOffsetFormatter>
+		</formatter>
+
+		<formatterServer id="serv" table="${tbs}">
+			<formatter ref="data"/>
+			<formatter ref="excel"/>
+		</formatterServer>
+
+		<response type="excel" ref="excelTemplate" name="aaa.xls" serv="serv"/>
+	</controller> 
+</components>

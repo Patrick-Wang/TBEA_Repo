@@ -12,6 +12,7 @@ import net.sf.json.JSONObject;
 import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
+import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
 
 
 public class ResponseXmlInterpreter implements XmlInterpreter {
@@ -40,6 +41,15 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 	
 	protected JSONArray parseJsonArray(Element elem, ELParser elParser) {
 		JSONArray ja = new JSONArray();
+		
+		String text = elem.getFirstChild().getTextContent();
+		text.replace("\\s", "");
+		if (!text.isEmpty()){
+			String[] vals = text.split(",");
+			for (String val : vals){
+				ja.add(val);
+			}
+		}
 		XmlUtil.each(elem.getElementsByTagName("item"), new XmlUtil.OnLoop(){
 			@Override
 			public void on(Element el) {
@@ -74,10 +84,11 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				e1.printStackTrace();
 			}
 			
-		}else if ("stream".equals(type)){
-			ExcelTemplate temp = (ExcelTemplate) component.getVar(e.getAttribute("ref"));
-			
+		}else if ("excel".equals(type)){
 			try {
+				ExcelTemplate temp = (ExcelTemplate) component.getVar(e.getAttribute("ref"));
+				FormatterServer serv = (FormatterServer) component.getVar(e.getAttribute("serv"));
+				serv.getResult();
 				temp.write(resp, e.getAttribute("name"));
 			} catch (IOException e1) {
 				e1.printStackTrace();

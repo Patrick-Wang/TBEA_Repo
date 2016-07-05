@@ -36,12 +36,14 @@ public class ComponentManager implements ComponentLoadedListener {
 
 	public Controller getController(String id) {
 		if (controllerMap.containsKey(id)){
-			Controller controller = new Controller(controllerMap.get(id));
-			Element config = serviceMap.get(controller.getServiceName());
-			if (null != config) {
-				controller.setService(new Service(config));
-				return controller;
-			}
+			return new Controller(controllerMap.get(id), this);
+		}
+		return null;
+	}
+	
+	public Service getService(String id) {
+		if (serviceMap.containsKey(id)){
+			return new Service(serviceMap.get(id), this);
 		}
 		return null;
 	}

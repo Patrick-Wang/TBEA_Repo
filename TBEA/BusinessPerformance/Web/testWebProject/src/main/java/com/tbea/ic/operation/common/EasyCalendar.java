@@ -39,8 +39,26 @@ public class EasyCalendar {
 		cal.setTime(d);
 	}
 	
+	public String getFormat(){
+		return Util.formatToDay(this.getDate());
+	}
+	
 	public int getDay(){
 		return cal.get(Calendar.DAY_OF_MONTH);
+	}
+	
+	public EasyCalendar getPreSunday(){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.add(Calendar.DAY_OF_MONTH, 1 - cal.get(Calendar.DAY_OF_WEEK));
+		return new EasyCalendar(cal);
+	}
+	
+	public EasyCalendar getSunday(){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.add(Calendar.DAY_OF_MONTH, 7 - cal.get(Calendar.DAY_OF_WEEK));
+		return new EasyCalendar(cal);
 	}
 	
 	public int getMonth(){

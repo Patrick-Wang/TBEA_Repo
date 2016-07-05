@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
@@ -23,12 +22,15 @@ import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelMergeFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTextFormatter;
+import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTitleFilter;
 import com.tbea.ic.operation.reportframe.XmlUtil.OnLoop;
 
 
 public class FormatterXmlInterpreter implements XmlInterpreter {
 
-	FormatterMatcher parserMatcher(ELParser elp, Element handler){
+	private ELParser elp;
+	
+	FormatterMatcher parserMatcher(Element handler){
 		FormatterMatcher[] mRet = new FormatterMatcher[]{null};
 		XmlUtil.each(handler.getChildNodes(), new XmlUtil.OnEach(){
 
@@ -92,13 +94,13 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		if (!"formatter".equals(e.getTagName())){
 			return false;
 		}
-		ELParser elp = new ELParser(component);
+		elp = new ELParser(component);
 		List<FormatterHandler> handlers = new ArrayList<FormatterHandler>();
 		XmlUtil.each(e.getChildNodes(), new OnLoop(){
 
 			@Override
 			public void on(Element elem) {
-				FormatterHandler handler = parserHandler(elp, component, elem);
+				FormatterHandler handler = parserHandler(component, elem);
 				if (null != handler){
 					handlers.add(handler);
 				}
@@ -112,16 +114,16 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 	}
 
 	
-	private FormatterHandler parserHandler(ELParser elp, AbstractXmlComponent component, Element item) {
+	private FormatterHandler parserHandler(AbstractXmlComponent component, Element item) {
 		FormatterHandler handler = null;
 		if ("EmptyFormatter".equals(item.getTagName())){
-			handler = new EmptyFormatter(parserMatcher(elp, item));
+			handler = new EmptyFormatter(parserMatcher(item));
 		}else if ("NumberFormatter".equals(item.getTagName())){
 			String reservedCount = item.getAttribute("reservedCount");
 			if (!reservedCount.isEmpty()){
-				handler = new NumberFormatter(parserMatcher(elp, item), Integer.valueOf(reservedCount));
+				handler = new NumberFormatter(parserMatcher(item), Integer.valueOf(reservedCount));
 			}else{
-				handler = new NumberFormatter(parserMatcher(elp, item), 1);
+				handler = new NumberFormatter(parserMatcher(item), 1);
 			}
 			if ("true".equals(item.getAttribute("trimZero"))){
 				((NumberFormatter)handler).trimZero(true);
@@ -129,9 +131,9 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		}else if ("PercentFormatter".equals(item.getTagName())){
 			String reservedCount = item.getAttribute("reservedCount");
 			if (!reservedCount.isEmpty()){
-				handler = new PercentFormatter(parserMatcher(elp, item), Integer.valueOf(reservedCount));
+				handler = new PercentFormatter(parserMatcher(item), Integer.valueOf(reservedCount));
 			}else{
-				handler = new PercentFormatter(parserMatcher(elp, item), 1);
+				handler = new PercentFormatter(parserMatcher(item), 1);
 			}
 			if ("true".equals(item.getAttribute("trimZero"))){
 				((PercentFormatter)handler).trimZero(true);
@@ -139,33 +141,46 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		}else if ("PercentSingleFormatter".equals(item.getTagName())){
 			String reservedCount = item.getAttribute("reservedCount");
 			if (!reservedCount.isEmpty()){
-				handler = new PercentSingleFormatter(parserMatcher(elp, item), Integer.valueOf(reservedCount));
+				handler = new PercentSingleFormatter(parserMatcher(item), Integer.valueOf(reservedCount));
 			}else{
-				handler = new PercentSingleFormatter(parserMatcher(elp, item), 1);
+				handler = new PercentSingleFormatter(parserMatcher(item), 1);
 			}
 		}else if ("TextFormatter".equals(item.getTagName())){
-			handler = new TextFormatter(parserMatcher(elp, item));
+			handler = new TextFormatter(parserMatcher(item));
 		}else if ("ExcelHeaderCenterFormatter".equals(item.getTagName())){
-			handler = new ExcelHeaderCenterFormatter(parserMatcher(elp, item), parserExcelTemplate(component, item), parserOffset(item));
+			handler = new ExcelHeaderCenterFormatter(parserMatcher(item), parserExcelTemplate(component, item), parserOffset(item));
 		}else if ("ExcelHeaderFormatter".equals(item.getTagName())){
-			handler = new ExcelHeaderFormatter(parserMatcher(elp, item), parserExcelTemplate(component, item), parserOffset(item));
+			handler = new ExcelHeaderFormatter(parserMatcher(item), parserExcelTemplate(component, item), parserOffset(item));
 		}else if ("ExcelOffsetFormatter".equals(item.getTagName())){
-			handler = new ExcelOffsetFormatter(parserMatcher(elp, item), parserExcelTemplate(component, item), parserOffset(item));
+			handler = new ExcelOffsetFormatter(parserMatcher(item), parserExcelTemplate(component, item), parserOffset(item));
 		}else if ("ExcelTextFormatter".equals(item.getTagName())){
-			handler = new ExcelTextFormatter(parserMatcher(elp, item), parserExcelTemplate(component, item), parserOffset(item));
+			handler = new ExcelTextFormatter(parserMatcher(item), parserExcelTemplate(component, item), parserOffset(item));
 		}else if ("ExcelMergeFormatter".equals(item.getTagName())){
 			handler = new ExcelMergeFormatter(parserExcelTemplate(component, item));
 			parserMergeRegion((ExcelMergeFormatter)handler, item);
+		}else if ("ExcelTitleFilter".equals(item.getTagName())){
+			handler = new ExcelTitleFilter(parserExcelTemplate(component, item), parserOffset(item), parserTitles(item));
 		}
 		return handler;
 	}
 
+	private List<List<String>> parserTitles(Element item) {
+		List<List<String>> titles = new ArrayList<List<String>>();
+		Element ts = XmlUtil.element(item.getElementsByTagName("titles"), 0);
+		XmlUtil.each(ts.getChildNodes(), new OnLoop(){
+			@Override
+			public void on(Element elem) {
+				Object obj = XmlUtil.getObjectAttr(elem, "ref", elp);
+				if (null != obj){
+					titles.add((List<String>) obj);
+				}
+			}
+		});
+		return titles;
+	}
+
 	private int getIntAttribute(Element e, String attr, int defaultVal){
-		String val = e.getAttribute(attr);
-		if (null != val && !val.isEmpty()){
-			return Integer.valueOf(val);
-		}
-		return defaultVal;
+		return XmlUtil.getIntAttr(e, attr, elp, defaultVal);
 	}
 	
 	private void parserMergeRegion(ExcelMergeFormatter handler, Element item) {
@@ -187,27 +202,19 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 
 	private ExcelTemplate parserExcelTemplate(AbstractXmlComponent component,
 			Element item) {
-		NodeList list = item.getChildNodes();
-		for (int i = 0; i < list.getLength(); ++i){
-			Element e = (Element) list.item(i);
-			if ("ExcelTemplate".equals(e.getTagName())){
-				String refId = e.getAttribute("ref");
-				return (ExcelTemplate) component.getVar(refId);
-			}
+		Element e = XmlUtil.element(item.getChildNodes(), "ExcelTemplate");
+		if (null != e){
+			String refId = e.getAttribute("ref");
+			return (ExcelTemplate) component.getVar(refId);
 		}
 		return null;
 	}
 
 	private Offset parserOffset(Element item) {
-		NodeList list = item.getChildNodes();
-		for (int i = 0; i < list.getLength(); ++i){
-			if (list.item(i) instanceof Element){
-				Element e = (Element) list.item(i);
-				if ("Offset".equals(e.getTagName())){
-					return new Offset(getIntAttribute(e, "row", 0), 
-							getIntAttribute(e, "col", 0));
-				}
-			}
+		Element e = XmlUtil.element(item.getChildNodes(), "Offset");
+		if (null != e){
+			return new Offset(getIntAttribute(e, "row", 0), 
+					getIntAttribute(e, "col", 0));
 		}
 		return null;
 	}

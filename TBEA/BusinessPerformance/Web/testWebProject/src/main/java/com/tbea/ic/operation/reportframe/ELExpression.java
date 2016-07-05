@@ -40,18 +40,24 @@ class ELExpression{
 		try {
 			if (method.equals("size")){
 				md = obj.getClass().getMethod(method);
+				return md.invoke(obj);
+			}else if (obj instanceof ControllerRequest){
+				ControllerRequest request = (ControllerRequest) obj;
+				return request.getParamater(method);
 			}else{
 				md = obj.getClass().getMethod("get" + method.substring(0, 1).toUpperCase() + method.substring(1));
-			}
-			try {
 				return md.invoke(obj);
-			} catch (IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-			
 		} catch (NoSuchMethodException | SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

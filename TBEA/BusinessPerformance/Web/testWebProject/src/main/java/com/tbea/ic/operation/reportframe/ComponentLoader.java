@@ -10,6 +10,7 @@ import java.util.TimerTask;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -68,12 +69,25 @@ public class ComponentLoader {
 			}
 		}, 0, 30 * 1000);
 	}
-
-	private void loadComponent(File file) {
-		try {
+	
+	DocumentBuilder builder = null;
+	
+	private DocumentBuilder getBuilder() throws ParserConfigurationException{
+		if (builder == null){
 			DocumentBuilderFactory factory = DocumentBuilderFactory
 					.newInstance();
- 			DocumentBuilder builder = factory.newDocumentBuilder();
+			builder = factory.newDocumentBuilder();
+		}
+		return builder;
+	}
+	
+	
+	private void loadComponent(File file) {
+		try {
+			
+			System.out.println("reload config file " + file.getName());
+			
+			DocumentBuilder builder = getBuilder();
 			Document doc = builder.parse(file);
 			NodeList nl = doc.getElementsByTagName("components");
 			Element e = (Element) nl.item(0);

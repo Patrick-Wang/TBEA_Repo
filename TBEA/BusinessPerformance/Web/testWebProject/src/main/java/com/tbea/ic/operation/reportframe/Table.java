@@ -20,6 +20,18 @@ public class Table {
 		return matrix;
 	}
 	
+	public List<List<String>> getMatrixNoIds() {
+		List<List<String>> matrix = new ArrayList<List<String>>();
+		for (int i = 0; i < ids.size(); ++i){
+			List<String> tmpList = new ArrayList<String>();
+			for (int j = 0; j < values.size(); ++j){
+				tmpList.add(values.get(j).get(i) + "");
+			}
+			matrix.add(tmpList);
+		}
+		return matrix;
+	}
+	
 	public void setValues(List<List<Object>> values) {
 		this.values = values;
 	}

@@ -5,15 +5,18 @@ import org.w3c.dom.NodeList;
 
 public class Service extends AbstractXmlComponent {
 
+	public Service(Element e, ComponentManager mgr) {
+		super(e, mgr);
+		// TODO Auto-generated constructor stub
+	}
+
 	XmlInterpreter[] interpreters = new XmlInterpreter[] {
 			new SqlXmlInterpreter(), 
 			new ListXmlInterpreter(), 
 			new TableXmlInterpreter(),
 			new ContextXmlInterpreter() };
 
-	public Service(Element e) {
-		super(e);
-	}
+
 
 	protected Transaction getTransactionManager() {
 		return (Transaction) getVar(config.getAttribute("transaction"));

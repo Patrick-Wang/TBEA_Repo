@@ -3,32 +3,30 @@ package com.tbea.ic.operation.reportframe;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.tbea.ic.operation.reportframe.XmlUtil.OnLoop;
+
 
 public class Controller extends AbstractXmlComponent {
 
-	Service service;
-	
+	public Controller(Element e, ComponentManager mgr) {
+		super(e, mgr);
+		// TODO Auto-generated constructor stub
+	}
+
 	XmlInterpreter[] interpreters = new XmlInterpreter[]{
 			new ExcelTemplateXmlInterpreter(),
 			new FormatterServerXmlInterpreter(),
 			new FormatterXmlInterpreter(),
-			new ResponseXmlInterpreter()
+			new ResponseXmlInterpreter(),
+			new ContextXmlInterpreter(),
+			new CallServiceXmlInterpreter(),
+			new ListXmlInterpreter()
 	};
 	
-	public void setService(Service service){
-		this.service = service;
-	}
 	
-	public Controller(Element e) {
-		super(e);
-	}
 	
 	public void setConfig(Element config){
 		this.config = config;
-	}
-
-	public String getServiceName(){
-		return config.getAttribute("service");
 	}
 	
 	public String getUrl() {
@@ -36,25 +34,19 @@ public class Controller extends AbstractXmlComponent {
 	}
 	
 	@Override
-	protected void onRun() {
-		if (null != service){
-			service.run(this.global);
-		}
-		
+	protected void onRun() {		
 		NodeList children = this.config.getChildNodes();
-		
-		for (int i = 0; i < children.getLength(); ++i){
-			if (children.item(i) instanceof Element){
-				Element e = (Element)children.item(i);
+		XmlUtil.each(children, new OnLoop(){
+			@Override
+			public void on(Element elem) {
 				for (XmlInterpreter interpreter : interpreters){
-					if (interpreter.accept(this, e)){
+					if (interpreter.accept(Controller.this, elem)){
 						break;
 					}
 				}
 			}
-		}
+			
+		});
 	}
-
-
 
 }
