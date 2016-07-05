@@ -7,6 +7,10 @@ import java.util.Calendar;
 public class EasyCalendar {
 	Calendar cal;
 
+	public EasyCalendar getCurrent(){
+		return new EasyCalendar();
+	}
+	
 	public EasyCalendar(Calendar cal) {
 		super();
 		this.cal = cal;
@@ -58,6 +62,13 @@ public class EasyCalendar {
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(this.cal.getTimeInMillis());
 		cal.add(Calendar.DAY_OF_MONTH, 7 - cal.get(Calendar.DAY_OF_WEEK));
+		return new EasyCalendar(cal);
+	}
+	
+	public EasyCalendar getMonday(){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.add(Calendar.DAY_OF_MONTH, 2-cal.get(Calendar.DAY_OF_WEEK));
 		return new EasyCalendar(cal);
 	}
 	
