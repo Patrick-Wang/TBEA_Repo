@@ -1,13 +1,13 @@
 /***************************************************************************** 新能源公司制造业项目公司周报表
-	开始	结束	项目公司	产品种类	产品型号	本周生产量	本周发货量	本周销售价格
+	开始日期	截止日期	项目公司	产品种类	产品型号	本周生产量	本周发货量	本周销售价格
 id start end xmgs cpzl cpxh bzscl bzfhl bzxsjg
 *****************************************************************************/
 IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'xnyzb')
 DROP TABLE xnyzb
 CREATE TABLE [dbo].[xnyzb](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[start] [date] NOT NULL,
-	[end] [date] NOT NULL,
+	[ksrq] [date] NOT NULL,
+	[jzrq] [date] NOT NULL,
 	[xmgs] [int] NOT NULL,
 	[cpzl] [varchar](50) NOT NULL,
 	[cpxh] [varchar](50) NOT NULL,
