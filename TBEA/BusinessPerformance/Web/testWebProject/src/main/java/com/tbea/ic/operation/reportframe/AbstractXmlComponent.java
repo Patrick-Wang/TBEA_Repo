@@ -61,5 +61,4 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	public Context globalContext() {
 		return global;
 	}
-
 }

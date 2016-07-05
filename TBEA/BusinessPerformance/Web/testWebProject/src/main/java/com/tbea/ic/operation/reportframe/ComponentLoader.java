@@ -3,6 +3,7 @@ package com.tbea.ic.operation.reportframe;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -16,6 +17,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.controller.servlet.convertor.Convertor;
 
 public class ComponentLoader {
@@ -46,8 +48,7 @@ public class ComponentLoader {
 	}
 
 
-	private void scan() {
-		File dir = new File(resPath);
+	private void scan(File dir) {
 		File[] fs = dir.listFiles();
 		for (int i = 0; i < fs.length; i++) {
 			if (fs[i].isFile() && fs[i].getName().endsWith(".xml")) {
@@ -57,6 +58,8 @@ public class ComponentLoader {
 					componentsTime.put(fs[i].getName(), fs[i].lastModified());
 					loadComponent(fs[i]);
 				}
+			}else if(fs[i].isDirectory()){
+				scan(fs[i]);
 			}
 		}
 	}
@@ -65,7 +68,7 @@ public class ComponentLoader {
 		Timer timer = new Timer(true);
 		timer.schedule(new TimerTask() {
 			public void run() {
-				scan();
+				scan(new File(resPath));
 			}
 		}, 0, 30 * 1000);
 	}
@@ -84,9 +87,7 @@ public class ComponentLoader {
 	
 	private void loadComponent(File file) {
 		try {
-			
-			System.out.println("reload config file " + file.getName());
-			
+			System.out.println(Util.formatToDay(new Date()) + " : load config file " + file.getName());
 			DocumentBuilder builder = getBuilder();
 			Document doc = builder.parse(file);
 			NodeList nl = doc.getElementsByTagName("components");

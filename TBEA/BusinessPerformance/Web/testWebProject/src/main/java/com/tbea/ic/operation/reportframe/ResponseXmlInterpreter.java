@@ -2,17 +2,21 @@ package com.tbea.ic.operation.reportframe;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.springframework.web.servlet.ModelAndView;
 import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
+import com.tbea.ic.operation.reportframe.XmlUtil.OnLoop;
 
 
 public class ResponseXmlInterpreter implements XmlInterpreter {
@@ -43,20 +47,22 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 		JSONArray ja = new JSONArray();
 		
 		String text = elem.getFirstChild().getTextContent();
-		text.replace("\\s", "");
+		text = text.replaceAll("\\s", "");
 		if (!text.isEmpty()){
 			String[] vals = text.split(",");
 			for (String val : vals){
 				ja.add(val);
 			}
 		}
-		XmlUtil.each(elem.getElementsByTagName("item"), new XmlUtil.OnLoop(){
+		XmlUtil.each(elem.getChildNodes(), new XmlUtil.OnLoop(){
 			@Override
 			public void on(Element el) {
-				if ("array".equals(el.getAttribute("type"))){
-					ja.add(parseJsonArray(el, elParser));
-				}else{
-					ja.add(parseJsonObject(el, elParser));
+				if ("item".equals(el.getTagName())){
+					if ("array".equals(el.getAttribute("type"))){
+						ja.add(parseJsonArray(el, elParser));
+					}else{
+						ja.add(parseJsonObject(el, elParser));
+					}
 				}
 			}
 		});
@@ -72,7 +78,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 		
 		HttpServletResponse resp = (HttpServletResponse) component.getVar("response");
 		String type = e.getAttribute("type");
-		if ("json".equals(type)){
+		if ("json".equalsIgnoreCase(type)){
 			JSONObject jo = parseJsonObject(e, new ELParser(component));
 			try {
 				resp.setCharacterEncoding("utf-8");       
@@ -84,7 +90,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				e1.printStackTrace();
 			}
 			
-		}else if ("excel".equals(type)){
+		} else if ("excel".equalsIgnoreCase(type)){
 			try {
 				ExcelTemplate temp = (ExcelTemplate) component.getVar(e.getAttribute("ref"));
 				FormatterServer serv = (FormatterServer) component.getVar(e.getAttribute("serv"));
@@ -93,9 +99,33 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
+		}else if ("jsp".equalsIgnoreCase(type)){
+			ELParser elp = new ELParser(component);
+			String jspName = (String) XmlUtil.getObjectAttr(e, "name", elp);
+			Map map = parseMap(elp, e);
+			component.global(Controller.MODEL_AND_VIEW, new ModelAndView(jspName, map));
 		}
 		
 		return true;
+	}
+
+	private Map parseMap(ELParser elp, Element e) {
+		Map map = new HashMap();
+		XmlUtil.each(e.getElementsByTagName("map"), new OnLoop(){
+
+			@Override
+			public void on(Element elem) {
+				String key = elem.getAttribute("key");
+				if (!key.isEmpty()){
+					Object val = XmlUtil.getObjectAttr(elem, "value", elp);
+					map.put(key, val);
+				}else{
+					Map<String, String> mp = (Map) XmlUtil.getObjectAttr(elem, "map", elp);
+					map.putAll(mp);					
+				}
+			}
+		});
+		return map;
 	}
 
 	private Object parseElObj(ELParser elp, String text) {

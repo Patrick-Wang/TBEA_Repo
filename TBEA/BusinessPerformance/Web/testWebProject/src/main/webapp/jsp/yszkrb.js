@@ -18,7 +18,7 @@ var yszkrb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -187,6 +187,6 @@ var yszkrb;
             });
         };
         return View;
-    }());
+    })();
     yszkrb.View = View;
 })(yszkrb || (yszkrb = {}));

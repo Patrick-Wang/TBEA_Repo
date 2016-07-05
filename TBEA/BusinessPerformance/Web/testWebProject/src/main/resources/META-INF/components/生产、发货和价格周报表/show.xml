@@ -1,5 +1,5 @@
 ﻿<components>
-	<service id="xnyscfhjgzbbServ" transaction="transactionManager" db="localDB">
+	<service id="xnyzbServ" transaction="transactionManager" db="localDB">
 		
 		<sql id="xnyzb">
 			select 
@@ -47,12 +47,12 @@
 
 		<context key="result" value="${result}"/>
 	</service>
-	<controller id="xnyscfhjgzbb">
+	<controller id="xnyzb">
 
-		<context key="dStart" value="${request.dStart.calendar}"/>
-		<context key="dEnd" value="${request.dEnd.calendar}"/>
+		<context key="dStart" value="${request.dStart.calendar.monday}"/>
+		<context key="dEnd" value="${request.dEnd.calendar.sunday}"/>
 		
-		<callservice id="xnyscfhjgzbbServ"/>
+		<callservice id="xnyzbServ"/>
 		
 		<formatter id="data">
 			<NumberFormatter reservedCount="1">
@@ -69,18 +69,27 @@
 				<item>
 					<name>周期</name>
 					<sub type="array">
-						<item><name>开始</name></item>
-						<item><name>截止</name></item>
+						<item>
+							<name>开始</name>
+							<type>date</type>
+						</item>
+						<item>
+							<name>截止</name>
+							<type>date</type>
+						</item>
 					</sub>
 				</item>
 				<item>
 					<name>项目公司</name>
+					<type>text</type>
 				</item>
 				<item>
 					<name>产品种类</name>
+					<type>text</type>
 				</item>
 				<item>
 					<name>产品型号</name>
+					<type>text</type>
 				</item>
 				<item>
 					<name>本周生产量</name>
@@ -90,18 +99,19 @@
 				</item>
 				<item>
 					<name>本周销售价格</name>
+					<type>text</type>
 				</item>
 			</header>
 			<title>生产、发货和价格周报表</title>
 			<data>${serv.result}</data>
 		</response>
-	</controller> 
+	</controller>
 	
-	<controller id="xnyscfhjgzbbexport">
+	<controller id="xnyzbExport">
 
 		<context key="dStart" value="${request.dStart.calendar}"/>
 		<context key="dEnd" value="${request.dEnd.calendar}"/>
-		<callservice id="xnyscfhjgzbbServ"/>
+		<callservice id="xnyzbServ"/>
 		<context key="tbs" value="${result.matrixNoIds}"/>
 		
 		<ExcelTemplate id="excelTemplate" sheet="生产、发货和价格周报表"/>
@@ -149,6 +159,6 @@
 			<formatter ref="excel"/>
 		</formatterServer>
 
-		<response type="excel" ref="excelTemplate" name="aaa.xls" serv="serv"/>
-	</controller> 
+		<response type="excel" ref="excelTemplate" name="新能源周报.xls" serv="serv"/>
+	</controller>
 </components>

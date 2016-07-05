@@ -43,7 +43,7 @@ class ELExpression{
 				return md.invoke(obj);
 			}else if (obj instanceof ControllerRequest){
 				ControllerRequest request = (ControllerRequest) obj;
-				return request.getParamater(method);
+				return request.getParameter(method);
 			}else{
 				md = obj.getClass().getMethod("get" + method.substring(0, 1).toUpperCase() + method.substring(1));
 				return md.invoke(obj);

@@ -3,6 +3,19 @@ declare var $;
 
 module Util {
 
+    export interface Header{
+        name:string;
+        type:string;
+        options:string[];
+        sub:Header[];
+    }
+
+    export interface ServResp{
+        header:Header[];
+        title:string;
+        data:string[][];
+    }
+
     export enum ErrorCode {
         OK,
         DATABASE_EXCEPTION,

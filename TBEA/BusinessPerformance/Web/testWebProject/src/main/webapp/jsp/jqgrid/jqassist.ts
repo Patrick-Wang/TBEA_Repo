@@ -209,6 +209,7 @@ module JQTable {
         width?: number;
         editType?: string;
         options?: any;
+        hidden?:boolean;
         //add by hzdqzy
         isSortable?: boolean;
         sorttype?: string
@@ -285,6 +286,10 @@ module JQTable {
 
         public editOptions():string {
             return this.mOpts.options;
+        }
+
+        public hidden():boolean {
+            return this.mOpts.hidden;
         }
 
         public append(child:Node):Node {
@@ -503,6 +508,7 @@ module JQTable {
                         edittype: nodes[j].editType(),
                         editoptions: nodes[j].editOptions(),
                         editrules: !nodes[j].isReadOnly() ? {number: nodes[j].isNumber()} : undefined,
+                        hidden:nodes[j].hidden(),
                         //editrules:undefined,
                         cellattr: function (rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
@@ -1060,7 +1066,8 @@ module JQTable {
                     });
                 },
                 beforeSaveCell: (rowid, cellname, v, iRow, iCol) => {
-                    if (this.mColModel[iCol].edittype != "select"){
+                    if (this.mColModel[iCol].edittype != "select" &&
+                        this.mColModel[iCol].edittype != "text"){
                         var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
                         if (isNaN(ret)) {
                            this.centerModal();

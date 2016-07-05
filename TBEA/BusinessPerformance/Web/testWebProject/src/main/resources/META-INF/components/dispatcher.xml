@@ -1,0 +1,8 @@
+﻿<components>
+	<controller id="controller">		
+		<response type="jsp" name="${request.name.string}"> 
+			<map key="date" value="${time.current.format}"/>
+			<map map="${request.parameters.map}"/>
+		</response>
+	</controller>
+</components>

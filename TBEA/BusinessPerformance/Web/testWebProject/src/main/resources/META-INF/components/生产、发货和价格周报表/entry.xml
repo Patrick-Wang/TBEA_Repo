@@ -1,0 +1,80 @@
+﻿<components>
+	<service id="xnyzbEntryServ" transaction="transactionManager" db="localDB">
+		
+		<sql id="cpzlSql">
+			select 
+				id,
+				cpzl
+			from 
+				xnyzb_cpzl
+			where 
+				xmgs = 903
+		</sql>
+		
+		<list id="cpzl" type="string" sql="cpzlSql" value="1" />
+
+		<context key="cpzl" value="${cpzl}"/>
+	</service>
+	<controller id="xnyzbEntry">
+
+		<context key="dStart" value="${request.dStart.calendar.monday}"/>
+		<context key="dEnd" value="${request.dEnd.calendar.sunday}"/>
+		
+		<callservice id="xnyzbServ"/>
+		<callservice id="xnyzbEntryServ"/>
+		
+		<formatter id="data">
+			<NumberFormatter reservedCount="1">
+				<DefaultMatcher cols="6,7"/>
+			</NumberFormatter>
+		</formatter>
+
+		<formatterServer id="serv" table="${result.matrix}">
+			<formatter ref="data"/>
+		</formatterServer>
+		
+		<response type="json"> 
+			<header type="array">
+				<item>
+					<name>周期</name>
+					<sub type="array">
+						<item>
+							<name>开始</name>
+							<type>date</type>
+						</item>
+						<item>
+							<name>截止</name>
+							<type>date</type>
+						</item>
+					</sub>
+				</item>
+				<item>
+					<name>项目公司</name>
+					<type>hidden</type>
+				</item>
+				<item>
+					<name>产品种类</name>
+					<type>select</type>
+					<options>${cpzl}</options>
+				</item>
+				<item>
+					<name>产品型号</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>本周生产量</name>
+					
+				</item>
+				<item>
+					<name>本周发货量</name>
+				</item>
+				<item>
+					<name>本周销售价格</name>
+					<type>text</type>
+				</item>
+			</header>
+			<title>生产、发货和价格周报表</title>
+			<data>${serv.result}</data>
+		</response>
+	</controller>
+</components>

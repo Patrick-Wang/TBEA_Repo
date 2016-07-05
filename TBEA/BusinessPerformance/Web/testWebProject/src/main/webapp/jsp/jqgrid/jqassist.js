@@ -239,6 +239,9 @@ var JQTable;
         Node.prototype.editOptions = function () {
             return this.mOpts.options;
         };
+        Node.prototype.hidden = function () {
+            return this.mOpts.hidden;
+        };
         Node.prototype.append = function (child) {
             this.mChilds.push(child);
             child.mParent = this;
@@ -420,6 +423,7 @@ var JQTable;
                         edittype: nodes[j].editType(),
                         editoptions: nodes[j].editOptions(),
                         editrules: !nodes[j].isReadOnly() ? { number: nodes[j].isNumber() } : undefined,
+                        hidden: nodes[j].hidden(),
                         //editrules:undefined,
                         cellattr: function (rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
@@ -940,7 +944,8 @@ var JQTable;
                     });
                 },
                 beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
-                    if (_this.mColModel[iCol].edittype != "select") {
+                    if (_this.mColModel[iCol].edittype != "select" &&
+                        _this.mColModel[iCol].edittype != "text") {
                         var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
                         if (isNaN(ret)) {
                             _this.centerModal();

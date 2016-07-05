@@ -8,9 +8,10 @@ import com.tbea.ic.operation.reportframe.XmlUtil.OnLoop;
 
 public class Controller extends AbstractXmlComponent {
 
+	public static final String MODEL_AND_VIEW = "_mv_";
+	
 	public Controller(Element e, ComponentManager mgr) {
 		super(e, mgr);
-		// TODO Auto-generated constructor stub
 	}
 
 	XmlInterpreter[] interpreters = new XmlInterpreter[]{
