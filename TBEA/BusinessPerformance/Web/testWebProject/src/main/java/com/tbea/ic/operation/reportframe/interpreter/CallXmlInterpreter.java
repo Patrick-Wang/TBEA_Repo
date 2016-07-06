@@ -40,6 +40,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 			void compareList(int tp, Object object){
 				for (int i = mdList.size() - 1; i >= 0; --i){
 					if (mdList.get(i).getParameterCount() > count){
+						System.out.println(mdList.get(i).getParameterTypes()[count].getName());
 						switch (tp){
 						case TypeUtil.DOUBLE:
 							if (!mdList.get(i).getParameterTypes()[count].getName().equals(Double.class.getName())){
@@ -58,6 +59,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 							break;
 						case TypeUtil.OBJECT:
 							if (object != null){
+								System.out.println(object.getClass().getName());
 								if (!mdList.get(i).getParameterTypes()[count].getName().equals(object.getClass().getName())){
 									mdList.remove(i);
 								};

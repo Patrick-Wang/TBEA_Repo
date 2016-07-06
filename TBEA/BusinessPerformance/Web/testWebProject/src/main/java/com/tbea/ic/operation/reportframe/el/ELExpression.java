@@ -10,6 +10,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
+import com.tbea.ic.operation.reportframe.component.controller.ControllerSession;
 import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
 
 public class ELExpression{
@@ -69,6 +70,9 @@ public class ELExpression{
 		if (obj instanceof ControllerRequest){
 			ControllerRequest request = (ControllerRequest) obj;
  			propValue = request.getParameter(propName);
+		}else if (obj instanceof ControllerSession){
+			ControllerSession session = (ControllerSession) obj;
+ 			propValue = session.getAttribute(propName);
 		}else{
 			Method md = getMethod(obj, propName);
 			if (null == md){
