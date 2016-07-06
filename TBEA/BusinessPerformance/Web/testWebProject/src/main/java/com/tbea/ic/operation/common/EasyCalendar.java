@@ -52,24 +52,37 @@ public class EasyCalendar {
 		return cal.get(Calendar.DAY_OF_MONTH);
 	}
 	
-	public EasyCalendar getPreSunday(){
+	public EasyCalendar getLastSunday(){
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(this.cal.getTimeInMillis());
-		cal.add(Calendar.DAY_OF_MONTH, 1 - cal.get(Calendar.DAY_OF_WEEK));
+//		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
+//		System.out.println(Util.formatToDay(new EasyCalendar(cal).getDate()));
+		cal.add(Calendar.DAY_OF_MONTH, -7);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+//		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
+//		System.out.println(Util.formatToDay(new EasyCalendar(cal).getDate()));
 		return new EasyCalendar(cal);
 	}
 	
 	public EasyCalendar getSunday(){
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(this.cal.getTimeInMillis());
-		cal.add(Calendar.DAY_OF_MONTH, 7 - cal.get(Calendar.DAY_OF_WEEK));
+//		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
+//		System.out.println(Util.formatToDay(new EasyCalendar(cal).getDate()));
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+//		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
+//		System.out.println(Util.formatToDay(new EasyCalendar(cal).getDate()));
 		return new EasyCalendar(cal);
 	}
 	
 	public EasyCalendar getMonday(){
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(this.cal.getTimeInMillis());
-		cal.add(Calendar.DAY_OF_MONTH, 2-cal.get(Calendar.DAY_OF_WEEK));
+//		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
+//		System.out.println(Util.formatToDay(new EasyCalendar(cal).getDate()));
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+//		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
+//		System.out.println(Util.formatToDay(new EasyCalendar(cal).getDate()));
 		return new EasyCalendar(cal);
 	}
 	
