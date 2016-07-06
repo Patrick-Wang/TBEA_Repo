@@ -69,7 +69,7 @@ var xnyzb;
             function EntryView() {
                 _super.apply(this, arguments);
                 this.mAjaxUpdate = new Util.Ajax("xnyzbEntry.do", false);
-                this.mAjaxSave = new Util.Ajax("../xnyzb/entry/save.do", false);
+                this.mAjaxSave = new Util.Ajax("xnyzbDoEntry.do", false);
                 this.mAjaxSubmit = new Util.Ajax("../xnyzb/entry/submit.do", false);
             }
             EntryView.prototype.getId = function () {
@@ -84,15 +84,15 @@ var xnyzb;
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
+                    for (var j = 0; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
+                        submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
                     }
                 }
                 this.mAjaxSave.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType
+                    compId: 903
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("保存 成功", function () {
@@ -157,7 +157,7 @@ var xnyzb;
                 framework.router
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "新能源周报");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, opt.title);
                 this.mDStart = "2016-1-1";
                 $("#dstart").val(2016 + "-" + 1 + "-" + 1);
                 $("#dstart").datepicker({

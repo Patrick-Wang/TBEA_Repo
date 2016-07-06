@@ -1,9 +1,8 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.interpreter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,26 +15,30 @@ import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
-import com.tbea.ic.operation.reportframe.XmlUtil.OnLoop;
+import com.tbea.ic.operation.reportframe.component.controller.Controller;
+import com.tbea.ic.operation.reportframe.el.ELParser;
+import com.tbea.ic.operation.reportframe.util.XmlUtil;
+import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
 
 public class ResponseXmlInterpreter implements XmlInterpreter {
 
+	ELParser elp;
 	
-	JSONObject parseJsonObject(Element pElem, ELParser elParser){
+	JSONObject parseJsonObject(Element pElem){
 		JSONObject pJson = new JSONObject();
 		XmlUtil.each(pElem.getChildNodes(), new XmlUtil.OnLoop(){
 			@Override
 			public void on(Element elem) {
 				if ("array".equals(elem.getAttribute("type"))){
-					JSONArray ja = parseJsonArray(elem, elParser);
+					JSONArray ja = parseJsonArray(elem);
 					pJson.put(elem.getTagName(), ja);
 				} else {
 					String text = elem.getFirstChild().getTextContent();
 					if (null != text && !text.isEmpty()){
-						pJson.put(elem.getTagName(), parseElObj(elParser, text));
+						pJson.put(elem.getTagName(), parseElObj(text));
 					}else {
-						pJson.put(elem.getTagName(), parseJsonObject(elem, elParser));
+						pJson.put(elem.getTagName(), parseJsonObject(elem));
 					}
 				}
 			}
@@ -43,25 +46,17 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 		return pJson;
 	}
 	
-	protected JSONArray parseJsonArray(Element elem, ELParser elParser) {
+	protected JSONArray parseJsonArray(Element elem) {
 		JSONArray ja = new JSONArray();
-		
-		String text = elem.getFirstChild().getTextContent();
-		text = text.replaceAll("\\s", "");
-		if (!text.isEmpty()){
-			String[] vals = text.split(",");
-			for (String val : vals){
-				ja.add(val);
-			}
-		}
+		ja.addAll(XmlUtil.toStringList(elem.getFirstChild().getTextContent(), elp));
 		XmlUtil.each(elem.getChildNodes(), new XmlUtil.OnLoop(){
 			@Override
 			public void on(Element el) {
 				if ("item".equals(el.getTagName())){
 					if ("array".equals(el.getAttribute("type"))){
-						ja.add(parseJsonArray(el, elParser));
+						ja.add(parseJsonArray(el));
 					}else{
-						ja.add(parseJsonObject(el, elParser));
+						ja.add(parseJsonObject(el));
 					}
 				}
 			}
@@ -72,14 +67,16 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) {
 		
-		if (!"response".equals(e.getTagName())){
+		if (!Schema.isResponse(e)){
 			return false;
 		}
+		
+		elp = new ELParser(component);
 		
 		HttpServletResponse resp = (HttpServletResponse) component.getVar("response");
 		String type = e.getAttribute("type");
 		if ("json".equalsIgnoreCase(type)){
-			JSONObject jo = parseJsonObject(e, new ELParser(component));
+			JSONObject jo = parseJsonObject(e);
 			try {
 				resp.setCharacterEncoding("utf-8");       
 				resp.setContentType("text/html; charset=utf-8");
@@ -128,15 +125,10 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 		return map;
 	}
 
-	private Object parseElObj(ELParser elp, String text) {
-		Object obj = text;
-		List<ELExpression> elexps = elp.parser(text);
-		if (!elexps.isEmpty()){
-			try {
-				obj = elexps.get(0).value();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	private Object parseElObj(String text) {
+		Object obj = XmlUtil.getELValue(text, elp);
+		if (null == obj){
+			obj = text;
 		}
 		return obj;
 	}

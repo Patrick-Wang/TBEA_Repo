@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.component;
 
 import java.io.File;
 import java.net.URI;
@@ -23,9 +23,8 @@ import com.tbea.ic.operation.controller.servlet.convertor.Convertor;
 public class ComponentLoader {
 
 	public static interface ComponentLoadedListener {
-		void onService(String id, Element e);
-
-		void onController(String id, Element e);
+		void onService(String id, Element e, String filePath);
+		void onController(String id, Element e, String filePath);
 	}
 
 	private static String resPath;
@@ -40,13 +39,12 @@ public class ComponentLoader {
 	}
 
 	ComponentLoadedListener listener;
+	DocumentBuilder builder = null;
 	Map<String, Long> componentsTime = new HashMap<String, Long>();
 
-	
 	public ComponentLoader(ComponentLoadedListener listener) {
 		this.listener = listener;
 	}
-
 
 	private void scan(File dir) {
 		File[] fs = dir.listFiles();
@@ -73,7 +71,12 @@ public class ComponentLoader {
 		}, 0, 30 * 1000);
 	}
 	
-	DocumentBuilder builder = null;
+	public void reload(){
+		componentsTime.clear();
+		scan(new File(resPath));
+	}
+	
+	
 	
 	private DocumentBuilder getBuilder() throws ParserConfigurationException{
 		if (builder == null){
@@ -88,6 +91,7 @@ public class ComponentLoader {
 	private void loadComponent(File file) {
 		try {
 			System.out.println(Util.formatToDay(new Date()) + " : load config file " + file.getName());
+			String path = file.getAbsolutePath();
 			DocumentBuilder builder = getBuilder();
 			Document doc = builder.parse(file);
 			NodeList nl = doc.getElementsByTagName("components");
@@ -97,9 +101,9 @@ public class ComponentLoader {
 				if (nl.item(i) instanceof Element){
 					e = (Element) nl.item(i);
 					if (e.getTagName().equals("service")) {
-						listener.onService(e.getAttribute("id"), e);
+						listener.onService(e.getAttribute("id"), e, path);
 					} else if (e.getTagName().equals("controller")) {
-						listener.onController(e.getAttribute("id"), e);
+						listener.onController(e.getAttribute("id"), e, path);
 					}
 				}
 			}

@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.interpreter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,10 @@ import java.util.List;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.tbea.ic.operation.reportframe.XmlUtil.OnLoop;
+import com.tbea.ic.operation.reportframe.el.ELParser;
+import com.tbea.ic.operation.reportframe.util.TypeUtil;
+import com.tbea.ic.operation.reportframe.util.XmlUtil;
+import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
 public class ListXmlInterpreter implements XmlInterpreter {
 	
@@ -65,7 +68,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) {
-		boolean bRet= "list".equals(e.getTagName());
+		boolean bRet= Schema.isList(e);
 		if (bRet) {
 			List<Object> objs = new ArrayList<Object>();
 			
@@ -79,25 +82,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	}
 
 	public static List<Integer> parserArray(AbstractXmlComponent component, String arr) {
-		List<Integer> ret = new ArrayList<Integer>();
-		arr = arr.replaceAll(" ", "");
-		if (!arr.isEmpty()){
-			String[] sarr = arr.split(",");
-			ELParser elp = new ELParser(component);
-			for (int i = 0; i < sarr.length; ++i) {
-				List<ELExpression> elexps = elp.parser(sarr[i]);
-				if (elexps.isEmpty()) {
-					ret.add(Integer.valueOf(sarr[i]));
-				} else {
-					try {
-						ret.add((Integer) (elexps.get(0).value()));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		return ret;
+		return XmlUtil.toIntList(arr, new ELParser(component));
 	}
 	
 	private void parseItems(AbstractXmlComponent component, Element e, List<Object> objs) {
@@ -106,56 +91,15 @@ public class ListXmlInterpreter implements XmlInterpreter {
 		ELParser elp = new ELParser(component);
 		if (null != e.getFirstChild()){
 			String text = e.getFirstChild().getTextContent();
-			text = text.replaceAll("\\s", "");
-			if (!text.isEmpty()){
-				String[] sarr = text.split(",");
-				if (TypeUtil.STRING == type){
-					for (String str : sarr){
-						List<ELExpression> exp = elp.parser(str);
-						if (exp.isEmpty()){
-							objs.add("" + str);
-						}else{
-							try {
-								objs.add(exp.get(0).value());
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-					}
-				} else if (TypeUtil.INT == type){
-					for (String str : sarr){
-						List<ELExpression> exp = elp.parser(str);
-						if (exp.isEmpty()){
-							objs.add(Integer.valueOf(str));
-						}else{
-							try {
-								objs.add(exp.get(0).value());
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-						
-					}
-				} else if (TypeUtil.DOUBLE == type){
-					for (String str : sarr){
-					
-						List<ELExpression> exp = elp.parser(str);
-						if (exp.isEmpty()){
-							objs.add(Double.valueOf(str));
-						}else{
-							try {
-								objs.add(exp.get(0).value());
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-					}
-				}  
-			}
+			if (TypeUtil.STRING == type){
+				objs.addAll(XmlUtil.toStringList(text, elp));
+			} else if (TypeUtil.INT == type){
+				objs.addAll(XmlUtil.toIntList(text, elp));
+			} else if (TypeUtil.DOUBLE == type){
+				objs.addAll(XmlUtil.toDoubleList(text, elp));
+			}  
 		}
+		
 		XmlUtil.each(children, new OnLoop(){
 			@Override
 			public void on(Element elem) {
@@ -206,11 +150,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 				repeatAdd(objs, Double.valueOf(val), repeat, insert);
 			}
 		} else if (type == TypeUtil.STRING) {
-			if (val.isEmpty()) {
-				repeatAdd(objs, "", repeat, insert);
-			} else {
-				repeatAdd(objs, "" + val, repeat, insert);
-			}
+			repeatAdd(objs, val, repeat, insert);
 		}
 	}
 

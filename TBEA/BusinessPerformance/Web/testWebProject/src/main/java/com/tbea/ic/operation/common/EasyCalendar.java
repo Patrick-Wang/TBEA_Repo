@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 public class EasyCalendar {
+	
 	Calendar cal;
 
 	public EasyCalendar getCurrent(){

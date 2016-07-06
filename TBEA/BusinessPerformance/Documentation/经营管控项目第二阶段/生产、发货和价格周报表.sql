@@ -1,4 +1,4 @@
-/***************************************************************************** 新能源公司制造业项目公司周报表
+﻿/***************************************************************************** 新能源公司制造业项目公司周报表
 	开始日期	截止日期	项目公司	产品种类	产品型号	本周生产量	本周发货量	本周销售价格
 id start end xmgs cpzl cpxh bzscl bzfhl bzxsjg
 *****************************************************************************/
@@ -9,11 +9,11 @@ CREATE TABLE [dbo].[xnyzb](
 	[ksrq] [date] NOT NULL,
 	[jzrq] [date] NOT NULL,
 	[xmgs] [int] NOT NULL,
-	[cpzl] [varchar](50) NOT NULL,
-	[cpxh] [varchar](50) NOT NULL,
-	[bzscl] [int] NOT NULL,
-	[bzfhl] [int] NOT NULL,
-	[bzxsjg] [varchar](50) NOT NULL
+	[cpzl] [varchar](50),
+	[cpxh] [varchar](50),
+	[bzscl] [int],
+	[bzfhl] [int],
+	[bzxsjg] [varchar](50)
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC

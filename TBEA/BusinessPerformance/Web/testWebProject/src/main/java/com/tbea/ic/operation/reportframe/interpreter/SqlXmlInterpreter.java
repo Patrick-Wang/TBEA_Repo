@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.interpreter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -9,13 +9,16 @@ import javax.persistence.Query;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.reportframe.el.ELExpression;
+import com.tbea.ic.operation.reportframe.el.ELParser;
+
 
 public class SqlXmlInterpreter implements XmlInterpreter {
 
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) {
 		
-		if (!"sql".equals(e.getTagName())){
+		if (!Schema.isSql(e)){
 			return false;
 		}
 		

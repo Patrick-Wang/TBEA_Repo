@@ -166,17 +166,19 @@ th.ui-th-ltr {
 </head> 
 <body>
 	<div class="header">
-		<h1 id="headertitle">完工产品情况</h1>
+		<h1 id="headertitle">生产、发货和价格周报表</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">
 		<tr>
 			<td>
-				<input id="dstart" style="float: left;width: 100px;margin-right:10px"></div>
-				<input id="dEnd" style="float: left;width: 100px;margin-right:10px"></div>
+				<div style="float: left;margin-right:5px;padding-top:3px">开始日期: </div>
+				<input id="dstart" style="float: left;width: 100px;margin-right:10px"></input>
+				<div style="float: left;margin-right:5px;padding-top:3px">截至日期: </div>
+				<input id="dEnd" style="float: left;width: 100px;margin-right:10px"></input>
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
-				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
+				<input type="button" value="查询" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
 		</tr> 
@@ -199,7 +201,7 @@ th.ui-th-ltr {
 			framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
 				type: "type",
 				comp:"compid",
-				comps : JSON.parse(' [{"data":{"id":142,"value":"新能源公司"},"parent":null,"subNodes":[]}]'),
+				comps : JSON.parse(' [{"data":{"id":142,"value":"西科公司"},"parent":null,"subNodes":[]}]'),
 				date: {
 					month: "${month}".length == 0 ? undefined : parseInt("${month}"),
 					year: ${year}

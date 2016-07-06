@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.component.entity;
 
 import java.util.ArrayList;
 import java.util.List;

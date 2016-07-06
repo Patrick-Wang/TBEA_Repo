@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.interpreter;
 
 import java.util.List;
 
@@ -6,14 +6,16 @@ import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
-import com.tbea.ic.operation.reportframe.XmlUtil.OnLoop;
+import com.tbea.ic.operation.reportframe.el.ELParser;
+import com.tbea.ic.operation.reportframe.util.XmlUtil;
+import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
 public class FormatterServerXmlInterpreter implements XmlInterpreter {
 
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) {
 
-		if (!"formatterServer".equals(e.getTagName())) {
+		if (!Schema.isFormatterServer(e)) {
 			return false;
 		}
 
@@ -35,23 +37,14 @@ public class FormatterServerXmlInterpreter implements XmlInterpreter {
 					}
 				}
 			}
-			
 		});
 		
 		if (e.hasAttribute("acceptNullAs")) {
-			serv.acceptNullAs(e.getAttribute("acceptNullAs"));
+			serv.acceptNullAs(XmlUtil.getAttr(e, "acceptNullAs"));
 		}
 		
-		ELParser el = new ELParser(component);
-		el.parser(e.getAttribute("table"));
-		List<ELExpression> elexprs = el.parser(e.getAttribute("table"));
-
-		try {
-			serv.setTable((List<List<String>>) elexprs.get(0).value());
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-
+		serv.setTable((List<List<String>>) XmlUtil.getObjectAttr(e, "table", new ELParser(component)));
+		
 		String id = e.getAttribute("id");
 		component.local(id, serv);
 		return true;

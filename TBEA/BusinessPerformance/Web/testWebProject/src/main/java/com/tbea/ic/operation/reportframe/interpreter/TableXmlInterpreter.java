@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.interpreter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,16 +10,22 @@ import org.w3c.dom.NodeList;
 
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.reportframe.XmlUtil.OnLoop;
+import com.tbea.ic.operation.reportframe.component.entity.Table;
+import com.tbea.ic.operation.reportframe.el.ELParser;
+import com.tbea.ic.operation.reportframe.util.XmlUtil;
+import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
 public class TableXmlInterpreter implements XmlInterpreter {
 
+	ELParser elp;
+	
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) {
 
-		if (!"table".equals(e.getTagName())) {
+		if (!Schema.isTable(e)) {
 			return false;
 		}
+		elp = new ELParser(component);
 		Table tb = new Table();
 		String id = e.getAttribute("id");
 		tb.setIds((List) component.getVar(e.getAttribute("rowIds")));
@@ -38,7 +44,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 				}else if ("divCol".equals(elem.getTagName())){
 					parseDivCol(component, tb, elem);
 				}else if ("copyCol".equals(elem.getTagName())){
-					parseCopyCol(component, tb, elem);
+					parseCopyCol(tb, elem);
 				}
 			}
 			
@@ -47,12 +53,11 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		return true;
 	}
 
-	protected void parseCopyCol(AbstractXmlComponent component, Table tb,
+	protected void parseCopyCol(Table tb,
 			Element elem) {
-		ELParser elp = new ELParser(component);
 		Integer row = tb.getIds().indexOf(XmlUtil.getIntAttr(elem, "rowId", elp, null));
 		Integer from = XmlUtil.getIntAttr(elem, "from", elp, null);
-		List<Integer> targets = parserArray(component, elem.getAttribute("to"));
+		List<Integer> targets = parserArray(elem.getAttribute("to"));
 		if (row != null && from != null && !targets.isEmpty()){
 			for (Integer tar : targets){
 				tb.getValues().get(tar).set(row, tb.getValues().get(from).get(row));
@@ -68,7 +73,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		Integer target = XmlUtil.getIntAttr(elem, "toCol", elp, null);
 		if (sub != null && base != null && target != null){
 			NodeList list = elem.getElementsByTagName("excludeRow");
-			List<Integer> excludeRows = parserArray(component, XmlUtil.elementText(list, 0));
+			List<Integer> excludeRows = parserArray(XmlUtil.elementText(list, 0));
 			List<Object> tarCols = tb.getValues().get(target);
 			List<Object> subCols = tb.getValues().get(sub);
 			List<Object> baseCols = tb.getValues().get(base);
@@ -94,60 +99,20 @@ public class TableXmlInterpreter implements XmlInterpreter {
 
 	private int getTargetIndex(AbstractXmlComponent component, Element item,
 			Table tb) {
-		String target = item.getAttribute("toId");
-
-		if (null != target && !target.isEmpty()) {
-			ELParser elp = new ELParser(component);
-			List<ELExpression> elexps = elp.parser(target);
-			if (elexps.isEmpty()) {
-				return tb.getIds().indexOf(Integer.valueOf(target));
-			} else {
-				try {
-					return tb.getIds().indexOf(
-							(Integer) (elexps.get(0).value()));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+		ELParser elp = new ELParser(component);
+		Integer target = XmlUtil.getIntAttr(item, "toId", elp, -1);
+		if (target >= 0){
+			target = tb.getIds().indexOf(target);
 		}
-
-		target = item.getAttribute("toRow");
-		if (null != target && !target.isEmpty()) {
-			ELParser elp = new ELParser(component);
-			List<ELExpression> elexps = elp.parser(target);
-			if (elexps.isEmpty()) {
-				return Integer.valueOf(target);
-			} else {
-				try {
-					return (Integer) (elexps.get(0).value()); 
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+		
+		if (target < 0){
+			target = XmlUtil.getIntAttr(item, "toRow", elp, -1);
 		}
-		return -1;
+		return target;
 	}
 
-	private List<Integer> parserArray(AbstractXmlComponent component, String arr) {
-		List<Integer> ret = new ArrayList<Integer>();
-		arr = arr.replaceAll(" ", "");
-		if (!arr.isEmpty()){
-			String[] sarr = arr.split(",");
-			ELParser elp = new ELParser(component);
-			for (int i = 0; i < sarr.length; ++i) {
-				List<ELExpression> elexps = elp.parser(sarr[i]);
-				if (elexps.isEmpty()) {
-					ret.add(Integer.valueOf(sarr[i]));
-				} else {
-					try {
-						ret.add((Integer) (elexps.get(0).value()));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		return ret;
+	private List<Integer> parserArray(String arr) {
+		return XmlUtil.toIntList(arr, elp);
 	}
 
 	private List<Integer> idsToRows(List<Integer> ids, Table tb) {
@@ -170,7 +135,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			Set<Integer> rows = new HashSet<Integer>();
 			if (list.getLength() > 0) {
 				List<Integer> rangeRow = idsToRows(
-						parserArray(component, XmlUtil.elementText(list, 0)), tb);
+						parserArray(XmlUtil.elementText(list, 0)), tb);
 				for (Integer row : rows) {
 					if (row < rangeRow.get(0) || row > rangeRow.get(1)) {
 						rows.remove(row);
@@ -184,7 +149,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 
 			list = item.getElementsByTagName("rangeRows");
 			if (list.getLength() > 0) {
-				List<Integer> rangeRow = parserArray(component, XmlUtil.elementText(list, 0));
+				List<Integer> rangeRow = parserArray(XmlUtil.elementText(list, 0));
 				for (Integer row : rows) {
 					if (row < rangeRow.get(0) || row > rangeRow.get(1)) {
 						rows.remove(row);
@@ -200,20 +165,20 @@ public class TableXmlInterpreter implements XmlInterpreter {
 				list = item.getElementsByTagName("inIds");
 
 				if (list.getLength() > 0) {
-					List<Integer> ids = parserArray(component, XmlUtil.elementText(list, 0));
+					List<Integer> ids = parserArray(XmlUtil.elementText(list, 0));
 					rows.addAll(idsToRows(ids, tb));
 				}
 
 				list = item.getElementsByTagName("inRows");
 				if (list.getLength() > 0) {
-					rows.addAll(parserArray(component, XmlUtil.elementText(list, 0)));
+					rows.addAll(parserArray(XmlUtil.elementText(list, 0)));
 				}
 			}
 
 			list = item.getElementsByTagName("excIds");
 			if (list.getLength() > 0) {
 				List<Integer> excRows = idsToRows(
-						parserArray(component, XmlUtil.elementText(list, 0)), tb);
+						parserArray(XmlUtil.elementText(list, 0)), tb);
 				for (Integer row : excRows) {
 					rows.remove(row);
 				}
@@ -221,14 +186,14 @@ public class TableXmlInterpreter implements XmlInterpreter {
 
 			list = item.getElementsByTagName("excRows");
 			if (list.getLength() > 0) {
-				List<Integer> excRows = parserArray(component, XmlUtil.elementText(list, 0));
+				List<Integer> excRows = parserArray(XmlUtil.elementText(list, 0));
 				for (Integer row : excRows) {
 					rows.remove(row);
 				}
 			}
 
 			list = item.getElementsByTagName("excludeCol");
-			List<Integer> excludeCols = parserArray(component, XmlUtil.elementText(list, 0));
+			List<Integer> excludeCols = parserArray(XmlUtil.elementText(list, 0));
 			
 			for (int i = 0; i < tb.getValues().size(); ++i) {
 				if (excludeCols.indexOf(i) < 0){
@@ -300,7 +265,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			
 			if (subRow != null && baseRow != null) {
 				list = item.getElementsByTagName("excludeCol");
-				List<Integer> excludeCols = parserArray(component, XmlUtil.elementText(list, 0));
+				List<Integer> excludeCols = parserArray(XmlUtil.elementText(list, 0));
 				
 				List<Object> col = null;
 				for (int i = 0; i < tb.getValues().size(); ++i) {

@@ -1,8 +1,11 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.interpreter;
 
 import org.w3c.dom.Element;
 
-import com.tbea.ic.operation.reportframe.ELParser.ObjectLoader;
+import com.tbea.ic.operation.reportframe.component.Component;
+import com.tbea.ic.operation.reportframe.component.ComponentManager;
+import com.tbea.ic.operation.reportframe.component.entity.Context;
+import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
 
 public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	

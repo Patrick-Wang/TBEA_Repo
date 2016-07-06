@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.interpreter;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.w3c.dom.Element;
@@ -11,7 +11,7 @@ public class ExcelTemplateXmlInterpreter implements XmlInterpreter {
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) {
 		
-		if (!"ExcelTemplate".equals(e.getTagName())){
+		if (!Schema.isExcelTemplate(e)){
 			return false;
 		}
 

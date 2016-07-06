@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.interpreter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,9 @@ import com.tbea.ic.operation.common.formatter.v2.excel.ExcelMergeFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTextFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTitleFilter;
-import com.tbea.ic.operation.reportframe.XmlUtil.OnLoop;
+import com.tbea.ic.operation.reportframe.el.ELParser;
+import com.tbea.ic.operation.reportframe.util.XmlUtil;
+import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
 
 public class FormatterXmlInterpreter implements XmlInterpreter {
@@ -37,9 +39,9 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 			@Override
 			public boolean on(Element elem) {
 				if ("DefaultMatcher".equals(elem.getTagName())){
-					mRet[0] = parserDefaultMatcher(elp, elem);
+					mRet[0] = parserDefaultMatcher(elem);
 				}else if ("IndicatorMatcher".equals(elem.getTagName())){
-					mRet[0] = parserIndicatorMatcher(elp, elem);
+					mRet[0] = parserIndicatorMatcher(elem);
 				}
 				return mRet[0] != null;
 			}
@@ -48,50 +50,27 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		return mRet[0];
 	}
 	
-	public List<Integer> asIntArray(ELParser elp, String str){
-		String[] arr = str.replaceAll(" ", "").split(",");
-		if (!arr[0].isEmpty()){
-			List<Integer> ret = new ArrayList<Integer>();
-			for (String item : arr){
-				Integer retVal = XmlUtil.getInt(item, elp, null);
-				if (retVal != null){
-					ret.add(retVal);
-				}
-			}
-			return ret;
-		}
-		return null;
-	}
 	
-	public List<String> asStringArray(String str){
-		String[] arr = str.replaceAll(" ", "").split(",");
-		if (!arr[0].isEmpty()){
-			List<String> ret = new ArrayList<String>();
-			for (String item : arr){
-				ret.add(item);
-			}
-			return ret;
-		}
-		return null;
-	}
-	
-	
-	private FormatterMatcher parserIndicatorMatcher(ELParser elp, Element matcher) {
+	private FormatterMatcher parserIndicatorMatcher(Element matcher) {
 		String rows = matcher.getAttribute("rows");
 		String cols = matcher.getAttribute("cols");
-		return new IndicatorMatcher(asStringArray(rows), asIntArray(elp, cols));
+		return new IndicatorMatcher(
+				XmlUtil.toStringList(rows, elp),
+				XmlUtil.toIntList(cols, elp));
 	}
 
-	private FormatterMatcher parserDefaultMatcher(ELParser elp, Element matcher) {
+	private FormatterMatcher parserDefaultMatcher(Element matcher) {
 		String rows = matcher.getAttribute("rows");
 		String cols = matcher.getAttribute("cols");
-		return new DefaultMatcher(asIntArray(elp, rows), asIntArray(elp, cols));
+		return new DefaultMatcher(
+				XmlUtil.toIntList(rows, elp), 
+				XmlUtil.toIntList(cols, elp));
 	}
 
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) {
 		
-		if (!"formatter".equals(e.getTagName())){
+		if (!Schema.isFormatter(e)){
 			return false;
 		}
 		elp = new ELParser(component);

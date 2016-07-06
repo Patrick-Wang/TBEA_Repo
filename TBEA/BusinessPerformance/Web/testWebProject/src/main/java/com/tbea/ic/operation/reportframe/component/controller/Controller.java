@@ -1,9 +1,20 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.component.controller;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.tbea.ic.operation.reportframe.XmlUtil.OnLoop;
+import com.tbea.ic.operation.reportframe.component.ComponentManager;
+import com.tbea.ic.operation.reportframe.interpreter.AbstractXmlComponent;
+import com.tbea.ic.operation.reportframe.interpreter.CallServiceXmlInterpreter;
+import com.tbea.ic.operation.reportframe.interpreter.ContextXmlInterpreter;
+import com.tbea.ic.operation.reportframe.interpreter.ExcelTemplateXmlInterpreter;
+import com.tbea.ic.operation.reportframe.interpreter.FormatterServerXmlInterpreter;
+import com.tbea.ic.operation.reportframe.interpreter.FormatterXmlInterpreter;
+import com.tbea.ic.operation.reportframe.interpreter.ListXmlInterpreter;
+import com.tbea.ic.operation.reportframe.interpreter.ResponseXmlInterpreter;
+import com.tbea.ic.operation.reportframe.interpreter.XmlInterpreter;
+import com.tbea.ic.operation.reportframe.util.XmlUtil;
+import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
 
 public class Controller extends AbstractXmlComponent {

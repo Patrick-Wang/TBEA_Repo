@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.component.controller;
 
 import java.sql.Date;
 import java.util.Enumeration;
@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONArray;
 
 import com.tbea.ic.operation.common.EasyCalendar;
 
@@ -18,20 +20,31 @@ public class ControllerRequest {
 			this.val = val;
 		}
 		
-		public String getString(){
-			return (String) val;
+		
+		public JSONArray asJsonArray(){
+			if (val instanceof JSONArray){
+				return (JSONArray) val;
+			}
+			if (val instanceof String){
+				return JSONArray.fromObject((String)val);
+			}
+			return null;
 		}
 		
-		public EasyCalendar getCalendar(){
+		public EasyCalendar asCalendar(){
 			return new EasyCalendar(Date.valueOf((String) val));
 		}
 
-		public Integer getInt(){
+		public Integer asInt(){
 			return Integer.valueOf((String) val);
 		}
 		
-		public Map getMap(){
+		public Map asMap(){
 			return (Map) val;
+		}
+		
+		public String asString(){
+			return val.toString();
 		}
 		
 		public String toString(){

@@ -60,13 +60,14 @@ module xnyzb {
 
         interface Option extends framework.basic.PluginOption {
             tb:string;
+            title:string;
         }
 
         class EntryView extends framework.basic.EntryPluginView {
             static ins = new EntryView();
             private mData:Util.ServResp;
             private mAjaxUpdate:Util.Ajax = new Util.Ajax("xnyzbEntry.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("../xnyzb/entry/save.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("xnyzbDoEntry.do", false);
             private mAjaxSubmit:Util.Ajax = new Util.Ajax("../xnyzb/entry/submit.do", false);
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;
@@ -85,15 +86,15 @@ module xnyzb {
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([]);
-                    for (var j = 2; j < allData[i].length; ++j) {
+                    for (var j = 0; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
-                        submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
+                        submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
                     }
                 }
                 this.mAjaxSave.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType
+                    compId: 903
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("保存 成功", ()=>{
@@ -158,7 +159,7 @@ module xnyzb {
                 framework.router
 					.fromEp(this)
 					.to(framework.basic.endpoint.FRAME_ID)
-					.send(framework.basic.FrameEvent.FE_REGISTER, "新能源周报");
+					.send(framework.basic.FrameEvent.FE_REGISTER, opt.title);
                 this.mDStart="2016-1-1";
                 $("#dstart").val(2016 + "-" + 1 + "-" + 1);
                 $("#dstart").datepicker({

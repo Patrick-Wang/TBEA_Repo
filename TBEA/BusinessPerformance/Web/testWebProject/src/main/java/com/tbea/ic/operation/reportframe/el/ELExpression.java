@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.reportframe;
+package com.tbea.ic.operation.reportframe.el;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -9,9 +9,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import com.tbea.ic.operation.reportframe.ELParser.ObjectLoader;
+import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
+import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
 
-class ELExpression{
+public class ELExpression{
 	static final Pattern objPattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*");   
 	int start;
 	int end;
@@ -35,22 +36,21 @@ class ELExpression{
 		return end;
 	}
 	
-	private Object getProperty(Object obj, String method){
-		Method md = null;
+	private Method getMethod(Object obj, String name){
 		try {
-			if (method.equals("size")){
-				md = obj.getClass().getMethod(method);
-				return md.invoke(obj);
-			}else if (obj instanceof ControllerRequest){
-				ControllerRequest request = (ControllerRequest) obj;
-				return request.getParameter(method);
-			}else{
-				md = obj.getClass().getMethod("get" + method.substring(0, 1).toUpperCase() + method.substring(1));
-				return md.invoke(obj);
-			}
-		} catch (NoSuchMethodException | SecurityException e) {
+			return obj.getClass().getMethod(name);
+		} catch (NoSuchMethodException e) {
+			//e.printStackTrace();
+		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private Object Invoke(Object obj, Method md){
+		try {
+			return md.invoke(obj);
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,6 +62,24 @@ class ELExpression{
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	private Object getProperty(Object obj, String propName){
+		Object propValue = null;
+		if (obj instanceof ControllerRequest){
+			ControllerRequest request = (ControllerRequest) obj;
+ 			propValue = request.getParameter(propName);
+		}else{
+			Method md = getMethod(obj, propName);
+			if (null == md){
+				md = getMethod(obj, "get" + propName.substring(0, 1).toUpperCase() + propName.substring(1));
+			}
+			
+			if (null != md){
+				propValue = Invoke(obj, md);
+			}
+		}
+		return propValue;
 	}
 	
 	private boolean isNumber(Object ob){

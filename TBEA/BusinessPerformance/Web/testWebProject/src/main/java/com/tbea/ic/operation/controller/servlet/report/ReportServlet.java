@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.EasyCalendar;
-import com.tbea.ic.operation.reportframe.ComponentManager;
-import com.tbea.ic.operation.reportframe.Context;
-import com.tbea.ic.operation.reportframe.ControllerRequest;
+import com.tbea.ic.operation.reportframe.component.ComponentManager;
+import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
+import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.service.report.TransactionProxy;
 
 @Controller
@@ -33,7 +33,7 @@ public class ReportServlet {
 	public ModelAndView ssoLogin(HttpServletRequest request,
 			HttpServletResponse response,
 			@PathVariable("controllor") String controllor) {
-		com.tbea.ic.operation.reportframe.Controller controller = compMgr.getController(controllor);
+		com.tbea.ic.operation.reportframe.component.controller.Controller controller = compMgr.getController(controllor);
 		if (null != controller){
 			Context context = new Context();
 			context.put("request", new ControllerRequest(request));
@@ -41,7 +41,7 @@ public class ReportServlet {
 			context.put("time", new EasyCalendar());
 			context.put("localDB", entityManager);
 			context.put("modelAndView", entityManager);
-			context.put("transactionManager", new com.tbea.ic.operation.reportframe.Transaction(){
+			context.put("transactionManager", new com.tbea.ic.operation.reportframe.component.service.Transaction(){
 				@Override
 				public void run(Runnable runnable) {
 					trProxy.invokeTransactionManager(runnable);
@@ -49,7 +49,7 @@ public class ReportServlet {
 			});
 			
 			controller.run(context);
-			return (ModelAndView) context.get(com.tbea.ic.operation.reportframe.Controller.MODEL_AND_VIEW);
+			return (ModelAndView) context.get(com.tbea.ic.operation.reportframe.component.controller.Controller.MODEL_AND_VIEW);
 		}
 		return null;
 	}
