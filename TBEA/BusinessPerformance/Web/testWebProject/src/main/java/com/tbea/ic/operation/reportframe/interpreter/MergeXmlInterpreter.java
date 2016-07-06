@@ -91,7 +91,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				ret = "" + sql.getValue();
 				break;
 			case TypeUtil.STRING:
-			case TypeUtil.DATE:
+			case TypeUtil.SQLDATE:
 				ret = "'" + sql.getValue() + "'";
 				break;
 			}
@@ -110,7 +110,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				}
 				break;
 			case TypeUtil.STRING:
-			case TypeUtil.DATE:
+			case TypeUtil.SQLDATE:
 				String s = row.getString(sql.getRef());
 				if (!s.isEmpty()){
 					ret = "'" + s + "'";

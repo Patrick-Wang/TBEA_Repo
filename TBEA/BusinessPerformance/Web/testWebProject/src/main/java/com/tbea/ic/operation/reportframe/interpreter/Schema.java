@@ -13,7 +13,7 @@ public class Schema {
 	static final String TAG_SQL = "sql";
 	static final String TAG_TABLE = "table";
 	static final String TAG_MERGE = "merge";
-	
+	static final String TAG_CALL = "call";
 	public static boolean isCallService(Element e){
 		return TAG_CALLSERVICE.equals(e.getTagName());
 	}
@@ -52,5 +52,9 @@ public class Schema {
 	
 	public static boolean isMerge(Element e){
 		return TAG_MERGE.equals(e.getTagName());
+	}
+	
+	public static boolean isCall(Element e){
+		return TAG_CALL.equals(e.getTagName());
 	}
 }

@@ -6,6 +6,7 @@ import org.w3c.dom.NodeList;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.interpreter.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.interpreter.CallServiceXmlInterpreter;
+import com.tbea.ic.operation.reportframe.interpreter.CallXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ContextXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ExcelTemplateXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.FormatterServerXmlInterpreter;
@@ -32,7 +33,8 @@ public class Controller extends AbstractXmlComponent {
 			new ResponseXmlInterpreter(),
 			new ContextXmlInterpreter(),
 			new CallServiceXmlInterpreter(),
-			new ListXmlInterpreter()
+			new ListXmlInterpreter(),
+			new CallXmlInterpreter()
 	};
 	
 	

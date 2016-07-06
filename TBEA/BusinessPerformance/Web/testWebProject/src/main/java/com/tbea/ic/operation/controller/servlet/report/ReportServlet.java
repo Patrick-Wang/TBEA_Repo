@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
+import com.tbea.ic.operation.reportframe.component.controller.ControllerSession;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.report.TransactionProxy;
 
 @Controller
@@ -29,6 +31,9 @@ public class ReportServlet {
 	@Autowired
 	TransactionProxy trProxy;
 	
+	@Autowired
+	ExtendAuthorityService extendAuthService;
+	
 	@RequestMapping(value = "{controllor}.do")
 	public ModelAndView ssoLogin(HttpServletRequest request,
 			HttpServletResponse response,
@@ -41,6 +46,9 @@ public class ReportServlet {
 			context.put("time", new EasyCalendar());
 			context.put("localDB", entityManager);
 			context.put("modelAndView", entityManager);
+			context.put("EAServ", extendAuthService);
+			context.put("session", new ControllerSession(request.getSession()));
+			
 			context.put("transactionManager", new com.tbea.ic.operation.reportframe.component.service.Transaction(){
 				@Override
 				public void run(Runnable runnable) {

@@ -77,8 +77,8 @@ public class SessionManager implements HttpSessionListener {
 	
 	public static Account getAccount(HttpSession session) {
 		if (null != session) {
-			if (null != session.getAttribute("_account")) {
-				return (Account) session.getAttribute("_account");
+			if (null != session.getAttribute("account")) {
+				return (Account) session.getAttribute("account");
 			}
 		}
 		return null;
@@ -86,7 +86,7 @@ public class SessionManager implements HttpSessionListener {
 	
 	public static void setAccount(HttpSession session, Account account) {
 		if (null != session) {
-			session.setAttribute("_account", account);
+			session.setAttribute("account", account);
 		}
 	}
 	

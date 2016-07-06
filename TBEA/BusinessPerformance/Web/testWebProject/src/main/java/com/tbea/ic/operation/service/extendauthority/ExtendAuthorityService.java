@@ -9,6 +9,8 @@ import com.tbea.ic.operation.model.entity.jygk.Account;
 public interface ExtendAuthorityService {
 
 	List<Company> getAuthedCompanies(Account account, AuthType yszkdialylookup);
+	
+	List<Company> getAuthedCompanies(Account account, Integer yszkdialylookup);
 
 	Boolean hasAuthority(Account account, AuthType authType);
 

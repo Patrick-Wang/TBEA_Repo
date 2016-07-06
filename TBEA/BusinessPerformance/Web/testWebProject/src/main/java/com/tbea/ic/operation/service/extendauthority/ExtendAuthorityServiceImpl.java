@@ -42,6 +42,16 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 		return comps;
 	}
 	
+	private List<Company> getAuthedCompaniesInternal(Account account,
+			Integer authType){
+		List<Company> comps = new ArrayList<Company>();
+		List<ExtendAuthority> auths = extendAuthDao.getAuthority(account, authType);
+		for (int i = 0; i < auths.size(); ++i){
+			comps.add(companyManager.getBMDBOrganization().getCompany(auths.get(i).getDwxx().getId()));
+		}
+		return comps;
+	}
+	
 	@Override
 	public List<Company> getAuthedCompanies(Account account,
 			AuthType authType) {
@@ -55,6 +65,21 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 			compsMap.put(authType.ordinal(), getAuthedCompaniesInternal(account ,authType));
 		}
 		return compsMap.get(authType.ordinal());
+	}
+	
+	@Override
+	public List<Company> getAuthedCompanies(Account account,
+			Integer authType) {
+		Map<Integer, List<Company>> compsMap = cacheAuth.get(account.getId());
+		if (null == compsMap){
+			compsMap = new HashMap<Integer, List<Company>>();
+			cacheAuth.put(account.getId(), compsMap);
+		}
+
+		if (!compsMap.containsKey(authType)){
+			compsMap.put(authType, getAuthedCompaniesInternal(account ,authType));
+		}
+		return compsMap.get(authType);
 	}
 	
 	@Override
