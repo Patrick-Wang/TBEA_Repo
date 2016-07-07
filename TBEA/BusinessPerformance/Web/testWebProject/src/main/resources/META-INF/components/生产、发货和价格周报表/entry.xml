@@ -106,18 +106,15 @@
 			<data>${serv.result}</data>
 		</response>
 	</controller>
-	<controller id="xnychEntryJsp">		
-		<call id="xnyzbAuthComps" object="${EAServ}" method="getAuthedCompanies">
-			<param type="object">${session.account}</param>
+	
+	<controller id="xnychEntryJsp">
+		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
 			<param type="int">11</param>
 		</call>
-		<call object="${companySelection.topOnly}" method="setCompanies">
-			<param type="object">${xnyzbAuthComps}</param>
-		</call>
-		
+
 		<response type="jsp" name="xnyzb/xnyzbEntry"> 
 			<map key="date" value="${time.current.format}"/>
-			<map map="${companySelection.asMap}"/>
+			<map map="${authCompMap}"/>
 		</response>
 	</controller>
 </components>

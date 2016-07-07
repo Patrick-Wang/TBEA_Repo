@@ -1,5 +1,9 @@
 package com.tbea.ic.operation.controller.servlet.report;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.EasyCalendar;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerSession;
@@ -35,6 +41,10 @@ public class ReportServlet {
 	@Autowired
 	ExtendAuthorityService extendAuthService;
 	
+	public static interface AuthManager{
+		Map<String, Object> getAuthedCompanies(int authType);
+	}
+	
 	@RequestMapping(value = "{controllor}.do")
 	public ModelAndView ssoLogin(HttpServletRequest request,
 			HttpServletResponse response,
@@ -47,14 +57,24 @@ public class ReportServlet {
 			context.put("time", new EasyCalendar());
 			context.put("localDB", entityManager);
 			context.put("modelAndView", entityManager);
-			context.put("EAServ", extendAuthService);
 			context.put("session", new ControllerSession(request.getSession()));
-			context.put("companySelection", new CompanySelection());
 			context.put("transactionManager", new com.tbea.ic.operation.reportframe.component.service.Transaction(){
 				@Override
 				public void run(Runnable runnable) {
 					trProxy.invokeTransactionManager(runnable);
 				}
+			});
+			context.put("authManager", new AuthManager(){
+
+				@Override
+				public Map<String, Object> getAuthedCompanies(int authType) {
+					List<Company> comps = extendAuthService.getAuthedCompanies(SessionManager.getAccount(request.getSession()), authType);
+					CompanySelection compSel = new CompanySelection(true, comps);
+					Map<String, Object> map = new HashMap<String, Object>();
+					compSel.select(map);
+					return map;
+				}
+				
 			});
 			
 			controller.run(context);

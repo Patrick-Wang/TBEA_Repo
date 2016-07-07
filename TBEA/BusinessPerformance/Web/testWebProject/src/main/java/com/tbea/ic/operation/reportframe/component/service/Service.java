@@ -4,6 +4,7 @@ import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.interpreter.AbstractXmlComponent;
+import com.tbea.ic.operation.reportframe.interpreter.CallXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ContextXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ListXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.MergeXmlInterpreter;
@@ -24,7 +25,9 @@ public class Service extends AbstractXmlComponent implements Runnable {
 			new ListXmlInterpreter(), 
 			new TableXmlInterpreter(),
 			new ContextXmlInterpreter(),
-			new MergeXmlInterpreter()};
+			new MergeXmlInterpreter(),
+			new CallXmlInterpreter()
+	};
 
 
 

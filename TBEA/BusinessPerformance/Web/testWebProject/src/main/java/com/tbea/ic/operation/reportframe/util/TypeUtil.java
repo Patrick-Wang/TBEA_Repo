@@ -27,4 +27,20 @@ public class TypeUtil {
 		}
 		return STRING;
 	}
+	
+	public static boolean isInt(Class<?> cls){
+		return cls.isAssignableFrom(Integer.class) || cls.getName().equals("int");
+	}
+	
+	public static boolean isDouble(Class<?> cls){
+		return cls.isAssignableFrom(Double.class) || cls.getName().equals("double");
+	}
+	
+	public static boolean isString(Class<?> cls){
+		return cls.isAssignableFrom(String.class);
+	}
+	
+	public static boolean instanceOf(Object obj, Class<?> cls2){
+		return obj.getClass().isAssignableFrom(cls2);
+	}
 }
