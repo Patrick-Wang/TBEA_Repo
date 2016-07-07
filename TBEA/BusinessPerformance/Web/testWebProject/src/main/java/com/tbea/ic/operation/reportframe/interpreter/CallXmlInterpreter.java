@@ -19,7 +19,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 	private void checkUnmatchedMethod(List<Method> mdList, int index, int tp, Object paramObj){
 		for (int i = mdList.size() - 1; i >= 0; --i){
 			if (mdList.get(i).getParameterCount() > index){
-				System.out.println(mdList.get(i).getParameterTypes()[index].getName());
+				//System.out.println(mdList.get(i).getParameterTypes()[index].getName());
 				switch (tp){
 				case TypeUtil.DOUBLE:
 					if (!TypeUtil.isDouble(mdList.get(i).getParameterTypes()[index])){
