@@ -13,7 +13,8 @@ $(document).ready(function(){
             .send(framework.basic.FrameEvent.FE_INIT_EVENT,{
                 tb: "table",
                 host: "xnyzb",
-                tbarea:"tbarea"
+                tbarea:"tbarea",
+                title:"${title}"
             });
 });
 </script>

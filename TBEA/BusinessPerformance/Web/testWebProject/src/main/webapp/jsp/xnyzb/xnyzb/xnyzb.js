@@ -44,27 +44,44 @@ var xnyzb;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("xnyzb.do", false);
+                this.mAjax = new Util.Ajax("xnyzbUpdate.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.xnyzb;
             };
-            ShowView.prototype.pluginGetExportUrl = function (date, compType) {
+            ShowView.prototype.onEvent = function (e) {
+                switch (e.id) {
+                    case framework.basic.FrameEvent.FE_UPDATE:
+                        {
+                            this.pluginUpdate(e.data.dStart, e.data.dEnd, e.data.compType);
+                        }
+                        return;
+                    case framework.basic.FrameEvent.FE_GET_EXPORTURL:
+                        {
+                            return this.pluginGetExportUrl(e.data.dStart, e.data.dEnd, e.data.compType);
+                        }
+                    default:
+                        break;
+                }
+                return _super.prototype.onEvent.call(this, e);
+            };
+            ShowView.prototype.pluginGetExportUrl = function (dStart, dEnd, compType) {
                 return "xnyzbExport.do?" + Util.Ajax.toUrlParam({
-                    dStart: this.mDStart,
-                    dEnd: this.mDEnd
+                    dStart: dStart,
+                    dEnd: dEnd,
+                    compId: compType
                 });
             };
             ShowView.prototype.option = function () {
                 return this.mOpt;
             };
-            ShowView.prototype.pluginUpdate = function (date, compType) {
+            ShowView.prototype.pluginUpdate = function (dStart, dEnd, compType) {
                 var _this = this;
-                this.mDt = date;
                 this.mCompType = compType;
                 this.mAjax.get({
-                    dStart: this.mDStart,
-                    dEnd: this.mDEnd
+                    dStart: dStart,
+                    dEnd: dEnd,
+                    compId: compType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -78,56 +95,10 @@ var xnyzb;
                 this.updateTable();
             };
             ShowView.prototype.init = function (opt) {
-                var _this = this;
                 framework.router
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "新能源周报");
-                this.mDStart = "2016-1-1";
-                $("#dstart").val(2016 + "/" + 1 + "/" + 1);
-                $("#dstart").datepicker({
-                    //            numberOfMonths:1,//显示几个月
-                    //            showButtonPanel:true,//是否显示按钮面板
-                    dateFormat: 'yy/mm/dd',
-                    //            clearText:"清除",//清除日期的按钮名称
-                    //            closeText:"关闭",//关闭选择框的按钮名称
-                    yearSuffix: '年',
-                    showMonthAfterYear: true,
-                    defaultDate: 2016 + "/" + 1 + "/" + 1,
-                    //            minDate:'2011-03-05',//最小日期
-                    maxDate: 2019 + "/" + 1 + "/" + 1,
-                    monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                    dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-                    dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                    dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
-                    onSelect: function (selectedDate) {
-                        var d = new Date(selectedDate);
-                        _this.mDStart = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
-                    }
-                });
-                $("#dEnd").val(2016 + "/" + 1 + "/" + 1);
-                this.mDEnd = "2016-1-1";
-                $("#dEnd").datepicker({
-                    //            numberOfMonths:1,//显示几个月
-                    //            showButtonPanel:true,//是否显示按钮面板
-                    dateFormat: 'yy/mm/dd',
-                    //            clearText:"清除",//清除日期的按钮名称
-                    //            closeText:"关闭",//关闭选择框的按钮名称
-                    yearSuffix: '年',
-                    showMonthAfterYear: true,
-                    defaultDate: 2016 + "/" + 1 + "/" + 1,
-                    //            minDate:'2011-03-05',//最小日期
-                    maxDate: 2019 + "/" + 1 + "/" + 1,
-                    monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                    dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-                    dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                    dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
-                    onSelect: function (selectedDate) {
-                        var d = new Date(selectedDate);
-                        _this.mDEnd = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
-                    }
-                });
-                $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
+                    .send(framework.basic.FrameEvent.FE_REGISTER, opt.title);
             };
             ShowView.prototype.getMonth = function () {
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));

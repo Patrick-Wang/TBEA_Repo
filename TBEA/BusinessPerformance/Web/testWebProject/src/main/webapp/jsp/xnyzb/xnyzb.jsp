@@ -174,8 +174,10 @@ th.ui-th-ltr {
 	<Table id="frameTable" align="center" style="width:1200px">
 		<tr>
 			<td>
-				<input id="dstart" style="float: left;width: 100px;margin-right:10px"></div>
-				<input id="dEnd" style="float: left;width: 100px;margin-right:10px"></div>
+				<div style="float: left;margin-right:5px;padding-top:3px">开始日期: </div>
+				<input id="dstart" style="float: left;width: 100px;margin-right:10px">
+				<div style="float: left;margin-right:5px;padding-top:3px">截至日期: </div>
+				<input id="dEnd" style="float: left;width: 100px;margin-right:10px">
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
@@ -200,13 +202,15 @@ th.ui-th-ltr {
 
 
     $(document).ready(function () {
+		var dt = new Date(Date.parse('${date}'.replace(/-/g, '/')));
 		framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
 			type: "type",
 			comp:"compid",
-			comps : JSON.parse('[{"data":{"id":142,"value":"新能源公司"},"parent":null,"subNodes":[]}]'),
+			comps : JSON.parse('${nodeData}'),
 			date: {
-				month: "${month}".length == 0 ? undefined : parseInt("${month}"),
-				year: ${year}
+				month: dt.getMonth() + 1,
+				year: dt.getFullYear(),
+				day: dt.getDate()
 			}
 		});
         $("#exportButton")

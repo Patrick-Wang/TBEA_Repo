@@ -173,9 +173,9 @@ th.ui-th-ltr {
 		<tr>
 			<td>
 				<div style="float: left;margin-right:5px;padding-top:3px">开始日期: </div>
-				<input id="dstart" style="float: left;width: 100px;margin-right:10px"></input>
+				<input id="dstart" style="float: left;width: 100px;margin-right:10px">
 				<div style="float: left;margin-right:5px;padding-top:3px">截至日期: </div>
-				<input id="dEnd" style="float: left;width: 100px;margin-right:10px"></input>
+				<input id="dEnd" style="float: left;width: 100px;margin-right:10px">
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="查询" style="float: left; width: 80px; margin-left: 10px;"

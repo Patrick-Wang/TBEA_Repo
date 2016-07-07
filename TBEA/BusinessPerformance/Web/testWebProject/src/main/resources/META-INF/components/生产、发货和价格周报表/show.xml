@@ -17,6 +17,7 @@
 				jygk_dwxx DWXX
 			where 
 				ZB.xmgs = DWXX.id and 
+				ZB.xmgs = ${compId} and
 				ZB.ksrq &gt;= ${dStart.date} and 
 				ZB.jzrq &lt;= ${dEnd.date}
 			order by 
@@ -50,8 +51,12 @@
 	
 	<controller id="xnyzbUpdate">
 
-		<context key="dStart" value="${request.dStart.calendar.monday}"/>
-		<context key="dEnd" value="${request.dEnd.calendar.sunday}"/>
+		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
+		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
+		<call id="compId" object="${compTypeIdMapper}" method="getId">
+			<param type="int">${request.compId.asInt}</param>
+		</call>
+		<context key="compId" value="${compId}"/>
 		
 		<callservice id="servXnyzb"/>
 		
@@ -112,6 +117,11 @@
 
 		<context key="dStart" value="${request.dStart.calendar}"/>
 		<context key="dEnd" value="${request.dEnd.calendar}"/>
+		<call id="compId" object="${compTypeIdMapper}" method="getId">
+			<param type="int">${request.compId.asInt}</param>
+		</call>
+		<context key="compId" value="${compId}"/>
+		
 		<callservice id="xnyzbServ"/>
 		<context key="tbs" value="${result.matrixNoIds}"/>
 		

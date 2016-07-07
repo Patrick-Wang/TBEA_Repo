@@ -38,6 +38,10 @@
 	<controller id="xnyzbSave">
 		<context key="data" value="${request.data.asJsonArray}"></context>
 		<context key="compId" value="${request.compId.asInt}"></context>
+		<call id="compId" object="${compTypeIdMapper}" method="getId">
+			<param type="int">${request.compId.asInt}</param>
+		</call>
+		<context key="compId" value="${compId}"/>
 		<callservice id="servXnyzbSave"/>
 		<response type="json">
 			<errorCode>0</errorCode>
