@@ -1,5 +1,5 @@
 ﻿<components>
-	<service id="xnyzbServ" transaction="transactionManager" db="localDB">
+	<service id="servXnyzb" transaction="transactionManager" db="localDB">
 		
 		<sql id="xnyzb">
 			select 
@@ -47,12 +47,13 @@
 
 		<context key="result" value="${result}"/>
 	</service>
-	<controller id="xnyzb">
+	
+	<controller id="xnyzbUpdate">
 
 		<context key="dStart" value="${request.dStart.calendar.monday}"/>
 		<context key="dEnd" value="${request.dEnd.calendar.sunday}"/>
 		
-		<callservice id="xnyzbServ"/>
+		<callservice id="servXnyzb"/>
 		
 		<formatter id="data">
 			<NumberFormatter reservedCount="1">

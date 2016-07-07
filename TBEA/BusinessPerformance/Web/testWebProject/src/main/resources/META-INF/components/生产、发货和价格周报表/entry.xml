@@ -1,5 +1,5 @@
 ﻿<components>
-	<service id="xnyzbEntryServ" transaction="transactionManager" db="localDB">
+	<service id="servXnyzbCpzl" transaction="transactionManager" db="localDB">
 		
 		<sql id="cpzlSql">
 			select 
@@ -8,7 +8,7 @@
 			from 
 				xnyzb_cpzl
 			where 
-				xmgs = 903
+				xmgs = ${compId}
 		</sql>
 		
 		<list id="cpzl" type="string" sql="cpzlSql" value="1" />
@@ -16,7 +16,7 @@
 		<context key="cpzl" value="${cpzl}"/>
 	</service>
 	
-	<service id="xnyzbDoEntryServ" transaction="transactionManager" db="localDB">
+	<service id="servXnyzbSave" transaction="transactionManager" db="localDB">
 		<merge data="${data}" id="0" table="xnyzb">
 			<where>
 				<id type="int" ref="0"/>
@@ -30,27 +30,32 @@
 				<bzscl type="double" ref="6"/>
 				<bzfhl type="double" ref="7"/>
 				<bzxsjg type="string" ref="8"/>
+				<zt type="int" value="4"/>
 			</set>
 		</merge>
 	</service>
-	
-	<controller id="xnyzbDoEntry">
+
+	<controller id="xnyzbSave">
 		<context key="data" value="${request.data.asJsonArray}"></context>
 		<context key="compId" value="${request.compId.asInt}"></context>
-		<callservice id="xnyzbDoEntryServ"/>
+		<callservice id="servXnyzbSave"/>
 		<response type="json">
 			<errorCode>0</errorCode>
 			<message>OK</message>
 		</response>
 	</controller>
 	
-	<controller id="xnyzbEntry">
+	<controller id="xnyzbEntryUpdate">
 
 		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
 		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
+		<call id="compId" object="${compTypeIdMapper}" method="getId">
+			<param type="int">${request.compId.asInt}</param>
+		</call>
+		<context key="compId" value="${compId}"/>
 		
-		<callservice id="xnyzbServ"/>
-		<callservice id="xnyzbEntryServ"/>
+		<callservice id="servXnyzb"/>
+		<callservice id="servXnyzbCpzl"/>
 		
 		
 		<formatter id="data">

@@ -5,4 +5,14 @@
 			<map map="${request.parameters.asMap}"/>
 		</response>
 	</controller>
+	<controller id="authController">		
+		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
+			<param type="int">${request.auth.asInt}</param>
+		</call>
+		<response type="jsp" name="${request.jsp.asString}"> 
+			<map key="date" value="${time.current.format}"/>
+			<map map="${request.parameters.asMap}"/>
+			<map map="${authCompMap}"/>
+		</response>
+	</controller>
 </components>

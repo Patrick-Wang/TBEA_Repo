@@ -13,7 +13,8 @@ CREATE TABLE [dbo].[xnyzb](
 	[cpxh] [varchar](50),
 	[bzscl] [int],
 	[bzfhl] [int],
-	[bzxsjg] [varchar](50)
+	[bzxsjg] [varchar](50),
+	[zt] [int] NOT NULL
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -44,4 +45,4 @@ INSERT [dbo].[xnyzb_cpzl] ([id], [xmgs], [cpzl])VALUES (3, 903, N'APF（单位�
 INSERT [dbo].[xnyzb_cpzl] ([id], [xmgs], [cpzl])VALUES (4, 905, N'硅片（单位：万片）')
 INSERT [dbo].[xnyzb_cpzl] ([id], [xmgs], [cpzl])VALUES (5, 905, N'硅棒（单位：kg）')
 INSERT [dbo].[xnyzb_cpzl] ([id], [xmgs], [cpzl])VALUES (6, 911, N'SVG（单位：MVar）')
-SET IDENTITY_INSERT [dbo].[identifier_cwgb_sz] OFF      
+SET IDENTITY_INSERT [dbo].[xnyzb_cpzl] OFF      

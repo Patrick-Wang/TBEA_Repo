@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
@@ -30,6 +33,9 @@ import com.tbea.ic.operation.service.report.TransactionProxy;
 @RequestMapping(value = "report")
 public class ReportServlet {
 
+	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	ComponentManager compMgr = new ComponentManager();
 
 	@PersistenceContext(unitName = "localDB")
@@ -45,6 +51,11 @@ public class ReportServlet {
 		Map<String, Object> getAuthedCompanies(int authType);
 	}
 	
+	public static interface CompanyTypeIdMapper{
+		int getId(int type);
+		int getType(int id);
+	}
+	
 	@RequestMapping(value = "{controllor}.do")
 	public ModelAndView ssoLogin(HttpServletRequest request,
 			HttpServletResponse response,
@@ -56,7 +67,6 @@ public class ReportServlet {
 			context.put("response", response);
 			context.put("time", new EasyCalendar());
 			context.put("localDB", entityManager);
-			context.put("modelAndView", entityManager);
 			context.put("session", new ControllerSession(request.getSession()));
 			context.put("transactionManager", new com.tbea.ic.operation.reportframe.component.service.Transaction(){
 				@Override
@@ -64,6 +74,7 @@ public class ReportServlet {
 					trProxy.invokeTransactionManager(runnable);
 				}
 			});
+			
 			context.put("authManager", new AuthManager(){
 
 				@Override
@@ -73,6 +84,20 @@ public class ReportServlet {
 					Map<String, Object> map = new HashMap<String, Object>();
 					compSel.select(map);
 					return map;
+				}
+				
+			});
+			
+			context.put("compTypeIdMapper", new CompanyTypeIdMapper(){
+
+				@Override
+				public int getId(int type) {
+					return companyManager.getBMDBOrganization().getCompany(CompanyType.valueOf(type)).getId();
+				}
+
+				@Override
+				public int getType(int id) {
+					return companyManager.getBMDBOrganization().getCompany(id).getType().ordinal();
 				}
 				
 			});

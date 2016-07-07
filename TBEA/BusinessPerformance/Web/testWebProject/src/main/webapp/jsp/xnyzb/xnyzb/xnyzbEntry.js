@@ -68,9 +68,9 @@ var xnyzb;
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("xnyzbEntry.do", false);
-                this.mAjaxSave = new Util.Ajax("xnyzbDoEntry.do", false);
-                this.mAjaxSubmit = new Util.Ajax("../xnyzb/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("xnyzbEntryUpdate.do", false);
+                this.mAjaxSave = new Util.Ajax("xnyzbSave.do", false);
+                this.mAjaxSubmit = new Util.Ajax("xnyzbSubmit.do", false);
             }
             EntryView.prototype.getId = function () {
                 return pluginEntry.xnyzb;

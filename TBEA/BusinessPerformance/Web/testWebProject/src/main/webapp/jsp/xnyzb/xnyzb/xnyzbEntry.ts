@@ -66,9 +66,9 @@ module xnyzb {
         class EntryView extends framework.basic.EntryPluginView {
             static ins = new EntryView();
             private mData:Util.ServResp;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("xnyzbEntry.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("xnyzbDoEntry.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../xnyzb/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("xnyzbEntryUpdate.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("xnyzbSave.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("xnyzbSubmit.do", false);
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;
             getId():number {
