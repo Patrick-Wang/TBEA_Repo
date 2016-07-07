@@ -38,7 +38,12 @@ public class Service extends AbstractXmlComponent implements Runnable {
 	@Override
 	protected void onRun() {
 		Transaction tr = getTransactionManager();
-		tr.run(this);
+		if (null != tr){
+			tr.run(this);
+		}else{
+			run();
+		}
+		
 	}
 
 	@Override
