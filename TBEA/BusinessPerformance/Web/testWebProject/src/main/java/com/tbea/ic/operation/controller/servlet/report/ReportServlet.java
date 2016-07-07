@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
@@ -48,7 +49,7 @@ public class ReportServlet {
 			context.put("modelAndView", entityManager);
 			context.put("EAServ", extendAuthService);
 			context.put("session", new ControllerSession(request.getSession()));
-			
+			context.put("companySelection", new CompanySelection());
 			context.put("transactionManager", new com.tbea.ic.operation.reportframe.component.service.Transaction(){
 				@Override
 				public void run(Runnable runnable) {

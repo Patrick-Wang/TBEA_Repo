@@ -202,7 +202,7 @@ th.ui-th-ltr {
 			framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
 				type: "type",
 				comp:"compid",
-				comps : JSON.parse(' [{"data":{"id":905,"value":"特变电工新疆新能源股份有限公司硅片事业部"},"parent":null,"subNodes":[]}]'),
+				comps : JSON.parse('${nodeData}'),
 				date: {
 					month: dt.getMonth() + 1,
 					year: dt.getFullYear(),

@@ -23,6 +23,35 @@ public class CompanySelection {
 	private int firstCompany = 0;
 	private CompanyType firstCompanyType;
 	
+	public CompanySelection(){
+		this.mFilter = new Filter(){
+			public boolean keep(Company comp){
+				return true;
+			}
+
+			@Override
+			public boolean keepGroup(Company comp) {
+				return true;
+			}
+		};
+	}
+	
+	public CompanySelection topOnly(){
+		this.mTopOnly = true;
+		return this;
+	}
+	
+	public CompanySelection setCompanies(List<Company> comps){
+		this.mTopComps = removeNullObject(comps);
+		return this;
+	}
+	
+	public Map<String, Object> asMap(){
+		Map<String, Object> map = new HashMap<String, Object>();
+		select(map);
+		return map;
+	}
+	
 	private List<Company> removeNullObject(List<Company> topComps){
 		for (int i = topComps.size() - 1; i >= 0; --i){
 			if (topComps.get(i) == null){

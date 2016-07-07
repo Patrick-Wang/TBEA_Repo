@@ -14,6 +14,33 @@ import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
 public class CallXmlInterpreter implements XmlInterpreter {
 	
+	private boolean kindOfEqual(Class<?> c1, Class c2){
+		if (null == c1){
+			return false;
+		}
+		System.out.println(c1.getName());
+		if (c1.getName().equals(c2.getName())){
+			return true;
+		}
+		return kindOfEqual(c1.getSuperclass(), c2);
+	}
+	
+	public boolean kindOf(Class<?> c1, Class c2){
+		if (c1 != null){
+			if (!kindOfEqual(c1, c2)){
+				Class<?>[] cls = c1.getInterfaces();
+				for (Class<?> cl : cls){
+					if (kindOfEqual(cl, c2)){
+						return true;
+					}
+				}
+			}else{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) {
 		
@@ -60,7 +87,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 						case TypeUtil.OBJECT:
 							if (object != null){
 								System.out.println(object.getClass().getName());
-								if (!mdList.get(i).getParameterTypes()[count].getName().equals(object.getClass().getName())){
+								if (!kindOf(object.getClass(), mdList.get(i).getParameterTypes()[count])){
 									mdList.remove(i);
 								};
 							}
@@ -94,7 +121,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 			}
 			
 		});
-		
+		if (e.hasAttribute("id")){
 		Object result = null;
 		try {
 			
@@ -127,6 +154,35 @@ public class CallXmlInterpreter implements XmlInterpreter {
 		
 		String id = e.getAttribute("id");
 		component.local(id, result);
+		}else{
+			try {
+				
+				Method md = mdList.get(0);
+				switch(params.size()){
+				case 0:
+					md.invoke(obj, params.get(0));
+					break;
+				case 1:
+					md.invoke(obj, params.get(0));
+					break;
+				case 2:
+					md.invoke(obj, params.get(0), params.get(1));
+					break;
+				case 3:
+					md.invoke(obj, params.get(0), params.get(1), params.get(2));
+					break;
+				case 4:
+					md.invoke(obj, params.get(0), params.get(1), params.get(2), params.get(3));
+					break;
+				case 5:
+					md.invoke(obj, params.get(0), params.get(1), params.get(2), params.get(3), params.get(4));
+					break;
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+		}
 		return true;
 	}
 }
