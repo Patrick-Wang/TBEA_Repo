@@ -53,11 +53,7 @@
 
 		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
 		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
-		<call id="compId" object="${compTypeIdMapper}" method="getId">
-			<param type="int">${request.compId.asInt}</param>
-		</call>
-		<context key="compId" value="${compId}"/>
-		
+		<callservice id="servCompTypeToId"/>
 		<callservice id="servXnyzb"/>
 		
 		<formatter id="data">
@@ -115,12 +111,9 @@
 	
 	<controller id="xnyzbExport">
 
-		<context key="dStart" value="${request.dStart.calendar}"/>
-		<context key="dEnd" value="${request.dEnd.calendar}"/>
-		<call id="compId" object="${compTypeIdMapper}" method="getId">
-			<param type="int">${request.compId.asInt}</param>
-		</call>
-		<context key="compId" value="${compId}"/>
+		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
+		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
+		<callservice id="servCompTypeToId"/>
 		
 		<callservice id="xnyzbServ"/>
 		<context key="tbs" value="${result.matrixNoIds}"/>
