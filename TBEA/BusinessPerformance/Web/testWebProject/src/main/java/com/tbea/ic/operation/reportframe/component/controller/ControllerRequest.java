@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONArray;
@@ -60,7 +61,10 @@ public class ControllerRequest {
 	}
 
 
-
+	public ServletContext getServletContext(){
+		return req.getSession().getServletContext();
+	}
+	
 	public Paramater getParameter(String name){
 		if ("parameters".equals(name)){
 			Map mp = new HashMap();
