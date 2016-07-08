@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,22 +24,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.POIUtils;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.VirtualJYZBOrganization;
-import com.tbea.ic.operation.common.excel.AllCompanysNCSheetType;
+import com.tbea.ic.operation.common.excel.CompanysNCSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
 import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
-import com.tbea.ic.operation.common.formatter.v2.core.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
 import com.tbea.ic.operation.common.formatter.v2.core.IndicatorMatcher;
-import com.tbea.ic.operation.common.formatter.v2.core.MergeRegion;
 import com.tbea.ic.operation.common.formatter.v2.core.Offset;
 import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
 import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
@@ -93,7 +93,6 @@ public class NCZBController {
 				new CompanyTypeFilter(
 						gszbService.getCompanies(SessionManager.getAccount(request.getSession(false))), 
 						org));
-
 		compSel.select(map, 2);
 		return new ModelAndView("hzb_companysNC", map);
 	}
@@ -126,7 +125,7 @@ public class NCZBController {
 		
 		
 		Offset offset = new Offset(1, 0);
-		ExcelTemplate template = ExcelTemplate.createAllCompanysNCTemplate(AllCompanysNCSheetType.AllCompanysNC);
+		ExcelTemplate template = ExcelTemplate.createCompanysNCTemplate(CompanysNCSheetType.AllCompanysNC);
 		FormatterServer fs = new FormatterServer();
 		fs.handlerBuilder()
 			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
@@ -164,6 +163,61 @@ public class NCZBController {
 		}
 		JSONArray ja = JSONArray.fromObject(ncGszbData);
 		return ja.toString().replace("null", "\"--\"").getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "CompanysNC_export.do")
+	public void getCompanysNC_export(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Date d = DateSelection.getDate(request);
+		
+		
+		Organization org = companyManager.getVirtualJYZBOrganization();
+		CompanySelection compSel = new CompanySelection(
+				false,
+				org.getCompany(CompanyType.GFGS).getSubCompanies(), 
+				new CompanyTypeFilter(
+						gszbService.getCompanies(SessionManager.getAccount(request.getSession(false))), 
+						org));
+		
+		List<DataNode> nodes = compSel.select(2);
+		ExcelTemplate template = ExcelTemplate.createCompanysNCTemplate(CompanysNCSheetType.JYDWCompanysNC);
+		int i = 0;
+		for (DataNode node : nodes){
+			for (DataNode sub : node.getSubNodes()){
+				CompanyType cm = CompanyType.valueOf(Integer.valueOf(sub.getData().getId()));
+				List<String[]> ncGszbData = nczbService.getGSZB(d, VirtualJYZBOrganization.getJydw(companyManager, cm));
+				if (VirtualJYZBOrganization.isSbdcy(cm) || VirtualJYZBOrganization.isSyb(cm)){
+					ncGszbData = removeJydwzb(ncGszbData);
+				}
+				
+				template.getSheet().getRow(i).getCell(0).setCellValue(sub.getData().getValue());
+				
+				Offset offset = new Offset(i + 1, 0);
+				FormatterServer fs = new FormatterServer();
+				fs.handlerBuilder()
+					.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
+					.add(new PercentFormatter(new IndicatorMatcher(new String[]{"三项费用率(%)"}, null), 1))
+					.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{3, 6}), 1))
+					.add(new NumberFormatter(0))
+					.add(new ExcelHeaderFormatter(DefaultMatcher.LEFT1_MATCHER, template, offset))
+					.to(FormatterServer.GROP_EXCEL)
+					.add(new ExcelOffsetFormatter(template, offset))
+					.to(FormatterServer.GROP_EXCEL)
+					.server()
+					.formatArray(ncGszbData);
+				i = i + 1 + ncGszbData.size() + 2;
+				template.getSheet().createRow(i - 1);
+				template.getSheet().createRow(i - 2);
+				HSSFRow rowFrom = template.getSheet().getRow(0);
+				HSSFRow rowTo = template.getSheet().createRow(i);
+				POIUtils.copyRow(template.getWorkbook(), rowFrom, rowTo, true);
+				template.getSheet().addMergedRegion(new CellRangeAddress(i, i, 0, rowFrom.getLastCellNum() - 1));
+			}
+		}
+		
+		template.setRowHeight(0, template.getSheet().getLastRowNum(), 16.5f);
+		template.setColumnWidth(0, template.getSheet().getRow(0).getLastCellNum() - 1, 6.5f);
+		template.write(response, template.getSheetName().replaceAll("\\(", "_").replaceAll("\\)", "") + ".xls");
 	}
 
 }

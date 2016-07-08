@@ -33,12 +33,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hzbNC_zbhz.jsp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hzbNC_zbhz.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/hzbNC_zbhz.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5893224">
+            <state vertical-scroll-proportion="-5.125">
               <caret line="213" column="12" selection-start-line="213" selection-start-column="12" selection-end-line="213" selection-end-column="12" />
               <folding>
+                <element signature="n#style#0;n#form#0;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#form#0;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hzb_companysNC.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jsp/hzb_companysNC.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.839779">
+              <caret line="65" column="9" selection-start-line="65" selection-start-column="9" selection-end-line="65" selection-end-column="9" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hzb_companysNC.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/hzb_companysNC.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-17.714285">
+              <caret line="216" column="69" selection-start-line="216" selection-start-column="69" selection-end-line="216" selection-end-column="69" />
+              <folding>
+                <element signature="n#style#0;n#form#0;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#input#0;n#form#0;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
@@ -58,8 +84,8 @@
       <file leaf-file-name="hzbNC_zbhz.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/hzbNC_zbhz.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.7">
-              <caret line="48" column="14" selection-start-line="48" selection-start-column="14" selection-end-line="48" selection-end-column="14" />
+            <state vertical-scroll-proportion="-4.9">
+              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="57" selection-end-column="9" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -103,18 +129,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="xnyzb.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzb.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="36" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="xnyzbEntry.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzbEntry.ts">
           <provider selected="true" editor-type-id="text-editor">
@@ -143,8 +157,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmxApprove.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqkdef.ts" />
         <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqk.ts" />
         <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqkEntry.ts" />
         <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqkApprove.ts" />
@@ -194,6 +206,8 @@
         <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzbEntry.ts" />
         <option value="$PROJECT_DIR$/jsp/hzbNC_zbhz.ts" />
         <option value="$PROJECT_DIR$/jsp/hzbNC_zbhz.jsp" />
+        <option value="$PROJECT_DIR$/jsp/hzb_companysNC.jsp" />
+        <option value="$PROJECT_DIR$/jsp/hzb_companysNC.ts" />
       </list>
     </option>
   </component>
@@ -460,21 +474,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicShow.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.75">
-          <caret line="7" column="52" selection-start-line="7" selection-start-column="52" selection-end-line="7" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/sbdscqyqk/xfcpqy/xfcpqy.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.857142">
-          <caret line="16" column="15" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/wlyddqk/wlyddqkEntry.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.785714">
@@ -870,22 +869,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/hzbNC_zbhz.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.125">
+          <caret line="213" column="12" selection-start-line="213" selection-start-column="12" selection-end-line="213" selection-end-column="12" />
+          <folding>
+            <element signature="n#style#0;n#form#0;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#form#0;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/hzb_companysNC.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.714285">
+          <caret line="216" column="69" selection-start-line="216" selection-start-column="69" selection-end-line="216" selection-end-column="69" />
+          <folding>
+            <element signature="n#style#0;n#form#0;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#form#0;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/hzbNC_zbhz.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.7">
-          <caret line="48" column="14" selection-start-line="48" selection-start-column="14" selection-end-line="48" selection-end-column="14" />
+        <state vertical-scroll-proportion="-4.9">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="57" selection-end-column="9" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/hzbNC_zbhz.jsp">
+    <entry file="file://$PROJECT_DIR$/jsp/hzb_companysNC.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5893224">
-          <caret line="213" column="12" selection-start-line="213" selection-start-column="12" selection-end-line="213" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.839779">
+          <caret line="65" column="9" selection-start-line="65" selection-start-column="9" selection-end-line="65" selection-end-column="9" />
           <folding>
-            <element signature="n#style#0;n#input#0;n#form#0;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>

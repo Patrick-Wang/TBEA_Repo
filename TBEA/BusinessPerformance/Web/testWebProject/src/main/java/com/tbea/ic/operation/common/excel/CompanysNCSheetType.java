@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.common.excel;
 
-public enum AllCompanysNCSheetType{
+public enum CompanysNCSheetType{
 	AllCompanysNC,
+	JYDWCompanysNC,
 	END
 }

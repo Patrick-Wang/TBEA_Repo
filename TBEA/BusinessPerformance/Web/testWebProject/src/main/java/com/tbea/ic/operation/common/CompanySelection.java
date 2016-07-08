@@ -131,6 +131,10 @@ public class CompanySelection {
 		return nodes;
 	}
 	
+	public List<DataNode> select(int depth) {
+		return select(this.mTopComps, depth);
+	}
+	
 	private List<DataNode> select(List<Company> topComps, int depth) {
 		List<DataNode> nodes = new ArrayList<DataNode>();
 		if (0 != depth) {

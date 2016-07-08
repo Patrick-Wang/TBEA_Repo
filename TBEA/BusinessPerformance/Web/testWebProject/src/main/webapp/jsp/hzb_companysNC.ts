@@ -61,10 +61,16 @@ module hzb_companysNC {
                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, { year: this.mOpt.date.year, month: month }, this.mOpt.dateId);
                this.mDateSelector.select(this.mOpt.date);
                this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
-               //this.updateUI();
+               this.updateUI();
            } 
         }
-               
+
+        exportExcel(){
+            var date : Util.Date = this.mDateSelector.getDate();
+            $("#export")[0].action = "CompanysNC_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year});
+            $("#export")[0].submit();
+        }
+
         public updateUI() {
             var date = this.mDateSelector.getDate();
             var compType = this.mCompanySelector.getCompany();

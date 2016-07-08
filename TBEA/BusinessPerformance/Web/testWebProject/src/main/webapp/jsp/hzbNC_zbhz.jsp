@@ -221,7 +221,6 @@ th.ui-th-ltr {
 						   role="button" aria-disabled="false">
 				</form>
 			</td>
-
 		</tr>
 	</Table>
 	<%@include file="loading.jsp"%>
