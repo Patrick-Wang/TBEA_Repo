@@ -21,70 +21,45 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="xfcpqyEntry.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/sbdscqyqk/xfcpqy/xfcpqyEntry.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="214" column="70" selection-start-line="214" selection-start-column="32" selection-end-line="214" selection-end-column="70" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="xfcpqy.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/sbdscqyqk/xfcpqy/xfcpqy.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="160" column="22" selection-start-line="160" selection-start-column="22" selection-end-line="160" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="xnyzb.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzb.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.857142">
-              <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#1;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <marker date="1467879768833" expanded="true" signature="5950:6469" placeholder="{...}" />
-                <marker date="1467879768833" expanded="true" signature="6118:6292" placeholder="{&quot;type&quot;: &quot;type&quot;...}" />
-                <marker date="1467879768833" expanded="true" signature="6283:6288" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="xnyzbEntry.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzbEntry.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.25">
-              <caret line="174" column="16" selection-start-line="174" selection-start-column="16" selection-end-line="177" selection-end-column="84" />
-              <folding>
-                <element signature="n#style#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#1;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#3;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#2;n#td#0;n#tr#0;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#1;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="xnyzbEntry.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="xnyzbEntry.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzbEntry.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5925926">
-              <caret line="140" column="34" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
+            <state vertical-scroll-proportion="-52.566666">
+              <caret line="137" column="58" selection-start-line="137" selection-start-column="58" selection-end-line="137" selection-end-column="58" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hzbNC_zbhz.jsp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jsp/hzbNC_zbhz.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5893224">
+              <caret line="213" column="12" selection-start-line="213" selection-start-column="12" selection-end-line="213" selection-end-column="12" />
+              <folding>
+                <element signature="n#style#0;n#input#0;n#form#0;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hzb_companys.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/hzb_companys.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-14.25">
+              <caret line="229" column="13" selection-start-line="219" selection-start-column="8" selection-end-line="229" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hzbNC_zbhz.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/hzbNC_zbhz.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="2.7">
+              <caret line="48" column="14" selection-start-line="48" selection-start-column="14" selection-end-line="48" selection-end-column="14" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -120,7 +95,7 @@
         <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzb.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="104" column="77" selection-start-line="104" selection-start-column="77" selection-end-line="104" selection-end-column="77" />
+              <caret line="27" column="26" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -168,8 +143,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/xlacptjjg/xlacptjjgEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqacptjjg/byqacptjjgEntry.ts" />
         <option value="$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmxApprove.jsp" />
         <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqkdef.ts" />
         <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqk.ts" />
@@ -219,6 +192,8 @@
         <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzb.jsp" />
         <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzb.ts" />
         <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzbEntry.ts" />
+        <option value="$PROJECT_DIR$/jsp/hzbNC_zbhz.ts" />
+        <option value="$PROJECT_DIR$/jsp/hzbNC_zbhz.jsp" />
       </list>
     </option>
   </component>
@@ -314,46 +289,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xnyzb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xnyzb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xnyzb" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -461,7 +396,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22496831" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -525,34 +460,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/jsp/dzwzgb/dzclcb/dzclcb.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="64" selection-start-line="32" selection-start-column="64" selection-end-line="32" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/sbdscqyqk/xfscqy/xfscqyEntry.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicApprove.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicEntry.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.75">
-          <caret line="7" column="72" selection-start-line="7" selection-start-column="72" selection-end-line="7" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicShow.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.75">
@@ -928,7 +835,7 @@
     <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzb.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="104" column="77" selection-start-line="104" selection-start-column="77" selection-end-line="104" selection-end-column="77" />
+          <caret line="27" column="26" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -937,10 +844,48 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzbEntry.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5925926">
-          <caret line="140" column="34" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
+        <state vertical-scroll-proportion="-52.566666">
+          <caret line="137" column="58" selection-start-line="137" selection-start-column="58" selection-end-line="137" selection-end-column="58" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/hzb_companys.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.25">
+          <caret line="229" column="13" selection-start-line="219" selection-start-column="8" selection-end-line="229" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/hzb_companys.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4198895">
+          <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="115" selection-end-column="37" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/hzbNC_zbhz.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.7">
+          <caret line="48" column="14" selection-start-line="48" selection-start-column="14" selection-end-line="48" selection-end-column="14" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/hzbNC_zbhz.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5893224">
+          <caret line="213" column="12" selection-start-line="213" selection-start-column="12" selection-end-line="213" selection-end-column="12" />
+          <folding>
+            <element signature="n#style#0;n#input#0;n#form#0;n#td#0;n#tr#2;n#Table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

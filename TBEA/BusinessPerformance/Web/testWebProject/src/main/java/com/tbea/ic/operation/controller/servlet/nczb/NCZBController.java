@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.nczb;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.Calendar;
@@ -27,6 +28,21 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.VirtualJYZBOrganization;
+import com.tbea.ic.operation.common.excel.AllCompanysNCSheetType;
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
+import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
+import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
+import com.tbea.ic.operation.common.formatter.v2.core.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
+import com.tbea.ic.operation.common.formatter.v2.core.IndicatorMatcher;
+import com.tbea.ic.operation.common.formatter.v2.core.MergeRegion;
+import com.tbea.ic.operation.common.formatter.v2.core.Offset;
+import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
+import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
+import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderFormatter;
+import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.controller.servlet.ydzb.CompanyTypeFilter;
 import com.tbea.ic.operation.service.nczb.NCZBService;
@@ -95,6 +111,37 @@ public class NCZBController {
 		return data;
 	}
 	
+	
+	
+	
+	
+	
+	@RequestMapping(value = "AllCompanysNC_overview_export.do")
+	public @ResponseBody void getAllCompanysNC_overview_export(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+
+		Date d = DateSelection.getDate(request);
+		List<String[]> ncGszbData = nczbService.getGSZB(d, BMDepartmentDB.getJydw(companyManager));
+		removeJydwzb(ncGszbData);
+		
+		
+		Offset offset = new Offset(1, 0);
+		ExcelTemplate template = ExcelTemplate.createAllCompanysNCTemplate(AllCompanysNCSheetType.AllCompanysNC);
+		FormatterServer fs = new FormatterServer();
+		fs.handlerBuilder()
+			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
+			.add(new PercentFormatter(new IndicatorMatcher(new String[]{"三项费用率(%)"}, null), 1))
+			.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{3, 6}), 1))
+			.add(new NumberFormatter(0))
+			.add(new ExcelHeaderFormatter(DefaultMatcher.LEFT1_MATCHER, template, offset))
+			.to(FormatterServer.GROP_EXCEL)
+			.add(new ExcelOffsetFormatter(template, offset))
+			.to(FormatterServer.GROP_EXCEL)
+			.server()
+			.formatArray(ncGszbData);
+
+		template.write(response, template.getSheetName().replaceAll("\\(", "_").replaceAll("\\)", "") + ".xls");
+	}
 	
 	@RequestMapping(value = "AllCompanysNC_overview_update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getAllCompanysNC_overview_update(HttpServletRequest request,

@@ -46,11 +46,17 @@ module hzbNC_zbhz{
                 {year: year - 3, month : 1}, 
                 {year: year, month: month},
                 dateId);
-            this.updateTable();
-            //this.updateUI();
+            //this.updateTable();
+            this.updateUI();
 
         }
-                
+
+        exportExcel(){
+            var date : Util.Date = this.mDs.getDate();
+            $("#export")[0].action = "AllCompanysNC_overview_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year});
+            $("#export")[0].submit();
+        }
+
         public updateUI() {
             var date : Util.Date = this.mDs.getDate();
             this.mDataSet.get({ month: date.month, year: date.year, type : this.mType })

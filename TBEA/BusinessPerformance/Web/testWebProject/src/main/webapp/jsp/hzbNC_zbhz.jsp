@@ -16,7 +16,7 @@
 	href="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
 <script type="text/javascript"
 	src="../jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
-<!-- jquery ui blue -->
+<!-- jquery ui blue --> 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="../jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
 <script src="../jsp/jqgrid/js/jquery-ui-custom.min.js"
@@ -211,7 +211,18 @@ th.ui-th-ltr {
 				<div id="table"></div>
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<form id="export" method="post" style="padding-top: 5px">
+					<input id="exportButton" type="button" value="导出"
+						   style="width:90px;"
+						   onclick="instance.exportExcel($('h1').text())"
+						   class="ui-button ui-widget ui-state-default ui-corner-all"
+						   role="button" aria-disabled="false">
+				</form>
+			</td>
 
+		</tr>
 	</Table>
 	<%@include file="loading.jsp"%>
 	<script src="../jsp/www2/js/echarts-plain-2-0-0.js"></script>

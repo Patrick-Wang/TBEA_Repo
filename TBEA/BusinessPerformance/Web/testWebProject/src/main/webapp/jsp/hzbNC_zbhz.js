@@ -46,8 +46,13 @@ var hzbNC_zbhz;
         View.prototype.init = function (tableId, dateId, month, year) {
             this.mTableId = tableId;
             this.mDs = new Util.DateSelector({ year: year - 3, month: 1 }, { year: year, month: month }, dateId);
-            this.updateTable();
-            //this.updateUI();
+            //this.updateTable();
+            this.updateUI();
+        };
+        View.prototype.exportExcel = function () {
+            var date = this.mDs.getDate();
+            $("#export")[0].action = "AllCompanysNC_overview_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year });
+            $("#export")[0].submit();
         };
         View.prototype.updateUI = function () {
             var _this = this;

@@ -169,7 +169,7 @@ public class ExcelTemplate {
 	{
 		try {
 			resPath = new URI(Convertor.class
-					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/";
+					.getClassLoader().getResource("").getPath()).getPath().substring(1) + "META-INF/templates/";
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
@@ -194,6 +194,8 @@ public class ExcelTemplate {
 	private static String pathCwyjsfTemplate = resPath + "cwyjsf_template.xls";
 	private static String pathCwgbjyxxjlTemplate = resPath + "cwgbjyxxjl_template.xls";
 	private static String pathCpzlqkTemplate = resPath + "cpzlqk_template.xls";
+	private static String pathAllCompanysNCTemplate = resPath + "allCompanysNC_template.xls";
+	
 	
 	private static ExcelTemplate createTemplate(String path, int index, int size)
 			throws FileNotFoundException, IOException {
@@ -316,6 +318,12 @@ public class ExcelTemplate {
 	public static ExcelTemplate createCpzlqkTemplate(CpzlqkSheetType type) throws IOException {
 		return createTemplate(pathCpzlqkTemplate, type.ordinal(),
 				CpzlqkSheetType.END.ordinal());
+	}
+
+	public static ExcelTemplate createAllCompanysNCTemplate(
+			AllCompanysNCSheetType type) throws IOException {
+		return createTemplate(pathAllCompanysNCTemplate, type.ordinal(),
+				AllCompanysNCSheetType.END.ordinal());
 	}
 
 }
