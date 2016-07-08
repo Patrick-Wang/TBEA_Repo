@@ -25,11 +25,11 @@
 				<ksrq type="date" ref="1"/>
 				<jzrq type="date" ref="2"/>
 				<xmgs type="int" value="${compId}"/>
-				<cpzl type="string" ref="4"/>
-				<cpxh type="string" ref="5"/>
-				<bzscl type="double" ref="6"/>
-				<bzfhl type="double" ref="7"/>
-				<bzxsjg type="string" ref="8"/>
+				<cpzl type="string" ref="3"/>
+				<cpxh type="string" ref="4"/>
+				<bzscl type="double" ref="5"/>
+				<bzfhl type="double" ref="6"/>
+				<bzxsjg type="string" ref="7"/>
 				<zt type="int" value="${zt}"/>
 			</set>
 		</merge>
@@ -55,7 +55,7 @@
 	
 	<controller id="xnyzbSave">
 		<context key="data" value="${request.data.asJsonArray}"></context>
-		<context key="zt" value="3"></context>
+		<context key="zt" value="${3}"></context>
 		<callservice id="servCompTypeToId"/>
 		<callservice id="servXnyzbEntry"/>
 		<response type="json">
@@ -95,10 +95,6 @@
 							<type>date</type>
 						</item>
 					</sub>
-				</item>
-				<item>
-					<name>项目公司</name>
-					<type>hidden</type>
 				</item>
 				<item>
 					<name>产品种类</name>

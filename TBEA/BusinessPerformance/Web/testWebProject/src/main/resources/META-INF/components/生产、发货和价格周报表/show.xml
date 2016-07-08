@@ -27,7 +27,6 @@
 		<list id="ids" type="int" sql="xnyzb" value="0" />
 		<list id="ks" type="string" sql="xnyzb" value="1" />
 		<list id="jz" type="string" sql="xnyzb" value="2" />
-		<list id="xmgs" type="string" sql="xnyzb" value="3" />
 		<list id="cpzl" type="string" sql="xnyzb" value="4" />
 		<list id="cpxh" type="string" sql="xnyzb" value="5" />
 		<list id="bzscl" type="double" sql="xnyzb" value="6" />
@@ -38,7 +37,6 @@
 		<table id="result" rowIds="ids">
 			<col list="ks"/>
 			<col list="jz"/>
-			<col list="xmgs"/>
 			<col list="cpzl"/>
 			<col list="cpxh"/>
 			<col list="bzscl"/> 
@@ -80,10 +78,6 @@
 							<type>date</type>
 						</item>
 					</sub>
-				</item>
-				<item>
-					<name>项目公司</name>
-					<type>text</type>
 				</item>
 				<item>
 					<name>产品种类</name>
