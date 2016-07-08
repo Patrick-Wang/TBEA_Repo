@@ -136,7 +136,7 @@ var xnyzb;
                     for (var j = 0; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
                         submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j]) {
+                        if (j != 3 && "" == submitData[i][j]) {
                             Util.MessageBox.tip("有空内容 无法提交");
                             return;
                         }

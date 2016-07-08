@@ -80,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="xnyzbEntry.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="xnyzbEntry.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzbEntry.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="186" column="75" selection-start-line="186" selection-start-column="70" selection-end-line="186" selection-end-column="75" />
+            <state vertical-scroll-proportion="0.5925926">
+              <caret line="140" column="34" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -116,10 +116,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="xnyzb.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="xnyzb.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzb.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40515652">
+            <state vertical-scroll-proportion="0.0">
               <caret line="104" column="77" selection-start-line="104" selection-start-column="77" selection-end-line="104" selection-end-column="77" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -213,12 +213,12 @@
         <option value="$PROJECT_DIR$/jsp/wgcpqk/yclbfqk/yclbfqk.ts" />
         <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzbEntry.jsp" />
         <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzbEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzbEntry.ts" />
         <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzb.ts" />
         <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzbEntry.jsp" />
         <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzb.jsp" />
         <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzb.jsp" />
         <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzb.ts" />
+        <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzbEntry.ts" />
       </list>
     </option>
   </component>
@@ -461,7 +461,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22496831" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -905,16 +905,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzbEntry.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="186" column="75" selection-start-line="186" selection-start-column="70" selection-end-line="186" selection-end-column="75" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzbEntry.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.857142">
@@ -937,8 +927,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzb.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40515652">
+        <state vertical-scroll-proportion="0.0">
           <caret line="104" column="77" selection-start-line="104" selection-start-column="77" selection-end-line="104" selection-end-column="77" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzbEntry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5925926">
+          <caret line="140" column="34" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

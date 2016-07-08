@@ -16,7 +16,7 @@
 		<context key="cpzl" value="${cpzl}"/>
 	</service>
 	
-	<service id="servXnyzbSave" transaction="transactionManager" db="localDB">
+	<service id="servXnyzbEntry" transaction="transactionManager" db="localDB">
 		<merge data="${data}" id="0" table="xnyzb">
 			<where>
 				<id type="int" ref="0"/>
@@ -30,7 +30,7 @@
 				<bzscl type="double" ref="6"/>
 				<bzfhl type="double" ref="7"/>
 				<bzxsjg type="string" ref="8"/>
-				<zt type="int" value="4"/>
+				<zt type="int" value="${zt}"/>
 			</set>
 		</merge>
 	</service>
@@ -42,10 +42,22 @@
 		<context key="compId" value="${compId}"/>
 	</service>
 	
+	<controller id="xnyzbSubmit">
+		<context key="data" value="${request.data.asJsonArray}"></context>
+		<context key="zt" value="4"></context>
+		<callservice id="servCompTypeToId"/>
+		<callservice id="servXnyzbEntry"/>
+		<response type="json">
+			<errorCode>0</errorCode>
+			<message>OK</message>
+		</response>
+	</controller>
+	
 	<controller id="xnyzbSave">
 		<context key="data" value="${request.data.asJsonArray}"></context>
+		<context key="zt" value="3"></context>
 		<callservice id="servCompTypeToId"/>
-		<callservice id="servXnyzbSave"/>
+		<callservice id="servXnyzbEntry"/>
 		<response type="json">
 			<errorCode>0</errorCode>
 			<message>OK</message>
