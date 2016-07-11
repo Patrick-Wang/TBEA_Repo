@@ -69,12 +69,12 @@
 	<div class="section">
 		<div class="thumb4">
 			<ul class="slides">
-				<c:if test="${JYAnalysisEntry}">
+<%-- 				<c:if test="${JYAnalysisEntry}">
 				<li data-thumb="asset/img/example/bar1.png"><a
 					href="../zzy_lrsj/zb.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>经营分析录入</strong></span></a>
 				</li>
-				</c:if>
+				</c:if> --%>
 				<li data-thumb="asset/img/example/bar1.png"><a
 					href="../dailyReport/yszk.do" target="_blank"><img
 						src="../images/charts/force.png"> <span><strong>应收账款日报录入</strong></span></a>

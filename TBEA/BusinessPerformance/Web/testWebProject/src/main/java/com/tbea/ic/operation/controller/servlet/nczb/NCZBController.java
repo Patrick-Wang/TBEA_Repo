@@ -75,7 +75,7 @@ public class NCZBController {
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(),
 				true, false);
 		dateSel.select(map);
-		return new ModelAndView("hzbNC_zbhz", map);
+		return new ModelAndView("hzbNC_zbhz", map); 
 	}
 	
 	@RequestMapping(value = "CompanysNC.do", method = RequestMethod.GET)
@@ -129,7 +129,7 @@ public class NCZBController {
 		FormatterServer fs = new FormatterServer();
 		fs.handlerBuilder()
 			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
-			.add(new PercentFormatter(new IndicatorMatcher(new String[]{"三项费用率(%)"}, null), 1))
+			.add(new PercentFormatter(new IndicatorMatcher(new String[]{"三项费用率(%)", "净资产收益率(%)", "负债率"}, null), 1))
 			.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{3, 6}), 1))
 			.add(new NumberFormatter(0))
 			.add(new ExcelHeaderFormatter(DefaultMatcher.LEFT1_MATCHER, template, offset))
@@ -192,11 +192,11 @@ public class NCZBController {
 				
 				template.getSheet().getRow(i).getCell(0).setCellValue(sub.getData().getValue());
 				
-				Offset offset = new Offset(i + 1, 0);
+				Offset offset = new Offset(i + 2, 0);
 				FormatterServer fs = new FormatterServer();
 				fs.handlerBuilder()
 					.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
-					.add(new PercentFormatter(new IndicatorMatcher(new String[]{"三项费用率(%)"}, null), 1))
+					.add(new PercentFormatter(new IndicatorMatcher(new String[]{"三项费用率(%)", "净资产收益率(%)", "负债率"}, null), 1))
 					.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{3, 6}), 1))
 					.add(new NumberFormatter(0))
 					.add(new ExcelHeaderFormatter(DefaultMatcher.LEFT1_MATCHER, template, offset))
@@ -205,16 +205,20 @@ public class NCZBController {
 					.to(FormatterServer.GROP_EXCEL)
 					.server()
 					.formatArray(ncGszbData);
-				i = i + 1 + ncGszbData.size() + 2;
+				i = i + 2 + ncGszbData.size() + 2;
 				template.getSheet().createRow(i - 1);
 				template.getSheet().createRow(i - 2);
 				HSSFRow rowFrom = template.getSheet().getRow(0);
 				HSSFRow rowTo = template.getSheet().createRow(i);
 				POIUtils.copyRow(template.getWorkbook(), rowFrom, rowTo, true);
+				rowFrom = template.getSheet().getRow(1);
+				rowTo = template.getSheet().createRow(i + 1);
+				POIUtils.copyRow(template.getWorkbook(), rowFrom, rowTo, true);
 				template.getSheet().addMergedRegion(new CellRangeAddress(i, i, 0, rowFrom.getLastCellNum() - 1));
 			}
 		}
-		
+		template.getSheet().removeRow(template.getSheet().getRow(i));
+		template.getSheet().removeRow(template.getSheet().getRow(1 + i)); 
 		template.setRowHeight(0, template.getSheet().getLastRowNum(), 16.5f);
 		template.setColumnWidth(0, template.getSheet().getRow(0).getLastCellNum() - 1, 6.5f);
 		template.write(response, template.getSheetName().replaceAll("\\(", "_").replaceAll("\\)", "") + ".xls");
