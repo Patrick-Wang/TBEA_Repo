@@ -22,12 +22,14 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.reportframe.component.Component;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerSession;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
+import com.tbea.ic.operation.reportframe.component.service.Service;
+import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
-import com.tbea.ic.operation.service.report.TransactionProxy;
 
 @Controller
 @RequestMapping(value = "report")
@@ -38,11 +40,8 @@ public class ReportServlet {
 	
 	ComponentManager compMgr = new ComponentManager();
 
-	@PersistenceContext(unitName = "localDB")
-	EntityManager entityManager;
-	
 	@Autowired
-	TransactionProxy trProxy;
+	Transaction trProxy;
 	
 	@Autowired
 	ExtendAuthorityService extendAuthService;
@@ -63,18 +62,11 @@ public class ReportServlet {
 		com.tbea.ic.operation.reportframe.component.controller.Controller controller = compMgr.getController(controllor);
 		if (null != controller){
 			Context context = new Context();
-			context.put("request", new ControllerRequest(request));
-			context.put("response", response);
-			context.put("time", new EasyCalendar());
-			context.put("localDB", entityManager);
-			context.put("session", new ControllerSession(request.getSession()));
-			context.put("transactionManager", new com.tbea.ic.operation.reportframe.component.service.Transaction(){
-				@Override
-				public void run(Runnable runnable) {
-					trProxy.invokeTransactionManager(runnable);
-				}
-			});
-			
+			context.put(Component.REQUEST, new ControllerRequest(request));
+			context.put(Component.RESPONSE, response);
+			context.put(Component.CALENDAR, new EasyCalendar());
+			context.put(Component.SESSION, new ControllerSession(request.getSession()));
+			context.put("transactionManager", trProxy);
 			context.put("authManager", new AuthManager(){
 
 				@Override

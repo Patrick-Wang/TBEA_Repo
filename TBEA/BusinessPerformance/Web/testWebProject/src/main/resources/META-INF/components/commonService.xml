@@ -1,0 +1,8 @@
+﻿<components>
+	<service id="servCompTypeToId">
+		<call id="compId" object="${compTypeIdMapper}" method="getId">
+			<param type="int">${request.compId.asInt}</param>
+		</call>
+		<context key="compId" value="${compId}"/>
+	</service>
+</components>

@@ -54,7 +54,6 @@ var hzb_companysNC;
                 this.updateUI();
             }
         };
-        
         View.prototype.exportExcel = function () {
             var date = this.mDateSelector.getDate();
             $("#export")[0].action = "CompanysNC_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year });

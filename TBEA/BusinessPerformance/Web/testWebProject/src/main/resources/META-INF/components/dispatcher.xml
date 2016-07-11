@@ -1,7 +1,7 @@
 ﻿<components>
 	<controller id="controller">		
 		<response type="jsp" name="${request.jsp.asString}"> 
-			<map key="date" value="${time.current.format}"/>
+			<map key="date" value="${calendar.current.format}"/>
 			<map map="${request.parameters.asMap}"/>
 		</response>
 	</controller>
@@ -10,7 +10,7 @@
 			<param type="int">${request.auth.asInt}</param>
 		</call>
 		<response type="jsp" name="${request.jsp.asString}"> 
-			<map key="date" value="${time.current.format}"/>
+			<map key="date" value="${calendar.current.format}"/>
 			<map map="${request.parameters.asMap}"/>
 			<map map="${authCompMap}"/>
 		</response>

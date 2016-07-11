@@ -16,20 +16,45 @@ module xnyzb {
         class JQGridAssistantFactory {
 
             static  parseHeader(header:Util.Header): Node{
-                let node:Node = Node.create({name : header.name, align : TextAlign.Center});
+                let node:Node = null;
+                if ("date" == header.type){
+                    node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:false,isNumber:false,editType:"text", options:{
+                        dataInit: function (element) {
+                            $(element).datepicker({
+                                dateFormat: 'yy-mm-dd',
+                                onSelect: function (dateText, inst) {
+                                }
+                            });
+                        }
+                    }});
+                }else if ("text" == header.type){
+                    node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:false,isNumber:false,editType:"text"});
+                }else if ("hidden" == header.type){
+                    node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:false,isNumber:false,editType:"text", hidden:true});
+                }else if ("select" == header.type){
+                    node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:false,isNumber:false,editType: "select", options: { value: header.options }});
+                }else{
+                    node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:false});
+                }
+
                 if (header.sub != undefined) {
                     for (let i = 0; i < header.sub.length; ++i) {
-                        node.append(JQGridAssistantFactory.parseHeader(header.sub[i]));
+                        if (header.sub[i].type != 'hidden') {
+                            node.append(JQGridAssistantFactory.parseHeader(header.sub[i]));
+                        }
                     }
                 }
                 return node;
             }
 
+
             public static createTable(gridName:string, headers: Util.Header[]):JQTable.JQGridAssistant {
 
                 let nodes : Node[] = [];
                 for (let i= 0; i < headers.length; ++i){
-                    nodes.push(JQGridAssistantFactory.parseHeader(headers[i]))
+                    if (headers[i].type != 'hidden'){
+                        nodes.push(JQGridAssistantFactory.parseHeader(headers[i]))
+                    }
                 }
                 return new JQTable.JQGridAssistant(nodes, gridName);
             }
@@ -38,7 +63,7 @@ module xnyzb {
         class ShowView extends framework.basic.ShowPluginView {
             static ins = new ShowView();
             private mData:Util.ServResp;
-            private mAjax:Util.Ajax = new Util.Ajax("xnyzbUpdate.do", false);
+            private mAjax:Util.Ajax;
             private mDateSelector:Util.DateSelector;
             private mDt: string;
             private mCompType:Util.CompanyType;
@@ -99,6 +124,7 @@ module xnyzb {
             }
 
             public init(opt:Option):void {
+                this.mAjax = new Util.Ajax(opt.updateUrl, false)
                 framework.router
 					.fromEp(this)
 					.to(framework.basic.endpoint.FRAME_ID)
@@ -117,6 +143,7 @@ module xnyzb {
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
+                tableAssist.mergeTitle(0);
                 tableAssist.mergeRow(0);
                 tableAssist.mergeRow(1);
                 tableAssist.mergeRow(2);

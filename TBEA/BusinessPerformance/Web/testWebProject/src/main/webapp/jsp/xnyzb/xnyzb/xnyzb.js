@@ -23,10 +23,35 @@ var xnyzb;
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.parseHeader = function (header) {
-                var node = Node.create({ name: header.name, align: TextAlign.Center });
+                var node = null;
+                if ("date" == header.type) {
+                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false, isNumber: false, editType: "text", options: {
+                            dataInit: function (element) {
+                                $(element).datepicker({
+                                    dateFormat: 'yy-mm-dd',
+                                    onSelect: function (dateText, inst) {
+                                    }
+                                });
+                            }
+                        } });
+                }
+                else if ("text" == header.type) {
+                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false, isNumber: false, editType: "text" });
+                }
+                else if ("hidden" == header.type) {
+                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false, isNumber: false, editType: "text", hidden: true });
+                }
+                else if ("select" == header.type) {
+                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false, isNumber: false, editType: "select", options: { value: header.options } });
+                }
+                else {
+                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false });
+                }
                 if (header.sub != undefined) {
                     for (var i = 0; i < header.sub.length; ++i) {
-                        node.append(JQGridAssistantFactory.parseHeader(header.sub[i]));
+                        if (header.sub[i].type != 'hidden') {
+                            node.append(JQGridAssistantFactory.parseHeader(header.sub[i]));
+                        }
                     }
                 }
                 return node;
@@ -34,7 +59,9 @@ var xnyzb;
             JQGridAssistantFactory.createTable = function (gridName, headers) {
                 var nodes = [];
                 for (var i = 0; i < headers.length; ++i) {
-                    nodes.push(JQGridAssistantFactory.parseHeader(headers[i]));
+                    if (headers[i].type != 'hidden') {
+                        nodes.push(JQGridAssistantFactory.parseHeader(headers[i]));
+                    }
                 }
                 return new JQTable.JQGridAssistant(nodes, gridName);
             };
@@ -44,7 +71,6 @@ var xnyzb;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("xnyzbUpdate.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.xnyzb;
@@ -95,6 +121,7 @@ var xnyzb;
                 this.updateTable();
             };
             ShowView.prototype.init = function (opt) {
+                this.mAjax = new Util.Ajax(opt.updateUrl, false);
                 framework.router
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
@@ -111,6 +138,7 @@ var xnyzb;
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
+                tableAssist.mergeTitle(0);
                 tableAssist.mergeRow(0);
                 tableAssist.mergeRow(1);
                 tableAssist.mergeRow(2);

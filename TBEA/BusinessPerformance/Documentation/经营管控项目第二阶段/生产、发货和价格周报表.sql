@@ -42,7 +42,7 @@ INSERT [dbo].[xnyzb_cpzl] ([id], [xmgs], [cpzl])VALUES (0, 903, N'逆变器（�
 INSERT [dbo].[xnyzb_cpzl] ([id], [xmgs], [cpzl])VALUES (1, 903, N'汇流箱（单位：台）')
 INSERT [dbo].[xnyzb_cpzl] ([id], [xmgs], [cpzl])VALUES (2, 903, N'充电桩（单位：台）')
 INSERT [dbo].[xnyzb_cpzl] ([id], [xmgs], [cpzl])VALUES (3, 903, N'APF（单位：台）')
-INSERT [dbo].[xnyzb_cpzl] ([id], [xmgs], [cpzl])VALUES (4, 905, N'硅片（单位：万片）')
+INSERT [dbo].[xnyzb_cpzl] ([id], [xmgs], [cpzl])VALUES (4, 905, N'硅片（单位：万片）') 
 INSERT [dbo].[xnyzb_cpzl] ([id], [xmgs], [cpzl])VALUES (5, 905, N'硅棒（单位：kg）')
 INSERT [dbo].[xnyzb_cpzl] ([id], [xmgs], [cpzl])VALUES (6, 911, N'SVG（单位：MVar）')
 SET IDENTITY_INSERT [dbo].[xnyzb_cpzl] OFF      

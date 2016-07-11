@@ -1,5 +1,5 @@
 ﻿<components>
-	<service id="servXnyzb" transaction="transactionManager">
+	<service id="servXnyQyzb" transaction="transactionManager">
 		
 		<sql id="xnyzb">
 			select 
@@ -7,13 +7,14 @@
 				CONVERT(varchar(20), ZB.ksrq, 23) as startDate, 
 				CONVERT(varchar(20), ZB.jzrq, 23) as endDate, 
 				DWXX.name,
-				ZB.cpzl,
-				ZB.cpxh,
-				ZB.bzscl,
-				ZB.bzfhl,
-				ZB.bzxsjg
+				ZB.khmc,
+				ZB.cpmc,
+				CONVERT(varchar(20), ZB.ddrq, 23) as ddDate, 
+				ZB.qyl,
+				ZB.qydj,
+				ZB.qyje
 			from 
-				xnyzb ZB, 
+				xny_qyzb ZB, 
 				jygk_dwxx DWXX
 			where 
 				ZB.xmgs = DWXX.id and 
@@ -24,41 +25,44 @@
 				ZB.xmgs
 		</sql>
 		
-		<list id="ids" type="int" sql="xnyzb" value="0" />
-		<list id="ks" type="string" sql="xnyzb" value="1" />
-		<list id="jz" type="string" sql="xnyzb" value="2" />
-		<list id="xmgs" type="string" sql="xnyzb" value="3" />
-		<list id="cpzl" type="string" sql="xnyzb" value="4" />
-		<list id="cpxh" type="string" sql="xnyzb" value="5" />
-		<list id="bzscl" type="double" sql="xnyzb" value="6" />
-		<list id="bzfhl" type="double" sql="xnyzb" value="7" />
-		<list id="bzxsjg" type="string" sql="xnyzb" value="8" />
-		
+		<list id="ids" type="int" sql="xnyzb" value="0">2000</list>
+		<list id="ks" type="string" sql="xnyzb" value="1">合计</list>
+		<list id="jz" type="string" sql="xnyzb" value="2">合计</list>
+		<list id="xmgs" type="string" sql="xnyzb" value="3">合计</list>
+		<list id="khmc" type="string" sql="xnyzb" value="4">合计</list> 
+		<list id="cpmc" type="string" sql="xnyzb" value="5">合计</list>
+		<list id="ddrq" type="date" sql="xnyzb" value="6">合计</list>
+		<list id="qyl" type="double" sql="xnyzb" value="7"><item isNull="true"></item></list>
+		<list id="qydj" type="double" sql="xnyzb" value="8"><item isNull="true"></item></list>
+		<list id="qyje" type="double" sql="xnyzb" value="9"><item isNull="true"></item></list>
 		
 		<table id="result" rowIds="ids">
 			<col list="ks"/>
 			<col list="jz"/>
-			<col list="xmgs"/>
-			<col list="cpzl"/>
-			<col list="cpxh"/>
-			<col list="bzscl"/> 
-			<col list="bzfhl"/> 
-			<col list="bzxsjg"/>
+			<col list="khmc"/>
+			<col list="cpmc"/>
+			<col list="ddrq"/> 
+			<col list="qyl"/> 
+			<col list="qydj"/>
+			<col list="qyje"/>
+			<sumRow toId="2000">
+				<rangeRows>0, ${ids.size - 2}</rangeRows>
+			</sumRow>
 		</table>
 
 		<context key="result" value="${result}"/>
 	</service>
 	
-	<controller id="xnyzbUpdate">
+	<controller id="xnyQyzbUpdate">
 
 		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
 		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
 		<callservice id="servCompTypeToId"/>
-		<callservice id="servXnyzb"/>
+		<callservice id="servXnyQyzb"/>
 		
 		<formatter id="data">
 			<NumberFormatter reservedCount="1">
-				<DefaultMatcher cols="6,7"/>
+				<DefaultMatcher cols="7,8,9"/>
 			</NumberFormatter>
 		</formatter>
 
@@ -70,66 +74,54 @@
 			<header type="array">
 				<item>
 					<name>周期</name>
-					<sub type="array">
-						<item>
-							<name>开始</name>
-							<type>date</type>
-						</item>
-						<item>
-							<name>截止</name>
-							<type>date</type>
-						</item>
-					</sub>
+				</item>
+				<item>
+					<name>周期</name>
 				</item>
 				<item>
 					<name>项目公司</name>
-					<type>text</type>
+					<type>hidden</type>
 				</item>
 				<item>
-					<name>产品种类</name>
-					<type>text</type>
+					<name>客户名称</name>
 				</item>
 				<item>
-					<name>产品型号</name>
-					<type>text</type>
+					<name>产品名称</name>
 				</item>
 				<item>
-					<name>本周生产量</name>
+					<name>签订日期</name>
 				</item>
 				<item>
-					<name>本周发货量</name>
+					<name>签约量</name>
 				</item>
 				<item>
-					<name>本周销售价格</name>
-					<type>text</type>
+					<name>签约单价</name>
+				</item>
+				<item>
+					<name>签约金额</name>
 				</item>
 			</header>
-			<title>生产、发货和价格周报表</title>
 			<data>${serv.result}</data>
 		</response>
 	</controller>
 	
-	<controller id="xnyzbExport">
+	<controller id="xnyQyzbExport">
 
 		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
 		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
 		<callservice id="servCompTypeToId"/>
-		
-		<callservice id="xnyzbServ"/>
+		<callservice id="servXnyQyzb"/>
 		<context key="tbs" value="${result.matrixNoIds}"/>
 		
-		<ExcelTemplate id="excelTemplate" sheet="生产、发货和价格周报表"/>
+		<ExcelTemplate id="excelTemplate" sheet="签约周报"/>
 		
-		<list id="title1" type="string">
-			周期, 周期, 项目公司, 产品种类, 产品型号, 本周生产量, 本周发货量, 本周销售价格
+		<list id="title" type="string">
+			周期,项目公司,客户名称,产品名称,签订日期,签约量,签约单价,签约金额
 		</list>
-		<list id="title2" type="string">
-			开始, 截止, 项目公司, 产品种类, 产品型号, 本周生产量, 本周发货量, 本周销售价格
-		</list>
-		
+				
 		<formatter id="data">
 			<NumberFormatter reservedCount="1">
-				<DefaultMatcher cols="5,6"/>
+				<DefaultMatcher cols="6,7,8"/>
 			</NumberFormatter>
 		</formatter>
 		
@@ -138,23 +130,22 @@
 				<ExcelTemplate ref="excelTemplate"/>
 				<Offset row="0" col="0"/>
 				<titles>
-					<title ref="${title1}"></title>
-					<title ref="${title2}"></title>
+					<title ref="${title}"></title>
 				</titles>
 			</ExcelTitleFilter>
 			<ExcelMergeFormatter>
 				<ExcelTemplate ref="excelTemplate"/>
-				<MergeRegion x="0" y="0" width="8" height="2"/>
-				<MergeRegion x="0" y="2" width="5" height="${tbs.size}"/>
+				<MergeRegion x="0" y="0" width="9" height="1"/>
+				<MergeRegion x="0" y="1" width="6" height="${tbs.size}"/>
 			</ExcelMergeFormatter>
 			<ExcelTextFormatter>
-				<DefaultMatcher cols="0, 1, 2, 3, 4, 7"/>
+				<DefaultMatcher cols="0, 1, 2, 3, 4, 5"/>
 				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="2" col="0"/>
+				<Offset row="1" col="0"/>
 			</ExcelTextFormatter>
 			<ExcelOffsetFormatter>
 				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="2" col="0"/>
+				<Offset row="1" col="0"/>
 			</ExcelOffsetFormatter>
 		</formatter>
 

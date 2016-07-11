@@ -15,7 +15,7 @@ import com.tbea.ic.operation.reportframe.util.XmlUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
 public class Service extends AbstractXmlComponent implements Runnable {
-
+	
 	public Service(Element e, ComponentManager mgr) {
 		super(e, mgr);
 	}
@@ -43,7 +43,6 @@ public class Service extends AbstractXmlComponent implements Runnable {
 		}else{
 			run();
 		}
-		
 	}
 
 	@Override

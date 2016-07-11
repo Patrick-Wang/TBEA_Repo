@@ -1,32 +1,49 @@
 package com.tbea.ic.operation.reportframe.interpreter;
 
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.sql.DataSource;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.reportframe.component.Component;
+import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
+import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.reportframe.el.ELExpression;
 import com.tbea.ic.operation.reportframe.el.ELParser;
+import com.tbea.ic.operation.reportframe.util.DBUtil;
 
 
 public class SqlXmlInterpreter implements XmlInterpreter {
 
+	
+	
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) {
 		
 		if (!Schema.isSql(e)){
 			return false;
 		}
-		
+
 		String sql = e.getFirstChild().getTextContent();
 		String id = e.getAttribute("id");
 		ELParser el = new ELParser(component);
 		List<ELExpression> elexps = el.parser(sql);
-		EntityManager em = (EntityManager) component.getVar(component.getConfig().getAttribute("db"));
+		Transaction tx = (Transaction) component.getVar(component.getConfig().getAttribute("transaction"));
+		EntityManager em = tx.getEntityManager();
 		List<Object> objs = new ArrayList<Object>();
 		for (int i = elexps.size() - 1; i >= 0; --i){
 			try {

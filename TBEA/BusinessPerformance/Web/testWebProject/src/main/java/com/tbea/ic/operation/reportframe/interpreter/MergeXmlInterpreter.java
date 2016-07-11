@@ -11,6 +11,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.TypeUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
@@ -72,7 +73,8 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			
 			List<FieldSql> where = compile(e.getElementsByTagName("where"));
 			List<FieldSql> set = compile(e.getElementsByTagName("set"));
-			EntityManager em = (EntityManager) component.getVar(component.getConfig().getAttribute("db"));
+			Transaction tx = (Transaction) component.getVar(component.getConfig().getAttribute("transaction"));
+			EntityManager em = tx.getEntityManager();
 			
 			for (int i = 0, len = data.size(); i < len; ++i){
 				JSONArray row = data.getJSONArray(i);

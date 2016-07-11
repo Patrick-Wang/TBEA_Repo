@@ -14,7 +14,8 @@ $(document).ready(function(){
                 tb: "table",
                 host: "xnyzb",
                 tbarea:"tbarea",
-                title:"${title}"
+                title:"${title}",
+                updateUrl:"${updateUrl}.do"
             });
 });
 </script>
