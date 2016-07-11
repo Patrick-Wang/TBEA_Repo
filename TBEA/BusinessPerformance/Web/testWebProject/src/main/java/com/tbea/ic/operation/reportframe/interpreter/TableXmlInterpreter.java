@@ -19,6 +19,8 @@ public class TableXmlInterpreter implements XmlInterpreter {
 
 	ELParser elp;
 	
+	ListXmlInterpreter listInterpreter = new ListXmlInterpreter();
+	
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) {
 
@@ -35,7 +37,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 
 			@Override
 			public void on(Element elem) {
-				if ("col".equals(elem.getTagName())){
+				if ("col".equals(elem.getTagName()) || "list".equals(elem.getTagName())){
 					parseCol(component, tb, elem);
 				}else if ("sumRow".equals(elem.getTagName())){
 					parseSumRow(component, tb, elem);
@@ -88,13 +90,20 @@ public class TableXmlInterpreter implements XmlInterpreter {
 	}
 
 	protected void parseCol(AbstractXmlComponent component, Table tb, Element elem) {
-		List list = (List) component.getVar(elem.getAttribute("list"));
+		List list = null;
+		if ("col".equals(elem.getTagName())){
+			list = (List) component.getVar(elem.getAttribute("list"));
+		}else{
+			listInterpreter.accept(component, elem);
+			list = (List) component.getVar(elem.getAttribute("id"));
+		}
 		if (null == list){
 			list = Util.resize(new ArrayList<Object>(),	tb.getIds().size());
 		} else if (list.size() != tb.getIds().size()){
 			list = Util.resize(list, tb.getIds().size());
 		}
-		tb.getValues().add(list);		
+		tb.getValues().add(list);	
+			
 	}
 
 	private int getTargetIndex(AbstractXmlComponent component, Element item,
