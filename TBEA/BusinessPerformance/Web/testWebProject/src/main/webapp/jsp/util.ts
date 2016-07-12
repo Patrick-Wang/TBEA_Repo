@@ -6,6 +6,7 @@ module Util {
     export interface Header{
         name:string;
         type:string;
+        readOnly:string;
         options:string[];
         sub:Header[];
     }

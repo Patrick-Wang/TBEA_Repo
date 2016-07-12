@@ -184,8 +184,8 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				}
 				
 				if (null != result && !result.isEmpty()){
-					System.out.println(result.get(0).getClass());
-					System.out.println(result.get(0));
+//					System.out.println(result.get(0).getClass());
+//					System.out.println(result.get(0));
 					if (!result.get(0).getClass().isArray()){
 						switch (sql.getType()){
 						case TypeUtil.INT:

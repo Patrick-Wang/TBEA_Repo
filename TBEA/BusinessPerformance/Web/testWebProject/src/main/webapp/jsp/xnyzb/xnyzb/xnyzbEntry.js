@@ -25,8 +25,9 @@ var xnyzb;
             }
             JQGridAssistantFactory.parseHeader = function (header) {
                 var node = null;
+                var readOnly = header.readOnly == "true";
                 if ("date" == header.type) {
-                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false, isNumber: false, editType: "text", options: {
+                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "text", options: {
                             dataInit: function (element) {
                                 $(element).datepicker({
                                     dateFormat: 'yy-mm-dd',
@@ -37,16 +38,16 @@ var xnyzb;
                         } });
                 }
                 else if ("text" == header.type) {
-                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false, isNumber: false, editType: "text" });
+                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "text" });
                 }
                 else if ("hidden" == header.type) {
-                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false, isNumber: false, editType: "text", hidden: true });
+                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "text", hidden: true });
                 }
                 else if ("select" == header.type) {
-                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false, isNumber: false, editType: "select", options: { value: header.options } });
+                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "select", options: { value: header.options } });
                 }
                 else {
-                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false });
+                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly });
                 }
                 if (header.sub != undefined) {
                     for (var i = 0; i < header.sub.length; ++i) {

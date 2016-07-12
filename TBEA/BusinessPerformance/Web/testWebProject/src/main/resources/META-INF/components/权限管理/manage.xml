@@ -1,0 +1,78 @@
+﻿<components>
+	<service id="servEntryAuthInstruc" transaction="transactionManager">		
+		<merge data="data" table="auth_instruction">
+			<where>
+				<id type="int" ref="0"/>
+			</where>
+			<set>
+				<instruction type="string" ref="2"/>
+			</set>
+		</merge>
+	</service>
+	
+	<service id="servAuthManageEntryUpdate" transaction="transactionManager">
+		<sql id="auth">
+			select *
+			from 
+				auth_instruction
+		</sql>
+		
+		<list id="ids" type="int" sql="auth" value="0" />
+		<table id="result" rowIds="ids">
+			<col list="ids"></col>
+			<list type="string" sql="auth" value="1" />
+		</table>
+		
+		<context key="result" value="${result}"></context>
+	</service>
+	
+	<controller id="submitAuthInstruc">
+		<context key="data" value="${request.data.asJsonArray}"></context>
+		<callservice id="servEntryAuthInstruc"/>
+		<response type="json">
+			<errorCode>0</errorCode>
+			<message>OK</message>
+		</response>
+	</controller>
+	
+	<controller id="authInstrucEntryUpdate">
+		<callservice id="servAuthManageEntryUpdate"/>
+		<formatter id="data">
+			<EmptyFormatter>
+			</EmptyFormatter>
+		</formatter>
+		
+		<formatterServer id="serv" table="${result.matrix}" acceptNullAs="--">
+			<formatter ref="data"/>
+		</formatterServer>
+		
+		<response type="json"> 
+			<header type="array">
+				<item>
+					<name>权限ID</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>权限说明</name>
+					<type>text</type>
+				</item>
+			</header>
+			<data>${serv.result}</data>
+		</response>
+	</controller>
+	
+	<controller id="manage">
+		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
+			<param type="int">25</param>
+		</call>
+
+		<response type="jsp" name="xnyzb/xnyzbEntry"> 
+			<map key="date" value="${calendar.current.format}"/>
+			<map map="${authCompMap}"/>
+			<map key="updateUrl" value="authInstrucEntryUpdate"/>
+			<map key="submitUrl" value="submitAuthInstruc"/>
+			<map key="title" value="权限管理"/>
+		</response>
+	</controller>
+</components>

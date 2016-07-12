@@ -7,7 +7,7 @@
 			<set>
 				<account_id type="int" ref="1" join="jygk_account" in="name" select="id" joinType="string"/>
 				<company_id type="int" ref="2" join="jygk_dwxx" in="name" select="id" joinType="string"/>
-				<auth_type type="int" ref="3"/>
+				<auth_type type="int" ref="3" join="auth_instruction" in="instruction" select="id" joinType="string"/>
 			</set>
 		</merge>
 	</service>
@@ -30,20 +30,31 @@
 		<context key="comps" value="${comps}"></context>
 	</service>
 	
+	<service id="servGetAllAuth" transaction="transactionManager">
+		<sql id="allAuths">
+			select id, instruction
+			from auth_instruction
+		</sql>
+		<list id ="auths" type="string" sql="allAuths" value="1"></list>
+		<context key="auths" value="${auths}"></context>
+	</service>
+	
 	<service id="servAuthorityEntryUpdate" transaction="transactionManager">
 		<sql id="auth">
 			select 
 				AUTH.id, 
 				ACCOUNT.name as accountName,
 				DWXX.name as dwName,
-				AUTH.auth_type
+				INSTRUCTION.instruction as authName
 			from 
 				jygk_dwxx DWXX, 
 				jygk_account ACCOUNT, 
+				auth_instruction INSTRUCTION,
 				system_extend_auth AUTH
 			where 
 				AUTH.account_id = ACCOUNT.id and
-				AUTH.company_id = DWXX.id
+				AUTH.company_id = DWXX.id and 
+				AUTH.auth_type = INSTRUCTION.id
 		</sql>
 		
 		<list id="ids" type="int" sql="auth" value="0" />
@@ -68,6 +79,7 @@
 	<controller id="authorityEntryUpdate">
 		<callservice id="servGetAllUser"/>
 		<callservice id="servGetAllComps"/>
+		<callservice id="servGetAllAuth"/>
 		<callservice id="servAuthorityEntryUpdate"/>
 		<formatter id="data">
 			<EmptyFormatter>
@@ -92,6 +104,8 @@
 				</item>
 				<item>
 					<name>权限</name>
+					<type>select</type>
+					<options>${auths}</options>
 				</item>
 			</header>
 			<data>${serv.result}</data>
@@ -102,13 +116,12 @@
 		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
 			<param type="int">25</param>
 		</call>
-
 		<response type="jsp" name="xnyzb/xnyzbEntry"> 
 			<map key="date" value="${calendar.current.format}"/>
 			<map map="${authCompMap}"/>
 			<map key="updateUrl" value="authorityEntryUpdate"/>
 			<map key="submitUrl" value="submitAuthority"/>
-			<map key="title" value="权限管理"/>
+			<map key="title" value="权限配置"/>
 		</response>
 	</controller>
 </components>
