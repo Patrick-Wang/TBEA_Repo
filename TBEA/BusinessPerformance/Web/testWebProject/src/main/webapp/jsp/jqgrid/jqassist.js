@@ -702,8 +702,9 @@ var JQTable;
                     if (align == undefined) {
                         align = TextAlign.Center;
                     }
-                    ++row;
-                    var leftCell = $("#" + _this.mGridName + " #" + row + " #" + _this.id(col) + row);
+                    var grid = $("#" + _this.mGridName + "");
+                    var mya = grid.getDataIDs();
+                    var leftCell = $("#" + _this.mGridName + " #" + mya[row] + " #" + _this.id(col) + mya[row]);
                     var rightCell = leftCell.next();
                     leftCell.css("text-align", "right");
                     rightCell.css("text-align", "left");
@@ -713,10 +714,10 @@ var JQTable;
                     rightCell.css("padding-left", "0px");
                     rightCell.css("disabled", "disabled");
                     if (_this.mOnMergedColums != undefined) {
-                        _this.mOnMergedColums(col, row);
+                        _this.mOnMergedColums(col, mya[row]);
                     }
                     _this.selectedList.push(function (newRow, newCol) {
-                        if (newRow == row) {
+                        if (newRow == mya[row]) {
                             if (col == newCol || col + 1 == newCol) {
                                 rightCell.addClass("edit-cell");
                                 rightCell.addClass("ui-state-highlight");

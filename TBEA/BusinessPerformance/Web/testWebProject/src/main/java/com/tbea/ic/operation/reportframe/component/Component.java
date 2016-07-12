@@ -9,6 +9,6 @@ public interface Component {
 	public final static String RESPONSE = "response";
 	public final static String SESSION = "session";
 	public final static String CALENDAR = "calendar";
-	void run(Context context);
+	void run(Context context) throws Exception;
 	String getId();
 }

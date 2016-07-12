@@ -3,6 +3,8 @@ package com.tbea.ic.operation.reportframe.component;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,10 +52,10 @@ public class ComponentLoader {
 		File[] fs = dir.listFiles();
 		for (int i = 0; i < fs.length; i++) {
 			if (fs[i].isFile() && fs[i].getName().endsWith(".xml")) {
-				if (!componentsTime.containsKey(fs[i].getName())
-						|| componentsTime.get(fs[i].getName()).longValue() != fs[i]
+				if (!componentsTime.containsKey(fs[i].getAbsolutePath())
+						|| componentsTime.get(fs[i].getAbsolutePath()).longValue() != fs[i]
 								.lastModified()) {
-					componentsTime.put(fs[i].getName(), fs[i].lastModified());
+					componentsTime.put(fs[i].getAbsolutePath(), fs[i].lastModified());
 					loadComponent(fs[i]);
 				}
 			}else if(fs[i].isDirectory()){
@@ -90,7 +92,7 @@ public class ComponentLoader {
 	
 	private void loadComponent(File file) {
 		try {
-			System.out.println(Util.formatToDay(new Date()) + " : load config file " + file.getName());
+			System.out.println(Util.formatToSecond(new Timestamp(Calendar.getInstance().getTimeInMillis())) + " : load config file " + file.getName());
 			String path = file.getAbsolutePath();
 			DocumentBuilder builder = getBuilder();
 			Document doc = builder.parse(file);

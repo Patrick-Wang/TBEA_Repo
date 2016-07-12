@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.controller.servlet.report;
+package com.tbea.ic.operation.service.report;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -6,6 +6,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.reportframe.component.service.ServiceRunnable;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 
 @Component
@@ -14,8 +15,8 @@ public class TransactionProxy implements Transaction{
 	@PersistenceContext(unitName = "localDB")
 	EntityManager em;
 	
-	@Transactional
-	public void run(Runnable run){
+	@Transactional("transactionManager")
+	public void run(ServiceRunnable run) throws Exception{
 		run.run();
 	}
 

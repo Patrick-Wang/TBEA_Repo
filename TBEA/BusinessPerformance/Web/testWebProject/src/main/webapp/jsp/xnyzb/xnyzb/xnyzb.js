@@ -92,7 +92,7 @@ var xnyzb;
                 return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.pluginGetExportUrl = function (dStart, dEnd, compType) {
-                return "xnyzbExport.do?" + Util.Ajax.toUrlParam({
+                return this.option().exportUrl + "?" + Util.Ajax.toUrlParam({
                     dStart: dStart,
                     dEnd: dEnd,
                     compId: compType
@@ -138,12 +138,31 @@ var xnyzb;
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                tableAssist.mergeTitle(0);
-                tableAssist.mergeRow(0);
-                tableAssist.mergeRow(1);
-                tableAssist.mergeRow(2);
-                tableAssist.mergeRow(3);
-                tableAssist.mergeColum(3);
+                if (this.mData.mergeTitle != undefined) {
+                    tableAssist.mergeTitle();
+                }
+                if (this.mData.mergeRows != undefined) {
+                    for (var i = 0; i < this.mData.mergeRows.length; ++i) {
+                        if (this.mData.mergeRows[i].col != undefined) {
+                            if (this.mData.mergeRows[i].rowStart != undefined && this.mData.mergeRows[i].rowLen != undefined) {
+                                tableAssist.mergeRow(parseInt(this.mData.mergeRows[i].col), parseInt(this.mData.mergeRows[i].rowStart), parseInt(this.mData.mergeRows[i].rowLen));
+                            }
+                            else if (this.mData.mergeRows[i].rowStart != undefined) {
+                                tableAssist.mergeRow(parseInt(this.mData.mergeRows[i].col), parseInt(this.mData.mergeRows[i].rowStart));
+                            }
+                            else {
+                                tableAssist.mergeRow(parseInt(this.mData.mergeRows[i].col));
+                            }
+                        }
+                    }
+                }
+                if (this.mData.mergeCols != undefined) {
+                    for (var i = 0; i < this.mData.mergeCols.length; ++i) {
+                        if (this.mData.mergeCols[i].col != undefined) {
+                            tableAssist.mergeColum(parseInt(this.mData.mergeCols[i].col));
+                        }
+                    }
+                }
                 this.$(name).jqGrid(tableAssist.decorate({
                     datatype: "local",
                     data: tableAssist.getDataWithId(this.mData.data),

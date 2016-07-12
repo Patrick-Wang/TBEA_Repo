@@ -15,7 +15,8 @@ $(document).ready(function(){
                 host: "xnyzb",
                 tbarea:"tbarea",
                 title:"${title}",
-                updateUrl:"${updateUrl}.do"
+                updateUrl:"${updateUrl}.do",
+                exportUrl:"${exportUrl}.do"
             });
 });
 </script>

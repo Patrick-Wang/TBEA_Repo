@@ -33,7 +33,12 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	}
 	
 	public void local(String key, Object value){
-		local.put(key, value);
+		if (!key.isEmpty()){
+			local.put(key, value);
+		}
+		if (value == null){
+			System.out.println("object " + key + " is null");
+		}
 	}
 	
 	public void global(String key, Object value){
@@ -45,6 +50,10 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 		this.mgr = mgr;
 	}
 	
+	public Object removeLocal(String key){
+		return local.remove(key);
+	}
+	
 	public Object getVar(String key){
 		if (local.contains(key)){
 			return local.get(key);
@@ -54,12 +63,12 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	}
 	
 	@Override
-	public void run(Context context) {
+	public void run(Context context) throws Exception {
 		global = context;
 		onRun();
 	}
 
-	protected abstract void onRun();
+	protected abstract void onRun() throws Exception;
 
 	public Context globalContext() {
 		return global;

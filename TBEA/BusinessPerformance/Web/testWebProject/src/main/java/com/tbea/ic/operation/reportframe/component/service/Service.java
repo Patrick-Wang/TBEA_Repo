@@ -14,7 +14,7 @@ import com.tbea.ic.operation.reportframe.interpreter.XmlInterpreter;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
-public class Service extends AbstractXmlComponent implements Runnable {
+public class Service extends AbstractXmlComponent implements ServiceRunnable {
 	
 	public Service(Element e, ComponentManager mgr) {
 		super(e, mgr);
@@ -36,7 +36,7 @@ public class Service extends AbstractXmlComponent implements Runnable {
 	}
 
 	@Override
-	protected void onRun() {
+	protected void onRun() throws Exception {
 		Transaction tr = getTransactionManager();
 		if (null != tr){
 			tr.run(this);
@@ -46,10 +46,10 @@ public class Service extends AbstractXmlComponent implements Runnable {
 	}
 
 	@Override
-	public void run() {
-		XmlUtil.each(config.getChildNodes(), new OnLoop(){
+	public void run() throws Exception{
+		XmlUtil.each(config.getChildNodes(), new OnLoop() {
 			@Override
-			public void on(Element elem) {
+			public void on(Element elem) throws Exception {
 				for (XmlInterpreter interpreter : interpreters) {
 					if (interpreter.accept(Service.this, elem)) {
 						break;

@@ -16,4 +16,8 @@ public class Context {
 	public boolean contains(String key){
 		return objMap.containsKey(key);
 	}
+	
+	public Object remove(String key){
+		return objMap.remove(key);
+	}
 }

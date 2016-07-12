@@ -48,7 +48,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 		}
 	}
 	
-	private Method parseParams(Element e, Object obj, String method, List<Object> params){
+	private Method parseParams(Element e, Object obj, String method, List<Object> params) throws Exception{
 		Method[] mds = obj.getClass().getMethods();
 		List<Method> mdList = new ArrayList<Method>();
 		for (Method m : mds){
@@ -61,7 +61,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 			int index = 0;
 			
 			@Override
-			public void on(Element elem) {
+			public void on(Element elem) throws Exception {
 				String text = elem.getFirstChild().getTextContent();
 				int tp = TypeUtil.typeof(elem);
 				switch (tp){
@@ -151,7 +151,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 	}
 	
 	@Override
-	public boolean accept(AbstractXmlComponent component, Element e) {
+	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 		
 		if (!Schema.isCall(e)){
 			return false;

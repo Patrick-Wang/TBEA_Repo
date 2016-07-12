@@ -9,7 +9,7 @@ import com.tbea.ic.operation.reportframe.util.XmlUtil;
 public class ContextXmlInterpreter implements XmlInterpreter {
 
 	@Override
-	public boolean accept(AbstractXmlComponent component, Element e) {
+	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 		
 		if (Schema.isContext(e)){
 			String key = e.getAttribute("key");

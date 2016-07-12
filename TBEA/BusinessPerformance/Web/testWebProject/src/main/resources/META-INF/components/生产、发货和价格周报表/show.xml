@@ -98,7 +98,19 @@
 					<type>text</type>
 				</item>
 			</header>
-			<title>生产、发货和价格周报表</title>
+			<mergeRows type="array">
+				<item>
+					<col>0</col>
+				</item>
+			</mergeRows>
+			<mergeCols type="array">
+				<item>
+					<col>0</col>
+				</item>
+			</mergeCols>
+			<mergeTitle>
+				true
+			</mergeTitle>
 			<data>${serv.result}</data>
 		</response>
 	</controller>
@@ -109,7 +121,7 @@
 		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
 		<callservice id="servCompTypeToId"/>
 		
-		<callservice id="xnyzbServ"/>
+		<callservice id="servXnyzb"/>
 		<context key="tbs" value="${result.matrixNoIds}"/>
 		
 		<ExcelTemplate id="excelTemplate" sheet="生产、发货和价格周报表"/>
@@ -132,8 +144,8 @@
 				<ExcelTemplate ref="excelTemplate"/>
 				<Offset row="0" col="0"/>
 				<titles>
-					<title ref="${title1}"></title>
-					<title ref="${title2}"></title>
+					<title ref="title1"></title>
+					<title ref="title2"></title>
 				</titles>
 			</ExcelTitleFilter>
 			<ExcelMergeFormatter>
@@ -157,6 +169,18 @@
 			<formatter ref="excel"/>
 		</formatterServer>
 
-		<response type="excel" ref="excelTemplate" name="新能源周报.xls" serv="serv"/>
+		<response type="excel" ref="excelTemplate" name="生产、发货和价格周报表.xls" serv="serv"/>
+	</controller>
+	<controller id="xnyzb">		
+		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
+			<param type="int">26</param>
+		</call>
+		<response type="jsp" name="xnyzb/xnyzb"> 
+			<map key="date" value="${calendar.current.format}"/>
+			<map key="updateUrl" value="xnyzbUpdate"/>
+			<map key="exportUrl" value="xnyzbExport"/>
+			<map key="title" value="生产、发货和价格周报表"/>
+			<map map="${authCompMap}"/>
+		</response>
 	</controller>
 </components>

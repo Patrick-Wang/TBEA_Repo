@@ -136,10 +136,6 @@ var xnyzb;
                     for (var j = 0; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
                         submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
-                        if (j != 3 && "" == submitData[i][j]) {
-                            Util.MessageBox.tip("有空内容 无法提交");
-                            return;
-                        }
                     }
                 }
                 this.mAjaxSubmit.post({
@@ -182,6 +178,8 @@ var xnyzb;
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, opt.title);
+                this.mAjaxUpdate = new Util.Ajax(this.option().updateUrl, false);
+                this.mAjaxSubmit = new Util.Ajax(this.option().submitUrl, false);
             };
             EntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";

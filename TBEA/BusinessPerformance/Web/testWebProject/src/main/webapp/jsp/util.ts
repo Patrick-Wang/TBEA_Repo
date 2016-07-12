@@ -10,10 +10,23 @@ module Util {
         sub:Header[];
     }
 
+    export interface MergeRow{
+        col:string;
+        rowStart?:string;
+        rowLen?:string;
+    }
+
+    export interface Merge{
+        col:string;
+        len?:string;
+    }
+
     export interface ServResp{
         header:Header[];
-        title:string;
         data:string[][];
+        mergeRows:MergeRow[];
+        mergeCols:Merge[];
+        mergeTitle:string;
     }
 
     export enum ErrorCode {

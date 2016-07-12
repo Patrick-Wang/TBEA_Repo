@@ -62,6 +62,9 @@
 			<divCol toCol="5" sub="1" base="2">
 				<excludeRow>0,1,2,3</excludeRow>
 			</divCol>
+			<growthRates toCol="5" sj="1" tq="2">
+				<excludeRow>0,1,2,3</excludeRow>
+			</growthRates>
 			<copyCol rowId="20000" from="1" to="4,3"></copyCol>
  		<!-- 	<sumRow toId="1" toRow="0">
  				<excludeCol>1,2</excludeCol>
@@ -78,7 +81,15 @@
 				<subRow>${sample1.size - 1}</subRow>
 				<baseId>2</baseId>
 				<baseRow>${sample1.size - 1}</baseRow>
-			</divRow> -->
+			</divRow> 
+			<divCol toId="1" toRow="0">
+				<excludeRow>1,2</excludeRow>
+				<subId>2</subId>
+				<subRow>${sample1.size - 1}</subRow>
+				<baseId>2</baseId>
+				<baseRow>${sample1.size - 1}</baseRow>
+			</divCol>
+			-->
 		</table>
 
 		<context key="tbs" value="${result.matrix}"/>

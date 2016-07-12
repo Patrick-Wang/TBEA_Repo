@@ -1,68 +1,38 @@
 ﻿<components>
-	<service id="servXnyzbCpzl" transaction="transactionManager">
-		
-		<sql id="cpzlSql">
-			select 
-				id,
-				cpzl
-			from 
-				xnyzb_cpzl
-			where 
-				xmgs = ${compId}
-		</sql>
-		
-		<list id="cpzl" type="string" sql="cpzlSql" value="1" />
-
-		<context key="cpzl" value="${cpzl}"/>
-	</service>
-	
-	<service id="servXnyzbEntry" transaction="transactionManager">
-		<merge data="data" id="0" table="xnyzb">
-			<where>
-				<id type="int" ref="0"/>
-			</where>
+	<service id="servEntryYszkhkzb" transaction="transactionManager">
+		<merge data="${data}" id="0" table="yszkhkzb">
 			<set>
-				<ksrq type="date" ref="1"/>
-				<jzrq type="date" ref="2"/>
+				<ksrq type="date" ref="0"/>
+				<jzrq type="date" ref="1"/>
 				<xmgs type="int" value="${compId}"/>
-				<cpzl type="string" ref="3"/>
-				<cpxh type="string" ref="4"/>
-				<bzscl type="double" ref="5"/>
-				<bzfhl type="double" ref="6"/>
-				<bzxsjg type="string" ref="7"/>
+				<xmmc type="string" ref="2"/>
+				<khmc type="string" ref="3"/>
+				<htje type="double" ref="4"/>
+				<yszkje type="double" ref="5"/>
+				<yqkje type="double" ref="6"/>
+				<yqksj type="int" ref="7"/>
 				<zt type="int" value="${zt}"/>
 			</set>
 		</merge>
 	</service>
 	
-	<controller id="xnyzbSubmit">
-		<context key="data" value="${request.data.asJsonArray}"></context>
+	<controller id="yszkhkzbImport">
+		<context key="data" value="${request.upfile.asExcel}"></context>
 		<context key="zt" value="${4}"></context>
 		<callservice id="servCompTypeToId"/>
-		<callservice id="servXnyzbEntry"/>
+		<callservice id="servEntryYszkhkzb"/>
 		<response type="json">
 			<errorCode>0</errorCode>
 			<message>OK</message>
 		</response>
 	</controller>
+
 	
-	<controller id="xnyzbSave">
-		<context key="data" value="${request.data.asJsonArray}"></context>
-		<context key="zt" value="${3}"></context>
-		<callservice id="servCompTypeToId"/>
-		<callservice id="servXnyzbEntry"/>
-		<response type="json">
-			<errorCode>0</errorCode>
-			<message>OK</message>
-		</response>
-	</controller>
-	
-	<controller id="xnyzbEntryUpdate">
+<!-- 	<controller id="yszkhkzbEntryUpdate">
 		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
 		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
 		<callservice id="servCompTypeToId"/>
-		<callservice id="servXnyzb"/>
-		<callservice id="servXnyzbCpzl"/>
+		<callservice id="yszkhkzbUpdate"/>
 
 		<formatter id="data">
 			<NumberFormatter reservedCount="1">
@@ -112,18 +82,16 @@
 			</header>
 			<data>${serv.result}</data>
 		</response>
-	</controller>
+	</controller> -->
 	
-	<controller id="xnyzbEntryJsp">
+	<controller id="yszkhkzbImportJsp">
 		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
 			<param type="int">25</param>
 		</call>
-		<response type="jsp" name="xnyzb/xnyzbEntry"> 
-			<map key="date" value="${calendar.current.format}"/>
+		<response type="jsp" name="components/import_data"> 
 			<map map="${authCompMap}"/>
-			<map key="updateUrl" value="xnyzbEntryUpdate"/>
-			<map key="submitUrl" value="xnyzbSubmit"/>
-			<map key="title" value="生产、发货和价格周报表"/>
+			<map key="importUrl" value="yszkhkzbImport"/>
+			<map key="title" value="应收账款回款周报"/>
 		</response>
 	</controller>
 </components>

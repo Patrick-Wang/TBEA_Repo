@@ -3,6 +3,6 @@ package com.tbea.ic.operation.reportframe.component.service;
 import javax.persistence.EntityManager;
 
 public interface Transaction{
-	void run(Runnable run);
+	void run(ServiceRunnable run) throws Exception;
 	EntityManager getEntityManager();
 }

@@ -806,8 +806,9 @@ module JQTable {
                     if (align == undefined) {
                         align = TextAlign.Center;
                     }
-                    ++row;
-                    var leftCell = $("#" + this.mGridName + " #" + row + " #" + this.id(col) + row);
+                    var grid = $("#" + this.mGridName + "");
+                    var mya = grid.getDataIDs();
+                    var leftCell = $("#" + this.mGridName + " #" + mya[row] + " #" + this.id(col) + mya[row]);
                     var rightCell = leftCell.next();
                     leftCell.css("text-align", "right");
                     rightCell.css("text-align", "left");
@@ -818,11 +819,11 @@ module JQTable {
                     rightCell.css("padding-left", "0px");
                     rightCell.css("disabled", "disabled");
                     if (this.mOnMergedColums != undefined) {
-                        this.mOnMergedColums(col, row);
+                        this.mOnMergedColums(col, mya[row]);
                     }
                     this.selectedList.push(function (newRow:number, newCol:number) {
 
-                        if (newRow == row) {
+                        if (newRow == mya[row]) {
                             if (col == newCol || col + 1 == newCol) {
                                 rightCell.addClass("edit-cell");
                                 rightCell.addClass("ui-state-highlight");

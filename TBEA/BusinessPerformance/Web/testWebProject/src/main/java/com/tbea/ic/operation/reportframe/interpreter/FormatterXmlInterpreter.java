@@ -31,13 +31,13 @@ import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 public class FormatterXmlInterpreter implements XmlInterpreter {
 
 	private ELParser elp;
-	
-	FormatterMatcher parserMatcher(Element handler){
+	AbstractXmlComponent component;
+	FormatterMatcher parserMatcher(Element handler) throws Exception{
 		FormatterMatcher[] mRet = new FormatterMatcher[]{null};
 		XmlUtil.each(handler.getChildNodes(), new XmlUtil.OnEach(){
 
 			@Override
-			public boolean on(Element elem) {
+			public boolean on(Element elem) throws Exception {
 				if ("DefaultMatcher".equals(elem.getTagName())){
 					mRet[0] = parserDefaultMatcher(elem);
 				}else if ("IndicatorMatcher".equals(elem.getTagName())){
@@ -51,34 +51,35 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 	}
 	
 	
-	private FormatterMatcher parserIndicatorMatcher(Element matcher) {
-		String rows = matcher.getAttribute("rows");
-		String cols = matcher.getAttribute("cols");
+	private FormatterMatcher parserIndicatorMatcher(Element matcher) throws Exception {
+		String rows = XmlUtil.getAttr(matcher, "rows");
+		String cols = XmlUtil.getAttr(matcher, "cols");
 		return new IndicatorMatcher(
 				XmlUtil.toStringList(rows, elp),
 				XmlUtil.toIntList(cols, elp));
 	}
 
-	private FormatterMatcher parserDefaultMatcher(Element matcher) {
-		String rows = matcher.getAttribute("rows");
-		String cols = matcher.getAttribute("cols");
+	private FormatterMatcher parserDefaultMatcher(Element matcher) throws Exception {
+		String rows = XmlUtil.getAttr(matcher, "rows");
+		String cols = XmlUtil.getAttr(matcher, "cols");
 		return new DefaultMatcher(
 				XmlUtil.toIntList(rows, elp), 
 				XmlUtil.toIntList(cols, elp));
 	}
 
 	@Override
-	public boolean accept(AbstractXmlComponent component, Element e) {
+	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 		
 		if (!Schema.isFormatter(e)){
 			return false;
 		}
+		this.component = component;
 		elp = new ELParser(component);
 		List<FormatterHandler> handlers = new ArrayList<FormatterHandler>();
 		XmlUtil.each(e.getChildNodes(), new OnLoop(){
 
 			@Override
-			public void on(Element elem) {
+			public void on(Element elem) throws Exception {
 				FormatterHandler handler = parserHandler(component, elem);
 				if (null != handler){
 					handlers.add(handler);
@@ -93,7 +94,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 	}
 
 	
-	private FormatterHandler parserHandler(AbstractXmlComponent component, Element item) {
+	private FormatterHandler parserHandler(AbstractXmlComponent component, Element item) throws Exception {
 		FormatterHandler handler = null;
 		if ("EmptyFormatter".equals(item.getTagName())){
 			handler = new EmptyFormatter(parserMatcher(item));
@@ -143,13 +144,13 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		return handler;
 	}
 
-	private List<List<String>> parserTitles(Element item) {
+	private List<List<String>> parserTitles(Element item) throws Exception {
 		List<List<String>> titles = new ArrayList<List<String>>();
 		Element ts = XmlUtil.element(item.getElementsByTagName("titles"), 0);
 		XmlUtil.each(ts.getChildNodes(), new OnLoop(){
 			@Override
 			public void on(Element elem) {
-				Object obj = XmlUtil.getObjectAttr(elem, "ref", elp);
+				Object obj = component.getVar(elem.getAttribute("ref"));
 				if (null != obj){
 					titles.add((List<String>) obj);
 				}
@@ -158,15 +159,15 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		return titles;
 	}
 
-	private int getIntAttribute(Element e, String attr, int defaultVal){
+	private int getIntAttribute(Element e, String attr, int defaultVal) throws Exception{
 		return XmlUtil.getIntAttr(e, attr, elp, defaultVal);
 	}
 	
-	private void parserMergeRegion(ExcelMergeFormatter handler, Element item) {
+	private void parserMergeRegion(ExcelMergeFormatter handler, Element item) throws Exception {
 		XmlUtil.each(item.getChildNodes(), new OnLoop(){
 			
 			@Override
-			public void on(Element elem) {
+			public void on(Element elem) throws Exception {
 				if ("MergeRegion".equals(elem.getTagName())){
 					handler.addMergeRegion(new MergeRegion(
 						getIntAttribute(elem, "x", 0),	
@@ -189,7 +190,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		return null;
 	}
 
-	private Offset parserOffset(Element item) {
+	private Offset parserOffset(Element item) throws Exception {
 		Element e = XmlUtil.element(item.getChildNodes(), "Offset");
 		if (null != e){
 			return new Offset(getIntAttribute(e, "row", 0), 

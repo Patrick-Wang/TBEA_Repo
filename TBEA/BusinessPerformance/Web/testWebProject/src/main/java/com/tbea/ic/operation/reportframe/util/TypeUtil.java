@@ -9,7 +9,10 @@ public class TypeUtil {
 	public static final int SQLDATE = 3;
 	public static final int OBJECT = 4;
 	public static int typeof(Element e){
-		String type = e.getAttribute("type"); 
+		return typeof(e.getAttribute("type"));
+	}
+	
+	public static int typeof(String type){
 		if ("int".equalsIgnoreCase(type)){
 			return INT;
 		}

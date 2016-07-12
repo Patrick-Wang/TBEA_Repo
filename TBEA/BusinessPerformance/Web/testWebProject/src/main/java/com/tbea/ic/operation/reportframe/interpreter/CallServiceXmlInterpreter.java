@@ -8,7 +8,7 @@ import com.tbea.ic.operation.reportframe.component.service.Service;
 public class CallServiceXmlInterpreter implements XmlInterpreter {
 	
 	@Override
-	public boolean accept(AbstractXmlComponent component, Element e) {
+	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 		
 		if (!Schema.isCallService(e)){
 			return false;

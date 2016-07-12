@@ -1,0 +1,114 @@
+﻿<components>
+	<service id="servEntryAuthority" transaction="transactionManager">		
+		<merge data="data" table="system_extend_auth">
+			<where>
+				<id type="int" ref="0"/>
+			</where>
+			<set>
+				<account_id type="int" ref="1" join="jygk_account" in="name" select="id" joinType="string"/>
+				<company_id type="int" ref="2" join="jygk_dwxx" in="name" select="id" joinType="string"/>
+				<auth_type type="int" ref="3"/>
+			</set>
+		</merge>
+	</service>
+	
+	<service id="servGetAllUser" transaction="transactionManager">
+		<sql id="allUser">
+			select id, name
+			from jygk_account
+		</sql>
+		<list id ="users" type="string" sql="allUser" value="1"></list>
+		<context key="users" value="${users}"></context>
+	</service>
+	
+	<service id="servGetAllComps" transaction="transactionManager">
+		<sql id="allComps">
+			select id, name
+			from jygk_dwxx
+		</sql>
+		<list id ="comps" type="string" sql="allComps" value="1"></list>
+		<context key="comps" value="${comps}"></context>
+	</service>
+	
+	<service id="servAuthorityEntryUpdate" transaction="transactionManager">
+		<sql id="auth">
+			select 
+				AUTH.id, 
+				ACCOUNT.name as accountName,
+				DWXX.name as dwName,
+				AUTH.auth_type
+			from 
+				jygk_dwxx DWXX, 
+				jygk_account ACCOUNT, 
+				system_extend_auth AUTH
+			where 
+				AUTH.account_id = ACCOUNT.id and
+				AUTH.company_id = DWXX.id
+		</sql>
+		
+		<list id="ids" type="int" sql="auth" value="0" />
+		<table id="result" rowIds="ids">
+			<list type="string" sql="auth" value="1" />
+			<list type="string" sql="auth" value="2" />
+			<list type="int" sql="auth" value="3" />
+		</table>
+		
+		<context key="result" value="${result}"></context>
+	</service>
+	
+	<controller id="submitAuthority">
+		<context key="data" value="${request.data.asJsonArray}"></context>
+		<callservice id="servEntryAuthority"/>
+		<response type="json">
+			<errorCode>0</errorCode>
+			<message>OK</message>
+		</response>
+	</controller>
+	
+	<controller id="authorityEntryUpdate">
+		<callservice id="servGetAllUser"/>
+		<callservice id="servGetAllComps"/>
+		<callservice id="servAuthorityEntryUpdate"/>
+		<formatter id="data">
+			<EmptyFormatter>
+			</EmptyFormatter>
+		</formatter>
+		
+		<formatterServer id="serv" table="${result.matrix}" acceptNullAs="--">
+			<formatter ref="data"/>
+		</formatterServer>
+		
+		<response type="json"> 
+			<header type="array">
+				<item>
+					<name>用户</name>
+					<type>select</type>
+					<options>${users}</options>
+				</item>
+				<item>
+					<name>单位</name>
+					<type>select</type>
+					<options>${comps}</options>
+				</item>
+				<item>
+					<name>权限</name>
+				</item>
+			</header>
+			<data>${serv.result}</data>
+		</response>
+	</controller>
+	
+	<controller id="authority">
+		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
+			<param type="int">25</param>
+		</call>
+
+		<response type="jsp" name="xnyzb/xnyzbEntry"> 
+			<map key="date" value="${calendar.current.format}"/>
+			<map map="${authCompMap}"/>
+			<map key="updateUrl" value="authorityEntryUpdate"/>
+			<map key="submitUrl" value="submitAuthority"/>
+			<map key="title" value="权限管理"/>
+		</response>
+	</controller>
+</components>

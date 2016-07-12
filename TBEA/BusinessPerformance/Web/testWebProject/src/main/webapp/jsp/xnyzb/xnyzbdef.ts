@@ -4,5 +4,8 @@
 module xnyzb{
     export interface Option extends framework.basic.PluginOption {
         tb:string;
+        updateUrl:string;
+        exportUrl:string;
+        title:string;
     }
 }

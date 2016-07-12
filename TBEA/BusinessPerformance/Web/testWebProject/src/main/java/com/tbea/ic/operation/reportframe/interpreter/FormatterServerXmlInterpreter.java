@@ -13,7 +13,7 @@ import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 public class FormatterServerXmlInterpreter implements XmlInterpreter {
 
 	@Override
-	public boolean accept(AbstractXmlComponent component, Element e) {
+	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 
 		if (!Schema.isFormatterServer(e)) {
 			return false;

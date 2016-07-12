@@ -13,11 +13,11 @@ import com.tbea.ic.operation.reportframe.el.ELParser;
 public class XmlUtil {
 	
 	public static interface OnEach{
-		boolean on(Element elem);
+		boolean on(Element elem) throws Exception;
 	}
 	
 	public static interface OnLoop{
-		void on(Element elem);
+		void on(Element elem) throws Exception;
 	}
 	
 	public static String elementText(NodeList list, int index) {
@@ -29,31 +29,42 @@ public class XmlUtil {
 	}
 	
 	public static Element element(NodeList list, int index) {
-		return each(list, new OnEach(){
-			int count;
-			@Override
-			public boolean on(Element elem) {
-				if (count++ == index){
-					return true;
+		try {
+			return each(list, new OnEach(){
+				int count;
+				@Override
+				public boolean on(Element elem) {
+					if (count++ == index){
+						return true;
+					}
+					return false;
 				}
-				return false;
-			}
-		});
+			});
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	public static Element element(NodeList list, String tagName) {
-		return each(list, new OnEach(){
-			@Override
-			public boolean on(Element elem) {
-				if (elem.getTagName().equals(tagName)){
-					return true;
+		try {
+			return each(list, new OnEach(){
+				@Override
+				public boolean on(Element elem) {
+					if (elem.getTagName().equals(tagName)){
+						return true;
+					}
+					return false;
 				}
-				return false;
-			}
-		});
+			});
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
-	public static List<Integer> toIntList(String text, ELParser elp){
+	public static List<Integer> toIntList(String text, ELParser elp) throws Exception{
+		if(null == text){
+			return null;
+		}
 		text = text.replaceAll("\\s", "");
 		List<Integer> list = new ArrayList<Integer>();
 		if (!text.isEmpty()){
@@ -69,7 +80,10 @@ public class XmlUtil {
 		return list;
 	}
 	
-	public static List<Double> toDoubleList(String text, ELParser elp){
+	public static List<Double> toDoubleList(String text, ELParser elp) throws Exception{
+		if(null == text){
+			return null;
+		}
 		text = text.replaceAll("\\s", "");
 		List<Double> list = new ArrayList<Double>();
 		if (!text.isEmpty()){
@@ -85,7 +99,11 @@ public class XmlUtil {
 		return list;
 	}
 	
-	public static List<String> toStringList(String text, ELParser elp){
+	public static List<String> toStringList(String text, ELParser elp) throws Exception{
+		if(null == text){
+			return null;
+		}
+		
 		text = text.replaceAll("\\s", "");
 		List<String> list = new ArrayList<String>();
 		if (!text.isEmpty()){
@@ -99,19 +117,15 @@ public class XmlUtil {
 		return list;
 	}
 	
-	public static Object getELValue(String el, ELParser elp){
+	public static Object getELValue(String el, ELParser elp) throws Exception{
 		List<ELExpression> elexps = elp.parser(el);
 		if (!elexps.isEmpty()) {
-			try {
-				return elexps.get(0).value();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			return elexps.get(0).value();
 		}
 		return null;
 	}
 	
-	public static String getString(String text, ELParser elParser) {
+	public static String getString(String text, ELParser elParser) throws Exception {
 		Object val = getELValue(text, elParser);
 		if (val == null){
 			val = text;
@@ -122,7 +136,7 @@ public class XmlUtil {
 	}
 	
 	public static Double getDouble(String text, ELParser elParser,
-			Double defaultVal) {
+			Double defaultVal) throws Exception {
 		Object val = getELValue(text, elParser);
 		if (val == null){
 			try{
@@ -139,7 +153,7 @@ public class XmlUtil {
 	}
 	
 	public static Integer getInt(String text, ELParser elParser,
-			Integer defaultVal) {
+			Integer defaultVal) throws Exception {
 		Object val = getELValue(text, elParser);
 		if (val == null){
 			try{
@@ -155,7 +169,7 @@ public class XmlUtil {
 		return (Integer) val;
 	}
 	
-	public static Object getObjectAttr(Element elem, String attr, ELParser elParser) {
+	public static Object getObjectAttr(Element elem, String attr, ELParser elParser) throws Exception {
 		Object obj = getELValue(elem.getAttribute(attr), elParser);
 		if (obj == null){
 			obj = getAttr(elem, attr);
@@ -164,7 +178,7 @@ public class XmlUtil {
 	}
 	
 	public static Integer getIntAttr(Element elem, String attr, ELParser elParser,
-			Integer defaultVal) {
+			Integer defaultVal) throws Exception {
 		return getInt(elem.getAttribute(attr), elParser, defaultVal);
 	}
 	
@@ -175,7 +189,7 @@ public class XmlUtil {
 		return null;
 	}
 	
-	public static void each(NodeList list, OnLoop onLoop){
+	public static void each(NodeList list, OnLoop onLoop) throws Exception{
 		Node node = null;
 		for (int i = 0, len = list.getLength(); i < len; ++i){
 			node = list.item(i);
@@ -185,7 +199,7 @@ public class XmlUtil {
 		}
 	}
 	
-	public static Element each(NodeList list, OnEach onEach){
+	public static Element each(NodeList list, OnEach onEach) throws Exception{
 		Node node = null;
 		for (int i = 0, len = list.getLength(); i < len; ++i){
 			node = list.item(i);

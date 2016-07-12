@@ -11,6 +11,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.web.servlet.ModelAndView;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
@@ -25,11 +26,11 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 
 	ELParser elp;
 	
-	JSONObject parseJsonObject(Element pElem){
+	JSONObject parseJsonObject(Element pElem) throws Exception{
 		JSONObject pJson = new JSONObject();
 		XmlUtil.each(pElem.getChildNodes(), new XmlUtil.OnLoop(){
 			@Override
-			public void on(Element elem) {
+			public void on(Element elem) throws Exception {
 				if ("array".equals(elem.getAttribute("type"))){
 					JSONArray ja = parseJsonArray(elem);
 					pJson.put(elem.getTagName(), ja);
@@ -46,12 +47,12 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 		return pJson;
 	}
 	
-	protected JSONArray parseJsonArray(Element elem) {
+	protected JSONArray parseJsonArray(Element elem) throws DOMException, Exception {
 		JSONArray ja = new JSONArray();
 		ja.addAll(XmlUtil.toStringList(elem.getFirstChild().getTextContent(), elp));
 		XmlUtil.each(elem.getChildNodes(), new XmlUtil.OnLoop(){
 			@Override
-			public void on(Element el) {
+			public void on(Element el) throws DOMException, Exception {
 				if ("item".equals(el.getTagName())){
 					if ("array".equals(el.getAttribute("type"))){
 						ja.add(parseJsonArray(el));
@@ -65,7 +66,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 	}
 
 	@Override
-	public boolean accept(AbstractXmlComponent component, Element e) {
+	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 		
 		if (!Schema.isResponse(e)){
 			return false;
@@ -106,12 +107,12 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 		return true;
 	}
 
-	private Map parseMap(ELParser elp, Element e) {
+	private Map parseMap(ELParser elp, Element e) throws Exception {
 		Map map = new HashMap();
 		XmlUtil.each(e.getElementsByTagName("map"), new OnLoop(){
 
 			@Override
-			public void on(Element elem) {
+			public void on(Element elem) throws Exception {
 				String key = elem.getAttribute("key");
 				if (!key.isEmpty()){
 					Object val = XmlUtil.getObjectAttr(elem, "value", elp);
@@ -125,7 +126,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 		return map;
 	}
 
-	private Object parseElObj(String text) {
+	private Object parseElObj(String text) throws Exception {
 		Object obj = XmlUtil.getELValue(text, elp);
 		if (null == obj){
 			obj = text;

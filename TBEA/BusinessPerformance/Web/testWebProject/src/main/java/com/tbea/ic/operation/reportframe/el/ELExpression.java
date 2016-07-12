@@ -14,7 +14,7 @@ import com.tbea.ic.operation.reportframe.component.controller.ControllerSession;
 import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
 
 public class ELExpression{
-	static final Pattern objPattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*");   
+	static final Pattern namePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*");   
 	int start;
 	int end;
 	String express;
@@ -37,35 +37,19 @@ public class ELExpression{
 		return end;
 	}
 	
-	private Method getMethod(Object obj, String name){
+	private Method getMethod(Object obj, String name) {
 		try {
 			return obj.getClass().getMethod(name);
-		} catch (NoSuchMethodException e) {
-			//e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+		} catch (NoSuchMethodException | SecurityException e) {
 		}
 		return null;
 	}
 	
-	private Object Invoke(Object obj, Method md){
-		try {
-			return md.invoke(obj);
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	private Object Invoke(Object obj, Method md) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		return md.invoke(obj);
 	}
 	
-	private Object getProperty(Object obj, String propName){
+	private Object getProperty(Object obj, String propName) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		Object propValue = null;
 		if (obj instanceof ControllerRequest){
 			ControllerRequest request = (ControllerRequest) obj;
@@ -91,13 +75,13 @@ public class ELExpression{
 	}
 
 	public Object value() throws Exception{
-		Matcher matcher = objPattern.matcher(express);
+		Matcher matcher = namePattern.matcher(express);
 		String expressTmp = express;
 		while (matcher.find()){
 			Object obj = parseObject(matcher.group());
 			if (isNumber(obj)){
 				expressTmp = expressTmp.substring(0, matcher.start()) + obj + expressTmp.substring(matcher.end());
-				matcher = objPattern.matcher(expressTmp);
+				matcher = namePattern.matcher(expressTmp);
 			}else{
 				return obj;
 			}
@@ -110,12 +94,22 @@ public class ELExpression{
 		return null;
 	}
 
-	private Object parseObject(String exp) {
+	private Object parseObject(String exp) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		String[] exps = exp.split("\\.");
 		Object obj = loader.onGetObject(exps[0]);
 		for (int i = 1; i < exps.length; ++i){
+			if (obj == null){
+				System.out.println("EL : " + exp);
+				System.out.println(exps[i - 1] + " is null object");
+			}
 			obj = getProperty(obj, exps[i]);
 		}
+		
+		if (obj == null){
+			System.out.println("EL : " + exp);
+			System.out.println(exps[exps.length - 1] + " is null object");
+		}
+		
 		return obj;
 	}
 }

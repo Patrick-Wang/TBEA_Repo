@@ -1,39 +1,37 @@
 ﻿<components>
-	<service id="servXnyqyzb" transaction="transactionManager">
+	<service id="servYszkhkzb" transaction="transactionManager">
 		
-		<sql id="xnyzb">
+		<sql id="yszkhkzb">
 			select 
 				ZB.id, 
 				CONVERT(varchar(20), ZB.ksrq, 23) as startDate, 
-				CONVERT(varchar(20), ZB.jzrq, 23) as endDate,
+				CONVERT(varchar(20), ZB.jzrq, 23) as endDate, 
+				ZB.xmmc,
 				ZB.khmc,
-				ZB.cpmc,
-				CONVERT(varchar(20), ZB.ddrq, 23) as ddDate, 
-				ZB.qyl,
-				ZB.qydj,
-				ZB.qyje
+				ZB.htje,
+				ZB.yszkje,
+				ZB.yqkje,
+				ZB.yqksj
 			from 
-				xny_qyzb ZB, 
-				jygk_dwxx DWXX
+				yszkhkzb ZB
 			where 
-				ZB.xmgs = DWXX.id and 
 				ZB.xmgs = ${compId} and
 				ZB.ksrq &gt;= ${dStart.date} and 
 				ZB.jzrq &lt;= ${dEnd.date}
 			order by 
-				ZB.ksrq,
-				ZB.jzrq
+				ZB.xmgs
 		</sql>
 		
-		<sql id="xnyzbhj">
+		<sql id="yszkhkzbhj">
 			select 
 				CONVERT(varchar(20), ZB.ksrq, 23) as startDate, 
 				CONVERT(varchar(20), ZB.jzrq, 23) as endDate, 
-				sum(qyl) as sumQyl,
-				sum(qydj) as sumQydj,
-				sum(qyje) as sumQyje
+				sum(htje) as sumhtje,
+				sum(yszkje) as sumyszkje,
+				sum(yqkje) as sumyqkje,
+				sum(yqksj) as sumyqksj
 			from 
-				xny_qyzb ZB
+				yszkhkzb ZB
 			where 
 				ZB.xmgs = ${compId} and
 				ZB.ksrq &gt;= ${dStart.date} and 
@@ -46,48 +44,42 @@
 				ZB.jzrq
 		</sql>
 		
-		<call id="xnyqyGS" object="${groupSum}" method="xnyqyGroupSum">
-			<param type="object">${xnyzb}</param>
-			<param type="object">${xnyzbhj}</param>
+		<call id="gs" object="${groupSum}" method="yszkhkzbGroupSum">
+			<param type="object">${yszkhkzb}</param>
+			<param type="object">${yszkhkzbhj}</param>
 		</call>
 		
-		<list id="ids" type="int" sql="xnyqyGS" value="0"/>
-		<list id="ks" type="string" sql="xnyqyGS" value="1"/>
-		<list id="jz" type="string" sql="xnyqyGS" value="2"/>
-		<list id="khmc" type="string" sql="xnyqyGS" value="3"/> 
-		<list id="cpmc" type="string" sql="xnyqyGS" value="4"/>
-		<list id="ddrq" type="date" sql="xnyqyGS" value="5"/>
-		<list id="qyl" type="double" sql="xnyqyGS" value="6"/>
-		<list id="qydj" type="double" sql="xnyqyGS" value="7"/>
-		<list id="qyje" type="double" sql="xnyqyGS" value="8"/>
-		
+		<list id="ids" type="int" sql="gs" value="0" />
 		<table id="result" rowIds="ids">
-			<col list="ks"/>
-			<col list="jz"/>
-			<col list="khmc"/>
-			<col list="cpmc"/>
-			<col list="ddrq"/> 
-			<col list="qyl"/> 
-			<col list="qydj"/>
-			<col list="qyje"/>
+			<list id="ks" type="date" sql="gs" value="1" />
+			<list id="jz" type="date" sql="gs" value="2" />
+			<list id="xmmc" type="string" sql="gs" value="3" />
+			<list id="khmc" type="string" sql="gs" value="4" />
+			<list id="htje" type="double" sql="gs" value="5" />
+			<list id="yszkje" type="double" sql="gs" value="6" />
+			<list id="yqkje" type="double" sql="gs" value="7" />
+			<list id="yqksj" type="double" sql="gs" value="8" />
 		</table>
 
 		<context key="result" value="${result}"/>
 	</service>
 	
-	<controller id="xnyqyzbUpdate">
+	<controller id="yszkhkzbUpdate">
 
 		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
 		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
 		<callservice id="servCompTypeToId"/>
-		<callservice id="servXnyqyzb"/>
+		<callservice id="servYszkhkzb"/>
 		
 		<formatter id="data">
 			<NumberFormatter reservedCount="1">
-				<DefaultMatcher cols="7,8,9"/>
+				<DefaultMatcher cols="5,6,7"/>
+			</NumberFormatter>
+			<NumberFormatter reservedCount="0">
+				<DefaultMatcher cols="8"/>
 			</NumberFormatter>
 		</formatter>
-
+		
 		<formatterServer id="serv" table="${result.matrix}">
 			<formatter ref="data"/>
 		</formatterServer>
@@ -101,22 +93,22 @@
 					<name>截止日期</name>
 				</item>
 				<item>
+					<name>项目名称</name>
+				</item>
+				<item>
 					<name>客户名称</name>
 				</item>
 				<item>
-					<name>产品名称</name>
+					<name>合同金额</name>
 				</item>
 				<item>
-					<name>签订日期</name>
+					<name>应收账款金额</name>
 				</item>
 				<item>
-					<name>签约量</name>
+					<name>逾期款金额</name>
 				</item>
 				<item>
-					<name>签约单价</name>
-				</item>
-				<item>
-					<name>签约金额</name>
+					<name>逾期款时间（月）</name>
 				</item>
 			</header>
 			<mergeRows type="array">
@@ -126,31 +118,31 @@
 				<item>
 					<col>1</col>
 				</item>
-				<item>
-					<col>2</col>
-				</item>
 			</mergeRows>
 			<data>${serv.result}</data>
 		</response>
 	</controller>
 	
-	<controller id="xnyqyzbExport">
+	<controller id="yszkhkzbExport">
 
 		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
 		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
 		<callservice id="servCompTypeToId"/>
-		<callservice id="servXnyqyzb"/>
+		<callservice id="servYszkhkzb"/>
 		<context key="tbs" value="${result.matrixNoIds}"/>
 		
-		<ExcelTemplate id="excelTemplate" sheet="签约周报"/>
+		<ExcelTemplate id="excelTemplate" sheet="应收账款回款周报"/>
 		
 		<list id="title" type="string">
-			周期,周期,客户名称,产品名称,签订日期,签约量,签约单价,签约金额
+			周期,周期,项目公司,项目名称,客户名称,合同金额,应收账款金额,逾期款金额,逾期款时间（月）
 		</list>
 				
 		<formatter id="data">
 			<NumberFormatter reservedCount="1">
-				<DefaultMatcher cols="5,6,7"/>
+				<DefaultMatcher cols="4,5,6"/>
+			</NumberFormatter>
+			<NumberFormatter reservedCount="0">
+				<DefaultMatcher cols="7"/>
 			</NumberFormatter>
 		</formatter>
 		
@@ -165,10 +157,10 @@
 			<ExcelMergeFormatter>
 				<ExcelTemplate ref="excelTemplate"/>
 				<MergeRegion x="0" y="0" width="8" height="1"/>
-				<MergeRegion x="0" y="1" width="5" height="${tbs.size}"/>
+				<MergeRegion x="0" y="1" width="2" height="${tbs.size}"/>
 			</ExcelMergeFormatter>
 			<ExcelHeaderCenterFormatter>
-				<DefaultMatcher cols="0, 1, 2, 3, 4"/>
+				<DefaultMatcher cols="0, 1, 2, 3"/>
 				<ExcelTemplate ref="excelTemplate"/>
 				<Offset row="1" col="0"/>
 			</ExcelHeaderCenterFormatter>
@@ -183,17 +175,18 @@
 			<formatter ref="excel"/>
 		</formatterServer>
 
-		<response type="excel" ref="excelTemplate" name="签约周报.xls" serv="serv"/>
+		<response type="excel" ref="excelTemplate" name="应收账款回款周报.xls" serv="serv"/>
 	</controller>
-	<controller id="xnyqyzb">		
+	
+	<controller id="yszkhkzb">		
 		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
 			<param type="int">26</param>
 		</call>
 		<response type="jsp" name="xnyzb/xnyzb"> 
 			<map key="date" value="${calendar.current.format}"/>
-			<map key="updateUrl" value="xnyqyzbUpdate"/>
-			<map key="exportUrl" value="xnyqyzbExport"/>
-			<map key="title" value="签约周报"/>
+			<map key="updateUrl" value="yszkhkzbUpdate"/>
+			<map key="exportUrl" value="yszkhkzbExport"/>
+			<map key="title" value="应收账款回款周报"/>
 			<map map="${authCompMap}"/>
 		</response>
 	</controller>

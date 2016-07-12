@@ -45,7 +45,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 		}
 	}
 	
-	private void parseSql(AbstractXmlComponent component, Element e, List<Object> objs){
+	private void parseSql(AbstractXmlComponent component, Element e, List<Object> objs) throws Exception{
 		List sqlRet = (List) component.getVar(e.getAttribute("sql"));
 		if (sqlRet != null && !sqlRet.isEmpty()){
 			ELParser elParser = new ELParser(component);
@@ -67,7 +67,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	
 
 	@Override
-	public boolean accept(AbstractXmlComponent component, Element e) {
+	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 		boolean bRet= Schema.isList(e);
 		if (bRet) {
 			List<Object> objs = new ArrayList<Object>();
@@ -81,11 +81,11 @@ public class ListXmlInterpreter implements XmlInterpreter {
 		return bRet;
 	}
 
-	public static List<Integer> parserArray(AbstractXmlComponent component, String arr) {
+	public static List<Integer> parserArray(AbstractXmlComponent component, String arr) throws Exception {
 		return XmlUtil.toIntList(arr, new ELParser(component));
 	}
 	
-	private void parseItems(AbstractXmlComponent component, Element e, List<Object> objs) {
+	private void parseItems(AbstractXmlComponent component, Element e, List<Object> objs) throws Exception {
 		NodeList children = e.getChildNodes();
 		int type = TypeUtil.typeof(e);
 		ELParser elp = new ELParser(component);
@@ -102,7 +102,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 		
 		XmlUtil.each(children, new OnLoop(){
 			@Override
-			public void on(Element elem) {
+			public void on(Element elem) throws Exception {
 				if (elem.getTagName().equals("item")) {
 					int repeat = XmlUtil.getIntAttr(elem, "repeat", elp, 1);
 					int insert = XmlUtil.getIntAttr(elem, "insert", elp, objs.size());

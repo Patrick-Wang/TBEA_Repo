@@ -1,23 +1,6 @@
 ﻿<components>
-	<service id="servXnyzbCpzl" transaction="transactionManager">
-		
-		<sql id="cpzlSql">
-			select 
-				id,
-				cpzl
-			from 
-				xnyzb_cpzl
-			where 
-				xmgs = ${compId}
-		</sql>
-		
-		<list id="cpzl" type="string" sql="cpzlSql" value="1" />
-
-		<context key="cpzl" value="${cpzl}"/>
-	</service>
-	
-	<service id="servXnyzbEntry" transaction="transactionManager">
-		<merge data="${data}" id="0" table="xnyzb">
+	<service id="servEntryXnyqyzb" transaction="transactionManager">
+		<merge data="data" id="0" table="xny_qyzb">
 			<where>
 				<id type="int" ref="0"/>
 			</where>
@@ -25,55 +8,87 @@
 				<ksrq type="date" ref="1"/>
 				<jzrq type="date" ref="2"/>
 				<xmgs type="int" value="${compId}"/>
-				<cpzl type="string" ref="4"/>
-				<cpxh type="string" ref="5"/>
-				<bzscl type="double" ref="6"/>
-				<bzfhl type="double" ref="7"/>
-				<bzxsjg type="string" ref="8"/>
+				<khmc type="string" ref="3"/>
+				<cpmc type="string" ref="4"/>
+				<ddrq type="date" ref="5"/>
+				<qyl type="double" ref="6"/>
+				<qydj type="double" ref="7"/>
+				<qyje type="double" ref="8"/>
 				<zt type="int" value="${zt}"/>
 			</set>
 		</merge>
 	</service>
 	
-	<service id="servCompTypeToId">
-		<call id="compId" object="${compTypeIdMapper}" method="getId">
-			<param type="int">${request.compId.asInt}</param>
-		</call>
-		<context key="compId" value="${compId}"/>
+	<service id="servXnyqyEntry" transaction="transactionManager">
+		
+		<sql id="qyzb">
+			select 
+				ZB.id, 
+				CONVERT(varchar(20), ZB.ksrq, 23) as startDate, 
+				CONVERT(varchar(20), ZB.jzrq, 23) as endDate,
+				ZB.khmc,
+				ZB.cpmc,
+				CONVERT(varchar(20), ZB.ddrq, 23) as ddDate, 
+				ZB.qyl,
+				ZB.qydj,
+				ZB.qyje
+			from 
+				xny_qyzb ZB, 
+				jygk_dwxx DWXX
+			where 
+				ZB.xmgs = DWXX.id and 
+				ZB.xmgs = ${compId} and
+				ZB.ksrq &gt;= ${dStart.date} and 
+				ZB.jzrq &lt;= ${dEnd.date}
+			order by 
+				ZB.ksrq,
+				ZB.jzrq
+		</sql>
+		
+		<list id="ids" type="int" sql="qyzb" value="0"/>
+		<list id="ks" type="string" sql="qyzb" value="1"/>
+		<list id="jz" type="string" sql="qyzb" value="2"/>
+		<list id="khmc" type="string" sql="qyzb" value="3"/> 
+		<list id="cpmc" type="string" sql="qyzb" value="4"/>
+		<list id="ddrq" type="date" sql="qyzb" value="5"/>
+		<list id="qyl" type="double" sql="qyzb" value="6"/>
+		<list id="qydj" type="double" sql="qyzb" value="7"/>
+		<list id="qyje" type="double" sql="qyzb" value="8"/>
+		
+		<table id="result" rowIds="ids">
+			<col list="ks"/>
+			<col list="jz"/>
+			<col list="khmc"/>
+			<col list="cpmc"/>
+			<col list="ddrq"/> 
+			<col list="qyl"/> 
+			<col list="qydj"/>
+			<col list="qyje"/>
+		</table>
+
+		<context key="result" value="${result}"/>
 	</service>
 	
-	<controller id="xnyzbSubmit">
+	<controller id="submitXnyqyzb">
 		<context key="data" value="${request.data.asJsonArray}"></context>
-		<context key="zt" value="4"></context>
+		<context key="zt" value="${4}"></context>
 		<callservice id="servCompTypeToId"/>
-		<callservice id="servXnyzbEntry"/>
+		<callservice id="servEntryXnyqyzb"/>
 		<response type="json">
 			<errorCode>0</errorCode>
 			<message>OK</message>
 		</response>
 	</controller>
 	
-	<controller id="xnyzbSave">
-		<context key="data" value="${request.data.asJsonArray}"></context>
-		<context key="zt" value="3"></context>
-		<callservice id="servCompTypeToId"/>
-		<callservice id="servXnyzbEntry"/>
-		<response type="json">
-			<errorCode>0</errorCode>
-			<message>OK</message>
-		</response>
-	</controller>
-	
-	<controller id="xnyzbEntryUpdate">
+	<controller id="xnyqyzbEntryUpdate">
 		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
 		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
 		<callservice id="servCompTypeToId"/>
-		<callservice id="servXnyzb"/>
-		<callservice id="servXnyzbCpzl"/>
+		<callservice id="servXnyqyEntry"/>
 
 		<formatter id="data">
 			<NumberFormatter reservedCount="1">
-				<DefaultMatcher cols="6,7"/>
+				<DefaultMatcher cols="6,7,8"/>
 			</NumberFormatter>
 		</formatter>
 		
@@ -84,55 +99,50 @@
 		<response type="json"> 
 			<header type="array">
 				<item>
-					<name>周期</name>
-					<sub type="array">
-						<item>
-							<name>开始</name>
-							<type>date</type>
-						</item>
-						<item>
-							<name>截至</name>
-							<type>date</type>
-						</item>
-					</sub>
+					<name>开始日期</name>
+					<type>date</type>
 				</item>
 				<item>
-					<name>项目公司</name>
-					<type>hidden</type>
+					<name>截止日期</name>
+					<type>date</type>
 				</item>
 				<item>
-					<name>产品种类</name>
-					<type>select</type>
-					<options>${cpzl}</options>
-				</item>
-				<item>
-					<name>产品型号</name>
+					<name>客户名称</name>
 					<type>text</type>
 				</item>
 				<item>
-					<name>本周生产量</name>
-					
-				</item>
-				<item>
-					<name>本周发货量</name>
-				</item>
-				<item>
-					<name>本周销售价格</name>
+					<name>产品名称</name>
 					<type>text</type>
+				</item>
+				<item>
+					<name>签订日期</name>
+					<type>date</type>
+				</item>
+				<item>
+					<name>签约量</name>
+				</item>
+				<item>
+					<name>签约单价</name>
+				</item>
+				<item>
+					<name>签约金额</name>
 				</item>
 			</header>
 			<data>${serv.result}</data>
 		</response>
 	</controller>
 	
-	<controller id="xnychEntryJsp">
+	<controller id="xnyqyzbEntryJsp">
 		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-			<param type="int">11</param>
+			<param type="int">25</param>
 		</call>
 
 		<response type="jsp" name="xnyzb/xnyzbEntry"> 
 			<map key="date" value="${calendar.current.format}"/>
 			<map map="${authCompMap}"/>
+			<map key="updateUrl" value="xnyqyzbEntryUpdate"/>
+			<map key="submitUrl" value="submitXnyqyzb"/>
+			<map key="title" value="签约周报"/>
 		</response>
 	</controller>
 </components>

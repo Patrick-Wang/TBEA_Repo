@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,7 +25,6 @@ import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerSession;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
-import com.tbea.ic.operation.reportframe.component.service.Service;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
@@ -58,7 +55,7 @@ public class ReportServlet {
 	@RequestMapping(value = "{controllor}.do")
 	public ModelAndView ssoLogin(HttpServletRequest request,
 			HttpServletResponse response,
-			@PathVariable("controllor") String controllor) {
+			@PathVariable("controllor") String controllor) throws Exception {
 		com.tbea.ic.operation.reportframe.component.controller.Controller controller = compMgr.getController(controllor);
 		if (null != controller){
 			Context context = new Context();
@@ -66,6 +63,8 @@ public class ReportServlet {
 			context.put(Component.RESPONSE, response);
 			context.put(Component.CALENDAR, new EasyCalendar());
 			context.put(Component.SESSION, new ControllerSession(request.getSession()));
+			context.put("groupSum", new GroupSum());
+			context.put("array", new Arrays());
 			context.put("transactionManager", trProxy);
 			context.put("authManager", new AuthManager(){
 

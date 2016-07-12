@@ -1,20 +1,19 @@
 ﻿/***************************************************************************** 新能源公司制造业项目公司周报表
-	开始日期	截止日期	项目公司	客户名称	产品名称	签订日期	签约量	签约单价	签约金额
-id start end xmgs cpzl cpxh bzscl bzfhl bzxsjg
+	开始日期	截止日期	项目公司	项目名称	客户名称	合同金额	应收账款金额	逾期款金额	逾期款时间（月）
 *****************************************************************************/
-IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'xny_qyzb')
-DROP TABLE xny_qyzb
-CREATE TABLE [dbo].[xny_qyzb](
+IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'yszkhkzb')
+DROP TABLE yszkhkzb
+CREATE TABLE [dbo].[yszkhkzb](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[ksrq] [date] NOT NULL,
 	[jzrq] [date] NOT NULL,
 	[xmgs] [int] NOT NULL,
+	[xmmc] [varchar](100),
 	[khmc] [varchar](50),
-	[cpmc] [varchar](50),
-	[ddrq] [date],
-	[qyl] [numeric](18, 4),
-	[qydj] [numeric](18, 4),
-	[qyje] [numeric](18, 4),
+	[htje] [numeric](18, 4),
+	[yszkje] [numeric](18, 4),
+	[yqkje] [numeric](18, 4),
+	[yqksj] [int]
 	[zt] [int] NOT NULL
 PRIMARY KEY CLUSTERED 
 (
