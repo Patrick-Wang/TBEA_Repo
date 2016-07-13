@@ -60,9 +60,9 @@ public class ReportServlet {
 		if (null != controller){
 			Context context = new Context();
 			context.put(Component.REQUEST, new ControllerRequest(request));
+			context.put(Component.SESSION, new ControllerSession(request.getSession()));
 			context.put(Component.RESPONSE, response);
 			context.put(Component.CALENDAR, new EasyCalendar());
-			context.put(Component.SESSION, new ControllerSession(request.getSession()));
 			context.put("groupSum", new GroupSum());
 			context.put("array", new Arrays());
 			context.put("transactionManager", trProxy);

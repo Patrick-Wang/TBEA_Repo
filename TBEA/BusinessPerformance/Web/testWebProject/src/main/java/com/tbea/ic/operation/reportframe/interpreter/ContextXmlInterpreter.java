@@ -2,6 +2,7 @@ package com.tbea.ic.operation.reportframe.interpreter;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 

@@ -112,7 +112,7 @@
 		</response>
 	</controller>
 	
-	<controller id="authority">
+	<controller id="authConfig">
 		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
 			<param type="int">25</param>
 		</call>

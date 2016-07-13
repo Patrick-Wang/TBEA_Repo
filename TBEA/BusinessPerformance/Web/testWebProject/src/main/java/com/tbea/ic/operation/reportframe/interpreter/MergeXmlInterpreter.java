@@ -19,6 +19,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.interpreter.excel.ExcelUtil;

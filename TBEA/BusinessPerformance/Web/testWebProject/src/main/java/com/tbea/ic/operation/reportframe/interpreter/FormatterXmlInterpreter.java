@@ -23,6 +23,7 @@ import com.tbea.ic.operation.common.formatter.v2.excel.ExcelMergeFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTextFormatter;
 import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTitleFilter;
+import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
@@ -89,7 +90,11 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		});
 		
 		String id = e.getAttribute("id");
-		component.local(id, handlers);
+		if ("true".equals(e.getAttribute("global"))){
+			component.global(id, handlers);
+		}else{
+			component.local(id, handlers);
+		}
 		return true;
 	}
 

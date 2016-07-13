@@ -6,6 +6,7 @@ import java.util.List;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.TypeUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
@@ -76,7 +77,11 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			
 			parseItems(component, e, objs);
 
-			component.local(e.getAttribute("id"), objs);
+			if ("true".equals(e.getAttribute("global"))){
+				component.global(e.getAttribute("id"), objs);
+			}else{
+				component.local(e.getAttribute("id"), objs);
+			}
 		}
 		return bRet;
 	}

@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.reportframe.el.ELExpression;
 import com.tbea.ic.operation.reportframe.el.ELParser;
@@ -58,8 +59,12 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 				}
 			}
 		}
-		
-		component.local(id, ret);
+
+		if ("true".equals(e.getAttribute("global"))){
+			component.global(id, ret);
+		}else{
+			component.local(id, ret);
+		}
 		return true;
 	}
 }

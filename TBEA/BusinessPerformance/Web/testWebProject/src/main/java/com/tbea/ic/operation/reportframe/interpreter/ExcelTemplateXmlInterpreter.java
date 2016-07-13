@@ -4,6 +4,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
+import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 
 
 public class ExcelTemplateXmlInterpreter implements XmlInterpreter {
@@ -19,7 +20,11 @@ public class ExcelTemplateXmlInterpreter implements XmlInterpreter {
 		String sheetName = e.getAttribute("sheet");
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		workbook.createSheet(sheetName);
-		component.local(id, new ExcelTemplate(workbook));
+		if ("true".equals(e.getAttribute("global"))){
+			component.global(id, new ExcelTemplate(workbook));
+		}else{
+			component.local(id, new ExcelTemplate(workbook));
+		}
 		return true;
 	}
 }

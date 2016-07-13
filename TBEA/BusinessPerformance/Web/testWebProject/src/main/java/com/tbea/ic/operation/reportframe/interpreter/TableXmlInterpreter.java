@@ -10,6 +10,7 @@ import org.w3c.dom.NodeList;
 
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.entity.Table;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
@@ -53,7 +54,12 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			}
 			
 		});
-		component.local(id, tb);
+
+		if ("true".equals(e.getAttribute("global"))){
+			component.global(id, tb);
+		}else{
+			component.local(id, tb);
+		}
 		return true;
 	}
 

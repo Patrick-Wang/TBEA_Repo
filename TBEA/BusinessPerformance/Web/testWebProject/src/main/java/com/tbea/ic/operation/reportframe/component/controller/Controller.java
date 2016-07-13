@@ -3,8 +3,8 @@ package com.tbea.ic.operation.reportframe.component.controller;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
-import com.tbea.ic.operation.reportframe.interpreter.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.interpreter.CallServiceXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.CallXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ContextXmlInterpreter;

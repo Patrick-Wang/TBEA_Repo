@@ -2,8 +2,8 @@ package com.tbea.ic.operation.reportframe.component.service;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
-import com.tbea.ic.operation.reportframe.interpreter.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.interpreter.CallXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ContextXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ListXmlInterpreter;

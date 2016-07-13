@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.TypeUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
@@ -168,7 +169,11 @@ public class CallXmlInterpreter implements XmlInterpreter {
 			if (e.hasAttribute("id")){
 				Object result = invoke(md, obj, params);
 				String id = e.getAttribute("id");
-				component.local(id, result);
+				if ("true".equals(e.getAttribute("global"))){
+					component.global(id, result);
+				}else{
+					component.local(id, result);
+				}
 			}else{
 				invokeVoid(md, obj, params);
 			}

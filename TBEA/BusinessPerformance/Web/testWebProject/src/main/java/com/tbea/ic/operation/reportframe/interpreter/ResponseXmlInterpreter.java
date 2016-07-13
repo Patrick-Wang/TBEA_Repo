@@ -16,6 +16,7 @@ import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
+import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.controller.Controller;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;

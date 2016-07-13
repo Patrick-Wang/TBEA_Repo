@@ -1,9 +1,7 @@
-package com.tbea.ic.operation.reportframe.interpreter;
+package com.tbea.ic.operation.reportframe.component;
 
 import org.w3c.dom.Element;
 
-import com.tbea.ic.operation.reportframe.component.Component;
-import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
 
@@ -37,12 +35,18 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 			local.put(key, value);
 		}
 		if (value == null){
-			System.out.println("object " + key + " is null");
+			System.out.println("local object " + key + " is null");
 		}
 	}
 	
 	public void global(String key, Object value){
-		global.put(key, value);
+
+		if (!key.isEmpty()){
+			global.put(key, value);
+		}
+		if (value == null){
+			System.out.println("global object " + key + " is null");
+		}
 	}
 	
 	public AbstractXmlComponent(Element e, ComponentManager mgr){

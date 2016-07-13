@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
+import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
@@ -46,7 +48,11 @@ public class FormatterServerXmlInterpreter implements XmlInterpreter {
 		serv.setTable((List<List<String>>) XmlUtil.getObjectAttr(e, "table", new ELParser(component)));
 		
 		String id = e.getAttribute("id");
-		component.local(id, serv);
+		if ("true".equals(e.getAttribute("global"))){
+			component.global(id, serv);
+		}else{
+			component.local(id, serv);
+		}
 		return true;
 	}
 }

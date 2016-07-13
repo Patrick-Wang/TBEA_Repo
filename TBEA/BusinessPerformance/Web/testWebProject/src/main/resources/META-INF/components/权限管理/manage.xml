@@ -62,7 +62,7 @@
 		</response>
 	</controller>
 	
-	<controller id="manage">
+	<controller id="authManage">
 		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
 			<param type="int">25</param>
 		</call>
