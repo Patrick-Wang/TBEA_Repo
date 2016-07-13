@@ -1,97 +1,249 @@
 ﻿<components>
-	<service id="servEntryYszkhkzb" transaction="transactionManager">
-		<merge data="${data}" id="0" table="yszkhkzb">
+	
+	<service id="servXnyrbEntryUpdate" transaction="transactionManager">
+		
+		<sql id="djgrb">
+			select 
+				id,
+				dwid,
+				drwc,
+				kcjy,
+				yjh,
+				njh
+			from  
+				djgrb
+			where 
+				date = ${date}
+		</sql>
+		<sql id="djgnjh">
+			select
+				dwid,
+				njh
+			from  
+				djgnjh
+			where 
+				nf = ${cal.year}
+		</sql>
+		<sql id="djgyjh">
+			select
+				dwid,
+				yjh
+			from  
+				djgyjh
+			where 
+				nf = ${cal.year} and
+				yf = ${cal.month}
+		</sql>
+
+		<list id="dwid" type="int">1002,1003</list>
+		<table id="djgResult" rowIds="dwid" global="true">
+			<list type="string">一分公司,二分公司</list>
+			<list type="double" sql="djgrb" value="2" order="dwid" by="1"/>
+			<list type="double" sql="djgrb" value="3" order="dwid" by="1"/>
+			<list type="double" sql="djgnjh" value="1" order="dwid" by="0"/>
+			<list type="double" sql="djgyjh" value="1" order="dwid" by="0"/>
+		</table>
+		
+		
+		<sql id="zbdcrb">
+			select 
+				id,
+				dwid,
+				zbmc,
+				drwc,
+				yjh,
+				njh
+			from  
+				zbdcrb
+			where 
+				date = ${date}
+		</sql>
+		<sql id="zbdcnjh">
+			select 
+				zbmc,
+				njh
+			from  
+				zbdcnjh
+			where 
+				nf = ${cal.year}
+		</sql>
+		<sql id="zbdcyjh">
+			select 
+				zbmc,
+				yjh
+			from  
+				zbdcyjh
+			where 
+				nf = ${cal.year} and
+				yf = ${cal.month}
+		</sql>
+		<list id="zbmc" type="string">发电量,上网电量</list>
+		<list id="ids" type="int" >1,2</list>
+		<table id="zbdcResult" rowIds="ids" global="true">
+			<col list="zbmc"/>
+			<list type="double" sql="zbdcrb" value="3" order="zbmc" by="2"/>
+			<list type="double" sql="zbdcnjh" value="1" order="zbmc" by="0"/>
+			<list type="double" sql="zbdcyjh" value="2" order="zbmc" by="0"/>
+		</table>
+	</service>
+
+	<service id="servXnyrbEntry" transaction="transactionManager">
+	<!--
+		dwid	dwmc	drwc	kcjy	yjh	njh
+	-->
+		<merge data="djgData" table="djgrb">
+			<where>
+				<date type="date" value="${cal.date}"/>
+				<dwid type="int" ref="0"/>
+			</where>
 			<set>
-				<ksrq type="date" ref="0"/>
-				<jzrq type="date" ref="1"/>
-				<xmgs type="int" value="${compId}"/>
-				<xmmc type="string" ref="2"/>
-				<khmc type="string" ref="3"/>
-				<htje type="double" ref="4"/>
-				<yszkje type="double" ref="5"/>
-				<yqkje type="double" ref="6"/>
-				<yqksj type="int" ref="7"/>
+				<drwc type="double" ref="2"/>
+				<kcjy type="double" ref="3"/>
+				<zt type="int" value="${zt}"/>
+			</set>
+		</merge>
+		<merge data="djgData" table="djgyjh">
+			<where>
+				<nf type="int" value="${cal.year}"/>
+				<yf type="int" value="${cal.month}"/>
+				<dwid type="int" ref="0"/>
+			</where>
+			<set>
+				<yjh type="double" ref="4"/>
+				<zt type="int" value="${zt}"/>
+			</set>
+		</merge>
+		<merge data="djgData" table="djgnjh">
+			<where>
+				<nf type="int" value="${cal.year}"/>
+				<dwid type="int" ref="0"/>
+			</where>
+			<set>
+				<njh type="double" ref="5"/>
+				<zt type="int" value="${zt}"/>
+			</set>
+		</merge>
+	<!--
+		zbid	zbmc	drwc	yjh	njh
+	-->
+		<merge data="zbdcData" table="zbdcrb">
+			<where>
+				<date type="date" value="${cal.date}"/>
+				<zbmc type="string" ref="1"/>
+			</where>
+			<set>
+				<drwc type="double" ref="2"/>
+				<zt type="int" value="${zt}"/>
+			</set>
+		</merge>
+		<merge data="zbdcData" table="zbdcyjh">
+			<where>
+				<nf type="int" value="${cal.year}"/>
+				<yf type="int" value="${cal.month}"/>
+				<zbmc type="string" ref="1"/>
+			</where>
+			<set>
+				<yjh type="double" ref="3"/>
+				<zt type="int" value="${zt}"/>
+			</set>
+		</merge>
+		<merge data="zbdcData" table="zbdcnjh">
+			<where>
+				<nf type="int" value="${cal.year}"/>
+				<zbmc type="string" ref="1"/>
+			</where>
+			<set>
+				<njh type="double" ref="4"/>
 				<zt type="int" value="${zt}"/>
 			</set>
 		</merge>
 	</service>
-	
-	<controller id="yszkhkzbImport">
-		<context key="data" value="${request.upfile.asExcel}"></context>
+
+	<controller id="xnyrbSubmit">
+		<context key="djgData" value="${request.data.asJsonObject.djg}"></context>
+		<context key="zbdcData" value="${request.data.asJsonObject.zbdc}"></context>
+		<context key="cal" value="${request.date.asCalendare}"></context>
 		<context key="zt" value="${4}"></context>
-		<callservice id="servCompTypeToId"/>
-		<callservice id="servEntryYszkhkzb"/>
+		<callservice id="servXnyrbEntry"/>
 		<response type="json">
 			<errorCode>0</errorCode>
 			<message>OK</message>
 		</response>
 	</controller>
-
 	
-<!-- 	<controller id="yszkhkzbEntryUpdate">
-		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
-		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
-		<callservice id="servCompTypeToId"/>
-		<callservice id="yszkhkzbUpdate"/>
+
+ 	<controller id="xnyrbEntryUpdate">
+		<context key="date" value="${request.date.asCalendar.date}"/>
+		<context key="cal" value="${request.date.asCalendar}"/>
+		<callservice id="servXnyrbEntryUpdate"/>
 
 		<formatter id="data">
+			<EmptyFormatter>
+				<DefaultMatcher cols="0, 1"/>
+			</EmptyFormatter>
 			<NumberFormatter reservedCount="1">
-				<DefaultMatcher cols="6,7"/>
 			</NumberFormatter>
 		</formatter>
 		
-		<formatterServer id="serv" table="${result.matrix}" acceptNullAs="">
+		<formatterServer id="servDjg" table="${djgResult.matrix}" acceptNullAs="">
+			<formatter ref="data"/>
+		</formatterServer>
+		<formatterServer id="servZbdc" table="${zbdcResult.matrix}" acceptNullAs="">
 			<formatter ref="data"/>
 		</formatterServer>
 		
 		<response type="json"> 
-			<header type="array">
-				<item>
-					<name>周期</name>
-					<sub type="array">
-						<item>
-							<name>开始</name>
-							<type>date</type>
-						</item>
-						<item>
-							<name>截至</name>
-							<type>date</type>
-						</item>
-					</sub>
-				</item>
-				<item>
-					<name>产品种类</name>
-					<type>select</type>
-					<options>${cpzl}</options>
-				</item>
-				<item>
-					<name>产品型号</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>本周生产量</name>
-					
-				</item>
-				<item>
-					<name>本周发货量</name>
-				</item>
-				<item>
-					<name>本周销售价格</name>
-					<type>text</type>
-				</item>
-			</header>
-			<data>${serv.result}</data>
+			<djg>
+				<header type="array">
+					<item>
+						<name>分公司</name>
+						<readOnly>true</readOnly>
+					</item>
+					<item>
+						<name>当日完成</name>
+					</item>
+					<item>
+						<name>库存结余</name>
+					</item>
+					<item>
+						<name>月计划</name>
+					</item>
+					<item>
+						<name>年计划</name>
+					</item>
+				</header>
+				<data>${servDjg.result}</data>
+			</djg>
+			<zbdc>
+				<header type="array">
+					<item>
+						<name>分公司</name>
+						<readOnly>true</readOnly>
+					</item>
+					<item>
+						<name>当日完成</name>
+					</item>
+					<item>
+						<name>库存结余</name>
+					</item>
+					<item>
+						<name>月计划</name>
+					</item>
+					<item>
+						<name>年计划</name>
+					</item>
+				</header>
+				<data>${servZbdc.result}</data>
+			</zbdc>
 		</response>
-	</controller> -->
+	</controller>
 	
-	<controller id="yszkhkzbImportJsp">
-		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-			<param type="int">25</param>
-		</call>
-		<response type="jsp" name="components/import_data"> 
-			<map map="${authCompMap}"/>
-			<map key="importUrl" value="yszkhkzbImport"/>
-			<map key="title" value="应收账款回款周报"/>
+	<controller id="xnyrbEntryJsp">
+		<response type="jsp" name="xnyr/xnyrEntry"> 
+			<map key="date" value="${calendar.current.format}"/>
+			<map key="updateUrl" value="xnyrbEntryUpdate"/>
+			<map key="submitUrl" value="xnyrbSubmit"/>
+			<map key="title" value="新能源日报"/>
 		</response>
 	</controller>
 </components>

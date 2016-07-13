@@ -3,9 +3,12 @@ package com.tbea.ic.operation.reportframe.interpreter;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.TypeUtil;
@@ -48,21 +51,26 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	
 	private void parseSql(AbstractXmlComponent component, Element e, List<Object> objs) throws Exception{
 		List sqlRet = (List) component.getVar(e.getAttribute("sql"));
-		if (sqlRet != null && !sqlRet.isEmpty()){
+		if (null != sqlRet){
 			ELParser elParser = new ELParser(component);
-			
-			if (sqlRet.get(0).getClass().isArray()){
-				int index = XmlUtil.getIntAttr(e, "value", elParser, 0);
+			if (!sqlRet.isEmpty()){
+				if (sqlRet.get(0).getClass().isArray()){
+					int index = XmlUtil.getIntAttr(e, "value", elParser, 0);
+					List order = (List) component.getVar(e.getAttribute("order"));
+					if (null != order){
+						int by = XmlUtil.getIntAttr(e, "by", elParser, 0);
+						injectFromSql(objs, sqlRet, index, order, by);
+					}else{
+						injectFromSql(objs, sqlRet, index);
+					}
+				}	
+			}else{
 				List order = (List) component.getVar(e.getAttribute("order"));
 				if (null != order){
 					int by = XmlUtil.getIntAttr(e, "by", elParser, 0);
-					injectFromSql(objs, sqlRet, index, order, by);
-				}else{
-					injectFromSql(objs, sqlRet, index);
+					injectFromSql(objs, sqlRet, 0, order, by);
 				}
-			}else{
-				
-			}			
+			}
 		}
 	}
 	
@@ -72,6 +80,8 @@ public class ListXmlInterpreter implements XmlInterpreter {
 		boolean bRet= Schema.isList(e);
 		if (bRet) {
 			List<Object> objs = new ArrayList<Object>();
+			
+			parseJson(component, e, objs);
 			
 			parseSql(component, e, objs);
 			
@@ -84,6 +94,31 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			}
 		}
 		return bRet;
+	}
+
+	private void parseJson(AbstractXmlComponent component, Element e,
+			List<Object> objs) {
+		ELParser elp = new ELParser(component);
+		if (e.hasAttribute("json") && e.hasAttribute("col")){
+			Object jarr;
+			try {
+				jarr = XmlUtil.getELValue(e.getAttribute("json"), elp);
+				Integer col = XmlUtil.getIntAttr(e, "col", elp, null);
+				if (jarr instanceof JSONArray && col != null){
+					JSONArray jrow = ((JSONArray)jarr).getJSONArray(col);
+					for (int i = 0; i < jrow.size(); ++i){
+						objs.add(jrow.get(i));
+					}
+				}else{
+					System.out.println(e.getAttribute("id") + " parseJson failed");
+				}
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		}
+		
 	}
 
 	public static List<Integer> parserArray(AbstractXmlComponent component, String arr) throws Exception {

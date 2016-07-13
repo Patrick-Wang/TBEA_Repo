@@ -10,6 +10,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -34,6 +35,11 @@ public class ControllerRequest {
 		public JSONArray asJsonArray(){
 			String val = req.getParameter(paraName);
 			return JSONArray.fromObject(val);
+		}
+		
+		public JSONObject asJsonObject(){
+			String val = req.getParameter(paraName);
+			return JSONObject.fromObject(val);
 		}
 		
 		public EasyCalendar asCalendar(){

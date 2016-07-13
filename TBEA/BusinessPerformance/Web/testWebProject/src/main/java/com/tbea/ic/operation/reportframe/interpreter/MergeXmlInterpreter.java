@@ -125,6 +125,12 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 						merge(em, table, jrow, where, set);
 					}
 				}		
+			} else if (dataObj instanceof List){
+				List<List<Object>> objs = (List<List<Object>>) dataObj;
+				for (int i = 0; i < objs.size(); ++i){
+					JSONArray jrow = List2Json(objs.get(i));
+					merge(em, table, jrow, where, set);
+				}
 			} 
 		}
 		
@@ -133,6 +139,15 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 
 	
 	
+	private JSONArray List2Json(List<Object> objs) {
+		JSONArray jrow = new JSONArray();
+		for (Object obj : objs){
+			jrow.add(obj);
+		}
+		return jrow;
+	}
+
+
 	private String getValue(JSONArray row, FieldSql sql, EntityManager em){
 		String ret = null;
 		if (sql.getValue() != null){
@@ -275,36 +290,54 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		em.createNativeQuery(sb.toString()).executeUpdate() ;
 	}
 
-	private void doUpdate(EntityManager em, String table, JSONArray row,
-			List<FieldSql> where, List<FieldSql> set) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(" UPDATE ");
-		sb.append(table);
-		sb.append(" ");
-		if (!set.isEmpty()){
-			sb.append(" SET ");
-			for (FieldSql setSql: set){
-				sb.append(setSql.getProp());
-				sb.append("=");
-				sb.append(getValue(row, setSql, em));
-				if (setSql != set.get(set.size() - 1)){
-					sb.append(", ");
-				}
-			}
-		}
-		
+	private String parseWhereSql(EntityManager em, JSONArray row){
 		if (!where.isEmpty()){
+			StringBuilder sb = new StringBuilder();
 			sb.append(" WHERE ");
 			for (FieldSql whereSql: where){
 				sb.append(whereSql.getProp());
-				sb.append("=");
+				sb.append(whereSql.getOper());
 				sb.append(getValue(row, whereSql, em));
 				if (whereSql != where.get(where.size() - 1)){
 					sb.append("and ");
 				}
 			}
+			return sb.toString();
 		}
-		em.createNativeQuery(sb.toString()).executeUpdate();
+		return null;
+	}
+	
+	private void doUpdate(EntityManager em, String table, JSONArray row,
+			List<FieldSql> where, List<FieldSql> set) {
+		String whereSql = parseWhereSql(em, row);
+		Long count = null;
+		if (null != whereSql){
+			List ret = em.createNativeQuery("select count(*) from " + whereSql).getResultList();
+			count = (Long)ret.get(0);
+		}
+		if (count > 0){
+			StringBuilder sb = new StringBuilder();
+			sb.append(" UPDATE ");
+			sb.append(table);
+			sb.append(" ");
+			if (!set.isEmpty()){
+				sb.append(" SET ");
+				for (FieldSql setSql: set){
+					sb.append(setSql.getProp());
+					sb.append("=");
+					sb.append(getValue(row, setSql, em));
+					if (setSql != set.get(set.size() - 1)){
+						sb.append(", ");
+					}
+				}
+			}
+			em.createNativeQuery(sb.toString() + whereSql).executeUpdate();
+		}else{
+			doInsert(em, table, row, where, set);
+		}
+		
+		
+		
 	}
 
 	private FieldSql compileElement(Element elem) throws Exception{
@@ -312,6 +345,9 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		FieldSql fs = new FieldSql();
 		fs.setProp(elem.getTagName());
 		fs.setType(TypeUtil.typeof(elem));
+		if (elem.hasAttribute("op")){
+			fs.setOper(elem.getAttribute("op"));
+		}
 		if (val != null){
 			fs.setValue(val);
 		}else{
@@ -328,9 +364,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			else {
 				fs = null;
 			}
-		}
-		
-		
+		}	
 		
 		return fs;
 	}

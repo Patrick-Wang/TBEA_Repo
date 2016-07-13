@@ -2,6 +2,8 @@ package com.tbea.ic.operation.reportframe.el;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,12 +11,18 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import com.tbea.ic.operation.common.EasyCalendar.MonthDay;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerSession;
 import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
 
 public class ELExpression{
-	static final Pattern namePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*");   
+	static final Pattern namePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*(\\[[0-9]+\\])*");  
+	static final Pattern indexsPattern = Pattern.compile("\\[\\S*\\]"); 
+	static final Pattern indexPattern = Pattern.compile("[0-9]+");
 	int start;
 	int end;
 	String express;
@@ -57,6 +65,9 @@ public class ELExpression{
 		}else if (obj instanceof ControllerSession){
 			ControllerSession session = (ControllerSession) obj;
  			propValue = session.getAttribute(propName);
+		}else if (obj instanceof JSONObject){
+			JSONObject jsonObj = (JSONObject) obj;
+ 			propValue = jsonObj.get(propName);
 		}else{
 			Method md = getMethod(obj, propName);
 			if (null == md){
@@ -94,10 +105,19 @@ public class ELExpression{
 		return null;
 	}
 
+	List<Integer> getIndexs(String indexs){
+		List<Integer> indxs = new ArrayList<Integer>();
+		Matcher mc = indexPattern.matcher(indexs);
+		while (mc.find()){
+			indxs.add(Integer.valueOf(mc.group()));
+		}
+		return indxs;
+	}
+	
 	private Object parseObject(String exp) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		String[] exps = exp.split("\\.");
 		Object obj = loader.onGetObject(exps[0]);
-		for (int i = 1; i < exps.length; ++i){
+		for (int i = 1; i < exps.length - 1; ++i){
 			if (obj == null){
 				System.out.println("EL : " + exp);
 				System.out.println(exps[i - 1] + " is null object");
@@ -105,11 +125,50 @@ public class ELExpression{
 			obj = getProperty(obj, exps[i]);
 		}
 		
+		Matcher mc = indexsPattern.matcher(exps[0]);
+		if (mc.find()){
+			obj = loader.onGetObject(exps[0].substring(0, mc.start()));
+			obj = getProperty(obj, getIndexs(mc.group()));
+		}else{
+			obj = loader.onGetObject(exps[0]);
+		}
+		
+		for (int i = 1; i < exps.length; ++i){
+			if (obj == null){
+				System.out.println("EL : " + exp);
+				System.out.println(exps[i - 1] + " is null object");
+			}
+			if (mc.find()){
+				obj = getProperty(obj, exps[i].substring(0, mc.start()));
+				obj = getProperty(obj, getIndexs(mc.group()));
+			}else{
+				obj = getProperty(obj, exps[i]);
+			}
+		}
+		
+		
 		if (obj == null){
 			System.out.println("EL : " + exp);
 			System.out.println(exps[exps.length - 1] + " is null object");
 		}
 		
 		return obj;
+	}
+
+	private Object getProperty(Object obj, List<Integer> indexs) {
+		Object propValue = null; 
+		for (int i = 0; i < indexs.size(); ++i){
+			if (obj instanceof List){
+	 			propValue = ((List) obj).get(indexs.get(i));
+			}else if (obj.getClass().isArray()){
+	 			propValue = ((Object[])obj)[indexs.get(i)];
+			}else if (obj instanceof JSONArray){
+				propValue = ((JSONArray) obj).get(indexs.get(i));
+			}else if (obj instanceof MonthDay){
+				propValue = ((MonthDay) obj).getDay(indexs.get(i));
+			}
+			obj = propValue;
+		}
+		return propValue;
 	}
 }

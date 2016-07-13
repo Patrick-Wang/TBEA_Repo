@@ -9,6 +9,7 @@ public class FieldSql{
 	String in;
 	String select;
 	Integer joinType;
+	String oper="=";
 	public FieldSql() {
 
 	}
@@ -66,6 +67,12 @@ public class FieldSql{
 	}
 	public void setJoinType(Integer joinType) {
 		this.joinType = joinType;
+	}
+	public String getOper() {
+		return oper;
+	}
+	public void setOper(String oper) {
+		this.oper = oper;
 	}
 	
 }

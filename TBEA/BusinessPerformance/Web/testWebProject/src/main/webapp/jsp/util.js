@@ -4,8 +4,11 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /// <reference path="jqgrid/vector.ts" />
+///<reference path="jqgrid/jqassist.ts"/>
 var Util;
 (function (Util) {
+    var TextAlign = JQTable.TextAlign;
+    var Node = JQTable.Node;
     (function (ErrorCode) {
         ErrorCode[ErrorCode["OK"] = 0] = "OK";
         ErrorCode[ErrorCode["DATABASE_EXCEPTION"] = 1] = "DATABASE_EXCEPTION";
@@ -15,6 +18,42 @@ var Util;
         ErrorCode[ErrorCode["PRICELIB_JCYCLJG_IMPORT_ERROR"] = 5] = "PRICELIB_JCYCLJG_IMPORT_ERROR";
     })(Util.ErrorCode || (Util.ErrorCode = {}));
     var ErrorCode = Util.ErrorCode;
+    function parseHeader(header) {
+        var node = null;
+        var readOnly = header.readOnly == "true";
+        if ("date" == header.type) {
+            node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "text", options: {
+                    dataInit: function (element) {
+                        $(element).datepicker({
+                            dateFormat: 'yy-mm-dd',
+                            onSelect: function (dateText, inst) {
+                            }
+                        });
+                    }
+                } });
+        }
+        else if ("text" == header.type) {
+            node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "text" });
+        }
+        else if ("hidden" == header.type) {
+            node = null; //Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
+        }
+        else if ("select" == header.type) {
+            node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "select", options: { value: header.options } });
+        }
+        else {
+            node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly });
+        }
+        if (header.sub != undefined) {
+            for (var i = 0; i < header.sub.length; ++i) {
+                if (header.sub[i].type != 'hidden') {
+                    node.append(Util.parseHeader(header.sub[i]));
+                }
+            }
+        }
+        return node;
+    }
+    Util.parseHeader = parseHeader;
     function indexOf(arr, val) {
         for (var i = 0; i < arr.length; i++) {
             if (arr[i] == val) {

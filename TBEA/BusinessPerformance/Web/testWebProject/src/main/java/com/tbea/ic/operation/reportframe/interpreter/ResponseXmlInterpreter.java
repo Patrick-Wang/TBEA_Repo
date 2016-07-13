@@ -36,7 +36,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 					JSONArray ja = parseJsonArray(elem);
 					pJson.put(elem.getTagName(), ja);
 				} else {
-					String text = elem.getFirstChild().getTextContent();
+					String text = elem.getFirstChild().getTextContent().replaceAll("\\s", "");
 					if (null != text && !text.isEmpty()){
 						pJson.put(elem.getTagName(), parseElObj(text));
 					}else {

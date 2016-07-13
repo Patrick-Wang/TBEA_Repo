@@ -17,50 +17,15 @@ var xnyzb;
 (function (xnyzb_1) {
     var xnyzb;
     (function (xnyzb) {
-        var TextAlign = JQTable.TextAlign;
-        var Node = JQTable.Node;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            JQGridAssistantFactory.parseHeader = function (header) {
-                var node = null;
-                if ("date" == header.type) {
-                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false, isNumber: false, editType: "text", options: {
-                            dataInit: function (element) {
-                                $(element).datepicker({
-                                    dateFormat: 'yy-mm-dd',
-                                    onSelect: function (dateText, inst) {
-                                    }
-                                });
-                            }
-                        } });
-                }
-                else if ("text" == header.type) {
-                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false, isNumber: false, editType: "text" });
-                }
-                else if ("hidden" == header.type) {
-                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false, isNumber: false, editType: "text", hidden: true });
-                }
-                else if ("select" == header.type) {
-                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false, isNumber: false, editType: "select", options: { value: header.options } });
-                }
-                else {
-                    node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: false });
-                }
-                if (header.sub != undefined) {
-                    for (var i = 0; i < header.sub.length; ++i) {
-                        if (header.sub[i].type != 'hidden') {
-                            node.append(JQGridAssistantFactory.parseHeader(header.sub[i]));
-                        }
-                    }
-                }
-                return node;
-            };
             JQGridAssistantFactory.createTable = function (gridName, headers) {
                 var nodes = [];
                 for (var i = 0; i < headers.length; ++i) {
-                    if (headers[i].type != 'hidden') {
-                        nodes.push(JQGridAssistantFactory.parseHeader(headers[i]));
+                    var node = Util.parseHeader(headers[i]);
+                    if (null != node) {
+                        nodes.push(node);
                     }
                 }
                 return new JQTable.JQGridAssistant(nodes, gridName);

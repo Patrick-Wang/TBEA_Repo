@@ -1,8 +1,11 @@
 /// <reference path="jqgrid/vector.ts" />
+///<reference path="jqgrid/jqassist.ts"/>
 declare var $;
 
 module Util {
 
+    import TextAlign = JQTable.TextAlign;
+    import Node = JQTable.Node;
     export interface Header{
         name:string;
         type:string;
@@ -17,7 +20,7 @@ module Util {
         rowLen?:string;
     }
 
-    export interface Merge{
+    export interface MergeCol{
         col:string;
         len?:string;
     }
@@ -26,7 +29,7 @@ module Util {
         header:Header[];
         data:string[][];
         mergeRows:MergeRow[];
-        mergeCols:Merge[];
+        mergeCols:MergeCol[];
         mergeTitle:string;
     }
 
@@ -42,6 +45,39 @@ module Util {
     export interface IResponse {
         errorCode:ErrorCode;
         message:string;
+    }
+
+    export function parseHeader(header:Util.Header): Node{
+        let node:Node = null;
+        let readOnly = header.readOnly == "true";
+        if ("date" == header.type){
+            node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text", options:{
+                dataInit: function (element) {
+                    $(element).datepicker({
+                        dateFormat: 'yy-mm-dd',
+                        onSelect: function (dateText, inst) {
+                        }
+                    });
+                }
+            }});
+        }else if ("text" == header.type){
+            node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text"});
+        }else if ("hidden" == header.type){
+            node = null;//Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
+        }else if ("select" == header.type){
+            node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType: "select", options: { value: header.options }});
+        }else{
+            node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly});
+        }
+
+        if (header.sub != undefined) {
+            for (let i = 0; i < header.sub.length; ++i) {
+                if (header.sub[i].type != 'hidden') {
+                    node.append(Util.parseHeader(header.sub[i]));
+                }
+            }
+        }
+        return node;
     }
 
     function indexOf(arr, val) {

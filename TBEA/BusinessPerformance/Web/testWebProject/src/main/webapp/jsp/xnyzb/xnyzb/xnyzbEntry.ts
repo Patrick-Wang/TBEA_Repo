@@ -18,42 +18,14 @@ module xnyzb {
         import Node = JQTable.Node;
         class JQGridAssistantFactory {
 
-            static  parseHeader(header:Util.Header): Node{
-                let node:Node = null;
-                let readOnly = header.readOnly == "true";
-                if ("date" == header.type){
-                    node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text", options:{
-                        dataInit: function (element) {
-                            $(element).datepicker({
-                                dateFormat: 'yy-mm-dd',
-                                onSelect: function (dateText, inst) {
-                                }
-                            });
-                        }
-                    }});
-                }else if ("text" == header.type){
-                    node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text"});
-                }else if ("hidden" == header.type){
-                    node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
-                }else if ("select" == header.type){
-                    node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType: "select", options: { value: header.options }});
-                }else{
-                    node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly});
-                }
-
-                if (header.sub != undefined) {
-                    for (let i = 0; i < header.sub.length; ++i) {
-                        node.append(JQGridAssistantFactory.parseHeader(header.sub[i]));
-                    }
-                }
-                return node;
-            }
-
             public static createTable(gridName:string, headers: Util.Header[]):JQTable.JQGridAssistant {
 
                 let nodes : Node[] = [];
-                for (let i= 0; i < headers.length; ++i){
-                    nodes.push(JQGridAssistantFactory.parseHeader(headers[i]))
+                for (let i= 0; i < headers.length; ++i) {
+                    let node = Util.parseHeader(headers[i]);
+                    if (null != node) {
+                        nodes.push(node);
+                    }
                 }
                 return new JQTable.JQGridAssistant(nodes, gridName);
             }
