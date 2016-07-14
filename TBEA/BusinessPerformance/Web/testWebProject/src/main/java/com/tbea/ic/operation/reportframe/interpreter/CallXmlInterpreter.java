@@ -169,7 +169,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 			if (e.hasAttribute("id")){
 				Object result = invoke(md, obj, params);
 				String id = e.getAttribute("id");
-				if ("true".equals(e.getAttribute("global"))){
+				if ("true".equals(e.getAttribute("export"))){
 					component.global(id, result);
 				}else{
 					component.local(id, result);

@@ -1,15 +1,16 @@
 ///<reference path="../framework/basic/basic.ts"/>
 ///<reference path="../framework/basic/basicEntry.ts"/>
 ///<reference path="../framework/templates/singleDateReport/entry.ts"/>
+///<reference path="../framework/templates/singleDateReport/show.ts"/>
 
-module xnyzb{
+module xtnyzb{
     interface ZbServResp extends Util.ServResp{
         zbdc:Util.ServResp;
     }
 
     import router = framework.router;
     import FrameEvent = framework.basic.FrameEvent;
-    class XnyzbEntryView extends framework.templates.singleDateReport.EntryView {
+    class XtnyzbShowView extends framework.templates.singleDateReport.ShowView {
         mZbdcAssist : JQTable.JQGridAssistant;
 
         response():ZbServResp{
@@ -18,9 +19,9 @@ module xnyzb{
 
         updateTable():void {
             $("#" + this.opt.host)
-                    .attr("align", "");
+                .attr("align", "");
             $("#" + this.opt.host).css("float", "left")
-                    .css("margin-top","5px");
+                .css("margin-top","5px");
 
             let nameDjg = this.opt.host + "_jqgrid_uiframe_djg";
             let nameZbdc = this.opt.host + "_jqgrid_uiframe_zbc";
@@ -33,15 +34,15 @@ module xnyzb{
             jqTable.jqGrid(
                 this.mTableAssist.decorate({
                     datatype: "local",
-                    data: this.mTableAssist.getDataWithId(this.response().data),
+                    data: this.mTableAssist.getData(this.response().data),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    assistEditable:true,
+                    assistEditable:false,
                     //autowidth : false,
                     cellsubmit: 'clientArray',
                     //editurl: 'clientArray',
-                    cellEdit: true,
+                    cellEdit: false,
                     // height: data.length > 25 ? 550 : '100%',
                     // width: titles.length * 200,
                     rowNum: 1000,
@@ -55,15 +56,15 @@ module xnyzb{
             jqTable.jqGrid(
                 this.mZbdcAssist.decorate({
                     datatype: "local",
-                    data: this.mZbdcAssist.getDataWithId(this.response().zbdc.data),
+                    data: this.mZbdcAssist.getData(this.response().zbdc.data),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    assistEditable:true,
+                    assistEditable:false,
                     //autowidth : false,
                     cellsubmit: 'clientArray',
                     //editurl: 'clientArray',
-                    cellEdit: true,
+                    cellEdit: false,
                     // height: data.length > 25 ? 550 : '100%',
                     // width: titles.length * 200,
                     rowNum: 1000,
@@ -74,10 +75,6 @@ module xnyzb{
                     caption:"自备电厂电量（万kw·h）"
                 }));
         }
-
-        onLoadSubmitData() : any{
-            return {djg : this.mTableAssist.getAllData(), zbdc : this.mZbdcAssist.getAllData()};
-        }
     }
-    let ins = new XnyzbEntryView();
+    let ins = new XtnyzbShowView();
 }

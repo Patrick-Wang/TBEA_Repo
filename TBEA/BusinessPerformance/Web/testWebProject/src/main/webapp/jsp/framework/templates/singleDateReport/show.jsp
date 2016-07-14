@@ -183,6 +183,14 @@
             <div id="table" align="center"></div>
         </td>
     </tr>
+    <tr>
+        <td>
+            <form id="export" method="post">
+                <input id="exportButton" type="button" value="导出"
+                       onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
+            </form>
+        </td>
+    </tr>
 </Table>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -209,7 +217,8 @@
             date: date,
             host:"table",
             title:"${title}",
-            updateUrl:"${updateUrl}.do"
+            updateUrl:"${updateUrl}.do",
+            exportUrl:"${exportUrl}.do"
         });
         $(document.body).css("visibility", "visible");
     });

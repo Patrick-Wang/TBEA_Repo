@@ -48,7 +48,7 @@ public class FormatterServerXmlInterpreter implements XmlInterpreter {
 		serv.setTable((List<List<String>>) XmlUtil.getObjectAttr(e, "table", new ELParser(component)));
 		
 		String id = e.getAttribute("id");
-		if ("true".equals(e.getAttribute("global"))){
+		if ("true".equals(e.getAttribute("export"))){
 			component.global(id, serv);
 		}else{
 			component.local(id, serv);

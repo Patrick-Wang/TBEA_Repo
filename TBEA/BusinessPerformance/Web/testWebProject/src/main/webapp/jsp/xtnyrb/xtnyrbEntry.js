@@ -6,17 +6,17 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var xnyzb;
-(function (xnyzb) {
-    var XnyzbEntryView = (function (_super) {
-        __extends(XnyzbEntryView, _super);
-        function XnyzbEntryView() {
+var xtnyzb;
+(function (xtnyzb) {
+    var XtnyzbEntryView = (function (_super) {
+        __extends(XtnyzbEntryView, _super);
+        function XtnyzbEntryView() {
             _super.apply(this, arguments);
         }
-        XnyzbEntryView.prototype.response = function () {
+        XtnyzbEntryView.prototype.response = function () {
             return (this.resp);
         };
-        XnyzbEntryView.prototype.updateTable = function () {
+        XtnyzbEntryView.prototype.updateTable = function () {
             $("#" + this.opt.host)
                 .attr("align", "");
             $("#" + this.opt.host).css("float", "left")
@@ -71,10 +71,10 @@ var xnyzb;
                 caption: "自备电厂电量（万kw·h）"
             }));
         };
-        XnyzbEntryView.prototype.onLoadSubmitData = function () {
+        XtnyzbEntryView.prototype.onLoadSubmitData = function () {
             return { djg: this.mTableAssist.getAllData(), zbdc: this.mZbdcAssist.getAllData() };
         };
-        return XnyzbEntryView;
+        return XtnyzbEntryView;
     })(framework.templates.singleDateReport.EntryView);
-    var ins = new XnyzbEntryView();
-})(xnyzb || (xnyzb = {}));
+    var ins = new XtnyzbEntryView();
+})(xtnyzb || (xtnyzb = {}));

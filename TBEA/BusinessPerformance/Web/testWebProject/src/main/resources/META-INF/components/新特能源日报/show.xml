@@ -1,5 +1,5 @@
 ﻿<components>
-	<service id="servXnyrb" transaction="transactionManager">
+	<service id="servXtnyrb" transaction="transactionManager">
 
 		<sql id="djgrb">
 			select 
@@ -60,7 +60,7 @@
 				dwid
 		</sql>
 		<list id="dwid" type="int">1002,1003</list>
-		<table id="djgResult" rowIds="dwid" global="true">
+		<table id="djgResult" rowIds="dwid" export="true">
 			<list type="string">一分公司,二分公司</list>
 			<list type="double" sql="djgrb" value="2" order="dwid" by="1"/>
 			<list type="double" sql="djgrb" value="3" order="dwid" by="1"/>
@@ -135,7 +135,7 @@
 		
 		<list id="zbmc" type="string">发电量,上网电量</list>
 		<list id="ids" type="int" >1,2</list>
-		<table id="zbdcResult" rowIds="ids" global="true">
+		<table id="zbdcResult" rowIds="ids" export="true">
 			<col list="zbmc"/>
 			<list type="double" sql="zbdcrb" value="2" order="zbmc" by="1"/>
 			<list type="double" sql="zbdcyjh" value="1" order="zbmc" by="0"/>
@@ -149,15 +149,8 @@
 		</table>
 	</service>
 	
-	<controller id="xnyrbUpdate">
-
-		<context key="cal" value="${request.date.asCalendar}"/>
-		<context key="date" value="${cal.date}"/>
-		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
-		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
-		<callservice id="servXnyrb"/>
-		
-		<formatter id="djgDf">
+	<service id="xtnyrbFmtter">
+		<formatter id="djgDf" export="true">
 			<EmptyFormatter >
 				<DefaultMatcher cols="0"/>
 			</EmptyFormatter>
@@ -167,7 +160,7 @@
 			<NumberFormatter reservedCount="1">
 			</NumberFormatter>
 		</formatter>
-		<formatter id="zbdcDf">
+		<formatter id="zbdcDf" export="true">
 			<EmptyFormatter >
 				<DefaultMatcher cols="0"/>
 			</EmptyFormatter>
@@ -177,6 +170,17 @@
 			<NumberFormatter reservedCount="1">
 			</NumberFormatter>
 		</formatter>
+	</service>
+	
+	<controller id="xtnyrbUpdate">
+
+		<context key="cal" value="${request.date.asCalendar}"/>
+		<context key="date" value="${cal.date}"/>
+		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
+		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
+		<callservice id="servXtnyrb"/>
+		<callservice id="xtnyrbFmtter"/>
+		
 		
 		<formatterServer id="servDjg" table="${djgResult.matrixNoIds}">
 			<formatter ref="djgDf"/>
@@ -218,7 +222,7 @@
 			<zbdc>
 				<header type="array">
 					<item>
-						<name>分公司</name>
+						<name>指标名称</name>
 					</item>
 					<item>
 						<name>当日完成</name>
@@ -247,66 +251,97 @@
 		</response>
 	</controller>
 	
-	<controller id="yszkhkzbExport">
+	<controller id="xtnyrbExport">
 
-		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
-		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
-		<callservice id="servCompTypeToId"/>
-		<callservice id="servYszkhkzb"/>
-		<context key="tbs" value="${result.matrixNoIds}"/>
+		<context key="cal" value="${request.date.asCalendar}"/>
+		<context key="date" value="${cal.date}"/>
+		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
+		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
+		<callservice id="servXtnyrb"/>
+		<callservice id="xtnyrbFmtter"/>
 		
-		<ExcelTemplate id="excelTemplate" sheet="应收账款回款周报"/>
+		<ExcelTemplate id="excelTemplate" sheet="新能源日报"/>
 		
-		<list id="title" type="string">
-			周期,周期,项目公司,项目名称,客户名称,合同金额,应收账款金额,逾期款金额,逾期款时间（月）
+		<list id="titleDjg1" type="string">
+			多晶硅产量（吨）,分公司, 当日完成,库存结余,月计划,月累计完成,月度完成比,年度计划,年度累计完成,年度累计完成比
 		</list>
-				
-		<formatter id="data">
-			<NumberFormatter reservedCount="1">
-				<DefaultMatcher cols="4,5,6"/>
-			</NumberFormatter>
-			<NumberFormatter reservedCount="0">
-				<DefaultMatcher cols="7"/>
-			</NumberFormatter>
-		</formatter>
+		<list id="titleDjg2" type="string">多晶硅产量（吨）</list>
+		<list id="titleDjg3" type="string">多晶硅产量（吨）</list>
 		
-		<formatter id="excel">
+		<list id="titleZbdc1" type="string">
+			自备电厂电量（万kw·h）, 指标名称, 当日完成,月计划,月累计完成,月度完成比,年度计划,年度累计完成,年度累计完成比
+		</list>
+		<list id="titleZbdc2" type="string">自备电厂电量（万kw·h）</list>
+		<list id="titleZbdc3" type="string">自备电厂电量（万kw·h）</list>
+		<formatter id="excelDig">
 			<ExcelTitleFilter>
 				<ExcelTemplate ref="excelTemplate"/>
 				<Offset row="0" col="0"/>
 				<titles>
-					<title ref="title"></title>
+					<title ref="titleDjg1"/>
+					<title ref="titleDjg2"/>
+					<title ref="titleDjg3"/>
 				</titles>
 			</ExcelTitleFilter>
 			<ExcelMergeFormatter>
 				<ExcelTemplate ref="excelTemplate"/>
-				<MergeRegion x="0" y="0" width="8" height="1"/>
-				<MergeRegion x="0" y="1" width="2" height="${tbs.size}"/>
+				<MergeRegion x="0" y="0" width="1" height="3"/>
 			</ExcelMergeFormatter>
 			<ExcelHeaderCenterFormatter>
-				<DefaultMatcher cols="0, 1, 2, 3"/>
+				<DefaultMatcher cols="0"/>
 				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="1" col="0"/>
+				<Offset row="1" col="1"/>
 			</ExcelHeaderCenterFormatter>
 			<ExcelOffsetFormatter>
 				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="1" col="0"/>
+				<Offset row="1" col="1"/>
 			</ExcelOffsetFormatter>
 		</formatter>
 
-		<formatterServer id="serv" table="${tbs}">
-			<formatter ref="data"/>
-			<formatter ref="excel"/>
+		<formatter id="excelZbdc">
+			<ExcelTitleFilter>
+				<ExcelTemplate ref="excelTemplate"/>
+				<Offset row="3" col="0"/>
+				<titles>
+					<title ref="titleZbdc1"/>
+					<title ref="titleZbdc2"/>
+					<title ref="titleZbdc3"/>
+				</titles>
+			</ExcelTitleFilter>
+			<ExcelMergeFormatter>
+				<ExcelTemplate ref="excelTemplate"/>
+				<MergeRegion x="0" y="3" width="1" height="3"/>
+			</ExcelMergeFormatter>
+			<ExcelHeaderCenterFormatter>
+				<DefaultMatcher cols="0"/>
+				<ExcelTemplate ref="excelTemplate"/>
+				<Offset row="4" col="1"/>
+			</ExcelHeaderCenterFormatter>
+			<ExcelOffsetFormatter>
+				<ExcelTemplate ref="excelTemplate"/>
+				<Offset row="4" col="1"/>
+			</ExcelOffsetFormatter>
+		</formatter>
+		
+		<formatterServer id="servDig" table="${djgResult.matrixNoIds}">
+			<formatter ref="djgDf"/>
+			<formatter ref="excelDig"/>
 		</formatterServer>
-
-		<response type="excel" ref="excelTemplate" name="应收账款回款周报.xls" serv="serv"/>
+		<formatterServer id="servZbdc" table="${zbdcResult.matrixNoIds}">
+			<formatter ref="zbdcDf"/>
+			<formatter ref="excelZbdc"/>
+		</formatterServer>
+		
+		<context key="tmp" value="${servDig.result}"/>
+		<response type="excel" ref="excelTemplate" name="${request.date.asString + '新特能源日报'}" serv="servZbdc"/>
 	</controller>
 	
-	<controller id="xnyrb">		
-		<response type="jsp" name="xnyrb/xnyrb"> 
+	<controller id="xtnyrb">		
+		<response type="jsp" name="xtnyrb/xtnyrb"> 
 			<map key="date" value="${calendar.current.format}"/>
-			<map key="updateUrl" value="xnyrbUpdate"/>
-			<map key="title" value="新能源日报"/>
+			<map key="updateUrl" value="xtnyrbUpdate"/>
+			<map key="exportUrl" value="xtnyrbExport"/>
+			<map key="title" value="新特能源日报"/>
 		</response>
 	</controller>
 </components>

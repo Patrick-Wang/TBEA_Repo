@@ -2,7 +2,7 @@
 pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <%@include file="../framework/templates/singleDateReport/entry.jsp"%>
-<script src="${pageContext.request.contextPath}/jsp/xnyrb/xnyrbEntry.js"></script>
+<script src="${pageContext.request.contextPath}/jsp/xtnyrb/xtnyrbEntry.js"></script>
 <script>
     $("#submit").css("float", "left")
             .css("margin-left" , "")

@@ -10,6 +10,7 @@ module framework.templates.singleDateReport {
 
     export interface ShowOption{
         updateUrl:string;
+        exportUrl:string;
         host:string;
         date:Util.Date;
         dtId:string;
@@ -18,7 +19,7 @@ module framework.templates.singleDateReport {
     export class ShowView extends BasicEndpoint{
         dateSelect : Util.DateSelector;
         mAjaxUpdate:Util.Ajax;
-        mAjaxSubmit:Util.Ajax;
+        mAjaxExport:Util.Ajax;
         mTableAssist:JQTable.JQGridAssistant;
         resp:Util.ServResp;
         opt:ShowOption;
@@ -35,7 +36,7 @@ module framework.templates.singleDateReport {
             }, opt.date, opt.dtId);
 
             this.mAjaxUpdate = new Util.Ajax(opt.updateUrl, false);
-            this.mAjaxSubmit = new Util.Ajax(opt.submitUrl, false);
+            this.mAjaxExport = new Util.Ajax(opt.exportUrl, false);
             this.update(this.dateSelect.getDate());
         }
 
@@ -43,6 +44,9 @@ module framework.templates.singleDateReport {
             switch (e.id) {
                 case FrameEvent.FE_UPDATE:
                     return this.update(this.dateSelect.getDate());
+                    break;
+                case FrameEvent.FE_EXPORTEXCEL:
+                    return this.exportExcel(this.dateSelect.getDate(), e);
                     break;
             }
             return super.onEvent(e);
@@ -91,6 +95,13 @@ module framework.templates.singleDateReport {
                     shrinkToFit: true,
                     autoScroll: true
                 }));
+        }
+
+        exportExcel(date:Util.Date, id:string): void {
+            $("#" + id)[0].action = this.opt.exportUrl + "?" +  Util.Ajax.toUrlParam({
+                date: date
+            });
+            $("#" + id)[0].submit();
         }
     }
 }

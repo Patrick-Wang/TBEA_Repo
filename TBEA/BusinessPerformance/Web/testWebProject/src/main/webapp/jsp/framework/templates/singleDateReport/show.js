@@ -30,13 +30,16 @@ var framework;
                         day: opt.date.day
                     }, opt.date, opt.dtId);
                     this.mAjaxUpdate = new Util.Ajax(opt.updateUrl, false);
-                    this.mAjaxSubmit = new Util.Ajax(opt.submitUrl, false);
+                    this.mAjaxExport = new Util.Ajax(opt.exportUrl, false);
                     this.update(this.dateSelect.getDate());
                 };
                 ShowView.prototype.onEvent = function (e) {
                     switch (e.id) {
                         case FrameEvent.FE_UPDATE:
                             return this.update(this.dateSelect.getDate());
+                            break;
+                        case FrameEvent.FE_EXPORTEXCEL:
+                            return this.exportExcel(this.dateSelect.getDate(), e);
                             break;
                     }
                     return _super.prototype.onEvent.call(this, e);
@@ -81,6 +84,12 @@ var framework;
                         shrinkToFit: true,
                         autoScroll: true
                     }));
+                };
+                ShowView.prototype.exportExcel = function (date, id) {
+                    $("#" + id)[0].action = this.opt.exportUrl + "?" + Util.Ajax.toUrlParam({
+                        date: date
+                    });
+                    $("#" + id)[0].submit();
                 };
                 return ShowView;
             })(BasicEndpoint);

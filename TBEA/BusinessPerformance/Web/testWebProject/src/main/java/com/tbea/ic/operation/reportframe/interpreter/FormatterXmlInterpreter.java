@@ -90,7 +90,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		});
 		
 		String id = e.getAttribute("id");
-		if ("true".equals(e.getAttribute("global"))){
+		if ("true".equals(e.getAttribute("export"))){
 			component.global(id, handlers);
 		}else{
 			component.local(id, handlers);

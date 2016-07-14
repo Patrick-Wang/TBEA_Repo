@@ -64,7 +64,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			}
 		}
 
-		if ("true".equals(e.getAttribute("global"))){
+		if ("true".equals(e.getAttribute("export"))){
 			component.global(id, ret);
 		}else{
 			component.local(id, ret);

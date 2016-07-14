@@ -94,7 +94,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				ExcelTemplate temp = (ExcelTemplate) component.getVar(e.getAttribute("ref"));
 				FormatterServer serv = (FormatterServer) component.getVar(e.getAttribute("serv"));
 				serv.getResult();
-				temp.write(resp, e.getAttribute("name"));
+				temp.write(resp, XmlUtil.getString(e.getAttribute("name"), elp) + ".xls");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

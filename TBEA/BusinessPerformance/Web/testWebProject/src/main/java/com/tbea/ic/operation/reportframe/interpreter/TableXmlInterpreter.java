@@ -55,7 +55,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			
 		});
 
-		if ("true".equals(e.getAttribute("global"))){
+		if ("true".equals(e.getAttribute("export"))){
 			component.global(id, tb);
 		}else{
 			component.local(id, tb);

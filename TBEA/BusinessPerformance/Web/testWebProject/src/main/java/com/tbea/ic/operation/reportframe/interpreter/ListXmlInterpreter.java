@@ -87,7 +87,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			
 			parseItems(component, e, objs);
 
-			if ("true".equals(e.getAttribute("global"))){
+			if ("true".equals(e.getAttribute("export"))){
 				component.global(e.getAttribute("id"), objs);
 			}else{
 				component.local(e.getAttribute("id"), objs);

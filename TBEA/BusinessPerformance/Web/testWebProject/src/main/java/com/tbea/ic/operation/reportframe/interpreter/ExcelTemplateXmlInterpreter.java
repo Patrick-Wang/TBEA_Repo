@@ -20,7 +20,7 @@ public class ExcelTemplateXmlInterpreter implements XmlInterpreter {
 		String sheetName = e.getAttribute("sheet");
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		workbook.createSheet(sheetName);
-		if ("true".equals(e.getAttribute("global"))){
+		if ("true".equals(e.getAttribute("export"))){
 			component.global(id, new ExcelTemplate(workbook));
 		}else{
 			component.local(id, new ExcelTemplate(workbook));

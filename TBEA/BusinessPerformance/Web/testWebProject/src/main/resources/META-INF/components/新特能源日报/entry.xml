@@ -1,6 +1,6 @@
 ﻿<components>
 	
-	<service id="servXnyrbEntryUpdate" transaction="transactionManager">
+	<service id="servXtnyrbEntryUpdate" transaction="transactionManager">
 		
 		<sql id="djgrb">
 			select 
@@ -34,7 +34,7 @@
 		</sql>
 
 		<list id="dwid" type="int">1002,1003</list>
-		<table id="djgResult" rowIds="dwid" global="true">
+		<table id="djgResult" rowIds="dwid" export="true">
 			<list type="string">一分公司,二分公司</list>
 			<list type="double" sql="djgrb" value="2" order="dwid" by="1"/>
 			<list type="double" sql="djgrb" value="3" order="dwid" by="1"/>
@@ -74,7 +74,7 @@
 		</sql>
 		<list id="zbmc" type="string">发电量,上网电量</list>
 		<list id="ids" type="int" >1,2</list>
-		<table id="zbdcResult" rowIds="ids" global="true">
+		<table id="zbdcResult" rowIds="ids" export="true">
 			<col list="zbmc"/>
 			<list type="double" sql="zbdcrb" value="2" order="zbmc" by="1"/>
 			<list type="double" sql="zbdcyjh" value="1" order="zbmc" by="0"/>
@@ -82,7 +82,7 @@
 		</table>
 	</service>
 
-	<service id="servXnyrbEntry" transaction="transactionManager">
+	<service id="servXtnyrbEntry" transaction="transactionManager">
 	<!--
 		dwid	dwmc	drwc	kcjy	yjh	njh
 	-->
@@ -168,14 +168,14 @@
 		</merge>
 	</service>
 
-	<controller id="xnyrbSubmit">
+	<controller id="xtnyrbSubmit">
 		<context key="djgData" value="${request.data.asJsonObject.djg}"></context>
 		<context key="zbdcData" value="${request.data.asJsonObject.zbdc}"></context>
 		<context key="cal" value="${request.date.asCalendar}"></context>
 		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
 		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
 		<context key="zt" value="${4}"></context>
-		<callservice id="servXnyrbEntry"/>
+		<callservice id="servXtnyrbEntry"/>
 		<response type="json">
 			<errorCode>0</errorCode>
 			<message>OK</message>
@@ -183,13 +183,13 @@
 	</controller>
 	
 
- 	<controller id="xnyrbEntryUpdate">
+ 	<controller id="xtnyrbEntryUpdate">
  		<context key="cal" value="${request.date.asCalendar}"/>
 		<context key="date" value="${cal.date}"/>
 		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
 		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
 
-		<callservice id="servXnyrbEntryUpdate"/>
+		<callservice id="servXtnyrbEntryUpdate"/>
 
 		<formatter id="data">
 			<EmptyFormatter>
@@ -247,12 +247,12 @@
 		</response>
 	</controller>
 	
-	<controller id="xnyrbEntryJsp">
-		<response type="jsp" name="xnyrb/xnyrbEntry"> 
+	<controller id="xtnyrbEntry">
+		<response type="jsp" name="xtnyrb/xtnyrbEntry"> 
 			<map key="date" value="${calendar.current.format}"/>
-			<map key="updateUrl" value="xnyrbEntryUpdate"/>
-			<map key="submitUrl" value="xnyrbSubmit"/>
-			<map key="title" value="新能源日报"/>
+			<map key="updateUrl" value="xtnyrbEntryUpdate"/>
+			<map key="submitUrl" value="xtnyrbSubmit"/>
+			<map key="title" value="新特能源日报"/>
 		</response>
 	</controller>
 </components>
