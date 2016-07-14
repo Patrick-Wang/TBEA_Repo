@@ -14,15 +14,15 @@ var framework;
         (function (singleDateReport) {
             var BasicEndpoint = framework.basic.BasicEndpoint;
             var FrameEvent = framework.basic.FrameEvent;
-            var EntryView = (function (_super) {
-                __extends(EntryView, _super);
-                function EntryView() {
+            var ShowView = (function (_super) {
+                __extends(ShowView, _super);
+                function ShowView() {
                     _super.apply(this, arguments);
                 }
-                EntryView.prototype.getId = function () {
+                ShowView.prototype.getId = function () {
                     return framework.basic.endpoint.FRAME_ID;
                 };
-                EntryView.prototype.onInitialize = function (opt) {
+                ShowView.prototype.onInitialize = function (opt) {
                     this.opt = opt;
                     this.dateSelect = new Util.DateSelector({
                         year: opt.date.year - 3,
@@ -33,21 +33,18 @@ var framework;
                     this.mAjaxSubmit = new Util.Ajax(opt.submitUrl, false);
                     this.update(this.dateSelect.getDate());
                 };
-                EntryView.prototype.onEvent = function (e) {
+                ShowView.prototype.onEvent = function (e) {
                     switch (e.id) {
                         case FrameEvent.FE_UPDATE:
                             return this.update(this.dateSelect.getDate());
                             break;
-                        case FrameEvent.FE_SUBMIT:
-                            return this.submit(this.dateSelect.getDate());
-                            break;
                     }
                     return _super.prototype.onEvent.call(this, e);
                 };
-                EntryView.prototype.getDate = function (date) {
+                ShowView.prototype.getDate = function (date) {
                     return "" + (date.year + "-" + (date.month == undefined ? 1 : date.month) + "-" + (date.day == undefined ? 1 : date.day));
                 };
-                EntryView.prototype.update = function (date) {
+                ShowView.prototype.update = function (date) {
                     var _this = this;
                     this.mAjaxUpdate.get({
                         date: this.getDate(date)
@@ -57,7 +54,7 @@ var framework;
                         _this.updateTable();
                     });
                 };
-                EntryView.prototype.updateTable = function () {
+                ShowView.prototype.updateTable = function () {
                     var name = this.opt.host + "_jqgrid_uiframe";
                     var pagername = name + "pager";
                     this.mTableAssist = Util.JQGridAssistantFactory.createTable(name, this.resp);
@@ -67,7 +64,7 @@ var framework;
                     var jqTable = $("#" + name);
                     jqTable.jqGrid(this.mTableAssist.decorate({
                         datatype: "local",
-                        data: this.mTableAssist.getDataWithId(this.resp.data),
+                        data: this.mTableAssist.getData(this.resp.data),
                         multiselect: false,
                         drag: false,
                         resize: false,
@@ -75,7 +72,7 @@ var framework;
                         //autowidth : false,
                         cellsubmit: 'clientArray',
                         //editurl: 'clientArray',
-                        cellEdit: true,
+                        cellEdit: false,
                         // height: data.length > 25 ? 550 : '100%',
                         // width: titles.length * 200,
                         rowNum: 1000,
@@ -85,28 +82,9 @@ var framework;
                         autoScroll: true
                     }));
                 };
-                EntryView.prototype.onLoadSubmitData = function () {
-                    return this.mTableAssist.getAllData();
-                };
-                EntryView.prototype.submit = function (date) {
-                    var _this = this;
-                    this.mAjaxSubmit.get({
-                        data: JSON.stringify(this.onLoadSubmitData()),
-                        date: this.getDate(date)
-                    })
-                        .then(function (resp) {
-                        if (Util.ErrorCode.OK == resp.errorCode) {
-                            _this.update(date);
-                            Util.MessageBox.tip("保存 成功");
-                        }
-                        else {
-                            Util.MessageBox.tip(resp.message);
-                        }
-                    });
-                };
-                return EntryView;
+                return ShowView;
             })(BasicEndpoint);
-            singleDateReport.EntryView = EntryView;
+            singleDateReport.ShowView = ShowView;
         })(singleDateReport = templates.singleDateReport || (templates.singleDateReport = {}));
     })(templates = framework.templates || (framework.templates = {}));
 })(framework || (framework = {}));

@@ -55,7 +55,7 @@
 	<script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/framework/templates/singleDateReport/entry.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/framework/templates/singleDateReport/show.js"></script>
     <title>${title}</title>
 
     <style type="text/css">
@@ -183,12 +183,6 @@
             <div id="table" align="center"></div>
         </td>
     </tr>
-    <tr>
-        <td>
-            <input id="submit" type="button" value="提交" style="float: right;width: 80px; mrgin-left: 10px;"
-                   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)" />
-        </td>
-    </tr>
 </Table>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -215,8 +209,7 @@
             date: date,
             host:"table",
             title:"${title}",
-            updateUrl:"${updateUrl}.do",
-            submitUrl:"${submitUrl}.do"
+            updateUrl:"${updateUrl}.do"
         });
         $(document.body).css("visibility", "visible");
     });

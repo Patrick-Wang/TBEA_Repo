@@ -94,7 +94,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		}
 		elp = new ELParser(component);
 		String table = (String) XmlUtil.getObjectAttr(e, "table", elp);
-		Object dataObj = component.getVar("data");
+		Object dataObj = component.getVar(e.getAttribute("data"));
 		if (table != null && !table.isEmpty() && dataObj != null){
 			where = compile(e.getElementsByTagName("where"));
 			set = compile(e.getElementsByTagName("set"));
@@ -252,7 +252,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 	private void merge(EntityManager em, String table, JSONArray row, List<FieldSql> where,
 			List<FieldSql> set) {
 		
-		if (!where.isEmpty()){
+		if (!where.isEmpty() && null != where.get(0).getRef()){
 			String firstWhere = row.getString(where.get(0).getRef());
 			if (null != firstWhere && firstWhere.startsWith("add")){
 				doInsert(em, table, row, where, set);
@@ -287,6 +287,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		}
 		sb.append(sbCols.toString());
 		sb.append(sbValues.toString());
+		System.out.println(sb.toString());
 		em.createNativeQuery(sb.toString()).executeUpdate() ;
 	}
 
@@ -299,7 +300,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				sb.append(whereSql.getOper());
 				sb.append(getValue(row, whereSql, em));
 				if (whereSql != where.get(where.size() - 1)){
-					sb.append("and ");
+					sb.append(" and ");
 				}
 			}
 			return sb.toString();
@@ -310,10 +311,12 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 	private void doUpdate(EntityManager em, String table, JSONArray row,
 			List<FieldSql> where, List<FieldSql> set) {
 		String whereSql = parseWhereSql(em, row);
-		Long count = null;
+		Integer count = null;
 		if (null != whereSql){
-			List ret = em.createNativeQuery("select count(*) from " + whereSql).getResultList();
-			count = (Long)ret.get(0);
+			String sql = "select count(*) from " + table + whereSql;
+			List ret = em.createNativeQuery("select count(*) from " + table + whereSql).getResultList();
+			System.out.println(sql);
+			count = (Integer) ret.get(0);
 		}
 		if (count > 0){
 			StringBuilder sb = new StringBuilder();
@@ -331,7 +334,9 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 					}
 				}
 			}
-			em.createNativeQuery(sb.toString() + whereSql).executeUpdate();
+			sb.append(whereSql);
+			System.out.println(sb.toString());
+			em.createNativeQuery(sb.toString()).executeUpdate();
 		}else{
 			doInsert(em, table, row, where, set);
 		}

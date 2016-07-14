@@ -8,21 +8,20 @@ module framework.templates.singleDateReport {
     import FrameEvent = framework.basic.FrameEvent;
 
 
-    export interface EntryOption{
+    export interface ShowOption{
         updateUrl:string;
-        submitUrl:string;
         host:string;
         date:Util.Date;
         dtId:string;
     }
 
-    export class EntryView extends BasicEndpoint{
+    export class ShowView extends BasicEndpoint{
         dateSelect : Util.DateSelector;
         mAjaxUpdate:Util.Ajax;
         mAjaxSubmit:Util.Ajax;
         mTableAssist:JQTable.JQGridAssistant;
         resp:Util.ServResp;
-        opt:EntryOption;
+        opt:ShowOption;
         getId():number{
             return framework.basic.endpoint.FRAME_ID;
         }
@@ -44,9 +43,6 @@ module framework.templates.singleDateReport {
             switch (e.id) {
                 case FrameEvent.FE_UPDATE:
                     return this.update(this.dateSelect.getDate());
-                    break;
-                case FrameEvent.FE_SUBMIT:
-                    return this.submit(this.dateSelect.getDate());
                     break;
             }
             return super.onEvent(e);
@@ -78,7 +74,7 @@ module framework.templates.singleDateReport {
             jqTable.jqGrid(
                 this.mTableAssist.decorate({
                     datatype: "local",
-                    data: this.mTableAssist.getDataWithId(this.resp.data),
+                    data: this.mTableAssist.getData(this.resp.data),
                     multiselect: false,
                     drag: false,
                     resize: false,
@@ -86,7 +82,7 @@ module framework.templates.singleDateReport {
                     //autowidth : false,
                     cellsubmit: 'clientArray',
                     //editurl: 'clientArray',
-                    cellEdit: true,
+                    cellEdit: false,
                     // height: data.length > 25 ? 550 : '100%',
                     // width: titles.length * 200,
                     rowNum: 1000,
@@ -95,25 +91,6 @@ module framework.templates.singleDateReport {
                     shrinkToFit: true,
                     autoScroll: true
                 }));
-        }
-
-        onLoadSubmitData() : any{
-            return this.mTableAssist.getAllData();
-        }
-
-        submit(date:Util.Date): void{
-            this.mAjaxSubmit.get({
-                data : JSON.stringify(this.onLoadSubmitData()),
-                date:this.getDate(date)
-                })
-            .then((resp:Util.IResponse) => {
-                if (Util.ErrorCode.OK == resp.errorCode) {
-                    this.update(date);
-                    Util.MessageBox.tip("保存 成功");
-                } else {
-                    Util.MessageBox.tip(resp.message);
-                }
-            });
         }
     }
 }

@@ -18,6 +18,48 @@ var Util;
         ErrorCode[ErrorCode["PRICELIB_JCYCLJG_IMPORT_ERROR"] = 5] = "PRICELIB_JCYCLJG_IMPORT_ERROR";
     })(Util.ErrorCode || (Util.ErrorCode = {}));
     var ErrorCode = Util.ErrorCode;
+    var JQGridAssistantFactory = (function () {
+        function JQGridAssistantFactory() {
+        }
+        JQGridAssistantFactory.createTable = function (gridName, gridCtrl) {
+            var nodes = [];
+            for (var i = 0; i < gridCtrl.header.length; ++i) {
+                var node = Util.parseHeader(gridCtrl.header[i]);
+                if (null != node) {
+                    nodes.push(node);
+                }
+            }
+            var tableAssist = new JQTable.JQGridAssistant(nodes, gridName);
+            if (gridCtrl.mergeTitle != undefined) {
+                tableAssist.mergeTitle();
+            }
+            if (gridCtrl.mergeRows != undefined) {
+                for (var i = 0; i < gridCtrl.mergeRows.length; ++i) {
+                    if (gridCtrl.mergeRows[i].col != undefined) {
+                        if (gridCtrl.mergeRows[i].rowStart != undefined && gridCtrl.mergeRows[i].rowLen != undefined) {
+                            tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col), parseInt(gridCtrl.mergeRows[i].rowStart), parseInt(gridCtrl.mergeRows[i].rowLen));
+                        }
+                        else if (gridCtrl.mergeRows[i].rowStart != undefined) {
+                            tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col), parseInt(gridCtrl.mergeRows[i].rowStart));
+                        }
+                        else {
+                            tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col));
+                        }
+                    }
+                }
+            }
+            if (gridCtrl.mergeCols != undefined) {
+                for (var i = 0; i < gridCtrl.mergeCols.length; ++i) {
+                    if (gridCtrl.mergeCols[i].col != undefined) {
+                        tableAssist.mergeColum(parseInt(gridCtrl.mergeCols[i].col));
+                    }
+                }
+            }
+            return new JQTable.JQGridAssistant(nodes, gridName);
+        };
+        return JQGridAssistantFactory;
+    })();
+    Util.JQGridAssistantFactory = JQGridAssistantFactory;
     function parseHeader(header) {
         var node = null;
         var readOnly = header.readOnly == "true";

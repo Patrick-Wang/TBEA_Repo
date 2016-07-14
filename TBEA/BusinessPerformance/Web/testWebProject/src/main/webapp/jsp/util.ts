@@ -2,6 +2,9 @@
 ///<reference path="jqgrid/jqassist.ts"/>
 declare var $;
 
+
+
+
 module Util {
 
     import TextAlign = JQTable.TextAlign;
@@ -25,12 +28,15 @@ module Util {
         len?:string;
     }
 
-    export interface ServResp{
+    export interface GridCtrl{
         header:Header[];
-        data:string[][];
         mergeRows:MergeRow[];
         mergeCols:MergeCol[];
         mergeTitle:string;
+    }
+
+    export interface ServResp extends GridCtrl{
+        data:string[][];
     }
 
     export enum ErrorCode {
@@ -40,6 +46,51 @@ module Util {
         PREMARY_KEY_NULL,
         HAVE_NO_RIGHT,
         PRICELIB_JCYCLJG_IMPORT_ERROR
+    }
+
+    export class JQGridAssistantFactory {
+
+        public static createTable(gridName:string, gridCtrl: Util.GridCtrl):JQTable.JQGridAssistant {
+
+            let nodes : Node[] = [];
+            for (let i= 0; i < gridCtrl.header.length; ++i) {
+                let node = Util.parseHeader(gridCtrl.header[i]);
+                if (null != node) {
+                    nodes.push(node);
+                }
+            }
+            let tableAssist:JQTable.JQGridAssistant = new JQTable.JQGridAssistant(nodes, gridName);
+            if (gridCtrl.mergeTitle != undefined){
+                tableAssist.mergeTitle();
+            }
+
+            if (gridCtrl.mergeRows != undefined){
+                for (let i =0; i < gridCtrl.mergeRows.length; ++i){
+                    if (gridCtrl.mergeRows[i].col != undefined){
+                        if (gridCtrl.mergeRows[i].rowStart != undefined && gridCtrl.mergeRows[i].rowLen != undefined){
+                            tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col),
+                                parseInt(gridCtrl.mergeRows[i].rowStart),
+                                parseInt(gridCtrl.mergeRows[i].rowLen));
+                        }else if (gridCtrl.mergeRows[i].rowStart != undefined){
+                            tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col),
+                                parseInt(gridCtrl.mergeRows[i].rowStart));
+                        }else{
+                            tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col));
+                        }
+                    }
+                }
+            }
+
+            if (gridCtrl.mergeCols != undefined){
+                for (let i =0; i < gridCtrl.mergeCols.length; ++i){
+                    if (gridCtrl.mergeCols[i].col != undefined){
+                        tableAssist.mergeColum(parseInt(gridCtrl.mergeCols[i].col));
+                    }
+                }
+            }
+
+            return new JQTable.JQGridAssistant(nodes, gridName);
+        }
     }
 
     export interface IResponse {

@@ -44,10 +44,14 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			}
 		}
 		
+		sql = sql.replaceAll("\\s+", " ");
+		System.out.println(sql);
 		Query q = em.createNativeQuery(sql);
 		for (int i = 0; i < objs.size(); ++i){
 			q.setParameter(i, objs.get(i));
+			System.out.print("?" + i + " : " + objs.get(i) + "\t");
 		}
+		System.out.println(" ");
 		List<Object[]> ret = q.getResultList();
 		
 		for (Object[] obs : ret){

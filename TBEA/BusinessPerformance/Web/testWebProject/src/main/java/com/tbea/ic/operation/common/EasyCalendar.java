@@ -6,10 +6,10 @@ import java.util.Calendar;
 
 public class EasyCalendar {
 	
-	public static class MonthDay{
+	public static class Days{
 		EasyCalendar cal;
 
-		public MonthDay(EasyCalendar cal) {
+		public Days(EasyCalendar cal) {
 			super();
 			this.cal = cal;
 		}
@@ -22,11 +22,31 @@ public class EasyCalendar {
 			return cal.getRealCalendar().getActualMaximum(Calendar.DAY_OF_MONTH);
 		}
 		
-		public MonthDay getDay(int day){
+		public EasyCalendar getDay(int day){
 			Calendar caltmp = Calendar.getInstance();
 			caltmp.setTimeInMillis(cal.getRealCalendar().getTimeInMillis());
 			caltmp.set(Calendar.DAY_OF_MONTH, day);
-			return new MonthDay(new EasyCalendar(caltmp));
+			return new EasyCalendar(caltmp);
+		}
+	}
+	
+	public static class Months{
+		EasyCalendar cal;
+
+		public Months(EasyCalendar cal) {
+			super();
+			this.cal = cal;
+		}
+		
+		public EasyCalendar getCalendar(){
+			return cal;
+		}
+		
+		public EasyCalendar getMonth(int month){
+			Calendar caltmp = Calendar.getInstance();
+			caltmp.setTimeInMillis(cal.getRealCalendar().getTimeInMillis());
+			caltmp.set(Calendar.MONTH, month - 1);
+			return new EasyCalendar(caltmp);
 		}
 	}
 	
@@ -105,8 +125,25 @@ public class EasyCalendar {
 		return new EasyCalendar(cal);
 	}
 	
-	public MonthDay getMonthDay(){
-		return new MonthDay(this);
+	public EasyCalendar getLastYear(){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.add(Calendar.YEAR, -1);
+		return new EasyCalendar(cal);
+	}
+	
+	public EasyCalendar getNextMonth(){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.add(Calendar.MONTH, 1);
+		return new EasyCalendar(cal);
+	}
+	
+	public Days getDays(){
+		return new Days(this);
+	}
+	public Months getMonths(){
+		return new Months(this);
 	}
 	
 	public int getMonth(){

@@ -9,8 +9,6 @@ CREATE TABLE [dbo].[djgrb](
 	[dwid] [int] NOT NULL,
 	[drwc] [numeric](18, 4),
 	[kcjy] [numeric](18, 4),
-	[yjh] [numeric](18, 4),
-	[njh] [numeric](18, 4),
 	[zt] [int] NOT NULL
 PRIMARY KEY CLUSTERED 
 (
@@ -61,17 +59,14 @@ DROP TABLE zbdcrb
 CREATE TABLE [dbo].[zbdcrb](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[date] [date] not null,
-	[dwid] [int] NOT NULL,
 	[zbmc] [varchar](100),
 	[drwc] [numeric](18, 4),
-	[yjh] [numeric](18, 4),
-	[njh] [numeric](18, 4),
 	[zt] [int] NOT NULL
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY
+) ON [PRIMARY]
 /*****************************************************************************自备电厂年计划
 单位信息	日期	当日完成	库存结余
 *****************************************************************************/
@@ -80,7 +75,7 @@ DROP TABLE zbdcnjh
 CREATE TABLE [dbo].[zbdcnjh](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not null,
-	[zbmc] [int] NOT NULL,
+	[zbmc] [varchar](100) NOT NULL,
 	[njh] [numeric](18, 4),
 	[zt] [int] NOT NULL
 PRIMARY KEY CLUSTERED 
@@ -98,7 +93,7 @@ CREATE TABLE [dbo].[zbdcyjh](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[nf] [int] not null,
 	[yf] [int] not null,
-	[zbmc] [int] NOT NULL,
+	[zbmc] [varchar](100) NOT NULL,
 	[yjh] [numeric](18, 4),
 	[zt] [int] NOT NULL
 PRIMARY KEY CLUSTERED 

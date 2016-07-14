@@ -7,9 +7,7 @@
 				id,
 				dwid,
 				drwc,
-				kcjy,
-				yjh,
-				njh
+				kcjy
 			from  
 				djgrb
 			where 
@@ -22,7 +20,7 @@
 			from  
 				djgnjh
 			where 
-				nf = ${cal.year}
+				nf = ${year}
 		</sql>
 		<sql id="djgyjh">
 			select
@@ -31,8 +29,8 @@
 			from  
 				djgyjh
 			where 
-				nf = ${cal.year} and
-				yf = ${cal.month}
+				nf = ${year} and
+				yf = ${month}
 		</sql>
 
 		<list id="dwid" type="int">1002,1003</list>
@@ -40,19 +38,16 @@
 			<list type="string">一分公司,二分公司</list>
 			<list type="double" sql="djgrb" value="2" order="dwid" by="1"/>
 			<list type="double" sql="djgrb" value="3" order="dwid" by="1"/>
-			<list type="double" sql="djgnjh" value="1" order="dwid" by="0"/>
 			<list type="double" sql="djgyjh" value="1" order="dwid" by="0"/>
+			<list type="double" sql="djgnjh" value="1" order="dwid" by="0"/>
 		</table>
 		
 		
 		<sql id="zbdcrb">
 			select 
 				id,
-				dwid,
 				zbmc,
-				drwc,
-				yjh,
-				njh
+				drwc
 			from  
 				zbdcrb
 			where 
@@ -65,7 +60,7 @@
 			from  
 				zbdcnjh
 			where 
-				nf = ${cal.year}
+				nf = ${year}
 		</sql>
 		<sql id="zbdcyjh">
 			select 
@@ -74,16 +69,16 @@
 			from  
 				zbdcyjh
 			where 
-				nf = ${cal.year} and
-				yf = ${cal.month}
+				nf = ${year} and
+				yf = ${month}
 		</sql>
 		<list id="zbmc" type="string">发电量,上网电量</list>
 		<list id="ids" type="int" >1,2</list>
 		<table id="zbdcResult" rowIds="ids" global="true">
 			<col list="zbmc"/>
-			<list type="double" sql="zbdcrb" value="3" order="zbmc" by="2"/>
+			<list type="double" sql="zbdcrb" value="2" order="zbmc" by="1"/>
+			<list type="double" sql="zbdcyjh" value="1" order="zbmc" by="0"/>
 			<list type="double" sql="zbdcnjh" value="1" order="zbmc" by="0"/>
-			<list type="double" sql="zbdcyjh" value="2" order="zbmc" by="0"/>
 		</table>
 	</service>
 
@@ -97,6 +92,8 @@
 				<dwid type="int" ref="0"/>
 			</where>
 			<set>
+				<dwid type="int" ref="0"/>
+				<date type="date" value="${cal.date}"/>
 				<drwc type="double" ref="2"/>
 				<kcjy type="double" ref="3"/>
 				<zt type="int" value="${zt}"/>
@@ -104,21 +101,26 @@
 		</merge>
 		<merge data="djgData" table="djgyjh">
 			<where>
-				<nf type="int" value="${cal.year}"/>
-				<yf type="int" value="${cal.month}"/>
+				<nf type="int" value="${year}"/>
+				<yf type="int" value="${month}"/>
 				<dwid type="int" ref="0"/>
 			</where>
 			<set>
+				<nf type="int" value="${year}"/>
+				<yf type="int" value="${month}"/>
+				<dwid type="int" ref="0"/>
 				<yjh type="double" ref="4"/>
 				<zt type="int" value="${zt}"/>
 			</set>
 		</merge>
 		<merge data="djgData" table="djgnjh">
 			<where>
-				<nf type="int" value="${cal.year}"/>
+				<nf type="int" value="${year}"/>
 				<dwid type="int" ref="0"/>
 			</where>
 			<set>
+				<nf type="int" value="${year}"/>
+				<dwid type="int" ref="0"/>
 				<njh type="double" ref="5"/>
 				<zt type="int" value="${zt}"/>
 			</set>
@@ -132,27 +134,34 @@
 				<zbmc type="string" ref="1"/>
 			</where>
 			<set>
+				<date type="date" value="${cal.date}"/>
+				<zbmc type="string" ref="1"/>
 				<drwc type="double" ref="2"/>
 				<zt type="int" value="${zt}"/>
 			</set>
 		</merge>
 		<merge data="zbdcData" table="zbdcyjh">
 			<where>
-				<nf type="int" value="${cal.year}"/>
-				<yf type="int" value="${cal.month}"/>
+				<nf type="int" value="${year}"/>
+				<yf type="int" value="${month}"/>
 				<zbmc type="string" ref="1"/>
 			</where>
 			<set>
+				<nf type="int" value="${year}"/>
+				<yf type="int" value="${month}"/>
+				<zbmc type="string" ref="1"/>
 				<yjh type="double" ref="3"/>
 				<zt type="int" value="${zt}"/>
 			</set>
 		</merge>
 		<merge data="zbdcData" table="zbdcnjh">
 			<where>
-				<nf type="int" value="${cal.year}"/>
+				<nf type="int" value="${year}"/>
 				<zbmc type="string" ref="1"/>
 			</where>
 			<set>
+				<nf type="int" value="${year}"/>
+				<zbmc type="string" ref="1"/>
 				<njh type="double" ref="4"/>
 				<zt type="int" value="${zt}"/>
 			</set>
@@ -162,7 +171,9 @@
 	<controller id="xnyrbSubmit">
 		<context key="djgData" value="${request.data.asJsonObject.djg}"></context>
 		<context key="zbdcData" value="${request.data.asJsonObject.zbdc}"></context>
-		<context key="cal" value="${request.date.asCalendare}"></context>
+		<context key="cal" value="${request.date.asCalendar}"></context>
+		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
+		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
 		<context key="zt" value="${4}"></context>
 		<callservice id="servXnyrbEntry"/>
 		<response type="json">
@@ -173,8 +184,11 @@
 	
 
  	<controller id="xnyrbEntryUpdate">
-		<context key="date" value="${request.date.asCalendar.date}"/>
-		<context key="cal" value="${request.date.asCalendar}"/>
+ 		<context key="cal" value="${request.date.asCalendar}"/>
+		<context key="date" value="${cal.date}"/>
+		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
+		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
+
 		<callservice id="servXnyrbEntryUpdate"/>
 
 		<formatter id="data">
@@ -193,38 +207,33 @@
 		</formatterServer>
 		
 		<response type="json"> 
-			<djg>
-				<header type="array">
-					<item>
-						<name>分公司</name>
-						<readOnly>true</readOnly>
-					</item>
-					<item>
-						<name>当日完成</name>
-					</item>
-					<item>
-						<name>库存结余</name>
-					</item>
-					<item>
-						<name>月计划</name>
-					</item>
-					<item>
-						<name>年计划</name>
-					</item>
-				</header>
-				<data>${servDjg.result}</data>
-			</djg>
+			<header type="array">
+				<item>
+					<name>分公司</name>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>当日完成</name>
+				</item>
+				<item>
+					<name>库存结余</name>
+				</item>
+				<item>
+					<name>月计划</name>
+				</item>
+				<item>
+					<name>年计划</name>
+				</item>
+			</header>
+			<data>${servDjg.result}</data>
 			<zbdc>
 				<header type="array">
 					<item>
-						<name>分公司</name>
+						<name>指标名称</name>
 						<readOnly>true</readOnly>
 					</item>
 					<item>
 						<name>当日完成</name>
-					</item>
-					<item>
-						<name>库存结余</name>
 					</item>
 					<item>
 						<name>月计划</name>
@@ -239,7 +248,7 @@
 	</controller>
 	
 	<controller id="xnyrbEntryJsp">
-		<response type="jsp" name="xnyr/xnyrEntry"> 
+		<response type="jsp" name="xnyrb/xnyrbEntry"> 
 			<map key="date" value="${calendar.current.format}"/>
 			<map key="updateUrl" value="xnyrbEntryUpdate"/>
 			<map key="submitUrl" value="xnyrbSubmit"/>

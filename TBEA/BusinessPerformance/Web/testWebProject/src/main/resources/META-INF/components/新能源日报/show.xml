@@ -1,125 +1,249 @@
 ﻿<components>
-	<service id="servYszkhkzb" transaction="transactionManager">
-		
-		<sql id="yszkhkzb">
-			select 
-				ZB.id, 
-				CONVERT(varchar(20), ZB.ksrq, 23) as startDate, 
-				CONVERT(varchar(20), ZB.jzrq, 23) as endDate, 
-				ZB.xmmc,
-				ZB.khmc,
-				ZB.htje,
-				ZB.yszkje,
-				ZB.yqkje,
-				ZB.yqksj
-			from 
-				yszkhkzb ZB
-			where 
-				ZB.xmgs = ${compId} and
-				ZB.ksrq &gt;= ${dStart.date} and 
-				ZB.jzrq &lt;= ${dEnd.date}
-			order by 
-				ZB.xmgs
-		</sql>
-		
-		<sql id="yszkhkzbhj">
-			select 
-				CONVERT(varchar(20), ZB.ksrq, 23) as startDate, 
-				CONVERT(varchar(20), ZB.jzrq, 23) as endDate, 
-				sum(htje) as sumhtje,
-				sum(yszkje) as sumyszkje,
-				sum(yqkje) as sumyqkje,
-				sum(yqksj) as sumyqksj
-			from 
-				yszkhkzb ZB
-			where 
-				ZB.xmgs = ${compId} and
-				ZB.ksrq &gt;= ${dStart.date} and 
-				ZB.jzrq &lt;= ${dEnd.date}
-			group by
-				ZB.ksrq,
-				ZB.jzrq
-			order by 
-				ZB.ksrq,
-				ZB.jzrq
-		</sql>
-		
-		<call id="gs" object="${groupSum}" method="yszkhkzbGroupSum">
-			<param type="object">${yszkhkzb}</param>
-			<param type="object">${yszkhkzbhj}</param>
-		</call>
-		
-		<list id="ids" type="int" sql="gs" value="0" />
-		<table id="result" rowIds="ids">
-			<list id="ks" type="date" sql="gs" value="1" />
-			<list id="jz" type="date" sql="gs" value="2" />
-			<list id="xmmc" type="string" sql="gs" value="3" />
-			<list id="khmc" type="string" sql="gs" value="4" />
-			<list id="htje" type="double" sql="gs" value="5" />
-			<list id="yszkje" type="double" sql="gs" value="6" />
-			<list id="yqkje" type="double" sql="gs" value="7" />
-			<list id="yqksj" type="double" sql="gs" value="8" />
-		</table>
+	<service id="servXnyrb" transaction="transactionManager">
 
-		<context key="result" value="${result}"/>
+		<sql id="djgrb">
+			select 
+				id,
+				dwid,
+				drwc,
+				kcjy
+			from  
+				djgrb
+			where 
+				date = ${date}
+		</sql>
+		<sql id="djgyjh">
+			select
+				dwid,
+				yjh
+			from  
+				djgyjh
+			where 
+				nf = ${year} and
+				yf = ${month}
+		</sql>
+		<sql id="djgylj">
+			select 
+				dwid,
+				sum(drwc) as ljwc
+			from  
+				djgrb
+			where 
+				date &gt; ${cal.day &gt; 25 ? cal.days[25].format : cal.lastMonth.days[25].format} and
+				date &lt;= ${cal.date}
+			group by
+				dwid
+		</sql>
+		<sql id="djgnjh">
+			select
+				dwid,
+				njh
+			from  
+				djgnjh
+			where 
+				nf = ${year}
+		</sql>
+		<sql id="djgnlj">
+			select 
+				dwid,
+				sum(drwc) as ljwc
+			from  
+				djgrb
+			where 
+				date &gt; ${
+					(cal.month == 12  &amp;&amp;  cal.day &gt; 25) 
+						? cal.days[25].format 
+						: cal.lastYear.months[12].days[25].format
+					} and
+				date &lt;= ${cal.date}
+			group by
+				dwid
+		</sql>
+		<list id="dwid" type="int">1002,1003</list>
+		<table id="djgResult" rowIds="dwid" global="true">
+			<list type="string">一分公司,二分公司</list>
+			<list type="double" sql="djgrb" value="2" order="dwid" by="1"/>
+			<list type="double" sql="djgrb" value="3" order="dwid" by="1"/>
+			<list type="double" sql="djgyjh" value="1" order="dwid" by="0"/>
+			<list type="double" sql="djgylj" value="1" order="dwid" by="0"/>
+			<col></col>
+			<list type="double" sql="djgnjh" value="1" order="dwid" by="0"/>
+			<list type="double" sql="djgnlj" value="1" order="dwid" by="0"/>
+			<col></col>
+			<divCol toCol="5" sub="3" base="4"/>
+			<divCol toCol="8" sub="6" base="7"/>
+		</table>
+		
+		
+		<sql id="zbdcrb">
+			select 
+				id,
+				zbmc,
+				drwc
+			from  
+				zbdcrb
+			where 
+				date = ${date}
+		</sql>
+		<sql id="zbdcyjh">
+			select 
+				zbmc,
+				yjh
+			from  
+				zbdcyjh
+			where 
+				nf = ${year} and
+				yf = ${month}
+		</sql>
+		<sql id="zbdcylj">
+			select 
+				zbmc,
+				sum(drwc) as ljwc
+			from  
+				zbdcrb
+			where 
+				date &gt; ${cal.day > 25 ? cal.days[25].format : cal.lastMonth.days[25].format} and
+				date &lt;= ${cal.date}
+			group by
+				zbmc
+		</sql>
+		<sql id="zbdcnjh">
+			select 
+				zbmc,
+				njh
+			from  
+				zbdcnjh
+			where 
+				nf = ${year}
+		</sql>
+		<sql id="zbdcnlj">
+			select 
+				zbmc,
+				sum(drwc) as ljwc
+			from  
+				zbdcrb
+			where 
+				date &gt; ${
+					(cal.month == 12 &amp;&amp; cal.day > 25) 
+						? cal.days[25].format 
+						: cal.lastYear.months[12].days[25].format
+					} and
+				date &lt;= ${cal.date}
+			group by
+				zbmc
+		</sql> 
+		
+		<list id="zbmc" type="string">发电量,上网电量</list>
+		<list id="ids" type="int" >1,2</list>
+		<table id="zbdcResult" rowIds="ids" global="true">
+			<col list="zbmc"/>
+			<list type="double" sql="zbdcrb" value="2" order="zbmc" by="1"/>
+			<list type="double" sql="zbdcyjh" value="1" order="zbmc" by="0"/>
+			<list type="double" sql="zbdcylj" value="1" order="zbmc" by="0"/>
+			<col></col>
+			<list type="double" sql="zbdcnjh" value="1" order="zbmc" by="0"/>
+			<list type="double" sql="zbdcnlj" value="1" order="zbmc" by="0"/>
+			<col></col>
+			<divCol toCol="4" sub="2" base="3"/>
+			<divCol toCol="7" sub="5" base="6"/>
+		</table>
 	</service>
 	
-	<controller id="yszkhkzbUpdate">
+	<controller id="xnyrbUpdate">
 
-		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
-		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
-		<callservice id="servCompTypeToId"/>
-		<callservice id="servYszkhkzb"/>
+		<context key="cal" value="${request.date.asCalendar}"/>
+		<context key="date" value="${cal.date}"/>
+		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
+		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
+		<callservice id="servXnyrb"/>
 		
-		<formatter id="data">
+		<formatter id="djgDf">
+			<EmptyFormatter >
+				<DefaultMatcher cols="0"/>
+			</EmptyFormatter>
+			<PercentFormatter reservedCount="1">
+				<DefaultMatcher cols="5,8"/>
+			</PercentFormatter>
 			<NumberFormatter reservedCount="1">
-				<DefaultMatcher cols="5,6,7"/>
 			</NumberFormatter>
-			<NumberFormatter reservedCount="0">
-				<DefaultMatcher cols="8"/>
+		</formatter>
+		<formatter id="zbdcDf">
+			<EmptyFormatter >
+				<DefaultMatcher cols="0"/>
+			</EmptyFormatter>
+			<PercentFormatter reservedCount="1">
+				<DefaultMatcher cols="4,7"/>
+			</PercentFormatter>
+			<NumberFormatter reservedCount="1">
 			</NumberFormatter>
 		</formatter>
 		
-		<formatterServer id="serv" table="${result.matrix}">
-			<formatter ref="data"/>
+		<formatterServer id="servDjg" table="${djgResult.matrixNoIds}">
+			<formatter ref="djgDf"/>
 		</formatterServer>
-		
+		<formatterServer id="servZbdc" table="${zbdcResult.matrixNoIds}">
+			<formatter ref="zbdcDf"/>
+		</formatterServer>
 		<response type="json"> 
 			<header type="array">
 				<item>
-					<name>开始日期</name>
+					<name>分公司</name>
 				</item>
 				<item>
-					<name>截止日期</name>
+					<name>当日完成</name>
 				</item>
 				<item>
-					<name>项目名称</name>
+					<name>库存结余</name>
 				</item>
 				<item>
-					<name>客户名称</name>
+					<name>月计划</name>
 				</item>
 				<item>
-					<name>合同金额</name>
+					<name>月累计完成</name>
 				</item>
 				<item>
-					<name>应收账款金额</name>
+					<name>月度完成比</name>
 				</item>
 				<item>
-					<name>逾期款金额</name>
+					<name>年度计划</name>
 				</item>
 				<item>
-					<name>逾期款时间（月）</name>
+					<name>年度累计完成</name>
+				</item>
+				<item>
+					<name>年度累计完成比</name>
 				</item>
 			</header>
-			<mergeRows type="array">
-				<item>
-					<col>0</col>
-				</item>
-				<item>
-					<col>1</col>
-				</item>
-			</mergeRows>
-			<data>${serv.result}</data>
+			<data>${servDjg.result}</data>
+			<zbdc>
+				<header type="array">
+					<item>
+						<name>分公司</name>
+					</item>
+					<item>
+						<name>当日完成</name>
+					</item>
+					<item>
+						<name>月计划</name>
+					</item>
+					<item>
+						<name>月累计完成</name>
+					</item>
+					<item>
+						<name>月度完成比</name>
+					</item>
+					<item>
+						<name>年度计划</name>
+					</item>
+					<item>
+						<name>年度累计完成</name>
+					</item>
+					<item>
+						<name>年度累计完成比</name>
+					</item>
+				</header>
+				<data>${servZbdc.result}</data>
+			</zbdc>
 		</response>
 	</controller>
 	
@@ -179,15 +303,10 @@
 	</controller>
 	
 	<controller id="xnyrb">		
-		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-			<param type="int">26</param>
-		</call>
-		<response type="jsp" name="xnyzb/xnyzb"> 
+		<response type="jsp" name="xnyrb/xnyrb"> 
 			<map key="date" value="${calendar.current.format}"/>
-			<map key="updateUrl" value="yszkhkzbUpdate"/>
-			<map key="exportUrl" value="yszkhkzbExport"/>
-			<map key="title" value="应收账款回款周报"/>
-			<map map="${authCompMap}"/>
+			<map key="updateUrl" value="xnyrbUpdate"/>
+			<map key="title" value="新能源日报"/>
 		</response>
 	</controller>
 </components>

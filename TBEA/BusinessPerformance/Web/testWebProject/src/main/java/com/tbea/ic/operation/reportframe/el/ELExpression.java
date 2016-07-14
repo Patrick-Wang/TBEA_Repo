@@ -14,13 +14,14 @@ import javax.script.ScriptException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import com.tbea.ic.operation.common.EasyCalendar.MonthDay;
+import com.tbea.ic.operation.common.EasyCalendar.Days;
+import com.tbea.ic.operation.common.EasyCalendar.Months;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerSession;
 import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
 
 public class ELExpression{
-	static final Pattern namePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*(\\[[0-9]+\\])*");  
+	static final Pattern namePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*(\\[[0-9]+\\])*)*");  
 	static final Pattern indexsPattern = Pattern.compile("\\[\\S*\\]"); 
 	static final Pattern indexPattern = Pattern.compile("[0-9]+");
 	int start;
@@ -84,6 +85,10 @@ public class ELExpression{
 	private boolean isNumber(Object ob){
 		return ob instanceof Integer || ob instanceof Double;  
 	}
+	
+	private boolean isString(Object ob){
+		return ob instanceof String;  
+	}
 
 	public Object value() throws Exception{
 		Matcher matcher = namePattern.matcher(express);
@@ -92,6 +97,9 @@ public class ELExpression{
 			Object obj = parseObject(matcher.group());
 			if (isNumber(obj)){
 				expressTmp = expressTmp.substring(0, matcher.start()) + obj + expressTmp.substring(matcher.end());
+				matcher = namePattern.matcher(expressTmp);
+			}else if (isString(obj)){
+				expressTmp = expressTmp.substring(0, matcher.start()) + "'" + obj + "'" + expressTmp.substring(matcher.end());
 				matcher = namePattern.matcher(expressTmp);
 			}else{
 				return obj;
@@ -116,15 +124,7 @@ public class ELExpression{
 	
 	private Object parseObject(String exp) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		String[] exps = exp.split("\\.");
-		Object obj = loader.onGetObject(exps[0]);
-		for (int i = 1; i < exps.length - 1; ++i){
-			if (obj == null){
-				System.out.println("EL : " + exp);
-				System.out.println(exps[i - 1] + " is null object");
-			}
-			obj = getProperty(obj, exps[i]);
-		}
-		
+		Object obj = null;		
 		Matcher mc = indexsPattern.matcher(exps[0]);
 		if (mc.find()){
 			obj = loader.onGetObject(exps[0].substring(0, mc.start()));
@@ -138,6 +138,7 @@ public class ELExpression{
 				System.out.println("EL : " + exp);
 				System.out.println(exps[i - 1] + " is null object");
 			}
+			mc = indexsPattern.matcher(exps[i]);
 			if (mc.find()){
 				obj = getProperty(obj, exps[i].substring(0, mc.start()));
 				obj = getProperty(obj, getIndexs(mc.group()));
@@ -164,8 +165,10 @@ public class ELExpression{
 	 			propValue = ((Object[])obj)[indexs.get(i)];
 			}else if (obj instanceof JSONArray){
 				propValue = ((JSONArray) obj).get(indexs.get(i));
-			}else if (obj instanceof MonthDay){
-				propValue = ((MonthDay) obj).getDay(indexs.get(i));
+			}else if (obj instanceof Days){
+				propValue = ((Days) obj).getDay(indexs.get(i));
+			}else if (obj instanceof Months){
+				propValue = ((Months) obj).getMonth(indexs.get(i));
 			}
 			obj = propValue;
 		}

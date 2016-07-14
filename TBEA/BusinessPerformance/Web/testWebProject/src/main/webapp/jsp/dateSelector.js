@@ -220,7 +220,7 @@ var Util;
                     daySel.multiselect({
                         multiple: false,
                         header: "Select an option",
-                        height: '100%',
+                        height: (endDay - startDay + 1) > 15 ? (15 * 28) + "px" : '100%',
                         noneSelectedText: "Select an Option",
                         selectedList: 1
                     });
@@ -248,7 +248,7 @@ var Util;
                     multiple: false,
                     header: false,
                     minWidth: 80,
-                    height: '100%',
+                    height: (endDay - startDay + 1) > 15 ? (15 * 28) + "px" : '100%',
                     selectedList: 1
                 });
             }
