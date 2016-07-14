@@ -39,7 +39,7 @@ var framework;
                             return this.update(this.dateSelect.getDate());
                             break;
                         case FrameEvent.FE_EXPORTEXCEL:
-                            return this.exportExcel(this.dateSelect.getDate(), e);
+                            return this.exportExcel(this.dateSelect.getDate(), e.data);
                             break;
                     }
                     return _super.prototype.onEvent.call(this, e);
@@ -87,7 +87,7 @@ var framework;
                 };
                 ShowView.prototype.exportExcel = function (date, id) {
                     $("#" + id)[0].action = this.opt.exportUrl + "?" + Util.Ajax.toUrlParam({
-                        date: date
+                        date: this.getDate(date)
                     });
                     $("#" + id)[0].submit();
                 };

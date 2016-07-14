@@ -162,6 +162,12 @@
             text-align: left;
             font-size: 12px;
         }
+        #exportButton {
+			height: 23px;
+			width:100px;
+			padding: .1em 1em;
+			margin-top: 40px;
+		}
     </style>
 </head>
 <body>

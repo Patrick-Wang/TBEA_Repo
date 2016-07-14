@@ -46,7 +46,7 @@ module framework.templates.singleDateReport {
                     return this.update(this.dateSelect.getDate());
                     break;
                 case FrameEvent.FE_EXPORTEXCEL:
-                    return this.exportExcel(this.dateSelect.getDate(), e);
+                    return this.exportExcel(this.dateSelect.getDate(), e.data);
                     break;
             }
             return super.onEvent(e);
@@ -99,7 +99,7 @@ module framework.templates.singleDateReport {
 
         exportExcel(date:Util.Date, id:string): void {
             $("#" + id)[0].action = this.opt.exportUrl + "?" +  Util.Ajax.toUrlParam({
-                date: date
+                date: this.getDate(date)
             });
             $("#" + id)[0].submit();
         }
