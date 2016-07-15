@@ -20,6 +20,16 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.dao.account.AccountDao;
+import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
+import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
+import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
+import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
+import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
+import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
+import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
+import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
+import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.reportframe.component.Component;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
@@ -27,6 +37,8 @@ import com.tbea.ic.operation.reportframe.component.controller.ControllerSession;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
+import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
 
 @Controller
 @RequestMapping(value = "report")
@@ -42,6 +54,31 @@ public class ReportServlet {
 	
 	@Autowired
 	ExtendAuthorityService extendAuthService;
+	
+	@Autowired
+	NDJHZBDao ndjhzbDao;
+
+	@Autowired
+	YDJHZBDao ydjhzbDao;
+
+	@Autowired
+	YDZBZTDao ydzbztDao;
+
+	@Autowired
+	SJZBDao sjzbDao;
+
+	@Autowired
+	YJ20ZBDao yj20zbDao;
+
+	@Autowired
+	YJ28ZBDao yj28zbDao;
+
+	AccumulatorFactory accFac;
+	
+	@Autowired
+	public void init() {
+		accFac = new AccumulatorFactory(sjzbDao, yj20zbDao, yj28zbDao, ydzbztDao, ydjhzbDao, ndjhzbDao);
+	}
 	
 	public static interface AuthManager{
 		Map<String, Object> getAuthedCompanies(int authType);
@@ -66,6 +103,7 @@ public class ReportServlet {
 			context.put("groupSum", new GroupSum());
 			context.put("array", new Arrays());
 			context.put("transactionManager", trProxy);
+			context.put("accFactory", accFac);
 			context.put("authManager", new AuthManager(){
 
 				@Override

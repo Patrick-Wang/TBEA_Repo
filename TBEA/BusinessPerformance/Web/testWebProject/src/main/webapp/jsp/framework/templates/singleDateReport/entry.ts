@@ -1,6 +1,7 @@
 ///<reference path="../../route/route.ts"/>
 ///<reference path="../../basic/basicdef.ts"/>
 ///<reference path="../../../messageBox.ts"/>
+///<reference path="../../../components/dateSelectorProxy.ts"/>
 module framework.templates.singleDateReport {
     import router = framework.router;
     import Node = JQTable.Node;
@@ -17,7 +18,7 @@ module framework.templates.singleDateReport {
     }
 
     export class EntryView extends BasicEndpoint{
-        dateSelect : Util.DateSelector;
+        dateSelect : Util.DateSelectorProxy;
         mAjaxUpdate:Util.Ajax;
         mAjaxSubmit:Util.Ajax;
         mTableAssist:JQTable.JQGridAssistant;
@@ -29,12 +30,11 @@ module framework.templates.singleDateReport {
 
         onInitialize(opt:any):void{
             this.opt = opt;
-            this.dateSelect = new Util.DateSelector({
+            this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
                 year:opt.date.year - 3,
                 month:opt.date.month,
                 day:opt.date.day
-            }, opt.date, opt.dtId);
-
+            }, opt.date, opt.date);
             this.mAjaxUpdate = new Util.Ajax(opt.updateUrl, false);
             this.mAjaxSubmit = new Util.Ajax(opt.submitUrl, false);
             this.update(this.dateSelect.getDate());
@@ -44,10 +44,8 @@ module framework.templates.singleDateReport {
             switch (e.id) {
                 case FrameEvent.FE_UPDATE:
                     return this.update(this.dateSelect.getDate());
-                    break;
                 case FrameEvent.FE_SUBMIT:
                     return this.submit(this.dateSelect.getDate());
-                    break;
             }
             return super.onEvent(e);
         }

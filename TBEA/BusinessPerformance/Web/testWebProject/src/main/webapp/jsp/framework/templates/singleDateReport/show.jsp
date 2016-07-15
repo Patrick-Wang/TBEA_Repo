@@ -52,6 +52,7 @@
 	<script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
@@ -162,15 +163,9 @@
             text-align: left;
             font-size: 12px;
         }
-        #exportButton {
-			height: 23px;
-			width:100px;
-			padding: .1em 1em;
-			margin-top: 40px;
-		}
     </style>
 </head>
-<body>
+<body style="visibility:hidden">
 <div class="header">
     <h1 id="headertitle">${title}</h1>
 </div>
@@ -226,6 +221,11 @@
             updateUrl:"${updateUrl}.do",
             exportUrl:"${exportUrl}.do"
         });
+        $("#exportButton")
+            .css("height", "23px")
+            .css("padding", ".1em 1em")
+            .css("margin-top", "10px")
+            .css("width", "90px");
         $(document.body).css("visibility", "visible");
     });
 </script>

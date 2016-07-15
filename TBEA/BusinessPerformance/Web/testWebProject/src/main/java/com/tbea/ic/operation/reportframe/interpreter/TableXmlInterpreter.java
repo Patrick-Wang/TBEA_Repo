@@ -30,7 +30,6 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		}
 		elp = new ELParser(component);
 		Table tb = new Table();
-		String id = e.getAttribute("id");
 		tb.setIds((List) component.getVar(e.getAttribute("rowIds")));
 		List<List<Object>> tbValues = new ArrayList<List<Object>>();
 		tb.setValues(tbValues);
@@ -55,11 +54,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			
 		});
 
-		if ("true".equals(e.getAttribute("export"))){
-			component.global(id, tb);
-		}else{
-			component.local(id, tb);
-		}
+		component.put(e, tb);
 		return true;
 	}
 

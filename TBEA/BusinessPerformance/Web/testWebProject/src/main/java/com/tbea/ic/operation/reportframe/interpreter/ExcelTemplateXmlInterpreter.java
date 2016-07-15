@@ -16,15 +16,12 @@ public class ExcelTemplateXmlInterpreter implements XmlInterpreter {
 			return false;
 		}
 
-		String id = e.getAttribute("id");
+
 		String sheetName = e.getAttribute("sheet");
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		workbook.createSheet(sheetName);
-		if ("true".equals(e.getAttribute("export"))){
-			component.global(id, new ExcelTemplate(workbook));
-		}else{
-			component.local(id, new ExcelTemplate(workbook));
-		}
+
+		component.put(e, new ExcelTemplate(workbook));
 		return true;
 	}
 }

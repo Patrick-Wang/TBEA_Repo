@@ -333,7 +333,7 @@
 		</formatterServer>
 		
 		<context key="tmp" value="${servDig.result}"/>
-		<response type="excel" ref="excelTemplate" name="${request.date.asString + '新特能源日报'}" serv="servZbdc"/>
+		<response type="excel" ref="excelTemplate" name="${request.date.asString} 新特1232能源日报.xls" serv="servZbdc"/>
 	</controller>
 	
 	<controller id="xtnyrb">		

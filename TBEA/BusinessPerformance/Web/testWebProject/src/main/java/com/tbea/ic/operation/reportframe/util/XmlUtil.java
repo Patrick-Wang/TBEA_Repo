@@ -103,7 +103,7 @@ public class XmlUtil {
 		if(null == text){
 			return null;
 		}
-		
+
 		text = text.replaceAll("\\s", "");
 		List<String> list = new ArrayList<String>();
 		if (!text.isEmpty()){
@@ -117,16 +117,40 @@ public class XmlUtil {
 		return list;
 	}
 	
-	public static Object getELValue(String el, ELParser elp) throws Exception{
+	public static Object parseELText(String el, ELParser elp) throws Exception{
+		el = el.trim();
 		List<ELExpression> elexps = elp.parser(el);
-		if (!elexps.isEmpty()) {
-			return elexps.get(0).value();
+		if (elexps.isEmpty()) {
+			return el;
+		} else if (elexps.size() == 1){
+			ELExpression exp = elexps.get(0);
+			if (exp.end() == el.length()){
+				return exp.value();
+			}else{
+				return el.substring(0, exp.start()) + exp.value() + el.substring(exp.end());
+			}
+		} else{
+			Object objTmp = null;
+			String strRet = el;
+			ELExpression exp = null;
+			for (int i = elexps.size() - 1; i >= 0; --i){
+				exp = elexps.get(i);
+				objTmp = exp.value();
+				if (!TypeUtil.isDouble(objTmp.getClass()) &&
+					!TypeUtil.isInt(objTmp.getClass()) &&
+					!TypeUtil.isString(objTmp.getClass())){
+					strRet = null;
+					break;
+				}else{
+					strRet = strRet.substring(0, exp.start()) + objTmp + strRet.substring(exp.end());
+				}
+			}
+			return strRet;
 		}
-		return null;
 	}
 	
 	public static String getString(String text, ELParser elParser) throws Exception {
-		Object val = getELValue(text, elParser);
+		Object val = parseELText(text, elParser);
 		if (val == null){
 			val = text;
 		}else{
@@ -137,44 +161,51 @@ public class XmlUtil {
 	
 	public static Double getDouble(String text, ELParser elParser,
 			Double defaultVal) throws Exception {
-		Object val = getELValue(text, elParser);
-		if (val == null){
-			try{
-				val = Double.valueOf(text);
-			}catch(NumberFormatException e){
+		Object val = parseELText(text, elParser);
+		if (val != null){
+			if (TypeUtil.isInt(val.getClass())){
+				val = ((Integer) val).doubleValue();
+			}else if (TypeUtil.isString(val.getClass())){
+				try{
+					val = Double.valueOf(text);
+				}catch(NumberFormatException e){
+					val = defaultVal;
+				}
+			}else if (!TypeUtil.isDouble(val.getClass())){
 				val = defaultVal;
 			}
 		}else{
-			if (val instanceof Integer){
-				val = ((Integer) val).doubleValue();
-			}
+			val = defaultVal;
 		}
 		return (Double) val;
 	}
 	
 	public static Integer getInt(String text, ELParser elParser,
 			Integer defaultVal) throws Exception {
-		Object val = getELValue(text, elParser);
-		if (val == null){
-			try{
-				val = Integer.valueOf(text);
-			}catch(NumberFormatException e){
+		Object val = parseELText(text, elParser);
+		if (val != null){
+			if (TypeUtil.isDouble(val.getClass())){
+				val = ((Double) val).intValue();
+			}else if (TypeUtil.isString(val.getClass())){
+				try{
+					val = Integer.valueOf(text);
+				}catch(NumberFormatException e){
+					val = defaultVal;
+				}
+			}else if (!TypeUtil.isInt(val.getClass())){
 				val = defaultVal;
 			}
 		}else{
-			if (val instanceof Double){
-				val = ((Double) val).intValue();
-			}
+			val = defaultVal;
 		}
 		return (Integer) val;
 	}
 	
 	public static Object getObjectAttr(Element elem, String attr, ELParser elParser) throws Exception {
-		Object obj = getELValue(elem.getAttribute(attr), elParser);
-		if (obj == null){
-			obj = getAttr(elem, attr);
+		if (elem.hasAttribute(attr)){
+			return parseELText(elem.getAttribute(attr), elParser);
 		}
-		return obj;
+		return null;
 	}
 	
 	public static Integer getIntAttr(Element elem, String attr, ELParser elParser,
@@ -210,5 +241,18 @@ public class XmlUtil {
 			}
 		}
 		return null;
+	}
+
+	public static Boolean getBoolean(String attribute, ELParser elParser) throws Exception {
+		Boolean bRet = false;
+		Object ret = parseELText(attribute, elParser);
+		if (null != ret){
+			if (TypeUtil.isBoolean(ret.getClass())){
+				bRet = (Boolean) ret;
+			}else if (TypeUtil.isString(ret.getClass())){
+				bRet = Boolean.valueOf((String)ret);
+			}
+		}
+		return bRet;
 	}
 }

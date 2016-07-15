@@ -39,6 +39,16 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 		}
 	}
 	
+	public void put(Element eVar, Object val){
+		if (eVar.hasAttribute("id")){
+			if ("true".equals(eVar.getAttribute("export"))){
+				global(eVar.getAttribute("id"), val);
+			}else{
+				local(eVar.getAttribute("id"), val);
+			}
+		}
+	}
+	
 	public void global(String key, Object value){
 
 		if (!key.isEmpty()){

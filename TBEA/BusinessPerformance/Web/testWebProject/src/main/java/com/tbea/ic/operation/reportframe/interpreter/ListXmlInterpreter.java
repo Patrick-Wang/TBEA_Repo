@@ -8,7 +8,6 @@ import net.sf.json.JSONArray;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.TypeUtil;
@@ -86,12 +85,8 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			parseSql(component, e, objs);
 			
 			parseItems(component, e, objs);
-
-			if ("true".equals(e.getAttribute("export"))){
-				component.global(e.getAttribute("id"), objs);
-			}else{
-				component.local(e.getAttribute("id"), objs);
-			}
+			
+			component.put(e, objs);
 		}
 		return bRet;
 	}
@@ -102,7 +97,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 		if (e.hasAttribute("json") && e.hasAttribute("col")){
 			Object jarr;
 			try {
-				jarr = XmlUtil.getELValue(e.getAttribute("json"), elp);
+				jarr = XmlUtil.parseELText(e.getAttribute("json"), elp);
 				Integer col = XmlUtil.getIntAttr(e, "col", elp, null);
 				if (jarr instanceof JSONArray && col != null){
 					JSONArray jrow = ((JSONArray)jarr).getJSONArray(col);

@@ -158,15 +158,10 @@ th.ui-th-ltr {
 	text-align: left;
 	font-size: 12px;
 }
-#exportButton {
-	height: 23px;
-	width:100px;
-	padding: .1em 1em;
-	margin-top: 2px;
-}
+
 </style>
 </head>
-<body>
+<body >
 	<div class="header">
 		<h1 id="headertitle">新能源周报</h1>
 	</div>

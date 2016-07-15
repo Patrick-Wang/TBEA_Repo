@@ -71,7 +71,7 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
         EasyCalendar ec = new EasyCalendar(d);
         Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt = :zt and nf = :nf and yf >= :jdstart and yf <= :yf and cpid = :cpid and dwid = :dwid");
 		q.setParameter("nf", ec.getYear());
-		q.setParameter("jdstart", ec.getCurrentSeasonFirstMonth());
+		q.setParameter("jdstart", ec.getSeasonFirstMonth());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("cpid", cpid);
 		q.setParameter("dwid", company.getId());
@@ -92,7 +92,7 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 		ec.addYear(-1);
         Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf and cpid = :cpid and dwid = :dwid and zt = :zt");
 		q.setParameter("nf", ec.getYear());
-		q.setParameter("jdstart", ec.getCurrentSeasonFirstMonth());
+		q.setParameter("jdstart", ec.getSeasonFirstMonth());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("cpid", cpid);
 		q.setParameter("dwid", company.getId());

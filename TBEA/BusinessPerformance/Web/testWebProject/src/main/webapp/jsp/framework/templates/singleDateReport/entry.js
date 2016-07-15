@@ -6,6 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 ///<reference path="../../route/route.ts"/>
 ///<reference path="../../basic/basicdef.ts"/>
 ///<reference path="../../../messageBox.ts"/>
+///<reference path="../../../components/dateSelectorProxy.ts"/>
 var framework;
 (function (framework) {
     var templates;
@@ -24,11 +25,11 @@ var framework;
                 };
                 EntryView.prototype.onInitialize = function (opt) {
                     this.opt = opt;
-                    this.dateSelect = new Util.DateSelector({
+                    this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
                         year: opt.date.year - 3,
                         month: opt.date.month,
                         day: opt.date.day
-                    }, opt.date, opt.dtId);
+                    }, opt.date, opt.date);
                     this.mAjaxUpdate = new Util.Ajax(opt.updateUrl, false);
                     this.mAjaxSubmit = new Util.Ajax(opt.submitUrl, false);
                     this.update(this.dateSelect.getDate());
@@ -37,10 +38,8 @@ var framework;
                     switch (e.id) {
                         case FrameEvent.FE_UPDATE:
                             return this.update(this.dateSelect.getDate());
-                            break;
                         case FrameEvent.FE_SUBMIT:
                             return this.submit(this.dateSelect.getDate());
-                            break;
                     }
                     return _super.prototype.onEvent.call(this, e);
                 };

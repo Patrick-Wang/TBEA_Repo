@@ -195,7 +195,35 @@ public class EasyCalendar {
 		return (month - 1) / 3 + 1;
 	}
 	
-	public int getCurrentSeasonFirstMonth(){
+	public int getSeasonFirstMonth(){
 		return (getJdCount(this.getMonth()) - 1) * 3 + 1;
+	}
+	
+	public EasyCalendar getNextSeason(){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.add(Calendar.MONTH, 3);
+		return new EasyCalendar(cal);
+	}
+	
+	public EasyCalendar getSeasonStart(){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.set(Calendar.MONTH, (getJdCount(this.getMonth()) - 1) * 3);
+		return new EasyCalendar(cal);
+	}
+	
+	public EasyCalendar getSeasonMid(){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.set(Calendar.MONTH, (getJdCount(this.getMonth()) - 1) * 3 + 1);
+		return new EasyCalendar(cal);
+	}
+	
+	public EasyCalendar getSeasonEnd(){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.set(Calendar.MONTH, (getJdCount(this.getMonth()) - 1) * 3 + 2);
+		return new EasyCalendar(cal);
 	}
 }

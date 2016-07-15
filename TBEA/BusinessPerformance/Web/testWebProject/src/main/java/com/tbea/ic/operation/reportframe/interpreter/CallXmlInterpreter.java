@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.TypeUtil;
@@ -76,7 +77,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 					params.add(XmlUtil.getString(text, elp));
 					break;
 				case TypeUtil.OBJECT:
-					params.add(XmlUtil.getELValue(text, elp));
+					params.add(XmlUtil.parseELText(text, elp));
 					break;
 				}
 				checkUnmatchedMethod(mdList, tp, index, params.get(params.size() - 1));
@@ -168,12 +169,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 			md.setAccessible(true);
 			if (e.hasAttribute("id")){
 				Object result = invoke(md, obj, params);
-				String id = e.getAttribute("id");
-				if ("true".equals(e.getAttribute("export"))){
-					component.global(id, result);
-				}else{
-					component.local(id, result);
-				}
+				component.put(e, result);
 			}else{
 				invokeVoid(md, obj, params);
 			}

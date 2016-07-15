@@ -46,4 +46,8 @@ public class TypeUtil {
 	public static boolean instanceOf(Object obj, Class<?> cls2){
 		return obj.getClass().isAssignableFrom(cls2);
 	}
+
+	public static boolean isBoolean(Class<? extends Object> cls) {
+		return cls.isAssignableFrom(Boolean.class) || cls.getName().equals("boolean");
+	}
 }

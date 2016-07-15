@@ -7,7 +7,7 @@ import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 
 
-public class ContextXmlInterpreter implements XmlInterpreter {
+public class IFXmlInterpreter implements XmlInterpreter {
 
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {

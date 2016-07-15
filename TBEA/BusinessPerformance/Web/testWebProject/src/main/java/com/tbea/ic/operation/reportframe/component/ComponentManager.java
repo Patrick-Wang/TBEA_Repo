@@ -67,9 +67,13 @@ public class ComponentManager implements ComponentLoadedListener {
 		return null;
 	}
 	
+	public Service createService(Element e){
+		return new Service(e, this);
+	}
+	
 	public Service getService(String id) {
 		if (serviceMap.containsKey(id)){
-			return new Service(serviceMap.get(id).getE(), this);
+			return createService(serviceMap.get(id).getE());
 		}
 		return null;
 	}

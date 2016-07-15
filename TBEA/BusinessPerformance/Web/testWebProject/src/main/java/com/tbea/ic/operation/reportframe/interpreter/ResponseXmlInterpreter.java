@@ -38,7 +38,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				} else {
 					String text = elem.getFirstChild().getTextContent().replaceAll("\\s", "");
 					if (null != text && !text.isEmpty()){
-						pJson.put(elem.getTagName(), parseElObj(text));
+						pJson.put(elem.getTagName(), XmlUtil.parseELText(text, elp));
 					}else {
 						pJson.put(elem.getTagName(), parseJsonObject(elem));
 					}
@@ -94,7 +94,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				ExcelTemplate temp = (ExcelTemplate) component.getVar(e.getAttribute("ref"));
 				FormatterServer serv = (FormatterServer) component.getVar(e.getAttribute("serv"));
 				serv.getResult();
-				temp.write(resp, XmlUtil.getString(e.getAttribute("name"), elp) + ".xls");
+				temp.write(resp, XmlUtil.getString(e.getAttribute("name"), elp));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -125,13 +125,5 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 			}
 		});
 		return map;
-	}
-
-	private Object parseElObj(String text) throws Exception {
-		Object obj = XmlUtil.getELValue(text, elp);
-		if (null == obj){
-			obj = text;
-		}
-		return obj;
 	}
 }

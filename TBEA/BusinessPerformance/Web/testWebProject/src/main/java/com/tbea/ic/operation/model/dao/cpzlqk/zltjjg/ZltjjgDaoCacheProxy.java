@@ -188,7 +188,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			EasyCalendar ec = new EasyCalendar(d);
 	        Query q = getEntityManager().createQuery("select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt=:zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwid group by dwid, cpid");
 			q.setParameter("nf", ec.getYear());
-			q.setParameter("jdstart", ec.getCurrentSeasonFirstMonth());
+			q.setParameter("jdstart", ec.getSeasonFirstMonth());
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwid", comps);
 			q.setParameter("zt", zt.ordinal());
@@ -217,7 +217,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			ec.addYear(-1);
 	        Query q = getEntityManager().createQuery("select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt=:zt and nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwid group by dwid, cpid");
 			q.setParameter("nf", ec.getYear());
-			q.setParameter("jdstart", ec.getCurrentSeasonFirstMonth());
+			q.setParameter("jdstart", ec.getSeasonFirstMonth());
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwid", comps);
 			q.setParameter("zt", zt.ordinal());
