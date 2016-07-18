@@ -9,12 +9,10 @@
 			制造业 ,
 			制造业 ,
 			制造业 ,
-			制造业
-			,
+			制造业 ,
 			物流贸易业 ,
 			物流贸易业 ,
 			物流贸易业 ,
-			服务业 ,
 			服务业 ,
 			服务业 ,
 			服务业 ,
@@ -623,6 +621,11 @@
 						</sub>
 					</item>
 				</header>
+				<mergeCols type="array">
+					<item>
+						<col>0</col>
+					</item>
+				</mergeCols>
 				<mergeRows type="array">
 					<item>
 						<col>0</col>
@@ -691,6 +694,11 @@
 						<col>0</col>
 					</item>
 				</mergeRows>
+				<mergeCols type="array">
+					<item>
+						<col>0</col>
+					</item>
+				</mergeCols>
 				<mergeTitle>true</mergeTitle>
 				<data>${fmtServ.result}</data>
 			</response>
@@ -761,6 +769,11 @@
 						<col>0</col>
 					</item>
 				</mergeRows>
+				<mergeCols type="array">
+					<item>
+						<col>0</col>
+					</item>
+				</mergeCols>
 				<mergeTitle>true</mergeTitle>
 				<data>${fmtServ.result}</data>
 			</response>
