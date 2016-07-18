@@ -6,6 +6,7 @@ import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
+import com.tbea.ic.operation.service.report.AccByComps;
 import com.tbea.ic.operation.service.util.pipe.acc.composite.CompositeAccDataSource;
 import com.tbea.ic.operation.service.util.pipe.acc.composite.CompositeAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
@@ -14,13 +15,19 @@ import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 public class AccumulatorFactory {
 	private IAccumulator sjAcc;
 	private IAccumulator njhAcc;
-	private IAccumulator yjhcc;
+	private IAccumulator yjhAcc;
+	private IAccumulator sjByComps;
+	private IAccumulator njhByComps;
+	private IAccumulator yjhByComps;
 	
 	public AccumulatorFactory(SJZBDao sjzbDao, YJ20ZBDao yj20zbDao,
 			YJ28ZBDao yj28zbDao, YDZBZTDao ydzbztDao, YDJHZBDao ydjhzbDao, NDJHZBDao ndjhzbDao){
 		sjAcc = new SjzbAccumulator(sjzbDao, yj20zbDao,	yj28zbDao, ydzbztDao);
 		njhAcc = new NjhzbAccumulator(ndjhzbDao);
-		yjhcc = new YjhzbAccumulator(ydjhzbDao);
+		yjhAcc = new YjhzbAccumulator(ydjhzbDao);
+		sjByComps = new AccByComps(sjAcc);
+		njhByComps = new AccByComps(njhAcc);
+		yjhByComps = new AccByComps(yjhAcc);
 	}
 	
 	public IAccumulator getSjAcc(){
@@ -32,11 +39,23 @@ public class AccumulatorFactory {
 	}
 	
 	public IAccumulator getYjhAcc(){
-		return yjhcc;
+		return yjhAcc;
 	}
 	
 	public IAccumulator getCompositeAcc(CompositeAccDataSource dataSource){
 		return new CompositeAccumulator(dataSource);
+	}
+
+	public IAccumulator getSjByComps() {
+		return sjByComps;
+	}
+
+	public IAccumulator getNjhByComps() {
+		return njhByComps;
+	}
+
+	public IAccumulator getYjhByComps() {
+		return yjhByComps;
 	}
 	
 }

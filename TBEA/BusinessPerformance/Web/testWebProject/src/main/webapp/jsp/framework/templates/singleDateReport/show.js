@@ -29,7 +29,7 @@ var framework;
                         year: opt.date.year - 3,
                         month: opt.date.month,
                         day: opt.date.day
-                    }, opt.date, opt.date);
+                    }, opt.date, opt.date, opt.asSeason);
                     this.mAjaxUpdate = new Util.Ajax(opt.updateUrl, false);
                     this.mAjaxExport = new Util.Ajax(opt.exportUrl, false);
                     this.update(this.dateSelect.getDate());

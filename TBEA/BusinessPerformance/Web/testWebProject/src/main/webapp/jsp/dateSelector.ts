@@ -31,6 +31,8 @@ module Util {
 
             if (asSeason && isExist(this.mEndDate.month)) {
                 this.mAsSeasion = true;
+                this.mEndDate.day = undefined;
+                this.mStartDate.day = undefined;
                 this.mEndDate.month = 3 * (parseInt((this.mEndDate.month - 1) / 3 + '') + 1);
                 // this.mEndDate = addMonth(this.mEndDate, -((this.mEndDate.month % 3));
             } else {

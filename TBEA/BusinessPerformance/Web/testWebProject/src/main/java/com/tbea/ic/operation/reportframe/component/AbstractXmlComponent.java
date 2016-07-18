@@ -64,6 +64,8 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 		this.mgr = mgr;
 	}
 	
+	abstract public AbstractXmlComponent clone(Element e);
+	
 	public Object removeLocal(String key){
 		return local.remove(key);
 	}
@@ -86,5 +88,9 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 
 	public Context globalContext() {
 		return global;
+	}
+
+	public Context localContext() {
+		return local;
 	}
 }

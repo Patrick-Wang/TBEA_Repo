@@ -89,7 +89,7 @@ module Util {
                 }
             }
 
-            return new JQTable.JQGridAssistant(nodes, gridName);
+            return tableAssist;
         }
     }
 

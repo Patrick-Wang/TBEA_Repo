@@ -15,6 +15,7 @@ module framework.templates.singleDateReport {
         host:string;
         date:Util.Date;
         dtId:string;
+        asSeason:boolean;
     }
 
     export class ShowView extends BasicEndpoint{
@@ -28,13 +29,13 @@ module framework.templates.singleDateReport {
             return framework.basic.endpoint.FRAME_ID;
         }
 
-        onInitialize(opt:any):void{
+        onInitialize(opt:ShowOption):void{
             this.opt = opt;
             this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
                 year:opt.date.year - 3,
                 month:opt.date.month,
                 day:opt.date.day
-            }, opt.date, opt.date);
+            }, opt.date, opt.date, opt.asSeason);
 
 
             this.mAjaxUpdate = new Util.Ajax(opt.updateUrl, false);

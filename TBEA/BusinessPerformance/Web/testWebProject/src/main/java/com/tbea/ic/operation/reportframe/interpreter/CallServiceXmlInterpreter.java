@@ -16,9 +16,18 @@ public class CallServiceXmlInterpreter implements XmlInterpreter {
 		}
 
 		String id = e.getAttribute("id");
-		Service serv = component.getCM().getService(id);
+		
+		Service serv = null;
+		if ("true".equals(e.getAttribute("inline"))){
+			serv = component.getCM().getService(id, component.localContext());
+		}else{
+			serv = component.getCM().getService(id);
+		}
+		
 		if (null != serv){
 			serv.run(component.globalContext());
+		}else{
+			System.out.println("call service " + e.toString() + " find failed");
 		}
 		return true;
 	}

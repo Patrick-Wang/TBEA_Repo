@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
-import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.TypeUtil;
@@ -38,8 +37,10 @@ public class CallXmlInterpreter implements XmlInterpreter {
 						mdList.remove(i);
 					}
 					break;
+				case TypeUtil.SQLDATE:
 				case TypeUtil.OBJECT:
 					if (paramObj != null){
+						//System.out.println(paramObj.getClass());
 						if (!TypeUtil.instanceOf(paramObj, mdList.get(i).getParameterTypes()[index])){
 							mdList.remove(i);
 						};
@@ -76,11 +77,14 @@ public class CallXmlInterpreter implements XmlInterpreter {
 				case TypeUtil.STRING:
 					params.add(XmlUtil.getString(text, elp));
 					break;
+				case TypeUtil.SQLDATE:
+					params.add(XmlUtil.parseELText(text, elp));
+					break;
 				case TypeUtil.OBJECT:
 					params.add(XmlUtil.parseELText(text, elp));
 					break;
 				}
-				checkUnmatchedMethod(mdList, tp, index, params.get(params.size() - 1));
+				checkUnmatchedMethod(mdList, index, tp, params.get(params.size() - 1));
 				
 				index++;
 			}

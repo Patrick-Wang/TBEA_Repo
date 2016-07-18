@@ -11,6 +11,7 @@ import com.tbea.ic.operation.reportframe.interpreter.ContextXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ExcelTemplateXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.FormatterServerXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.FormatterXmlInterpreter;
+import com.tbea.ic.operation.reportframe.interpreter.IFXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ListXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ResponseXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.XmlInterpreter;
@@ -34,7 +35,8 @@ public class Controller extends AbstractXmlComponent {
 			new ContextXmlInterpreter(),
 			new CallServiceXmlInterpreter(),
 			new ListXmlInterpreter(),
-			new CallXmlInterpreter()
+			new CallXmlInterpreter(),
+			new IFXmlInterpreter()
 	};
 	
 	
@@ -61,6 +63,14 @@ public class Controller extends AbstractXmlComponent {
 			}
 			
 		});
+	}
+
+	@Override
+	public AbstractXmlComponent clone(Element e) {
+		Controller controller = new Controller(e, mgr);
+		controller.local = this.local;
+		controller.global = this.global;
+		return controller;
 	}
 
 }

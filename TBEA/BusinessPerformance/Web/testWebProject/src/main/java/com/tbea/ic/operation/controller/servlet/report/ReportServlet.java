@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.report;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,17 +20,14 @@ import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
-import com.tbea.ic.operation.model.dao.account.AccountDao;
-import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
-import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
-import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.reportframe.component.Component;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
@@ -38,7 +36,6 @@ import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
-import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
 
 @Controller
 @RequestMapping(value = "report")
@@ -87,6 +84,7 @@ public class ReportServlet {
 	public static interface CompanyTypeIdMapper{
 		int getId(int type);
 		int getType(int id);
+		List<Company> getCompanies(List<Integer> ids);
 	}
 	
 	@RequestMapping(value = "{controllor}.do")
@@ -119,14 +117,25 @@ public class ReportServlet {
 			
 			context.put("compTypeIdMapper", new CompanyTypeIdMapper(){
 
+				Organization org = companyManager.getBMDBOrganization();
+				
 				@Override
 				public int getId(int type) {
-					return companyManager.getBMDBOrganization().getCompany(CompanyType.valueOf(type)).getId();
+					return org.getCompany(CompanyType.valueOf(type)).getId();
 				}
 
 				@Override
 				public int getType(int id) {
-					return companyManager.getBMDBOrganization().getCompany(id).getType().ordinal();
+					return org.getCompany(id).getType().ordinal();
+				}
+
+				@Override
+				public List<Company> getCompanies(List<Integer> ids) {
+					List<Company> comps = new ArrayList<Company>();
+					for (Integer id : ids){
+						comps.add(org.getCompany(id));
+					}
+					return comps;
 				}
 				
 			});

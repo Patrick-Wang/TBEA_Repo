@@ -194,6 +194,7 @@
     </tr>
 </Table>
 <script type="text/javascript">
+    new framework.templates.singleDateReport.ShowView();
     $(document).ready(function () {
 
 
@@ -218,6 +219,7 @@
             date: date,
             host:"table",
             title:"${title}",
+            asSeason:"${asSeason}" == "true" ? true : false,
             updateUrl:"${updateUrl}.do",
             exportUrl:"${exportUrl}.do"
         });

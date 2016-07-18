@@ -17,6 +17,8 @@ var Util;
             this.mCtrlId = divId + "_date";
             if (asSeason && Util.isExist(this.mEndDate.month)) {
                 this.mAsSeasion = true;
+                this.mEndDate.day = undefined;
+                this.mStartDate.day = undefined;
                 this.mEndDate.month = 3 * (parseInt((this.mEndDate.month - 1) / 3 + '') + 1);
             }
             else {

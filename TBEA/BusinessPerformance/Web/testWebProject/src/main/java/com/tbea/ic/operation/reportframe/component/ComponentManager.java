@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.reportframe.component.ComponentLoader.ComponentLoadedListener;
 import com.tbea.ic.operation.reportframe.component.controller.Controller;
+import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.reportframe.component.service.Service;
 
 class Config{
@@ -67,8 +68,15 @@ public class ComponentManager implements ComponentLoadedListener {
 		return null;
 	}
 	
-	public Service createService(Element e){
+	private Service createService(Element e){
 		return new Service(e, this);
+	}
+	
+	public Service getService(String id, Context local){
+		if (serviceMap.containsKey(id)){
+			return new Service(serviceMap.get(id).getE(), this, local);
+		}
+		return null;
 	}
 	
 	public Service getService(String id) {

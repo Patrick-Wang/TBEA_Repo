@@ -22,6 +22,24 @@ public class TableXmlInterpreter implements XmlInterpreter {
 	
 	ListXmlInterpreter listInterpreter = new ListXmlInterpreter();
 	
+	List<List<Object>> tempCols;
+	
+	private void putTemp(List<Object> col){
+		if (tempCols == null){
+			tempCols = new ArrayList<List<Object>>();
+		}
+		tempCols.add(col);
+	}
+	
+	private void clearTemps(List<List<Object>> tbValues){
+		if (tempCols != null){
+			for(List<Object> col : tempCols){
+				tbValues.remove(col);
+			}
+			tempCols.clear();
+		}
+	}
+	
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 
@@ -53,7 +71,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			}
 			
 		});
-
+		this.clearTemps(tbValues);
 		component.put(e, tb);
 		return true;
 	}
@@ -129,7 +147,9 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			list = Util.resize(list, tb.getIds().size());
 		}
 		tb.getValues().add(list);	
-			
+		if ("true".equals(elem.getAttribute("temp"))){
+			this.putTemp(list);
+		}	
 	}
 
 	private int getTargetIndex(AbstractXmlComponent component, Element item,
