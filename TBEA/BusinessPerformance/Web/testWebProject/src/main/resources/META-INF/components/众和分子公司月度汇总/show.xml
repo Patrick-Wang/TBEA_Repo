@@ -695,7 +695,7 @@
 		</table>
 	</service>
 
-	<service id="servFmtterZhgsydzbhz">
+	<controller id="servFmtterZhgsydzbhz">
 		<formatter id="fmtData" export="true">
 			<EmptyFormatter>
 				<DefaultMatcher cols="0,1" />
@@ -706,12 +706,12 @@
 			<NumberFormatter reservedCount="1">
 			</NumberFormatter>
 		</formatter>
-	</service>
+	</controller>
 
 	<controller id="zhgsydzbhzUpdate">
 		<context key="cal" value="${request.date.asCalendar}" />
 		<callservice id="servZhgsydzbhz"/>
-		<callservice id="servFmtterZhgsydzbhz" inline="true"/>
+		<callcontroller id="servFmtterZhgsydzbhz"/>
 		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
 			<formatter ref="fmtData" />
 		</formatterServer>
