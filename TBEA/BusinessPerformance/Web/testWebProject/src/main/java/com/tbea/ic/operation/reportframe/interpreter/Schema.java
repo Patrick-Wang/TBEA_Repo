@@ -4,6 +4,7 @@ import org.w3c.dom.Element;
 
 public class Schema {
 	static final String TAG_CALLSERVICE = "callservice";
+	static final String TAG_CALLCONTROLLER = "callcontroller";
 	static final String TAG_CONTEXT = "context";
 	static final String TAG_EXCELTEMPLATE = "ExcelTemplate";
 	static final String TAG_FORMATTERSERVER = "formatterServer";
@@ -17,6 +18,10 @@ public class Schema {
 	static final String TAG_IF = "if";
 	public static boolean isCallService(Element e){
 		return TAG_CALLSERVICE.equals(e.getTagName());
+	}
+	
+	public static boolean isCallController(Element e){
+		return TAG_CALLCONTROLLER.equals(e.getTagName());
 	}
 	
 	public static boolean isContext(Element e){

@@ -1,16 +1,20 @@
 ///<reference path="../dateSelector.ts"/>
+///<reference path="dateSeasonSelector.ts"/>
 
 module Util{
     export class DateSelectorProxy{
         curDate : Util.Date;
         dateSelect : Util.DateSelector;
+        seasonSelect : Util.DateSeasonSelector;
         public constructor(divId:string,
                            dtStart : Util.Date,
                            dtEnd : Util.Date,
                            dtNow : Util.Date,
                            asSeason:boolean = false){
             this.curDate = dtNow;
-            if (this.curDate.day != undefined && !asSeason){
+            if (asSeason){
+                this.seasonSelect = new Util.DateSeasonSelector(dtStart, dtEnd, dtNow, divId);
+            } else if (this.curDate.day != undefined){
                 let strDate = this.curDate.year + "-" + this.curDate.month + "-" + this.curDate.day;
                 let maxDate = dtEnd.year + "-" + dtEnd.month + "-" + dtEnd.day;
                 let minDate = dtStart.year + "-" + dtStart.month + "-" + dtStart.day;
@@ -41,13 +45,15 @@ module Util{
                     }
                 });
             }else{
-                this.dateSelect = new Util.DateSelector(dtStart, dtEnd, divId, asSeason);
+                this.dateSelect = new Util.DateSelector(dtStart, dtEnd, divId);
             }
         }
 
         public getDate(): Util.Date{
             if (this.dateSelect != undefined){
                 this.curDate = this.dateSelect.getDate();
+            }else if (this.seasonSelect != undefined){
+                this.curDate = this.seasonSelect.getDate();
             }
             return this.curDate;
         }

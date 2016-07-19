@@ -238,6 +238,7 @@ module Util {
             return $("#" + this.mCtrlId + " tr select");
         }
 
+
         private initPath(path?: number[]) {
             var node = this.mRoot.childAt(0);
             this.mPath.push(0);

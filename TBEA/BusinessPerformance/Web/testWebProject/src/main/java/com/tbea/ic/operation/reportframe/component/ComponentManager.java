@@ -68,6 +68,13 @@ public class ComponentManager implements ComponentLoadedListener {
 		return null;
 	}
 	
+	public Controller getController(String id, Context local) {
+		if (controllerMap.containsKey(id)){
+			return new Controller(controllerMap.get(id).getE(), this, local);
+		}
+		return null;
+	}
+	
 	private Service createService(Element e){
 		return new Service(e, this);
 	}

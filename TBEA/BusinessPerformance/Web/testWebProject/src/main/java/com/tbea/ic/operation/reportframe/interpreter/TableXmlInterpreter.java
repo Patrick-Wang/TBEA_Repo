@@ -22,18 +22,18 @@ public class TableXmlInterpreter implements XmlInterpreter {
 	
 	ListXmlInterpreter listInterpreter = new ListXmlInterpreter();
 	
-	List<List<Object>> tempCols;
+	List<Integer> tempCols;
 	
-	private void putTemp(List<Object> col){
+	private void putTemp(Integer col){
 		if (tempCols == null){
-			tempCols = new ArrayList<List<Object>>();
+			tempCols = new ArrayList<Integer>();
 		}
 		tempCols.add(col);
 	}
 	
 	private void clearTemps(List<List<Object>> tbValues){
 		if (tempCols != null){
-			for(List<Object> col : tempCols){
+			for(Integer col : tempCols){
 				tbValues.remove(col);
 			}
 			tempCols.clear();
@@ -148,7 +148,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		}
 		tb.getValues().add(list);	
 		if ("true".equals(elem.getAttribute("temp"))){
-			this.putTemp(list);
+			this.putTemp(tb.getValues().size());
 		}	
 	}
 

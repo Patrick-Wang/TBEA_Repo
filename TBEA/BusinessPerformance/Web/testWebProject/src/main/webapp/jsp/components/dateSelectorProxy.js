@@ -1,4 +1,5 @@
 ///<reference path="../dateSelector.ts"/>
+///<reference path="dateSeasonSelector.ts"/>
 var Util;
 (function (Util) {
     var DateSelectorProxy = (function () {
@@ -6,7 +7,10 @@ var Util;
             var _this = this;
             if (asSeason === void 0) { asSeason = false; }
             this.curDate = dtNow;
-            if (this.curDate.day != undefined && !asSeason) {
+            if (asSeason) {
+                this.seasonSelect = new Util.DateSeasonSelector(dtStart, dtEnd, dtNow, divId);
+            }
+            else if (this.curDate.day != undefined) {
                 var strDate = this.curDate.year + "-" + this.curDate.month + "-" + this.curDate.day;
                 var maxDate = dtEnd.year + "-" + dtEnd.month + "-" + dtEnd.day;
                 var minDate = dtStart.year + "-" + dtStart.month + "-" + dtStart.day;
@@ -38,12 +42,15 @@ var Util;
                 });
             }
             else {
-                this.dateSelect = new Util.DateSelector(dtStart, dtEnd, divId, asSeason);
+                this.dateSelect = new Util.DateSelector(dtStart, dtEnd, divId);
             }
         }
         DateSelectorProxy.prototype.getDate = function () {
             if (this.dateSelect != undefined) {
                 this.curDate = this.dateSelect.getDate();
+            }
+            else if (this.seasonSelect != undefined) {
+                this.curDate = this.seasonSelect.getDate();
             }
             return this.curDate;
         };

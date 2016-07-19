@@ -4,14 +4,10 @@ import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
-import com.tbea.ic.operation.reportframe.component.controller.Controller;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.reportframe.interpreter.CallServiceXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.CallXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ContextXmlInterpreter;
-import com.tbea.ic.operation.reportframe.interpreter.ExcelTemplateXmlInterpreter;
-import com.tbea.ic.operation.reportframe.interpreter.FormatterServerXmlInterpreter;
-import com.tbea.ic.operation.reportframe.interpreter.FormatterXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.IFXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ListXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.MergeXmlInterpreter;
@@ -40,9 +36,6 @@ public class Service extends AbstractXmlComponent implements ServiceRunnable {
 			new ContextXmlInterpreter(),
 			new MergeXmlInterpreter(),
 			new CallXmlInterpreter(),
-			new ExcelTemplateXmlInterpreter(),
-			new FormatterServerXmlInterpreter(),
-			new FormatterXmlInterpreter(),
 			new CallServiceXmlInterpreter(),
 			new IFXmlInterpreter()
 	};

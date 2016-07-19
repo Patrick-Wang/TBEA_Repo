@@ -5,6 +5,8 @@ import org.w3c.dom.NodeList;
 
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
+import com.tbea.ic.operation.reportframe.component.entity.Context;
+import com.tbea.ic.operation.reportframe.interpreter.CallControllerXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.CallServiceXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.CallXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ContextXmlInterpreter;
@@ -27,7 +29,14 @@ public class Controller extends AbstractXmlComponent {
 		super(e, mgr);
 	}
 
+	public Controller(Element e, ComponentManager mgr,
+			Context local) {
+		super(e, mgr);
+		this.local = local;
+	}
+
 	XmlInterpreter[] interpreters = new XmlInterpreter[]{
+			new CallControllerXmlInterpreter(),
 			new ExcelTemplateXmlInterpreter(),
 			new FormatterServerXmlInterpreter(),
 			new FormatterXmlInterpreter(),
@@ -37,7 +46,7 @@ public class Controller extends AbstractXmlComponent {
 			new ListXmlInterpreter(),
 			new CallXmlInterpreter(),
 			new IFXmlInterpreter()
-	};
+	}; 
 	
 	
 	

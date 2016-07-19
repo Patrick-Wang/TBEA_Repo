@@ -435,7 +435,7 @@
 			<param type="int">0</param>
 			<param type="date">${cal.nextSeason.months[1].date}</param>
 			<param type="date">${cal.nextSeason.date}</param>
-			<param type="int">${zbs}</param>
+			<param type="object">${zbs}</param>
 			<param type="object">${companies}</param>
 		</call>
 		<call id="xjdndljwcqntq" object="${accFactory.sjByComps}" method="compute">
@@ -554,7 +554,7 @@
 		<context key="isSeasonStart" value="${cal.seasonStart.month == cal.month}" />
 		<context key="isSeasonMid" value="${cal.seasonMid.month == cal.month}" />
 		<context key="isSeasonEnd" value="${cal.seasonEnd.month == cal.month}" />
-		<context key="zb" value="${1}" />
+		
 		<if test="${isSeasonStart}">
 			<callservice id="servZhgsfcySeasonStart" />
 			<callservice id="servFmtterSeasonStart" />
@@ -784,10 +784,10 @@
 
 		<callservice id="servUpdateInternal" inline="true"/>
 
-		<ExcelTemplate id="excelTemplate" sheet="众和分产业关键指标汇报" />
+		<ExcelTemplate id="excelTemplate" sheet="众和分产业${zbname}汇报" />
 		<if test="${isSeasonStart}">
 			<list id="title1" type="string">
-				单位	年度计划	本季度计划	当月完成	当月完成	当月完成	当月完成	当月完成	季度预计完成	季度预计完成	季度预计完成	季度预计完成	季度预计完成	季度预计完成	年度累计完成	年度累计完成	年度累计完成	年度累计完成
+				单位,年度计划,本季度计划,当月完成,当月完成,当月完成,当月完成,当月完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,年度累计完成,年度累计完成,年度累计完成,年度累计完成
 			</list>
 			<list id="title2" type="string">
 				单位,年度计划,本季度计划,本月计划值,当月预计值,计划完成率,去年同期,同比增幅,次月预计,末月预计,季度预计合计,季度预计完成率,去年同期,同比增幅,累计完成值,年度指标完成率,去年同期值,同比增幅
@@ -824,7 +824,7 @@
 			</ExcelMergeFormatter>
 			<ExcelMergeFormatter>
 				<ExcelTemplate ref="excelTemplate" />
-				<MergeRegion x="0" y="2" width="1" height="${result.ids.size}" />
+				<MergeRegion x="0" y="2" width="2" height="${result.ids.size}" />
 			</ExcelMergeFormatter>
 			<ExcelHeaderCenterFormatter>
 				<DefaultMatcher cols="0, 1" />
@@ -844,14 +844,44 @@
 		</formatterServer>
 
 		<response type="excel" ref="excelTemplate"
-			name="${request.date.asString} 众和分产业关键指标汇报.xls" serv="fmtServ" />
+			name="${request.date.asString} 众和分产业${zbname}汇报.xls" serv="fmtServ" />
 	</controller>
 
-	<controller id="zhgsfcy">
+	<controller id="zhgsfcyUpdateLrze">
+		<context key="zb" value="${1}" />
+		<context key="zbname" value="利润总额" />
+		<callcontroller id="zhgsfcyUpdate"/>
+	</controller>
+	<controller id="zhgsfcyExportLrze">
+		<context key="zb" value="${1}" />
+		<context key="zbname" value="利润总额" />
+		<callcontroller id="zhgsfcyExport"/>
+	</controller>
+	<controller id="zhgsfcyUpdateXssr">
+		<context key="zb" value="${37}" />
+		<context key="zbname" value="销售收入" />
+		<callcontroller id="zhgsfcyUpdate"/>
+	</controller>
+	<controller id="zhgsfcyExportXssr">
+		<context key="zb" value="${37}" />
+		<context key="zbname" value="销售收入" />
+		<callcontroller id="zhgsfcyExport"/>
+	</controller>
+	
+	<controller id="zhgsfcylrze">
 		<response type="jsp" name="framework/templates/singleDateReport/show">
 			<map key="date" value="${calendar.current.format}" />
-			<map key="updateUrl" value="zhgsfcyUpdate" />
-			<map key="exportUrl" value="zhgsfcyExport" />
+			<map key="updateUrl" value="zhgsfcyUpdateLrze" />
+			<map key="exportUrl" value="zhgsfcyExportLrze" />
+			<map key="asSeason" value="true" />
+			<map key="title" value="众和分产业关键指标汇报" />
+		</response>
+	</controller>
+	<controller id="zhgsfcyxssr">
+		<response type="jsp" name="framework/templates/singleDateReport/show">
+			<map key="date" value="${calendar.current.format}" />
+			<map key="updateUrl" value="zhgsfcyUpdateXssr" />
+			<map key="exportUrl" value="zhgsfcyExportXssr" />
 			<map key="asSeason" value="true" />
 			<map key="title" value="众和分产业关键指标汇报" />
 		</response>

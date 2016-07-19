@@ -52,6 +52,7 @@
 	<script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/components/dateSeasonSelector.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
@@ -163,9 +164,23 @@
             text-align: left;
             font-size: 12px;
         }
+        .ui-widget{
+            font-size: 12px;
+        }
+        
+         .ui-widget-content{
+            font-size: 12px;
+        }
+
+        #exportButton {
+            height: 23px;
+            width:100px;
+            padding: .1em 1em;
+            margin-top: 2px;
+        }
     </style>
 </head>
-<body style="visibility:hidden">
+<body>
 <div class="header">
     <h1 id="headertitle">${title}</h1>
 </div>
@@ -229,6 +244,7 @@
             .css("margin-top", "10px")
             .css("width", "90px");
         $(document.body).css("visibility", "visible");
+
     });
 </script>
 
