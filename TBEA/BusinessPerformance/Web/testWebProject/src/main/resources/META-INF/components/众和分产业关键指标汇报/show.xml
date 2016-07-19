@@ -858,12 +858,12 @@
 		<callcontroller id="zhgsfcyExport"/>
 	</controller>
 	<controller id="zhgsfcyUpdateXssr">
-		<context key="zb" value="${37}" />
+		<context key="zb" value="${6}" />
 		<context key="zbname" value="销售收入" />
 		<callcontroller id="zhgsfcyUpdate"/>
 	</controller>
 	<controller id="zhgsfcyExportXssr">
-		<context key="zb" value="${37}" />
+		<context key="zb" value="${6}" />
 		<context key="zbname" value="销售收入" />
 		<callcontroller id="zhgsfcyExport"/>
 	</controller>

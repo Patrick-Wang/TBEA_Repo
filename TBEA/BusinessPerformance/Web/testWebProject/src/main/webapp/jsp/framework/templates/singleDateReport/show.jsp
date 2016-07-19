@@ -167,7 +167,7 @@
         .ui-widget{
             font-size: 12px;
         }
-        
+
          .ui-widget-content{
             font-size: 12px;
         }

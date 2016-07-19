@@ -69,7 +69,11 @@ public class ELExpression{
 		}else if (obj instanceof JSONObject){
 			JSONObject jsonObj = (JSONObject) obj;
  			propValue = jsonObj.get(propName);
-		}else{
+		}else if ("packAsList".equals(propName)){
+			List list = new ArrayList();
+			list.add(obj);
+ 			propValue = list;
+		}else {
 			Method md = getMethod(obj, propName);
 			if (null == md){
 				md = getMethod(obj, "get" + propName.substring(0, 1).toUpperCase() + propName.substring(1));

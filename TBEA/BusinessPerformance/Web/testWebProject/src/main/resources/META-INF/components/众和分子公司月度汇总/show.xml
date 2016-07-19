@@ -1,0 +1,790 @@
+﻿<components>
+	<service id="servDwxxs">
+		<list id="dwmc" type="string">
+			高纯铝制品公司,
+			高纯铝制品公司,
+			高纯铝制品公司,
+			高纯铝制品公司,
+			高纯铝制品公司,
+			合金材料公司,
+			合金材料公司,
+			合金材料公司,
+			合金材料公司,
+			合金材料公司,
+			铝箔公司,
+			铝箔公司,
+			铝箔公司,
+			铝箔公司,
+			铝箔公司,
+			电极箔公司,
+			电极箔公司,
+			电极箔公司,
+			电极箔公司,
+			金属结构与炭素材料公司,
+			金属结构与炭素材料公司,
+			金属结构与炭素材料公司,
+			金属结构与炭素材料公司,
+			金属结构与炭素材料公司,
+			五元线缆公司,
+			五元线缆公司,
+			五元线缆公司,
+			五元线缆公司,
+			热电公司,
+			热电公司,
+			热电公司,
+			动力保障公司,
+			动力保障公司,
+			现代物流公司,
+			现代物流公司,
+			现代物流公司,
+			贸易公司,
+			贸易公司,
+			贸易公司,
+			冶金建设工程公司,
+			冶金建设工程公司,
+			冶金建设工程公司,
+			冶金建设工程公司,
+			电力建设工程公司,
+			电力建设工程公司,
+			电力建设工程公司,
+			电力建设工程公司,
+			经纬众和公司,
+			经纬众和公司,
+			经纬众和公司,
+			服务公司,
+			服务公司,
+			服务公司,
+			合计,
+			合计,
+			合计,
+			合计
+		</list>
+		<list id="zbmc" type="string">
+			利润总额,
+			销售收入,
+			其中：外销收入,
+			应收账款,
+			存货,
+			利润总额,
+			销售收入,
+			其中：外销收入,
+			应收账款,
+			存货,
+			利润总额,
+			销售收入,
+			其中：外销收入,
+			应收账款,
+			存货,
+			利润总额,
+			外销收入,
+			应收账款,
+			存货,
+			利润总额,
+			销售收入,
+			其中：外销收入,
+			应收账款,
+			存货,
+			利润,
+			销售收入,
+			应收账款,
+			存货,
+			发电量,
+			利润总额,
+			存货,
+			利润总额,
+			销售收入,
+			利润总额,
+			销售收入,
+			应收账款,
+			利润总额,
+			销售收入,
+			应收账款,
+			利润,
+			销售收入,
+			其中：外销收入,
+			应收账款,
+			利润,
+			销售收入,
+			其中：外销收入,
+			应收账款,
+			利润总额,
+			销售收入,
+			应收账款,
+			毛利润,
+			销售收入,
+			其中：外销收入,
+			利润总额,
+			外销收入,
+			应收账款,
+			存货
+		</list>
+		
+		<context key="lrze" value="${1}"/>
+		<context key="xssr" value="${6}"/>
+		<context key="wxsr" value="${336}"/>
+		<context key="yszk" value="${32}"/>
+		<context key="ch" value="${35}"/>
+		<context key="fdl" value="${85}"/>
+		
+		<list id="lrxswxys" type="int">
+			${lrze},${xssr},${wxsr},${yszk}
+		</list>
+		<list id="lrxswxysch" type="int">
+			${lrze},${xssr},${wxsr},${yszk},${ch}
+		</list>
+
+		<list id="xswxysch" type="int">
+			${xssr},${wxsr},${yszk},${ch}
+		</list>
+		<list id="lrxsysch" type="int">
+			${lrze},${xssr},${yszk},${ch}
+		</list>
+		<list id="fdlrch" type="int">
+			${fdl},${lrze},${ch}
+		</list>
+		<list id="lrxsys" type="int">
+			${lrze},${xssr},${yszk}
+		</list>
+		<list id="lrxswx" type="int">
+			${lrze},${xssr},${wxsr}
+		</list>
+		<list id="lrxs" type="int">
+			${lrze},${xssr}
+		</list>
+		
+		<list id="zhdwids" type="int">
+			1301,1302,1303,1304,1305,1306,1307,1308,
+			1309,1310,
+			1312,1313,1311,1314
+		</list>
+		
+		<call id="zhxmgs" object="${compTypeIdMapper}" method="getCompanies">
+			<param type="object">${zhdwids}</param>
+		</call>
+	</service>
+
+	<service id="servZhgsydzbhz" transaction="transactionManager">
+		<callservice id="servDwxxs" inline="true" />
+		<list id="tmpComps" type="int">
+			${zhxmgs[0].packAsList}
+			${zhxmgs[1].packAsList}
+			${zhxmgs[2].packAsList}
+		</list>
+		<context key="zbs" value="${lrxswxysch}"/>
+		<context key="comp" value="${tmpComps}"/>
+		<call id="dyjh0" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysj0" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntq0" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysj0" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<context key="zbs" value="${xswxysch}"/>
+		<context key="comp" value="${zhxmgs[3].packAsList}"/>
+		<call id="dyjh3" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysj3" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntq3" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysj3" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<context key="zbs" value="${lrxswxysch}"/>
+		<context key="comp" value="${zhxmgs[4].packAsList}"/>
+		<call id="dyjh4" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysj4" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntq4" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysj4" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<context key="zbs" value="${lrxsysch}"/>
+		<context key="comp" value="${zhxmgs[5].packAsList}"/>
+		<call id="dyjh5" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysj5" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntq5" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysj5" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<context key="zbs" value="${fdlrch}"/>
+		<context key="comp" value="${zhxmgs[6].packAsList}"/>
+		<call id="dyjh6" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysj6" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntq6" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysj6" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<context key="zbs" value="${lrxs}"/>
+		<context key="comp" value="${zhxmgs[7].packAsList}"/>
+		<call id="dyjh7" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysj7" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntq7" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysj7" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<context key="zbs" value="${lrxsys}"/>
+		<context key="comp" value="${zhxmgs[8].packAsList}"/>
+		<call id="dyjh8" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysj8" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntq8" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysj8" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<list id="temp" type="int">${zhxmgs[8]},${zhxmgs[9]}</list>
+		<context key="zbs" value="${lrxsys}"/>
+		<context key="comp" value="${temp}"/>
+		<call id="dyjh8" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysj8" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntq8" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysj8" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<list id="temp" type="int">${zhxmgs[10]},${zhxmgs[11]}</list>
+		<context key="zbs" value="${lrxswxys}"/>
+		<context key="comp" value="${temp}"/>
+		<call id="dyjh10" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysj10" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntq10" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysj10" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<context key="zbs" value="${lrxsys}"/>
+		<context key="comp" value="${zhxmgs[12].packAsList}"/>
+		<call id="dyjh12" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysj12" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntq12" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysj12" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<context key="zbs" value="${lrxswx}"/>
+		<context key="comp" value="${zhxmgs[13].packAsList}"/>
+		<call id="dyjh13" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysj13" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntq13" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysj13" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		
+		<context key="zbs" value="${lrze.packAsList}"/>
+		<context key="comp" value="${zhxmgs}"/>
+		<call id="dyjhhj0" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysjhj0" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntqhj0" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysjhj0" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<context key="zbs" value="${xssr.packAsList}"/>
+		<list id="temp" type="int">
+			${zhxmgs[0]},${zhxmgs[1]},
+			${zhxmgs[2]},${zhxmgs[3]},
+			${zhxmgs[4]},${zhxmgs[5]},${zhxmgs[8]},
+			${zhxmgs[9]},${zhxmgs[10]},
+			${zhxmgs[11]},${zhxmgs[12]}
+		</list>
+		<context key="comp" value="${temp}"/>
+		<call id="dyjhhj1" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysjhj1" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntqhj1" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysjhj1" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<list id="temp" type="int">${yszk},${ch}</list>
+		<context key="zbs" value="${temp}"/>
+		<context key="comp" value="${zhxmgs}"/>
+		<call id="dyjhhj2" object="${accFactory.yjhByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dysjhj2" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="dyqntqhj2" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		<call id="sysjhj2" object="${accFactory.sjByComps}" method="compute">
+			<param type="int">0</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.lastMonth.date}</param>
+			<param type="object">${zbs}</param>
+			<param type="object">${comp}</param>
+		</call>
+		
+		<list id="dwids">
+			<item concat="zhdwids"></item>
+			<item>200000</item>
+			<item>200001</item>
+			<item>200002</item>
+			<item>200003</item>
+		</list>
+		
+		<table id="result" rowIds="dwids" export="true">
+			<col list="dwmc" />
+			<col list="zbmc" />
+			<list type="double">
+				<item concat="dyjh0"/>
+				<item concat="dyjh3"/>
+				<item concat="dyjh4"/>
+				<item concat="dyjh5"/>
+				<item concat="dyjh6"/>
+				<item concat="dyjh7"/>
+				<item concat="dyjh8"/>
+				<item concat="dyjh10"/>
+				<item concat="dyjh12"/>
+				<item concat="dyjh13"/>
+				<item concat="dyjhhj0"/>
+				<item concat="dyjhhj1"/>
+				<item concat="dyjhhj2"/>
+			</list>
+			<list type="double">
+				<item concat="dysj0"/>
+				<item concat="dysj3"/>
+				<item concat="dysj4"/>
+				<item concat="dysj5"/>
+				<item concat="dysj6"/>
+				<item concat="dysj7"/>
+				<item concat="dysj8"/>
+				<item concat="dysj10"/>
+				<item concat="dysj12"/>
+				<item concat="dysj13"/>
+				<item concat="dysjhj0"/>
+				<item concat="dysjhj1"/>
+				<item concat="dysjhj2"/>
+			</list>
+			<col instruction="计划完成率" />
+			<list type="double"> 
+				<item concat="dyqntq0"/>
+				<item concat="dyqntq3"/>
+				<item concat="dyqntq4"/>
+				<item concat="dyqntq5"/>
+				<item concat="dyqntq6"/>
+				<item concat="dyqntq7"/>
+				<item concat="dyqntq8"/>
+				<item concat="dyqntq10"/>
+				<item concat="dyqntq12"/>
+				<item concat="dyqntq13"/>
+				<item concat="dyqntqhj0"/>
+				<item concat="dyqntqhj1"/>
+				<item concat="dyqntqhj2"/>
+			</list>
+			<col instruction="同比增幅" />
+			<list type="double">
+				<item concat="sysj0"></item>
+				<item concat="sysj3"></item>
+				<item concat="sysj4"></item>
+				<item concat="sysj5"></item>
+				<item concat="sysj6"></item>
+				<item concat="sysj7"></item>
+				<item concat="sysj8"></item>
+				<item concat="sysj10"></item>
+				<item concat="sysj12"></item>
+				<item concat="sysj13"></item>
+				<item concat="sysjhj0"></item>
+				<item concat="sysjhj1"></item>
+				<item concat="sysjhj2"></item>
+			</list>
+			<col instruction="环比增减" />
+			<divCol toCol="4" sub="3" base="2" />
+			<growthRates toCol="6" sj="3" tq="4" />
+			<growthRates toCol="8" sj="3" tq="7" />
+		</table>
+	</service>
+
+	<service id="servFmtterZhgsydzbhz">
+		<formatter id="fmtData" export="true">
+			<EmptyFormatter>
+				<DefaultMatcher cols="0,1" />
+			</EmptyFormatter>
+			<PercentFormatter reservedCount="1">
+				<DefaultMatcher cols="4,6,8" />
+			</PercentFormatter>
+			<NumberFormatter reservedCount="1">
+			</NumberFormatter>
+		</formatter>
+	</service>
+
+	<controller id="zhgsydzbhzUpdate">
+		<context key="cal" value="${request.date.asCalendar}" />
+		<callservice id="servZhgsydzbhz"/>
+		<callservice id="servFmtterZhgsydzbhz" inline="true"/>
+		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
+			<formatter ref="fmtData" />
+		</formatterServer>
+	
+		<response type="json">
+			<header type="array">
+				<item><name>分子公司</name></item>
+				<item><name>经营指标</name></item>
+				<item><name>月下达计划</name></item>
+				<item><name>月预计完成</name></item>
+				<item><name>计划完成率</name></item>
+				<item><name>去年同期完成</name></item>
+				<item><name>同比增减</name></item>
+				<item><name>上月完成</name></item>
+				<item><name>环比增减</name></item>
+			</header>
+			<mergeRows type="array">
+				<item>
+					<col>0</col>
+				</item>
+			</mergeRows>
+			<data>${fmtServ.result}</data>
+		</response>
+	</controller>
+
+	<controller id="zhgsydzbhzExport">
+		<context key="cal" value="${request.date.asCalendar}" />
+		<callservice id="servZhgsydzbhz"/>
+		<callservice id="servFmtterZhgsydzbhz" inline="true"/>
+
+		<ExcelTemplate id="excelTemplate" sheet="众和分子公司月度汇总" />
+		<list id="title" type="string">
+			分子公司,经营指标,月下达计划,月预计完成,计划完成率,去年同期完成,同比增减,上月完成,环比增减
+		</list>
+		<formatter id="excel">
+			<ExcelTitleFilter>
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset row="0" col="0" />
+				<titles>
+					<title ref="title" />
+				</titles>
+			</ExcelTitleFilter>
+			<ExcelMergeFormatter>
+				<ExcelTemplate ref="excelTemplate" />
+				<MergeRegion x="0" y="1" width="1" height="${result.ids.size}" />
+			</ExcelMergeFormatter>
+			<ExcelHeaderCenterFormatter>
+				<DefaultMatcher cols="0, 1" />
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset row="1" col="0" />
+			</ExcelHeaderCenterFormatter>
+			<ExcelOffsetFormatter>
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset row="1" col="0"/>
+			</ExcelOffsetFormatter>
+		</formatter>
+
+		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
+			<formatter ref="fmtData" />
+			<formatter ref="excel" />
+		</formatterServer>
+
+		<response type="excel" ref="excelTemplate"
+			name="${request.date.asString} 众和分子公司月度汇总.xls" serv="fmtServ" />
+	</controller>
+	
+	<controller id="zhgsydzbhz">
+		<response type="jsp" name="framework/templates/singleDateReport/show">
+			<map key="date" value="${calendar.current.format}" />
+			<map key="updateUrl" value="zhgsydzbhzUpdate" />
+			<map key="exportUrl" value="zhgsydzbhzExport" />
+			<map key="asSeason" value="true" />
+			<map key="title" value="众和分子公司月度汇总" />
+		</response>
+	</controller>
+</components>
