@@ -51,3 +51,8 @@ TBEA/BusinessPerformance/Web/testWebProject/.project
 *.class
 TBEA/BusinessPerformance/Android Service/Source_Code/mobile/build/classes/com/tbea/servlet/beforeLoginServlet.class
 *.class
+
+
+# Virtual environment
+TBEA/MasterData/hrm/venv/
+
