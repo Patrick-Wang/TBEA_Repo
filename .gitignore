@@ -53,7 +53,7 @@ TBEA/BusinessPerformance/Android Service/Source_Code/mobile/build/classes/com/tb
 *.class
 
 
-# Virtual environment
+# Python hrm
 TBEA/MasterData/hrm/venv/
-
+TBEA/MasterData/hrm/.idea
 *.pyc
