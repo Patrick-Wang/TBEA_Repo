@@ -1,9 +1,12 @@
 package com.tbea.ic.operation.controller.servlet.report;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +33,7 @@ import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.reportframe.component.Component;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
+import com.tbea.ic.operation.reportframe.component.ComponentManager.Config;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerSession;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
@@ -91,58 +95,92 @@ public class ReportServlet {
 	public ModelAndView ssoLogin(HttpServletRequest request,
 			HttpServletResponse response,
 			@PathVariable("controllor") String controllor) throws Exception {
-		com.tbea.ic.operation.reportframe.component.controller.Controller controller = compMgr.getController(controllor);
-		if (null != controller){
-			Context context = new Context();
-			context.put(Component.REQUEST, new ControllerRequest(request));
-			context.put(Component.SESSION, new ControllerSession(request.getSession()));
-			context.put(Component.RESPONSE, response);
-			context.put(Component.CALENDAR, new EasyCalendar());
-			context.put("groupSum", new GroupSum());
-			context.put("array", new Arrays());
-			context.put("transactionManager", trProxy);
-			context.put("accFactory", accFac);
-			context.put("authManager", new AuthManager(){
-
-				@Override
-				public Map<String, Object> getAuthedCompanies(int authType) {
-					List<Company> comps = extendAuthService.getAuthedCompanies(SessionManager.getAccount(request.getSession()), authType);
-					CompanySelection compSel = new CompanySelection(true, comps);
-					Map<String, Object> map = new HashMap<String, Object>();
-					compSel.select(map);
-					return map;
-				}
+		if ("console".equals(controllor)){
+			String url = request.getRequestURI();
+			String rootUrl = url.substring(1);
+			int rootPos = rootUrl.indexOf('/');
+			rootUrl = rootUrl.substring(0, rootPos);
+			String redirUrl = "http://" + request.getLocalAddr() + ":" + request.getLocalPort() + "/" + rootUrl + "/report/";
+			Set<String> controllers = compMgr.getController();
+			response.setCharacterEncoding("utf-8");       
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter writer = response.getWriter();
+			writer.write("<html>");
+			Map<String, List<String>> folderMap = new HashMap<String, List<String>>();
+			for(String cid : controllers){
 				
-			});
-			
-			context.put("compTypeIdMapper", new CompanyTypeIdMapper(){
-
-				Organization org = companyManager.getBMDBOrganization();
+				Config cfg = compMgr.getControllerConfig(cid);
+				if (!folderMap.containsKey(cfg.getPath())){
+					folderMap.put(cfg.getPath(), new ArrayList<String>());
+				}
+				folderMap.get(cfg.getPath()).add(cid);
+			}
+			Set<String> keys =  new TreeSet();
+			keys.addAll(folderMap.keySet());
+			for (String path : keys){
+				writer.write("<span>" + path + "</span></br>");
+				for (String cid: folderMap.get(path)){
+					writer.write("<a href='" + cid + ".do'>" + cid + ".do</a></br>");
+				}
+			}
 				
-				@Override
-				public int getId(int type) {
-					return org.getCompany(CompanyType.valueOf(type)).getId();
-				}
+			writer.write("</html>");
+		}else{
+			com.tbea.ic.operation.reportframe.component.controller.Controller controller = compMgr.getController(controllor);
+			if (null != controller){
+				Context context = new Context();
+				context.put(Component.REQUEST, new ControllerRequest(request));
+				context.put(Component.SESSION, new ControllerSession(request.getSession()));
+				context.put(Component.RESPONSE, response);
+				context.put(Component.CALENDAR, new EasyCalendar());
+				context.put("groupSum", new GroupSum());
+				context.put("array", new Arrays());
+				context.put("transactionManager", trProxy);
+				context.put("accFactory", accFac);
+				context.put("authManager", new AuthManager(){
 
-				@Override
-				public int getType(int id) {
-					return org.getCompany(id).getType().ordinal();
-				}
-
-				@Override
-				public List<Company> getCompanies(List<Integer> ids) {
-					List<Company> comps = new ArrayList<Company>();
-					for (Integer id : ids){
-						comps.add(org.getCompany(id));
+					@Override
+					public Map<String, Object> getAuthedCompanies(int authType) {
+						List<Company> comps = extendAuthService.getAuthedCompanies(SessionManager.getAccount(request.getSession()), authType);
+						CompanySelection compSel = new CompanySelection(true, comps);
+						Map<String, Object> map = new HashMap<String, Object>();
+						compSel.select(map);
+						return map;
 					}
-					return comps;
-				}
+					
+				});
 				
-			});
-			
-			controller.run(context);
-			return (ModelAndView) context.get(com.tbea.ic.operation.reportframe.component.controller.Controller.MODEL_AND_VIEW);
+				context.put("compTypeIdMapper", new CompanyTypeIdMapper(){
+
+					Organization org = companyManager.getBMDBOrganization();
+					
+					@Override
+					public int getId(int type) {
+						return org.getCompany(CompanyType.valueOf(type)).getId();
+					}
+
+					@Override
+					public int getType(int id) {
+						return org.getCompany(id).getType().ordinal();
+					}
+
+					@Override
+					public List<Company> getCompanies(List<Integer> ids) {
+						List<Company> comps = new ArrayList<Company>();
+						for (Integer id : ids){
+							comps.add(org.getCompany(id));
+						}
+						return comps;
+					}
+					
+				});
+				
+				controller.run(context);
+				return (ModelAndView) context.get(com.tbea.ic.operation.reportframe.component.controller.Controller.MODEL_AND_VIEW);
+			}
 		}
+		
+		
 		return null;
 	}
 }
