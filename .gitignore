@@ -56,3 +56,4 @@ TBEA/BusinessPerformance/Android Service/Source_Code/mobile/build/classes/com/tb
 # Virtual environment
 TBEA/MasterData/hrm/venv/
 
+*.pyc
