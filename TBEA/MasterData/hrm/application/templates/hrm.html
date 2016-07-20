@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
 <h1>Hello, id = {{ hr_id }}!</h1>
-{{ wtf.quick_form(user_id_form) }}
 {% endblock %}
