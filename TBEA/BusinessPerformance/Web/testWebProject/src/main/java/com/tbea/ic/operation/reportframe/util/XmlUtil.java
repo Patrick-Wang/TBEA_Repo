@@ -1,6 +1,8 @@
 package com.tbea.ic.operation.reportframe.util;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.w3c.dom.Element;
@@ -254,5 +256,60 @@ public class XmlUtil {
 			}
 		}
 		return bRet;
+	}
+
+	public static List<Object> toObjectList(String text,
+			ELParser elp) throws Exception {
+		if(null == text){
+			return null;
+		}
+		text = text.replaceAll("\\s", "");
+		List<Object> list = new ArrayList<Object>();
+		if (!text.isEmpty()){
+			String[] items = text.split(",");
+			Object val = null;
+			for (String item : items){
+				val = parseELText(item, elp);
+				if (null != val){
+					list.add(val);
+				}
+			}
+		}
+		return list;
+	}
+
+	public static Date getDate(String text,
+			ELParser elp) throws Exception{
+		Object val = parseELText(text, elp);
+		if (null != val){
+			if (TypeUtil.isString(val.getClass())){
+				return Date.valueOf((String)val);
+			}else if(TypeUtil.isDate(val.getClass())){
+				return (Date) val;
+			}else{
+				throw new Exception(val.toString() + "is not a type of Date");
+			}
+		}
+		return null;
+	}
+	
+	public static List<Date> toDateList(String text,
+			ELParser elp) throws Exception {
+		if(null == text){
+			return null;
+		}
+		text = text.replaceAll("\\s", "");
+		List<Date> list = new ArrayList<Date>();
+		if (!text.isEmpty()){
+			String[] items = text.split(",");
+			Date val = null;
+			for (String item : items){
+				val = getDate(item, elp);
+				if (null != val){
+					list.add(val);
+				}
+			}
+		}
+		return list;
 	}
 }

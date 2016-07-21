@@ -21,7 +21,7 @@ import com.tbea.ic.operation.reportframe.component.controller.ControllerSession;
 import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
 
 public class ELExpression{
-	static final Pattern namePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*(\\[[0-9]+\\])*)*");  
+	static final Pattern namePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\[[0-9]+\\])*(\\.[a-zA-Z][a-zA-Z0-9]*(\\[[0-9]+\\])*)*");  
 	static final Pattern indexsPattern = Pattern.compile("\\[\\S*\\]"); 
 	static final Pattern indexPattern = Pattern.compile("[0-9]+");
 	int start;

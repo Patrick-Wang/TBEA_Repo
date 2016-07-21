@@ -24,8 +24,8 @@
       <file leaf-file-name="show.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4951049">
-              <caret line="94" column="32" selection-start-line="94" selection-start-column="32" selection-end-line="94" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.46853146">
+              <caret line="93" column="42" selection-start-line="93" selection-start-column="42" selection-end-line="93" selection-end-column="42" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -197,13 +197,13 @@
         <option value="$PROJECT_DIR$/jsp/xtnyrb/xtnyrbEntry.jsp" />
         <option value="$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.jsp" />
         <option value="$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.ts" />
-        <option value="$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.ts" />
         <option value="$PROJECT_DIR$/jsp/dateSelector.ts" />
         <option value="$PROJECT_DIR$/jsp/util.ts" />
         <option value="$PROJECT_DIR$/jsp/components/dateSelectorProxy.ts" />
         <option value="$PROJECT_DIR$/jsp/unitedSelector.ts" />
         <option value="$PROJECT_DIR$/jsp/components/dateSeasonSelector.ts" />
         <option value="$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.jsp" />
+        <option value="$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.ts" />
       </list>
     </option>
   </component>
@@ -576,7 +576,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2906903" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1079,8 +1079,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4951049">
-          <caret line="94" column="32" selection-start-line="94" selection-start-column="32" selection-end-line="94" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.46853146">
+          <caret line="93" column="42" selection-start-line="93" selection-start-column="42" selection-end-line="93" selection-end-column="42" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

@@ -91,7 +91,7 @@ module framework.templates.singleDateReport {
                     // height: data.length > 25 ? 550 : '100%',
                     // width: titles.length * 200,
                     rowNum: 1000,
-                    height: '100%',
+                    height: this.resp.data.length > 25 ? 550 : '100%',
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true

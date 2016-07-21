@@ -50,4 +50,8 @@ public class TypeUtil {
 	public static boolean isBoolean(Class<? extends Object> cls) {
 		return Boolean.class.isAssignableFrom(cls) || cls.getName().equals("boolean");
 	}
+
+	public static boolean isDate(Class<? extends Object> cls) {
+		return java.sql.Date.class.isAssignableFrom(cls);
+	}
 }

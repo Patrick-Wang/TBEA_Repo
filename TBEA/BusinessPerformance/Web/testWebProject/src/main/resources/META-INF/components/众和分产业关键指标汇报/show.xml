@@ -844,7 +844,7 @@
 		</formatterServer>
 
 		<response type="excel" ref="excelTemplate"
-			name="${request.date.asString} 众和分产业${zbname}汇报.xls" serv="fmtServ" />
+			name="${request.date.asString}众和分产业${zbname}汇报.xls" serv="fmtServ" />
 	</controller>
 
 	<controller id="zhgsfcyUpdateLrze">

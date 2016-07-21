@@ -51,13 +51,12 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	private void parseSql(AbstractXmlComponent component, Element e, List<Object> objs) throws Exception{
 		List sqlRet = (List) component.getVar(e.getAttribute("sql"));
 		if (null != sqlRet){
-			ELParser elParser = new ELParser(component);
 			if (!sqlRet.isEmpty()){
 				if (sqlRet.get(0).getClass().isArray()){
-					int index = XmlUtil.getIntAttr(e, "value", elParser, 0);
+					int index = XmlUtil.getIntAttr(e, "value", elp, 0);
 					List order = (List) component.getVar(e.getAttribute("order"));
 					if (null != order){
-						int by = XmlUtil.getIntAttr(e, "by", elParser, 0);
+						int by = XmlUtil.getIntAttr(e, "by", elp, 0);
 						injectFromSql(objs, sqlRet, index, order, by);
 					}else{
 						injectFromSql(objs, sqlRet, index);
@@ -66,19 +65,24 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			}else{
 				List order = (List) component.getVar(e.getAttribute("order"));
 				if (null != order){
-					int by = XmlUtil.getIntAttr(e, "by", elParser, 0);
+					int by = XmlUtil.getIntAttr(e, "by", elp, 0);
 					injectFromSql(objs, sqlRet, 0, order, by);
 				}
 			}
 		}
 	}
 	
-
+	ELParser elp;
+	
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 		boolean bRet= Schema.isList(e);
 		if (bRet) {
-			List<Object> objs = new ArrayList<Object>();
+			elp = new ELParser(component);
+			List<Object> objs = (List<Object>) component.getVar(XmlUtil.getAttr(e, "id"));
+			if (null == objs){
+				objs = new ArrayList<Object>();
+			}
 			
 			parseJson(component, e, objs);
 			
@@ -93,7 +97,6 @@ public class ListXmlInterpreter implements XmlInterpreter {
 
 	private void parseJson(AbstractXmlComponent component, Element e,
 			List<Object> objs) {
-		ELParser elp = new ELParser(component);
 		if (e.hasAttribute("json") && e.hasAttribute("col")){
 			Object jarr;
 			try {
@@ -116,14 +119,10 @@ public class ListXmlInterpreter implements XmlInterpreter {
 		
 	}
 
-	public static List<Integer> parserArray(AbstractXmlComponent component, String arr) throws Exception {
-		return XmlUtil.toIntList(arr, new ELParser(component));
-	}
 	
 	private void parseItems(AbstractXmlComponent component, Element e, List<Object> objs) throws Exception {
 		NodeList children = e.getChildNodes();
 		int type = TypeUtil.typeof(e);
-		ELParser elp = new ELParser(component);
 		if (null != e.getFirstChild()){
 			String text = e.getFirstChild().getTextContent();
 			if (TypeUtil.STRING == type){
@@ -132,7 +131,11 @@ public class ListXmlInterpreter implements XmlInterpreter {
 				objs.addAll(XmlUtil.toIntList(text, elp));
 			} else if (TypeUtil.DOUBLE == type){
 				objs.addAll(XmlUtil.toDoubleList(text, elp));
-			}  
+			} else if (TypeUtil.OBJECT == type){
+				objs.addAll(XmlUtil.toObjectList(text, elp));
+			} else if (TypeUtil.SQLDATE == type){
+				objs.addAll(XmlUtil.toDateList(text, elp));
+			}   
 		}
 		
 		XmlUtil.each(children, new OnLoop(){
@@ -164,13 +167,13 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	}
 
 	private void replaceAdd(Element item, List<Object> objs, int repeat, int index,
-			int type) {
+			int type) throws Exception {
 		objs.remove(index);
 		insertAdd(item, objs, repeat, index, type);
 	}
 	
 	private void insertAdd(Element item, List<Object> objs, int repeat, int insert,
-			int type) {
+			int type) throws Exception {
 		String val = item.getFirstChild().getTextContent();
 		if (type == TypeUtil.INT) {
 			if (val.isEmpty()) {
@@ -186,65 +189,13 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			}
 		} else if (type == TypeUtil.STRING) {
 			repeatAdd(objs, val, repeat, insert);
+		} else if (type == TypeUtil.OBJECT) {
+			repeatAdd(objs, XmlUtil.parseELText(val, elp), repeat, insert);
+		} else if (type == TypeUtil.SQLDATE) {
+			repeatAdd(objs, XmlUtil.getDate(val, elp), repeat, insert);
 		}
 	}
-
-//	private boolean sum(AbstractXmlComponent component, Element item,
-//			List<Object> objs, int repeat, int insert, int type) {
-//
-//		if (type == TypeUtil.STRING) {
-//			return false;
-//		}
-//
-//		String sumFrom = item.getAttribute("sumFrom");
-//		String sumTo = item.getAttribute("sumTo");
-//		Integer from = null;
-//		Integer to = null;
-//		if (null != sumFrom && !sumFrom.isEmpty() && null != sumTo
-//				&& !sumTo.isEmpty()) {
-//			ELParser elp = new ELParser(component);
-//			List<ELExpression> elexps = elp.parser(sumFrom);
-//			if (elexps.isEmpty()) {
-//				from = Integer.valueOf(sumFrom);
-//			} else {
-//				try {
-//					from = (Integer) (elexps.get(0).value());
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//
-//			elexps = elp.parser(sumTo);
-//			if (elexps.isEmpty()) {
-//				to = Integer.valueOf(sumTo);
-//			} else {
-//				try {
-//					to = (Integer) (elexps.get(0).value());
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//
-//		if (null != from && null != to) {
-//			if (type == TypeUtil.INT) {
-//				Integer ret = null;
-//				for (int i = from; i <= to; ++i) {
-//					ret = MathUtil.sum(ret, (Integer) objs.get(i));
-//				}
-//				repestAdd(objs, ret, repeat, insert);
-//			} else {
-//				Double ret = null;
-//				for (int i = from; i <= to; ++i) {
-//					ret = MathUtil.sum(ret, (Double) objs.get(i));
-//				}
-//				repestAdd(objs, ret, repeat, insert);
-//			}
-//			return true;
-//		}
-//		return false;
-//	}
-
+	
 	private boolean isNull(AbstractXmlComponent component, Element item,
 			List<Object> objs, int repeat, int insert) {
 		if ("true".equals(item.getAttribute("isNull"))) {
