@@ -12,3 +12,10 @@ class TestingConfig(DefaultConfig):
     # App config
     TESTING = True
 
+    # sqlalchemy config
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:root@localhost/hrm'
+    SQLALCHEMY_BINDS = {
+        'eLink': 'mysql://root:root@localhost/elink',
+        'hr': 'mysql://root:root@localhost/hr'
+    }
+    SQLALCHEMY_ECHO = True

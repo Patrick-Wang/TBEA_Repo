@@ -7,6 +7,8 @@
 
 from flask import Blueprint, render_template, redirect, url_for, session
 from ..forms.hrm import UserIdForm
+from ..models.employee import EmployeeBase, EmployeeELink, EmployeeHR
+from .. import db
 
 blueprint = Blueprint('hrm_blueprint', __name__)
 
@@ -18,3 +20,8 @@ def hrm_id():
         session['hr_id'] = user_id_form.user_id.data
         return redirect(url_for('hrm_blueprint.hrm_id'))
     return render_template('hrm.html', hr_id=session.get('hr_id'), user_id_form=user_id_form)
+
+
+@blueprint.route('/hrm/run')
+def hrm_run():
+    return render_template('<h1>haha</h1>')
