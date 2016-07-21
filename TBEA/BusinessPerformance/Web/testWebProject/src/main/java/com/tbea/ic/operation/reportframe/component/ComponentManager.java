@@ -3,6 +3,7 @@ package com.tbea.ic.operation.reportframe.component;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.w3c.dom.Element;
 
@@ -11,29 +12,31 @@ import com.tbea.ic.operation.reportframe.component.controller.Controller;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.reportframe.component.service.Service;
 
-class Config{
-	Element e;
-	String path;
-	public Element getE() {
-		return e;
-	}
-	public void setE(Element e) {
-		this.e = e;
-	}
-	public String getPath() {
-		return path;
-	}
-	public void setPath(String path) {
-		this.path = path;
-	}
-	public Config(Element e, String path) {
-		super();
-		this.e = e;
-		this.path = path;
-	}
-}
+
 
 public class ComponentManager implements ComponentLoadedListener {
+	
+	public static class Config{
+		Element e;
+		String path;
+		public Element getE() {
+			return e;
+		}
+		public void setE(Element e) {
+			this.e = e;
+		}
+		public String getPath() {
+			return path;
+		}
+		public void setPath(String path) {
+			this.path = path;
+		}
+		public Config(Element e, String path) {
+			super();
+			this.e = e;
+			this.path = path;
+		}
+	}
 	
 	ComponentLoader loader;
 	
@@ -91,5 +94,9 @@ public class ComponentManager implements ComponentLoadedListener {
 			return createService(serviceMap.get(id).getE());
 		}
 		return null;
+	}
+
+	public Map<String, Config> getController() {
+		return controllerMap;
 	}
 }
