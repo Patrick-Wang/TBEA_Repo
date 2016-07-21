@@ -67,7 +67,7 @@ public class XmlUtil {
 		if(null == text){
 			return null;
 		}
-		text = text.replaceAll("\\s", "");
+		text = StringUtil.shrink(text);
 		List<Integer> list = new ArrayList<Integer>();
 		if (!text.isEmpty()){
 			String[] items = text.split(",");
@@ -86,7 +86,7 @@ public class XmlUtil {
 		if(null == text){
 			return null;
 		}
-		text = text.replaceAll("\\s", "");
+		text = StringUtil.shrink(text);
 		List<Double> list = new ArrayList<Double>();
 		if (!text.isEmpty()){
 			String[] items = text.split(",");
@@ -106,7 +106,7 @@ public class XmlUtil {
 			return null;
 		}
 
-		text = text.replaceAll("\\s", "");
+		text = StringUtil.shrink(text);
 		List<String> list = new ArrayList<String>();
 		if (!text.isEmpty()){
 			String[] items = text.split(",");
@@ -120,15 +120,19 @@ public class XmlUtil {
 	}
 	
 	public static Object parseELText(String el, ELParser elp) throws Exception{
-		el = el.trim();
 		List<ELExpression> elexps = elp.parser(el);
 		if (elexps.isEmpty()) {
 			return el;
 		} else if (elexps.size() == 1){
 			ELExpression exp = elexps.get(0);
+			
 			if (exp.end() == el.length()){
 				return exp.value();
 			}else{
+				el = StringUtil.trim(el);
+				if (exp.end() == el.length()){
+					return exp.value();
+				}
 				return el.substring(0, exp.start()) + exp.value() + el.substring(exp.end());
 			}
 		} else{
@@ -169,7 +173,7 @@ public class XmlUtil {
 				val = ((Integer) val).doubleValue();
 			}else if (TypeUtil.isString(val.getClass())){
 				try{
-					val = Double.valueOf(text);
+					val = Double.valueOf(((String)val).replaceAll("\\s+", ""));
 				}catch(NumberFormatException e){
 					val = defaultVal;
 				}
@@ -190,7 +194,7 @@ public class XmlUtil {
 				val = ((Double) val).intValue();
 			}else if (TypeUtil.isString(val.getClass())){
 				try{
-					val = Integer.valueOf(text);
+					val = Integer.valueOf(((String)val).replaceAll("\\s+", ""));
 				}catch(NumberFormatException e){
 					val = defaultVal;
 				}
@@ -252,7 +256,7 @@ public class XmlUtil {
 			if (TypeUtil.isBoolean(ret.getClass())){
 				bRet = (Boolean) ret;
 			}else if (TypeUtil.isString(ret.getClass())){
-				bRet = Boolean.valueOf((String)ret);
+				bRet = Boolean.valueOf(((String)ret).replaceAll("\\s+", ""));
 			}
 		}
 		return bRet;
@@ -263,7 +267,7 @@ public class XmlUtil {
 		if(null == text){
 			return null;
 		}
-		text = text.replaceAll("\\s", "");
+		text = StringUtil.shrink(text);
 		List<Object> list = new ArrayList<Object>();
 		if (!text.isEmpty()){
 			String[] items = text.split(",");
@@ -283,7 +287,7 @@ public class XmlUtil {
 		Object val = parseELText(text, elp);
 		if (null != val){
 			if (TypeUtil.isString(val.getClass())){
-				return Date.valueOf((String)val);
+				return Date.valueOf(((String)val).replaceAll("\\s+", ""));
 			}else if(TypeUtil.isDate(val.getClass())){
 				return (Date) val;
 			}else{
@@ -298,7 +302,7 @@ public class XmlUtil {
 		if(null == text){
 			return null;
 		}
-		text = text.replaceAll("\\s", "");
+		text = StringUtil.shrink(text);
 		List<Date> list = new ArrayList<Date>();
 		if (!text.isEmpty()){
 			String[] items = text.split(",");

@@ -30,8 +30,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			}
 		}
 		
-		sql = sql.replaceAll("\\s+", " ");
-		System.out.println(sql);
+		System.out.println(sql.replaceAll("\\s+", " "));
 		
 		Query q = em.createNativeQuery(sql);
 		for (int i = 0; i < objs.size(); ++i){

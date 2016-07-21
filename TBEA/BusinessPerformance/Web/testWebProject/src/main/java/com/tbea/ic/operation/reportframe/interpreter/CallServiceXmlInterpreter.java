@@ -27,7 +27,7 @@ public class CallServiceXmlInterpreter implements XmlInterpreter {
 		if (null != serv){
 			serv.run(component.globalContext());
 		}else{
-			System.out.println("call service " + e.toString() + " find failed");
+			System.out.println("call service " + e.getAttribute("id") + " find failed");
 		}
 		return true;
 	}

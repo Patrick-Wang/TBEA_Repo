@@ -26,7 +26,7 @@ public class ELParser {
 			while (matcher.find()) {
 				String val = matcher.group();
 				exps.add(new ELExpression(matcher.start(), matcher.end(), val
-						.substring(2, val.length() - 1).replaceAll("\\s", ""),
+						.substring(2, val.length() - 1),
 						loader));
 			}
 		}

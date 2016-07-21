@@ -1,5 +1,5 @@
 ﻿<components>
-	<service id="servZhydzbDwxxs">
+	<service id="servLjhzDwxxs">
 		<list id="dwmc" type="string">
 			高纯铝制品公司,
 			高纯铝制品公司,
@@ -28,8 +28,6 @@
 			五元线缆公司,
 			五元线缆公司,
 			五元线缆公司,
-			五元线缆公司,
-			热电公司,
 			热电公司,
 			热电公司,
 			动力保障公司,
@@ -76,7 +74,7 @@
 			应收账款,
 			存货,
 			利润总额,
-			外销收入,
+			销售收入,
 			应收账款,
 			存货,
 			利润总额,
@@ -84,13 +82,11 @@
 			其中：外销收入,
 			应收账款,
 			存货,
-			利润,
+			利润总额,
 			销售收入,
 			应收账款,
-			存货,
 			发电量,
 			利润总额,
-			存货,
 			利润总额,
 			销售收入,
 			利润总额,
@@ -99,7 +95,7 @@
 			利润总额,
 			销售收入,
 			应收账款,
-			利润,
+			利润总额,
 			销售收入,
 			其中：外销收入,
 			应收账款,
@@ -139,8 +135,8 @@
 		<list id="lrxsysch" type="int">
 			${lrze},${xssr},${yszk},${ch}
 		</list>
-		<list id="fdlrch" type="int">
-			${fdl},${lrze},${ch}
+		<list id="fdlr" type="int">
+			${fdl},${lrze}
 		</list>
 		<list id="lrxsys" type="int">
 			${lrze},${xssr},${yszk}
@@ -163,15 +159,15 @@
 		</call>
 	</service>
 
-	<service id="servZhgsydzbhz" transaction="transactionManager">
-		<callservice id="servZhydzbDwxxs" inline="true" />
+	<service id="servZhgsljzbhz" transaction="transactionManager">
+		<callservice id="servLjhzDwxxs" inline="true" />
 
 		<list id="zbgroup" type="object">
 			<item repeat="3">${lrxswxysch}</item>
 			<item>${xswxysch}</item>
 			<item>${lrxswxysch}</item>
-			<item>${lrxsysch}</item>
-			<item>${fdlrch}</item>
+			<item>${lrxsys}</item>
+			<item>${fdlr}</item>
 			<item>${lrxs}</item>
 			<item repeat="2">${lrxsys}</item>
 			<item repeat="2">${lrxswxys}</item>
@@ -192,63 +188,98 @@
 			${zhxmgs}, ${xscomps}, ${zhxmgs}, ${zhxmgs}
 		</list>
 		
-		<call id="dyjh" object="${accFactory.yjhByGroup}" method="computeByCompanies">
+		<call id="ndjh" object="${accFactory.njhByGroup}" method="computeByCompanies">
 			<param type="int">0</param>
 			<param type="date">${cal.date}</param>
 			<param type="date">${cal.date}</param>
-			<param type="object">${zbgroup}</param>
-			<param type="object">${zhxmgs}</param>
-		</call>
-		<call id="dysj" object="${accFactory.sjByGroup}" method="computeByCompanies">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbgroup}</param>
-			<param type="object">${zhxmgs}</param>
-		</call>
-		<call id="dyqntq" object="${accFactory.sjByGroup}" method="computeByCompanies">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${zbgroup}</param>
-			<param type="object">${zhxmgs}</param>
-		</call>
-		<call id="sysj" object="${accFactory.sjByGroup}" method="computeByCompanies">
-			<param type="int">0</param>
-			<param type="date">${cal.lastMonth.date}</param>
-			<param type="date">${cal.lastMonth.date}</param>
 			<param type="object">${zbgroup}</param>
 			<param type="object">${zhxmgs}</param>
 		</call>
 		
-		<call id="dyjhhj" object="${accFactory.yjhByGroup}" method="computeByZbs">
+		<list id="ndjh" type="double">
+			<item index="26">${var njh = ndjh[26]; njh == null ? null : njh * 0.15}</item>
+			<item index="40">${var njh = ndjh[40]; njh == null ? null : njh * 0.1}</item>
+		</list>
+		
+		<call id="jdjh" object="${accFactory.yjhByGroup}" method="computeByCompanies">
 			<param type="int">0</param>
+			<param type="date">${cal.seasonStart.date}</param>
 			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${lrxsysch}</param>
-			<param type="object">${comps}</param>
+			<param type="object">${zbgroup}</param>
+			<param type="object">${zhxmgs}</param>
 		</call>
-		<call id="dysjhj" object="${accFactory.sjByGroup}" method="computeByZbs">
+		<call id="jdlj" object="${accFactory.sjByGroup}" method="computeByCompanies">
 			<param type="int">0</param>
+			<param type="date">${cal.seasonStart.date}</param>
 			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${lrxsysch}</param>
-			<param type="object">${comps}</param>
+			<param type="object">${zbgroup}</param>
+			<param type="object">${zhxmgs}</param>
 		</call>
-		<call id="dyqntqhj" object="${accFactory.sjByGroup}" method="computeByZbs">
+		<call id="jdljqntq" object="${accFactory.sjByGroup}" method="computeByCompanies">
 			<param type="int">0</param>
+			<param type="date">${cal.lastYear.seasonStart.date}</param>
 			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbgroup}</param>
+			<param type="object">${zhxmgs}</param>
+		</call>
+		<call id="ndlj" object="${accFactory.sjByGroup}" method="computeByCompanies">
+			<param type="int">0</param>
+			<param type="date">${cal.months[1].date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${zbgroup}</param>
+			<param type="object">${zhxmgs}</param>
+		</call>
+		<call id="ndljqntq" object="${accFactory.sjByGroup}" method="computeByCompanies">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.months[1].date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${zbgroup}</param>
+			<param type="object">${zhxmgs}</param>
+		</call>
+		
+		<call id="ndjhhj" object="${accFactory.njhByGroup}" method="computeByZbs">
+			<param type="int">0</param>
+			<param type="date">${cal.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${lrxsysch}</param>
+			<param type="object">${comps}</param>
+		</call>
+		<call id="jdjhhj" object="${accFactory.yjhByGroup}" method="computeByZbs">
+			<param type="int">0</param>
+			<param type="date">${cal.seasonStart.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${lrxsysch}</param>
+			<param type="object">${comps}</param>
+		</call>
+		<call id="jdljhj" object="${accFactory.sjByGroup}" method="computeByZbs">
+			<param type="int">0</param>
+			<param type="date">${cal.seasonStart.date}</param>
+			<param type="date">${cal.date}</param>
+			<param type="object">${lrxsysch}</param>
+			<param type="object">${comps}</param>
+		</call>
+		<call id="jdljqntqhj" object="${accFactory.sjByGroup}" method="computeByZbs">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.seasonStart.date}</param>
 			<param type="date">${cal.lastYear.date}</param>
 			<param type="object">${lrxsysch}</param>
 			<param type="object">${comps}</param>
 		</call>
-		<call id="sysjhj" object="${accFactory.sjByGroup}" method="computeByZbs">
+		<call id="ndljhj" object="${accFactory.sjByGroup}" method="computeByZbs">
 			<param type="int">0</param>
-			<param type="date">${cal.lastMonth.date}</param>
-			<param type="date">${cal.lastMonth.date}</param>
+			<param type="date">${cal.months[1].date}</param>
+			<param type="date">${cal.date}</param>
 			<param type="object">${lrxsysch}</param>
 			<param type="object">${comps}</param>
 		</call>
+		<call id="ndljqntqhj" object="${accFactory.sjByGroup}" method="computeByZbs">
+			<param type="int">0</param>
+			<param type="date">${cal.lastYear.months[1].date}</param>
+			<param type="date">${cal.lastYear.date}</param>
+			<param type="object">${lrxsysch}</param>
+			<param type="object">${comps}</param>
+		</call> 
+
 		
 		<list id="dwids" type="int">
 			<item repeat="${dwmc.size}">1</item>
@@ -258,62 +289,75 @@
 			<col list="dwmc" />
 			<col list="zbmc" />
 			<list type="double">
-				<item concat="dyjh"/>
-				<item concat="dyjhhj"/>
+				<item concat="ndjh"/>
+				<item concat="ndjhhj"/>
 			</list>
 			<list type="double">
-				<item concat="dysj"/>
-				<item concat="dysjhj"/>
+				<item concat="jdjh"/>
+				<item concat="jdjhhj"/>
 			</list>
-			<col instruction="计划完成率" />
+			<list type="double">
+				<item concat="jdlj"/>
+				<item concat="jdljhj"/>
+			</list>
+			<col instruction="季度计划完成率" />
 			<list type="double"> 
-				<item concat="dyqntq"/>
-				<item concat="dyqntqhj"/>
+				<item concat="jdljqntq"/>
+				<item concat="jdljqntqhj"/>
 			</list>
 			<col instruction="同比增幅" />
 			<list type="double">
-				<item concat="sysj"></item>
-				<item concat="sysjhj"></item>
+				<item concat="ndlj"></item>
+				<item concat="ndljhj"></item>
 			</list>
-			<col instruction="环比增减" />
-			<divCol toCol="4" sub="3" base="2" />
-			<growthRates toCol="6" sj="3" tq="4" />
-			<growthRates toCol="8" sj="3" tq="7" />
+			<col instruction="年计划完成率" />
+			<list type="double">
+				<item concat="ndljqntq"></item>
+				<item concat="ndljqntqhj"></item>
+			</list>
+			<col instruction="同比增幅" />
+			<divCol toCol="5" sub="4" base="3" />
+			<growthRates toCol="7" sj="4" tq="6" />
+			<divCol toCol="9" sub="8" base="2" />
+			<growthRates toCol="11" sj="8" tq="10" />
 		</table>
 	</service>
 
-	<controller id="servFmtterZhgsydzbhz">
+	<controller id="clrFmtterZhgsljzbhz">
 		<formatter id="fmtData" export="true">
 			<EmptyFormatter>
 				<DefaultMatcher cols="0,1" />
 			</EmptyFormatter>
 			<PercentFormatter reservedCount="1">
-				<DefaultMatcher cols="4,6,8" />
+				<DefaultMatcher cols="5,7,9,11" />
 			</PercentFormatter>
 			<NumberFormatter reservedCount="1">
 			</NumberFormatter>
 		</formatter>
 	</controller>
 
-	<controller id="zhgsydzbhzUpdate">
+	<controller id="zhgsljzbhzUpdate">
 		<context key="cal" value="${request.date.asCalendar}" />
-		<callservice id="servZhgsydzbhz"/>
-		<callcontroller id="servFmtterZhgsydzbhz"/>
+		<callservice id="servZhgsljzbhz"/>
+		<callcontroller id="clrFmtterZhgsljzbhz"/>
 		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
 			<formatter ref="fmtData" />
 		</formatterServer>
 	
 		<response type="json">
 			<header type="array">
-				<item><name>分子公司</name></item>
+				<item><name>项目公司</name></item>
 				<item><name>经营指标</name></item>
-				<item><name>月下达计划</name></item>
-				<item><name>月预计完成</name></item>
-				<item><name>计划完成率</name></item>
-				<item><name>去年同期完成</name></item>
+				<item><name>年度计划</name></item>
+				<item><name>季度计划</name></item>
+				<item><name>季度累计预计完成</name></item>
+				<item><name>季度计划完成率</name></item>
+				<item><name>去年同期累计</name></item>
 				<item><name>同比增减</name></item>
-				<item><name>上月完成</name></item>
-				<item><name>环比增减</name></item>
+				<item><name>年度累计预计完成</name></item>
+				<item><name>年计划完成率</name></item>
+				<item><name>去年同期累计</name></item>
+				<item><name>同比增减</name></item>
 			</header>
 			<mergeRows type="array">
 				<item>
@@ -324,14 +368,14 @@
 		</response>
 	</controller>
 
-	<controller id="zhgsydzbhzExport">
+	<controller id="zhgsljzbhzExport">
 		<context key="cal" value="${request.date.asCalendar}" />
-		<callservice id="servZhgsydzbhz"/>
-		<callcontroller id="servFmtterZhgsydzbhz" inline="true"/>
+		<callservice id="servZhgsljzbhz"/>
+		<callcontroller id="clrFmtterZhgsljzbhz" inline="true"/>
 
-		<ExcelTemplate id="excelTemplate" sheet="众和分子公司月度汇总" />
+		<ExcelTemplate id="excelTemplate" sheet="众和分子公司累计汇总" />
 		<list id="title" type="string">
-			分子公司,经营指标,月下达计划,月预计完成,计划完成率,去年同期完成,同比增减,上月完成,环比增减
+			项目公司,经营指标,年度计划,季度计划,季度累计预计完成,季度计划完成率,去年同期累计,同比增减,年度累计预计完成,年计划完成率,去年同期累计,同比增减
 		</list>
 		<formatter id="excel">
 			<ExcelTitleFilter>
@@ -362,16 +406,16 @@
 		</formatterServer>
 
 		<response type="excel" ref="excelTemplate"
-			name="${request.date.asString}众和分子公司月度汇总.xls" serv="fmtServ" />
+			name="${request.date.asString}众和分子公司累计汇总.xls" serv="fmtServ" />
 	</controller>
 	
-	<controller id="zhgsydzbhz">
+	<controller id="zhgsljzbhz">
 		<response type="jsp" name="framework/templates/singleDateReport/show">
 			<map key="date" value="${calendar.current.format}" />
-			<map key="updateUrl" value="zhgsydzbhzUpdate" />
-			<map key="exportUrl" value="zhgsydzbhzExport" />
+			<map key="updateUrl" value="zhgsljzbhzUpdate" />
+			<map key="exportUrl" value="zhgsljzbhzExport" />
 			<map key="asSeason" value="true" />
-			<map key="title" value="众和分子公司月度汇总" />
+			<map key="title" value="众和分子公司累计汇总" />
 		</response>
 	</controller>
 </components>

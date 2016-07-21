@@ -179,13 +179,13 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			if (val.isEmpty()) {
 				repeatAdd(objs, null, repeat, insert);
 			} else {
-				repeatAdd(objs, Integer.valueOf(val), repeat, insert);
+				repeatAdd(objs, XmlUtil.getInt(val, elp, null), repeat, insert);
 			}
 		} else if (type == TypeUtil.DOUBLE) {
 			if (val.isEmpty()) {
 				repeatAdd(objs, null, repeat, insert);
 			} else {
-				repeatAdd(objs, Double.valueOf(val), repeat, insert);
+				repeatAdd(objs, XmlUtil.getDouble(val, elp, null), repeat, insert);
 			}
 		} else if (type == TypeUtil.STRING) {
 			repeatAdd(objs, val, repeat, insert);
@@ -207,11 +207,17 @@ public class ListXmlInterpreter implements XmlInterpreter {
 
 	private boolean concat(AbstractXmlComponent component, Element item,
 			List<Object> objs, int repeat, int insert) {
-		List list = (List) component.getVar(item.getAttribute("concat"));
-		if (null != list) {
-			repeatAddList(objs, list, repeat, insert);
-			return true;
+		String concat = XmlUtil.getAttr(item, "concat");
+		if (null != concat){
+			List list = (List) component.getVar(concat);
+			if (null != list) {
+				repeatAddList(objs, list, repeat, insert);
+				return true;
+			}else{
+				System.out.println("list concat " + concat + " object cannot be found");
+			}
 		}
+		
 		return false;
 	}
 }

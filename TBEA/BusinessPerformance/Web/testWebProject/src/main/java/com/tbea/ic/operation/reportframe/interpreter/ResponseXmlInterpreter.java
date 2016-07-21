@@ -19,6 +19,7 @@ import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.controller.Controller;
 import com.tbea.ic.operation.reportframe.el.ELParser;
+import com.tbea.ic.operation.reportframe.util.StringUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
@@ -36,7 +37,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 					JSONArray ja = parseJsonArray(elem);
 					pJson.put(elem.getTagName(), ja);
 				} else {
-					String text = elem.getFirstChild().getTextContent().replaceAll("\\s", "");
+					String text = elem.getFirstChild().getTextContent();
 					if (null != text && !text.isEmpty()){
 						pJson.put(elem.getTagName(), XmlUtil.parseELText(text, elp));
 					}else {
@@ -50,7 +51,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 	
 	protected JSONArray parseJsonArray(Element elem) throws DOMException, Exception {
 		JSONArray ja = new JSONArray();
-		ja.addAll(XmlUtil.toStringList(elem.getFirstChild().getTextContent(), elp));
+		ja.addAll(XmlUtil.toStringList(StringUtil.shrink(elem.getFirstChild().getTextContent()), elp));
 		XmlUtil.each(elem.getChildNodes(), new XmlUtil.OnLoop(){
 			@Override
 			public void on(Element el) throws DOMException, Exception {

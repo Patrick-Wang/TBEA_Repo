@@ -20,6 +20,12 @@ import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
 import com.tbea.ic.operation.reportframe.component.controller.ControllerSession;
 import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
 
+class ELInitObjectNotExist extends Exception{
+
+	private static final long serialVersionUID = 1L;
+	
+}
+
 public class ELExpression{
 	static final Pattern namePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\[[0-9]+\\])*(\\.[a-zA-Z][a-zA-Z0-9]*(\\[[0-9]+\\])*)*");  
 	static final Pattern indexsPattern = Pattern.compile("\\[\\S*\\]"); 
@@ -97,19 +103,30 @@ public class ELExpression{
 	public Object value() throws Exception{
 		Matcher matcher = namePattern.matcher(express);
 		String expressTmp = express;
+		int offset = 0;
 		while (matcher.find()){
-			Object obj = parseObject(matcher.group());
-			if (isNumber(obj)){
-				expressTmp = expressTmp.substring(0, matcher.start()) + obj + expressTmp.substring(matcher.end());
-				matcher = namePattern.matcher(expressTmp);
-			}else if (isString(obj)){
-				expressTmp = expressTmp.substring(0, matcher.start()) + "'" + obj + "'" + expressTmp.substring(matcher.end());
-				matcher = namePattern.matcher(expressTmp);
-			}else{
-				return obj;
+			try{
+				Object obj = parseObject(matcher.group());
+				if (isNumber(obj) || null == obj){
+					String objVal = expressTmp.substring(0, offset + matcher.start()) + obj;
+					expressTmp = objVal + expressTmp.substring(offset + matcher.end());
+					offset = objVal.length();
+					matcher = namePattern.matcher(expressTmp.substring(offset));
+				}else if (isString(obj)){
+					String objVal = expressTmp.substring(0, offset + matcher.start()) + "'" + obj + "'";
+					expressTmp = objVal + expressTmp.substring(offset + matcher.end());
+					offset = objVal.length();
+					matcher = namePattern.matcher(expressTmp.substring(offset));
+				}else{
+					System.out.println(expressTmp);
+					return obj;
+				}
+			}catch(ELInitObjectNotExist e){
+				
 			}
 		}
 		try {
+			System.out.println(expressTmp);
 			return jse.eval(expressTmp);
 		} catch (ScriptException e) {
 			e.printStackTrace();
@@ -126,15 +143,28 @@ public class ELExpression{
 		return indxs;
 	}
 	
-	private Object parseObject(String exp) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	private Object parseObject(String exp) throws 
+			IllegalAccessException, 
+			IllegalArgumentException, 
+			InvocationTargetException, 
+			NoSuchMethodException, 
+			SecurityException, 
+			ELInitObjectNotExist {
 		String[] exps = exp.split("\\.");
 		Object obj = null;		
 		Matcher mc = indexsPattern.matcher(exps[0]);
 		if (mc.find()){
 			obj = loader.onGetObject(exps[0].substring(0, mc.start()));
-			obj = getProperty(obj, getIndexs(mc.group()));
+			if (null == obj){
+				throw new ELInitObjectNotExist();
+			}else{
+				obj = getProperty(obj, getIndexs(mc.group()));
+			}
 		}else{
 			obj = loader.onGetObject(exps[0]);
+			if (null == obj){
+				throw new ELInitObjectNotExist();
+			}
 		}
 		
 		for (int i = 1; i < exps.length; ++i){
