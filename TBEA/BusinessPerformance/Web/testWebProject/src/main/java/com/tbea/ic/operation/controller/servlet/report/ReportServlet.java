@@ -121,7 +121,7 @@ public class ReportServlet {
 			for (String path : keys){
 				writer.write("<span>" + path + "</span></br>");
 				for (String cid: folderMap.get(path)){
-					writer.write("<a href='" + cid + ".do'>" + cid + ".do</a></br>");
+					writer.write("<a href='" + cid + ".do'  target='_blank'>" + cid + ".do</a></br>");
 				}
 			}
 				

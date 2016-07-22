@@ -116,7 +116,7 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 				entity.setClid(Integer.valueOf(row.getString(0)));
 				entity.setNf(ec.getYear());
 				entity.setYf(ec.getMonth());
-				entity.setDwid(company.getId());
+				entity.setDwid(company.getId()); 
 				entity.setZt(zt.ordinal());
 			}
 			entity.setLyl(Util.toDoubleNull(row.getString(1)));
