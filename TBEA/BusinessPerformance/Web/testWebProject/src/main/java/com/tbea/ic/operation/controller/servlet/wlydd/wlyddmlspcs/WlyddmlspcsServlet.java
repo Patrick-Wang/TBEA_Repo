@@ -43,7 +43,15 @@ import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.WlyddmlspcsServiceImpl;
 public class WlyddmlspcsServlet {
 	@Resource(name = WlyddmlspcsServiceImpl.NAME)
 	WlyddmlspcsService wlyddmlspcsService;
-
+	Company getCompany(CompanyType comp){
+		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
+		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompany(comp);
+		if (bmCompany == null || vYszkCompany != null && vYszkCompany.getId() != bmCompany.getId()){
+			return vYszkCompany;
+		}
+		return bmCompany;
+	}
+	
 	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -71,7 +79,7 @@ public class WlyddmlspcsServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = wlyddmlspcsService.getWlyddmlspcs(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
+		List<List<String>> result = wlyddmlspcsService.getWlyddmlspcs(d, getCompany(comp), getType(request));
 		RawFormatterHandler handler = new RawEmptyHandler(null, null);
 		//handler.next(new RawNumberFormatterHandler(1));
 		RawFormatterServer serv = new RawFormatterServer(handler);
@@ -128,7 +136,7 @@ public class WlyddmlspcsServlet {
 		
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		WlyddType type = getType(request);
 		
 		List<List<String>> ret = wlyddmlspcsService.getWlyddmlspcs(d, company, type);

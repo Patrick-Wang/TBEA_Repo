@@ -42,7 +42,14 @@ public class YclbfqkServlet {
 	@Resource(name=YclbfqkServiceImpl.NAME)
 	YclbfqkService yclbfqkService;
 
-
+	Company getCompany(CompanyType comp){
+		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
+		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompany(comp);
+		if (bmCompany == null || vYszkCompany != null && vYszkCompany.getId() != bmCompany.getId()){
+			return vYszkCompany;
+		}
+		return bmCompany;
+	}
 
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -52,7 +59,7 @@ public class YclbfqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		List<List<String>> result = yclbfqkService.getYclbfqk(d, company);
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
@@ -106,7 +113,7 @@ public class YclbfqkServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		
 		List<List<String>> ret = yclbfqkService.getYclbfqk(d, company);
 		ExcelTemplate template = ExcelTemplate.createWgcpqkTemplate(WgcpqkSheetType.YCLBFQK);

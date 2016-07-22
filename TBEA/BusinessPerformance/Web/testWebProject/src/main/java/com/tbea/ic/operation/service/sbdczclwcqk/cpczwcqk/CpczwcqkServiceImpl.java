@@ -7,31 +7,36 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.ZBStatus;
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.controller.servlet.sbdczclwcqk.SbdczclwcqkType;
-import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
-import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
-import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
-import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDaoImpl;
-import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDao;
-import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpczwcqkEntity;
-import com.tbea.ic.operation.service.sbdczclwcqk.cpclwcqk.SBDCZCLWCQK_CL_BYQ_Type;
-import com.tbea.ic.operation.service.sbdczclwcqk.cpczwcqk.CpczwcqkService;
-
 import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.MathUtil;
+import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.controller.servlet.sbdczclwcqk.SbdczclwcqkType;
+import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
+import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
+import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
+import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDao;
+import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDaoImpl;
+import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpclwcqkEntity;
+import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpczwcqkEntity;
+
 @Service(CpczwcqkServiceImpl.NAME)
 @Transactional("transactionManager")
 
 public class CpczwcqkServiceImpl implements CpczwcqkService {
+	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
+	
 	@Resource(name=CpczwcqkDaoImpl.NAME)
 	CpczwcqkDao cpczwcqkDao;
 	
@@ -114,7 +119,13 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 			cal.add(Calendar.YEAR, -1);
 			//cal.add(Calendar.MONTH, 1);
 			
-			List<CpczwcqkEntity> entities= cpczwcqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
+			List<CpczwcqkEntity> entities = null;
+			if (companyManager.getBMDBOrganization().owns(company)){
+				entities = cpczwcqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
+			}else{
+				entities = cpczwcqkDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies(), type, cpIdList.get(cp));
+			}
+			
 			List<String> oneLine = new ArrayList<String>();
 
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());

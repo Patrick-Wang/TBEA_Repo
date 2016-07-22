@@ -46,7 +46,14 @@ import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsServiceImpl
 public class WgcpylnlspcsServlet {
 	@Resource(name = WgcpylnlspcsServiceImpl.NAME)
 	WgcpylnlspcsService wgcpylnlspcsService;
-
+	Company getCompany(CompanyType comp){
+		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
+		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompany(comp);
+		if (bmCompany == null || vYszkCompany != null && vYszkCompany.getId() != bmCompany.getId()){
+			return vYszkCompany;
+		}
+		return bmCompany;
+	}
 	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -70,7 +77,7 @@ public class WgcpylnlspcsServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = wgcpylnlspcsService.getWgcpylnlspcs(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
+		List<List<String>> result = wgcpylnlspcsService.getWgcpylnlspcs(d, getCompany(comp), getType(request));
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
 			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
@@ -130,7 +137,7 @@ public class WgcpylnlspcsServlet {
 		
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		WgcpqkType type = getType(request);
 		
 		List<List<String>> ret = wgcpylnlspcsService.getWgcpylnlspcs(d, company, type);

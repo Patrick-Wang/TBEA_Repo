@@ -6,9 +6,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 
 import javax.annotation.Resource;
@@ -22,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.wlydd.wlyddmlspcs.WlyddmlspcsDao;
 import com.tbea.ic.operation.model.dao.wlydd.wlyddmlspcs.WlyddmlspcsDaoImpl;
+import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpczwcqkEntity;
 import com.tbea.ic.operation.model.entity.wlydd.wlyddmslspcs.WlyddmlspcsEntity;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
@@ -39,6 +43,10 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 	
 	@Autowired
 	DWXXDao dwxxDao;
+	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	
 	public final static String NAME = "WlyddmlspcsServiceImpl";
 	private List<Integer> getHjList(WlyddType type) {
@@ -135,9 +143,14 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 	}
 
 	private String getMll(Double cb, Double sr) {
-		
-		return String.format("%.1f", (Double.valueOf((sr - cb)/sr)) * 100) + "%";
+		Double ret = MathUtil.mul(MathUtil.division(MathUtil.minus(sr, cb),sr), 100d);
+		if (null != ret){
+			return String.format("%.1f", ret) + "%";
+		}
+		return null;
 	}
+	
+
 	
 	@Override
 	public List<List<String>> getWlyddmlspcs(Date d, Company company, WlyddType type) {
@@ -160,8 +173,18 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 			cal.setTime(d);
 			cal.add(Calendar.YEAR, -1);
 			//cal.add(Calendar.MONTH, 1);
-			
-			List<WlyddmlspcsEntity> entities= wlyddmlspcsDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
+			List<WlyddmlspcsEntity> entities = null;
+			if (companyManager.getBMDBOrganization().owns(company)){
+				entities = wlyddmlspcsDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
+			}else{
+				if (company.getType() == CompanyType.SBDCYJT){
+					entities = wlyddmlspcsDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies(), WlyddType.YLFX_WLYMLSP_BYQ_ZH, WlyddType.YLFX_WLYMLSP_XL_ZH, cpIdList.get(cp));
+				}else{
+					entities = wlyddmlspcsDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies(), type, cpIdList.get(cp));
+				}
+				
+			}
+		//	List<WlyddmlspcsEntity> entities= wlyddmlspcsDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
 			List<String> oneLine = new ArrayList<String>();
 
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());

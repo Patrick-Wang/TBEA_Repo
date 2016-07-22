@@ -16,4 +16,8 @@ public interface ExtendAuthorityService {
 
 	void removeCache(Account account);
 
+	List<Company> getAuthedCompaniesForSbd(Account account, AuthType authType);
+
+	List<Company> getAuthedCompaniesForByqXl(Account account, AuthType authType);
+
 }

@@ -18,6 +18,7 @@ import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.sbdczclwcqk.SbdczclwcqkType;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
@@ -26,12 +27,17 @@ import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpclwcqk.CpclwcqkDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpclwcqk.CpclwcqkDaoImpl;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDaoImpl;
+import com.tbea.ic.operation.model.entity.chgb.ChzlbhqkEntity;
 import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpclwcqkEntity;
 import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpczwcqkEntity;
 
 @Service(CpclwcqkServiceImpl.NAME)
 @Transactional("transactionManager")
 public class CpclwcqkServiceImpl implements CpclwcqkService {
+	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	@Resource(name=CpclwcqkDaoImpl.NAME)
 	CpclwcqkDao cpclwcqkDao;
 
@@ -113,8 +119,15 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 			cal.setTime(d);
 			cal.add(Calendar.YEAR, -1);
 			//cal.add(Calendar.MONTH, 1);
+
+			List<CpclwcqkEntity> entities = null;
+			if (companyManager.getBMDBOrganization().owns(company)){
+				entities = cpclwcqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
+			}else{
+				entities = cpclwcqkDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies(), type, cpIdList.get(cp));
+			}
 			
-			List<CpclwcqkEntity> entities= cpclwcqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
+			
 			List<String> oneLine = new ArrayList<String>();
 
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());

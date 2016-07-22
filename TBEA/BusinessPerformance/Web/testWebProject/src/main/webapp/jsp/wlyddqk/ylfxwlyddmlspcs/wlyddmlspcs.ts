@@ -91,6 +91,32 @@ module  ylfxwlyddmlspcs {
             }
 
             isSupported( compType:Util.CompanyType):boolean{
+
+                if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH){
+                    if (compType == Util.CompanyType.BYQCY){
+                        return true;
+                    }
+                }
+
+                if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH){
+                    if (compType == Util.CompanyType.XLCY||
+                        compType == Util.CompanyType.SBDCYJT){
+                        return true;
+                    }
+                }
+
+                if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL){
+                    if (compType == Util.CompanyType.XLCY){
+                        return true;
+                    }
+                }
+
+                if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZZY){
+                    if (compType == Util.CompanyType.BYQCY){
+                        return true;
+                    }
+                }
+
                 if (this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_ZH ||
                     this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_DYDJ ||
                     this.mType == wlyddqk.WlyddType.YLFX_WLYMLSP_BYQ_CPFL||

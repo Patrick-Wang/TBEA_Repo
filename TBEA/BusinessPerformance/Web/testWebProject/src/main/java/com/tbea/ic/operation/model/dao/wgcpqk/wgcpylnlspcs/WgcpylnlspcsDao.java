@@ -19,4 +19,11 @@ public interface WgcpylnlspcsDao extends AbstractReadWriteDao<WgcpylnlspcsEntity
 	List<WgcpylnlspcsEntity> getByDate(Date ds, Date de, Company company, WgcpqkType type, Integer cpId);
 
 	WgcpylnlspcsEntity getByDate(Date d, Company company, WgcpqkType type, Integer cpId);
+
+	List<WgcpylnlspcsEntity> getSumByDate(Date ds, Date de, List<Company> comps,
+			WgcpqkType ylfxWgcpylnlByqZh, WgcpqkType ylfxWgcpylnlXlZh,
+			Integer cpId);
+
+	List<WgcpylnlspcsEntity> getSumByDate(Date ds, Date de,
+			List<Company> comps, WgcpqkType type, Integer cpId);
 }

@@ -15,5 +15,7 @@ public interface YszkZlDao extends AbstractReadWriteDao<YszkZlEntity> {
 
 	List<YszkZlEntity> getByDate(Date ds, Date de, Company company);
 	YszkZlEntity getByDate(Date d, Company company);
+	List<YszkZlEntity> getSumByDate(Date date, Date d,
+			List<Company> subCompanies);
 
 }

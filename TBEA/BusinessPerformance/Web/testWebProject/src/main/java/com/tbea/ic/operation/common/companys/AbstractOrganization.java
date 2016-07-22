@@ -87,5 +87,9 @@ public abstract class AbstractOrganization implements Organization {
 		}
 		return bottomComps;
 	}
-
+	@Override
+	public boolean owns(Company comp) {
+		return null != comp && this.getCompany(comp.getType()) == comp;
+	}
+	
 }

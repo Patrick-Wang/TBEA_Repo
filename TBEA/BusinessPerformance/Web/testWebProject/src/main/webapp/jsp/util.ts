@@ -7,8 +7,7 @@ declare var $;
 
 module Util {
 
-    import TextAlign = JQTable.TextAlign;
-    import Node = JQTable.Node;
+
     export interface Header{
         name:string;
         type:string;
@@ -52,7 +51,7 @@ module Util {
 
         public static createTable(gridName:string, gridCtrl: Util.GridCtrl):JQTable.JQGridAssistant {
 
-            let nodes : Node[] = [];
+            let nodes : JQTable.Node[] = [];
             for (let i= 0; i < gridCtrl.header.length; ++i) {
                 let node = Util.parseHeader(gridCtrl.header[i]);
                 if (null != node) {
@@ -98,11 +97,11 @@ module Util {
         message:string;
     }
 
-    export function parseHeader(header:Util.Header): Node{
-        let node:Node = null;
+    export function parseHeader(header:Util.Header): JQTable.Node{
+        let node:JQTable.Node = null;
         let readOnly = header.readOnly == "true";
         if ("date" == header.type){
-            node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text", options:{
+            node = JQTable.Node.create({name : header.name, align : JQTable.TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text", options:{
                 dataInit: function (element) {
                     $(element).datepicker({
                         dateFormat: 'yy-mm-dd',
@@ -112,13 +111,13 @@ module Util {
                 }
             }});
         }else if ("text" == header.type){
-            node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text"});
+            node = JQTable.Node.create({name : header.name, align : JQTable.TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text"});
         }else if ("hidden" == header.type){
-            node = null;//Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
+            node = null;//JQTable.Node.create({name : header.name, align : JQTable.TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
         }else if ("select" == header.type){
-            node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType: "select", options: { value: header.options }});
+            node = JQTable.Node.create({name : header.name, align : JQTable.TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType: "select", options: { value: header.options }});
         }else{
-            node = Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly});
+            node = JQTable.Node.create({name : header.name, align : JQTable.TextAlign.Center, isReadOnly:readOnly});
         }
 
         if (header.sub != undefined) {

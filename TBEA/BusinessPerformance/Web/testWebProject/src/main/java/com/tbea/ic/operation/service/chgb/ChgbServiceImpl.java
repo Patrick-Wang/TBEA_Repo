@@ -44,6 +44,7 @@ import com.tbea.ic.operation.model.entity.chgb.ChzlbhqkEntity;
 import com.tbea.ic.operation.model.entity.chgb.NychEntity;
 import com.tbea.ic.operation.model.entity.identifier.chgb.JykcxmEntity;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
+import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
 import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 
@@ -76,7 +77,13 @@ public class ChgbServiceImpl implements ChgbService {
 	@Override
 	public List<List<String>> getChzmb(Date d, Company company) {
 		List<List<String>> result = new ArrayList<List<String>>();
-		List<ChZmEntity> entities= chzmDao.getByDate(d, company);
+		List<ChZmEntity> entities = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			entities = chzmDao.getByDate(d, company);
+		}else{
+			entities = chzmDao.getSumByDate(d, company.getSubCompanies());
+		}
+		
 		for (ChZmEntity entity : entities){
 			List<String> list = new ArrayList<String>();
 			list.add("" + entity.getZmje());
@@ -90,8 +97,14 @@ public class ChgbServiceImpl implements ChgbService {
 	@Override
 	public List<List<String>> getChjykcb(Date d, Company company) {
 		List<List<String>> result = new ArrayList<List<String>>();
-		List<ChJykcEntity> entities= chJykcDao.getByDate(d, company);
 		List<JykcxmEntity> jykcxmEntities = jykcxmDao.getXMMapping();
+		
+		List<ChJykcEntity> entities = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			entities = chJykcDao.getByDate(d, company);
+		}else{
+			entities = chJykcDao.getSumByDate(d, company.getSubCompanies());
+		}
 		
 		Double hjSyye = 0.0;
 		Double hjByxz = 0.0;
@@ -215,7 +228,15 @@ public class ChgbServiceImpl implements ChgbService {
 		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
 		cal.add(Calendar.MONTH, 1);
-		List<ChzlbhqkEntity> entities= chzlbhqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+
+		List<ChzlbhqkEntity> entities = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			entities = chzlbhqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		}else{
+			entities = chzlbhqkDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies());
+		}
+		
+		
 		for (int i = 0; i < 12; ++i){
 			result.add(new ArrayList<String>());
 			for (ChzlbhqkEntity entity : entities){
@@ -263,7 +284,14 @@ public class ChgbServiceImpl implements ChgbService {
 		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
 		cal.add(Calendar.MONTH, 1);
-		List<ChxzqkEntity> entities= chxzqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+
+		List<ChxzqkEntity> entities = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			entities = chxzqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		}else{
+			entities = chxzqkDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies());
+		}
+		
 		for (int i = 0; i < 12; ++i){
 			result.add(new ArrayList<String>());
 			for (ChxzqkEntity entity : entities){
@@ -303,8 +331,14 @@ public class ChgbServiceImpl implements ChgbService {
 		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
 		cal.add(Calendar.MONTH, 1);
+		List<NychEntity> entities = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			entities = nychDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		}else{
+			entities = nychDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies());
+		}
 		
-		List<NychEntity> entities= nychDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		
 		for (int i = 0; i < 12; ++i){
 			result.add(new ArrayList<String>());
 			for (NychEntity entity : entities){
@@ -320,7 +354,12 @@ public class ChgbServiceImpl implements ChgbService {
 			cal.add(Calendar.MONTH, 1);
 		}
 		
-		NychEntity qcjyEntity = nychDao.getQCJYByDate(d, company);
+		NychEntity qcjyEntity  = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			qcjyEntity = nychDao.getQCJYByDate(d, company);
+		}else{
+			qcjyEntity = nychDao.getSumQCJYByDate(d, company.getSubCompanies());
+		}
 		
 		if (qcjyEntity != null) {
 			result.add(toList(qcjyEntity));

@@ -2,15 +2,9 @@ package com.tbea.ic.operation.model.dao.chgb.chxzqk;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.model.entity.chgb.ChxzqkEntity;
-
-import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
-
-import com.tbea.ic.operation.model.dao.chgb.chxzqk.ChxzqkDao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +12,12 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
+
+import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.model.entity.chgb.ChxzqkEntity;
 
 
 
@@ -56,5 +56,45 @@ public class ChxzqkDaoImpl extends AbstractReadWriteDaoImpl<ChxzqkEntity> implem
 			return null;
 		}
 		return list.get(0);
+	}
+
+	@Override
+	public List<ChxzqkEntity> getSumByDate(Date ds, Date de,
+			List<Company> subCompanies) {
+		Query q = this
+				.getEntityManager()
+				.createQuery(
+						"select nf, yf," +
+						"sum(ycl),"+
+						"sum(bcp),"+
+						"sum(sjkcsp),"+
+						"sum(yfhwkp),"+
+						"sum(qhfdyk),"+
+						"sum(qhpcyk),"+
+						"sum(wfhykp),"+
+						"sum(qt)"+
+						"from ChxzqkEntity where "
+								+ "dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dStart) <= 0 and "
+								+ "dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dEnd) >= 0 and "
+								+ "dwxx.id in (" + Util.toBMString(subCompanies)+ ") group by nf, yf");
+		q.setParameter("dStart", ds);
+		q.setParameter("dEnd", de);
+		List<ChxzqkEntity> rets = new ArrayList<ChxzqkEntity>();
+		List<Object[]> ret = q.getResultList();
+		for (Object[] row : ret){
+			ChxzqkEntity entity = new ChxzqkEntity();
+			entity.setNf((Integer) row[0]);
+			entity.setYf((Integer) row[1]);
+			entity.setYcl((Double) row[2]);
+			entity.setBcp((Double) row[3]);
+			entity.setSjkcsp((Double) row[4]);
+			entity.setYfhwkp((Double) row[5]);
+			entity.setQhfdyk((Double) row[6]);
+			entity.setQhpcyk((Double) row[7]);
+			entity.setWfhykp((Double) row[8]);
+			entity.setQt((Double) row[9]);
+			rets.add(entity);
+		}
+		return rets;
 	}
 }

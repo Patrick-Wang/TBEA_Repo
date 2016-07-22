@@ -17,12 +17,14 @@ import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.sbdscqyqk.SbdscqyqkType;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy.XfcpqyDao;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy.XfcpqyDaoImpl;
+import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpczwcqkEntity;
 import com.tbea.ic.operation.model.entity.sbdscqyqk.XfcpqyEntity;
 
 @Service(XfcpqyServiceImpl.NAME)
@@ -38,6 +40,9 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 	@Resource(name = XfcpqyDaoImpl.NAME)
 	XfcpqyDao xfcpqyDao;
 
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	public final static String NAME = "XfcpqyServiceImpl";
 
 	private List<Integer> getHjList(SbdscqyqkType type) {
@@ -121,8 +126,12 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 			cal.setTime(d);
 			cal.add(Calendar.YEAR, -1);
 //			cal.add(Calendar.MONTH, 1);
-			
-			List<XfcpqyEntity> entities= xfcpqyDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
+			List<XfcpqyEntity> entities = null;
+			if (companyManager.getBMDBOrganization().owns(company)){
+				entities = xfcpqyDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
+			}else{
+				entities = xfcpqyDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies(), type, cpIdList.get(cp));
+			}
 			List<String> oneLine = new ArrayList<String>();
 
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());

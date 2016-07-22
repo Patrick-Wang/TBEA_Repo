@@ -86,6 +86,14 @@ public class ChgbServlet {
 	@Autowired
 	ExtendAuthorityService extendAuthService;
 
+	Company getCompany(CompanyType comp){
+		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
+		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompany(comp);
+		if (bmCompany == null || vYszkCompany != null && vYszkCompany.getId() != bmCompany.getId()){
+			return vYszkCompany;
+		}
+		return bmCompany;
+	}
 	
 	@RequestMapping(value = "chzmb/update.do", method = RequestMethod.GET)
 	public @ResponseBody byte[] getChgbzmb_update(HttpServletRequest request,
@@ -93,7 +101,7 @@ public class ChgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = chgbService.getChzmb(d, companyManager.getBMDBOrganization().getCompany(comp));
+		List<List<String>> result = chgbService.getChzmb(d, getCompany(comp));
 		
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
 		RawFormatterServer serv = new RawFormatterServer(handler);
@@ -107,7 +115,7 @@ public class ChgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = chgbService.getChjykcb(d, companyManager.getBMDBOrganization().getCompany(comp));
+		List<List<String>> result = chgbService.getChjykcb(d, getCompany(comp));
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0});
 		handler.next(new RawNumberFormatterHandler(1));
@@ -123,7 +131,7 @@ public class ChgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = chgbService.getChzlbhqk(d, companyManager.getBMDBOrganization().getCompany(comp));
+		List<List<String>> result = chgbService.getChzlbhqk(d, getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
@@ -136,7 +144,7 @@ public class ChgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = chgbService.getChxzqk(d, companyManager.getBMDBOrganization().getCompany(comp));
+		List<List<String>> result = chgbService.getChxzqk(d, getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
@@ -149,7 +157,7 @@ public class ChgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = chgbService.getChnych(d, companyManager.getBMDBOrganization().getCompany(comp));
+		List<List<String>> result = chgbService.getChnych(d, getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
@@ -162,7 +170,7 @@ public class ChgbServlet {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		List<Company> comps = extendAuthService.getAuthedCompanies(
+		List<Company> comps = extendAuthService.getAuthedCompaniesForSbd(
 				SessionManager.getAccount(request.getSession()),
 				AuthType.ChgbLookup);
 
@@ -200,7 +208,7 @@ public class ChgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType type = CompanySelection.getCompany(request);
-		Company comp = companyManager.getBMDBOrganization().getCompany(type);
+		Company comp = getCompany(type);
 		List<List<String>> result = chgbService.getChjykcbEntry(d, comp);
 		ZBStatus status = chgbService.getChjykcbStatus(d, comp);
 		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
@@ -298,7 +306,7 @@ public class ChgbServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		List<List<String>> ret = chgbService.getChzmb(d, company);
 		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.ZMB);
 		
@@ -320,7 +328,7 @@ public class ChgbServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		List<List<String>> ret = chgbService.getChjykcb(d, company);
 		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.JYKCB);
 		
@@ -344,7 +352,7 @@ public class ChgbServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		List<List<String>> ret = chgbService.getChzlbhqk(d, company);
 		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.CHZLBHQK);
 		
@@ -391,7 +399,7 @@ public class ChgbServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		List<List<String>> ret = chgbService.getChxzqk(d, company);
 		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.CHXZQK);
 		
@@ -438,7 +446,7 @@ public class ChgbServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		List<List<String>> ret = chgbService.getChnych(d, company);
 		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.NYCH);
 		

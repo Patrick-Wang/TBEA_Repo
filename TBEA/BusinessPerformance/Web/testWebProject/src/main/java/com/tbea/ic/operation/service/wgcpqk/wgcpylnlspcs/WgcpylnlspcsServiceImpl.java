@@ -18,6 +18,8 @@ import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
@@ -25,6 +27,7 @@ import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.wgcpylnlspcs.WgcpylnlspcsDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.wgcpylnlspcs.WgcpylnlspcsDaoImpl;
 import com.tbea.ic.operation.model.entity.wgcpqk.wgcpylnlspcs.WgcpylnlspcsEntity;
+import com.tbea.ic.operation.model.entity.yszkgb.YszkZlEntity;
 
 
 @Service(WgcpylnlspcsServiceImpl.NAME)
@@ -38,6 +41,9 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 	
 	@Autowired
 	DWXXDao dwxxDao;
+	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
 	
 	public final static String NAME = "WgcpylnlspcsServiceImpl";
 
@@ -158,7 +164,18 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 			cal.setTime(d);
 			cal.add(Calendar.YEAR, -1);
 			
-			List<WgcpylnlspcsEntity> entities= wgcpylnlspcsDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
+			List<WgcpylnlspcsEntity> entities = null;
+			if (companyManager.getBMDBOrganization().owns(company)){
+				entities = wgcpylnlspcsDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
+			}else{
+				if (company.getType() == CompanyType.SBDCYJT){
+					entities = wgcpylnlspcsDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies(), WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH, WgcpqkType.YLFX_WGCPYLNL_XL_ZH, cpIdList.get(cp));
+				}else{
+					entities = wgcpylnlspcsDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies(), type, cpIdList.get(cp));
+				}
+			}
+			
+			
 			List<String> oneLine = new ArrayList<String>();
 
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());

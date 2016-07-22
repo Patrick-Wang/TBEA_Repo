@@ -13,4 +13,6 @@ public interface NychDao extends AbstractReadWriteDao<NychEntity> {
 
 	List<NychEntity> getByDate(Date ds, Date de, Company company);
 	NychEntity getQCJYByDate(Date dSelected, Company company);
+	List<NychEntity> getSumByDate(Date date, Date d, List<Company> subCompanies);
+	NychEntity getSumQCJYByDate(Date date, List<Company> subCompanies);
 }

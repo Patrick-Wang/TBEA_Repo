@@ -33,6 +33,7 @@ public class SbdczclwcqkServlet {
 	@Autowired
 	ExtendAuthorityService extendAuthService;
 	
+	
 	@RequestMapping(value = "show.do")
 	public ModelAndView getShow(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -40,7 +41,7 @@ public class SbdczclwcqkServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		List<Company> comps = extendAuthService.getAuthedCompanies(
+		List<Company> comps = extendAuthService.getAuthedCompaniesForByqXl(
 				SessionManager.getAccount(request.getSession()),
 				AuthType.SbdgbLookup);
 

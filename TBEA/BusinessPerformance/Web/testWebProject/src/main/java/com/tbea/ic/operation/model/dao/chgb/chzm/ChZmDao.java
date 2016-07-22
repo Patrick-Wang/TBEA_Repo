@@ -12,4 +12,6 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 public interface ChZmDao extends AbstractReadWriteDao<ChZmEntity> {
 
 	List<ChZmEntity> getByDate(Date d, Company company);
+
+	List<ChZmEntity> getSumByDate(Date d, List<Company> subCompanies);
 }

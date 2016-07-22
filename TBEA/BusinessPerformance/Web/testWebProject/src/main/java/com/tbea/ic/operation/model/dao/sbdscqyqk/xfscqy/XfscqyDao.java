@@ -15,4 +15,6 @@ public interface XfscqyDao extends AbstractReadWriteDao<XfscqyEntity> {
 
 	XfscqyEntity getByDate(Date d, Company company, int hy);
 
+	List<XfscqyEntity> getSumByDate(Date d, List<Company> subCompanies);
+
 }

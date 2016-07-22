@@ -105,14 +105,16 @@ module sbdscqyqk {
                     if (compType == Util.CompanyType.SBGS ||
                         compType == Util.CompanyType.HBGS ||
                         compType == Util.CompanyType.XBC ||
-                        compType == Util.CompanyType.TBGS
+                        compType == Util.CompanyType.TBGS||
+                        compType == Util.CompanyType.BYQCY
                     ) {
                         return true;
                     }
                 } else {
                     if (compType == Util.CompanyType.LLGS ||
                         compType == Util.CompanyType.XLC ||
-                        compType == Util.CompanyType.DLGS
+                        compType == Util.CompanyType.DLGS ||
+                        compType == Util.CompanyType.XLCY
                     ) {
                         return true;
                     }

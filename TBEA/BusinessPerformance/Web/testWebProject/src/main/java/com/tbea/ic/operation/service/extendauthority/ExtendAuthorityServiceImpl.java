@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.model.dao.authority.ExtendAuthorityDao;
 import com.tbea.ic.operation.model.entity.ExtendAuthority;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
@@ -50,6 +52,79 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 			comps.add(companyManager.getBMDBOrganization().getCompany(auths.get(i).getDwxx().getId()));
 		}
 		return comps;
+	}
+	
+	@Override
+	public List<Company> getAuthedCompaniesForByqXl(Account account,
+			AuthType authType) {
+		List<Company> comps = this.getAuthedCompanies(account, authType);
+		List<Company> compsTmp = new ArrayList<Company>();
+		compsTmp.addAll(comps);
+		Organization org = companyManager.getVirtualGBOrg();
+		Company byqcy = org.getCompany(CompanyType.BYQCY);
+		boolean containsAllByq = true;
+		for (Company byq : byqcy.getSubCompanies()){
+			if (comps.indexOf(companyManager.getBMDBOrganization().getCompany(byq.getId())) < 0){
+				containsAllByq = false;
+				break;
+			}
+		}
+		boolean containsAllXl = true;
+		Company xlcy = org.getCompany(CompanyType.XLCY);
+		for (Company xl : xlcy.getSubCompanies()){
+			if (comps.indexOf(companyManager.getBMDBOrganization().getCompany(xl.getId())) < 0){
+				containsAllXl = false;
+				break;
+			}
+		}
+		
+		if (containsAllByq){
+			compsTmp.add(byqcy);
+		}
+		if (containsAllXl){
+			compsTmp.add(xlcy);
+		}
+		
+		return compsTmp;
+	}
+	
+	@Override
+	public List<Company> getAuthedCompaniesForSbd(Account account,
+			AuthType authType) {
+		List<Company> comps = this.getAuthedCompanies(account, authType);
+		List<Company> compsTmp = new ArrayList<Company>();
+		compsTmp.addAll(comps);
+		Organization org = companyManager.getVirtualGBOrg();
+		Company byqcy = org.getCompany(CompanyType.BYQCY);
+		boolean containsAllByq = true;
+		for (Company byq : byqcy.getSubCompanies()){
+			if (comps.indexOf(companyManager.getBMDBOrganization().getCompany(byq.getId())) < 0){
+				containsAllByq = false;
+				break;
+			}
+		}
+		boolean containsAllXl = true;
+		Company xlcy = org.getCompany(CompanyType.XLCY);
+		for (Company xl : xlcy.getSubCompanies()){
+			if (comps.indexOf(companyManager.getBMDBOrganization().getCompany(xl.getId())) < 0){
+				containsAllXl = false;
+				break;
+			}
+		}
+		
+		if (containsAllByq){
+			compsTmp.add(byqcy);
+		}
+		if (containsAllXl){
+			compsTmp.add(xlcy);
+		}
+		
+		if (containsAllXl && containsAllByq){
+			Company sbdcy = org.getCompany(CompanyType.SBDCYJT);
+			compsTmp.add(sbdcy);
+		}
+		
+		return compsTmp;
 	}
 	
 	@Override

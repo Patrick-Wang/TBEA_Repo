@@ -9,6 +9,7 @@ import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.identifier.scfxgb.hy.HyDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.scfxgb.hy.HyDao;
 
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfscqy.XfscqyDaoImpl;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfscqy.XfscqyDao;
 import com.tbea.ic.operation.model.entity.identifier.scfxgb.HyEntity;
+import com.tbea.ic.operation.model.entity.sbdscqyqk.XfcpqyEntity;
 import com.tbea.ic.operation.model.entity.sbdscqyqk.XfscqyEntity;
 import com.tbea.ic.operation.service.sbdscqyqk.xfscqy.XfscqyService;
 
@@ -36,6 +38,9 @@ public class XfscqyServiceImpl implements XfscqyService {
 
 	public final static String NAME = "XfscqyServiceImpl";
 
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
+	
 	@Override
 	public List<List<String>> getXfscqy(Date d, Company company) {
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -56,7 +61,13 @@ public class XfscqyServiceImpl implements XfscqyService {
 		listHj.set(0, "合计");
 		result.add(listHj);
 		for (int i = 0; i < 13; ++i){
-			List<XfscqyEntity> entities = xfscqyDao.getByDate(new Date(cal.getTimeInMillis()), company);
+			List<XfscqyEntity> entities = null;
+			if (companyManager.getBMDBOrganization().owns(company)){
+				entities = xfscqyDao.getByDate(new Date(cal.getTimeInMillis()), company);
+			}else{
+				entities = xfscqyDao.getSumByDate(new Date(cal.getTimeInMillis()), company.getSubCompanies());
+			}
+			
 			Double sum = null;
 			for (XfscqyEntity entity: entities){
 				result.get(entity.getHyid()).set(i + 1, "" + entity.getQye());

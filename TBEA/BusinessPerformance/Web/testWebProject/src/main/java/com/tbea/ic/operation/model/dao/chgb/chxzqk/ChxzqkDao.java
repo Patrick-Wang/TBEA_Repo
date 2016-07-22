@@ -14,4 +14,7 @@ public interface ChxzqkDao extends AbstractReadWriteDao<ChxzqkEntity> {
 	List<ChxzqkEntity> getByDate(Date ds, Date de, Company company);
 	
 	ChxzqkEntity getByDate(Date de, Company company);
+
+	List<ChxzqkEntity> getSumByDate(Date date, Date d,
+			List<Company> subCompanies);
 }

@@ -1,5 +1,6 @@
 ///<reference path="../../route/route.ts"/>
 ///<reference path="../../basic/basicdef.ts"/>
+///<reference path="../../basic/basicShow.ts"/>
 ///<reference path="../../../messageBox.ts"/>
 ///<reference path="../../../components/dateSelectorProxy.ts"/>
 module framework.templates.singleDateReport {

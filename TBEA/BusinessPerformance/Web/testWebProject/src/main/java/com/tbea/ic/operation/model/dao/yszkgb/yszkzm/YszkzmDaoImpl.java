@@ -1,10 +1,12 @@
 package com.tbea.ic.operation.model.dao.yszkgb.yszkzm;
 
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
 
@@ -44,5 +46,28 @@ public class YszkzmDaoImpl extends AbstractReadWriteDaoImpl<YszkzmEntity> implem
 			return null;
 		}
 		return ret.get(0);
+	}
+	
+	@Override
+	public YszkzmEntity getSumByDate(Date d, List<Company> comps) {
+	
+		Query q = this.getEntityManager().createQuery("select sum(zmje) as zmje, sum(hzzb) as hzzb, sum(yz) as yz from YszkzmEntity where nf=:nf and yf=:yf and dwxx.id in (" + Util.toBMString(comps) + ")");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		List<Object[]> ret = q.getResultList();
+		YszkzmEntity entity = new YszkzmEntity();
+		if (null != ret.get(0)[0]){
+			entity.setZmje(((Double)ret.get(0)[0]));
+		}
+		if (null != ret.get(0)[1]){
+			entity.setHzzb(((Double)ret.get(0)[1]));
+		}
+		if (null != ret.get(0)[2]){
+			entity.setYz(((Double)ret.get(0)[2]));
+		}
+		
+		return entity;
 	}
 }

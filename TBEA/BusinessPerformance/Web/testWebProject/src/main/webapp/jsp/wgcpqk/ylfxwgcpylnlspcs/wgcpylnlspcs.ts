@@ -102,6 +102,29 @@ module  ylfxwgcpylnlspcs {
             }
 
             isSupported(compType:Util.CompanyType):boolean {
+
+                if (this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH ||
+                    this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_MLL) {
+                    if (compType == Util.CompanyType.BYQCY
+                    ) {
+                        return true;
+                    }
+                }
+
+                if (this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_XL_ZH ||
+                    this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_XL_CPFL) {
+                    if (compType == Util.CompanyType.XLCY) {
+                        return true;
+                    }
+                }
+
+                if (this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_XL_ZH) {
+                    if (compType == Util.CompanyType.SBDCYJT) {
+                        return true;
+                    }
+                }
+
+
                 if (this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH ||
                     this.mWgcpqkType == wgcpqk.WgcpqkType.YLFX_WGCPYLNL_BYQ_MLL) {
                     if (compType == Util.CompanyType.SBGS ||
@@ -144,7 +167,7 @@ module  ylfxwgcpylnlspcs {
                 framework.router
                     .fromEp(new framework.basic.EndpointProxy(plugin.xl_cpfl, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势-产品分类");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "完工产品盈利能力变化趋势（毛利率）");
             }
 
             onEvent(e:framework.route.Event):any {

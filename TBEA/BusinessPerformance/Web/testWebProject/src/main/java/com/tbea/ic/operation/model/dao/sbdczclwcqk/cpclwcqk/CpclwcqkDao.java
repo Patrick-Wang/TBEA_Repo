@@ -20,4 +20,7 @@ public interface CpclwcqkDao extends AbstractReadWriteDao<CpclwcqkEntity> {
 	List<CpclwcqkEntity> getByDate(Date ds, Date de, Company company, SbdczclwcqkType type, Integer cpId);
 
 	CpclwcqkEntity getByDate(Date d, Company company, SbdczclwcqkType type, Integer cpId);
+
+	List<CpclwcqkEntity> getSumByDate(Date ds, Date de,
+			List<Company> subCompanies, SbdczclwcqkType type, Integer integer);
 }

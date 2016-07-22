@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
@@ -44,6 +45,15 @@ public class XfcpqyServlet {
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
+	Company getCompany(CompanyType comp){
+		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
+		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompany(comp);
+		if (bmCompany == null || vYszkCompany != null && vYszkCompany.getId() != bmCompany.getId()){
+			return vYszkCompany;
+		}
+		return bmCompany;
+	}
+	
 	private SbdscqyqkType getType(HttpServletRequest request){
 		if (0 == Integer.valueOf(request.getParameter("type"))){
 			return SbdscqyqkType.YLFX_WGCPYLNL_BYQ;
@@ -60,7 +70,7 @@ public class XfcpqyServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = xfcpqyService.getXfcpqy(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
+		List<List<String>> result = xfcpqyService.getXfcpqy(d, getCompany(comp), getType(request));
 		
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
@@ -131,7 +141,7 @@ public class XfcpqyServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		
-		List<List<String>> ret = xfcpqyService.getXfcpqy(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
+		List<List<String>> ret = xfcpqyService.getXfcpqy(d, getCompany(comp), getType(request));
 		
 		ExcelTemplate template = ExcelTemplate.createSbdscqyqkTemplate(SbdscqyqkSheetType.XFCPQY);
 				

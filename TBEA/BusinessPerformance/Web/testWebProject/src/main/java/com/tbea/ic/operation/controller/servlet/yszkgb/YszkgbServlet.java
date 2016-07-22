@@ -65,7 +65,7 @@ public class YszkgbServlet {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		List<Company> comps = extendAuthService.getAuthedCompanies(
+		List<Company> comps = extendAuthService.getAuthedCompaniesForSbd(
 				SessionManager.getAccount(request.getSession()),
 				AuthType.YszkgbLookup);
 
@@ -97,13 +97,22 @@ public class YszkgbServlet {
 		return new ModelAndView("yszkgb/yszkgbEntry", map);
 	}
 	
+	Company getCompany(CompanyType comp){
+		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
+		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompany(comp);
+		if (bmCompany == null || vYszkCompany != null && vYszkCompany.getId() != bmCompany.getId()){
+			return vYszkCompany;
+		}
+		return bmCompany;
+	}
+	
 	@RequestMapping(value = "zmb/update.do")
 	public @ResponseBody byte[] getZmb(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = yszkgbService.getZmb(d, companyManager.getBMDBOrganization().getCompany(comp));
+		List<List<String>> result = yszkgbService.getZmb(d, getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
@@ -116,7 +125,7 @@ public class YszkgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = yszkgbService.getYszkzlbh(d, companyManager.getBMDBOrganization().getCompany(comp));
+		List<List<String>> result = yszkgbService.getYszkzlbh(d, getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
@@ -128,7 +137,7 @@ public class YszkgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = yszkgbService.getYszkkxxz(d, companyManager.getBMDBOrganization().getCompany(comp));
+		List<List<String>> result = yszkgbService.getYszkkxxz(d, getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
@@ -142,7 +151,7 @@ public class YszkgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = yszkgbService.getYqyszcsys(d, companyManager.getBMDBOrganization().getCompany(comp));
+		List<List<String>> result = yszkgbService.getYqyszcsys(d, getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
@@ -155,7 +164,7 @@ public class YszkgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = yszkgbService.getYszkyjtztjqs(d, companyManager.getBMDBOrganization().getCompany(comp));
+		List<List<String>> result = yszkgbService.getYszkyjtztjqs(d, getCompany(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
@@ -273,7 +282,7 @@ public class YszkgbServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		List<List<String>> ret = yszkgbService.getZmb(d, company);
 		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.ZMB);
 		
@@ -294,7 +303,7 @@ public class YszkgbServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		List<List<String>> ret = yszkgbService.getYszkzlbh(d, company);
 		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKZLBH);
 		
@@ -342,7 +351,7 @@ public class YszkgbServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		List<List<String>> ret = yszkgbService.getYszkkxxz(d, company);
 		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKKXXZQK);
 		
@@ -389,7 +398,7 @@ public class YszkgbServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		List<List<String>> ret = yszkgbService.getYqyszcsys(d, company);
 		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YQYSCSYS);
 		
@@ -436,7 +445,7 @@ public class YszkgbServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = getCompany(comp);
 		List<List<String>> ret = yszkgbService.getYszkyjtztjqs(d, company);
 		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKZMYYJTZTJQS);
 		

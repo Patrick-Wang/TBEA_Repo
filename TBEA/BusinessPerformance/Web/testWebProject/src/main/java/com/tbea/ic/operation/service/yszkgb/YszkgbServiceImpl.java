@@ -74,7 +74,12 @@ public class YszkgbServiceImpl implements YszkgbService {
 	@Override
 	public List<List<String>> getZmb(Date d, Company company) {
 		List<List<String>> result = new ArrayList<List<String>>();
-		YszkzmEntity entity= yszkzmDao.getByDate(d, company);
+		YszkzmEntity entity = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			entity = yszkzmDao.getByDate(d, company);
+		}else{
+			entity = yszkzmDao.getSumByDate(d, company.getSubCompanies());
+		}
 		List<String> list = new ArrayList<String>();
 		if (null != entity){
 			list.add("" + entity.getZmje());
@@ -106,7 +111,14 @@ public class YszkgbServiceImpl implements YszkgbService {
 		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
 		cal.add(Calendar.MONTH, 1);
-		List<YszkZlEntity> entities= yszkZlDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		
+		List<YszkZlEntity> entities = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			entities = yszkZlDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		}else{
+			entities = yszkZlDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies());
+		}
+		
 		for (int i = 0; i < 12; ++i){
 			result.add(new ArrayList<String>());
 			for (YszkZlEntity entity : entities){
@@ -132,7 +144,12 @@ public class YszkgbServiceImpl implements YszkgbService {
 		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
 		cal.add(Calendar.MONTH, 1);
-		List<YszkKxxzEntity> entities= yszkKxxzDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		List<YszkKxxzEntity> entities = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			entities = yszkKxxzDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		}else{
+			entities = yszkKxxzDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies());
+		}
 		for (int i = 0; i < 12; ++i){
 			result.add(new ArrayList<String>());
 			for (YszkKxxzEntity entity : entities){
@@ -194,7 +211,12 @@ public class YszkgbServiceImpl implements YszkgbService {
 		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
 		cal.add(Calendar.MONTH, 1);
-		List<YszkYjtzTjqsEntity> entities= yszkYjtzTjqsDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		List<YszkYjtzTjqsEntity> entities = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			entities = yszkYjtzTjqsDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		}else{
+			entities = yszkYjtzTjqsDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies());
+		}
 		for (int i = 0; i < 12; ++i){
 			result.add(new ArrayList<String>());
 			for (YszkYjtzTjqsEntity entity : entities){
@@ -233,7 +255,12 @@ public class YszkgbServiceImpl implements YszkgbService {
 		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
 		cal.add(Calendar.MONTH, 1);
-		List<YqyszcsysEntity> entities= yqyszcsysDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		List<YqyszcsysEntity> entities = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			entities = yqyszcsysDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		}else{
+			entities = yqyszcsysDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies());
+		}
 		for (int i = 0; i < 12; ++i){
 			result.add(new ArrayList<String>());
 			for (YqyszcsysEntity entity : entities){

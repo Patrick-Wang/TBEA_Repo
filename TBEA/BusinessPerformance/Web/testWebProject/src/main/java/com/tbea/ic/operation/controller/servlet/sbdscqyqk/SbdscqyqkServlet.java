@@ -41,7 +41,7 @@ public class SbdscqyqkServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		List<Company> comps = extendAuthService.getAuthedCompanies(
+		List<Company> comps = extendAuthService.getAuthedCompaniesForSbd(
 				SessionManager.getAccount(request.getSession()),
 				AuthType.SbdgbLookup);
 

@@ -15,4 +15,6 @@ public interface YclbfqkDao extends AbstractReadWriteDao<YclbfqkEntity> {
 
 	YclbfqkEntity getByDate(Date d, Company company, Integer valueOf);
 
+	List<YclbfqkEntity> getSumByDate(Date date, List<Company> subCompanies);
+
 }

@@ -2,9 +2,11 @@ package com.tbea.ic.operation.model.dao.yszkgb.yszkkxxz;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkKxxzEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkYjtzTjqsEntity;
@@ -58,5 +60,43 @@ public class YszkKxxzDaoImpl extends AbstractReadWriteDaoImpl<YszkKxxzEntity> im
 			return null;
 		}
 		return list.get(0);
+	}
+
+	@Override
+	public List<YszkKxxzEntity> getSumByDate(Date ds, Date de,
+			List<Company> subCompanies) {
+		Query q = this
+				.getEntityManager()
+				.createQuery(
+						"select nf, yf," +
+						"sum(yq0z1y),"+
+						"sum(yq1z3y),"+
+						"sum(yq3z6y),"+
+						"sum(yq6z12y),"+
+						"sum(yq1nys),"+
+						"sum(wdq),"+
+						"sum(wdqzbj)"+
+						"from YszkKxxzEntity where "
+								+ "dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dStart) <= 0 and "
+								+ "dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), :dEnd) >= 0 and "
+								+ "dwxx.id in (" + Util.toBMString(subCompanies)+ ") group by nf, yf");
+		q.setParameter("dStart", ds);
+		q.setParameter("dEnd", de);
+		List<YszkKxxzEntity> rets = new ArrayList<YszkKxxzEntity>();
+		List<Object[]> ret = q.getResultList();
+		for (Object[] row : ret){
+			YszkKxxzEntity entity = new YszkKxxzEntity();
+			entity.setNf((Integer) row[0]);
+			entity.setYf((Integer) row[1]);
+			entity.setYq0z1y((Double) row[2]);
+			entity.setYq1z3y((Double) row[3]);
+			entity.setYq3z6y((Double) row[4]);
+			entity.setYq6z12y((Double) row[5]);
+			entity.setYq1nys((Double) row[6]);
+			entity.setWdq((Double) row[7]);
+			entity.setWdqzbj((Double) row[8]);
+			rets.add(entity);
+		}
+		return rets;
 	}
 }

@@ -14,6 +14,7 @@ public class CompanyManager {
 	Organization BMDB;
 	Organization virtualYSZK;
 	Organization virtualJYZB;
+	Organization virtualGB;
  
 	private final static Company emptyCompany = new Company(-1, CompanyType.UNKNOWN);
 	public static Company getEmptyCompany(){
@@ -26,10 +27,15 @@ public class CompanyManager {
 		BMDB = org;
 		virtualYSZK = new VirtualYSZKOrganization(BMDB);
 		virtualJYZB = new VirtualJYZBOrganization((VirtualYSZKOrganization) virtualYSZK, BMDB);
+		virtualGB = new VirtualGBOrganization(BMDB);
 	}
 	
 	public Organization getVirtualJYZBOrganization() {
 		return virtualJYZB;
+	}
+	
+	public Organization getVirtualGBOrg() {
+		return virtualGB;
 	}
 	
 	public Organization get15Org() {

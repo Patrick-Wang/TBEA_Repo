@@ -51,6 +51,12 @@ var wgcpqk;
             ShowView.prototype.getId = function () {
                 return plugin.yclbfqk;
             };
+            ShowView.prototype.isSupported = function (compType) {
+                if (compType == Util.CompanyType.SBDCYJT) {
+                    return false;
+                }
+                return true;
+            };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../yclbfqk/export.do?" + Util.Ajax.toUrlParam({
                     date: date,

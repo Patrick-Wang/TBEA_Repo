@@ -7,8 +7,6 @@ var __extends = (this && this.__extends) || function (d, b) {
 ///<reference path="jqgrid/jqassist.ts"/>
 var Util;
 (function (Util) {
-    var TextAlign = JQTable.TextAlign;
-    var Node = JQTable.Node;
     (function (ErrorCode) {
         ErrorCode[ErrorCode["OK"] = 0] = "OK";
         ErrorCode[ErrorCode["DATABASE_EXCEPTION"] = 1] = "DATABASE_EXCEPTION";
@@ -64,7 +62,7 @@ var Util;
         var node = null;
         var readOnly = header.readOnly == "true";
         if ("date" == header.type) {
-            node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "text", options: {
+            node = JQTable.Node.create({ name: header.name, align: JQTable.TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "text", options: {
                     dataInit: function (element) {
                         $(element).datepicker({
                             dateFormat: 'yy-mm-dd',
@@ -75,16 +73,16 @@ var Util;
                 } });
         }
         else if ("text" == header.type) {
-            node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "text" });
+            node = JQTable.Node.create({ name: header.name, align: JQTable.TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "text" });
         }
         else if ("hidden" == header.type) {
-            node = null; //Node.create({name : header.name, align : TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
+            node = null; //JQTable.Node.create({name : header.name, align : JQTable.TextAlign.Center, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
         }
         else if ("select" == header.type) {
-            node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "select", options: { value: header.options } });
+            node = JQTable.Node.create({ name: header.name, align: JQTable.TextAlign.Center, isReadOnly: readOnly, isNumber: false, editType: "select", options: { value: header.options } });
         }
         else {
-            node = Node.create({ name: header.name, align: TextAlign.Center, isReadOnly: readOnly });
+            node = JQTable.Node.create({ name: header.name, align: JQTable.TextAlign.Center, isReadOnly: readOnly });
         }
         if (header.sub != undefined) {
             for (var i = 0; i < header.sub.length; ++i) {

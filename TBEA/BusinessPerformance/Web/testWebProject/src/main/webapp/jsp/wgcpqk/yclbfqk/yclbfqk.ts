@@ -47,6 +47,12 @@ module wgcpqk {
                 return plugin.yclbfqk;
             }
 
+            isSupported(compType:Util.CompanyType):boolean {
+                if (compType == Util.CompanyType.SBDCYJT) {
+                    return false;
+                }
+                return true;
+            }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
                 return "../yclbfqk/export.do?" + Util.Ajax.toUrlParam({

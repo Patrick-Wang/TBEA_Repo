@@ -14,4 +14,6 @@ public interface YqyszcsysDao extends AbstractReadWriteDao<YqyszcsysEntity> {
 
 	List<YqyszcsysEntity> getByDate(Date ds, Date de, Company company);
 	YqyszcsysEntity getByDate(Date d, Company company);
+	List<YqyszcsysEntity> getSumByDate(Date date, Date d,
+			List<Company> subCompanies);
 }

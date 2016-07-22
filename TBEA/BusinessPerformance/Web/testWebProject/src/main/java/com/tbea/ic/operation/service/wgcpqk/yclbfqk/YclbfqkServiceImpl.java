@@ -17,10 +17,14 @@ import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
 import com.tbea.ic.operation.model.dao.wgcpqk.yclbfqk.YclbfqkDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.yclbfqk.YclbfqkDaoImpl;
 import com.tbea.ic.operation.model.dao.wgcpqk.yclbfqk.dwxxrefclmc.DwxxRefClmcDao;
 import com.tbea.ic.operation.model.entity.wgcpqk.YclbfqkEntity;
+import com.tbea.ic.operation.model.entity.wgcpqk.wgcpylnlspcs.WgcpylnlspcsEntity;
 import com.tbea.ic.operation.model.entity.wgcpqk.yclbfqk.DwxxRefClmcEntity;
 
 @Service(YclbfqkServiceImpl.NAME)
@@ -31,7 +35,9 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 
 	@Autowired
 	DwxxRefClmcDao dwrefclDao;
-
+	
+	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
+	CompanyManager companyManager;
 
 	public final static String NAME = "YclbfqkServiceImpl";
 
@@ -41,7 +47,18 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 		EasyCalendar ecCur = new EasyCalendar(d);
 		EasyCalendar ec = new EasyCalendar(d);
 		ec.addYear(-1);
-		List<DwxxRefClmcEntity> clmcs = dwrefclDao.getByCompany(company);
+		
+		List<DwxxRefClmcEntity> clmcs = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			clmcs = dwrefclDao.getByCompany(company);
+		}else{
+			if (company.getType() == CompanyType.BYQCY){
+				clmcs = dwrefclDao.getByCompany(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
+			}else{
+				clmcs = dwrefclDao.getByCompany(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
+			}			
+		}
+
 		for (int i = 0; i < clmcs.size(); ++i) {
 			List<String> list = new ArrayList<String>();
 			Util.resize(list, 17);
@@ -50,8 +67,14 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 		}
 
 		for (int i = 0; i < 13; ++i) {
-			List<YclbfqkEntity> entities = yclbfqkDao.getByDate(
-					ec.getDate(), company);
+
+			List<YclbfqkEntity> entities = null;
+			if (companyManager.getBMDBOrganization().owns(company)){
+				entities = yclbfqkDao.getByDate(ec.getDate(), company);
+			}else{
+				entities = yclbfqkDao.getSumByDate(ec.getDate(), company.getSubCompanies());		
+			}
+			
 			for (YclbfqkEntity entity : entities) {
 				List<String> list = null;
 				for (int j = 0; j < clmcs.size(); ++j) {

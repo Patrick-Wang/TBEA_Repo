@@ -57,6 +57,7 @@
 	<script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicShow.js"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/templates/singleDateReport/show.js"></script>
     <title>${title}</title>
 
