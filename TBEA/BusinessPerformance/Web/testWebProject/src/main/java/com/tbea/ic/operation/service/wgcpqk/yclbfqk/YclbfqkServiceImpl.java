@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -89,8 +90,10 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 							&& ec.getYear() == ecCur.getYear()) {
 						list.set(1, "" + entity.getLyl());
 						list.set(2, "" + entity.getFl());
-						list.set(3,	"" + Util.division(entity.getFl(),
-												entity.getLyl()));
+						list.set(3,	"" + 
+								MathUtil.division(
+										MathUtil.minus(entity.getLyl(), entity.getFl()), 
+										entity.getLyl()));
 					}
 					list.set(i + 4,
 							"" + Util.division(entity.getFl(), entity.getLyl()));
