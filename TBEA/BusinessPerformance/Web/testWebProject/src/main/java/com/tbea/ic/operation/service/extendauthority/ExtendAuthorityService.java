@@ -20,4 +20,6 @@ public interface ExtendAuthorityService {
 
 	List<Company> getAuthedCompaniesForByqXl(Account account, AuthType authType);
 
+	Boolean hasAuthority(Account account, Integer authType);
+
 }

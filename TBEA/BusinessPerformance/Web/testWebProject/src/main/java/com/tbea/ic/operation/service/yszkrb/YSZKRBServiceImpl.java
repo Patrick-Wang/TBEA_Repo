@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.poi.util.ArrayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,9 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.model.dao.ysdaily.YSDAILYDao;
+import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.tbea.ic.operation.service.util.pipe.core.BasicPipe;
 import com.tbea.ic.operation.service.util.pipe.core.CompositePipe;
 import com.tbea.ic.operation.service.yszkrb.pipe.configurator.ConfiguratorFactory;
 
@@ -31,6 +35,9 @@ public class YSZKRBServiceImpl implements YSZKRBService{
 	ConfiguratorFactory configFactory;
 	
 	CompanyManager companyManager;
+	
+	@Autowired
+	ExtendAuthorityService extAuthServ;
 	
 	private static Map<Company, List<Company>> computeMap = new HashMap<Company, List<Company>>();
 
@@ -112,33 +119,50 @@ public class YSZKRBServiceImpl implements YSZKRBService{
 	}
 	
 	@Override
-	public List<String[]> getYszkData(Date date) {
-		CompositePipe pipe = new CompositePipe(GSZB.YSZK_DAILY_REPORT.value(), date, configFactory.getYszkrbCompositeConfigurator(computeMap));
-		Organization org = companyManager.getBMDBOrganization();
-		
-
-		
-		List<Company> companies = new ArrayList<Company>();
-		companies.add(org.getCompany(CompanyType.SBGS));
-		companies.add(org.getCompany(CompanyType.HBGS));
-		companies.add(org.getCompany(CompanyType.XBC));
-		companies.add(org.getCompany(CompanyType.TBGS));
-		companies.add(org.getCompany(CompanyType.LLGS));
-		companies.add(org.getCompany(CompanyType.XLC));
-		companies.add(org.getCompany(CompanyType.DLGS));
-		
-		
-		pipe.addCompany(companies, configFactory.getYszkrbConfigurator())
-			.addCompany(org.getCompany(CompanyType.SBDCYJT), null)
-			.addCompany(computeMap.get(org.getCompany(CompanyType.XNYSYB)), configFactory.getYszkrbConfigurator())
-			.addCompany(org.getCompany(CompanyType.XNYSYB), null)
-			.addCompany(computeMap.get(org.getCompany(CompanyType.NYSYB)), configFactory.getYszkrbConfigurator())
-			.addCompany(org.getCompany(CompanyType.NYSYB), null)
-			.addCompany(computeMap.get(org.getCompany(CompanyType.GJGCGS_SYB)), configFactory.getYszkrbConfigurator())
-			.addCompany(org.getCompany(CompanyType.GJGCGS_SYB), null)			
-			.addCompany(org.getCompany(CompanyType.ZHGS), configFactory.getYszkrbConfigurator())
-			.addCompany(org.getCompany(CompanyType.GFGS), null);			
-		return makeResult(pipe.getData());
+	public List<String[]> getYszkData(Date date, Account account) {
+		if (extAuthServ.hasAuthority(account, 27)){
+			CompositePipe pipe = new CompositePipe(GSZB.YSZK_DAILY_REPORT.value(), date, configFactory.getYszkrbCompositeConfigurator(computeMap));
+			Organization org = companyManager.getBMDBOrganization();
+			
+			List<Company> companies = new ArrayList<Company>();
+			companies.add(org.getCompany(CompanyType.SBGS));
+			companies.add(org.getCompany(CompanyType.HBGS));
+			companies.add(org.getCompany(CompanyType.XBC));
+			companies.add(org.getCompany(CompanyType.TBGS));
+			companies.add(org.getCompany(CompanyType.LLGS));
+			companies.add(org.getCompany(CompanyType.XLC));
+			companies.add(org.getCompany(CompanyType.DLGS));
+			
+			
+			pipe.addCompany(companies, configFactory.getYszkrbConfigurator())
+				.addCompany(org.getCompany(CompanyType.SBDCYJT), null)
+				.addCompany(computeMap.get(org.getCompany(CompanyType.XNYSYB)), configFactory.getYszkrbConfigurator())
+				.addCompany(org.getCompany(CompanyType.XNYSYB), null)
+				.addCompany(computeMap.get(org.getCompany(CompanyType.NYSYB)), configFactory.getYszkrbConfigurator())
+				.addCompany(org.getCompany(CompanyType.NYSYB), null)
+				.addCompany(computeMap.get(org.getCompany(CompanyType.GJGCGS_SYB)), configFactory.getYszkrbConfigurator())
+				.addCompany(org.getCompany(CompanyType.GJGCGS_SYB), null)			
+				.addCompany(org.getCompany(CompanyType.ZHGS), configFactory.getYszkrbConfigurator())
+				.addCompany(org.getCompany(CompanyType.GFGS), null);			
+			return makeResult(pipe.getData());
+		}else{			
+			if (extAuthServ.hasAuthority(account, 28)){
+				Company comp = extAuthServ.getAuthedCompanies(account, 28).get(0);
+				BasicPipe pipe = new BasicPipe(GSZB.YSZK_DAILY_REPORT.value(), 
+						comp,
+						date,
+						configFactory.getYszkrbConfigurator());
+				List<String[]> ret = makeResult(pipe.getData());
+				String[] dest = new String[ret.get(0).length + 1];
+				dest[0] = comp.getName();
+				for (int i = 0; i < ret.get(0).length; ++i){
+					dest[i + 1] = ret.get(0)[i];
+				}
+				ret.set(0, dest);
+				return ret;
+			}
+		}
+		return null;
 	}
 
 

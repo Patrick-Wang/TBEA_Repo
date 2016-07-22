@@ -161,6 +161,11 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 	public Boolean hasAuthority(Account account, AuthType authType) {
 		return extendAuthDao.getAuthorityCount(account, authType.ordinal()) > 0;
 	}
+	
+	@Override
+	public Boolean hasAuthority(Account account, Integer authType) {
+		return extendAuthDao.getAuthorityCount(account, authType) > 0;
+	}
 
 	@Override
 	public void removeCache(Account account) {

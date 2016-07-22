@@ -137,7 +137,7 @@ module gdw_indexinput_summary {
                     //                    cellsubmit: 'clientArray',
                     //                    cellEdit: true,
                     height: '100%',
-                    width: 500,
+                    width: 650,
                     shrinkToFit: true,
                     autoScroll: true,
                     pager:'#pager',

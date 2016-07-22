@@ -30,6 +30,7 @@ import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.service.yszkrb.YSZKRBService;
 
 
@@ -53,7 +54,7 @@ public class YSZKRBController {
 	public @ResponseBody byte[] getYszkUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date date = DateSelection.getDate(request);
-		List<String[]> data = yszkrbService.getYszkData(date);
+		List<String[]> data = yszkrbService.getYszkData(date, SessionManager.getAccount(request.getSession()));
 		return JSONArray.fromObject(data).toString().replace("null", "\"--\"").getBytes("utf-8");
 	}
 	
@@ -61,35 +62,69 @@ public class YSZKRBController {
 	public @ResponseBody byte[] getyszk_view_export(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Date d = DateSelection.getDate(request);
-		List<String[]> data = yszkrbService.getYszkData(d);
-		ExcelTemplate template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.YSDialy);
-		String fileAndSheetName = (1900 + d.getYear()) + "-" + (d.getMonth() + 1) +"-" + d.getDate() + "应收账款日报";
-//		CellFormatter formatter = template.createCellFormatter()
-//				.addType(3, CellFormatter.CellType.PERCENT)
-//				.addType(5, CellFormatter.CellType.PERCENT)
-//				.addType(8, CellFormatter.CellType.PERCENT)
-//				.addType(10, CellFormatter.CellType.PERCENT)
-//				.addType(12, CellFormatter.CellType.PERCENT)
-//				.addType(14, CellFormatter.CellType.PERCENT);
-
-		FormatterHandler formatterChain = this.getFormatterChainDataOnly(
-				new Integer[]{4, 5, 11}, new Integer[]{0});
+		List<String[]> data = yszkrbService.getYszkData(d, SessionManager.getAccount(request.getSession()));
+		if (data.size() > 1){
 		
-		HSSFWorkbook workbook = template.getWorkbook();
-		workbook.setSheetName(0, fileAndSheetName);
-		HSSFSheet sheet = workbook.getSheetAt(0);
-		
-		
-		for (int i = 0, ilen = data.size(); i < ilen; ++i) {
-			HSSFRow row = sheet.getRow(2 + i);
-			for (int j = 0, jlen = data.get(i).length; j < jlen; ++j) {
-				HSSFCell cell = row.createCell(j + 1);
-//				formatter.format(j, cell, data.get(i)[j]);
-				formatterChain.handle(null, j, template, cell, data.get(i)[j]);
-			}
-		}		
+			ExcelTemplate template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.YSDialy);
+			String fileAndSheetName = (1900 + d.getYear()) + "-" + (d.getMonth() + 1) +"-" + d.getDate() + "应收账款日报";
+	//		CellFormatter formatter = template.createCellFormatter()
+	//				.addType(3, CellFormatter.CellType.PERCENT)
+	//				.addType(5, CellFormatter.CellType.PERCENT)
+	//				.addType(8, CellFormatter.CellType.PERCENT)
+	//				.addType(10, CellFormatter.CellType.PERCENT)
+	//				.addType(12, CellFormatter.CellType.PERCENT)
+	//				.addType(14, CellFormatter.CellType.PERCENT);
+	
+			FormatterHandler formatterChain = this.getFormatterChainDataOnly(
+					new Integer[]{4, 5, 11}, new Integer[]{0});
 			
-		template.write(response, fileAndSheetName + ".xls");
+			HSSFWorkbook workbook = template.getWorkbook();
+			workbook.setSheetName(0, fileAndSheetName);
+			HSSFSheet sheet = workbook.getSheetAt(0);
+			
+			
+			for (int i = 0, ilen = data.size(); i < ilen; ++i) {
+				HSSFRow row = sheet.getRow(2 + i);
+				for (int j = 0, jlen = data.get(i).length; j < jlen; ++j) {
+					HSSFCell cell = row.createCell(j + 1);
+	//				formatter.format(j, cell, data.get(i)[j]);
+					formatterChain.handle(null, j, template, cell, data.get(i)[j]);
+				}
+			}		
+				
+			template.write(response, fileAndSheetName + ".xls");
+		}else{
+			ExcelTemplate template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.YSDialyJydw);
+			String fileAndSheetName = (1900 + d.getYear()) + "-" + (d.getMonth() + 1) +"-" + d.getDate() + "应收账款日报";
+	//		CellFormatter formatter = template.createCellFormatter()
+	//				.addType(3, CellFormatter.CellType.PERCENT)
+	//				.addType(5, CellFormatter.CellType.PERCENT)
+	//				.addType(8, CellFormatter.CellType.PERCENT)
+	//				.addType(10, CellFormatter.CellType.PERCENT)
+	//				.addType(12, CellFormatter.CellType.PERCENT)
+	//				.addType(14, CellFormatter.CellType.PERCENT);
+	
+			FormatterHandler formatterChain = this.getFormatterChainDataOnly(
+					new Integer[]{5, 6, 12}, new Integer[]{1});
+			
+			HSSFWorkbook workbook = template.getWorkbook();
+			workbook.setSheetName(0, fileAndSheetName);
+			HSSFSheet sheet = workbook.getSheetAt(0);
+			
+			
+			for (int i = 0, ilen = data.size(); i < ilen; ++i) {
+				HSSFRow row = sheet.getRow(2 + i);
+				HSSFCell cell = row.getCell(0);
+				cell.setCellValue(data.get(i)[0]);
+				for (int j = 1, jlen = data.get(i).length; j < jlen; ++j) {
+					cell = row.createCell(j + 1);
+	//				formatter.format(j, cell, data.get(i)[j]);
+					formatterChain.handle(null, j, template, cell, data.get(i)[j]);
+				}
+			}		
+				
+			template.write(response, fileAndSheetName + ".xls");
+		}
 		return "".getBytes("utf-8");
 	}
 	

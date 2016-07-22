@@ -13,7 +13,8 @@
 				<option value="2" selected="selected">20号指标</option>
 				<option value="3" >28号指标</option>
 				<option value="4" >实际指标</option>
-
+				<option value="0" >年度计划指标</option>
+				<option value="1" >月度计划指标</option>
 		</select>
 
 

@@ -107,28 +107,35 @@ module yszkrb_view {
             var name = this.mTableId + "_jqgrid_1234";
             var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
             var outputData: string[][] = [];
-            Util.formatData(outputData, this.mData, this.initPercentList(), [], 0);
-            var data = [
-                ["沈变公司"],
-                ["衡变公司"],
-                ["新变厂"],
-                ["其中：天变公司"],
-                ["鲁缆公司"],
-                ["新缆厂"],
-                ["德缆公司"],
-                ["输变电小计"],
-                ["新能源"],
-                ["新特能源公司"],
-                ["新能源小计"],
-                ["天池能源"],
-                ["能动公司"],
-                ["能源小计"],
-                ["进出口公司"],
-                ["国际工程公司"],
-                ["工程小计"],
-                ["众和公司"],
-                ["集团合计"]
-            ];
+            var data = [[]];
+            if (this.mData.length == 1){
+                Util.formatData(outputData, this.mData, this.initPercentList(), [], 1);
+            }else{
+                Util.formatData(outputData, this.mData, this.initPercentList(), [], 0);
+                data = [
+                    ["沈变公司"],
+                    ["衡变公司"],
+                    ["新变厂"],
+                    ["其中：天变公司"],
+                    ["鲁缆公司"],
+                    ["新缆厂"],
+                    ["德缆公司"],
+                    ["输变电小计"],
+                    ["新能源"],
+                    ["新特能源公司"],
+                    ["新能源小计"],
+                    ["天池能源"],
+                    ["能动公司"],
+                    ["能源小计"],
+                    ["进出口公司"],
+                    ["国际工程公司"],
+                    ["工程小计"],
+                    ["众和公司"],
+                    ["集团合计"]
+                ];
+            }
+
+
 
             var row = [];
             for (var i = 0; i < outputData.length; ++i) {
