@@ -1,3 +1,5 @@
+/// <reference path="util.ts" />
+/// <reference path="unitedSelector.ts" />
 var Util;
 (function (Util) {
     String.prototype["getWidth"] = function (fontSize) {
@@ -37,12 +39,12 @@ var Util;
             var firstCompNode;
             virtualRoot.appendAll(Util.DataNode.valueOfAll(comps));
             virtualRoot.accept({ visit: function (node) {
-                if (node != virtualRoot && node.getData().id + "" == firstComp + "") {
-                    firstCompNode = node;
-                    return true;
-                }
-                return false;
-            } });
+                    if (node != virtualRoot && node.getData().id + "" == firstComp + "") {
+                        firstCompNode = node;
+                        return true;
+                    }
+                    return false;
+                } });
             if (Util.isExist(firstCompNode)) {
                 var path = new std.vector();
                 var parent = firstCompNode.getParent();
@@ -105,6 +107,7 @@ var Util;
                     noneSelectedText: this.mOpt.noneSelectedText,
                     selectedText: this.mOpt.selectedText,
                     height: '100%',
+                    // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
             }
@@ -114,6 +117,7 @@ var Util;
                     header: multi,
                     minWidth: minWidth,
                     height: '100%',
+                    // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
             }

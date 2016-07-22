@@ -1,3 +1,10 @@
+/// <reference path="../jqgrid/jqassist.ts" />
+/// <reference path="../util.ts" />
+/// <reference path="../dateSelector.ts" />
+/// <reference path="yszkgbdef.ts" />
+/// <reference path="../unitedSelector.ts"/>
+///<reference path="../messageBox.ts"/>
+///<reference path="../companySelector.ts"/>
 var yszkgb;
 (function (yszkgb) {
     var View = (function () {
@@ -27,6 +34,7 @@ var yszkgb;
             }
             return this.plugin(nod);
         };
+        //不可以起名叫做export 在IE中有冲突
         View.prototype.exportExcel = function (elemId) {
             var url = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
             $("#" + elemId)[0].action = url;
@@ -72,7 +80,7 @@ var yszkgb;
             this.plugin(node).update(dt, this.mCurrentComp);
         };
         return View;
-    }());
+    })();
     yszkgb.View = View;
 })(yszkgb || (yszkgb = {}));
 var view = new yszkgb.View();

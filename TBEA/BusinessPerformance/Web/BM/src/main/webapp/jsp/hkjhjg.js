@@ -126,7 +126,7 @@ var hkjhjg;
                     orient: "vertical"
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 series: [

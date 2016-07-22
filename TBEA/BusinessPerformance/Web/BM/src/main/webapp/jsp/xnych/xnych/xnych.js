@@ -31,7 +31,7 @@ var xnych;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -99,6 +99,6 @@ var xnych;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(framework.basic.ShowPluginView));
+        })(framework.basic.ShowPluginView);
     })(xnych = xnych_1.xnych || (xnych_1.xnych = {}));
 })(xnych || (xnych = {}));

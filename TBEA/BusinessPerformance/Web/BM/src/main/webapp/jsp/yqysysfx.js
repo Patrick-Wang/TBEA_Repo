@@ -85,7 +85,7 @@ var yqysysfx;
                     data: ['总金额', '其中法律清收']
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: true,
                 xAxis: [
@@ -105,7 +105,7 @@ var yqysysfx;
                 ],
                 yAxis: [
                     {
-                        type: 'value'
+                        type: 'value',
                     }
                 ],
                 series: [

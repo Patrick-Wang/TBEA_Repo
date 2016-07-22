@@ -1,3 +1,6 @@
+/// <reference path="../util.ts" />
+/// <reference path="../dateSelector.ts" />
+/// <reference path="../../js/jquery/jquery.d.ts" />
 var yszkgb;
 (function (yszkgb) {
     var BasePluginView = (function () {
@@ -24,7 +27,7 @@ var yszkgb;
             return this.pluginGetExportUrl(st, cpType);
         };
         return BasePluginView;
-    }());
+    })();
     yszkgb.BasePluginView = BasePluginView;
     var BaseEntryPluginView = (function () {
         function BaseEntryPluginView() {
@@ -62,6 +65,6 @@ var yszkgb;
             this.pluginSubmit(dt, cpType);
         };
         return BaseEntryPluginView;
-    }());
+    })();
     yszkgb.BaseEntryPluginView = BaseEntryPluginView;
 })(yszkgb || (yszkgb = {}));

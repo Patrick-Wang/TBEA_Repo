@@ -80,7 +80,7 @@ var tbbzjqk;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -124,7 +124,7 @@ var tbbzjqk;
                 cellEdit: true,
                 height: '100%',
                 shrinkToFit: true,
-                width: 12 * 90
+                width: 12 * 90,
             }));
         };
         return View;

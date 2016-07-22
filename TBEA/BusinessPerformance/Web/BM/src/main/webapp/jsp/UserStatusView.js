@@ -68,7 +68,7 @@ var userStatus;
                 width: 1000,
                 height: '100%',
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.instance = new View();

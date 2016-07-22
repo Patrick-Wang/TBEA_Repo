@@ -1,3 +1,7 @@
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../yszkgbdef.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26,7 +30,7 @@ var yszkgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var YszkyjtztjqsView = (function (_super) {
             __extends(YszkyjtztjqsView, _super);
             function YszkyjtztjqsView() {
@@ -99,7 +103,7 @@ var yszkgb;
                 }));
             };
             return YszkyjtztjqsView;
-        }(yszkgb.BasePluginView));
+        })(yszkgb.BasePluginView);
         yszkyjtztjqs.pluginView = YszkyjtztjqsView.newInstance();
     })(yszkyjtztjqs = yszkgb.yszkyjtztjqs || (yszkgb.yszkyjtztjqs = {}));
 })(yszkgb || (yszkgb = {}));

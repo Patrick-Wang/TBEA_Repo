@@ -115,7 +115,7 @@ var cqk;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -180,7 +180,7 @@ var cqk;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -232,7 +232,7 @@ var cqk;
                     orient: "vertical"
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 series: [

@@ -212,7 +212,7 @@ var xl_fkfstj;
                     orient: "vertical"
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 series: [
@@ -257,7 +257,7 @@ var xl_fkfstj;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: shrink,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.updateFdwTable = function (parentName, childName, tableAssist, rawData) {

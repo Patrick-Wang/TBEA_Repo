@@ -1,3 +1,8 @@
+/// <reference path="../jqgrid/jqassist.ts" />
+/// <reference path="../util.ts" />
+/// <reference path="../dateSelector.ts" />
+/// <reference path="company_selector.ts" />
+/// <reference path="bglx_selector.ts" />
 var jygk_zzy_cc_kglyddcbqk;
 (function (jygk_zzy_cc_kglyddcbqk) {
     var JQGridAssistantFactory = (function () {
@@ -12,6 +17,7 @@ var jygk_zzy_cc_kglyddcbqk;
                 new JQTable.Node("所有可供履约订单总量", "yy")
                     .append(new JQTable.Node("产值", "kglyddzcz"))
                     .append(new JQTable.Node("产量", "kglyddzcl")),
+                //                new JQTable.Node("可供履约订单（不含税）", "yd")
                 new JQTable.Node("可供履约订单（不含税）" + date.year + "年可供履约订单总量", "yd0")
                     .append(new JQTable.Node("产值", "ndkglyddzcz"))
                     .append(new JQTable.Node("产量", "ndkglyddzcl")),
@@ -48,7 +54,7 @@ var jygk_zzy_cc_kglyddcbqk;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("readviewbyq.do", false);
@@ -70,6 +76,7 @@ var jygk_zzy_cc_kglyddcbqk;
                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
                 this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy, '02');
                 this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx, opt.isByq, opt.isXl, opt.isSbdcy);
+                //this.updateTextandTitle(this.mDateSelector.getDate());
                 if (opt.comps.length == 1) {
                     this.mCompanySelector.hide();
                 }
@@ -126,11 +133,16 @@ var jygk_zzy_cc_kglyddcbqk;
                 }
             }
             $("#" + name).jqGrid(this.mTableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: this.mTableAssist.getData(this.mTableData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: this.mTableData.length > 23 ? 500 : '100%',
                 width: this.mTableData[0].length * 100,
                 shrinkToFit: true,
@@ -139,6 +151,6 @@ var jygk_zzy_cc_kglyddcbqk;
             }));
         };
         return View;
-    }());
+    })();
     jygk_zzy_cc_kglyddcbqk.View = View;
 })(jygk_zzy_cc_kglyddcbqk || (jygk_zzy_cc_kglyddcbqk = {}));
