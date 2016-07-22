@@ -119,7 +119,7 @@ public class ReportServlet {
 			Set<String> keys =  new TreeSet<String>();
 			keys.addAll(folderMap.keySet());
 			for (String path : keys){
-				writer.write("<span>" + path + "</span></br>");
+				writer.write("<span style='color:red;font-weight:bold'>" + path.substring(path.indexOf("components\\") + "components\\".length()) + "</span></br>");
 				for (String cid: folderMap.get(path)){
 					writer.write("<a href='" + cid + ".do'  target='_blank'>" + cid + ".do</a></br>");
 				}

@@ -511,7 +511,7 @@
 		</table>
 	</service>
 
-	<service id="servFmtterSeasonStart">
+	<controller id="clrFmtterSeasonStart">
 		<formatter id="fmtData" export="true">
 			<EmptyFormatter>
 				<DefaultMatcher cols="0,1" />
@@ -522,9 +522,9 @@
 			<NumberFormatter reservedCount="1">
 			</NumberFormatter>
 		</formatter>
-	</service>
+	</controller>
 
-	<service id="servFmtterSeasonMid">
+	<controller id="clrFmtterSeasonMid">
 		<formatter id="fmtData" export="true">
 			<EmptyFormatter>
 				<DefaultMatcher cols="0,1" />
@@ -535,8 +535,8 @@
 			<NumberFormatter reservedCount="1">
 			</NumberFormatter>
 		</formatter>
-	</service>
-	<service id="servFmtterSeasonEnd">
+	</controller>
+	<controller id="clrFmtterSeasonEnd">
 		<formatter id="fmtData" export="true">
 			<EmptyFormatter>
 				<DefaultMatcher cols="0,1" />
@@ -547,9 +547,9 @@
 			<NumberFormatter reservedCount="1">
 			</NumberFormatter>
 		</formatter>
-	</service>
+	</controller>
 	
-	<service id="servUpdateInternal">
+	<controller id="servUpdateInternal">
 		<context key="cal" value="${request.date.asCalendar}" />
 		<context key="isSeasonStart" value="${cal.seasonStart.month == cal.month}" />
 		<context key="isSeasonMid" value="${cal.seasonMid.month == cal.month}" />
@@ -557,20 +557,20 @@
 		
 		<if test="${isSeasonStart}">
 			<callservice id="servZhgsfcySeasonStart" />
-			<callservice id="servFmtterSeasonStart" />
+			<callcontroller id="clrFmtterSeasonStart" />
 		</if>
 		<if test="${isSeasonMid}">
 			<callservice id="servZhgsfcySeasonMid" />
-			<callservice id="servFmtterSeasonMid" />
+			<callcontroller id="clrFmtterSeasonMid" />
 		</if>
 		<if test="${isSeasonEnd}">
 			<callservice id="servZhgsfcySeasonEnd" />
-			<callservice id="servFmtterSeasonEnd" />
+			<callcontroller id="clrFmtterSeasonEnd" />
 		</if>
-	</service>
+	</controller>
 	
 	<controller id="zhgsfcyUpdate">
-		<callservice id="servUpdateInternal" inline="true"/>
+		<callcontroller id="servUpdateInternal" inline="true"/>
 
 		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
 			<formatter ref="fmtData" />
@@ -782,7 +782,7 @@
 
 	<controller id="zhgsfcyExport">
 
-		<callservice id="servUpdateInternal" inline="true"/>
+		<callcontroller id="servUpdateInternal" inline="true"/>
 
 		<ExcelTemplate id="excelTemplate" sheet="众和分产业${zbname}汇报" />
 		<if test="${isSeasonStart}">
