@@ -7,7 +7,9 @@ from flask_sqlalchemy import SQLAlchemy
 from config import load_config
 
 bootstrap = Bootstrap()
-db = SQLAlchemy()
+db_elink = SQLAlchemy()
+db_hr = SQLAlchemy()
+db_base = SQLAlchemy()
 
 
 def create_app():
@@ -16,7 +18,10 @@ def create_app():
 
     # init ext of Flask
     bootstrap.init_app(app)
-    db.init_app(app)
+
+    db_elink.init_app(app)
+    db_hr.init_app(app)
+    db_base.init_app(app)
 
     # Load config
     config = load_config()

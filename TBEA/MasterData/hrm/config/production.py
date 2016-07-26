@@ -10,10 +10,10 @@ from .default import DefaultConfig
 
 class ProductionConfig(DefaultConfig):
     # sqlalchemy config
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:root@localhost/hrm'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@localhost/hrm'
     SQLALCHEMY_BINDS = {
-        'eLink': 'mysql://root:root@localhost/elink',
-        'hr': 'mysql://root:root@localhost/hr'
+        'elink': 'mysql+pymysql://root:root@localhost/elink',
+        'hr': 'mysql+pymysql://root:root@localhost/hr'
     }
 
 
