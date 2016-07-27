@@ -1,3 +1,4 @@
+/// <reference path="util.ts" />
 var Util;
 (function (Util) {
     function addMonth(d, count) {
@@ -106,7 +107,10 @@ var Util;
             var _this = this;
             var yearSel = $("#" + this.mCtrlId + "year");
             if (yearSel.length == 0) {
-                $("#" + this.mCtrlId + " tr").append('<td>' + '<select id="' + this.mCtrlId + 'year"' + 'style="width: 100px;"></select>' + '</td><td><div style="width:5px;"></div></td>');
+                $("#" + this.mCtrlId + " tr").append('<td>' +
+                    '<select id="' + this.mCtrlId + 'year"' +
+                    'style="width: 100px;"></select>' +
+                    '</td><td><div style="width:5px;"></div></td>');
                 yearSel = $("#" + this.mCtrlId + "year");
             }
             else {
@@ -131,6 +135,7 @@ var Util;
                 header: false,
                 minWidth: 80,
                 height: '100%',
+                // noneSelectedText: "请选择月份",
                 selectedList: 1
             });
         };
@@ -139,7 +144,10 @@ var Util;
             if (Util.isExist(this.mEndDate.month)) {
                 var monthSel = $("#" + this.mCtrlId + "month");
                 if (0 == monthSel.length) {
-                    $("#" + this.mCtrlId + " tr").append('<td>' + '<select id="' + this.mCtrlId + 'month"' + 'style="width: 100px;"></select>' + '</td><td><div style="width:5px;"></div></td>');
+                    $("#" + this.mCtrlId + " tr").append('<td>' +
+                        '<select id="' + this.mCtrlId + 'month"' +
+                        'style="width: 100px;"></select>' +
+                        '</td><td><div style="width:5px;"></div></td>');
                     monthSel = $("#" + this.mCtrlId + "month");
                 }
                 else {
@@ -198,7 +206,10 @@ var Util;
             if (Util.isExist(this.mEndDate.day)) {
                 var daySel = $("#" + this.mCtrlId + "day");
                 if (0 == daySel.length) {
-                    $("#" + this.mCtrlId + " tr").append('<td>' + '<select id="' + this.mCtrlId + 'day"' + 'style="width: 100px;"></select>' + '</td><td><div style="width:5px;"></div></td>');
+                    $("#" + this.mCtrlId + " tr").append('<td>' +
+                        '<select id="' + this.mCtrlId + 'day"' +
+                        'style="width: 100px;"></select>' +
+                        '</td><td><div style="width:5px;"></div></td>');
                     daySel = $("#" + this.mCtrlId + "day");
                     daySel.multiselect({
                         multiple: false,

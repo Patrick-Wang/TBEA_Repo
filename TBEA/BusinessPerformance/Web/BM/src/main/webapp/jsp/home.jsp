@@ -41,8 +41,14 @@ paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
 					<div class="func_span">经营指标完成情况</div>
 				</div>
 				<div class="children">
-					<a href="${pageContext.request.contextPath}/yszkrb/yszk_mobile.do"><img
+					<a href="${pageContext.request.contextPath}/futures/show.do"><img
 						src="${pageContext.request.contextPath}/img/func2.png"
+						name="func_img2" id="func_img2"></a>
+					<div class="func_span">期货套保</div>
+				</div>
+				<div class="children">
+					<a href="${pageContext.request.contextPath}/yszkrb/yszk_mobile.do"><img
+						src="${pageContext.request.contextPath}/img/func3.png"
 						name="func_img2" id="func_img2"></a>
 					<div class="func_span">应收账款日报</div>
 				</div>

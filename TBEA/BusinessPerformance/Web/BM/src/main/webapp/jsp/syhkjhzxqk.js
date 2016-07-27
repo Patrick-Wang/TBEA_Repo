@@ -82,7 +82,7 @@ var syhkjhzxqk;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -163,7 +163,7 @@ var syhkjhzxqk;
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
-                width: '100%'
+                width: '100%',
             }));
         };
         return View;

@@ -30,7 +30,7 @@ var nyzbscqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
@@ -153,6 +153,6 @@ var nyzbscqk;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        }(framework.basic.EntryPluginView));
+        })(framework.basic.EntryPluginView);
     })(nyzbscjgEntry = nyzbscqk.nyzbscjgEntry || (nyzbscqk.nyzbscjgEntry = {}));
 })(nyzbscqk || (nyzbscqk = {}));

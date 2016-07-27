@@ -133,7 +133,7 @@ var byq_fkfstj;
                     orient: "vertical"
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 series: [
@@ -177,7 +177,7 @@ var byq_fkfstj;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;

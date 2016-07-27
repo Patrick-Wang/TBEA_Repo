@@ -85,7 +85,7 @@ var rhkqk;
                 height: '100%',
                 width: 1200,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;

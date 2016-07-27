@@ -132,7 +132,7 @@ var mkt_view_data;
             this.mSaveDataSet.post({
                 mktType: this.mDocType,
                 data: JSON.stringify(submitData),
-                editOper: this.mEditOper
+                editOper: this.mEditOper,
             }).then(function (data) {
                 if ("true" == data.result) {
                     Util.MessageBox.tip("提交 成功");

@@ -28,7 +28,7 @@ var chgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var CHNYCHView = (function (_super) {
             __extends(CHNYCHView, _super);
             function CHNYCHView() {
@@ -104,7 +104,7 @@ var chgb;
                 }));
             };
             return CHNYCHView;
-        }(chgb.BasePluginView));
+        })(chgb.BasePluginView);
         chnych.pluginView = CHNYCHView.newInstance();
     })(chnych = chgb.chnych || (chgb.chnych = {}));
 })(chgb || (chgb = {}));

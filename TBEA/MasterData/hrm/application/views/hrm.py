@@ -8,7 +8,7 @@
 from flask import Blueprint, render_template, redirect, url_for, session
 from ..forms.hrm import UserIdForm
 from ..models.employee import EmployeeBase, EmployeeELink, EmployeeHR
-from .. import db
+from .. import db_elink, db_hr, db_base
 
 blueprint = Blueprint('hrm_blueprint', __name__)
 
@@ -24,4 +24,25 @@ def hrm_id():
 
 @blueprint.route('/hrm/run')
 def hrm_run():
-    return render_template('<h1>haha</h1>')
+    user_elink = EmployeeELink('wangxin11', '220702198701061411', '王鑫')
+    user_hr = EmployeeHR('wangxin11', '220702198701061411', '王鑫')
+    user_hr2 = EmployeeHR('wangxin12', '220702198701061412', '王鑫1')
+    user_base = EmployeeBase('wangxin11', '220702198701061411', '王鑫')
+    user_base1 = EmployeeBase('wangxin12', '220702198701061412', '王鑫1')
+    user_base2 = EmployeeBase('wangxin13', '220702198701061413', '王鑫2')
+    user_base3 = EmployeeBase('wangxin14', '220702198701061414', '王鑫3')
+
+    db_base.session.add(user_base)
+    db_base.session.add(user_base1)
+    db_base.session.add(user_base2)
+    db_base.session.add(user_base3)
+    db_base.session.commit()
+
+    db_hr.session.add(user_hr)
+    db_hr.session.add(user_hr2)
+    db_hr.session.commit()
+
+    db_elink.session.add(user_elink)
+    db_elink.session.commit()
+
+    return '<h1>haha</h1>'

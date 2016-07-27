@@ -160,7 +160,7 @@ var cb_xl;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.format = function (row) {
@@ -205,7 +205,7 @@ var cb_xl;
                 height: height,
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;

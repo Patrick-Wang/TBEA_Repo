@@ -117,7 +117,7 @@ var yszkjgqkb;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [{
@@ -178,7 +178,7 @@ var yszkjgqkb;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -227,7 +227,7 @@ var yszkjgqkb;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -351,7 +351,7 @@ var yszkjgqkb;
                 height: '100%',
                 width: 1300,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;

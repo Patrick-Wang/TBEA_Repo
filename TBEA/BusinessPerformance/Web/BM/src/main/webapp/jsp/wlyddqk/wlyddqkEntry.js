@@ -119,7 +119,7 @@ var wlyddqk;
             this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
         };
         return EntryView;
-    }());
+    })();
     wlyddqk.EntryView = EntryView;
 })(wlyddqk || (wlyddqk = {}));
 var entryView = new wlyddqk.EntryView();

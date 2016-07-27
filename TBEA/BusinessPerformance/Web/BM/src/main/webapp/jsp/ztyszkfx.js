@@ -73,7 +73,7 @@ var ztyszkfx;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -150,7 +150,7 @@ var ztyszkfx;
                 height: '100%',
                 width: 1300,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;

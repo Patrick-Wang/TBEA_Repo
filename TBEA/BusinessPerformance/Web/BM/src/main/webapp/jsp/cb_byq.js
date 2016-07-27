@@ -156,7 +156,7 @@ var cb_byq;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.format = function (row) {
@@ -199,7 +199,7 @@ var cb_byq;
                 height: height,
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;

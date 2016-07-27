@@ -1,3 +1,9 @@
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../yszkgbdef.ts" />
+///<reference path="../../messageBox.ts"/>
+///<reference path="../yszkgbEntry.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -25,7 +31,7 @@ var yszkgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var YszkkxxzEntryView = (function (_super) {
             __extends(YszkkxxzEntryView, _super);
             function YszkkxxzEntryView() {
@@ -135,8 +141,11 @@ var yszkgb;
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    //autowidth : false,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
+                    //height: data.length > 25 ? 550 : '100%',
+                    // width: titles.length * 200,
                     rowNum: 150,
                     height: '100%',
                     width: 1200,
@@ -161,6 +170,7 @@ var yszkgb;
                     beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
                         lastsel = iRow;
                         lastcell = iCol;
+                        //                        console.log(iRow +', ' + iCol);
                         $("input").attr("disabled", true);
                     },
                     afterEditCell: function (rowid, cellname, v, iRow, iCol) {
@@ -184,14 +194,16 @@ var yszkgb;
                 $('html').bind('click', function (e) {
                     if (lastsel != "") {
                         if ($(e.target).closest("#" + name).length == 0) {
+                            //  $("#" + name).jqGrid('saveRow', lastsel);
                             $("#" + name).jqGrid("saveCell", lastsel, lastcell);
+                            //$("#" + name).resetSelection();
                             lastsel = "";
                         }
                     }
                 });
             };
             return YszkkxxzEntryView;
-        }(yszkgb.BaseEntryPluginView));
+        })(yszkgb.BaseEntryPluginView);
         yszkkxxzEntry.pluginView = YszkkxxzEntryView.newInstance();
     })(yszkkxxzEntry = yszkgb.yszkkxxzEntry || (yszkgb.yszkkxxzEntry = {}));
 })(yszkgb || (yszkgb = {}));

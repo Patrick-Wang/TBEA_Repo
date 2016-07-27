@@ -30,17 +30,20 @@ public class SessionCheckFilter implements Filter {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
 			HttpServletResponse httpResp = (HttpServletResponse) resp;
 			String url = httpRequest.getRequestURI();
-			
-			if (/*url.indexOf("/Login/ssoLogin.do")  < 0 
-					&& url.indexOf("/Login/ssoLogout.do")  < 0 
-					&& url.indexOf("/Login/validate.do") < 0
-					&& url.indexOf("/Login/login.do") < 0
-					&& url.indexOf("/Account/resetPassword.do") < 0
-					&& */url.indexOf("/ydzb/hzb_zbhz_update.do") < 0
+
+			if (/*
+				 * url.indexOf("/Login/ssoLogin.do") < 0 &&
+				 * url.indexOf("/Login/ssoLogout.do") < 0 &&
+				 * url.indexOf("/Login/validate.do") < 0 &&
+				 * url.indexOf("/Login/login.do") < 0 &&
+				 * url.indexOf("/Account/resetPassword.do") < 0 &&
+				 */url.indexOf("/ydzb/hzb_zbhz_update.do") < 0
 					&& url.indexOf("/ydzb/hzb_zbhz_mobile.do") < 0
 					&& url.indexOf("/yszkrb/yszk_mobile.do") < 0
 					&& url.indexOf("/yszkrb/yszk_update.do") < 0
-					&& url.indexOf("/Validate/validate.do") < 0) {
+					&& url.indexOf("/Validate/validate.do") < 0
+					&& url.indexOf("/futures/show.do") < 0
+					&& url.indexOf("/futures/update.do") < 0) {
 				HttpSession session = httpRequest.getSession(false);
 				if (!SessionManager.isOnline(session)) {
 					String requestType = httpRequest
@@ -52,7 +55,8 @@ public class SessionCheckFilter implements Filter {
 					if (requestType != null
 							&& requestType.equals("XMLHttpRequest")) {
 						PrintWriter pw = httpResp.getWriter();
-						pw.print(JSONObject.fromObject(new AjaxRedirect(redirUrl)));
+						pw.print(JSONObject.fromObject(new AjaxRedirect(
+								redirUrl)));
 						pw.close();
 
 					} else {

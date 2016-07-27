@@ -107,7 +107,7 @@ var blhtdqqkhzb;
                     data: [this.mYear - 1 + "年", this.mYear + "年"]
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [

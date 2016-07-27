@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="jdk" jdkName="Python 3.5.1 virtualenv at C:\Users\PtrickHome\Documents\GitHub\TBEA_Repo\TBEA\MasterData\hrm\venv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="flasky" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_FOLDERS">

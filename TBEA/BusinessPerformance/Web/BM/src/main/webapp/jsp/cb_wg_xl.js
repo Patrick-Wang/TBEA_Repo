@@ -149,7 +149,7 @@ var cb_wg_xl;
                 height: 250,
                 width: 1250,
                 shrinkToFit: false,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.updateJttbTable = function () {
@@ -209,7 +209,7 @@ var cb_wg_xl;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         View.prototype.updateGstbTable = function () {
@@ -313,7 +313,7 @@ var cb_wg_xl;
                 width: 1250,
                 rowNum: 200,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;

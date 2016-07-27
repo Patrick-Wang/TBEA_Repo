@@ -1,3 +1,8 @@
+/// <reference path="../jqgrid/jqassist.ts" />
+/// <reference path="../util.ts" />
+/// <reference path="../dateSelector.ts" />
+/// <reference path="company_selector.ts" />
+/// <reference path="bglx_selector.ts" />
 var jygk_zzy_ch_yclch;
 (function (jygk_zzy_ch_yclch) {
     var JQGridAssistantFactory = (function () {
@@ -14,7 +19,7 @@ var jygk_zzy_ch_yclch;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("readview.do", false);
@@ -36,6 +41,7 @@ var jygk_zzy_ch_yclch;
                 this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, this.mOpt.date, this.mOpt.dateId);
                 this.mCompanySelector = new Util.CompanySelectorZzy(opt.companyId, opt.comps, opt.isSbdcy, '01');
                 this.mBglxSelector = new Util.BglxViewSelector(opt.bglxId, opt.curbglx, opt.isByq, opt.isXl, opt.isSbdcy);
+                //this.updateTextandTitle(this.mDateSelector.getDate());
                 if (opt.comps.length == 1) {
                     this.mCompanySelector.hide();
                 }
@@ -92,11 +98,16 @@ var jygk_zzy_ch_yclch;
                 }
             }
             $("#" + name).jqGrid(this.mTableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: this.mTableAssist.getData(this.mTableData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: this.mTableData.length > 23 ? 500 : '100%',
                 width: this.mTableData[0].length * 100,
                 shrinkToFit: true,
@@ -105,6 +116,6 @@ var jygk_zzy_ch_yclch;
             }));
         };
         return View;
-    }());
+    })();
     jygk_zzy_ch_yclch.View = View;
 })(jygk_zzy_ch_yclch || (jygk_zzy_ch_yclch = {}));
