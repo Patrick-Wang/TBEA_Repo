@@ -14,24 +14,22 @@ public class ComponentStructureBuilder implements ComponentLoadedListener {
 
 	DataNode lastNode;
 	Stack<DataNode> runStack = new Stack<DataNode>();
-	
+	String basePath;
 	DataNode getFolderNode(String path){
-		int index = path.lastIndexOf("\\");
 		DataNode dataNode = new DataNode();
 		Data data = new Data();
 		dataNode.setData(data);
 		data.setId(1);
-		data.setValue(path.substring(index + 1));
+		data.setValue(path.substring(basePath.length()));
 		return dataNode;
 	}
 	
 	DataNode getFileNode(String path){
-		int index = path.lastIndexOf("\\");
 		DataNode dataNode = new DataNode();
 		Data data = new Data();
 		dataNode.setData(data);
 		data.setId(2);
-		data.setValue(path.substring(index + 1));
+		data.setValue(path.substring(basePath.length()));
 		return dataNode;
 	}
 	
@@ -77,6 +75,7 @@ public class ComponentStructureBuilder implements ComponentLoadedListener {
 			if (lastNode != null){
 				runStack.push(lastNode);
 			}else{
+				basePath = filePath.substring(0, filePath.lastIndexOf("\\"));
 				DataNode node = getFolderNode(filePath);
 				node.getData().setId(0);
 				runStack.push(node);

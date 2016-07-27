@@ -30,8 +30,16 @@ var report;
                 node = {
                     name: nodes[i].data.value,
                     open: false,
-                    exType: nodes[i].data.id
+                    exType: nodes[i].data.id,
+                    exPath: nodes[i].data.value
                 };
+                if (node.exType == 3 || node.exType == 4) {
+                    node.name = nodes[i].data.value;
+                }
+                else {
+                    var index = nodes[i].data.value.lastIndexOf("\\");
+                    node.name = nodes[i].data.value.substring(index + 1);
+                }
                 if (nodes[i].data.id != 0) {
                     node.rm = ['添  加', '删  除', '重命名'];
                     node.rmClick = function (n, rmi) {

@@ -24,7 +24,7 @@
 
 <script>
 	$(document).ready(function(){
-		framework.router.to(report.ConsoleID).send(report.Message.MSG_INIT, JSON.parse('${componentTree}'));
+		framework.router.to(report.ConsoleID).send(report.Message.MSG_INIT, JSON.parse('${componentTree}'.replace(/\\/g,"\\\\")));
 	});
 </script>
 <style>
