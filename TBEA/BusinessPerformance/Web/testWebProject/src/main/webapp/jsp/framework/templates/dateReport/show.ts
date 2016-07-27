@@ -3,11 +3,14 @@
 ///<reference path="../../basic/basicShow.ts"/>
 ///<reference path="../../../messageBox.ts"/>
 ///<reference path="../../../components/dateSelectorProxy.ts"/>
-module framework.templates.singleDateReport {
+///<reference path="../singleDateReport/show.ts"/>
+module framework.templates.DateReport {
     import router = framework.router;
     import Node = JQTable.Node;
     import BasicEndpoint = framework.basic.BasicEndpoint;
     import FrameEvent = framework.basic.FrameEvent;
+    import UnitedSelector = Util.UnitedSelector;
+    import IDataNode = Util.IDataNode;
 
 
     export interface ShowOption{
@@ -17,56 +20,30 @@ module framework.templates.singleDateReport {
         date:Util.Date;
         dtId:string;
         asSeason:boolean;
+        itemNodes:IDataNode[];
+        itemId:string;
     }
 
-    export class ShowView extends BasicEndpoint{
-        dateSelect : Util.DateSelectorProxy;
-        mAjaxUpdate:Util.Ajax;
-        mAjaxExport:Util.Ajax;
-        mTableAssist:JQTable.JQGridAssistant;
-        resp:Util.ServResp;
-        opt:ShowOption;
+    export class ShowView extends framework.templates.singleDateReport.ShowView{
+        unitedSelector : Util.UnitedSelector
         getId():number{
             return framework.basic.endpoint.FRAME_ID;
         }
 
         onInitialize(opt:ShowOption):void{
-            this.opt = opt;
-            this.mAjaxUpdate = new Util.Ajax(opt.updateUrl, false);
-            this.mAjaxExport = new Util.Ajax(opt.exportUrl, false);
-            if (opt.date == undefined){
-                $("#" + opt.dtId).hide();
-                this.update(<Util.Date>({}));
-            }else{
-                this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
-                    year:opt.date.year - 3,
-                    month:opt.date.month,
-                    day:opt.date.day
-                }, opt.date, opt.date, opt.asSeason);
-                this.update(this.dateSelect.getDate());
-            }
-
-
-
+            this.unitedSelector = new UnitedSelector(opt.itemNodes,opt.itemId);
+            $("#" + opt.itemId).multiselect({
+                multiple: false,
+                header: false,
+                minWidth: 100,
+                height　: '100%',///*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
+                // noneSelectedText: "请选择月份",
+                selectedList: 1
+            }).css("text-align:center");
+            super.onInitialize(opt);
         }
 
-        onEvent(e:framework.route.Event):any {
-            switch (e.id) {
-                case FrameEvent.FE_UPDATE:
-                    if (this.dateSelect == undefined){
-                        return this.update(<Util.Date>({}));
-                    }else{
-                        return this.update(this.dateSelect.getDate());
-                    }
-                case FrameEvent.FE_EXPORTEXCEL:
-                    if (this.dateSelect == undefined){
-                        return this.exportExcel(<Util.Date>({}), e.data);
-                    }else{
-                        return this.exportExcel(this.dateSelect.getDate(), e.data);
-                    }
-            }
-            return super.onEvent(e);
-        }
+
 
         getDate(date:Util.Date):string{
             return "" + (date.year + "-" + (date.month == undefined ? 1 :date.month) + "-" + (date.day == undefined ? 1 :date.day));
@@ -74,7 +51,8 @@ module framework.templates.singleDateReport {
 
         update (date:Util.Date){
             this.mAjaxUpdate.get({
-                    date: this.getDate(date)
+                    date: this.getDate(date),
+                    item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
                 })
                 .then((jsonData:any) => {
                     this.resp = jsonData;
@@ -115,7 +93,8 @@ module framework.templates.singleDateReport {
 
         exportExcel(date:Util.Date, id:string): void {
             $("#" + id)[0].action = this.opt.exportUrl + "?" +  Util.Ajax.toUrlParam({
-                date: this.getDate(date)
+                date: this.getDate(date),
+                item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
             });
             $("#" + id)[0].submit();
         }

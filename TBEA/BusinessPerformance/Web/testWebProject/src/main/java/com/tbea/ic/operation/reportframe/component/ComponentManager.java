@@ -3,10 +3,10 @@ package com.tbea.ic.operation.reportframe.component;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.reportframe.component.ComponentLoader.ComponentLoadedListener;
 import com.tbea.ic.operation.reportframe.component.controller.Controller;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
@@ -39,14 +39,16 @@ public class ComponentManager implements ComponentLoadedListener {
 	}
 	
 	ComponentLoader loader;
-	
+	ComponentStructureBuilder csb = new ComponentStructureBuilder();
 	Map<String, Config> serviceMap = Collections
 			.synchronizedMap(new HashMap<String, Config>());
 	Map<String, Config> controllerMap = Collections
 			.synchronizedMap(new HashMap<String, Config>());
 
 	public ComponentManager() {
- 		loader = new ComponentLoader(this);
+ 		loader = new ComponentLoader();
+ 		loader.addListener(this);
+ 		loader.addListener(csb);
 		loader.load();
 	}
 
@@ -96,7 +98,31 @@ public class ComponentManager implements ComponentLoadedListener {
 		return null;
 	}
 
+	public DataNode getCSB(){
+		return csb.getRootNode();
+	}
+	
 	public Map<String, Config> getController() {
 		return controllerMap;
+	}
+
+	@Override
+	public void onEnterFolder(String filePath) {
+		
+	}
+
+	@Override
+	public void onExitFolder(String filePath) {
+		
+	}
+
+	@Override
+	public void onEnterFile(String filePath) {
+		
+	}
+
+	@Override
+	public void onExitFile(String filePath) {
+		
 	}
 }

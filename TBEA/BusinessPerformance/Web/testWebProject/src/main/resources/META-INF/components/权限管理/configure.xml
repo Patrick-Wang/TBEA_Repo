@@ -116,8 +116,7 @@
 		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
 			<param type="int">25</param>
 		</call>
-		<response type="jsp" name="xnyzb/xnyzbEntry"> 
-			<map key="date" value="${calendar.current.format}"/>
+		<response type="jsp" name="framework/templates/singleDateReport/entry">
 			<map map="${authCompMap}"/>
 			<map key="updateUrl" value="authorityEntryUpdate"/>
 			<map key="submitUrl" value="submitAuthority"/>

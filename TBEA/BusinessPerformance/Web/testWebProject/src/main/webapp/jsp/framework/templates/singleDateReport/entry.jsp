@@ -195,12 +195,15 @@
     $(document).ready(function () {
 
 
+        new framework.templates.singleDateReport.EntryView();
         var date;
         if ('${date}' == ""){
-            date = {
-                month:'${month}' == ''?undefined:parseInt('${month}'),
-                year:'${year}' == ''?undefined:parseInt('${year}'),
-                day:'${day}' == ''?undefined:parseInt('${day}')
+            if ("" != '${year}') {
+                date = {
+                    month: '${month}' == '' ? undefined : parseInt('${month}'),
+                    year: '${year}' == '' ? undefined : parseInt('${year}'),
+                    day: '${day}' == '' ? undefined : parseInt('${day}')
+                }
             }
         }else{
             var dt = new Date(Date.parse('${date}'.replace(/-/g, '/')));

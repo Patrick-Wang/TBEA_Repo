@@ -1,6 +1,3 @@
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../../../js/jquery/jquery.d.ts" />
 module framework.route {
 
     export interface Event {
@@ -12,6 +9,11 @@ module framework.route {
         isBroadcast?:boolean;
     }
 
+    export let nextId : ()=>number = (function(idBase:number){
+        return function(){
+            return ++idBase;
+        };
+    })(9988392);
 
 
     export interface Endpoint {

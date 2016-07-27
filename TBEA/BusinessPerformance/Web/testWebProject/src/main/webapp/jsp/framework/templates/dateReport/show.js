@@ -8,14 +8,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 ///<reference path="../../basic/basicShow.ts"/>
 ///<reference path="../../../messageBox.ts"/>
 ///<reference path="../../../components/dateSelectorProxy.ts"/>
+///<reference path="../singleDateReport/show.ts"/>
 var framework;
 (function (framework) {
     var templates;
     (function (templates) {
-        var singleDateReport;
-        (function (singleDateReport) {
-            var BasicEndpoint = framework.basic.BasicEndpoint;
-            var FrameEvent = framework.basic.FrameEvent;
+        var DateReport;
+        (function (DateReport) {
+            var UnitedSelector = Util.UnitedSelector;
             var ShowView = (function (_super) {
                 __extends(ShowView, _super);
                 function ShowView() {
@@ -25,40 +25,16 @@ var framework;
                     return framework.basic.endpoint.FRAME_ID;
                 };
                 ShowView.prototype.onInitialize = function (opt) {
-                    this.opt = opt;
-                    this.mAjaxUpdate = new Util.Ajax(opt.updateUrl, false);
-                    this.mAjaxExport = new Util.Ajax(opt.exportUrl, false);
-                    if (opt.date == undefined) {
-                        $("#" + opt.dtId).hide();
-                        this.update(({}));
-                    }
-                    else {
-                        this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
-                            year: opt.date.year - 3,
-                            month: opt.date.month,
-                            day: opt.date.day
-                        }, opt.date, opt.date, opt.asSeason);
-                        this.update(this.dateSelect.getDate());
-                    }
-                };
-                ShowView.prototype.onEvent = function (e) {
-                    switch (e.id) {
-                        case FrameEvent.FE_UPDATE:
-                            if (this.dateSelect == undefined) {
-                                return this.update(({}));
-                            }
-                            else {
-                                return this.update(this.dateSelect.getDate());
-                            }
-                        case FrameEvent.FE_EXPORTEXCEL:
-                            if (this.dateSelect == undefined) {
-                                return this.exportExcel(({}), e.data);
-                            }
-                            else {
-                                return this.exportExcel(this.dateSelect.getDate(), e.data);
-                            }
-                    }
-                    return _super.prototype.onEvent.call(this, e);
+                    this.unitedSelector = new UnitedSelector(opt.itemNodes, opt.itemId);
+                    $("#" + opt.itemId).multiselect({
+                        multiple: false,
+                        header: false,
+                        minWidth: 100,
+                        height: '100%',
+                        // noneSelectedText: "请选择月份",
+                        selectedList: 1
+                    }).css("text-align:center");
+                    _super.prototype.onInitialize.call(this, opt);
                 };
                 ShowView.prototype.getDate = function (date) {
                     return "" + (date.year + "-" + (date.month == undefined ? 1 : date.month) + "-" + (date.day == undefined ? 1 : date.day));
@@ -66,7 +42,8 @@ var framework;
                 ShowView.prototype.update = function (date) {
                     var _this = this;
                     this.mAjaxUpdate.get({
-                        date: this.getDate(date)
+                        date: this.getDate(date),
+                        item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
                     })
                         .then(function (jsonData) {
                         _this.resp = jsonData;
@@ -103,13 +80,14 @@ var framework;
                 };
                 ShowView.prototype.exportExcel = function (date, id) {
                     $("#" + id)[0].action = this.opt.exportUrl + "?" + Util.Ajax.toUrlParam({
-                        date: this.getDate(date)
+                        date: this.getDate(date),
+                        item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
                     });
                     $("#" + id)[0].submit();
                 };
                 return ShowView;
-            })(BasicEndpoint);
-            singleDateReport.ShowView = ShowView;
-        })(singleDateReport = templates.singleDateReport || (templates.singleDateReport = {}));
+            })(framework.templates.singleDateReport.ShowView);
+            DateReport.ShowView = ShowView;
+        })(DateReport = templates.DateReport || (templates.DateReport = {}));
     })(templates = framework.templates || (framework.templates = {}));
 })(framework || (framework = {}));

@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.reportframe.interpreter;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,60 +101,20 @@ public class CallXmlInterpreter implements XmlInterpreter {
 		return null;
 	}
 	
-	private void invokeVoid(Method md, Object obj, List<Object> params){
-		try {
-			switch(params.size()){
-			case 0:
-				md.invoke(obj);
-				break;
-			case 1:
-				md.invoke(obj, params.get(0));
-				break;
-			case 2:
-				md.invoke(obj, params.get(0), params.get(1));
-				break;
-			case 3:
-				md.invoke(obj, params.get(0), params.get(1), params.get(2));
-				break;
-			case 4:
-				md.invoke(obj, params.get(0), params.get(1), params.get(2), params.get(3));
-				break;
-			case 5:
-				md.invoke(obj, params.get(0), params.get(1), params.get(2), params.get(3), params.get(4));
-				break;
-			}
-		} catch (Exception e1) {
-			e1.printStackTrace();
+	private void invokeVoid(Method md, Object obj, List<Object> params) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		if (params.isEmpty()){
+			md.invoke(obj);
+		}else{
+			md.invoke(obj, params.toArray());
 		}
 	}
 	
-	private Object invoke(Method md, Object obj, List<Object> params){
-		Object result = null;
-		try {
-			switch(params.size()){
-			case 0:
-				result = md.invoke(obj);
-				break;
-			case 1:
-				result = md.invoke(obj, params.get(0));
-				break;
-			case 2:
-				result = md.invoke(obj, params.get(0), params.get(1));
-				break;
-			case 3:
-				result = md.invoke(obj, params.get(0), params.get(1), params.get(2));
-				break;
-			case 4:
-				result = md.invoke(obj, params.get(0), params.get(1), params.get(2), params.get(3));
-				break;
-			case 5:
-				result = md.invoke(obj, params.get(0), params.get(1), params.get(2), params.get(3), params.get(4));
-				break;
-			}
-		} catch (Exception e1) {
-			e1.printStackTrace();
+	private Object invoke(Method md, Object obj, List<Object> params) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		if (params.isEmpty()){
+			return md.invoke(obj);
+		}else{
+			return md.invoke(obj, params.toArray());
 		}
-		return result;
 	}
 	
 	@Override

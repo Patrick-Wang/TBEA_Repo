@@ -58,7 +58,9 @@
 	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicShow.js"></script>
+
     <script src="${pageContext.request.contextPath}/jsp/framework/templates/singleDateReport/show.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/framework/templates/dateReport/show.js"></script>
     <title>${title}</title>
 
     <style type="text/css">
@@ -189,8 +191,12 @@
 <Table id="frameTable" align="center" style="width:1200px">
     <tr>
         <td>
-        
             <div id="dt" style="float: left;margin-right:10px"></div>
+            <div  style="float: left;margin-right:10px">
+                <div id="im">
+
+                </div>
+            </div>
             <input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
                    onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
         </td>
@@ -210,18 +216,16 @@
     </tr>
 </Table>
 <script type="text/javascript">
-    new framework.templates.singleDateReport.ShowView();
+    new framework.templates.DateReport.ShowView();
     $(document).ready(function () {
 
 
         var date;
         if ('${date}' == ""){
-            if ("" != '${year}'){
-                date = {
-                    month:'${month}' == ''?undefined:parseInt('${month}'),
-                    year:'${year}' == ''?undefined:parseInt('${year}'),
-                    day:'${day}' == ''?undefined:parseInt('${day}')
-                }
+            date = {
+                month:'${month}' == ''?undefined:parseInt('${month}'),
+                year:'${year}' == ''?undefined:parseInt('${year}'),
+                day:'${day}' == ''?undefined:parseInt('${day}')
             }
         }else{
             var dt = new Date(Date.parse('${date}'.replace(/-/g, '/')));
@@ -239,7 +243,9 @@
             title:"${title}",
             asSeason:"${asSeason}" == "true" ? true : false,
             updateUrl:"${updateUrl}.do",
-            exportUrl:"${exportUrl}.do"
+            exportUrl:"${exportUrl}.do",
+            itemId:"im",
+            itemNodes:JSON.parse("${dateNode}".replace(/'/g, '"'))
         });
         $("#exportButton")
             .css("height", "23px")

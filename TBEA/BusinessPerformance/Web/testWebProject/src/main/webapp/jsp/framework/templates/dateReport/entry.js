@@ -25,37 +25,21 @@ var framework;
                 };
                 EntryView.prototype.onInitialize = function (opt) {
                     this.opt = opt;
+                    this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
+                        year: opt.date.year - 3,
+                        month: opt.date.month,
+                        day: opt.date.day
+                    }, opt.date, opt.date);
                     this.mAjaxUpdate = new Util.Ajax(opt.updateUrl, false);
                     this.mAjaxSubmit = new Util.Ajax(opt.submitUrl, false);
-                    if (opt.date == undefined) {
-                        $("#" + opt.dtId).hide();
-                        this.update(({}));
-                    }
-                    else {
-                        this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
-                            year: opt.date.year - 3,
-                            month: opt.date.month,
-                            day: opt.date.day
-                        }, opt.date, opt.date);
-                        this.update(this.dateSelect.getDate());
-                    }
+                    this.update(this.dateSelect.getDate());
                 };
                 EntryView.prototype.onEvent = function (e) {
                     switch (e.id) {
                         case FrameEvent.FE_UPDATE:
-                            if (this.dateSelect == undefined) {
-                                return this.update(({}));
-                            }
-                            else {
-                                return this.update(this.dateSelect.getDate());
-                            }
+                            return this.update(this.dateSelect.getDate());
                         case FrameEvent.FE_SUBMIT:
-                            if (this.dateSelect == undefined) {
-                                return this.submit(({}));
-                            }
-                            else {
-                                return this.submit(this.dateSelect.getDate());
-                            }
+                            return this.submit(this.dateSelect.getDate());
                     }
                     return _super.prototype.onEvent.call(this, e);
                 };
@@ -86,24 +70,22 @@ var framework;
                         multiselect: false,
                         drag: false,
                         resize: false,
-                        assistEditable: true,
+                        assistEditable: false,
                         //autowidth : false,
                         cellsubmit: 'clientArray',
                         //editurl: 'clientArray',
                         cellEdit: true,
                         // height: data.length > 25 ? 550 : '100%',
                         // width: titles.length * 200,
-                        rowNum: 20,
+                        rowNum: 1000,
                         height: '100%',
                         width: 1200,
                         shrinkToFit: true,
-                        autoScroll: true,
-                        pager: '#' + pagername,
-                        viewrecords: true
+                        autoScroll: true
                     }));
                 };
                 EntryView.prototype.onLoadSubmitData = function () {
-                    return this.mTableAssist.getChangedData();
+                    return this.mTableAssist.getAllData();
                 };
                 EntryView.prototype.submit = function (date) {
                     var _this = this;

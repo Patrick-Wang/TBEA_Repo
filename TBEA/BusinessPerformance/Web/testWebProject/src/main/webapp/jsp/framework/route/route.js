@@ -1,10 +1,12 @@
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../../../js/jquery/jquery.d.ts" />
 var framework;
 (function (framework) {
     var route;
     (function (route) {
+        route.nextId = (function (idBase) {
+            return function () {
+                return ++idBase;
+            };
+        })(9988392);
         var Router = (function () {
             function Router() {
                 this.mEndpoints = {};

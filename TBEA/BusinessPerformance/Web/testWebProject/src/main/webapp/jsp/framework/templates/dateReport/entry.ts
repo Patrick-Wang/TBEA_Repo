@@ -30,38 +30,22 @@ module framework.templates.singleDateReport {
 
         onInitialize(opt:any):void{
             this.opt = opt;
+            this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
+                year:opt.date.year - 3,
+                month:opt.date.month,
+                day:opt.date.day
+            }, opt.date, opt.date);
             this.mAjaxUpdate = new Util.Ajax(opt.updateUrl, false);
             this.mAjaxSubmit = new Util.Ajax(opt.submitUrl, false);
-            if (opt.date == undefined){
-                $("#" + opt.dtId).hide();
-                this.update(<Util.Date>({}));
-            }else {
-                this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
-                    year: opt.date.year - 3,
-                    month: opt.date.month,
-                    day: opt.date.day
-                }, opt.date, opt.date);
-                this.update(this.dateSelect.getDate());
-            }
-
-
+            this.update(this.dateSelect.getDate());
         }
 
         onEvent(e:framework.route.Event):any {
             switch (e.id) {
                 case FrameEvent.FE_UPDATE:
-                    if (this.dateSelect == undefined){
-                        return this.update(<Util.Date>({}));
-                    }else{
-                        return this.update(this.dateSelect.getDate());
-                    }
-
+                    return this.update(this.dateSelect.getDate());
                 case FrameEvent.FE_SUBMIT:
-                    if (this.dateSelect == undefined){
-                        return this.submit(<Util.Date>({}));
-                    }else{
-                        return this.submit(this.dateSelect.getDate());
-                    }
+                    return this.submit(this.dateSelect.getDate());
             }
             return super.onEvent(e);
         }
@@ -96,25 +80,23 @@ module framework.templates.singleDateReport {
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    assistEditable:true,
+                    assistEditable:false,
                     //autowidth : false,
                     cellsubmit: 'clientArray',
                     //editurl: 'clientArray',
                     cellEdit: true,
                     // height: data.length > 25 ? 550 : '100%',
                     // width: titles.length * 200,
-                    rowNum: 20,
+                    rowNum: 1000,
                     height: '100%',
                     width: 1200,
                     shrinkToFit: true,
-                    autoScroll: true,
-                    pager: '#' + pagername,
-                    viewrecords: true
+                    autoScroll: true
                 }));
         }
 
         onLoadSubmitData() : any{
-            return this.mTableAssist.getChangedData();
+            return this.mTableAssist.getAllData();
         }
 
         submit(date:Util.Date): void{

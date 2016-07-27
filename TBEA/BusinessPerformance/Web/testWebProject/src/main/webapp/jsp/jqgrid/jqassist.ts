@@ -486,7 +486,7 @@ module JQTable {
         private mOnMergedRows:(iCol:number, iRowStart:number, ilen:number) => void;
         private mOnMergedColums:(col:number, row:number) => void;
         private mOnMergedTitles:(iColStart:number, iCount:number) => void;
-
+        private mEditedRows:string[] = [];
         private mDepth:number;
 
         constructor(titleNodes:Node[], gridName:string) {
@@ -793,6 +793,22 @@ module JQTable {
             }
         }
 
+        public getChangedData(){
+            var grid = $("#" + this.mGridName + "");
+            var data:Array<string[]> = [];
+            for (var i in grid[0].p.data) {
+                if (this.mEditedRows.indexOf(grid[0].p.data[i].id) >= 0){
+                    var row = [];
+                    row.push(grid[0].p.data[i].id);
+                    for (var j in this.mColModel) {
+                        let val = grid[0].p.data[i][this.mColModel[j].index];
+                        row.push(undefined == val ? "" : val + "");
+                    }
+                    data.push(row);
+                }
+            }
+            return data;
+        }
 
         public setRowBgColor(row:number, r:number, g:number, b:number):void {
             this.completeList.push(() => {
@@ -885,6 +901,7 @@ module JQTable {
             }
             this.mFormula.push(formula);
         }
+
 
 
         public cellChanged(iRow:number, iCol:number) {
@@ -1047,6 +1064,10 @@ module JQTable {
 
                 afterSaveCell: () => {
                     $("input").attr("disabled", false);
+                    let ids:string[] = grid.jqGrid('getDataIDs');
+                    if (this.mEditedRows.indexOf(ids[lastsel - 1]) < 0){
+                        this.mEditedRows.push(ids[lastsel - 1]);
+                    }
                     lastsel = "";
                 },
 
@@ -1127,6 +1148,10 @@ module JQTable {
                         if (rowid.indexOf("add") < 0) {
                             this.showError("数据已保存，无法删除");
                             return;
+                        }
+
+                        if (this.mEditedRows.indexOf(rowid) >= 0){
+                            this.mEditedRows.splice(this.mEditedRows.indexOf(rowid), 1);
                         }
 
                         let ids:string[] = grid.jqGrid('getDataIDs');

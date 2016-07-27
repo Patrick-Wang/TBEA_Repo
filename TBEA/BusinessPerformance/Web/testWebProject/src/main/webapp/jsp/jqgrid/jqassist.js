@@ -406,6 +406,7 @@ var JQTable;
             this.mColModel = [];
             this.mResizeList = [];
             this.mFormula = [];
+            this.mEditedRows = [];
             var nodes;
             this.mGridName = gridName;
             this.mTitle = titleNodes;
@@ -689,6 +690,22 @@ var JQTable;
                 });
             }
         };
+        JQGridAssistant.prototype.getChangedData = function () {
+            var grid = $("#" + this.mGridName + "");
+            var data = [];
+            for (var i in grid[0].p.data) {
+                if (this.mEditedRows.indexOf(grid[0].p.data[i].id) >= 0) {
+                    var row = [];
+                    row.push(grid[0].p.data[i].id);
+                    for (var j in this.mColModel) {
+                        var val = grid[0].p.data[i][this.mColModel[j].index];
+                        row.push(undefined == val ? "" : val + "");
+                    }
+                    data.push(row);
+                }
+            }
+            return data;
+        };
         JQGridAssistant.prototype.setRowBgColor = function (row, r, g, b) {
             var _this = this;
             this.completeList.push(function () {
@@ -926,6 +943,10 @@ var JQTable;
                 },
                 afterSaveCell: function () {
                     $("input").attr("disabled", false);
+                    var ids = grid.jqGrid('getDataIDs');
+                    if (_this.mEditedRows.indexOf(ids[lastsel - 1]) < 0) {
+                        _this.mEditedRows.push(ids[lastsel - 1]);
+                    }
                     lastsel = "";
                 },
                 afterRestoreCell: function () {
@@ -1001,6 +1022,9 @@ var JQTable;
                             if (rowid.indexOf("add") < 0) {
                                 _this.showError("数据已保存，无法删除");
                                 return;
+                            }
+                            if (_this.mEditedRows.indexOf(rowid) >= 0) {
+                                _this.mEditedRows.splice(_this.mEditedRows.indexOf(rowid), 1);
                             }
                             var ids = grid.jqGrid('getDataIDs');
                             grid.jqGrid("delRowData", rowid);

@@ -52,13 +52,11 @@
 	<script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/components/dateSeasonSelector.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicShow.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/framework/templates/singleDateReport/show.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/framework/templates/singleDateReport/entry.js"></script>
     <title>${title}</title>
 
     <style type="text/css">
@@ -165,20 +163,6 @@
             text-align: left;
             font-size: 12px;
         }
-        .ui-widget{
-            font-size: 12px;
-        }
-
-         .ui-widget-content{
-            font-size: 12px;
-        }
-
-        #exportButton {
-            height: 23px;
-            width:100px;
-            padding: .1em 1em;
-            margin-top: 2px;
-        }
     </style>
 </head>
 <body>
@@ -202,26 +186,21 @@
     </tr>
     <tr>
         <td>
-            <form id="export" method="post">
-                <input id="exportButton" type="button" value="导出"
-                       onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
-            </form>
+            <input id="submit" type="button" value="提交" style="float: right;width: 80px; mrgin-left: 10px;"
+                   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)" />
         </td>
     </tr>
 </Table>
 <script type="text/javascript">
-    new framework.templates.singleDateReport.ShowView();
     $(document).ready(function () {
-
+        new framework.templates.singleDateReport.EntryView();
 
         var date;
         if ('${date}' == ""){
-            if ("" != '${year}'){
-                date = {
-                    month:'${month}' == ''?undefined:parseInt('${month}'),
-                    year:'${year}' == ''?undefined:parseInt('${year}'),
-                    day:'${day}' == ''?undefined:parseInt('${day}')
-                }
+            date = {
+                month:'${month}' == ''?undefined:parseInt('${month}'),
+                year:'${year}' == ''?undefined:parseInt('${year}'),
+                day:'${day}' == ''?undefined:parseInt('${day}')
             }
         }else{
             var dt = new Date(Date.parse('${date}'.replace(/-/g, '/')));
@@ -237,17 +216,10 @@
             date: date,
             host:"table",
             title:"${title}",
-            asSeason:"${asSeason}" == "true" ? true : false,
             updateUrl:"${updateUrl}.do",
-            exportUrl:"${exportUrl}.do"
+            submitUrl:"${submitUrl}.do"
         });
-        $("#exportButton")
-            .css("height", "23px")
-            .css("padding", ".1em 1em")
-            .css("margin-top", "10px")
-            .css("width", "90px");
         $(document.body).css("visibility", "visible");
-
     });
 </script>
 

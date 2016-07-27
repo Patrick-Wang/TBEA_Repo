@@ -4,9 +4,10 @@ import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,6 +26,10 @@ import com.tbea.ic.operation.controller.servlet.convertor.Convertor;
 public class ComponentLoader {
 
 	public static interface ComponentLoadedListener {
+		void onEnterFolder(String filePath);
+		void onExitFolder(String filePath);
+		void onEnterFile(String filePath);
+		void onExitFile(String filePath);
 		void onService(String id, Element e, String filePath);
 		void onController(String id, Element e, String filePath);
 	}
@@ -40,15 +45,54 @@ public class ComponentLoader {
 		}
 	}
 
-	ComponentLoadedListener listener;
+	List<ComponentLoadedListener> listeners = new ArrayList<ComponentLoadedListener>();
 	DocumentBuilder builder = null;
 	Map<String, Long> componentsTime = new HashMap<String, Long>();
 
-	public ComponentLoader(ComponentLoadedListener listener) {
-		this.listener = listener;
+	public ComponentLoader addListener(ComponentLoadedListener listener){
+		listeners.add(listener);
+		return this;
 	}
+	
+	public void notifyOnService(String id, Element e, String filePath){
+		for (ComponentLoadedListener lsn : listeners){
+			lsn.onService(id, e, filePath);
+		}
+	}
+	
+	public void notifyOnController(String id, Element e, String filePath){
+		for (ComponentLoadedListener lsn : listeners){
+			lsn.onController(id, e, filePath);
+		}
+	}
+	
+	public void notifyOnEnterFolder(String filePath){
+		for (ComponentLoadedListener lsn : listeners){
+			lsn.onEnterFolder(filePath);
+		}
+	}
+	
+	public void notifyOnEnterFile(String filePath){
+		for (ComponentLoadedListener lsn : listeners){
+			lsn.onEnterFile(filePath);
+		}
+	}
+	
+	public void notifyOnExitFolder(String filePath){
+		for (ComponentLoadedListener lsn : listeners){
+			lsn.onExitFolder(filePath);
+		}
+	}
+	
+	public void notifyOnExitFile(String filePath){
+		for (ComponentLoadedListener lsn : listeners){
+			lsn.onExitFile(filePath);
+		}
+	}
+	
 
 	private void scan(File dir) {
+		notifyOnEnterFolder(dir.getAbsolutePath());
 		File[] fs = dir.listFiles();
 		for (int i = 0; i < fs.length; i++) {
 			if (fs[i].isFile() && fs[i].getName().endsWith(".xml")) {
@@ -62,6 +106,7 @@ public class ComponentLoader {
 				scan(fs[i]);
 			}
 		}
+		notifyOnExitFolder(dir.getAbsolutePath());
 	}
 
 	public void load() {
@@ -92,6 +137,7 @@ public class ComponentLoader {
 	
 	private void loadComponent(File file) {
 		try {
+			notifyOnEnterFile(file.getAbsolutePath());
 			System.out.println(Util.formatToSecond(new Timestamp(Calendar.getInstance().getTimeInMillis())) + " : load config file " + file.getName());
 			String path = file.getAbsolutePath();
 			DocumentBuilder builder = getBuilder();
@@ -103,14 +149,15 @@ public class ComponentLoader {
 				if (nl.item(i) instanceof Element){
 					e = (Element) nl.item(i);
 					if (e.getTagName().equals("service")) {
-						listener.onService(e.getAttribute("id"), e, path);
+						notifyOnService(e.getAttribute("id"), e, path);
 					} else if (e.getTagName().equals("controller")) {
-						listener.onController(e.getAttribute("id"), e, path);
+						notifyOnController(e.getAttribute("id"), e, path);
 					}
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		notifyOnExitFile(file.getAbsolutePath());
 	}
 }
