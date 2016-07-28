@@ -18,8 +18,9 @@
 				ZB.xmgs = ${compId} and
 				ZB.ksrq &gt;= ${dStart.date} and 
 				ZB.jzrq &lt;= ${dEnd.date}
-			order by 
-				ZB.xmgs
+			order by
+				ZB.ksrq,
+				ZB.jzrq
 		</sql>
 		
 		<sql id="yszkhkzbhj">
@@ -44,21 +45,53 @@
 				ZB.jzrq
 		</sql>
 		
+		<sql id="hj">
+			select 
+				sum(htje) as sumhtje,
+				sum(yszkje) as sumyszkje,
+				sum(yqkje) as sumyqkje,
+				sum(yqksj) as sumyqksj
+			from 
+				yszkhkzb ZB
+			where 
+				ZB.xmgs = ${compId} and
+				ZB.ksrq &gt;= ${dStart.date} and 
+				ZB.jzrq &lt;= ${dEnd.date}
+		</sql>
+		
 		<call id="gs" object="${groupSum}" method="yszkhkzbGroupSum">
 			<param type="object">${yszkhkzb}</param>
 			<param type="object">${yszkhkzbhj}</param>
 		</call>
 		
-		<list id="ids" type="int" sql="gs" value="0" />
+		<list id="ids" type="int" sql="gs" value="0" >
+				<item>-2</item>
+		</list>
 		<table id="result" rowIds="ids">
-			<list id="ks" type="date" sql="gs" value="1" />
-			<list id="jz" type="date" sql="gs" value="2" />
-			<list id="xmmc" type="string" sql="gs" value="3" />
-			<list id="khmc" type="string" sql="gs" value="4" />
-			<list id="htje" type="double" sql="gs" value="5" />
-			<list id="yszkje" type="double" sql="gs" value="6" />
-			<list id="yqkje" type="double" sql="gs" value="7" />
-			<list id="yqksj" type="double" sql="gs" value="8" />
+			<list id="ks" type="string" sql="gs" value="1" >
+				<item>--</item>
+			</list>
+			<list id="jz" type="string" sql="gs" value="2"  >
+				<item>--</item>
+			</list>
+			<list id="xmmc" type="string" sql="gs" value="3"  >
+				<item>合计</item>
+			</list>
+			<list id="khmc" type="string" sql="gs" value="4"  >
+				<item>--</item>
+			</list>
+			<list id="htje" type="double" sql="gs" value="5"  >
+				<item>${hj[0][0]}</item>
+			</list>
+			<list id="yszkje" type="double" sql="gs" value="6" >
+				<item>${hj[0][1]}</item>
+			</list>
+			<list id="yqkje" type="double" sql="gs" value="7" >
+				<item>${hj[0][2]}</item>
+			</list>
+			<list id="yqksj" type="double" sql="gs" value="8" >
+				<item>${hj[0][3]}</item>
+			</list>
 		</table>
 
 		<context key="result" value="${result}"/>
@@ -134,7 +167,7 @@
 		<ExcelTemplate id="excelTemplate" sheet="应收账款回款周报"/>
 		
 		<list id="title" type="string">
-			周期,周期,项目公司,项目名称,客户名称,合同金额,应收账款金额,逾期款金额,逾期款时间（月）
+			周期,周期,项目名称,客户名称,合同金额,应收账款金额,逾期款金额,逾期款时间（月）
 		</list>
 				
 		<formatter id="data">

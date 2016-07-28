@@ -73,16 +73,16 @@ public class GroupSum {
 				row = items.get(i);
 				result.add(row);
 			}else{
-				if (!dtStart.equals(items.get(i)[1]) || dtEnd.equals(items.get(i)[2])){
+				if (dtStart.equals(items.get(i)[1]) && dtEnd.equals(items.get(i)[2])){
+					row = items.get(i);
+					result.add(row);
+				}else{
 					row = mergeYszkhkz(id, items.get(i).length, dtStart, dtEnd, sums.get(-(id + 10)));
 					dtStart = items.get(i)[1];
 					dtEnd = items.get(i)[2];
-					--id;
 					result.add(row);
 					result.add(items.get(i));
-				}else{
-					row = items.get(i);
-					result.add(row);
+					--id;
 				}
 			}
 			
