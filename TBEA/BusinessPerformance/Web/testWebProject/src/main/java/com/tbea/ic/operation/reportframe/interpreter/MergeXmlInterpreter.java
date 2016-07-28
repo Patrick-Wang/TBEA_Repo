@@ -94,7 +94,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		}
 		elp = new ELParser(component);
 		String table = (String) XmlUtil.getObjectAttr(e, "table", elp);
-		Object dataObj = component.getVar(e.getAttribute("data"));
+		Object dataObj = XmlUtil.getObjectAttr(e, "data", elp);
 		if (table != null && !table.isEmpty() && dataObj != null){
 			where = compile(e.getElementsByTagName("where"));
 			set = compile(e.getElementsByTagName("set"));

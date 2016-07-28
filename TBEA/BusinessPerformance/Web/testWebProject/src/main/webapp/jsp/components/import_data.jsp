@@ -92,9 +92,16 @@
 	$(document)
 			.ready(
 					function() {
+						var $ = jQuery, $btn = $('#ctlBtn'), state = 'pending';
 						var comps =  JSON.parse('${nodeData}');
 						compSelctor = new Util.CompanySelector(false, "compid",comps);
-						var $ = jQuery, $btn = $('#ctlBtn'), state = 'pending';
+						if (comps.length == 1){
+							compSelctor.hide();
+							$("title").text(compSelctor.getCompanyName() + " " + $("title").text());
+							$("h1").text(compSelctor.getCompanyName() + " " + $("h1").text());
+						}
+
+
 						$list = $('#thelist');
 						uploader = WebUploader.create({
 							// swf文件路径
