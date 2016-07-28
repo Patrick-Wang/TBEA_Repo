@@ -210,7 +210,7 @@
     </tr>
 </Table>
 <script type="text/javascript">
-    new framework.templates.singleDateReport.ShowView();
+    framework.templates.singleDateReport.createInstance();
     $(document).ready(function () {
 
 

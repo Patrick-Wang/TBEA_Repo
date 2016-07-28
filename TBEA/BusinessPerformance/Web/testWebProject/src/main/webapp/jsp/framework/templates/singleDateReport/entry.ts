@@ -8,6 +8,9 @@ module framework.templates.singleDateReport {
     import BasicEndpoint = framework.basic.BasicEndpoint;
     import FrameEvent = framework.basic.FrameEvent;
 
+    export function createInstance() : EntryView{
+        return new EntryView();
+    }
 
     export interface EntryOption{
         updateUrl:string;

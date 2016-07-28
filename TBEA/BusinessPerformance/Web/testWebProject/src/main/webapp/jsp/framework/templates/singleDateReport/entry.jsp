@@ -193,9 +193,7 @@
 </Table>
 <script type="text/javascript">
     $(document).ready(function () {
-
-
-        new framework.templates.singleDateReport.EntryView();
+        framework.templates.singleDateReport.createInstance();
         var date;
         if ('${date}' == ""){
             if ("" != '${year}') {

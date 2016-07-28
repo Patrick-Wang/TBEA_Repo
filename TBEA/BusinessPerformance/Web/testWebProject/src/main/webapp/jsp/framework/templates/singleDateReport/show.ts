@@ -14,6 +14,9 @@ module framework.templates.singleDateReport {
     export let FE_EXPORTEXCEL:number = framework.route.nextId();
     export let FE_INIT_EVENT:number = framework.route.nextId();
 
+    export function createInstance() : ShowView{
+        return new ShowView();
+    }
 
     export interface ShowOption{
         updateUrl:string;

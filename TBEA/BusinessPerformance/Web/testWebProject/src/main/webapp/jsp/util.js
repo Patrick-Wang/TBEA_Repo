@@ -61,6 +61,7 @@ var Util;
     function parseHeader(header) {
         var node = null;
         var readOnly = header.readOnly == "true";
+        var sortable = header.sortable == "true";
         var align = JQTable.TextAlign.Center;
         if (header.align == 'left') {
             align = JQTable.TextAlign.Left;
@@ -69,7 +70,14 @@ var Util;
             align = JQTable.TextAlign.Right;
         }
         if ("date" == header.type) {
-            node = JQTable.Node.create({ name: header.name, align: align, isReadOnly: readOnly, isNumber: false, editType: "text", options: {
+            node = JQTable.Node.create({
+                name: header.name,
+                align: align,
+                isReadOnly: readOnly,
+                isNumber: false,
+                editType: "text",
+                isSortable: sortable,
+                options: {
                     dataInit: function (element) {
                         $(element).datepicker({
                             dateFormat: 'yy-mm-dd',
@@ -80,16 +88,33 @@ var Util;
                 } });
         }
         else if ("text" == header.type) {
-            node = JQTable.Node.create({ name: header.name, align: align, isReadOnly: readOnly, isNumber: false, editType: "text" });
+            node = JQTable.Node.create({
+                name: header.name,
+                align: align,
+                isReadOnly: readOnly,
+                isNumber: false,
+                editType: "text",
+                isSortable: sortable });
         }
         else if ("hidden" == header.type) {
             node = null; //JQTable.Node.create({name : header.name, align : align, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
         }
         else if ("select" == header.type) {
-            node = JQTable.Node.create({ name: header.name, align: align, isReadOnly: readOnly, isNumber: false, editType: "select", options: { value: header.options } });
+            node = JQTable.Node.create({
+                name: header.name,
+                align: align,
+                isReadOnly: readOnly,
+                isNumber: false,
+                editType: "select",
+                isSortable: sortable,
+                options: { value: header.options } });
         }
         else {
-            node = JQTable.Node.create({ name: header.name, align: align, isReadOnly: readOnly });
+            node = JQTable.Node.create({
+                name: header.name,
+                align: align,
+                isReadOnly: readOnly,
+                isSortable: sortable });
         }
         if (header.sub != undefined) {
             for (var i = 0; i < header.sub.length; ++i) {

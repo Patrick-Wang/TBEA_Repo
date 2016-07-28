@@ -19,6 +19,10 @@ var framework;
             singleDateReport.FE_UPDATE = framework.route.nextId();
             singleDateReport.FE_EXPORTEXCEL = framework.route.nextId();
             singleDateReport.FE_INIT_EVENT = framework.route.nextId();
+            function createInstance() {
+                return new ShowView();
+            }
+            singleDateReport.createInstance = createInstance;
             var ShowView = (function (_super) {
                 __extends(ShowView, _super);
                 function ShowView() {

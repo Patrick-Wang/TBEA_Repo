@@ -15,6 +15,10 @@ var framework;
         (function (singleDateReport) {
             var BasicEndpoint = framework.basic.BasicEndpoint;
             var FrameEvent = framework.basic.FrameEvent;
+            function createInstance() {
+                return new EntryView();
+            }
+            singleDateReport.createInstance = createInstance;
             var EntryView = (function (_super) {
                 __extends(EntryView, _super);
                 function EntryView() {

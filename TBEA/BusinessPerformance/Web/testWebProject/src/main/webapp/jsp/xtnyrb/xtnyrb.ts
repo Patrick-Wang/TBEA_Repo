@@ -8,6 +8,10 @@ module xtnyzb{
         zbdc:Util.ServResp;
     }
 
+    framework.templates.singleDateReport.createInstance = function(){
+        return new XtnyzbShowView();
+    }
+
     import router = framework.router;
     import FrameEvent = framework.basic.FrameEvent;
     class XtnyzbShowView extends framework.templates.singleDateReport.ShowView {

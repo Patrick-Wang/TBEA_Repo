@@ -9,6 +9,9 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var xtnyzb;
 (function (xtnyzb) {
+    framework.templates.singleDateReport.createInstance = function () {
+        return new XtnyzbShowView();
+    };
     var XtnyzbShowView = (function (_super) {
         __extends(XtnyzbShowView, _super);
         function XtnyzbShowView() {

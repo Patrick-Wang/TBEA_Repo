@@ -214,7 +214,7 @@
     </tr>
 </Table>
 <script type="text/javascript">
-    new framework.templates.DateReport.ShowView();
+    framework.templates.DateReport.createInstance();
     $(document).ready(function () {
 
 

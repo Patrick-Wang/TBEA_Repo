@@ -100,6 +100,7 @@ module Util {
     export function parseHeader(header:Util.Header): JQTable.Node{
         let node:JQTable.Node = null;
         let readOnly = header.readOnly == "true";
+        let sortable = header.sortable == "true";
         let align = JQTable.TextAlign.Center;
         if (header.align == 'left'){
             align = JQTable.TextAlign.Left;
@@ -107,7 +108,14 @@ module Util {
             align = JQTable.TextAlign.Right;
         }
         if ("date" == header.type){
-            node = JQTable.Node.create({name : header.name, align : align, isReadOnly:readOnly,isNumber:false,editType:"text", options:{
+            node = JQTable.Node.create({
+                name : header.name,
+                align : align,
+                isReadOnly:readOnly,
+                isNumber:false,
+                editType:"text",
+                isSortable : sortable,
+                options:{
                 dataInit: function (element) {
                     $(element).datepicker({
                         dateFormat: 'yy-mm-dd',
@@ -117,13 +125,30 @@ module Util {
                 }
             }});
         }else if ("text" == header.type){
-            node = JQTable.Node.create({name : header.name, align : align, isReadOnly:readOnly,isNumber:false,editType:"text"});
+            node = JQTable.Node.create({
+                name : header.name,
+                align : align,
+                isReadOnly:readOnly,
+                isNumber:false,
+                editType:"text",
+                isSortable : sortable});
         }else if ("hidden" == header.type){
             node = null;//JQTable.Node.create({name : header.name, align : align, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
         }else if ("select" == header.type){
-            node = JQTable.Node.create({name : header.name, align : align, isReadOnly:readOnly,isNumber:false,editType: "select", options: { value: header.options }});
+            node = JQTable.Node.create({
+                name : header.name,
+                align : align,
+                isReadOnly:readOnly,
+                isNumber:false,
+                editType: "select",
+                isSortable : sortable,
+                options: { value: header.options }});
         }else{
-            node = JQTable.Node.create({name : header.name, align : align, isReadOnly:readOnly});
+            node = JQTable.Node.create({
+                name : header.name,
+                align : align,
+                isReadOnly:readOnly,
+                isSortable : sortable});
         }
 
         if (header.sub != undefined) {

@@ -13,6 +13,10 @@ module framework.templates.DateReport {
     import IDataNode = Util.IDataNode;
 
 
+    export function createInstance() : ShowView {
+        return new ShowView();
+    }
+
     export interface ShowOption{
         updateUrl:string;
         exportUrl:string;

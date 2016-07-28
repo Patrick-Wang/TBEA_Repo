@@ -16,6 +16,10 @@ var framework;
         var DateReport;
         (function (DateReport) {
             var UnitedSelector = Util.UnitedSelector;
+            function createInstance() {
+                return new ShowView();
+            }
+            DateReport.createInstance = createInstance;
             var ShowView = (function (_super) {
                 __extends(ShowView, _super);
                 function ShowView() {
