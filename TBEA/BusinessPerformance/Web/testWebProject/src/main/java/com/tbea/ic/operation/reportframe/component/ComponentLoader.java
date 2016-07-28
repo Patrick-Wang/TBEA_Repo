@@ -44,7 +44,7 @@ public class ComponentLoader {
 			e.printStackTrace();
 		}
 	}
-
+	Timer timer = new Timer(true);
 	List<ComponentLoadedListener> listeners = new ArrayList<ComponentLoadedListener>();
 	DocumentBuilder builder = null;
 	Map<String, Long> componentsTime = new HashMap<String, Long>();
@@ -110,12 +110,20 @@ public class ComponentLoader {
 	}
 
 	public void load() {
-		Timer timer = new Timer(true);
 		timer.schedule(new TimerTask() {
 			public void run() {
-				scan(new File(resPath));
+				synchronized(timer){
+					scan(new File(resPath));
+				}
 			}
 		}, 0, 30 * 1000);
+	}
+	
+	public void pause(){
+		timer.cancel();
+		synchronized(timer){
+			
+		}
 	}
 	
 	public void reload(){

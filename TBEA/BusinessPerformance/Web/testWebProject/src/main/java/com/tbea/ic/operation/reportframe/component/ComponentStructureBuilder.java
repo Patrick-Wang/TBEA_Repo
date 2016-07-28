@@ -1,7 +1,6 @@
 package com.tbea.ic.operation.reportframe.component;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 import org.w3c.dom.Element;
@@ -12,6 +11,10 @@ import com.tbea.ic.operation.reportframe.component.ComponentLoader.ComponentLoad
 
 public class ComponentStructureBuilder implements ComponentLoadedListener {
 
+	public final static int FOLDER = 1;
+	public final static int FILE = 2;
+	public final static int SERVICE = 3;
+	public final static int CONTROLLER = 4;
 	DataNode lastNode;
 	Stack<DataNode> runStack = new Stack<DataNode>();
 	String basePath;
@@ -19,16 +22,20 @@ public class ComponentStructureBuilder implements ComponentLoadedListener {
 		DataNode dataNode = new DataNode();
 		Data data = new Data();
 		dataNode.setData(data);
-		data.setId(1);
+		data.setId(FOLDER);
 		data.setValue(path.substring(basePath.length()));
 		return dataNode;
+	}
+	
+	String getBasePath(){
+		return basePath;
 	}
 	
 	DataNode getFileNode(String path){
 		DataNode dataNode = new DataNode();
 		Data data = new Data();
 		dataNode.setData(data);
-		data.setId(2);
+		data.setId(FILE);
 		data.setValue(path.substring(basePath.length()));
 		return dataNode;
 	}
@@ -37,7 +44,7 @@ public class ComponentStructureBuilder implements ComponentLoadedListener {
 		DataNode dataNode = new DataNode();
 		Data data = new Data();
 		dataNode.setData(data);
-		data.setId(3);
+		data.setId(SERVICE);
 		data.setValue(id);
 		return dataNode;
 	}
@@ -46,31 +53,46 @@ public class ComponentStructureBuilder implements ComponentLoadedListener {
 		DataNode dataNode = new DataNode();
 		Data data = new Data();
 		dataNode.setData(data);
-		data.setId(4);
+		data.setId(CONTROLLER);
 		data.setValue(id);
 		return dataNode;
+	}
+	
+	public String nextPathSegment(String path, int start){
+		if (start >= path.length()){
+			return null;
+		}
+		int index = path.indexOf("\\", start + 1);
+		if (index >= 0){
+			return path.substring(start, index);
+		}
+		return path.substring(start);
+	}
+	
+	public DataNode getNode(String path){
+		if (lastNode != null){
+			String subPath = path.substring(basePath.length());
+			int start = 0;
+			String pathSegment = nextPathSegment(subPath, start);
+			DataNode node = lastNode;
+			if (node.getData().getValue().equals(pathSegment)){
+				start += pathSegment.length();
+				while (null != node && null != (pathSegment = nextPathSegment(subPath, start))){
+					node = node.findByValue(pathSegment);
+					start += pathSegment.length();
+				}
+				return node;
+			}
+		}
+		return null;
 	}
 	
 	public DataNode getRootNode(){
 		return lastNode;
 	}
 	
-	private DataNode find(List<DataNode> nodes, String path){
-		if (null != nodes){
-			int index = path.lastIndexOf("\\");
-			path = path.substring(index + 1);
-			for (DataNode node : nodes){
-				if (node.getData().getValue().equals(path)){
-					return node;
-				}
-			}
-		}
-		return null;
-	}
-	
 	@Override
 	public void onEnterFolder(String filePath) {
-
 		if (runStack.isEmpty()){
 			if (lastNode != null){
 				runStack.push(lastNode);
@@ -81,7 +103,7 @@ public class ComponentStructureBuilder implements ComponentLoadedListener {
 				runStack.push(node);
 			}
 		}else{
-			DataNode node = find(runStack.peek().getSubNodes(), filePath);
+			DataNode node = runStack.peek().findByValue(filePath.substring(basePath.length()));
 			if (node == null){
 				if (runStack.peek().getSubNodes() == null){
 					runStack.peek().setSubNodes(new ArrayList<DataNode>());
@@ -100,13 +122,17 @@ public class ComponentStructureBuilder implements ComponentLoadedListener {
 
 	@Override
 	public void onEnterFile(String filePath) {
-		DataNode node = find(runStack.peek().getSubNodes(), filePath);
+		DataNode node = runStack.peek().findByValue(filePath.substring(basePath.length()));
 		if (node == null){
 			if (runStack.peek().getSubNodes() == null){
 				runStack.peek().setSubNodes(new ArrayList<DataNode>());
 			}
 			node = getFileNode(filePath);
 			runStack.peek().getSubNodes().add(node);
+		}else{
+			if (null != node.getSubNodes()){
+				node.getSubNodes().clear();
+			}
 		}
 		runStack.push(node);
 	}
@@ -118,7 +144,7 @@ public class ComponentStructureBuilder implements ComponentLoadedListener {
 
 	@Override
 	public void onService(String id, Element e, String filePath) {
-		DataNode node = find(runStack.peek().getSubNodes(), id);
+		DataNode node = runStack.peek().findByValue(id);
 		if (node == null){
 			if (runStack.peek().getSubNodes() == null){
 				runStack.peek().setSubNodes(new ArrayList<DataNode>());
@@ -130,7 +156,7 @@ public class ComponentStructureBuilder implements ComponentLoadedListener {
 
 	@Override
 	public void onController(String id, Element e, String filePath) {
-		DataNode node = find(runStack.peek().getSubNodes(), id);
+		DataNode node = runStack.peek().findByValue(id);
 		if (node == null){
 			if (runStack.peek().getSubNodes() == null){
 				runStack.peek().setSubNodes(new ArrayList<DataNode>());

@@ -874,7 +874,7 @@
 			<map key="updateUrl" value="zhgsfcyUpdateLrze" />
 			<map key="exportUrl" value="zhgsfcyExportLrze" />
 			<map key="asSeason" value="true" />
-			<map key="title" value="众和分产业关键指标汇报" />
+			<map key="title" value="众和分产业利润总额汇报" />
 		</response>
 	</controller>
 	<controller id="zhgsfcyxssr">
@@ -883,7 +883,7 @@
 			<map key="updateUrl" value="zhgsfcyUpdateXssr" />
 			<map key="exportUrl" value="zhgsfcyExportXssr" />
 			<map key="asSeason" value="true" />
-			<map key="title" value="众和分产业关键指标汇报" />
+			<map key="title" value="众和分产业销售收入汇报" />
 		</response>
 	</controller>
 </components>

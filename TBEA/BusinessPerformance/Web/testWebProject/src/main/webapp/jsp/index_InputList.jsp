@@ -62,7 +62,7 @@
 	</div>
 </c:if> --%>
 
-<c:if test="${isJydw}">
+<c:if test="${jyfxEntry}">
 	<h3>
 		经营分析录入<a name="inputDaily"> </a>
 	</h3>
@@ -75,10 +75,33 @@
 						src="../images/charts/bar1.png"> <span><strong>经营分析录入</strong></span></a>
 				</li>
 				</c:if> --%>
+				
+				<c:if test="${isJydw}">
 				<li data-thumb="asset/img/example/bar1.png"><a
 					href="../dailyReport/yszk.do" target="_blank"><img
 						src="../images/charts/force.png"> <span><strong>应收账款日报录入</strong></span></a>
 				</li>
+				</c:if>
+				<c:if test="${xnyJyfxEntryAuth}">
+				<li data-thumb="asset/img/example/bar1.png"><a
+					href="../report/xnyqyzbEntryJsp.do" target="_blank"><img
+						src="../images/charts/force.png"> <span><strong>新能源签约周报录入</strong></span></a>
+				</li>
+				<li data-thumb="asset/img/example/bar1.png"><a
+					href="../report/xnyzbEntryJsp.do" target="_blank"><img
+						src="../images/charts/force.png"> <span><strong>新能源生产、发货和价格周报录入</strong></span></a>
+				</li>
+				<li data-thumb="asset/img/example/bar1.png"><a
+					href="../report/yszkhkzbImportJsp.do" target="_blank"><img
+						src="../images/charts/force.png"> <span><strong>新能源应收账款回款周报导入</strong></span></a>
+				</li>
+				</c:if>
+				<c:if test="${xtnyrbEntryAuth}">
+				<li data-thumb="asset/img/example/bar1.png"><a
+					href="../report/xtnyrbEntry.do" target="_blank"><img
+						src="../images/charts/force.png"> <span><strong>新特能源日报录入</strong></span></a>
+				</li>
+				</c:if>
 			</ul>
 		</div>
 	</div>

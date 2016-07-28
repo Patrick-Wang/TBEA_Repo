@@ -33,7 +33,6 @@ module report {
             let node;
             for (let i = 0; i < nodes.length; ++i){
                 node = {
-                    name : nodes[i].data.value,
                     open : false,
                     exType : nodes[i].data.id,
                     exPath : nodes[i].data.value

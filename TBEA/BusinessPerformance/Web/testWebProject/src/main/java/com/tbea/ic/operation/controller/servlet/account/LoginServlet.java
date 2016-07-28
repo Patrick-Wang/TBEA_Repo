@@ -154,6 +154,7 @@ public class LoginServlet implements OnSessionChangedListener {
 		
 		Logic lookup = new Logic(false);
 		Logic entry = new Logic(false);
+		Logic jyfxEntry = new Logic(false);
 		Logic comGbLookup = new Logic(false);
 		Logic comGbEntry = new Logic(false);
 		acl
@@ -164,7 +165,7 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("CorpAuth", loginServ.hasCorpAuth(account))
 		.add("SbdAuth", loginServ.hasSbdAuth(account))
 		.add("MarketAuth", entryServ.hasMarketPermission(account))
-		.add("isJydw", drServ.hasYszkAuthority(account))
+		.add("isJydw", jyfxEntry.or(drServ.hasYszkAuthority(account)))
 		.add("JYAnalysisEntry", drServ.hasJYAnalysisEntryAuthority(account))
 		.add("JYAnalysisSummary", drServ.hasJYAnalysisLookupAuthority(account))
 		.add("YSZKDialyLookup", drServ.hasYSZKDialyLookupAuthority(account))
@@ -203,7 +204,18 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("zhAuth", Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName()))
 		.add("notSbqgb", !Account.KNOWN_ACCOUNT_QGB.equals(account.getName()))
 		.add("admin", Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName()))
-		.add("debug", false);
+		.add("debug", false)
+		.add("xnyJyfxEntryAuth", jyfxEntry.or(extAuthServ.hasAuthority(account, 25)||
+				extAuthServ.hasAuthority(account, 29) ||
+				extAuthServ.hasAuthority(account, 31)))
+		.add("xnyJyfxLookupAuth", extAuthServ.hasAuthority(account, 26)||
+				extAuthServ.hasAuthority(account, 30) ||
+				extAuthServ.hasAuthority(account, 32))
+		.add("zhJyfxLookupAuth", extAuthServ.hasAuthority(account, 34))
+		.add("xtnyrbEntryAuth", jyfxEntry.or(extAuthServ.hasAuthority(account, 35)))
+		.add("xtnyrbLookupAuth", extAuthServ.hasAuthority(account, 36))
+		.add("jyfxEntry", jyfxEntry.value());
+		
 		
 		if (Account.KNOWN_ACCOUNT_AFL.equals(account.getName())){
 			acl.openAll();

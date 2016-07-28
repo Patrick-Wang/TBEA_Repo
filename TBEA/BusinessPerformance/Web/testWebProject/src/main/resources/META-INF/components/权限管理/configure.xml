@@ -16,6 +16,7 @@
 		<sql id="allUser">
 			select id, name
 			from jygk_account
+			order by name
 		</sql>
 		<list id ="users" type="string" sql="allUser" value="1"></list>
 		<context key="users" value="${users}"></context>
@@ -25,6 +26,7 @@
 		<sql id="allComps">
 			select id, name
 			from jygk_dwxx
+			order by name
 		</sql>
 		<list id ="comps" type="string" sql="allComps" value="1"></list>
 		<context key="comps" value="${comps}"></context>
@@ -34,6 +36,7 @@
 		<sql id="allAuths">
 			select id, instruction
 			from auth_instruction
+			order by instruction
 		</sql>
 		<list id ="auths" type="string" sql="allAuths" value="1"></list>
 		<context key="auths" value="${auths}"></context>
@@ -55,6 +58,8 @@
 				AUTH.account_id = ACCOUNT.id and
 				AUTH.company_id = DWXX.id and 
 				AUTH.auth_type = INSTRUCTION.id
+			order by
+				AUTH.id				
 		</sql>
 		
 		<list id="ids" type="int" sql="auth" value="0" />
@@ -94,16 +99,19 @@
 			<header type="array">
 				<item>
 					<name>用户</name>
+					<sortable>true</sortable>
 					<type>select</type>
 					<options>${users}</options>
 				</item>
 				<item>
 					<name>单位</name>
 					<type>select</type>
+					<sortable>true</sortable>
 					<options>${comps}</options>
 				</item>
 				<item>
 					<name>权限</name>
+					<sortable>true</sortable>
 					<type>select</type>
 					<options>${auths}</options>
 				</item>

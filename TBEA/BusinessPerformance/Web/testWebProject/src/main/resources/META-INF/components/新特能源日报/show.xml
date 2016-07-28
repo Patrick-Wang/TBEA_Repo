@@ -149,7 +149,7 @@
 		</table>
 	</service>
 	
-	<service id="xtnyrbFmtter">
+	<controller id="xtnyrbFmtter">
 		<formatter id="djgDf" export="true">
 			<EmptyFormatter >
 				<DefaultMatcher cols="0"/>
@@ -170,7 +170,7 @@
 			<NumberFormatter reservedCount="1">
 			</NumberFormatter>
 		</formatter>
-	</service>
+	</controller>
 	
 	<controller id="xtnyrbUpdate">
 
@@ -179,7 +179,7 @@
 		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
 		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
 		<callservice id="servXtnyrb"/>
-		<callservice id="xtnyrbFmtter"/>
+		<callcontroller id="xtnyrbFmtter"/>
 		
 		
 		<formatterServer id="servDjg" table="${djgResult.matrixNoIds}">
@@ -258,7 +258,7 @@
 		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
 		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
 		<callservice id="servXtnyrb"/>
-		<callservice id="xtnyrbFmtter"/>
+		<callcontroller id="xtnyrbFmtter"/>
 		
 		<ExcelTemplate id="excelTemplate" sheet="新能源日报"/>
 		

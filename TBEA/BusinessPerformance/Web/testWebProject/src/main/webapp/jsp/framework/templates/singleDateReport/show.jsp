@@ -192,7 +192,7 @@
         
             <div id="dt" style="float: left;margin-right:10px"></div>
             <input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
-                   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
+                   onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_UPDATE)" />
         </td>
     </tr>
     <tr>
@@ -204,7 +204,7 @@
         <td>
             <form id="export" method="post">
                 <input id="exportButton" type="button" value="导出"
-                       onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
+                       onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_EXPORTEXCEL, 'export')">
             </form>
         </td>
     </tr>
@@ -232,7 +232,7 @@
             }
         }
 
-        framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+        framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
             dtId:"dt",
             date: date,
             host:"table",

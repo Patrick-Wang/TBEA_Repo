@@ -180,7 +180,7 @@
 	
 	<controller id="yszkhkzb">		
 		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-			<param type="int">26</param>
+			<param type="int">32</param>
 		</call>
 		<response type="jsp" name="xnyzb/xnyzb"> 
 			<map key="date" value="${calendar.current.format}"/>

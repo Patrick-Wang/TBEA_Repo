@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataNode {
+	
+	public static interface Visitor{
+		boolean visit(DataNode node);
+	}
+	
 	private Data data;
 	private DataNode parent;
 	private List<DataNode> subNodes = new ArrayList<DataNode>();
@@ -42,5 +47,30 @@ public class DataNode {
 	 */
 	public void setSubNodes(List<DataNode> subNodes) {
 		this.subNodes = subNodes;
+	}
+	
+	public DataNode findByValue(String value){
+		if (null != this.subNodes){
+			for (DataNode node : this.subNodes){
+				if (node.getData().getValue().equals(value)){
+					return node;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public boolean accept(Visitor visitor){
+		if (!visitor.visit(this)){
+			return false;
+		}
+		if (null != this.subNodes){
+			for (DataNode node : this.subNodes){
+				if (!node.accept(visitor)){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }

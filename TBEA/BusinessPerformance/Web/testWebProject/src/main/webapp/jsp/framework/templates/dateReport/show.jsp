@@ -49,16 +49,14 @@
     <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/components/dateSeasonSelector.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicShow.js"></script>
-
     <script src="${pageContext.request.contextPath}/jsp/framework/templates/singleDateReport/show.js"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/templates/dateReport/show.js"></script>
     <title>${title}</title>
@@ -198,7 +196,7 @@
                 </div>
             </div>
             <input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
-                   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
+                   onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_UPDATE)" />
         </td>
     </tr>
     <tr>
@@ -210,7 +208,7 @@
         <td>
             <form id="export" method="post">
                 <input id="exportButton" type="button" value="导出"
-                       onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
+                       onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_EXPORTEXCEL, 'export')">
             </form>
         </td>
     </tr>
@@ -236,7 +234,7 @@
             }
         }
 
-        framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+        framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
             dtId:"dt",
             date: date,
             host:"table",

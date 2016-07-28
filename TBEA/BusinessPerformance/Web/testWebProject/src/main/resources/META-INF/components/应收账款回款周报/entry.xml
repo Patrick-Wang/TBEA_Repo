@@ -86,7 +86,7 @@
 	
 	<controller id="yszkhkzbImportJsp">
 		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-			<param type="int">25</param>
+			<param type="int">31</param>
 		</call>
 		<response type="jsp" name="components/import_data"> 
 			<map map="${authCompMap}"/>

@@ -48,6 +48,9 @@
 				<li><a href="../ydzb/gdw_zbhz.do" target="_blank"><img
 						src="../images/charts/pie1.png"> <span><strong>各单位五大经营指标完成情况</strong></span></a>
 				</li>
+				<li><a href="../report/acyhzzb.do" target="_blank"><img
+						src="../images/charts/pie2.png"> <span><strong>按照产业汇总指标</strong></span></a>
+				</li>
 <!-- 				/li
 				<li><a href="../ydzb/gdw_zbhz.do?zb=6" target="_blank"><img
 						src="../images/charts/scatter1.png"> <span><strong>销售收入指标完成情况</strong></span></a>
@@ -170,7 +173,36 @@
 						src="../images/charts/scatter2.png"> <span><strong>各单位经营指标排名情况</strong></span></a>
 				</li>
 				</c:if>
-				
+				<c:if test="${xnyJyfxLookupAuth}">
+				<li><a href="../report/yszkhkzb.do" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>新能源应收账款回款周报</strong></span></a>
+				</li>
+				<li><a href="../report/xnyzb.do" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>新能源生产、发货和价格周报表</strong></span></a>
+				</li>
+				<li><a href="../report/xnyqyzb.do" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>新能源签约周报</strong></span></a>
+				</li>
+				</c:if>
+				<c:if test="${xtnyrbLookupAuth}">
+				<li><a href="../report/xtnyrb.do" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>新特能源日报</strong></span></a>
+				</li>
+				</c:if>
+				<c:if test="${zhJyfxLookupAuth}">
+				<li><a href="../report/zhgsljzbhz.do" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>众和分子公司累计汇总</strong></span></a>
+				</li>
+				<li><a href="../report/zhgsydzbhz.do" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>众和分子公司月度汇总</strong></span></a>
+				</li>
+				<li><a href="../report/zhgsfcylrze.do" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>众和分产业利润总额汇报</strong></span></a>
+				</li>
+				<li><a href="../report/zhgsfcyxssr.do" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>众和分产业销售收入汇报</strong></span></a>
+				</li>
+				</c:if>
 			</ul>
 		</div>
 	</div>

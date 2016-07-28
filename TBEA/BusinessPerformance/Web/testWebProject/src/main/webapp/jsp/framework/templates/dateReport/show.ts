@@ -27,19 +27,23 @@ module framework.templates.DateReport {
     export class ShowView extends framework.templates.singleDateReport.ShowView{
         unitedSelector : Util.UnitedSelector
         getId():number{
-            return framework.basic.endpoint.FRAME_ID;
+            return framework.templates.singleDateReport.FRAME_ID;
         }
 
         onInitialize(opt:ShowOption):void{
             this.unitedSelector = new UnitedSelector(opt.itemNodes,opt.itemId);
-            $("#" + opt.itemId).multiselect({
-                multiple: false,
-                header: false,
-                minWidth: 100,
-                height　: '100%',///*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
-                // noneSelectedText: "请选择月份",
-                selectedList: 1
-            }).css("text-align:center");
+            $("#" + opt.itemId + " select")
+                .multiselect({
+                    multiple: false,
+                    header: false,
+                    minWidth: 100,
+                    height: '100%',
+                    // noneSelectedText: "请选择月份",
+                    selectedList: 1
+                })
+                .css("padding", "2px 0 2px 4px")
+                .css("text-align", "left")
+                .css("font-size", "12px");
             super.onInitialize(opt);
         }
 

@@ -22,18 +22,22 @@ var framework;
                     _super.apply(this, arguments);
                 }
                 ShowView.prototype.getId = function () {
-                    return framework.basic.endpoint.FRAME_ID;
+                    return framework.templates.singleDateReport.FRAME_ID;
                 };
                 ShowView.prototype.onInitialize = function (opt) {
                     this.unitedSelector = new UnitedSelector(opt.itemNodes, opt.itemId);
-                    $("#" + opt.itemId).multiselect({
+                    $("#" + opt.itemId + " select")
+                        .multiselect({
                         multiple: false,
                         header: false,
                         minWidth: 100,
                         height: '100%',
                         // noneSelectedText: "请选择月份",
                         selectedList: 1
-                    }).css("text-align:center");
+                    })
+                        .css("padding", "2px 0 2px 4px")
+                        .css("text-align", "left")
+                        .css("font-size", "12px");
                     _super.prototype.onInitialize.call(this, opt);
                 };
                 ShowView.prototype.getDate = function (date) {

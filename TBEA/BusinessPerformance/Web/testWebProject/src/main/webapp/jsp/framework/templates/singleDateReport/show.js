@@ -15,14 +15,17 @@ var framework;
         var singleDateReport;
         (function (singleDateReport) {
             var BasicEndpoint = framework.basic.BasicEndpoint;
-            var FrameEvent = framework.basic.FrameEvent;
+            singleDateReport.FRAME_ID = framework.route.nextId();
+            singleDateReport.FE_UPDATE = framework.route.nextId();
+            singleDateReport.FE_EXPORTEXCEL = framework.route.nextId();
+            singleDateReport.FE_INIT_EVENT = framework.route.nextId();
             var ShowView = (function (_super) {
                 __extends(ShowView, _super);
                 function ShowView() {
                     _super.apply(this, arguments);
                 }
                 ShowView.prototype.getId = function () {
-                    return framework.basic.endpoint.FRAME_ID;
+                    return singleDateReport.FRAME_ID;
                 };
                 ShowView.prototype.onInitialize = function (opt) {
                     this.opt = opt;
@@ -43,14 +46,14 @@ var framework;
                 };
                 ShowView.prototype.onEvent = function (e) {
                     switch (e.id) {
-                        case FrameEvent.FE_UPDATE:
+                        case singleDateReport.FE_UPDATE:
                             if (this.dateSelect == undefined) {
                                 return this.update(({}));
                             }
                             else {
                                 return this.update(this.dateSelect.getDate());
                             }
-                        case FrameEvent.FE_EXPORTEXCEL:
+                        case singleDateReport.FE_EXPORTEXCEL:
                             if (this.dateSelect == undefined) {
                                 return this.exportExcel(({}), e.data);
                             }

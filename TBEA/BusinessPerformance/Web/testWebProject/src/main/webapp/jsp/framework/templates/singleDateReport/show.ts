@@ -9,6 +9,11 @@ module framework.templates.singleDateReport {
     import BasicEndpoint = framework.basic.BasicEndpoint;
     import FrameEvent = framework.basic.FrameEvent;
 
+    export let FRAME_ID:number = framework.route.nextId();
+    export let FE_UPDATE:number = framework.route.nextId();
+    export let FE_EXPORTEXCEL:number = framework.route.nextId();
+    export let FE_INIT_EVENT:number = framework.route.nextId();
+
 
     export interface ShowOption{
         updateUrl:string;
@@ -27,7 +32,7 @@ module framework.templates.singleDateReport {
         resp:Util.ServResp;
         opt:ShowOption;
         getId():number{
-            return framework.basic.endpoint.FRAME_ID;
+            return FRAME_ID;
         }
 
         onInitialize(opt:ShowOption):void{
@@ -52,13 +57,13 @@ module framework.templates.singleDateReport {
 
         onEvent(e:framework.route.Event):any {
             switch (e.id) {
-                case FrameEvent.FE_UPDATE:
+                case FE_UPDATE:
                     if (this.dateSelect == undefined){
                         return this.update(<Util.Date>({}));
                     }else{
                         return this.update(this.dateSelect.getDate());
                     }
-                case FrameEvent.FE_EXPORTEXCEL:
+                case FE_EXPORTEXCEL:
                     if (this.dateSelect == undefined){
                         return this.exportExcel(<Util.Date>({}), e.data);
                     }else{
