@@ -107,7 +107,28 @@ var Util;
                 isNumber: false,
                 editType: "select",
                 isSortable: sortable,
-                options: { value: header.options } });
+                options: {
+                    value: header.options
+                }
+            });
+        }
+        else if ("searchSelect" == header.type) {
+            node = JQTable.Node.create({
+                name: header.name,
+                align: align,
+                isReadOnly: readOnly,
+                isNumber: false,
+                editType: "select",
+                isSortable: sortable,
+                options: {
+                    value: header.options,
+                    dataInit: function (element) {
+                        $(element).select2({
+                            language: "cn"
+                        });
+                    }
+                }
+            });
         }
         else {
             node = JQTable.Node.create({

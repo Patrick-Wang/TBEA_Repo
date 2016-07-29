@@ -1104,6 +1104,10 @@ module JQTable {
                 if (lastsel != "") { //if a row is selected for edit
                     if ($(e.target).closest("#" + this.mGridName).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row
                         //  $("#" + name).jqGrid('saveRow', lastsel);
+
+                        if ($('input[type=search]').length != 0){
+                            return;
+                        }
                         grid.jqGrid("saveCell", lastsel, lastcell);
                         //$("#" + name).resetSelection();
                         lastsel = "";

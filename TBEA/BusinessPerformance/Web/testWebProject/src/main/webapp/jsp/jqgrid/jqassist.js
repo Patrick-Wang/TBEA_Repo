@@ -983,6 +983,9 @@ var JQTable;
                 if (lastsel != "") {
                     if ($(e.target).closest("#" + _this.mGridName).length == 0) {
                         //  $("#" + name).jqGrid('saveRow', lastsel);
+                        if ($('input[type=search]').length != 0) {
+                            return;
+                        }
                         grid.jqGrid("saveCell", lastsel, lastcell);
                         //$("#" + name).resetSelection();
                         lastsel = "";

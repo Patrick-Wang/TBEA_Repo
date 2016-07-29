@@ -25,6 +25,10 @@
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.js"></script>
 
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="${pageContext.request.contextPath}/jsp/components/select2/css/select2.min.css">
+    <script src="${pageContext.request.contextPath}/jsp/components/select2/js/i18n/zh-CN.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/components/select2/js/select2.min.js" type="text/javascript"></script>
 
     <!-- jqgrid -->
     <link rel="stylesheet" type="text/css" media="screen"
@@ -63,6 +67,10 @@
         body {
             background-color: rgb(247, 247, 247);
             visibility: hidden;
+        }
+
+        .select2-container{
+            margin-left:8px;
         }
 
         .panel-content-border {

@@ -175,13 +175,13 @@
 				</c:if>
 				<c:if test="${xnyJyfxLookupAuth}">
 				<li><a href="../report/yszkhkzb.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>新能源应收账款回款周报</strong></span></a>
+						src="../images/charts/bar1.png"> <span><strong>新能源应收账款回款周报</strong></span></a>
 				</li>
 				<li><a href="../report/xnyzb.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>新能源生产、发货和价格周报表</strong></span></a>
+						src="../images/charts/bar3.png"> <span><strong>新能源生产、发货和价格周报表</strong></span></a>
 				</li>
 				<li><a href="../report/xnyqyzb.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>新能源签约周报</strong></span></a>
+						src="../images/charts/bar2.png"> <span><strong>新能源签约周报</strong></span></a>
 				</li>
 				</c:if>
 				<c:if test="${xtnyrbLookupAuth}">
@@ -191,16 +191,16 @@
 				</c:if>
 				<c:if test="${zhJyfxLookupAuth}">
 				<li><a href="../report/zhgsljzbhz.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>众和分子公司累计汇总</strong></span></a>
+						src="../images/charts/scatter3.png"> <span><strong>众和分子公司累计汇总</strong></span></a>
 				</li>
 				<li><a href="../report/zhgsydzbhz.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>众和分子公司月度汇总</strong></span></a>
+						src="../images/charts/scatter4.png"> <span><strong>众和分子公司月度汇总</strong></span></a>
 				</li>
 				<li><a href="../report/zhgsfcylrze.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>众和分产业利润总额汇报</strong></span></a>
+						src="../images/charts/bar5.png"> <span><strong>众和分产业利润总额汇报</strong></span></a>
 				</li>
 				<li><a href="../report/zhgsfcyxssr.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>众和分产业销售收入汇报</strong></span></a>
+						src="../images/charts/scatter6.png"> <span><strong>众和分产业销售收入汇报</strong></span></a>
 				</li>
 				</c:if>
 			</ul>

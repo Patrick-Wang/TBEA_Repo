@@ -100,19 +100,19 @@
 				<item>
 					<name>用户</name>
 					<sortable>true</sortable>
-					<type>select</type>
+					<type>searchSelect</type>
 					<options>${users}</options>
 				</item>
 				<item>
 					<name>单位</name>
-					<type>select</type>
+					<type>searchSelect</type>
 					<sortable>true</sortable>
 					<options>${comps}</options>
 				</item>
 				<item>
 					<name>权限</name>
 					<sortable>true</sortable>
-					<type>select</type>
+					<type>searchSelect</type>
 					<options>${auths}</options>
 				</item>
 			</header>
