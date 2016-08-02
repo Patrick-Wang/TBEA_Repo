@@ -22,7 +22,7 @@ public class PsnJTDaoImpl implements PsnJTDao{
 	public String getPsnNoByID(String id) {
 		String result = "";
 		
-		Query q = manager.createQuery("from PsnJT where ID = :id");
+		Query q = manager.createQuery("from PsnJT where 身份证号  = :id");
 		q.setParameter("id", id);
 		List<Psn> keys = q.getResultList();
 
@@ -38,7 +38,7 @@ public class PsnJTDaoImpl implements PsnJTDao{
 	public String getPsnSSOByID(String id) {
 		String result = "";
 		
-		Query q = manager.createQuery("from PsnJT where ID = :id");
+		Query q = manager.createQuery("from PsnJT where 身份证号 = :id");
 		q.setParameter("id", id);
 		List<Psn> keys = q.getResultList();
 
@@ -77,7 +77,7 @@ public class PsnJTDaoImpl implements PsnJTDao{
 	
 
 	public List<Psn> getPsnsById(String id){
-		Query q = manager.createQuery("from PsnJT where ID = :id");
+		Query q = manager.createQuery("from PsnJT where 身份证号  = :id");
 		q.setParameter("id", id);
 		List<Psn> keys = q.getResultList();
 

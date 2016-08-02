@@ -12,11 +12,11 @@ public class Psn {
 	
 	String psnSSO = "";
 	
-	String birthdate = "";
-	
-	String addr = "";
-	
-	String pk_corp = "";
+//	String birthdate = "";
+//	
+//	String addr = "";
+//	
+//	String pk_corp = "";
 
 	public String getPsnname() {
 		return psnname;
@@ -58,29 +58,29 @@ public class Psn {
 		this.psnSSO = psnSSO;
 	}
 	
-	public String getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
-	}
-
-	public String getAddr() {
-		return addr;
-	}
-
-	public void setAddr(String addr) {
-		this.addr = addr;
-	}
-
-	public String getPk_corp() {
-		return pk_corp;
-	}
-
-	public void setPk_corp(String pk_corp) {
-		this.pk_corp = pk_corp;
-	}
+//	public String getBirthdate() {
+//		return birthdate;
+//	}
+//
+//	public void setBirthdate(String birthdate) {
+//		this.birthdate = birthdate;
+//	}
+//
+//	public String getAddr() {
+//		return addr;
+//	}
+//
+//	public void setAddr(String addr) {
+//		this.addr = addr;
+//	}
+//
+//	public String getPk_corp() {
+//		return pk_corp;
+//	}
+//
+//	public void setPk_corp(String pk_corp) {
+//		this.pk_corp = pk_corp;
+//	}
 
 	
 }

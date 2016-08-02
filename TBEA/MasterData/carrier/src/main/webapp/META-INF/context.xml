@@ -7,13 +7,13 @@
 		
 	<Resource name="jdbc/master_data_psn_db" auth="Container" type="javax.sql.DataSource"
 		username="TBEAHR" password="TBEAHR" driverClassName="oracle.jdbc.driver.OracleDriver"
-		url="jdbc:oracle:thin:@dm01-scan.tbea.com.cn:1521:tbea1"
+		url="jdbc:oracle:thin:@(description=(address=(protocol=tcp)(port=1521)(host=172.28.8.155))(connect_data=(service_name=tbea)))"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1 from dual"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 
 	<Resource name="jdbc/master_data_psn_jt_db" auth="Container"
 		type="javax.sql.DataSource" username="TBEAHRJT" password="TBEAHRJT"
-		driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@dm01-scan.tbea.com.cn:1521:tbea1"
+		driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@(description=(address=(protocol=tcp)(port=1521)(host=172.28.8.155))(connect_data=(service_name=tbea)))"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1 from dual"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 </Context>

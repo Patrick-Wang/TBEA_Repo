@@ -6,36 +6,36 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "BD_PSNBASDOC")
+@Table(name = "ehr_person_info")
 public class PsnJT extends Psn {
 	
 	@Id
-	@Column(name = "id")
+	@Column(name = "身份证号")
 	String id;
 
-	@Column(name = "psnname")
+	@Column(name = "姓名")
 	String psnname;
 	
-	@Column(name = "sex")
+	@Column(name = "性别")
 	String sex;
 
-	@Column(name = "mobile")
+	@Column(name = "手机号")
 	String mobile;
 	
-	@Column(name = "basgroupdef20")
+	@Column(name = "员工号")
 	String psnNo;
 	
-	@Column(name = "basgroupdef19")
+	@Column(name = "单点登录名")
 	String psnSSO;
 	
-	@Column(name = "birthdate")
-	String birthdate;
-	
-	@Column(name = "addr")
-	String addr;
-	
-	@Column(name = "pk_corp")
-	String pk_corp;
+//	@Column(name = "birthdate")
+//	String birthdate;
+//	
+//	@Column(name = "addr")
+//	String addr;
+//	
+//	@Column(name = "pk_corp")
+//	String pk_corp;
 
 	
 	public String getId() {
@@ -86,29 +86,29 @@ public class PsnJT extends Psn {
 		this.psnSSO = psnSSO;
 	}
 	
-	public String getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
-	}
-
-	public String getAddr() {
-		return addr;
-	}
-
-	public void setAddr(String addr) {
-		this.addr = addr;
-	}
-
-	public String getPk_corp() {
-		return pk_corp;
-	}
-
-	public void setPk_corp(String pk_corp) {
-		this.pk_corp = pk_corp;
-	}
+//	public String getBirthdate() {
+//		return birthdate;
+//	}
+//
+//	public void setBirthdate(String birthdate) {
+//		this.birthdate = birthdate;
+//	}
+//
+//	public String getAddr() {
+//		return addr;
+//	}
+//
+//	public void setAddr(String addr) {
+//		this.addr = addr;
+//	}
+//
+//	public String getPk_corp() {
+//		return pk_corp;
+//	}
+//
+//	public void setPk_corp(String pk_corp) {
+//		this.pk_corp = pk_corp;
+//	}
 
 	
 }

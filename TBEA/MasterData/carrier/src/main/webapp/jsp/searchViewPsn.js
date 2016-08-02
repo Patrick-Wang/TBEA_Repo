@@ -69,19 +69,19 @@ var searchView;
                 "mobile",
                 "psnSSO",
                 "psnNo",
-                "birthdate",
-                "addr",
-                "pk_corp"
+//                "birthdate",
+//                "addr",
+//                "pk_corp"
             ], [
                 "身份证",
                 "姓名",
                 "性别",
                 "电话",
                 "单点登录名称",
-                "工号",
-                "生日",
-                "地址",
-                "部门"
+                "工号"
+//                "生日",
+//                "地址",
+//                "部门"
             ]);
             var parent = $("#" + tableId);
             parent.empty();
