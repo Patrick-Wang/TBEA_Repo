@@ -151,7 +151,7 @@ public class LoginServlet implements OnSessionChangedListener {
 		ACL acl = new ACL();
 		SessionManager.setAccount(session, account);
 		SessionManager.setAcl(session, acl);
-		
+		boolean yszkrb = false;
 		Logic lookup = new Logic(false);
 		Logic entry = new Logic(false);
 		Logic jyfxEntry = new Logic(false);
@@ -168,9 +168,10 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("isJydw", jyfxEntry.or(drServ.hasYszkAuthority(account)))
 		.add("JYAnalysisEntry", drServ.hasJYAnalysisEntryAuthority(account))
 		.add("JYAnalysisSummary", drServ.hasJYAnalysisLookupAuthority(account))
-		.add("YSZKDialyLookup", drServ.hasYSZKDialyLookupAuthority(account))
+		.add("YSZKDialyLookup", yszkrb = (drServ.hasYSZKDialyLookupAuthority(account) ||
+				extAuthServ.hasAuthority(account, 28)))
 		.add("XJLDialyLookup", drServ.hasXJLDialyLookupAuthority(account))
-		.add("JYAnalysisLookup", drServ.hasJYAnalysisLookupAuthority(account)
+		.add("JYAnalysisLookup", yszkrb || drServ.hasJYAnalysisLookupAuthority(account)
 								|| drServ.hasYSZKDialyLookupAuthority(account))
 		.add("JYEntryLookup", drServ.hasJYEntryLookupAuthority(account))
 		.add("PriceLibAuth", extAuthServ.hasAuthority(account, AuthType.PriceLib))

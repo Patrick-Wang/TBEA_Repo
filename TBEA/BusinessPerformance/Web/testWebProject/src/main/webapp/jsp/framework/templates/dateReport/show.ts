@@ -34,7 +34,7 @@ module framework.templates.DateReport {
             return framework.templates.singleDateReport.FRAME_ID;
         }
 
-        onInitialize(opt:ShowOption):void{
+        onInitialize(opt:any):void{
             this.unitedSelector = new UnitedSelector(opt.itemNodes,opt.itemId);
             $("#" + opt.itemId + " select")
                 .multiselect({
@@ -71,7 +71,7 @@ module framework.templates.DateReport {
         updateTable():void {
             var name = this.opt.host + "_jqgrid_uiframe";
             var pagername = name + "pager";
-            this.mTableAssist = Util.JQGridAssistantFactory.createTable(name, this.resp);
+            this.mTableAssist = Util.createTable(name, this.resp);
 
             var parent = $("#" + this.opt.host);
             parent.empty();

@@ -46,7 +46,7 @@ var framework;
                 return this;
             };
             Router.prototype.broadcast = function (id, data) {
-                for (var i in this.mEplist) {
+                for (var i = 0; i < this.mEplist.lenth; ++i) {
                     var event_1 = {
                         from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
                         to: undefined,

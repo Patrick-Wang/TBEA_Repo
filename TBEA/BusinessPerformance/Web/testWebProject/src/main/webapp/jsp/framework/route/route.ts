@@ -70,7 +70,7 @@ module framework.route {
         }
 
         public broadcast(id:number, data?:any):any {
-            for (let i in this.mEplist) {
+            for (let i = 0; i < this.mEplist.lenth; ++i) {
                 let event = {
                     from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
                     to: undefined,

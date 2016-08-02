@@ -174,7 +174,7 @@
 		<context key="cal" value="${request.date.asCalendar}"></context>
 		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
 		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
-		<context key="zt" value="${4}"></context>
+		<context key="zt" value="${2}"></context>
 		<callservice id="servXtnyrbEntry"/>
 		<response type="json">
 			<errorCode>0</errorCode>

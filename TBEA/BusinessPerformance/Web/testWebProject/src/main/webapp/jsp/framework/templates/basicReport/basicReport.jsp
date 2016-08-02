@@ -50,8 +50,8 @@
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
 <%@include file="../framework/basic/basicShow.jsp"%>
-<script src="${pageContext.request.contextPath}/jsp/xnyzb/xnyzbdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/xnyzb/xnyzb.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/basicReport/basicReportdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/basicReport/basicReport.js" type="text/javascript"></script>
 <title>${title}</title>
 
 <style type="text/css">
@@ -158,21 +158,23 @@ th.ui-th-ltr {
 	text-align: left;
 	font-size: 12px;
 }
-
+#exportButton {
+	height: 23px;
+	width:100px;
+	padding: .1em 1em;
+	margin-top: 2px;
+}
 </style>
 </head>
-<body >
+<body>
 	<div class="header">
-		<h1 id="headertitle">新能源周报</h1>
+		<h1 id="headertitle">${title}</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">
 		<tr>
 			<td>
-				<div style="float: left;margin-right:5px;padding-top:3px">开始日期: </div>
-				<input id="dstart" style="float: left;width: 100px;margin-right:10px">
-				<div style="float: left;margin-right:5px;padding-top:3px">截至日期: </div>
-				<input id="dEnd" style="float: left;width: 100px;margin-right:10px">
+				<div id="dt" style="float: left"></div>
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
@@ -181,7 +183,7 @@ th.ui-th-ltr {
 		</tr>
 		<tr>
 			<td id="plugin">
-				<%@include file="xnyzb/xnyzb.jsp"%>
+				<%@include file="basic/basic.jsp"%>
 			</td>
 		</tr>
 		<tr>
@@ -197,15 +199,14 @@ th.ui-th-ltr {
 
 
     $(document).ready(function () {
-		var dt = new Date(Date.parse('${date}'.replace(/-/g, '/')));
 		framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
 			type: "type",
 			comp:"compid",
 			comps : JSON.parse('${nodeData}'),
+			dt: "dt",
 			date: {
-				month: dt.getMonth() + 1,
-				year: dt.getFullYear(),
-				day: dt.getDate()
+				month: "${month}".length == 0 ? undefined : parseInt("${month}"),
+				year: ${year}
 			}
 		});
         $("#exportButton")

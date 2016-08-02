@@ -871,6 +871,7 @@
 	<controller id="zhgsfcylrze">
 		<response type="jsp" name="framework/templates/singleDateReport/show">
 			<map key="date" value="${calendar.current.format}" />
+			<map key="dateEnd" value="${calendar.current.months[12].format}" />
 			<map key="updateUrl" value="zhgsfcyUpdateLrze" />
 			<map key="exportUrl" value="zhgsfcyExportLrze" />
 			<map key="asSeason" value="true" />
@@ -880,10 +881,46 @@
 	<controller id="zhgsfcyxssr">
 		<response type="jsp" name="framework/templates/singleDateReport/show">
 			<map key="date" value="${calendar.current.format}" />
+			<map key="dateEnd" value="${calendar.current.months[12].format}" />
 			<map key="updateUrl" value="zhgsfcyUpdateXssr" />
 			<map key="exportUrl" value="zhgsfcyExportXssr" />
 			<map key="asSeason" value="true" />
 			<map key="title" value="众和分产业销售收入汇报" />
+		</response>
+	</controller>
+	
+	<controller id="zhgsfcyExportUnion">
+		<if test="${request.item.asInt == 0}">
+			<context key="zb" value="${1}" />
+			<context key="zbname" value="利润总额" />
+		</if>
+		<if test="${request.item.asInt == 1}">
+			<context key="zb" value="${6}" />
+			<context key="zbname" value="销售收入" />
+		</if>
+		<callcontroller id="zhgsfcyExport"/>
+	</controller>
+	<controller id="zhgsfcyUpdateUnion">
+		<if test="${0==request.item.asInt}">
+		<context key="zb" value="${1}" />
+		<context key="zbname" value="利润总额" />
+		</if>
+		<if test="${1==request.item.asInt}">
+		<context key="zb" value="${6}" />
+		<context key="zbname" value="销售收入" />
+		</if>
+		<callcontroller id="zhgsfcyUpdate"/>
+	</controller>
+	
+	<controller id="zhgsfcyUnion">
+		<response type="jsp" name="framework/templates/dateReport/show">
+		<map key="date" value="${calendar.current.format}" />
+			<map key="dateEnd" value="${calendar.current.months[12].format}" />
+			<map key="updateUrl" value="zhgsfcyUpdateUnion" />
+			<map key="exportUrl" value="zhgsfcyExportUnion" />
+			<map key="asSeason" value="true" />
+			<map key="dateNode" value="[{'data':{'id':0,'value':'利润总额'}},{'data':{'id':1,'value':'销售收入'}}]" />
+			<map key="title" value="众和分产业关键指标汇报" />
 		</response>
 	</controller>
 </components>

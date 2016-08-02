@@ -4,6 +4,8 @@ declare var $;
 
 module Util {
 
+
+
     export interface Header{
         name:string;
         type:string;
@@ -45,9 +47,8 @@ module Util {
         PRICELIB_JCYCLJG_IMPORT_ERROR
     }
 
-    export class JQGridAssistantFactory {
 
-        public static createTable(gridName:string, gridCtrl: Util.GridCtrl):JQTable.JQGridAssistant {
+        export function createTable(gridName:string, gridCtrl: Util.GridCtrl):JQTable.JQGridAssistant {
 
             let nodes : JQTable.Node[] = [];
             for (let i= 0; i < gridCtrl.header.length; ++i) {
@@ -88,7 +89,7 @@ module Util {
 
             return tableAssist;
         }
-    }
+
 
     export interface IResponse {
         errorCode:ErrorCode;
@@ -179,7 +180,7 @@ module Util {
         return node;
     }
 
-    function indexOf(arr, val) {
+    export function indexOf(arr, val) {
         for (var i = 0; i < arr.length; i++) {
             if (arr[i] == val) {
                 return i;

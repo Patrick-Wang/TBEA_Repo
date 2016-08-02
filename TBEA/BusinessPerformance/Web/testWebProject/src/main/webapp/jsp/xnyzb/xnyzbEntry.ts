@@ -29,7 +29,7 @@ module xnyzb{
                 dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
                 dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
                 onSelect: (selectedDate) => {//选择日期后执行的操作
-                    var d: Date = new Date(selectedDate);
+                    var d: Date = new Date(selectedDate.replace(/-/g, '/'));
                     this.mDStart = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
                 }
             });
@@ -51,7 +51,7 @@ module xnyzb{
                 dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
                 dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
                 onSelect: (selectedDate) => {//选择日期后执行的操作
-                    var d: Date = new Date(selectedDate);
+                    var d: Date = new Date(selectedDate.replace(/-/g, '/'));
                     this.mDEnd = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
                 }
             });

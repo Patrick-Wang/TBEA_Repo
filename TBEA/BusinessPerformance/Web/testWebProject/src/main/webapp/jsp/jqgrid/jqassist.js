@@ -694,7 +694,7 @@ var JQTable;
             var grid = $("#" + this.mGridName + "");
             var data = [];
             for (var i in grid[0].p.data) {
-                if (this.mEditedRows.indexOf(grid[0].p.data[i].id) >= 0) {
+                if (Util.indexOf(this.mEditedRows, grid[0].p.data[i].id) >= 0) {
                     var row = [];
                     row.push(grid[0].p.data[i].id);
                     for (var j in this.mColModel) {
@@ -944,7 +944,7 @@ var JQTable;
                 afterSaveCell: function () {
                     $("input").attr("disabled", false);
                     var ids = grid.jqGrid('getDataIDs');
-                    if (_this.mEditedRows.indexOf(ids[lastsel - 1]) < 0) {
+                    if (Util.indexOf(_this.mEditedRows, ids[lastsel - 1]) < 0) {
                         _this.mEditedRows.push(ids[lastsel - 1]);
                     }
                     lastsel = "";
@@ -1026,8 +1026,9 @@ var JQTable;
                                 _this.showError("数据已保存，无法删除");
                                 return;
                             }
-                            if (_this.mEditedRows.indexOf(rowid) >= 0) {
-                                _this.mEditedRows.splice(_this.mEditedRows.indexOf(rowid), 1);
+                            var ind = Util.indexOf(_this.mEditedRows, rowid);
+                            if (ind >= 0) {
+                                _this.mEditedRows.splice(ind, 1);
                             }
                             var ids = grid.jqGrid('getDataIDs');
                             grid.jqGrid("delRowData", rowid);

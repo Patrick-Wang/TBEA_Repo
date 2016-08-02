@@ -37,7 +37,7 @@
 	
 	<controller id="xnyzbSubmit">
 		<context key="data" value="${request.data.asJsonArray}"></context>
-		<context key="zt" value="${4}"></context>
+		<context key="zt" value="${2}"></context>
 		<callservice id="servCompTypeToId"/>
 		<callservice id="servXnyzbEntry"/>
 		<response type="json">

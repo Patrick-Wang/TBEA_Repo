@@ -24,6 +24,7 @@ module framework.templates.singleDateReport {
         host:string;
         date:Util.Date;
         dtId:string;
+        dateEnd:Util.Date;
         asSeason:boolean;
     }
 
@@ -46,11 +47,14 @@ module framework.templates.singleDateReport {
                 $("#" + opt.dtId).hide();
                 this.update(<Util.Date>({}));
             }else{
+                if (opt.dateEnd == undefined){
+                    opt.dateEnd = $.extend({}, opt.date);
+                }
                 this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
                     year:opt.date.year - 3,
                     month:opt.date.month,
                     day:opt.date.day
-                }, opt.date, opt.date, opt.asSeason);
+                }, opt.dateEnd, opt.date, opt.asSeason);
                 this.update(this.dateSelect.getDate());
             }
 
@@ -93,7 +97,7 @@ module framework.templates.singleDateReport {
         updateTable():void {
             var name = this.opt.host + "_jqgrid_uiframe";
             var pagername = name + "pager";
-            this.mTableAssist = Util.JQGridAssistantFactory.createTable(name, this.resp);
+            this.mTableAssist = Util.createTable(name, this.resp);
 
             var parent = $("#" + this.opt.host);
             parent.empty();

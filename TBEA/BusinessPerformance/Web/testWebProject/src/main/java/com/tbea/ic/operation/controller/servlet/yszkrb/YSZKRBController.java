@@ -117,7 +117,7 @@ public class YSZKRBController {
 				HSSFCell cell = row.getCell(0);
 				cell.setCellValue(data.get(i)[0]);
 				for (int j = 1, jlen = data.get(i).length; j < jlen; ++j) {
-					cell = row.createCell(j + 1);
+					cell = row.createCell(j);
 	//				formatter.format(j, cell, data.get(i)[j]);
 					formatterChain.handle(null, j, template, cell, data.get(i)[j]);
 				}

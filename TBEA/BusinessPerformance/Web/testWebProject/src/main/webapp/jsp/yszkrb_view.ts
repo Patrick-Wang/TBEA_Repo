@@ -96,9 +96,16 @@ module yszkrb_view {
         }
         private initPercentList(): std.vector<number> {
             var precentList: std.vector<number> = new std.vector<number>();
-            precentList.push(YSZKColumnId.HLZBWC);
-            precentList.push(YSZKColumnId.HLJHWCL);
-            precentList.push(YSZKColumnId.JHWCL);
+            if (this.mData.length == 1){
+                precentList.push(YSZKColumnId.HLZBWC + 1);
+                precentList.push(YSZKColumnId.HLJHWCL + 1);
+                precentList.push(YSZKColumnId.JHWCL + 1);
+            }else{
+                precentList.push(YSZKColumnId.HLZBWC);
+                precentList.push(YSZKColumnId.HLJHWCL);
+                precentList.push(YSZKColumnId.JHWCL);
+            }
+
             return precentList;
         }
 

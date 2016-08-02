@@ -10,13 +10,15 @@
 
 <!-- jquery -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
+
 <!-- jquery ui blue --> 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
-<!-- 多选菜单 -->  
-<link rel="stylesheet" type="text/css" 
+
+<!-- 多选菜单 -->
+<link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.css" />
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/jsp/multi-select/assets/style.css" />
@@ -27,7 +29,7 @@
 	src="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.js"></script>
 
 
-<!-- jqgrid --> 
+<!-- jqgrid -->
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.jqgrid.css">
 <link rel="stylesheet" type="text/css" media="screen"
@@ -38,21 +40,23 @@
 	type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
- 
+
 <!-- jqgrid assist -->
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/vector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/jqgrid/jqassist.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/json2.js" type="text/javascript"></script>
 
+
+<script src="${pageContext.request.contextPath}/jsp/json2.js" type="text/javascript"></script>
 
 <!-- message box -->
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-<%@include file="../framework/basic/basicShow.jsp"%>
-<script src="${pageContext.request.contextPath}/jsp/xnyzb/xnyzbdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/xnyzb/xnyzb.js" type="text/javascript"></script>
-<title>${title}</title>
+
+<%@include file="../framework/basic/basicEntry.jsp"%>
+<script src="${pageContext.request.contextPath}/jsp/basicReport/basicReportdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/basicReport/basicReportEntry.js" type="text/javascript"></script>
+<title>完工产品情况</title>
 
 <style type="text/css">
 body {
@@ -139,7 +143,7 @@ body {
 	margin-top: 10px;
 	margin-left: 90px;
 	border: 0;
-	background-color: #5cb85c;
+	background-color: #5cb85c; 
 }
 
 th.ui-th-column div {
@@ -158,60 +162,49 @@ th.ui-th-ltr {
 	text-align: left;
 	font-size: 12px;
 }
-
 </style>
-</head>
-<body >
+</head> 
+<body>
 	<div class="header">
-		<h1 id="headertitle">新能源周报</h1>
+		<h1 id="headertitle">完工产品情况</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">
 		<tr>
 			<td>
-				<div style="float: left;margin-right:5px;padding-top:3px">开始日期: </div>
-				<input id="dstart" style="float: left;width: 100px;margin-right:10px">
-				<div style="float: left;margin-right:5px;padding-top:3px">截至日期: </div>
-				<input id="dEnd" style="float: left;width: 100px;margin-right:10px">
+				<div id="dt" style="float: left"></div>
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
-		</tr>
+		</tr> 
 		<tr>
 			<td id="plugin">
-				<%@include file="xnyzb/xnyzb.jsp"%>
+				<%@include file="basic/basicEntry.jsp"%>
 			</td>
-		</tr>
+		</tr> 
 		<tr>
 			<td>
-				<form id="export" method="post">
-					<input id="exportButton" type="button" value="导出"
-						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
-				</form> 
+				<input id="gbsv" type="button" value="保存" style="float: right; width: 80px; margin-left: 10px;"
+					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SAVE)" />
+				<input id="gbsm" type="button" value="提交" style="float: right; width: 80px; margin-left: 10px;"
+					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)" />
 			</td>
 		</tr>
 	</Table>
 	<script type="text/javascript">
-
-
-    $(document).ready(function () {
-		var dt = new Date(Date.parse('${date}'.replace(/-/g, '/')));
-		framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
-			type: "type",
-			comp:"compid",
-			comps : JSON.parse('${nodeData}'),
-			date: {
-				month: dt.getMonth() + 1,
-				year: dt.getFullYear(),
-				day: dt.getDate()
-			}
-		});
-        $("#exportButton")
-			.css("height", "23px")
-			.css("padding", ".1em 1em")
-			.css("margin-top", "2px");
+	    $(document).ready(function () {
+			framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+				type: "type",
+				dt: "dt",
+				comp:"compid",
+				comps : JSON.parse('${nodeData}'),
+				date: {
+					month: "${month}".length == 0 ? undefined : parseInt("${month}"),
+					year: ${year}
+				}
+			});
         $(document.body).css("visibility", "visible");
     });
 </script>
@@ -219,7 +212,7 @@ th.ui-th-ltr {
 	<script src="${pageContext.request.contextPath}/jsp/style_button.js"></script>
 	<script src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 	<%@include file="../components/loading.jsp"%>
-</body>
+</body> 
 
 
 </html>

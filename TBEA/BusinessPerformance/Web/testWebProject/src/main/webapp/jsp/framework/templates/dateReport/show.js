@@ -61,7 +61,7 @@ var framework;
                 ShowView.prototype.updateTable = function () {
                     var name = this.opt.host + "_jqgrid_uiframe";
                     var pagername = name + "pager";
-                    this.mTableAssist = Util.JQGridAssistantFactory.createTable(name, this.resp);
+                    this.mTableAssist = Util.createTable(name, this.resp);
                     var parent = $("#" + this.opt.host);
                     parent.empty();
                     parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");

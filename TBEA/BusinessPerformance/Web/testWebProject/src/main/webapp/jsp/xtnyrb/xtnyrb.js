@@ -27,11 +27,11 @@ var xtnyzb;
                 .css("margin-top", "5px");
             var nameDjg = this.opt.host + "_jqgrid_uiframe_djg";
             var nameZbdc = this.opt.host + "_jqgrid_uiframe_zbc";
-            this.mTableAssist = Util.JQGridAssistantFactory.createTable(nameDjg, this.response());
-            this.mZbdcAssist = Util.JQGridAssistantFactory.createTable(nameZbdc, this.response().zbdc);
+            this.mTableAssist = Util.createTable(nameDjg, this.response());
+            this.mZbdcAssist = Util.createTable(nameZbdc, this.response().zbdc);
             var parent = $("#" + this.opt.host);
             parent.empty();
-            parent.append("<table id='" + nameDjg + "'></table></div><table id='" + nameZbdc + "'></table></div>");
+            parent.append("<table id=\"" + nameDjg + "\"></table><div><table id=\"" + nameZbdc + "\"></table></div>");
             var jqTable = $("#" + nameDjg);
             jqTable.jqGrid(this.mTableAssist.decorate({
                 datatype: "local",

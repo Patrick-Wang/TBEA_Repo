@@ -18,7 +18,7 @@
 	
 	<controller id="yszkhkzbImport">
 		<context key="data" value="${request.upfile.asExcel}"></context>
-		<context key="zt" value="${4}"></context>
+		<context key="zt" value="${2}"></context>
 		<callservice id="servCompTypeToId"/>
 		<callservice id="servEntryYszkhkzb"/>
 		<response type="json">

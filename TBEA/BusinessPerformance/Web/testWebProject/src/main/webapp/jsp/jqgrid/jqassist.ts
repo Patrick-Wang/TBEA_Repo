@@ -797,7 +797,7 @@ module JQTable {
             var grid = $("#" + this.mGridName + "");
             var data:Array<string[]> = [];
             for (var i in grid[0].p.data) {
-                if (this.mEditedRows.indexOf(grid[0].p.data[i].id) >= 0){
+                if (Util.indexOf(this.mEditedRows, grid[0].p.data[i].id) >= 0){
                     var row = [];
                     row.push(grid[0].p.data[i].id);
                     for (var j in this.mColModel) {
@@ -1065,7 +1065,7 @@ module JQTable {
                 afterSaveCell: () => {
                     $("input").attr("disabled", false);
                     let ids:string[] = grid.jqGrid('getDataIDs');
-                    if (this.mEditedRows.indexOf(ids[lastsel - 1]) < 0){
+                    if (Util.indexOf(this.mEditedRows, ids[lastsel - 1]) < 0){
                         this.mEditedRows.push(ids[lastsel - 1]);
                     }
                     lastsel = "";
@@ -1153,9 +1153,9 @@ module JQTable {
                             this.showError("数据已保存，无法删除");
                             return;
                         }
-
-                        if (this.mEditedRows.indexOf(rowid) >= 0){
-                            this.mEditedRows.splice(this.mEditedRows.indexOf(rowid), 1);
+                        let ind = Util.indexOf(this.mEditedRows, rowid);
+                        if (ind >= 0){
+                            this.mEditedRows.splice(ind, 1);
                         }
 
                         let ids:string[] = grid.jqGrid('getDataIDs');

@@ -1,5 +1,6 @@
 ﻿<html>
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 
     <!-- message box -->
@@ -58,6 +59,8 @@
     <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/framework/basic/basic.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicShow.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/templates/singleDateReport/show.js"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/templates/dateReport/show.js"></script>
     <title>${title}</title>
@@ -218,7 +221,7 @@
     framework.templates.DateReport.createInstance();
     $(document).ready(function () {
 
-
+        var dateEnd;
         var date;
         if ('${date}' == ""){
             date = {
@@ -233,11 +236,18 @@
                 year: dt.getFullYear(),
                 day: dt.getDate()
             }
+            dt = new Date(Date.parse('${dateEnd}'.replace(/-/g, '/')));
+            dateEnd = {
+                month: dt.getMonth() + 1,
+                year: dt.getFullYear(),
+                day: dt.getDate()
+            }
         }
 
         framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
             dtId:"dt",
             date: date,
+            dateEnd:dateEnd,
             host:"table",
             title:"${title}",
             asSeason:"${asSeason}" == "true" ? true : false,

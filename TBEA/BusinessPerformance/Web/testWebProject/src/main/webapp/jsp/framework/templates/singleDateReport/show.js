@@ -40,11 +40,14 @@ var framework;
                         this.update(({}));
                     }
                     else {
+                        if (opt.dateEnd == undefined) {
+                            opt.dateEnd = $.extend({}, opt.date);
+                        }
                         this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
                             year: opt.date.year - 3,
                             month: opt.date.month,
                             day: opt.date.day
-                        }, opt.date, opt.date, opt.asSeason);
+                        }, opt.dateEnd, opt.date, opt.asSeason);
                         this.update(this.dateSelect.getDate());
                     }
                 };
@@ -83,7 +86,7 @@ var framework;
                 ShowView.prototype.updateTable = function () {
                     var name = this.opt.host + "_jqgrid_uiframe";
                     var pagername = name + "pager";
-                    this.mTableAssist = Util.JQGridAssistantFactory.createTable(name, this.resp);
+                    this.mTableAssist = Util.createTable(name, this.resp);
                     var parent = $("#" + this.opt.host);
                     parent.empty();
                     parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");

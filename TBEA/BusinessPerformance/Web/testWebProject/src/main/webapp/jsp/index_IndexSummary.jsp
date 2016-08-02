@@ -196,11 +196,8 @@
 				<li><a href="../report/zhgsydzbhz.do" target="_blank"><img
 						src="../images/charts/scatter4.png"> <span><strong>众和分子公司月度汇总</strong></span></a>
 				</li>
-				<li><a href="../report/zhgsfcylrze.do" target="_blank"><img
-						src="../images/charts/bar5.png"> <span><strong>众和分产业利润总额汇报</strong></span></a>
-				</li>
-				<li><a href="../report/zhgsfcyxssr.do" target="_blank"><img
-						src="../images/charts/scatter6.png"> <span><strong>众和分产业销售收入汇报</strong></span></a>
+				<li><a href="../report/zhgsfcyUnion.do" target="_blank"><img
+						src="../images/charts/bar5.png"> <span><strong>众和分产业关键指标汇报</strong></span></a>
 				</li>
 				</c:if>
 			</ul>

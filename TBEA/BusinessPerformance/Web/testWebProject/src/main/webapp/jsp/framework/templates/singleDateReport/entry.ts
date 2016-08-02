@@ -86,7 +86,7 @@ module framework.templates.singleDateReport {
         updateTable():void {
             var name = this.opt.host + "_jqgrid_uiframe";
             var pagername = name + "pager";
-            this.mTableAssist = Util.JQGridAssistantFactory.createTable(name, this.resp);
+            this.mTableAssist = Util.createTable(name, this.resp);
 
             var parent = $("#" + this.opt.host);
             parent.empty();

@@ -56,7 +56,7 @@
 <%@include file="../framework/basic/basicEntry.jsp"%>
 <script src="${pageContext.request.contextPath}/jsp/xnyzb/xnyzbdef.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/xnyzb/xnyzbEntry.js" type="text/javascript"></script>
-<title>完工产品情况</title>
+<title>${title}</title>
 
 <style type="text/css">
 body {

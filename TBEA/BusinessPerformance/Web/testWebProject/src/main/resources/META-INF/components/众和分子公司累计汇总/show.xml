@@ -412,6 +412,7 @@
 	<controller id="zhgsljzbhz">
 		<response type="jsp" name="framework/templates/singleDateReport/show">
 			<map key="date" value="${calendar.current.format}" />
+			<map key="dateEnd" value="${calendar.current.months[12].format}" />
 			<map key="updateUrl" value="zhgsljzbhzUpdate" />
 			<map key="exportUrl" value="zhgsljzbhzExport" />
 			<map key="asSeason" value="true" />

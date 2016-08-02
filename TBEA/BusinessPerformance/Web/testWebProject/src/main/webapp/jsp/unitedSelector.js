@@ -17,7 +17,7 @@ var Util;
             }
         };
         DataNode.prototype.appendAll = function (nodes) {
-            for (var i in nodes) {
+            for (var i = 0; i < nodes.length; ++i) {
                 this.append(nodes[i]);
             }
         };

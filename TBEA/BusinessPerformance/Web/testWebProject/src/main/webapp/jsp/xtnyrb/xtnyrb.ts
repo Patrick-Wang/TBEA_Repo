@@ -29,55 +29,57 @@ module xtnyzb{
 
             let nameDjg = this.opt.host + "_jqgrid_uiframe_djg";
             let nameZbdc = this.opt.host + "_jqgrid_uiframe_zbc";
-            this.mTableAssist = Util.JQGridAssistantFactory.createTable(nameDjg, this.response());
-            this.mZbdcAssist = Util.JQGridAssistantFactory.createTable(nameZbdc, this.response().zbdc);
+            this.mTableAssist = Util.createTable(nameDjg, this.response());
+            this.mZbdcAssist = Util.createTable(nameZbdc, this.response().zbdc);
             var parent = $("#" + this.opt.host);
             parent.empty();
-            parent.append("<table id='" + nameDjg + "'></table></div><table id='" + nameZbdc + "'></table></div>");
-            let jqTable = $("#" + nameDjg);
-            jqTable.jqGrid(
-                this.mTableAssist.decorate({
-                    datatype: "local",
-                    data: this.mTableAssist.getData(this.response().data),
-                    multiselect: false,
-                    drag: false,
-                    resize: false,
-                    assistEditable:false,
-                    //autowidth : false,
-                    cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
-                    cellEdit: false,
-                    // height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 1000,
-                    height: '100%',
-                    width: '100%',
-                    shrinkToFit: true,
-                    autoScroll: true,
-                    caption:"多晶硅产量（吨）"
-                }));
-            jqTable = $("#" + nameZbdc);
-            jqTable.jqGrid(
-                this.mZbdcAssist.decorate({
-                    datatype: "local",
-                    data: this.mZbdcAssist.getData(this.response().zbdc.data),
-                    multiselect: false,
-                    drag: false,
-                    resize: false,
-                    assistEditable:false,
-                    //autowidth : false,
-                    cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
-                    cellEdit: false,
-                    // height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 1000,
-                    height: '100%',
-                    width: '100%',
-                    shrinkToFit: true,
-                    autoScroll: true,
-                    caption:"自备电厂电量（万kw·h）"
-                }));
+            parent.append("<table id=\"" + nameDjg + "\"></table><div><table id=\"" + nameZbdc + "\"></table></div>");
+
+                let jqTable = $("#" + nameDjg);
+                jqTable.jqGrid(
+                    this.mTableAssist.decorate({
+                        datatype: "local",
+                        data: this.mTableAssist.getData(this.response().data),
+                        multiselect: false,
+                        drag: false,
+                        resize: false,
+                        assistEditable:false,
+                        //autowidth : false,
+                        cellsubmit: 'clientArray',
+                        //editurl: 'clientArray',
+                        cellEdit: false,
+                        // height: data.length > 25 ? 550 : '100%',
+                        // width: titles.length * 200,
+                        rowNum: 1000,
+                        height: '100%',
+                        width: '100%',
+                        shrinkToFit: true,
+                        autoScroll: true,
+                        caption:"多晶硅产量（吨）"
+                    }));
+                jqTable = $("#" + nameZbdc);
+                jqTable.jqGrid(
+                    this.mZbdcAssist.decorate({
+                        datatype: "local",
+                        data: this.mZbdcAssist.getData(this.response().zbdc.data),
+                        multiselect: false,
+                        drag: false,
+                        resize: false,
+                        assistEditable:false,
+                        //autowidth : false,
+                        cellsubmit: 'clientArray',
+                        //editurl: 'clientArray',
+                        cellEdit: false,
+                        // height: data.length > 25 ? 550 : '100%',
+                        // width: titles.length * 200,
+                        rowNum: 1000,
+                        height: '100%',
+                        width: '100%',
+                        shrinkToFit: true,
+                        autoScroll: true,
+                        caption:"自备电厂电量（万kw·h）"
+                    }));
+
         }
     }
     let ins = new XtnyzbShowView();
