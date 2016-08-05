@@ -16,10 +16,19 @@ public class ContextXmlInterpreter implements XmlInterpreter {
 			String key = e.getAttribute("key");
 			String value = e.getAttribute("value");
 			Object obj = XmlUtil.parseELText(value, new ELParser(component));
-			if (null != obj){
-				component.global(key, obj);
-			}else{
-				component.global(key, component.getVar(value));
+			if ("false".equals(e.getAttribute("export"))){
+				if (null != obj){
+					component.local(key, obj);
+				}else{
+					component.local(key, component.getVar(value));
+				}
+			}
+			else{
+				if (null != obj){
+					component.global(key, obj);
+				}else{
+					component.global(key, component.getVar(value));
+				}
 			}
 			return true;
 		}

@@ -9,6 +9,9 @@ import com.tbea.ic.operation.reportframe.util.TypeUtil;
 
 public class PackingMap extends ClosureMap {
 
+	private final static String METHOD_ETEND_ISARRAY = "isArray";
+	private final static String METHOD_ETEND_ISLIST = "isList";
+	
 	Object packageObj;
 	int nextSize = 0;
 	Method md;
@@ -45,17 +48,34 @@ public class PackingMap extends ClosureMap {
 	@Override
 	protected Object onGetProp(List<Object> args) throws Exception {
 		if (null == this.md){
-			return null;
+			return invokeExtendMethod(args);
 		}
 		nextSize = 0;
-		args.remove(0);
 		Object ret = this;
-		if (TypeUtil.typeOf(md.getReturnType(), void.class)){
-			this.md.invoke(packageObj, args.toArray());
+		if (!args.isEmpty()){
+			args.remove(0);
+			if (TypeUtil.typeOf(md.getReturnType(), void.class)){
+				this.md.invoke(packageObj, args.toArray());
+			}else{
+				ret = this.md.invoke(packageObj, args.toArray());
+			}
 		}else{
-			ret = this.md.invoke(packageObj, args.toArray());
+			if (TypeUtil.typeOf(md.getReturnType(), void.class)){
+				this.md.invoke(packageObj);
+			}else{
+				ret = this.md.invoke(packageObj);
+			}
 		}
 		return ret;
+	}
+
+	private Object invokeExtendMethod(List<Object> args) {
+		if (METHOD_ETEND_ISARRAY.equals((String)args.get(0))){
+			return packageObj.getClass().isArray();
+		}else if (METHOD_ETEND_ISLIST.equals((String)args.get(0))){
+			return TypeUtil.instanceOf(packageObj, List.class);
+		}
+		return null;
 	}
 	
 }
