@@ -1,6 +1,6 @@
-﻿<components>
-	<service id="servDwxxs">
-		<list id="cymc" type="string">
+<components>
+ <service id="servDwxxs">
+  <list id="cymc" type="string">
 			制造业 ,
 			制造业 ,
 			制造业 ,
@@ -20,7 +20,7 @@
 			服务业 ,
 			合计
 		</list>
-		<list id="dwmc" type="string">
+  <list id="dwmc" type="string">
 			高纯铝制品公司,
 			合金材料公司,
 			铝箔公司,
@@ -40,887 +40,969 @@
 			小计,
 			合计
 		</list>
-		<list id="zzy" type="int">
+  <list id="zzy" type="int">
 			1301,1302,1303,1304,1305,1306,1307,1308
 		</list>
-		<list id="wlmy" type="int">
+  <list id="wlmy" type="int">
 			1309,1310
 		</list>
-		<list id="fwy" type="int">
+  <list id="fwy" type="int">
 			1312,1313,1311,1314
 		</list>
-		<list id="dwids" type="int">
-			<item concat="zzy" />
-			<item>20000</item>
-			<item concat="wlmy" />
-			<item>20001</item>
-			<item concat="fwy" />
-			<item>20002</item>
-			<item>20003</item>
-		</list>
-		<call id="companies" object="${compTypeIdMapper}" method="getCompanies">
-			<param type="object">${dwids}</param>
-		</call>
-		<list id="zbs" type="int">${zb}</list>
-	</service>
-
-	<service id="servZhgsfcySeasonStart" transaction="transactionManager">
-		<callservice id="servDwxxs" inline="true" />
-		<call id="ndjh" object="${accFactory.njhByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdjh" object="${accFactory.yjhByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.seasonStart.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="dyjh" object="${accFactory.yjhByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="dysj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="dyqntq" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="cyyj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.seasonMid.date}</param>
-			<param type="date">${cal.seasonMid.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="myyj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.seasonEnd.date}</param>
-			<param type="date">${cal.seasonEnd.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdyjhj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.seasonStart.date}</param>
-			<param type="date">${cal.seasonEnd.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdyjhjqntq" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.seasonStart.date}</param>
-			<param type="date">${cal.lastYear.seasonEnd.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="ndljwc" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.months[1].date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="ndljwcqntq" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.months[1].date}</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-
-		<table id="result" rowIds="dwids" export="true">
-			<col list="cymc" />
-			<col list="dwmc" />
-			<col list="ndjh" />
-			<col list="jdjh" />
-			<col list="dyjh" />
-			<col list="dysj" />
-			<col instruction="计划完成率" />
-			<col list="dyqntq" />
-			<col instruction="同比增幅" />
-			<col list="cyyj" />
-			<col list="myyj" />
-			<col list="jdyjhj" />
-			<col instruction="季度预计完成率" />
-			<col list="jdyjhjqntq" />
-			<col instruction="同比增幅" />
-			<col list="ndljwc" />
-			<col instruction="年度指标完成率" />
-			<col list="ndljwcqntq" />
-			<col instruction="同比增幅" />
-			<sumRow toId="20000">
-				<excludeCol>0,1,6,8,12,14,16,18</excludeCol>
-				<rangeRows>0, ${zzy.size - 1}</rangeRows>
-			</sumRow>
-			<sumRow toId="20001">
-				<excludeCol>0,1,6,8,12,14,16,18</excludeCol>
-				<inIds>20000</inIds>
-				<rangeRows>${zzy.size + 1}, ${zzy.size + 2}</rangeRows>
-			</sumRow>
-			<sumRow toId="20002">
-				<excludeCol>0,1,6,8,12,14,16,18</excludeCol>
-				<inIds>20000,20001</inIds>
-				<rangeRows>${zzy.size + 4}, ${zzy.size + 7}</rangeRows>
-			</sumRow>
-			<sumRow toId="20003">
-				<excludeCol>0,1,6,12,16,18</excludeCol>
-				<inIds>20000,20001,20002</inIds>
-			</sumRow>
-			<divCol toCol="6" sub="5" base="4" />
-			<growthRates toCol="8" sj="5" tq="7" />
-			<divCol toCol="12" sub="11" base="3" />
-			<growthRates toCol="14" sj="11" tq="13" />
-			<divCol toCol="16" sub="15" base="2" />
-			<growthRates toCol="18" sj="15" tq="17" />
-		</table>
-	</service>
-
-	<service id="servZhgsfcySeasonMid" transaction="transactionManager">
-		<callservice id="servDwxxs" inline="true" />
-		<call id="ndjh" object="${accFactory.njhByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdjh" object="${accFactory.yjhByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.seasonStart.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="dyjh" object="${accFactory.yjhByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="dysj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="dyqntq" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdlj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.seasonStart.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdljqntq" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.seasonStart.date}</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="myyj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.seasonEnd.date}</param>
-			<param type="date">${cal.seasonEnd.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdyjhj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.seasonStart.date}</param>
-			<param type="date">${cal.seasonEnd.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdyjhjqntq" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.seasonStart.date}</param>
-			<param type="date">${cal.lastYear.seasonEnd.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="ndljwc" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.months[1].date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="ndljwcqntq" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.months[1].date}</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-
-		<table id="result" rowIds="dwids" export="true">
-			<col list="cymc" />
-			<col list="dwmc" />
-			<col list="ndjh" />
-			<col list="jdjh" />
-			<col list="dyjh" />
-			<col list="dysj" />
-			<col instruction="计划完成率" />
-			<col list="dyqntq" />
-			<col instruction="同比增幅" />
-			<col list="jdlj" />
-			<col instruction="季度累计完成率" />
-			<col list="jdljqntq" />
-			<col instruction="同比增幅" />
-			<col list="myyj" />
-			<col list="jdyjhj" />
-			<col instruction="季度预计完成率" />
-			<col list="jdyjhjqntq" />
-			<col instruction="同比增幅" />
-			<col list="ndljwc" />
-			<col instruction="年度指标完成率" />
-			<col list="ndljwcqntq" />
-			<col instruction="同比增幅" />
-			<sumRow toId="20000">
-				<excludeCol>0,1,6,8,10,12,15,17,19,21</excludeCol>
-				<rangeRows>0, ${zzy.size - 1}</rangeRows>
-			</sumRow>
-			<sumRow toId="20001">
-				<excludeCol>0,1,6,8,10,12,15,17,19,21</excludeCol>
-				<inIds>20000</inIds>
-				<rangeRows>${zzy.size + 1}, ${zzy.size + 2}</rangeRows>
-			</sumRow>
-			<sumRow toId="20002">
-				<excludeCol>0,1,6,8,10,12,15,17,19,21</excludeCol>
-				<inIds>20000,20001</inIds>
-				<rangeRows>${zzy.size + 4}, ${zzy.size + 7}</rangeRows>
-			</sumRow>
-			<sumRow toId="20003">
-				<excludeCol>0,1,6,8,10,12,15,17,19,21</excludeCol>
-				<inIds>20000,20001,20002</inIds>
-			</sumRow>
-			<divCol toCol="6" sub="5" base="4" />
-			<growthRates toCol="8" sj="5" tq="7" />
-			<divCol toCol="10" sub="9" base="3" />
-			<growthRates toCol="12" sj="9" tq="11" />
-			<divCol toCol="15" sub="14" base="3" />
-			<growthRates toCol="17" sj="14" tq="16" />
-			<divCol toCol="19" sub="18" base="2" />
-			<growthRates toCol="21" sj="18" tq="20" />
-		</table>
-
-	</service>
-
-	<service id="servZhgsfcySeasonEnd" transaction="transactionManager">
-		<callservice id="servDwxxs" inline="true" />
-		<call id="ndjh" object="${accFactory.njhByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdjh" object="${accFactory.yjhByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.seasonStart.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="xjdjh" object="${accFactory.yjhByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.nextSeason.seasonStart.date}</param>
-			<param type="date">${cal.nextSeason.seasonEnd.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="dyjh" object="${accFactory.yjhByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="dysj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="dyqntq" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdlj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.seasonStart.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdljqntq" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.seasonStart.date}</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="ndljwc" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.months[1].date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="ndljwcqntq" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.months[1].date}</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="xjdsyyj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.nextSeason.seasonStart.date}</param>
-			<param type="date">${cal.nextSeason.seasonStart.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="xjdcyyj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.nextSeason.seasonMid.date}</param>
-			<param type="date">${cal.nextSeason.seasonMid.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="xjdmyyj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.nextSeason.seasonEnd.date}</param>
-			<param type="date">${cal.nextSeason.seasonEnd.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="xjdyjhj" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.nextSeason.seasonStart.date}</param>
-			<param type="date">${cal.nextSeason.seasonEnd.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="xjdndljwc" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.nextSeason.months[1].date}</param>
-			<param type="date">${cal.nextSeason.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="xjdndljwcqntq" object="${accFactory.sjByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.nextSeason.lastYear.months[1].date}</param>
-			<param type="date">${cal.nextSeason.lastYear.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="xjdndjh" object="${accFactory.njhByComps}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.nextSeason.date}</param>
-			<param type="date">${cal.nextSeason.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<table id="result" rowIds="dwids" export="true">
-			<col list="cymc" />
-			<col list="dwmc" />
-			<col list="ndjh" />
-			<col list="jdjh" />
-			<col list="xjdjh" />
-			<col list="dyjh" />
-			<col list="dysj" />
-			<col instruction="计划完成率" />
-			<col list="dyqntq" />
-			<col instruction="同比增幅" />
-			<col list="jdlj" />
-			<col instruction="季度累计完成率" />
-			<col list="jdljqntq" />
-			<col instruction="同比增幅" />
-			<col list="ndljwc" />
-			<col instruction="年度累计完成率" />
-			<col list="ndljwcqntq" />
-			<col instruction="同比增幅" />
-			<col list="xjdsyyj" />
-			<col list="xjdcyyj" />
-			<col list="xjdmyyj" />
-			<col list="xjdyjhj" />
-			<col instruction="季度预计完成率" />
-			<col list="xjdndljwc" />
-			<col instruction="年度累计完成率" />
-			<col list="xjdndljwcqntq" />
-			<col instruction="同比增幅" />
-			<col list="xjdndjh" temp="true"/>
-			<sumRow toId="20000">
-				<excludeCol>0,1,7,9,11,13,15,17,22,24,26</excludeCol>
-				<rangeRows>0, ${zzy.size - 1}</rangeRows>
-			</sumRow>
-			<sumRow toId="20001">
-				<excludeCol>0,1,7,9,11,13,15,17,22,24,26</excludeCol>
-				<inIds>20000</inIds>
-				<rangeRows>${zzy.size + 1}, ${zzy.size + 2}</rangeRows>
-			</sumRow>
-			<sumRow toId="20002">
-				<excludeCol>0,1,7,9,11,13,15,17,22,24,26</excludeCol>
-				<inIds>20000,20001</inIds>
-				<rangeRows>${zzy.size + 4}, ${zzy.size + 7}</rangeRows>
-			</sumRow>
-			<sumRow toId="20003">
-				<excludeCol>0,1,7,9,11,13,15,17,22,24,26</excludeCol>
-				<inIds>20000,20001,20002</inIds>
-			</sumRow>
-			<divCol toCol="7" sub="6" base="5" />
-			<growthRates toCol="9" sj="6" tq="8" />
-			<divCol toCol="11" sub="10" base="3" />
-			<growthRates toCol="13" sj="10" tq="12" />
-			<divCol toCol="15" sub="14" base="3" />
-			<growthRates toCol="17" sj="14" tq="16" />
-			<divCol toCol="22" sub="21" base="4" />
-			<divCol toCol="24" sub="23" base="27" />
-			<growthRates toCol="26" sj="23" tq="25" />
-		</table>
-	</service>
-
-	<controller id="clrFmtterSeasonStart">
-		<formatter id="fmtData" export="true">
-			<EmptyFormatter>
-				<DefaultMatcher cols="0,1" />
-			</EmptyFormatter>
-			<PercentFormatter reservedCount="1">
-				<DefaultMatcher cols="6,8,12,14,16,18" />
-			</PercentFormatter>
-			<NumberFormatter reservedCount="1">
-			</NumberFormatter>
-		</formatter>
-	</controller>
-
-	<controller id="clrFmtterSeasonMid">
-		<formatter id="fmtData" export="true">
-			<EmptyFormatter>
-				<DefaultMatcher cols="0,1" />
-			</EmptyFormatter>
-			<PercentFormatter reservedCount="1">
-				<DefaultMatcher cols="6,8,10,12,15,17,19,21" />
-			</PercentFormatter>
-			<NumberFormatter reservedCount="1">
-			</NumberFormatter>
-		</formatter>
-	</controller>
-	<controller id="clrFmtterSeasonEnd">
-		<formatter id="fmtData" export="true">
-			<EmptyFormatter>
-				<DefaultMatcher cols="0,1" />
-			</EmptyFormatter>
-			<PercentFormatter reservedCount="1">
-				<DefaultMatcher cols="7,9,11,13,15,17,22,24,26" />
-			</PercentFormatter>
-			<NumberFormatter reservedCount="1">
-			</NumberFormatter>
-		</formatter>
-	</controller>
-	
-	<controller id="servUpdateInternal">
-		<context key="cal" value="${request.date.asCalendar}" />
-		<context key="isSeasonStart" value="${cal.seasonStart.month == cal.month}" />
-		<context key="isSeasonMid" value="${cal.seasonMid.month == cal.month}" />
-		<context key="isSeasonEnd" value="${cal.seasonEnd.month == cal.month}" />
-		
-		<if test="${isSeasonStart}">
-			<callservice id="servZhgsfcySeasonStart" />
-			<callcontroller id="clrFmtterSeasonStart" />
-		</if>
-		<if test="${isSeasonMid}">
-			<callservice id="servZhgsfcySeasonMid" />
-			<callcontroller id="clrFmtterSeasonMid" />
-		</if>
-		<if test="${isSeasonEnd}">
-			<callservice id="servZhgsfcySeasonEnd" />
-			<callcontroller id="clrFmtterSeasonEnd" />
-		</if>
-	</controller>
-	
-	<controller id="zhgsfcyUpdate">
-		<callcontroller id="servUpdateInternal" inline="true"/>
-
-		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
-			<formatter ref="fmtData" />
-		</formatterServer>
-		<if test="${isSeasonStart}">
-			<response type="json">
-				<header type="array">
-					<item>
-						<name>产业</name>
-					</item>
-					<item>
-						<name>单位</name>
-					</item>
-					<item>
-						<name>年度计划</name>
-					</item>
-					<item>
-						<name>季度计划</name>
-					</item>
-					<item>
-						<name>当月完成</name>
-						<sub type="array">
-							<item><name>本月计划值</name></item>
-							<item><name>当月预计值</name></item>
-							<item><name>计划完成率</name></item>
-							<item><name>去年同期</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-					<item>
-						<name>季度预计完成</name>
-						<sub type="array">
-							<item><name>次月预计</name></item>
-							<item><name>末月预计</name></item>
-							<item><name>季度预计合计</name></item>
-							<item><name>季度预计完成率</name></item>
-							<item><name>去年同期</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-					<item>
-						<name>年度累计完成</name>
-						<sub type="array">
-							<item><name>累计完成值</name></item>
-							<item><name>年度指标完成率</name></item>
-							<item><name>去年同期值</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-				</header>
-				<mergeCols type="array">
-					<item>
-						<col>0</col>
-					</item>
-				</mergeCols>
-				<mergeRows type="array">
-					<item>
-						<col>0</col>
-					</item>
-				</mergeRows>
-				<mergeTitle>true</mergeTitle>
-				<data>${fmtServ.result}</data>
-			</response>
-		</if>
-		<if test="${isSeasonMid}">
-			<response type="json">
-				<header type="array">
-					<item>
-						<name>产业</name>
-					</item>
-					<item>
-						<name>单位</name>
-					</item>
-					<item>
-						<name>年度计划</name>
-					</item>
-					<item>
-						<name>季度计划</name>
-					</item>
-					<item>
-						<name>当月完成</name>
-						<sub type="array">
-							<item><name>本月计划值</name></item>
-							<item><name>当月预计值</name></item>
-							<item><name>计划完成率</name></item>
-							<item><name>去年同期</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-					<item>
-						<name>季度累计完成</name>
-						<sub type="array">
-							<item><name>季度累计</name></item>
-							<item><name>季度计划完成率</name></item>
-							<item><name>去年同期值</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-					<item>
-						<name>季度预计完成</name>
-						<sub type="array">
-							<item><name>末月预计</name></item>
-							<item><name>季度预计合计</name></item>
-							<item><name>季度预计完成率</name></item>
-							<item><name>去年同期</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-					<item>
-						<name>年度累计完成</name>
-						<sub type="array">
-							<item><name>累计完成值</name></item>
-							<item><name>年度指标完成率</name></item>
-							<item><name>去年同期值</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-				</header>
-				 <mergeRows type="array">
-					<item>
-						<col>0</col>
-					</item>
-				</mergeRows>
-				<mergeCols type="array">
-					<item>
-						<col>0</col>
-					</item>
-				</mergeCols>
-				<mergeTitle>true</mergeTitle>
-				<data>${fmtServ.result}</data>
-			</response>
-		</if>
-		<if test="${isSeasonEnd}">
-			<response type="json">
-				<header type="array">
-					<item>
-						<name>产业</name>
-					</item>
-					<item>
-						<name>单位</name>
-					</item>
-					<item>
-						<name>年度计划</name>
-					</item>
-					<item>
-						<name>本季度计划</name>
-					</item>
-					<item>
-						<name>下季度计划</name>
-					</item>
-					<item>
-						<name>当月完成</name>
-						<sub type="array">
-							<item><name>本月计划值</name></item>
-							<item><name>当月预计值</name></item>
-							<item><name>计划完成率</name></item>
-							<item><name>去年同期</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-					<item>
-						<name>季度累计完成</name>
-						<sub type="array">
-							<item><name>季度累计</name></item>
-							<item><name>季度计划完成率</name></item>
-							<item><name>去年同期值</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-					<item>
-						<name>年度累计完成</name>
-						<sub type="array">
-							<item><name>累计完成值</name></item>
-							<item><name>年度指标完成率</name></item>
-							<item><name>去年同期值</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-					<item>
-						<name>下季度预计完成</name>
-						<sub type="array">
-							<item><name>下季度首月预计</name></item>
-							<item><name>下季度次月预计</name></item>
-							<item><name>下季度末月预计</name></item>
-							<item><name>季度预计合计</name></item>
-							<item><name>季度预计完成率</name></item>
-							<item><name>年度累计</name></item>
-							<item><name>年度累计完成率</name></item>
-							<item><name>去年同期</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-				</header>
-				<mergeRows type="array">
-					<item>
-						<col>0</col>
-					</item>
-				</mergeRows>
-				<mergeCols type="array">
-					<item>
-						<col>0</col>
-					</item>
-				</mergeCols>
-				<mergeTitle>true</mergeTitle>
-				<data>${fmtServ.result}</data>
-			</response>
-		</if>
-	</controller>
-
-	<controller id="zhgsfcyExport">
-
-		<callcontroller id="servUpdateInternal" inline="true"/>
-
-		<ExcelTemplate id="excelTemplate" sheet="众和分产业${zbname}汇报" />
-		<if test="${isSeasonStart}">
-			<list id="title1" type="string">
-				单位,年度计划,本季度计划,当月完成,当月完成,当月完成,当月完成,当月完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,年度累计完成,年度累计完成,年度累计完成,年度累计完成
+  <list id="dwids" type="int">
+   <item concat="zzy"/>
+   <item>20000</item>
+   <item concat="wlmy"/>
+   <item>20001</item>
+   <item concat="fwy"/>
+   <item>20002</item>
+   <item>20003</item>
+  </list>
+  <context key="companies" value="${orgCompaniesByIds['BMDBOrganization'][dwids]}"/>
+  <list id="zbs" type="int">${zb}</list>
+ </service>
+ <service id="servZhgsfcySeasonStart" transaction="transactionManager">
+  <callservice id="servDwxxs" inline="true"/>
+  <call id="ndjh" object="${accFactory.njhByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdjh" object="${accFactory.yjhByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.seasonStart.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="dyjh" object="${accFactory.yjhByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="dysj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="dyqntq" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="cyyj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.seasonMid.date}</param>
+   <param type="date">${cal.seasonMid.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="myyj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.seasonEnd.date}</param>
+   <param type="date">${cal.seasonEnd.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdyjhj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.seasonStart.date}</param>
+   <param type="date">${cal.seasonEnd.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdyjhjqntq" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.seasonStart.date}</param>
+   <param type="date">${cal.lastYear.seasonEnd.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="ndljwc" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.months[1].date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="ndljwcqntq" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.months[1].date}</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <table id="result" rowIds="dwids" export="true">
+   <col list="cymc"/>
+   <col list="dwmc"/>
+   <col list="ndjh"/>
+   <col list="jdjh"/>
+   <col list="dyjh"/>
+   <col list="dysj"/>
+   <col instruction="计划完成率"/>
+   <col list="dyqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="cyyj"/>
+   <col list="myyj"/>
+   <col list="jdyjhj"/>
+   <col instruction="季度预计完成率"/>
+   <col list="jdyjhjqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="ndljwc"/>
+   <col instruction="年度指标完成率"/>
+   <col list="ndljwcqntq"/>
+   <col instruction="同比增幅"/>
+   <sumRow toId="20000">
+    <excludeCol>0,1,6,8,12,14,16,18</excludeCol>
+    <rangeRows>0, ${zzy.size - 1}</rangeRows>
+   </sumRow>
+   <sumRow toId="20001">
+    <excludeCol>0,1,6,8,12,14,16,18</excludeCol>
+    <inIds>20000</inIds>
+    <rangeRows>${zzy.size + 1}, ${zzy.size + 2}</rangeRows>
+   </sumRow>
+   <sumRow toId="20002">
+    <excludeCol>0,1,6,8,12,14,16,18</excludeCol>
+    <inIds>20000,20001</inIds>
+    <rangeRows>${zzy.size + 4}, ${zzy.size + 7}</rangeRows>
+   </sumRow>
+   <sumRow toId="20003">
+    <excludeCol>0,1,6,12,16,18</excludeCol>
+    <inIds>20000,20001,20002</inIds>
+   </sumRow>
+   <divCol toCol="6" sub="5" base="4"/>
+   <growthRates toCol="8" sj="5" tq="7"/>
+   <divCol toCol="12" sub="11" base="3"/>
+   <growthRates toCol="14" sj="11" tq="13"/>
+   <divCol toCol="16" sub="15" base="2"/>
+   <growthRates toCol="18" sj="15" tq="17"/>
+  </table>
+ </service>
+ <service id="servZhgsfcySeasonMid" transaction="transactionManager">
+  <callservice id="servDwxxs" inline="true"/>
+  <call id="ndjh" object="${accFactory.njhByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdjh" object="${accFactory.yjhByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.seasonStart.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="dyjh" object="${accFactory.yjhByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="dysj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="dyqntq" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdlj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.seasonStart.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdljqntq" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.seasonStart.date}</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="myyj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.seasonEnd.date}</param>
+   <param type="date">${cal.seasonEnd.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdyjhj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.seasonStart.date}</param>
+   <param type="date">${cal.seasonEnd.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdyjhjqntq" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.seasonStart.date}</param>
+   <param type="date">${cal.lastYear.seasonEnd.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="ndljwc" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.months[1].date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="ndljwcqntq" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.months[1].date}</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <table id="result" rowIds="dwids" export="true">
+   <col list="cymc"/>
+   <col list="dwmc"/>
+   <col list="ndjh"/>
+   <col list="jdjh"/>
+   <col list="dyjh"/>
+   <col list="dysj"/>
+   <col instruction="计划完成率"/>
+   <col list="dyqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="jdlj"/>
+   <col instruction="季度累计完成率"/>
+   <col list="jdljqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="myyj"/>
+   <col list="jdyjhj"/>
+   <col instruction="季度预计完成率"/>
+   <col list="jdyjhjqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="ndljwc"/>
+   <col instruction="年度指标完成率"/>
+   <col list="ndljwcqntq"/>
+   <col instruction="同比增幅"/>
+   <sumRow toId="20000">
+    <excludeCol>0,1,6,8,10,12,15,17,19,21</excludeCol>
+    <rangeRows>0, ${zzy.size - 1}</rangeRows>
+   </sumRow>
+   <sumRow toId="20001">
+    <excludeCol>0,1,6,8,10,12,15,17,19,21</excludeCol>
+    <inIds>20000</inIds>
+    <rangeRows>${zzy.size + 1}, ${zzy.size + 2}</rangeRows>
+   </sumRow>
+   <sumRow toId="20002">
+    <excludeCol>0,1,6,8,10,12,15,17,19,21</excludeCol>
+    <inIds>20000,20001</inIds>
+    <rangeRows>${zzy.size + 4}, ${zzy.size + 7}</rangeRows>
+   </sumRow>
+   <sumRow toId="20003">
+    <excludeCol>0,1,6,8,10,12,15,17,19,21</excludeCol>
+    <inIds>20000,20001,20002</inIds>
+   </sumRow>
+   <divCol toCol="6" sub="5" base="4"/>
+   <growthRates toCol="8" sj="5" tq="7"/>
+   <divCol toCol="10" sub="9" base="3"/>
+   <growthRates toCol="12" sj="9" tq="11"/>
+   <divCol toCol="15" sub="14" base="3"/>
+   <growthRates toCol="17" sj="14" tq="16"/>
+   <divCol toCol="19" sub="18" base="2"/>
+   <growthRates toCol="21" sj="18" tq="20"/>
+  </table>
+ </service>
+ <service id="servZhgsfcySeasonEnd" transaction="transactionManager">
+  <callservice id="servDwxxs" inline="true"/>
+  <call id="ndjh" object="${accFactory.njhByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdjh" object="${accFactory.yjhByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.seasonStart.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="xjdjh" object="${accFactory.yjhByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.nextSeason.seasonStart.date}</param>
+   <param type="date">${cal.nextSeason.seasonEnd.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="dyjh" object="${accFactory.yjhByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="dysj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="dyqntq" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdlj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.seasonStart.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdljqntq" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.seasonStart.date}</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="ndljwc" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.months[1].date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="ndljwcqntq" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.months[1].date}</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="xjdsyyj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.nextSeason.seasonStart.date}</param>
+   <param type="date">${cal.nextSeason.seasonStart.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="xjdcyyj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.nextSeason.seasonMid.date}</param>
+   <param type="date">${cal.nextSeason.seasonMid.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="xjdmyyj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.nextSeason.seasonEnd.date}</param>
+   <param type="date">${cal.nextSeason.seasonEnd.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="xjdyjhj" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.nextSeason.seasonStart.date}</param>
+   <param type="date">${cal.nextSeason.seasonEnd.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="xjdndljwc" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.nextSeason.months[1].date}</param>
+   <param type="date">${cal.nextSeason.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="xjdndljwcqntq" object="${accFactory.sjByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.nextSeason.lastYear.months[1].date}</param>
+   <param type="date">${cal.nextSeason.lastYear.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="xjdndjh" object="${accFactory.njhByComps}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.nextSeason.date}</param>
+   <param type="date">${cal.nextSeason.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <table id="result" rowIds="dwids" export="true">
+   <col list="cymc"/>
+   <col list="dwmc"/>
+   <col list="ndjh"/>
+   <col list="jdjh"/>
+   <col list="xjdjh"/>
+   <col list="dyjh"/>
+   <col list="dysj"/>
+   <col instruction="计划完成率"/>
+   <col list="dyqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="jdlj"/>
+   <col instruction="季度累计完成率"/>
+   <col list="jdljqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="ndljwc"/>
+   <col instruction="年度累计完成率"/>
+   <col list="ndljwcqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="xjdsyyj"/>
+   <col list="xjdcyyj"/>
+   <col list="xjdmyyj"/>
+   <col list="xjdyjhj"/>
+   <col instruction="季度预计完成率"/>
+   <col list="xjdndljwc"/>
+   <col instruction="年度累计完成率"/>
+   <col list="xjdndljwcqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="xjdndjh" temp="true"/>
+   <sumRow toId="20000">
+    <excludeCol>0,1,7,9,11,13,15,17,22,24,26</excludeCol>
+    <rangeRows>0, ${zzy.size - 1}</rangeRows>
+   </sumRow>
+   <sumRow toId="20001">
+    <excludeCol>0,1,7,9,11,13,15,17,22,24,26</excludeCol>
+    <inIds>20000</inIds>
+    <rangeRows>${zzy.size + 1}, ${zzy.size + 2}</rangeRows>
+   </sumRow>
+   <sumRow toId="20002">
+    <excludeCol>0,1,7,9,11,13,15,17,22,24,26</excludeCol>
+    <inIds>20000,20001</inIds>
+    <rangeRows>${zzy.size + 4}, ${zzy.size + 7}</rangeRows>
+   </sumRow>
+   <sumRow toId="20003">
+    <excludeCol>0,1,7,9,11,13,15,17,22,24,26</excludeCol>
+    <inIds>20000,20001,20002</inIds>
+   </sumRow>
+   <divCol toCol="7" sub="6" base="5"/>
+   <growthRates toCol="9" sj="6" tq="8"/>
+   <divCol toCol="11" sub="10" base="3"/>
+   <growthRates toCol="13" sj="10" tq="12"/>
+   <divCol toCol="15" sub="14" base="3"/>
+   <growthRates toCol="17" sj="14" tq="16"/>
+   <divCol toCol="22" sub="21" base="4"/>
+   <divCol toCol="24" sub="23" base="27"/>
+   <growthRates toCol="26" sj="23" tq="25"/>
+  </table>
+ </service>
+ <controller id="clrFmtterSeasonStart">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,1"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="6,8,12,14,16,18"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="clrFmtterSeasonMid">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,1"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="6,8,10,12,15,17,19,21"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="clrFmtterSeasonEnd">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,1"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="7,9,11,13,15,17,22,24,26"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="servUpdateInternal">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="isSeasonStart" value="${cal.seasonStart.month == cal.month}"/>
+  <context key="isSeasonMid" value="${cal.seasonMid.month == cal.month}"/>
+  <context key="isSeasonEnd" value="${cal.seasonEnd.month == cal.month}"/>
+  <if test="${isSeasonStart}">
+   <callservice id="servZhgsfcySeasonStart"/>
+   <callcontroller id="clrFmtterSeasonStart"/>
+  </if>
+  <if test="${isSeasonMid}">
+   <callservice id="servZhgsfcySeasonMid"/>
+   <callcontroller id="clrFmtterSeasonMid"/>
+  </if>
+  <if test="${isSeasonEnd}">
+   <callservice id="servZhgsfcySeasonEnd"/>
+   <callcontroller id="clrFmtterSeasonEnd"/>
+  </if>
+ </controller>
+ <controller id="zhgsfcyUpdate">
+  <callcontroller id="servUpdateInternal" inline="true"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <if test="${isSeasonStart}">
+   <response type="json">
+    <header type="array">
+     <item>
+      <name>产业</name>
+     </item>
+     <item>
+      <name>单位</name>
+     </item>
+     <item>
+      <name>年度计划</name>
+     </item>
+     <item>
+      <name>季度计划</name>
+     </item>
+     <item>
+      <name>当月完成</name>
+      <sub type="array">
+       <item>
+        <name>本月计划值</name>
+       </item>
+       <item>
+        <name>当月预计值</name>
+       </item>
+       <item>
+        <name>计划完成率</name>
+       </item>
+       <item>
+        <name>去年同期</name>
+       </item>
+       <item>
+        <name>同比增幅</name>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>季度预计完成</name>
+      <sub type="array">
+       <item>
+        <name>次月预计</name>
+       </item>
+       <item>
+        <name>末月预计</name>
+       </item>
+       <item>
+        <name>季度预计合计</name>
+       </item>
+       <item>
+        <name>季度预计完成率</name>
+       </item>
+       <item>
+        <name>去年同期</name>
+       </item>
+       <item>
+        <name>同比增幅</name>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>年度累计完成</name>
+      <sub type="array">
+       <item>
+        <name>累计完成值</name>
+       </item>
+       <item>
+        <name>年度指标完成率</name>
+       </item>
+       <item>
+        <name>去年同期值</name>
+       </item>
+       <item>
+        <name>同比增幅</name>
+       </item>
+      </sub>
+     </item>
+    </header>
+    <mergeCols type="array">
+     <item>
+      <col>0</col>
+     </item>
+    </mergeCols>
+    <mergeRows type="array">
+     <item>
+      <col>0</col>
+     </item>
+    </mergeRows>
+    <mergeTitle>true</mergeTitle>
+    <width>1330</width>
+    <data>${fmtServ.result}</data>
+   </response>
+  </if>
+  <if test="${isSeasonMid}">
+   <response type="json">
+    <header type="array">
+     <item>
+      <name>产业</name>
+     </item>
+     <item>
+      <name>单位</name>
+     </item>
+     <item>
+      <name>年度计划</name>
+     </item>
+     <item>
+      <name>季度计划</name>
+     </item>
+     <item>
+      <name>当月完成</name>
+      <sub type="array">
+       <item>
+        <name>本月计划值</name>
+       </item>
+       <item>
+        <name>当月预计值</name>
+       </item>
+       <item>
+        <name>计划完成率</name>
+       </item>
+       <item>
+        <name>去年同期</name>
+       </item>
+       <item>
+        <name>同比增幅</name>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>季度累计完成</name>
+      <sub type="array">
+       <item>
+        <name>季度累计</name>
+       </item>
+       <item>
+        <name>季度计划完成率</name>
+       </item>
+       <item>
+        <name>去年同期值</name>
+       </item>
+       <item>
+        <name>同比增幅</name>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>季度预计完成</name>
+      <sub type="array">
+       <item>
+        <name>末月预计</name>
+       </item>
+       <item>
+        <name>季度预计合计</name>
+       </item>
+       <item>
+        <name>季度预计完成率</name>
+       </item>
+       <item>
+        <name>去年同期</name>
+       </item>
+       <item>
+        <name>同比增幅</name>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>年度累计完成</name>
+      <sub type="array">
+       <item>
+        <name>累计完成值</name>
+       </item>
+       <item>
+        <name>年度指标完成率</name>
+       </item>
+       <item>
+        <name>去年同期值</name>
+       </item>
+       <item>
+        <name>同比增幅</name>
+       </item>
+      </sub>
+     </item>
+    </header>
+    <mergeRows type="array">
+     <item>
+      <col>0</col>
+     </item>
+    </mergeRows>
+    <mergeCols type="array">
+     <item>
+      <col>0</col>
+     </item>
+    </mergeCols>
+    <width>1330</width>
+    <mergeTitle>true</mergeTitle>
+    <data>${fmtServ.result}</data>
+   </response>
+  </if>
+  <if test="${isSeasonEnd}">
+   <response type="json">
+    <header type="array">
+     <item>
+      <name>产业</name>
+     </item>
+     <item>
+      <name>单位</name>
+     </item>
+     <item>
+      <name>年度计划</name>
+     </item>
+     <item>
+      <name>本季度计划</name>
+     </item>
+     <item>
+      <name>下季度计划</name>
+     </item>
+     <item>
+      <name>当月完成</name>
+      <sub type="array">
+       <item>
+        <name>本月计划值</name>
+       </item>
+       <item>
+        <name>当月预计值</name>
+       </item>
+       <item>
+        <name>计划完成率</name>
+       </item>
+       <item>
+        <name>去年同期</name>
+       </item>
+       <item>
+        <name>同比增幅</name>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>季度累计完成</name>
+      <sub type="array">
+       <item>
+        <name>季度累计</name>
+       </item>
+       <item>
+        <name>季度计划完成率</name>
+       </item>
+       <item>
+        <name>去年同期值</name>
+       </item>
+       <item>
+        <name>同比增幅</name>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>年度累计完成</name>
+      <sub type="array">
+       <item>
+        <name>累计完成值</name>
+       </item>
+       <item>
+        <name>年度指标完成率</name>
+       </item>
+       <item>
+        <name>去年同期值</name>
+       </item>
+       <item>
+        <name>同比增幅</name>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>下季度预计完成</name>
+      <sub type="array">
+       <item>
+        <name>下季度首月预计</name>
+       </item>
+       <item>
+        <name>下季度次月预计</name>
+       </item>
+       <item>
+        <name>下季度末月预计</name>
+       </item>
+       <item>
+        <name>季度预计合计</name>
+       </item>
+       <item>
+        <name>季度预计完成率</name>
+       </item>
+       <item>
+        <name>年度累计</name>
+       </item>
+       <item>
+        <name>年度累计完成率</name>
+       </item>
+       <item>
+        <name>去年同期</name>
+       </item>
+       <item>
+        <name>同比增幅</name>
+       </item>
+      </sub>
+     </item>
+    </header>
+    <mergeRows type="array">
+     <item>
+      <col>0</col>
+     </item>
+    </mergeRows>
+    <mergeCols type="array">
+     <item>
+      <col>0</col>
+     </item>
+    </mergeCols>
+    <mergeTitle>true</mergeTitle>
+    <width>1330</width>
+    <data>${fmtServ.result}</data>
+   </response>
+  </if>
+ </controller>
+ <controller id="zhgsfcyExport">
+  <callcontroller id="servUpdateInternal" inline="true"/>
+  <ExcelTemplate id="excelTemplate" sheet="众和分产业${zbname}汇报"/>
+  <if test="${isSeasonStart}">
+   <list id="title1" type="string">产业,单位,年度计划,本季度计划,当月完成,当月完成,当月完成,当月完成,当月完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,年度累计完成,年度累计完成,年度累计完成,年度累计完成
 			</list>
-			<list id="title2" type="string">
-				单位,年度计划,本季度计划,本月计划值,当月预计值,计划完成率,去年同期,同比增幅,次月预计,末月预计,季度预计合计,季度预计完成率,去年同期,同比增幅,累计完成值,年度指标完成率,去年同期值,同比增幅
+   <list id="title2" type="string">产业,单位,年度计划,本季度计划,本月计划值,当月预计值,计划完成率,去年同期,同比增幅,次月预计,末月预计,季度预计合计,季度预计完成率,去年同期,同比增幅,累计完成值,年度指标完成率,去年同期值,同比增幅
 			</list>
-		</if>
-		<if test="${isSeasonMid}">
-			<list id="title1" type="string">
-				产业,单位,年度计划,本季度计划,当月完成,当月完成,当月完成,当月完成,当月完成,季度累计完成,季度累计完成,季度累计完成,季度累计完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,年度累计完成,年度累计完成,年度累计完成,年度累计完成
+  </if>
+  <if test="${isSeasonMid}">
+   <list id="title1" type="string">产业,单位,年度计划,本季度计划,当月完成,当月完成,当月完成,当月完成,当月完成,季度累计完成,季度累计完成,季度累计完成,季度累计完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,年度累计完成,年度累计完成,年度累计完成,年度累计完成
 			</list>
-			<list id="title2" type="string">
+   <list id="title2" type="string">
 				产业,单位,年度计划,本季度计划,本月计划值,当月预计值,计划完成率,去年同期,同比增幅,季度累计,季度计划完成率,去年同期值,同比增幅,末月预计,季度预计合计,季度预计完成率,去年同期,同比增幅,累计完成值,年度指标完成率,去年同期值,同比增幅
 			</list>
-		</if>
-		<if test="${isSeasonEnd}">
-			<list id="title1" type="string">
+  </if>
+  <if test="${isSeasonEnd}">
+   <list id="title1" type="string">
 				产业,单位,年度计划,本季度计划,下季度计划,当月完成,当月完成,当月完成,当月完成,当月完成,季度累计完成,季度累计完成,季度累计完成,季度累计完成,年度累计完成,年度累计完成,年度累计完成,年度累计完成,下季度预计完成,下季度预计完成,下季度预计完成,下季度预计完成,下季度预计完成,下季度预计完成,下季度预计完成,下季度预计完成,下季度预计完成
 			</list>
-			<list id="title2" type="string">
+   <list id="title2" type="string">
 				产业,单位,年度计划,本季度计划,下季度计划,本月计划值,当月预计值,计划完成率,去年同期,同比增幅,季度累计,季度计划完成率,去年同期值,同比增幅,累计完成值,年度指标完成率,去年同期值,同比增幅,下季度首月预计,下季度次月预计,下季度末月预计,季度预计合计,季度预计完成率,年度累计,年度累计完成率,去年同期,同比增幅
 			</list>
-		</if>
-		<formatter id="excel">
-			<ExcelTitleFilter>
-				<ExcelTemplate ref="excelTemplate" />
-				<Offset row="0" col="0" />
-				<titles>
-					<title ref="title1" />
-					<title ref="title2" />
-				</titles>
-			</ExcelTitleFilter>
-			<ExcelMergeFormatter>
-				<ExcelTemplate ref="excelTemplate" />
-				<MergeRegion x="0" y="0" width="${title1.size}" height="2" />
-			</ExcelMergeFormatter>
-			<ExcelMergeFormatter>
-				<ExcelTemplate ref="excelTemplate" />
-				<MergeRegion x="0" y="2" width="2" height="${result.ids.size}" />
-			</ExcelMergeFormatter>
-			<ExcelHeaderCenterFormatter>
-				<DefaultMatcher cols="0, 1" />
-				<ExcelTemplate ref="excelTemplate" />
-				<Offset row="2" col="0" />
-			</ExcelHeaderCenterFormatter>
-			<ExcelOffsetFormatter>
-				<ExcelTemplate ref="excelTemplate" />
-				<Offset row="2" col="0"/>
-			</ExcelOffsetFormatter>
-		</formatter>
-
-
-		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
-			<formatter ref="fmtData" />
-			<formatter ref="excel" />
-		</formatterServer>
-
-		<response type="excel" ref="excelTemplate"
-			name="${request.date.asString}众和分产业${zbname}汇报.xls" serv="fmtServ" />
-	</controller>
-
-	<controller id="zhgsfcyUpdateLrze">
-		<context key="zb" value="${1}" />
-		<context key="zbname" value="利润总额" />
-		<callcontroller id="zhgsfcyUpdate"/>
-	</controller>
-	<controller id="zhgsfcyExportLrze">
-		<context key="zb" value="${1}" />
-		<context key="zbname" value="利润总额" />
-		<callcontroller id="zhgsfcyExport"/>
-	</controller>
-	<controller id="zhgsfcyUpdateXssr">
-		<context key="zb" value="${6}" />
-		<context key="zbname" value="销售收入" />
-		<callcontroller id="zhgsfcyUpdate"/>
-	</controller>
-	<controller id="zhgsfcyExportXssr">
-		<context key="zb" value="${6}" />
-		<context key="zbname" value="销售收入" />
-		<callcontroller id="zhgsfcyExport"/>
-	</controller>
-	
-	<controller id="zhgsfcylrze">
-		<response type="jsp" name="framework/templates/singleDateReport/show">
-			<map key="date" value="${calendar.current.format}" />
-			<map key="dateEnd" value="${calendar.current.months[12].format}" />
-			<map key="updateUrl" value="zhgsfcyUpdateLrze" />
-			<map key="exportUrl" value="zhgsfcyExportLrze" />
-			<map key="asSeason" value="true" />
-			<map key="title" value="众和分产业利润总额汇报" />
-		</response>
-	</controller>
-	<controller id="zhgsfcyxssr">
-		<response type="jsp" name="framework/templates/singleDateReport/show">
-			<map key="date" value="${calendar.current.format}" />
-			<map key="dateEnd" value="${calendar.current.months[12].format}" />
-			<map key="updateUrl" value="zhgsfcyUpdateXssr" />
-			<map key="exportUrl" value="zhgsfcyExportXssr" />
-			<map key="asSeason" value="true" />
-			<map key="title" value="众和分产业销售收入汇报" />
-		</response>
-	</controller>
-	
-	<controller id="zhgsfcyExportUnion">
-		<if test="${request.item.asInt == 0}">
-			<context key="zb" value="${1}" />
-			<context key="zbname" value="利润总额" />
-		</if>
-		<if test="${request.item.asInt == 1}">
-			<context key="zb" value="${6}" />
-			<context key="zbname" value="销售收入" />
-		</if>
-		<callcontroller id="zhgsfcyExport"/>
-	</controller>
-	<controller id="zhgsfcyUpdateUnion">
-		<if test="${0==request.item.asInt}">
-		<context key="zb" value="${1}" />
-		<context key="zbname" value="利润总额" />
-		</if>
-		<if test="${1==request.item.asInt}">
-		<context key="zb" value="${6}" />
-		<context key="zbname" value="销售收入" />
-		</if>
-		<callcontroller id="zhgsfcyUpdate"/>
-	</controller>
-	
-	<controller id="zhgsfcyUnion">
-		<response type="jsp" name="framework/templates/dateReport/show">
-		<map key="date" value="${calendar.current.format}" />
-			<map key="dateEnd" value="${calendar.current.months[12].format}" />
-			<map key="updateUrl" value="zhgsfcyUpdateUnion" />
-			<map key="exportUrl" value="zhgsfcyExportUnion" />
-			<map key="asSeason" value="true" />
-			<map key="dateNode" value="[{'data':{'id':0,'value':'利润总额'}},{'data':{'id':1,'value':'销售收入'}}]" />
-			<map key="title" value="众和分产业关键指标汇报" />
-		</response>
-	</controller>
+  </if>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title1"/>
+     <title ref="title2"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="${title1.size}" height="2"/>
+   </ExcelMergeFormatter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="2" width="2" height="${result.ids.size}"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0, 1"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}众和分产业${zbname}汇报.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="zhgsfcyUpdateLrze">
+  <context key="zb" value="${1}"/>
+  <context key="zbname" value="利润总额"/>
+  <callcontroller id="zhgsfcyUpdate"/>
+ </controller>
+ <controller id="zhgsfcyExportLrze">
+  <context key="zb" value="${1}"/>
+  <context key="zbname" value="利润总额"/>
+  <callcontroller id="zhgsfcyExport"/>
+ </controller>
+ <controller id="zhgsfcyUpdateXssr">
+  <context key="zb" value="${6}"/>
+  <context key="zbname" value="销售收入"/>
+  <callcontroller id="zhgsfcyUpdate"/>
+ </controller>
+ <controller id="zhgsfcyExportXssr">
+  <context key="zb" value="${6}"/>
+  <context key="zbname" value="销售收入"/>
+  <callcontroller id="zhgsfcyExport"/>
+ </controller>
+ <controller id="zhgsfcylrze">
+  <response type="jsp" name="framework/templates/singleDateReport/show">
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="dateEnd" value="${calendar.current.months[12].format}"/>
+   <map key="updateUrl" value="zhgsfcyUpdateLrze"/>
+   <map key="exportUrl" value="zhgsfcyExportLrze"/>
+   <map key="asSeason" value="true"/>
+   <map key="title" value="众和分产业利润总额汇报"/>
+  </response>
+ </controller>
+ <controller id="zhgsfcyxssr">
+  <response type="jsp" name="framework/templates/singleDateReport/show">
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="dateEnd" value="${calendar.current.months[12].format}"/>
+   <map key="updateUrl" value="zhgsfcyUpdateXssr"/>
+   <map key="exportUrl" value="zhgsfcyExportXssr"/>
+   <map key="asSeason" value="true"/>
+   <map key="title" value="众和分产业销售收入汇报"/>
+  </response>
+ </controller>
+ <controller id="zhgsfcyExportUnion">
+  <if test="${request.item.asInt == 0}">
+   <context key="zb" value="${1}"/>
+   <context key="zbname" value="利润总额"/>
+  </if>
+  <if test="${request.item.asInt == 1}">
+   <context key="zb" value="${6}"/>
+   <context key="zbname" value="销售收入"/>
+  </if>
+  <callcontroller id="zhgsfcyExport"/>
+ </controller>
+ <controller id="zhgsfcyUpdateUnion">
+  <if test="${0==request.item.asInt}">
+   <context key="zb" value="${1}"/>
+   <context key="zbname" value="利润总额"/>
+  </if>
+  <if test="${1==request.item.asInt}">
+   <context key="zb" value="${6}"/>
+   <context key="zbname" value="销售收入"/>
+  </if>
+  <callcontroller id="zhgsfcyUpdate"/>
+ </controller>
+ <controller id="zhgsfcyUnion">
+  <response type="jsp" name="framework/templates/dateReport/show">
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="dateEnd" value="${calendar.current.months[12].format}"/>
+   <map key="updateUrl" value="zhgsfcyUpdateUnion"/>
+   <map key="exportUrl" value="zhgsfcyExportUnion"/>
+   <map key="asSeason" value="true"/>
+   <map key="nodeData" value="[{&quot;data&quot;:{&quot;id&quot;:0,&quot;value&quot;:&quot;利润总额&quot;}},{&quot;data&quot;:{&quot;id&quot;:1,&quot;value&quot;:&quot;销售收入&quot;}}]"/>
+   <map key="title" value="众和分产业关键指标汇报"/>
+  </response>
+ </controller>
 </components>

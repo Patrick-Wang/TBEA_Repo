@@ -156,7 +156,7 @@ public class ApproveController {
 			break;
 		case BYSJ:
 			//[[compId...]]
-			ret = service.approveSjZb(account, comps, date);
+			ret = service.approveSjZb(account, comps, date, false);
 			break;
 		case NDJH:
 			//[[compId...]]

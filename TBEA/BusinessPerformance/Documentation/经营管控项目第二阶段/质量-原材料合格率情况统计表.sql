@@ -45,7 +45,10 @@ IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 
 DROP TABLE zl_yclhglqk
 CREATE TABLE [dbo].[zl_yclhglqk](
 	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nf] [int],
+	[yf] [int],
 	[dwid] [int],
+	[clid] [int],
 	[hgs] [int],
 	[zs] [int],
 	[zt] [int]

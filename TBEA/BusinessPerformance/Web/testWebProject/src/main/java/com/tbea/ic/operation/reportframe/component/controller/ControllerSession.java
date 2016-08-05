@@ -2,7 +2,9 @@ package com.tbea.ic.operation.reportframe.component.controller;
 
 import javax.servlet.http.HttpSession;
 
-public class ControllerSession {
+import com.tbea.ic.operation.common.PropMap;
+
+public class ControllerSession extends PropMap{
 	HttpSession session;
 	
 	
@@ -12,9 +14,8 @@ public class ControllerSession {
 		this.session = session;
 	}
 
-
-
-	public Object getAttribute(String name){
-		return session.getAttribute(name);
+	@Override
+	public Object getProperty(Object key) throws Exception {
+		return session.getAttribute((String)key);
 	}
 }

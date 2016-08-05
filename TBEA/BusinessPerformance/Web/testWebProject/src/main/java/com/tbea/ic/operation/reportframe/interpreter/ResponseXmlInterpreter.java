@@ -118,6 +118,12 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				String key = elem.getAttribute("key");
 				if (!key.isEmpty()){
 					Object val = XmlUtil.getObjectAttr(elem, "value", elp);
+					if (val == null){
+						val = XmlUtil.parseELText(elem.getFirstChild().getTextContent(), elp);
+						if (null != val && val instanceof String){
+							val = ((String)val).replaceAll("\\s", "");
+						}
+					}
 					map.put(key, val);
 				}else{
 					Map<String, String> mp = (Map) XmlUtil.getObjectAttr(elem, "map", elp);

@@ -1,7 +1,6 @@
-﻿<components>
-	<service id="servXnyzb" transaction="transactionManager">
-		
-		<sql id="xnyzb">
+<components>
+ <service id="servXnyzb" transaction="transactionManager">
+  <sql id="xnyzb">
 			select 
 				ZB.id, 
 				CONVERT(varchar(20), ZB.ksrq, 23) as startDate, 
@@ -23,164 +22,144 @@
 			order by 
 				ZB.xmgs
 		</sql>
-		
-		<list id="ids" type="int" sql="xnyzb" value="0" />
-		<list id="ks" type="string" sql="xnyzb" value="1" />
-		<list id="jz" type="string" sql="xnyzb" value="2" />
-		<list id="cpzl" type="string" sql="xnyzb" value="4" />
-		<list id="cpxh" type="string" sql="xnyzb" value="5" />
-		<list id="bzscl" type="double" sql="xnyzb" value="6" />
-		<list id="bzfhl" type="double" sql="xnyzb" value="7" />
-		<list id="bzxsjg" type="string" sql="xnyzb" value="8" />
-		
-		
-		<table id="result" rowIds="ids">
-			<col list="ks"/>
-			<col list="jz"/>
-			<col list="cpzl"/>
-			<col list="cpxh"/>
-			<col list="bzscl"/> 
-			<col list="bzfhl"/> 
-			<col list="bzxsjg"/>
-		</table>
-
-		<context key="result" value="${result}"/>
-	</service>
-	
-	<controller id="xnyzbUpdate">
-
-		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
-		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
-		<callservice id="servCompTypeToId"/>
-		<callservice id="servXnyzb"/>
-		
-		<formatter id="data">
-			<NumberFormatter reservedCount="1">
-				<DefaultMatcher cols="6,7"/>
-			</NumberFormatter>
-		</formatter>
-
-		<formatterServer id="serv" table="${result.matrix}">
-			<formatter ref="data"/>
-		</formatterServer>
-		
-		<response type="json"> 
-			<header type="array">
-				<item>
-					<name>周期</name>
-					<sub type="array">
-						<item>
-							<name>开始</name>
-							<type>date</type>
-						</item>
-						<item>
-							<name>截止</name>
-							<type>date</type>
-						</item>
-					</sub>
-				</item>
-				<item>
-					<name>产品种类</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>产品型号</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>本周生产量</name>
-				</item>
-				<item>
-					<name>本周发货量</name>
-				</item>
-				<item>
-					<name>本周销售价格</name>
-					<type>text</type>
-				</item>
-			</header>
-			<mergeRows type="array">
-				<item>
-					<col>0</col>
-				</item>
-			</mergeRows>
-			<mergeCols type="array">
-				<item>
-					<col>0</col>
-				</item>
-			</mergeCols>
-			<mergeTitle>
+  <list id="ids" type="int" sql="xnyzb" value="0"/>
+  <list id="ks" type="string" sql="xnyzb" value="1"/>
+  <list id="jz" type="string" sql="xnyzb" value="2"/>
+  <list id="cpzl" type="string" sql="xnyzb" value="4"/>
+  <list id="cpxh" type="string" sql="xnyzb" value="5"/>
+  <list id="bzscl" type="double" sql="xnyzb" value="6"/>
+  <list id="bzfhl" type="double" sql="xnyzb" value="7"/>
+  <list id="bzxsjg" type="string" sql="xnyzb" value="8"/>
+  <table id="result" rowIds="ids">
+   <col list="ks"/>
+   <col list="jz"/>
+   <col list="cpzl"/>
+   <col list="cpxh"/>
+   <col list="bzscl"/>
+   <col list="bzfhl"/>
+   <col list="bzxsjg"/>
+  </table>
+  <context key="result" value="${result}"/>
+ </service>
+ <controller id="xnyzbUpdate">
+  <context key="dStart" value="${request.dStart.asCalendar.monday}"/>
+  <context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
+  <callservice id="servCompTypeToId"/>
+  <callservice id="servXnyzb"/>
+  <formatter id="data">
+   <NumberFormatter reservedCount="1">
+    <DefaultMatcher cols="6,7"/>
+   </NumberFormatter>
+  </formatter>
+  <formatterServer id="serv" table="${result.matrix}">
+   <formatter ref="data"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>周期</name>
+     <sub type="array">
+      <item>
+       <name>开始</name>
+       <type>date</type>
+      </item>
+      <item>
+       <name>截止</name>
+       <type>date</type>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>产品种类</name>
+     <type>text</type>
+    </item>
+    <item>
+     <name>产品型号</name>
+     <type>text</type>
+    </item>
+    <item>
+     <name>本周生产量</name>
+    </item>
+    <item>
+     <name>本周发货量</name>
+    </item>
+    <item>
+     <name>本周销售价格</name>
+     <type>text</type>
+    </item>
+   </header>
+   <mergeRows type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeRows>
+   <mergeCols type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeCols>
+   <mergeTitle>
 				true
 			</mergeTitle>
-			<data>${serv.result}</data>
-		</response>
-	</controller>
-	
-	<controller id="xnyzbExport">
-
-		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
-		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
-		<callservice id="servCompTypeToId"/>
-		
-		<callservice id="servXnyzb"/>
-		<context key="tbs" value="${result.matrixNoIds}"/>
-		
-		<ExcelTemplate id="excelTemplate" sheet="生产、发货和价格周报表"/>
-		
-		<list id="title1" type="string">
-			周期, 周期, 项目公司, 产品种类, 产品型号, 本周生产量, 本周发货量, 本周销售价格
+   <data>${serv.result}</data>
+  </response>
+ </controller>
+ <controller id="xnyzbExport">
+  <context key="dStart" value="${request.dStart.asCalendar.monday}"/>
+  <context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
+  <callservice id="servCompTypeToId"/>
+  <callservice id="servXnyzb"/>
+  <context key="tbs" value="${result.matrixNoIds}"/>
+  <ExcelTemplate id="excelTemplate" sheet="生产、发货和价格周报表"/>
+  <list id="title1" type="string">周期, 周期, 产品种类, 产品型号, 本周生产量, 本周发货量, 本周销售价格
 		</list>
-		<list id="title2" type="string">
-			开始, 截止, 项目公司, 产品种类, 产品型号, 本周生产量, 本周发货量, 本周销售价格
+  <list id="title2" type="string">开始, 截止, 产品种类, 产品型号, 本周生产量, 本周发货量, 本周销售价格
 		</list>
-		
-		<formatter id="data">
-			<NumberFormatter reservedCount="1">
-				<DefaultMatcher cols="5,6"/>
-			</NumberFormatter>
-		</formatter>
-		
-		<formatter id="excel">
-			<ExcelTitleFilter>
-				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="0" col="0"/>
-				<titles>
-					<title ref="title1"></title>
-					<title ref="title2"></title>
-				</titles>
-			</ExcelTitleFilter>
-			<ExcelMergeFormatter>
-				<ExcelTemplate ref="excelTemplate"/>
-				<MergeRegion x="0" y="0" width="8" height="2"/>
-				<MergeRegion x="0" y="2" width="5" height="${tbs.size}"/>
-			</ExcelMergeFormatter>
-			<ExcelTextFormatter>
-				<DefaultMatcher cols="0, 1, 2, 3, 4, 7"/>
-				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="2" col="0"/>
-			</ExcelTextFormatter>
-			<ExcelOffsetFormatter>
-				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="2" col="0"/>
-			</ExcelOffsetFormatter>
-		</formatter>
-
-		<formatterServer id="serv" table="${tbs}">
-			<formatter ref="data"/>
-			<formatter ref="excel"/>
-		</formatterServer>
-
-		<response type="excel" ref="excelTemplate" name="生产、发货和价格周报表.xls" serv="serv"/>
-	</controller>
-	<controller id="xnyzb">		
-		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-			<param type="int">26</param>
-		</call>
-		<response type="jsp" name="xnyzb/xnyzb"> 
-			<map key="date" value="${calendar.current.format}"/>
-			<map key="updateUrl" value="xnyzbUpdate"/>
-			<map key="exportUrl" value="xnyzbExport"/>
-			<map key="title" value="生产、发货和价格周报表"/>
-			<map map="${authCompMap}"/>
-		</response>
-	</controller>
+  <formatter id="data">
+   <NumberFormatter reservedCount="1">
+    <DefaultMatcher cols="4,5"/>
+   </NumberFormatter>
+  </formatter>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title1"/>
+     <title ref="title2"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="7" height="2"/>
+    <MergeRegion x="0" y="2" width="4" height="${tbs.size}"/>
+   </ExcelMergeFormatter>
+   <ExcelTextFormatter>
+    <DefaultMatcher cols="0, 1, 2, 3,6"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelTextFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="serv" table="${tbs}">
+   <formatter ref="data"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="生产、发货和价格周报表.xls" serv="serv"/>
+ </controller>
+ <controller id="xnyzb">
+  <call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
+   <param type="int">26</param>
+  </call>
+  <response type="jsp" name="xnyzb/xnyzb">
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="updateUrl" value="xnyzbUpdate"/>
+   <map key="exportUrl" value="xnyzbExport"/>
+   <map key="title" value="生产、发货和价格周报表"/>
+   <map map="${authCompMap}"/>
+  </response>
+ </controller>
 </components>

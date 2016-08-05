@@ -153,10 +153,8 @@
 			1309,1310,
 			1312,1313,1311,1314
 		</list>
-		
-		<call id="zhxmgs" object="${compTypeIdMapper}" method="getCompanies">
-			<param type="object">${zhdwids}</param>
-		</call>
+	
+		<context key="zhxmgs" value="${orgCompaniesByIds['BMDBOrganization'][zhdwids]}"/>
 	</service>
 
 	<service id="servZhgsljzbhz" transaction="transactionManager">
@@ -364,6 +362,7 @@
 					<col>0</col>
 				</item>
 			</mergeRows>
+			<width>1330</width>
 			<data>${fmtServ.result}</data>
 		</response>
 	</controller>

@@ -8,51 +8,6 @@ import java.util.Map;
 
 public class EasyCalendar {
 	
-	public static class Days{
-		EasyCalendar cal;
-
-		public Days(EasyCalendar cal) {
-			super();
-			this.cal = cal;
-		}
-		
-		public EasyCalendar getCalendar(){
-			return cal;
-		}
-		
-		public int count(){
-			return cal.getRealCalendar().getActualMaximum(Calendar.DAY_OF_MONTH);
-		}
-		
-		public EasyCalendar getDay(int day){
-			Calendar caltmp = Calendar.getInstance();
-			caltmp.setTimeInMillis(cal.getRealCalendar().getTimeInMillis());
-			caltmp.set(Calendar.DAY_OF_MONTH, day);
-			return new EasyCalendar(caltmp);
-		}
-	}
-	
-	public static class Months{
-		EasyCalendar cal;
-
-		public Months(EasyCalendar cal) {
-			super();
-			this.cal = cal;
-		}
-		
-		public EasyCalendar getCalendar(){
-			return cal;
-		}
-		
-		public EasyCalendar getMonth(int month){
-			Calendar caltmp = Calendar.getInstance();
-			caltmp.setTimeInMillis(cal.getRealCalendar().getTimeInMillis());
-			caltmp.set(Calendar.MONTH, month - 1);
-			return new EasyCalendar(caltmp);
-		}
-	}
-	
-	
 	Calendar cal;
 	
 	Map<Integer, Object> cache = new HashMap<Integer, Object>();
@@ -306,18 +261,25 @@ public class EasyCalendar {
 		return (EasyCalendar) cache(KEY_NextYear, new EasyCalendar(cal));
 	}
 	
-	public Days getDays(){
+	public EasyCalendar getDays(Integer day){
 		if (cache.containsKey(KEY_Days)){
-			return (Days) cache.get(KEY_Days);
+			return (EasyCalendar) cache.get(KEY_Days);
 		}
-		return (Days) cache(KEY_Days, new Days(this));
+		
+		Calendar caltmp = Calendar.getInstance();
+		caltmp.setTimeInMillis(cal.getTimeInMillis());
+		caltmp.set(Calendar.DAY_OF_MONTH, day);
+		return (EasyCalendar) cache(KEY_Days, new EasyCalendar(caltmp));
 	}
 	
-	public Months getMonths(){
+	public EasyCalendar getMonths(Integer month){
 		if (cache.containsKey(KEY_Months)){
-			return (Months) cache.get(KEY_Timestamp);
+			return (EasyCalendar) cache.get(KEY_Months);
 		}
-		return (Months) cache(KEY_Timestamp, new Months(this));
+		Calendar caltmp = Calendar.getInstance();
+		caltmp.setTimeInMillis(cal.getTimeInMillis());
+		caltmp.set(Calendar.MONTH, month - 1);
+		return (EasyCalendar) cache(KEY_Months, new EasyCalendar(caltmp));
 	}
 	
 	public Date getDate(){

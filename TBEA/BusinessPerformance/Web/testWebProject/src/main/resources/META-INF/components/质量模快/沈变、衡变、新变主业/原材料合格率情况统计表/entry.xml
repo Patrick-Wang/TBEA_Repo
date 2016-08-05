@@ -1,0 +1,110 @@
+<components>
+ <service id="servByqjydwzyYclhglqktjEntryUpdate" transaction="transactionManager">
+  <sql id="clids">select
+ CLDL.id,
+ CLDL.name,
+ CLDL.dw
+from
+ zl_yclhglqk_cldl CLDL</sql>
+  <list id="ids" type="int" sql="clids" value="0"/>
+  <sql id="dyz" order="ids" by="0">select
+ CLDL.id,
+ YCL.hgs,
+ YCL.zs,
+ (YCL.zs - YCL.hgs) / YCL.zs as hgl
+from
+ zl_yclhglqk_cldl CLDL,
+ zl_yclhglqk YCL
+where
+ YCL.clid=CLDL.id and
+ YCL.nf=${cal.date.year} and
+ YCL.yf=${cal.date.month} and
+ YCL.dwid=${compId}</sql>
+  <sql id="ljz" order="ids" by="0">select
+ CLDL.id,
+ sum(YCL.hgs) as newHgs,
+ sum(YCL.zs) as newZs,
+ (sum(YCL.zs) - sum(YCL.hgs)) / sum(YCL.zs) as hgl
+from
+ zl_yclhglqk_cldl CLDL,
+ zl_yclhglqk YCL
+where
+ YCL.clid=CLDL.id and
+ dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
+ dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
+ YCL.dwid=${compId}
+group by
+ CLDL.id</sql>
+  <list id="dyzOrdered" type="int" sql="dyz" value="0"/>
+  <table id="result" rowIds="ids">
+   <list type="string" sql="clids" value="1"/>
+   <list type="string" sql="clids" value="2"/>
+   <list type="int" sql="dyz" value="1"/>
+   <list type="int" sql="dyz" value="2"/>
+   <list type="double" sql="dyz" value="3"/>
+   <list type="int" sql="ljz" value="1"/>
+   <list type="int" sql="ljz" value="2"/>
+   <list type="double" sql="ljz" value="3"/>
+  </table>
+  <context key="result" value="${result}"/>
+ </service>
+ <controller id="byqjydwzyYclhglqktjEntryUpdate" transaction="transactionManager">
+  <sql id="clids">select
+ CLDL.id,
+ CLDL.name,
+ CLDL.dw
+from
+ zl_yclhglqk_cldl CLDL</sql>
+  <list id="ids" type="int" sql="clids" value="0"/>
+  <sql id="dyz" order="ids" by="0">select
+ CLDL.id,
+ YCL.hgs,
+ YCL.zs,
+ (YCL.zs - YCL.hgs) / YCL.zs as hgl
+from
+ zl_yclhglqk_cldl CLDL,
+ zl_yclhglqk YCL
+where
+ YCL.clid=CLDL.id and
+ YCL.nf=${cal.date.year} and
+ YCL.yf=${cal.date.month} and
+ YCL.dwid=${compId}</sql>
+  <sql id="ljz" order="ids" by="0">select
+ CLDL.id,
+ sum(YCL.hgs) as newHgs,
+ sum(YCL.zs) as newZs,
+ (sum(YCL.zs) - sum(YCL.hgs)) / sum(YCL.zs) as hgl
+from
+ zl_yclhglqk_cldl CLDL,
+ zl_yclhglqk YCL
+where
+ YCL.clid=CLDL.id and
+ dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
+ dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
+ YCL.dwid=${compId}
+group by
+ CLDL.id</sql>
+  <list id="dyzOrdered" type="int" sql="dyz" value="0"/>
+  <table id="result" rowIds="ids">
+   <list type="string" sql="clids" value="1"/>
+   <list type="string" sql="clids" value="2"/>
+   <list type="int" sql="dyz" value="1"/>
+   <list type="int" sql="dyz" value="2"/>
+   <list type="double" sql="dyz" value="3"/>
+   <list type="int" sql="ljz" value="1"/>
+   <list type="int" sql="ljz" value="2"/>
+   <list type="double" sql="ljz" value="3"/>
+  </table>
+  <context key="result" value="${result}"/>
+ </controller>
+ <controller id="byqjydwzyYclhglqktjEntry">
+  <response type="jsp" name="framework/templates/dateReport/entry">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="byqjydwzyYclhglqktjEntryUpdate"/>
+   <map key="submitUrl" value="byqjydwzyYclhglqktjSubmit"/>
+   <map key="title" value="原材料合格率"/>
+   <map map="${authMgr[42]}"/>
+  </response>
+ </controller>
+</components>

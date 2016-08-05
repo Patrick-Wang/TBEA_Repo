@@ -32,6 +32,8 @@ module Util {
         mergeRows:MergeRow[];
         mergeCols:MergeCol[];
         mergeTitle:string;
+        width:string;
+        pager:string;
     }
 
     export interface ServResp extends GridCtrl{

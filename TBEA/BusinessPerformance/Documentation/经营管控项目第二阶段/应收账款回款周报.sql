@@ -13,7 +13,7 @@ CREATE TABLE [dbo].[yszkhkzb](
 	[htje] [numeric](18, 4),
 	[yszkje] [numeric](18, 4),
 	[yqkje] [numeric](18, 4),
-	[yqksj] [int]
+	[yqksj] [int],
 	[zt] [int] NOT NULL
 PRIMARY KEY CLUSTERED 
 (

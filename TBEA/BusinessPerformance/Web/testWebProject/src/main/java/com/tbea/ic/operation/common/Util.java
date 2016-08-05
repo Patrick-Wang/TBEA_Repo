@@ -25,7 +25,8 @@ public class Util {
 	}
 	
 	public static String formatToSecond(Timestamp d) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
 		return formatter.format(new Date(d.getTime()));
 	}
 	

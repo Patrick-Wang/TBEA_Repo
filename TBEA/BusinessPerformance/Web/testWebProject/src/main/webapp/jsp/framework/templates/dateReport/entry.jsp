@@ -1,7 +1,7 @@
 ﻿<html>
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- message box -->
     <link href="${pageContext.request.contextPath}/jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
@@ -26,13 +26,15 @@
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.js"></script>
 
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="${pageContext.request.contextPath}/jsp/components/select2/css/select2.min.css">
+    <script src="${pageContext.request.contextPath}/jsp/components/select2/js/select2.min.js" type="text/javascript"></script>
 
     <!-- jqgrid -->
     <link rel="stylesheet" type="text/css" media="screen"
           href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.jqgrid.css">
     <link rel="stylesheet" type="text/css" media="screen"
           href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.multiselect.css">
-
     <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.contextmenu.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/i18n/grid.locale-cn.js"
@@ -51,24 +53,26 @@
     <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/components/dateSeasonSelector.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basic.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicShow.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/framework/templates/singleDateReport/show.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/framework/templates/dateReport/show.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/framework/templates/singleDateReport/entry.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/framework/templates/dateReport/entry.js"></script>
     <title>${title}</title>
 
     <style type="text/css">
         body {
             background-color: rgb(247, 247, 247);
             visibility: hidden;
+        }
+
+        .select2-container{
+            margin-left:8px;
         }
 
         .panel-content-border {
@@ -169,20 +173,6 @@
             text-align: left;
             font-size: 12px;
         }
-        .ui-widget{
-            font-size: 12px;
-        }
-
-         .ui-widget-content{
-            font-size: 12px;
-        }
-
-        #exportButton {
-            height: 23px;
-            width:100px;
-            padding: .1em 1em;
-            margin-top: 2px;
-        }
     </style>
 </head>
 <body>
@@ -193,6 +183,7 @@
 <Table id="frameTable" align="center" style="width:1200px">
     <tr>
         <td>
+        
             <div id="dt" style="float: left;margin-right:10px"></div>
             <div  style="float: left;margin-right:10px">
                 <div id="im">
@@ -200,7 +191,7 @@
                 </div>
             </div>
             <input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
-                   onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_UPDATE)" />
+                   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
         </td>
     </tr>
     <tr>
@@ -210,24 +201,23 @@
     </tr>
     <tr>
         <td>
-            <form id="export" method="post">
-                <input id="exportButton" type="button" value="导出"
-                       onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_EXPORTEXCEL, 'export')">
-            </form>
+            <input id="submit" type="button" value="提交" style="float: right;width: 80px; mrgin-left: 10px;"
+                   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)" />
         </td>
     </tr>
 </Table>
 <script type="text/javascript">
-
     $(document).ready(function () {
         framework.templates.dateReport.createInstance();
         var dateEnd;
         var date;
         if ('${date}' == ""){
-            date = {
-                month:'${month}' == ''?undefined:parseInt('${month}'),
-                year:'${year}' == ''?undefined:parseInt('${year}'),
-                day:'${day}' == ''?undefined:parseInt('${day}')
+            if ("" != '${year}') {
+                date = {
+                    month: '${month}' == '' ? undefined : parseInt('${month}'),
+                    year: '${year}' == '' ? undefined : parseInt('${year}'),
+                    day: '${day}' == '' ? undefined : parseInt('${day}')
+                }
             }
         }else{
             var dt = new Date(Date.parse('${date}'.replace(/-/g, '/')));
@@ -244,7 +234,7 @@
             }
         }
 
-        framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+        framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
             dtId:"dt",
             date: date,
             dateEnd:dateEnd,
@@ -252,17 +242,11 @@
             title:"${title}",
             asSeason:"${asSeason}" == "true" ? true : false,
             updateUrl:"${updateUrl}.do",
-            exportUrl:"${exportUrl}.do",
+            submitUrl:"${submitUrl}.do",
             itemId:"im",
             itemNodes:JSON.parse('${nodeData}')
         });
-        $("#exportButton")
-            .css("height", "23px")
-            .css("padding", ".1em 1em")
-            .css("margin-top", "10px")
-            .css("width", "90px");
         $(document.body).css("visibility", "visible");
-
     });
 </script>
 

@@ -28,7 +28,6 @@
 
     <link rel="stylesheet" type="text/css" media="screen"
           href="${pageContext.request.contextPath}/jsp/components/select2/css/select2.min.css">
-    <script src="${pageContext.request.contextPath}/jsp/components/select2/js/i18n/zh-CN.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/components/select2/js/select2.min.js" type="text/javascript"></script>
 
     <!-- jqgrid -->
@@ -61,6 +60,7 @@
     <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/framework/basic/basic.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/templates/singleDateReport/entry.js"></script>
     <title>${title}</title>
 

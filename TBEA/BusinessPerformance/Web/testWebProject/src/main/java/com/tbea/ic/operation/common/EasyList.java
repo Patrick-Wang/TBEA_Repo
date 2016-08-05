@@ -5,7 +5,7 @@ import java.util.List;
 
 public class EasyList<T> {
 	List<T> list = new ArrayList<T>();
-
+	
 	public EasyList(T[] arr){
 		if (null == arr){
 			list = null;
@@ -14,6 +14,9 @@ public class EasyList<T> {
 				list.add(arr[i]);
 			}
 		}
+	}
+	public EasyList(List<T> arr){
+		this.list = arr;
 	}
 	
 	public EasyList(){}
@@ -50,6 +53,14 @@ public class EasyList<T> {
 		return list;
 	}
 
+	public List<T> clone(){
+		List<T> cp = new ArrayList<T>(list.size());
+		for(T l : list){
+			cp.add(l);
+		}
+		return cp;
+	}
+	
 	public EasyList<T> clear() {
 		list.clear();
 		return this;

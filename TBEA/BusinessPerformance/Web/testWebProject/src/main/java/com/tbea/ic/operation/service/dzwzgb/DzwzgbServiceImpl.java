@@ -10,7 +10,9 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -229,8 +231,11 @@ public class DzwzgbServiceImpl implements DzwzgbService {
 	
 	@Override
 	public ErrorCode importDzclcb(Date d){
+		Logger logger = Logger.getLogger("LOG-NC");
+		logger.debug("大宗物资管报" + d);
 		List<TqbzYjjEntity> entities = tqbzyjjDao.getByDate(d);
 		for (TqbzYjjEntity entity : entities){
+			logger.debug(JSONObject.fromObject(entity).toString());
 			importToDzclcb(entity, d);
 		}
 		return ErrorCode.OK;
@@ -253,7 +258,7 @@ public class DzwzgbServiceImpl implements DzwzgbService {
 					dzclkcb.setDwid(comp.getId());
 					dzclkcb.setZt(ZBStatus.APPROVED.ordinal());
 				}
-
+				
 				dzclkcb.setQhyk(entity.getDYQHYK());//期货盈亏
 				dzclkcb.setScxhyjj(entity.getSCJ());//市场现货月均价
 				dzclkcb.setCgyjj(entity.getCGJ2());//采购月均价

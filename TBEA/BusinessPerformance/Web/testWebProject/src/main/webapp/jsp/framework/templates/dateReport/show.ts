@@ -4,7 +4,7 @@
 ///<reference path="../../../messageBox.ts"/>
 ///<reference path="../../../components/dateSelectorProxy.ts"/>
 ///<reference path="../singleDateReport/show.ts"/>
-module framework.templates.DateReport {
+module framework.templates.dateReport {
     import router = framework.router;
     import Node = JQTable.Node;
     import BasicEndpoint = framework.basic.BasicEndpoint;
@@ -17,25 +17,30 @@ module framework.templates.DateReport {
         return new ShowView();
     }
 
-    export interface ShowOption{
-        updateUrl:string;
-        exportUrl:string;
-        host:string;
-        date:Util.Date;
-        dtId:string;
-        asSeason:boolean;
+    export interface ShowOption extends framework.templates.singleDateReport.ShowOption{
         itemNodes:IDataNode[];
         itemId:string;
     }
 
     export class ShowView extends framework.templates.singleDateReport.ShowView{
-        unitedSelector : Util.UnitedSelector
-        getId():number{
-            return framework.templates.singleDateReport.FRAME_ID;
-        }
+        unitedSelector : Util.UnitedSelector;
 
         onInitialize(opt:any):void{
             this.unitedSelector = new UnitedSelector(opt.itemNodes,opt.itemId);
+            this.unitedSelector.change(()=>{
+                $("#" + opt.itemId + " select")
+                    .multiselect({
+                        multiple: false,
+                        header: false,
+                        minWidth: 100,
+                        height: '100%',
+                        // noneSelectedText: "请选择月份",
+                        selectedList: 1
+                    })
+                    .css("padding", "2px 0 2px 4px")
+                    .css("text-align", "left")
+                    .css("font-size", "12px");
+            })
             $("#" + opt.itemId + " select")
                 .multiselect({
                     multiple: false,
@@ -52,16 +57,19 @@ module framework.templates.DateReport {
         }
 
 
+        getParams(date:Util.Date):any{
+            return {
+                date: this.getDate(date),
+                item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
+            };
+        }
 
         getDate(date:Util.Date):string{
             return "" + (date.year + "-" + (date.month == undefined ? 1 :date.month) + "-" + (date.day == undefined ? 1 :date.day));
         }
 
         update (date:Util.Date){
-            this.mAjaxUpdate.get({
-                    date: this.getDate(date),
-                    item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
-                })
+            this.mAjaxUpdate.get(this.getParams(date))
                 .then((jsonData:any) => {
                     this.resp = jsonData;
                     this.updateTable();
@@ -93,17 +101,14 @@ module framework.templates.DateReport {
                     // width: titles.length * 200,
                     rowNum: 1000,
                     height: this.resp.data.length > 25 ? 550 : '100%',
-                    width: 1200,
+                    width: this.resp.width == undefined ? 1200 : this.resp.width,
                     shrinkToFit: true,
                     autoScroll: true
                 }));
         }
 
         exportExcel(date:Util.Date, id:string): void {
-            $("#" + id)[0].action = this.opt.exportUrl + "?" +  Util.Ajax.toUrlParam({
-                date: this.getDate(date),
-                item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
-            });
+            $("#" + id)[0].action = this.opt.exportUrl + "?" +  Util.Ajax.toUrlParam(this.getParams(date));
             $("#" + id)[0].submit();
         }
     }

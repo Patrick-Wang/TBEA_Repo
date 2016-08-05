@@ -12,12 +12,6 @@ module plugin {
 module basicReport {
     export module basic {
 
-        class JQGridAssistantFactory {
-            public static createTable(gridName:string):JQTable.JQGridAssistant {
-                return Util.JQGridAssistantFactory.createTable(gridName)
-            }
-        }
-
         class ShowView extends framework.basic.ShowPluginView {
             static ins = new ShowView();
             private mData:Array<string[]>;
@@ -42,11 +36,20 @@ module basicReport {
                 return <Option>this.mOpt;
             }
 
+            private find(id : number){
+                for (let i = this.option().items.length - 1; i >= 0; --i){
+                    if (this.option().items[i].data.id == id){
+                        return i;
+                    }
+                }
+                return -1;
+            }
 
             onEvent(e: framework.route.Event): any {
                 if (e.road != undefined) {
-                    if (this.option().ids.indexOf(<string>(e.road[e.road.length - 1])) >= 0){
-                        this.mCurEp = this.option().ids.indexOf(<string>(e.road[e.road.length - 1]));
+                    let index = this.find(e.road[e.road.length - 1]);
+                    if (index >= 0){
+                        this.mCurEp = index;
                     }
                 }
                 return super.onEvent(e);
@@ -75,11 +78,11 @@ module basicReport {
             }
 
             public init(opt:Option):void {
-                for (var i = 0; i < opt.ids.length; ++i){
+                for (var i = 0; i < opt.items.length; ++i){
                     framework.router
-                        .fromEp(new framework.basic.EndpointProxy(<number>(opt.ids[i]), this.getId()))
+                        .fromEp(new framework.basic.EndpointProxy(<number>(opt.items[i].data.id), this.getId()))
                         .to(framework.basic.endpoint.FRAME_ID)
-                        .send(framework.basic.FrameEvent.FE_REGISTER, opt.names[i]);
+                        .send(framework.basic.FrameEvent.FE_REGISTER, opt.items[i].data.value);
                 }
 
             }
@@ -92,7 +95,7 @@ module basicReport {
 			
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+                var tableAssist:JQTable.JQGridAssistant = Util.createTable(name, this.m);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");

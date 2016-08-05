@@ -22,7 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.tbea.ic.operation.common.CommonMethod;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
@@ -93,14 +92,14 @@ public class NCController {
 			approveService.unapproveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp, date);
 			entryService.submitZb(date, null, comp.getType(), ZBType.BYSJ,
 					jsonArray);
-			approveService.approveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp, date);
+			approveService.approveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp, date, true);
 			break;
 		case APPROVED_2: 
 			entryService.saveZb(date, null, comp.getType(), ZBType.BYSJ,
 					jsonArray);
 			List<Company> compsTmp2 = new ArrayList<Company>();
 			compsTmp2.add(comp);
-			approveService.approveSjZb(Account.KNOWN_ACCOUNT_JYFZ, compsTmp2, date);
+			approveService.approveSjZb(Account.KNOWN_ACCOUNT_JYFZ, compsTmp2, date, true);
 			break;
 		case NONE:
 		case SAVED:

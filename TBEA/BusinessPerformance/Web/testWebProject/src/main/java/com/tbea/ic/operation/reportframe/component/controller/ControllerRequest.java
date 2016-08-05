@@ -17,14 +17,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.tbea.ic.operation.common.EasyCalendar;
+import com.tbea.ic.operation.common.PropMap;
 
-public class ControllerRequest {
+public class ControllerRequest extends PropMap{
 	HttpServletRequest req;
 	public static class Paramater{
 		HttpServletRequest req;
 		String paraName;
-
-	
 		
 		public Paramater(HttpServletRequest req, String paraName) {
 			super();
@@ -93,7 +92,8 @@ public class ControllerRequest {
 		return req.getSession().getServletContext();
 	}
 	
-	public Paramater getParameter(String name){
-		return new Paramater(req, name);
+	@Override
+	public Object getProperty(Object key) throws Exception {
+		return new Paramater(req, (String)key);
 	}
 }

@@ -503,7 +503,7 @@ public class ApproveServiceImpl implements ApproveService {
 	}
 
 	@Override
-	public boolean approveSjZb(Account account, List<Company> comps, Date date) {
+	public boolean approveSjZb(Account account, List<Company> comps, Date date, boolean isNC) {
 		PreApprovedCompanyFilter preApprovedCompanyFilter = new PreApprovedCompanyFilter(
 				account, date, new OnGetStatus() {
 					@Override
@@ -519,7 +519,9 @@ public class ApproveServiceImpl implements ApproveService {
 			List<SJZB> zbs = sjzbDao.getZbs(date, comps);
 			for (SJZB zb : zbs) {
 				zb.setSjshzt(shztDao.getById(approveStatus));
-				zb.setSjshsj(timestamp);
+				if (!isNC){
+					zb.setSjshsj(timestamp);
+				}
 				sjzbDao.merge(zb);			
 			}
 			

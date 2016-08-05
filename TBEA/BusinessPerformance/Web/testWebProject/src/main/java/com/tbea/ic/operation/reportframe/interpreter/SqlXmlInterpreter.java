@@ -13,11 +13,13 @@ import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.reportframe.el.ELExpression;
 import com.tbea.ic.operation.reportframe.el.ELParser;
+import com.tbea.ic.operation.reportframe.util.XmlUtil;
 
 
 public class SqlXmlInterpreter implements XmlInterpreter {
 
-	List parseElSql(ELParser el, String sql, EntityManager em){
+	ELParser el;
+	List parseElSql(String sql, EntityManager em){
 		List<ELExpression> elexps = el.parser(sql);
 		List<Object> objs = new ArrayList<Object>();
 		for (int i = elexps.size() - 1; i >= 0; --i){
@@ -42,6 +44,15 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		return q.getResultList();
 	}
 	
+	private int find(List<Object[]> sqlRet, Object val, int by){
+		for (int j = 0; j < sqlRet.size(); ++j){
+			if (val.equals(sqlRet.get(j)[by])){
+				return j;
+			}
+		}
+		return -1;
+	} 
+	
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 		
@@ -53,9 +64,8 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		if (null == tx){
 			throw new Exception("请指定 transaction " + e.toString());
 		}
-		
+		el = new ELParser(component);
 		List sqlRet = parseElSql(
-				new ELParser(component), 
 				e.getFirstChild().getTextContent(),
 				tx.getEntityManager());
 		
@@ -68,6 +78,23 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 						}else if (objs[i] instanceof Long){
 							objs[i] = ((Long)objs[i]).intValue();
 						}
+					}
+				}
+			}
+		}
+		
+		List order = (List) component.getVar(e.getAttribute("order"));
+		if (null != order){
+			Integer by = XmlUtil.getIntAttr(e, "by", el, null);
+			if (null != by){
+				List<Object[]> objs = new ArrayList<Object[]>();
+				int ret = 0;
+				for (int i = 0; i < order.size(); ++i){
+					ret = find(sqlRet, order.get(i), by);
+					if (ret >= 0){
+						objs.add((Object[]) sqlRet.get(ret));
+					}else{
+						objs.add(null);
 					}
 				}
 			}

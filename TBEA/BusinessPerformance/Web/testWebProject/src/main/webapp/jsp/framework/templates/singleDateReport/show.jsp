@@ -212,10 +212,10 @@
     </tr>
 </Table>
 <script type="text/javascript">
-    framework.templates.singleDateReport.createInstance();
+
     $(document).ready(function () {
 
-
+        framework.templates.singleDateReport.createInstance();
 
 
         var dateEnd;

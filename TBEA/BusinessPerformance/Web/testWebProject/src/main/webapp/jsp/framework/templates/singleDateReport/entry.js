@@ -84,7 +84,7 @@ var framework;
                     parent.empty();
                     parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                     var jqTable = $("#" + name);
-                    jqTable.jqGrid(this.mTableAssist.decorate({
+                    var opt = {
                         datatype: "local",
                         data: this.mTableAssist.getDataWithId(this.resp.data),
                         multiselect: false,
@@ -104,9 +104,16 @@ var framework;
                         autoScroll: true,
                         pager: '#' + pagername,
                         viewrecords: true
-                    }));
+                    };
+                    if (this.resp.pager == 'none') {
+                        opt.pager = undefined;
+                    }
+                    jqTable.jqGrid(this.mTableAssist.decorate(opt));
                 };
                 EntryView.prototype.onLoadSubmitData = function () {
+                    if (this.resp.pager == 'none') {
+                        return this.mTableAssist.getAllData();
+                    }
                     return this.mTableAssist.getChangedData();
                 };
                 EntryView.prototype.submit = function (date) {

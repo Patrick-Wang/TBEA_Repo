@@ -23,7 +23,7 @@ public interface ApproveService {
 
 	boolean approveYj28Zb(Account account, List<Company> comps, Date date);
 
-	boolean approveSjZb(Account account, List<Company> comps, Date date);
+	boolean approveSjZb(Account account, List<Company> comps, Date date, boolean isNC);
 
 	boolean approveYdjdZb(Account account, List<Company> comps, List<Date> dateList);
 
@@ -42,4 +42,6 @@ public interface ApproveService {
 	List<Company> getValidJhCompanies(Account account);
 
 	List<String[]> getApproveStatus(Date date, ZBType entryType, List<Company> mainCompanies);
+
+
 }

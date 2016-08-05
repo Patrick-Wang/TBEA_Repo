@@ -1,13 +1,18 @@
 ///<reference path="../dateSelector.ts"/>
 ///<reference path="dateSeasonSelector.ts"/>
+///<reference path="SeasonAccSelector.ts"/>
 var Util;
 (function (Util) {
     var DateSelectorProxy = (function () {
-        function DateSelectorProxy(divId, dtStart, dtEnd, dtNow, asSeason) {
+        function DateSelectorProxy(divId, dtStart, dtEnd, dtNow, asSeason, asSeasonAcc) {
             var _this = this;
             if (asSeason === void 0) { asSeason = false; }
+            if (asSeasonAcc === void 0) { asSeasonAcc = false; }
             this.curDate = dtNow;
-            if (asSeason) {
+            if (asSeasonAcc) {
+                this.seasonAccSelect = new Util.SeasonAccSelector(dtStart, dtEnd, dtNow, divId);
+            }
+            else if (asSeason) {
                 this.seasonSelect = new Util.DateSeasonSelector(dtStart, dtEnd, dtNow, divId);
             }
             else if (this.curDate.day != undefined) {
@@ -51,6 +56,9 @@ var Util;
             }
             else if (this.seasonSelect != undefined) {
                 this.curDate = this.seasonSelect.getDate();
+            }
+            else if (this.seasonAccSelect != undefined) {
+                this.curDate = this.seasonAccSelect.getDate();
             }
             return this.curDate;
         };

@@ -1,7 +1,7 @@
-﻿<components>
-	<service id="servAcyhzzb" transaction="transactionManager">
-		<if test="${item == 0}">
-			<list id="zbmc" type="string">
+<components>
+ <service id="servAcyhzzb" transaction="transactionManager">
+  <if test="${item == 0}">
+   <list id="zbmc" type="string">
 				制造业利润,
 				销售收入-制造业收入,	
 				应收账款-制造业应收,	
@@ -10,10 +10,10 @@
 				按业务类型分：制造业资金回笼,
 				制造业人数
 			</list>
-			<list id="zbs" type="int">1,7,256,279,290,308,217</list>
-		</if>
-		<if test="${item == 1}">
-			<list id="zbmc" type="string">
+   <list id="zbs" type="int">1,7,256,279,290,308,217</list>
+  </if>
+  <if test="${item == 1}">
+   <list id="zbmc" type="string">
 				集成服务业利润,	
 				集成服务业-制造业收入,
 				集成服务业-制造业应收, 
@@ -22,10 +22,10 @@
 				按业务类型分：集成服务业资金回笼,
 				集成服务业人数
 			</list>
-			<list id="zbs" type="int">196,12,262,282,299,311,218</list>
-		</if>
-		<if test="${item == 2}">
-			<list id="zbmc" type="string">
+   <list id="zbs" type="int">196,12,262,282,299,311,218</list>
+  </if>
+  <if test="${item == 2}">
+   <list id="zbmc" type="string">
 				物流贸易利润,
 				物流贸易-制造业收入,
 				物流贸易-制造业应收,
@@ -33,9 +33,9 @@
 				按业务类型分：物流贸易业资金回笼,
 				物流贸易人数
 			</list>
-			<list id="zbs" type="int">197,16,267,284,313,219</list>
-		</if>
-		<list id="dwids" type="int">
+   <list id="zbs" type="int">197,16,267,284,313,219</list>
+  </if>
+  <list id="dwids" type="int">
 			1,
 			2,
 			3,
@@ -49,229 +49,259 @@
 			11,
 			12,
 			60000
-		</list>	
-		
-		<call id="companies" object="${compTypeIdMapper}" method="getCompanies">
-			<param type="object">${dwids}</param>
-		</call>
-		
-		<call id="ndjh" object="${accFactory.njhAcc" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="dyjh" object="${accFactory.yjhAcc}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="dysj" object="${accFactory.sjAcc}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="dysjqntq" object="${accFactory.sjAcc}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdjh" object="${accFactory.yjhAcc}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.seasonStart.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdlj" object="${accFactory.sjAcc}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.seasonStart.date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="jdljqntq" object="${accFactory.sjAcc}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.seasonStart.date}</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="ndljwc" object="${accFactory.sjAcc}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.months[1].date}</param>
-			<param type="date">${cal.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		<call id="ndljwcqntq" object="${accFactory.sjAcc}" method="compute">
-			<param type="int">0</param>
-			<param type="date">${cal.lastYear.months[1].date}</param>
-			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${zbs}</param>
-			<param type="object">${companies}</param>
-		</call>
-		
-	
-		<table id="result" rowIds="zbs" export="true">
-			<col list="zbmc" />
-			<col list="ndjh" />
-			<col list="dyjh" />
-			<col list="dysj" />
-			<col instruction="计划完成率" />
-			<col list="dysjqntq" />
-			<col instruction="同比增幅" />
-			<col list="jdjh" />
-			<col list="jdlj" />
-			<col instruction="计划完成率" />
-			<col list="jdljqntq" />
-			<col instruction="同比增幅" />
-			<col list="ndljwc" />
-			<col instruction="年度完成率" />
-			<col list="ndljwcqntq" />
-			<col instruction="同比增幅" />
-
-			<divCol toCol="4" sub="3" base="2" />
-			<growthRates toCol="6" sj="3" tq="5" />
-			<divCol toCol="9" sub="8" base="7" />
-			<growthRates toCol="11" sj="8" tq="10" />
-			<divCol toCol="13" sub="12" base="1" />
-			<growthRates toCol="15" sj="12" tq="14" />
-		</table>
-	</service>
-
-	<controller id="servFmtterAcyhzzb">
-		<formatter id="fmtData" export="true">
-			<EmptyFormatter>
-				<DefaultMatcher cols="0" />
-			</EmptyFormatter>
-			<PercentFormatter reservedCount="1">
-				<DefaultMatcher cols="4,6,9,11,13,15" />
-			</PercentFormatter>
-			<NumberFormatter reservedCount="1">
-			</NumberFormatter>
-		</formatter>
-	</controller>
-
-	<controller id="acyhzzbUpdate">
-		<context key="cal" value="${request.date.asCalendar}" />
-		<context key="item" value="${request.item.asString}" />
-		<callservice id="servAcyhzzb"/>
-		<callcontroller id="servFmtterAcyhzzb"/>
-		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
-			<formatter ref="fmtData" />
-		</formatterServer>
-	
-		<response type="json">
-			<header type="array">
-					<item>
-						<name>指标</name>
-						<align>left</align>
-					</item>
-					<item>
-						<name>年度计划</name>
-					</item>
-					<item>
-						<name>月度</name>
-						<sub type="array">
-							<item><name>当月计划</name></item>
-							<item><name>当月实际</name></item>
-							<item><name>计划完成率</name></item>
-							<item><name>去年同期</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-					<item>
-						<name>季度</name>
-						<sub type="array">
-							<item><name>季度计划</name></item>
-							<item><name>季度累计</name></item>
-							<item><name>季度计划完成率</name></item>
-							<item><name>去年同期</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-					<item>
-						<name>年度</name>
-						<sub type="array">
-							<item><name>年度累计</name></item>
-							<item><name>累计计划完成率</name></item>
-							<item><name>去年同期</name></item>
-							<item><name>同比增幅</name></item>
-						</sub>
-					</item>
-				</header>
-				<mergeCols type="array">
-					<item>
-						<col>0</col>
-					</item>
-				</mergeCols>
-				<mergeTitle>true</mergeTitle>
-				<data>${fmtServ.result}</data>
-		</response>
-	</controller>
-
-	<controller id="acyhzzbExport">
-		<context key="cal" value="${request.date.asCalendar}" />
-		<context key="item" value="${request.item.asString}" />
-		<callservice id="servAcyhzzb"/>
-		<callcontroller id="servFmtterAcyhzzb" inline="true"/>
-
-		<ExcelTemplate id="excelTemplate" sheet="按照产业汇总指标" />
-		<list id="title" type="string">
+		</list>
+  <context key="companies" value="${orgCompaniesByIds.BMDBOrganization[dwids]}"/>
+  <call id="ndjh" object="${accFactory.njhAcc" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="dyjh" object="${accFactory.yjhAcc}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="dysj" object="${accFactory.sjAcc}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="dysjqntq" object="${accFactory.sjAcc}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdjh" object="${accFactory.yjhAcc}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.seasonStart.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdlj" object="${accFactory.sjAcc}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.seasonStart.date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="jdljqntq" object="${accFactory.sjAcc}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.seasonStart.date}</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="ndljwc" object="${accFactory.sjAcc}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.months[1].date}</param>
+   <param type="date">${cal.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <call id="ndljwcqntq" object="${accFactory.sjAcc}" method="compute">
+   <param type="int">0</param>
+   <param type="date">${cal.lastYear.months[1].date}</param>
+   <param type="date">${cal.lastYear.date}</param>
+   <param type="object">${zbs}</param>
+   <param type="object">${companies}</param>
+  </call>
+  <table id="result" rowIds="zbs" export="true">
+   <col list="zbmc"/>
+   <col list="ndjh"/>
+   <col list="dyjh"/>
+   <col list="dysj"/>
+   <col instruction="计划完成率"/>
+   <col list="dysjqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="jdjh"/>
+   <col list="jdlj"/>
+   <col instruction="计划完成率"/>
+   <col list="jdljqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="ndljwc"/>
+   <col instruction="年度完成率"/>
+   <col list="ndljwcqntq"/>
+   <col instruction="同比增幅"/>
+   <divCol toCol="4" sub="3" base="2"/>
+   <growthRates toCol="6" sj="3" tq="5"/>
+   <divCol toCol="9" sub="8" base="7"/>
+   <growthRates toCol="11" sj="8" tq="10"/>
+   <divCol toCol="13" sub="12" base="1"/>
+   <growthRates toCol="15" sj="12" tq="14"/>
+  </table>
+ </service>
+ <controller id="servFmtterAcyhzzb">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="4,6,9,11,13,15"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="acyhzzbUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="item" value="${request.item.asString}"/>
+  <callservice id="servAcyhzzb"/>
+  <callcontroller id="servFmtterAcyhzzb"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>指标</name>
+     <align>left</align>
+    </item>
+    <item>
+     <name>年度计划</name>
+    </item>
+    <item>
+     <name>月度</name>
+     <sub type="array">
+      <item>
+       <name>当月计划</name>
+      </item>
+      <item>
+       <name>当月实际</name>
+      </item>
+      <item>
+       <name>计划完成率</name>
+      </item>
+      <item>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>季度</name>
+     <sub type="array">
+      <item>
+       <name>季度计划</name>
+      </item>
+      <item>
+       <name>季度累计</name>
+      </item>
+      <item>
+       <name>季度计划完成率</name>
+      </item>
+      <item>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>年度</name>
+     <sub type="array">
+      <item>
+       <name>年度累计</name>
+      </item>
+      <item>
+       <name>累计计划完成率</name>
+      </item>
+      <item>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
+      </item>
+     </sub>
+    </item>
+   </header>
+   <mergeCols type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeCols>
+   <mergeTitle>true</mergeTitle>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="acyhzzbExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="item" value="${request.item.asString}"/>
+  <callservice id="servAcyhzzb"/>
+  <callcontroller id="servFmtterAcyhzzb" inline="true"/>
+  <ExcelTemplate id="excelTemplate" sheet="按照产业汇总指标"/>
+  <list id="title" type="string">
 			指标,全年计划,月度,月度,月度,月度,月度,季度,季度,季度,季度,季度,年度,年度,年度,年度
 		</list>
-		<list id="title1" type="string">
+  <list id="title1" type="string">
 			指标,全年计划,当月计划,当月实际,计划完成率,去年同期,同比增幅,季度计划,季度累计,季度计划完成率,去年同期,同比增幅,年度累计,累计计划完成率,去年同期,同比增幅
 		</list>
-		<formatter id="excel">
-			<ExcelTitleFilter>
-				<ExcelTemplate ref="excelTemplate" />
-				<Offset row="0" col="0" />
-				<titles>
-					<title ref="title" />
-					<title ref="title1" />
-				</titles>
-			</ExcelTitleFilter>
-			<ExcelMergeFormatter>
-				<ExcelTemplate ref="excelTemplate" />
-				<MergeRegion x="0" y="0" width="${title.size}" height="2" />
-			</ExcelMergeFormatter>
-			<ExcelHeaderCenterFormatter>
-				<DefaultMatcher cols="0" />
-				<ExcelTemplate ref="excelTemplate" />
-				<Offset row="2" col="0" />
-			</ExcelHeaderCenterFormatter>
-			<ExcelOffsetFormatter>
-				<ExcelTemplate ref="excelTemplate" />
-				<Offset row="2" col="0"/>
-			</ExcelOffsetFormatter>
-		</formatter>
-
-		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
-			<formatter ref="fmtData" />
-			<formatter ref="excel" />
-		</formatterServer>
-
-		<response type="excel" ref="excelTemplate"
-			name="${request.date.asString}按照产业汇总指标.xls" serv="fmtServ" />
-	</controller>
-	
-	<controller id="acyhzzb">
-		<response type="jsp" name="framework/templates/dateReport/show">
-			<map key="year" value="${calendar.current.year}" />
-			<map key="month" value="${calendar.current.month}" />
-			<map key="updateUrl" value="acyhzzbUpdate" />
-			<map key="exportUrl" value="acyhzzbExport" />
-			<map key="dateNode" value="[{'data':{'id':0,'value':'制造业'}},{'data':{'id':1,'value':'服务业'}},{'data':{'id':2,'value':'物流贸易'}}]" />
-			<map key="title" value="按照产业汇总指标" />
-		</response>
-	</controller>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="${title.size}" height="2"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}按照产业汇总指标.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="acyhzzb">
+  <response type="jsp" name="framework/templates/dateReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="acyhzzbUpdate"/>
+   <map key="exportUrl" value="acyhzzbExport"/>
+   <map key="nodeData">[
+  {
+    &quot;data&quot;: {
+      &quot;id&quot;: 0,
+      &quot;value&quot;: &quot;制造业&quot;
+    }
+  },
+  {
+    &quot;data&quot;: {
+      &quot;id&quot;: 1,
+      &quot;value&quot;: &quot;服务业&quot;
+    }
+  },
+  {
+    &quot;data&quot;: {
+      &quot;id&quot;: 2,
+      &quot;value&quot;: &quot;物流贸易&quot;
+    }
+  }
+]</map>
+   <map key="title" value="按照产业汇总指标"/>
+  </response>
+ </controller>
 </components>

@@ -119,7 +119,7 @@ module framework.templates.singleDateReport {
                     // width: titles.length * 200,
                     rowNum: 1000,
                     height: this.resp.data.length > 25 ? 550 : '100%',
-                    width: 1200,
+                    width: this.resp.width == undefined ? 1200 : this.resp.width,
                     shrinkToFit: true,
                     autoScroll: true
                 }));

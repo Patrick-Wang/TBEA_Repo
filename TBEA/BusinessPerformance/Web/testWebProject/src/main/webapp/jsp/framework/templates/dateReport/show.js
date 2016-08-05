@@ -13,23 +13,34 @@ var framework;
 (function (framework) {
     var templates;
     (function (templates) {
-        var DateReport;
-        (function (DateReport) {
+        var dateReport;
+        (function (dateReport) {
             var UnitedSelector = Util.UnitedSelector;
             function createInstance() {
                 return new ShowView();
             }
-            DateReport.createInstance = createInstance;
+            dateReport.createInstance = createInstance;
             var ShowView = (function (_super) {
                 __extends(ShowView, _super);
                 function ShowView() {
                     _super.apply(this, arguments);
                 }
-                ShowView.prototype.getId = function () {
-                    return framework.templates.singleDateReport.FRAME_ID;
-                };
                 ShowView.prototype.onInitialize = function (opt) {
                     this.unitedSelector = new UnitedSelector(opt.itemNodes, opt.itemId);
+                    this.unitedSelector.change(function () {
+                        $("#" + opt.itemId + " select")
+                            .multiselect({
+                            multiple: false,
+                            header: false,
+                            minWidth: 100,
+                            height: '100%',
+                            // noneSelectedText: "请选择月份",
+                            selectedList: 1
+                        })
+                            .css("padding", "2px 0 2px 4px")
+                            .css("text-align", "left")
+                            .css("font-size", "12px");
+                    });
                     $("#" + opt.itemId + " select")
                         .multiselect({
                         multiple: false,
@@ -44,15 +55,18 @@ var framework;
                         .css("font-size", "12px");
                     _super.prototype.onInitialize.call(this, opt);
                 };
+                ShowView.prototype.getParams = function (date) {
+                    return {
+                        date: this.getDate(date),
+                        item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
+                    };
+                };
                 ShowView.prototype.getDate = function (date) {
                     return "" + (date.year + "-" + (date.month == undefined ? 1 : date.month) + "-" + (date.day == undefined ? 1 : date.day));
                 };
                 ShowView.prototype.update = function (date) {
                     var _this = this;
-                    this.mAjaxUpdate.get({
-                        date: this.getDate(date),
-                        item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
-                    })
+                    this.mAjaxUpdate.get(this.getParams(date))
                         .then(function (jsonData) {
                         _this.resp = jsonData;
                         _this.updateTable();
@@ -81,21 +95,18 @@ var framework;
                         // width: titles.length * 200,
                         rowNum: 1000,
                         height: this.resp.data.length > 25 ? 550 : '100%',
-                        width: 1200,
+                        width: this.resp.width == undefined ? 1200 : this.resp.width,
                         shrinkToFit: true,
                         autoScroll: true
                     }));
                 };
                 ShowView.prototype.exportExcel = function (date, id) {
-                    $("#" + id)[0].action = this.opt.exportUrl + "?" + Util.Ajax.toUrlParam({
-                        date: this.getDate(date),
-                        item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
-                    });
+                    $("#" + id)[0].action = this.opt.exportUrl + "?" + Util.Ajax.toUrlParam(this.getParams(date));
                     $("#" + id)[0].submit();
                 };
                 return ShowView;
             })(framework.templates.singleDateReport.ShowView);
-            DateReport.ShowView = ShowView;
-        })(DateReport = templates.DateReport || (templates.DateReport = {}));
+            dateReport.ShowView = ShowView;
+        })(dateReport = templates.dateReport || (templates.dateReport = {}));
     })(templates = framework.templates || (framework.templates = {}));
 })(framework || (framework = {}));

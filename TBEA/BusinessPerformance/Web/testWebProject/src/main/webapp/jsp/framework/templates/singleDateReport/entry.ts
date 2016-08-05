@@ -92,31 +92,37 @@ module framework.templates.singleDateReport {
             parent.empty();
             parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
             let jqTable = $("#" + name);
-            jqTable.jqGrid(
-                this.mTableAssist.decorate({
-                    datatype: "local",
-                    data: this.mTableAssist.getDataWithId(this.resp.data),
-                    multiselect: false,
-                    drag: false,
-                    resize: false,
-                    assistEditable:true,
-                    //autowidth : false,
-                    cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
-                    cellEdit: true,
-                    // height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 20,
-                    height: '100%',
-                    width: 1200,
-                    shrinkToFit: true,
-                    autoScroll: true,
-                    pager: '#' + pagername,
-                    viewrecords: true
-                }));
+            let opt = {
+                datatype: "local",
+                data: this.mTableAssist.getDataWithId(this.resp.data),
+                multiselect: false,
+                drag: false,
+                resize: false,
+                assistEditable:true,
+                //autowidth : false,
+                cellsubmit: 'clientArray',
+                //editurl: 'clientArray',
+                cellEdit: true,
+                // height: data.length > 25 ? 550 : '100%',
+                // width: titles.length * 200,
+                rowNum: 20,
+                height: '100%',
+                width: 1200,
+                shrinkToFit: true,
+                autoScroll: true,
+                pager: '#' + pagername,
+                viewrecords: true
+            };
+            if (this.resp.pager == 'none'){
+                opt.pager = undefined;
+            }
+            jqTable.jqGrid(this.mTableAssist.decorate(opt));
         }
 
         onLoadSubmitData() : any{
+            if (this.resp.pager == 'none'){
+                return this.mTableAssist.getAllData();
+            }
             return this.mTableAssist.getChangedData();
         }
 

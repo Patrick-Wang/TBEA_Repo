@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.CompanySelection.Filter;
 import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.common.EasyCalendar;
+import com.tbea.ic.operation.common.EasyList;
+import com.tbea.ic.operation.common.PropMap;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -83,14 +86,7 @@ public class ReportServlet {
 	public static interface AuthManager{
 		Map<String, Object> getAuthedCompanies(int authType);
 	}
-	
-	public static interface CompanyTypeIdMapper{
-		int getId(int type);
-		int getType(int id);
-		List<Company> getCompanies(List<Integer> ids);
-	}
-	
-	
+		
 	
 	@RequestMapping(value = "console/show.do")
 	public ModelAndView consoleShow(HttpServletRequest request,
@@ -117,6 +113,99 @@ public class ReportServlet {
 			context.put("array", new Arrays());
 			context.put("transactionManager", trProxy);
 			context.put("accFactory", accFac);
+			context.put("compMgr", companyManager);
+			context.put("orgTypeById", new CMGRClosureMap(){
+
+				@Override
+				protected Object onGetProp(List<Object> args) throws Exception {
+					Organization org = getOrg(companyManager, (String)args.get(0));
+					return org.getCompany((Integer)args.get(1)).getType().ordinal();
+				}
+				
+			});
+			
+			context.put("orgIdByType", new CMGRClosureMap(){
+
+				@Override
+				protected Object onGetProp(List<Object> args) throws Exception {
+					Organization org = getOrg(companyManager, (String)args.get(0));
+					return org.getCompany(CompanyType.valueOf((Integer)args.get(1))).getId();
+				}
+				
+			});
+			
+			context.put("orgCompaniesByIds", new CMGRClosureMap(){
+
+				@Override
+				protected Object onGetProp(List<Object> args) throws Exception {
+					Organization org = getOrg(companyManager, (String)args.get(0));
+					List<Integer> ids = (List) args.get(1);
+					List<Company> comps = new ArrayList<Company>();
+					for (Integer id : ids){
+						comps.add(org.getCompany(id));
+					}
+					return comps;
+				}
+			});
+			
+			context.put("authMgr", new PropMap(){
+
+				@Override
+				public Object getProperty(Object key) throws Exception {
+					Integer authType = (Integer)key;
+					List<Company> comps = extendAuthService.getAuthedCompanies(SessionManager.getAccount(request.getSession()), authType);
+					if (authType == 43){
+						Organization org = companyManager.getVirtualCYOrg();
+						List<Company> byqs = new EasyList<Company>(org.getCompany(CompanyType.BYQCY).getSubCompanies()).clone();
+						List<Company> xls = new EasyList<Company>(org.getCompany(CompanyType.XLCY).getSubCompanies()).clone();
+						CompanySelection compSel = new CompanySelection(false, org.getTopCompany(), new Filter(){
+								
+							@Override
+							public boolean keep(Company comp) {
+								for (Company cp : comps){
+									if (cp.getType() == comp.getType()){
+										byqs.remove(comp);
+										xls.remove(comp);
+										return true;
+									}
+								}
+								
+								if (comp.getType() == CompanyType.BYQCY){
+									if (byqs.isEmpty()){
+										return true;
+									}
+								}
+								
+								if (comp.getType() == CompanyType.XLCY){
+									if (xls.isEmpty()){
+										return true;
+									}
+								}
+								
+								return false;
+							}
+
+							@Override
+							public boolean keepGroup(Company comp) {
+								return true;
+							}
+						});
+						Map<String, Object> map = new HashMap<String, Object>();
+						compSel.select(map);
+						return map; 
+					}else{
+						CompanySelection compSel = new CompanySelection(true, comps);
+						Map<String, Object> map = new HashMap<String, Object>();
+						compSel.select(map);
+						return map;
+					}
+					
+					
+					
+				}
+				
+			});
+			
 			context.put("authManager", new AuthManager(){
 
 				@Override
@@ -129,32 +218,6 @@ public class ReportServlet {
 				}
 				
 			});
-			
-			context.put("compTypeIdMapper", new CompanyTypeIdMapper(){
-
-				Organization org = companyManager.getBMDBOrganization();
-				
-				@Override
-				public int getId(int type) {
-					return org.getCompany(CompanyType.valueOf(type)).getId();
-				}
-
-				@Override
-				public int getType(int id) {
-					return org.getCompany(id).getType().ordinal();
-				}
-
-				@Override
-				public List<Company> getCompanies(List<Integer> ids) {
-					List<Company> comps = new ArrayList<Company>();
-					for (Integer id : ids){
-						comps.add(org.getCompany(id));
-					}
-					return comps;
-				}
-				
-			});
-			
 			controller.run(context);
 			return (ModelAndView) context.get(com.tbea.ic.operation.reportframe.component.controller.Controller.MODEL_AND_VIEW);
 		}

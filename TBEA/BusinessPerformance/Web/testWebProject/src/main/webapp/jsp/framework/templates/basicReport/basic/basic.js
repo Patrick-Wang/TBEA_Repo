@@ -17,14 +17,6 @@ var basicReport;
 (function (basicReport) {
     var basic;
     (function (basic) {
-        var JQGridAssistantFactory = (function () {
-            function JQGridAssistantFactory() {
-            }
-            JQGridAssistantFactory.createTable = function (gridName) {
-                return Util.JQGridAssistantFactory.createTable(gridName);
-            };
-            return JQGridAssistantFactory;
-        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -43,10 +35,19 @@ var basicReport;
             ShowView.prototype.option = function () {
                 return this.mOpt;
             };
+            ShowView.prototype.find = function (id) {
+                for (var i = this.option().items.length - 1; i >= 0; --i) {
+                    if (this.option().items[i].data.id == id) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
             ShowView.prototype.onEvent = function (e) {
                 if (e.road != undefined) {
-                    if (this.option().ids.indexOf((e.road[e.road.length - 1])) >= 0) {
-                        this.mCurEp = this.option().ids.indexOf((e.road[e.road.length - 1]));
+                    var index = this.find(e.road[e.road.length - 1]);
+                    if (index >= 0) {
+                        this.mCurEp = index;
                     }
                 }
                 return _super.prototype.onEvent.call(this, e);
@@ -72,11 +73,11 @@ var basicReport;
                 this.updateTable();
             };
             ShowView.prototype.init = function (opt) {
-                for (var i = 0; i < opt.ids.length; ++i) {
+                for (var i = 0; i < opt.items.length; ++i) {
                     framework.router
-                        .fromEp(new framework.basic.EndpointProxy((opt.ids[i]), this.getId()))
+                        .fromEp(new framework.basic.EndpointProxy((opt.items[i].data.id), this.getId()))
                         .to(framework.basic.endpoint.FRAME_ID)
-                        .send(framework.basic.FrameEvent.FE_REGISTER, opt.names[i]);
+                        .send(framework.basic.FrameEvent.FE_REGISTER, opt.items[i].data.value);
                 }
             };
             ShowView.prototype.getMonth = function () {
@@ -86,7 +87,7 @@ var basicReport;
             };
             ShowView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+                var tableAssist = Util.createTable(name, this.m);
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
