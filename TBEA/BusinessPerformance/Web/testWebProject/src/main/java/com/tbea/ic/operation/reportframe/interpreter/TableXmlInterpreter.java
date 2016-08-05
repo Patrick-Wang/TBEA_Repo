@@ -34,7 +34,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 	private void clearTemps(List<List<Object>> tbValues){
 		if (tempCols != null){
 			for(Integer col : tempCols){
-				tbValues.remove(col);
+				tbValues.remove(col.intValue());
 			}
 			tempCols.clear();
 		}
@@ -90,7 +90,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			List<Object> tqCols = tb.getValues().get(tq);
 			for (int i = 0; i < tarCols.size(); ++i) {
 				if (excludeRows.indexOf(i) < 0){
-					tarCols.set(i, MathUtil.minus(MathUtil.division(
+					tarCols.set(i, MathUtil.minus(div(
 									MathUtil.o2d(sjCols.get(i)), 
 									MathUtil.o2d(tqCols.get(i))), 1.0));
 				}
@@ -124,7 +124,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			List<Object> baseCols = tb.getValues().get(base);
 			for (int i = 0; i < tarCols.size(); ++i) {
 				if (excludeRows.indexOf(i) < 0){
-					tarCols.set(i, MathUtil.division(
+					tarCols.set(i, div(
 									MathUtil.o2d(subCols.get(i)), 
 									MathUtil.o2d(baseCols.get(i))));
 				}
@@ -148,7 +148,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		}
 		tb.getValues().add(list);	
 		if ("true".equals(elem.getAttribute("temp"))){
-			this.putTemp(tb.getValues().size());
+			this.putTemp(tb.getValues().size() - 1);
 		}	
 	}
 
@@ -272,6 +272,18 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		}
 	}
 	
+	private Double div(Double sub, Double base){
+		if (sub != null &&
+			base != null &&
+			(Util.isNegative(sub) || 
+			Util.isNegative(base) || 
+			Util.isZero(base) || 
+			Util.isZero(sub))) {
+			return null;
+		}
+		return MathUtil.division(sub, base);
+	}
+	
 	private void parseDivRow(AbstractXmlComponent component, Table tb,
 			Element item) throws Exception {
 		int index = getTargetIndex(component, item, tb);
@@ -328,8 +340,8 @@ public class TableXmlInterpreter implements XmlInterpreter {
 						col = tb.getValues().get(i);
 						if (col.get(subRow) instanceof Double ||
 								col.get(baseRow) instanceof Double) {
-							col.set(index, MathUtil.division(
-									(Double) col.get(subRow),
+							col.set(index, div(
+									(Double)col.get(subRow),
 									(Double)col.get(baseRow)));
 						}
 					}
