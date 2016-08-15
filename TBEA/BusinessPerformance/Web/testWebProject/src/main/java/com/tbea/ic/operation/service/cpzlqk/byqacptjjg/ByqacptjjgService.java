@@ -29,4 +29,6 @@ public interface ByqacptjjgService {
 
 	ErrorCode unapproveByqacptjjg(Date d, JSONArray data, Company company);
 
+	List<WaveItem> getJdWaveValues(Date d, Company company);
+
 }

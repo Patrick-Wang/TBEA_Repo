@@ -58,7 +58,7 @@
    <item>20002</item>
    <item>20003</item>
   </list>
-  <context key="companies" value="${orgCompaniesByIds['BMDBOrganization'][dwids]}"/>
+  <context key="companies" value="${orgs.BMDBOrganization.companiesByIds[dwids]}"/>
   <list id="zbs" type="int">${zb}</list>
  </service>
  <service id="servZhgsfcySeasonStart" transaction="transactionManager">

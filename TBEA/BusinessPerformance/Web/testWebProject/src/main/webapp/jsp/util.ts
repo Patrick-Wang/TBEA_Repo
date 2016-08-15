@@ -36,6 +36,12 @@ module Util {
         pager:string;
     }
 
+    export interface ChartCtrl{
+        yNames:string[];
+        xNames:string[];
+        data:string[][];
+    }
+
     export interface ServResp extends GridCtrl{
         data:string[][];
     }
@@ -50,47 +56,47 @@ module Util {
     }
 
 
-        export function createTable(gridName:string, gridCtrl: Util.GridCtrl):JQTable.JQGridAssistant {
+    export function createTable(gridName:string, gridCtrl: Util.GridCtrl):JQTable.JQGridAssistant {
 
-            let nodes : JQTable.Node[] = [];
-            for (let i= 0; i < gridCtrl.header.length; ++i) {
-                let node = Util.parseHeader(gridCtrl.header[i]);
-                if (null != node) {
-                    nodes.push(node);
-                }
+        let nodes : JQTable.Node[] = [];
+        for (let i= 0; i < gridCtrl.header.length; ++i) {
+            let node = Util.parseHeader(gridCtrl.header[i]);
+            if (null != node) {
+                nodes.push(node);
             }
-            let tableAssist:JQTable.JQGridAssistant = new JQTable.JQGridAssistant(nodes, gridName);
-            if (gridCtrl.mergeTitle != undefined){
-                tableAssist.mergeTitle();
-            }
-
-            if (gridCtrl.mergeRows != undefined){
-                for (let i =0; i < gridCtrl.mergeRows.length; ++i){
-                    if (gridCtrl.mergeRows[i].col != undefined){
-                        if (gridCtrl.mergeRows[i].rowStart != undefined && gridCtrl.mergeRows[i].rowLen != undefined){
-                            tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col),
-                                parseInt(gridCtrl.mergeRows[i].rowStart),
-                                parseInt(gridCtrl.mergeRows[i].rowLen));
-                        }else if (gridCtrl.mergeRows[i].rowStart != undefined){
-                            tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col),
-                                parseInt(gridCtrl.mergeRows[i].rowStart));
-                        }else{
-                            tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col));
-                        }
-                    }
-                }
-            }
-
-            if (gridCtrl.mergeCols != undefined){
-                for (let i =0; i < gridCtrl.mergeCols.length; ++i){
-                    if (gridCtrl.mergeCols[i].col != undefined){
-                        tableAssist.mergeColum(parseInt(gridCtrl.mergeCols[i].col));
-                    }
-                }
-            }
-
-            return tableAssist;
         }
+        let tableAssist:JQTable.JQGridAssistant = new JQTable.JQGridAssistant(nodes, gridName);
+        if (gridCtrl.mergeTitle != undefined){
+            tableAssist.mergeTitle();
+        }
+
+        if (gridCtrl.mergeRows != undefined){
+            for (let i =0; i < gridCtrl.mergeRows.length; ++i){
+                if (gridCtrl.mergeRows[i].col != undefined){
+                    if (gridCtrl.mergeRows[i].rowStart != undefined && gridCtrl.mergeRows[i].rowLen != undefined){
+                        tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col),
+                            parseInt(gridCtrl.mergeRows[i].rowStart),
+                            parseInt(gridCtrl.mergeRows[i].rowLen));
+                    }else if (gridCtrl.mergeRows[i].rowStart != undefined){
+                        tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col),
+                            parseInt(gridCtrl.mergeRows[i].rowStart));
+                    }else{
+                        tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col));
+                    }
+                }
+            }
+        }
+
+        if (gridCtrl.mergeCols != undefined){
+            for (let i =0; i < gridCtrl.mergeCols.length; ++i){
+                if (gridCtrl.mergeCols[i].col != undefined){
+                    tableAssist.mergeColum(parseInt(gridCtrl.mergeCols[i].col));
+                }
+            }
+        }
+
+        return tableAssist;
+    }
 
 
     export interface IResponse {
@@ -460,7 +466,7 @@ module Util {
         XBGNGCJXGS		,//("新变国内工程检修公司"),
         XBGS		,//("箱变公司"),
         XBXBGS		,//("新变箱变公司"),
-        XBYTGS		,//("新变中特公司"),
+        XBZTGS		,//("新变中特公司"),
         XDWLGS		,//("现代物流公司"),
         XJFGS		,//("新疆分公司"),
         XJNY		,//("新疆能源"),
@@ -513,7 +519,8 @@ module Util {
         XLCY			,//("线缆产业"),
         UNKNOWN			,//("未知"),
 
-        RSGS			,//("柔输公司");
+        RSGS			,//("柔输公司")
+        PDCY		    ,//("配电产业");
         ALL = 1000
     }
 
@@ -592,6 +599,10 @@ module Util {
         public constructor(baseUrl: string, useCache: boolean = true) {
             this.mBaseUrl = baseUrl;
             this.mUseCache = useCache;
+        }
+
+        public baseUrl(){
+            return this.mBaseUrl;
         }
 
         public static toUrlParam(option: any) {

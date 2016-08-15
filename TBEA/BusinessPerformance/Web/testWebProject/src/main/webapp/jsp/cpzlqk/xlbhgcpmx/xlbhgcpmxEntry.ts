@@ -140,7 +140,9 @@ module cpzlqk {
                 if (this.mData == undefined) {
                     return;
                 }
-
+                framework.router
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(Event.ZLFE_DATA_STATUS, this.mData.status);
                 this.updateTable();
             }
 

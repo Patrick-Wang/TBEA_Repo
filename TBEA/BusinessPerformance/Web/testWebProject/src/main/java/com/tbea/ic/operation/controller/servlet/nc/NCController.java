@@ -129,7 +129,7 @@ public class NCController {
 		unitList.add("0202AA000000");
 		unitList.add("0303AA000000");
 		unitList.add("0304AA000000");
-		unitList.add("0203AA000000");
+		unitList.add("CC15");
 		unitList.add("CC02");
 		unitList.add("CC03");
 		unitList.add("040203AA0000");

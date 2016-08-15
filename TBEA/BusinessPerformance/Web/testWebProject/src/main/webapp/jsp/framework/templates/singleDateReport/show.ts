@@ -28,6 +28,8 @@ module framework.templates.singleDateReport {
         asSeason:boolean;
     }
 
+
+
     export class ShowView extends BasicEndpoint{
         dateSelect : Util.DateSelectorProxy;
         mAjaxUpdate:Util.Ajax;

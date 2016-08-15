@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import com.tbea.ic.operation.common.Formula;
 import com.tbea.ic.operation.common.FormulaClient;
@@ -28,6 +29,13 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	ZltjjgDao tjjgDao;
 	Date d;
 	YDJDType yjType;
+	
+	List<String> getRow(Formula formula){
+		return this.result.get(forIndexMap.get(formula));
+	}
+	
+	private Map<Formula, Integer> forIndexMap = new HashMap<Formula, Integer>();
+
 	public List<List<String>> getResult(){
 		return result;
 	}
@@ -70,9 +78,8 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 			FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> server,
 			Formula formula) {
 		Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> pair = this.getDjTq(formula);
-		List<String> r = Util.resize(new ArrayList<String>(), 8);
+		List<String> r = getRow(formula);
 		this.byqadwtjjgServiceImpl.setRow(r, forMap.get(formula).getFirst(), pair.getSecond().getFirst(), pair.getSecond().getSecond());
-		result.add(r);
 		return pair;
 	}
 
@@ -80,6 +87,7 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	public Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> onNull(
 			FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> server,
 			Formula formula) {
+		this.result.remove(this.forIndexMap.get(formula).intValue());
 		return this.getDjTq(formula);
 	}
 
@@ -87,8 +95,7 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	public Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> onFormula(
 			FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> server,
 			Formula formula) {
-		List<String> r = Util.resize(new ArrayList<String>(), 8);
-		result.add(r);
+		List<String> r = this.getRow(formula);
 		Pair<ZltjjgEntity, ZltjjgEntity> pair;
 		for (Integer id : formula.getParameters()){
 			pair = server.getCache(id);
@@ -121,22 +128,20 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	public Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> onFormulaNoCache(
 			FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> server,
 			Formula formula) {
-		List<String> r = Util.resize(new ArrayList<String>(), 8);
-		result.add(r);
 		return null;
 	}
 	@Override
 	public void onStart(FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> server,
 			Formula formula) {
-		// TODO Auto-generated method stub
-		
+		List<String> r = Util.resize(new ArrayList<String>(), 8);
+		result.add(r);
+		forIndexMap.put(formula, result.size() - 1);
 	}
 	@Override
 	public void onComplete(
 			FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> server,
 			Formula formula) {
-		// TODO Auto-generated method stub
-		
+		forIndexMap.remove(formula);
 	}
 
 

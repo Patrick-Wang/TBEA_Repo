@@ -5,23 +5,18 @@ module cpzlqk{
     export interface Option extends framework.basic.PluginOption {
         tb:string;
         ct?:string;
+        ct1?:string;
         ctarea?:string;
         tips?:string
     }
 
     export interface FrameOption extends framework.basic.Option {
         contentType: string;
-        bhglx:string;
     }
 
     export enum YDJDType{
         YD,
         JD
-    }
-
-    export enum ByqBhgType{
-        YBYSQFJYS,
-        PBCP
     }
 
     export interface CpzlqkResp{
@@ -46,7 +41,10 @@ module cpzlqk{
         export let ZLFE_YD_SELECTED : number = FrameEvent.lastEvent();
         export let ZLFE_JD_SELECTED : number = FrameEvent.lastEvent();
         export let ZLFE_IS_BHGLX_SUPPORTED : number = FrameEvent.lastEvent();
-        export let ZLFE_GET_BHGLX : number = FrameEvent.lastEvent();
         export let ZLFE_SET_ZBSTATUS : number = FrameEvent.lastEvent();
+        export let ZLFE_SAVE_COMMENT : number = FrameEvent.lastEvent();
+        export let ZLFE_COMMENT_UPDATED : number = FrameEvent.lastEvent();
+        export let ZLFE_DATA_STATUS : number = FrameEvent.lastEvent();
     }
+
 }

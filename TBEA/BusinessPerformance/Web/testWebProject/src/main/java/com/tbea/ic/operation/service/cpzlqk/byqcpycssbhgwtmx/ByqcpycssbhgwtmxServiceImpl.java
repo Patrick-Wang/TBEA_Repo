@@ -17,7 +17,6 @@ import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.controller.servlet.cpzlqk.ByqBhgType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqbhgwtmx.ByqBhgwtmxDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqbhgwtmx.ByqBhgwtmxDaoImpl;
@@ -48,12 +47,12 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 
 	@Override
 	public List<List<String>> getByqcpycssbhgwtmx(Date d,
-			YDJDType yjType, ByqBhgType bhgType) {
+			YDJDType yjType) {
 		List<ByqBhgwtmxEntity> entities = null;
 		if (yjType == YDJDType.YD){
-			entities = byqBhgwtmxDao.getByYd(d, bhgType.ordinal(), ZBStatus.APPROVED);
+			entities = byqBhgwtmxDao.getByYd(d, ZBStatus.APPROVED);
 		}else{
-			entities = byqBhgwtmxDao.getByJd(d, bhgType.ordinal(), ZBStatus.APPROVED);
+			entities = byqBhgwtmxDao.getByJd(d, ZBStatus.APPROVED);
 		}
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (ByqBhgwtmxEntity entity : entities){
@@ -65,6 +64,7 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 	private List<String> toList(ByqBhgwtmxEntity entity) {
 		List<String> row = new ArrayList<String>();
 		row.add(dwmcDao.getByDwid(entity.getDwid()).getDwmc().getName());
+		row.add(entity.getNf() + "年" + entity.getYf() + "月");
 		row.add(entity.getCplx());
 		row.add(entity.getSch());
 		row.add(entity.getCpxh());
@@ -93,8 +93,8 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 	}
 
 	@Override
-	public List<List<String>> getByqcpycssbhgwtmxEntry(Date d, Company company, ByqBhgType bhgType) {
-		List<ByqBhgwtmxEntity> entities = byqBhgwtmxDao.getByDate(d, company, bhgType.ordinal());
+	public List<List<String>> getByqcpycssbhgwtmxEntry(Date d, Company company) {
+		List<ByqBhgwtmxEntity> entities = byqBhgwtmxDao.getByDate(d, company);
 		List<List<String>> result = new ArrayList<List<String>>(); 
 		for (ByqBhgwtmxEntity entity : entities){
 			result.add(toEntryList(entity));
@@ -118,8 +118,8 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 	}
 
 	@Override
-	public ZBStatus getStatus(Date d, Company company, ByqBhgType bhgType) {
-		ByqBhgwtmxEntity entity = byqBhgwtmxDao.getFirstBhgwtmx(d, company, bhgType.ordinal());
+	public ZBStatus getStatus(Date d, Company company) {
+		ByqBhgwtmxEntity entity = byqBhgwtmxDao.getFirstBhgwtmx(d, company);
 		if (null != entity){
 			return ZBStatus.valueOf(entity.getZt());
 		}
@@ -127,7 +127,7 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 	}
 	
 	private ErrorCode entryByqcpycssbhgwtmx(Date d, JSONArray data,
-			Company company, ZBStatus zt, ByqBhgType bhgType) {
+			Company company, ZBStatus zt) {
 		EasyCalendar ec = new EasyCalendar(d);
 		for (int i = 0; i < data.size(); ++i){
 			JSONArray row = data.getJSONArray(i);
@@ -145,7 +145,6 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 			}
 			int start = 1;
 			entity.setZt(zt.ordinal());
-			entity.setTjfs(bhgType.ordinal());
 			entity.setCplx(row.getString(start++));
 			entity.setSch(row.getString(start++));
 			entity.setCpxh(row.getString(start++));
@@ -163,14 +162,14 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 	
 	@Override
 	public ErrorCode submitByqcpycssbhgwtmx(Date d, JSONArray data,
-			Company company, ByqBhgType bhgType) {
-		return entryByqcpycssbhgwtmx(d, data, company, ZBStatus.SUBMITTED, bhgType);
+			Company company) {
+		return entryByqcpycssbhgwtmx(d, data, company, ZBStatus.SUBMITTED);
 	}
 
 	@Override
 	public ErrorCode saveByqcpycssbhgwtmx(Date d, JSONArray data,
-			Company company, ByqBhgType bhgType) {
-		return entryByqcpycssbhgwtmx(d, data, company, ZBStatus.SAVED, bhgType);
+			Company company) {
+		return entryByqcpycssbhgwtmx(d, data, company, ZBStatus.SAVED);
 	}
 
 	@Override
@@ -210,12 +209,12 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 
 	@Override
 	public List<List<String>> getByqcpycssbhgwtmx(Date d, YDJDType yjType,
-			ByqBhgType bhgType, Company company) {
+			Company company) {
 		List<ByqBhgwtmxEntity> entities = null;
 		if (yjType == YDJDType.YD){
-			entities = byqBhgwtmxDao.getByYd(d, bhgType.ordinal(), company, ZBStatus.APPROVED);
+			entities = byqBhgwtmxDao.getByYd(d, company, ZBStatus.APPROVED);
 		}else{
-			entities = byqBhgwtmxDao.getByJd(d, bhgType.ordinal(), company, ZBStatus.APPROVED);
+			entities = byqBhgwtmxDao.getByJd(d, company, ZBStatus.APPROVED);
 		}
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (ByqBhgwtmxEntity entity : entities){

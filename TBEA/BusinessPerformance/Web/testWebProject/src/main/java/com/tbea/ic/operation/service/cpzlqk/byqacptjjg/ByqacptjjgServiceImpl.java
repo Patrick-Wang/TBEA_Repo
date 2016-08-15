@@ -58,13 +58,17 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 
 	private List<List<String>> getByqYdAcptjjg(Date d, Company company,
 			YDJDType yjType) {
+		
 		List<ByqYdAcptjjgEntity> entities = byqYdAcptjjgDao.getAll();
-		List<List<String>> result = new ArrayList<List<String>>();
-		ZltjjgDao tjjgDao = new ZltjjgDaoCacheProxy(zltjjgDao, company.getId());
+		FormulaClientYd client = new FormulaClientYd(this, zltjjgDao, company, d);
+		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
 		for (ByqYdAcptjjgEntity entity : entities){
-			result.add(toList(tjjgDao, entity, d, company, ZBStatus.APPROVED));
+			Formula formula = new Formula(entity.getFormul());
+			client.add(formula, entity);
+			fs.addFormul(formula);
 		}
-		return result;
+		fs.run();
+		return client.getResult();
 	}
 
 	private List<String> toList(ZltjjgDao tjjgDao, ByqYdAcptjjgEntity entity, Date d, Company company, ZBStatus zt) {
@@ -172,11 +176,67 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		List<List<String>> result = new ArrayList<List<String>>();
 		ZltjjgDao tjjgDao = new ZltjjgDaoCacheProxy(zltjjgDao, company.getId());
 		for (ByqYdAcptjjgEntity entity : entities){
-			result.add(toEntryList(tjjgDao, entity, d, company));
+			if (null == entity.getFormul() || "this".equals(entity.getFormul())){
+				result.add(toEntryList(tjjgDao, entity, d, company));
+			}
 		}
 		return result;
 	}
 
+	@Override
+	public List<WaveItem> getJdWaveValues(Date d, Company company) {
+		List<WaveItem> ret = new ArrayList<WaveItem>();
+		List<String> row = null;
+		EasyCalendar ec = new EasyCalendar(d);
+		List<ByqJdAcptjjgEntity> entities = byqJdAcptjjgDao.getAll();
+		ZltjjgDao tjjgDao = new ZltjjgDaoCacheProxy(zltjjgDao, company.getId());
+		List<Integer> cpids = new ArrayList<Integer>();
+		String cpName = null;
+		for (ByqJdAcptjjgEntity entity : entities){
+			if (cpName == null || entity.getCpdl().getName().equals(cpName)){
+				cpids.add(entity.getCpxl().getId());
+				cpName = entity.getCpdl().getName();
+				continue;
+			}
+			row = Util.resize(new ArrayList<String>(), 12);
+			ec.setMonth(1);
+			for (int i = 0; i < 12; ++i){
+				
+				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
+				if (null != zltjjg){
+					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
+				}else{
+					row.set(i, null);
+				}
+				ec.addMonth(1);
+			}
+			ec.addMonth(-1);
+			ret.add(new WaveItem(cpName, row));
+			cpids.clear();
+			cpids.add(entity.getCpxl().getId());
+			cpName = entity.getCpdl().getName();
+			
+		}
+		
+		if (cpName != null){
+			row = Util.resize(new ArrayList<String>(), 12);
+			ec.setMonth(1);
+			for (int i = 0; i < 12; ++i){
+				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
+				if (null != zltjjg){
+					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
+				}else{
+					row.set(i, null);
+				}
+				ec.addMonth(1);
+			}
+			ec.addMonth(-1);
+			ret.add(new WaveItem(cpName, row));
+		}
+		
+		return ret;
+	}
+	
 	@Override
 	public List<WaveItem> getWaveValues(Date d, Company company) {
 		List<WaveItem> ret = new ArrayList<WaveItem>();
@@ -268,6 +328,16 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 			}
 		}
 		return ErrorCode.OK;
+	}
+
+	public void setRow(List<String> row, ByqYdAcptjjgEntity entity,
+			ZltjjgEntity tj1, ZltjjgEntity tj2) {
+		int start = 0;
+		row.set(start++, entity.getCpdl().getName());
+		row.set(start++, entity.getCpxl().getName());
+		start = setZltjjg(row, start, tj1);
+		setZltjjg(row, start, tj2);
+		
 	}
 
 

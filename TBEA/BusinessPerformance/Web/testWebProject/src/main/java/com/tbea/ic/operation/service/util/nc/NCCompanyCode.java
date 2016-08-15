@@ -17,7 +17,7 @@ public class NCCompanyCode {
 		companyMap.put("CC01", CompanyType.XBC);
 		companyMap.put("0204AA000000", CompanyType.TBGS);
 		companyMap.put("0303AA000000", CompanyType.LLGS);
-		companyMap.put("0304AA000000", CompanyType.DLGS);
+		companyMap.put("CC15", CompanyType.DLGS);
 		companyMap.put("CC03", CompanyType.XLC);
 		companyMap.put("040203AA0000", CompanyType.XNYGS);
 		companyMap.put("040202AA0000", CompanyType.XTNYGS);

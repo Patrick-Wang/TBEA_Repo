@@ -10,28 +10,23 @@ var Util;
         function SeasonAccSelector(start, end, now, id) {
             var _this = this;
             var dates = this.getYears(start, end);
-            var seasons = [{
+            var seasonEnd = parseInt("" + (end.month - 1) / 3);
+            var jdNames = ["一季度", "半年度", "三季度", "年度"];
+            var seasons = [];
+            for (var i = 0; i <= seasonEnd; ++i) {
+                seasons.push({
                     data: {
-                        id: 0, value: "一季度"
+                        id: i,
+                        value: jdNames[i]
                     }
-                }, {
-                    data: {
-                        id: 1, value: "半年度"
-                    }
-                }, {
-                    data: {
-                        id: 2, value: "三季度"
-                    }
-                }, {
-                    data: {
-                        id: 3, value: "年度"
-                    }
-                }];
+                });
+            }
             var seasonNow = parseInt("" + (now.month - 1) / 3);
-            $("#" + id).append("<div id='" + id + "year'></div>");
-            $("#" + id).append("<div style='margin-left:5px' id='" + id + "season'></div>");
+            $("#" + id).append("<div style='float:left' id='" + id + "year'></div>");
+            $("#" + id).append("<div style='float:left' id='" + id + "season'></div>");
             this.yearSelector = new Util.UnitedSelector(dates, id + "year", [now.year - start.year]);
             this.seasonSelector = new Util.UnitedSelector(seasons, id + "season", [seasonNow]);
+            $("#" + id + " select").css("width", "100px");
             this.yearSelector.change(function (sel, depth) {
                 sel = _this.yearSelector.getSelect();
                 $(sel).multiselect({
@@ -45,7 +40,7 @@ var Util;
                 $(sel[1]).multiselect({
                     multiple: false,
                     header: false,
-                    minWidth: 100,
+                    minWidth: 80,
                     height: '100%',
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
@@ -63,7 +58,7 @@ var Util;
             $(sel[1]).multiselect({
                 multiple: false,
                 header: false,
-                minWidth: 100,
+                minWidth: 80,
                 height: '100%',
                 // noneSelectedText: "请选择月份",
                 selectedList: 1

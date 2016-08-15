@@ -18,6 +18,7 @@ module cpzlqk {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
                     Node.create({name : "单位", align : TextAlign.Center}),
+                    Node.create({name : "时间", align : TextAlign.Center,}),
                     Node.create({name : "产品类型", align : TextAlign.Center,}),
                     Node.create({name : "生产号", align : TextAlign.Center,}),
                     Node.create({name : "产品型号", align : TextAlign.Center,}),
@@ -39,7 +40,8 @@ module cpzlqk {
             private mDateSelector:Util.DateSelector;
             private mDt: string;
             private mCompType:Util.CompanyType;
-
+            private mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
+            private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
             protected isSupported(compType:Util.CompanyType):boolean {
                 return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
                     ||compType == Util.CompanyType.XLC;
@@ -49,6 +51,22 @@ module cpzlqk {
                 switch (e.id) {
                     case Event.ZLFE_IS_YDJD_SUPPORTED:
                         return false;
+                    case Event.ZLFE_SAVE_COMMENT:
+                        let param = {
+                            condition:Util.Ajax.toUrlParam({
+                                url : window.location.href + this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId:this.mCompType,
+                                ydjd:this.mYdjdType
+                            }),
+                            comment:e.data
+                        }
+                        this.mCommentSubmit.get({
+                            data : JSON.stringify([[param.condition, param.comment]])
+                        }).then((jsonData:any)=>{
+                            Util.MessageBox.tip("保存成功", undefined, 1000);
+                        });
+                        break;
                 }
                 return super.onEvent(e);
             }
@@ -72,6 +90,19 @@ module cpzlqk {
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
                 this.mCompType = compType;
+
+                this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
+                    url : window.location.href + this.mAjax.baseUrl(),
+                    date: date,
+                    companyId:compType,
+                    ydjd:this.mYdjdType
+                })}).then((jsonData:any)=>{
+                    framework.router
+                        .fromEp(this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
+                });
+
                 this.mAjax.get({
                         date: date,
                         companyId:compType,

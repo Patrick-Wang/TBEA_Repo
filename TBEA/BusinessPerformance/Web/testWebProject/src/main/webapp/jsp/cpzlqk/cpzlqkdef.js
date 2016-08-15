@@ -7,11 +7,6 @@ var cpzlqk;
         YDJDType[YDJDType["JD"] = 1] = "JD";
     })(cpzlqk.YDJDType || (cpzlqk.YDJDType = {}));
     var YDJDType = cpzlqk.YDJDType;
-    (function (ByqBhgType) {
-        ByqBhgType[ByqBhgType["YBYSQFJYS"] = 0] = "YBYSQFJYS";
-        ByqBhgType[ByqBhgType["PBCP"] = 1] = "PBCP";
-    })(cpzlqk.ByqBhgType || (cpzlqk.ByqBhgType = {}));
-    var ByqBhgType = cpzlqk.ByqBhgType;
     var FrameEvent = framework.basic.FrameEvent;
     var Event;
     (function (Event) {
@@ -20,7 +15,9 @@ var cpzlqk;
         Event.ZLFE_YD_SELECTED = FrameEvent.lastEvent();
         Event.ZLFE_JD_SELECTED = FrameEvent.lastEvent();
         Event.ZLFE_IS_BHGLX_SUPPORTED = FrameEvent.lastEvent();
-        Event.ZLFE_GET_BHGLX = FrameEvent.lastEvent();
         Event.ZLFE_SET_ZBSTATUS = FrameEvent.lastEvent();
+        Event.ZLFE_SAVE_COMMENT = FrameEvent.lastEvent();
+        Event.ZLFE_COMMENT_UPDATED = FrameEvent.lastEvent();
+        Event.ZLFE_DATA_STATUS = FrameEvent.lastEvent();
     })(Event = cpzlqk.Event || (cpzlqk.Event = {}));
 })(cpzlqk || (cpzlqk = {}));

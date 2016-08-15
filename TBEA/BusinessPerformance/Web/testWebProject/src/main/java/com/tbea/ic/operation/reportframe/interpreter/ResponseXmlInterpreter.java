@@ -20,6 +20,7 @@ import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.controller.Controller;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.StringUtil;
+import com.tbea.ic.operation.reportframe.util.TypeUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
@@ -36,6 +37,12 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				if ("array".equals(elem.getAttribute("type"))){
 					JSONArray ja = parseJsonArray(elem);
 					pJson.put(elem.getTagName(), ja);
+				} else if ("jarray".equals(elem.getAttribute("type"))){
+					Object obj = XmlUtil.parseELText(elem.getFirstChild().getTextContent(), elp);
+					pJson.put(elem.getTagName(), JSONArray.fromObject(obj));
+				}  else if ("jobject".equals(elem.getAttribute("type"))){
+					Object obj = XmlUtil.parseELText(elem.getFirstChild().getTextContent(), elp);
+					pJson.put(elem.getTagName(), JSONObject.fromObject(obj));
 				} else {
 					String text = elem.getFirstChild().getTextContent().replaceAll("\\s", "");
 					if (null != text && !text.isEmpty()){
@@ -58,6 +65,8 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				if ("item".equals(el.getTagName())){
 					if ("array".equals(el.getAttribute("type"))){
 						ja.add(parseJsonArray(el));
+					}else if ("json".equals(el.getAttribute("type"))){
+						ja.add(XmlUtil.parseELText(elem.getFirstChild().getTextContent(), elp));
 					}else{
 						ja.add(parseJsonObject(el));
 					}

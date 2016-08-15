@@ -38,7 +38,7 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
@@ -56,7 +56,6 @@ var cpzlqk;
             EntryView.prototype.isSupported = function (compType) {
                 if (compType == Util.CompanyType.SBGS ||
                     compType == Util.CompanyType.HBGS ||
-                    compType == Util.CompanyType.TBGS ||
                     compType == Util.CompanyType.XBC) {
                     return true;
                 }
@@ -89,8 +88,7 @@ var cpzlqk;
                 this.mAjaxSave.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType,
-                    bhgType: this.getBhglx()
+                    companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("保存 成功", function () {
@@ -120,8 +118,7 @@ var cpzlqk;
                 this.mAjaxSubmit.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType,
-                    bhgType: this.getBhglx()
+                    companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("提交 成功", function () {
@@ -139,8 +136,7 @@ var cpzlqk;
                 this.mCompType = compType;
                 this.mAjaxUpdate.get({
                     date: date,
-                    companyId: compType,
-                    bhgType: this.getBhglx()
+                    companyId: compType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -151,6 +147,9 @@ var cpzlqk;
                 if (this.mData == undefined) {
                     return;
                 }
+                framework.router
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(cpzlqk.Event.ZLFE_DATA_STATUS, this.mData.status);
                 this.updateTable();
             };
             EntryView.prototype.init = function (opt) {
@@ -191,6 +190,6 @@ var cpzlqk;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        }(cpzlqk.ZlEntryPluginView));
+        })(cpzlqk.ZlEntryPluginView);
     })(byqcpycssbhgwtmxEntry = cpzlqk.byqcpycssbhgwtmxEntry || (cpzlqk.byqcpycssbhgwtmxEntry = {}));
 })(cpzlqk || (cpzlqk = {}));

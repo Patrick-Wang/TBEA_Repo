@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.ic.operation.model.entity.identifier.cpzlqk.ByqBhglbEntity;
-import com.tbea.ic.operation.model.entity.identifier.cpzlqk.ByqZrlbEntity;
 
 
 

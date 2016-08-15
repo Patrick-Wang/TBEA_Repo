@@ -63,12 +63,7 @@
 	</controller>
 	
 	<controller id="authManage">
-		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-			<param type="int">25</param>
-		</call>
-
 		<response type="jsp" name="framework/templates/singleDateReport/entry">
-			<map map="${authCompMap}"/>
 			<map key="updateUrl" value="authInstrucEntryUpdate"/>
 			<map key="submitUrl" value="submitAuthInstruc"/>
 			<map key="title" value="权限管理"/>

@@ -1,4 +1,4 @@
-﻿package com.tbea.ic.operation.common.companys;
+package com.tbea.ic.operation.common.companys;
 
 public enum CompanyType {
 	BB		("本部"),
@@ -130,7 +130,7 @@ public enum CompanyType {
 	XBGNGCJXGS		("新变国内工程检修公司"),
 	XBGS		("箱变公司"),
 	XBXBGS		("新变箱变公司"),
-	XBYTGS		("新变中特公司"),
+	XBZTGS		("新变中特公司"),
 	XDWLGS		("现代物流公司"),
 	XJFGS		("新疆分公司"),
 	XJNY		("新疆能源"),
@@ -183,7 +183,8 @@ public enum CompanyType {
 	XLCY			("线缆产业"),
 	UNKNOWN			("未知"),
 	
-	RSGS			("柔输公司");
+	RSGS			("柔输公司"),
+	PDCY			("配电产业");
 	//TCNY_and_XJNY	("天池能源+新疆能源公司");
 	private String value;
 

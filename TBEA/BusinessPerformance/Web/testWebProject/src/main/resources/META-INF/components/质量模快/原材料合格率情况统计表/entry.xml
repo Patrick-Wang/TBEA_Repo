@@ -1,110 +1,107 @@
 <components>
- <service id="servByqjydwzyYclhglqktjEntryUpdate" transaction="transactionManager">
+ <service id="servYclhglqktjEntryUpdate" transaction="transactionManager">
   <sql id="clids">select
  CLDL.id,
  CLDL.name,
  CLDL.dw
 from
- zl_yclhglqk_cldl CLDL</sql>
+ zl_yclhglqk_cldl CLDL
+where
+ CLDL.cy=${cy}</sql>
   <list id="ids" type="int" sql="clids" value="0"/>
-  <sql id="dyz" order="ids" by="0">select
+  <sql id="dyz" order="ids" by="0" colcount="3">select
  CLDL.id,
  YCL.hgs,
- YCL.zs,
- (YCL.zs - YCL.hgs) / YCL.zs as hgl
+ YCL.zs
 from
  zl_yclhglqk_cldl CLDL,
  zl_yclhglqk YCL
 where
  YCL.clid=CLDL.id and
- YCL.nf=${cal.date.year} and
- YCL.yf=${cal.date.month} and
+ YCL.nf=${cal.year} and
+ YCL.yf=${cal.month} and
  YCL.dwid=${compId}</sql>
-  <sql id="ljz" order="ids" by="0">select
- CLDL.id,
- sum(YCL.hgs) as newHgs,
- sum(YCL.zs) as newZs,
- (sum(YCL.zs) - sum(YCL.hgs)) / sum(YCL.zs) as hgl
-from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
-where
- YCL.clid=CLDL.id and
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid=${compId}
-group by
- CLDL.id</sql>
-  <list id="dyzOrdered" type="int" sql="dyz" value="0"/>
   <table id="result" rowIds="ids">
    <list type="string" sql="clids" value="1"/>
    <list type="string" sql="clids" value="2"/>
    <list type="int" sql="dyz" value="1"/>
    <list type="int" sql="dyz" value="2"/>
-   <list type="double" sql="dyz" value="3"/>
-   <list type="int" sql="ljz" value="1"/>
-   <list type="int" sql="ljz" value="2"/>
-   <list type="double" sql="ljz" value="3"/>
   </table>
   <context key="result" value="${result}"/>
  </service>
- <controller id="byqjydwzyYclhglqktjEntryUpdate" transaction="transactionManager">
-  <sql id="clids">select
- CLDL.id,
- CLDL.name,
- CLDL.dw
-from
- zl_yclhglqk_cldl CLDL</sql>
-  <list id="ids" type="int" sql="clids" value="0"/>
-  <sql id="dyz" order="ids" by="0">select
- CLDL.id,
- YCL.hgs,
- YCL.zs,
- (YCL.zs - YCL.hgs) / YCL.zs as hgl
-from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
-where
- YCL.clid=CLDL.id and
- YCL.nf=${cal.date.year} and
- YCL.yf=${cal.date.month} and
- YCL.dwid=${compId}</sql>
-  <sql id="ljz" order="ids" by="0">select
- CLDL.id,
- sum(YCL.hgs) as newHgs,
- sum(YCL.zs) as newZs,
- (sum(YCL.zs) - sum(YCL.hgs)) / sum(YCL.zs) as hgl
-from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
-where
- YCL.clid=CLDL.id and
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid=${compId}
-group by
- CLDL.id</sql>
-  <list id="dyzOrdered" type="int" sql="dyz" value="0"/>
-  <table id="result" rowIds="ids">
-   <list type="string" sql="clids" value="1"/>
-   <list type="string" sql="clids" value="2"/>
-   <list type="int" sql="dyz" value="1"/>
-   <list type="int" sql="dyz" value="2"/>
-   <list type="double" sql="dyz" value="3"/>
-   <list type="int" sql="ljz" value="1"/>
-   <list type="int" sql="ljz" value="2"/>
-   <list type="double" sql="ljz" value="3"/>
-  </table>
-  <context key="result" value="${result}"/>
+ <service id="servYclhglqktjEntrySubmit" transaction="transactionManager">
+  <merge data="data" table="zl_yclhglqk">
+   <where>
+    <nf type="int" value="${cal.year}"/>
+    <yf type="int" value="${cal.month}"/>
+    <dwid type="int" value="${compId}"/>
+    <clid type="int" ref="0"/>
+   </where>
+   <set>
+    <hgs type="int" ref="3"/>
+    <zs type="int" ref="4"/>
+    <zt type="int" value="${zt}"/>
+    <nf type="int" value="${cal.year}"/>
+    <yf type="int" value="${cal.month}"/>
+    <clid type="int" ref="0"/>
+    <dwid type="int" value="${compId}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="yclhglqktjEntryUpdate">
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="cy" value="${[1,2,3].indexOf(compId) &gt;= 0 ? 0 : 1}"/>
+  <callservice id="servYclhglqktjEntryUpdate"/>
+  <formatter id="data">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0, 1, 2"/>
+   </EmptyFormatter>
+   <NumberFormatter reservedCount="0"/>
+  </formatter>
+  <formatterServer id="serv" table="${result.matrix}" acceptNullAs="">
+   <formatter ref="data"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>材料大类</name>
+     <readOnly>true</readOnly>
+    </item>
+    <item>
+     <name>单位</name>
+     <readOnly>true</readOnly>
+    </item>
+    <item>
+     <name>合格数</name>
+    </item>
+    <item>
+     <name>总数</name>
+    </item>
+   </header>
+   <pager>none</pager>
+   <data>${serv.result}</data>
+  </response>
  </controller>
- <controller id="byqjydwzyYclhglqktjEntry">
+ <controller id="yclhglqktjEntry">
   <response type="jsp" name="framework/templates/dateReport/entry">
    <map key="year" value="${calendar.current.year}"/>
    <map key="month" value="${calendar.current.month}"/>
-   <map key="updateUrl" value="byqjydwzyYclhglqktjEntryUpdate"/>
-   <map key="submitUrl" value="byqjydwzyYclhglqktjSubmit"/>
+   <map key="updateUrl" value="yclhglqktjEntryUpdate"/>
+   <map key="submitUrl" value="yclhglqktjEntrySubmit"/>
    <map key="title" value="原材料合格率"/>
    <map map="${authMgr[42]}"/>
+  </response>
+ </controller>
+ <controller id="yclhglqktjEntrySubmit">
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="data" value="${request.data.asJsonArray}"/>
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="zt" value="${2}"/>
+  <callservice id="servYclhglqktjEntrySubmit"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
   </response>
  </controller>
 </components>

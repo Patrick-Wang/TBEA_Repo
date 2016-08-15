@@ -421,7 +421,7 @@ var Util;
         CompanyType[CompanyType["XBGNGCJXGS"] = 126] = "XBGNGCJXGS";
         CompanyType[CompanyType["XBGS"] = 127] = "XBGS";
         CompanyType[CompanyType["XBXBGS"] = 128] = "XBXBGS";
-        CompanyType[CompanyType["XBYTGS"] = 129] = "XBYTGS";
+        CompanyType[CompanyType["XBZTGS"] = 129] = "XBZTGS";
         CompanyType[CompanyType["XDWLGS"] = 130] = "XDWLGS";
         CompanyType[CompanyType["XJFGS"] = 131] = "XJFGS";
         CompanyType[CompanyType["XJNY"] = 132] = "XJNY";
@@ -473,6 +473,7 @@ var Util;
         CompanyType[CompanyType["XLCY"] = 176] = "XLCY";
         CompanyType[CompanyType["UNKNOWN"] = 177] = "UNKNOWN";
         CompanyType[CompanyType["RSGS"] = 178] = "RSGS";
+        CompanyType[CompanyType["PDCY"] = 179] = "PDCY";
         CompanyType[CompanyType["ALL"] = 1000] = "ALL";
     })(Util.CompanyType || (Util.CompanyType = {}));
     var CompanyType = Util.CompanyType;
@@ -539,6 +540,9 @@ var Util;
             this.mBaseUrl = baseUrl;
             this.mUseCache = useCache;
         }
+        Ajax.prototype.baseUrl = function () {
+            return this.mBaseUrl;
+        };
         Ajax.toUrlParam = function (option) {
             var keys = [];
             for (var key in option) {

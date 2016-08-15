@@ -1,6 +1,7 @@
 ///<reference path="../framework/basic/basic.ts"/>
 ///<reference path="../framework/basic/basicShow.ts"/>
 ///<reference path="cpzlqkdef.ts"/>
+///<reference path="../components/dateSelectorProxy.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -16,6 +17,31 @@ var cpzlqk;
             _super.apply(this, arguments);
             this.isCompanySupported = false;
         }
+        CpzlqkFrameView.prototype.init = function (opt) {
+            var _this = this;
+            this.mOpt = opt;
+            var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
+                year: this.mOpt.date.year,
+                month: 12
+            }, {
+                year: this.mOpt.date.year,
+                month: this.mOpt.date.month
+            }, false, false);
+            this.mDtSec = dsp;
+            this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
+            if (opt.comps.length == 1) {
+                this.mCompanySelector.hide();
+            }
+            this.mCompanySelector.change(function (selector, depth) {
+                _this.updateTypeSelector();
+            });
+            var inputs = $("#" + this.mOpt.contentType).show();
+            inputs.click(function (e) {
+                var node = _this.triggerYdjdChecked();
+            });
+            this.updateTypeSelector();
+            this.updateUI();
+        };
         CpzlqkFrameView.prototype.checkCompanySupported = function () {
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
             var isSupported = router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED, this.mOpt.comps.length);
@@ -50,22 +76,28 @@ var cpzlqk;
                     if (inputs[i].id == 'rdyd') {
                         this.mYdjdType = cpzlqk.YDJDType.YD;
                         router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_YD_SELECTED);
+                        var dtNow = this.mDtSec.getDate();
+                        $("#" + this.mOpt.dt).empty();
+                        var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
+                            year: this.mOpt.date.year,
+                            month: this.mOpt.date.month
+                        }, dtNow, false, false);
+                        this.mDtSec = dsp;
                     }
                     else {
                         this.mYdjdType = cpzlqk.YDJDType.JD;
+                        var dtNow = this.mDtSec.getDate();
+                        $("#" + this.mOpt.dt).empty();
+                        var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
+                            year: this.mOpt.date.year,
+                            month: this.mOpt.date.month
+                        }, dtNow, false, true);
+                        this.mDtSec = dsp;
                         router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_JD_SELECTED);
                     }
                 }
             }
             return node;
-        };
-        CpzlqkFrameView.prototype.init = function (opt) {
-            var _this = this;
-            _super.prototype.init.call(this, opt);
-            var inputs = $("#" + this.mOpt.contentType).show();
-            inputs.click(function (e) {
-                var node = _this.triggerYdjdChecked();
-            });
         };
         CpzlqkFrameView.prototype.updateTypeSelector = function (width) {
             var _this = this;
@@ -80,6 +112,17 @@ var cpzlqk;
                 return true;
             }
             return false;
+        };
+        CpzlqkFrameView.prototype.onEvent = function (e) {
+            switch (e.id) {
+                case cpzlqk.Event.ZLFE_SAVE_COMMENT:
+                    router.to(this.mCurrentPlugin).send(cpzlqk.Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
+                    break;
+                case cpzlqk.Event.ZLFE_COMMENT_UPDATED:
+                    $("#commentText").val(e.data);
+                    break;
+            }
+            return _super.prototype.onEvent.call(this, e);
         };
         CpzlqkFrameView.prototype.updateUI = function () {
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());

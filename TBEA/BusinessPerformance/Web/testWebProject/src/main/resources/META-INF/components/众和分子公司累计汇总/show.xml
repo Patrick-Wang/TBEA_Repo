@@ -154,7 +154,7 @@
 			1312,1313,1311,1314
 		</list>
 	
-		<context key="zhxmgs" value="${orgCompaniesByIds['BMDBOrganization'][zhdwids]}"/>
+		<context key="zhxmgs" value="${orgs.BMDBOrganization.companiesByIds[zhdwids]}"/>
 	</service>
 
 	<service id="servZhgsljzbhz" transaction="transactionManager">

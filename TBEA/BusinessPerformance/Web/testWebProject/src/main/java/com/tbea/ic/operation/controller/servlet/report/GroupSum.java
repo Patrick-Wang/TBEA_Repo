@@ -103,10 +103,9 @@ public class GroupSum {
 		row[1] = dtStart;
 		row[2] = dtEnd;
 		row[3] = "合计";
-		row[5] = sums[2];
-		row[6] = sums[3];
-		row[7] = sums[4];
-		row[8] = sums[5];
+		row[6] = sums[2];
+		row[7] = sums[3];
+		row[8] = sums[4];
 		
 		return row;
 	}

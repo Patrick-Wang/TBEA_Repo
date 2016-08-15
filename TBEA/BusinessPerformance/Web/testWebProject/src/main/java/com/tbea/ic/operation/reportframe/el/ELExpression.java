@@ -140,32 +140,36 @@ public class ELExpression{
 		Matcher matcher = expPattern.matcher(expression);
 		String expressTmp = expression;
 		int offset = 0;
-		boolean found = false;
+		boolean isObject = false;
 		Object obj = null;
 		while (matcher.find()){
 			try{
 				obj = parseObject(matcher.group());
-				if (null == obj || isNumber(obj)){
+				if (null == obj || isNumber(obj) || isString(obj) || TypeUtil.isBoolean(obj.getClass())){
 					String objVal = expressTmp.substring(0, offset + matcher.start()) + obj;
 					expressTmp = objVal + expressTmp.substring(offset + matcher.end());
 					offset = objVal.length();
 					matcher = expPattern.matcher(expressTmp.substring(offset));
-				}else if (isString(obj)){
-					String objVal = expressTmp.substring(0, offset + matcher.start()) + "'" + obj + "'";
-					expressTmp = objVal + expressTmp.substring(offset + matcher.end());
-					offset = objVal.length();
-					matcher = expPattern.matcher(expressTmp.substring(offset));
 				}else{
-					found = true;
+					isObject = true;
 					break;
 				}
 			}catch(ELInitObjectNotExist e){
-				e.printStackTrace();
+				if (!"indexOf".equals(e.getMessage())){
+					e.printStackTrace();
+				}
 			}
 		}
-		
-		if (!found){
+
+		if (!isObject && !expressTmp.equals(obj)){
 			obj = jse.eval(expressTmp);
+			if (null != obj &&
+				!TypeUtil.isDouble(obj.getClass()) &&
+				!TypeUtil.isInt(obj.getClass()) &&
+				!TypeUtil.isBoolean(obj.getClass()) &&
+				!TypeUtil.isString(obj.getClass())){
+				return expressTmp;
+			}
 		}
 		return obj;
 	}

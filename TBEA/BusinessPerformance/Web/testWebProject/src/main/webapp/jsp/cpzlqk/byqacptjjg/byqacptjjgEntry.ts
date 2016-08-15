@@ -48,7 +48,6 @@ module cpzlqk {
             protected isSupported(compType:Util.CompanyType):boolean {
                 if (compType == Util.CompanyType.SBGS ||
                     compType == Util.CompanyType.HBGS ||
-                    compType == Util.CompanyType.TBGS ||
                     compType == Util.CompanyType.XBC){
                     return true;
                 }
@@ -131,8 +130,9 @@ module cpzlqk {
                     return;
                 }
 
-                if (this.mData)
-
+                framework.router
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(Event.ZLFE_DATA_STATUS, this.mData.status);
 
                 this.updateTable();
             }

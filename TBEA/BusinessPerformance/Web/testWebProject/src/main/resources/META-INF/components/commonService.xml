@@ -1,5 +1,5 @@
 ﻿<components>
 	<service id="servCompTypeToId">
-		<context key="compId" value="${orgIdByType.BMDBOrganization[request.compId.asInt]}"/>
+		<context key="compId" value="${orgs.BMDBOrganization.ids[request.compId.asInt]}"/>
 	</service>
 </components>

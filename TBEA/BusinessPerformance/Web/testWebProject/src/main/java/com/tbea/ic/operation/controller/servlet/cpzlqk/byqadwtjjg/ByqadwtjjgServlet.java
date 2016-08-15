@@ -75,9 +75,10 @@ public class ByqadwtjjgServlet {
 			resp = new CpzlqkResp(result, waveItems, waveX);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 			List<List<String>> result = byqadwtjjgService.getByqadwtjjg(d, yjType, company);
-			resp = new CpzlqkResp(result);
+			List<WaveItem> waveItems = byqadwtjjgService.getByqYdAdwtjjgWaveItems(d, company);
+			resp = new CpzlqkResp(result, waveItems);
 		}
 		
 		
@@ -101,7 +102,7 @@ public class ByqadwtjjgServlet {
 			
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 			result = byqadwtjjgService.getByqadwtjjg(d, yjType, company);
 		}
 		

@@ -46,6 +46,15 @@ public class Util {
 		return list;
 	}
 	
+	public static List resize(List list, int size, Object val){
+		if (list.size() < size){
+			for (int i = list.size(); i < size; ++i){
+				list.add(val);
+			}
+		}
+		return list;
+	}
+	
 	// d => yyyyMM
 	public static Date valueOf(String d) {
 		return java.sql.Date.valueOf(d.substring(0, 4) + "-" + d.substring(4)
@@ -223,7 +232,7 @@ public class Util {
 	
 	public static Integer toIntNull(String val) {
 		try {
-			return Integer.valueOf(val);
+			return Double.valueOf(val).intValue();
 		} catch (Exception e) {
 		}
 		return null;

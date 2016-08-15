@@ -2,6 +2,7 @@ package com.tbea.ic.operation.service.cpzlqk.byqadwtjjg;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,12 +10,14 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.Formula;
 import com.tbea.ic.operation.common.FormulaServer;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqadwtjjg.ByqAdwtjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqadwtjjg.ByqAdwtjjgDaoImpl;
@@ -72,8 +75,8 @@ public class ByqadwtjjgServiceImpl implements ByqadwtjjgService {
 		for (ByqAdwtjjgEntity entity : entities){
 			Formula formula = new Formula(entity.getFormul());
 			Company comp = null;
-			if (entity.getDw() != null){
-				comp = companyManager.getBMDBOrganization().getCompany(entity.getDw().getId());
+			if (entity.getDwid() != null){
+				comp = companyManager.getVirtualCYOrg().getCompany(entity.getDwid());
 				comps.add(comp.getId());
 			}
 			client.add(formula, entity, comp);
@@ -88,5 +91,47 @@ public class ByqadwtjjgServiceImpl implements ByqadwtjjgService {
 	public List<List<String>> getByqadwtjjg(Date d, YDJDType yjType,
 			Company company) {
 		return this.getByqadwtjjg(d, yjType, byqAdwtjjgDao.getByDw(company));
+	}
+
+	private WaveItem getWaveItem(List<WaveItem> wis, String name){
+		for (int i = 0; i < wis.size(); ++i){
+			if (wis.get(i).getName().equals(name)){
+				return wis.get(i);
+			}
+		}
+		WaveItem item = new WaveItem(name, new ArrayList<String>());
+		wis.add(item);
+		return item;
+	}
+	
+	private String toCtVal(String val){
+		if (null == val || "".equals(val) || "null".equals(val)){
+			val = "0";
+		}else{
+			val = Double.valueOf(val).doubleValue() * 100 + "";
+		}
+		return val;
+	}
+	
+	@Override
+	public List<WaveItem> getByqYdAdwtjjgWaveItems(Date d, Company company) {
+		
+		List<WaveItem> wis = new ArrayList<WaveItem>();
+		EasyCalendar cal = new EasyCalendar();
+		cal.setTime(d);
+		cal.setMonth(1);
+		for (int j = 0; j < 12; ++j){
+			List<List<String>> result = this.getByqadwtjjg(cal.getDate(), YDJDType.YD, byqAdwtjjgDao.getByDw(company));
+			//result.size() - 1 因为最后一行是合计
+			for (int i = 0; i < result.size() - 1; ++i){
+				if (result.get(i).get(1).indexOf("35") < 0){
+					//不包含35千伏以下产品
+					WaveItem item = getWaveItem(wis, result.get(i).get(1));
+					item.getData().add(toCtVal(result.get(i).get(4)));
+				}
+			}
+			cal.addMonth(1);
+		}
+		return wis;
 	}
 }

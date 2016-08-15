@@ -5,7 +5,7 @@
 	display: block;
 	
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=50)";
-
+	overflow:hidden;
 	opacity: 0.4;
 	background: gray;
 	position: absolute;
@@ -56,7 +56,7 @@
 			} */
         	ajaxbg.hide(); 
         	$(document).ajaxStart(function () { 
-        		ajaxbg.show();    
+        		ajaxbg.show();
 /*         		if (navigator.appName == "Microsoft Internet Explorer"){
         			$("table,input,select, h1").each(function(index, e){e.disabled = true;});	
         			$("#progressBar table")[0].disabled = false;
@@ -67,7 +67,7 @@
       			} */
     			$("#background").css("height", '100%');
                 $("#background").css("width", '100%');
-        	}).ajaxStop(function () { 
+        	}).ajaxStop(function () {
         		ajaxbg.hide(); 
 /*         		if (navigator.appName == "Microsoft Internet Explorer"){
         			$("table,input,select, h1").each(function(index, e){e.disabled = false;});

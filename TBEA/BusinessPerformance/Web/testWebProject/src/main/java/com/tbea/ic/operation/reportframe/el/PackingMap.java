@@ -3,6 +3,9 @@ package com.tbea.ic.operation.reportframe.el;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import com.tbea.ic.operation.common.ClosureMap;
 import com.tbea.ic.operation.reportframe.util.TypeUtil;
 
@@ -11,6 +14,7 @@ public class PackingMap extends ClosureMap {
 
 	private final static String METHOD_ETEND_ISARRAY = "isArray";
 	private final static String METHOD_ETEND_ISLIST = "isList";
+	private final static String METHOD_ETEND_TOJSON = "asJson";
 	
 	Object packageObj;
 	int nextSize = 0;
@@ -66,6 +70,7 @@ public class PackingMap extends ClosureMap {
 				ret = this.md.invoke(packageObj);
 			}
 		}
+		args.clear();
 		return ret;
 	}
 
@@ -74,6 +79,13 @@ public class PackingMap extends ClosureMap {
 			return packageObj.getClass().isArray();
 		}else if (METHOD_ETEND_ISLIST.equals((String)args.get(0))){
 			return TypeUtil.instanceOf(packageObj, List.class);
+		}else if (METHOD_ETEND_TOJSON.equals((String)args.get(0))){
+			if (TypeUtil.instanceOf(packageObj, List.class) ||
+					packageObj.getClass().isArray()){
+				return  JSONArray.fromObject(packageObj).toString();
+			}else{
+				return JSONObject.fromObject(packageObj).toString();
+			}
 		}
 		return null;
 	}

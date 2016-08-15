@@ -11,7 +11,7 @@ var Util;
             }
             return $("#self_msgBox");
         };
-        MessageBox.tip = function (msg, onclose) {
+        MessageBox.tip = function (msg, onclose, timeOut) {
             var container = MessageBox.getContainer();
             if (container.attr("finish") == "true") {
                 $("#self_tip").children().eq(0).text(msg);
@@ -41,6 +41,11 @@ var Util;
                 $("#self_tip").trigger('close');
             });
             // }
+            if (undefined != timeOut) {
+                setTimeout(function () {
+                    $("#self_tip").trigger('close');
+                }, timeOut);
+            }
         };
         MessageBox.selfOk = function () {
             MessageBox.promise.succeed();

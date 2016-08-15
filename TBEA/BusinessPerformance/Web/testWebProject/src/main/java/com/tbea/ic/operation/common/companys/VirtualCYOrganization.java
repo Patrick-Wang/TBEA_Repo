@@ -14,6 +14,12 @@ class VirtualCYOrganization extends AbstractOrganization {
 				.append(clone(BM, CompanyType.LLGS))
 				.append(clone(BM, CompanyType.XLC))
 				.append(clone(BM, CompanyType.DLGS))
+		).append(
+				getCompany(CompanyType.PDCY, 50002)
+				.append(clone(BM, CompanyType.SBZTFGS))
+				.append(clone(BM, CompanyType.HBDQFGS))
+				.append(clone(BM, CompanyType.XBZTGS))
+				.append(clone(BM, CompanyType.TBGS))
 		);
 	}
 

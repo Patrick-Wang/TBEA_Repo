@@ -13,32 +13,27 @@ module Util {
 
         constructor(start:Util.Date, end:Util.Date, now:Util.Date, id:string){
             let dates:Util.IDataNode[] = this.getYears(start, end);
-            let seasons:Util.IDataNode[] = [{
-                data:{
-                    id:0,value:"一季度"
-                }
-            },{
-                data:{
-                    id:1,value:"半年度"
-                }
-            },{
-                data:{
-                    id:2,value:"三季度"
-                }
-            },{
-                data:{
-                    id:3,value:"年度"
-                }
-            }];
+
+            let seasonEnd : number = parseInt("" + (end.month - 1) / 3);
+            let jdNames:string[] = ["一季度", "半年度","三季度","年度"];
+            let seasons:Util.IDataNode[] = [];
+            for (let i = 0; i <= seasonEnd; ++i){
+                seasons.push({
+                    data:{
+                        id:i,
+                        value:jdNames[i]
+                    }
+                })
+            }
 
             let seasonNow : number = parseInt("" + (now.month - 1) / 3);
 
-            $("#" + id).append("<div id='" + id +"year'></div>");
-            $("#" + id).append("<div style='margin-left:5px' id='" + id +"season'></div>");
+            $("#" + id).append("<div style='float:left' id='" + id +"year'></div>");
+            $("#" + id).append("<div style='float:left' id='" + id +"season'></div>");
 
             this.yearSelector = new UnitedSelector(dates, id + "year", [now.year - start.year]);
             this.seasonSelector = new UnitedSelector(seasons, id + "season", [seasonNow]);
-
+            $("#" + id + " select").css("width", "100px");
             this.yearSelector.change((sel, depth) =>{
                 sel = this.yearSelector.getSelect();
                 $(sel).multiselect({
@@ -52,7 +47,7 @@ module Util {
                 $(sel[1]).multiselect({
                     multiple: false,
                     header: false,
-                    minWidth: 100,
+                    minWidth: 80,
                     height　: '100%',///*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
@@ -70,7 +65,7 @@ module Util {
             $(sel[1]).multiselect({
                 multiple: false,
                 header: false,
-                minWidth: 100,
+                minWidth: 80,
                 height　: '100%',///*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
                 // noneSelectedText: "请选择月份",
                 selectedList: 1

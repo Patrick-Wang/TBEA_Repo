@@ -16,20 +16,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CpzlqkSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.TextFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
-import com.tbea.ic.operation.controller.servlet.cpzlqk.ByqBhgType;
+import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgxxfb.BhgxxfbResp;
 import com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgxxfb.ByqcpycssbhgxxfbService;
@@ -49,24 +50,35 @@ public class ByqcpycssbhgxxfbServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
-		ByqBhgType bhgType = ByqBhgType.valueOf(Integer.valueOf(request.getParameter("bhgType")));
-		
 		List<String> bhglbs = byqcpycssbhgxxfbService.getBhglbs();
 		boolean all = Boolean.valueOf(request.getParameter("all"));
 		List<List<String>> result = null;
+		List<WaveItem> wis = null;
 		if (all){
-			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, bhgType);
+			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType);
+			if (yjType == YDJDType.JD){
+				EasyCalendar cal = new EasyCalendar();
+				cal.setTime(d);
+				result.addAll(byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(cal.getLastYear().getDate(), yjType));
+			}
+			wis = byqcpycssbhgxxfbService.getWaveItems(d, yjType);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getBMDBOrganization().getCompany(comp);
-			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, bhgType, company);
+			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, company);
+			if (yjType == YDJDType.JD){
+				EasyCalendar cal = new EasyCalendar();
+				cal.setTime(d);
+				result.addAll(byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(cal.getLastYear().getDate(), yjType, company));
+			}
+			wis = byqcpycssbhgxxfbService.getWaveItems(d, yjType, company);
 		}
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, null);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
 		
-		return JSONObject.fromObject(new BhgxxfbResp(bhglbs, result)).toString().getBytes("utf-8");
+		return JSONObject.fromObject(new BhgxxfbResp(bhglbs, result, wis)).toString().getBytes("utf-8");
 	}
 
 
@@ -75,16 +87,15 @@ public class ByqcpycssbhgxxfbServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
-		ByqBhgType bhgType = ByqBhgType.valueOf(Integer.valueOf(request.getParameter("bhgType")));
-		
+			
 		boolean all = Boolean.valueOf(request.getParameter("all"));
 		List<List<String>> result = null;
 		if (all){
-			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, bhgType);
+			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getBMDBOrganization().getCompany(comp);
-			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, bhgType, company);
+			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, company);
 		}
 		
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQCPYCSSBHGXXFB);
@@ -95,7 +106,7 @@ public class ByqcpycssbhgxxfbServlet {
 		serv.addMergeRegion(new MergeRegion(0, 1, 1, result.size()));
 		serv.format(result, template);
 
-		String name = yjType.val() + bhgType.val() + template.getSheetName();
+		String name = yjType.val() + template.getSheetName();
 
 		template.write(response, name + ".xls");
 	}

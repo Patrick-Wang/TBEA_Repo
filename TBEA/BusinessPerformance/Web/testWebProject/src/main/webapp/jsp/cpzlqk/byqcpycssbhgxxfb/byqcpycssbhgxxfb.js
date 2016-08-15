@@ -25,35 +25,45 @@ var cpzlqk;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            JQGridAssistantFactory.createTable = function (gridName, title) {
-                var nodes = [Node.create({ name: "单位", align: TextAlign.Center })];
+            JQGridAssistantFactory.createTable = function (gridName, title, type) {
+                var nodes;
+                if (cpzlqk.YDJDType.YD == type) {
+                    nodes = [Node.create({ name: "单位", align: TextAlign.Center })];
+                }
+                else {
+                    nodes = [
+                        Node.create({ name: "单位", align: TextAlign.Center }),
+                        Node.create({ name: "单位", align: TextAlign.Center })];
+                }
                 for (var i in title) {
                     nodes.push(Node.create({ name: title[i] }));
                 }
+                nodes.push(Node.create({ name: "合计" }));
                 return new JQTable.JQGridAssistant(nodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../byqcpycssbhgxxfb/update.do", false);
+                this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
+                this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.byqcpycssbhgxxfb;
             };
             ShowView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.SBGS || compType == Util.CompanyType.HBGS
-                    || compType == Util.CompanyType.XBC || compType == Util.CompanyType.TBGS;
+                    || compType == Util.CompanyType.XBC || compType == Util.CompanyType.BYQCY;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../byqcpycssbhgxxfb/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType,
-                    bhgType: this.mBhgmxType,
                     ydjd: this.mYdjdType,
-                    all: this.mCompSize > 1
+                    all: this.mCompType == Util.CompanyType.BYQCY
                 });
             };
             ShowView.prototype.option = function () {
@@ -63,12 +73,22 @@ var cpzlqk;
                 var _this = this;
                 this.mDt = date;
                 this.mCompType = compType;
+                this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: date,
+                        companyId: compType,
+                        ydjd: this.mYdjdType
+                    }) }).then(function (jsonData) {
+                    framework.router
+                        .fromEp(_this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
+                });
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
-                    bhgType: this.mBhgmxType,
                     ydjd: this.mYdjdType,
-                    all: this.mCompSize > 1
+                    all: this.mCompType == Util.CompanyType.BYQCY
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -80,27 +100,58 @@ var cpzlqk;
                     return;
                 }
                 this.updateTable();
-            };
-            ShowView.prototype.onEvent = function (e) {
-                if (e.road != undefined) {
-                    if (plugin.byqybysqfysxxfb == e.road[e.road.length - 1]) {
-                        this.mBhgmxType = cpzlqk.ByqBhgType.YBYSQFJYS;
+                this.$(this.option().ctarea).show();
+                if (this.mYdjdType == cpzlqk.YDJDType.YD) {
+                    if (this.mData.waveItems.length == 0) {
+                        this.$(this.option().ctarea).hide();
                     }
                     else {
-                        this.mBhgmxType = cpzlqk.ByqBhgType.PBCP;
+                        this.$(this.option().ct1).hide();
+                        this.$(this.option().ct).css("width", "100%");
+                        this.updateYDEchart();
                     }
+                }
+                else {
+                    if (this.mData.result.length == 0) {
+                        this.$(this.option().ctarea).hide();
+                    }
+                    else {
+                        this.$(this.option().ct).show();
+                        this.$(this.option().ct1).show();
+                        this.$(this.option().ct).css("width", "50%");
+                        this.$(this.option().ct1).css("width", "50%");
+                        this.updateJDEchart();
+                    }
+                }
+            };
+            ShowView.prototype.onEvent = function (e) {
+                switch (e.id) {
+                    case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
+                        return true;
+                    case cpzlqk.Event.ZLFE_SAVE_COMMENT:
+                        var param = {
+                            condition: Util.Ajax.toUrlParam({
+                                url: this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId: this.mCompType,
+                                ydjd: this.mYdjdType
+                            }),
+                            comment: e.data
+                        };
+                        this.mCommentSubmit.get({
+                            data: JSON.stringify([[param.condition, param.comment]])
+                        }).then(function (jsonData) {
+                            Util.MessageBox.tip("保存成功", undefined, 1000);
+                        });
+                        break;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.byqybysqfysxxfb, this.getId()))
+                    .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "110kV及以上产品送试不合格现象分布");
-                framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.byqybyspbcpxxfb, this.getId()))
-                    .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "配变产品送试不合格现象分布");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产品送试不合格现象分布");
             };
             ShowView.prototype.getMonth = function () {
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
@@ -109,15 +160,33 @@ var cpzlqk;
             };
             ShowView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name, this.mData.bhglbs);
+                var tableAssist = JQGridAssistantFactory.createTable(name, this.mData.bhglbs, this.mYdjdType);
+                var data = [];
+                if (this.mYdjdType == cpzlqk.YDJDType.YD) {
+                    data = this.mData.result;
+                }
+                else {
+                    var i = 0;
+                    for (; i < this.mData.result.length; ++i) {
+                        data.push(["当期"].concat(this.mData.result[i]));
+                        if (this.mData.result[i][0].replace(/\s/g, "") == "合计") {
+                            break;
+                        }
+                    }
+                    ++i;
+                    for (; i < this.mData.result.length; ++i) {
+                        data.push(["去年同期"].concat(this.mData.result[i]));
+                    }
+                }
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
                 tableAssist.mergeRow(0);
                 tableAssist.mergeColum(0);
+                tableAssist.mergeTitle(0);
                 this.$(name).jqGrid(tableAssist.decorate({
                     datatype: "local",
-                    data: tableAssist.getData(this.mData.result),
+                    data: tableAssist.getData(data),
                     multiselect: false,
                     drag: false,
                     resize: false,
@@ -129,8 +198,149 @@ var cpzlqk;
                     viewrecords: true
                 }));
             };
+            ShowView.prototype.updateYDEchart = function () {
+                var title = "按产单位计结果";
+                var legend = [];
+                var echart = this.option().ct;
+                var series = [];
+                var xData = [];
+                var tooltip = {
+                    trigger: 'axis'
+                };
+                var yAxis = [
+                    {
+                        type: 'value'
+                    }
+                ];
+                for (var i in this.mData.waveItems) {
+                    legend.push(this.mData.waveItems[i].name);
+                    series.push({
+                        name: this.mData.waveItems[i].name,
+                        type: 'line',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: this.mData.waveItems[i].data
+                    });
+                }
+                for (var i = 1; i <= 12; ++i) {
+                    xData.push(i + "月");
+                }
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: tooltip,
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: yAxis,
+                    series: series
+                };
+                echarts.init(this.$(this.option().ct)[0]).setOption(option);
+            };
+            ShowView.prototype.toCtVal = function (val) {
+                var index = val.lastIndexOf('%');
+                if (index >= 0) {
+                    return val.substring(0, index);
+                }
+                return val == '--' ? 0 : val;
+            };
+            ShowView.prototype.updateJDEchart = function () {
+                var legend = {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: this.mData.bhglbs
+                };
+                var tooltip = {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                };
+                var series = [{
+                        name: "不合格类型",
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: []
+                    }];
+                var i = 0;
+                for (; i < this.mData.result.length; ++i) {
+                    if (this.mData.result[i][0].replace(/\s/g, "") == "合计") {
+                        for (var j = 0; j < this.mData.bhglbs.length; ++j) {
+                            series[0].data.push({
+                                name: this.mData.bhglbs[j],
+                                value: this.mData.result[i][j + 1]
+                            });
+                        }
+                        break;
+                    }
+                }
+                var option = {
+                    title: {
+                        text: "当期",
+                        x: 'center'
+                    },
+                    tooltip: tooltip,
+                    legend: legend,
+                    toolbox: {
+                        show: true
+                    },
+                    calculable: true,
+                    series: series
+                };
+                series = [{
+                        name: "不合格类型",
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: []
+                    }];
+                ++i;
+                for (; i < this.mData.result.length; ++i) {
+                    if (this.mData.result[i][0].replace(/\s/g, "") == "合计") {
+                        for (var j = 0; j < this.mData.bhglbs.length; ++j) {
+                            series[0].data.push({
+                                name: this.mData.bhglbs[j],
+                                value: this.mData.result[i][j + 1]
+                            });
+                        }
+                        break;
+                    }
+                }
+                if (series[0].data.length != 0) {
+                    var option1 = {
+                        title: {
+                            text: "去年同期",
+                            x: 'center'
+                        },
+                        tooltip: tooltip,
+                        legend: legend,
+                        toolbox: {
+                            show: true
+                        },
+                        calculable: true,
+                        series: series
+                    };
+                    echarts.init(this.$(this.option().ct1)[0]).setOption(option1);
+                }
+                else {
+                    this.$(this.option().ct).css("width", "100%");
+                    this.$(this.option().ct1).hide();
+                }
+                echarts.init(this.$(this.option().ct)[0]).setOption(option);
+            };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(cpzlqk.ZlPluginView));
+        })(cpzlqk.ZlPluginView);
     })(byqcpycssbhgxxfb = cpzlqk.byqcpycssbhgxxfb || (cpzlqk.byqcpycssbhgxxfb = {}));
 })(cpzlqk || (cpzlqk = {}));

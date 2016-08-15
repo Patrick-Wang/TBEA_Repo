@@ -55,7 +55,7 @@ public class XlacptjjgServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		
 		List<List<String>> result = xlacptjjgService.getXlacptjjg(d, company, yjType);
@@ -75,7 +75,7 @@ public class XlacptjjgServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		List<List<String>> result = xlacptjjgService.getXlacptjjgEntry(d, company);
 		ZBStatus status = xlacptjjgService.getStatus(d, company);
@@ -92,7 +92,7 @@ public class XlacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		ErrorCode err = xlacptjjgService.saveXlacptjjg(d, data, company);
 		return Util.response(err);
@@ -104,7 +104,7 @@ public class XlacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		ErrorCode err = xlacptjjgService.submitXlacptjjg(d, data, company);
 		return Util.response(err);
@@ -116,7 +116,7 @@ public class XlacptjjgServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		List<List<String>> result = null;
 		ZBStatus status = xlacptjjgService.getStatus(d, company);
 		if (status == ZBStatus.APPROVED || status == ZBStatus.SUBMITTED){
@@ -137,7 +137,7 @@ public class XlacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		ErrorCode err = xlacptjjgService.approveXlacptjjg(d, data, company);
 		return Util.response(err);
@@ -149,7 +149,7 @@ public class XlacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		ErrorCode err = xlacptjjgService.unapproveXlacptjjg(d, data, company);
 		return Util.response(err);
@@ -160,7 +160,7 @@ public class XlacptjjgServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		
 		List<List<String>> result = xlacptjjgService.getXlacptjjg(d, company, yjType);

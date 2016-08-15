@@ -37,6 +37,10 @@ var framework;
                         .css("padding", "2px 0 2px 4px")
                         .css("text-align", "left")
                         .css("font-size", "12px");
+                    if (opt.itemNodes.length == 1) {
+                        this.unitedSelector.hide();
+                        $("#headertitle").text(opt.itemNodes[0].data.value + " " + $("#headertitle").text());
+                    }
                     _super.prototype.onInitialize.call(this, opt);
                 };
                 EntryView.prototype.getParams = function (date) {

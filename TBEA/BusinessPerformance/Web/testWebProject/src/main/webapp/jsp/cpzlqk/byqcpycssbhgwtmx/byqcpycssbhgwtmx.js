@@ -28,6 +28,7 @@ var cpzlqk;
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
                     Node.create({ name: "单位", align: TextAlign.Center }),
+                    Node.create({ name: "发生日期", align: TextAlign.Center }),
                     Node.create({ name: "产品类型", align: TextAlign.Center }),
                     Node.create({ name: "生产号", align: TextAlign.Center }),
                     Node.create({ name: "产品型号", align: TextAlign.Center }),
@@ -40,27 +41,28 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../byqcpycssbhgwtmx/update.do", false);
+                this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
+                this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.byqcpycssbhgwtmx;
             };
             ShowView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.SBGS || compType == Util.CompanyType.HBGS
-                    || compType == Util.CompanyType.XBC || compType == Util.CompanyType.TBGS;
+                    || compType == Util.CompanyType.XBC || compType == Util.CompanyType.BYQCY;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../byqcpycssbhgwtmx/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType,
-                    bhgType: this.mBhgmxType,
-                    all: this.mCompSize > 1
+                    all: this.mCompType == Util.CompanyType.BYQCY
                 });
             };
             ShowView.prototype.option = function () {
@@ -70,12 +72,22 @@ var cpzlqk;
                 var _this = this;
                 this.mDt = date;
                 this.mCompType = compType;
+                this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: date,
+                        companyId: compType,
+                        ydjd: this.mYdjdType
+                    }) }).then(function (jsonData) {
+                    framework.router
+                        .fromEp(_this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
+                });
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType,
-                    bhgType: this.mBhgmxType,
-                    all: this.mCompSize > 1
+                    all: this.mCompType == Util.CompanyType.BYQCY
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -89,25 +101,31 @@ var cpzlqk;
                 this.updateTable();
             };
             ShowView.prototype.onEvent = function (e) {
-                if (e.road != undefined) {
-                    if (plugin.byqybysqfyswtmx == e.road[e.road.length - 1]) {
-                        this.mBhgmxType = cpzlqk.ByqBhgType.YBYSQFJYS;
-                    }
-                    else {
-                        this.mBhgmxType = cpzlqk.ByqBhgType.PBCP;
-                    }
+                switch (e.id) {
+                    case cpzlqk.Event.ZLFE_SAVE_COMMENT:
+                        var param = {
+                            condition: Util.Ajax.toUrlParam({
+                                url: this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId: this.mCompType,
+                                ydjd: this.mYdjdType
+                            }),
+                            comment: e.data
+                        };
+                        this.mCommentSubmit.get({
+                            data: JSON.stringify([[param.condition, param.comment]])
+                        }).then(function (jsonData) {
+                            Util.MessageBox.tip("保存成功", undefined, 1000);
+                        });
+                        break;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.byqybysqfyswtmx, this.getId()))
+                    .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "110kV及以上产品一次送试不合格问题明细");
-                framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.byqybyspbcpwtmx, this.getId()))
-                    .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "配变产品一次送试不合格明细");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产品一次送试不合格问题明细");
             };
             ShowView.prototype.getMonth = function () {
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
@@ -136,11 +154,11 @@ var cpzlqk;
                     autoScroll: true,
                     rowNum: 20,
                     viewrecords: true,
-                    pager: '#' + pagername,
+                    pager: '#' + pagername
                 }));
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(cpzlqk.ZlPluginView));
+        })(cpzlqk.ZlPluginView);
     })(byqcpycssbhgwtmx = cpzlqk.byqcpycssbhgwtmx || (cpzlqk.byqcpycssbhgwtmx = {}));
 })(cpzlqk || (cpzlqk = {}));

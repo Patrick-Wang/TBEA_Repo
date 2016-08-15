@@ -48,7 +48,6 @@ var cpzlqk;
             EntryView.prototype.isSupported = function (compType) {
                 if (compType == Util.CompanyType.SBGS ||
                     compType == Util.CompanyType.HBGS ||
-                    compType == Util.CompanyType.TBGS ||
                     compType == Util.CompanyType.XBC) {
                     return true;
                 }
@@ -130,8 +129,10 @@ var cpzlqk;
                 if (this.mData == undefined) {
                     return;
                 }
-                if (this.mData)
-                    this.updateTable();
+                framework.router
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(cpzlqk.Event.ZLFE_DATA_STATUS, this.mData.status);
+                this.updateTable();
             };
             EntryView.prototype.init = function (opt) {
                 framework.router

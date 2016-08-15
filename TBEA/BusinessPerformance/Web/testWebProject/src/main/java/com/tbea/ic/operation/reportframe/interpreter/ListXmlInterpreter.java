@@ -148,7 +148,12 @@ public class ListXmlInterpreter implements XmlInterpreter {
 					if (concat(component, elem, objs, repeat, insert)) {
 						return;
 					}
+					
+					if (increase(component, elem, objs, repeat, insert)){
+						return;
+					}
 
+					
 					if (isNull(component, elem, objs, repeat, insert)) {
 						return;
 					}
@@ -164,6 +169,28 @@ public class ListXmlInterpreter implements XmlInterpreter {
 				}
 			}
 		});
+	}
+
+	protected boolean increase(AbstractXmlComponent component, Element elem,
+			List<Object> objs, int repeat, int insert) throws Exception {
+		Integer from = XmlUtil.getIntAttr(elem, "from", elp,null);
+		Integer to = XmlUtil.getIntAttr(elem, "to", elp,null);
+		if (null != from && null != to && to > from){
+			String print = elem.getAttribute("print");
+			List list = new ArrayList<Object>(to - from + 1);
+			if (print.isEmpty()){
+				for(int i = from; i <= to; ++i){
+					list.add(i);
+				}
+			}else{
+				for(int i = from; i <= to; ++i){
+					list.add(print.replace(":i", "" + i));
+				}
+			}
+			repeatAddList(objs, list, repeat, insert);
+			return true;
+		}
+		return false;
 	}
 
 	private void replaceAdd(Element item, List<Object> objs, int repeat, int index,

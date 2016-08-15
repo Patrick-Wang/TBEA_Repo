@@ -35,20 +35,13 @@ public class XlAdwtjjgEntity extends AbstractReadWriteEntity implements Serializ
 	 */
 	private static final long serialVersionUID = 1L;
 
-	DWXX dw;
+	Integer dwid;
 	NameEntity dwmc;
 	NameEntity cpdl;
 	NameEntity cpxl;
 	String formul;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "dwid")
-	public DWXX getDw() {
-		return dw;
-	}
-	public void setDw(DWXX dw) {
-		this.dw = dw;
-	}
+
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dwmc")
@@ -83,5 +76,15 @@ public class XlAdwtjjgEntity extends AbstractReadWriteEntity implements Serializ
 	}
 	public void setFormul(String formul) {
 		this.formul = formul;
+	}
+
+
+	public Integer getDwid() {
+		return dwid;
+	}
+
+
+	public void setDwid(Integer dwid) {
+		this.dwid = dwid;
 	}
 }

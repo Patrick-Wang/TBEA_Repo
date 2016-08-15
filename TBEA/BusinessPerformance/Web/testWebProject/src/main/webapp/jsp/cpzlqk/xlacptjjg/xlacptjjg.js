@@ -38,12 +38,14 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../xlacptjjg/update.do", false);
+                this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
+                this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
             }
             ShowView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
@@ -56,6 +58,22 @@ var cpzlqk;
                 switch (e.id) {
                     case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
+                    case cpzlqk.Event.ZLFE_SAVE_COMMENT:
+                        var param = {
+                            condition: Util.Ajax.toUrlParam({
+                                url: this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId: this.mCompType,
+                                ydjd: this.mYdjdType
+                            }),
+                            comment: e.data
+                        };
+                        this.mCommentSubmit.get({
+                            data: JSON.stringify([[param.condition, param.comment]])
+                        }).then(function (jsonData) {
+                            Util.MessageBox.tip("保存成功", undefined, 1000);
+                        });
+                        break;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
@@ -73,6 +91,17 @@ var cpzlqk;
                 var _this = this;
                 this.mDt = date;
                 this.mCompType = compType;
+                this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: date,
+                        companyId: compType,
+                        ydjd: this.mYdjdType
+                    }) }).then(function (jsonData) {
+                    framework.router
+                        .fromEp(_this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
+                });
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
@@ -83,51 +112,122 @@ var cpzlqk;
                     _this.refresh();
                 });
             };
+            ShowView.prototype.toCtVal = function (val) {
+                var index = val.lastIndexOf('%');
+                if (index >= 0) {
+                    return val.substring(0, index);
+                }
+                return val == '--' ? 0 : val;
+            };
+            ShowView.prototype.splitLongString = function (val) {
+                var alphaCount = 0;
+                var tmp;
+                for (var i = 0; i < val.length; ++i) {
+                    tmp = val.substr(i, 1);
+                    if (tmp.match(/[0-9a-zA-Z\/]/g)) {
+                        ++alphaCount;
+                    }
+                    else {
+                        alphaCount += 2;
+                    }
+                    if (alphaCount >= 6) {
+                        return val.substr(0, i + 1) + "...";
+                    }
+                }
+                return val;
+            };
+            ShowView.prototype.findTotal = function (valShort) {
+                for (var i = 0; i < this.mData.tjjg.length; ++i) {
+                    if (this.mData.tjjg[i][1].indexOf(valShort.replace(/\.\.\./g, "")) >= 0) {
+                        return this.mData.tjjg[i][1];
+                    }
+                }
+                return valShort;
+            };
             ShowView.prototype.updateEchart = function () {
-                var title = "";
+                var _this = this;
+                var title = "按产品统计结果";
                 var legend = [];
                 var echart = this.option().ct;
                 var series = [];
-                for (var i in this.mData.waveItems) {
-                    legend.push(this.mData.waveItems[i].name);
+                var xData = [];
+                var tooltip = {
+                    trigger: 'axis'
+                };
+                var yAxis = [
+                    {
+                        type: 'value'
+                    }
+                ];
+                if (this.mYdjdType == cpzlqk.YDJDType.YD) {
+                    for (var i in this.mData.waveItems) {
+                        legend.push(this.mData.waveItems[i].name);
+                        series.push({
+                            name: this.mData.waveItems[i].name,
+                            type: 'line',
+                            smooth: true,
+                            // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data: this.mData.waveItems[i].data
+                        });
+                    }
+                    for (var i = 0; i < 12; ++i) {
+                        xData.push((i + 1) + "月");
+                    }
+                }
+                else {
+                    var dy = [];
+                    var qntq = [];
+                    for (var i = 0; i < this.mData.tjjg.length; ++i) {
+                        xData.push(this.splitLongString(this.mData.tjjg[i][1]));
+                        dy.push(this.toCtVal(this.mData.tjjg[i][4]));
+                        qntq.push(this.toCtVal(this.mData.tjjg[i][7]));
+                    }
+                    legend = ["当月", "去年同期"];
                     series.push({
-                        name: this.mData.waveItems[i].name,
-                        type: 'line',
+                        name: legend[0],
+                        type: 'bar',
                         smooth: true,
                         // itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                        data: this.mData.waveItems[i].data
+                        data: dy
                     });
-                }
-                var xData = [];
-                for (var i = 0; i < 12; ++i) {
-                    xData.push((i + 1) + "月");
+                    series.push({
+                        name: legend[1],
+                        type: 'bar',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: qntq
+                    });
+                    yAxis[0].axisLabel = {
+                        formatter: '{value} %'
+                    };
+                    tooltip.formatter = function (params) {
+                        var ret = _this.findTotal(params[0][1]);
+                        for (var i = 0; i < params.length; ++i) {
+                            ret += "<br/>" + params[i][0] + ' : ' + params[i][2] + "%";
+                        }
+                        return ret;
+                    };
                 }
                 var option = {
                     title: {
                         text: title
                     },
-                    tooltip: {
-                        trigger: 'axis'
-                    },
+                    tooltip: tooltip,
                     legend: {
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
                         {
                             type: 'category',
-                            boundaryGap: false,
+                            boundaryGap: this.mYdjdType == cpzlqk.YDJDType.YD ? false : true,
                             data: xData.length < 1 ? [0] : xData
                         }
                     ],
-                    yAxis: [
-                        {
-                            type: 'value'
-                        }
-                    ],
+                    yAxis: yAxis,
                     series: series
                 };
                 echarts.init(this.$(echart)[0]).setOption(option);
@@ -137,13 +237,8 @@ var cpzlqk;
                     return;
                 }
                 this.updateTable();
-                if (this.mYdjdType == cpzlqk.YDJDType.YD) {
-                    this.$(this.option().ctarea).show();
-                    this.updateEchart();
-                }
-                else {
-                    this.$(this.option().ctarea).hide();
-                }
+                this.$(this.option().ctarea).show();
+                this.updateEchart();
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
@@ -181,6 +276,6 @@ var cpzlqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(cpzlqk.ZlPluginView));
+        })(cpzlqk.ZlPluginView);
     })(xlacptjjg = cpzlqk.xlacptjjg || (cpzlqk.xlacptjjg = {}));
 })(cpzlqk || (cpzlqk = {}));

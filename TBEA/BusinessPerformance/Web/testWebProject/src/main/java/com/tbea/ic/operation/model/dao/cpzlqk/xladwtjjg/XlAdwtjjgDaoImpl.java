@@ -35,7 +35,7 @@ public class XlAdwtjjgDaoImpl extends AbstractReadWriteDaoImpl<XlAdwtjjgEntity> 
 
 	@Override
 	public List<XlAdwtjjgEntity> getByDw(Company company) {
-		 Query q = getEntityManager().createQuery("from XlAdwtjjgEntity where dw != null and dw.id = :dwid");
+		 Query q = getEntityManager().createQuery("from XlAdwtjjgEntity where dwid = :dwid");
 		 q.setParameter("dwid", company.getId());
 		return q.getResultList();
 	}

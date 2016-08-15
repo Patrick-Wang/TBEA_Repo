@@ -133,13 +133,9 @@
 	</controller>
 	
 	<controller id="xnyqyzbEntryJsp">
-		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-			<param type="int">29</param>
-		</call>
-
 		<response type="jsp" name="xnyzb/xnyzbEntry"> 
 			<map key="date" value="${calendar.current.format}"/>
-			<map map="${authCompMap}"/>
+			<map map="${authMgr[29]}"/>
 			<map key="updateUrl" value="xnyqyzbEntryUpdate"/>
 			<map key="submitUrl" value="submitXnyqyzb"/>
 			<map key="title" value="签约周报"/>

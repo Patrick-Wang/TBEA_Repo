@@ -6,13 +6,10 @@
 		</response>
 	</controller>
 	<controller id="authController">		
-		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-			<param type="int">${request.auth.asInt}</param>
-		</call>
 		<response type="jsp" name="${request.jsp.asString}"> 
 			<map key="date" value="${calendar.current.format}"/>
 			<map map="${request.parameters.asMap}"/>
-			<map map="${authCompMap}"/>
+			<map map="${authMgr[request.auth.asInt]}"/>
 		</response>
 	</controller>
 </components>

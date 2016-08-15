@@ -44,7 +44,6 @@ module cpzlqk {
             protected isSupported(compType:Util.CompanyType):boolean {
                 if (compType == Util.CompanyType.SBGS ||
                     compType == Util.CompanyType.HBGS ||
-                    compType == Util.CompanyType.TBGS ||
                     compType == Util.CompanyType.XBC){
                     return true;
                 }

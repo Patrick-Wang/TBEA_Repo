@@ -37,7 +37,8 @@ module cpzlqk {
             static ins = new ShowView();
             private mData:CpzlqkResp;
             private mAjax:Util.Ajax = new Util.Ajax("../byqacptjjg/update.do", false);
-            private mDateSelector:Util.DateSelector;
+            private mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
+            private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
 
@@ -47,12 +48,28 @@ module cpzlqk {
 
             protected isSupported(compType:Util.CompanyType):boolean {
                 return compType == Util.CompanyType.SBGS || compType == Util.CompanyType.HBGS
-                    ||compType == Util.CompanyType.XBC || compType == Util.CompanyType.TBGS;
+                    ||compType == Util.CompanyType.XBC || compType == Util.CompanyType.BYQCY;
             }
             onEvent(e:framework.route.Event):any {
                 switch (e.id) {
                     case Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
+                    case Event.ZLFE_SAVE_COMMENT:
+                        let param = {
+                            condition:Util.Ajax.toUrlParam({
+                                url : this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId:this.mCompType,
+                                ydjd:this.mYdjdType
+                            }),
+                            comment:e.data
+                        }
+                        this.mCommentSubmit.get({
+                            data : JSON.stringify([[param.condition, param.comment]])
+                        }).then((jsonData:any)=>{
+                            Util.MessageBox.tip("保存成功", undefined);
+                        });
+                        break;
                 }
                 return super.onEvent(e);
             }
@@ -72,6 +89,17 @@ module cpzlqk {
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
                 this.mCompType = compType;
+                this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
+                    url : this.mAjax.baseUrl(),
+                    date: date,
+                    companyId:compType,
+                    ydjd:this.mYdjdType
+                })}).then((jsonData:any)=>{
+                    framework.router
+                        .fromEp(this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
+                });
                 this.mAjax.get({
                         date: date,
                         companyId:compType,
@@ -83,35 +111,94 @@ module cpzlqk {
                     });
             }
 
+            private toCtVal(val:string){
+                let index = val.lastIndexOf('%');
+                if (index >= 0){
+                    return val.substring(0, index);
+                }
+                return val == '--' ? 0 : val;
+            }
+
+
             private updateEchart():void {
                 let title = "按产品统计结果";
                 let legend:Array<string> = [];
                 let echart = this.option().ct;
 
                 let series = [];
-                for (let i in this.mData.waveItems){
-                    legend.push(this.mData.waveItems[i].name);
+                var xData:string[] = [];
+                let tooltip : any = {
+                    trigger: 'axis',
+                    formatter : (params) => {
+                        let ret = params[0][1];
+                        for (let i = 0; i < params.length; ++i) {
+                            ret += "<br/>" + params[i][0] + ' : ' + params[i][2] + "%";
+                        }
+                        return ret;
+                    }
+                };
+                let yAxis : any = [
+                    {
+                        type: 'value',
+                        axisLabel : {
+                            formatter: '{value} %'
+                        }
+                    }
+                ];
+                if (this.mYdjdType == YDJDType.YD){
+                    for (let i in this.mData.waveItems){
+                        legend.push(this.mData.waveItems[i].name);
+
+                        let data = [];
+                        for (let j = 0; j < this.mData.waveItems[i].data.length; ++j){
+                            data.push((parseFloat("" + this.mData.waveItems[i].data[j]) * 100).toFixed(1));
+                        }
+
+                        series.push({
+                            name: this.mData.waveItems[i].name,
+                            type: 'line',
+                            smooth: true,
+                            // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data: data
+                        });
+                    }
+                    for (let i = 0; i < 12; ++i){
+                        xData.push((i + 1) + "月");
+                    }
+                }else{
+                    let dy = [];
+                    let qntq = [];
+                    for (let i = 0; i < this.mData.tjjg.length; ++i){
+                        if (this.mData.tjjg[i][1].replace(/\s/g, "") == "合计"){
+                            xData.push(this.mData.tjjg[i][0]);
+                            dy.push(this.toCtVal(this.mData.tjjg[i][4]));
+                            qntq.push(this.toCtVal(this.mData.tjjg[i][7]));
+                        }
+
+                    }
+                    legend = ["当月", "去年同期"];
                     series.push({
-                        name: this.mData.waveItems[i].name,
-                        type: 'line',
+                        name: legend[0],
+                        type: 'bar',
                         smooth: true,
                         // itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                        data: this.mData.waveItems[i].data
+                        data: dy
+                    });
+                    series.push({
+                        name: legend[1],
+                        type: 'bar',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: qntq
                     });
                 }
 
-                var xData:string[] = [];
-                for (let i = 0; i < 12; ++i){
-                    xData.push((i + 1) + "月");
-                }
 
                 var option = {
                     title: {
                         text: title
                     },
-                    tooltip: {
-                        trigger: 'axis'
-                    },
+                    tooltip: tooltip,
                     legend: {
                         data: legend
                     },
@@ -122,15 +209,11 @@ module cpzlqk {
                     xAxis: [
                         {
                             type: 'category',
-                            boundaryGap: false,
+                            boundaryGap: this.mYdjdType == YDJDType.YD ? false : true,
                             data: xData.length < 1 ? [0] : xData
                         }
                     ],
-                    yAxis: [
-                        {
-                            type: 'value'
-                        }
-                    ],
+                    yAxis: yAxis,
                     series: series
                 };
 
@@ -144,12 +227,8 @@ module cpzlqk {
                 }
                 this.updateTable();
 
-                if (this.mYdjdType == YDJDType.YD){
-                    this.$(this.option().ctarea).show();
-                    this.updateEchart();
-                }else{
-                    this.$(this.option().ctarea).hide();
-                }
+                this.$(this.option().ctarea).show();
+                this.updateEchart();
             }
 
             public init(opt:Option):void {

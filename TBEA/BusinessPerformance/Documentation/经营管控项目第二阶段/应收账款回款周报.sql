@@ -8,12 +8,13 @@ CREATE TABLE [dbo].[yszkhkzb](
 	[ksrq] [date] NOT NULL,
 	[jzrq] [date] NOT NULL,
 	[xmgs] [int] NOT NULL,
+	[xmbh] [varchar](100),
 	[xmmc] [varchar](100),
 	[khmc] [varchar](50),
 	[htje] [numeric](18, 4),
 	[yszkje] [numeric](18, 4),
 	[yqkje] [numeric](18, 4),
-	[yqksj] [int],
+	[yqksj] [varchar](50),
 	[zt] [int] NOT NULL
 PRIMARY KEY CLUSTERED 
 (

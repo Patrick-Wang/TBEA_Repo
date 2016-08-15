@@ -20,6 +20,7 @@ module cpzlqk {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
 					Node.create({name : "单位", align : TextAlign.Center}),
+                    Node.create({name : "发生日期", align : TextAlign.Center}),
                     Node.create({name : "产品类型", align : TextAlign.Center}),
                     Node.create({name : "生产号", align : TextAlign.Center}),
                     Node.create({name : "产品型号", align : TextAlign.Center}),
@@ -40,21 +41,21 @@ module cpzlqk {
             private mDateSelector:Util.DateSelector;
             private mDt: string;
             private mCompType:Util.CompanyType;
-            private mBhgmxType : ByqBhgType;
+            private mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
+            private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
             getId():number {
                 return plugin.byqcpycssbhgwtmx;
             }
             protected isSupported(compType:Util.CompanyType):boolean {
                 return compType == Util.CompanyType.SBGS || compType == Util.CompanyType.HBGS
-                    ||compType == Util.CompanyType.XBC || compType == Util.CompanyType.TBGS;
+                    ||compType == Util.CompanyType.XBC || compType == Util.CompanyType.BYQCY;
             }
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
                 return "../byqcpycssbhgwtmx/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId:compType,
                         ydjd:this.mYdjdType,
-                        bhgType:this.mBhgmxType,
-                        all: this.mCompSize > 1
+                        all: this.mCompType == Util.CompanyType.BYQCY
                     });
             }
 
@@ -65,12 +66,22 @@ module cpzlqk {
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
                 this.mCompType = compType;
+                this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
+                    url : this.mAjax.baseUrl(),
+                    date: date,
+                    companyId:compType,
+                    ydjd:this.mYdjdType
+                })}).then((jsonData:any)=>{
+                    framework.router
+                        .fromEp(this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
+                });
                 this.mAjax.get({
                         date: date,
                         companyId:compType,
                         ydjd:this.mYdjdType,
-                        bhgType:this.mBhgmxType,
-                        all: this.mCompSize > 1
+                        all: this.mCompType == Util.CompanyType.BYQCY
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
@@ -87,25 +98,32 @@ module cpzlqk {
             }
 
             onEvent(e: framework.route.Event): any {
-                if (e.road != undefined) {
-                    if (plugin.byqybysqfyswtmx == e.road[e.road.length - 1]){
-                        this.mBhgmxType = ByqBhgType.YBYSQFJYS;
-                    }else{
-                        this.mBhgmxType = ByqBhgType.PBCP;
-                    }
+                switch (e.id){
+                    case Event.ZLFE_SAVE_COMMENT:
+                        let param = {
+                            condition:Util.Ajax.toUrlParam({
+                                url : this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId:this.mCompType,
+                                ydjd:this.mYdjdType
+                            }),
+                            comment:e.data
+                        }
+                        this.mCommentSubmit.get({
+                            data : JSON.stringify([[param.condition, param.comment]])
+                        }).then((jsonData:any)=>{
+                            Util.MessageBox.tip("保存成功", undefined, 1000);
+                        });
+                        break;
                 }
                 return super.onEvent(e);
             }
 
             public init(opt:Option):void {
                 framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.byqybysqfyswtmx, this.getId()))
+                    .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "110kV及以上产品一次送试不合格问题明细");
-                framework.router
-                    .fromEp(new framework.basic.EndpointProxy(plugin.byqybyspbcpwtmx, this.getId()))
-                    .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "配变产品一次送试不合格明细");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产品一次送试不合格问题明细");
             }
 
 			private getMonth():number{

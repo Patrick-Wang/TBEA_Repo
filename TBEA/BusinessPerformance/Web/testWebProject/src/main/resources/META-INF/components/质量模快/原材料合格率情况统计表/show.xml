@@ -1,127 +1,96 @@
 <components>
+ <service id="servYclhglqktjHj" transaction="transactionManager">
+  <sql id="hjdyz" order="ids" by="0" export="true">select
+ CLDL.id,
+ sum(YCL.hgs) as hgs,
+ sum(YCL.zs) as zs,
+ (sum(YCL.zs) * 1.0 - sum(YCL.hgs)) / sum(YCL.zs) as hgl
+from
+ zl_yclhglqk_cldl CLDL,
+ zl_yclhglqk YCL
+where
+ YCL.clid=CLDL.id and
+ CLDL.cy=${cy} and
+ YCL.nf=${cal.year} and
+ YCL.yf=${cal.month} and
+ YCL.dwid in ${companies}
+group by
+ CLDL.id</sql>
+  <sql id="hjljz" order="ids" by="0" export="true">select
+ CLDL.id,
+ sum(YCL.hgs) as newHgs,
+ sum(YCL.zs) as newZs,
+ (sum(YCL.zs) * 1.0 - sum(YCL.hgs)) / sum(YCL.zs) as hgl
+from
+ zl_yclhglqk_cldl CLDL,
+ zl_yclhglqk YCL
+where
+ YCL.clid=CLDL.id and
+ CLDL.cy=${cy} and
+ dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
+ dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
+ YCL.dwid in ${companies}
+group by
+ CLDL.id</sql>
+ </service>
+ <service id="servYclhglqktj" transaction="transactionManager">
+  <sql id="dyz" order="ids" by="0" export="true">select
+ CLDL.id,
+ YCL.hgs,
+ YCL.zs,
+ (YCL.zs * 1.0 - YCL.hgs) / YCL.zs as hgl
+from
+ zl_yclhglqk_cldl CLDL,
+ zl_yclhglqk YCL
+where
+ YCL.clid=CLDL.id and
+ CLDL.cy=${cy} and
+ YCL.nf=${cal.year} and
+ YCL.yf=${cal.month} and
+ YCL.dwid=${compId}</sql>
+  <sql id="ljz" order="ids" by="0" export="true">select
+ CLDL.id,
+ sum(YCL.hgs) as newHgs,
+ sum(YCL.zs) as newZs,
+ (sum(YCL.zs) * 1.0 - sum(YCL.hgs)) / sum(YCL.zs) as hgl
+from
+ zl_yclhglqk_cldl CLDL,
+ zl_yclhglqk YCL
+where
+ YCL.clid=CLDL.id and
+ CLDL.cy=${cy} and
+ dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
+ dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
+ YCL.dwid=${compId}
+group by
+ CLDL.id</sql>
+ </service>
  <service id="servByqzyYclhglqktj" transaction="transactionManager">
+  <context key="cy" value="0"/>
   <sql id="clids">select
  CLDL.id,
  CLDL.name,
  CLDL.dw
 from
- zl_yclhglqk_cldl CLDL</sql>
+ zl_yclhglqk_cldl CLDL
+where
+ CLDL.cy=${cy}</sql>
   <list id="ids" type="int" sql="clids" value="0"/>
-  <sql id="sbdyz" order="ids" by="0">select
- CLDL.id,
- YCL.hgs,
- YCL.zs,
- (YCL.zs - YCL.hgs) / YCL.zs as hgl
-from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
-where
- YCL.clid=CLDL.id and
- YCL.nf=${cal.year} and
- YCL.yf=${cal.month} and
- YCL.dwid=1</sql>
-  <sql id="sbljz" order="ids" by="0">select
- CLDL.id,
- sum(YCL.hgs) as newHgs,
- sum(YCL.zs) as newZs,
- (sum(YCL.zs) - sum(YCL.hgs)) / sum(YCL.zs) as hgl
-from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
-where
- YCL.clid=CLDL.id and
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid=1
-group by
- CLDL.id</sql>
-  <sql id="hbdyz" order="ids" by="0">select
- CLDL.id,
- YCL.hgs,
- YCL.zs,
- (YCL.zs - YCL.hgs) / YCL.zs as hgl
-from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
-where
- YCL.clid=CLDL.id and
- YCL.nf=${cal.year} and
- YCL.yf=${cal.month} and
- YCL.dwid=2</sql>
-  <sql id="hbljz" order="ids" by="0">select
- CLDL.id,
- sum(YCL.hgs) as newHgs,
- sum(YCL.zs) as newZs,
- (sum(YCL.zs) - sum(YCL.hgs)) / sum(YCL.zs) as hgl
-from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
-where
- YCL.clid=CLDL.id and
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid=2
-group by
- CLDL.id</sql>
-  <sql id="xbdyz" order="ids" by="0">select
- CLDL.id,
- YCL.hgs,
- YCL.zs,
- (YCL.zs - YCL.hgs) / YCL.zs as hgl
-from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
-where
- YCL.clid=CLDL.id and
- YCL.nf=${cal.year} and
- YCL.yf=${cal.month} and
- YCL.dwid=3</sql>
-  <sql id="xbljz" order="ids" by="0">select
- CLDL.id,
- sum(YCL.hgs) as newHgs,
- sum(YCL.zs) as newZs,
- (sum(YCL.zs) - sum(YCL.hgs)) / sum(YCL.zs) as hgl
-from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
-where
- YCL.clid=CLDL.id and
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid=3
-group by
- CLDL.id</sql>
-  <sql id="hjdyz" order="ids" by="0">select
- CLDL.id,
- sum(YCL.hgs) as hgs,
- sum(YCL.zs) as zs,
- (sum(YCL.zs) - sum(YCL.hgs)) / sum(YCL.zs) as hgl
-from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
-where
- YCL.clid=CLDL.id and
- YCL.nf=${cal.year} and
- YCL.yf=${cal.month} and
- YCL.dwid in (1,2,3)
-group by
- CLDL.id</sql>
-  <sql id="hjljz" order="ids" by="0">select
- CLDL.id,
- sum(YCL.hgs) as newHgs,
- sum(YCL.zs) as newZs,
- (sum(YCL.zs) - sum(YCL.hgs)) / sum(YCL.zs) as hgl
-from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
-where
- YCL.clid=CLDL.id and
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid in (1,2,3)
-group by
- CLDL.id</sql>
   <list id="dyzOrdered" type="int" sql="dyz" value="0"/>
+  <list id="companies" export="true" type="int">1,2,3</list>
+  <context key="compId" value="${companies[0]}"/>
+  <callservice id="servYclhglqktj"/>
+  <context key="sbdyz" value="${dyz}"/>
+  <context key="sbljz" value="${ljz}"/>
+  <context key="compId" value="${companies[1]}"/>
+  <callservice id="servYclhglqktj"/>
+  <context key="hbdyz" value="${dyz}"/>
+  <context key="hbljz" value="${ljz}"/>
+  <context key="compId" value="${companies[2]}"/>
+  <callservice id="servYclhglqktj"/>
+  <context key="xbdyz" value="${dyz}"/>
+  <context key="xbljz" value="${ljz}"/>
+  <callservice id="servYclhglqktjHj"/>
   <table id="result" rowIds="ids">
    <list type="string" sql="clids" value="1"/>
    <list type="string" sql="clids" value="2"/>
@@ -152,42 +121,74 @@ group by
   </table>
   <context key="result" value="${result}"/>
  </service>
- <service id="servByqjydwzyYclhglqktj" transaction="transactionManager">
+ <service id="servXlcyYclhglqktj" transaction="transactionManager">
+  <context key="cy" value="1"/>
   <sql id="clids">select
  CLDL.id,
  CLDL.name,
  CLDL.dw
 from
- zl_yclhglqk_cldl CLDL</sql>
+ zl_yclhglqk_cldl CLDL
+where
+ CLDL.cy = ${cy}</sql>
   <list id="ids" type="int" sql="clids" value="0"/>
-  <sql id="dyz" order="ids" by="0">select
+  <list id="dyzOrdered" type="int" sql="dyz" value="0"/>
+  <list id="companies" export="true" type="int">4,5,6</list>
+  <context key="compId" value="${companies[0]}"/>
+  <callservice id="servYclhglqktj"/>
+  <context key="sbdyz" value="${dyz}"/>
+  <context key="sbljz" value="${ljz}"/>
+  <context key="compId" value="${companies[1]}"/>
+  <callservice id="servYclhglqktj"/>
+  <context key="hbdyz" value="${dyz}"/>
+  <context key="hbljz" value="${ljz}"/>
+  <context key="compId" value="${companies[2]}"/>
+  <callservice id="servYclhglqktj"/>
+  <context key="xbdyz" value="${dyz}"/>
+  <context key="xbljz" value="${ljz}"/>
+  <callservice id="servYclhglqktjHj"/>
+  <table id="result" rowIds="ids">
+   <list type="string" sql="clids" value="1"/>
+   <list type="string" sql="clids" value="2"/>
+   <list type="int" sql="sbdyz" value="1"/>
+   <list type="int" sql="sbdyz" value="2"/>
+   <list type="double" sql="sbdyz" value="3"/>
+   <list type="int" sql="sbljz" value="1"/>
+   <list type="int" sql="sbljz" value="2"/>
+   <list type="double" sql="sbljz" value="3"/>
+   <list type="int" sql="hbdyz" value="1"/>
+   <list type="int" sql="hbdyz" value="2"/>
+   <list type="double" sql="hbdyz" value="3"/>
+   <list type="int" sql="hbljz" value="1"/>
+   <list type="int" sql="hbljz" value="2"/>
+   <list type="double" sql="hbljz" value="3"/>
+   <list type="int" sql="xbdyz" value="1"/>
+   <list type="int" sql="xbdyz" value="2"/>
+   <list type="double" sql="xbdyz" value="3"/>
+   <list type="int" sql="xbljz" value="1"/>
+   <list type="int" sql="xbljz" value="2"/>
+   <list type="double" sql="xbljz" value="3"/>
+   <list type="int" sql="hjdyz" value="1"/>
+   <list type="int" sql="hjdyz" value="2"/>
+   <list type="double" sql="hjdyz" value="3"/>
+   <list type="int" sql="hjljz" value="1"/>
+   <list type="int" sql="hjljz" value="2"/>
+   <list type="double" sql="hjljz" value="3"/>
+  </table>
+  <context key="result" value="${result}"/>
+ </service>
+ <service id="servJydwzyYclhglqktj" transaction="transactionManager">
+  <context key="cy" value="${[1,2,3].indexOf(compId) &gt;= 0 ? 0 : 1}"/>
+  <callservice id="servYclhglqktj"/>
+  <sql id="clids">select
  CLDL.id,
- YCL.hgs,
- YCL.zs,
- (YCL.zs - YCL.hgs) / YCL.zs as hgl
+ CLDL.name,
+ CLDL.dw
 from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
+ zl_yclhglqk_cldl CLDL
 where
- YCL.clid=CLDL.id and
- YCL.nf=${cal.date.year} and
- YCL.yf=${cal.date.month} and
- YCL.dwid=${compId}</sql>
-  <sql id="ljz" order="ids" by="0">select
- CLDL.id,
- sum(YCL.hgs) as newHgs,
- sum(YCL.zs) as newZs,
- (sum(YCL.zs) - sum(YCL.hgs)) / sum(YCL.zs) as hgl
-from
- zl_yclhglqk_cldl CLDL,
- zl_yclhglqk YCL
-where
- YCL.clid=CLDL.id and
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
- dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid=${compId}
-group by
- CLDL.id</sql>
+ CLDL.cy=${cy}</sql>
+  <list id="ids" type="int" sql="clids" value="0"/>
   <list id="dyzOrdered" type="int" sql="dyz" value="0"/>
   <table id="result" rowIds="ids">
    <list type="string" sql="clids" value="1"/>
@@ -201,7 +202,7 @@ group by
   </table>
   <context key="result" value="${result}"/>
  </service>
- <controller id="byqjydwzyYclhglqktjDataFmtter">
+ <controller id="jydwYclhglqktjDataFmtter">
   <formatter id="data">
    <EmptyFormatter>
     <DefaultMatcher cols="0,1"/>
@@ -212,7 +213,7 @@ group by
    <NumberFormatter reservedCount="0"/>
   </formatter>
  </controller>
- <controller id="byqzyYclhglqktjDataFmtter">
+ <controller id="yclhglqktjHjDataFmtter">
   <formatter id="data">
    <EmptyFormatter>
     <DefaultMatcher cols="0,1"/>
@@ -223,10 +224,17 @@ group by
    <NumberFormatter reservedCount="0"/>
   </formatter>
  </controller>
- <controller id="byqjydwzyYclhglqktjUpdate">
+ <controller id="clrYclhglqkParams">
   <context key="cal" value="${request.date.asCalendar}"/>
-  <if test="${[50000,50001].indexOf(orgIdByType.virtualCYOrg[request.item.asInt]) &gt;= 0}">
-   <callcontroller id="byqzyYclhglqktjDataFmtter" inline="true"/>
+  <context key="compId" value="${orgs.virtualCYOrg.ids[request.item.asInt]}"/>
+  <context key="isJydw" value="${[50000,50001].indexOf(compId) &lt; 0}"/>
+  <context key="isByqcy" value="${50000 == compId}"/>
+  <context key="isXlcy" value="${50001 == compId}"/>
+ </controller>
+ <controller id="yclhglqktjUpdate">
+  <callcontroller id="clrYclhglqkParams"/>
+  <if test="${isByqcy}">
+   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
    <callservice id="servByqzyYclhglqktj"/>
    <formatterServer id="serv" table="${result.matrixNoIds}">
     <formatter ref="data"/>
@@ -376,10 +384,160 @@ group by
     <data>${serv.result}</data>
    </response>
   </if>
-  <if test="${[50000,50001].indexOf(orgIdByType.virtualCYOrg[request.item.asInt]) &lt; 0}">
-   <context key="compId" value="${request.item.asInt}"/>
-   <callservice id="servByqjydwzyYclhglqktj"/>
-   <callcontroller id="byqjydwzyYclhglqktjDataFmtter" inline="true"/>
+  <if test="${isXlcy}">
+   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
+   <callservice id="servXlcyYclhglqktj"/>
+   <formatterServer id="serv" table="${result.matrixNoIds}">
+    <formatter ref="data"/>
+   </formatterServer>
+   <response type="json">
+    <header type="array">
+     <item>
+      <name>材料大类</name>
+     </item>
+     <item>
+      <name>单位</name>
+     </item>
+     <item>
+      <name>鲁缆</name>
+      <sub type="array">
+       <item>
+        <name>当月</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+       <item>
+        <name>年度累计</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>新缆</name>
+      <sub type="array">
+       <item>
+        <name>当月</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+       <item>
+        <name>年度累计</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>德缆</name>
+      <sub type="array">
+       <item>
+        <name>当月</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+       <item>
+        <name>年度累计</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>合计</name>
+      <sub type="array">
+       <item>
+        <name>当月</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+       <item>
+        <name>年度累计</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+      </sub>
+     </item>
+    </header>
+    <mergeTitle type="array">true</mergeTitle>
+    <data>${serv.result}</data>
+   </response>
+  </if>
+  <if test="${isJydw)}">
+   <callservice id="servJydwzyYclhglqktj"/>
+   <callcontroller id="jydwYclhglqktjDataFmtter" inline="true"/>
    <formatterServer id="serv" table="${result.matrixNoIds}">
     <formatter ref="data"/>
    </formatterServer>
@@ -426,10 +584,11 @@ group by
   </if>
  </controller>
  <controller id="yclhglqktjExport">
+  <callcontroller id="clrYclhglqkParams"/>
   <context key="cal" value="${request.date.asCalendar}"/>
   <ExcelTemplate id="excelTemplate" sheet="原材料合格率"/>
-  <if test="${[50000,50001].indexOf(request.item.asInt) &lt; 0}">
-   <callcontroller id="byqzyYclhglqktjDataFmtter" inline="true"/>
+  <if test="${isByqcy}">
+   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
    <callservice id="servByqzyYclhglqktj"/>
    <list id="title" type="string">材料大类,单位,
 沈变,沈变,沈变,沈变,沈变,沈变,
@@ -473,10 +632,54 @@ group by
     </ExcelOffsetFormatter>
    </formatter>
   </if>
-  <if test="${[50000,50001].indexOf(request.item.asInt) &gt;= 0}">
-   <context key="compId" value="${request.item.asInt}"/>
-   <callservice id="servByqjydwzyYclhglqktj"/>
-   <callcontroller id="byqjydwzyYclhglqktjDataFmtter" inline="true"/>
+  <if test="${isXlcy}">
+   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
+   <callservice id="servXlcyYclhglqktj"/>
+   <list id="title" type="string">材料大类,单位,
+鲁缆,鲁缆,鲁缆,鲁缆,鲁缆,鲁缆,
+新缆,新缆,新缆,新缆,新缆,新缆,
+德缆,德缆,德缆,德缆,德缆,德缆,
+合计,合计,合计,合计,合计,合计
+		</list>
+   <list id="title1" type="string">材料大类,单位,
+当月,当月,当月,年度累计,年度累计,年度累计,
+当月,当月,当月,年度累计,年度累计,年度累计,
+当月,当月,当月,年度累计,年度累计,年度累计,
+当月,当月,当月,年度累计,年度累计,年度累计
+		</list>
+   <list id="title2" type="string">材料大类,单位,
+合格数,总数,合格率％,合格数,总数,合格率％,
+合格数,总数,合格率％,合格数,总数,合格率％,
+合格数,总数,合格率％,合格数,总数,合格率％,
+合格数,总数,合格率％,合格数,总数,合格率％</list>
+   <formatter id="excel">
+    <ExcelTitleFilter>
+     <ExcelTemplate ref="excelTemplate"/>
+     <Offset row="0" col="0"/>
+     <titles>
+      <title ref="title"/>
+      <title ref="title1"/>
+      <title ref="title2"/>
+     </titles>
+    </ExcelTitleFilter>
+    <ExcelMergeFormatter>
+     <ExcelTemplate ref="excelTemplate"/>
+     <MergeRegion x="0" y="0" width="${title.size}" height="3"/>
+    </ExcelMergeFormatter>
+    <ExcelHeaderCenterFormatter>
+     <DefaultMatcher cols="0, 1"/>
+     <ExcelTemplate ref="excelTemplate"/>
+     <Offset row="3" col="0"/>
+    </ExcelHeaderCenterFormatter>
+    <ExcelOffsetFormatter>
+     <ExcelTemplate ref="excelTemplate"/>
+     <Offset row="3" col="0"/>
+    </ExcelOffsetFormatter>
+   </formatter>
+  </if>
+  <if test="${isJydw}">
+   <callservice id="servJydwzyYclhglqktj"/>
+   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
    <list id="title" type="string">材料大类,单位,当月,当月,当月,年度累计,年度累计,年度累计
 		</list>
    <list id="title1" type="string">材料大类,单位,合格数,总数,合格率％,合格数,总数,合格率％
@@ -511,14 +714,90 @@ group by
   </formatterServer>
   <response type="excel" ref="excelTemplate" name="${cal.format}原材料合格率.xls" serv="serv"/>
  </controller>
- <controller id="yclhglqktj">
-  <response type="jsp" name="framework/templates/dateReport/show">
-   <map key="year" value="${calendar.current.year}"/>
-   <map key="month" value="${calendar.current.month}"/>
-   <map key="updateUrl" value="byqjydwzyYclhglqktjUpdate"/>
-   <map key="exportUrl" value="byqjydwzyYclhglqktjExport"/>
-   <map key="title" value="原材料合格率"/>
-   <map map="${authMgr[43]}"/>
+ <controller id="yclhglqktjChart">
+  <context key="cy" value="${request.chart.asInt}"/>
+  <callcontroller id="clrYclhglqkParams"/>
+  <callservice id="servYclhglqktjChart"/>
+  <response type="json">
+   <yNames>[&quot;合格数&quot;, &quot;总数&quot;]</yNames>
+   <data type="jarray">[${hgs.asJson}, ${zs.asJson}]</data>
+   <xNames type="jarray">${yfname}</xNames>
   </response>
  </controller>
+ <controller id="yclhglqktj">
+  <callservice id="servYclhglqkCldlItems"/>
+  <response type="jsp" name="framework/templates/dateChartReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="yclhglqktjUpdate"/>
+   <map key="exportUrl" value="yclhglqktjExport"/>
+   <map key="title" value="原材料合格率"/>
+   <map map="${authMgr[43]}"/>
+   <map key="itemChart">[
+{&quot;item&quot;:${orgs.virtualCYOrg.types[1]},&quot;chart&quot;:0},
+{&quot;item&quot;:${orgs.virtualCYOrg.types[2]},&quot;chart&quot;:0},
+{&quot;item&quot;:${orgs.virtualCYOrg.types[3]},&quot;chart&quot;:0},
+{&quot;item&quot;:${orgs.virtualCYOrg.types[50000]},&quot;chart&quot;:0},
+{&quot;item&quot;:${orgs.virtualCYOrg.types[4]},&quot;chart&quot;:1},
+{&quot;item&quot;:${orgs.virtualCYOrg.types[5]},&quot;chart&quot;:1},
+{&quot;item&quot;:${orgs.virtualCYOrg.types[6]},&quot;chart&quot;:1},
+{&quot;item&quot;:${orgs.virtualCYOrg.types[50001]},&quot;chart&quot;:1}
+]</map>
+   <map key="chartNodes">[
+{&quot;chart&quot;:0,&quot;nodes&quot;:${dataNodeFactory[byqClid][byqName].asJson}},
+{&quot;chart&quot;:1,&quot;nodes&quot;:${dataNodeFactory[xlClid][xlName].asJson}}
+]</map>
+   <map key="chartUrl" value="yclhglqktjChart"/>
+  </response>
+ </controller>
+ <service id="servYclhglqkCldlItems" transaction="transactionManager">
+  <sql id="byqClids">select
+ CLDL.id,
+ CLDL.name,
+ CLDL.dw
+from
+ zl_yclhglqk_cldl CLDL
+where
+ CLDL.cy=0</sql>
+  <sql id="xlClids">select
+ CLDL.id,
+ CLDL.name,
+ CLDL.dw
+from
+ zl_yclhglqk_cldl CLDL
+where
+ CLDL.cy=1</sql>
+  <list id="byqClid" type="int" sql="byqClids" value="0" export="true"/>
+  <list id="byqName" type="string" sql="byqClids" value="1" export="true"/>
+  <list id="xlClid" type="int" sql="xlClids" value="0" export="true"/>
+  <list id="xlName" type="string" sql="xlClids" value="1" export="true"/>
+ </service>
+ <service id="servYclhglqktjChart" transaction="transactionManager">
+  <list id="yf" type="string">
+   <item from="1" to="${cal.month}"/>
+  </list>
+  <list id="yfname" type="string" export="true">
+   <item from="1" to="${cal.month}" print=":i月"/>
+  </list>
+  <sql id="values" export="true" order="yf" by="0" colcount="3">select
+ yf,
+ sum(YCL.hgs) as hg,
+ sum(YCL.zs) as zs
+from
+ zl_yclhglqk_cldl CLDL,
+ zl_yclhglqk YCL
+where
+ YCL.clid=CLDL.id and
+ CLDL.cy=${cy} and
+ dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
+ dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
+ YCL.dwid=${compId}
+group by
+ YCL.nf,
+ YCL.yf
+order by
+ YCL.yf</sql>
+  <list id="hgs" type="int" export="true" sql="values" value="1"/>
+  <list id="zs" type="int" export="true" sql="values" value="2"/>
+ </service>
 </components>

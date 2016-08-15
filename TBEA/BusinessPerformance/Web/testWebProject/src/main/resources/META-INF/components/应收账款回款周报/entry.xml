@@ -1,34 +1,32 @@
-﻿<components>
-	<service id="servEntryYszkhkzb" transaction="transactionManager">
-		<merge data="${data}" id="0" table="yszkhkzb">
-			<set>
-				<ksrq type="date" ref="0"/>
-				<jzrq type="date" ref="1"/>
-				<xmgs type="int" value="${compId}"/>
-				<xmmc type="string" ref="2"/>
-				<khmc type="string" ref="3"/>
-				<htje type="double" ref="4"/>
-				<yszkje type="double" ref="5"/>
-				<yqkje type="double" ref="6"/>
-				<yqksj type="int" ref="7"/>
-				<zt type="int" value="${zt}"/>
-			</set>
-		</merge>
-	</service>
-	
-	<controller id="yszkhkzbImport">
-		<context key="data" value="${request.upfile.asExcel}"></context>
-		<context key="zt" value="${2}"></context>
-		<callservice id="servCompTypeToId"/>
-		<callservice id="servEntryYszkhkzb"/>
-		<response type="json">
-			<errorCode>0</errorCode>
-			<message>OK</message>
-		</response>
-	</controller>
-
-	
-<!-- 	<controller id="yszkhkzbEntryUpdate">
+<components>
+ <service id="servEntryYszkhkzb" transaction="transactionManager">
+  <merge data="${data}" id="0" table="yszkhkzb">
+   <set>
+    <ksrq type="date" ref="0"/>
+    <jzrq type="date" ref="1"/>
+    <xmgs type="int" value="${compId}"/>
+    <xmbh type="string" ref="2"/>
+    <xmmc type="string" ref="3"/>
+    <khmc type="string" ref="4"/>
+    <htje type="double" ref="5"/>
+    <yszkje type="double" ref="6"/>
+    <yqkje type="double" ref="7"/>
+    <yqksj type="string" ref="8"/>
+    <zt type="int" value="${zt}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="yszkhkzbImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="zt" value="${2}"/>
+  <callservice id="servCompTypeToId"/>
+  <callservice id="servEntryYszkhkzb"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <!-- 	<controller id="yszkhkzbEntryUpdate">
 		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
 		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
 		<callservice id="servCompTypeToId"/>
@@ -83,15 +81,11 @@
 			<data>${serv.result}</data>
 		</response>
 	</controller> -->
-	
-	<controller id="yszkhkzbImportJsp">
-		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-			<param type="int">31</param>
-		</call>
-		<response type="jsp" name="components/import_data"> 
-			<map map="${authCompMap}"/>
-			<map key="importUrl" value="yszkhkzbImport"/>
-			<map key="title" value="应收账款回款周报"/>
-		</response>
-	</controller>
+ <controller id="yszkhkzbImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map map="${authMgr[31]}"/>
+   <map key="importUrl" value="yszkhkzbImport"/>
+   <map key="title" value="应收账款回款周报"/>
+  </response>
+ </controller>
 </components>

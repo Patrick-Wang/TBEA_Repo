@@ -12,11 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.controller.servlet.cpzlqk.ByqBhgType;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqbhgwtmx.ByqBhgwtmxDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.byqbhgwtmx.ByqBhgwtmxDaoImpl;
@@ -39,7 +40,7 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 
 	public final static String NAME = "ByqcpycssbhgxxfbServiceImpl";
 
-	private List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType, List<Object[]> entities){
+	private List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType, List<Object[]> entities, List<Object[]> hjEntities){
 		List<List<String>> result = new ArrayList<List<String>>();
 		if (!entities.isEmpty()) {
 
@@ -50,26 +51,40 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 			}
 
 			List<Integer> hj = Util.resize(new ArrayList<Integer>(),
-					bhglbs.size());
+					bhglbs.size() + 1);
 
 			Map<Integer, Integer> dwCpMap = new HashMap<Integer, Integer>();
 
 			for (Object[] entity : entities) {
 				if (!dwCpMap.containsKey((Integer) entity[0])) {
 					List<String> list = Util.resize(new ArrayList<String>(),
-							1 + bhglbs.size());
+							2 + bhglbs.size());
 					result.add(list);
 					list.set(0, dwmcDao.getByDwid((Integer) entity[0])
 							.getDwmc().getName());
+
 					dwCpMap.put((Integer) entity[0], result.size() - 1);
 				}
 
 				List<String> row = result.get(dwCpMap.get((Integer) entity[0]));
+				
+				
 				row.set(bhglbsIds.get((Integer) entity[1]), ""
 						+ ((Long) entity[2]).intValue());
+				
 				hj.set(bhglbsIds.get((Integer) entity[1]) - 1, MathUtil.sum(
 						hj.get(bhglbsIds.get((Integer) entity[1]) - 1),
 						((Long) entity[2]).intValue()));
+			}
+			
+			for (int i = 0; i < hjEntities.size(); ++i){
+				if (dwCpMap.containsKey(hjEntities.get(i)[0])){
+					List<String> row = result.get(dwCpMap.get(hjEntities.get(i)[0]));
+					row.set(row.size() - 1, "" + ((Long)hjEntities.get(i)[1]).intValue());
+					hj.set(hj.size() - 1, MathUtil.sum(
+							hj.get(hj.size() - 1),
+							((Long)hjEntities.get(i)[1]).intValue()));
+				}	
 			}
 
 			List<String> list = new ArrayList<String>();
@@ -84,16 +99,18 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 	
 	
 	@Override
-	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType,
-			ByqBhgType bhgType) {
+	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType) {
 		List<Object[]> entities = null;// [Integer dwid, Integer bhglxid, Long
 										// count]
+		List<Object[]> hjEntities = null;
 		if (yjType == YDJDType.YD) {
-			entities = byqBhgwtmxDao.getByYdFb(d, bhgType.ordinal(), ZBStatus.APPROVED);
+			hjEntities = byqBhgwtmxDao.getByYdFbHj(d, ZBStatus.APPROVED);
+			entities = byqBhgwtmxDao.getByYdFb(d, ZBStatus.APPROVED);
 		} else {
-			entities = byqBhgwtmxDao.getByJdFb(d, bhgType.ordinal(), ZBStatus.APPROVED);
+			hjEntities = byqBhgwtmxDao.getByJdFbHj(d, ZBStatus.APPROVED);
+			entities = byqBhgwtmxDao.getByJdFb(d, ZBStatus.APPROVED);
 		}
-		return this.getByqcpycssbhgxxfb(d, yjType, entities);
+		return this.getByqcpycssbhgxxfb(d, yjType, entities, hjEntities);
 	}
 
 	@Override
@@ -107,17 +124,78 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 	}
 
 	@Override
-	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType,
-			ByqBhgType bhgType, Company company) {
+	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType, Company company) {
 		List<Object[]> entities = null;// [Integer dwid, Integer bhglxid, Long
 		// count]
+		List<Object[]> hjEntities = null;//[Integer dwid, Long
+		                          		// count]
 		if (yjType == YDJDType.YD) {
-			entities = byqBhgwtmxDao.getByYdFb(d, bhgType.ordinal(), company,
+			hjEntities = byqBhgwtmxDao.getByYdFbHj(d, company,
+					ZBStatus.APPROVED);
+			entities = byqBhgwtmxDao.getByYdFb(d, company,
 					ZBStatus.APPROVED);
 		} else {
-			entities = byqBhgwtmxDao.getByJdFb(d, bhgType.ordinal(), company,
+			hjEntities = byqBhgwtmxDao.getByJdFbHj(d, company,
+					ZBStatus.APPROVED);
+			entities = byqBhgwtmxDao.getByJdFb(d, company,
 					ZBStatus.APPROVED);
 		}
-		return this.getByqcpycssbhgxxfb(d, yjType, entities);
+		return this.getByqcpycssbhgxxfb(d, yjType, entities, hjEntities);
+	}
+
+	private WaveItem getWaveItem(List<WaveItem> wis, String name){
+		for (int i = 0; i < wis.size(); ++i){
+			if (wis.get(i).getName().equals(name)){
+				return wis.get(i);
+			}
+		}
+		WaveItem item = new WaveItem(name, Util.resize(new ArrayList<String>(), 12, "0"));
+		wis.add(item);
+		return item;
+	}
+	
+	
+	@Override
+	public List<WaveItem> getWaveItems(Date d, YDJDType yjType) {
+		List<WaveItem> wis = new ArrayList<WaveItem>();
+		EasyCalendar cal = new EasyCalendar();
+		cal.setTime(d);
+		cal.setMonth(1);
+		List<Object[]> hjEntities = null;//[Integer dwid, Long
+  		// count]
+		for (int i = 0; i < 12; ++i){
+			hjEntities = byqBhgwtmxDao.getByYdFbHj(cal.getDate(), ZBStatus.APPROVED);
+			for (int j = 0; j < hjEntities.size(); ++j){
+				getWaveItem(wis, dwmcDao.getByDwid((Integer) hjEntities.get(j)[0])
+						.getDwmc().getName())
+						.getData()
+						.set(i, ((Long)hjEntities.get(j)[1]).intValue() + "");
+			}
+			
+			cal.addMonth(1);
+		}
+		return wis;
+	}
+
+
+	@Override
+	public List<WaveItem> getWaveItems(Date d, YDJDType yjType, Company company) {
+		List<WaveItem> wis = new ArrayList<WaveItem>();
+		EasyCalendar cal = new EasyCalendar();
+		cal.setTime(d);
+		cal.setMonth(1);
+		List<Object[]> hjEntities = null;//[Integer dwid, Long
+  		// count]
+		for (int i = 0; i < 12; ++i){
+			hjEntities = byqBhgwtmxDao.getByYdFbHj(cal.getDate(), company, ZBStatus.APPROVED);
+			
+			for (int j = 0; j < hjEntities.size(); ++j){
+				getWaveItem(wis, company.getName())
+						.getData()
+						.set(i, ((Long)hjEntities.get(j)[1]).intValue() + "");
+			}
+			cal.addMonth(1);
+		}
+		return wis;
 	}
 }

@@ -77,9 +77,10 @@ public class XladydjtjjgServlet {
 			}
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 			List<List<String>> result = xladydjtjjgService.getXladydjtjjg(d, yjType, company);
-			resp = new CpzlqkResp(result);
+			List<WaveItem> waveItems = xladydjtjjgService.getXladydjWaveItems(d, yjType, company);
+			resp = new CpzlqkResp(result, waveItems);
 		}
 		
 		return JSONObject.fromObject(resp.format()).toString().getBytes("utf-8");
@@ -98,7 +99,7 @@ public class XladydjtjjgServlet {
 			result = xladydjtjjgService.getXladydjtjjg(d, yjType);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 			result = xladydjtjjgService.getXladydjtjjg(d, yjType, company);
 		}
 		

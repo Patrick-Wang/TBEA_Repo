@@ -48,7 +48,6 @@ var cpzlqk;
             ApproveView.prototype.isSupported = function (compType) {
                 if (compType == Util.CompanyType.SBGS ||
                     compType == Util.CompanyType.HBGS ||
-                    compType == Util.CompanyType.TBGS ||
                     compType == Util.CompanyType.XBC) {
                     return true;
                 }

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-
+<meta charset="UTF-8">
 <!-- message box -->
 <link href="${pageContext.request.contextPath}/jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
 
@@ -50,6 +50,9 @@
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
 <%@include file="../framework/basic/basicShow.jsp"%>
+	<script src="${pageContext.request.contextPath}/jsp/components/dateSeasonSelector.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/jsp/components/SeasonAccSelector.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqkdef.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqk.js" type="text/javascript"></script>
 <title>产品质量情况</title>
@@ -190,20 +193,29 @@ th.ui-th-ltr {
 		<tr>
 			<td id="plugin">
 				<%@include file="byqacptjjg/byqacptjjg.jsp"%>
+				<%@include file="pdacptjjg/pdacptjjg.jsp"%>
 				<%@include file="xlacptjjg/xlacptjjg.jsp"%>
 				<%@include file="byqadwtjjg/byqadwtjjg.jsp"%>
+				<%@include file="pdadwtjjg/pdadwtjjg.jsp"%>
 				<%@include file="xladydjtjjg/xladydjtjjg.jsp"%>
 				<%@include file="byqcpycssbhgwtmx/byqcpycssbhgwtmx.jsp"%>
+				<%@include file="pdcpycssbhgwtmx/pdcpycssbhgwtmx.jsp"%>
 				<%@include file="byqcpycssbhgxxfb/byqcpycssbhgxxfb.jsp"%>
+				<%@include file="pdcpycssbhgxxfb/pdcpycssbhgxxfb.jsp"%>
 				<%@include file="xlbhgcpmx/xlbhgcpmx.jsp"%>
 			</td>
 		</tr>
 		<tr>
 			<td>
+				<div id="comment">
+					<textarea id="commentText" cols="20" rows="5" style="width:100%;resize: none;margin-bottom:5px"></textarea>
+					<input type="button" id="saveComment" value="保存" style="float:left;width:90px"
+						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_SAVE_COMMENT)">
+				</div>
 				<form id="export" method="post">
 					<input id="exportButton" type="button" value="导出" style="display:none"
 						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
-				</form> 
+				</form>
 			</td>
 		</tr>
 	</Table>
@@ -226,6 +238,10 @@ th.ui-th-ltr {
 			.css("height", "23px")
 			.css("padding", ".1em 1em")
 			.css("margin-top", "2px");
+		$("#saveComment")
+				.css("height", "23px")
+				.css("padding", ".1em 1em")
+				.css("margin-top", "2px");
         $(document.body).css("visibility", "visible");
     });
 </script>

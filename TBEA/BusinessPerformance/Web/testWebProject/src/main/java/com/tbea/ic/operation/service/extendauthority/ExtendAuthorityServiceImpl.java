@@ -151,7 +151,7 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 			cacheAuth.put(account.getId(), compsMap);
 		}
 
-		if (!compsMap.containsKey(authType)){
+		if (!compsMap.containsKey(authType) || compsMap.get(authType).isEmpty()){
 			compsMap.put(authType, getAuthedCompaniesInternal(account ,authType));
 		}
 		return compsMap.get(authType);

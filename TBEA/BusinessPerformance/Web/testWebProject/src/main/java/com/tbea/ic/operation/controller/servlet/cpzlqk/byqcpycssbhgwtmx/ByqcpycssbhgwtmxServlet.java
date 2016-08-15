@@ -33,7 +33,6 @@ import com.tbea.ic.operation.common.formatter.excel.TextFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
-import com.tbea.ic.operation.controller.servlet.cpzlqk.ByqBhgType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgwtmx.ByqcpycssbhgwtmxService;
@@ -55,15 +54,14 @@ public class ByqcpycssbhgwtmxServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
-		ByqBhgType bhgType = ByqBhgType.valueOf(Integer.valueOf(request.getParameter("bhgType")));
 		boolean all = Boolean.valueOf(request.getParameter("all"));
 		List<List<String>> result = null;
 		if (all){
-			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, bhgType);
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getBMDBOrganization().getCompany(comp);
-			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, bhgType, company);
+			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, company);
 		}
 		
 		
@@ -80,12 +78,11 @@ public class ByqcpycssbhgwtmxServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		ByqBhgType bhgType = ByqBhgType.valueOf(Integer.valueOf(request.getParameter("bhgType")));
-		List<List<String>> result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmxEntry(d, company, bhgType);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		List<List<String>> result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmxEntry(d, company);
 		List<String> zrlb = byqcpycssbhgwtmxService.getZrlb();
 		List<String> bhglx = byqcpycssbhgwtmxService.getBhglx();
-		ZBStatus status = byqcpycssbhgwtmxService.getStatus(d, company, bhgType);
+		ZBStatus status = byqcpycssbhgwtmxService.getStatus(d, company);
 		RawFormatterHandler handler = new RawEmptyHandler();
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("").format(result);
@@ -99,9 +96,8 @@ public class ByqcpycssbhgwtmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		ByqBhgType bhgType = ByqBhgType.valueOf(Integer.valueOf(request.getParameter("bhgType")));
-		ErrorCode err = byqcpycssbhgwtmxService.saveByqcpycssbhgwtmx(d, data, company, bhgType);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		ErrorCode err = byqcpycssbhgwtmxService.saveByqcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
 	}
 	
@@ -111,9 +107,8 @@ public class ByqcpycssbhgwtmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		ByqBhgType bhgType = ByqBhgType.valueOf(Integer.valueOf(request.getParameter("bhgType")));
-		ErrorCode err = byqcpycssbhgwtmxService.submitByqcpycssbhgwtmx(d, data, company, bhgType);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		ErrorCode err = byqcpycssbhgwtmxService.submitByqcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
 	}
 	
@@ -123,13 +118,12 @@ public class ByqcpycssbhgwtmxServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		ByqBhgType bhgType = ByqBhgType.valueOf(Integer.valueOf(request.getParameter("bhgType")));
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		List<List<String>> result = null;
-		ZBStatus status = byqcpycssbhgwtmxService.getStatus(d, company, bhgType);
+		ZBStatus status = byqcpycssbhgwtmxService.getStatus(d, company);
 		if (status == ZBStatus.APPROVED || status == ZBStatus.SUBMITTED){
 			
-			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmxEntry(d, company, bhgType);
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmxEntry(d, company);
 		
 			RawFormatterHandler handler = new RawEmptyHandler();
 			RawFormatterServer serv = new RawFormatterServer(handler);
@@ -146,7 +140,7 @@ public class ByqcpycssbhgwtmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		ErrorCode err = byqcpycssbhgwtmxService.approveByqcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
@@ -158,7 +152,7 @@ public class ByqcpycssbhgwtmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		ErrorCode err = byqcpycssbhgwtmxService.unapproveByqcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
@@ -169,16 +163,15 @@ public class ByqcpycssbhgwtmxServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
-		ByqBhgType bhgType = ByqBhgType.valueOf(Integer.valueOf(request.getParameter("bhgType")));
 		
 		boolean all = Boolean.valueOf(request.getParameter("all"));
 		List<List<String>> result = null;
 		if (all){
-			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, bhgType);
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getBMDBOrganization().getCompany(comp);
-			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, bhgType, company);
+			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, company);
 		}
 		
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQCPYCSSBHGWTMX);
@@ -189,7 +182,7 @@ public class ByqcpycssbhgwtmxServlet {
 		serv.addMergeRegion(new MergeRegion(0, 1, 1, result.size()));
 		serv.format(result, template);
 	
-		String name = yjType.val() + bhgType.val() + template.getSheetName();
+		String name = yjType.val() + template.getSheetName();
 
 		template.write(response, name + ".xls");
 	}

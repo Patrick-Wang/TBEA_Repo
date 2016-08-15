@@ -56,7 +56,7 @@ public class ByqacptjjgServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		
 		
@@ -64,6 +64,8 @@ public class ByqacptjjgServlet {
 		List<WaveItem> waveItems = null;
 		if (yjType == YDJDType.YD){
 			waveItems  = byqacptjjgService.getWaveValues(d, company);
+		}else{
+			waveItems  = byqacptjjgService.getJdWaveValues(d, company);
 		}
 		
 		CpzlqkResp resp = new CpzlqkResp(result, waveItems);
@@ -76,7 +78,7 @@ public class ByqacptjjgServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		List<List<String>> result = byqacptjjgService.getByqacptjjgEntry(d, company);
 		ZBStatus status = byqacptjjgService.getStatus(d, company);
@@ -93,7 +95,7 @@ public class ByqacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		ErrorCode err = byqacptjjgService.saveByqacptjjg(d, data, company);
 		return Util.response(err);
@@ -105,7 +107,7 @@ public class ByqacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		ErrorCode err = byqacptjjgService.submitByqacptjjg(d, data, company);
 		return Util.response(err);
@@ -117,7 +119,7 @@ public class ByqacptjjgServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		List<List<String>> result = null;
 		ZBStatus status = byqacptjjgService.getStatus(d, company);
@@ -140,7 +142,7 @@ public class ByqacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		ErrorCode err = byqacptjjgService.approveByqacptjjg(d, data, company);
 		return Util.response(err);
@@ -152,7 +154,7 @@ public class ByqacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
 		ErrorCode err = byqacptjjgService.unapproveByqacptjjg(d, data, company);
 		return Util.response(err);
@@ -163,7 +165,7 @@ public class ByqacptjjgServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		
 		List<List<String>> result = byqacptjjgService.getByqacptjjg(d, company, yjType);

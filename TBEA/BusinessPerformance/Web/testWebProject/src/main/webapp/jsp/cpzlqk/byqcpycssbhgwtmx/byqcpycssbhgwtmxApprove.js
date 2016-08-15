@@ -38,7 +38,7 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ApproveView = (function (_super) {
             __extends(ApproveView, _super);
             function ApproveView() {
@@ -56,7 +56,6 @@ var cpzlqk;
             ApproveView.prototype.isSupported = function (compType) {
                 if (compType == Util.CompanyType.SBGS ||
                     compType == Util.CompanyType.HBGS ||
-                    compType == Util.CompanyType.TBGS ||
                     compType == Util.CompanyType.XBC) {
                     return true;
                 }
@@ -75,8 +74,7 @@ var cpzlqk;
                 this.mAjaxApprove.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType,
-                    bhgType: this.getBhglx()
+                    companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("审核 成功", function () {
@@ -94,8 +92,7 @@ var cpzlqk;
                 this.mCompType = compType;
                 this.mAjaxUpdate.get({
                     date: date,
-                    companyId: compType,
-                    bhgType: this.getBhglx()
+                    companyId: compType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -193,6 +190,6 @@ var cpzlqk;
             };
             ApproveView.ins = new ApproveView();
             return ApproveView;
-        }(cpzlqk.ZlApprovePluginView));
+        })(cpzlqk.ZlApprovePluginView);
     })(byqcpycssbhgwtmxApprove = cpzlqk.byqcpycssbhgwtmxApprove || (cpzlqk.byqcpycssbhgwtmxApprove = {}));
 })(cpzlqk || (cpzlqk = {}));

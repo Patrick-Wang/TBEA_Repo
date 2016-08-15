@@ -151,15 +151,12 @@
   <response type="excel" ref="excelTemplate" name="生产、发货和价格周报表.xls" serv="serv"/>
  </controller>
  <controller id="xnyzb">
-  <call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-   <param type="int">26</param>
-  </call>
   <response type="jsp" name="xnyzb/xnyzb">
    <map key="date" value="${calendar.current.format}"/>
    <map key="updateUrl" value="xnyzbUpdate"/>
    <map key="exportUrl" value="xnyzbExport"/>
    <map key="title" value="生产、发货和价格周报表"/>
-   <map map="${authCompMap}"/>
+   <map map="${authMgr[26]}"/>
   </response>
  </controller>
 </components>

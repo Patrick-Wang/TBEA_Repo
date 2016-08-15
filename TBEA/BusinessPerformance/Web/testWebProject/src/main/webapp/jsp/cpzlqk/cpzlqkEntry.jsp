@@ -175,7 +175,6 @@ th.ui-th-ltr {
 				<div id="dt" style="float: left"></div>
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
-				<div id="bhglx" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
@@ -186,13 +185,15 @@ th.ui-th-ltr {
 				<%@include file="byqcpycssbhgwtmx/byqcpycssbhgwtmxEntry.jsp"%>
 				<%@include file="xlacptjjg/xlacptjjgEntry.jsp"%>
 				<%@include file="xlbhgcpmx/xlbhgcpmxEntry.jsp"%>
+				<%@include file="pdacptjjg/pdacptjjgEntry.jsp"%>
+				<%@include file="pdcpycssbhgwtmx/pdcpycssbhgwtmxEntry.jsp"%>
 			</td>
 		</tr> 
 		<tr>
 			<td>
-				<input id="gbsv" type="button" value="保存" style="float: right; width: 80px; margin-left: 10px;"
+				<input id="gbsv" type="button" value="保存" style="display:none;float: right; width: 80px; margin-left: 10px;"
 					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SAVE)" />
-				<input id="gbsm" type="button" value="提交审核" style="float: right; width: 80px; margin-left: 10px;"
+				<input id="gbsm" type="button" value="提交审核" style="display:none;float: right; width: 80px; margin-left: 10px;"
 					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)" />
 			</td>
 		</tr>
@@ -204,7 +205,6 @@ th.ui-th-ltr {
 				dt: "dt",
 				comp:"compid",
 				comps : JSON.parse('${nodeData}'),
-				bhglx:"bhglx",
 				date: {
 					month: "${month}".length == 0 ? undefined : parseInt("${month}"),
 					year: ${year}

@@ -121,11 +121,8 @@
 	</controller>
 	
 	<controller id="authConfig">
-		<call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-			<param type="int">25</param>
-		</call>
 		<response type="jsp" name="framework/templates/singleDateReport/entry">
-			<map map="${authCompMap}"/>
+			<map map="${authMgr[25]}"/>
 			<map key="updateUrl" value="authorityEntryUpdate"/>
 			<map key="submitUrl" value="submitAuthority"/>
 			<map key="title" value="权限配置"/>

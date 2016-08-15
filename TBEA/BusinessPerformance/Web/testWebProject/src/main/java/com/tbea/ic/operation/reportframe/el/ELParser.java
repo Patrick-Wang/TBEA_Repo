@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.tbea.ic.operation.reportframe.util.StringUtil;
+
 public class ELParser {
 
-	static Pattern elPattern = Pattern.compile("\\$\\{[^\\$]*\\}");
+	static Pattern elPattern = Pattern.compile("\\$\\{[^\\$^\\}]*\\}");
 
 	public static interface ObjectLoader {
 		Object onGetObject(String key);
@@ -25,8 +27,10 @@ public class ELParser {
 			Matcher matcher = elPattern.matcher(express);
 			while (matcher.find()) {
 				String val = matcher.group();
-				exps.add(new ELExpression(matcher.start(), matcher.end(), val
-						.substring(2, val.length() - 1),
+				exps.add(new ELExpression(
+						matcher.start(), 
+						matcher.end(), 
+						StringUtil.trim(val.substring(2, val.length() - 1)),
 						loader));
 			}
 		}

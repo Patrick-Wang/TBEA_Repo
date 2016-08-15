@@ -38,7 +38,8 @@ module cpzlqk {
             private mDateSelector:Util.DateSelector;
             private mDt: string;
             private mCompType:Util.CompanyType;
-
+            private mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
+            private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
             protected isSupported(compType:Util.CompanyType):boolean {
                 return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
                     ||compType == Util.CompanyType.XLC;
@@ -52,6 +53,22 @@ module cpzlqk {
                 switch (e.id) {
                     case Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
+                    case Event.ZLFE_SAVE_COMMENT:
+                        let param = {
+                            condition:Util.Ajax.toUrlParam({
+                                url : this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId:this.mCompType,
+                                ydjd:this.mYdjdType
+                            }),
+                            comment:e.data
+                        }
+                        this.mCommentSubmit.get({
+                            data : JSON.stringify([[param.condition, param.comment]])
+                        }).then((jsonData:any)=>{
+                            Util.MessageBox.tip("保存成功", undefined, 1000);
+                        });
+                        break;
                 }
                 return super.onEvent(e);
             }
@@ -71,6 +88,19 @@ module cpzlqk {
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
                 this.mCompType = compType;
+
+                this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
+                    url : this.mAjax.baseUrl(),
+                    date: date,
+                    companyId:compType,
+                    ydjd:this.mYdjdType
+                })}).then((jsonData:any)=>{
+                    framework.router
+                        .fromEp(this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
+                });
+
                 this.mAjax.get({
                         date: date,
                         companyId:compType,
@@ -81,35 +111,112 @@ module cpzlqk {
                         this.refresh();
                     });
             }
-            private updateEchart():void {
-                let title = "";
+
+            private toCtVal(val:string){
+                let index = val.lastIndexOf('%');
+                if (index >= 0){
+                    return val.substring(0, index);
+                }
+                return val == '--' ? 0 : val;
+            }
+
+            private splitLongString(val:string): string{
+                let alphaCount = 0;
+                let tmp:string;
+                for (let i = 0; i < val.length; ++i){
+                    tmp = val.substr(i, 1);
+                    if (tmp.match(/[0-9a-zA-Z\/]/g)){
+                        ++alphaCount;
+                    }else{
+                        alphaCount += 2;
+                    }
+                    if (alphaCount >= 6){
+                        return val.substr(0, i + 1) + "...";
+                    }
+                }
+                return val;
+
+            }
+
+            private findTotal(valShort:string):string{
+                for (let i = 0; i < this.mData.tjjg.length; ++i){
+                    if (this.mData.tjjg[i][1].indexOf(valShort.replace(/\.\.\./g, "")) >= 0){
+                        return this.mData.tjjg[i][1];
+                    }
+                }
+                return valShort;
+            }
+
+            private updateEchart():void{
+                let title = "按产品统计结果";
                 let legend:Array<string> = [];
                 let echart = this.option().ct;
 
                 let series = [];
-                for (let i in this.mData.waveItems){
-                    legend.push(this.mData.waveItems[i].name);
+                var xData:string[] = [];
+                let tooltip : any = {
+                    trigger: 'axis'
+                };
+                let yAxis : any = [
+                    {
+                        type: 'value'
+                    }
+                ];
+                if (this.mYdjdType == YDJDType.YD){
+                    for (let i in this.mData.waveItems){
+                        legend.push(this.mData.waveItems[i].name);
+                        series.push({
+                            name: this.mData.waveItems[i].name,
+                            type: 'line',
+                            smooth: true,
+                            // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data: this.mData.waveItems[i].data
+                        });
+                    }
+                    for (let i = 0; i < 12; ++i){
+                        xData.push((i + 1) + "月");
+                    }
+                }else{
+                    let dy = [];
+                    let qntq = [];
+                    for (let i = 0; i < this.mData.tjjg.length; ++i){
+                        xData.push(this.splitLongString(this.mData.tjjg[i][1]));
+                        dy.push(this.toCtVal(this.mData.tjjg[i][4]));
+                        qntq.push(this.toCtVal(this.mData.tjjg[i][7]));
+                    }
+                    legend = ["当月", "去年同期"];
                     series.push({
-                        name: this.mData.waveItems[i].name,
-                        type: 'line',
+                        name: legend[0],
+                        type: 'bar',
                         smooth: true,
                         // itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                        data: this.mData.waveItems[i].data
+                        data: dy
                     });
+                    series.push({
+                        name: legend[1],
+                        type: 'bar',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: qntq
+                    });
+                    yAxis[0].axisLabel = {
+                        formatter: '{value} %'
+                    };
+                    tooltip.formatter = (params) => {
+                        let ret = this.findTotal(params[0][1]);
+                        for (let i = 0; i < params.length; ++i) {
+                            ret += "<br/>" + params[i][0] + ' : ' + params[i][2] + "%";
+                        }
+                        return ret;
+                    };
                 }
 
-                var xData:string[] = [];
-                for (let i = 0; i < 12; ++i){
-                    xData.push((i + 1) + "月");
-                }
 
                 var option = {
                     title: {
                         text: title
                     },
-                    tooltip: {
-                        trigger: 'axis'
-                    },
+                    tooltip: tooltip,
                     legend: {
                         data: legend
                     },
@@ -120,33 +227,25 @@ module cpzlqk {
                     xAxis: [
                         {
                             type: 'category',
-                            boundaryGap: false,
+                            boundaryGap: this.mYdjdType == YDJDType.YD ? false : true,
                             data: xData.length < 1 ? [0] : xData
                         }
                     ],
-                    yAxis: [
-                        {
-                            type: 'value'
-                        }
-                    ],
+                    yAxis: yAxis,
                     series: series
                 };
 
                 echarts.init(this.$(echart)[0]).setOption(option);
-
             }
+
             public refresh() : void{
                 if ( this.mData == undefined){
                     return;
                 }
 
                 this.updateTable();
-                if (this.mYdjdType == YDJDType.YD){
-                    this.$(this.option().ctarea).show();
-                    this.updateEchart();
-                }else{
-                    this.$(this.option().ctarea).hide();
-                }
+                this.$(this.option().ctarea).show();
+                this.updateEchart();
             }
 
             public init(opt:Option):void {

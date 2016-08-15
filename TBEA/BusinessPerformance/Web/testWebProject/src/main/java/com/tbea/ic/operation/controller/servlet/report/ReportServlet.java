@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.ic.operation.common.ClosureMap;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.CompanySelection.Filter;
+import com.tbea.ic.operation.common.Data;
 import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.EasyList;
@@ -114,40 +116,57 @@ public class ReportServlet {
 			context.put("transactionManager", trProxy);
 			context.put("accFactory", accFac);
 			context.put("compMgr", companyManager);
-			context.put("orgTypeById", new CMGRClosureMap(){
+			context.put("orgs", new CMGRClosureMap(companyManager){
 
 				@Override
-				protected Object onGetProp(List<Object> args) throws Exception {
-					Organization org = getOrg(companyManager, (String)args.get(0));
-					return org.getCompany((Integer)args.get(1)).getType().ordinal();
-				}
-				
-			});
-			
-			context.put("orgIdByType", new CMGRClosureMap(){
-
-				@Override
-				protected Object onGetProp(List<Object> args) throws Exception {
-					Organization org = getOrg(companyManager, (String)args.get(0));
-					return org.getCompany(CompanyType.valueOf((Integer)args.get(1))).getId();
-				}
-				
-			});
-			
-			context.put("orgCompaniesByIds", new CMGRClosureMap(){
-
-				@Override
-				protected Object onGetProp(List<Object> args) throws Exception {
-					Organization org = getOrg(companyManager, (String)args.get(0));
-					List<Integer> ids = (List) args.get(1);
-					List<Company> comps = new ArrayList<Company>();
-					for (Integer id : ids){
-						comps.add(org.getCompany(id));
+				protected Object onGetProp(Organization org, List<Object> args) throws Exception {
+					if ("ids".equals(args.get(0))){
+						return org.getCompany(CompanyType.valueOf((Integer)args.get(1))).getId();
+					}else if ("types".equals(args.get(0))){
+						return org.getCompany((Integer)args.get(1)).getType().ordinal();
+					}else if ("companiesByIds".equals(args.get(0))){
+						List<Integer> ids = (List) args.get(1);
+						List<Company> comps = new ArrayList<Company>();
+						for (Integer id : ids){
+							comps.add(org.getCompany(id));
+						}
+						return comps;
+					}else{
+						return null;
 					}
-					return comps;
+				}
+
+				@Override
+				protected boolean onValidating(List<Object> args) {
+					return args.size() == 2;
 				}
 			});
 			
+			context.put("dataNodeFactory", new ClosureMap(){
+
+				@Override
+				protected boolean validate(List<Object> args) throws Exception {
+					return args.size() == 2;
+				}
+
+				@Override
+				protected Object onGetProp(List<Object> args) throws Exception {
+					List<Integer> ids = (List<Integer>) args.get(0);
+					List<String> vals = (List<String>) args.get(1);
+					List<DataNode> nodes = new ArrayList<DataNode>(args.size());
+					for (int i = 0; i < ids.size(); ++i){
+						DataNode dn = new DataNode();
+						Data d = new Data();
+						d.setId(ids.get(i));
+						d.setValue(vals.get(i));
+						dn.setData(d);
+						nodes.add(dn);
+					}
+					return nodes;
+				}
+			});
+			
+
 			context.put("authMgr", new PropMap(){
 
 				@Override
@@ -159,7 +178,7 @@ public class ReportServlet {
 						List<Company> byqs = new EasyList<Company>(org.getCompany(CompanyType.BYQCY).getSubCompanies()).clone();
 						List<Company> xls = new EasyList<Company>(org.getCompany(CompanyType.XLCY).getSubCompanies()).clone();
 						CompanySelection compSel = new CompanySelection(false, org.getTopCompany(), new Filter(){
-								
+
 							@Override
 							public boolean keep(Company comp) {
 								for (Company cp : comps){
@@ -199,24 +218,7 @@ public class ReportServlet {
 						compSel.select(map);
 						return map;
 					}
-					
-					
-					
 				}
-				
-			});
-			
-			context.put("authManager", new AuthManager(){
-
-				@Override
-				public Map<String, Object> getAuthedCompanies(int authType) {
-					List<Company> comps = extendAuthService.getAuthedCompanies(SessionManager.getAccount(request.getSession()), authType);
-					CompanySelection compSel = new CompanySelection(true, comps);
-					Map<String, Object> map = new HashMap<String, Object>();
-					compSel.select(map);
-					return map;
-				}
-				
 			});
 			controller.run(context);
 			return (ModelAndView) context.get(com.tbea.ic.operation.reportframe.component.controller.Controller.MODEL_AND_VIEW);

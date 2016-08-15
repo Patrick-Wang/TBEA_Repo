@@ -48,6 +48,7 @@ var Util;
             }
             else {
                 this.dateSelect = new Util.DateSelector(dtStart, dtEnd, divId);
+                this.dateSelect.select(dtNow);
             }
         }
         DateSelectorProxy.prototype.getDate = function () {

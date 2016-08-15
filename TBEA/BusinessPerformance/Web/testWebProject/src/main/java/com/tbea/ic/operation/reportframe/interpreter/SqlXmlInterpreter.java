@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.reportframe.el.ELExpression;
@@ -70,7 +71,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 				tx.getEntityManager());
 		
 		if (!sqlRet.isEmpty()){
-			if (sqlRet.get(0).getClass().isArray()){
+			if (null != sqlRet.get(0) && sqlRet.get(0).getClass().isArray()){
 				for (Object[] objs : (List<Object[]>)sqlRet){
 					for (int i = 0; i < objs.length; ++i){
 						if (objs[i] instanceof BigDecimal){
@@ -86,17 +87,19 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		List order = (List) component.getVar(e.getAttribute("order"));
 		if (null != order){
 			Integer by = XmlUtil.getIntAttr(e, "by", el, null);
-			if (null != by){
-				List<Object[]> objs = new ArrayList<Object[]>();
+			Integer colcount = XmlUtil.getIntAttr(e, "colcount", el, null);
+			if (null != by && null != colcount){
+				List<Object[]> objs = new ArrayList<Object[]>(order.size());
 				int ret = 0;
 				for (int i = 0; i < order.size(); ++i){
 					ret = find(sqlRet, order.get(i), by);
 					if (ret >= 0){
 						objs.add((Object[]) sqlRet.get(ret));
 					}else{
-						objs.add(null);
+						objs.add(new Object[colcount]);
 					}
 				}
+				sqlRet = objs;
 			}
 		}
 		

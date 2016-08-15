@@ -1,7 +1,6 @@
-﻿<components>
-	<service id="servXtnyrb" transaction="transactionManager">
-
-		<sql id="djgrb">
+<components>
+ <service id="servXtnyrb" transaction="transactionManager">
+  <sql id="djgrb">
 			select 
 				id,
 				dwid,
@@ -12,7 +11,7 @@
 			where 
 				date = ${date}
 		</sql>
-		<sql id="djgyjh">
+  <sql id="djgyjh">
 			select
 				dwid,
 				yjh
@@ -22,19 +21,17 @@
 				nf = ${year} and
 				yf = ${month}
 		</sql>
-		<sql id="djgylj">
-			select 
-				dwid,
-				sum(drwc) as ljwc
-			from  
-				djgrb
-			where 
-				date &gt; ${cal.day &gt; 25 ? cal.days[25].format : cal.lastMonth.days[25].format} and
-				date &lt;= ${cal.date}
-			group by
-				dwid
-		</sql>
-		<sql id="djgnjh">
+  <sql id="djgylj">select 
+	dwid,
+	sum(drwc) as ljwc
+from  
+	djgrb
+where 
+	date &gt; ${cal.day &gt; 25 ? 'cal.days[25].format' : 'cal.lastMonth.days[25].format'} and
+	date &lt;= ${cal.date}
+group by
+	dwid</sql>
+  <sql id="djgnjh">
 			select
 				dwid,
 				njh
@@ -43,39 +40,35 @@
 			where 
 				nf = ${year}
 		</sql>
-		<sql id="djgnlj">
-			select 
-				dwid,
-				sum(drwc) as ljwc
-			from  
-				djgrb
-			where 
-				date &gt; ${
-					(cal.month == 12  &amp;&amp;  cal.day &gt; 25) 
-						? cal.days[25].format 
-						: cal.lastYear.months[12].days[25].format
-					} and
-				date &lt;= ${cal.date}
-			group by
-				dwid
-		</sql>
-		<list id="dwid" type="int">1002,1003</list>
-		<table id="djgResult" rowIds="dwid" export="true">
-			<list type="string">一分公司,二分公司</list>
-			<list type="double" sql="djgrb" value="2" order="dwid" by="1"/>
-			<list type="double" sql="djgrb" value="3" order="dwid" by="1"/>
-			<list type="double" sql="djgyjh" value="1" order="dwid" by="0"/>
-			<list type="double" sql="djgylj" value="1" order="dwid" by="0"/>
-			<col></col>
-			<list type="double" sql="djgnjh" value="1" order="dwid" by="0"/>
-			<list type="double" sql="djgnlj" value="1" order="dwid" by="0"/>
-			<col></col>
-			<divCol toCol="5" sub="3" base="4"/>
-			<divCol toCol="8" sub="6" base="7"/>
-		</table>
-		
-		
-		<sql id="zbdcrb">
+  <sql id="djgnlj">select 
+	dwid,
+	sum(drwc) as ljwc
+from  
+	djgrb
+where 
+	date &gt; ${
+		(cal.month == 12  &amp;&amp;  cal.day &gt; 25) 
+			? 'cal.days[25].format' 
+			: 'cal.lastYear.months[12].days[25].format'
+		} and
+	date &lt;= ${cal.date}
+group by
+	dwid</sql>
+  <list id="dwid" type="int">1002,1003</list>
+  <table id="djgResult" rowIds="dwid" export="true">
+   <list type="string">一分公司,二分公司</list>
+   <list type="double" sql="djgrb" value="2" order="dwid" by="1"/>
+   <list type="double" sql="djgrb" value="3" order="dwid" by="1"/>
+   <list type="double" sql="djgyjh" value="1" order="dwid" by="0"/>
+   <list type="double" sql="djgylj" value="1" order="dwid" by="0"/>
+   <col/>
+   <list type="double" sql="djgnjh" value="1" order="dwid" by="0"/>
+   <list type="double" sql="djgnlj" value="1" order="dwid" by="0"/>
+   <col/>
+   <divCol toCol="5" sub="3" base="4"/>
+   <divCol toCol="8" sub="6" base="7"/>
+  </table>
+  <sql id="zbdcrb">
 			select 
 				id,
 				zbmc,
@@ -85,7 +78,7 @@
 			where 
 				date = ${date}
 		</sql>
-		<sql id="zbdcyjh">
+  <sql id="zbdcyjh">
 			select 
 				zbmc,
 				yjh
@@ -95,19 +88,17 @@
 				nf = ${year} and
 				yf = ${month}
 		</sql>
-		<sql id="zbdcylj">
-			select 
-				zbmc,
-				sum(drwc) as ljwc
-			from  
-				zbdcrb
-			where 
-				date &gt; ${cal.day > 25 ? cal.days[25].format : cal.lastMonth.days[25].format} and
-				date &lt;= ${cal.date}
-			group by
-				zbmc
-		</sql>
-		<sql id="zbdcnjh">
+  <sql id="zbdcylj">select 
+	zbmc,
+	sum(drwc) as ljwc
+from  
+	zbdcrb
+where 
+	date &gt; ${cal.day &gt; 25 ? 'cal.days[25].format' : 'cal.lastMonth.days[25].format'} and
+	date &lt;= ${cal.date}
+group by
+	zbmc</sql>
+  <sql id="zbdcnjh">
 			select 
 				zbmc,
 				njh
@@ -116,232 +107,213 @@
 			where 
 				nf = ${year}
 		</sql>
-		<sql id="zbdcnlj">
-			select 
-				zbmc,
-				sum(drwc) as ljwc
-			from  
-				zbdcrb
-			where 
-				date &gt; ${
-					(cal.month == 12 &amp;&amp; cal.day > 25) 
-						? cal.days[25].format 
-						: cal.lastYear.months[12].days[25].format
-					} and
-				date &lt;= ${cal.date}
-			group by
-				zbmc
-		</sql> 
-		
-		<list id="zbmc" type="string">发电量,上网电量</list>
-		<list id="ids" type="int" >1,2</list>
-		<table id="zbdcResult" rowIds="ids" export="true">
-			<col list="zbmc"/>
-			<list type="double" sql="zbdcrb" value="2" order="zbmc" by="1"/>
-			<list type="double" sql="zbdcyjh" value="1" order="zbmc" by="0"/>
-			<list type="double" sql="zbdcylj" value="1" order="zbmc" by="0"/>
-			<col></col>
-			<list type="double" sql="zbdcnjh" value="1" order="zbmc" by="0"/>
-			<list type="double" sql="zbdcnlj" value="1" order="zbmc" by="0"/>
-			<col></col>
-			<divCol toCol="4" sub="2" base="3"/>
-			<divCol toCol="7" sub="5" base="6"/>
-		</table>
-	</service>
-	
-	<controller id="xtnyrbFmtter">
-		<formatter id="djgDf" export="true">
-			<EmptyFormatter >
-				<DefaultMatcher cols="0"/>
-			</EmptyFormatter>
-			<PercentFormatter reservedCount="1">
-				<DefaultMatcher cols="5,8"/>
-			</PercentFormatter>
-			<NumberFormatter reservedCount="1">
-			</NumberFormatter>
-		</formatter>
-		<formatter id="zbdcDf" export="true">
-			<EmptyFormatter >
-				<DefaultMatcher cols="0"/>
-			</EmptyFormatter>
-			<PercentFormatter reservedCount="1">
-				<DefaultMatcher cols="4,7"/>
-			</PercentFormatter>
-			<NumberFormatter reservedCount="1">
-			</NumberFormatter>
-		</formatter>
-	</controller>
-	
-	<controller id="xtnyrbUpdate">
-
-		<context key="cal" value="${request.date.asCalendar}"/>
-		<context key="date" value="${cal.date}"/>
-		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
-		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
-		<callservice id="servXtnyrb"/>
-		<callcontroller id="xtnyrbFmtter"/>
-		
-		
-		<formatterServer id="servDjg" table="${djgResult.matrixNoIds}">
-			<formatter ref="djgDf"/>
-		</formatterServer>
-		<formatterServer id="servZbdc" table="${zbdcResult.matrixNoIds}">
-			<formatter ref="zbdcDf"/>
-		</formatterServer>
-		<response type="json"> 
-			<header type="array">
-				<item>
-					<name>分公司</name>
-				</item>
-				<item>
-					<name>当日完成</name>
-				</item>
-				<item>
-					<name>库存结余</name>
-				</item>
-				<item>
-					<name>月计划</name>
-				</item>
-				<item>
-					<name>月累计完成</name>
-				</item>
-				<item>
-					<name>月度完成比</name>
-				</item>
-				<item>
-					<name>年度计划</name>
-				</item>
-				<item>
-					<name>年度累计完成</name>
-				</item>
-				<item>
-					<name>年度累计完成比</name>
-				</item>
-			</header>
-			<data>${servDjg.result}</data>
-			<zbdc>
-				<header type="array">
-					<item>
-						<name>指标名称</name>
-					</item>
-					<item>
-						<name>当日完成</name>
-					</item>
-					<item>
-						<name>月计划</name>
-					</item>
-					<item>
-						<name>月累计完成</name>
-					</item>
-					<item>
-						<name>月度完成比</name>
-					</item>
-					<item>
-						<name>年度计划</name>
-					</item>
-					<item>
-						<name>年度累计完成</name>
-					</item>
-					<item>
-						<name>年度累计完成比</name>
-					</item>
-				</header>
-				<data>${servZbdc.result}</data>
-			</zbdc>
-		</response>
-	</controller>
-	
-	<controller id="xtnyrbExport">
-
-		<context key="cal" value="${request.date.asCalendar}"/>
-		<context key="date" value="${cal.date}"/>
-		<context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
-		<context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
-		<callservice id="servXtnyrb"/>
-		<callcontroller id="xtnyrbFmtter"/>
-		
-		<ExcelTemplate id="excelTemplate" sheet="新能源日报"/>
-		
-		<list id="titleDjg1" type="string">
+  <sql id="zbdcnlj">select 
+	zbmc,
+	sum(drwc) as ljwc
+from  
+	zbdcrb
+where 
+	date &gt; ${
+		(cal.month == 12 &amp;&amp; cal.day &gt; 25) 
+			? 'cal.days[25].format' 
+			: 'cal.lastYear.months[12].days[25].format'
+		} and
+	date &lt;= ${cal.date}
+group by
+	zbmc</sql>
+  <list id="zbmc" type="string">发电量,上网电量</list>
+  <list id="ids" type="int">1,2</list>
+  <table id="zbdcResult" rowIds="ids" export="true">
+   <col list="zbmc"/>
+   <list type="double" sql="zbdcrb" value="2" order="zbmc" by="1"/>
+   <list type="double" sql="zbdcyjh" value="1" order="zbmc" by="0"/>
+   <list type="double" sql="zbdcylj" value="1" order="zbmc" by="0"/>
+   <col/>
+   <list type="double" sql="zbdcnjh" value="1" order="zbmc" by="0"/>
+   <list type="double" sql="zbdcnlj" value="1" order="zbmc" by="0"/>
+   <col/>
+   <divCol toCol="4" sub="2" base="3"/>
+   <divCol toCol="7" sub="5" base="6"/>
+  </table>
+ </service>
+ <controller id="xtnyrbFmtter">
+  <formatter id="djgDf" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="5,8"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+  <formatter id="zbdcDf" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="4,7"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="xtnyrbUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="date" value="${cal.date}"/>
+  <context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
+  <context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
+  <callservice id="servXtnyrb"/>
+  <callcontroller id="xtnyrbFmtter"/>
+  <formatterServer id="servDjg" table="${djgResult.matrixNoIds}">
+   <formatter ref="djgDf"/>
+  </formatterServer>
+  <formatterServer id="servZbdc" table="${zbdcResult.matrixNoIds}">
+   <formatter ref="zbdcDf"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>分公司</name>
+    </item>
+    <item>
+     <name>当日完成</name>
+    </item>
+    <item>
+     <name>库存结余</name>
+    </item>
+    <item>
+     <name>月计划</name>
+    </item>
+    <item>
+     <name>月累计完成</name>
+    </item>
+    <item>
+     <name>月度完成比</name>
+    </item>
+    <item>
+     <name>年度计划</name>
+    </item>
+    <item>
+     <name>年度累计完成</name>
+    </item>
+    <item>
+     <name>年度累计完成比</name>
+    </item>
+   </header>
+   <data>${servDjg.result}</data>
+   <zbdc>
+    <header type="array">
+     <item>
+      <name>指标名称</name>
+     </item>
+     <item>
+      <name>当日完成</name>
+     </item>
+     <item>
+      <name>月计划</name>
+     </item>
+     <item>
+      <name>月累计完成</name>
+     </item>
+     <item>
+      <name>月度完成比</name>
+     </item>
+     <item>
+      <name>年度计划</name>
+     </item>
+     <item>
+      <name>年度累计完成</name>
+     </item>
+     <item>
+      <name>年度累计完成比</name>
+     </item>
+    </header>
+    <data>${servZbdc.result}</data>
+   </zbdc>
+  </response>
+ </controller>
+ <controller id="xtnyrbExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="date" value="${cal.date}"/>
+  <context key="year" value="${cal.day &lt;= 25 ? cal.year : cal.nextMonth.year}"/>
+  <context key="month" value="${cal.day &lt;= 25 ? cal.month : cal.nextMonth.month}"/>
+  <callservice id="servXtnyrb"/>
+  <callcontroller id="xtnyrbFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="新能源日报"/>
+  <list id="titleDjg1" type="string">
 			多晶硅产量（吨）,分公司, 当日完成,库存结余,月计划,月累计完成,月度完成比,年度计划,年度累计完成,年度累计完成比
 		</list>
-		<list id="titleDjg2" type="string">多晶硅产量（吨）</list>
-		<list id="titleDjg3" type="string">多晶硅产量（吨）</list>
-		
-		<list id="titleZbdc1" type="string">
+  <list id="titleDjg2" type="string">多晶硅产量（吨）</list>
+  <list id="titleDjg3" type="string">多晶硅产量（吨）</list>
+  <list id="titleZbdc1" type="string">
 			自备电厂电量（万kw·h）, 指标名称, 当日完成,月计划,月累计完成,月度完成比,年度计划,年度累计完成,年度累计完成比
 		</list>
-		<list id="titleZbdc2" type="string">自备电厂电量（万kw·h）</list>
-		<list id="titleZbdc3" type="string">自备电厂电量（万kw·h）</list>
-		<formatter id="excelDig">
-			<ExcelTitleFilter>
-				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="0" col="0"/>
-				<titles>
-					<title ref="titleDjg1"/>
-					<title ref="titleDjg2"/>
-					<title ref="titleDjg3"/>
-				</titles>
-			</ExcelTitleFilter>
-			<ExcelMergeFormatter>
-				<ExcelTemplate ref="excelTemplate"/>
-				<MergeRegion x="0" y="0" width="1" height="3"/>
-			</ExcelMergeFormatter>
-			<ExcelHeaderCenterFormatter>
-				<DefaultMatcher cols="0"/>
-				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="1" col="1"/>
-			</ExcelHeaderCenterFormatter>
-			<ExcelOffsetFormatter>
-				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="1" col="1"/>
-			</ExcelOffsetFormatter>
-		</formatter>
-
-		<formatter id="excelZbdc">
-			<ExcelTitleFilter>
-				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="3" col="0"/>
-				<titles>
-					<title ref="titleZbdc1"/>
-					<title ref="titleZbdc2"/>
-					<title ref="titleZbdc3"/>
-				</titles>
-			</ExcelTitleFilter>
-			<ExcelMergeFormatter>
-				<ExcelTemplate ref="excelTemplate"/>
-				<MergeRegion x="0" y="3" width="1" height="3"/>
-			</ExcelMergeFormatter>
-			<ExcelHeaderCenterFormatter>
-				<DefaultMatcher cols="0"/>
-				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="4" col="1"/>
-			</ExcelHeaderCenterFormatter>
-			<ExcelOffsetFormatter>
-				<ExcelTemplate ref="excelTemplate"/>
-				<Offset row="4" col="1"/>
-			</ExcelOffsetFormatter>
-		</formatter>
-		
-		<formatterServer id="servDig" table="${djgResult.matrixNoIds}">
-			<formatter ref="djgDf"/>
-			<formatter ref="excelDig"/>
-		</formatterServer>
-		<formatterServer id="servZbdc" table="${zbdcResult.matrixNoIds}">
-			<formatter ref="zbdcDf"/>
-			<formatter ref="excelZbdc"/>
-		</formatterServer>
-		
-		<context key="tmp" value="${servDig.result}"/>
-		<response type="excel" ref="excelTemplate" name="${request.date.asString} 新特1232能源日报.xls" serv="servZbdc"/>
-	</controller>
-	
-	<controller id="xtnyrb">		
-		<response type="jsp" name="xtnyrb/xtnyrb"> 
-			<map key="date" value="${calendar.current.format}"/>
-			<map key="updateUrl" value="xtnyrbUpdate"/>
-			<map key="exportUrl" value="xtnyrbExport"/>
-			<map key="title" value="新特能源日报"/>
-		</response>
-	</controller>
+  <list id="titleZbdc2" type="string">自备电厂电量（万kw·h）</list>
+  <list id="titleZbdc3" type="string">自备电厂电量（万kw·h）</list>
+  <formatter id="excelDig">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="titleDjg1"/>
+     <title ref="titleDjg2"/>
+     <title ref="titleDjg3"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="1" height="3"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="1"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="1"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatter id="excelZbdc">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="3" col="0"/>
+    <titles>
+     <title ref="titleZbdc1"/>
+     <title ref="titleZbdc2"/>
+     <title ref="titleZbdc3"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="3" width="1" height="3"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="4" col="1"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="4" col="1"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="servDig" table="${djgResult.matrixNoIds}">
+   <formatter ref="djgDf"/>
+   <formatter ref="excelDig"/>
+  </formatterServer>
+  <formatterServer id="servZbdc" table="${zbdcResult.matrixNoIds}">
+   <formatter ref="zbdcDf"/>
+   <formatter ref="excelZbdc"/>
+  </formatterServer>
+  <context key="tmp" value="${servDig.result}"/>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString} 新特1232能源日报.xls" serv="servZbdc"/>
+ </controller>
+ <controller id="xtnyrb">
+  <response type="jsp" name="xtnyrb/xtnyrb">
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="updateUrl" value="xtnyrbUpdate"/>
+   <map key="exportUrl" value="xtnyrbExport"/>
+   <map key="title" value="新特能源日报"/>
+  </response>
+ </controller>
 </components>

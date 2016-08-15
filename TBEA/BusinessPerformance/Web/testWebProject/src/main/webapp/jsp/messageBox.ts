@@ -15,7 +15,7 @@ module Util {
 
         private static isMSIE: boolean = navigator.appName == "Microsoft Internet Explorer";
 
-        static tip(msg: string, onclose ? : ()=>void): void {
+        static tip(msg: string, onclose ? : ()=>void, timeOut? : number): void {
             var container: any = MessageBox.getContainer();
             if (container.attr("finish") == "true") {
                 $("#self_tip").children().eq(0).text(msg);
@@ -46,6 +46,12 @@ module Util {
                     $("#self_tip").trigger('close');
                 });
            // }
+
+            if (undefined != timeOut){
+                setTimeout(()=>{
+                    $("#self_tip").trigger('close');
+                }, timeOut);
+            }
         }
 
         static selfOk() {

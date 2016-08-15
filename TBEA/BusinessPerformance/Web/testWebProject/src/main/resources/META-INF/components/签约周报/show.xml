@@ -172,15 +172,12 @@
   <response type="excel" ref="excelTemplate" name="签约周报.xls" serv="serv"/>
  </controller>
  <controller id="xnyqyzb">
-  <call id="authCompMap" object="${authManager}" method="getAuthedCompanies">
-   <param type="int">30</param>
-  </call>
   <response type="jsp" name="xnyzb/xnyzb">
    <map key="date" value="${calendar.current.format}"/>
    <map key="updateUrl" value="xnyqyzbUpdate"/>
    <map key="exportUrl" value="xnyqyzbExport"/>
    <map key="title" value="签约周报"/>
-   <map map="${authCompMap}"/>
+   <map map="${authMgr[30]}"/>
   </response>
  </controller>
 </components>

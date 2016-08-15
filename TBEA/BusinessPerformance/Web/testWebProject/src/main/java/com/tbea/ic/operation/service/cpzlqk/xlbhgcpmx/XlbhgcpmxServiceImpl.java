@@ -58,6 +58,7 @@ public class XlbhgcpmxServiceImpl implements XlbhgcpmxService {
 	private List<String> toList(XlBhgwtmxEntity entity) {
 		List<String> row = new ArrayList<String>();
 		row.add(dwmcDao.getByDwid(entity.getDwid()).getDwmc().getName());
+		row.add(entity.getNf() + "年" + entity.getYf() + "月");
 		row.add(entity.getCplx());
 		row.add(entity.getSch());
 		row.add(entity.getCpxh());

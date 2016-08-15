@@ -1,15 +1,48 @@
 ///<reference path="../framework/basic/basic.ts"/>
 ///<reference path="../framework/basic/basicShow.ts"/>
 ///<reference path="cpzlqkdef.ts"/>
+///<reference path="../components/dateSelectorProxy.ts"/>
 
 module cpzlqk {
     import router = framework.router;
     import FrameEvent = framework.basic.FrameEvent;
+    import DateSelector = Util.DateSelector;
 
     class CpzlqkFrameView extends framework.basic.ShowFrameView {
 
         isCompanySupported:boolean = false;
         mYdjdType : YDJDType;
+
+        protected init(opt:any):void {
+            this.mOpt = opt;
+            let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                {year: this.mOpt.date.year - 3, month: 1},
+                {
+                    year: this.mOpt.date.year,
+                    month: 12
+                },
+                {
+                    year: this.mOpt.date.year,
+                    month: this.mOpt.date.month
+                }, false, false);
+            this.mDtSec = dsp;
+
+            this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
+            if (opt.comps.length == 1) {
+                this.mCompanySelector.hide();
+            }
+
+            this.mCompanySelector.change((selector:any, depth:number) => {
+                this.updateTypeSelector();
+            });
+            let inputs = $("#" + (<FrameOption>this.mOpt).contentType).show();
+            inputs.click((e)=>{
+                let node:Util.DataNode = this.triggerYdjdChecked();
+            });
+            this.updateTypeSelector();
+            this.updateUI();
+        }
+
         protected checkCompanySupported() {
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
             let isSupported = router.to(this.plugin(node)).send(Event.ZLFE_IS_COMPANY_SUPPORTED, this.mOpt.comps.length);
@@ -44,21 +77,35 @@ module cpzlqk {
                     if (inputs[i].id == 'rdyd') {
                         this.mYdjdType = YDJDType.YD;
                         router.to(this.plugin(node)).send(Event.ZLFE_YD_SELECTED);
+
+
+                        let dtNow = this.mDtSec.getDate();
+                        $("#" + this.mOpt.dt).empty();
+                        let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                            {year: this.mOpt.date.year - 3, month: 1},
+                            {
+                                year: this.mOpt.date.year,
+                                month: this.mOpt.date.month
+                            },
+                            dtNow, false, false);
+                        this.mDtSec = dsp;
                     } else {
                         this.mYdjdType = YDJDType.JD;
+                        let dtNow = this.mDtSec.getDate();
+                        $("#" + this.mOpt.dt).empty();
+                        let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                            {year: this.mOpt.date.year - 3, month: 1},
+                            {
+                                year: this.mOpt.date.year,
+                                month: this.mOpt.date.month
+                            },
+                            dtNow, false, true);
+                        this.mDtSec = dsp;
                         router.to(this.plugin(node)).send(Event.ZLFE_JD_SELECTED);
                     }
                 }
             }
             return node;
-        }
-
-        protected init(opt:FrameOption):void {
-            super.init(opt);
-            let inputs = $("#" + (<FrameOption>this.mOpt).contentType).show();
-            inputs.click((e)=>{
-                let node:Util.DataNode = this.triggerYdjdChecked();
-            });
         }
 
         protected updateTypeSelector(width:number = 285):boolean {
@@ -72,6 +119,18 @@ module cpzlqk {
                 return true;
             }
             return false;
+        }
+
+        onEvent(e:framework.route.Event):any {
+            switch (e.id) {
+                case Event.ZLFE_SAVE_COMMENT:
+                    router.to(this.mCurrentPlugin).send(Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
+                    break;
+                case Event.ZLFE_COMMENT_UPDATED:
+                    $("#commentText").val(e.data);
+                    break;
+            }
+            return super.onEvent(e);
         }
 
         protected updateUI() {

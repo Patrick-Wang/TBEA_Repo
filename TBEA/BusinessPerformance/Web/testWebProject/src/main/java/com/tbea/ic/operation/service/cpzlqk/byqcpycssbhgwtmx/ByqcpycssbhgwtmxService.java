@@ -8,23 +8,22 @@ import net.sf.json.JSONArray;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.controller.servlet.cpzlqk.ByqBhgType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 
 public interface ByqcpycssbhgwtmxService {
 
 	List<List<String>> getByqcpycssbhgwtmx(Date d,
-			YDJDType yjType, ByqBhgType bhgType);
+			YDJDType yjType);
 
-	List<List<String>> getByqcpycssbhgwtmxEntry(Date d, Company company, ByqBhgType bhgType);
+	List<List<String>> getByqcpycssbhgwtmxEntry(Date d, Company company);
 
 	ErrorCode approveByqcpycssbhgwtmx(Date d, JSONArray data, Company company);
 
-	ZBStatus getStatus(Date d, Company company, ByqBhgType bhgType);
+	ZBStatus getStatus(Date d, Company company);
 
-	ErrorCode submitByqcpycssbhgwtmx(Date d, JSONArray data, Company company, ByqBhgType bhgType);
+	ErrorCode submitByqcpycssbhgwtmx(Date d, JSONArray data, Company company);
 
-	ErrorCode saveByqcpycssbhgwtmx(Date d, JSONArray data, Company company, ByqBhgType bhgType);
+	ErrorCode saveByqcpycssbhgwtmx(Date d, JSONArray data, Company company);
 
 	List<String> getZrlb();
 
@@ -33,7 +32,7 @@ public interface ByqcpycssbhgwtmxService {
 	ErrorCode unapproveByqcpycssbhgwtmx(Date d, JSONArray data, Company company);
 
 	List<List<String>> getByqcpycssbhgwtmx(Date d, YDJDType yjType,
-			ByqBhgType bhgType, Company company);
+			Company company);
 
 
 

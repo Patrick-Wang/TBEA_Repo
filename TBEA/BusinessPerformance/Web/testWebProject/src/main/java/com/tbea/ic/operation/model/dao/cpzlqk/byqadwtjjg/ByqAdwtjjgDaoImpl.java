@@ -35,7 +35,7 @@ public class ByqAdwtjjgDaoImpl extends AbstractReadWriteDaoImpl<ByqAdwtjjgEntity
 
 	@Override
 	public List<ByqAdwtjjgEntity> getByDw(Company company) {
-		Query q = getEntityManager().createQuery("from ByqAdwtjjgEntity where dw != null and dw.id=:dwid");
+		Query q = getEntityManager().createQuery("from ByqAdwtjjgEntity where dwid=:dwid");
 		q.setParameter("dwid", company.getId());
 		return q.getResultList();
 	}

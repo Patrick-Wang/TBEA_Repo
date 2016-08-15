@@ -45,18 +45,36 @@ var cpzlqk;
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../byqacptjjg/update.do", false);
+                this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
+                this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.byqacptjjg;
             };
             ShowView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.SBGS || compType == Util.CompanyType.HBGS
-                    || compType == Util.CompanyType.XBC || compType == Util.CompanyType.TBGS;
+                    || compType == Util.CompanyType.XBC || compType == Util.CompanyType.BYQCY;
             };
             ShowView.prototype.onEvent = function (e) {
                 switch (e.id) {
                     case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
+                    case cpzlqk.Event.ZLFE_SAVE_COMMENT:
+                        var param = {
+                            condition: Util.Ajax.toUrlParam({
+                                url: this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId: this.mCompType,
+                                ydjd: this.mYdjdType
+                            }),
+                            comment: e.data
+                        };
+                        this.mCommentSubmit.get({
+                            data: JSON.stringify([[param.condition, param.comment]])
+                        }).then(function (jsonData) {
+                            Util.MessageBox.tip("保存成功", undefined);
+                        });
+                        break;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
@@ -74,6 +92,17 @@ var cpzlqk;
                 var _this = this;
                 this.mDt = date;
                 this.mCompType = compType;
+                this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: date,
+                        companyId: compType,
+                        ydjd: this.mYdjdType
+                    }) }).then(function (jsonData) {
+                    framework.router
+                        .fromEp(_this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
+                });
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
@@ -84,32 +113,87 @@ var cpzlqk;
                     _this.refresh();
                 });
             };
+            ShowView.prototype.toCtVal = function (val) {
+                var index = val.lastIndexOf('%');
+                if (index >= 0) {
+                    return val.substring(0, index);
+                }
+                return val == '--' ? 0 : val;
+            };
             ShowView.prototype.updateEchart = function () {
                 var title = "按产品统计结果";
                 var legend = [];
                 var echart = this.option().ct;
                 var series = [];
-                for (var i in this.mData.waveItems) {
-                    legend.push(this.mData.waveItems[i].name);
+                var xData = [];
+                var tooltip = {
+                    trigger: 'axis',
+                    formatter: function (params) {
+                        var ret = params[0][1];
+                        for (var i = 0; i < params.length; ++i) {
+                            ret += "<br/>" + params[i][0] + ' : ' + params[i][2] + "%";
+                        }
+                        return ret;
+                    }
+                };
+                var yAxis = [
+                    {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value} %'
+                        }
+                    }
+                ];
+                if (this.mYdjdType == cpzlqk.YDJDType.YD) {
+                    for (var i in this.mData.waveItems) {
+                        legend.push(this.mData.waveItems[i].name);
+                        var data = [];
+                        for (var j = 0; j < this.mData.waveItems[i].data.length; ++j) {
+                            data.push((parseFloat("" + this.mData.waveItems[i].data[j]) * 100).toFixed(1));
+                        }
+                        series.push({
+                            name: this.mData.waveItems[i].name,
+                            type: 'line',
+                            smooth: true,
+                            // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data: data
+                        });
+                    }
+                    for (var i = 0; i < 12; ++i) {
+                        xData.push((i + 1) + "月");
+                    }
+                }
+                else {
+                    var dy = [];
+                    var qntq = [];
+                    for (var i = 0; i < this.mData.tjjg.length; ++i) {
+                        if (this.mData.tjjg[i][1].replace(/\s/g, "") == "合计") {
+                            xData.push(this.mData.tjjg[i][0]);
+                            dy.push(this.toCtVal(this.mData.tjjg[i][4]));
+                            qntq.push(this.toCtVal(this.mData.tjjg[i][7]));
+                        }
+                    }
+                    legend = ["当月", "去年同期"];
                     series.push({
-                        name: this.mData.waveItems[i].name,
-                        type: 'line',
+                        name: legend[0],
+                        type: 'bar',
                         smooth: true,
                         // itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                        data: this.mData.waveItems[i].data
+                        data: dy
                     });
-                }
-                var xData = [];
-                for (var i = 0; i < 12; ++i) {
-                    xData.push((i + 1) + "月");
+                    series.push({
+                        name: legend[1],
+                        type: 'bar',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: qntq
+                    });
                 }
                 var option = {
                     title: {
                         text: title
                     },
-                    tooltip: {
-                        trigger: 'axis'
-                    },
+                    tooltip: tooltip,
                     legend: {
                         data: legend
                     },
@@ -120,15 +204,11 @@ var cpzlqk;
                     xAxis: [
                         {
                             type: 'category',
-                            boundaryGap: false,
+                            boundaryGap: this.mYdjdType == cpzlqk.YDJDType.YD ? false : true,
                             data: xData.length < 1 ? [0] : xData
                         }
                     ],
-                    yAxis: [
-                        {
-                            type: 'value'
-                        }
-                    ],
+                    yAxis: yAxis,
                     series: series
                 };
                 echarts.init(this.$(echart)[0]).setOption(option);
@@ -138,13 +218,8 @@ var cpzlqk;
                     return;
                 }
                 this.updateTable();
-                if (this.mYdjdType == cpzlqk.YDJDType.YD) {
-                    this.$(this.option().ctarea).show();
-                    this.updateEchart();
-                }
-                else {
-                    this.$(this.option().ctarea).hide();
-                }
+                this.$(this.option().ctarea).show();
+                this.updateEchart();
             };
             ShowView.prototype.init = function (opt) {
                 framework.router

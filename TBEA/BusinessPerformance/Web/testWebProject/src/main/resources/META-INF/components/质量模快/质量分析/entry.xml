@@ -1,0 +1,44 @@
+<components>
+ <service id="servZlfxUpdate" transaction="transactionManager">
+  <sql id="comment" export="true">select
+ comment
+from
+ cpzlqk_zlfx
+where
+ condition=${condition}</sql>
+ </service>
+ <service id="servZlfxSubmit" transaction="transactionManager">
+  <merge data="data" table="cpzlqk_zlfx">
+   <where>
+    <condition type="string" ref="0"/>
+   </where>
+   <set>
+    <condition type="string" ref="0"/>
+    <comment type="string" ref="1"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="zlfxUpdate">
+  <context key="condition" value="${request.condition.asString}"/>
+  <context key="type" value="${request.type.asString}"/>
+  <callservice id="servZlfxUpdate"/>
+  <if test="${comment.isEmpty}">
+   <response type="json">
+    <comment>${&quot;&quot;}</comment>
+   </response>
+  </if>
+  <if test="${!comment.isEmpty}">
+   <response type="json">
+    <comment>${comment[0]}</comment>
+   </response>
+  </if>
+ </controller>
+ <controller id="zlfxSubmit">
+  <context key="data" value="${request.data.asJsonArray}"/>
+  <callservice id="servZlfxSubmit"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+</components>

@@ -33,7 +33,8 @@ public class ByqBhgwtmxEntity extends AbstractReadWriteEntity implements Seriali
 	Integer nf;
 	Integer yf;
 	Integer dwid;
-	Integer tjfs;//  --0  --> 110kv 以上   1 --> 配变产品
+	//不需要统计方式
+	//Integer tjfs;//  --0  --> 110kv 以上   1 --> 配变产品
 	String cplx;
 	String sch;
 	String cpxh;
@@ -62,12 +63,12 @@ public class ByqBhgwtmxEntity extends AbstractReadWriteEntity implements Seriali
 	public void setDwid(Integer dwid) {
 		this.dwid = dwid;
 	}
-	public Integer getTjfs() {
-		return tjfs;
-	}
-	public void setTjfs(Integer tjfs) {
-		this.tjfs = tjfs;
-	}
+//	public Integer getTjfs() {
+//		return tjfs;
+//	}
+//	public void setTjfs(Integer tjfs) {
+//		this.tjfs = tjfs;
+//	}
 	public String getCplx() {
 		return cplx;
 	}

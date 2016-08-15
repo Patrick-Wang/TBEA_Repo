@@ -56,7 +56,6 @@ module cpzlqk {
             protected isSupported(compType:Util.CompanyType):boolean {
                 if (compType == Util.CompanyType.SBGS ||
                     compType == Util.CompanyType.HBGS ||
-                    compType == Util.CompanyType.TBGS ||
                     compType == Util.CompanyType.XBC){
                     return true;
                 }
@@ -91,8 +90,7 @@ module cpzlqk {
                 this.mAjaxSave.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType,
-                    bhgType:this.getBhglx()
+                    companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("保存 成功", ()=>{
@@ -121,8 +119,7 @@ module cpzlqk {
                 this.mAjaxSubmit.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType,
-                    bhgType:this.getBhglx()
+                    companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("提交 成功", ()=>{
@@ -139,8 +136,7 @@ module cpzlqk {
                 this.mCompType = compType;
                 this.mAjaxUpdate.get({
                         date: date,
-                        companyId: compType,
-                        bhgType:this.getBhglx()
+                        companyId: compType
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
@@ -152,6 +148,10 @@ module cpzlqk {
                 if (this.mData == undefined) {
                     return;
                 }
+
+                framework.router
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(Event.ZLFE_DATA_STATUS, this.mData.status);
 
                 this.updateTable();
             }

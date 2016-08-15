@@ -35,6 +35,7 @@ public class ByqYdAcptjjgEntity extends AbstractReadWriteEntity implements Seria
 	NameEntity cpdl;
 	NameEntity cpxl;
 	
+	String formul;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cpdl")
 	public NameEntity getCpdl() {
@@ -51,5 +52,11 @@ public class ByqYdAcptjjgEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void setCpxl(NameEntity cpxl) {
 		this.cpxl = cpxl;
+	}
+	public String getFormul() {
+		return formul;
+	}
+	public void setFormul(String formul) {
+		this.formul = formul;
 	}
 }

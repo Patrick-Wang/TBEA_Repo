@@ -52,7 +52,6 @@ module cpzlqk {
             protected isSupported(compType:Util.CompanyType):boolean {
                 if (compType == Util.CompanyType.SBGS ||
                     compType == Util.CompanyType.HBGS ||
-                    compType == Util.CompanyType.TBGS ||
                     compType == Util.CompanyType.XBC){
                     return true;
                 }
@@ -72,8 +71,7 @@ module cpzlqk {
                 this.mAjaxApprove.post({
                     date: dt,
                     data: JSON.stringify(submitData),
-                    companyId: compType,
-                    bhgType:this.getBhglx()
+                    companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("审核 成功", ()=>{
@@ -92,8 +90,7 @@ module cpzlqk {
                 this.mCompType = compType;
                 this.mAjaxUpdate.get({
                         date: date,
-                        companyId: compType,
-                        bhgType:this.getBhglx()
+                        companyId: compType
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
