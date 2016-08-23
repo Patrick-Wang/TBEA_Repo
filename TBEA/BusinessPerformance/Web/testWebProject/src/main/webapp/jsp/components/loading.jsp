@@ -56,7 +56,7 @@
 			} */
         	ajaxbg.hide(); 
         	$(document).ajaxStart(function () { 
-        		ajaxbg.show();    
+        		    
 /*         		if (navigator.appName == "Microsoft Internet Explorer"){
         			$("table,input,select, h1").each(function(index, e){e.disabled = true;});	
         			$("#progressBar table")[0].disabled = false;
@@ -65,22 +65,23 @@
                 	$("#background").css("height", document.body.scrollHeight + "px");
                 	$("#background").css("width", document.body.scrollWidth + "px");
       			} */
-    			$("#background").css("height", '100%');
-                $("#background").css("width", '100%');
+    			//$("#background").css("height", '100%');
+                //$("#background").css("width", '100%');
+        		$("#background").css("height", document.body.scrollHeight + "px");
+            	$("#background").css("width", document.body.scrollWidth + "px");
+            	ajaxbg.show();
         	}).ajaxStop(function () { 
         		ajaxbg.hide(); 
 /*         		if (navigator.appName == "Microsoft Internet Explorer"){
         			$("table,input,select, h1").each(function(index, e){e.disabled = false;});
       			} */
-    			$("#background").css("height", '100%');
-                $("#background").css("width", '100%');
-        	}); 
+         	}); 
 
         	$(window).resize(function(){
         		if (navigator.appName != "Microsoft Internet Explorer"){
         			
         		}
-        		$("#background").css("height", '100%');
-                $("#background").css("width", '100%');
+        		$("#background").css("height", document.body.scrollHeight + "px");
+            	$("#background").css("width", document.body.scrollWidth + "px");
         	})
 </script>

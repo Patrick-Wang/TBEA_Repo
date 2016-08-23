@@ -58,3 +58,6 @@ TBEA/MasterData/hrm/venv/
 TBEA/MasterData/hrm/.idea
 *.pyc
 *.xml~
+*.class
+*.class
+*.class

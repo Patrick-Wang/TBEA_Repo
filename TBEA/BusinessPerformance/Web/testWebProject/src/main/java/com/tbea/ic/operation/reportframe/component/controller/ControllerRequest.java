@@ -87,7 +87,10 @@ public class ControllerRequest extends PropMap{
 		this.req = req;
 	}
 
-
+	public HttpServletRequest getRequest(){
+		return req;
+	}
+	
 	public ServletContext getServletContext(){
 		return req.getSession().getServletContext();
 	}

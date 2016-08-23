@@ -36,6 +36,7 @@ public class EasyCalendar {
 	private static final Integer KEY_SeasonEnd = count++;
 	private static final Integer KEY_NextSeason = count++;
 	private static final Integer KEY_LastSeason = count++;
+	private static final Integer KEY_Format_Month = count++;
 	
 	private Object cache(Integer key, Object val){
 		cache.put(key, val);
@@ -72,6 +73,13 @@ public class EasyCalendar {
 		super();
 		this.cal = Calendar.getInstance();
 		cal.setTime(d);
+	}
+	
+	public String getMonthFormat(){
+		if (cache.containsKey(KEY_Format_Month)){
+			return (String) cache.get(KEY_Format_Month);
+		}
+		return (String) cache(KEY_Format_Month, Util.formatToMonth(this.getDate()));
 	}
 	
 	public String getFormat(){

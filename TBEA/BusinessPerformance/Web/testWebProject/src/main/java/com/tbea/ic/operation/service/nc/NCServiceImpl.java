@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +22,7 @@ import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.model.dao.dzwzgb.dzclkcb.TqbzYjjDao;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.dao.nc.NCZBDao;
@@ -41,6 +41,9 @@ public class NCServiceImpl implements NCService {
 	@Autowired
 	ZBXXDao zbxxDao;
 
+	@Autowired
+	TqbzYjjDao hrDao;
+	
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
@@ -196,6 +199,12 @@ public class NCServiceImpl implements NCService {
 	@Override
 	public List<NCZB> getNCZBByDate(int nf, int yf) {
 		return nczbDao.getNCZBByDate(nf, yf);
+	}
+
+	@Override
+	public List<Object[]> get15DBRs(Date d) {
+		List<Object[]> rs = hrDao.getRsByDate(d);
+		return rs;
 	}
 
 }

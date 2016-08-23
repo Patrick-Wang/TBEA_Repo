@@ -134,7 +134,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 					JSONArray jrow = List2Json(objs.get(i));
 					merge(em, table, jrow, where, set);
 				}
-			} 
+			}
 		}
 		
 		return true;
@@ -142,10 +142,20 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 
 	
 	
-	private JSONArray List2Json(List<Object> objs) {
+	private JSONArray List2Json(Object objs) {
 		JSONArray jrow = new JSONArray();
-		for (Object obj : objs){
-			jrow.add(obj);
+		if (objs.getClass().isArray()){
+			Object[] arr = (Object[]) objs;
+			for(int i = 0; i < arr.length; ++i){
+				jrow.add(arr[i]);
+			}
+		}else if (objs instanceof List){
+			List<Object> list = (List<Object>) objs;
+			for (Object obj : list){
+				jrow.add(obj);
+			}
+		}else{
+			System.out.println("List2Json type error : " + objs);
 		}
 		return jrow;
 	}
@@ -263,7 +273,6 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			}
 		}
 		doUpdate(em, table, row, where, set);
-		
 	}
 
 	private void doInsert(EntityManager em, String table, JSONArray row,
@@ -343,9 +352,6 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		}else{
 			doInsert(em, table, row, where, set);
 		}
-		
-		
-		
 	}
 
 	private FieldSql compileElement(Element elem) throws Exception{

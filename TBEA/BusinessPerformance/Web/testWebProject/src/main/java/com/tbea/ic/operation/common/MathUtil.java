@@ -15,6 +15,20 @@ public class MathUtil {
 		return ret;
 	}
 	
+	public static Integer sum(Integer[] vals){
+		Integer ret = null;
+		for (int i = 0; i < vals.length; ++i){
+			if (vals[i] != null){
+				if (ret == null){
+					ret = vals[i];
+				}else{
+					ret += vals[i];
+				}
+			}
+		}
+		return ret;
+	}
+	
 	public static Double sum(Double val1, Double val2){
 		Double ret = val1;
 		if (val2 != null){

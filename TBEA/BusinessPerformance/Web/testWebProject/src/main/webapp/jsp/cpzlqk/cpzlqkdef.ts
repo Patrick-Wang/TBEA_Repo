@@ -45,6 +45,12 @@ module cpzlqk{
         export let ZLFE_SAVE_COMMENT : number = FrameEvent.lastEvent();
         export let ZLFE_COMMENT_UPDATED : number = FrameEvent.lastEvent();
         export let ZLFE_DATA_STATUS : number = FrameEvent.lastEvent();
+        export let ZLFE_COMMENT_DENY : number = FrameEvent.lastEvent();
     }
 
+    export enum NwbzlType {
+        ZT,
+        SJZL,
+        SCZZ
+    }
 }

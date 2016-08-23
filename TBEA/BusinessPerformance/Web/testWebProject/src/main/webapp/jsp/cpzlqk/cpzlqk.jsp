@@ -203,11 +203,23 @@ th.ui-th-ltr {
 				<%@include file="byqcpycssbhgxxfb/byqcpycssbhgxxfb.jsp"%>
 				<%@include file="pdcpycssbhgxxfb/pdcpycssbhgxxfb.jsp"%>
 				<%@include file="xlbhgcpmx/xlbhgcpmx.jsp"%>
+				<%@include file="byqnwbzlztqk/byqnwbzlztqk.jsp"%>
+				<%@include file="xlnwbzlztqk/xlnwbzlztqk.jsp"%>
+				<%@include file="pdnwbzlztqk/pdnwbzlztqk.jsp"%>
+				<%@include file="byqsjzlqk/byqsjzlqk.jsp"%>
+				<%@include file="xlgyzlqk/xlgyzlqk.jsp"%>
+				<%@include file="pdsjzlqk/pdsjzlqk.jsp"%>
+				<%@include file="byqyclzlwt/byqyclzlwt.jsp"%>
+				<%@include file="xlyclzlwt/xlyclzlwt.jsp"%>
+				<%@include file="byqsczzzlwt/byqsczzzlwt.jsp"%>
+				<%@include file="xlsczzzlwt/xlsczzzlwt.jsp"%>
+				<%@include file="pdsczzzlwt/pdsczzzlwt.jsp"%>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<div id="comment">
+				<div id="comment" style="display:none">
+					<div style="font-size:18px;font-weight:bold">问题分析</div>
 					<textarea id="commentText" cols="20" rows="5" style="width:100%;resize: none;margin-bottom:5px"></textarea>
 					<input type="button" id="saveComment" value="保存" style="float:left;width:90px"
 						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_SAVE_COMMENT)">

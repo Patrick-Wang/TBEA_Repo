@@ -9,4 +9,6 @@ import com.tbea.ic.operation.model.entity.dzwzgb.TqbzYjjEntity;
 public interface TqbzYjjDao {
 	List<TqbzYjjEntity> getByDate(Date d);
 
+	List<Object[]> getRsByDate(Date d);
+
 }

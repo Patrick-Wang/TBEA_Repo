@@ -80,7 +80,7 @@ var cpzlqk;
                         $("#" + this.mOpt.dt).empty();
                         var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
                             year: this.mOpt.date.year,
-                            month: this.mOpt.date.month
+                            month: 12
                         }, dtNow, false, false);
                         this.mDtSec = dsp;
                     }
@@ -90,7 +90,7 @@ var cpzlqk;
                         $("#" + this.mOpt.dt).empty();
                         var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
                             year: this.mOpt.date.year,
-                            month: this.mOpt.date.month
+                            month: 12
                         }, dtNow, false, true);
                         this.mDtSec = dsp;
                         router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_JD_SELECTED);
@@ -116,10 +116,14 @@ var cpzlqk;
         CpzlqkFrameView.prototype.onEvent = function (e) {
             switch (e.id) {
                 case cpzlqk.Event.ZLFE_SAVE_COMMENT:
-                    router.to(this.mCurrentPlugin).send(cpzlqk.Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
+                    //router.to(this.mCurrentPlugin).send(Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
+                    break;
+                case cpzlqk.Event.ZLFE_COMMENT_DENY:
+                    //$("#comment").hide();
                     break;
                 case cpzlqk.Event.ZLFE_COMMENT_UPDATED:
-                    $("#commentText").val(e.data);
+                    //$("#comment").show();
+                    //$("#commentText").val(e.data);
                     break;
             }
             return _super.prototype.onEvent.call(this, e);

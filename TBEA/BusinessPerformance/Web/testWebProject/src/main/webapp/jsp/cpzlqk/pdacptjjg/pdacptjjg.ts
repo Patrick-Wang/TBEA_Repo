@@ -95,11 +95,18 @@ module cpzlqk {
                     date: date,
                     companyId:compType,
                     ydjd:this.mYdjdType
-                })}).then((jsonData:any)=>{
-                    framework.router
-                        .fromEp(this)
-                        .to(framework.basic.endpoint.FRAME_ID)
-                        .send(Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
+                }),compId:compType}).then((jsonData:any)=>{
+                    if (jsonData.deny == "deny"){
+                        framework.router
+                            .fromEp(this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(Event.ZLFE_COMMENT_DENY);
+                    }else {
+                        framework.router
+                            .fromEp(this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
+                    }
                 });
                 this.mAjax.get({
                         date: date,

@@ -79,11 +79,19 @@ var cpzlqk;
                         date: date,
                         companyId: compType,
                         ydjd: this.mYdjdType
-                    }) }).then(function (jsonData) {
-                    framework.router
-                        .fromEp(_this)
-                        .to(framework.basic.endpoint.FRAME_ID)
-                        .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
+                    }), compId: compType }).then(function (jsonData) {
+                    if (jsonData.deny == "deny") {
+                        framework.router
+                            .fromEp(_this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(cpzlqk.Event.ZLFE_COMMENT_DENY);
+                    }
+                    else {
+                        framework.router
+                            .fromEp(_this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
+                    }
                 });
                 this.mAjax.get({
                     date: date,

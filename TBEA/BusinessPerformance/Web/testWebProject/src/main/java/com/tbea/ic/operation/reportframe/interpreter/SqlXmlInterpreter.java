@@ -9,7 +9,6 @@ import javax.persistence.Query;
 
 import org.w3c.dom.Element;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.reportframe.el.ELExpression;
@@ -20,7 +19,7 @@ import com.tbea.ic.operation.reportframe.util.XmlUtil;
 public class SqlXmlInterpreter implements XmlInterpreter {
 
 	ELParser el;
-	List parseElSql(String sql, EntityManager em){
+	Query parseElSql(String sql, EntityManager em){
 		List<ELExpression> elexps = el.parser(sql);
 		List<Object> objs = new ArrayList<Object>();
 		for (int i = elexps.size() - 1; i >= 0; --i){
@@ -42,7 +41,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		}
 		
 		System.out.println(" ");
-		return q.getResultList();
+		return q;
 	}
 	
 	private int find(List<Object[]> sqlRet, Object val, int by){
@@ -66,22 +65,29 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			throw new Exception("请指定 transaction " + e.toString());
 		}
 		el = new ELParser(component);
-		List sqlRet = parseElSql(
+		Query q = parseElSql(
 				e.getFirstChild().getTextContent(),
 				tx.getEntityManager());
 		
-		if (!sqlRet.isEmpty()){
-			if (null != sqlRet.get(0) && sqlRet.get(0).getClass().isArray()){
-				for (Object[] objs : (List<Object[]>)sqlRet){
-					for (int i = 0; i < objs.length; ++i){
-						if (objs[i] instanceof BigDecimal){
-							objs[i] = ((BigDecimal)objs[i]).doubleValue();
-						}else if (objs[i] instanceof Long){
-							objs[i] = ((Long)objs[i]).intValue();
-						}
+		if (!e.hasAttribute("id")){
+			q.executeUpdate();
+			return true;
+		}
+		
+		List sqlRet = q.getResultList();
+		if (!sqlRet.isEmpty() &&
+			null != sqlRet.get(0) &&
+			sqlRet.get(0).getClass().isArray()){
+			for (Object[] objs : (List<Object[]>)sqlRet){
+				for (int i = 0; i < objs.length; ++i){
+					if (objs[i] instanceof BigDecimal){
+						objs[i] = ((BigDecimal)objs[i]).doubleValue();
+					}else if (objs[i] instanceof Long){
+						objs[i] = ((Long)objs[i]).intValue();
 					}
 				}
 			}
+
 		}
 		
 		List order = (List) component.getVar(e.getAttribute("order"));
@@ -102,7 +108,6 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 				sqlRet = objs;
 			}
 		}
-		
 		component.put(e, sqlRet);
 		return true;
 	}

@@ -129,7 +129,7 @@ public enum CompanyType {
 	XBGJCTGCGS		("新变国际成套工程公司"),
 	XBGNGCJXGS		("新变国内工程检修公司"),
 	XBGS		("箱变公司"),
-	XBXBGS		("新变箱变公司"),
+	XBXBGS		("特变电工智能电气有限责任公司"),
 	XBZTGS		("新变中特公司"),
 	XDWLGS		("现代物流公司"),
 	XJFGS		("新疆分公司"),

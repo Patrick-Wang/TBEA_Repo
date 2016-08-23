@@ -70,7 +70,6 @@ public class Controller extends AbstractXmlComponent {
 					}
 				}
 			}
-			
 		});
 	}
 

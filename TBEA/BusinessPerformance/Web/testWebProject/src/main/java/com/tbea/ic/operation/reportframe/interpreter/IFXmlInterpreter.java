@@ -18,8 +18,10 @@ public class IFXmlInterpreter implements XmlInterpreter {
 				NamedNodeMap nnm = component.getConfig().getAttributes();
 				for (int i = 0; i < nnm.getLength(); ++i){
 					String name = nnm.item(i).getNodeName();
-					String value = nnm.item(i).getNodeValue();
-					e.setAttribute(name, value);
+					if (!e.hasAttribute(name)){
+						String value = nnm.item(i).getNodeValue();
+						e.setAttribute(name, value);
+					}
 				}
 				component.clone(e).run(component.globalContext());
 			}

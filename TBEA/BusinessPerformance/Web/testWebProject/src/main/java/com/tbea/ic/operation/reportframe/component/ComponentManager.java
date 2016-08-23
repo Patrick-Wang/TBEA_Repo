@@ -20,6 +20,7 @@ import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.common.DataNode.Visitor;
 import com.tbea.ic.operation.reportframe.component.ComponentLoader.ComponentLoadedListener;
 import com.tbea.ic.operation.reportframe.component.controller.Controller;
+import com.tbea.ic.operation.reportframe.component.controller.Scheduler;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.reportframe.component.service.Service;
 
@@ -51,15 +52,17 @@ public class ComponentManager implements ComponentLoadedListener {
 
 	ComponentLoader loader;
 	ComponentStructureBuilder csb = new ComponentStructureBuilder();
+	Scheduler scheduler;
 	Map<String, Config> serviceMap = Collections
 			.synchronizedMap(new HashMap<String, Config>());
 	Map<String, Config> controllerMap = Collections
 			.synchronizedMap(new HashMap<String, Config>());
 
-	public ComponentManager() {
+	public ComponentManager(Scheduler scheduler) {
  		loader = new ComponentLoader();
  		loader.addListener(this);
  		loader.addListener(csb);
+ 		this.scheduler = scheduler;
 		loader.load();
 	}
 
@@ -76,7 +79,10 @@ public class ComponentManager implements ComponentLoadedListener {
 		if (node.getData().getId() == ComponentStructureBuilder.SERVICE){
 			serviceMap.remove(node.getData().getValue());
 		}else if (node.getData().getId() == ComponentStructureBuilder.CONTROLLER){
-			controllerMap.remove(node.getData().getValue());
+			Element e = (Element) controllerMap.remove(node.getData().getValue());
+			if (e.hasAttribute("cron")){
+				QuartzManager.removeJob(node.getData().getValue());
+			}
 		}
 	}
 	
@@ -194,6 +200,12 @@ public class ComponentManager implements ComponentLoadedListener {
 	@Override
 	public void onController(String id, Element e, String path) {
 		if (null != id) {
+			if (e.hasAttribute("cron")){
+				QuartzManager.addJob(id, 
+						this.scheduler.getClass().getName(), 
+						e.getAttribute("cron"));
+				QuartzManager.startJobs();
+			}
 			controllerMap.put(id,  new Config(e, path));
 		}
 	}

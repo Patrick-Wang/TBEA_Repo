@@ -77,15 +77,13 @@ module cpzlqk {
                     if (inputs[i].id == 'rdyd') {
                         this.mYdjdType = YDJDType.YD;
                         router.to(this.plugin(node)).send(Event.ZLFE_YD_SELECTED);
-
-
                         let dtNow = this.mDtSec.getDate();
                         $("#" + this.mOpt.dt).empty();
                         let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
                             {year: this.mOpt.date.year - 3, month: 1},
                             {
                                 year: this.mOpt.date.year,
-                                month: this.mOpt.date.month
+                                month: 12
                             },
                             dtNow, false, false);
                         this.mDtSec = dsp;
@@ -97,7 +95,7 @@ module cpzlqk {
                             {year: this.mOpt.date.year - 3, month: 1},
                             {
                                 year: this.mOpt.date.year,
-                                month: this.mOpt.date.month
+                                month: 12
                             },
                             dtNow, false, true);
                         this.mDtSec = dsp;
@@ -124,10 +122,14 @@ module cpzlqk {
         onEvent(e:framework.route.Event):any {
             switch (e.id) {
                 case Event.ZLFE_SAVE_COMMENT:
-                    router.to(this.mCurrentPlugin).send(Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
+                    //router.to(this.mCurrentPlugin).send(Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
+                    break;
+                case Event.ZLFE_COMMENT_DENY:
+                    //$("#comment").hide();
                     break;
                 case Event.ZLFE_COMMENT_UPDATED:
-                    $("#commentText").val(e.data);
+                    //$("#comment").show();
+                    //$("#commentText").val(e.data);
                     break;
             }
             return super.onEvent(e);

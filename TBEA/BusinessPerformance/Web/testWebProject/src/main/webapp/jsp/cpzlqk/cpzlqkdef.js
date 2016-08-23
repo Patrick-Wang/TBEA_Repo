@@ -19,5 +19,12 @@ var cpzlqk;
         Event.ZLFE_SAVE_COMMENT = FrameEvent.lastEvent();
         Event.ZLFE_COMMENT_UPDATED = FrameEvent.lastEvent();
         Event.ZLFE_DATA_STATUS = FrameEvent.lastEvent();
+        Event.ZLFE_COMMENT_DENY = FrameEvent.lastEvent();
     })(Event = cpzlqk.Event || (cpzlqk.Event = {}));
+    (function (NwbzlType) {
+        NwbzlType[NwbzlType["ZT"] = 0] = "ZT";
+        NwbzlType[NwbzlType["SJZL"] = 1] = "SJZL";
+        NwbzlType[NwbzlType["SCZZ"] = 2] = "SCZZ";
+    })(cpzlqk.NwbzlType || (cpzlqk.NwbzlType = {}));
+    var NwbzlType = cpzlqk.NwbzlType;
 })(cpzlqk || (cpzlqk = {}));
