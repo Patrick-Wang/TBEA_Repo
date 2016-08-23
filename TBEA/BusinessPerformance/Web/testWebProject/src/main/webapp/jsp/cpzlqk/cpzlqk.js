@@ -116,14 +116,14 @@ var cpzlqk;
         CpzlqkFrameView.prototype.onEvent = function (e) {
             switch (e.id) {
                 case cpzlqk.Event.ZLFE_SAVE_COMMENT:
-                    //router.to(this.mCurrentPlugin).send(Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
+                    router.to(this.mCurrentPlugin).send(cpzlqk.Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
                     break;
                 case cpzlqk.Event.ZLFE_COMMENT_DENY:
-                    //$("#comment").hide();
+                    $("#comment").hide();
                     break;
                 case cpzlqk.Event.ZLFE_COMMENT_UPDATED:
-                    //$("#comment").show();
-                    //$("#commentText").val(e.data);
+                    $("#comment").show();
+                    $("#commentText").val(e.data);
                     break;
             }
             return _super.prototype.onEvent.call(this, e);

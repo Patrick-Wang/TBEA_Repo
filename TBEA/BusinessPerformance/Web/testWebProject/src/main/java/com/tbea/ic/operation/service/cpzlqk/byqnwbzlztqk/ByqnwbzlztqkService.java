@@ -57,4 +57,12 @@ public interface ByqnwbzlztqkService {
 
 	List<WaveItem> getWaveItemsSczzzlqk(Date d, YDJDType yjType, Company company);
 
+	List<List<String>> getJdSczzzlqkxxxx(Date d);
+
+	List<List<String>> getYdSczzzlqkxxxx(Date d);
+
+	List<List<String>> getJdSczzzlqkxxxx(Date d, Company company);
+
+	List<List<String>> getYdSczzzlqkxxxx(Date d, Company company);
+
 }

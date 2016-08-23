@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.model.dao.cpzlqk.wbzlztqk;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
@@ -52,4 +53,10 @@ public interface WbyclzlwtDao extends AbstractReadWriteDao<WbyclzlwtEntity> {
 	Integer getSczzzlqkCount(Date date, List<Company> subCompanies);
 
 	Integer getSczzzlqkCount(Date d, Company company);
+
+	List<String> getXmgs(Company company);
+
+	Integer getSczzzlqkxxxxCount(Date d, Company company, String gs);
+
+	Integer getSczzzlqkxxxxCount(Date date, Date d, Company company, String gs);
 }

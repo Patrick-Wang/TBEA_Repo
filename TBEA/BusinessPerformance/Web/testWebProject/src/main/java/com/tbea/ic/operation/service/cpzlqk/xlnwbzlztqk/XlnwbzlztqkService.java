@@ -55,4 +55,12 @@ public interface XlnwbzlztqkService {
 	List<List<String>> getYdSczzzlqk(Date d, Company company);
 
 	List<WaveItem> getWaveItemsSczzzlqk(Date d, YDJDType yjType, Company company);
+
+	List<List<String>> getJdSczzzlqkxxxx(Date d);
+
+	List<List<String>> getYdSczzzlqkxxxx(Date d);
+
+	List<List<String>> getJdSczzzlqkxxxx(Date d, Company company);
+
+	List<List<String>> getYdSczzzlqkxxxx(Date d, Company company);
 }

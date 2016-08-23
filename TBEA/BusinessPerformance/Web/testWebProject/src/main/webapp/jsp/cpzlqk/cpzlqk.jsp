@@ -203,17 +203,6 @@ th.ui-th-ltr {
 				<%@include file="byqcpycssbhgxxfb/byqcpycssbhgxxfb.jsp"%>
 				<%@include file="pdcpycssbhgxxfb/pdcpycssbhgxxfb.jsp"%>
 				<%@include file="xlbhgcpmx/xlbhgcpmx.jsp"%>
-				<%@include file="byqnwbzlztqk/byqnwbzlztqk.jsp"%>
-				<%@include file="xlnwbzlztqk/xlnwbzlztqk.jsp"%>
-				<%@include file="pdnwbzlztqk/pdnwbzlztqk.jsp"%>
-				<%@include file="byqsjzlqk/byqsjzlqk.jsp"%>
-				<%@include file="xlgyzlqk/xlgyzlqk.jsp"%>
-				<%@include file="pdsjzlqk/pdsjzlqk.jsp"%>
-				<%@include file="byqyclzlwt/byqyclzlwt.jsp"%>
-				<%@include file="xlyclzlwt/xlyclzlwt.jsp"%>
-				<%@include file="byqsczzzlwt/byqsczzzlwt.jsp"%>
-				<%@include file="xlsczzzlwt/xlsczzzlwt.jsp"%>
-				<%@include file="pdsczzzlwt/pdsczzzlwt.jsp"%>
 			</td>
 		</tr>
 		<tr>

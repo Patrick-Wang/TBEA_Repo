@@ -296,4 +296,41 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
 	}
+
+	@Override
+	public List<String> getXmgs(Company company) {
+		Query q = getEntityManager().createQuery(
+				"select responsibility_department from NbyclzlwtEntity where company_name = :comp " +
+				"group by responsibility_department");
+		q.setParameter("comp", company.getName());
+		return q.getResultList();
+	}
+	
+	
+
+	@Override
+	public Integer getSczzzlqkxxxxCount(Date d, Company comp, String gs) {
+		Query q = getEntityManager().createQuery(
+				"select count(*) from NbyclzlwtEntity where company_name = :comp and " +
+				"datediff(mm, issue_happen_date, :date) = 0 and " + 
+				"responsibility_department = :gs ");
+		q.setParameter("comp", comp.getName());
+		q.setParameter("date", d);
+		q.setParameter("gs", gs);
+		return ((Long)q.getResultList().get(0)).intValue();
+	}
+
+	@Override
+	public Integer getSczzzlqkxxxxCount(Date date, Date d, Company comp, String gs) {
+		Query q = getEntityManager().createQuery(
+				"select count(*) from NbyclzlwtEntity where company_name = :comp and " +
+				"dateDiff(mm, issue_happen_date, :dStart) <= 0 and " +
+				"dateDiff(mm, issue_happen_date, :dEnd) >= 0 and " + 
+				"responsibility_department = :gs ");
+		q.setParameter("comp", comp.getName());
+		q.setParameter("dStart", date);
+		q.setParameter("dEnd", d);
+		q.setParameter("gs", gs);
+		return ((Long)q.getResultList().get(0)).intValue();
+	}
 }

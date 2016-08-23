@@ -122,14 +122,14 @@ module cpzlqk {
         onEvent(e:framework.route.Event):any {
             switch (e.id) {
                 case Event.ZLFE_SAVE_COMMENT:
-                    //router.to(this.mCurrentPlugin).send(Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
+                    router.to(this.mCurrentPlugin).send(Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
                     break;
                 case Event.ZLFE_COMMENT_DENY:
-                    //$("#comment").hide();
+                    $("#comment").hide();
                     break;
                 case Event.ZLFE_COMMENT_UPDATED:
-                    //$("#comment").show();
-                    //$("#commentText").val(e.data);
+                    $("#comment").show();
+                    $("#commentText").val(e.data);
                     break;
             }
             return super.onEvent(e);

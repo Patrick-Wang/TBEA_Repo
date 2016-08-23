@@ -155,7 +155,7 @@ public class CompanySelection {
 					if (mFilter.keep(topComp)) {
 						DataNode nodeTmp = bind(topComp);
 						nodeTmp.getData().setValue(topComp.getName() + "总体");
-						node.getSubNodes().add(nodeTmp);
+						node.getSubNodes().add(0, nodeTmp);
 					}
 					node.getSubNodes().addAll(subNodes);
 				} else if (mFilter.keep(topComp)) {
@@ -245,7 +245,7 @@ public class CompanySelection {
 					if (mFilter.keep(topComp)) {
 						DataNode nodeTmp = bind(topComp);
 						nodeTmp.getData().setValue(topComp.getName() + "总体");
-						node.getSubNodes().add(nodeTmp);
+						node.getSubNodes().add(0, nodeTmp);
 					}
 
 				} else if (mFilter.keep(topComp)) {
@@ -253,7 +253,7 @@ public class CompanySelection {
 					nodes.add(node);
 					DataNode nodeTmp = bind(topComp);
 					nodeTmp.getData().setValue(topComp.getName() + "总体");
-					node.getSubNodes().add(nodeTmp);
+					node.getSubNodes().add(0, nodeTmp);
 				}
 			}
 		}

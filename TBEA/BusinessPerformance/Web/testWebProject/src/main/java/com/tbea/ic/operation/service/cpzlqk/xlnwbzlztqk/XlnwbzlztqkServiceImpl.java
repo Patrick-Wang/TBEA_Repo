@@ -2,7 +2,9 @@ package com.tbea.ic.operation.service.cpzlqk.xlnwbzlztqk;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -164,8 +166,15 @@ public class XlnwbzlztqkServiceImpl implements XlnwbzlztqkService {
 	
 	@Override
 	public List<List<String>> getJdSczzzlqk(Date d, Company company) {
-		// TODO Auto-generated method stub
-		return null;
+		List<List<String>> result = new ArrayList<List<String>>();
+		EasyCalendar ec = new EasyCalendar(d);
+		result.add(toList("当期", 
+				nbyclzlwtDao.getSczzzlqkCount(ec.getSeasonStart().getDate(), ec.getSeasonEnd().getDate(), company),
+				wbyclzlwtDao.getSczzzlqkCount(ec.getSeasonStart().getDate(), ec.getSeasonEnd().getDate(), company)));
+		result.add(toList("去年同期", 
+				nbyclzlwtDao.getSczzzlqkCount(ec.getLastYear().getSeasonEnd().getDate(), ec.getLastYear().getSeasonEnd().getDate(), company),
+				wbyclzlwtDao.getSczzzlqkCount(ec.getLastYear().getSeasonEnd().getDate(), ec.getLastYear().getSeasonEnd().getDate(), company)));
+		return result;
 	}
 
 	@Override
@@ -552,4 +561,143 @@ public class XlnwbzlztqkServiceImpl implements XlnwbzlztqkService {
 		return result;
 	}
 
+	@Override
+	public List<List<String>> getJdSczzzlqkxxxx(Date d) {
+		List<Company> comps = companyManager.getVirtualCYOrg().getCompany(CompanyType.XLCY).getSubCompanies();
+		List<List<String>> result = new ArrayList<List<String>>();
+		Set<String> xmgs = new HashSet<String>();
+		EasyCalendar ec = new EasyCalendar(d);
+		for (int i = 0; i < comps.size(); ++i){
+			 xmgs.addAll(wbyclzlwtDao.getXmgs(comps.get(i)));
+			 xmgs.addAll(nbyclzlwtDao.getXmgs(comps.get(i)));
+			 for (String gs : xmgs){
+				 result.add(toList(
+						 comps.get(i).getName(),
+						 gs,
+						 MathUtil.sum(
+								 wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getSeasonStart().getDate(), ec.getSeasonEnd().getDate(), comps.get(i), gs), 
+								 nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getSeasonStart().getDate(), ec.getSeasonEnd().getDate(), comps.get(i), gs)),
+						 MathUtil.sum(
+								wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getMonths(1).getDate(), ec.getSeasonEnd().getDate(), comps.get(i), gs), 
+								nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getMonths(1).getDate(), ec.getSeasonEnd().getDate(), comps.get(i), gs)),
+						 MathUtil.sum(
+								 wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getLastYear().getSeasonStart().getDate(), ec.getLastYear().getSeasonEnd().getDate(), comps.get(i), gs), 
+								 nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getLastYear().getSeasonStart().getDate(), ec.getLastYear().getSeasonEnd().getDate(), comps.get(i), gs)),
+				 	     MathUtil.sum(
+						      wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getLastYear().getMonths(1).getDate(), ec.getLastYear().getSeasonEnd().getDate(), comps.get(i), gs), 
+						      nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getLastYear().getMonths(1).getDate(), ec.getLastYear().getSeasonEnd().getDate(), comps.get(i), gs))));
+}
+		}
+		
+		return result;
+	}  
+
+	@Override
+	public List<List<String>> getJdSczzzlqkxxxx(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		Set<String> xmgs = new HashSet<String>();
+		EasyCalendar ec = new EasyCalendar(d);
+		
+		 xmgs.addAll(wbyclzlwtDao.getXmgs(company));
+		 xmgs.addAll(nbyclzlwtDao.getXmgs(company));
+		 for (String gs : xmgs){
+			 result.add(toList(
+					 company.getName(),
+					 gs,
+					 nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getSeasonStart().getDate(), ec.getSeasonEnd().getDate(), company, gs),
+					 wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getSeasonStart().getDate(), ec.getSeasonEnd().getDate(), company, gs),
+					 MathUtil.sum(
+							 wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getSeasonStart().getDate(), ec.getSeasonEnd().getDate(), company, gs), 
+							 nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getSeasonStart().getDate(), ec.getSeasonEnd().getDate(), company, gs)),
+					 wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getLastYear().getSeasonStart().getDate(), ec.getLastYear().getSeasonEnd().getDate(), company, gs), 
+					 nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getLastYear().getSeasonStart().getDate(), ec.getLastYear().getSeasonEnd().getDate(), company, gs),
+					 MathUtil.sum(
+							 wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getLastYear().getSeasonStart().getDate(), ec.getLastYear().getSeasonEnd().getDate(), company, gs), 
+							 nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getLastYear().getSeasonStart().getDate(), ec.getLastYear().getSeasonEnd().getDate(), company, gs))));
+		 }
+		return result;
+	}
+	
+	private List<String> toList(String jydw, String xmgs, Integer nb,
+			Integer wb, Integer hj, Integer qnnb, Integer qnwb, Integer qnhj) {
+		List<String> list = new ArrayList<String>();
+		list.add(jydw);
+		list.add(xmgs);
+		list.add(nb + "");
+		list.add(wb + "");
+		list.add(hj + "");
+		list.add(qnnb + "");
+		list.add(qnwb + "");
+		list.add(qnhj + "");
+		return list;
+	}
+
+	@Override
+	public List<List<String>> getYdSczzzlqkxxxx(Date d) {
+		List<Company> comps = companyManager.getVirtualCYOrg().getCompany(CompanyType.XLCY).getSubCompanies();
+		List<List<String>> result = new ArrayList<List<String>>();
+		Set<String> xmgs = new HashSet<String>();
+		EasyCalendar ec = new EasyCalendar(d);
+		for (int i = 0; i < comps.size(); ++i){
+			 xmgs.addAll(wbyclzlwtDao.getXmgs(comps.get(i)));
+			 xmgs.addAll(nbyclzlwtDao.getXmgs(comps.get(i)));
+			 for (String gs : xmgs){
+				 result.add(toList(
+						 comps.get(i).getName(),
+						 gs,
+						 MathUtil.sum(
+								 wbyclzlwtDao.getSczzzlqkxxxxCount(d, comps.get(i), gs), 
+								 nbyclzlwtDao.getSczzzlqkxxxxCount(d, comps.get(i), gs)),
+						 MathUtil.sum(
+								 wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getMonths(1).getDate(), d, comps.get(i), gs), 
+								 nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getMonths(1).getDate(), d, comps.get(i), gs)),
+						 MathUtil.sum(
+								 wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getLastYear().getDate(), comps.get(i), gs), 
+								 nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getLastYear().getDate(), comps.get(i), gs)),
+						 MathUtil.sum(
+								 wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getLastYear().getMonths(1).getDate(), ec.getLastYear().getDate(), comps.get(i), gs), 
+								 nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getLastYear().getMonths(1).getDate(), ec.getLastYear().getDate(), comps.get(i), gs))));
+			 }
+		}
+		
+		return result;
+	}
+
+	private List<String> toList(String jydw, String xmgs, Integer yd,
+			Integer lj, Integer qnyd, Integer qnlj) {
+		List<String> list = new ArrayList<String>();
+		list.add(jydw);
+		list.add(xmgs);
+		list.add(yd + "");
+		list.add(lj + "");
+		list.add(qnyd + "");
+		list.add(qnlj + "");
+		return list;
+	}
+
+	@Override
+	public List<List<String>> getYdSczzzlqkxxxx(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		Set<String> xmgs = new HashSet<String>();
+		EasyCalendar ec = new EasyCalendar(d);
+
+		xmgs.addAll(wbyclzlwtDao.getXmgs(company));
+		xmgs.addAll(nbyclzlwtDao.getXmgs(company));
+		for (String gs : xmgs){
+			 result.add(toList(
+					 company.getName(),
+					 gs,
+					 nbyclzlwtDao.getSczzzlqkxxxxCount(d, company, gs),
+					 wbyclzlwtDao.getSczzzlqkxxxxCount(d, company, gs),
+					 MathUtil.sum(
+							 wbyclzlwtDao.getSczzzlqkxxxxCount(d, company, gs), 
+							 nbyclzlwtDao.getSczzzlqkxxxxCount(d, company, gs)),
+					 nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getMonths(1).getDate(), d, company, gs),
+					 wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getMonths(1).getDate(), d, company, gs),
+					 MathUtil.sum(
+							 wbyclzlwtDao.getSczzzlqkxxxxCount(ec.getMonths(1).getDate(), d, company, gs), 
+							 nbyclzlwtDao.getSczzzlqkxxxxCount(ec.getMonths(1).getDate(), d, company, gs))));
+			 }
+		return result;
+	}
 }
