@@ -535,7 +535,7 @@ where
     <data>${serv.result}</data>
    </response>
   </if>
-  <if test="${isJydw)}">
+  <if test="${isJydw}">
    <callservice id="servJydwzyYclhglqktj"/>
    <callcontroller id="jydwYclhglqktjDataFmtter" inline="true"/>
    <formatterServer id="serv" table="${result.matrixNoIds}">

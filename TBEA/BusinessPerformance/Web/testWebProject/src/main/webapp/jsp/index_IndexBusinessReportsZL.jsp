@@ -17,7 +17,10 @@
 						src="../images/charts/bar5.png"> <span><strong>产品质量情况</strong></span></a>
 				</li>
 				<li><a href="../nwbzlqk/show.do" target="_blank"><img
-						src="../images/charts/bar5.png"> <span><strong>内外部质量情况</strong></span></a>
+						src="../images/charts/bar4.png"> <span><strong>内外部质量情况</strong></span></a>
+				</li>
+				<li><a href="../report/yclhglqktj.do" target="_blank"><img
+						src="../images/charts/bar3.png"> <span><strong>原材料合格率</strong></span></a>
 				</li>
 				<c:if test="${QualityApprove}">
 				<li><a href="../cpzlqk/approve.do" target="_blank"><img
